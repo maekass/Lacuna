@@ -56,7 +56,7 @@ python src/models/market_analysis.py
 streamlit run dashboard/app.py
 ```
 
-ClinicalTrials.gov and Yahoo Finance require network access. If the legacy ClinicalTrials URL fails, update `collect_health_data.py` to the [current API](https://clinicaltrials.gov/data-api/api).
+ClinicalTrials.gov and Yahoo Finance require network access. If the legacy ClinicalTrials URL fails, update `collect_health_data.py` to the [current API](https://clinicaltrials.gov/data-api/api). Some tickers in the sample universe (e.g. delisted names) may return no price history from Yahoo Finance; refresh the ticker map as needed.
 
 ## What changed vs the original single-file spec
 
