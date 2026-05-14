@@ -5,7 +5,6 @@ Analyzes market size, TAM, competitive landscape, and large pharma investments (
 
 import os
 
-import numpy as np
 import pandas as pd
 
 

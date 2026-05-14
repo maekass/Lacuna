@@ -5,10 +5,41 @@ All data sources are public and legally accessible
 """
 
 import os
+from typing import Any
 
 import numpy as np
 import pandas as pd
 import requests
+
+
+def _normalize_legacy_phase(raw: Any) -> str:
+    """Coerce legacy ClinicalTrials.gov `PhaseList.Phase` (str, list, or absent) to a single CSV-safe string."""
+    if raw is None:
+        return ""
+    if isinstance(raw, list):
+        parts = [str(p).strip() for p in raw if p is not None and str(p).strip()]
+        return "; ".join(parts)
+    if isinstance(raw, dict):
+        inner = raw.get("Phase", raw.get("phase"))
+        return _normalize_legacy_phase(inner)
+    return str(raw).strip()
+
+
+def _format_v2_phases(phases: Any) -> str:
+    """Turn v2 API `designModule.phases` enums into readable labels."""
+    if not phases:
+        return ""
+    out: list[str] = []
+    for p in phases:
+        if not p:
+            continue
+        s = str(p).strip()
+        if s.upper().startswith("PHASE"):
+            rest = s.upper().replace("PHASE", "", 1).replace("_", " ").strip()
+            out.append(f"Phase {rest}" if rest else s)
+        else:
+            out.append(s)
+    return "; ".join(out)
 
 
 class SickleCellHealthDataCollector:
@@ -43,49 +74,87 @@ class SickleCellHealthDataCollector:
         print(f"✓ CDC data saved to {self.data_dir}/cdc_sickle_cell_data.csv")
         return df
 
-    def collect_clinical_trials_data(self):
+    def collect_clinical_trials_data(self, max_trials: int = 50):
         """
         Fetch sickle cell clinical trial data from ClinicalTrials.gov.
-        Verify the request URL/JSON shape against the current API docs:
-        https://clinicaltrials.gov/data-api/api
+        Tries the legacy JSON API first; on failure or empty payload, uses the v2 REST API
+        (see https://clinicaltrials.gov/data-api/api).
         """
         print("Collecting Clinical Trials Data...")
 
-        base_url = "https://clinicaltrials.gov/api/query/full_studies"
-        params = {
+        trials: list[dict[str, str]] = []
+        legacy_url = "https://clinicaltrials.gov/api/query/full_studies"
+        legacy_params = {
             "expr": "sickle cell disease",
             "min_rnk": 1,
-            "max_rnk": 50,
+            "max_rnk": max_trials,
             "fmt": "json",
         }
 
-        trials = []
         try:
-            response = requests.get(base_url, params=params, timeout=30)
+            response = requests.get(legacy_url, params=legacy_params, timeout=30)
             if response.status_code == 200:
                 data = response.json()
                 if "FullStudiesResponse" in data:
                     for study in data["FullStudiesResponse"].get("FullStudies", []):
                         protocol = study.get("Study", {}).get("ProtocolSection", {})
-                        status = protocol.get("StatusModule", {})
-                        identification = protocol.get("IdentificationModule", {})
-                        phase_list = protocol.get("DesignModule", {}).get("PhaseList")
-                        phase = ""
-                        if phase_list and phase_list.get("Phase"):
-                            ph = phase_list.get("Phase")
-                            phase = ph[0] if isinstance(ph, list) else ph
+                        status = protocol.get("StatusModule", {}) or {}
+                        identification = protocol.get("IdentificationModule", {}) or {}
+                        design = protocol.get("DesignModule") or {}
+                        phase_list = design.get("PhaseList") or {}
+                        raw_phase = phase_list.get("Phase") if isinstance(phase_list, dict) else None
+                        phase = _normalize_legacy_phase(raw_phase)
+                        start_struct = status.get("StartDateStruct") or {}
+                        start_date = start_struct.get("StartDate", "") if isinstance(start_struct, dict) else ""
                         trial = {
                             "nct_id": identification.get("NCTId", ""),
                             "title": identification.get("BriefTitle", ""),
                             "status": status.get("OverallStatus", ""),
-                            "start_date": status.get("StartDateStruct", {}).get("StartDate", ""),
+                            "start_date": start_date,
                             "phase": phase,
                         }
                         trials.append(trial)
             else:
-                print(f"✗ ClinicalTrials.gov returned status {response.status_code}")
+                print(f"✗ Legacy ClinicalTrials.gov API returned status {response.status_code}")
         except Exception as e:
-            print(f"✗ ClinicalTrials.gov request failed: {e}")
+            print(f"✗ Legacy ClinicalTrials.gov request failed: {e}")
+
+        if not trials:
+            v2_url = "https://clinicaltrials.gov/api/v2/studies"
+            v2_params = {
+                "query.cond": "sickle cell disease",
+                "pageSize": min(max_trials, 100),
+            }
+            try:
+                r2 = requests.get(v2_url, params=v2_params, timeout=30)
+                if r2.status_code != 200:
+                    print(f"✗ ClinicalTrials.gov v2 API returned status {r2.status_code}")
+                else:
+                    payload = r2.json()
+                    for study in payload.get("studies", [])[:max_trials]:
+                        ps = study.get("protocolSection", {}) or {}
+                        idm = ps.get("identificationModule", {}) or {}
+                        sm = ps.get("statusModule", {}) or {}
+                        dm = ps.get("designModule", {}) or {}
+                        start_struct = sm.get("startDateStruct") or {}
+                        start_date = (
+                            start_struct.get("date", "")
+                            if isinstance(start_struct, dict)
+                            else str(start_struct or "")
+                        )
+                        trials.append(
+                            {
+                                "nct_id": idm.get("nctId", ""),
+                                "title": idm.get("briefTitle", ""),
+                                "status": sm.get("overallStatus", ""),
+                                "start_date": start_date,
+                                "phase": _format_v2_phases(dm.get("phases")),
+                            }
+                        )
+                    if trials:
+                        print(f"✓ Loaded {len(trials)} trials via ClinicalTrials.gov v2 API")
+            except Exception as e:
+                print(f"✗ ClinicalTrials.gov v2 request failed: {e}")
 
         df = pd.DataFrame(trials) if trials else pd.DataFrame(
             columns=["nct_id", "title", "status", "start_date", "phase"]
