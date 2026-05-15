@@ -251,101 +251,100 @@ def _ontology_display_cols(df: pd.DataFrame) -> list[str]:
     return [c for c in keys if c in df.columns]
 
 
-def render_page_provenance(
+def _pull_has_audit(pull: dict[str, Any]) -> bool:
+    return bool(pull.get("source_url") or pull.get("pulled_at_utc") or pull.get("parser_version"))
+
+
+def render_sidebar_provenance(
     page: str,
     manifest: Optional[dict[str, Any]],
     *,
     disease_id: str = "scd",
 ) -> None:
-    """Every page: sourced vs illustrative, manifest timestamps, and per-pull audit fields."""
+    """Compact source summary in the sidebar; API pull audit only when logged."""
     files = page_artifacts(page, disease_id) or PAGE_ARTIFACTS.get(page, [])
-    with st.expander("**Data provenance** — pull URL · query · UTC · schema · ontology", expanded=False):
+    with st.sidebar.expander("Data sources", expanded=False):
         if manifest is None:
-            st.markdown(
-                "No `data/raw/data_manifest.json` yet. From the project root run:\n"
-                "`python src/data_collection/collect_all_data.py` then "
-                "`python src/models/market_analysis.py` so timestamps and kinds stay current."
+            st.caption(
+                "No manifest on disk. Bundled demo CSVs load without API pull metadata. "
+                "Run `python3 src/data_collection/collect_all_data.py` to refresh with provenance."
             )
             return
-        st.markdown(
-            f"**Manifest last written (UTC):** `{manifest.get('last_manifest_write_utc', '—')}`  \n"
-            f"**Trigger:** `{manifest.get('trigger', '—')}`"
-        )
+
         if not files:
             if page == "ML Models":
-                artifact_dir, label = ML_DATA, "ML training CSVs under `data/processed/`"
-            elif page in ("Quant Strategy", "Portfolio Optimization"):
-                artifact_dir, label = QUANT_DATA, "Quant outputs under `data/processed/quant/`"
-            else:
-                artifact_dir, label = None, ""
-
-            if artifact_dir is not None:
-                names = (
-                    [
-                        "regression_training.csv",
-                        "trial_success_training.csv",
-                        "model_comparison.csv",
-                        "model_metrics.json",
-                    ]
-                    if page == "ML Models"
-                    else [
-                        "backtest_metrics.csv",
-                        "factor_model_betas.csv",
-                        "monte_carlo_fan.csv",
-                        "efficient_frontier.csv",
-                        "portfolio_weights.csv",
-                        "quant_metrics.json",
-                    ]
-                )
-                rows_custom = [
-                    {
-                        "File": name,
-                        "Sourced vs illustrative": "Sourced (public, delayed vendor)" if "factor" not in name else "Illustrative (demo model)",
-                        "Last updated (UTC)": "—",
-                        "Summary": "Precomputed quant artifact for dashboard demo.",
-                    }
-                    for name in names
-                    if (artifact_dir / name).is_file()
+                artifact_dir = ML_DATA
+                names = [
+                    "regression_training.csv",
+                    "trial_success_training.csv",
+                    "model_comparison.csv",
                 ]
-                if rows_custom:
-                    st.caption(label)
-                    st.dataframe(pd.DataFrame(rows_custom), use_container_width=True, hide_index=True)
-                else:
-                    st.caption(
-                        f"No files for this page. Run "
-                        f"`python3 scripts/train_{'models' if page == 'ML Models' else 'quant'}.py`."
-                    )
+            elif page in ("Quant Strategy", "Portfolio Optimization"):
+                artifact_dir = QUANT_DATA
+                names = [
+                    "backtest_metrics.csv",
+                    "factor_model_betas.csv",
+                    "efficient_frontier.csv",
+                    "portfolio_weights.csv",
+                ]
+            else:
+                st.caption("No registered CSVs for this view.")
+                return
+            rows_custom = [
+                {
+                    "File": name,
+                    "Kind": "Demo / precomputed",
+                    "About": "Precomputed artifact for dashboard demo.",
+                }
+                for name in names
+                if (artifact_dir / name).is_file()
+            ]
+            if rows_custom:
+                st.dataframe(pd.DataFrame(rows_custom), use_container_width=True, hide_index=True)
             else:
                 st.caption(
-                    "This page is **Roadmap** / placeholder only — no registered CSVs. "
-                    "Nothing to list in the manifest table."
+                    f"Run `python3 scripts/train_{'models' if page == 'ML Models' else 'quant'}.py`."
                 )
             return
+
         arts = manifest.get("artifacts", {})
         pulls = manifest.get("latest_pulls", {})
         rows: list[dict[str, str]] = []
+        audit_rows: list[dict[str, str]] = []
         for fname in files:
             a = arts.get(fname, {})
             kind = a.get("kind", "")
             present = a.get("present", False)
-            lm = a.get("last_modified_utc", "—") if present else "— (file not on disk)"
+            lm = a.get("last_modified_utc", "—") if present else "—"
+            summary = (a.get("source_summary") or "—").strip()
             pull = pulls.get(fname, {})
             rows.append(
                 {
                     "File": fname,
                     "Kind": kind_display_label(kind) if kind else "—",
-                    "File mtime (UTC)": lm,
-                    "Pull (UTC)": pull.get("pulled_at_utc", "—"),
-                    "Source URL": (pull.get("source_url") or "—")[:80],
-                    "Query": (pull.get("query_string") or "—")[:60],
-                    "Parser": pull.get("parser_version", "—"),
+                    "Updated": lm,
+                    "About": summary[:120] + ("…" if len(summary) > 120 else ""),
                 }
             )
+            if _pull_has_audit(pull):
+                audit_rows.append(
+                    {
+                        "File": fname,
+                        "Pulled (UTC)": pull.get("pulled_at_utc", "—"),
+                        "Source": (pull.get("source_url") or "—")[:72],
+                        "Parser": pull.get("parser_version", "—") or "—",
+                    }
+                )
+
         st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
-        st.caption(
-            "Full pull audit: `data/raw/provenance_log.jsonl` (append-only). "
-            "MeSH / SNOMED / ICD columns added on validated CSV write."
-        )
+        if audit_rows:
+            st.caption("Latest API pull (from provenance log)")
+            st.dataframe(pd.DataFrame(audit_rows), use_container_width=True, hide_index=True)
+        else:
+            st.caption(
+                "Bundled or locally copied data — no API pull logged yet. "
+                "Re-run collectors with network access to populate `provenance_log.jsonl`."
+            )
 
 
 st.set_page_config(
@@ -437,7 +436,7 @@ if not data_is_present(DATA):
             )
 
 _manifest = load_manifest()
-render_page_provenance(page, _manifest, disease_id=disease_id)
+render_sidebar_provenance(page, _manifest, disease_id=disease_id)
 
 missing = not data_is_present(DATA)
 if missing:
