@@ -29,6 +29,20 @@ def test_enrich_adds_mesh_columns() -> None:
             "phase": [""],
         }
     )
-    out = enrich_clinical_trials(df)
+    out = enrich_clinical_trials(df, "scd")
     assert out["condition_mesh_id"].iloc[0] == "D000755"
+
+
+def test_sle_mesh_anchor() -> None:
+    df = pd.DataFrame(
+        {
+            "nct_id": ["NCT1"],
+            "title": ["Lupus nephritis study"],
+            "status": ["ACTIVE"],
+            "start_date": ["2024-01-01"],
+            "phase": ["Phase 2"],
+        }
+    )
+    out = enrich_clinical_trials(df, "sle")
+    assert out["condition_mesh_id"].iloc[0] == "D008180"
     assert "indication_disambiguation" in out.columns

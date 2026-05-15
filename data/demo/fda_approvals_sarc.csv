@@ -1,0 +1,4 @@
+drug_name,company,approval_date,mechanism,phase,efficacy,disease_id,indication_mesh_id,indication_mesh_label,indication_icd10_code,indication_disambiguation,moa_mesh_id,moa_mesh_label
+Prednisone (standard),Generic,—,Corticosteroid,Commercial,Symptom control,sarc,D012507,Sarcoidosis,D86.9,primary_sarc,,Corticosteroid
+Methotrexate,Generic,—,Antimetabolite,Commercial,Steroid-sparing,sarc,D012507,Sarcoidosis,D86.9,primary_sarc,,Antimetabolite
+Infliximab (off-label),JNJ,—,TNF inhibitor,Off-label,Refractory sarcoidosis,sarc,D012507,Sarcoidosis,D86.9,primary_sarc,D000911,"Antibodies, Monoclonal"

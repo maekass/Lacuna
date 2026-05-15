@@ -25,6 +25,7 @@ jobs:
             src/data_collection \
             src/data_collection/parsers \
             src/ontology \
+            src/disease_registry \
             tests \
             scripts/debug_check.py \
             scripts/playwright_browsers.py \

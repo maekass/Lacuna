@@ -1,0 +1,3 @@
+nct_id,title,status,start_date,phase,disease_id,condition_mesh_id,condition_mesh_label,condition_snomed_id,condition_snomed_label,condition_icd10_code,condition_icd10_label,indication_disambiguation,indication_query
+NCT03732807,Study of Cosentyx in Patients With Pulmonary Sarcoidosis,TERMINATED,2019-01-14,Phase 2,sarc,D012507,Sarcoidosis,31541009,Sarcoidosis,D86.9,"Sarcoidosis, unspecified",primary_sarc,sarcoidosis
+NCT03910543,Rituximab for Treatment of Sarcoidosis,COMPLETED,2019-06-01,Phase 2,sarc,D012507,Sarcoidosis,31541009,Sarcoidosis,D86.9,"Sarcoidosis, unspecified",primary_sarc,sarcoidosis
