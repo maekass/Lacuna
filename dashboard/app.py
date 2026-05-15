@@ -19,12 +19,14 @@ if str(ROOT) not in sys.path:
 
 from src.data_collection.bootstrap_data import data_is_present, run_full_pipeline, seed_demo_if_missing
 from src.data_collection.data_manifest import kind_display_label
-from src.data_collection.seed_demo_data import sync_ml_from_demo
+from src.data_collection.seed_demo_data import sync_ml_from_demo, sync_quant_from_demo
 from src.models.ml_artifacts import ml_bundle_present
+from src.quant_framework.quant_artifacts import quant_bundle_present
 
 DATA = ROOT / "data" / "raw"
 ML_DATA = ROOT / "data" / "processed"
 ML_MODELS = ROOT / "data" / "models"
+QUANT_DATA = ROOT / "data" / "processed" / "quant"
 
 
 @st.cache_resource(show_spinner=False)
@@ -87,6 +89,23 @@ def _ml_artifacts_ready() -> bool:
 def _ensure_ml_artifacts_cached() -> bool:
     sync_ml_from_demo()
     return _ml_artifacts_ready() or ml_bundle_present(ROOT / "data" / "demo" / "ml")
+
+
+def _quant_artifacts_ready() -> bool:
+    return (QUANT_DATA / "backtest_metrics.csv").is_file()
+
+
+@st.cache_resource(show_spinner=False)
+def _ensure_quant_artifacts_cached() -> bool:
+    sync_quant_from_demo()
+    return _quant_artifacts_ready() or quant_bundle_present(ROOT / "data" / "demo" / "quant")
+
+
+def load_quant_json(name: str) -> Optional[dict[str, Any]]:
+    path = QUANT_DATA / name
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def load_manifest() -> Optional[dict[str, Any]]:
@@ -210,29 +229,47 @@ def render_page_provenance(page: str, manifest: Optional[dict[str, Any]]) -> Non
         )
         if not files:
             if page == "ML Models":
-                ml_rows = [
-                    {
-                        "File": name,
-                        "Sourced vs illustrative": "Illustrative (demo training)",
-                        "Last updated (UTC)": "—",
-                        "Summary": "Fitted-model training matrix or metrics; see model_metrics.json.",
-                    }
-                    for name in (
+                artifact_dir, label = ML_DATA, "ML training CSVs under `data/processed/`"
+            elif page in ("Quant Strategy", "Portfolio Optimization"):
+                artifact_dir, label = QUANT_DATA, "Quant outputs under `data/processed/quant/`"
+            else:
+                artifact_dir, label = None, ""
+
+            if artifact_dir is not None:
+                names = (
+                    [
                         "regression_training.csv",
                         "trial_success_training.csv",
                         "model_comparison.csv",
                         "model_metrics.json",
-                    )
-                    if (ML_DATA / name).is_file()
+                    ]
+                    if page == "ML Models"
+                    else [
+                        "backtest_metrics.csv",
+                        "factor_model_betas.csv",
+                        "monte_carlo_fan.csv",
+                        "efficient_frontier.csv",
+                        "portfolio_weights.csv",
+                        "quant_metrics.json",
+                    ]
+                )
+                rows_custom = [
+                    {
+                        "File": name,
+                        "Sourced vs illustrative": "Sourced (public, delayed vendor)" if "factor" not in name else "Illustrative (demo model)",
+                        "Last updated (UTC)": "—",
+                        "Summary": "Precomputed quant artifact for dashboard demo.",
+                    }
+                    for name in names
+                    if (artifact_dir / name).is_file()
                 ]
-                if ml_rows:
-                    st.caption(
-                        "ML training CSVs live under `data/processed/`; fitted joblib files under `data/models/`."
-                    )
-                    st.dataframe(pd.DataFrame(ml_rows), use_container_width=True, hide_index=True)
+                if rows_custom:
+                    st.caption(label)
+                    st.dataframe(pd.DataFrame(rows_custom), use_container_width=True, hide_index=True)
                 else:
                     st.caption(
-                        "No ML training files on disk. Run `python3 scripts/train_models.py` from the project root."
+                        f"No files for this page. Run "
+                        f"`python3 scripts/train_{'models' if page == 'ML Models' else 'quant'}.py`."
                     )
             else:
                 st.caption(
@@ -485,13 +522,83 @@ elif page == "ML Models":
 
 elif page == "Quant Strategy":
     st.subheader("Quant strategy")
-    st.caption("**Roadmap:** no factor / backtest outputs registered in `data_manifest` for this page yet.")
-    st.write("Placeholder: factor models, backtests (e.g. Backtrader), Monte Carlo.")
+    st.caption(
+        "**Demo / non-advisory:** Backtests and factor regressions use **delayed vendor** stock CSVs "
+        "from `data/raw/` — not live trading signals."
+    )
+    if not _ensure_quant_artifacts_cached():
+        st.warning("No quant outputs found. Run `python3 scripts/train_quant.py` from the project root.")
+    else:
+        qmeta = load_quant_json("quant_metrics.json")
+        if qmeta:
+            st.markdown(f"**Built (UTC):** `{qmeta.get('trained_at_utc', '—')}` · tickers: `{', '.join(qmeta.get('tickers', []))}`")
+
+        backtest = load_csv("backtest_metrics.csv", QUANT_DATA)
+        if backtest is not None:
+            st.markdown("**Strategy backtest summary** (equal weight vs health-tilt demo)")
+            st.dataframe(backtest, use_container_width=True, hide_index=True)
+
+        factors = load_csv("factor_model_betas.csv", QUANT_DATA)
+        if factors is not None and not factors.empty:
+            st.markdown("**Factor model** (monthly returns ~ IBB + XBI−IBB spread)")
+            st.dataframe(factors, use_container_width=True, hide_index=True)
+            fig_f = px.bar(
+                factors,
+                x="ticker",
+                y="beta_ibb",
+                title="IBB beta by ticker (demo)",
+                color="r_squared",
+            )
+            st.plotly_chart(fig_f, use_container_width=True)
+
+        mc = load_csv("monte_carlo_fan.csv", QUANT_DATA)
+        if mc is not None:
+            st.markdown("**Monte Carlo fan** (1-year, equal-weight return distribution)")
+            fig_mc = go.Figure()
+            fig_mc.add_trace(go.Scatter(x=mc["day"], y=mc["p95"], name="95th %ile", line=dict(dash="dot")))
+            fig_mc.add_trace(go.Scatter(x=mc["day"], y=mc["p50"], name="Median"))
+            fig_mc.add_trace(go.Scatter(x=mc["day"], y=mc["p05"], name="5th %ile", line=dict(dash="dot")))
+            fig_mc.update_layout(
+                title="Simulated cumulative return paths (demo)",
+                xaxis_title="Trading day",
+                yaxis_title="Growth of $1",
+                height=360,
+            )
+            st.plotly_chart(fig_mc, use_container_width=True)
 
 elif page == "Portfolio Optimization":
     st.subheader("Portfolio optimization")
-    st.caption("**Roadmap:** no portfolio optimization outputs on disk yet.")
-    st.write("Placeholder: efficient frontier and risk metrics.")
+    st.caption(
+        "**Demo / non-advisory:** Mean-variance-style random portfolios and scipy optimizers "
+        "on the same delayed-vendor return sample — not allocation advice."
+    )
+    if not _ensure_quant_artifacts_cached():
+        st.warning("No portfolio outputs found. Run `python3 scripts/train_quant.py` from the project root.")
+    else:
+        frontier = load_csv("efficient_frontier.csv", QUANT_DATA)
+        if frontier is not None and not frontier.empty:
+            st.markdown("**Efficient frontier (random long-only portfolios)**")
+            fig_ef = px.scatter(
+                frontier,
+                x="volatility",
+                y="expected_return",
+                color="sharpe_ratio",
+                title="Return vs volatility (color = Sharpe, demo)",
+                labels={"volatility": "Annualized vol", "expected_return": "Annualized return"},
+            )
+            st.plotly_chart(fig_ef, use_container_width=True)
+
+        weights = load_csv("portfolio_weights.csv", QUANT_DATA)
+        if weights is not None and not weights.empty:
+            st.markdown("**Optimized weights by strategy**")
+            pivot = weights.pivot(index="ticker", columns="strategy", values="weight").fillna(0)
+            st.dataframe(pivot, use_container_width=True)
+            selected = st.selectbox("Strategy detail", sorted(weights["strategy"].unique()))
+            st.dataframe(
+                weights[weights["strategy"] == selected].sort_values("weight", ascending=False),
+                use_container_width=True,
+                hide_index=True,
+            )
 
 elif page == "Investment Stages":
     st.subheader("Investment stages")

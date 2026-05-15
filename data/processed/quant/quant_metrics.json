@@ -1,0 +1,17 @@
+{
+  "trained_at_utc": "2026-05-15T09:40:55.476320+00:00",
+  "tickers": [
+    "CRSP",
+    "VRTX",
+    "BEAM",
+    "NTLA",
+    "EDIT",
+    "NVS",
+    "PFE",
+    "BMY",
+    "EMMS",
+    "SGMO"
+  ],
+  "n_trading_days": 1254,
+  "notes": "Demo quant outputs from delayed vendor CSVs; not investment advice."
+}

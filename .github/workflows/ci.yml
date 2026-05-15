@@ -28,6 +28,7 @@ jobs:
             scripts/smoke_test_dashboard.py \
             src/models/market_analysis.py \
             src/models/investment_stage_analysis.py \
-            src/models/ml_artifacts.py
+            src/models/ml_artifacts.py \
+            src/quant_framework/quant_artifacts.py
       - name: Verify bundled demo CSVs
         run: python scripts/debug_check.py

@@ -18,6 +18,7 @@ from src.data_collection.seed_demo_data import (  # noqa: E402
     sync_ml_from_demo,
 )
 from src.models.ml_artifacts import ml_bundle_present  # noqa: E402
+from src.quant_framework.quant_artifacts import quant_bundle_present  # noqa: E402
 
 RAW = ROOT / "data" / "raw"
 REQUIRED = [
@@ -74,6 +75,16 @@ def main() -> int:
         print("  OK tracked training CSVs and fitted joblib models")
     else:
         print("  FAIL: missing data/processed or data/models — run train_models.py")
+        failed = True
+
+    print("\nQuant bundle (data/demo/quant):")
+    from src.data_collection.seed_demo_data import sync_quant_from_demo
+
+    if quant_bundle_present():
+        sync_quant_from_demo()
+        print("  OK quant CSVs")
+    else:
+        print("  FAIL: run python3 scripts/train_quant.py")
         failed = True
 
     print("\nRunning smoke_test_dashboard.check_data ...")

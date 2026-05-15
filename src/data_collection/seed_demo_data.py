@@ -16,6 +16,8 @@ ROOT = Path(__file__).resolve().parents[2]
 DEMO_DIR = ROOT / "data" / "demo"
 DEMO_ML_DIR = DEMO_DIR / "ml"
 DEMO_MODELS_DIR = DEMO_DIR / "models"
+DEMO_QUANT_DIR = DEMO_DIR / "quant"
+PROCESSED_QUANT_DIR = ROOT / "data" / "processed" / "quant"
 
 
 def csv_has_data_rows(path: Path, min_rows: int = 1) -> bool:
@@ -51,6 +53,22 @@ def seed_from_demo(data_dir: Path | str, demo_dir: Path | str | None = None) -> 
         shutil.copy2(src, dest)
         copied += 1
     return copied
+
+
+def sync_quant_from_demo(
+    quant_dir: Path | str | None = None,
+    processed_quant_dir: Path | str | None = None,
+) -> bool:
+    from src.quant_framework.quant_artifacts import quant_bundle_present, sync_quant_to_runtime
+
+    src = Path(quant_dir) if quant_dir else DEMO_QUANT_DIR
+    dest = Path(processed_quant_dir) if processed_quant_dir else PROCESSED_QUANT_DIR
+    if not quant_bundle_present(src):
+        return False
+    if (dest / "backtest_metrics.csv").is_file():
+        return True
+    sync_quant_to_runtime(src, dest)
+    return True
 
 
 def sync_ml_from_demo(

@@ -21,6 +21,7 @@ from src.data_collection.seed_demo_data import (
     restore_empty_from_demo,
     seed_from_demo,
     sync_ml_from_demo,
+    sync_quant_from_demo,
 )
 from src.models.investment_stage_analysis import InvestmentStageAnalyzer
 from src.models.market_analysis import SickleCellMarketAnalyzer
@@ -39,11 +40,13 @@ def seed_demo_if_missing(data_dir: Path | str = "data/raw") -> bool:
     data_path.mkdir(parents=True, exist_ok=True)
     if data_is_present(data_path):
         sync_ml_from_demo()
+        sync_quant_from_demo()
         return True
     if not demo_bundle_present(DEMO_DIR):
         return False
     seed_from_demo(data_path, DEMO_DIR)
     sync_ml_from_demo()
+    sync_quant_from_demo()
     write_data_manifest(str(data_path), trigger="seed_demo_if_missing")
     return data_is_present(data_path)
 
@@ -64,6 +67,7 @@ def run_full_pipeline(data_dir: Path | str = "data/raw") -> None:
         restore_empty_from_demo(data_path, DEMO_DIR)
 
     sync_ml_from_demo()
+    sync_quant_from_demo()
 
     write_data_manifest(str(data_path), trigger="bootstrap_data.run_full_pipeline")
 

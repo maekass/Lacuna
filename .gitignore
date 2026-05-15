@@ -13,6 +13,10 @@ venv/
 !data/processed/**
 !data/processed/**/*.csv
 !data/processed/**/*.json
+!data/demo/quant/
+!data/demo/quant/**
+!data/processed/quant/
+!data/processed/quant/**
 !data/models/
 !data/models/**
 !data/raw/.gitkeep
