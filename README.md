@@ -8,15 +8,33 @@
 
 GitHub stores the **Streamlit UI as code** ([`dashboard/app.py`](https://github.com/maekass/Sickle-Cell-Investment-Analysis/blob/main/dashboard/app.py)); it does **not** run the interactive app inside the README or file tree. To use the dashboard **from this GitHub repo** without cloning locally:
 
-1. **[Open in GitHub Codespaces](https://codespaces.new/maekass/Sickle-Cell-Investment-Analysis)** — uses [`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json) to install `requirements.txt` and forward port **8501**.
-2. In the Codespaces terminal (repo root), optionally refresh data then start Streamlit:
+1. **Open a Codespace** (pick one link; both open this repo on `main`):
+   - Short link: **[Open in GitHub Codespaces](https://codespaces.new/maekass/Sickle-Cell-Investment-Analysis)**
+   - Full GitHub URL (if the short link ever fails):  
+     `https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=maekass%2FSickle-Cell-Investment-Analysis`
+2. Wait until setup finishes — [`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json) runs `pip install -r requirements.txt` and registers port **8501** (`http`).
+3. In the Codespaces terminal (**repository root**), optionally refresh data then start Streamlit (use `python3` if `python` is not on your `PATH`):
    ```bash
-   python src/data_collection/collect_all_data.py
-   python src/models/investment_stage_analysis.py
-   python src/models/market_analysis.py
+   python3 src/data_collection/collect_all_data.py
+   python3 src/models/investment_stage_analysis.py
+   python3 src/models/market_analysis.py
    streamlit run dashboard/app.py --server.address 0.0.0.0 --server.port 8501
    ```
-3. When GitHub prompts, **open the forwarded port** for `8501` and use the **Browser** tab to load the app.
+   **UI only (no charts):** you can skip the three `python3` lines; the app will load with empty CSV warnings until you run collectors.
+4. Open the **Ports** view → row **8501** → **Open in Browser** (or use the toast when the port forwards). The app must bind to **`0.0.0.0`** so port forwarding works; that is why the command above includes `--server.address 0.0.0.0`.
+
+**From the editor:** **Terminal → Run Task… → “Streamlit: dashboard (port 8501)”** (see [`.vscode/tasks.json`](.vscode/tasks.json)).
+
+**Codespaces troubleshooting**
+
+| Issue | What to do |
+|--------|----------------|
+| “Site can’t be reached” on the forwarded URL | In **Ports**, confirm **8501** is **Forwarded**; try **Port Visibility → Public** if your org blocks private forwarded URLs. |
+| Streamlit starts but browser shows nothing | Ensure you used `--server.address 0.0.0.0` (not only `localhost`). |
+| `streamlit: command not found` | Open a **new** terminal after `postCreateCommand` finishes, or run `python3 -m streamlit run …` instead of `streamlit run …`. |
+| Dependency errors during `pip install` | Re-run: `python3 -m pip install -r requirements.txt` from the repo root. |
+
+**Local (same app):** from the repo root, `streamlit run dashboard/app.py` then open **[http://localhost:8501](http://localhost:8501)** (Streamlit defaults work on your machine).
 
 For a **public URL** without Codespaces, deploy with [Streamlit Community Cloud](#deploy-on-streamlit-community-cloud) and paste your `*.streamlit.app` link in the README there.
 
@@ -83,6 +101,8 @@ sickle_cell_investment_analysis/
 │   └── ci.yml                    # install deps + compileall smoke (dashboard + pipeline)
 ├── .streamlit/
 │   └── config.toml               # local / Community Cloud defaults (e.g. usage stats)
+├── .vscode/
+│   └── tasks.json                # "Streamlit: dashboard" task (Codespaces / VS Code)
 ├── data/raw/
 ├── docs/
 │   └── screenshots/              # README gallery (static captures of the Streamlit UI)
