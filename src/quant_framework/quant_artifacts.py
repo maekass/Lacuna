@@ -14,6 +14,7 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 from src.quant_framework.risk_optimization import RiskOptimizedPortfolio
+from src.quant_framework.walk_forward import walk_forward_folds, walk_forward_summary
 
 ROOT = Path(__file__).resolve().parents[2]
 RAW_DIR = ROOT / "data" / "raw"
@@ -22,6 +23,8 @@ PROCESSED_QUANT_DIR = ROOT / "data" / "processed" / "quant"
 
 QUANT_ARTIFACTS = (
     "backtest_metrics.csv",
+    "walk_forward_folds.csv",
+    "walk_forward_summary.csv",
     "factor_model_betas.csv",
     "monte_carlo_fan.csv",
     "efficient_frontier.csv",
@@ -203,12 +206,16 @@ def train_all(
     eq_returns = daily.mean(axis=1)
 
     backtest_metrics = build_backtest_metrics(prices)
+    wf_folds = walk_forward_folds(prices)
+    wf_summary = walk_forward_summary(wf_folds)
     factor_betas = build_factor_model(prices, etfs)
     mc_fan = build_monte_carlo_fan(eq_returns)
     frontier = build_efficient_frontier(prices)
     weights_long, _ = build_portfolio_weights(prices)
 
     backtest_metrics.to_csv(out / "backtest_metrics.csv", index=False)
+    wf_folds.to_csv(out / "walk_forward_folds.csv", index=False)
+    wf_summary.to_csv(out / "walk_forward_summary.csv", index=False)
     factor_betas.to_csv(out / "factor_model_betas.csv", index=False)
     mc_fan.to_csv(out / "monte_carlo_fan.csv", index=False)
     frontier.to_csv(out / "efficient_frontier.csv", index=False)
@@ -218,7 +225,13 @@ def train_all(
         "trained_at_utc": datetime.now(timezone.utc).isoformat(),
         "tickers": list(prices.columns),
         "n_trading_days": int(len(daily)),
-        "notes": "Demo quant outputs from delayed vendor CSVs; not investment advice.",
+        "walk_forward": {
+            "train_months": 24,
+            "test_months": 6,
+            "step_months": 6,
+            "n_folds": int(wf_folds["fold_id"].nunique()) if not wf_folds.empty and "fold_id" in wf_folds.columns else 0,
+        },
+        "notes": "Quant outputs from delayed vendor CSVs; walk-forward uses rolling OOS folds. Not investment advice.",
     }
     (out / "quant_metrics.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
