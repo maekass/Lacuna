@@ -146,19 +146,45 @@ streamlit run dashboard/app.py
 - **This project on GitHub:** [README & repository](https://github.com/maekass/Sickle-Cell-Investment-Analysis?tab=readme-ov-file)
 - **Dashboard UI code on GitHub:** [`dashboard/app.py` on `main`](https://github.com/maekass/Sickle-Cell-Investment-Analysis/blob/main/dashboard/app.py)
 
-## Deploy on Streamlit Community Cloud
+## Deploy on Streamlit Community Cloud ([share.streamlit.io](https://share.streamlit.io/))
 
-GitHub hosts **source**; the UI only runs publicly if you deploy it.
+This repo is **organized for [Community Cloud](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/file-organization)**: working directory is the **repository root**, config lives in **`.streamlit/config.toml`**, and dependencies are declared in **`requirements.txt`**. The app entry file is **`dashboard/app.py`** (paths like `data/raw/` resolve from the repo root, matching local `streamlit run dashboard/app.py`).
 
-1. Push this repo to GitHub (you are on [`maekass/Sickle-Cell-Investment-Analysis`](https://github.com/maekass/Sickle-Cell-Investment-Analysis)).
-2. Sign in at **[Streamlit Community Cloud](https://share.streamlit.io/)** with GitHub and **Create app**.
-3. Pick this repository and branch **`main`**.
-4. Set **Main file path** to **`dashboard/app.py`** (repository root stays the app root so `ROOT` / `data/raw` paths resolve correctly).
-5. Python version: **3.9+** (3.11 matches CI). Dependencies install from **`requirements.txt`** at the repo root.
+### One-time setup
 
-**Data on Cloud:** Generated **`*.csv`** and **`data/raw/data_manifest.json`** are **gitignored**, so a fresh Cloud deploy starts **without** local CSVs. The app still loads and shows provenance guidance; to populate charts in the cloud you would need a supported approach (for example run collectors in a separate job and sync artifacts, use [Secrets](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management) for API keys if you add paid feeds, or adjust your own policy on committing non-sensitive extracts). **After your first successful deploy**, add your public app URL here for visitors:
+1. **GitHub:** Ensure [`maekass/Sickle-Cell-Investment-Analysis`](https://github.com/maekass/Sickle-Cell-Investment-Analysis) is pushed and that you have **admin or write** access.
+2. **Streamlit account:** Open **[https://share.streamlit.io/](https://share.streamlit.io/)** and sign in (GitHub is the usual identity).
+3. **Connect GitHub to Streamlit:** Grant the Streamlit GitHub App access to this repository when prompted ([connect GitHub](https://docs.streamlit.io/deploy/streamlit-community-cloud/get-started/connect-your-github-account)).
+4. **Create app:** In your workspace, click **Create app** (upper right) → **Deploy a public app from GitHub** (or your workspace’s equivalent).
+5. **Repository:** `maekass/Sickle-Cell-Investment-Analysis` — **Branch:** `main`.
+6. **Main file path:** `dashboard/app.py` (use forward slashes; do **not** set a custom root that breaks `ROOT` in code).
+7. **Python:** In **Advanced settings**, choose **3.11** (matches CI and `.devcontainer`).
+8. **Deploy** and wait for the build. If it fails, open **Manage app → Logs** and fix missing dependencies in `requirements.txt`.
 
-- **Live app (Community Cloud):** _https://YOUR-APP.streamlit.app — replace after deploy_
+### Official references
+
+- [Prep and deploy on Community Cloud](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app)  
+- [File organization (entrypoint + `requirements.txt` + `.streamlit/`)](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/file-organization)  
+- [App dependencies (`requirements.txt`, optional `packages.txt`)](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/app-dependencies)  
+- [Secrets management](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management) (only if you add API keys)
+
+### After deploy: README badge (optional)
+
+Replace `YOUR-SUBDOMAIN` with the subdomain Streamlit assigns, then add to this README (or your profile):
+
+```markdown
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://YOUR-SUBDOMAIN.streamlit.app)
+```
+
+### Data on Cloud (important)
+
+Generated **`*.csv`** and **`data/raw/data_manifest.json`** are **gitignored**, so a **fresh Cloud deploy has no price or trial CSVs**. The app **still runs** (banner, navigation, provenance text, warnings). To **fill charts on Cloud** you can, for example:
+
+- Run **`collect_all_data.py`** (and stage/market scripts) in **[GitHub Codespaces](https://codespaces.new/maekass/Sickle-Cell-Investment-Analysis)**, then **commit** selected outputs if your compliance policy allows; or  
+- Add a **scheduled job** elsewhere that writes into a bucket you read from the app; or  
+- Use **[Secrets](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management)** for API keys and extend collectors (not included by default).
+
+**Live app (Community Cloud):** _https://YOUR-SUBDOMAIN.streamlit.app — paste your URL from the Streamlit workspace after the first successful deploy_
 
 ## Data sources and network
 
@@ -172,4 +198,4 @@ ClinicalTrials.gov and Yahoo Finance require network access. **`collect_health_d
 - **`data_manifest.json`** (generated, gitignored) plus **per-page provenance** in the dashboard.
 - **`.gitignore`** ignores generated `*.csv` and `data/raw/data_manifest.json` while keeping `data/raw/.gitkeep`.
 - **GitHub ↔ local:** Merged unrelated histories once; canonical README and pipeline match the sickle cell Streamlit stack above; **Community Cloud** deploy steps and **`.streamlit/config.toml`** added; placeholder **Django** workflow removed in favor of **`ci.yml`** compile smoke.
-- **Dashboard on GitHub:** **`.devcontainer/devcontainer.json`** plus README [Dashboard from GitHub](#dashboard-from-github) so you can run Streamlit in **Codespaces** from the green **Code** button; **screenshots** under `docs/screenshots/` preview the UI in this README.
+- **Streamlit Community Cloud:** README [Deploy on Streamlit Community Cloud](#deploy-on-streamlit-community-cloud-sharestreamlitio) expanded for [share.streamlit.io](https://share.streamlit.io/) (steps, docs links, badge snippet, data strategy); `.streamlit/config.toml` sets `[server] headless = true`; `requirements.txt` pins `streamlit>=1.28.0`; dashboard **empty-data** warning mentions Cloud + Codespaces.

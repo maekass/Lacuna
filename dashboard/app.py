@@ -165,7 +165,10 @@ missing = not DATA.exists() or not any(DATA.glob("*.csv"))
 if missing:
     st.warning(
         f"No CSV data found under `{DATA}`. From the project root run: "
-        "`python src/data_collection/collect_all_data.py` and optionally `python src/models/market_analysis.py`."
+        "`python src/data_collection/collect_all_data.py` and optionally `python src/models/market_analysis.py`. "
+        "**On [Streamlit Community Cloud](https://share.streamlit.io/)** (this repo’s default deploy), CSVs are "
+        "gitignored—run the same commands in **[Codespaces](https://codespaces.new/maekass/Sickle-Cell-Investment-Analysis)** "
+        "or locally, commit data only if your policy allows, then redeploy or refresh."
     )
 
 if page == "Overview":

@@ -1,5 +1,9 @@
-# Local + Streamlit Community Cloud. See:
+# Local + Streamlit Community Cloud — see:
 # https://docs.streamlit.io/develop/concepts/configuration/options
+# https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/file-organization
+
+[server]
+headless = true
 
 [browser]
 gatherUsageStats = false
