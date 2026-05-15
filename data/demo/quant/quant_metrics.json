@@ -1,5 +1,5 @@
 {
-  "trained_at_utc": "2026-05-15T09:40:55.476320+00:00",
+  "trained_at_utc": "2026-05-15T11:29:35.147250+00:00",
   "tickers": [
     "CRSP",
     "VRTX",
@@ -13,5 +13,11 @@
     "SGMO"
   ],
   "n_trading_days": 1254,
-  "notes": "Demo quant outputs from delayed vendor CSVs; not investment advice."
+  "walk_forward": {
+    "train_months": 24,
+    "test_months": 6,
+    "step_months": 6,
+    "n_folds": 6
+  },
+  "notes": "Quant outputs from delayed vendor CSVs; walk-forward uses rolling OOS folds. Not investment advice."
 }

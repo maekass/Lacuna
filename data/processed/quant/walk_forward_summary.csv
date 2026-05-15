@@ -1,0 +1,3 @@
+strategy,n_folds,mean_test_annual_return,mean_test_sharpe,mean_test_max_drawdown,notes
+Equal weight,6,0.1272,0.224,-0.2214,Average of fold-level test metrics; not a single compounded OOS path.
+Health-tilt demo,6,-0.0148,-0.292,-0.3326,Average of fold-level test metrics; not a single compounded OOS path.

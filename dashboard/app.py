@@ -283,6 +283,8 @@ def render_sidebar_provenance(
                 artifact_dir = QUANT_DATA
                 names = [
                     "backtest_metrics.csv",
+                    "walk_forward_folds.csv",
+                    "walk_forward_summary.csv",
                     "factor_model_betas.csv",
                     "efficient_frontier.csv",
                     "portfolio_weights.csv",
@@ -637,8 +639,20 @@ elif page == "Quant Strategy":
 
         backtest = load_csv("backtest_metrics.csv", QUANT_DATA)
         if backtest is not None:
-            st.markdown("**Strategy backtest summary** (equal weight vs health-tilt demo)")
+            st.markdown("**In-sample backtest** (full history — equal weight vs health-tilt demo)")
             st.dataframe(backtest, use_container_width=True, hide_index=True)
+
+        wf_summary = load_csv("walk_forward_summary.csv", QUANT_DATA)
+        wf_folds = load_csv("walk_forward_folds.csv", QUANT_DATA)
+        if wf_summary is not None and not wf_summary.empty:
+            st.markdown("**Walk-forward out-of-sample** (24m train · 6m test · 6m step on price panel)")
+            st.dataframe(wf_summary, use_container_width=True, hide_index=True)
+            if wf_folds is not None and not wf_folds.empty:
+                with st.expander("Fold-level test metrics", expanded=False):
+                    st.dataframe(wf_folds, use_container_width=True, hide_index=True)
+            st.caption(
+                "OOS metrics are computed on each test window only; summary row averages fold-level stats."
+            )
 
         factors = load_csv("factor_model_betas.csv", QUANT_DATA)
         if factors is not None and not factors.empty:
