@@ -42,6 +42,8 @@ For a **public URL** without Codespaces, deploy with [Streamlit Community Cloud]
 
 These are **static images** checked into [`docs/screenshots/`](docs/screenshots/) so the README shows what the Streamlit UI looks like after you run the collectors (GitHub does not render the live app here). All charts and scores remain **demo / illustrative** as in the app.
 
+**Why they can look “squished” or sidebar-heavy (e.g. on the [raw `market-analysis.png` view](https://github.com/maekass/Sickle-Cell-Investment-Analysis/blob/main/docs/screenshots/market-analysis.png)):** The PNGs are about **966×1458** pixels—captured from a **narrow automation viewport** with Streamlit’s **sidebar open**. Streamlit gives the sidebar a large fixed share of that width, so the **main content is only a thin column** in the image. That is a **framing choice in the screenshot**, not how GitHub is “breaking” the file. On GitHub, the blob page shows the image **as uploaded**; in the README, images **scale down** to the page column but keep the same aspect ratio. For a wide layout, open the app in **Codespaces or a desktop browser** at **1280px+** width (or collapse the sidebar with **`<<`**) and replace the PNGs if you want new captures.
+
 **Overview** (banner, disclaimer, data provenance expander, pipeline table region):
 
 ![Overview — Streamlit dashboard](docs/screenshots/overview.png)
