@@ -4,8 +4,16 @@ Analyzes market size, TAM, competitive landscape, and large pharma investments (
 """
 
 import os
+import sys
+from pathlib import Path
 
 import pandas as pd
+
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+
+from src.data_collection.data_manifest import write_data_manifest
 
 
 class SickleCellMarketAnalyzer:
@@ -401,6 +409,8 @@ class SickleCellMarketAnalyzer:
         print("\n" + "=" * 60)
         print("✓ Market Analysis Complete")
         print("=" * 60)
+
+        write_data_manifest(self.data_dir, trigger="market_analysis.generate_market_report")
 
         return {
             "market_size": market_size,

@@ -7,4 +7,5 @@ venv/
 .env
 *.csv
 !data/raw/.gitkeep
+data/raw/data_manifest.json
 .ipynb_checkpoints/

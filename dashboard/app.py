@@ -3,15 +3,46 @@ Sickle Cell Investment Analysis Dashboard
 Interactive Streamlit dashboard (run from project root).
 """
 
+import json
+import sys
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 import pandas as pd
 import plotly.express as px
 import streamlit as st
 
 ROOT = Path(__file__).resolve().parent.parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from src.data_collection.data_manifest import kind_display_label
+
 DATA = ROOT / "data" / "raw"
+
+# Primary CSVs surfaced on each dashboard page (for manifest table)
+PAGE_ARTIFACTS: dict[str, list[str]] = {
+    "Overview": ["gene_therapy_pipeline_scd.csv", "fda_approvals_scd.csv"],
+    "Health Trends": ["cdc_sickle_cell_data.csv", "clinical_trials_scd.csv"],
+    "Stock Analysis": ["stock_prices_companies.csv", "stock_prices_etfs.csv", "company_financials.csv"],
+    "ML Models": [],
+    "Quant Strategy": [],
+    "Portfolio Optimization": [],
+    "Investment Stages": [
+        "vc_deals_scd.csv",
+        "growth_equity_deals_scd.csv",
+        "public_equity_companies_scd.csv",
+        "stage_returns_analysis.csv",
+    ],
+    "Market Analysis": [
+        "market_size_scd.csv",
+        "large_pharma_investments_scd.csv",
+        "competitive_landscape_scd.csv",
+        "deal_flow_scd.csv",
+        "regulatory_landscape_scd.csv",
+        "investment_attractiveness_scd.csv",
+    ],
+}
 
 
 def load_csv(name: str) -> Optional[pd.DataFrame]:
@@ -19,6 +50,55 @@ def load_csv(name: str) -> Optional[pd.DataFrame]:
     if not path.exists():
         return None
     return pd.read_csv(path)
+
+
+def load_manifest() -> Optional[dict[str, Any]]:
+    path = DATA / "data_manifest.json"
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def render_page_provenance(page: str, manifest: Optional[dict[str, Any]]) -> None:
+    """Every page: sourced vs illustrative + last modified from data_manifest.json."""
+    files = PAGE_ARTIFACTS.get(page, [])
+    with st.expander("**Data provenance** — sourced vs illustrative · manifest timestamps", expanded=False):
+        if manifest is None:
+            st.markdown(
+                "No `data/raw/data_manifest.json` yet. From the project root run:\n"
+                "`python src/data_collection/collect_all_data.py` then "
+                "`python src/models/market_analysis.py` so timestamps and kinds stay current."
+            )
+            return
+        st.markdown(
+            f"**Manifest last written (UTC):** `{manifest.get('last_manifest_write_utc', '—')}`  \n"
+            f"**Trigger:** `{manifest.get('trigger', '—')}`"
+        )
+        if not files:
+            st.caption(
+                "This page is **Roadmap** / placeholder only — no registered CSVs. "
+                "Nothing to list in the manifest table."
+            )
+            return
+        arts = manifest.get("artifacts", {})
+        rows: list[dict[str, str]] = []
+        for fname in files:
+            a = arts.get(fname, {})
+            kind = a.get("kind", "")
+            present = a.get("present", False)
+            if present:
+                lm = a.get("last_modified_utc", "—")
+            else:
+                lm = "— (file not on disk)"
+            rows.append(
+                {
+                    "File": fname,
+                    "Sourced vs illustrative": kind_display_label(kind) if kind else "—",
+                    "Last updated (UTC)": lm,
+                    "Summary": (a.get("source_summary") or "")[:200],
+                }
+            )
+        st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
 
 st.set_page_config(
@@ -43,14 +123,26 @@ st.markdown('<p class="main-header">🧬 Sickle Cell Investment Analysis Platfor
 st.markdown(
     """
 <div style='background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 5px; padding: 15px; margin-bottom: 20px;'>
-    <strong>⚠️ LEGAL DISCLAIMER:</strong> This platform is for educational and research purposes only.
-    All data is publicly available and delayed. This is NOT investment advice.
-    No patient-level or private health data is used. Attractiveness scores in sample data are illustrative only.
+    <strong>⚠️ Disclaimer (non-advisory):</strong> Educational and research use only.
+    <strong>Not investment advice, not medical advice.</strong> Public and delayed sources only; no patient-level data in this app.
+    <br/><br/>
+    <strong>Demo / illustrative only:</strong> Any attractiveness scores, “Strong Buy / Hold / Sell” labels, TAM blocks,
+    VC tables, and similar outputs are <strong>software demo weights</strong>—not ratings, forecasts, or recommendations.
+    <br/><br/>
+    <strong>Population &amp; burden charts:</strong> CDC-style series in <code>cdc_sickle_cell_data.csv</code> are
+    <strong>illustrative placeholders</strong> until you wire cited primary sources (e.g. agency surveillance); see README
+    “Equity, population data, and compliance.”
+    <br/><br/>
+    <strong>Health equity:</strong> Keep population-health statistics analytically separate from market framing; do not treat communities as a trade thesis.
 </div>
 """,
     unsafe_allow_html=True,
 )
 
+st.sidebar.markdown(
+    "**Reminder:** all scores and population curves here are **demo / illustrative** — not advice. "
+    "See top banner and README."
+)
 st.sidebar.header("Navigation")
 page = st.sidebar.radio(
     "Select Page",
@@ -66,6 +158,9 @@ page = st.sidebar.radio(
     ],
 )
 
+_manifest = load_manifest()
+render_page_provenance(page, _manifest)
+
 missing = not DATA.exists() or not any(DATA.glob("*.csv"))
 if missing:
     st.warning(
@@ -75,6 +170,10 @@ if missing:
 
 if page == "Overview":
     st.subheader("Overview")
+    st.caption(
+        "Pipeline table and probability-of-success values below are **illustrative / demo** for UI testing—not "
+        "clinical or investment recommendations."
+    )
     pipeline = load_csv("gene_therapy_pipeline_scd.csv")
     if pipeline is not None:
         st.dataframe(pipeline, use_container_width=True)
@@ -83,7 +182,7 @@ if page == "Overview":
             x="company",
             y="probability_of_success",
             color="technology",
-            title="Illustrative POS by company",
+            title="Illustrative POS by company (demo)",
         )
         st.plotly_chart(fig, use_container_width=True)
     else:
@@ -91,35 +190,50 @@ if page == "Overview":
 
 elif page == "Health Trends":
     st.subheader("Health trends")
+    st.info(
+        "**Population / burden (illustrative):** The CDC-named CSV here is generated in code as a placeholder "
+        "time series, not a live CDC extract. **Planned work:** replace with primary-sourced pulls and cite extract "
+        "date and methodology in your workflow. See README → Equity, population data, and compliance."
+    )
     cdc = load_csv("cdc_sickle_cell_data.csv")
     trials = load_csv("clinical_trials_scd.csv")
     if cdc is not None:
         cdc = cdc.copy()
         cdc["date"] = pd.to_datetime(cdc["date"])
+        st.caption("scd_prevalence_us & clinical_trials_active — illustrative until cited sources are wired.")
         st.line_chart(cdc.set_index("date")[["scd_prevalence_us", "clinical_trials_active"]])
     if trials is not None and not trials.empty:
+        st.caption("Trials from ClinicalTrials.gov (public API); verify query and API version for your use case.")
         st.dataframe(trials.head(20), use_container_width=True)
 
 elif page == "Stock Analysis":
     st.subheader("Stock analysis")
+    st.caption(
+        "Prices and fundamentals are **Sourced (public, delayed vendor)** via Yahoo Finance / yfinance when files exist. "
+        "See provenance expander above."
+    )
     fin = load_csv("company_financials.csv")
     if fin is not None:
         st.dataframe(fin, use_container_width=True)
 
 elif page == "ML Models":
     st.subheader("ML models")
+    st.caption("**Roadmap:** no fitted models or training CSVs wired to this page yet.")
     st.write("Placeholder: add regression / time-series notebooks and wire results here.")
 
 elif page == "Quant Strategy":
     st.subheader("Quant strategy")
+    st.caption("**Roadmap:** no factor / backtest outputs registered in `data_manifest` for this page yet.")
     st.write("Placeholder: factor models, backtests (e.g. Backtrader), Monte Carlo.")
 
 elif page == "Portfolio Optimization":
     st.subheader("Portfolio optimization")
+    st.caption("**Roadmap:** no portfolio optimization outputs on disk yet.")
     st.write("Placeholder: efficient frontier and risk metrics.")
 
 elif page == "Investment Stages":
     st.subheader("Investment stages")
+    st.caption("Private-market tables below are **Illustrative** (see manifest). Not licensed deal data.")
     vc = load_csv("vc_deals_scd.csv")
     growth = load_csv("growth_equity_deals_scd.csv")
     if vc is not None and growth is not None:
@@ -130,9 +244,16 @@ elif page == "Investment Stages":
 
 elif page == "Market Analysis":
     st.subheader("Market analysis")
+    st.warning(
+        "**Demo / non-advisory:** Market size and competitive tables below are illustrative scaffolding. "
+        "**Investment attractiveness scores and buy/hold/sell labels are demo weights only**—not research, "
+        "not ratings, not recommendations."
+    )
     mkt = load_csv("market_size_scd.csv")
     attr = load_csv("investment_attractiveness_scd.csv")
     if mkt is not None:
+        st.caption("market_size_scd.csv — illustrative TAM-style rows unless you replace with sourced estimates.")
         st.dataframe(mkt, use_container_width=True)
     if attr is not None:
+        st.caption("investment_attractiveness_scd.csv — demo scores only; do not use for real decisions.")
         st.dataframe(attr, use_container_width=True)

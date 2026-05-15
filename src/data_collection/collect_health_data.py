@@ -72,6 +72,9 @@ class SickleCellHealthDataCollector:
         df = pd.DataFrame(cdc_data)
         df.to_csv(f"{self.data_dir}/cdc_sickle_cell_data.csv", index=False)
         print(f"✓ CDC data saved to {self.data_dir}/cdc_sickle_cell_data.csv")
+        print(
+            "  Note: prevalence-style columns are illustrative placeholders until wired to cited agency/surveillance sources."
+        )
         return df
 
     def collect_clinical_trials_data(self, max_trials: int = 50):
