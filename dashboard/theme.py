@@ -51,14 +51,31 @@ html, body, [data-testid="stAppViewContainer"] {
     -webkit-backdrop-filter: blur(12px);
 }
 .glass-disclaimer {
-    background: rgba(251, 191, 36, 0.12);
-    border: 1px solid rgba(251, 191, 36, 0.35);
+    background: #fef3c7;
+    border: 1px solid #d97706;
+    border-left: 4px solid #b45309;
     border-radius: 12px;
-    padding: 14px 18px;
+    padding: 16px 20px;
     margin-bottom: 1.25rem;
-    color: #fde68a;
-    font-size: 0.88rem;
-    line-height: 1.5;
+    color: #1c1917 !important;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.28);
+}
+.glass-disclaimer strong {
+    color: #451a03 !important;
+    font-weight: 700;
+}
+.glass-disclaimer code {
+    color: #78350f !important;
+    background: #fde68a;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.88em;
+}
+.glass-disclaimer a {
+    color: #92400e !important;
+    text-decoration: underline;
 }
 .glass-zone-label {
     display: inline-block;
