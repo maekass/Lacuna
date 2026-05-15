@@ -82,12 +82,12 @@ class IndicationView:
         icd = metrics.get("icd10_codes") or []
         icd_primary = icd[0] if icd else "—"
         return cls(
-            disease_id=f"orpha:{metrics['orpha_code']}",
+            disease_id=str(metrics.get("disease_id", f"orpha:{metrics.get('orpha_code', 0)}")),
             display_name=str(metrics.get("preferred_term", "Unknown disorder")),
             clinical_trials_query=str(metrics.get("clinical_trials_query", metrics.get("preferred_term", ""))),
             disparity_note=(
-                "Ad-hoc Orphanet lookup — verify burden and equity context with primary literature; "
-                "not pre-loaded in the focus registry."
+                "Ad-hoc public lookup (Orphanet and/or CDC NNDSS) — verify burden and equity context "
+                "with primary literature; not pre-loaded in the focus registry."
             ),
             mesh_id="—",
             mesh_label="—",
@@ -105,7 +105,15 @@ def is_orpha_disease_id(disease_id: str) -> bool:
     return disease_id.startswith("orpha:")
 
 
+def is_cdc_disease_id(disease_id: str) -> bool:
+    return disease_id.startswith("cdc:")
+
+
+def is_ad_hoc_disease_id(disease_id: str) -> bool:
+    return is_orpha_disease_id(disease_id) or is_cdc_disease_id(disease_id)
+
+
 def registry_disease_id(disease_id: str) -> str:
-    if is_orpha_disease_id(disease_id):
+    if is_ad_hoc_disease_id(disease_id):
         return "scd"
     return disease_id
