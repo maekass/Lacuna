@@ -10,6 +10,7 @@ def test_focus_diseases_order() -> None:
 def test_sle_ontology_codes() -> None:
     sle = get_disease("sle")
     assert sle.mesh_id == "D008180"
+    assert sle.orpha_code == 536
     assert sle.trials_artifact == "clinical_trials_sle.csv"
 
 

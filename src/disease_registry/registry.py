@@ -22,6 +22,7 @@ class DiseaseSpec:
     icd10_code: str
     icd10_label: str
     prevalence_us: int
+    orpha_code: int
     search_terms: tuple[str, ...]
     companies: dict[str, str]
     openfda_query: str
@@ -73,6 +74,7 @@ DISEASES: dict[str, DiseaseSpec] = {
         icd10_code="D57.1",
         icd10_label="Sickle-cell disease without crisis",
         prevalence_us=118_000,
+        orpha_code=232,
         search_terms=("sickle cell disease", "sickle cell anemia", "hemoglobin S"),
         companies={
             "CRISPR Therapeutics": "CRSP",
@@ -104,6 +106,7 @@ DISEASES: dict[str, DiseaseSpec] = {
         icd10_code="M32.10",
         icd10_label="Systemic lupus erythematosus, organ/system involvement unspecified",
         prevalence_us=200_000,
+        orpha_code=536,
         search_terms=("systemic lupus erythematosus", "lupus", "SLE"),
         companies={
             "GSK": "GSK",
@@ -133,6 +136,7 @@ DISEASES: dict[str, DiseaseSpec] = {
         icd10_code="D86.9",
         icd10_label="Sarcoidosis, unspecified",
         prevalence_us=150_000,
+        orpha_code=797,
         search_terms=("sarcoidosis", "pulmonary sarcoidosis"),
         companies={
             "Novartis": "NVS",

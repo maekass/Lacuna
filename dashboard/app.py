@@ -163,16 +163,16 @@ def render_health_trends_charts(
         go.Scatter(
             x=epi_df["date"],
             y=epi_df[prev_col],
-            name=f"{spec.display_name} prevalence (illustrative)",
+            name=f"{spec.display_name} prevalence (U.S. estimate)",
             mode="lines+markers",
             line=dict(width=2),
             marker=dict(size=4),
         )
     )
     fig_prev.update_layout(
-        title=f"{spec.display_name} — illustrative U.S. burden (not a live agency extract)",
+        title=f"{spec.display_name} — U.S. prevalence estimate (Orphanet rate × Census population)",
         xaxis_title="Date",
-        yaxis_title="Estimated prevalence (illustrative)",
+        yaxis_title="Estimated prevalence (persons)",
         height=360,
         margin=dict(t=50, b=40),
         yaxis=dict(tickformat=",.0f"),
@@ -371,9 +371,9 @@ st.markdown(
     <strong>Demo / illustrative only:</strong> Any attractiveness scores, “Strong Buy / Hold / Sell” labels, TAM blocks,
     VC tables, and similar outputs are <strong>software demo weights</strong>—not ratings, forecasts, or recommendations.
     <br/><br/>
-    <strong>Population &amp; burden charts:</strong> CDC-style series in <code>cdc_sickle_cell_data.csv</code> are
-    <strong>illustrative placeholders</strong> until you wire cited primary sources (e.g. agency surveillance); see README
-    “Equity, population data, and compliance.”
+    <strong>Population &amp; burden charts:</strong> Epidemiology CSVs combine <strong>Orphanet</strong> U.S. prevalence rates
+    (CC BY 4.0) with <strong>CDC-cited</strong> sickle cell birth anchors where noted; trial activity reflects the
+    ClinicalTrials.gov sample in this repo—not total global volume.
     <br/><br/>
     <strong>Health equity:</strong> Keep population-health statistics analytically separate from market framing; do not treat communities as a trade thesis.
 </div>
@@ -481,7 +481,8 @@ elif page == "Health Trends":
         "Burden, trial activity, and ontology-anchored clinical development data",
     )
     equity_context_card(
-        f"{_spec.disparity_note} Burden series are illustrative until wired to cited primary sources."
+        f"{_spec.disparity_note} Burden series use Orphanet U.S. point-prevalence rates (CC BY 4.0) "
+        "and CDC-cited SCD birth metrics where applicable; see provenance for pull details."
     )
     epi = load_csv(_spec.epidemiology_artifact)
     trials = load_csv(_spec.trials_artifact)
