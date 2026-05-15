@@ -25,6 +25,67 @@ def _normalize_legacy_phase(raw: Any) -> str:
     return str(raw).strip()
 
 
+# Representative sickle cell trials for offline / API-failure demos (public NCT IDs).
+_FALLBACK_CLINICAL_TRIALS: list[dict[str, str]] = [
+    {
+        "nct_id": "NCT03745287",
+        "title": "A Study of CTX001 in Severe Sickle Cell Disease",
+        "status": "COMPLETED",
+        "start_date": "2018-11-19",
+        "phase": "Phase 1/2",
+    },
+    {
+        "nct_id": "NCT04208592",
+        "title": "Study of Voxelotor in Pediatric Participants With Sickle Cell Disease",
+        "status": "COMPLETED",
+        "start_date": "2019-12-18",
+        "phase": "Phase 2",
+    },
+    {
+        "nct_id": "NCT01895361",
+        "title": "Safety and Efficacy Study of Crizanlizumab in Sickle Cell Disease",
+        "status": "COMPLETED",
+        "start_date": "2013-11",
+        "phase": "Phase 2",
+    },
+    {
+        "nct_id": "NCT03040908",
+        "title": "New Hemolysis Parameters in Sickle Cell Disease",
+        "status": "UNKNOWN",
+        "start_date": "2019-09-01",
+        "phase": "",
+    },
+    {
+        "nct_id": "NCT04335721",
+        "title": "Voxelotor in Sickle Cell Anemia Patients at Risk for CKD Progression",
+        "status": "TERMINATED",
+        "start_date": "2021-03-16",
+        "phase": "Phase 1; Phase 2",
+    },
+    {
+        "nct_id": "NCT00834899",
+        "title": "Safety Study of Eptifibatide in Patients With Sickle Cell Disease",
+        "status": "TERMINATED",
+        "start_date": "2009-01",
+        "phase": "Phase 1; Phase 2",
+    },
+    {
+        "nct_id": "NCT00445978",
+        "title": "Phase 2 Study of 6R-BH4 in Subjects With Sickle Cell Disease",
+        "status": "COMPLETED",
+        "start_date": "2007-05",
+        "phase": "Phase 2",
+    },
+    {
+        "nct_id": "NCT01685515",
+        "title": "Study of Decitabine and THU in Patients With Sickle Cell Disease",
+        "status": "COMPLETED",
+        "start_date": "2012-08",
+        "phase": "Phase 1",
+    },
+]
+
+
 def _format_v2_phases(phases: Any) -> str:
     """Turn v2 API `designModule.phases` enums into readable labels."""
     if not phases:
@@ -159,9 +220,13 @@ class SickleCellHealthDataCollector:
             except Exception as e:
                 print(f"✗ ClinicalTrials.gov v2 request failed: {e}")
 
-        df = pd.DataFrame(trials) if trials else pd.DataFrame(
-            columns=["nct_id", "title", "status", "start_date", "phase"]
-        )
+        if not trials:
+            trials = _FALLBACK_CLINICAL_TRIALS
+            print(
+                f"  Using {len(trials)} bundled fallback trial rows (API unavailable or empty)."
+            )
+
+        df = pd.DataFrame(trials)
         df.to_csv(f"{self.data_dir}/clinical_trials_scd.csv", index=False)
         print(f"✓ Clinical trials data saved ({len(trials)} trials)")
         return df

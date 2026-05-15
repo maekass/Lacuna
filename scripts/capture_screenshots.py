@@ -3,9 +3,17 @@ Capture wide-viewport screenshots of each Streamlit dashboard page.
 Run from project root with Streamlit already running on port 18501:
     python3 scripts/capture_screenshots.py
 """
+import sys
 import time
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 from playwright.sync_api import sync_playwright
+
+from scripts.playwright_browsers import ensure_chromium
 
 BASE_URL = "http://127.0.0.1:18501"
 OUT_DIR = Path(__file__).resolve().parent.parent / "docs" / "screenshots"
@@ -15,6 +23,7 @@ PAGES = [
     ("Overview",          "overview.png"),
     ("Health Trends",     "health-trends.png"),
     ("Stock Analysis",    "stock-analysis.png"),
+    ("ML Models",         "ml-models.png"),
     ("Investment Stages", "investment-stages.png"),
     ("Market Analysis",   "market-analysis.png"),
 ]
@@ -55,6 +64,7 @@ def select_page(page, label):
     time.sleep(2.5)   # wait for page content + charts
 
 def main():
+    ensure_chromium()
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         ctx = browser.new_context(viewport={"width": 1440, "height": 900})

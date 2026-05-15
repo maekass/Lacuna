@@ -17,15 +17,21 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from src.data_collection.bootstrap_data import data_is_present, run_full_pipeline
+from src.data_collection.bootstrap_data import data_is_present, run_full_pipeline, seed_demo_if_missing
 from src.data_collection.data_manifest import kind_display_label
+from src.data_collection.seed_demo_data import sync_ml_from_demo
+from src.models.ml_artifacts import ml_bundle_present
 
 DATA = ROOT / "data" / "raw"
+ML_DATA = ROOT / "data" / "processed"
+ML_MODELS = ROOT / "data" / "models"
 
 
 @st.cache_resource(show_spinner=False)
 def _bootstrap_data_cached() -> bool:
-    """Once per Cloud container: build gitignored CSVs from public APIs."""
+    """Once per Cloud container: seed bundled CSVs, then optional API refresh."""
+    if seed_demo_if_missing(DATA):
+        return True
     run_full_pipeline(DATA)
     return True
 
@@ -34,7 +40,11 @@ PAGE_ARTIFACTS: dict[str, list[str]] = {
     "Overview": ["gene_therapy_pipeline_scd.csv", "fda_approvals_scd.csv"],
     "Health Trends": ["cdc_sickle_cell_data.csv", "clinical_trials_scd.csv"],
     "Stock Analysis": ["stock_prices_companies.csv", "stock_prices_etfs.csv", "company_financials.csv"],
-    "ML Models": [],
+    "ML Models": [
+        "regression_training.csv",
+        "trial_success_training.csv",
+        "model_comparison.csv",
+    ],
     "Quant Strategy": [],
     "Portfolio Optimization": [],
     "Investment Stages": [
@@ -54,11 +64,29 @@ PAGE_ARTIFACTS: dict[str, list[str]] = {
 }
 
 
-def load_csv(name: str) -> Optional[pd.DataFrame]:
-    path = DATA / name
+def load_csv(name: str, base: Path | None = None) -> Optional[pd.DataFrame]:
+    path = (base or DATA) / name
     if not path.exists():
         return None
     return pd.read_csv(path)
+
+
+def load_ml_json(name: str) -> Optional[dict[str, Any]]:
+    path = ML_DATA / name
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _ml_artifacts_ready() -> bool:
+    """True when training CSVs exist under data/processed (tracked or synced from demo)."""
+    return (ML_DATA / "model_comparison.csv").is_file()
+
+
+@st.cache_resource(show_spinner=False)
+def _ensure_ml_artifacts_cached() -> bool:
+    sync_ml_from_demo()
+    return _ml_artifacts_ready() or ml_bundle_present(ROOT / "data" / "demo" / "ml")
 
 
 def load_manifest() -> Optional[dict[str, Any]]:
@@ -181,10 +209,36 @@ def render_page_provenance(page: str, manifest: Optional[dict[str, Any]]) -> Non
             f"**Trigger:** `{manifest.get('trigger', '—')}`"
         )
         if not files:
-            st.caption(
-                "This page is **Roadmap** / placeholder only — no registered CSVs. "
-                "Nothing to list in the manifest table."
-            )
+            if page == "ML Models":
+                ml_rows = [
+                    {
+                        "File": name,
+                        "Sourced vs illustrative": "Illustrative (demo training)",
+                        "Last updated (UTC)": "—",
+                        "Summary": "Fitted-model training matrix or metrics; see model_metrics.json.",
+                    }
+                    for name in (
+                        "regression_training.csv",
+                        "trial_success_training.csv",
+                        "model_comparison.csv",
+                        "model_metrics.json",
+                    )
+                    if (ML_DATA / name).is_file()
+                ]
+                if ml_rows:
+                    st.caption(
+                        "ML training CSVs live under `data/processed/`; fitted joblib files under `data/models/`."
+                    )
+                    st.dataframe(pd.DataFrame(ml_rows), use_container_width=True, hide_index=True)
+                else:
+                    st.caption(
+                        "No ML training files on disk. Run `python3 scripts/train_models.py` from the project root."
+                    )
+            else:
+                st.caption(
+                    "This page is **Roadmap** / placeholder only — no registered CSVs. "
+                    "Nothing to list in the manifest table."
+                )
             return
         arts = manifest.get("artifacts", {})
         rows: list[dict[str, str]] = []
@@ -265,20 +319,14 @@ page = st.sidebar.radio(
 )
 
 if not data_is_present(DATA):
-    with st.spinner(
-        "First visit: building demo datasets from public APIs (ClinicalTrials.gov, Yahoo Finance). "
-        "This can take 1–2 minutes on Streamlit Cloud…"
-    ):
+    with st.spinner("Loading demo datasets (tables and charts)…"):
         try:
             _bootstrap_data_cached()
-            st.success("Demo data ready. Charts and tables will load below.")
             st.rerun()
         except Exception as exc:
             st.error(
-                f"Could not generate data automatically: {exc}. "
-                "From the project root run `python3 src/data_collection/collect_all_data.py` and "
-                "`python3 src/models/market_analysis.py`, or use "
-                "[Codespaces](https://codespaces.new/maekass/sickle-cell-investment-analysis)."
+                f"Could not load data: {exc}. "
+                "From the project root run `python3 src/data_collection/collect_all_data.py`."
             )
 
 _manifest = load_manifest()
@@ -355,8 +403,85 @@ elif page == "Stock Analysis":
 
 elif page == "ML Models":
     st.subheader("ML models")
-    st.caption("**Roadmap:** no fitted models or training CSVs wired to this page yet.")
-    st.write("Placeholder: add regression / time-series notebooks and wire results here.")
+    st.caption(
+        "**Demo / non-advisory:** Regression uses illustrative health + delayed stock features; "
+        "trial-success classifiers train on **synthetic** multi-disease rows—not clinical predictions."
+    )
+    if not _ensure_ml_artifacts_cached():
+        st.warning(
+            "No fitted models found. From the project root run `python3 scripts/train_models.py` "
+            "(requires `data/raw` or `data/demo` CSVs)."
+        )
+    else:
+        metrics = load_ml_json("model_metrics.json")
+        comparison = load_csv("model_comparison.csv", ML_DATA)
+        reg_train = load_csv("regression_training.csv", ML_DATA)
+        trial_train = load_csv("trial_success_training.csv", ML_DATA)
+
+        if metrics:
+            st.markdown(f"**Last trained (UTC):** `{metrics.get('trained_at_utc', '—')}`")
+
+        if comparison is not None:
+            st.markdown("**Regression model comparison** (target: next-period stock return)")
+            st.dataframe(comparison, use_container_width=True, hide_index=True)
+            fig_cmp = px.bar(
+                comparison,
+                x="model",
+                y="R2",
+                title="Out-of-sample R² (demo — not investment signal)",
+                text="R2",
+            )
+            fig_cmp.update_traces(texttemplate="%{text:.3f}", textposition="outside")
+            st.plotly_chart(fig_cmp, use_container_width=True)
+
+        col_a, col_b = st.columns(2)
+        with col_a:
+            if reg_train is not None:
+                st.markdown("**Regression training matrix** (sample)")
+                st.dataframe(reg_train.head(12), use_container_width=True, hide_index=True)
+        with col_b:
+            if trial_train is not None:
+                st.markdown("**Trial-success training matrix** (sample)")
+                show_cols = [
+                    c
+                    for c in ["phase", "enrollment_log", "duration_months", "disease", "success"]
+                    if c in trial_train.columns
+                ]
+                st.dataframe(
+                    trial_train[show_cols].head(12), use_container_width=True, hide_index=True
+                )
+
+        if metrics and metrics.get("trial_success_cv_auc"):
+            st.markdown("**Trial-success CV AUC (synthetic training)**")
+            auc_rows = [
+                {"model": k, "auc_mean": round(v.get("auc_mean", 0), 3)}
+                for k, v in metrics["trial_success_cv_auc"].items()
+            ]
+            st.dataframe(pd.DataFrame(auc_rows), use_container_width=True, hide_index=True)
+
+        st.markdown("**Interactive trial-success demo**")
+        phase = st.slider("Phase", 1, 3, 2)
+        enrollment = st.number_input("Enrollment", 50, 3000, 200, step=50)
+        sponsor = st.selectbox("Sponsor type", ["biotech", "pharma", "academic"])
+        mechanism = st.selectbox(
+            "Mechanism",
+            ["Gene Editing", "Monoclonal Antibody", "Small Molecule", "Novel Mechanism"],
+        )
+        if st.button("Run ensemble prediction"):
+            from src.models.trial_success_predictor import TrialSuccessPredictor
+
+            pred = TrialSuccessPredictor()
+            pred.train(verbose=False)
+            out = pred.predict(
+                phase=phase,
+                enrollment=enrollment,
+                sponsor=sponsor,
+                mechanism=mechanism,
+                duration_months=36,
+                disease_name="Sickle Cell Disease",
+            )
+            st.metric("Success probability (demo)", f"{out['probability']:.1%}")
+            st.json(out)
 
 elif page == "Quant Strategy":
     st.subheader("Quant strategy")

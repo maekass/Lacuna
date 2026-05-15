@@ -1,0 +1,7 @@
+company,ticker,gene_therapy_name,technology,clinical_phase,target_mechanism,probability_of_success,estimated_cost
+CRISPR Therapeutics,CRSP,CTX001,CRISPR-Cas9,Phase 3,BCL11A disruption,0.8,1850000
+Vertex Pharmaceuticals,VRTX,CTX001,CRISPR-Cas9,Phase 3,BCL11A disruption,0.8,1850000
+Editas Medicine,EDIT,EDIT-301,CRISPR-Cas9,Phase 1/2,BCL11A disruption,0.45,1950000
+Intellia Therapeutics,NTLA,NTLA-2001,CRISPR-Cas9,Phase 1,BCL11A disruption,0.35,1750000
+Beam Therapeutics,BEAM,BEAM-101,Base Editing,Preclinical,Base editing,0.3,1200000
+Sangamo Therapeutics,SGMO,ST-400,ZFN,Phase 1/2,BCL11A repression,0.4,1800000

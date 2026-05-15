@@ -22,8 +22,7 @@ import sys
 import warnings
 warnings.filterwarnings('ignore')
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from data_collection.disease_config import DiseaseConfig
+from src.data_collection.disease_config import DiseaseConfig
 
 try:
     from xgboost import XGBClassifier

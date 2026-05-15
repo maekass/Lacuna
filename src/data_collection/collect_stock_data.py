@@ -5,9 +5,14 @@ All data from public sources (Yahoo Finance, SEC filings)
 """
 
 import os
+import shutil
+from pathlib import Path
 
 import pandas as pd
 import yfinance as yf
+
+ROOT = Path(__file__).resolve().parents[2]
+DEMO_DIR = ROOT / "data" / "demo"
 
 
 class SickleCellStockDataCollector:
@@ -58,6 +63,14 @@ class SickleCellStockDataCollector:
             combined.to_csv(f"{self.data_dir}/{filename}")
             print(f"✓ Stock prices saved to {self.data_dir}/{filename}")
             return combined
+
+        demo_src = DEMO_DIR / filename
+        dest = Path(self.data_dir) / filename
+        if demo_src.is_file():
+            shutil.copy2(demo_src, dest)
+            print(f"✓ Stock prices restored from demo bundle ({filename})")
+            return pd.read_csv(dest, header=[0, 1], index_col=0, parse_dates=True)
+
         print("✗ No stock data collected")
         return None
 

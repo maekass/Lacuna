@@ -1,0 +1,6 @@
+drug_name,company,approval_date,mechanism,phase,efficacy
+L-glutamine,Emmaus Life Sciences,2017-07-07,Antioxidant,Commercial,Reduces pain crises
+Voxelotor,Global Blood Therapeutics,2019-11-25,HbS polymerization inhibitor,Commercial,Increases hemoglobin
+Crizanlizumab,Novartis,2019-11-15,P-selectin inhibitor,Commercial,Reduces pain crises
+LentiGlobin,Bluebird Bio,2021-12-03,Lentiviral gene therapy,Phase 3,Functional cure potential
+CTX001,CRISPR Therapeutics,2023-11-16,CRISPR gene editing,Phase 3,Functional cure potential

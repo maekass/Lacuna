@@ -1,0 +1,9 @@
+company,technology,target_mechanism,precision_level,phase,estimated_cost_per_patient,probability_of_success
+CRISPR Therapeutics,CRISPR-Cas9,BCL11A disruption,High,Phase 3,1850000,0.8
+Vertex,CRISPR-Cas9,BCL11A disruption,High,Phase 3,1850000,0.8
+Bluebird Bio,Lentiviral,Beta-globin addition,Medium,Phase 3,2100000,0.75
+Editas Medicine,CRISPR-Cas9,BCL11A disruption,High,Phase 1/2,1950000,0.45
+Graphite Bio,Gene correction,Gene correction,Very High,Phase 1,2500000,0.35
+Intellia,CRISPR-Cas9,BCL11A disruption,High,Phase 1,1750000,0.4
+Beam Therapeutics,Base Editing,Base editing,High,Phase 1,1200000,0.5
+Mammoth Biosciences,CRISPR-Cas12,CRISPR diagnostics,High,Preclinical,500,0.6

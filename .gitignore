@@ -6,6 +6,15 @@ __pycache__/
 venv/
 .env
 *.csv
+!data/demo/
+!data/demo/**
+!data/demo/**/*.csv
+!data/processed/
+!data/processed/**
+!data/processed/**/*.csv
+!data/processed/**/*.json
+!data/models/
+!data/models/**
 !data/raw/.gitkeep
 data/raw/data_manifest.json
 .ipynb_checkpoints/

@@ -22,10 +22,12 @@ jobs:
         run: |
           python -m compileall -q \
             dashboard \
-            src/data_collection/data_manifest.py \
-            src/data_collection/collect_all_data.py \
-            src/data_collection/collect_health_data.py \
-            src/data_collection/collect_stock_data.py \
-            src/data_collection/collect_vc_growth_data.py \
+            src/data_collection \
+            scripts/debug_check.py \
+            scripts/playwright_browsers.py \
+            scripts/smoke_test_dashboard.py \
             src/models/market_analysis.py \
-            src/models/investment_stage_analysis.py
+            src/models/investment_stage_analysis.py \
+            src/models/ml_artifacts.py
+      - name: Verify bundled demo CSVs
+        run: python scripts/debug_check.py

@@ -82,7 +82,7 @@ Quantitative research tooling at the intersection of sickle cell disease epidemi
 1. **(Shipped)** Public health data analysis — prevalence-style series (illustrative sample), trials (**sourced** when ClinicalTrials.gov responds), FDA rows (illustrative), adoption fields in notebooks (**Roadmap**).
 2. **(Shipped)** Investment analysis — tickers and fundamentals via `yfinance` (**sourced public, delayed**); universe editable in code.
 3. **(Shipped)** Investment stage analysis — VC vs growth vs public **illustrative** CSVs; `investment_stage_analysis.py`.
-4. **(Roadmap)** ML and regression — notebooks and fitted pipelines not wired to the dashboard yet.
+4. **(Shipped)** ML models — fitted Ridge/Random Forest + trial-success classifiers; training CSVs in `data/processed/`, models in `data/models/`; **ML Models** dashboard page (`python3 scripts/train_models.py` to refresh).
 5. **(Roadmap)** Quant framework — placeholder package `src/quant_framework/` for factors, backtests, Monte Carlo.
 6. **(Shipped)** Market analysis — `market_analysis.py` writes TAM-style tables, pharma rows, deal flow, **demo** attractiveness scores (**illustrative**).
 
