@@ -1,9 +1,15 @@
-# Local + Streamlit Community Cloud — see:
+# Local + Streamlit Community Cloud
 # https://docs.streamlit.io/develop/concepts/configuration/options
-# https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/file-organization
 
 [server]
 headless = true
 
 [browser]
 gatherUsageStats = false
+
+[theme]
+primaryColor = "#818cf8"
+backgroundColor = "#070b14"
+secondaryBackgroundColor = "#0f1420"
+textColor = "#f1f5f9"
+font = "sans serif"
