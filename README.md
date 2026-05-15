@@ -1,5 +1,7 @@
 # Sickle Cell Disease Investment Analysis Platform
 
+**Disclaimer (read first):** For **educational and research use only**. This is **not investment advice**, **not medical advice**, and not a substitute for professional counsel. Demo scores and illustrative tables are for software testing, not recommendations.
+
 **On GitHub:** [Sickle-Cell-Investment-Analysis](https://github.com/maekass/Sickle-Cell-Investment-Analysis?tab=readme-ov-file) — README, source, and issues for this project.
 
 ## One-line pitch (cover letter / resume)
@@ -43,6 +45,10 @@ Python 3.9+, pandas, numpy, scikit-learn, optional TensorFlow/PyTorch later, yfi
 
 ```
 sickle_cell_investment_analysis/
+├── .github/workflows/
+│   └── ci.yml                    # install deps + compileall smoke (dashboard + pipeline)
+├── .streamlit/
+│   └── config.toml               # local / Community Cloud defaults (e.g. usage stats)
 ├── data/raw/
 ├── notebooks/
 ├── src/
@@ -51,7 +57,7 @@ sickle_cell_investment_analysis/
 │   │   ├── collect_health_data.py
 │   │   ├── collect_stock_data.py
 │   │   ├── collect_vc_growth_data.py
-│   │   └── data_manifest.py      # writes data_manifest.json (provenance)
+│   │   └── data_manifest.py    # writes data_manifest.json (provenance)
 │   ├── models/
 │   ├── quant_framework/
 │   └── visualization/
@@ -60,6 +66,8 @@ sickle_cell_investment_analysis/
 ├── requirements.txt
 └── README.md
 ```
+
+**Legacy / roadmap modules:** The tree may still include earlier multi-disease prototypes (for example `disease_config.py`, `health_market_analysis.py`, `trial_success_predictor.py`). They are **not** wired into `dashboard/app.py` or the `collect_*` + stage/market pipeline documented above.
 
 ## Getting started
 
@@ -80,7 +88,23 @@ streamlit run dashboard/app.py
 - **This project on GitHub:** [README & repository](https://github.com/maekass/Sickle-Cell-Investment-Analysis?tab=readme-ov-file)
 - **Dashboard UI code on GitHub:** [`dashboard/app.py` on `main`](https://github.com/maekass/Sickle-Cell-Investment-Analysis/blob/main/dashboard/app.py)
 
-ClinicalTrials.gov and Yahoo Finance require network access. If the legacy ClinicalTrials URL fails, update `collect_health_data.py` to the [current API](https://clinicaltrials.gov/data-api/api). Some tickers in the sample universe (e.g. delisted names) may return no price history from Yahoo Finance; refresh the ticker map as needed.
+## Deploy on Streamlit Community Cloud
+
+GitHub hosts **source**; the UI only runs publicly if you deploy it.
+
+1. Push this repo to GitHub (you are on [`maekass/Sickle-Cell-Investment-Analysis`](https://github.com/maekass/Sickle-Cell-Investment-Analysis)).
+2. Sign in at **[Streamlit Community Cloud](https://share.streamlit.io/)** with GitHub and **Create app**.
+3. Pick this repository and branch **`main`**.
+4. Set **Main file path** to **`dashboard/app.py`** (repository root stays the app root so `ROOT` / `data/raw` paths resolve correctly).
+5. Python version: **3.9+** (3.11 matches CI). Dependencies install from **`requirements.txt`** at the repo root.
+
+**Data on Cloud:** Generated **`*.csv`** and **`data/raw/data_manifest.json`** are **gitignored**, so a fresh Cloud deploy starts **without** local CSVs. The app still loads and shows provenance guidance; to populate charts in the cloud you would need a supported approach (for example run collectors in a separate job and sync artifacts, use [Secrets](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management) for API keys if you add paid feeds, or adjust your own policy on committing non-sensitive extracts). **After your first successful deploy**, add your public app URL here for visitors:
+
+- **Live app (Community Cloud):** _https://YOUR-APP.streamlit.app — replace after deploy_
+
+## Data sources and network
+
+ClinicalTrials.gov and Yahoo Finance require network access. **`collect_health_data.py`** tries the legacy ClinicalTrials.gov JSON endpoint first, then **falls back to the [v2 Studies API](https://clinicaltrials.gov/data-api/api)** if the legacy URL errors or returns nothing. Some tickers in the sample universe (e.g. delisted names) may return no price history from Yahoo Finance; refresh the ticker map as needed.
 
 ## What changed vs the original single-file spec
 
@@ -89,3 +113,4 @@ ClinicalTrials.gov and Yahoo Finance require network access. If the legacy Clini
 - Fixed **VC implied multiple** in `investment_stage_analysis.py` (uses `vc_deals`, not growth deals).
 - **`data_manifest.json`** (generated, gitignored) plus **per-page provenance** in the dashboard.
 - **`.gitignore`** ignores generated `*.csv` and `data/raw/data_manifest.json` while keeping `data/raw/.gitkeep`.
+- **GitHub ↔ local:** Merged unrelated histories once; canonical README and pipeline match the sickle cell Streamlit stack above; **Community Cloud** deploy steps and **`.streamlit/config.toml`** added; placeholder **Django** workflow removed in favor of **`ci.yml`** compile smoke.
