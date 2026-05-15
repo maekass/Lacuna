@@ -165,11 +165,11 @@ class VCGrowthEquityCollector:
         print("Collecting Public Equity Companies Data...")
 
         public_companies = {
-            "ticker": ["CRSP", "VRTX", "BLUE", "EDIT", "SGMO", "NTLA", "BEAM", "GILD", "PFE", "BMY", "JNJ", "MRK"],
+            "ticker": ["CRSP", "VRTX", "EMMS", "EDIT", "SGMO", "NTLA", "BEAM", "GILD", "PFE", "BMY", "JNJ", "MRK"],
             "company": [
                 "CRISPR Therapeutics",
                 "Vertex Pharmaceuticals",
-                "Bluebird Bio",
+                "Emmaus Life Sciences",
                 "Editas Medicine",
                 "Sangamo Therapeutics",
                 "Intellia Therapeutics",
@@ -180,7 +180,7 @@ class VCGrowthEquityCollector:
                 "Johnson & Johnson",
                 "Merck (MSD)",
             ],
-            "market_cap_millions": [5500, 85000, 450, 600, 350, 2500, 1800, 85000, 250000, 110000, 380000, 275000],
+            "market_cap_millions": [5500, 85000, 120, 600, 350, 2500, 1800, 85000, 250000, 110000, 380000, 275000],
             "sickle_cell_focus": [
                 "High",
                 "High",

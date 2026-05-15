@@ -15,11 +15,13 @@ class SickleCellStockDataCollector:
         self.data_dir = data_dir
         os.makedirs(data_dir, exist_ok=True)
 
+        # Tickers chosen for liquidity on Yahoo Finance; refresh as M&A / listings change
+        # (GBT / BLUE were removed after delisting / thin history — see README.)
         self.companies = {
             "CRISPR Therapeutics": "CRSP",
             "Vertex Pharmaceuticals": "VRTX",
-            "Global Blood Therapeutics": "GBT",
-            "Bluebird Bio": "BLUE",
+            "Beam Therapeutics": "BEAM",
+            "Intellia Therapeutics": "NTLA",
             "Editas Medicine": "EDIT",
             "Novartis": "NVS",
             "Pfizer": "PFE",
