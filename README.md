@@ -14,7 +14,7 @@ GitHub shows **source and screenshots** only. The interactive app runs when you 
 |--------|------------|
 | **Codespaces** (recommended) | [Create a codespace](https://codespaces.new/maekass/sickle-cell-investment-analysis) on `main`, then follow [Quick start (Codespaces)](#quick-start-codespaces) below. Open the app from **Ports → 8501 → Open in Browser** (`https://<your-codespace-name>-8501.app.github.dev`). |
 | **Local machine** | From repo root: `streamlit run dashboard/app.py` → [http://localhost:8501](http://localhost:8501) |
-| **Community Cloud** | Use the badge above or [Deploy on Streamlit Community Cloud](#deploy-on-streamlit-community-cloud-sharestreamlitio). Main file: `dashboard/app.py`, branch `main`, Python **3.11**. |
+| **Community Cloud** | **[Live app](https://sickle-cell-investment-analysis-dpu9ufwqnp6jy65sa5ljxd.streamlit.app)** — first load auto-builds demo CSVs (~1–2 min). Main file: `dashboard/app.py`, branch `main`, Python **3.11**. |
 
 ### Quick start (Codespaces)
 
@@ -191,7 +191,7 @@ Replace `YOUR-SUBDOMAIN` with the subdomain Streamlit assigns, then add to this 
 
 ### Data on Cloud (important)
 
-Generated **`*.csv`** and **`data/raw/data_manifest.json`** are **gitignored**, so a **fresh Cloud deploy has no price or trial CSVs**. The app **still runs** (banner, navigation, provenance text, warnings). To **fill charts on Cloud** you can, for example:
+Generated **`*.csv`** and **`data/raw/data_manifest.json`** are **gitignored**. On **first visit**, the dashboard runs **`bootstrap_data`** (collectors + stage/market scripts) so tables and charts populate automatically—allow **1–2 minutes** and refresh if needed. To **pre-build data elsewhere** you can, for example:
 
 - Run **`collect_all_data.py`** (and stage/market scripts) in **[GitHub Codespaces](https://codespaces.new/maekass/sickle-cell-investment-analysis)**, then **commit** selected outputs if your compliance policy allows; or  
 - Add a **scheduled job** elsewhere that writes into a bucket you read from the app; or  

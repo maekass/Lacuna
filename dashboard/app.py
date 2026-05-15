@@ -17,9 +17,17 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from src.data_collection.bootstrap_data import data_is_present, run_full_pipeline
 from src.data_collection.data_manifest import kind_display_label
 
 DATA = ROOT / "data" / "raw"
+
+
+@st.cache_resource(show_spinner=False)
+def _bootstrap_data_cached() -> bool:
+    """Once per Cloud container: build gitignored CSVs from public APIs."""
+    run_full_pipeline(DATA)
+    return True
 
 # Primary CSVs surfaced on each dashboard page (for manifest table)
 PAGE_ARTIFACTS: dict[str, list[str]] = {
@@ -256,17 +264,31 @@ page = st.sidebar.radio(
     ],
 )
 
+if not data_is_present(DATA):
+    with st.spinner(
+        "First visit: building demo datasets from public APIs (ClinicalTrials.gov, Yahoo Finance). "
+        "This can take 1–2 minutes on Streamlit Cloud…"
+    ):
+        try:
+            _bootstrap_data_cached()
+            st.success("Demo data ready. Charts and tables will load below.")
+            st.rerun()
+        except Exception as exc:
+            st.error(
+                f"Could not generate data automatically: {exc}. "
+                "From the project root run `python3 src/data_collection/collect_all_data.py` and "
+                "`python3 src/models/market_analysis.py`, or use "
+                "[Codespaces](https://codespaces.new/maekass/sickle-cell-investment-analysis)."
+            )
+
 _manifest = load_manifest()
 render_page_provenance(page, _manifest)
 
-missing = not DATA.exists() or not any(DATA.glob("*.csv"))
+missing = not data_is_present(DATA)
 if missing:
     st.warning(
-        f"No CSV data found under `{DATA}`. From the project root run: "
-        "`python src/data_collection/collect_all_data.py` and optionally `python src/models/market_analysis.py`. "
-        "**On [Streamlit Community Cloud](https://share.streamlit.io/)** (this repo’s default deploy), CSVs are "
-        "gitignored—run the same commands in **[Codespaces](https://codespaces.new/maekass/sickle-cell-investment-analysis)** "
-        "or locally, commit data only if your policy allows, then redeploy or refresh."
+        f"No CSV data under `{DATA}` yet. Use the spinner above on first load, or run collectors manually: "
+        "`python3 src/data_collection/collect_all_data.py` and `python3 src/models/market_analysis.py`."
     )
 
 if page == "Overview":
