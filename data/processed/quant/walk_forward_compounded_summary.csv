@@ -1,0 +1,5 @@
+disease_id,strategy,oos_total_return,oos_annual_return,oos_sharpe,oos_max_drawdown,n_oos_days
+all,Equal weight,0.1126,0.1141,0.248,-0.4469,624
+all,Registry-tilt demo,-0.3086,-0.0127,-0.062,-0.7411,624
+scd,Equal weight,0.1126,0.1141,0.248,-0.4469,624
+scd,Registry-tilt demo,0.1126,0.1141,0.248,-0.4469,624
