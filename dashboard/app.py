@@ -10,6 +10,8 @@ from typing import Any, Optional
 
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import streamlit as st
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -57,6 +59,49 @@ def load_manifest() -> Optional[dict[str, Any]]:
     if not path.exists():
         return None
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def render_health_trends_chart(cdc: pd.DataFrame) -> None:
+    """Prevalence (~100k) and trial counts (~50–100) need separate y-axes or one series is invisible."""
+    chart_df = cdc.copy()
+    chart_df["date"] = pd.to_datetime(chart_df["date"])
+    needed = ["scd_prevalence_us", "clinical_trials_active"]
+    missing_cols = [c for c in needed if c not in chart_df.columns]
+    if missing_cols:
+        st.error(f"CDC CSV is missing columns: {missing_cols}. Re-run `collect_all_data.py`.")
+        return
+
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+    fig.add_trace(
+        go.Scatter(
+            x=chart_df["date"],
+            y=chart_df["scd_prevalence_us"],
+            name="SCD prevalence (US, illustrative)",
+            mode="lines",
+            line=dict(color="#1f77b4"),
+        ),
+        secondary_y=False,
+    )
+    fig.add_trace(
+        go.Scatter(
+            x=chart_df["date"],
+            y=chart_df["clinical_trials_active"],
+            name="Active trials (illustrative)",
+            mode="lines",
+            line=dict(color="#ff7f0e"),
+        ),
+        secondary_y=True,
+    )
+    fig.update_layout(
+        title="Illustrative burden vs active trials (dual scale — not comparable units)",
+        legend=dict(orientation="h", yanchor="bottom", y=1.02),
+        height=420,
+        margin=dict(t=60),
+    )
+    fig.update_xaxes(title_text="Date")
+    fig.update_yaxes(title_text="Prevalence (illustrative)", secondary_y=False)
+    fig.update_yaxes(title_text="Active trials", secondary_y=True)
+    st.plotly_chart(fig, use_container_width=True)
 
 
 def render_page_provenance(page: str, manifest: Optional[dict[str, Any]]) -> None:
@@ -200,14 +245,32 @@ elif page == "Health Trends":
     )
     cdc = load_csv("cdc_sickle_cell_data.csv")
     trials = load_csv("clinical_trials_scd.csv")
-    if cdc is not None:
-        cdc = cdc.copy()
-        cdc["date"] = pd.to_datetime(cdc["date"])
-        st.caption("scd_prevalence_us & clinical_trials_active — illustrative until cited sources are wired.")
-        st.line_chart(cdc.set_index("date")[["scd_prevalence_us", "clinical_trials_active"]])
+
+    if cdc is None and (trials is None or trials.empty):
+        st.warning(
+            "No health data files found. From the project root run:\n"
+            "`python3 src/data_collection/collect_all_data.py`"
+        )
+    elif cdc is not None:
+        st.caption(
+            "Blue = illustrative US prevalence; orange = illustrative active trial count "
+            "(separate y-axes — values are not directly comparable)."
+        )
+        render_health_trends_chart(cdc)
+    else:
+        st.info("Run data collection to load `cdc_sickle_cell_data.csv` for the trend chart.")
+
     if trials is not None and not trials.empty:
-        st.caption("Trials from ClinicalTrials.gov (public API); verify query and API version for your use case.")
-        st.dataframe(trials.head(20), use_container_width=True)
+        st.subheader("Clinical trials (sourced when API responds)")
+        st.caption("From ClinicalTrials.gov (public API); verify query and API version for your use case.")
+        display_trials = trials.copy()
+        if "start_date" in display_trials.columns:
+            display_trials["start_date"] = pd.to_datetime(
+                display_trials["start_date"], errors="coerce"
+            )
+        st.dataframe(display_trials.head(20), use_container_width=True, hide_index=True)
+    elif trials is not None:
+        st.info("Clinical trials file exists but has no rows. Re-run `collect_all_data.py` with network access.")
 
 elif page == "Stock Analysis":
     st.subheader("Stock analysis")
