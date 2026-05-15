@@ -350,7 +350,7 @@ def render_page_provenance(
 
 st.set_page_config(
     page_title="Immunology Investment Dashboard",
-    page_icon="🧬",
+    page_icon=":material/analytics:",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -358,13 +358,14 @@ st.set_page_config(
 apply_glass_theme()
 glass_hero(
     "Immunology Investment Intelligence",
-    "Quantitative research across SCD, SLE, and sarcoidosis — epidemiology, pipeline, and portfolio analytics with full data provenance.",
+    "Quantitative analysis across sickle cell disease, systemic lupus erythematosus, and sarcoidosis. "
+    "Epidemiology, development pipeline, and portfolio views with documented data provenance.",
 )
 
 st.markdown(
     """
 <div class='glass-disclaimer'>
-    <strong>⚠️ Disclaimer (non-advisory):</strong> Educational and research use only.
+    <strong>Notice (non-advisory):</strong> Educational and research use only.
     <strong>Not investment advice, not medical advice.</strong> Public and delayed sources only; no patient-level data in this app.
     <br/><br/>
     <strong>Demo / illustrative only:</strong> Any attractiveness scores, “Strong Buy / Hold / Sell” labels, TAM blocks,
@@ -382,7 +383,7 @@ st.markdown(
 
 sidebar_brand()
 st.sidebar.markdown(
-    '<p style="font-size:0.8rem;color:#64748b;margin:0 0 1rem;">Demo data only — not investment or medical advice.</p>',
+    '<p style="font-size:0.8rem;color:#5C6B73;margin:0 0 1rem;">Demonstration data. Not investment or medical advice.</p>',
     unsafe_allow_html=True,
 )
 st.sidebar.header("Indication")
@@ -396,7 +397,7 @@ disease_id = st.sidebar.selectbox(
 _spec = get_disease(disease_id)
 st.sidebar.caption(_spec.disparity_note)
 st.sidebar.header("Navigation")
-st.sidebar.caption("**Epidemiology** · **Pipeline** · **Portfolio** analytics zones")
+st.sidebar.caption("Epidemiology · Pipeline · Portfolio")
 page = st.sidebar.radio(
     "Select Page",
     [
