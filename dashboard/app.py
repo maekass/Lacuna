@@ -265,7 +265,7 @@ if missing:
         f"No CSV data found under `{DATA}`. From the project root run: "
         "`python src/data_collection/collect_all_data.py` and optionally `python src/models/market_analysis.py`. "
         "**On [Streamlit Community Cloud](https://share.streamlit.io/)** (this repo’s default deploy), CSVs are "
-        "gitignored—run the same commands in **[Codespaces](https://codespaces.new/maekass/Sickle-Cell-Investment-Analysis)** "
+        "gitignored—run the same commands in **[Codespaces](https://codespaces.new/maekass/sickle-cell-investment-analysis)** "
         "or locally, commit data only if your policy allows, then redeploy or refresh."
     )
 

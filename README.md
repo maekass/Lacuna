@@ -2,23 +2,23 @@
 
 > **Disclaimer:** For **educational and research use only**. This is **not investment advice**, **not medical advice**, and not a substitute for professional counsel. Demo scores and illustrative tables are for software testing only—not recommendations.
 
-**Repository:** [maekass/Sickle-Cell-Investment-Analysis](https://github.com/maekass/Sickle-Cell-Investment-Analysis) · UI entrypoint: [`dashboard/app.py`](dashboard/app.py)
+**Repository:** [maekass/sickle-cell-investment-analysis](https://github.com/maekass/sickle-cell-investment-analysis) · UI entrypoint: [`dashboard/app.py`](dashboard/app.py)
 
 ## Run the Streamlit dashboard
 
 GitHub shows **source and screenshots** only. The interactive app runs when you start Streamlit **locally**, in **GitHub Codespaces**, or on **[Streamlit Community Cloud](https://share.streamlit.io/)**.
 
-[![Deploy on Streamlit Community Cloud](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=https://github.com/maekass/Sickle-Cell-Investment-Analysis&branch=main&mainPath=dashboard%2Fapp.py)
+[![Deploy on Streamlit Community Cloud](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=https://github.com/maekass/sickle-cell-investment-analysis&branch=main&mainPath=dashboard%2Fapp.py)
 
 | Where | What to do |
 |--------|------------|
-| **Codespaces** (recommended) | [Create a codespace](https://codespaces.new/maekass/Sickle-Cell-Investment-Analysis) on `main`, then follow [Quick start (Codespaces)](#quick-start-codespaces) below. Open the app from **Ports → 8501 → Open in Browser** (`https://<your-codespace-name>-8501.app.github.dev`). |
+| **Codespaces** (recommended) | [Create a codespace](https://codespaces.new/maekass/sickle-cell-investment-analysis) on `main`, then follow [Quick start (Codespaces)](#quick-start-codespaces) below. Open the app from **Ports → 8501 → Open in Browser** (`https://<your-codespace-name>-8501.app.github.dev`). |
 | **Local machine** | From repo root: `streamlit run dashboard/app.py` → [http://localhost:8501](http://localhost:8501) |
 | **Community Cloud** | Use the badge above or [Deploy on Streamlit Community Cloud](#deploy-on-streamlit-community-cloud-sharestreamlitio). Main file: `dashboard/app.py`, branch `main`, Python **3.11**. |
 
 ### Quick start (Codespaces)
 
-1. [Open in GitHub Codespaces](https://codespaces.new/maekass/Sickle-Cell-Investment-Analysis) (or [full create URL](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=maekass%2FSickle-Cell-Investment-Analysis)).
+1. [Open in GitHub Codespaces](https://codespaces.new/maekass/sickle-cell-investment-analysis) (or [full create URL](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=maekass%2Fsickle-cell-investment-analysis)).
 2. Wait for [`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json) to install `requirements.txt` and forward port **8501**.
 3. In the terminal at the **repository root** (optional data refresh, then Streamlit):
 
@@ -156,8 +156,8 @@ streamlit run dashboard/app.py
 
 **Open the dashboard:** after the command starts, use **[http://localhost:8501](http://localhost:8501)** (Streamlit’s default port). If you changed the port, use the URL Streamlit prints in the terminal.
 
-- **This project on GitHub:** [README & repository](https://github.com/maekass/Sickle-Cell-Investment-Analysis?tab=readme-ov-file)
-- **Dashboard UI code on GitHub:** [`dashboard/app.py` on `main`](https://github.com/maekass/Sickle-Cell-Investment-Analysis/blob/main/dashboard/app.py)
+- **This project on GitHub:** [README & repository](https://github.com/maekass/sickle-cell-investment-analysis?tab=readme-ov-file)
+- **Dashboard UI code on GitHub:** [`dashboard/app.py` on `main`](https://github.com/maekass/sickle-cell-investment-analysis/blob/main/dashboard/app.py)
 
 ## Deploy on Streamlit Community Cloud ([share.streamlit.io](https://share.streamlit.io/))
 
@@ -165,11 +165,11 @@ This repo is **organized for [Community Cloud](https://docs.streamlit.io/deploy/
 
 ### One-time setup
 
-1. **GitHub:** Ensure [`maekass/Sickle-Cell-Investment-Analysis`](https://github.com/maekass/Sickle-Cell-Investment-Analysis) is pushed and that you have **admin or write** access.
+1. **GitHub:** Ensure [`maekass/sickle-cell-investment-analysis`](https://github.com/maekass/sickle-cell-investment-analysis) is pushed and that you have **admin or write** access.
 2. **Streamlit account:** Open **[https://share.streamlit.io/](https://share.streamlit.io/)** and sign in (GitHub is the usual identity).
 3. **Connect GitHub to Streamlit:** Grant the Streamlit GitHub App access to this repository when prompted ([connect GitHub](https://docs.streamlit.io/deploy/streamlit-community-cloud/get-started/connect-your-github-account)).
 4. **Create app:** In your workspace, click **Create app** (upper right) → **Deploy a public app from GitHub** (or your workspace’s equivalent).
-5. **Repository:** `maekass/Sickle-Cell-Investment-Analysis` — **Branch:** `main`.
+5. **Repository:** `maekass/sickle-cell-investment-analysis` — **Branch:** `main`.
 6. **Main file path:** `dashboard/app.py` (use forward slashes; do **not** set a custom root that breaks `ROOT` in code).
 7. **Python:** In **Advanced settings**, choose **3.11** (matches CI and `.devcontainer`).
 8. **Deploy** and wait for the build. If it fails, open **Manage app → Logs** and fix missing dependencies in `requirements.txt`.
@@ -193,7 +193,7 @@ Replace `YOUR-SUBDOMAIN` with the subdomain Streamlit assigns, then add to this 
 
 Generated **`*.csv`** and **`data/raw/data_manifest.json`** are **gitignored**, so a **fresh Cloud deploy has no price or trial CSVs**. The app **still runs** (banner, navigation, provenance text, warnings). To **fill charts on Cloud** you can, for example:
 
-- Run **`collect_all_data.py`** (and stage/market scripts) in **[GitHub Codespaces](https://codespaces.new/maekass/Sickle-Cell-Investment-Analysis)**, then **commit** selected outputs if your compliance policy allows; or  
+- Run **`collect_all_data.py`** (and stage/market scripts) in **[GitHub Codespaces](https://codespaces.new/maekass/sickle-cell-investment-analysis)**, then **commit** selected outputs if your compliance policy allows; or  
 - Add a **scheduled job** elsewhere that writes into a bucket you read from the app; or  
 - Use **[Secrets](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management)** for API keys and extend collectors (not included by default).
 
