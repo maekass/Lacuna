@@ -77,6 +77,54 @@ SCHEMAS: dict[str, dict[str, Any]] = {
     },
 }
 
+_TRIALS_SCHEMA = {
+    "required": ["nct_id", "title", "status", "start_date", "phase"],
+    "optional": [
+        "condition_mesh_id",
+        "condition_mesh_label",
+        "condition_snomed_id",
+        "condition_snomed_label",
+        "condition_icd10_code",
+        "condition_icd10_label",
+        "indication_disambiguation",
+        "indication_query",
+        "disease_id",
+    ],
+    "dtypes": {},
+}
+_FDA_SCHEMA = {
+    "required": ["drug_name", "company", "approval_date", "mechanism", "phase", "efficacy"],
+    "optional": ["moa_mesh_id", "moa_mesh_label", "indication_mesh_id", "disease_id"],
+    "dtypes": {},
+}
+_EPI_SCHEMA = {
+    "required": ["date", "prevalence_us", "clinical_trials_active", "new_treatments_approved"],
+    "optional": ["disease_id"],
+    "dtypes": {
+        "prevalence_us": "numeric",
+        "clinical_trials_active": "numeric",
+        "new_treatments_approved": "numeric",
+    },
+}
+_PIPELINE_GENERIC = {
+    "required": [
+        "company",
+        "ticker",
+        "clinical_phase",
+        "target_mechanism",
+        "probability_of_success",
+        "estimated_cost",
+    ],
+    "optional": ["asset_name", "gene_therapy_name", "technology", "disease_id"],
+    "dtypes": {"probability_of_success": "numeric", "estimated_cost": "numeric"},
+}
+
+for _did in ("sle", "sarc"):
+    SCHEMAS[f"clinical_trials_{_did}.csv"] = dict(_TRIALS_SCHEMA)
+    SCHEMAS[f"fda_approvals_{_did}.csv"] = dict(_FDA_SCHEMA)
+    SCHEMAS[f"epidemiology_{_did}.csv"] = dict(_EPI_SCHEMA)
+    SCHEMAS[f"pipeline_{_did}.csv"] = dict(_PIPELINE_GENERIC)
+
 
 class SchemaValidationError(ValueError):
     """Raised when a DataFrame fails schema checks before CSV write."""

@@ -14,16 +14,10 @@ import pandas as pd
 
 from src.data_collection.csv_schemas import validate_dataframe
 from src.data_collection.data_manifest import ARTIFACT_REGISTRY
+from src.disease_registry import all_artifact_names
 from src.ontology.enrich import enrich_artifact
 
-_ONTOLOGY_ARTIFACTS = frozenset(
-    {
-        "clinical_trials_scd.csv",
-        "gene_therapy_pipeline_scd.csv",
-        "fda_approvals_scd.csv",
-        "cdc_sickle_cell_data.csv",
-    }
-)
+_ONTOLOGY_ARTIFACTS = frozenset(all_artifact_names())
 
 ROOT = Path(__file__).resolve().parents[2]
 DEMO_DIR = ROOT / "data" / "demo"

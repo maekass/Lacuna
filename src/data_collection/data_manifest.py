@@ -30,6 +30,38 @@ ARTIFACT_REGISTRY: dict[str, dict[str, str]] = {
         "kind": "illustrative",
         "summary": "Illustrative pipeline table for demos; verify against company filings and trials.",
     },
+    "clinical_trials_sle.csv": {
+        "kind": "sourced_public",
+        "summary": "ClinicalTrials.gov query: systemic lupus erythematosus.",
+    },
+    "clinical_trials_sarc.csv": {
+        "kind": "sourced_public",
+        "summary": "ClinicalTrials.gov query: sarcoidosis.",
+    },
+    "epidemiology_sle.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative SLE burden time series; disproportionate impact among Black women (cite primary sources).",
+    },
+    "epidemiology_sarc.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative sarcoidosis burden time series; cite primary sources.",
+    },
+    "pipeline_sle.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative SLE immunology pipeline for demo UI.",
+    },
+    "pipeline_sarc.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative sarcoidosis pipeline for demo UI.",
+    },
+    "fda_approvals_sle.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative SLE approval rows; not a live openFDA extract.",
+    },
+    "fda_approvals_sarc.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative sarcoidosis therapy rows for demo UI.",
+    },
     "stock_prices_companies.csv": {
         "kind": "sourced_public_delayed",
         "summary": "Yahoo Finance via yfinance; delayed per vendor terms.",
