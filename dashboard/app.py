@@ -11,7 +11,6 @@ from typing import Any, Optional
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 import streamlit as st
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -61,47 +60,101 @@ def load_manifest() -> Optional[dict[str, Any]]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def render_health_trends_chart(cdc: pd.DataFrame) -> None:
-    """Prevalence (~100k) and trial counts (~50–100) need separate y-axes or one series is invisible."""
-    chart_df = cdc.copy()
-    chart_df["date"] = pd.to_datetime(chart_df["date"])
-    needed = ["scd_prevalence_us", "clinical_trials_active"]
-    missing_cols = [c for c in needed if c not in chart_df.columns]
-    if missing_cols:
-        st.error(f"CDC CSV is missing columns: {missing_cols}. Re-run `collect_all_data.py`.")
+def _trials_by_start_year(trials: pd.DataFrame) -> pd.DataFrame:
+    """Count trials in this CSV sample by calendar year of start_date."""
+    df = trials.copy()
+    if "start_date" not in df.columns:
+        return pd.DataFrame(columns=["year", "trial_count"])
+    df["start_date"] = pd.to_datetime(df["start_date"], errors="coerce")
+    df = df.dropna(subset=["start_date"])
+    if df.empty:
+        return pd.DataFrame(columns=["year", "trial_count"])
+    counts = df.groupby(df["start_date"].dt.year).size().reset_index(name="trial_count")
+    counts.columns = ["year", "trial_count"]
+    return counts.sort_values("year")
+
+
+def render_health_trends_charts(cdc: pd.DataFrame, trials: Optional[pd.DataFrame]) -> None:
+    """Separate charts: prevalence placeholder (CDC CSV) vs trial counts from ClinicalTrials sample."""
+    cdc_df = cdc.copy()
+    cdc_df["date"] = pd.to_datetime(cdc_df["date"])
+
+    if "scd_prevalence_us" not in cdc_df.columns:
+        st.error("CDC CSV is missing `scd_prevalence_us`. Re-run `collect_all_data.py`.")
         return
 
-    fig = make_subplots(specs=[[{"secondary_y": True}]])
-    fig.add_trace(
+    # --- Chart 1: prevalence only (do not mix with trial counts on one axis) ---
+    fig_prev = go.Figure()
+    fig_prev.add_trace(
         go.Scatter(
-            x=chart_df["date"],
-            y=chart_df["scd_prevalence_us"],
+            x=cdc_df["date"],
+            y=cdc_df["scd_prevalence_us"],
             name="SCD prevalence (US, illustrative)",
-            mode="lines",
-            line=dict(color="#1f77b4"),
-        ),
-        secondary_y=False,
+            mode="lines+markers",
+            line=dict(color="#1f77b4", width=2),
+            marker=dict(size=4),
+        )
     )
-    fig.add_trace(
-        go.Scatter(
-            x=chart_df["date"],
-            y=chart_df["clinical_trials_active"],
-            name="Active trials (illustrative)",
-            mode="lines",
-            line=dict(color="#ff7f0e"),
-        ),
-        secondary_y=True,
+    fig_prev.update_layout(
+        title="US sickle cell prevalence — illustrative time series (not a live CDC extract)",
+        xaxis_title="Date",
+        yaxis_title="Estimated prevalence (illustrative)",
+        height=360,
+        margin=dict(t=50, b=40),
+        yaxis=dict(tickformat=",.0f"),
     )
-    fig.update_layout(
-        title="Illustrative burden vs active trials (dual scale — not comparable units)",
-        legend=dict(orientation="h", yanchor="bottom", y=1.02),
-        height=420,
-        margin=dict(t=60),
-    )
-    fig.update_xaxes(title_text="Date")
-    fig.update_yaxes(title_text="Prevalence (illustrative)", secondary_y=False)
-    fig.update_yaxes(title_text="Active trials", secondary_y=True)
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig_prev, use_container_width=True)
+
+    # --- Chart 2: trials from ClinicalTrials.gov sample when available ---
+    by_year = _trials_by_start_year(trials) if trials is not None and not trials.empty else pd.DataFrame()
+
+    if not by_year.empty:
+        fig_trials = go.Figure()
+        fig_trials.add_trace(
+            go.Bar(
+                x=by_year["year"],
+                y=by_year["trial_count"],
+                name="Trials in sample",
+                marker_color="#ff7f0e",
+            )
+        )
+        fig_trials.update_layout(
+            title="Clinical trials in this repo sample by trial start year (ClinicalTrials.gov)",
+            xaxis_title="Start year",
+            yaxis_title="Number of trials in CSV sample",
+            height=360,
+            margin=dict(t=50, b=40),
+            xaxis=dict(dtick=1),
+        )
+        st.plotly_chart(fig_trials, use_container_width=True)
+        st.caption(
+            f"Counts {len(trials)} studies returned by the collector query—not total global trial volume."
+        )
+    elif "clinical_trials_active" in cdc_df.columns:
+        st.caption(
+            "No dated trials in `clinical_trials_scd.csv` for a bar chart; showing illustrative "
+            "`clinical_trials_active` from the CDC-named placeholder CSV instead."
+        )
+        fig_placeholder = go.Figure()
+        fig_placeholder.add_trace(
+            go.Scatter(
+                x=cdc_df["date"],
+                y=cdc_df["clinical_trials_active"],
+                name="Active trials (illustrative placeholder)",
+                mode="lines+markers",
+                line=dict(color="#ff7f0e", width=2),
+            )
+        )
+        fig_placeholder.update_layout(
+            title="Active trials — illustrative placeholder series in CDC CSV (not ClinicalTrials.gov)",
+            xaxis_title="Date",
+            yaxis_title="Count (illustrative)",
+            height=360,
+            margin=dict(t=50, b=40),
+        )
+        st.plotly_chart(fig_placeholder, use_container_width=True)
+    else:
+        st.info("Run `collect_all_data.py` to load ClinicalTrials.gov rows for the trials chart.")
 
 
 def render_page_provenance(page: str, manifest: Optional[dict[str, Any]]) -> None:
@@ -252,11 +305,7 @@ elif page == "Health Trends":
             "`python3 src/data_collection/collect_all_data.py`"
         )
     elif cdc is not None:
-        st.caption(
-            "Blue = illustrative US prevalence; orange = illustrative active trial count "
-            "(separate y-axes — values are not directly comparable)."
-        )
-        render_health_trends_chart(cdc)
+        render_health_trends_charts(cdc, trials)
     else:
         st.info("Run data collection to load `cdc_sickle_cell_data.csv` for the trend chart.")
 

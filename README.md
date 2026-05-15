@@ -53,7 +53,7 @@ Skip the three `python3` lines if you only need the UI shell (charts stay empty 
 
 ![Overview](docs/screenshots/overview.png)
 
-**Health Trends** — CDC-style prevalence line chart · ClinicalTrials.gov trial table:
+**Health Trends** — prevalence line chart (illustrative) · trials-by-start-year bar chart (ClinicalTrials sample) · trial table:
 
 ![Health Trends](docs/screenshots/health-trends.png)
 
