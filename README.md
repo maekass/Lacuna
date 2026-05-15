@@ -1,31 +1,65 @@
-# Sickle Cell Disease Investment Analysis Platform
+# Immunology Investment Intelligence Platform
 
-## One-line pitch (cover letter / resume)
+## ⚠️ Legal Disclaimer
 
-End-to-end **Python research stack** combining public **sickle cell epidemiology and trial** signals with **listed biotech/pharma** data, **staged private-market framing** (VC / growth / public), and a **Streamlit** surface—explicitly **non-advisory**, public sources only, with **illustrative** market and scoring tables until you wire authoritative feeds.
+> **Educational and research purposes only.** All data is publicly available and delayed. This is NOT investment advice. No patient-level or private health data is used. Illustrative scores and private-market figures are demo weights only. Verify compliance before any production or commercial use.
 
-## Project overview
+---
 
-Quantitative research tooling at the intersection of sickle cell disease epidemiology, treatment innovation, and **public-market** company data. **“Buy/Hold” style scores in sample CSVs are demo weights only**, not research or investment advice.
+## One-Line Pitch
 
-## Key components (ordered)
+End-to-end Python research platform combining public **immunology epidemiology and trial signals** with **listed biotech/pharma** data, **ML-driven trial success prediction**, **deep quant analysis** (OLS, Granger causality, factor models, event studies), and a **2026-modern Streamlit** surface — multi-disease, legally compliant, public sources only.
 
-1. **(Shipped)** Public health data analysis — prevalence-style series (illustrative sample), trials (**sourced** when ClinicalTrials.gov responds), FDA rows (illustrative), adoption fields in notebooks (**Roadmap**).
-2. **(Shipped)** Investment analysis — tickers and fundamentals via `yfinance` (**sourced public, delayed**); universe editable in code.
-3. **(Shipped)** Investment stage analysis — VC vs growth vs public **illustrative** CSVs; `investment_stage_analysis.py`.
-4. **(Roadmap)** ML and regression — notebooks and fitted pipelines not wired to the dashboard yet.
-5. **(Roadmap)** Quant framework — placeholder package `src/quant_framework/` for factors, backtests, Monte Carlo.
-6. **(Shipped)** Market analysis — `market_analysis.py` writes TAM-style tables, pharma rows, deal flow, **demo** attractiveness scores (**illustrative**).
+## Disease Coverage
+
+| Disease | Code | Prevalence (US) | Active Trials |
+|---|---|---|---|
+| Sickle Cell Disease | SCD | 118,000 | ~105 |
+| Systemic Lupus Erythematosus | SLE | 322,000 | ~140 |
+| Hidradenitis Suppurativa | HS | 330,000 | ~60 |
+| Diabetic Nephropathy | DN | 800,000 | ~90 |
+| Autoimmune Liver Diseases | ALD | 130,000 | ~55 |
+| Multiple Sclerosis | MS | 1,000,000 | ~320 |
+| Food Allergy & Anaphylaxis | FA | 32,000,000 | ~75 |
+
+## Platform Features
+
+### Public Health Analysis
+- Epidemiological trend modeling (prevalence, diagnosis rate, treatment access)
+- Clinical trial pipeline tracking via ClinicalTrials.gov API
+- FDA approval timeline analysis
+- Disease-specific research focus areas
+
+### Investment Analysis
+- Disease-relevant company universe with tickers (dynamically loaded per disease)
+- Sector ETF benchmarking (IBB, XBI, XLV, BBH)
+- Interactive stock price charts with configurable time ranges
+- Company financial metrics via yfinance
+- Investment stage comparison: VC vs Growth Equity vs Public Equity
+- Market size, TAM, deal flow, competitive landscape
+
+### ML & Regression
+- **Trial Success Predictor** — Ensemble of RandomForest + GradientBoosting + LogisticRegression (+ XGBoost)
+  - Features: phase, enrollment, sponsor type, mechanism class, duration, disease prevalence, prior FDA approvals
+  - Calibrated to Hay et al. (2014) and Wong et al. (2019) published success rate distributions
+  - Outputs: probability, 95% CI, per-model breakdown, feature importances
+- **9 Regression Algorithms** with automatic hyperparameter tuning (Linear, Ridge, Lasso, ElasticNet, RF, GBM, SVR, KNN, AdaBoost)
+- **24+ Engineered Features** including lagged variables, rolling statistics, momentum indicators, interaction terms
+- Model comparison framework with MSE, R², MAE, MAPE diagnostics
+
+### Deep Quant Analysis
+- **Rolling Correlation** — trial activity vs monthly stock returns, per-ticker
+- **OLS Multi-Factor Regression** — stock return ~ IBB + XBI + trial growth + prevalence + R&D sentiment, with full coefficient table and residuals plot
+- **Granger Causality** — tests if trial data has statistically significant predictive power (lags 1–3)
+- **Event Study** — cumulative abnormal returns (CAR) around FDA/trial events vs market-adjusted benchmark
+- **Factor Model** — market beta, size factor, defensive factor, alpha, information ratio per company
+- **Portfolio Optimization** — Modern Portfolio Theory with Sharpe, Sortino, Calmar ratios
+- **Risk Analysis** — max drawdown, rolling volatility, efficient frontier, strategy comparison
+- **Monte Carlo** simulations for scenario analysis
 
 ## Data manifest (provenance)
 
 After `python src/data_collection/collect_all_data.py` and `python src/models/market_analysis.py`, the repo writes **`data/raw/data_manifest.json`**: for each registered CSV it records **illustrative vs sourced (public / delayed vendor)** and **`last_modified_utc`**. The Streamlit dashboard shows this under **Data provenance** on **every** page. The manifest file is **gitignored** (regenerate locally after pulls).
-
-## Legal disclaimer
-
-**Educational and research use only. Not investment advice, not medical advice, not a substitute for professional counsel.** No patient-level data in this repository. Verify compliance with applicable rules (including securities and health-data use) before any production or commercial use.
-
-**Scores and labels:** Any “attractiveness,” “Strong Buy / Hold / Sell,” or similar fields produced by `market_analysis.py` or shown in the dashboard are **demo / illustrative weights for software testing only**—not research outputs, ratings, or recommendations.
 
 ## Equity, population data, and compliance (research framing)
 
