@@ -1,5 +1,5 @@
 {
-  "trained_at_utc": "2026-05-15T11:29:35.147250+00:00",
+  "trained_at_utc": "2026-05-15T11:42:29.286192+00:00",
   "tickers": [
     "CRSP",
     "VRTX",
@@ -17,7 +17,10 @@
     "train_months": 24,
     "test_months": 6,
     "step_months": 6,
-    "n_folds": 6
+    "n_folds_union": 6,
+    "registry_diseases": [
+      "scd"
+    ]
   },
-  "notes": "Quant outputs from delayed vendor CSVs; walk-forward uses rolling OOS folds. Not investment advice."
+  "notes": "Quant outputs from delayed vendor CSVs; walk-forward includes union panel and registry-scoped OOS curves. Not investment advice."
 }

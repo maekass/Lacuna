@@ -14,7 +14,14 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 from src.quant_framework.risk_optimization import RiskOptimizedPortfolio
-from src.quant_framework.walk_forward import walk_forward_folds, walk_forward_summary
+from src.disease_registry import FOCUS_DISEASE_IDS, get_disease, us_tickers
+from src.quant_framework.walk_forward import (
+    GENE_THERAPY_TICKERS,
+    walk_forward_compounded_summary,
+    walk_forward_folds,
+    walk_forward_oos_curve,
+    walk_forward_summary,
+)
 
 ROOT = Path(__file__).resolve().parents[2]
 RAW_DIR = ROOT / "data" / "raw"
@@ -46,6 +53,44 @@ def _close_matrix_from_csv(path: Path) -> pd.DataFrame:
     out = pd.DataFrame(closes)
     out.index = pd.to_datetime(out.index, utc=True).tz_localize(None)
     return out.sort_index().dropna(how="all")
+
+
+def filter_prices_for_disease(prices: pd.DataFrame, disease_id: str) -> pd.DataFrame:
+    """Subset close matrix to registry US tickers for an indication."""
+    tickers = set(us_tickers(get_disease(disease_id).companies).values())
+    cols = [c for c in prices.columns if c in tickers]
+    return prices[cols].dropna(how="all", axis=1)
+
+
+def build_registry_walk_forward(
+    prices: pd.DataFrame,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Union panel + per-indication walk-forward folds, summary, OOS curves, compounded summary."""
+    fold_frames: list[pd.DataFrame] = []
+    curve_frames: list[pd.DataFrame] = []
+
+    union_folds = walk_forward_folds(prices, disease_id="all", tilt_tickers=GENE_THERAPY_TICKERS)
+    if not union_folds.empty:
+        fold_frames.append(union_folds)
+        curve_frames.append(
+            walk_forward_oos_curve(prices, disease_id="all", tilt_tickers=GENE_THERAPY_TICKERS)
+        )
+
+    for did in FOCUS_DISEASE_IDS:
+        sub = filter_prices_for_disease(prices, did)
+        if sub.shape[1] < 2:
+            continue
+        tilt = tuple(us_tickers(get_disease(did).companies).values())
+        folds = walk_forward_folds(sub, disease_id=did, tilt_tickers=tilt)
+        if not folds.empty:
+            fold_frames.append(folds)
+            curve_frames.append(walk_forward_oos_curve(sub, disease_id=did, tilt_tickers=tilt))
+
+    all_folds = pd.concat(fold_frames, ignore_index=True) if fold_frames else pd.DataFrame()
+    all_curves = pd.concat(curve_frames, ignore_index=True) if curve_frames else pd.DataFrame()
+    summary = walk_forward_summary(all_folds)
+    compounded = walk_forward_compounded_summary(all_curves)
+    return all_folds, summary, all_curves, compounded
 
 
 def load_price_panels(raw_dir: Path | str = RAW_DIR) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -206,8 +251,7 @@ def train_all(
     eq_returns = daily.mean(axis=1)
 
     backtest_metrics = build_backtest_metrics(prices)
-    wf_folds = walk_forward_folds(prices)
-    wf_summary = walk_forward_summary(wf_folds)
+    wf_folds, wf_summary, wf_curve, wf_compounded = build_registry_walk_forward(prices)
     factor_betas = build_factor_model(prices, etfs)
     mc_fan = build_monte_carlo_fan(eq_returns)
     frontier = build_efficient_frontier(prices)
@@ -216,6 +260,8 @@ def train_all(
     backtest_metrics.to_csv(out / "backtest_metrics.csv", index=False)
     wf_folds.to_csv(out / "walk_forward_folds.csv", index=False)
     wf_summary.to_csv(out / "walk_forward_summary.csv", index=False)
+    wf_curve.to_csv(out / "walk_forward_oos_curve.csv", index=False)
+    wf_compounded.to_csv(out / "walk_forward_compounded_summary.csv", index=False)
     factor_betas.to_csv(out / "factor_model_betas.csv", index=False)
     mc_fan.to_csv(out / "monte_carlo_fan.csv", index=False)
     frontier.to_csv(out / "efficient_frontier.csv", index=False)
@@ -229,9 +275,21 @@ def train_all(
             "train_months": 24,
             "test_months": 6,
             "step_months": 6,
-            "n_folds": int(wf_folds["fold_id"].nunique()) if not wf_folds.empty and "fold_id" in wf_folds.columns else 0,
+            "n_folds_union": int(
+                wf_folds.loc[wf_folds["disease_id"] == "all", "fold_id"].nunique()
+            )
+            if not wf_folds.empty and "disease_id" in wf_folds.columns
+            else 0,
+            "registry_diseases": [
+                did
+                for did in FOCUS_DISEASE_IDS
+                if did in set(wf_folds.get("disease_id", []))
+            ],
         },
-        "notes": "Quant outputs from delayed vendor CSVs; walk-forward uses rolling OOS folds. Not investment advice.",
+        "notes": (
+            "Quant outputs from delayed vendor CSVs; walk-forward includes union panel and "
+            "registry-scoped OOS curves. Not investment advice."
+        ),
     }
     (out / "quant_metrics.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
