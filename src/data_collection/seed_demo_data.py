@@ -10,7 +10,20 @@ from __future__ import annotations
 import shutil
 from pathlib import Path
 
+import pandas as pd
+
+from src.data_collection.csv_schemas import validate_dataframe
 from src.data_collection.data_manifest import ARTIFACT_REGISTRY
+from src.ontology.enrich import enrich_artifact
+
+_ONTOLOGY_ARTIFACTS = frozenset(
+    {
+        "clinical_trials_scd.csv",
+        "gene_therapy_pipeline_scd.csv",
+        "fda_approvals_scd.csv",
+        "cdc_sickle_cell_data.csv",
+    }
+)
 
 ROOT = Path(__file__).resolve().parents[2]
 DEMO_DIR = ROOT / "data" / "demo"
@@ -50,7 +63,13 @@ def seed_from_demo(data_dir: Path | str, demo_dir: Path | str | None = None) -> 
     copied = 0
     for src in sorted(demo_path.glob("*.csv")):
         dest = data_path / src.name
-        shutil.copy2(src, dest)
+        if src.name in _ONTOLOGY_ARTIFACTS:
+            df = pd.read_csv(src)
+            df = enrich_artifact(src.name, df)
+            validate_dataframe(df, src.name)
+            df.to_csv(dest, index=False)
+        else:
+            shutil.copy2(src, dest)
         copied += 1
     return copied
 

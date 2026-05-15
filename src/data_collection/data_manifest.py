@@ -10,6 +10,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from src.data_collection.provenance import ProvenanceStore
+
 # kind: illustrative | sourced_public | sourced_public_delayed
 ARTIFACT_REGISTRY: dict[str, dict[str, str]] = {
     "cdc_sickle_cell_data.csv": {
@@ -107,11 +109,27 @@ def write_data_manifest(data_dir: str | Path, trigger: str = "unknown") -> Path:
             ).isoformat()
         artifacts[fname] = entry
 
+    store = ProvenanceStore(data_dir)
+    pulls = store.summary_by_artifact()
+
     payload = {
-        "manifest_version": 1,
+        "manifest_version": 2,
         "last_manifest_write_utc": now,
         "trigger": trigger,
         "artifacts": artifacts,
+        "latest_pulls": {
+            fname: {
+                "pull_id": p.get("pull_id"),
+                "source_url": p.get("source_url"),
+                "query_string": p.get("query_string"),
+                "full_url": p.get("full_url"),
+                "pulled_at_utc": p.get("pulled_at_utc"),
+                "parser_version": p.get("parser_version"),
+                "extractor": p.get("extractor"),
+                "row_count": p.get("row_count"),
+            }
+            for fname, p in pulls.items()
+        },
     }
     out_path = data_dir / "data_manifest.json"
     out_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")

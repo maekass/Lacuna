@@ -23,6 +23,9 @@ jobs:
           python -m compileall -q \
             dashboard \
             src/data_collection \
+            src/data_collection/parsers \
+            src/ontology \
+            tests \
             scripts/debug_check.py \
             scripts/playwright_browsers.py \
             scripts/smoke_test_dashboard.py \
@@ -30,5 +33,7 @@ jobs:
             src/models/investment_stage_analysis.py \
             src/models/ml_artifacts.py \
             src/quant_framework/quant_artifacts.py
+      - name: Unit tests (parsers, schemas, ontology)
+        run: python -m pytest tests/ -q
       - name: Verify bundled demo CSVs
         run: python scripts/debug_check.py

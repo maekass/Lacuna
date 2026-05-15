@@ -5,24 +5,14 @@ All data sources are public and legally accessible
 """
 
 import os
-from typing import Any
 
 import numpy as np
 import pandas as pd
 import requests
 
-
-def _normalize_legacy_phase(raw: Any) -> str:
-    """Coerce legacy ClinicalTrials.gov `PhaseList.Phase` (str, list, or absent) to a single CSV-safe string."""
-    if raw is None:
-        return ""
-    if isinstance(raw, list):
-        parts = [str(p).strip() for p in raw if p is not None and str(p).strip()]
-        return "; ".join(parts)
-    if isinstance(raw, dict):
-        inner = raw.get("Phase", raw.get("phase"))
-        return _normalize_legacy_phase(inner)
-    return str(raw).strip()
+from src.data_collection.csv_writer import write_csv
+from src.data_collection.parsers.clinical_trials import PARSER_VERSION, parse_legacy_full_studies, parse_v2_studies
+from src.data_collection.provenance import ProvenanceStore, PullRecord
 
 
 # Representative sickle cell trials for offline / API-failure demos (public NCT IDs).
@@ -86,27 +76,11 @@ _FALLBACK_CLINICAL_TRIALS: list[dict[str, str]] = [
 ]
 
 
-def _format_v2_phases(phases: Any) -> str:
-    """Turn v2 API `designModule.phases` enums into readable labels."""
-    if not phases:
-        return ""
-    out: list[str] = []
-    for p in phases:
-        if not p:
-            continue
-        s = str(p).strip()
-        if s.upper().startswith("PHASE"):
-            rest = s.upper().replace("PHASE", "", 1).replace("_", " ").strip()
-            out.append(f"Phase {rest}" if rest else s)
-        else:
-            out.append(s)
-    return "; ".join(out)
-
-
 class SickleCellHealthDataCollector:
     def __init__(self, data_dir="data/raw"):
         self.data_dir = data_dir
         os.makedirs(data_dir, exist_ok=True)
+        self.provenance = ProvenanceStore(data_dir)
 
     def collect_cdc_sickle_cell_data(self):
         """
@@ -131,8 +105,24 @@ class SickleCellHealthDataCollector:
         }
 
         df = pd.DataFrame(cdc_data)
-        df.to_csv(f"{self.data_dir}/cdc_sickle_cell_data.csv", index=False)
-        print(f"✓ CDC data saved to {self.data_dir}/cdc_sickle_cell_data.csv")
+        artifact = "cdc_sickle_cell_data.csv"
+        pull = PullRecord.now(
+            artifact=artifact,
+            source_url="https://www.cdc.gov/ncbddd/sicklecell/data.html",
+            params={},
+            parser_version="illustrative.v1",
+            extractor="collect_cdc_sickle_cell_data",
+            kind="illustrative",
+            notes="Illustrative time series until live CDC API wired.",
+        )
+        write_csv(
+            df,
+            f"{self.data_dir}/{artifact}",
+            artifact=artifact,
+            pull=pull,
+            provenance_store=self.provenance,
+        )
+        print(f"✓ CDC data saved to {self.data_dir}/{artifact}")
         print(
             "  Note: prevalence-style columns are illustrative placeholders until wired to cited agency/surveillance sources."
         )
@@ -147,6 +137,7 @@ class SickleCellHealthDataCollector:
         print("Collecting Clinical Trials Data...")
 
         trials: list[dict[str, str]] = []
+        pull: PullRecord | None = None
         legacy_url = "https://clinicaltrials.gov/api/query/full_studies"
         legacy_params = {
             "expr": "sickle cell disease",
@@ -158,26 +149,16 @@ class SickleCellHealthDataCollector:
         try:
             response = requests.get(legacy_url, params=legacy_params, timeout=30)
             if response.status_code == 200:
-                data = response.json()
-                if "FullStudiesResponse" in data:
-                    for study in data["FullStudiesResponse"].get("FullStudies", []):
-                        protocol = study.get("Study", {}).get("ProtocolSection", {})
-                        status = protocol.get("StatusModule", {}) or {}
-                        identification = protocol.get("IdentificationModule", {}) or {}
-                        design = protocol.get("DesignModule") or {}
-                        phase_list = design.get("PhaseList") or {}
-                        raw_phase = phase_list.get("Phase") if isinstance(phase_list, dict) else None
-                        phase = _normalize_legacy_phase(raw_phase)
-                        start_struct = status.get("StartDateStruct") or {}
-                        start_date = start_struct.get("StartDate", "") if isinstance(start_struct, dict) else ""
-                        trial = {
-                            "nct_id": identification.get("NCTId", ""),
-                            "title": identification.get("BriefTitle", ""),
-                            "status": status.get("OverallStatus", ""),
-                            "start_date": start_date,
-                            "phase": phase,
-                        }
-                        trials.append(trial)
+                trials = parse_legacy_full_studies(response.json(), max_trials=max_trials)
+                if trials:
+                    pull = PullRecord.now(
+                        artifact="clinical_trials_scd.csv",
+                        source_url=legacy_url,
+                        params=legacy_params,
+                        parser_version=PARSER_VERSION,
+                        extractor="parse_legacy_full_studies",
+                        http_status=response.status_code,
+                    )
             else:
                 print(f"✗ Legacy ClinicalTrials.gov API returned status {response.status_code}")
         except Exception as e:
@@ -194,40 +175,44 @@ class SickleCellHealthDataCollector:
                 if r2.status_code != 200:
                     print(f"✗ ClinicalTrials.gov v2 API returned status {r2.status_code}")
                 else:
-                    payload = r2.json()
-                    for study in payload.get("studies", [])[:max_trials]:
-                        ps = study.get("protocolSection", {}) or {}
-                        idm = ps.get("identificationModule", {}) or {}
-                        sm = ps.get("statusModule", {}) or {}
-                        dm = ps.get("designModule", {}) or {}
-                        start_struct = sm.get("startDateStruct") or {}
-                        start_date = (
-                            start_struct.get("date", "")
-                            if isinstance(start_struct, dict)
-                            else str(start_struct or "")
-                        )
-                        trials.append(
-                            {
-                                "nct_id": idm.get("nctId", ""),
-                                "title": idm.get("briefTitle", ""),
-                                "status": sm.get("overallStatus", ""),
-                                "start_date": start_date,
-                                "phase": _format_v2_phases(dm.get("phases")),
-                            }
-                        )
+                    trials = parse_v2_studies(r2.json(), max_trials=max_trials)
                     if trials:
+                        pull = PullRecord.now(
+                            artifact="clinical_trials_scd.csv",
+                            source_url=v2_url,
+                            params=v2_params,
+                            parser_version=PARSER_VERSION,
+                            extractor="parse_v2_studies",
+                            http_status=r2.status_code,
+                        )
                         print(f"✓ Loaded {len(trials)} trials via ClinicalTrials.gov v2 API")
             except Exception as e:
                 print(f"✗ ClinicalTrials.gov v2 request failed: {e}")
 
         if not trials:
             trials = _FALLBACK_CLINICAL_TRIALS
+            pull = PullRecord.now(
+                artifact="clinical_trials_scd.csv",
+                source_url="bundled://fallback_clinical_trials",
+                params={"reason": "api_unavailable"},
+                parser_version=PARSER_VERSION,
+                extractor="_FALLBACK_CLINICAL_TRIALS",
+                kind="illustrative",
+                notes="Bundled fallback rows when APIs fail.",
+            )
             print(
                 f"  Using {len(trials)} bundled fallback trial rows (API unavailable or empty)."
             )
 
         df = pd.DataFrame(trials)
-        df.to_csv(f"{self.data_dir}/clinical_trials_scd.csv", index=False)
+        artifact = "clinical_trials_scd.csv"
+        write_csv(
+            df,
+            f"{self.data_dir}/{artifact}",
+            artifact=artifact,
+            pull=pull,
+            provenance_store=self.provenance,
+        )
         print(f"✓ Clinical trials data saved ({len(trials)} trials)")
         return df
 
@@ -263,7 +248,16 @@ class SickleCellHealthDataCollector:
         }
 
         df = pd.DataFrame(fda_approvals)
-        df.to_csv(f"{self.data_dir}/fda_approvals_scd.csv", index=False)
+        artifact = "fda_approvals_scd.csv"
+        pull = PullRecord.now(
+            artifact=artifact,
+            source_url="https://api.fda.gov/drug/event.json",
+            params={"search": "sickle cell (not yet wired)"},
+            parser_version="illustrative.v1",
+            extractor="collect_fda_approval_data",
+            kind="illustrative",
+        )
+        write_csv(df, f"{self.data_dir}/{artifact}", artifact=artifact, pull=pull, provenance_store=self.provenance)
         print(f"✓ FDA approval data saved ({len(df)} drugs)")
         return df
 
@@ -297,7 +291,16 @@ class SickleCellHealthDataCollector:
         }
 
         df = pd.DataFrame(gene_therapy_data)
-        df.to_csv(f"{self.data_dir}/gene_therapy_pipeline_scd.csv", index=False)
+        artifact = "gene_therapy_pipeline_scd.csv"
+        pull = PullRecord.now(
+            artifact=artifact,
+            source_url="illustrative://gene_therapy_pipeline",
+            params={},
+            parser_version="illustrative.v1",
+            extractor="collect_gene_therapy_pipeline",
+            kind="illustrative",
+        )
+        write_csv(df, f"{self.data_dir}/{artifact}", artifact=artifact, pull=pull, provenance_store=self.provenance)
         print(f"✓ Gene therapy pipeline data saved ({len(df)} companies)")
         return df
 

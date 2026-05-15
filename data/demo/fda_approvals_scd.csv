@@ -1,6 +1,6 @@
-drug_name,company,approval_date,mechanism,phase,efficacy
-L-glutamine,Emmaus Life Sciences,2017-07-07,Antioxidant,Commercial,Reduces pain crises
-Voxelotor,Global Blood Therapeutics,2019-11-25,HbS polymerization inhibitor,Commercial,Increases hemoglobin
-Crizanlizumab,Novartis,2019-11-15,P-selectin inhibitor,Commercial,Reduces pain crises
-LentiGlobin,Bluebird Bio,2021-12-03,Lentiviral gene therapy,Phase 3,Functional cure potential
-CTX001,CRISPR Therapeutics,2023-11-16,CRISPR gene editing,Phase 3,Functional cure potential
+drug_name,company,approval_date,mechanism,phase,efficacy,indication_mesh_id,indication_mesh_label,indication_icd10_code,indication_disambiguation,moa_mesh_id,moa_mesh_label
+L-glutamine,Emmaus Life Sciences,2017-07-07,Antioxidant,Commercial,Reduces pain crises,D000755,"Anemia, Sickle Cell",D57.1,primary_scd,D000975,Antioxidants
+Voxelotor,Global Blood Therapeutics,2019-11-25,HbS polymerization inhibitor,Commercial,Increases hemoglobin,D000755,"Anemia, Sickle Cell",D57.1,primary_scd,D006461,"Hemoglobin, Sickle"
+Crizanlizumab,Novartis,2019-11-15,P-selectin inhibitor,Commercial,Reduces pain crises,D000755,"Anemia, Sickle Cell",D57.1,primary_scd,D019032,P-Selectin
+LentiGlobin,Bluebird Bio,2021-12-03,Lentiviral gene therapy,Phase 3,Functional cure potential,D000755,"Anemia, Sickle Cell",D57.1,primary_scd,D015316,Genetic Therapy
+CTX001,CRISPR Therapeutics,2023-11-16,CRISPR gene editing,Phase 3,Functional cure potential,D000755,"Anemia, Sickle Cell",D57.1,primary_scd,D064113,CRISPR-Cas Systems

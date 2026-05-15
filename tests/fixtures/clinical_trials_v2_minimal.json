@@ -1,0 +1,19 @@
+{
+  "studies": [
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT03745287",
+          "briefTitle": "A Study of CTX001 in Severe Sickle Cell Disease"
+        },
+        "statusModule": {
+          "overallStatus": "COMPLETED",
+          "startDateStruct": { "date": "2018-11-19" }
+        },
+        "designModule": {
+          "phases": ["PHASE1", "PHASE2"]
+        }
+      }
+    }
+  ]
+}

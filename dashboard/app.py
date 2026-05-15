@@ -17,9 +17,11 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from dashboard.theme import apply_glass_theme, apply_plotly_theme, glass_hero, zone_banner
 from src.data_collection.bootstrap_data import data_is_present, run_full_pipeline, seed_demo_if_missing
 from src.data_collection.data_manifest import kind_display_label
 from src.data_collection.seed_demo_data import sync_ml_from_demo, sync_quant_from_demo
+from src.ontology.enrich import enrich_artifact
 from src.models.ml_artifacts import ml_bundle_present
 from src.quant_framework.quant_artifacts import quant_bundle_present
 
@@ -158,7 +160,7 @@ def render_health_trends_charts(cdc: pd.DataFrame, trials: Optional[pd.DataFrame
         margin=dict(t=50, b=40),
         yaxis=dict(tickformat=",.0f"),
     )
-    st.plotly_chart(fig_prev, use_container_width=True)
+    st.plotly_chart(apply_plotly_theme(fig_prev), use_container_width=True)
 
     # --- Chart 2: trials from ClinicalTrials.gov sample when available ---
     by_year = _trials_by_start_year(trials) if trials is not None and not trials.empty else pd.DataFrame()
@@ -181,7 +183,7 @@ def render_health_trends_charts(cdc: pd.DataFrame, trials: Optional[pd.DataFrame
             margin=dict(t=50, b=40),
             xaxis=dict(dtick=1),
         )
-        st.plotly_chart(fig_trials, use_container_width=True)
+        st.plotly_chart(apply_plotly_theme(fig_trials), use_container_width=True)
         st.caption(
             f"Counts {len(trials)} studies returned by the collector query—not total global trial volume."
         )
@@ -207,15 +209,27 @@ def render_health_trends_charts(cdc: pd.DataFrame, trials: Optional[pd.DataFrame
             height=360,
             margin=dict(t=50, b=40),
         )
-        st.plotly_chart(fig_placeholder, use_container_width=True)
+        st.plotly_chart(apply_plotly_theme(fig_placeholder), use_container_width=True)
     else:
         st.info("Run `collect_all_data.py` to load ClinicalTrials.gov rows for the trials chart.")
 
 
+def _ontology_display_cols(df: pd.DataFrame) -> list[str]:
+    keys = [
+        "condition_mesh_id",
+        "condition_snomed_id",
+        "condition_icd10_code",
+        "indication_disambiguation",
+        "moa_mesh_id",
+        "indication_mesh_id",
+    ]
+    return [c for c in keys if c in df.columns]
+
+
 def render_page_provenance(page: str, manifest: Optional[dict[str, Any]]) -> None:
-    """Every page: sourced vs illustrative + last modified from data_manifest.json."""
+    """Every page: sourced vs illustrative, manifest timestamps, and per-pull audit fields."""
     files = PAGE_ARTIFACTS.get(page, [])
-    with st.expander("**Data provenance** — sourced vs illustrative · manifest timestamps", expanded=False):
+    with st.expander("**Data provenance** — pull URL · query · UTC · schema · ontology", expanded=False):
         if manifest is None:
             st.markdown(
                 "No `data/raw/data_manifest.json` yet. From the project root run:\n"
@@ -278,24 +292,30 @@ def render_page_provenance(page: str, manifest: Optional[dict[str, Any]]) -> Non
                 )
             return
         arts = manifest.get("artifacts", {})
+        pulls = manifest.get("latest_pulls", {})
         rows: list[dict[str, str]] = []
         for fname in files:
             a = arts.get(fname, {})
             kind = a.get("kind", "")
             present = a.get("present", False)
-            if present:
-                lm = a.get("last_modified_utc", "—")
-            else:
-                lm = "— (file not on disk)"
+            lm = a.get("last_modified_utc", "—") if present else "— (file not on disk)"
+            pull = pulls.get(fname, {})
             rows.append(
                 {
                     "File": fname,
-                    "Sourced vs illustrative": kind_display_label(kind) if kind else "—",
-                    "Last updated (UTC)": lm,
-                    "Summary": (a.get("source_summary") or "")[:200],
+                    "Kind": kind_display_label(kind) if kind else "—",
+                    "File mtime (UTC)": lm,
+                    "Pull (UTC)": pull.get("pulled_at_utc", "—"),
+                    "Source URL": (pull.get("source_url") or "—")[:80],
+                    "Query": (pull.get("query_string") or "—")[:60],
+                    "Parser": pull.get("parser_version", "—"),
                 }
             )
         st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+        st.caption(
+            "Full pull audit: `data/raw/provenance_log.jsonl` (append-only). "
+            "MeSH / SNOMED / ICD columns added on validated CSV write."
+        )
 
 
 st.set_page_config(
@@ -305,21 +325,15 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-st.markdown(
-    """
-<style>
-    .main-header { font-size: 2.5rem; font-weight: bold; color: #1f77b4; text-align: center; margin-bottom: 1rem; }
-    .sub-header { font-size: 1.8rem; font-weight: bold; color: #2c3e50; margin-top: 2rem; margin-bottom: 1rem; }
-</style>
-""",
-    unsafe_allow_html=True,
+apply_glass_theme()
+glass_hero(
+    "🧬 Immunology Investment Intelligence",
+    "Epidemiology · pipeline · portfolio — glass UI with pull-level provenance and MeSH / SNOMED / ICD anchors",
 )
 
-st.markdown('<p class="main-header">🧬 Sickle Cell Investment Analysis Platform</p>', unsafe_allow_html=True)
-
 st.markdown(
     """
-<div style='background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 5px; padding: 15px; margin-bottom: 20px;'>
+<div class='glass-disclaimer'>
     <strong>⚠️ Disclaimer (non-advisory):</strong> Educational and research use only.
     <strong>Not investment advice, not medical advice.</strong> Public and delayed sources only; no patient-level data in this app.
     <br/><br/>
@@ -341,6 +355,7 @@ st.sidebar.markdown(
     "See top banner and README."
 )
 st.sidebar.header("Navigation")
+st.sidebar.caption("**Epidemiology** · **Pipeline** · **Portfolio** analytics zones")
 page = st.sidebar.radio(
     "Select Page",
     [
@@ -354,6 +369,19 @@ page = st.sidebar.radio(
         "Market Analysis",
     ],
 )
+_ZONE_FOR_PAGE = {
+    "Overview": ("pipeline", "Gene therapy & FDA pipeline"),
+    "Health Trends": ("epidemiology", "Burden, trials, ontology-anchored conditions"),
+    "Stock Analysis": ("portfolio", "Equity & fundamentals"),
+    "Quant Strategy": ("portfolio", "Factor & backtest analytics"),
+    "Portfolio Optimization": ("portfolio", "Efficient frontier & weights"),
+    "Investment Stages": ("portfolio", "Private-market stages"),
+    "Market Analysis": ("pipeline", "Market sizing & competitive landscape"),
+    "ML Models": ("pipeline", "Trial-success & return models"),
+}
+if page in _ZONE_FOR_PAGE:
+    z, label = _ZONE_FOR_PAGE[page]
+    zone_banner(z, label)
 
 if not data_is_present(DATA):
     with st.spinner("Loading demo datasets (tables and charts)…"):
@@ -377,13 +405,18 @@ if missing:
     )
 
 if page == "Overview":
-    st.subheader("Overview")
+    st.subheader("Pipeline overview")
     st.caption(
         "Pipeline table and probability-of-success values below are **illustrative / demo** for UI testing—not "
         "clinical or investment recommendations."
     )
     pipeline = load_csv("gene_therapy_pipeline_scd.csv")
     if pipeline is not None:
+        pipeline = enrich_artifact("gene_therapy_pipeline_scd.csv", pipeline)
+        onto = _ontology_display_cols(pipeline)
+        if onto:
+            st.markdown("**Ontology anchors (MeSH / ICD)**")
+            st.dataframe(pipeline[onto].drop_duplicates(), use_container_width=True, hide_index=True)
         st.dataframe(pipeline, use_container_width=True)
         fig = px.bar(
             pipeline,
@@ -392,12 +425,12 @@ if page == "Overview":
             color="technology",
             title="Illustrative POS by company (demo)",
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(apply_plotly_theme(fig), use_container_width=True)
     else:
         st.info("Run data collection to populate overview tables.")
 
 elif page == "Health Trends":
-    st.subheader("Health trends")
+    st.subheader("Epidemiology & clinical development")
     st.info(
         "**Population / burden (illustrative):** The CDC-named CSV here is generated in code as a placeholder "
         "time series, not a live CDC extract. **Planned work:** replace with primary-sourced pulls and cite extract "
@@ -417,12 +450,21 @@ elif page == "Health Trends":
         st.info("Run data collection to load `cdc_sickle_cell_data.csv` for the trend chart.")
 
     if trials is not None and not trials.empty:
+        trials = enrich_artifact("clinical_trials_scd.csv", trials)
         st.subheader("Clinical trials (sourced when API responds)")
-        st.caption("From ClinicalTrials.gov (public API); verify query and API version for your use case.")
+        st.caption("From ClinicalTrials.gov (public API); MeSH D000755 · SNOMED 417357006 · ICD-10 D57.x")
         display_trials = trials.copy()
         if "start_date" in display_trials.columns:
             display_trials["start_date"] = pd.to_datetime(
                 display_trials["start_date"], errors="coerce"
+            )
+        onto = _ontology_display_cols(display_trials)
+        if onto:
+            st.markdown("**Indication disambiguation**")
+            st.dataframe(
+                display_trials[["nct_id", "title"] + onto].head(20),
+                use_container_width=True,
+                hide_index=True,
             )
         st.dataframe(display_trials.head(20), use_container_width=True, hide_index=True)
     elif trials is not None:
@@ -469,7 +511,7 @@ elif page == "ML Models":
                 text="R2",
             )
             fig_cmp.update_traces(texttemplate="%{text:.3f}", textposition="outside")
-            st.plotly_chart(fig_cmp, use_container_width=True)
+            st.plotly_chart(apply_plotly_theme(fig_cmp), use_container_width=True)
 
         col_a, col_b = st.columns(2)
         with col_a:
@@ -549,7 +591,7 @@ elif page == "Quant Strategy":
                 title="IBB beta by ticker (demo)",
                 color="r_squared",
             )
-            st.plotly_chart(fig_f, use_container_width=True)
+            st.plotly_chart(apply_plotly_theme(fig_f), use_container_width=True)
 
         mc = load_csv("monte_carlo_fan.csv", QUANT_DATA)
         if mc is not None:
@@ -564,7 +606,7 @@ elif page == "Quant Strategy":
                 yaxis_title="Growth of $1",
                 height=360,
             )
-            st.plotly_chart(fig_mc, use_container_width=True)
+            st.plotly_chart(apply_plotly_theme(fig_mc), use_container_width=True)
 
 elif page == "Portfolio Optimization":
     st.subheader("Portfolio optimization")
@@ -586,7 +628,7 @@ elif page == "Portfolio Optimization":
                 title="Return vs volatility (color = Sharpe, demo)",
                 labels={"volatility": "Annualized vol", "expected_return": "Annualized return"},
             )
-            st.plotly_chart(fig_ef, use_container_width=True)
+            st.plotly_chart(apply_plotly_theme(fig_ef), use_container_width=True)
 
         weights = load_csv("portfolio_weights.csv", QUANT_DATA)
         if weights is not None and not weights.empty:
