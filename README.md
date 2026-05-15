@@ -14,7 +14,7 @@ GitHub shows **source and screenshots** only. The interactive app runs when you 
 |--------|------------|
 | **Codespaces** (recommended) | [Create a codespace](https://codespaces.new/maekass/sickle-cell-investment-analysis) on `main`, then follow [Quick start (Codespaces)](#quick-start-codespaces) below. Open the app from **Ports → 8501 → Open in Browser** (`https://<your-codespace-name>-8501.app.github.dev`). |
 | **Local machine** | From repo root: `streamlit run dashboard/app.py` → [http://localhost:8501](http://localhost:8501) |
-| **Community Cloud** | **[Live app](https://sickle-cell-investment-analysis-dpu9ufwqnp6jy65sa5ljxd.streamlit.app)** — first load auto-builds demo CSVs (~1–2 min). Main file: `dashboard/app.py`, branch `main`, Python **3.11**. |
+| **Community Cloud** | **[Live app](https://immunology-investment-dashboard.streamlit.app)** — first load auto-builds demo CSVs (~1–2 min). Main file: `dashboard/app.py`, branch `main`, Python **3.11**. |
 
 ### Quick start (Codespaces)
 
@@ -183,10 +183,8 @@ This repo is **organized for [Community Cloud](https://docs.streamlit.io/deploy/
 
 ### After deploy: README badge (optional)
 
-Replace `YOUR-SUBDOMAIN` with the subdomain Streamlit assigns, then add to this README (or your profile):
-
 ```markdown
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://YOUR-SUBDOMAIN.streamlit.app)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://immunology-investment-dashboard.streamlit.app)
 ```
 
 ### Data on Cloud (important)
