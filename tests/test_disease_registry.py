@@ -15,3 +15,11 @@ def test_sle_ontology_codes() -> None:
 
 def test_three_diseases_listed() -> None:
     assert len(list_diseases()) == 3
+
+
+def test_sle_has_us_tickers() -> None:
+    from src.disease_registry import us_tickers
+
+    t = us_tickers(get_disease("sle").companies)
+    assert "GSK" in t.values()
+    assert all("." not in sym for sym in t.values())

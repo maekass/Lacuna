@@ -13,6 +13,7 @@ import yfinance as yf
 
 from src.data_collection.csv_writer import write_csv
 from src.data_collection.provenance import ProvenanceStore, PullRecord
+from src.disease_registry import list_diseases, union_us_tickers, us_tickers
 
 ROOT = Path(__file__).resolve().parents[2]
 DEMO_DIR = ROOT / "data" / "demo"
@@ -92,25 +93,28 @@ class SickleCellStockDataCollector:
         print("✗ No stock data collected")
         return None
 
-    def collect_company_financials(self):
-        print("\nCollecting company financial data...")
+    def _fetch_ticker_financials(self, name: str, ticker: str, disease_id: str) -> dict:
+        stock = yf.Ticker(ticker)
+        info = stock.info or {}
+        return {
+            "ticker": ticker,
+            "company": name,
+            "disease_id": disease_id,
+            "market_cap": info.get("marketCap", None),
+            "pe_ratio": info.get("trailingPE", None),
+            "revenue": info.get("totalRevenue", None),
+            "debt_to_equity": info.get("debtToEquity", None),
+            "roe": info.get("returnOnEquity", None),
+            "beta": info.get("beta", None),
+        }
 
+    def collect_company_financials(self):
+        """Legacy SCD-only financials (backward compatible)."""
+        print("\nCollecting company financial data (SCD universe)...")
         financials = []
         for name, ticker in self.companies.items():
             try:
-                stock = yf.Ticker(ticker)
-                info = stock.info or {}
-                fin_data = {
-                    "ticker": ticker,
-                    "company": name,
-                    "market_cap": info.get("marketCap", None),
-                    "pe_ratio": info.get("trailingPE", None),
-                    "revenue": info.get("totalRevenue", None),
-                    "debt_to_equity": info.get("debtToEquity", None),
-                    "roe": info.get("returnOnEquity", None),
-                    "beta": info.get("beta", None),
-                }
-                financials.append(fin_data)
+                financials.append(self._fetch_ticker_financials(name, ticker, "scd"))
                 print(f"  ✓ {ticker}")
             except Exception as e:
                 print(f"  ✗ {ticker}: {e}")
@@ -140,11 +144,36 @@ class SickleCellStockDataCollector:
         print("  (News sentiment analysis to be implemented)")
         return None
 
+    def collect_registry_financials(self) -> pd.DataFrame:
+        """Financials for each disease's US ticker universe (registry-driven)."""
+        print("\nCollecting registry-scoped company financials...")
+        financials: list[dict] = []
+        for spec in list_diseases():
+            for name, ticker in us_tickers(spec.companies).items():
+                try:
+                    financials.append(self._fetch_ticker_financials(name, ticker, spec.disease_id))
+                    print(f"  ✓ {spec.code} · {ticker}")
+                except Exception as e:
+                    print(f"  ✗ {spec.code} · {ticker}: {e}")
+        df = pd.DataFrame(financials)
+        artifact = "company_financials.csv"
+        pull = PullRecord.now(
+            artifact=artifact,
+            source_url="https://query2.finance.yahoo.com/v10/finance/quoteSummary",
+            params={"source": "disease_registry", "diseases": list({r["disease_id"] for r in financials})},
+            extractor="yfinance.Ticker.info",
+            kind="sourced_public_delayed",
+        )
+        write_csv(df, f"{self.data_dir}/{artifact}", artifact=artifact, pull=pull, provenance_store=self.provenance, enrich_ontology=False)
+        print(f"✓ Registry financials saved ({len(df)} rows)")
+        return df
+
     def collect_all_stock_data(self):
-        print("\n=== Collecting Sickle Cell Company Stock Data ===\n")
-        self.collect_stock_prices(self.companies, "stock_prices_companies.csv")
+        print("\n=== Collecting immunology equity data (registry universes) ===\n")
+        all_tickers = union_us_tickers()
+        self.collect_stock_prices(all_tickers, "stock_prices_companies.csv")
         self.collect_stock_prices(self.etfs, "stock_prices_etfs.csv")
-        self.collect_company_financials()
+        self.collect_registry_financials()
         self.collect_news_sentiment()
         print("\n✓ All stock data collection complete!")
 

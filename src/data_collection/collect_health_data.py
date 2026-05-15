@@ -21,6 +21,8 @@ from src.data_collection.demo_tables import (
 )
 from src.data_collection.disease_fallbacks import FALLBACK_TRIALS
 from src.data_collection.parsers.clinical_trials import PARSER_VERSION, parse_legacy_full_studies, parse_v2_studies
+from src.data_collection.parsers.openfda import PARSER_VERSION as OPENFDA_PARSER_VERSION
+from src.data_collection.parsers.openfda import fetch_labels_for_query
 from src.data_collection.provenance import ProvenanceStore, PullRecord
 from src.disease_registry import FOCUS_DISEASE_IDS, DiseaseSpec, get_disease, list_diseases
 
@@ -119,15 +121,38 @@ class ImmunologyHealthDataCollector:
         return df
 
     def collect_fda_approvals(self, spec: DiseaseSpec, df: pd.DataFrame | None = None) -> pd.DataFrame:
+        pull: PullRecord | None = None
         if df is None:
-            df = {"scd": fda_scd, "sle": fda_sle, "sarc": fda_sarc}[spec.disease_id]()
-        pull = PullRecord.now(
-            artifact=spec.fda_artifact,
-            source_url="illustrative://fda_approvals",
-            params={"disease_id": spec.disease_id},
-            kind="illustrative",
-            extractor="collect_fda_approvals",
-        )
+            rows, meta = fetch_labels_for_query(spec.openfda_query, limit=15)
+            if rows:
+                df = pd.DataFrame(rows)
+                df["disease_id"] = spec.disease_id
+                pull = PullRecord.now(
+                    artifact=spec.fda_artifact,
+                    source_url=meta["source_url"],
+                    params=meta.get("params"),
+                    parser_version=OPENFDA_PARSER_VERSION,
+                    extractor="fetch_labels_for_query",
+                    http_status=meta.get("http_status"),
+                    kind="sourced_public",
+                )
+            else:
+                df = {"scd": fda_scd, "sle": fda_sle, "sarc": fda_sarc}[spec.disease_id]()
+                pull = PullRecord.now(
+                    artifact=spec.fda_artifact,
+                    source_url="illustrative://fda_approvals",
+                    params={"disease_id": spec.disease_id, "openfda_error": meta.get("error")},
+                    kind="illustrative",
+                    extractor="collect_fda_approvals",
+                )
+        if pull is None:
+            pull = PullRecord.now(
+                artifact=spec.fda_artifact,
+                source_url="illustrative://fda_approvals",
+                params={"disease_id": spec.disease_id},
+                kind="illustrative",
+                extractor="collect_fda_approvals",
+            )
         write_csv(
             df,
             f"{self.data_dir}/{spec.fda_artifact}",
