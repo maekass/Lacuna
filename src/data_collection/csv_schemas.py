@@ -71,7 +71,7 @@ SCHEMAS: dict[str, dict[str, Any]] = {
     "stock_prices_etfs.csv": {"required": [], "optional": [], "dtypes": {}, "flexible": True},
     "company_financials.csv": {
         "required": ["company", "ticker"],
-        "optional": [],
+        "optional": ["disease_id", "market_cap", "pe_ratio", "revenue", "beta"],
         "dtypes": {},
         "flexible": True,
     },

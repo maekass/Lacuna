@@ -6,6 +6,8 @@ from src.disease_registry.registry import (
     all_artifact_names,
     get_disease,
     list_diseases,
+    union_us_tickers,
+    us_tickers,
 )
 
 __all__ = [
@@ -14,4 +16,6 @@ __all__ = [
     "all_artifact_names",
     "get_disease",
     "list_diseases",
+    "union_us_tickers",
+    "us_tickers",
 ]

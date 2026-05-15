@@ -1,0 +1,14 @@
+{
+  "results": [
+    {
+      "brand_name": ["Hydroxyurea"],
+      "openfda": {
+        "brand_name": ["Hydroxyurea"],
+        "generic_name": ["hydroxyurea"],
+        "manufacturer_name": ["Example Pharma Inc"]
+      },
+      "active_ingredient": ["hydroxyurea"],
+      "indications_and_usage": ["Sickle cell anemia: to reduce frequency of painful crises."]
+    }
+  ]
+}

@@ -31,7 +31,7 @@ from dashboard.theme import (
 from src.data_collection.bootstrap_data import data_is_present, run_full_pipeline, seed_demo_if_missing
 from src.data_collection.data_manifest import kind_display_label
 from src.data_collection.seed_demo_data import sync_ml_from_demo, sync_quant_from_demo
-from src.disease_registry import get_disease, list_diseases
+from src.disease_registry import get_disease, list_diseases, us_tickers
 from src.ontology.enrich import enrich_artifact
 from src.models.ml_artifacts import ml_bundle_present
 from src.quant_framework.quant_artifacts import quant_bundle_present
@@ -234,6 +234,8 @@ def page_artifacts(page: str, disease_id: str) -> list[str]:
         return [spec.pipeline_artifact, spec.fda_artifact]
     if page == "Health Trends":
         return [spec.epidemiology_artifact, spec.trials_artifact]
+    if page == "Stock Analysis":
+        return ["stock_prices_companies.csv", "stock_prices_etfs.csv", "company_financials.csv"]
     return PAGE_ARTIFACTS.get(page, [])
 
 
@@ -518,10 +520,32 @@ elif page == "Health Trends":
         st.info("Clinical trials file exists but has no rows. Re-run collectors with network access.")
 
 elif page == "Stock Analysis":
-    section_header("Equity & fundamentals", "Delayed public vendor data via Yahoo Finance / yfinance")
+    section_header(
+        f"Equity — {_spec.display_name}",
+        "Registry ticker universe · delayed Yahoo Finance / yfinance",
+    )
     fin = load_csv("company_financials.csv")
+    prices = load_csv("stock_prices_companies.csv")
+    tickers = us_tickers(_spec.companies)
     if fin is not None:
-        st.dataframe(fin, use_container_width=True)
+        if "disease_id" in fin.columns:
+            fin = fin[fin["disease_id"] == disease_id]
+        elif "ticker" in fin.columns:
+            fin = fin[fin["ticker"].isin(tickers.values())]
+        st.dataframe(fin, use_container_width=True, hide_index=True)
+    if prices is not None and tickers:
+        try:
+            px = prices.copy()
+            if hasattr(px.columns, "levels") and px.columns.nlevels > 1:
+                avail = [t for t in tickers.values() if t in px.columns.get_level_values(0)]
+                if avail:
+                    close = px[avail]["Close"] if "Close" in px[avail].columns.names else px[avail]
+                    st.markdown("**Price history (close)** — selected tickers")
+                    st.line_chart(close)
+        except Exception:
+            st.caption("Price chart unavailable for current CSV shape; table above lists fundamentals.")
+    if fin is None and prices is None:
+        st.info("Run `python3 src/data_collection/collect_all_data.py` to load equity data.")
 
 elif page == "ML Models":
     section_header("Machine learning", "Demo models on illustrative features — not clinical or investment signals")

@@ -23,6 +23,8 @@ class DiseaseSpec:
     icd10_label: str
     prevalence_us: int
     search_terms: tuple[str, ...]
+    companies: dict[str, str]
+    openfda_query: str
 
     @property
     def trials_artifact(self) -> str:
@@ -72,6 +74,19 @@ DISEASES: dict[str, DiseaseSpec] = {
         icd10_label="Sickle-cell disease without crisis",
         prevalence_us=118_000,
         search_terms=("sickle cell disease", "sickle cell anemia", "hemoglobin S"),
+        companies={
+            "CRISPR Therapeutics": "CRSP",
+            "Vertex Pharmaceuticals": "VRTX",
+            "Beam Therapeutics": "BEAM",
+            "Intellia Therapeutics": "NTLA",
+            "Editas Medicine": "EDIT",
+            "Novartis": "NVS",
+            "Pfizer": "PFE",
+            "Bristol Myers Squibb": "BMY",
+            "Emmaus Life Sciences": "EMMS",
+            "Sangamo Therapeutics": "SGMO",
+        },
+        openfda_query="sickle cell",
     ),
     "sle": DiseaseSpec(
         disease_id="sle",
@@ -90,6 +105,17 @@ DISEASES: dict[str, DiseaseSpec] = {
         icd10_label="Systemic lupus erythematosus, organ/system involvement unspecified",
         prevalence_us=200_000,
         search_terms=("systemic lupus erythematosus", "lupus", "SLE"),
+        companies={
+            "GSK": "GSK",
+            "AstraZeneca": "AZN",
+            "Eli Lilly": "LLY",
+            "Bristol Myers Squibb": "BMY",
+            "Biogen": "BIIB",
+            "Johnson & Johnson": "JNJ",
+            "Immunovant": "IMVT",
+            "Cabaletta Bio": "CABA",
+        },
+        openfda_query="systemic lupus erythematosus",
     ),
     "sarc": DiseaseSpec(
         disease_id="sarc",
@@ -108,8 +134,28 @@ DISEASES: dict[str, DiseaseSpec] = {
         icd10_label="Sarcoidosis, unspecified",
         prevalence_us=150_000,
         search_terms=("sarcoidosis", "pulmonary sarcoidosis"),
+        companies={
+            "Novartis": "NVS",
+            "Insmed": "INSM",
+            "aTyr Pharma": "LIFE",
+            "Johnson & Johnson": "JNJ",
+        },
+        openfda_query="sarcoidosis",
     ),
 }
+
+
+def us_tickers(companies: dict[str, str]) -> dict[str, str]:
+    """Keep liquid US symbols for yfinance (drop dotted foreign listings)."""
+    return {n: t for n, t in companies.items() if t and "." not in t and t.upper() == t}
+
+
+def union_us_tickers() -> dict[str, str]:
+    out: dict[str, str] = {}
+    for spec in list_diseases():
+        for name, ticker in us_tickers(spec.companies).items():
+            out[name] = ticker
+    return out
 
 FOCUS_DISEASE_IDS: tuple[str, ...] = ("scd", "sle", "sarc")
 

@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from src.data_collection.collect_health_data import SickleCellHealthDataCollector
+from src.data_collection.collect_health_data import ImmunologyHealthDataCollector
 from src.data_collection.collect_stock_data import SickleCellStockDataCollector
 from src.data_collection.collect_vc_growth_data import VCGrowthEquityCollector
 from src.data_collection.data_manifest import write_data_manifest
@@ -26,7 +26,7 @@ def main():
 
     vc = VCGrowthEquityCollector()
     vc.collect_all_vc_growth_data()
-    SickleCellHealthDataCollector().collect_all_health_data()
+    ImmunologyHealthDataCollector().collect_all_health_data()
     SickleCellStockDataCollector().collect_all_stock_data()
 
     if demo_bundle_present(DEMO_DIR):
