@@ -17,7 +17,17 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from dashboard.theme import apply_glass_theme, apply_plotly_theme, glass_hero, zone_banner
+from dashboard.theme import (
+    apply_glass_theme,
+    apply_plotly_theme,
+    equity_context_card,
+    glass_hero,
+    section_header,
+    sidebar_brand,
+    styled_bar_chart,
+    styled_line_chart,
+    zone_banner,
+)
 from src.data_collection.bootstrap_data import data_is_present, run_full_pipeline, seed_demo_if_missing
 from src.data_collection.data_manifest import kind_display_label
 from src.data_collection.seed_demo_data import sync_ml_from_demo, sync_quant_from_demo
@@ -167,7 +177,7 @@ def render_health_trends_charts(
         margin=dict(t=50, b=40),
         yaxis=dict(tickformat=",.0f"),
     )
-    st.plotly_chart(apply_plotly_theme(fig_prev), use_container_width=True)
+    st.plotly_chart(styled_line_chart(fig_prev), use_container_width=True)
 
     # --- Chart 2: trials from ClinicalTrials.gov sample when available ---
     by_year = _trials_by_start_year(trials) if trials is not None and not trials.empty else pd.DataFrame()
@@ -179,7 +189,7 @@ def render_health_trends_charts(
                 x=by_year["year"],
                 y=by_year["trial_count"],
                 name="Trials in sample",
-                marker_color="#ff7f0e",
+                marker_color="#818cf8",
             )
         )
         fig_trials.update_layout(
@@ -190,7 +200,7 @@ def render_health_trends_charts(
             margin=dict(t=50, b=40),
             xaxis=dict(dtick=1),
         )
-        st.plotly_chart(apply_plotly_theme(fig_trials), use_container_width=True)
+        st.plotly_chart(styled_bar_chart(fig_trials), use_container_width=True)
         st.caption(
             f"Counts {len(trials)} studies returned by the collector query—not total global trial volume."
         )
@@ -213,7 +223,7 @@ def render_health_trends_charts(
             height=360,
             margin=dict(t=50, b=40),
         )
-        st.plotly_chart(apply_plotly_theme(fig_placeholder), use_container_width=True)
+        st.plotly_chart(styled_line_chart(fig_placeholder), use_container_width=True)
     else:
         st.info("Run `collect_all_data.py` to load ClinicalTrials.gov rows for the trials chart.")
 
@@ -337,7 +347,7 @@ def render_page_provenance(
 
 
 st.set_page_config(
-    page_title="Sickle Cell Investment Analysis",
+    page_title="Immunology Investment Dashboard",
     page_icon="🧬",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -345,8 +355,8 @@ st.set_page_config(
 
 apply_glass_theme()
 glass_hero(
-    "🧬 Immunology Investment Intelligence",
-    "Rare immunology indications with disproportionate burden among Black women — SCD · SLE · sarcoidosis",
+    "Immunology Investment Intelligence",
+    "Quantitative research across SCD, SLE, and sarcoidosis — epidemiology, pipeline, and portfolio analytics with full data provenance.",
 )
 
 st.markdown(
@@ -368,9 +378,10 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+sidebar_brand()
 st.sidebar.markdown(
-    "**Reminder:** all scores and population curves here are **demo / illustrative** — not advice. "
-    "See top banner and README."
+    '<p style="font-size:0.8rem;color:#64748b;margin:0 0 1rem;">Demo data only — not investment or medical advice.</p>',
+    unsafe_allow_html=True,
 )
 st.sidebar.header("Indication")
 _disease_labels = {d.disease_id: d.display_name for d in list_diseases()}
@@ -433,10 +444,9 @@ if missing:
     )
 
 if page == "Overview":
-    st.subheader(f"Pipeline overview — {_spec.display_name}")
-    st.caption(
-        f"MeSH {_spec.mesh_id} · SNOMED {_spec.snomed_id} · ICD-10 {_spec.icd10_code}. "
-        "Pipeline and POS values are **illustrative / demo**—not clinical or investment recommendations."
+    section_header(
+        f"Pipeline — {_spec.display_name}",
+        f"MeSH {_spec.mesh_id} · SNOMED {_spec.snomed_id} · ICD-10 {_spec.icd10_code}",
     )
     pipeline = load_csv(_spec.pipeline_artifact)
     fda = load_csv(_spec.fda_artifact)
@@ -455,18 +465,20 @@ if page == "Overview":
             color=color_col,
             title=f"Illustrative POS by company — {_spec.code} (demo)",
         )
-        st.plotly_chart(apply_plotly_theme(fig), use_container_width=True)
+        st.plotly_chart(styled_bar_chart(fig), use_container_width=True)
     else:
         st.info("Run `python3 scripts/build_disease_demo_bundle.py` or collectors to populate pipeline tables.")
     if fda is not None:
-        st.subheader("Approved / reference therapies (illustrative)")
+        section_header("Approved therapies", "Illustrative reference rows — not a live regulatory feed")
         st.dataframe(enrich_artifact(_spec.fda_artifact, fda), use_container_width=True, hide_index=True)
 
 elif page == "Health Trends":
-    st.subheader(f"Epidemiology & clinical development — {_spec.display_name}")
-    st.info(
-        f"**Health equity context:** {_spec.disparity_note} "
-        "**Data note:** burden series are illustrative placeholders until wired to cited primary sources."
+    section_header(
+        f"Epidemiology — {_spec.display_name}",
+        "Burden, trial activity, and ontology-anchored clinical development data",
+    )
+    equity_context_card(
+        f"{_spec.disparity_note} Burden series are illustrative until wired to cited primary sources."
     )
     epi = load_csv(_spec.epidemiology_artifact)
     trials = load_csv(_spec.trials_artifact)
@@ -484,10 +496,9 @@ elif page == "Health Trends":
 
     if trials is not None and not trials.empty:
         trials = enrich_artifact(_spec.trials_artifact, trials)
-        st.subheader("Clinical trials (sourced when API responds)")
-        st.caption(
-            f"ClinicalTrials.gov · query: `{_spec.clinical_trials_query}` · "
-            f"MeSH {_spec.mesh_id} · SNOMED {_spec.snomed_id} · ICD-10 {_spec.icd10_code}"
+        section_header(
+            "Clinical trials",
+            f"ClinicalTrials.gov · `{_spec.clinical_trials_query}` · MeSH {_spec.mesh_id}",
         )
         display_trials = trials.copy()
         if "start_date" in display_trials.columns:
@@ -507,21 +518,13 @@ elif page == "Health Trends":
         st.info("Clinical trials file exists but has no rows. Re-run collectors with network access.")
 
 elif page == "Stock Analysis":
-    st.subheader("Stock analysis")
-    st.caption(
-        "Prices and fundamentals are **Sourced (public, delayed vendor)** via Yahoo Finance / yfinance when files exist. "
-        "See provenance expander above."
-    )
+    section_header("Equity & fundamentals", "Delayed public vendor data via Yahoo Finance / yfinance")
     fin = load_csv("company_financials.csv")
     if fin is not None:
         st.dataframe(fin, use_container_width=True)
 
 elif page == "ML Models":
-    st.subheader("ML models")
-    st.caption(
-        "**Demo / non-advisory:** Regression uses illustrative health + delayed stock features; "
-        "trial-success classifiers train on **synthetic** multi-disease rows—not clinical predictions."
-    )
+    section_header("Machine learning", "Demo models on illustrative features — not clinical or investment signals")
     if not _ensure_ml_artifacts_cached():
         st.warning(
             "No fitted models found. From the project root run `python3 scripts/train_models.py` "
@@ -547,7 +550,7 @@ elif page == "ML Models":
                 text="R2",
             )
             fig_cmp.update_traces(texttemplate="%{text:.3f}", textposition="outside")
-            st.plotly_chart(apply_plotly_theme(fig_cmp), use_container_width=True)
+            st.plotly_chart(styled_bar_chart(fig_cmp), use_container_width=True)
 
         col_a, col_b = st.columns(2)
         with col_a:
@@ -599,11 +602,7 @@ elif page == "ML Models":
             st.json(out)
 
 elif page == "Quant Strategy":
-    st.subheader("Quant strategy")
-    st.caption(
-        "**Demo / non-advisory:** Backtests and factor regressions use **delayed vendor** stock CSVs "
-        "from `data/raw/` — not live trading signals."
-    )
+    section_header("Quant strategy", "Backtests and factor models on delayed-vendor return samples")
     if not _ensure_quant_artifacts_cached():
         st.warning("No quant outputs found. Run `python3 scripts/train_quant.py` from the project root.")
     else:
@@ -627,7 +626,7 @@ elif page == "Quant Strategy":
                 title="IBB beta by ticker (demo)",
                 color="r_squared",
             )
-            st.plotly_chart(apply_plotly_theme(fig_f), use_container_width=True)
+            st.plotly_chart(styled_bar_chart(fig_f), use_container_width=True)
 
         mc = load_csv("monte_carlo_fan.csv", QUANT_DATA)
         if mc is not None:
@@ -642,14 +641,10 @@ elif page == "Quant Strategy":
                 yaxis_title="Growth of $1",
                 height=360,
             )
-            st.plotly_chart(apply_plotly_theme(fig_mc), use_container_width=True)
+            st.plotly_chart(styled_line_chart(fig_mc), use_container_width=True)
 
 elif page == "Portfolio Optimization":
-    st.subheader("Portfolio optimization")
-    st.caption(
-        "**Demo / non-advisory:** Mean-variance-style random portfolios and scipy optimizers "
-        "on the same delayed-vendor return sample — not allocation advice."
-    )
+    section_header("Portfolio optimization", "Mean-variance-style demos — not allocation advice")
     if not _ensure_quant_artifacts_cached():
         st.warning("No portfolio outputs found. Run `python3 scripts/train_quant.py` from the project root.")
     else:
@@ -679,8 +674,7 @@ elif page == "Portfolio Optimization":
             )
 
 elif page == "Investment Stages":
-    st.subheader("Investment stages")
-    st.caption("Private-market tables below are **Illustrative** (see manifest). Not licensed deal data.")
+    section_header("Investment stages", "Illustrative private-market tables — not licensed deal data")
     vc = load_csv("vc_deals_scd.csv")
     growth = load_csv("growth_equity_deals_scd.csv")
     if vc is not None and growth is not None:
@@ -690,7 +684,7 @@ elif page == "Investment Stages":
         st.dataframe(growth, use_container_width=True)
 
 elif page == "Market Analysis":
-    st.subheader("Market analysis")
+    section_header("Market analysis", "Illustrative TAM and competitive scaffolding")
     st.warning(
         "**Demo / non-advisory:** Market size and competitive tables below are illustrative scaffolding. "
         "**Investment attractiveness scores and buy/hold/sell labels are demo weights only**—not research, "
