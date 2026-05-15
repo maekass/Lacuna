@@ -20,6 +20,22 @@ GitHub stores the **Streamlit UI as code** ([`dashboard/app.py`](https://github.
 
 For a **public URL** without Codespaces, deploy with [Streamlit Community Cloud](#deploy-on-streamlit-community-cloud) and paste your `*.streamlit.app` link in the README there.
 
+### Dashboard screenshots
+
+These are **static images** checked into [`docs/screenshots/`](docs/screenshots/) so the README shows what the Streamlit UI looks like after you run the collectors (GitHub does not render the live app here). All charts and scores remain **demo / illustrative** as in the app.
+
+**Overview** (banner, disclaimer, data provenance expander, pipeline table region):
+
+![Overview — Streamlit dashboard](docs/screenshots/overview.png)
+
+**Health trends** (illustrative population-style series + ClinicalTrials.gov trial rows):
+
+![Health trends — Streamlit dashboard](docs/screenshots/health-trends.png)
+
+**Market analysis** (illustrative market-size table + demo attractiveness scores):
+
+![Market analysis — Streamlit dashboard](docs/screenshots/market-analysis.png)
+
 ## One-line pitch (cover letter / resume)
 
 End-to-end **Python research stack** combining public **sickle cell epidemiology and trial** signals with **listed biotech/pharma** data, **staged private-market framing** (VC / growth / public), and a **Streamlit** surface—explicitly **non-advisory**, public sources only, with **illustrative** market and scoring tables until you wire authoritative feeds.
@@ -68,6 +84,8 @@ sickle_cell_investment_analysis/
 ├── .streamlit/
 │   └── config.toml               # local / Community Cloud defaults (e.g. usage stats)
 ├── data/raw/
+├── docs/
+│   └── screenshots/              # README gallery (static captures of the Streamlit UI)
 ├── notebooks/
 ├── src/
 │   ├── data_collection/
@@ -132,4 +150,4 @@ ClinicalTrials.gov and Yahoo Finance require network access. **`collect_health_d
 - **`data_manifest.json`** (generated, gitignored) plus **per-page provenance** in the dashboard.
 - **`.gitignore`** ignores generated `*.csv` and `data/raw/data_manifest.json` while keeping `data/raw/.gitkeep`.
 - **GitHub ↔ local:** Merged unrelated histories once; canonical README and pipeline match the sickle cell Streamlit stack above; **Community Cloud** deploy steps and **`.streamlit/config.toml`** added; placeholder **Django** workflow removed in favor of **`ci.yml`** compile smoke.
-- **Dashboard on GitHub:** **`.devcontainer/devcontainer.json`** plus README [Dashboard from GitHub](#dashboard-from-github) so you can run Streamlit in **Codespaces** from the green **Code** button.
+- **Dashboard on GitHub:** **`.devcontainer/devcontainer.json`** plus README [Dashboard from GitHub](#dashboard-from-github) so you can run Streamlit in **Codespaces** from the green **Code** button; **screenshots** under `docs/screenshots/` preview the UI in this README.
