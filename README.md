@@ -4,6 +4,19 @@
 
 **On GitHub:** [Sickle-Cell-Investment-Analysis](https://github.com/maekass/Sickle-Cell-Investment-Analysis?tab=readme-ov-file) — README, source, and issues for this project.
 
+## Streamlit dashboard (links)
+
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=https://github.com/maekass/Sickle-Cell-Investment-Analysis&branch=main&mainPath=dashboard%2Fapp.py)
+
+| How you run it | Link |
+|----------------|------|
+| **GitHub Codespaces** (recommended) | [Create a codespace](https://codespaces.new/maekass/Sickle-Cell-Investment-Analysis) → start Streamlit on port **8501** → **Ports → Open in Browser** (URL shape: `https://<codespace-name>-8501.app.github.dev`) |
+| **Your Codespace (port 8501)** | **[Open Streamlit dashboard](https://bookish-trout-v6j6jgwq4wjgcxxxw-8501.app.github.dev)** — [Codespace IDE](https://bookish-trout-v6j6jgwq4wjgcxxxw.github.dev); *only works while this codespace is running and `streamlit run … --server.port 8501` is active* |
+| **Streamlit Community Cloud** | [Deploy this repo on share.streamlit.io](https://share.streamlit.io/deploy?repository=https://github.com/maekass/Sickle-Cell-Investment-Analysis&branch=main&mainPath=dashboard%2Fapp.py) — after deploy, paste your `https://….streamlit.app` URL below |
+| **Local** | [http://localhost:8501](http://localhost:8501) after `streamlit run dashboard/app.py` from the repo root |
+
+**Live app (Community Cloud):** _https://YOUR-SUBDOMAIN.streamlit.app — replace after you deploy_
+
 ## Dashboard from GitHub
 
 GitHub stores the **Streamlit UI as code** ([`dashboard/app.py`](https://github.com/maekass/Sickle-Cell-Investment-Analysis/blob/main/dashboard/app.py)); it does **not** run the interactive app inside the README or file tree. To use the dashboard **from this GitHub repo** without cloning locally:
@@ -40,21 +53,27 @@ For a **public URL** without Codespaces, deploy with [Streamlit Community Cloud]
 
 ### Dashboard screenshots
 
-These are **static images** checked into [`docs/screenshots/`](docs/screenshots/) so the README shows what the Streamlit UI looks like after you run the collectors (GitHub does not render the live app here). All charts and scores remain **demo / illustrative** as in the app.
+**1440×900** captures taken with sidebar collapsed, including graphs and tables. Regenerate any time with `python3 scripts/capture_screenshots.py` (Streamlit running on port 18501 + `playwright` installed).
 
-**Why they can look “squished” or sidebar-heavy (e.g. on the [raw `market-analysis.png` view](https://github.com/maekass/Sickle-Cell-Investment-Analysis/blob/main/docs/screenshots/market-analysis.png)):** The PNGs are about **966×1458** pixels—captured from a **narrow automation viewport** with Streamlit’s **sidebar open**. Streamlit gives the sidebar a large fixed share of that width, so the **main content is only a thin column** in the image. That is a **framing choice in the screenshot**, not how GitHub is “breaking” the file. On GitHub, the blob page shows the image **as uploaded**; in the README, images **scale down** to the page column but keep the same aspect ratio. For a wide layout, open the app in **Codespaces or a desktop browser** at **1280px+** width (or collapse the sidebar with **`<<`**) and replace the PNGs if you want new captures.
+**Overview** — disclaimer banner · gene therapy pipeline table · POS bar chart (illustrative):
 
-**Overview** (banner, disclaimer, data provenance expander, pipeline table region):
+![Overview](docs/screenshots/overview.png)
 
-![Overview — Streamlit dashboard](docs/screenshots/overview.png)
+**Health Trends** — CDC-style prevalence line chart · ClinicalTrials.gov trial table:
 
-**Health trends** (illustrative population-style series + ClinicalTrials.gov trial rows):
+![Health Trends](docs/screenshots/health-trends.png)
 
-![Health trends — Streamlit dashboard](docs/screenshots/health-trends.png)
+**Stock Analysis** — company financials table (live via yfinance, public/delayed):
 
-**Market analysis** (illustrative market-size table + demo attractiveness scores):
+![Stock Analysis](docs/screenshots/stock-analysis.png)
 
-![Market analysis — Streamlit dashboard](docs/screenshots/market-analysis.png)
+**Investment Stages** — VC / growth equity deal tables (illustrative):
+
+![Investment Stages](docs/screenshots/investment-stages.png)
+
+**Market Analysis** — TAM table · demo investment attractiveness scores:
+
+![Market Analysis](docs/screenshots/market-analysis.png)
 
 ## One-line pitch (cover letter / resume)
 
@@ -184,7 +203,7 @@ Generated **`*.csv`** and **`data/raw/data_manifest.json`** are **gitignored**, 
 - Add a **scheduled job** elsewhere that writes into a bucket you read from the app; or  
 - Use **[Secrets](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management)** for API keys and extend collectors (not included by default).
 
-**Live app (Community Cloud):** _https://YOUR-SUBDOMAIN.streamlit.app — paste your URL from the Streamlit workspace after the first successful deploy_
+See **[Streamlit dashboard (links)](#streamlit-dashboard-links)** at the top of this README for Codespaces, Community Cloud deploy, and local URLs.
 
 ## Data sources and network
 
