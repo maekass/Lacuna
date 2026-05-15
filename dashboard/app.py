@@ -283,8 +283,8 @@ def render_sidebar_provenance(
                 artifact_dir = QUANT_DATA
                 names = [
                     "backtest_metrics.csv",
-                    "walk_forward_folds.csv",
-                    "walk_forward_summary.csv",
+                    "walk_forward_oos_curve.csv",
+                    "walk_forward_compounded_summary.csv",
                     "factor_model_betas.csv",
                     "efficient_frontier.csv",
                     "portfolio_weights.csv",
@@ -642,16 +642,63 @@ elif page == "Quant Strategy":
             st.markdown("**In-sample backtest** (full history — equal weight vs health-tilt demo)")
             st.dataframe(backtest, use_container_width=True, hide_index=True)
 
+        wf_compound = load_csv("walk_forward_compounded_summary.csv", QUANT_DATA)
         wf_summary = load_csv("walk_forward_summary.csv", QUANT_DATA)
+        wf_curve = load_csv("walk_forward_oos_curve.csv", QUANT_DATA)
         wf_folds = load_csv("walk_forward_folds.csv", QUANT_DATA)
+
+        def _filter_wf(df: Optional[pd.DataFrame]) -> Optional[pd.DataFrame]:
+            if df is None or df.empty:
+                return df
+            if "disease_id" not in df.columns:
+                return df
+            scoped = df[df["disease_id"] == disease_id]
+            if scoped.empty and disease_id != "all":
+                scoped = df[df["disease_id"] == "all"]
+            return scoped
+
+        wf_compound = _filter_wf(wf_compound)
+        wf_summary = _filter_wf(wf_summary)
+        wf_curve = _filter_wf(wf_curve)
+        wf_folds = _filter_wf(wf_folds)
+
+        if wf_compound is not None and not wf_compound.empty:
+            st.markdown(
+                f"**Walk-forward OOS — {_spec.display_name}** "
+                "(24m train · 6m test · chained test windows)"
+            )
+            st.dataframe(wf_compound, use_container_width=True, hide_index=True)
+
+        if wf_curve is not None and not wf_curve.empty:
+            curve = wf_curve.copy()
+            curve["date"] = pd.to_datetime(curve["date"])
+            fig_oos = go.Figure()
+            for strat in curve["strategy"].unique():
+                sub = curve[curve["strategy"] == strat].sort_values("date")
+                fig_oos.add_trace(
+                    go.Scatter(
+                        x=sub["date"],
+                        y=sub["cumulative_return"],
+                        name=strat,
+                        mode="lines",
+                    )
+                )
+            fig_oos.update_layout(
+                title="Compounded out-of-sample equity (growth of $1)",
+                xaxis_title="Date",
+                yaxis_title="Cumulative return",
+                height=380,
+                legend=dict(orientation="h", yanchor="bottom", y=1.02),
+            )
+            st.plotly_chart(styled_line_chart(fig_oos), use_container_width=True)
+
         if wf_summary is not None and not wf_summary.empty:
-            st.markdown("**Walk-forward out-of-sample** (24m train · 6m test · 6m step on price panel)")
-            st.dataframe(wf_summary, use_container_width=True, hide_index=True)
+            with st.expander("Fold-average test metrics (per window)", expanded=False):
+                st.dataframe(wf_summary, use_container_width=True, hide_index=True)
             if wf_folds is not None and not wf_folds.empty:
-                with st.expander("Fold-level test metrics", expanded=False):
-                    st.dataframe(wf_folds, use_container_width=True, hide_index=True)
+                st.dataframe(wf_folds, use_container_width=True, hide_index=True)
             st.caption(
-                "OOS metrics are computed on each test window only; summary row averages fold-level stats."
+                "Chart uses chained OOS test returns only. Fold table averages separate test windows."
             )
 
         factors = load_csv("factor_model_betas.csv", QUANT_DATA)
