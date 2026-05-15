@@ -19,6 +19,10 @@ from src.data_collection.demo_tables import (
     pipeline_scd,
     pipeline_sle,
 )
+from src.data_collection.parsers.cdc_scd import cdc_scd_source_meta
+from src.data_collection.parsers.epidemiology_series import build_epidemiology_dataframe
+from src.data_collection.parsers.orphanet import PARSER_VERSION as ORPHANET_PARSER_VERSION
+from src.data_collection.parsers.orphanet import fetch_orphanet_epidemiology, select_us_point_prevalence_per_100k
 from src.data_collection.disease_fallbacks import FALLBACK_TRIALS
 from src.data_collection.parsers.clinical_trials import PARSER_VERSION, parse_legacy_full_studies, parse_v2_studies
 from src.data_collection.parsers.openfda import PARSER_VERSION as OPENFDA_PARSER_VERSION
@@ -33,18 +37,53 @@ class ImmunologyHealthDataCollector:
         os.makedirs(data_dir, exist_ok=True)
         self.provenance = ProvenanceStore(data_dir)
 
-    def collect_epidemiology(self, spec: DiseaseSpec) -> pd.DataFrame:
+    def collect_epidemiology(
+        self,
+        spec: DiseaseSpec,
+        *,
+        trials: pd.DataFrame | None = None,
+    ) -> pd.DataFrame:
         print(f"Collecting epidemiology for {spec.display_name}...")
-        df = epidemiology_df(spec.disease_id)
-        pull = PullRecord.now(
-            artifact=spec.epidemiology_artifact,
-            source_url="illustrative://epidemiology",
-            params={"disease_id": spec.disease_id},
-            parser_version="illustrative.v1",
-            extractor="collect_epidemiology",
-            kind="illustrative",
-            notes=spec.disparity_note[:200],
-        )
+        entries, meta = fetch_orphanet_epidemiology(spec.orpha_code)
+        us_rate = select_us_point_prevalence_per_100k(entries) if entries else None
+        kind = "illustrative"
+        notes = spec.disparity_note[:200]
+
+        if us_rate is not None:
+            df = build_epidemiology_dataframe(
+                spec,
+                us_prevalence_per_100k=us_rate,
+                trials=trials,
+            )
+            kind = "sourced_public"
+            notes = (
+                f"Orphanet ORPHA{spec.orpha_code} U.S. point prevalence {us_rate}/100k "
+                f"(CC BY 4.0). Trial active count from collector sample when available."
+            )
+            if spec.disease_id == "scd":
+                notes += f" {cdc_scd_source_meta()['notes']}"
+            pull = PullRecord.now(
+                artifact=spec.epidemiology_artifact,
+                source_url=meta["source_url"],
+                params=meta.get("params"),
+                parser_version=ORPHANET_PARSER_VERSION,
+                extractor="fetch_orphanet_epidemiology",
+                http_status=meta.get("http_status"),
+                kind=kind,
+                notes=notes,
+            )
+        else:
+            df = epidemiology_df(spec.disease_id)
+            pull = PullRecord.now(
+                artifact=spec.epidemiology_artifact,
+                source_url="illustrative://epidemiology",
+                params={"disease_id": spec.disease_id, "orphanet_error": meta.get("error")},
+                parser_version="illustrative.v1",
+                extractor="collect_epidemiology",
+                kind=kind,
+                notes=notes,
+            )
+
         write_csv(
             df,
             f"{self.data_dir}/{spec.epidemiology_artifact}",
@@ -52,6 +91,7 @@ class ImmunologyHealthDataCollector:
             pull=pull,
             provenance_store=self.provenance,
         )
+        print(f"  ✓ {len(df)} epidemiology rows → {spec.epidemiology_artifact} ({kind})")
         return df
 
     def collect_clinical_trials(self, spec: DiseaseSpec, max_trials: int = 50) -> pd.DataFrame:
@@ -183,8 +223,8 @@ class ImmunologyHealthDataCollector:
 
     def collect_disease(self, disease_id: str) -> None:
         spec = get_disease(disease_id)
-        self.collect_epidemiology(spec)
-        self.collect_clinical_trials(spec)
+        trials_df = self.collect_clinical_trials(spec)
+        self.collect_epidemiology(spec, trials=trials_df)
         self.collect_fda_approvals(spec)
         self.collect_pipeline(spec)
 

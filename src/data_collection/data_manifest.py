@@ -15,8 +15,8 @@ from src.data_collection.provenance import ProvenanceStore
 # kind: illustrative | sourced_public | sourced_public_delayed
 ARTIFACT_REGISTRY: dict[str, dict[str, str]] = {
     "cdc_sickle_cell_data.csv": {
-        "kind": "illustrative",
-        "summary": "Generated time series in code; not a live CDC API extract. Replace with cited agency data.",
+        "kind": "sourced_public",
+        "summary": "Orphanet U.S. point prevalence (CC BY 4.0) + CDC-cited birth ratio and approval-year flags; trial counts from ClinicalTrials.gov sample.",
     },
     "clinical_trials_scd.csv": {
         "kind": "sourced_public",
@@ -39,12 +39,12 @@ ARTIFACT_REGISTRY: dict[str, dict[str, str]] = {
         "summary": "ClinicalTrials.gov query: sarcoidosis.",
     },
     "epidemiology_sle.csv": {
-        "kind": "illustrative",
-        "summary": "Illustrative SLE burden time series; disproportionate impact among Black women (cite primary sources).",
+        "kind": "sourced_public",
+        "summary": "Orphanet U.S. point prevalence (ORPHA536, CC BY 4.0) scaled to annual U.S. population; trial counts from collector sample.",
     },
     "epidemiology_sarc.csv": {
-        "kind": "illustrative",
-        "summary": "Illustrative sarcoidosis burden time series; cite primary sources.",
+        "kind": "sourced_public",
+        "summary": "Orphanet U.S. point prevalence (ORPHA797, CC BY 4.0) scaled to annual U.S. population; trial counts from collector sample.",
     },
     "pipeline_sle.csv": {
         "kind": "illustrative",

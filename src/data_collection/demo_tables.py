@@ -2,35 +2,20 @@
 
 from __future__ import annotations
 
-import numpy as np
 import pandas as pd
 
+from src.data_collection.parsers.epidemiology_series import build_epidemiology_dataframe
 from src.disease_registry import get_disease
+
+# Illustrative Orphanet U.S. point-prevalence rates (per 100k) for offline demo bundle.
+_DEMO_ORPHANET_US_PER_100K = {"scd": 30.0, "sle": 53.6, "sarc": 60.0}
 
 
 def epidemiology_df(disease_id: str) -> pd.DataFrame:
+    """Offline epidemiology rows using cited anchors (no network)."""
     spec = get_disease(disease_id)
-    dates = pd.date_range(start="2015-01-01", end="2024-12-31", freq="QE")
-    n = len(dates)
-    if disease_id == "scd":
-        return pd.DataFrame(
-            {
-                "date": dates,
-                "scd_births_per_1000": np.linspace(1.2, 1.5, n),
-                "scd_prevalence_us": np.linspace(100_000, 120_000, n),
-                "new_treatments_approved": np.linspace(0, 2, n).astype(int),
-                "clinical_trials_active": np.linspace(45, 105, n),
-            }
-        )
-    return pd.DataFrame(
-        {
-            "date": dates,
-            "prevalence_us": np.linspace(spec.prevalence_us * 0.92, spec.prevalence_us * 1.05, n),
-            "clinical_trials_active": np.linspace(40, 100, n),
-            "new_treatments_approved": np.zeros(n, dtype=int),
-            "disease_id": disease_id,
-        }
-    )
+    rate = _DEMO_ORPHANET_US_PER_100K.get(disease_id)
+    return build_epidemiology_dataframe(spec, us_prevalence_per_100k=rate, trials=None)
 
 
 def pipeline_sle() -> pd.DataFrame:

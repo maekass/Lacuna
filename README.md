@@ -98,7 +98,7 @@ After `python src/data_collection/collect_all_data.py` and `python src/models/ma
 
 ## Equity, population data, and compliance (research framing)
 
-- **Population and burden metrics** in `cdc_sickle_cell_data.csv` are currently **illustrated time series** generated in code to stand in until you wire **primary sources** (for example [CDC sickle cell disease data](https://www.cdc.gov/ncbddd/sicklecell/data.html), peer-reviewed epidemiology, or agency surveillance). Treat them as **non-authoritative** unless you replace them with cited pulls and document the extract date in your own workflow.
+- **Population and burden metrics** in `cdc_sickle_cell_data.csv` and `epidemiology_*.csv` are built from **[Orphadata](https://api.orphadata.com/)** U.S. point-prevalence rates (CC BY 4.0), **CDC-cited** sickle cell birth anchors, and ClinicalTrials.gov **sample** counts—not live agency surveillance extracts. Re-run `python3 src/data_collection/collect_all_data.py` with network access to refresh provenance.
 - **Health equity:** Disparate burden and access are legitimate research topics; keep **population-level public statistics** separate from **market or “investment” framing**, and avoid implying that communities exist to validate a financial thesis.
 - **Dashboard:** locally or in **GitHub Codespaces**, run `streamlit run dashboard/app.py` and open port **8501** — see [Run the Streamlit dashboard](#run-the-streamlit-dashboard), [Getting started](#getting-started), and [`dashboard/app.py`](dashboard/app.py).
 
