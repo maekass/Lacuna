@@ -11,6 +11,9 @@ from pathlib import Path
 import pandas as pd
 import yfinance as yf
 
+from src.data_collection.csv_writer import write_csv
+from src.data_collection.provenance import ProvenanceStore, PullRecord
+
 ROOT = Path(__file__).resolve().parents[2]
 DEMO_DIR = ROOT / "data" / "demo"
 
@@ -19,6 +22,7 @@ class SickleCellStockDataCollector:
     def __init__(self, data_dir="data/raw"):
         self.data_dir = data_dir
         os.makedirs(data_dir, exist_ok=True)
+        self.provenance = ProvenanceStore(data_dir)
 
         # Tickers chosen for liquidity on Yahoo Finance; refresh as M&A / listings change
         # (GBT / BLUE were removed after delisting / thin history — see README.)
@@ -60,7 +64,21 @@ class SickleCellStockDataCollector:
 
         if all_data:
             combined = pd.concat(all_data, axis=1)
-            combined.to_csv(f"{self.data_dir}/{filename}")
+            out = Path(self.data_dir) / filename
+            if combined.empty:
+                print("✗ No stock data collected")
+                return None
+            combined.to_csv(out)
+            self.provenance.record(
+                PullRecord.now(
+                    artifact=filename,
+                    source_url="https://finance.yahoo.com",
+                    params={"tickers": list(tickers.values()), "period": "5y"},
+                    row_count=len(combined),
+                    extractor="yfinance.Ticker.history",
+                    kind="sourced_public_delayed",
+                )
+            )
             print(f"✓ Stock prices saved to {self.data_dir}/{filename}")
             return combined
 
@@ -98,7 +116,22 @@ class SickleCellStockDataCollector:
                 print(f"  ✗ {ticker}: {e}")
 
         df = pd.DataFrame(financials)
-        df.to_csv(f"{self.data_dir}/company_financials.csv", index=False)
+        artifact = "company_financials.csv"
+        pull = PullRecord.now(
+            artifact=artifact,
+            source_url="https://query2.finance.yahoo.com/v10/finance/quoteSummary",
+            params={"tickers": list(self.companies.values()), "modules": "summaryDetail,financialData"},
+            extractor="yfinance.Ticker.info",
+            kind="sourced_public_delayed",
+        )
+        write_csv(
+            df,
+            f"{self.data_dir}/{artifact}",
+            artifact=artifact,
+            pull=pull,
+            provenance_store=self.provenance,
+            enrich_ontology=False,
+        )
         print(f"\n✓ Company financials saved ({len(df)} companies)")
         return df
 

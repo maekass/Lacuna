@@ -1,0 +1,23 @@
+{
+  "FullStudiesResponse": {
+    "FullStudies": [
+      {
+        "Study": {
+          "ProtocolSection": {
+            "IdentificationModule": {
+              "NCTId": "NCT00445978",
+              "BriefTitle": "Phase 2 Study of 6R-BH4 in Subjects With Sickle Cell Disease"
+            },
+            "StatusModule": {
+              "OverallStatus": "COMPLETED",
+              "StartDateStruct": { "StartDate": "2007-05" }
+            },
+            "DesignModule": {
+              "PhaseList": { "Phase": "Phase 2" }
+            }
+          }
+        }
+      }
+    ]
+  }
+}
