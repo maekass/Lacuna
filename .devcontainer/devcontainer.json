@@ -1,0 +1,20 @@
+{
+  "name": "Sickle Cell Investment Analysis (Streamlit)",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11-bookworm",
+  "postCreateCommand": "pip install -r requirements.txt",
+  "forwardPorts": [8501],
+  "portsAttributes": {
+    "8501": {
+      "label": "Streamlit dashboard",
+      "onAutoForward": "notify"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      },
+      "extensions": ["ms-python.python"]
+    }
+  }
+}

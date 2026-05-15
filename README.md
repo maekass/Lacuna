@@ -4,6 +4,22 @@
 
 **On GitHub:** [Sickle-Cell-Investment-Analysis](https://github.com/maekass/Sickle-Cell-Investment-Analysis?tab=readme-ov-file) — README, source, and issues for this project.
 
+## Dashboard from GitHub
+
+GitHub stores the **Streamlit UI as code** ([`dashboard/app.py`](https://github.com/maekass/Sickle-Cell-Investment-Analysis/blob/main/dashboard/app.py)); it does **not** run the interactive app inside the README or file tree. To use the dashboard **from this GitHub repo** without cloning locally:
+
+1. **[Open in GitHub Codespaces](https://codespaces.new/maekass/Sickle-Cell-Investment-Analysis)** — uses [`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json) to install `requirements.txt` and forward port **8501**.
+2. In the Codespaces terminal (repo root), optionally refresh data then start Streamlit:
+   ```bash
+   python src/data_collection/collect_all_data.py
+   python src/models/investment_stage_analysis.py
+   python src/models/market_analysis.py
+   streamlit run dashboard/app.py --server.address 0.0.0.0 --server.port 8501
+   ```
+3. When GitHub prompts, **open the forwarded port** for `8501` and use the **Browser** tab to load the app.
+
+For a **public URL** without Codespaces, deploy with [Streamlit Community Cloud](#deploy-on-streamlit-community-cloud) and paste your `*.streamlit.app` link in the README there.
+
 ## One-line pitch (cover letter / resume)
 
 End-to-end **Python research stack** combining public **sickle cell epidemiology and trial** signals with **listed biotech/pharma** data, **staged private-market framing** (VC / growth / public), and a **Streamlit** surface—explicitly **non-advisory**, public sources only, with **illustrative** market and scoring tables until you wire authoritative feeds.
@@ -35,7 +51,7 @@ After `python src/data_collection/collect_all_data.py` and `python src/models/ma
 
 - **Population and burden metrics** in `cdc_sickle_cell_data.csv` are currently **illustrated time series** generated in code to stand in until you wire **primary sources** (for example [CDC sickle cell disease data](https://www.cdc.gov/ncbddd/sicklecell/data.html), peer-reviewed epidemiology, or agency surveillance). Treat them as **non-authoritative** unless you replace them with cited pulls and document the extract date in your own workflow.
 - **Health equity:** Disparate burden and access are legitimate research topics; keep **population-level public statistics** separate from **market or “investment” framing**, and avoid implying that communities exist to validate a financial thesis.
-- **Dashboard (local):** with `streamlit run dashboard/app.py`, open **[http://localhost:8501](http://localhost:8501)** — see [Getting started](#getting-started) and [`dashboard/app.py`](dashboard/app.py).
+- **Dashboard:** locally or in **GitHub Codespaces**, run `streamlit run dashboard/app.py` and open port **8501** — see [Dashboard from GitHub](#dashboard-from-github), [Getting started](#getting-started), and [`dashboard/app.py`](dashboard/app.py).
 
 ## Tech stack
 
@@ -45,6 +61,8 @@ Python 3.9+, pandas, numpy, scikit-learn, optional TensorFlow/PyTorch later, yfi
 
 ```
 sickle_cell_investment_analysis/
+├── .devcontainer/
+│   └── devcontainer.json         # GitHub Codespaces: Python 3.11, deps, Streamlit port 8501
 ├── .github/workflows/
 │   └── ci.yml                    # install deps + compileall smoke (dashboard + pipeline)
 ├── .streamlit/
@@ -114,3 +132,4 @@ ClinicalTrials.gov and Yahoo Finance require network access. **`collect_health_d
 - **`data_manifest.json`** (generated, gitignored) plus **per-page provenance** in the dashboard.
 - **`.gitignore`** ignores generated `*.csv` and `data/raw/data_manifest.json` while keeping `data/raw/.gitkeep`.
 - **GitHub ↔ local:** Merged unrelated histories once; canonical README and pipeline match the sickle cell Streamlit stack above; **Community Cloud** deploy steps and **`.streamlit/config.toml`** added; placeholder **Django** workflow removed in favor of **`ci.yml`** compile smoke.
+- **Dashboard on GitHub:** **`.devcontainer/devcontainer.json`** plus README [Dashboard from GitHub](#dashboard-from-github) so you can run Streamlit in **Codespaces** from the green **Code** button.
