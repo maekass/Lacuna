@@ -26,6 +26,9 @@ jobs:
             src/data_collection/parsers \
             src/ontology \
             src/disease_registry \
+            src/data_collection/live_trials.py \
+            src/data_collection/parsers/orphanet_search.py \
+            src/data_collection/parsers/cdc_nndss.py \
             tests \
             scripts/debug_check.py \
             scripts/playwright_browsers.py \

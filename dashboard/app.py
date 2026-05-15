@@ -31,7 +31,15 @@ from dashboard.theme import (
 from src.data_collection.bootstrap_data import data_is_present, run_full_pipeline, seed_demo_if_missing
 from src.data_collection.data_manifest import kind_display_label
 from src.data_collection.seed_demo_data import sync_ml_from_demo, sync_quant_from_demo
+from src.data_collection.parsers.cdc_nndss import fetch_nndss_disease_index, search_nndss_index
+from src.data_collection.parsers.orphanet_search import fetch_orphanet_index, search_orphanet_index
 from src.disease_registry import get_disease, list_diseases, us_tickers
+from src.disease_registry.disease_metrics import fetch_disease_metrics
+from src.disease_registry.indication import (
+    IndicationView,
+    is_ad_hoc_disease_id,
+    registry_disease_id,
+)
 from src.ontology.enrich import enrich_artifact
 from src.models.ml_artifacts import ml_bundle_present
 from src.quant_framework.quant_artifacts import quant_bundle_present
@@ -128,6 +136,70 @@ def load_manifest() -> Optional[dict[str, Any]]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+@st.cache_data(ttl=86400, show_spinner=False)
+def _orphanet_index_cached() -> list[dict[str, Any]]:
+    rows, _ = fetch_orphanet_index()
+    return rows
+
+
+@st.cache_data(ttl=600, show_spinner="Loading public disease metrics…")
+def _disease_metrics_cached(orpha_code: int, preferred_term: str) -> dict[str, Any]:
+    return fetch_disease_metrics(orpha_code, preferred_term)
+
+
+def _prevalence_column(epi: pd.DataFrame) -> str:
+    if "scd_prevalence_us" in epi.columns:
+        return "scd_prevalence_us"
+    if "prevalence_us" in epi.columns:
+        return "prevalence_us"
+    return "prevalence_us"
+
+
+def render_disease_metrics_panel(metrics: dict[str, Any]) -> None:
+    """Orphanet, CDC NNDSS, and trials summary for ad-hoc disease search."""
+    sources = ", ".join(metrics.get("metric_sources") or []) or "—"
+    st.caption(f"Metric sources: {sources}")
+
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("ORPHA code", metrics.get("orpha_code") or "—")
+    us_rate = metrics.get("us_point_prevalence_per_100k")
+    c2.metric("U.S. point prevalence", f"{us_rate}/100k" if us_rate else "—")
+    c3.metric("Trials in sample", metrics.get("trials_in_sample", 0))
+    c4.metric("Active in sample", metrics.get("trials_active_in_sample", 0))
+
+    nndss = metrics.get("cdc_nndss") or {}
+    if nndss:
+        st.markdown("**CDC NNDSS (nationally notifiable conditions, U.S. residents)**")
+        n1, n2, n3 = st.columns(3)
+        n1.metric("Report week", f"{nndss.get('report_year', '—')}-W{nndss.get('report_week', '—')}")
+        n2.metric("Current week cases", nndss.get("current_week_cases", "—"))
+        n3.metric("Cumulative (reported)", nndss.get("cumulative_cases", "—"))
+        if metrics.get("cdc_profile_url"):
+            st.markdown(f"[CDC NNDSS dataset view]({metrics['cdc_profile_url']})")
+
+    icd = ", ".join(metrics.get("icd10_codes") or []) or "—"
+    omim = ", ".join(metrics.get("omim_codes") or []) or "—"
+    st.markdown(
+        f"**Disorder group:** {metrics.get('disorder_group') or '—'}  \n"
+        f"**ICD-10:** {icd}  \n"
+        f"**OMIM:** {omim}  \n"
+        f"**ClinicalTrials.gov query:** `{metrics.get('clinical_trials_query', '')}`"
+    )
+    if metrics.get("orphanet_url"):
+        st.markdown(f"[Orphanet record]({metrics['orphanet_url']})")
+
+    prev_rows = metrics.get("prevalence_entries") or []
+    if prev_rows:
+        st.markdown("**Orphanet prevalence sources (sample)**")
+        st.dataframe(pd.DataFrame(prev_rows), use_container_width=True, hide_index=True)
+
+    if metrics.get("cdc_label") and not metrics.get("orpha_code"):
+        st.info(
+            "This condition is in the **CDC NNDSS** infectious/notifiable universe. "
+            "Chronic focus diseases (SCD, lupus, sarcoidosis) are not NNDSS-listed — use **Orphanet** or **Focus indications**."
+        )
+
+
 def _trials_by_start_year(trials: pd.DataFrame) -> pd.DataFrame:
     """Count trials in this CSV sample by calendar year of start_date."""
     df = trials.copy()
@@ -147,12 +219,13 @@ def render_health_trends_charts(
     trials: Optional[pd.DataFrame],
     *,
     disease_id: str = "scd",
+    display_name: str | None = None,
 ) -> None:
     """Prevalence placeholder vs trial counts from ClinicalTrials.gov sample."""
-    spec = get_disease(disease_id)
+    label = display_name or get_disease(registry_disease_id(disease_id)).display_name
     epi_df = epi.copy()
     epi_df["date"] = pd.to_datetime(epi_df["date"])
-    prev_col = spec.prevalence_column
+    prev_col = _prevalence_column(epi_df)
 
     if prev_col not in epi_df.columns:
         st.error(f"Epidemiology CSV missing `{prev_col}`. Re-run collectors or seed demo bundle.")
@@ -163,14 +236,14 @@ def render_health_trends_charts(
         go.Scatter(
             x=epi_df["date"],
             y=epi_df[prev_col],
-            name=f"{spec.display_name} prevalence (U.S. estimate)",
+            name="Prevalence (U.S. estimate)",
             mode="lines+markers",
             line=dict(width=2),
             marker=dict(size=4),
         )
     )
     fig_prev.update_layout(
-        title=f"{spec.display_name} — U.S. prevalence estimate (Orphanet rate × Census population)",
+        title=f"{label} — U.S. prevalence estimate (Orphanet rate × Census population)",
         xaxis_title="Date",
         yaxis_title="Estimated prevalence (persons)",
         height=360,
@@ -229,7 +302,9 @@ def render_health_trends_charts(
 
 
 def page_artifacts(page: str, disease_id: str) -> list[str]:
-    spec = get_disease(disease_id)
+    if is_ad_hoc_disease_id(disease_id):
+        return []
+    spec = get_disease(registry_disease_id(disease_id))
     if page == "Overview":
         return [spec.pipeline_artifact, spec.fda_artifact]
     if page == "Health Trends":
@@ -388,20 +463,70 @@ st.sidebar.markdown(
     unsafe_allow_html=True,
 )
 st.sidebar.header("Indication")
-_disease_labels = {d.disease_id: d.display_name for d in list_diseases()}
-disease_id = st.sidebar.selectbox(
-    "Focus disease",
-    options=list(_disease_labels.keys()),
-    format_func=lambda k: _disease_labels[k],
-    index=0,
+_indication_mode = st.sidebar.radio(
+    "Source",
+    ["Focus indications", "Search any disease"],
+    horizontal=True,
 )
-_spec = get_disease(disease_id)
-st.sidebar.caption(_spec.disparity_note)
+_disease_labels = {d.disease_id: d.display_name for d in list_diseases()}
+disease_id = "scd"
+_ctx: IndicationView = IndicationView.from_registry("scd")
+
+if _indication_mode == "Focus indications":
+    disease_id = st.sidebar.selectbox(
+        "Focus disease",
+        options=list(_disease_labels.keys()),
+        format_func=lambda k: _disease_labels[k],
+        index=0,
+    )
+    _ctx = IndicationView.from_registry(disease_id)
+else:
+    _universe = st.sidebar.radio(
+        "Universe",
+        ["Both", "Orphanet", "CDC NNDSS"],
+        horizontal=True,
+        help="CDC NNDSS: nationally notifiable infectious conditions on data.cdc.gov (~130 labels).",
+    )
+    _search_q = st.sidebar.text_input(
+        "Search disease name",
+        placeholder="e.g. hepatitis, tuberculosis, lupus, sickle cell",
+    )
+    _hits = _search_disease_hits(_search_q, _universe, limit=30) if _search_q.strip() else []
+    if _hits:
+
+        def _hit_label(i: int) -> str:
+            h = _hits[i]
+            if h["source"] == "cdc_nndss":
+                return f"[CDC] {h['label']}"
+            return f"[Orphanet] {h['label']} (ORPHA{h['orpha_code']})"
+
+        _pick_i = st.sidebar.selectbox("Match", options=list(range(len(_hits))), format_func=_hit_label)
+        _row = _hits[_pick_i]
+        _metrics = _disease_metrics_cached(
+            _row["label"],
+            _row.get("orpha_code"),
+            _row.get("cdc_label"),
+        )
+        _ctx = IndicationView.from_metrics(_metrics)
+        disease_id = _ctx.disease_id
+    elif _search_q.strip():
+        st.sidebar.warning("No matches in this universe. Try **Both** or a different term.")
+        _ctx = IndicationView.from_registry("scd")
+        disease_id = "scd"
+    else:
+        st.sidebar.caption(
+            "Search Orphanet rare diseases (~11k) and/or CDC NNDSS notifiable conditions (data.cdc.gov)."
+        )
+        _ctx = IndicationView.from_registry("scd")
+        disease_id = "scd"
+
+st.sidebar.caption(_ctx.disparity_note)
 st.sidebar.header("Navigation")
 st.sidebar.caption("Epidemiology · Pipeline · Portfolio")
 page = st.sidebar.radio(
     "Select Page",
     [
+        "Disease Lookup",
         "Overview",
         "Health Trends",
         "Stock Analysis",
@@ -413,6 +538,7 @@ page = st.sidebar.radio(
     ],
 )
 _ZONE_FOR_PAGE = {
+    "Disease Lookup": ("epidemiology", "Orphanet search · public metrics"),
     "Overview": ("pipeline", "Gene therapy & FDA pipeline"),
     "Health Trends": ("epidemiology", "Burden, trials, ontology-anchored conditions"),
     "Stock Analysis": ("portfolio", "Equity & fundamentals"),
@@ -447,15 +573,46 @@ if missing:
         "`python3 src/data_collection/collect_all_data.py` and `python3 src/models/market_analysis.py`."
     )
 
-if page == "Overview":
+if page == "Disease Lookup":
     section_header(
-        f"Pipeline — {_spec.display_name}",
-        f"MeSH {_spec.mesh_id} · SNOMED {_spec.snomed_id} · ICD-10 {_spec.icd10_code}",
+        "Disease lookup",
+        "Search Orphanet and CDC NNDSS universes; pull epidemiology, surveillance, and trial samples",
     )
-    pipeline = load_csv(_spec.pipeline_artifact)
-    fda = load_csv(_spec.fda_artifact)
+    if _indication_mode != "Search any disease":
+        st.info("Set sidebar **Source** to **Search any disease**, then choose an Orphanet match.")
+    elif _ctx.is_registry or not _ctx.metrics:
+        st.info("Enter a disease name in the sidebar and select a match (Orphanet and/or CDC NNDSS).")
+    else:
+        render_disease_metrics_panel(_ctx.metrics)
+        epi_live = _ctx.metrics.get("epidemiology_df")
+        trials_live = _ctx.metrics.get("trials_df")
+        if epi_live is not None and not epi_live.empty:
+            section_header("Burden trend (estimated)", "Orphanet U.S. rate × population — illustrative annual points")
+            render_health_trends_charts(
+                epi_live, trials_live, disease_id=disease_id, display_name=_ctx.display_name
+            )
+        elif trials_live is not None and not trials_live.empty:
+            st.markdown("**Clinical trials (live sample)**")
+            st.dataframe(trials_live.head(25), use_container_width=True, hide_index=True)
+        st.caption(
+            "Live public APIs (Orphanet, CDC data.cdc.gov NNDSS, ClinicalTrials.gov). No bundled pipeline, equity, or FDA tables "
+            "for ad-hoc diseases — use **Focus indications** for full demo datasets."
+        )
+
+elif page == "Overview":
+    if not _ctx.is_registry:
+        st.info(
+            f"**{_ctx.display_name}** is not in the focus registry. Open **Disease Lookup** for live metrics, "
+            "or switch sidebar **Source** to **Focus indications** for pipeline/FDA demo CSVs."
+        )
+    section_header(
+        f"Pipeline — {_ctx.display_name}",
+        f"MeSH {_ctx.mesh_id} · SNOMED {_ctx.snomed_id} · ICD-10 {_ctx.icd10_code}",
+    )
+    pipeline = load_csv(_ctx.pipeline_artifact) if _ctx.is_registry else None
+    fda = load_csv(_ctx.fda_artifact) if _ctx.is_registry else None
     if pipeline is not None:
-        pipeline = enrich_artifact(_spec.pipeline_artifact, pipeline)
+        pipeline = enrich_artifact(_ctx.pipeline_artifact, pipeline)
         onto = _ontology_display_cols(pipeline)
         if onto:
             st.markdown("**Ontology anchors (MeSH / ICD)**")
@@ -467,26 +624,30 @@ if page == "Overview":
             x="company",
             y="probability_of_success",
             color=color_col,
-            title=f"Illustrative POS by company — {_spec.code} (demo)",
+            title=f"Illustrative POS by company — {_ctx.display_name} (demo)",
         )
         st.plotly_chart(styled_bar_chart(fig), use_container_width=True)
     else:
         st.info("Run `python3 scripts/build_disease_demo_bundle.py` or collectors to populate pipeline tables.")
     if fda is not None:
         section_header("Approved therapies", "Illustrative reference rows — not a live regulatory feed")
-        st.dataframe(enrich_artifact(_spec.fda_artifact, fda), use_container_width=True, hide_index=True)
+        st.dataframe(enrich_artifact(_ctx.fda_artifact, fda), use_container_width=True, hide_index=True)
 
 elif page == "Health Trends":
     section_header(
-        f"Epidemiology — {_spec.display_name}",
+        f"Epidemiology — {_ctx.display_name}",
         "Burden, trial activity, and ontology-anchored clinical development data",
     )
     equity_context_card(
-        f"{_spec.disparity_note} Burden series use Orphanet U.S. point-prevalence rates (CC BY 4.0) "
+        f"{_ctx.disparity_note} Burden series use Orphanet U.S. point-prevalence rates (CC BY 4.0) "
         "and CDC-cited SCD birth metrics where applicable; see provenance for pull details."
     )
-    epi = load_csv(_spec.epidemiology_artifact)
-    trials = load_csv(_spec.trials_artifact)
+    if _ctx.is_registry:
+        epi = load_csv(_ctx.epidemiology_artifact)
+        trials = load_csv(_ctx.trials_artifact)
+    else:
+        epi = _ctx.metrics.get("epidemiology_df") if _ctx.metrics else None
+        trials = _ctx.metrics.get("trials_df") if _ctx.metrics else None
 
     if epi is None and (trials is None or trials.empty):
         st.warning(
@@ -495,15 +656,20 @@ elif page == "Health Trends":
             "`python3 src/data_collection/collect_all_data.py`"
         )
     elif epi is not None:
-        render_health_trends_charts(epi, trials, disease_id=disease_id)
+        render_health_trends_charts(epi, trials, disease_id=disease_id, display_name=_ctx.display_name)
     else:
-        st.info(f"Missing `{_spec.epidemiology_artifact}` for trend charts.")
+        if _ctx.is_registry:
+            st.info(f"Missing `{_ctx.epidemiology_artifact}` for trend charts.")
+        else:
+            st.info("Search a disease in the sidebar (Orphanet) to load live burden and trial metrics.")
 
     if trials is not None and not trials.empty:
-        trials = enrich_artifact(_spec.trials_artifact, trials)
+        if _ctx.is_registry:
+            trials = enrich_artifact(_ctx.trials_artifact, trials)
         section_header(
             "Clinical trials",
-            f"ClinicalTrials.gov · `{_spec.clinical_trials_query}` · MeSH {_spec.mesh_id}",
+            f"ClinicalTrials.gov · `{_ctx.clinical_trials_query}`"
+            + (f" · MeSH {_ctx.mesh_id}" if _ctx.mesh_id != "—" else ""),
         )
         display_trials = trials.copy()
         if "start_date" in display_trials.columns:
@@ -524,12 +690,14 @@ elif page == "Health Trends":
 
 elif page == "Stock Analysis":
     section_header(
-        f"Equity — {_spec.display_name}",
+        f"Equity — {_ctx.display_name}",
         "Registry ticker universe · delayed Yahoo Finance / yfinance",
     )
+    if not _ctx.is_registry:
+        st.info("Equity tables are wired for **Focus indications** registry tickers only.")
     fin = load_csv("company_financials.csv")
     prices = load_csv("stock_prices_companies.csv")
-    tickers = us_tickers(_spec.companies)
+    tickers = us_tickers(_ctx.companies)
     if fin is not None:
         if "disease_id" in fin.columns:
             fin = fin[fin["disease_id"] == disease_id]
@@ -652,8 +820,9 @@ elif page == "Quant Strategy":
                 return df
             if "disease_id" not in df.columns:
                 return df
-            scoped = df[df["disease_id"] == disease_id]
-            if scoped.empty and disease_id != "all":
+            reg_id = registry_disease_id(disease_id)
+            scoped = df[df["disease_id"] == reg_id]
+            if scoped.empty and reg_id != "all":
                 scoped = df[df["disease_id"] == "all"]
             return scoped
 
