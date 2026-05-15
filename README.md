@@ -1,4 +1,4 @@
-# Sickle Cell Disease Investment Analysis Platform
+# Immunology Investment Analysis Dashbord and Platform
 
 > **Disclaimer:** For **educational and research use only**. This is **not investment advice**, **not medical advice**, and not a substitute for professional counsel. Demo scores and illustrative tables are for software testing only—not recommendations.
 
