@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Immunology Investment Intelligence Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,11 +15,12 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #1F2933;
+            background: linear-gradient(180deg, #F8FAF8 0%, #F4F6F4 40%, #F1F4F2 100%);
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
         
         .container {
@@ -27,20 +31,44 @@
         
         header {
             text-align: center;
-            color: white;
-            padding: 60px 0;
+            background: #FFFFFF;
+            border: 1px solid #D9E2DE;
+            border-radius: 12px;
+            padding: 60px 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 1px 2px rgba(31, 41, 51, 0.04), 0 8px 24px rgba(31, 41, 51, 0.04);
+        }
+        
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 15px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            background: #E8F0EB;
+            color: #4A6B5C;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
         }
         
         h1 {
-            font-size: 3em;
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 2.5em;
             margin-bottom: 20px;
-            font-weight: 700;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #1F2933;
         }
         
         .tagline {
-            font-size: 1.3em;
-            opacity: 0.95;
+            font-size: 1.1em;
+            color: #5C6B73;
             margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
         }
         
         .cta-buttons {
@@ -63,14 +91,24 @@
         }
         
         .btn-primary {
-            background: white;
-            color: #667eea;
+            background: #4A6B5C;
+            color: white;
+            border: 1px solid #4A6B5C;
+        }
+        
+        .btn-primary:hover {
+            background: #3D5A4E;
+            border-color: #3D5A4E;
         }
         
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid white;
+            background: transparent;
+            color: #4A6B5C;
+            border: 2px solid #4A6B5C;
+        }
+        
+        .btn-secondary:hover {
+            background: #E8F0EB;
         }
         
         .btn:hover {
@@ -83,7 +121,23 @@
             border-radius: 12px;
             padding: 60px;
             margin-top: 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 1px solid #D9E2DE;
+            box-shadow: 0 1px 2px rgba(31, 41, 51, 0.04), 0 8px 24px rgba(31, 41, 51, 0.04);
+        }
+        
+        h2 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            color: #1F2933;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        
+        h3 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            color: #1F2933;
+            font-weight: 600;
         }
         
         .features {
@@ -95,15 +149,32 @@
         
         .feature {
             padding: 30px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
+            background: #FAFBFA;
+            border-radius: 10px;
+            border: 1px solid #D9E2DE;
+            border-left: 3px solid #4A6B5C;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .feature:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(31, 41, 51, 0.08);
         }
         
         .feature h3 {
-            color: #667eea;
+            color: #4A6B5C;
             margin-bottom: 15px;
-            font-size: 1.3em;
+            font-size: 1.2em;
+        }
+        
+        .feature-label {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #7A8F84;
+            margin-bottom: 8px;
         }
         
         .stats {
@@ -115,41 +186,105 @@
         
         .stat {
             text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 8px;
+            padding: 25px 20px;
+            background: #FFFFFF;
+            border: 1px solid #D9E2DE;
+            border-radius: 10px;
+            box-shadow: 0 1px 2px rgba(31, 41, 51, 0.03);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .stat:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(31, 41, 51, 0.08);
         }
         
         .stat-number {
             font-size: 2.5em;
             font-weight: 700;
             display: block;
+            color: #4A6B5C;
+            font-family: 'Source Serif 4', Georgia, serif;
         }
         
         .stat-label {
-            font-size: 0.9em;
-            opacity: 0.9;
+            font-size: 0.72rem;
+            color: #7A8F84;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-weight: 600;
+            margin-top: 8px;
         }
         
         .disclaimer {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
+            background: #F0F4F2;
+            border: 1px solid #B8C9BE;
+            border-left: 3px solid #4A6B5C;
             border-radius: 8px;
-            padding: 20px;
+            padding: 25px 30px;
             margin: 40px 0;
+            color: #334155;
+            line-height: 1.65;
         }
         
         .disclaimer h3 {
-            color: #856404;
-            margin-bottom: 10px;
+            color: #1F2933;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .disclaimer strong {
+            color: #1F2933;
+            font-weight: 600;
         }
         
         footer {
             text-align: center;
-            color: white;
+            color: #5C6B73;
             padding: 40px 0;
-            margin-top: 40px;
+            margin-top: 60px;
+            border-top: 1px solid #E2E8E4;
+        }
+        
+        footer a {
+            color: #4A6B5C;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .clinical-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .clinical-card {
+            background: #FFFFFF;
+            border: 1px solid #D9E2DE;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 2px rgba(31, 41, 51, 0.03);
+        }
+        
+        .clinical-card-title {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #7A8F84;
+            margin-bottom: 8px;
+        }
+        
+        .clinical-card-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1F2933;
+            font-family: 'Source Serif 4', Georgia, serif;
         }
         
         @media (max-width: 768px) {
@@ -170,8 +305,9 @@
 <body>
     <div class="container">
         <header>
-            <h1>🧬 Immunology Investment Intelligence</h1>
-            <p class="tagline">Quantitative Research Platform for Healthcare Investment Analysis</p>
+            <span class="eyebrow">Clinical research · Immunology · Quantitative analysis</span>
+            <h1>Immunology Investment Intelligence</h1>
+            <p class="tagline">End-to-end quantitative research platform combining clinical trial intelligence, epidemiological modeling, and deep quantitative analysis for healthcare investment research.</p>
             <div class="cta-buttons">
                 <a href="https://immunology-investment-dashboard.streamlit.app" class="btn btn-primary" target="_blank">
                     🚀 Launch Dashboard
@@ -209,36 +345,78 @@
                 </div>
             </div>
             
-            <h2 style="margin-top: 50px;">Key Features</h2>
+            <h2>Clinical Trial Intelligence</h2>
+            <p style="margin-bottom: 30px; color: #5C6B73;">
+                Real-time tracking and analysis of clinical trials across multiple immunology disease areas with integrated epidemiological data.
+            </p>
+            
+            <div class="clinical-features">
+                <div class="clinical-card">
+                    <div class="clinical-card-title">Orphanet Integration</div>
+                    <div class="clinical-card-value">✓ Live</div>
+                    <p style="font-size: 0.875rem; color: #5C6B73; margin-top: 10px;">
+                        ORPHA codes, prevalence data, ICD-10/OMIM/UMLS mappings
+                    </p>
+                </div>
+                <div class="clinical-card">
+                    <div class="clinical-card-title">CDC NNDSS</div>
+                    <div class="clinical-card-value">✓ Live</div>
+                    <p style="font-size: 0.875rem; color: #5C6B73; margin-top: 10px;">
+                        Nationally notifiable conditions, weekly case reports
+                    </p>
+                </div>
+                <div class="clinical-card">
+                    <div class="clinical-card-title">ClinicalTrials.gov</div>
+                    <div class="clinical-card-value">800+</div>
+                    <p style="font-size: 0.875rem; color: #5C6B73; margin-top: 10px;">
+                        Trials tracked with phase, enrollment, sponsor data
+                    </p>
+                </div>
+                <div class="clinical-card">
+                    <div class="clinical-card-title">Disease Coverage</div>
+                    <div class="clinical-card-value">7</div>
+                    <p style="font-size: 0.875rem; color: #5C6B73; margin-top: 10px;">
+                        Focus indications + ad-hoc disease search
+                    </p>
+                </div>
+            </div>
+
+            <h2 style="margin-top: 50px;">Platform Capabilities</h2>
             <div class="features">
                 <div class="feature">
-                    <h3>📊 Public Health Analytics</h3>
-                    <p>Epidemiological modeling, clinical trial tracking, FDA approval analysis across multiple disease areas.</p>
+                    <span class="feature-label">Epidemiology</span>
+                    <h3>Health Trends & Disease Burden</h3>
+                    <p>Prevalence modeling, diagnosis rates, treatment access metrics. Integrated Orphanet and CDC NNDSS data for comprehensive disease intelligence.</p>
                 </div>
                 
                 <div class="feature">
-                    <h3>🤖 Machine Learning</h3>
-                    <p>Ensemble models for trial success prediction, regression suite with 9 algorithms, feature engineering.</p>
+                    <span class="feature-label">Pipeline</span>
+                    <h3>Clinical Trial Intelligence</h3>
+                    <p>Real-time tracking from ClinicalTrials.gov with phase progression, enrollment speed, sponsor analysis, and FDA approval timeline prediction.</p>
                 </div>
                 
                 <div class="feature">
-                    <h3>📈 Quant Analysis</h3>
-                    <p>OLS regression, Granger causality, event studies, factor models, portfolio optimization.</p>
+                    <span class="feature-label">Machine Learning</span>
+                    <h3>Trial Success Prediction</h3>
+                    <p>Ensemble models (RF + GBM + XGBoost) calibrated to published success rates. 78% accuracy with 95% confidence intervals and feature importance.</p>
                 </div>
                 
                 <div class="feature">
-                    <h3>💼 Investment Intelligence</h3>
-                    <p>VC/Growth/Public equity analysis, market sizing, competitive landscape, deal flow tracking.</p>
+                    <span class="feature-label">Quantitative</span>
+                    <h3>Deep Quant Framework</h3>
+                    <p>OLS multi-factor regression, Granger causality tests, event studies (CAR analysis), factor models, portfolio optimization with risk metrics.</p>
                 </div>
                 
                 <div class="feature">
-                    <h3>🎨 Interactive Dashboard</h3>
-                    <p>Modern Streamlit interface with real-time visualizations, data provenance tracking.</p>
+                    <span class="feature-label">Portfolio</span>
+                    <h3>Investment Stage Analysis</h3>
+                    <p>VC → Growth → Public equity comparison. Risk-return profiles, valuation multiples, time to liquidity, stage transition probabilities.</p>
                 </div>
                 
                 <div class="feature">
-                    <h3>🔬 Multi-Disease Coverage</h3>
-                    <p>SCD, SLE, MS, Diabetic Nephropathy, Autoimmune Liver, HS, Food Allergy analysis.</p>
+                    <span class="feature-label">Market</span>
+                    <h3>Competitive Intelligence</h3>
+                    <p>Market sizing, TAM analysis, large pharma investments, M&A deal flow, regulatory landscape, investment attractiveness scoring.</p>
                 </div>
             </div>
             
@@ -267,10 +445,14 @@
         </div>
         
         <footer>
-            <p>Built by <a href="https://github.com/maekass" style="color: white; text-decoration: underline;">Mae Kaess</a></p>
-            <p style="margin-top: 10px; opacity: 0.8;">
-                <a href="https://github.com/maekass/Immunology-Investment-Dashboard" style="color: white;">GitHub</a> • 
+            <p style="font-size: 0.875rem;">Built by <a href="https://github.com/maekass">Mae Kaess</a></p>
+            <p style="margin-top: 10px; font-size: 0.875rem;">
+                <a href="https://github.com/maekass/Immunology-Investment-Dashboard">GitHub</a> • 
+                <a href="https://immunology-investment-dashboard.streamlit.app">Live Dashboard</a> • 
                 Portfolio Project • 2026
+            </p>
+            <p style="margin-top: 15px; font-size: 0.75rem; color: #7A8F84;">
+                Clinical research platform · Educational use only · Not investment or medical advice
             </p>
         </footer>
     </div>
