@@ -934,7 +934,7 @@ elif page == "Quant Strategy":
 
         if wf_compound is not None and not wf_compound.empty:
             st.markdown(
-                f"**Walk-forward OOS — {_spec.display_name}** "
+                f"**Walk-forward OOS — {_ctx.display_name}** "
                 "(24m train · 6m test · chained test windows)"
             )
             st.dataframe(wf_compound, use_container_width=True, hide_index=True)
