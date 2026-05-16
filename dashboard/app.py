@@ -35,6 +35,7 @@ from src.data_collection.parsers.cdc_nndss import fetch_nndss_disease_index, sea
 from src.data_collection.parsers.orphanet_search import fetch_orphanet_index, search_orphanet_index
 from src.disease_registry import get_disease, list_diseases, us_tickers
 from src.disease_registry.disease_metrics import fetch_disease_metrics
+from src.disease_registry.equity_context import render_equity_snippets_markdown
 from src.disease_registry.indication import (
     IndicationView,
     is_ad_hoc_disease_id,
@@ -136,15 +137,58 @@ def load_manifest() -> Optional[dict[str, Any]]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-@st.cache_data(ttl=86400, show_spinner=False)
+@st.cache_data(ttl=86400, show_spinner="Loading Orphanet disease index (cached 24h)…")
 def _orphanet_index_cached() -> list[dict[str, Any]]:
     rows, _ = fetch_orphanet_index()
     return rows
 
 
+@st.cache_data(ttl=86400, show_spinner="Loading CDC NNDSS condition list (cached 24h)…")
+def _cdc_nndss_index_cached() -> list[dict[str, Any]]:
+    rows, _ = fetch_nndss_disease_index()
+    return rows
+
+
 @st.cache_data(ttl=600, show_spinner="Loading public disease metrics…")
-def _disease_metrics_cached(orpha_code: int, preferred_term: str) -> dict[str, Any]:
-    return fetch_disease_metrics(orpha_code, preferred_term)
+def _disease_metrics_cached(
+    preferred_term: str,
+    orpha_code: int | None,
+    cdc_label: str | None,
+) -> dict[str, Any]:
+    return fetch_disease_metrics(
+        preferred_term,
+        orpha_code=orpha_code,
+        cdc_label=cdc_label,
+    )
+
+
+def _search_disease_hits(query: str, universe: str, *, limit: int = 25) -> list[dict[str, Any]]:
+    """Substring search over Orphanet and/or CDC NNDSS indices (no download until invoked)."""
+    q = query.strip()
+    if len(q) < 2:
+        return []
+    hits: list[dict[str, Any]] = []
+    if universe in ("Orphanet", "Both"):
+        for row in search_orphanet_index(_orphanet_index_cached(), q, limit=limit):
+            hits.append(
+                {
+                    "source": "orphanet",
+                    "label": row["preferred_term"],
+                    "orpha_code": row["orpha_code"],
+                    "cdc_label": None,
+                }
+            )
+    if universe in ("CDC NNDSS", "Both"):
+        for row in search_nndss_index(_cdc_nndss_index_cached(), q, limit=limit):
+            hits.append(
+                {
+                    "source": "cdc_nndss",
+                    "label": row["cdc_label"],
+                    "orpha_code": None,
+                    "cdc_label": row["cdc_label"],
+                }
+            )
+    return hits[:limit]
 
 
 def _prevalence_column(epi: pd.DataFrame) -> str:
@@ -630,7 +674,10 @@ elif page == "Overview":
     else:
         st.info("Run `python3 scripts/build_disease_demo_bundle.py` or collectors to populate pipeline tables.")
     if fda is not None:
-        section_header("Approved therapies", "Illustrative reference rows — not a live regulatory feed")
+        section_header(
+            "Approved therapies",
+            "openFDA drug labels + drugsfda first approval when brand matches (see collectors with network)",
+        )
         st.dataframe(enrich_artifact(_ctx.fda_artifact, fda), use_container_width=True, hide_index=True)
 
 elif page == "Health Trends":
@@ -643,6 +690,10 @@ elif page == "Health Trends":
         "and CDC-cited SCD birth metrics where applicable; see provenance for pull details."
     )
     if _ctx.is_registry:
+        eq_md = render_equity_snippets_markdown(registry_disease_id(disease_id))
+        if eq_md:
+            with st.expander("Stratified / citation context (CDC & NIH entry points)", expanded=False):
+                st.markdown(eq_md)
         epi = load_csv(_ctx.epidemiology_artifact)
         trials = load_csv(_ctx.trials_artifact)
     else:
@@ -700,7 +751,7 @@ elif page == "Stock Analysis":
     tickers = us_tickers(_ctx.companies)
     if fin is not None:
         if "disease_id" in fin.columns:
-            fin = fin[fin["disease_id"] == disease_id]
+            fin = fin[fin["disease_id"] == registry_disease_id(disease_id)]
         elif "ticker" in fin.columns:
             fin = fin[fin["ticker"].isin(tickers.values())]
         st.dataframe(fin, use_container_width=True, hide_index=True)
@@ -945,6 +996,28 @@ elif page == "Market Analysis":
         "**Investment attractiveness scores and buy/hold/sell labels are demo weights only**—not research, "
         "not ratings, not recommendations."
     )
+    _m = load_manifest()
+    _arts = (_m or {}).get("artifacts", {})
+    _tier_rows = []
+    for fname in PAGE_ARTIFACTS.get("Market Analysis", []):
+        meta = _arts.get(fname, {})
+        if meta.get("present"):
+            _tier_rows.append(
+                {
+                    "File": fname,
+                    "Kind": kind_display_label(meta.get("kind", "")),
+                    "Tier": meta.get("tier", "—"),
+                    "Summary": (meta.get("source_summary") or "")[:100],
+                }
+            )
+    if _tier_rows:
+        with st.expander("Data tier reference (this page’s CSVs)", expanded=False):
+            st.dataframe(pd.DataFrame(_tier_rows), use_container_width=True, hide_index=True)
+            st.caption(
+                "**Tier** labels: `demo_tier_3` = illustrative market scaffolding; "
+                "`sourced_public` / `mixed` = see manifest after running collectors. "
+                "See README *Data tiers*."
+            )
     mkt = load_csv("market_size_scd.csv")
     attr = load_csv("investment_attractiveness_scd.csv")
     if mkt is not None:

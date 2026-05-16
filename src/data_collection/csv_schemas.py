@@ -43,6 +43,8 @@ SCHEMAS: dict[str, dict[str, Any]] = {
             "indication_mesh_label",
             "indication_icd10_code",
             "indication_disambiguation",
+            "application_number",
+            "approval_date_source",
         ],
         "dtypes": {},
     },
@@ -94,7 +96,14 @@ _TRIALS_SCHEMA = {
 }
 _FDA_SCHEMA = {
     "required": ["drug_name", "company", "approval_date", "mechanism", "phase", "efficacy"],
-    "optional": ["moa_mesh_id", "moa_mesh_label", "indication_mesh_id", "disease_id"],
+    "optional": [
+        "moa_mesh_id",
+        "moa_mesh_label",
+        "indication_mesh_id",
+        "disease_id",
+        "application_number",
+        "approval_date_source",
+    ],
     "dtypes": {},
 }
 _EPI_SCHEMA = {
