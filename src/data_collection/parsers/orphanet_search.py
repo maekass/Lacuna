@@ -92,6 +92,7 @@ def parse_crossref(payload: dict[str, Any]) -> dict[str, Any]:
         "preferred_term": preferred,
         "orpha_code": int(orpha) if orpha is not None else None,
         "disorder_group": str(results.get("DisorderGroup", "")),
+        "typology": str(results.get("Typology", "") or ""),
         "icd10_codes": icd10[:5],
         "omim_codes": omim[:5],
         "umls_codes": umls[:3],

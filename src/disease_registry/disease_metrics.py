@@ -15,7 +15,11 @@ from src.data_collection.parsers.cdc_nndss import (
     fetch_nndss_us_snapshot,
 )
 from src.data_collection.parsers.epidemiology_series import build_epidemiology_dataframe, prevalence_us_from_rate
-from src.data_collection.parsers.orphanet import fetch_orphanet_epidemiology, select_us_point_prevalence_per_100k
+from src.data_collection.parsers.orphanet import (
+    fetch_orphanet_epidemiology,
+    select_best_non_us_point_prevalence,
+    select_us_point_prevalence_per_100k,
+)
 from src.data_collection.parsers.orphanet_search import fetch_orphanet_by_name, fetch_orphanet_crossref
 from src.disease_registry.registry import DiseaseSpec
 
@@ -47,16 +51,24 @@ def _orphanet_bundle(orpha_code: int, preferred_term: str) -> dict[str, Any]:
     term = cross.get("preferred_term") or preferred_term
     epi_entries, epi_meta = fetch_orphanet_epidemiology(orpha_code)
     us_rate = select_us_point_prevalence_per_100k(epi_entries) if epi_entries else None
+    alt_prev = (
+        None
+        if us_rate is not None
+        else (select_best_non_us_point_prevalence(epi_entries) if epi_entries else None)
+    )
     us_prev_n = int(prevalence_us_from_rate(us_rate, 2024)) if us_rate else None
     return {
         "orpha_code": orpha_code,
         "preferred_term": term,
         "disorder_group": cross.get("disorder_group", ""),
+        "typology": cross.get("typology", ""),
         "icd10_codes": cross.get("icd10_codes", []),
         "omim_codes": cross.get("omim_codes", []),
+        "umls_codes": cross.get("umls_codes", []),
         "orphanet_url": cross.get("orphanet_url", ""),
         "us_point_prevalence_per_100k": us_rate,
         "us_prevalence_estimate": us_prev_n,
+        "orphanet_non_us_point_prevalence": alt_prev,
         "prevalence_entries": epi_entries[:8],
         "epidemiology_meta": epi_meta,
         "clinical_trials_query": term,
@@ -78,6 +90,7 @@ def fetch_disease_metrics(
     *,
     orpha_code: int | None = None,
     cdc_label: str | None = None,
+    trial_query_fallback: str | None = None,
     max_trials: int = 40,
 ) -> dict[str, Any]:
     """
@@ -110,6 +123,13 @@ def fetch_disease_metrics(
     query = orpha_block.get("clinical_trials_query") or term
     trials_df = fetch_clinical_trials(query, max_trials=max_trials)
     trials_n, active_n = _trial_activity(trials_df)
+    trials_used_fallback_query = False
+    fb = (trial_query_fallback or "").strip()
+    if trials_df.empty and fb and fb.lower() != query.lower():
+        trials_df = fetch_clinical_trials(fb, max_trials=max_trials)
+        trials_n, active_n = _trial_activity(trials_df)
+        if not trials_df.empty:
+            trials_used_fallback_query = True
 
     display = orpha_block.get("preferred_term") or cdc_label or term
     us_rate = orpha_block.get("us_point_prevalence_per_100k")
@@ -157,6 +177,7 @@ def fetch_disease_metrics(
         "trials_df": trials_df,
         "trials_in_sample": trials_n,
         "trials_active_in_sample": active_n,
+        "trials_used_search_fallback_query": trials_used_fallback_query,
     }
     if resolved_orpha:
         out["orpha_code"] = resolved_orpha
