@@ -1,0 +1,188 @@
+"""
+Write data/raw/data_manifest.json: per-artifact kind (sourced vs illustrative) and last_modified_utc.
+Call after collection and after market_analysis writes CSVs.
+"""
+
+from __future__ import annotations
+
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+from src.data_collection.provenance import ProvenanceStore
+
+# kind: illustrative | sourced_public | sourced_public_delayed
+ARTIFACT_REGISTRY: dict[str, dict[str, str]] = {
+    "cdc_sickle_cell_data.csv": {
+        "kind": "sourced_public",
+        "summary": "Orphanet U.S. point prevalence (CC BY 4.0) + CDC-cited birth ratio and approval-year flags; trial counts from ClinicalTrials.gov sample.",
+    },
+    "clinical_trials_scd.csv": {
+        "kind": "sourced_public",
+        "summary": "ClinicalTrials.gov (legacy JSON and/or v2 REST). Query and API version affect coverage.",
+    },
+    "fda_approvals_scd.csv": {
+        "kind": "sourced_public",
+        "summary": "openFDA drug labels (indications search) plus drugsfda first approval date / sponsor when brand matches.",
+        "tier": "sourced_public",
+    },
+    "gene_therapy_pipeline_scd.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative pipeline table for demos; verify against company filings and trials.",
+    },
+    "clinical_trials_sle.csv": {
+        "kind": "sourced_public",
+        "summary": "ClinicalTrials.gov query: systemic lupus erythematosus.",
+    },
+    "clinical_trials_sarc.csv": {
+        "kind": "sourced_public",
+        "summary": "ClinicalTrials.gov query: sarcoidosis.",
+    },
+    "epidemiology_sle.csv": {
+        "kind": "sourced_public",
+        "summary": "Orphanet U.S. point prevalence (ORPHA536, CC BY 4.0) scaled to annual U.S. population; trial counts from collector sample.",
+    },
+    "epidemiology_sarc.csv": {
+        "kind": "sourced_public",
+        "summary": "Orphanet U.S. point prevalence (ORPHA797, CC BY 4.0) scaled to annual U.S. population; trial counts from collector sample.",
+    },
+    "pipeline_sle.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative SLE immunology pipeline for demo UI.",
+    },
+    "pipeline_sarc.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative sarcoidosis pipeline for demo UI.",
+    },
+    "fda_approvals_sle.csv": {
+        "kind": "sourced_public",
+        "summary": "openFDA labels + drugsfda approval enrichment when API returns rows; else illustrative fallback.",
+        "tier": "mixed",
+    },
+    "fda_approvals_sarc.csv": {
+        "kind": "sourced_public",
+        "summary": "openFDA labels + drugsfda approval enrichment when API returns rows; else illustrative fallback.",
+        "tier": "mixed",
+    },
+    "stock_prices_companies.csv": {
+        "kind": "sourced_public_delayed",
+        "summary": "Yahoo Finance via yfinance; delayed per vendor terms.",
+    },
+    "stock_prices_etfs.csv": {
+        "kind": "sourced_public_delayed",
+        "summary": "Yahoo Finance via yfinance; delayed per vendor terms.",
+    },
+    "company_financials.csv": {
+        "kind": "sourced_public_delayed",
+        "summary": "yfinance ticker info snapshot; delayed / vendor-defined fields.",
+    },
+    "vc_deals_scd.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative private-market table; not PitchBook/Crunchbase.",
+    },
+    "growth_equity_deals_scd.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative private-market table; not licensed deal data.",
+    },
+    "public_equity_companies_scd.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative cross-section for stage analysis demos.",
+    },
+    "stage_returns_analysis.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative stage return parameters for demos.",
+    },
+    "precision_medicine_pipeline.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative precision-medicine rows for demos.",
+    },
+    "market_size_scd.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative TAM-style rows until replaced with sourced market research.",
+        "tier": "demo_tier_3",
+    },
+    "large_pharma_investments_scd.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative pharma positioning table.",
+        "tier": "demo_tier_3",
+    },
+    "competitive_landscape_scd.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative competitive snapshot.",
+        "tier": "demo_tier_3",
+    },
+    "deal_flow_scd.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative deal timeline; not a comprehensive M&A database.",
+        "tier": "demo_tier_3",
+    },
+    "regulatory_landscape_scd.csv": {
+        "kind": "illustrative",
+        "summary": "Illustrative regulatory summary rows.",
+        "tier": "demo_tier_3",
+    },
+    "investment_attractiveness_scd.csv": {
+        "kind": "illustrative",
+        "summary": "Demo scoring weights only; not ratings or recommendations.",
+        "tier": "demo_tier_3",
+    },
+}
+
+
+def write_data_manifest(data_dir: str | Path, trigger: str = "unknown") -> Path:
+    """Scan registered artifacts on disk and write data_manifest.json."""
+    data_dir = Path(data_dir)
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    now = datetime.now(timezone.utc).isoformat()
+    artifacts: dict[str, Any] = {}
+    for fname, meta in ARTIFACT_REGISTRY.items():
+        path = data_dir / fname
+        entry = {
+            "kind": meta["kind"],
+            "source_summary": meta["summary"],
+            "present": path.exists(),
+        }
+        if meta.get("tier"):
+            entry["tier"] = meta["tier"]
+        if path.exists():
+            entry["last_modified_utc"] = datetime.fromtimestamp(
+                path.stat().st_mtime, tz=timezone.utc
+            ).isoformat()
+        artifacts[fname] = entry
+
+    store = ProvenanceStore(data_dir)
+    pulls = store.summary_by_artifact()
+
+    payload = {
+        "manifest_version": 2,
+        "last_manifest_write_utc": now,
+        "trigger": trigger,
+        "artifacts": artifacts,
+        "latest_pulls": {
+            fname: {
+                "pull_id": p.get("pull_id"),
+                "source_url": p.get("source_url"),
+                "query_string": p.get("query_string"),
+                "full_url": p.get("full_url"),
+                "pulled_at_utc": p.get("pulled_at_utc"),
+                "parser_version": p.get("parser_version"),
+                "extractor": p.get("extractor"),
+                "row_count": p.get("row_count"),
+            }
+            for fname, p in pulls.items()
+        },
+    }
+    out_path = data_dir / "data_manifest.json"
+    out_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    print(f"✓ Data manifest written to {out_path}")
+    return out_path
+
+
+def kind_display_label(kind: str) -> str:
+    return {
+        "illustrative": "Illustrative",
+        "sourced_public": "Sourced (public)",
+        "sourced_public_delayed": "Sourced (public, delayed vendor)",
+    }.get(kind, kind)

@@ -1,0 +1,11 @@
+date,prevalence_us,clinical_trials_active,new_treatments_approved,disease_id,population_mesh_id,population_mesh_label,population_snomed_id,population_snomed_label,population_icd10_code,population_icd10_label
+2015-12-31,192600,50,0,sarc,D012507,Sarcoidosis,31541009,Sarcoidosis,D86.9,"Sarcoidosis, unspecified"
+2016-12-31,193800,50,0,sarc,D012507,Sarcoidosis,31541009,Sarcoidosis,D86.9,"Sarcoidosis, unspecified"
+2017-12-31,195000,50,0,sarc,D012507,Sarcoidosis,31541009,Sarcoidosis,D86.9,"Sarcoidosis, unspecified"
+2018-12-31,196200,50,0,sarc,D012507,Sarcoidosis,31541009,Sarcoidosis,D86.9,"Sarcoidosis, unspecified"
+2019-12-31,197400,50,0,sarc,D012507,Sarcoidosis,31541009,Sarcoidosis,D86.9,"Sarcoidosis, unspecified"
+2020-12-31,198600,50,0,sarc,D012507,Sarcoidosis,31541009,Sarcoidosis,D86.9,"Sarcoidosis, unspecified"
+2021-12-31,199200,50,0,sarc,D012507,Sarcoidosis,31541009,Sarcoidosis,D86.9,"Sarcoidosis, unspecified"
+2022-12-31,199800,50,0,sarc,D012507,Sarcoidosis,31541009,Sarcoidosis,D86.9,"Sarcoidosis, unspecified"
+2023-12-31,201000,50,0,sarc,D012507,Sarcoidosis,31541009,Sarcoidosis,D86.9,"Sarcoidosis, unspecified"
+2024-12-31,202200,50,0,sarc,D012507,Sarcoidosis,31541009,Sarcoidosis,D86.9,"Sarcoidosis, unspecified"

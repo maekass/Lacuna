@@ -1,0 +1,25 @@
+{
+  "data": {
+    "__count": 1,
+    "results": {
+      "ORPHAcode": 232,
+      "Preferred term": "Sickle cell anemia",
+      "Prevalence": [
+        {
+          "PrevalenceClass": "1-5 / 10 000",
+          "PrevalenceGeographic": "United States",
+          "PrevalenceQualification": "Value and class",
+          "PrevalenceType": "Point prevalence",
+          "PrevalenceValidationStatus": "Validated",
+          "Source": "20331952[PMID]_Center for Diseases Control and Prevention[INST]",
+          "ValMoy": "30.0"
+        },
+        {
+          "PrevalenceGeographic": "France",
+          "PrevalenceType": "Point prevalence",
+          "ValMoy": "42.0"
+        }
+      ]
+    }
+  }
+}

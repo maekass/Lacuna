@@ -1,38 +1,25 @@
-# Python
+.DS_Store
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-.Python
+*.egg-info/
 .venv/
 venv/
-ENV/
-env/
-
-# Data files
-data/raw/*.csv
-data/processed/*.csv
-data/visualizations/*.html
+.env
+*.csv
+!data/demo/
+!data/demo/**
+!data/demo/**/*.csv
+!data/processed/
+!data/processed/**
+!data/processed/**/*.csv
+!data/processed/**/*.json
+!data/demo/quant/
+!data/demo/quant/**
+!data/processed/quant/
+!data/processed/quant/**
+!data/models/
+!data/models/**
 !data/raw/.gitkeep
-!data/processed/.gitkeep
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Jupyter
+data/raw/data_manifest.json
+data/raw/provenance_log.jsonl
 .ipynb_checkpoints/
-*.ipynb
-
-# Streamlit
-.streamlit/
-
-# Logs
-*.log

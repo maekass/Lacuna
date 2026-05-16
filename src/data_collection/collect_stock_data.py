@@ -1,196 +1,183 @@
 """
-Multi-Disease Stock Data Collector
-Fetches public stock market data for companies involved in immunology treatments
-Uses delayed public data (15+ minutes) - legally compliant
-Supports: SCD, SLE, HS, Diabetic Nephropathy, Autoimmune Liver, MS, Food Allergy
+Sickle Cell Company Stock Data Collector
+Fetches historical stock prices and financial data for companies in sickle cell treatment space
+All data from public sources (Yahoo Finance, SEC filings)
 """
 
-import yfinance as yf
-import pandas as pd
-from datetime import datetime, timedelta
 import os
-import sys
+import shutil
+from pathlib import Path
 
-# Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from data_collection.disease_config import DiseaseConfig, SECTOR_ETFS
+import pandas as pd
+import yfinance as yf
 
-class MultiDiseaseStockDataCollector:
-    def __init__(self, disease_name="Sickle Cell Disease", data_dir="data/raw"):
+from src.data_collection.csv_writer import write_csv
+from src.data_collection.provenance import ProvenanceStore, PullRecord
+from src.disease_registry import list_diseases, union_us_tickers, us_tickers
+
+ROOT = Path(__file__).resolve().parents[2]
+DEMO_DIR = ROOT / "data" / "demo"
+
+
+class SickleCellStockDataCollector:
+    def __init__(self, data_dir="data/raw"):
         self.data_dir = data_dir
-        self.disease_name = disease_name
         os.makedirs(data_dir, exist_ok=True)
-        
-        # Get disease-specific configuration
-        self.disease_config = DiseaseConfig.get_disease_config(disease_name)
-        self.companies = self.disease_config["companies"]
-        
-        # Healthcare ETFs for sector comparison (universal)
-        self.etfs = SECTOR_ETFS
-    
-    def set_disease(self, disease_name: str):
-        """Switch to a different disease context"""
-        self.disease_name = disease_name
-        self.disease_config = DiseaseConfig.get_disease_config(disease_name)
-        self.companies = self.disease_config["companies"]
-        print(f"Switched to {disease_name} ({self.disease_config['code']})")
-    
-    def collect_stock_prices(self, tickers=None, period="5y", filename_suffix=None):
-        """
-        Collect historical stock prices for disease-relevant companies
-        Uses yfinance (delayed public data)
-        """
-        if tickers is None:
-            tickers = self.companies
-        
-        if filename_suffix is None:
-            filename_suffix = self.disease_config["code"].lower()
-        
-        print(f"\nCollecting stock prices for {self.disease_name} ({len(tickers)} tickers)...")
-        
+        self.provenance = ProvenanceStore(data_dir)
+
+        # Tickers chosen for liquidity on Yahoo Finance; refresh as M&A / listings change
+        # (GBT / BLUE were removed after delisting / thin history — see README.)
+        self.companies = {
+            "CRISPR Therapeutics": "CRSP",
+            "Vertex Pharmaceuticals": "VRTX",
+            "Beam Therapeutics": "BEAM",
+            "Intellia Therapeutics": "NTLA",
+            "Editas Medicine": "EDIT",
+            "Novartis": "NVS",
+            "Pfizer": "PFE",
+            "Bristol Myers Squibb": "BMY",
+            "Emmaus Life Sciences": "EMMS",
+            "Sangamo Therapeutics": "SGMO",
+        }
+
+        self.etfs = {
+            "iShares Biotechnology ETF": "IBB",
+            "SPDR S&P Biotech ETF": "XBI",
+            "Health Care Select Sector SPDR": "XLV",
+            "VanEck Biotech ETF": "BBH",
+        }
+
+    def collect_stock_prices(self, tickers, filename):
+        print(f"Collecting stock prices for {len(tickers)} tickers...")
+
         all_data = {}
         for name, ticker in tickers.items():
             try:
                 stock = yf.Ticker(ticker)
-                hist = stock.history(period=period)
-                
+                hist = stock.history(period="5y")
                 if not hist.empty:
                     all_data[ticker] = hist
                     print(f"  ✓ {ticker} ({name}): {len(hist)} data points")
                 else:
                     print(f"  ✗ {ticker} ({name}): No data available")
             except Exception as e:
-                print(f"  ✗ {ticker} ({name}): Error - {e}")
-        
-        # Combine all data
+                print(f"  ✗ {ticker} ({name}): {e}")
+
         if all_data:
-            combined = pd.concat(all_data, axis=1, names=['Ticker', 'Price'])
-            combined.columns = combined.columns.swaplevel(0, 1)
-            
-            filename = f"{self.data_dir}/stock_prices_{filename_suffix}.csv"
-            combined.to_csv(filename)
-            print(f"\n✓ Stock prices saved to {filename}")
+            combined = pd.concat(all_data, axis=1)
+            out = Path(self.data_dir) / filename
+            if combined.empty:
+                print("✗ No stock data collected")
+                return None
+            combined.to_csv(out)
+            self.provenance.record(
+                PullRecord.now(
+                    artifact=filename,
+                    source_url="https://finance.yahoo.com",
+                    params={"tickers": list(tickers.values()), "period": "5y"},
+                    row_count=len(combined),
+                    extractor="yfinance.Ticker.history",
+                    kind="sourced_public_delayed",
+                )
+            )
+            print(f"✓ Stock prices saved to {self.data_dir}/{filename}")
             return combined
-        else:
-            print("\n✗ No stock data collected")
-            return None
-    
-    def collect_company_financials(self, disease_code=None):
-        """
-        Collect financial statements for disease-relevant companies
-        """
-        if disease_code is None:
-            disease_code = self.disease_config["code"].lower()
-        
-        print(f"\nCollecting company financials for {self.disease_name}...")
-        
-        financials_data = []
+
+        demo_src = DEMO_DIR / filename
+        dest = Path(self.data_dir) / filename
+        if demo_src.is_file():
+            shutil.copy2(demo_src, dest)
+            print(f"✓ Stock prices restored from demo bundle ({filename})")
+            return pd.read_csv(dest, header=[0, 1], index_col=0, parse_dates=True)
+
+        print("✗ No stock data collected")
+        return None
+
+    def _fetch_ticker_financials(self, name: str, ticker: str, disease_id: str) -> dict:
+        stock = yf.Ticker(ticker)
+        info = stock.info or {}
+        return {
+            "ticker": ticker,
+            "company": name,
+            "disease_id": disease_id,
+            "market_cap": info.get("marketCap", None),
+            "pe_ratio": info.get("trailingPE", None),
+            "revenue": info.get("totalRevenue", None),
+            "debt_to_equity": info.get("debtToEquity", None),
+            "roe": info.get("returnOnEquity", None),
+            "beta": info.get("beta", None),
+        }
+
+    def collect_company_financials(self):
+        """Legacy SCD-only financials (backward compatible)."""
+        print("\nCollecting company financial data (SCD universe)...")
+        financials = []
         for name, ticker in self.companies.items():
             try:
-                stock = yf.Ticker(ticker)
-                info = stock.info
-                
-                company_data = {
-                    "ticker": ticker,
-                    "name": name,
-                    "market_cap": info.get('marketCap', None),
-                    "pe_ratio": info.get('trailingPE', None),
-                    "revenue": info.get('totalRevenue', None),
-                    "debt_to_equity": info.get('debtToEquity', None),
-                    "profit_margin": info.get('profitMargins', None),
-                    "beta": info.get('beta', None),
-                    "sector": info.get('sector', None),
-                    "industry": info.get('industry', None)
-                }
-                financials_data.append(company_data)
+                financials.append(self._fetch_ticker_financials(name, ticker, "scd"))
                 print(f"  ✓ {ticker}")
             except Exception as e:
                 print(f"  ✗ {ticker}: {e}")
-        
-        df = pd.DataFrame(financials_data)
-        filename = f"{self.data_dir}/company_financials_{disease_code}.csv"
-        df.to_csv(filename, index=False)
-        print(f"\n✓ Company financials saved to {filename} ({len(df)} companies)")
+
+        df = pd.DataFrame(financials)
+        artifact = "company_financials.csv"
+        pull = PullRecord.now(
+            artifact=artifact,
+            source_url="https://query2.finance.yahoo.com/v10/finance/quoteSummary",
+            params={"tickers": list(self.companies.values()), "modules": "summaryDetail,financialData"},
+            extractor="yfinance.Ticker.info",
+            kind="sourced_public_delayed",
+        )
+        write_csv(
+            df,
+            f"{self.data_dir}/{artifact}",
+            artifact=artifact,
+            pull=pull,
+            provenance_store=self.provenance,
+            enrich_ontology=False,
+        )
+        print(f"\n✓ Company financials saved ({len(df)} companies)")
         return df
-    
+
     def collect_news_sentiment(self):
-        """
-        Collect news headlines for sentiment analysis
-        Note: This is a placeholder - implement with news API
-        """
-        print("News sentiment collection would go here")
-        print("  (Implement with NewsAPI, Alpha Vantage News, or similar)")
+        print("\nCollecting news sentiment data...")
+        print("  (News sentiment analysis to be implemented)")
         return None
-    
-    def collect_all_stock_data(self, disease_name=None):
-        """
-        Collect all stock-related data for a disease
-        
-        Args:
-            disease_name: Disease to collect data for (uses current if None)
-        """
-        if disease_name:
-            self.set_disease(disease_name)
-        
-        disease_code = self.disease_config["code"].lower()
-        print(f"\n=== Collecting Stock Data for {self.disease_name} ===\n")
-        
-        # Collect company stock prices
-        self.collect_stock_prices(period="5y", filename_suffix=disease_code)
-        
-        # Collect ETF prices for sector comparison (once, universal)
-        print("\n--- Collecting sector ETF data ---")
-        self.collect_stock_prices(self.etfs, period="5y", filename_suffix="etfs")
-        
-        # Collect financials
-        self.collect_company_financials(disease_code)
-        
-        print(f"\n✓ All stock data collection complete for {self.disease_name}!")
-        return True
-    
-    @staticmethod
-    def collect_all_diseases():
-        """Collect stock data for all supported diseases"""
-        diseases = DiseaseConfig.get_disease_names()
-        print(f"\n{'='*60}")
-        print(f"COLLECTING STOCK DATA FOR {len(diseases)} DISEASE AREAS")
-        print(f"{'='*60}")
-        
-        results = {}
-        for disease in diseases:
-            try:
-                collector = MultiDiseaseStockDataCollector(disease_name=disease)
-                collector.collect_all_stock_data()
-                results[disease] = "Success"
-            except Exception as e:
-                print(f"\n✗ Error collecting data for {disease}: {e}")
-                results[disease] = f"Error: {e}"
-        
-        print(f"\n{'='*60}")
-        print("COLLECTION SUMMARY")
-        print(f"{'='*60}")
-        for disease, status in results.items():
-            print(f"  {disease}: {status}")
-        
-        return results
 
+    def collect_registry_financials(self) -> pd.DataFrame:
+        """Financials for each disease's US ticker universe (registry-driven)."""
+        print("\nCollecting registry-scoped company financials...")
+        financials: list[dict] = []
+        for spec in list_diseases():
+            for name, ticker in us_tickers(spec.companies).items():
+                try:
+                    financials.append(self._fetch_ticker_financials(name, ticker, spec.disease_id))
+                    print(f"  ✓ {spec.code} · {ticker}")
+                except Exception as e:
+                    print(f"  ✗ {spec.code} · {ticker}: {e}")
+        df = pd.DataFrame(financials)
+        artifact = "company_financials.csv"
+        pull = PullRecord.now(
+            artifact=artifact,
+            source_url="https://query2.finance.yahoo.com/v10/finance/quoteSummary",
+            params={"source": "disease_registry", "diseases": list({r["disease_id"] for r in financials})},
+            extractor="yfinance.Ticker.info",
+            kind="sourced_public_delayed",
+        )
+        write_csv(df, f"{self.data_dir}/{artifact}", artifact=artifact, pull=pull, provenance_store=self.provenance, enrich_ontology=False)
+        print(f"✓ Registry financials saved ({len(df)} rows)")
+        return df
 
-# Backward compatibility - alias for old class name
-SickleCellStockDataCollector = MultiDiseaseStockDataCollector
+    def collect_all_stock_data(self):
+        print("\n=== Collecting immunology equity data (registry universes) ===\n")
+        all_tickers = union_us_tickers()
+        self.collect_stock_prices(all_tickers, "stock_prices_companies.csv")
+        self.collect_stock_prices(self.etfs, "stock_prices_etfs.csv")
+        self.collect_registry_financials()
+        self.collect_news_sentiment()
+        print("\n✓ All stock data collection complete!")
+
 
 if __name__ == "__main__":
-    import argparse
-    
-    parser = argparse.ArgumentParser(description="Collect stock data for immunology diseases")
-    parser.add_argument("--disease", "-d", type=str, default="Sickle Cell Disease",
-                        help="Disease area to collect data for")
-    parser.add_argument("--all", "-a", action="store_true",
-                        help="Collect data for all supported diseases")
-    
-    args = parser.parse_args()
-    
-    if args.all:
-        MultiDiseaseStockDataCollector.collect_all_diseases()
-    else:
-        collector = MultiDiseaseStockDataCollector(disease_name=args.disease)
-        collector.collect_all_stock_data()
+    collector = SickleCellStockDataCollector()
+    collector.collect_all_stock_data()

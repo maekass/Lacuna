@@ -1,0 +1,15 @@
+# Local + Streamlit Community Cloud
+# https://docs.streamlit.io/develop/concepts/configuration/options
+
+[server]
+headless = true
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+primaryColor = "#4A6B5C"
+backgroundColor = "#F4F6F4"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#1F2933"
+font = "sans serif"

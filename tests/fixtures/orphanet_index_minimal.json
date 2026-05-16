@@ -1,0 +1,10 @@
+{
+  "data": {
+    "results": [
+      {"ORPHAcode": 232, "Preferred term": "Sickle cell anemia"},
+      {"ORPHAcode": 536, "Preferred term": "Systemic lupus erythematosus"},
+      {"ORPHAcode": 797, "Preferred term": "Sarcoidosis"},
+      {"ORPHAcode": 586, "Preferred term": "Cystic fibrosis"}
+    ]
+  }
+}

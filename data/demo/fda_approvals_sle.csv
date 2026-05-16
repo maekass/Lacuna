@@ -1,0 +1,5 @@
+drug_name,company,approval_date,mechanism,phase,efficacy,disease_id,indication_mesh_id,indication_mesh_label,indication_icd10_code,indication_disambiguation,moa_mesh_id,moa_mesh_label
+Belimumab,GSK,2011-03-09,Monoclonal antibody,Commercial,Reduces SLE flares,sle,D008180,"Lupus Erythematosus, Systemic",M32.10,primary_sle,D000911,"Antibodies, Monoclonal"
+Anifrolumab,AstraZeneca,2021-07-30,Type I IFN inhibitor,Commercial,Skin and organ response,sle,D008180,"Lupus Erythematosus, Systemic",M32.10,primary_sle,D007372,Interferons
+Baricitinib,Eli Lilly,2023-08-14,JAK inhibitor,Commercial,Lupus nephritis adjunct,sle,D008180,"Lupus Erythematosus, Systemic",M32.10,primary_sle,D053610,Janus Kinase Inhibitors
+Voclosporin,Aurinia,2021-01-22,Calcineurin inhibitor,Commercial,Lupus nephritis,sle,D008180,"Lupus Erythematosus, Systemic",M32.10,primary_sle,,Calcineurin inhibitor
