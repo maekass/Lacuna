@@ -54,6 +54,41 @@ def select_us_point_prevalence_per_100k(entries: list[dict[str, Any]]) -> float 
     return float(pick["val_moy_per_100k"])
 
 
+def select_best_non_us_point_prevalence(entries: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """
+    When no U.S. point rate exists, pick a single Orphanet point-prevalence row for display only.
+    Preference: validated > unvalidated; non-Unknown prevalence class > Unknown; Worldwide > other geos.
+    """
+    candidates: list[dict[str, Any]] = []
+    for e in entries:
+        if "point" not in str(e.get("prevalence_type", "")).lower():
+            continue
+        if e.get("val_moy_per_100k") is None:
+            continue
+        if str(e.get("geographic", "")).strip() == "United States":
+            continue
+        candidates.append(e)
+    if not candidates:
+        return None
+
+    def score(row: dict[str, Any]) -> tuple[int, int, int]:
+        val_st = str(row.get("validation_status", "")).lower()
+        geo = str(row.get("geographic", "")).strip()
+        cls = str(row.get("prevalence_class", "")).lower()
+        validated_rank = 1 if "validated" in val_st else 0
+        class_rank = 1 if cls and "unknown" not in cls else 0
+        geo_rank = 2 if geo == "Worldwide" else (1 if geo else 0)
+        return (validated_rank, class_rank, geo_rank)
+
+    best = max(candidates, key=score)
+    return {
+        "val_moy_per_100k": float(best["val_moy_per_100k"]),
+        "geographic": str(best.get("geographic", "")),
+        "validation_status": str(best.get("validation_status", "")),
+        "prevalence_class": str(best.get("prevalence_class", "")),
+    }
+
+
 def _to_float(val: Any) -> float | None:
     if val is None or val == "":
         return None

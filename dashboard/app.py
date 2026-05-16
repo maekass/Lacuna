@@ -154,11 +154,13 @@ def _disease_metrics_cached(
     preferred_term: str,
     orpha_code: int | None,
     cdc_label: str | None,
+    trial_query_fallback: str | None,
 ) -> dict[str, Any]:
     return fetch_disease_metrics(
         preferred_term,
         orpha_code=orpha_code,
         cdc_label=cdc_label,
+        trial_query_fallback=trial_query_fallback,
     )
 
 
@@ -207,9 +209,28 @@ def render_disease_metrics_panel(metrics: dict[str, Any]) -> None:
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("ORPHA code", metrics.get("orpha_code") or "—")
     us_rate = metrics.get("us_point_prevalence_per_100k")
-    c2.metric("U.S. point prevalence", f"{us_rate}/100k" if us_rate else "—")
+    alt_prev = metrics.get("orphanet_non_us_point_prevalence") or {}
+    alt_rate = alt_prev.get("val_moy_per_100k")
+    if us_rate is not None:
+        c2.metric("U.S. point prevalence", f"{us_rate}/100k")
+    elif alt_rate is not None:
+        geo = alt_prev.get("geographic") or "—"
+        c2.metric(
+            "Orphanet point prevalence (non‑U.S.)",
+            f"{alt_rate}/100k · {geo}",
+        )
+        c2.caption("No validated U.S. point estimate in Orphadata for this entity; shown value is geography-specific from Orphanet.")
+    else:
+        c2.metric("U.S. point prevalence", "—")
+        if metrics.get("orpha_code"):
+            c2.caption("Orphanet returned no usable point-prevalence ValMoy for this code (common for umbrella groups). See prevalence table below.")
     c3.metric("Trials in sample", metrics.get("trials_in_sample", 0))
     c4.metric("Active in sample", metrics.get("trials_active_in_sample", 0))
+    if metrics.get("trials_used_search_fallback_query"):
+        st.caption(
+            "ClinicalTrials.gov used your **sidebar search text** as a fallback condition query "
+            "(the Orphanet preferred term alone returned no studies in this pull)."
+        )
 
     nndss = metrics.get("cdc_nndss") or {}
     if nndss:
@@ -223,10 +244,14 @@ def render_disease_metrics_panel(metrics: dict[str, Any]) -> None:
 
     icd = ", ".join(metrics.get("icd10_codes") or []) or "—"
     omim = ", ".join(metrics.get("omim_codes") or []) or "—"
+    umls = ", ".join(metrics.get("umls_codes") or []) or "—"
+    typology = metrics.get("typology") or "—"
     st.markdown(
         f"**Disorder group:** {metrics.get('disorder_group') or '—'}  \n"
+        f"**Orphanet typology:** {typology}  \n"
         f"**ICD-10:** {icd}  \n"
         f"**OMIM:** {omim}  \n"
+        f"**UMLS:** {umls}  \n"
         f"**ClinicalTrials.gov query:** `{metrics.get('clinical_trials_query', '')}`"
     )
     if metrics.get("orphanet_url"):
