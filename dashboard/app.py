@@ -50,6 +50,13 @@ ML_DATA = ROOT / "data" / "processed"
 ML_MODELS = ROOT / "data" / "models"
 QUANT_DATA = ROOT / "data" / "processed" / "quant"
 
+st.set_page_config(
+    page_title="Immunology Investment Dashboard",
+    page_icon=":material/analytics:",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
 
 @st.cache_resource(show_spinner=False)
 def _bootstrap_data_cached() -> bool:
@@ -154,7 +161,7 @@ def _disease_metrics_cached(
     preferred_term: str,
     orpha_code: int | None,
     cdc_label: str | None,
-    trial_query_fallback: str | None,
+    trial_query_fallback: str | None = None,
 ) -> dict[str, Any]:
     return fetch_disease_metrics(
         preferred_term,
@@ -207,25 +214,49 @@ def render_disease_metrics_panel(metrics: dict[str, Any]) -> None:
     st.caption(f"Metric sources: {sources}")
 
     c1, c2, c3, c4 = st.columns(4)
-    c1.metric("ORPHA code", metrics.get("orpha_code") or "—")
+    oc = metrics.get("orpha_code")
+    if oc is not None and oc != "" and oc != "—":
+        c1.metric("ORPHA code", str(oc))
+    else:
+        c1.metric("ORPHA code", "—")
     us_rate = metrics.get("us_point_prevalence_per_100k")
     alt_prev = metrics.get("orphanet_non_us_point_prevalence") or {}
     alt_rate = alt_prev.get("val_moy_per_100k")
+    prevalence_note: str | None = None
     if us_rate is not None:
-        c2.metric("U.S. point prevalence", f"{us_rate}/100k")
+        c2.metric("U.S. point prevalence", f"{float(us_rate)!s}/100k")
     elif alt_rate is not None:
         geo = alt_prev.get("geographic") or "—"
         c2.metric(
             "Orphanet point prevalence (non‑U.S.)",
-            f"{alt_rate}/100k · {geo}",
+            f"{float(alt_rate)!s}/100k · {geo}",
         )
-        c2.caption("No validated U.S. point estimate in Orphadata for this entity; shown value is geography-specific from Orphanet.")
+        prevalence_note = (
+            "No validated U.S. point estimate in Orphadata for this entity; "
+            "shown value is geography-specific from Orphanet."
+        )
     else:
         c2.metric("U.S. point prevalence", "—")
         if metrics.get("orpha_code"):
-            c2.caption("Orphanet returned no usable point-prevalence ValMoy for this code (common for umbrella groups). See prevalence table below.")
-    c3.metric("Trials in sample", metrics.get("trials_in_sample", 0))
-    c4.metric("Active in sample", metrics.get("trials_active_in_sample", 0))
+            prevalence_note = (
+                "Orphanet returned no usable point-prevalence ValMoy for this code "
+                "(common for umbrella groups). See prevalence table below."
+            )
+
+    try:
+        trials_n_disp = int(metrics.get("trials_in_sample", 0))
+    except (TypeError, ValueError):
+        trials_n_disp = metrics.get("trials_in_sample", 0)
+    try:
+        trials_a_disp = int(metrics.get("trials_active_in_sample", 0))
+    except (TypeError, ValueError):
+        trials_a_disp = metrics.get("trials_active_in_sample", 0)
+    c3.metric("Trials in sample", trials_n_disp)
+    c4.metric("Active in sample", trials_a_disp)
+
+    if prevalence_note:
+        st.caption(prevalence_note)
+
     if metrics.get("trials_used_search_fallback_query"):
         st.caption(
             "ClinicalTrials.gov used your **sidebar search text** as a fallback condition query "
@@ -493,13 +524,6 @@ def render_sidebar_provenance(
             )
 
 
-st.set_page_config(
-    page_title="Immunology Investment Dashboard",
-    page_icon=":material/analytics:",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
-
 apply_glass_theme()
 glass_hero(
     "Immunology Investment Intelligence",
@@ -575,6 +599,7 @@ else:
             _row["label"],
             _row.get("orpha_code"),
             _row.get("cdc_label"),
+            _search_q.strip() if _search_q.strip() else None,
         )
         _ctx = IndicationView.from_metrics(_metrics)
         disease_id = _ctx.disease_id
