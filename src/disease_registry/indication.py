@@ -95,7 +95,7 @@ class IndicationView:
             snomed_label="—",
             icd10_code=icd_primary,
             icd10_label=icd_primary,
-            orpha_code=int(metrics["orpha_code"]),
+            orpha_code=int(metrics["orpha_code"]) if metrics.get("orpha_code") is not None else None,
             is_registry=False,
             metrics=metrics,
         )

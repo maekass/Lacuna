@@ -23,8 +23,9 @@ ARTIFACT_REGISTRY: dict[str, dict[str, str]] = {
         "summary": "ClinicalTrials.gov (legacy JSON and/or v2 REST). Query and API version affect coverage.",
     },
     "fda_approvals_scd.csv": {
-        "kind": "illustrative",
-        "summary": "Hand-built example rows for scaffolding; not an automated openFDA pull.",
+        "kind": "sourced_public",
+        "summary": "openFDA drug labels (indications search) plus drugsfda first approval date / sponsor when brand matches.",
+        "tier": "sourced_public",
     },
     "gene_therapy_pipeline_scd.csv": {
         "kind": "illustrative",
@@ -55,12 +56,14 @@ ARTIFACT_REGISTRY: dict[str, dict[str, str]] = {
         "summary": "Illustrative sarcoidosis pipeline for demo UI.",
     },
     "fda_approvals_sle.csv": {
-        "kind": "illustrative",
-        "summary": "Illustrative SLE approval rows; not a live openFDA extract.",
+        "kind": "sourced_public",
+        "summary": "openFDA labels + drugsfda approval enrichment when API returns rows; else illustrative fallback.",
+        "tier": "mixed",
     },
     "fda_approvals_sarc.csv": {
-        "kind": "illustrative",
-        "summary": "Illustrative sarcoidosis therapy rows for demo UI.",
+        "kind": "sourced_public",
+        "summary": "openFDA labels + drugsfda approval enrichment when API returns rows; else illustrative fallback.",
+        "tier": "mixed",
     },
     "stock_prices_companies.csv": {
         "kind": "sourced_public_delayed",
@@ -97,26 +100,32 @@ ARTIFACT_REGISTRY: dict[str, dict[str, str]] = {
     "market_size_scd.csv": {
         "kind": "illustrative",
         "summary": "Illustrative TAM-style rows until replaced with sourced market research.",
+        "tier": "demo_tier_3",
     },
     "large_pharma_investments_scd.csv": {
         "kind": "illustrative",
         "summary": "Illustrative pharma positioning table.",
+        "tier": "demo_tier_3",
     },
     "competitive_landscape_scd.csv": {
         "kind": "illustrative",
         "summary": "Illustrative competitive snapshot.",
+        "tier": "demo_tier_3",
     },
     "deal_flow_scd.csv": {
         "kind": "illustrative",
         "summary": "Illustrative deal timeline; not a comprehensive M&A database.",
+        "tier": "demo_tier_3",
     },
     "regulatory_landscape_scd.csv": {
         "kind": "illustrative",
         "summary": "Illustrative regulatory summary rows.",
+        "tier": "demo_tier_3",
     },
     "investment_attractiveness_scd.csv": {
         "kind": "illustrative",
         "summary": "Demo scoring weights only; not ratings or recommendations.",
+        "tier": "demo_tier_3",
     },
 }
 
@@ -135,6 +144,8 @@ def write_data_manifest(data_dir: str | Path, trigger: str = "unknown") -> Path:
             "source_summary": meta["summary"],
             "present": path.exists(),
         }
+        if meta.get("tier"):
+            entry["tier"] = meta["tier"]
         if path.exists():
             entry["last_modified_utc"] = datetime.fromtimestamp(
                 path.stat().st_mtime, tz=timezone.utc

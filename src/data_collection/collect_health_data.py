@@ -27,6 +27,10 @@ from src.data_collection.disease_fallbacks import FALLBACK_TRIALS
 from src.data_collection.parsers.clinical_trials import PARSER_VERSION, parse_legacy_full_studies, parse_v2_studies
 from src.data_collection.parsers.openfda import PARSER_VERSION as OPENFDA_PARSER_VERSION
 from src.data_collection.parsers.openfda import fetch_labels_for_query
+from src.data_collection.parsers.openfda_drugsfda import (
+    PARSER_VERSION as DRUGSFDA_PARSER_VERSION,
+    enrich_fda_dataframe_with_drugsfda,
+)
 from src.data_collection.provenance import ProvenanceStore, PullRecord
 from src.disease_registry import FOCUS_DISEASE_IDS, DiseaseSpec, get_disease, list_diseases
 
@@ -167,14 +171,16 @@ class ImmunologyHealthDataCollector:
             if rows:
                 df = pd.DataFrame(rows)
                 df["disease_id"] = spec.disease_id
+                df = enrich_fda_dataframe_with_drugsfda(df)
                 pull = PullRecord.now(
                     artifact=spec.fda_artifact,
                     source_url=meta["source_url"],
                     params=meta.get("params"),
-                    parser_version=OPENFDA_PARSER_VERSION,
-                    extractor="fetch_labels_for_query",
+                    parser_version=f"{OPENFDA_PARSER_VERSION}+{DRUGSFDA_PARSER_VERSION}",
+                    extractor="fetch_labels_for_query+enrich_fda_dataframe_with_drugsfda",
                     http_status=meta.get("http_status"),
                     kind="sourced_public",
+                    notes="Label indications search; approval dates from drugsfda ORIG/AP when matched.",
                 )
             else:
                 df = {"scd": fda_scd, "sle": fda_sle, "sarc": fda_sarc}[spec.disease_id]()

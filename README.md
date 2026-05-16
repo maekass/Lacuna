@@ -90,6 +90,25 @@ Quantitative research tooling at the intersection of sickle cell disease epidemi
 
 After `python src/data_collection/collect_all_data.py` and `python src/models/market_analysis.py`, the repo writes **`data/raw/data_manifest.json`**: for each registered CSV it records **illustrative vs sourced (public / delayed vendor)** and **`last_modified_utc`**. The Streamlit dashboard shows this under **Data provenance** on **every** page. The manifest file is **gitignored** (regenerate locally after pulls).
 
+## Data tiers (sourced vs demo)
+
+Registered artifacts may include a **`tier`** in the manifest (and in the JSON written by `write_data_manifest`). Common values:
+
+- **`demo_tier_3`** — illustrative market / competitive scaffolding (e.g. TAM rows, demo attractiveness scores). Not a substitute for licensed market data.
+- **`sourced_public`** / **`mixed`** — public API pulls (e.g. ClinicalTrials.gov, openFDA labels + **drugsfda** enrichment when the network succeeds). See each file’s **source summary** in the manifest.
+
+The **Market Analysis** page includes a collapsible **Data tier reference** table when `data_manifest.json` is present (after collectors or bootstrap).
+
+## Disease Lookup (sidebar)
+
+- **Registry** focus diseases use pre-wired artifact names and load quickly from disk (or demo seed).
+- **Orphanet** and **CDC NNDSS** search builds a **local index on first use** (requires network); the UI shows a **spinner** on that cold path. NNDSS index responses are cached about **24 hours** in-session to reduce repeat downloads.
+- **Ad-hoc** Orphanet/CDC selections still map **stock / demo market** tables to the **SCD** registry slug where the dashboard uses `registry_disease_id`; burden and trials use the fetched metrics when available.
+
+## FDA approvals (openFDA labels + drugsfda)
+
+`collect_health_data` pulls **openFDA drug labels** for indication-matched rows, then calls **openFDA drugsfda** (when reachable) to enrich **first approval date** (earliest ORIG/AP `submission_status_date`), **sponsor (`company`)**, and **`application_number`** when brand names match. Optional CSV columns: `application_number`, `approval_date_source`. Re-run **`python3 src/data_collection/collect_all_data.py`** with network access to refresh.
+
 ## Legal disclaimer
 
 **Educational and research use only. Not investment advice, not medical advice, not a substitute for professional counsel.** No patient-level data in this repository. Verify compliance with applicable rules (including securities and health-data use) before any production or commercial use.
