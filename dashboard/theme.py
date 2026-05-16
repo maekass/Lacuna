@@ -211,7 +211,7 @@ html, body, [data-testid="stAppViewContainer"] {
     color: #5C6B73 !important;
     font-size: 0.84rem !important;
 }
-[data-testid="stSidebar"] .stRadio > label { display: none; }
+/* Do not hide .stRadio > label — new Streamlit lays out horizontal options as direct labels; hiding breaks Indication / Universe / Navigation radios. */
 [data-testid="stSidebar"] [data-testid="stRadio"] label {
     padding: 0.4rem 0.6rem !important;
     border-radius: 6px !important;
