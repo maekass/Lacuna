@@ -1,0 +1,7 @@
+Strategy,Annual Return,Annual Volatility,Sharpe Ratio,Max Drawdown,Sortino Ratio,Calmar Ratio
+Equal Weight,15.25%,36.60%,0.362,-34.64%,0.024,0.440
+Minimum Variance,9.60%,20.78%,0.365,-19.34%,0.022,0.496
+Risk Parity,13.26%,24.85%,0.453,-21.60%,0.028,0.614
+Max Sortino,22.73%,28.36%,0.731,-28.56%,0.045,0.796
+Max Calmar,23.47%,32.62%,0.658,-26.05%,0.042,0.901
+Min Drawdown,9.51%,22.62%,0.332,-17.73%,0.019,0.537
