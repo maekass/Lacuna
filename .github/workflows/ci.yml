@@ -39,8 +39,12 @@ jobs:
             src/models/investment_stage_analysis.py \
             src/models/ml_artifacts.py \
             src/quant_framework/quant_artifacts.py \
-            src/quant_framework/walk_forward.py
-      - name: Unit tests (parsers, schemas, ontology)
+            src/quant_framework/walk_forward.py \
+            src/data_validation \
+            scripts/validate_data.py
+      - name: Unit tests (parsers, schemas, ontology, validation)
         run: python -m pytest tests/ -q
       - name: Verify bundled demo CSVs
         run: python scripts/debug_check.py
+      - name: Data validation
+        run: python scripts/validate_data.py
