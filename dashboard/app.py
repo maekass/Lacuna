@@ -68,6 +68,15 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# Initialize session state for production
+if 'initialized' not in st.session_state:
+    st.session_state.initialized = True
+    st.session_state.page_views = 0
+    st.session_state.session_start = datetime.now()
+    
+# Track page views
+st.session_state.page_views += 1
+
 # ============================================================================
 # LEGAL DISCLAIMER - DISPLAYED ON EVERY PAGE
 # ============================================================================
