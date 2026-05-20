@@ -122,7 +122,7 @@ jobs:
     
     - name: Upload validation report
       if: always() && hashFiles('data/raw/validation_report.json') != ''
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: validation-report
         path: data/raw/validation_report.json
