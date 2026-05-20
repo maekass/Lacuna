@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-05-20T10:00:29.029704+00:00",
+  "timestamp": "2026-05-20T10:47:39.094795+00:00",
   "checks": {
     "api_health": {
       "status": "PASS",
-      "response_time_ms": 137.65800000000002
+      "response_time_ms": 318.888
     },
     "data_quality": {
       "status": "PASS",
