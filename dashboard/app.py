@@ -64,7 +64,6 @@ QUANT_DATA = ROOT / "data" / "processed" / "quant"
 
 st.set_page_config(
     page_title="Immunology Investment Dashboard",
-    page_icon=":material/analytics:",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -75,12 +74,15 @@ st.set_page_config(
 def show_legal_disclaimer():
     """Display comprehensive legal disclaimer banner"""
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-                padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; 
-                border-left: 5px solid #f59e0b;">
-        <h3 style="color: white; margin: 0 0 1rem 0;">⚠️ Legal Disclaimer</h3>
-        <p style="color: white; margin: 0; font-size: 0.95rem; line-height: 1.6;">
-            <strong>FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY</strong><br><br>
+    <div style="background: linear-gradient(135deg, #E8F2EC 0%, #F4F7F2 100%); 
+                padding: 1.75rem 2rem; border-radius: 12px; margin-bottom: 2rem; 
+                border-left: 4px solid #5A8A6F; border: 1px solid #C4D4C0;">
+        <h3 style="color: #2A3B2E; margin: 0 0 1rem 0; font-family: 'Inter', sans-serif; 
+                   font-weight: 600; font-size: 1.125rem; letter-spacing: -0.015em;">
+            Legal Disclaimer
+        </h3>
+        <p style="color: #2A3B2E; margin: 0; font-size: 0.9375rem; line-height: 1.7; font-weight: 400;">
+            <strong style="color: #5A8A6F;">FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY</strong><br><br>
             This platform is designed for academic research and learning. It is <strong>NOT</strong>:<br>
             • Investment advice or financial recommendations<br>
             • Suitable for commercial trading or real-money decisions without proper validation<br>
