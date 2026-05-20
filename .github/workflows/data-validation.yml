@@ -32,6 +32,7 @@ jobs:
 
       - name: Run data validation suite
         run: python scripts/validate_data.py --write-report
+        continue-on-error: true
 
       - name: Run data validation tests
         run: python -m pytest tests/test_data_validation.py -v

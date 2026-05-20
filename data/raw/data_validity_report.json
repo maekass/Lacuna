@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-05-20T03:46:14.681526+00:00",
+  "total_files": 26,
+  "real_files": 10,
+  "synthetic_files": 14,
+  "mixed_files": 2,
+  "real_percentage": 38.46,
+  "synthetic_percentage": 53.85,
+  "mixed_percentage": 7.69,
+  "categories": {
+    "sourced_public": [
+      "cdc_sickle_cell_data.csv",
+      "clinical_trials_scd.csv",
+      "fda_approvals_scd.csv",
+      "clinical_trials_sle.csv",
+      "clinical_trials_sarc.csv",
+      "epidemiology_sle.csv",
+      "epidemiology_sarc.csv"
+    ],
+    "sourced_public_delayed": [
+      "stock_prices_companies.csv",
+      "stock_prices_etfs.csv",
+      "company_financials.csv"
+    ],
+    "mixed": [
+      "fda_approvals_sle.csv",
+      "fda_approvals_sarc.csv"
+    ],
+    "illustrative": [
+      "gene_therapy_pipeline_scd.csv",
+      "pipeline_sle.csv",
+      "pipeline_sarc.csv",
+      "vc_deals_scd.csv",
+      "growth_equity_deals_scd.csv",
+      "public_equity_companies_scd.csv",
+      "stage_returns_analysis.csv",
+      "precision_medicine_pipeline.csv",
+      "market_size_scd.csv",
+      "large_pharma_investments_scd.csv",
+      "competitive_landscape_scd.csv",
+      "deal_flow_scd.csv",
+      "regulatory_landscape_scd.csv",
+      "investment_attractiveness_scd.csv"
+    ]
+  },
+  "replacement_needed": [
+    "gene_therapy_pipeline_scd.csv",
+    "pipeline_sle.csv",
+    "pipeline_sarc.csv",
+    "vc_deals_scd.csv",
+    "growth_equity_deals_scd.csv",
+    "public_equity_companies_scd.csv",
+    "stage_returns_analysis.csv",
+    "precision_medicine_pipeline.csv",
+    "market_size_scd.csv",
+    "large_pharma_investments_scd.csv",
+    "competitive_landscape_scd.csv",
+    "deal_flow_scd.csv",
+    "regulatory_landscape_scd.csv",
+    "investment_attractiveness_scd.csv"
+  ]
+}

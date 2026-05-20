@@ -1,0 +1,36 @@
+======================================================================
+DATA VALIDATION REPORT
+Generated: 2026-05-20 10:31:37 UTC
+======================================================================
+
+Total checks: 214
+Passed:       206
+Failed:       8 (0 errors, 8 warnings)
+Pass rate:    96.3%
+Artifacts:    45 checked, 6 with issues
+
+----------------------------------------------------------------------
+FAILURES
+----------------------------------------------------------------------
+
+  clinical_trials_sarc.csv:
+    [WARN] date_format: column 'start_date' has 24 unparseable date value(s)
+
+  clinical_trials_scd.csv:
+    [WARN] date_format: column 'start_date' has 22 unparseable date value(s)
+
+  clinical_trials_sle.csv:
+    [WARN] date_format: column 'start_date' has 16 unparseable date value(s)
+
+  fda_approvals_sarc.csv:
+    [WARN] date_format: column 'approval_date' has 11 unparseable date value(s)
+
+  fda_approvals_scd.csv:
+    [WARN] date_format: column 'approval_date' has 6 unparseable date value(s)
+    [WARN] custom:No duplicate rows: No duplicate rows: 1 fully duplicated row(s)
+
+  fda_approvals_sle.csv:
+    [WARN] date_format: column 'approval_date' has 11 unparseable date value(s)
+    [WARN] custom:No duplicate rows: No duplicate rows: 1 fully duplicated row(s)
+
+======================================================================
