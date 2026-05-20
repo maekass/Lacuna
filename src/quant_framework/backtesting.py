@@ -6,11 +6,7 @@ Includes backtesting, portfolio optimization, and risk management
 import pandas as pd
 import numpy as np
 import yfinance as yf
-from datetime import datetime, timedelta
-import matplotlib.pyplot as plt
-import seaborn as sns
 from scipy import stats
-import os
 
 class SickleCellQuantFramework:
     def __init__(self, initial_capital=100000):
@@ -197,7 +193,7 @@ class SickleCellQuantFramework:
         portfolio_return = np.dot(weights, expected_returns)
         portfolio_volatility = np.sqrt(np.dot(weights.T, np.dot(cov_matrix, weights)))
         
-        print(f"  Equal Weight Portfolio:")
+        print("  Equal Weight Portfolio:")
         print(f"    Expected Return: {portfolio_return:.2%}")
         print(f"    Volatility: {portfolio_volatility:.2%}")
         print(f"    Sharpe Ratio: {portfolio_return / portfolio_volatility:.2f}")

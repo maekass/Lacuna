@@ -7,8 +7,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 import pandas as pd
-import numpy as np
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 # Tableau Color Palettes
 TABLEAU_COLORS = {
@@ -86,8 +85,6 @@ class TableauVisualizer:
         fig = go.Figure()
         
         # Calculate funnel widths
-        max_count = phase_data['Count'].max()
-        
         for idx, row in phase_data.iterrows():
             fig.add_trace(go.Funnel(
                 name=row['Phase'],

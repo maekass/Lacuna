@@ -32,7 +32,7 @@ from src.data_collection.parsers.openfda_drugsfda import (
     enrich_fda_dataframe_with_drugsfda,
 )
 from src.data_collection.provenance import ProvenanceStore, PullRecord
-from src.disease_registry import FOCUS_DISEASE_IDS, DiseaseSpec, get_disease, list_diseases
+from src.disease_registry import DiseaseSpec, get_disease, list_diseases
 
 
 class ImmunologyHealthDataCollector:

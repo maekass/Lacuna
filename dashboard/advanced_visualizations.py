@@ -6,7 +6,6 @@ Additional charts and interactive components for the Streamlit dashboard.
 
 import streamlit as st
 import plotly.graph_objects as go
-import plotly.express as px
 import pandas as pd
 import numpy as np
 from typing import Dict, List

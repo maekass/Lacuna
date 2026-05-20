@@ -25,7 +25,7 @@ def test_data_file():
     
     try:
         df = pd.read_csv(data_path)
-        print(f"✅ Data loads successfully")
+        print("✅ Data loads successfully")
         print(f"   Rows: {len(df)}")
         print(f"   Columns: {len(df.columns)}")
         
@@ -37,10 +37,10 @@ def test_data_file():
             print(f"❌ Missing required fields: {missing}")
             return False
         else:
-            print(f"✅ All required fields present")
+            print("✅ All required fields present")
         
         # Check for null values in critical fields
-        print(f"\n   Null values in critical fields:")
+        print("\n   Null values in critical fields:")
         for field in required:
             null_count = df[field].isnull().sum()
             pct = (null_count / len(df)) * 100
@@ -79,10 +79,10 @@ def test_api():
         
         data = response.json()
         if "studies" not in data:
-            print(f"❌ Invalid response structure")
+            print("❌ Invalid response structure")
             return False
         
-        print(f"✅ Response structure valid")
+        print("✅ Response structure valid")
         print(f"   Studies in response: {len(data.get('studies', []))}")
         
         return True
@@ -109,13 +109,13 @@ def test_parser():
         response = requests.get(url, params=params, timeout=10)
         
         if response.status_code != 200:
-            print(f"❌ Cannot fetch test data")
+            print("❌ Cannot fetch test data")
             return False
         
         trials = parse_v2_studies(response.json(), max_trials=3)
         
         if not trials:
-            print(f"❌ Parser returned no trials")
+            print("❌ Parser returned no trials")
             return False
         
         print(f"✅ Parser works: {len(trials)} trials parsed")
@@ -182,14 +182,14 @@ def test_sample_data():
     data_path = ROOT / "data" / "processed" / "enhanced_clinical_trials.csv"
     
     if not data_path.exists():
-        print(f"❌ Data file not found")
+        print("❌ Data file not found")
         return False
     
     try:
         df = pd.read_csv(data_path)
         
         # Show first 3 trials
-        print(f"\n   First 3 trials:")
+        print("\n   First 3 trials:")
         for idx in range(min(3, len(df))):
             trial = df.iloc[idx]
             print(f"\n   Trial {idx + 1}:")

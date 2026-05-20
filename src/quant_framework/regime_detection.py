@@ -167,7 +167,6 @@ def calculate_transition_matrix(regimes: pd.Series) -> pd.DataFrame:
         DataFrame where element [i,j] = P(regime j | regime i)
     """
     unique_regimes = sorted(regimes.unique())
-    n = len(unique_regimes)
     
     # Initialize transition matrix
     transitions = pd.DataFrame(0, index=unique_regimes, columns=unique_regimes)

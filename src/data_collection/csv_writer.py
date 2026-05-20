@@ -5,7 +5,6 @@ Write CSVs with schema validation and provenance recording on every pull.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
 
 import pandas as pd
 
