@@ -53,7 +53,7 @@ def main():
                 print(f"\n  📁 {file}")
                 for issue in result["issues"]:
                     print(f"     - {issue}")
-                print(f"     → Regenerate using ClinicalTrials.gov API")
+                print("     → Regenerate using ClinicalTrials.gov API")
     
     if report["summary"]["apis_accessible"] < len(diseases):
         print("\n⚠️  API Issues Detected")

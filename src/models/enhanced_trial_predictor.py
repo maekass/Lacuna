@@ -9,10 +9,8 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, VotingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import cross_val_score
 from xgboost import XGBClassifier
-import re
-from typing import Dict, List, Tuple
+from typing import Dict
 
 
 class EnhancedTrialPredictor:

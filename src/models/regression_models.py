@@ -4,7 +4,6 @@ Includes linear regression, time series forecasting, ensemble methods, and causa
 """
 
 import pandas as pd
-import numpy as np
 from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, AdaBoostRegressor
 from sklearn.svm import SVR
@@ -12,13 +11,8 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, mean_absolute_percentage_error
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
-from sklearn.pipeline import Pipeline
-import statsmodels.api as sm
 from statsmodels.tsa.arima.model import ARIMA
-from statsmodels.tsa.statespace.sarimax import SARIMAX
 from statsmodels.tsa.seasonal import seasonal_decompose
-import matplotlib.pyplot as plt
-import seaborn as sns
 import joblib
 import os
 import warnings

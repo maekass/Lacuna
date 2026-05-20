@@ -5,8 +5,6 @@ Replace or extend with peer-reviewed sources as your workflow matures.
 
 from __future__ import annotations
 
-from typing import Any
-
 # Short labels + primary public URLs for dashboard "Stratified context" expander.
 EQUITY_SNIPPETS: dict[str, list[dict[str, str]]] = {
     "scd": [
