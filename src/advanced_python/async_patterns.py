@@ -6,11 +6,10 @@ Demonstrates modern asynchronous patterns for high-performance applications
 import asyncio
 import aiohttp
 import time
-from typing import List, Dict, Any, Callable, Coroutine
+from typing import List, Dict, Any, Callable
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 import multiprocessing as mp
 from dataclasses import dataclass
-from datetime import datetime
 
 # ============================================================================
 # ASYNC/AWAIT PATTERNS
@@ -440,7 +439,7 @@ class CircuitBreaker:
             self.failures = 0
             return result
             
-        except Exception as e:
+        except Exception:
             self.failures += 1
             self.last_failure_time = time.time()
             

@@ -4,7 +4,6 @@ Includes linear regression, time series forecasting, ensemble methods, and causa
 """
 
 import pandas as pd
-import numpy as np
 from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, AdaBoostRegressor
 from sklearn.svm import SVR
@@ -12,13 +11,8 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, mean_absolute_percentage_error
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
-from sklearn.pipeline import Pipeline
-import statsmodels.api as sm
 from statsmodels.tsa.arima.model import ARIMA
-from statsmodels.tsa.statespace.sarimax import SARIMAX
 from statsmodels.tsa.seasonal import seasonal_decompose
-import matplotlib.pyplot as plt
-import seaborn as sns
 import joblib
 import os
 import warnings
@@ -515,7 +509,7 @@ class SickleCellRegressionModels:
             print(f"    Trend component strength: {decomposition.trend.std():.2f}")
             print(f"    Seasonal component strength: {decomposition.seasonal.std():.2f}")
             print(f"    Residual component strength: {decomposition.resid.std():.2f}")
-        except:
+        except (ValueError, IndexError):
             print("  Insufficient data for seasonal decomposition")
         
         # Fit ARIMA model with auto parameter selection
@@ -559,8 +553,8 @@ class SickleCellRegressionModels:
         try:
             result = grangercausalitytests(test_data, maxlag=3, verbose=True)
             return result
-        except:
-            print("  Insufficient data for Granger causality test")
+        except Exception as exc:
+            print(f"  Insufficient data for Granger causality test: {exc}")
             return None
     
     def compare_models(self, X, y):

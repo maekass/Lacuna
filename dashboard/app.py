@@ -5,6 +5,7 @@ Interactive Streamlit dashboard (run from project root).
 
 import json
 import sys
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Optional
 
@@ -67,6 +68,15 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# Initialize session state for production
+if 'initialized' not in st.session_state:
+    st.session_state.initialized = True
+    st.session_state.page_views = 0
+    st.session_state.session_start = datetime.now()
+    
+# Track page views
+st.session_state.page_views += 1
 
 # ============================================================================
 # LEGAL DISCLAIMER - DISPLAYED ON EVERY PAGE

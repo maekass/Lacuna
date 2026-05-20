@@ -3,10 +3,10 @@ Advanced Python: Custom Data Structures and Algorithms
 Demonstrates implementation of advanced data structures from scratch
 """
 
-from typing import Any, Optional, List, Tuple, Callable, Generic, TypeVar
+from typing import Any, Optional, List, Tuple, Generic, TypeVar
 from collections import deque
 import heapq
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 T = TypeVar('T')
 

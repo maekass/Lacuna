@@ -16,11 +16,11 @@ from typing import Any
 import joblib
 import numpy as np
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import Ridge
-from sklearn.metrics import mean_absolute_error, r2_score, roc_auc_score
+from sklearn.metrics import mean_absolute_error, r2_score
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+
 
 ROOT = Path(__file__).resolve().parents[2]
 RAW_DIR = ROOT / "data" / "raw"
@@ -147,7 +147,6 @@ def train_regression_models(
         metrics[name] = {k: row[k] for k in ("R2", "MAE", "RMSE")}
 
     comparison = pd.DataFrame(rows).sort_values("R2", ascending=False)
-    meta = {"feature_columns": feature_cols, "target": "stock_return", "target_ticker": REGRESSION_TARGET_TICKER}
     return fitted, comparison, metrics
 
 

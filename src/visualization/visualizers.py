@@ -10,7 +10,6 @@ import seaborn as sns
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
-from datetime import datetime
 import os
 
 class SickleCellVisualizers:
@@ -29,7 +28,7 @@ class SickleCellVisualizers:
         if trials_df is None:
             try:
                 trials_df = pd.read_csv(f"{self.data_dir}/clinical_trials_scd.csv")
-            except:
+            except (FileNotFoundError, pd.errors.EmptyDataError):
                 print("Clinical trials data not found")
                 return None
         
@@ -325,7 +324,7 @@ class SickleCellVisualizers:
             try:
                 health_df = pd.read_csv(f"{self.data_dir}/cdc_sickle_cell_data.csv")
                 health_df['date'] = pd.to_datetime(health_df['date'])
-            except:
+            except (FileNotFoundError, pd.errors.EmptyDataError):
                 print("Health data not found")
                 return None
         

@@ -7,7 +7,7 @@ Uses Engle-Granger cointegration test and mean-reversion signals.
 
 import numpy as np
 import pandas as pd
-from statsmodels.tsa.stattools import coint, adfuller
+from statsmodels.tsa.stattools import coint
 from statsmodels.regression.linear_model import OLS
 import warnings
 warnings.filterwarnings('ignore')

@@ -7,7 +7,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from src.disease_registry.registry import DiseaseSpec, get_disease
+from src.disease_registry.registry import get_disease
 
 
 @dataclass(frozen=True)
