@@ -1,0 +1,6 @@
+company,ticker,therapy_name,phase,mechanism,estimated_approval,probability_of_success
+Bluebird Bio,BLUE,LentiGlobin,Phase 3,Lentiviral gene addition,2024,0.75
+CRISPR Therapeutics,CRSP,CTX001,Phase 3,CRISPR-Cas9 gene editing,2024,0.8
+Vertex Pharmaceuticals,VRTX,CTX001,Phase 3,CRISPR-Cas9 gene editing,2024,0.8
+Editas Medicine,EDIT,EDIT-301,Phase 1/2,CRISPR-Cas9 gene editing,2026,0.45
+Sangamo Therapeutics,SGMO,BIVV001,Preclinical,Zinc finger nuclease,2027,0.3

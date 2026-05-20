@@ -1,0 +1,7 @@
+company,ticker,asset_name,technology,clinical_phase,target_mechanism,probability_of_success,estimated_cost,disease_id,indication_mesh_id,indication_mesh_label,indication_icd10_code,moa_mesh_id,moa_mesh_label
+AstraZeneca,AZN,Anifrolumab,Type I IFN inhibitor,Commercial,Interferon pathway,0.75,120000,sle,D008180,"Lupus Erythematosus, Systemic",M32.10,D007372,Interferons
+GSK,GSK,Belimumab,BLyS inhibitor,Commercial,B-cell modulation,0.7,95000,sle,D008180,"Lupus Erythematosus, Systemic",M32.10,D000911,"Antibodies, Monoclonal"
+Eli Lilly,LLY,Baricitinib,JAK inhibitor,Commercial,JAK-STAT,0.65,80000,sle,D008180,"Lupus Erythematosus, Systemic",M32.10,D053610,Janus Kinase Inhibitors
+Biogen,BIIB,Litifilimab,Anti-BDCA2,Phase 2,Monoclonal antibody,0.45,150000,sle,D008180,"Lupus Erythematosus, Systemic",M32.10,D000911,"Antibodies, Monoclonal"
+Immunovant,IMVT,IMVT-1401,FcRn inhibitor,Phase 2,IgG recycling,0.4,110000,sle,D008180,"Lupus Erythematosus, Systemic",M32.10,,IgG recycling
+Cabaletta Bio,CABA,CABA-201,CAR-T,Phase 1/2,CD19 CAR-T,0.35,450000,sle,D008180,"Lupus Erythematosus, Systemic",M32.10,,CD19 CAR-T

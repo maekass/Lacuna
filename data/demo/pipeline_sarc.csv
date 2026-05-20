@@ -1,0 +1,5 @@
+company,ticker,asset_name,technology,clinical_phase,target_mechanism,probability_of_success,estimated_cost,disease_id,indication_mesh_id,indication_mesh_label,indication_icd10_code,moa_mesh_id,moa_mesh_label
+Novartis,NVS,Secukinumab,IL-17 inhibitor,Phase 2,IL-17 pathway,0.35,90000,sarc,D012507,Sarcoidosis,D86.9,D053728,Interleukin-17
+aTyr Pharma,LIFE,ATYR1923,tRNA synthetase,Phase 1/2,Immune resolution,0.3,75000,sarc,D012507,Sarcoidosis,D86.9,,Immune resolution
+Insmed,INSM,Brensocatib,DPP1 inhibitor,Phase 3,Neutrophil serine protease,0.5,95000,sarc,D012507,Sarcoidosis,D86.9,,Neutrophil serine protease
+Kinevant Sciences,N/A,Namilumab,GM-CSF inhibitor,Phase 2,Macrophage axis,0.4,85000,sarc,D012507,Sarcoidosis,D86.9,,Macrophage axis
