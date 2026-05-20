@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-05-20T08:43:29.985585",
+  "timestamp": "2026-05-20T09:03:50.094260+00:00",
   "checks": {
     "api_health": {
       "status": "PASS",
-      "response_time_ms": 317.171
+      "response_time_ms": 308.317
     },
     "data_quality": {
       "status": "PASS",
@@ -38,8 +38,8 @@
     },
     "data_freshness": {
       "status": "PASS",
-      "age_days": -1,
-      "latest_collection": "2026-05-20T07:12:44.971792"
+      "age_days": 0,
+      "latest_collection": "2026-05-20T07:12:44.971792+00:00"
     },
     "synthetic_data": {
       "status": "FAIL",

@@ -183,6 +183,10 @@ class AutomatedVerification:
                 }
                 return True
             
+            # Convert to timezone-aware datetime for comparison
+            if latest.tzinfo is None:
+                latest = latest.replace(tzinfo=timezone.utc)
+            
             age_days = (datetime.now(timezone.utc) - latest).days
             
             # Warn if older than 30 days
