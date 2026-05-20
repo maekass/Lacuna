@@ -1,0 +1,47 @@
+name: Data Validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/**"
+      - "src/data_validation/**"
+      - "src/data_collection/**"
+      - "scripts/validate_data.py"
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run weekly on Monday at 06:00 UTC to catch data drift
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run data validation suite
+        run: python scripts/validate_data.py --write-report
+
+      - name: Run data validation tests
+        run: python -m pytest tests/test_data_validation.py -v
+
+      - name: Upload validation reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-reports
+          path: |
+            data/validation_report.txt
+            data/validation_report.json
+          retention-days: 30
