@@ -1,7 +1,0 @@
-company,ticker,gene_therapy_name,technology,clinical_phase,target_mechanism,probability_of_success,estimated_cost,indication_mesh_id,indication_mesh_label,indication_icd10_code,indication_disambiguation,moa_mesh_id,moa_mesh_label
-CRISPR Therapeutics,CRSP,CTX001,CRISPR-Cas9,Phase 3,BCL11A disruption,0.8,1850000,D000755,"Anemia, Sickle Cell",D57.1,primary_scd,D015316,Genetic Therapy
-Vertex Pharmaceuticals,VRTX,CTX001,CRISPR-Cas9,Phase 3,BCL11A disruption,0.8,1850000,D000755,"Anemia, Sickle Cell",D57.1,primary_scd,D015316,Genetic Therapy
-Editas Medicine,EDIT,EDIT-301,CRISPR-Cas9,Phase 1/2,BCL11A disruption,0.45,1950000,D000755,"Anemia, Sickle Cell",D57.1,primary_scd,D015316,Genetic Therapy
-Intellia Therapeutics,NTLA,NTLA-2001,CRISPR-Cas9,Phase 1,BCL11A disruption,0.35,1750000,D000755,"Anemia, Sickle Cell",D57.1,primary_scd,D015316,Genetic Therapy
-Beam Therapeutics,BEAM,BEAM-101,Base Editing,Preclinical,Base editing,0.3,1200000,D000755,"Anemia, Sickle Cell",D57.1,primary_scd,D064113,CRISPR-Cas Systems
-Sangamo Therapeutics,SGMO,ST-400,ZFN,Phase 1/2,BCL11A repression,0.4,1800000,D000755,"Anemia, Sickle Cell",D57.1,primary_scd,D015316,Genetic Therapy
