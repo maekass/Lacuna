@@ -11,14 +11,7 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, cross_val_score
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-from sklearn.metrics import (
-    classification_report, roc_auc_score, confusion_matrix,
-    precision_recall_curve, average_precision_score
-)
 from sklearn.pipeline import Pipeline
-from sklearn.calibration import CalibratedClassifierCV
-import os
-import sys
 import warnings
 warnings.filterwarnings('ignore')
 

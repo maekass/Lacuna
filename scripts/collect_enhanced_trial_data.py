@@ -53,7 +53,7 @@ def collect_trials_for_disease(disease_name: str, max_trials: int = 200) -> pd.D
         trials = parse_v2_studies(data, max_trials=max_trials)
         
         if not trials:
-            print(f"   ⚠️  No trials found")
+            print("   ⚠️  No trials found")
             return pd.DataFrame()
         
         df = pd.DataFrame(trials)
@@ -125,17 +125,17 @@ def main():
     print("="*70)
     print(f"\nTotal Trials Collected: {len(combined)}")
     print(f"Diseases Covered: {len(diseases)}")
-    print(f"\nOutcome Distribution:")
+    print("\nOutcome Distribution:")
     for outcome, count in combined["outcome"].value_counts().items():
         pct = (count / len(combined)) * 100
         print(f"  {outcome:10}: {count:4} trials ({pct:.1f}%)")
     
-    print(f"\nSponsor Type Distribution:")
+    print("\nSponsor Type Distribution:")
     for sponsor, count in combined["sponsor_type"].value_counts().items():
         pct = (count / len(combined)) * 100
         print(f"  {sponsor:20}: {count:4} trials ({pct:.1f}%)")
     
-    print(f"\nPhase Distribution:")
+    print("\nPhase Distribution:")
     phase_counts = combined["phase"].value_counts()
     for phase, count in phase_counts.items():
         if phase:  # Skip empty phases

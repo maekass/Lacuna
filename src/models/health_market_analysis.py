@@ -8,15 +8,11 @@ All analysis uses public/delayed data — legally compliant for educational rese
 import numpy as np
 import pandas as pd
 import yfinance as yf
-from datetime import datetime, timedelta
+from datetime import datetime
 from scipy import stats
-from scipy.stats import pearsonr, spearmanr
+from scipy.stats import pearsonr
 import statsmodels.api as sm
-from statsmodels.tsa.stattools import grangercausalitytests, adfuller, coint
-from statsmodels.regression.rolling import RollingOLS
-from sklearn.linear_model import LinearRegression, Ridge
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import r2_score
+from statsmodels.tsa.stattools import grangercausalitytests, adfuller
 import warnings
 import os
 import sys

@@ -6,7 +6,6 @@ Focuses on minimizing drawdown and maximizing risk-adjusted returns
 import pandas as pd
 import numpy as np
 from scipy.optimize import minimize
-import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
@@ -472,7 +471,7 @@ if __name__ == "__main__":
         
         # Save comparison
         comparison_df.to_csv("data/processed/risk_optimization_comparison.csv", index=False)
-        print(f"\n✓ Comparison saved to data/processed/risk_optimization_comparison.csv")
+        print("\n✓ Comparison saved to data/processed/risk_optimization_comparison.csv")
         
         # Generate visualizations
         fig = optimizer.plot_drawdown_comparison(strategies)

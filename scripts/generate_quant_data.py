@@ -6,7 +6,7 @@ Creates CSV files for pairs trading and regime detection pages.
 import pandas as pd
 import numpy as np
 from pathlib import Path
-from datetime import datetime, timedelta
+
 
 # Create output directory
 OUTPUT_DIR = Path(__file__).parent.parent / "data" / "processed" / "quant"
@@ -95,7 +95,7 @@ transition_matrix = pd.DataFrame({
     'crisis': [0.01, 0.02, 0.05, 0.55]
 })
 transition_matrix.to_csv(OUTPUT_DIR / "regime_transitions.csv", index=False)
-print(f"   ✓ Saved transition matrix to regime_transitions.csv")
+print("   ✓ Saved transition matrix to regime_transitions.csv")
 
 # 6. Generate regime strategy performance
 print("\n6. Creating regime strategy performance...")
@@ -109,7 +109,7 @@ regime_performance = pd.DataFrame({
     'alpha': [4.2]
 })
 regime_performance.to_csv(OUTPUT_DIR / "regime_strategy_performance.csv", index=False)
-print(f"   ✓ Saved strategy performance to regime_strategy_performance.csv")
+print("   ✓ Saved strategy performance to regime_strategy_performance.csv")
 
 print("\n" + "="*60)
 print("✅ All quant data generated successfully!")

@@ -73,7 +73,7 @@ class RealDataValidator:
                     print(f"  ✓ Data quality: {result['data_quality']['completeness_score']:.1%} complete")
                 else:
                     result["errors"].append("Invalid response structure")
-                    print(f"  ✗ Invalid response structure")
+                    print("  ✗ Invalid response structure")
             else:
                 result["http_status"] = response.status_code
                 result["errors"].append(f"HTTP {response.status_code}")

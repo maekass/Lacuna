@@ -19,13 +19,13 @@ from pathlib import Path
 from datetime import datetime, timezone
 from typing import Dict, List, Tuple
 import requests
-from sklearn.model_selection import train_test_split, cross_val_score, TimeSeriesSplit
+from sklearn.model_selection import cross_val_score
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import (
     accuracy_score, precision_score, recall_score, f1_score,
-    roc_auc_score, classification_report, confusion_matrix
+    roc_auc_score, confusion_matrix
 )
 import joblib
 
@@ -259,7 +259,7 @@ class RealDataValidator:
         X_train, y_train = self.prepare_features(train_df)
         X_test, y_test = self.prepare_features(test_df)
         
-        print(f"\nTemporal split:")
+        print("\nTemporal split:")
         print(f"  Train: {len(train_df)} trials (≤{train_end_year})")
         print(f"  Test:  {len(test_df)} trials (>{train_end_year})")
         print(f"  Train completion rate: {y_train.mean():.1%}")
@@ -523,20 +523,20 @@ def main():
     
     # Step 4: Validate
     print("\nStep 4: Validating on out-of-sample data...")
-    results = validator.validate_models(X_test, y_test)
+    validator.validate_models(X_test, y_test)
     
     # Step 5: Cross-validation
     print("\nStep 5: Cross-validation...")
     X_all, y_all = validator.prepare_features(df)
-    cv_results = validator.cross_validate(X_all, y_all)
+    validator.cross_validate(X_all, y_all)
     
     # Step 6: Compare to benchmarks
     print("\nStep 6: Comparing to published benchmarks...")
-    comparison = validator.compare_to_benchmarks()
+    validator.compare_to_benchmarks()
     
     # Step 7: Generate report
     print("\nStep 7: Generating validation report...")
-    report = validator.generate_validation_report(
+    validator.generate_validation_report(
         output_file=validator.data_dir / "validation_report.json"
     )
     
@@ -547,7 +547,7 @@ def main():
     print("\n" + "="*60)
     print("VALIDATION COMPLETE")
     print("="*60)
-    print(f"\nYou can now claim:")
+    print("\nYou can now claim:")
     print(f"  'Validated on {len(df)} real clinical trials from ClinicalTrials.gov'")
     print(f"  'Temporal out-of-sample validation (train: 2010-2020, test: 2021-2023)'")
     print(f"  'Predicts trial completion vs early termination (not drug efficacy)'")
