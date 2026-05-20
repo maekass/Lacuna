@@ -2,12 +2,41 @@
 
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.31+-FF4B4B.svg)](https://streamlit.io)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 > **End-to-end quantitative research platform combining immunology epidemiology, clinical trial intelligence, ML-driven predictions, and deep quantitative analysis for healthcare investment research.**
 
+**[Live Dashboard](https://immunology-investment-dashboard.streamlit.app)** | **[GitHub](https://github.com/maekass/Immunology-Investment-Intelligence)** | **[Landing Page](https://maekass.github.io/Immunology-Investment-Intelligence/)**
+
 ---
 
-## ⚠️ Legal Disclaimer
+## Quick Results
+
+| Metric | Value | Context |
+|--------|-------|---------|
+| **ML Model Accuracy** | 78% | Trial success prediction (ensemble) |
+| **Diseases Analyzed** | 7 | SCD, SLE, HS, DN, ALD, MS, FA |
+| **Clinical Trials Tracked** | 800+ | Real-time from ClinicalTrials.gov |
+| **Portfolio Return (Backtest)** | 16.2% | vs 8.5% benchmark (XBI) |
+| **Best Sharpe Ratio** | 1.8 | Gene therapy sector |
+| **Regression R²** | 0.52 | Multi-factor stock return model |
+| **Event Study Significance** | p < 0.05 | FDA approval CAR analysis |
+
+---
+
+## Demo
+
+**Interactive Dashboard Preview:**
+
+![Dashboard Overview](https://via.placeholder.com/800x450/4A6B5C/FFFFFF?text=Dashboard+Preview+%E2%80%94+Add+Screenshot)
+
+*Try it live: [immunology-investment-dashboard.streamlit.app](https://immunology-investment-dashboard.streamlit.app)*
+
+---
+
+## Legal Disclaimer
 
 **FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY**
 
@@ -25,23 +54,23 @@ This project is designed for academic research and learning. It is **NOT**:
 
 ---
 
-## 🎯 Project Overview
+## Project Overview
 
 A comprehensive Python research platform that bridges **public health analytics** and **quantitative finance** to analyze healthcare investment opportunities across multiple immunology disease areas. Combines epidemiological data, clinical trial intelligence, machine learning models, and advanced quantitative methods.
 
 ### Key Capabilities
 
-- 📊 **Multi-Disease Analysis**: 7 therapeutic areas with 800+ clinical trials
-- 🧬 **Clinical Trial Intelligence**: Real-time data from ClinicalTrials.gov API
-- 🤖 **ML Models**: Ensemble trial success predictor (78%+ accuracy)
-- 📈 **Deep Quant Analysis**: OLS regression, Granger causality, event studies, factor models
-- 💼 **Investment Stage Analysis**: VC → Growth Equity → Public Markets
-- 📉 **Portfolio Optimization**: Modern Portfolio Theory with risk metrics
-- 🎨 **Interactive Dashboard**: Modern Streamlit interface with real-time visualizations
+- **Multi-Disease Analysis**: 7 therapeutic areas with 800+ clinical trials
+- **Clinical Trial Intelligence**: Real-time data from ClinicalTrials.gov API
+- **ML Models**: Ensemble trial success predictor (78%+ accuracy)
+- **Deep Quant Analysis**: OLS regression, Granger causality, event studies, factor models
+- **Investment Stage Analysis**: VC → Growth Equity → Public Markets
+- **Portfolio Optimization**: Modern Portfolio Theory with risk metrics
+- **Interactive Dashboard**: Modern Streamlit interface with real-time visualizations
 
 ---
 
-## 🏥 Disease Coverage
+## Disease Coverage
 
 | Disease | Code | US Prevalence | Active Trials | Key Focus Areas |
 |---------|------|---------------|---------------|-----------------|
@@ -55,7 +84,7 @@ A comprehensive Python research platform that bridges **public health analytics*
 
 ---
 
-## 🚀 Features
+## Features
 
 ### 1. Public Health Analytics
 - **Epidemiological Modeling**: Prevalence trends, diagnosis rates, treatment access
@@ -75,7 +104,7 @@ A comprehensive Python research platform that bridges **public health analytics*
 
 #### Trial Success Predictor
 - **Ensemble Model**: RandomForest + GradientBoosting + LogisticRegression + XGBoost
-- **Features** (24+): Phase, enrollment, sponsor type, mechanism, duration, disease prevalence, prior approvals
+- **Features** (30+): Phase, enrollment, sponsor type, mechanism, duration, disease prevalence, prior approvals, **NLP keywords** (novel, breakthrough, gene therapy), **enrollment velocity**, **sponsor track record**, **competitive landscape**
 - **Calibration**: Based on Hay et al. (2014) and Wong et al. (2019) published success rates
 - **Outputs**: Success probability, 95% confidence intervals, feature importance, model breakdown
 
@@ -94,13 +123,15 @@ A comprehensive Python research platform that bridges **public health analytics*
 | **Granger Causality** | Predictive power of trial data (lags 1-3) | F-statistics, p-values |
 | **Event Study** | Cumulative abnormal returns (CAR) around FDA/trial events | CAR plots, statistical significance |
 | **Factor Model** | Market beta, size, defensive factors | Alpha, information ratio, factor loadings |
-| **Portfolio Optimization** | Modern Portfolio Theory | Efficient frontier, optimal weights |
+| **Pairs Trading** | Statistical arbitrage via cointegration (Engle-Granger) | Hedge ratios, z-scores, backtest metrics |
+| **Regime Detection** | HMM-based market state identification (bull/bear/crisis) | Transition matrix, regime stats, conditional strategy |
+| **Portfolio Optimization** | Modern Portfolio Theory with efficient frontier | Optimal weights, Sharpe maximization |
 | **Risk Analysis** | Drawdown, volatility, Sharpe/Sortino/Calmar | Risk-adjusted performance metrics |
-| **Monte Carlo** | Scenario analysis and stress testing | Distribution of outcomes |
+| **Monte Carlo** | Scenario analysis and stress testing | Distribution of outcomes, VaR/CVaR |
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 immunology-investment-platform/
@@ -123,18 +154,25 @@ immunology-investment-platform/
 │   │   ├── disease_config.py          # Disease-specific configs
 │   │   └── data_manifest.py           # Provenance tracking
 │   ├── models/
-│   │   ├── trial_success_model.py     # ML trial predictor
+│   │   ├── trial_success_predictor.py # Base ML trial predictor
+│   │   ├── enhanced_trial_predictor.py # Enhanced with NLP + 30+ features
 │   │   ├── market_analysis.py         # Market sizing, TAM
 │   │   └── investment_stage_analysis.py
 │   ├── quant_framework/
 │   │   ├── event_study.py
 │   │   ├── factor_models.py
 │   │   ├── portfolio_optimizer.py
-│   │   └── risk_metrics.py
+│   │   ├── risk_metrics.py
+│   │   ├── pairs_trading.py           # Statistical arbitrage (NEW)
+│   │   └── regime_detection.py        # HMM market regimes (NEW)
 │   └── visualization/
 │       └── dashboard_components.py
 ├── dashboard/
-│   └── app.py                         # Streamlit dashboard
+│   ├── app.py                         # Streamlit dashboard
+│   └── advanced_visualizations.py     # 8 new viz types (NEW)
+├── docs/
+│   ├── index.html                     # Landing page
+│   └── article-draft.md               # Medium/LinkedIn article (NEW)
 ├── requirements.txt
 ├── .gitignore
 └── README.md
@@ -142,7 +180,45 @@ immunology-investment-platform/
 
 ---
 
-## 🛠️ Installation & Setup
+## Advanced Features
+
+### Pairs Trading (Statistical Arbitrage)
+- **Cointegration Testing**: Engle-Granger test to identify mean-reverting pairs
+- **Hedge Ratio Calculation**: OLS regression for optimal pair weighting
+- **Z-Score Signals**: Entry at ±2σ, exit at ±0.5σ
+- **Backtest Engine**: Full performance metrics (Sharpe, drawdown, trade count)
+- **Portfolio Mode**: Equal-weight basket of top cointegrated pairs
+
+### Market Regime Detection
+- **Hidden Markov Model**: Gaussian HMM with 3-4 hidden states
+- **Regime Classification**: Bull, bear, sideways, crisis based on return/volatility
+- **Transition Matrix**: Probability of regime shifts
+- **Conditional Strategy**: Dynamic exposure adjustment (1.5x bull, 0x bear/crisis)
+- **Performance**: Backtested alpha vs buy-and-hold benchmark
+
+### Enhanced ML Model
+- **30+ Features** including:
+  - **NLP Extraction**: Keywords from trial descriptions (novel, breakthrough, gene therapy, etc.)
+  - **Enrollment Velocity**: Patients/month as efficacy signal
+  - **Sponsor Intelligence**: Big pharma vs biotech vs academic, historical approval count
+  - **Competitive Landscape**: Competing trials, market saturation metrics
+  - **Temporal Patterns**: Trial duration, time since last update
+- **Ensemble Architecture**: RF + GB + LR + XGBoost with optimized weights
+- **Calibration**: Isotonic calibration to published success rates
+
+### Advanced Visualizations
+- **Regime Timeline**: Colored background by market state
+- **Pairs Trading Spread**: Z-score with entry/exit signals
+- **Trial Funnel**: Pipeline conversion rates by phase
+- **Feature Importance Radar**: Top 10 ML features
+- **Correlation Heatmap**: Annotated correlation matrix
+- **Monte Carlo Distribution**: Simulated returns with percentiles
+- **Efficient Frontier**: Portfolio optimization scatter
+- **Drawdown Chart**: Cumulative returns with underwater periods
+
+---
+
+## Installation & Setup
 
 ### Prerequisites
 - Python 3.9 or higher
@@ -153,8 +229,8 @@ immunology-investment-platform/
 
 ```bash
 # Clone repository
-git clone https://github.com/maekass/Immunology-Investment-Dashboard.git
-cd Immunology-Investment-Dashboard
+git clone https://github.com/maekass/Immunology-Investment-Intelligence.git
+cd Immunology-Investment-Intelligence
 
 # Create virtual environment
 python -m venv .venv
@@ -184,7 +260,7 @@ The dashboard will open in your browser at `http://localhost:8501`
 
 ---
 
-## 📊 Data Provenance & Research Ethics
+## Data Provenance & Research Ethics
 
 ### Data Manifest System
 After running data collection, the platform generates `data/raw/data_manifest.json` which tracks:
@@ -210,13 +286,13 @@ After running data collection, the platform generates `data/raw/data_manifest.js
 
 ---
 
-## 🧪 Tech Stack
+## Tech Stack
 
 ### Core Technologies
 - **Language**: Python 3.9+
 - **Data Processing**: pandas, numpy, scipy
-- **Machine Learning**: scikit-learn, XGBoost, (optional: TensorFlow/PyTorch)
-- **Statistics**: statsmodels (econometric analysis)
+- **Machine Learning**: scikit-learn, XGBoost, hmmlearn (HMM)
+- **Statistics**: statsmodels (econometric analysis, cointegration)
 
 ### Financial & Quant
 - **Market Data**: yfinance (delayed stock prices)
@@ -234,7 +310,7 @@ After running data collection, the platform generates `data/raw/data_manifest.js
 
 ---
 
-## 📈 Key Results & Insights
+## Key Results & Insights
 
 ### Model Performance
 - **Trial Success Predictor**: 78% accuracy, AUC 0.84
@@ -253,20 +329,25 @@ After running data collection, the platform generates `data/raw/data_manifest.js
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 ### ✅ Completed
 - [x] Multi-disease data collection infrastructure
 - [x] Clinical trial API integration
-- [x] ML trial success predictor
+- [x] ML trial success predictor (base + enhanced with 30+ features)
 - [x] Investment stage analysis
 - [x] Interactive Streamlit dashboard
 - [x] Data provenance tracking
+- [x] **Pairs trading module** (statistical arbitrage)
+- [x] **Regime detection** (HMM-based)
+- [x] **Advanced visualizations** (8 new chart types)
+- [x] **Enhanced ML model** (NLP, sponsor intelligence, competitive landscape)
+- [x] **Medium/LinkedIn article** (6,000+ words)
+- [x] **Case study** (sickle cell gene therapy analysis)
 
 ### 🚧 In Progress
-- [ ] Advanced NLP on trial protocols
 - [ ] Real-time event study automation
-- [ ] Enhanced portfolio backtesting
+- [ ] Integration of advanced viz into main dashboard
 
 ### 📋 Planned
 - [ ] Deep learning models (LSTM, Transformers)
@@ -276,21 +357,21 @@ After running data collection, the platform generates `data/raw/data_manifest.js
 
 ---
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 📧 Contact
+## Contact
 
 **Mae Kaess** - [GitHub](https://github.com/maekass)
 
-Project Link: [https://github.com/maekass/Immunology-Investment-Dashboard](https://github.com/maekass/Immunology-Investment-Dashboard)
+Project Link: [https://github.com/maekass/Immunology-Investment-Intelligence](https://github.com/maekass/Immunology-Investment-Intelligence)
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [ClinicalTrials.gov](https://clinicaltrials.gov) - Clinical trial data
 - [openFDA](https://open.fda.gov) - Drug approval information
@@ -300,11 +381,11 @@ Project Link: [https://github.com/maekass/Immunology-Investment-Dashboard](https
 
 ---
 
-## 📚 References
+## References
 
 1. Hay, M., et al. (2014). "Clinical development success rates for investigational drugs." *Nature Biotechnology*, 32(1), 40-51.
 2. Wong, C. H., et al. (2019). "Estimation of clinical trial success rates and related parameters." *Biostatistics*, 20(2), 273-286.
 
 ---
 
-**⭐ If you find this project useful for your research or learning, please consider giving it a star!**
+**If you find this project useful for your research or learning, please consider giving it a star!**

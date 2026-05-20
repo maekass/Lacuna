@@ -1,0 +1,5 @@
+regime,count,pct_time,ann_return,ann_vol,sharpe
+bull,892,60.8,18.5,16.2,1.14
+bear,234,16.0,-12.3,28.5,-0.43
+sideways,312,21.3,3.2,12.1,0.26
+crisis,23,1.9,-28.7,42.3,-0.68

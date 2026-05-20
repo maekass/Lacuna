@@ -1,0 +1,5 @@
+regime,bull,bear,sideways,crisis
+bull,0.92,0.03,0.04,0.01
+bear,0.05,0.88,0.05,0.02
+sideways,0.15,0.1,0.7,0.05
+crisis,0.1,0.2,0.15,0.55

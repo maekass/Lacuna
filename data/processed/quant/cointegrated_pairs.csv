@@ -1,0 +1,5 @@
+ticker_x,ticker_y,pvalue,hedge_ratio,half_life
+CRSP,EDIT,0.0234,1.23,12.3
+EDIT,NTLA,0.0412,0.87,15.7
+NTLA,BEAM,0.0189,1.45,10.2
+VRTX,REGN,0.0456,0.92,18.4

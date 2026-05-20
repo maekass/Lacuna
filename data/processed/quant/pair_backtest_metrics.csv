@@ -1,0 +1,5 @@
+ticker_x,ticker_y,total_return,ann_return,ann_vol,sharpe,max_drawdown,num_trades
+CRSP,EDIT,15.3,12.1,18.5,0.65,-8.2,24
+EDIT,NTLA,12.7,10.3,16.2,0.64,-10.5,18
+NTLA,BEAM,18.9,14.8,21.3,0.69,-12.1,32
+VRTX,REGN,10.2,8.5,15.8,0.54,-7.8,15

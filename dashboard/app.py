@@ -28,6 +28,18 @@ from dashboard.theme import (
     styled_line_chart,
     zone_banner,
 )
+try:
+    from dashboard.advanced_visualizations import (
+        plot_regime_timeline,
+        plot_pairs_trading_spread,
+        plot_trial_funnel,
+        plot_feature_importance_radar,
+        plot_efficient_frontier,
+        plot_drawdown_chart,
+    )
+    ADVANCED_VIZ_AVAILABLE = True
+except ImportError:
+    ADVANCED_VIZ_AVAILABLE = False
 from src.data_collection.bootstrap_data import data_is_present, run_full_pipeline, seed_demo_if_missing
 from src.data_collection.data_manifest import kind_display_label
 from src.data_collection.seed_demo_data import sync_ml_from_demo, sync_quant_from_demo
@@ -627,6 +639,8 @@ page = st.sidebar.radio(
         "ML Models",
         "Quant Strategy",
         "Portfolio Optimization",
+        "Pairs Trading",
+        "Regime Detection",
         "Investment Stages",
         "Market Analysis",
     ],
@@ -636,11 +650,13 @@ _ZONE_FOR_PAGE = {
     "Overview": ("pipeline", "Gene therapy & FDA pipeline"),
     "Health Trends": ("epidemiology", "Burden, trials, ontology-anchored conditions"),
     "Stock Analysis": ("portfolio", "Equity & fundamentals"),
+    "ML Models": ("pipeline", "Trial-success & return models"),
     "Quant Strategy": ("portfolio", "Factor & backtest analytics"),
     "Portfolio Optimization": ("portfolio", "Efficient frontier & weights"),
+    "Pairs Trading": ("portfolio", "Statistical arbitrage & cointegration"),
+    "Regime Detection": ("portfolio", "HMM market state identification"),
     "Investment Stages": ("portfolio", "Private-market stages"),
     "Market Analysis": ("pipeline", "Market sizing & competitive landscape"),
-    "ML Models": ("pipeline", "Trial-success & return models"),
 }
 if page in _ZONE_FOR_PAGE:
     z, label = _ZONE_FOR_PAGE[page]
@@ -1028,6 +1044,125 @@ elif page == "Portfolio Optimization":
                 use_container_width=True,
                 hide_index=True,
             )
+
+elif page == "Pairs Trading":
+    section_header("Pairs Trading", "Statistical arbitrage via cointegration analysis")
+    
+    if not ADVANCED_VIZ_AVAILABLE:
+        st.warning("Advanced visualizations module not available. Ensure `dashboard/advanced_visualizations.py` is present.")
+    else:
+        st.markdown("""
+        **Statistical arbitrage** identifies cointegrated stock pairs that exhibit mean-reverting behavior.
+        This page demonstrates the Engle-Granger cointegration test and z-score trading signals.
+        """)
+        
+        st.info("**Demo:** Run `python src/quant_framework/pairs_trading.py` to generate pairs data.")
+        
+        # Check if pairs data exists
+        pairs_data = load_csv("cointegrated_pairs.csv", QUANT_DATA)
+        
+        if pairs_data is not None and not pairs_data.empty:
+            st.subheader("Cointegrated Pairs")
+            st.dataframe(pairs_data, use_container_width=True, hide_index=True)
+            
+            # Show pair metrics
+            pair_metrics = load_csv("pair_backtest_metrics.csv", QUANT_DATA)
+            if pair_metrics is not None and not pair_metrics.empty:
+                st.subheader("Backtest Performance")
+                st.dataframe(pair_metrics, use_container_width=True, hide_index=True)
+                
+                # Show top pair details
+                if len(pairs_data) > 0:
+                    selected_pair = st.selectbox(
+                        "Select pair to visualize",
+                        options=range(len(pairs_data)),
+                        format_func=lambda i: f"{pairs_data.iloc[i]['ticker_x']} / {pairs_data.iloc[i]['ticker_y']}"
+                    )
+                    
+                    pair_row = pairs_data.iloc[selected_pair]
+                    st.markdown(f"""
+                    **Pair:** {pair_row['ticker_x']} / {pair_row['ticker_y']}  
+                    **P-value:** {pair_row['pvalue']:.4f}  
+                    **Hedge Ratio:** {pair_row['hedge_ratio']:.4f}
+                    """)
+                    
+                    # Load spread data if available
+                    spread_file = f"pair_spread_{pair_row['ticker_x']}_{pair_row['ticker_y']}.csv"
+                    spread_data = load_csv(spread_file, QUANT_DATA)
+                    
+                    if spread_data is not None:
+                        st.caption("Spread and z-score visualization would appear here with actual data")
+        else:
+            st.info("""
+            No pairs data found. To generate:
+            1. Run `python src/quant_framework/pairs_trading.py`
+            2. Results will be saved to `data/processed/quant/`
+            3. Refresh this page
+            """)
+
+elif page == "Regime Detection":
+    section_header("Regime Detection", "HMM-based market state identification")
+    
+    if not ADVANCED_VIZ_AVAILABLE:
+        st.warning("Advanced visualizations module not available. Ensure `dashboard/advanced_visualizations.py` is present.")
+    else:
+        st.markdown("""
+        **Hidden Markov Models (HMM)** identify distinct market regimes (bull, bear, sideways, crisis)
+        based on return and volatility patterns. The model dynamically adjusts portfolio exposure.
+        """)
+        
+        st.info("**Demo:** Run `python src/quant_framework/regime_detection.py` to generate regime data.")
+        
+        # Check if regime data exists
+        regime_data = load_csv("market_regimes.csv", QUANT_DATA)
+        
+        if regime_data is not None and not regime_data.empty:
+            # Current regime
+            current_regime = regime_data.iloc[-1]['regime'] if 'regime' in regime_data.columns else "Unknown"
+            st.metric("Current Market Regime", current_regime.title())
+            
+            # Regime statistics
+            regime_stats = load_csv("regime_statistics.csv", QUANT_DATA)
+            if regime_stats is not None and not regime_stats.empty:
+                st.subheader("Regime Statistics")
+                st.dataframe(regime_stats, use_container_width=True, hide_index=True)
+            
+            # Transition matrix
+            transition_matrix = load_csv("regime_transitions.csv", QUANT_DATA)
+            if transition_matrix is not None and not transition_matrix.empty:
+                st.subheader("Transition Probability Matrix")
+                st.dataframe(transition_matrix, use_container_width=True)
+                st.caption("Each cell shows P(transition from row regime to column regime)")
+            
+            # Performance comparison
+            regime_performance = load_csv("regime_strategy_performance.csv", QUANT_DATA)
+            if regime_performance is not None and not regime_performance.empty:
+                st.subheader("Strategy Performance")
+                col1, col2, col3 = st.columns(3)
+                
+                if 'strategy_return' in regime_performance.columns:
+                    with col1:
+                        st.metric("Strategy Return", f"{regime_performance['strategy_return'].iloc[0]:.2f}%")
+                if 'strategy_sharpe' in regime_performance.columns:
+                    with col2:
+                        st.metric("Sharpe Ratio", f"{regime_performance['strategy_sharpe'].iloc[0]:.3f}")
+                if 'alpha' in regime_performance.columns:
+                    with col3:
+                        st.metric("Alpha vs Benchmark", f"{regime_performance['alpha'].iloc[0]:.2f}%")
+            
+            # Regime timeline visualization
+            if 'date' in regime_data.columns and 'regime' in regime_data.columns:
+                st.subheader("Regime Timeline")
+                st.caption("Colored regions indicate different market states over time")
+                # Placeholder for actual visualization
+                st.info("Regime timeline chart would appear here with plot_regime_timeline()")
+        else:
+            st.info("""
+            No regime data found. To generate:
+            1. Run `python src/quant_framework/regime_detection.py`
+            2. Results will be saved to `data/processed/quant/`
+            3. Refresh this page
+            """)
 
 elif page == "Investment Stages":
     section_header("Investment stages", "Illustrative private-market tables — not licensed deal data")
