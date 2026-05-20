@@ -419,7 +419,64 @@ Project Link: [https://github.com/maekass/Immunology-Investment-Intelligence](ht
 
 ---
 
-## 💼 Commercial Viability for Healthcare Investors
+## � Advanced Python Demonstrations
+
+**NEW**: Comprehensive module showcasing advanced Python proficiency (1,500+ lines)
+
+### What's Included
+
+**Location**: `src/advanced_python/`
+
+| Module | Lines | Concepts |
+|--------|-------|----------|
+| **decorators_and_context.py** | 500+ | Decorators, context managers, metaclasses, descriptors |
+| **async_patterns.py** | 450+ | Async/await, concurrency, task queues, circuit breakers |
+| **data_structures_algorithms.py** | 550+ | Custom data structures, sorting, graph algorithms, DP |
+
+### Skills Demonstrated
+
+**Language Features**:
+- Type hints (Generic, TypeVar, ParamSpec)
+- Decorators (timer, retry, memoize, validation)
+- Context managers (`__enter__`, `__exit__`, `@contextmanager`)
+- Metaclasses (Singleton, AutoRegister, ValidatedAttributes)
+- Descriptors (`__get__`, `__set__`, `__set_name__`)
+- Async/await (coroutines, event loops, `asyncio`)
+- Generators (yield, async generators)
+
+**Design Patterns**:
+- Singleton, Factory, Strategy
+- Circuit Breaker, Retry with exponential backoff
+- Producer-Consumer, Observer
+- Functional Pipeline
+
+**Data Structures & Algorithms**:
+- Linked List, Binary Search Tree, Graph, Trie, LRU Cache
+- BFS, DFS, Dijkstra's shortest path
+- Quick Sort, Merge Sort
+- Dynamic Programming (LCS, Knapsack)
+
+**Concurrency**:
+- Async I/O (non-blocking operations)
+- Thread/Process pools
+- Semaphores (rate limiting)
+- Task queues
+- Concurrent futures
+
+### Run Demonstrations
+
+```bash
+# All demonstrations are fully runnable
+python3 src/advanced_python/decorators_and_context.py
+python3 src/advanced_python/async_patterns.py
+python3 src/advanced_python/data_structures_algorithms.py
+```
+
+**See**: [Advanced Python README](src/advanced_python/README.md) for detailed documentation and usage examples.
+
+---
+
+## �💼 Commercial Viability for Healthcare Investors
 
 This platform is designed with rare disease investment analysis in mind and can be adapted for commercial use with proper validation:
 
