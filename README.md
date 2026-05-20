@@ -123,11 +123,28 @@ A comprehensive Python research platform that bridges **public health analytics*
 | **Granger Causality** | Predictive power of trial data (lags 1-3) | F-statistics, p-values |
 | **Event Study** | Cumulative abnormal returns (CAR) around FDA/trial events | CAR plots, statistical significance |
 | **Factor Model** | Market beta, size, defensive factors | Alpha, information ratio, factor loadings |
-| **Pairs Trading** | Statistical arbitrage via cointegration (Engle-Granger) | Hedge ratios, z-scores, backtest metrics |
-| **Regime Detection** | HMM-based market state identification (bull/bear/crisis) | Transition matrix, regime stats, conditional strategy |
 | **Portfolio Optimization** | Modern Portfolio Theory with efficient frontier | Optimal weights, Sharpe maximization |
 | **Risk Analysis** | Drawdown, volatility, Sharpe/Sortino/Calmar | Risk-adjusted performance metrics |
-| **Monte Carlo** | Scenario analysis and stress testing | Distribution of outcomes, VaR/CVaR |
+| **Monte Carlo** | Scenario analysis and stress testing | Distribution of outcomes |
+| **Pairs Trading** | Cointegration-based mean reversion | Hedge ratios, backtest metrics |
+| **Regime Detection** | Hidden Markov Model market states | Bull/bear/sideways/crisis classification |
+
+### 5. Tableau-Style Visualizations
+
+Professional, publication-ready charts using Tableau design principles:
+
+| Chart Type | Use Case | Key Features |
+|------------|----------|--------------|
+| **Clinical Trial Funnel** | Phase progression analysis | Attrition rates, success probabilities |
+| **Portfolio Treemap** | Holdings composition | Size = value, color = performance |
+| **Dual-Axis Timeline** | Trials vs stock price | Two independent Y-axes, unified hover |
+| **Bullet Chart** | KPI tracking | Actual vs target, performance ranges |
+| **Waterfall Chart** | Variance analysis | Sequential gains/losses visualization |
+| **Scatter Matrix (SPLOM)** | Correlation exploration | All pairwise relationships |
+| **Geographic Heatmap** | State/country distribution | Choropleth with color gradient |
+| **Executive Dashboard** | High-level KPI summary | 4-panel indicator layout |
+
+**Features**: Tableau 10/20 color palettes, interactive tooltips, responsive design, export-ready
 
 ---
 
