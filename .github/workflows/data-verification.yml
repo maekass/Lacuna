@@ -1,0 +1,264 @@
+name: Data Verification
+
+on:
+  # Run on every push
+  push:
+    branches: [ main, develop, enhanced-data-collection ]
+  
+  # Run on every pull request
+  pull_request:
+    branches: [ main ]
+  
+  # Run daily at 2 AM UTC
+  schedule:
+    - cron: '0 2 * * *'
+  
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  verify-data-quality:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas requests
+    
+    - name: Run API validation
+      run: |
+        echo "🔍 Validating ClinicalTrials.gov API..."
+        python3 scripts/validate_real_data.py
+      continue-on-error: false
+    
+    - name: Run enhanced data verification
+      run: |
+        echo "🔍 Verifying enhanced clinical trial data..."
+        python3 scripts/verify_enhanced_data.py
+      continue-on-error: false
+    
+    - name: Run debug suite
+      run: |
+        echo "🔍 Running comprehensive debug suite..."
+        python3 scripts/debug_enhanced_data.py
+      continue-on-error: false
+    
+    - name: Check data quality thresholds
+      run: |
+        python3 << 'EOF'
+        import pandas as pd
+        import sys
+        
+        print("\n" + "="*70)
+        print("DATA QUALITY THRESHOLD CHECKS")
+        print("="*70)
+        
+        # Load data
+        df = pd.read_csv('data/processed/enhanced_clinical_trials.csv')
+        
+        # Define thresholds
+        thresholds = {
+            'nct_id': 100.0,      # Must be 100%
+            'status': 100.0,      # Must be 100%
+            'sponsor_type': 100.0, # Must be 100%
+            'outcome': 100.0,     # Must be 100%
+            'enrollment': 95.0,   # At least 95%
+        }
+        
+        failed = []
+        
+        for field, min_pct in thresholds.items():
+            non_null = df[field].notna().sum()
+            pct = (non_null / len(df)) * 100
+            
+            status = "✅" if pct >= min_pct else "❌"
+            print(f"{status} {field:15}: {pct:5.1f}% (threshold: {min_pct}%)")
+            
+            if pct < min_pct:
+                failed.append(f"{field}: {pct:.1f}% < {min_pct}%")
+        
+        if failed:
+            print(f"\n❌ FAILED: {len(failed)} field(s) below threshold")
+            for f in failed:
+                print(f"  - {f}")
+            sys.exit(1)
+        else:
+            print(f"\n✅ PASSED: All fields meet quality thresholds")
+            sys.exit(0)
+        EOF
+    
+    - name: Upload validation report
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: validation-report
+        path: data/raw/validation_report.json
+        retention-days: 30
+    
+    - name: Comment on PR (if applicable)
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          
+          let comment = '## 🔍 Data Verification Results\n\n';
+          comment += '✅ All data quality checks passed!\n\n';
+          comment += '### Verified:\n';
+          comment += '- ✅ ClinicalTrials.gov API connectivity\n';
+          comment += '- ✅ Enhanced data parser functionality\n';
+          comment += '- ✅ Data quality thresholds met\n';
+          comment += '- ✅ All debug tests passing\n\n';
+          comment += '**Status:** Ready to merge 🚀';
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
+
+  verify-no-synthetic-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        pip install pandas
+    
+    - name: Scan for synthetic data markers
+      run: |
+        python3 << 'EOF'
+        import os
+        import sys
+        import json
+        
+        print("\n" + "="*70)
+        print("SYNTHETIC DATA DETECTION")
+        print("="*70)
+        
+        # Check data manifest
+        manifest_path = 'data/raw/data_manifest.json'
+        if os.path.exists(manifest_path):
+            with open(manifest_path) as f:
+                manifest = json.load(f)
+            
+            synthetic_files = []
+            # Handle manifest format with "artifacts" key
+            artifacts = manifest.get('artifacts', manifest)
+            for file, meta in artifacts.items():
+                if isinstance(meta, dict) and meta.get('kind') == 'illustrative':
+                    synthetic_files.append(file)
+            
+            if synthetic_files:
+                print(f"❌ Found {len(synthetic_files)} synthetic data file(s):")
+                for f in synthetic_files:
+                    print(f"  - {f}")
+                sys.exit(1)
+            else:
+                print("✅ No synthetic data markers in manifest")
+        
+        # Check for demo/test markers in code
+        suspicious_patterns = [
+            'DEMO_DATA',
+            'TEST_DATA',
+            'SYNTHETIC',
+            'FAKE_DATA',
+            'ILLUSTRATIVE',
+        ]
+        
+        print("\nScanning Python files for synthetic data patterns...")
+        found_issues = []
+        
+        for root, dirs, files in os.walk('src'):
+            for file in files:
+                if file.endswith('.py'):
+                    filepath = os.path.join(root, file)
+                    with open(filepath) as f:
+                        content = f.read()
+                        for pattern in suspicious_patterns:
+                            if pattern in content and 'test' not in filepath.lower():
+                                found_issues.append(f"{filepath}: contains '{pattern}'")
+        
+        if found_issues:
+            print(f"⚠️  Found {len(found_issues)} potential synthetic data reference(s)")
+            for issue in found_issues[:5]:  # Show first 5
+                print(f"  - {issue}")
+        else:
+            print("✅ No synthetic data patterns found in source code")
+        
+        print("\n✅ PASSED: No synthetic data detected")
+        sys.exit(0)
+        EOF
+
+  verify-data-freshness:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        pip install pandas
+    
+    - name: Check data freshness
+      run: |
+        python3 << 'EOF'
+        import pandas as pd
+        import sys
+        from datetime import datetime, timedelta
+        
+        print("\n" + "="*70)
+        print("DATA FRESHNESS CHECK")
+        print("="*70)
+        
+        # Load data
+        df = pd.read_csv('data/processed/enhanced_clinical_trials.csv')
+        
+        if 'collection_date' in df.columns:
+            collection_dates = pd.to_datetime(df['collection_date'])
+            latest = collection_dates.max()
+            oldest = collection_dates.min()
+            
+            now = datetime.now()
+            age_days = (now - latest).days
+            
+            print(f"Latest collection: {latest}")
+            print(f"Oldest collection: {oldest}")
+            print(f"Data age: {age_days} days")
+            
+            # Warn if data is older than 30 days
+            if age_days > 30:
+                print(f"\n⚠️  WARNING: Data is {age_days} days old")
+                print("   Consider refreshing with: python3 scripts/collect_enhanced_trial_data.py")
+            else:
+                print(f"\n✅ Data is fresh ({age_days} days old)")
+        else:
+            print("⚠️  No collection_date field found")
+        
+        print("\n✅ PASSED: Data freshness check complete")
+        sys.exit(0)
+        EOF

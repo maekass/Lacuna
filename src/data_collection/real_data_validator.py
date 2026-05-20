@@ -36,7 +36,7 @@ class RealDataValidator:
         
         result = {
             "query": disease_query,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "api_accessible": False,
             "trials_found": 0,
             "data_quality": {},
@@ -244,7 +244,7 @@ class RealDataValidator:
         print("="*60)
         
         report = {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "diseases_tested": len(diseases),
             "api_tests": {},
             "csv_validations": {},

@@ -16,7 +16,7 @@ import json
 import pandas as pd
 import numpy as np
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, List, Tuple
 import requests
 from sklearn.model_selection import train_test_split, cross_val_score, TimeSeriesSplit
@@ -83,16 +83,15 @@ class RealDataValidator:
         """
         print(f"Fetching real trials for {disease} from {min_year}-{max_year}...")
         
-        base_url = "https://clinicaltrials.gov/api/query/full_studies"
+        base_url = "https://clinicaltrials.gov/api/v2/studies"
         
         all_trials = []
         
         for year in range(min_year, max_year + 1):
             params = {
-                "expr": f"{disease} AND AREA[StartDate]RANGE[01/01/{year}, 12/31/{year}]",
-                "min_rnk": 1,
-                "max_rnk": 1000,
-                "fmt": "json"
+                "query.term": f"{disease} AND AREA[StartDate]RANGE[{year}-01-01,{year}-12-31]",
+                "pageSize": 1000,
+                "format": "json"
             }
             
             try:
@@ -100,7 +99,7 @@ class RealDataValidator:
                 response.raise_for_status()
                 data = response.json()
                 
-                studies = data.get("FullStudiesResponse", {}).get("FullStudies", [])
+                studies = data.get("studies", [])
                 
                 for study in studies:
                     trial = self._parse_trial(study)
@@ -123,38 +122,45 @@ class RealDataValidator:
         return df
     
     def _parse_trial(self, study: Dict) -> Dict:
-        """Parse trial data from ClinicalTrials.gov API response"""
+        """Parse trial data from ClinicalTrials.gov v2 API response"""
         try:
-            protocol = study.get("Study", {}).get("ProtocolSection", {})
+            protocol = study.get("protocolSection", {})
             
             # Identification
-            id_module = protocol.get("IdentificationModule", {})
-            nct_id = id_module.get("NCTId", "")
+            id_module = protocol.get("identificationModule", {})
+            nct_id = id_module.get("nctId", "")
             
             # Status
-            status_module = protocol.get("StatusModule", {})
-            overall_status = status_module.get("OverallStatus", "")
+            status_module = protocol.get("statusModule", {})
+            overall_status = status_module.get("overallStatus", "")
             
             # Design
-            design_module = protocol.get("DesignModule", {})
-            phases = design_module.get("PhaseList", {}).get("Phase", [])
+            design_module = protocol.get("designModule", {})
+            phases = design_module.get("phases", [])
             phase = phases[0] if phases else "Unknown"
             
             # Enrollment
-            enrollment_module = protocol.get("DesignModule", {}).get("EnrollmentInfo", {})
-            enrollment = enrollment_module.get("EnrollmentCount", 0)
+            enrollment = design_module.get("enrollmentInfo", {}).get("count", 0) or 0
             
             # Sponsor
-            sponsor_module = protocol.get("SponsorCollaboratorsModule", {})
-            lead_sponsor = sponsor_module.get("LeadSponsor", {})
-            sponsor_type = lead_sponsor.get("LeadSponsorClass", "")
+            sponsor_module = protocol.get("sponsorCollaboratorsModule", {})
+            lead_sponsor = sponsor_module.get("leadSponsor", {})
+            sponsor_type = lead_sponsor.get("class", "")
             
             # Dates
-            start_date = status_module.get("StartDateStruct", {}).get("StartDate", "")
-            completion_date = status_module.get("CompletionDateStruct", {}).get("CompletionDate", "")
+            start_date = status_module.get("startDateStruct", {}).get("date", "")
+            completion_date = status_module.get("completionDateStruct", {}).get("date", "")
             
             # Determine success (binary outcome)
             success = self._determine_success(overall_status, phase)
+            
+            # Parse year safely
+            year = None
+            if start_date and "-" in start_date:
+                try:
+                    year = int(start_date.split("-")[0])
+                except (ValueError, IndexError):
+                    year = None
             
             return {
                 "nct_id": nct_id,
@@ -165,7 +171,7 @@ class RealDataValidator:
                 "start_date": start_date,
                 "completion_date": completion_date,
                 "success": success,
-                "year": int(start_date.split("/")[-1]) if start_date else None
+                "year": year
             }
             
         except Exception as e:
@@ -174,27 +180,26 @@ class RealDataValidator:
     
     def _determine_success(self, status: str, phase: str) -> int:
         """
-        Determine if trial was successful based on status
+        Determine trial outcome (completion vs early termination)
         
-        Success criteria:
-        - Completed with results
-        - Active (ongoing)
-        - Approved
+        HONEST FRAMING: ClinicalTrials.gov does NOT report drug efficacy.
+        We predict whether a trial reaches completion vs early termination.
         
-        Failure criteria:
-        - Terminated
-        - Withdrawn
-        - Suspended
+        Completed (1): Trial finished as planned (COMPLETED)
+        Terminated (0): Trial stopped early (TERMINATED, WITHDRAWN, SUSPENDED)
+        Excluded (-1): Ongoing or unknown status
+        
+        This is NOT predicting drug success - it's predicting trial completion.
         """
-        success_statuses = ["COMPLETED", "ACTIVE_NOT_RECRUITING", "APPROVED_FOR_MARKETING"]
-        failure_statuses = ["TERMINATED", "WITHDRAWN", "SUSPENDED"]
+        completed_statuses = ["COMPLETED"]
+        terminated_statuses = ["TERMINATED", "WITHDRAWN", "SUSPENDED"]
         
-        if status in success_statuses:
+        if status in completed_statuses:
             return 1
-        elif status in failure_statuses:
+        elif status in terminated_statuses:
             return 0
         else:
-            return -1  # Unknown/ambiguous
+            return -1  # Ongoing/unknown - excluded
     
     def prepare_features(self, df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.Series]:
         """
@@ -211,11 +216,11 @@ class RealDataValidator:
         
         # Encode phase
         phase_mapping = {
-            "PHASE1": 1,
-            "PHASE2": 2,
-            "PHASE3": 3,
-            "PHASE4": 4,
-            "EARLY_PHASE1": 0.5,
+            "PHASE1": 1, "Phase 1": 1,
+            "PHASE2": 2, "Phase 2": 2,
+            "PHASE3": 3, "Phase 3": 3,
+            "PHASE4": 4, "Phase 4": 4,
+            "EARLY_PHASE1": 0.5, "Early Phase 1": 0.5,
             "NA": 0
         }
         df['phase_encoded'] = df['phase'].map(phase_mapping).fillna(0)
@@ -257,8 +262,8 @@ class RealDataValidator:
         print(f"\nTemporal split:")
         print(f"  Train: {len(train_df)} trials (≤{train_end_year})")
         print(f"  Test:  {len(test_df)} trials (>{train_end_year})")
-        print(f"  Train success rate: {y_train.mean():.1%}")
-        print(f"  Test success rate:  {y_test.mean():.1%}")
+        print(f"  Train completion rate: {y_train.mean():.1%}")
+        print(f"  Test completion rate:  {y_test.mean():.1%}")
         
         return X_train, X_test, y_train, y_test
     
@@ -358,15 +363,18 @@ class RealDataValidator:
         
         print(f"\nYour Model (Best): {best_model[0]}")
         print(f"  Accuracy: {best_accuracy:.1%}")
+        print(f"\nNote: This predicts trial COMPLETION (reaching planned end), NOT drug efficacy.")
+        print(f"ClinicalTrials.gov does not report whether a drug was effective.")
         
-        print(f"\nPublished Benchmarks:")
+        print(f"\nPublished Benchmarks (drug success rates, for reference):")
         print(f"  Hay et al. (2014):")
-        print(f"    Overall success rate: {PUBLISHED_BENCHMARKS['hay_2014']['overall']:.1%}")
+        print(f"    Overall drug success rate: {PUBLISHED_BENCHMARKS['hay_2014']['overall']:.1%}")
         print(f"    Phase 1→2: {PUBLISHED_BENCHMARKS['hay_2014']['phase_1_to_2']:.1%}")
         print(f"    Phase 2→3: {PUBLISHED_BENCHMARKS['hay_2014']['phase_2_to_3']:.1%}")
-        
         print(f"\n  Wong et al. (2019):")
-        print(f"    Overall success rate: {PUBLISHED_BENCHMARKS['wong_2019']['overall']:.1%}")
+        print(f"    Overall drug success rate: {PUBLISHED_BENCHMARKS['wong_2019']['overall']:.1%}")
+        print(f"\n  Our model predicts trial COMPLETION (different from drug success).")
+        print(f"  ~80% of trials complete; ~20% terminate early. Baseline: 80% (majority class).")
         
         comparison = {
             'your_model': best_model[0],
@@ -378,17 +386,17 @@ class RealDataValidator:
         return comparison
     
     def _interpret_comparison(self, accuracy: float) -> str:
-        """Interpret how model compares to benchmarks"""
-        baseline = PUBLISHED_BENCHMARKS['hay_2014']['overall']
+        """Interpret model performance"""
+        baseline = 0.80  # ~80% of trials complete
         
-        if accuracy > baseline + 0.1:
-            return "Significantly better than published baseline (may indicate overfitting)"
+        if accuracy > baseline + 0.05:
+            return "Significantly better than baseline (may indicate overfitting or data leakage)"
         elif accuracy > baseline:
-            return "Slightly better than published baseline"
-        elif accuracy > baseline - 0.1:
-            return "Comparable to published baseline"
+            return "Slightly better than baseline"
+        elif accuracy > baseline - 0.05:
+            return "Comparable to baseline (majority-class prediction)"
         else:
-            return "Below published baseline (needs improvement)"
+            return "Below baseline (needs improvement)"
     
     def cross_validate(self, X: pd.DataFrame, y: pd.Series, cv: int = 5) -> Dict:
         """
@@ -426,7 +434,7 @@ class RealDataValidator:
         - Recommendations
         """
         report = {
-            'timestamp': datetime.now().isoformat(),
+            'timestamp': datetime.now(timezone.utc).isoformat(),
             'data_source': 'ClinicalTrials.gov API',
             'validation_type': 'Temporal out-of-sample',
             'models': self.validation_results,
@@ -542,7 +550,9 @@ def main():
     print(f"\nYou can now claim:")
     print(f"  'Validated on {len(df)} real clinical trials from ClinicalTrials.gov'")
     print(f"  'Temporal out-of-sample validation (train: 2010-2020, test: 2021-2023)'")
-    print(f"  'Performance comparable to published benchmarks (Hay et al. 2014)'")
+    print(f"  'Predicts trial completion vs early termination (not drug efficacy)'")
+    best_acc = max(validator.validation_results.items(), key=lambda x: x[1]['accuracy'])[1]['accuracy']
+    print(f"  'Performance: {best_acc:.1%} accuracy on held-out test set'")
     print(f"\nSee validation_report.json for full details")
 
 
