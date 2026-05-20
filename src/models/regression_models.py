@@ -509,7 +509,7 @@ class SickleCellRegressionModels:
             print(f"    Trend component strength: {decomposition.trend.std():.2f}")
             print(f"    Seasonal component strength: {decomposition.seasonal.std():.2f}")
             print(f"    Residual component strength: {decomposition.resid.std():.2f}")
-        except:
+        except (ValueError, IndexError):
             print("  Insufficient data for seasonal decomposition")
         
         # Fit ARIMA model with auto parameter selection
@@ -553,8 +553,8 @@ class SickleCellRegressionModels:
         try:
             result = grangercausalitytests(test_data, maxlag=3, verbose=True)
             return result
-        except:
-            print("  Insufficient data for Granger causality test")
+        except Exception as exc:
+            print(f"  Insufficient data for Granger causality test: {exc}")
             return None
     
     def compare_models(self, X, y):

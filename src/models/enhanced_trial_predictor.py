@@ -86,7 +86,7 @@ class EnhancedTrialPredictor:
             months = max((end - start).days / 30, 1)
             velocity = enrollment / months
             return min(velocity, 100.0)  # Cap at 100 patients/month
-        except:
+        except (ValueError, TypeError, OverflowError):
             return 0.0
     
     def get_sponsor_track_record(self, sponsor_name: str, 

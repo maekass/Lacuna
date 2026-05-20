@@ -257,7 +257,7 @@ def plot_correlation_heatmap(data: pd.DataFrame, title: str = "Correlation Matri
 
 
 def plot_monte_carlo_distribution(simulated_returns: np.ndarray, 
-                                   percentiles: List[float] = [5, 50, 95]):
+                                   percentiles: List[float] = None):
     """
     Plot Monte Carlo simulation results.
     
@@ -265,6 +265,8 @@ def plot_monte_carlo_distribution(simulated_returns: np.ndarray,
         simulated_returns: Array of simulated returns (n_simulations,)
         percentiles: Percentiles to highlight
     """
+    if percentiles is None:
+        percentiles = [5, 50, 95]
     fig = go.Figure()
     
     # Histogram
