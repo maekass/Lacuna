@@ -1,0 +1,59 @@
+#!/bin/bash
+# Pre-commit hook for data verification
+# Install: git config core.hooksPath .githooks
+
+set -e
+
+echo ""
+echo "🔍 Running pre-commit data verification..."
+echo "=========================================="
+
+# Check if data files are being committed
+if git diff --cached --name-only | grep -q "data/.*\.csv"; then
+    echo ""
+    echo "📊 Data files detected in commit"
+    echo ""
+    
+    # Run quick validation
+    if [ -f "scripts/verify_enhanced_data.py" ]; then
+        echo "Running data verification..."
+        python3 scripts/verify_enhanced_data.py || {
+            echo ""
+            echo "❌ Data verification failed!"
+            echo "Fix issues before committing."
+            exit 1
+        }
+    fi
+    
+    # Check for synthetic data
+    echo ""
+    echo "Checking for synthetic data markers..."
+    if git diff --cached --name-only | xargs grep -l "DEMO_DATA\|SYNTHETIC\|ILLUSTRATIVE" 2>/dev/null; then
+        echo ""
+        echo "⚠️  WARNING: Potential synthetic data markers found"
+        echo "Review changes carefully"
+    else
+        echo "✅ No synthetic data markers found"
+    fi
+fi
+
+# Check if parser was modified
+if git diff --cached --name-only | grep -q "src/data_collection/parsers/clinical_trials.py"; then
+    echo ""
+    echo "🔧 Parser modified - running tests..."
+    
+    if [ -f "scripts/test_enhanced_parser.py" ]; then
+        python3 scripts/test_enhanced_parser.py || {
+            echo ""
+            echo "❌ Parser tests failed!"
+            echo "Fix parser before committing."
+            exit 1
+        }
+    fi
+fi
+
+echo ""
+echo "✅ Pre-commit verification passed!"
+echo ""
+
+exit 0

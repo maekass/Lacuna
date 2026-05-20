@@ -6,6 +6,8 @@ __pycache__/
 venv/
 .env
 .streamlit/secrets.toml
+
+# Ignore CSV files by default
 *.csv
 !data/demo/
 !data/demo/**
@@ -18,8 +20,15 @@ venv/
 !data/demo/quant/**
 !data/processed/quant/
 !data/processed/quant/**
+
+# Ignore large HTML visualization files (regenerate with scripts)
+data/visualizations/*.html
+
+# Allow models but ignore large ones
 !data/models/
 !data/models/**
+
+# Other ignores
 !data/raw/.gitkeep
 data/raw/data_manifest.json
 data/raw/provenance_log.jsonl

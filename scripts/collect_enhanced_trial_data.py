@@ -58,7 +58,7 @@ def collect_trials_for_disease(disease_name: str, max_trials: int = 200) -> pd.D
         
         df = pd.DataFrame(trials)
         df["disease"] = disease_name
-        df["collection_date"] = datetime.utcnow().isoformat()
+        df["collection_date"] = datetime.now(timezone.utc).isoformat()
         
         print(f"   ✅ Collected {len(df)} trials")
         print(f"      - Success: {(df['outcome'] == 'Success').sum()}")

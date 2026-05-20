@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-05-20T06:45:28.832840",
+  "timestamp": "2026-05-20T09:31:52.163967+00:00",
   "diseases_tested": 7,
   "api_tests": {
     "sickle cell disease": {
       "query": "sickle cell disease",
-      "timestamp": "2026-05-20T06:45:28.832858",
+      "timestamp": "2026-05-20T09:31:52.163978+00:00",
       "api_accessible": true,
       "trials_found": 50,
       "data_quality": {
@@ -26,7 +26,7 @@
     },
     "systemic lupus erythematosus": {
       "query": "systemic lupus erythematosus",
-      "timestamp": "2026-05-20T06:45:29.320152",
+      "timestamp": "2026-05-20T09:31:52.781595+00:00",
       "api_accessible": true,
       "trials_found": 50,
       "data_quality": {
@@ -46,7 +46,7 @@
     },
     "hidradenitis suppurativa": {
       "query": "hidradenitis suppurativa",
-      "timestamp": "2026-05-20T06:45:29.939504",
+      "timestamp": "2026-05-20T09:31:53.292518+00:00",
       "api_accessible": true,
       "trials_found": 50,
       "data_quality": {
@@ -68,7 +68,7 @@
     },
     "diabetic nephropathy": {
       "query": "diabetic nephropathy",
-      "timestamp": "2026-05-20T06:45:30.537410",
+      "timestamp": "2026-05-20T09:31:53.628983+00:00",
       "api_accessible": true,
       "trials_found": 50,
       "data_quality": {
@@ -88,7 +88,7 @@
     },
     "autoimmune liver disease": {
       "query": "autoimmune liver disease",
-      "timestamp": "2026-05-20T06:45:31.503985",
+      "timestamp": "2026-05-20T09:31:53.964921+00:00",
       "api_accessible": true,
       "trials_found": 50,
       "data_quality": {
@@ -110,7 +110,7 @@
     },
     "multiple sclerosis": {
       "query": "multiple sclerosis",
-      "timestamp": "2026-05-20T06:45:32.048515",
+      "timestamp": "2026-05-20T09:31:54.494062+00:00",
       "api_accessible": true,
       "trials_found": 50,
       "data_quality": {
@@ -132,7 +132,7 @@
     },
     "food allergy": {
       "query": "food allergy",
-      "timestamp": "2026-05-20T06:45:32.828331",
+      "timestamp": "2026-05-20T09:31:54.820315+00:00",
       "api_accessible": true,
       "trials_found": 50,
       "data_quality": {
@@ -290,6 +290,26 @@
         "regulatory_advantage_score",
         "overall_score",
         "investment_recommendation"
+      ]
+    },
+    "sample_enhanced_trials.csv": {
+      "file": "/Users/maekaess/CascadeProjects/windsurf-project/data/raw/sample_enhanced_trials.csv",
+      "exists": true,
+      "is_real_data": true,
+      "provenance": null,
+      "issues": [],
+      "row_count": 10,
+      "columns": [
+        "nct_id",
+        "title",
+        "status",
+        "phase",
+        "start_date",
+        "completion_date",
+        "enrollment",
+        "sponsor_name",
+        "sponsor_type",
+        "outcome"
       ]
     },
     "fda_approvals_sarc.csv": {
@@ -794,7 +814,7 @@
   "summary": {
     "apis_accessible": 7,
     "total_trials_found": 350,
-    "real_data_files": 27,
+    "real_data_files": 28,
     "synthetic_data_files": 0
   }
 }

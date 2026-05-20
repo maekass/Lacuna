@@ -1,0 +1,110 @@
+{
+  "timestamp": "2026-05-20T04:50:37.806332",
+  "data_source": "ClinicalTrials.gov API",
+  "validation_type": "Temporal out-of-sample",
+  "models": {
+    "random_forest": {
+      "accuracy": 0.7704918032786885,
+      "precision": 0.9047619047619048,
+      "recall": 0.7916666666666666,
+      "f1": 0.8444444444444444,
+      "roc_auc": 0.8279246794871795,
+      "confusion_matrix": [
+        [
+          18,
+          8
+        ],
+        [
+          20,
+          76
+        ]
+      ]
+    },
+    "gradient_boosting": {
+      "accuracy": 0.7786885245901639,
+      "precision": 0.896551724137931,
+      "recall": 0.8125,
+      "f1": 0.8524590163934426,
+      "roc_auc": 0.8084935897435896,
+      "confusion_matrix": [
+        [
+          17,
+          9
+        ],
+        [
+          18,
+          78
+        ]
+      ]
+    },
+    "logistic_regression": {
+      "accuracy": 0.7459016393442623,
+      "precision": 0.9452054794520548,
+      "recall": 0.71875,
+      "f1": 0.8165680473372781,
+      "roc_auc": 0.8637820512820513,
+      "confusion_matrix": [
+        [
+          22,
+          4
+        ],
+        [
+          27,
+          69
+        ]
+      ]
+    }
+  },
+  "benchmarks": {
+    "hay_2014": {
+      "phase_1_to_2": 0.632,
+      "phase_2_to_3": 0.307,
+      "phase_3_to_approval": 0.581,
+      "overall": 0.138,
+      "source": "Hay, M., et al. (2014). Nature Biotechnology, 32(1), 40-51"
+    },
+    "wong_2019": {
+      "overall": 0.138,
+      "oncology": 0.034,
+      "infectious_disease": 0.197,
+      "source": "Wong, C. H., et al. (2019). Biostatistics, 20(2), 273-286"
+    },
+    "dimasi_2016": {
+      "phase_1": 0.632,
+      "phase_2": 0.307,
+      "phase_3": 0.581,
+      "source": "DiMasi, J. A., et al. (2016). Journal of Health Economics"
+    }
+  },
+  "comparison": {
+    "your_model": "gradient_boosting",
+    "your_accuracy": 0.7786885245901639,
+    "benchmarks": {
+      "hay_2014": {
+        "phase_1_to_2": 0.632,
+        "phase_2_to_3": 0.307,
+        "phase_3_to_approval": 0.581,
+        "overall": 0.138,
+        "source": "Hay, M., et al. (2014). Nature Biotechnology, 32(1), 40-51"
+      },
+      "wong_2019": {
+        "overall": 0.138,
+        "oncology": 0.034,
+        "infectious_disease": 0.197,
+        "source": "Wong, C. H., et al. (2019). Biostatistics, 20(2), 273-286"
+      },
+      "dimasi_2016": {
+        "phase_1": 0.632,
+        "phase_2": 0.307,
+        "phase_3": 0.581,
+        "source": "DiMasi, J. A., et al. (2016). Journal of Health Economics"
+      }
+    },
+    "interpretation": "Comparable to baseline (majority-class prediction)"
+  },
+  "recommendations": [
+    "Validate on additional disease areas to test generalizability",
+    "Consider ensemble methods to improve robustness",
+    "Add confidence intervals to predictions"
+  ]
+}

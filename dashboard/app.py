@@ -73,7 +73,7 @@ st.set_page_config(
 if 'initialized' not in st.session_state:
     st.session_state.initialized = True
     st.session_state.page_views = 0
-    st.session_state.session_start = datetime.now()
+    st.session_state.session_start = datetime.now(timezone.utc)
     
 # Track page views
 st.session_state.page_views += 1
