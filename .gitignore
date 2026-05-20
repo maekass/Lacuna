@@ -23,4 +23,6 @@ venv/
 !data/raw/.gitkeep
 data/raw/data_manifest.json
 data/raw/provenance_log.jsonl
+data/validation_report.txt
+data/validation_report.json
 .ipynb_checkpoints/
