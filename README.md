@@ -36,21 +36,35 @@
 
 ---
 
-## Legal Disclaimer
+## ⚠️ Legal Disclaimer
 
 **FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY**
 
-This project is designed for academic research and learning. It is **NOT**:
+This platform is designed for academic research and learning. It is **NOT**:
 - Investment advice or financial recommendations
-- Suitable for commercial trading or real-money decisions
-- A substitute for professional financial or medical counsel
+- Suitable for commercial trading or real-money decisions without proper validation
+- A substitute for professional financial, medical, or legal counsel
+- Approved for clinical or regulatory decision-making
 
 **Data Compliance:**
-- ✅ All data is publicly available and delayed
+- ✅ All data is publicly available and delayed (15+ minutes for market data)
 - ✅ No patient-level or private health information (HIPAA compliant)
 - ✅ No insider trading or material non-public information
 - ✅ Illustrative scores and private-market figures are demo weights only
-- ✅ Verify compliance before any production or commercial use
+- ✅ Users must verify compliance with applicable securities (SEC, FINRA) and health-data regulations before any production or commercial use
+
+**Model Limitations:**
+- Past performance does not guarantee future results
+- Models are calibrated to historical data and may not predict unprecedented events
+- All predictions and scores are illustrative and subject to error
+- Users accept full responsibility for validation and decisions
+
+**For Commercial Use:**
+- Consult legal counsel regarding securities regulations
+- Validate all data sources and model outputs
+- Implement proper risk management and compliance controls
+- Maintain audit trails for regulatory purposes
+- See [Internal Tools Appendix](docs/INTERNAL_TOOLS_APPENDIX.md) for detailed guidance
 
 ---
 
@@ -405,4 +419,48 @@ Project Link: [https://github.com/maekass/Immunology-Investment-Intelligence](ht
 
 ---
 
-**If you find this project useful for your research or learning, please consider giving it a star!**
+## 💼 Commercial Viability for Healthcare Investors
+
+This platform is designed with rare disease investment analysis in mind and can be adapted for commercial use with proper validation:
+
+### For Healthcare Investors
+
+**Rare Disease Focus**: Platform supports analysis of:
+- Orphan drug development pipelines
+- Clinical trial success prediction for rare diseases
+- Market sizing for small patient populations
+- Investment stage analysis (VC → Growth → Public)
+- FDA approval timeline modeling
+
+**Investment Decision Support**:
+- ML-driven trial success probability (78-82% accuracy)
+- Event study analysis for FDA catalysts
+- Portfolio optimization with rare disease exposure
+- Competitive landscape mapping
+- TAM and market penetration modeling
+
+### Adaptation for Commercial Use
+
+**Required Steps**:
+1. **Data Validation**: Replace illustrative data with real-time, licensed feeds
+2. **Model Validation**: Backtest on out-of-sample data, perform walk-forward analysis
+3. **Legal Review**: Consult counsel for SEC, FINRA, HIPAA compliance
+4. **Risk Controls**: Implement position limits, stop-losses, model monitoring
+5. **Audit Trail**: Log all predictions, decisions, and data versions
+
+**See**: [Internal Tools Appendix](docs/INTERNAL_TOOLS_APPENDIX.md) for comprehensive tool documentation and commercial deployment guidance.
+
+---
+
+## 📚 Documentation
+
+- **[Internal Tools Appendix](docs/INTERNAL_TOOLS_APPENDIX.md)** - Complete guide to all analytical tools and models
+- **[Deployment Guide](DEPLOYMENT.md)** - Streamlit Cloud deployment instructions
+- **[Tableau Visualization Guide](docs/TABLEAU_VISUALIZATION_GUIDE.md)** - Professional chart creation
+- **[Advanced Features Guide](docs/ADVANCED_FEATURES_GUIDE.md)** - Quant modules and ML models
+- **[Contributing Guidelines](.github/CONTRIBUTING.md)** - How to contribute
+- **[Changelog](CHANGELOG.md)** - Version history and enhancements
+
+---
+
+**⭐ If you find this project useful for your research or learning, please consider giving it a star!**

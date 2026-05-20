@@ -69,6 +69,33 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# ============================================================================
+# LEGAL DISCLAIMER - DISPLAYED ON EVERY PAGE
+# ============================================================================
+def show_legal_disclaimer():
+    """Display comprehensive legal disclaimer banner"""
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; 
+                border-left: 5px solid #f59e0b;">
+        <h3 style="color: white; margin: 0 0 1rem 0;">⚠️ Legal Disclaimer</h3>
+        <p style="color: white; margin: 0; font-size: 0.95rem; line-height: 1.6;">
+            <strong>FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY</strong><br><br>
+            This platform is designed for academic research and learning. It is <strong>NOT</strong>:<br>
+            • Investment advice or financial recommendations<br>
+            • Suitable for commercial trading or real-money decisions without proper validation<br>
+            • A substitute for professional financial, medical, or legal counsel<br>
+            • Approved for clinical or regulatory decision-making<br><br>
+            <strong>Data Compliance:</strong> All data is publicly available and delayed. No patient-level or 
+            private health information (HIPAA compliant). No insider trading or material non-public information. 
+            Illustrative scores and private-market figures are demo weights only. Users must verify compliance 
+            with applicable securities and health-data regulations before any production or commercial use.<br><br>
+            <strong>Past performance does not guarantee future results.</strong> All models and predictions are 
+            illustrative and subject to error. Consult qualified professionals before making investment decisions.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
 
 @st.cache_resource(show_spinner=False)
 def _bootstrap_data_cached() -> bool:
@@ -537,6 +564,10 @@ def render_sidebar_provenance(
 
 
 apply_glass_theme()
+
+# Display legal disclaimer on every page
+show_legal_disclaimer()
+
 glass_hero(
     "Immunology Investment Intelligence",
     "Quantitative analysis across sickle cell disease, systemic lupus erythematosus, and sarcoidosis. "
