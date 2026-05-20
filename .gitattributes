@@ -1,0 +1,14 @@
+# Git LFS Configuration
+# Track large data files with Git LFS
+
+# CSV data files
+data/processed/*.csv filter=lfs diff=lfs merge=lfs -text
+data/validation/*.csv filter=lfs diff=lfs merge=lfs -text
+
+# Machine learning model files
+*.pkl filter=lfs diff=lfs merge=lfs -text
+data/models/*.pkl filter=lfs diff=lfs merge=lfs -text
+data/validation/models/*.pkl filter=lfs diff=lfs merge=lfs -text
+
+# Large JSON files (optional)
+data/raw/validation_report.json filter=lfs diff=lfs merge=lfs -text
