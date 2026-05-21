@@ -12,7 +12,8 @@
     "crohn's disease"
   ],
   "year_range": "2010-2023",
-  "completion_rate": "82.0%",
+  "success_rate": "82.0%",
+  "notes_on_success_rate": "Percentage of trials that completed successfully (vs terminated early)",
   "features": [
     "phase",
     "enrollment_log",

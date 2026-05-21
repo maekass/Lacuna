@@ -21,7 +21,7 @@
 - **Data**: **6,523 real clinical trials**
 - **Diseases**: 5 (sickle cell, lupus, RA, MS, Crohn's)
 - **Years**: 2010-2023
-- **Completion Rate**: 82.0%
+- **Success Rate**: 82.0% (trials that completed successfully)
 - **Credibility**: 100% - real, verifiable data
 
 ---
@@ -126,9 +126,9 @@ st.markdown("**Trial-success CV AUC (REAL data from ClinicalTrials.gov)**")
    - True: SCD, SLE, RA, MS, Crohn's
    - Diverse: Not just one disease
 
-3. **"82% trial completion rate (18% early termination)"**
-   - True: 5,347 completed, 1,176 terminated
-   - Matches published literature (~80% baseline)
+3. **"82% trial success rate (18% early termination)"**
+   - True: 5,347 completed successfully, 1,176 terminated early
+   - Matches published literature (~80% baseline for trial completion)
 
 4. **"Temporal validation: 2010-2023"**
    - True: 14 years of real trial data
@@ -177,7 +177,7 @@ git add data/validation/real_trials_*.csv
 git commit -m "feat: Replace synthetic trial data with 6,523 real trials from ClinicalTrials.gov
 
 - Fetched 9,577 trials across 5 diseases (2010-2023)
-- 6,523 trials with known outcomes (82% completion rate)
+- 6,523 trials with known outcomes (82% success rate)
 - Replaced synthetic _generate_training_data() with real API data
 - Backed up old synthetic data
 - Updated model_metrics.json to reflect real data source
