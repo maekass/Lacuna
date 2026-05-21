@@ -47,5 +47,7 @@
       ]
     }
   },
-  "notes": "Regression uses illustrative CDC + delayed vendor stock features; trial-success training is synthetic multi-disease data for demo UI only."
+  "notes": "Regression uses illustrative CDC + delayed vendor stock features; trial-success training uses REAL multi-disease data from ClinicalTrials.gov (replaced synthetic data on 2026-05-21).",
+  "data_source": "ClinicalTrials.gov API v2 (REAL)",
+  "last_updated": "2026-05-21T03:55:42.033351+00:00"
 }

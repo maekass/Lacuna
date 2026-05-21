@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-05-21T03:55:42.031642+00:00",
+  "source": "ClinicalTrials.gov API v2",
+  "data_type": "REAL (not synthetic)",
+  "num_trials": 6523,
+  "num_diseases": 5,
+  "diseases": [
+    "sickle cell disease",
+    "systemic lupus erythematosus",
+    "rheumatoid arthritis",
+    "multiple sclerosis",
+    "crohn's disease"
+  ],
+  "year_range": "2010-2023",
+  "completion_rate": "82.0%",
+  "features": [
+    "phase",
+    "enrollment_log",
+    "sponsor_type",
+    "mechanism_id",
+    "duration_months",
+    "disease_trial_rate",
+    "prior_approvals",
+    "disease_prevalence_log",
+    "phase_success_rate",
+    "success",
+    "disease",
+    "raw_probability"
+  ],
+  "notes": "Replaced synthetic data with real trials from ClinicalTrials.gov"
+}
