@@ -22,7 +22,7 @@
 **Expected output:**
 ```
 ✅ VERIFICATION COMPLETE - ALL TESTS PASSED!
-✅ Certification hash matches: 971ACF8592ADEA0E
+✅ Certification hash matches: 72602DA18EE94F6A
 ```
 
 ---
@@ -86,7 +86,7 @@ The verification runs 5 comprehensive tests:
 
 ## 🔐 Certification Hash
 
-**Expected Hash:** `971ACF8592ADEA0E`
+**Expected Hash:** `72602DA18EE94F6A`
 
 This hash is generated from all test results. If the data changes, the hash changes. This proves the certification is authentic and hasn't been tampered with.
 

@@ -20,7 +20,7 @@ Run this ONE command and see for yourself:
 - ✅ Confirms zero synthetic/demo files exist
 - ✅ Validates all epidemiology sources are cited
 - ✅ Verifies all 535 FDA drugs are from openFDA
-- ✅ Generates cryptographic hash: `971ACF8592ADEA0E`
+- ✅ Generates cryptographic hash: `72602DA18EE94F6A`
 
 **Expected result:** All tests pass ✅
 
@@ -89,7 +89,7 @@ Should return: Nothing (or only archived files)
 **Step 4:** Verify the hash
 ```bash
 python3 scripts/generate_data_certification.py
-# Should output: 971ACF8592ADEA0E
+# Should output: 72602DA18EE94F6A
 ```
 
 ---
@@ -211,7 +211,7 @@ Your verification confirms:
   ✅ 100% real data from verified public sources
   ✅ Zero synthetic or demo data
   ✅ Quality score: 99.96/100 (Grade: A+)
-  ✅ Certification hash matches: 971ACF8592ADEA0E
+  ✅ Certification hash matches: 72602DA18EE94F6A
 
 📄 Full certificate: DATA_VERIFICATION_CERTIFICATE.md
 ```
@@ -243,7 +243,7 @@ If verification fails, it means:
 ### This Project:
 - "Run ./verify_data.sh" ← Proof in 2 minutes
 - "Don't trust, verify" ← Independent confirmation
-- "Here's the hash: 971ACF8592ADEA0E" ← Cryptographic authenticity
+- "Here's the hash: 72602DA18EE94F6A" ← Cryptographic authenticity
 
 ---
 

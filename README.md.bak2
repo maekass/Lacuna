@@ -13,7 +13,7 @@
 [![Certified Real Data](https://img.shields.io/badge/Certified-100%25%20Real%20Data-success?style=for-the-badge&logo=shield)](DATA_VERIFICATION_CERTIFICATE.md)
 [![Zero Synthetic](https://img.shields.io/badge/Synthetic%20Data-0%25-success?style=for-the-badge&logo=x)](DATA_VERIFICATION_CERTIFICATE.md)
 
-**Certification Hash:** `971ACF8592ADEA0E` | **Grade:** A+ (Excellent) | **[View Certificate →](DATA_VERIFICATION_CERTIFICATE.md)**
+**Certification Hash:** `72602DA18EE94F6A` | **Grade:** A+ (Excellent) | **[View Certificate →](DATA_VERIFICATION_CERTIFICATE.md)**
 
 ### ⚡ Don't Trust Me. Verify It Yourself. (2 Minutes)
 
@@ -27,7 +27,7 @@
 - ✅ Verifies 10 random NCT IDs on ClinicalTrials.gov (live API calls)
 - ✅ Confirms zero synthetic files exist
 - ✅ Validates all sources are cited
-- ✅ Generates hash: `971ACF8592ADEA0E`
+- ✅ Generates hash: `72602DA18EE94F6A`
 
 **[� VERIFY THIS DATA - Challenge Me! →](VERIFY_THIS_DATA.md)** | **[📖 Verification Guide →](VERIFY.md)** | **[🔍 Spot Check →](https://clinicaltrials.gov/study/NCT04846959)**
 
