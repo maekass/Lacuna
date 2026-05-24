@@ -19,6 +19,19 @@
 
 **I claim 100% real data. Prove me wrong (or right):**
 
+#### Option 1: One-Click Verification (Zero Installation)
+
+**Just click links - no code, no installation:**
+
+[VERIFY WITH ONE CLICK - Click 10 links to verify data →](VERIFY_WITH_ONE_CLICK.md)
+
+**What you'll do:** Click 10 ClinicalTrials.gov links. If they load, data is real.
+
+---
+
+#### Option 2: Run Verification Script
+
+
 ```bash
 ./verify_data.sh
 ```
