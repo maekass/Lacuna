@@ -1,3 +1,0 @@
-strategy,annual_return,volatility,sharpe_ratio,max_drawdown
-Equal weight,0.1182,0.3934,0.25,-0.4541
-Health-tilt demo,0.048,0.5508,0.051,-0.8245

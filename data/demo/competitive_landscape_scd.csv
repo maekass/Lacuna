@@ -1,9 +1,0 @@
-company,ticker,modality,lead_asset,phase,mechanism,differentiation,market_share_estimate_percent,pricing_power,regulatory_advantage
-Beam Therapeutics,BEAM,Gene Editing,BEAM-101,Clinical,Base editing,Precision base editors,15,High,Orphan Drug
-Novartis,NVS,Biologic,Crizanlizumab,Commercial,P-selectin inhibitor,First-in-class biologic,20,High,Approved
-Pfizer,PFE,Small Molecule,Multiple candidates,Clinical,Multiple mechanisms,Established portfolio,12,Medium,Strong
-Intellia Therapeutics,NTLA,Gene Editing,NTLA-2001,Phase 1,CRISPR-Cas9 editing,In vivo editing platform,10,Very High,Fast Track
-CRISPR Therapeutics,CRSP,Gene Therapy,CTX001,Phase 3,CRISPR-Cas9 editing,Leading CRISPR platform,8,Very High,Fast Track
-Vertex,VRTX,Gene Therapy,CTX001,Phase 3,CRISPR-Cas9 editing,Manufacturing scale,8,Very High,Fast Track
-Editas Medicine,EDIT,Gene Therapy,EDIT-301,Phase 1/2,CRISPR-Cas9 editing,Novel target,5,High,Orphan Drug
-Bristol Myers Squibb,BMY,Multiple,Various acquired drugs,Commercial,Multiple mechanisms,Broad portfolio,22,High,Strong
