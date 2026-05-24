@@ -14,6 +14,20 @@
 
 **Certification Hash:** `72602DA18EE94F6A` | **Grade:** A+ (Excellent) | **[View Certificate →](DATA_VERIFICATION_CERTIFICATE.md)**
 
+### ⚡ Verify It Yourself (2 Minutes)
+
+**Don't trust, verify!** Run this one command to independently verify all claims:
+
+```bash
+./verify_data.sh
+```
+
+Or manually: `python3 scripts/generate_data_certification.py`
+
+**[📖 Full Verification Guide →](VERIFY.md)** | **[🔍 Spot Check NCT IDs →](https://clinicaltrials.gov/)**
+
+---
+
 ### Certified Data Quality Metrics
 
 | Metric | Value | Verification |

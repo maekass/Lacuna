@@ -1,8 +1,8 @@
 # 🏆 DATA VERIFICATION CERTIFICATE
 
 **Certification Level:** FULLY CERTIFIED  
-**Certification Date:** May 24, 2026 at 04:00 UTC  
-**Certification Hash:** `72602DA18EE94F6A`
+**Certification Date:** May 24, 2026 at 04:04 UTC  
+**Certification Hash:** `4418466485A5622C`
 
 ---
 
@@ -69,7 +69,7 @@ This certificate verifies that the data platform has undergone comprehensive aut
 This certification can be independently verified by:
 
 1. Running the certification script: `python scripts/generate_data_certification.py`
-2. Checking the certification hash matches: `72602DA18EE94F6A`
+2. Checking the certification hash matches: `4418466485A5622C`
 3. Verifying random NCT IDs on https://clinicaltrials.gov/
 4. Reviewing the data quality report in `data/raw/data_quality_report.json`
 
@@ -88,7 +88,7 @@ All data is sourced from verified public APIs:
 
 ## ⚖️ License & Usage
 
-This certification is valid as of May 24, 2026 at 04:00 UTC.
+This certification is valid as of May 24, 2026 at 04:04 UTC.
 
 The certification may be referenced in documentation, presentations, and publications with proper attribution.
 
