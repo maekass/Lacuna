@@ -1,5 +1,5 @@
 """
-Sickle Cell Investment Analysis Dashboard
+Immunology Investment Intelligence Dashboard
 Interactive Streamlit dashboard (run from project root).
 """
 
@@ -64,7 +64,7 @@ ML_MODELS = ROOT / "data" / "models"
 QUANT_DATA = ROOT / "data" / "processed" / "quant"
 
 st.set_page_config(
-    page_title="Immunology Investment Dashboard",
+    page_title="Immunology Investment Intelligence",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -847,7 +847,7 @@ if missing:
 
 if page == "Disease Lookup":
     section_header(
-        "Disease lookup",
+        "Disease Lookup",
         "Search Orphanet and CDC NNDSS universes; pull epidemiology, surveillance, and trial samples",
     )
     if _indication_mode != "Search any disease":
@@ -859,7 +859,7 @@ if page == "Disease Lookup":
         epi_live = _ctx.metrics.get("epidemiology_df")
         trials_live = _ctx.metrics.get("trials_df")
         if epi_live is not None and not epi_live.empty:
-            section_header("Burden trend (estimated)", "Orphanet U.S. rate × population — illustrative annual points")
+            section_header("Burden Trend (Estimated)", "Orphanet U.S. rate × population — illustrative annual points")
             render_health_trends_charts(
                 epi_live, trials_live, disease_id=disease_id, display_name=_ctx.display_name
             )
@@ -903,7 +903,7 @@ elif page == "Overview":
         st.info("Run `python3 scripts/build_disease_demo_bundle.py` or collectors to populate pipeline tables.")
     if fda is not None:
         section_header(
-            "Approved therapies",
+            "Approved Therapies",
             "openFDA drug labels + drugsfda first approval when brand matches (see collectors with network)",
         )
         st.dataframe(enrich_artifact(_ctx.fda_artifact, fda), use_container_width=True, hide_index=True)
@@ -946,7 +946,7 @@ elif page == "Health Trends":
         if _ctx.is_registry:
             trials = enrich_artifact(_ctx.trials_artifact, trials)
         section_header(
-            "Clinical trials",
+            "Clinical Trials",
             f"ClinicalTrials.gov · `{_ctx.clinical_trials_query}`"
             + (f" · MeSH {_ctx.mesh_id}" if _ctx.mesh_id != "—" else ""),
         )
@@ -998,7 +998,7 @@ elif page == "Stock Analysis":
         st.info("Run `python3 src/data_collection/collect_all_data.py` to load equity data.")
 
 elif page == "ML Models":
-    section_header("Machine learning", "Demo models on illustrative features — not clinical or investment signals")
+    section_header("Machine Learning", "Demo models on illustrative features — not clinical or investment signals")
     if not _ensure_ml_artifacts_cached():
         st.warning(
             "No fitted models found. From the project root run `python3 scripts/train_models.py` "
@@ -1088,7 +1088,7 @@ elif page == "ML Models":
             st.json(out)
 
 elif page == "Quant Strategy":
-    section_header("Quant strategy", "Backtests and factor models on delayed-vendor return samples")
+    section_header("Quant Strategy", "Backtests and factor models on delayed-vendor return samples")
     if not _ensure_quant_artifacts_cached():
         st.warning("No quant outputs found. Run `python3 scripts/train_quant.py` from the project root.")
     else:
@@ -1190,7 +1190,7 @@ elif page == "Quant Strategy":
             st.plotly_chart(styled_line_chart(fig_mc), use_container_width=True)
 
 elif page == "Portfolio Optimization":
-    section_header("Portfolio optimization", "Mean-variance-style demos — not allocation advice")
+    section_header("Portfolio Optimization", "Mean-variance-style demos — not allocation advice")
     if not _ensure_quant_artifacts_cached():
         st.warning("No portfolio outputs found. Run `python3 scripts/train_quant.py` from the project root.")
     else:
@@ -1339,7 +1339,7 @@ elif page == "Regime Detection":
             """)
 
 elif page == "Investment Stages":
-    section_header("Investment stages", "Illustrative private-market tables — not licensed deal data")
+    section_header("Investment Stages", "Illustrative private-market tables — not licensed deal data")
     vc = load_csv("vc_deals_scd.csv")
     growth = load_csv("growth_equity_deals_scd.csv")
     if vc is not None and growth is not None:
@@ -1349,7 +1349,7 @@ elif page == "Investment Stages":
         st.dataframe(growth, use_container_width=True)
 
 elif page == "Market Analysis":
-    section_header("Market analysis", "Illustrative TAM and competitive scaffolding")
+    section_header("Market Analysis", "Illustrative TAM and competitive scaffolding")
     st.warning(
         "**Demo / non-advisory:** Market size and competitive tables below are illustrative scaffolding. "
         "**Investment attractiveness scores and buy/hold/sell labels are demo weights only**—not research, "
