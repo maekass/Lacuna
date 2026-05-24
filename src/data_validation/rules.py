@@ -48,8 +48,6 @@ CLINICAL_TRIAL_PHASES = {
 
 def _check_nct_id_format(df: "pd.DataFrame") -> list[str]:
     """NCT IDs should match the pattern NCTxxxxxxxx."""
-    import re
-
     errors: list[str] = []
     if "nct_id" not in df.columns:
         return errors

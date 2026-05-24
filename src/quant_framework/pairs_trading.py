@@ -150,7 +150,8 @@ def backtest_pair(prices: pd.DataFrame, ticker1: str, ticker2: str,
     
     # Performance metrics
     total_return = (1 + strategy_returns).prod() - 1
-    ann_return = (1 + total_return) ** (252 / len(strategy_returns)) - 1
+    n_obs = len(strategy_returns)
+    ann_return = (1 + total_return) ** (252 / n_obs) - 1 if n_obs > 0 else 0.0
     ann_vol = strategy_returns.std() * np.sqrt(252)
     sharpe = ann_return / ann_vol if ann_vol > 0 else 0
     
@@ -213,7 +214,8 @@ def run_pairs_portfolio(prices: pd.DataFrame, pairs: list,
         
         # Portfolio metrics
         total_return = (1 + portfolio_returns).prod() - 1
-        ann_return = (1 + total_return) ** (252 / len(portfolio_returns)) - 1
+        n_obs = len(portfolio_returns)
+        ann_return = (1 + total_return) ** (252 / n_obs) - 1 if n_obs > 0 else 0.0
         ann_vol = portfolio_returns.std() * np.sqrt(252)
         sharpe = ann_return / ann_vol if ann_vol > 0 else 0
         
