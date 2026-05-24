@@ -71,6 +71,18 @@ API Response / Dashboard Visualization
 
 **Baseline Comparison:** Industry standard ~60% accuracy for trial success prediction
 
+### ML Explainability Dashboard
+
+**Interactive visualization of model predictions and performance:**
+
+- **Feature Importance Analysis:** Visual breakdown of top 15 predictive features
+- **Model Performance Comparison:** Side-by-side metrics for all 4 models + ensemble
+- **Confidence Distribution:** Histogram showing prediction certainty across trials
+- **Layman's Explanations:** Plain-language descriptions for non-technical stakeholders
+- **Data Source Links:** Direct links to ClinicalTrials.gov and verification certificates
+
+**Access:** Navigate to "ML Model Explainability" page in the Streamlit dashboard
+
 ---
 
 ## Data Verification Certification
