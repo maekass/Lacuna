@@ -1,0 +1,68 @@
+{
+  "name": "cascade-registry-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Cascade Registry - Biotech/Pharma Clinical Trial Intelligence Platform. Search 1,400+ trials, predict success with ML, analyze disease burden, query FDA approvals across 9 immunology disease areas.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "cascade-registry-mcp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "biotech",
+    "pharma",
+    "clinical-trials",
+    "healthcare",
+    "fda",
+    "machine-learning",
+    "ai",
+    "drug-development",
+    "epidemiology",
+    "market-analysis",
+    "investment-research",
+    "windsurf",
+    "claude"
+  ],
+  "author": {
+    "name": "Mae Kaess",
+    "url": "https://github.com/maekass"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maekass/Immunology-Investment-Intelligence.git",
+    "directory": "mcp-server"
+  },
+  "homepage": "https://github.com/maekass/Immunology-Investment-Intelligence#readme",
+  "bugs": {
+    "url": "https://github.com/maekass/Immunology-Investment-Intelligence/issues"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "python": ">=3.9.0"
+  },
+  "mcp": {
+    "tools": 10,
+    "categories": ["Healthcare", "Research", "Data Analysis"],
+    "dataSource": "ClinicalTrials.gov, openFDA, CDC, Orphanet"
+  }
+}

@@ -6,11 +6,25 @@ Adds NLP features, temporal patterns, and sponsor intelligence to base model.
 
 import numpy as np
 import pandas as pd
+import warnings
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, VotingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
-from xgboost import XGBClassifier
 from typing import Dict
+
+try:
+    from xgboost import XGBClassifier
+    XGBOOST_AVAILABLE = True
+except (ImportError, Exception) as e:
+    # XGBoost may fail to load due to missing OpenMP (libomp.dylib)
+    # Gracefully fall back to sklearn models only
+    XGBOOST_AVAILABLE = False
+    if "libomp" in str(e) or "OpenMP" in str(e):
+        warnings.warn(
+            "XGBoost unavailable (OpenMP not installed). Using sklearn models only. "
+            "To enable XGBoost: brew install libomp",
+            UserWarning
+        )
 
 
 class EnhancedTrialPredictor:
@@ -284,24 +298,31 @@ class EnhancedTrialPredictor:
             random_state=42
         )
         
-        xgb = XGBClassifier(
-            n_estimators=200, 
-            max_depth=6, 
-            learning_rate=0.05,
-            random_state=42,
-            eval_metric='logloss'
-        )
+        # Build estimators list
+        estimators = [
+            ('rf', rf),
+            ('gb', gb),
+            ('lr', lr)
+        ]
+        weights = [1.2, 1.5, 0.8]
+        
+        # Add XGBoost if available
+        if XGBOOST_AVAILABLE:
+            xgb = XGBClassifier(
+                n_estimators=200, 
+                max_depth=6, 
+                learning_rate=0.05,
+                random_state=42,
+                eval_metric='logloss'
+            )
+            estimators.append(('xgb', xgb))
+            weights.append(2.0)  # XGBoost highest weight
         
         # Ensemble with optimized weights
         self.model = VotingClassifier(
-            estimators=[
-                ('rf', rf),
-                ('gb', gb),
-                ('lr', lr),
-                ('xgb', xgb)
-            ],
+            estimators=estimators,
             voting='soft',
-            weights=[1.2, 1.5, 0.8, 2.0]  # XGBoost highest weight
+            weights=weights
         )
         
         self.model.fit(X_scaled, labels)

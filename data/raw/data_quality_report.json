@@ -1,0 +1,144 @@
+{
+  "timestamp": "2026-05-24T03:40:14.354607",
+  "clinicaltrials_gov": {
+    "sickle cell disease": {
+      "status": "\u2705",
+      "total_trials": 0,
+      "api_version": "v2"
+    },
+    "systemic lupus erythematosus": {
+      "status": "\u2705",
+      "total_trials": 0,
+      "api_version": "v2"
+    },
+    "hidradenitis suppurativa": {
+      "status": "\u2705",
+      "total_trials": 0,
+      "api_version": "v2"
+    },
+    "diabetic nephropathy": {
+      "status": "\u2705",
+      "total_trials": 0,
+      "api_version": "v2"
+    },
+    "multiple sclerosis": {
+      "status": "\u2705",
+      "total_trials": 0,
+      "api_version": "v2"
+    },
+    "rheumatoid arthritis": {
+      "status": "\u2705",
+      "total_trials": 0,
+      "api_version": "v2"
+    },
+    "crohn's disease": {
+      "status": "\u2705",
+      "total_trials": 0,
+      "api_version": "v2"
+    },
+    "food allergy": {
+      "status": "\u2705",
+      "total_trials": 0,
+      "api_version": "v2"
+    },
+    "autoimmune liver disease": {
+      "status": "\u2705",
+      "total_trials": 0,
+      "api_version": "v2"
+    }
+  },
+  "openfda": {
+    "sickle cell": {
+      "status": "\u2705",
+      "total_drugs": 18
+    },
+    "lupus": {
+      "status": "\u2705",
+      "total_drugs": 1690
+    },
+    "hidradenitis": {
+      "status": "\u2705",
+      "total_drugs": 45
+    },
+    "diabetic nephropathy": {
+      "status": "\u2705",
+      "total_drugs": 616
+    },
+    "multiple sclerosis": {
+      "status": "\u2705",
+      "total_drugs": 1536
+    },
+    "rheumatoid arthritis": {
+      "status": "\u2705",
+      "total_drugs": 5162
+    },
+    "crohn": {
+      "status": "\u26a0\ufe0f",
+      "total_drugs": 0
+    },
+    "food allergy": {
+      "status": "\u2705",
+      "total_drugs": 2
+    }
+  },
+  "current_data": {
+    "total_trials": 1400,
+    "diseases": 7,
+    "completeness": {
+      "nct_id": 100.0,
+      "status": 100.0,
+      "phase": 47.785714285714285,
+      "enrollment": 99.21428571428571,
+      "sponsor_type": 100.0,
+      "outcome": 100.0
+    }
+  },
+  "cdc_status": {
+    "status": "manual_collection_required"
+  },
+  "recommendations": [
+    {
+      "priority": "HIGH",
+      "category": "ClinicalTrials.gov",
+      "action": "Expand to 15+ diseases",
+      "effort": "Low (1-2 hours)",
+      "impact": "High - more comprehensive coverage"
+    },
+    {
+      "priority": "HIGH",
+      "category": "ClinicalTrials.gov",
+      "action": "Increase trials per disease from 200 to 500",
+      "effort": "Low (30 min)",
+      "impact": "High - better statistical power"
+    },
+    {
+      "priority": "HIGH",
+      "category": "Data Fields",
+      "action": "Add intervention/drug names",
+      "effort": "Medium (2-3 hours)",
+      "impact": "High - enables drug pipeline analysis"
+    },
+    {
+      "priority": "MEDIUM",
+      "category": "openFDA",
+      "action": "Collect FDA approvals for all diseases",
+      "effort": "Medium (3-4 hours)",
+      "impact": "Medium - regulatory landscape"
+    },
+    {
+      "priority": "MEDIUM",
+      "category": "CDC/Orphanet",
+      "action": "Add epidemiology data for all diseases",
+      "effort": "Medium (2-3 hours)",
+      "impact": "Medium - market sizing"
+    },
+    {
+      "priority": "LOW",
+      "category": "NIH/PubMed",
+      "action": "Add published outcomes data",
+      "effort": "High (1 week)",
+      "impact": "Low - nice to have"
+    }
+  ],
+  "quality_score": 69.12738095238095
+}

@@ -289,7 +289,16 @@ if __name__ == "__main__":
     
     # Download biotech ETF data
     print("Downloading XBI (biotech ETF) data...")
-    xbi = yf.download('XBI', start='2015-01-01', end='2024-01-01')['Adj Close']
+    data = yf.download('XBI', start='2015-01-01', end='2024-01-01')
+    
+    # Handle both single and multi-level column index (yfinance API changed)
+    if isinstance(data.columns, pd.MultiIndex):
+        # New yfinance format: ('Close', 'XBI')
+        xbi = data[('Close', 'XBI')]
+    else:
+        # Old format or single ticker
+        xbi = data.get('Adj Close', data.get('Close'))
+    
     returns = xbi.pct_change().dropna()
     
     print("\nRunning regime detection...")
