@@ -1,0 +1,536 @@
+disease,brand_name,generic_name,manufacturer,application_number,search_term,source,collection_date
+sickle cell disease,Lyfgenia,LOVOTIBEGLOGENE AUTOTEMCEL,Genetix Biotherapeutics Inc.,BLA125788,sickle cell,openFDA,2026-05-24T03:44:24.419641
+sickle cell disease,OXBRYTA,VOXELOTOR,"Global Blood Therapeutics, Inc, A subsidiary of Pfizer Inc.",NDA213137,sickle cell,openFDA,2026-05-24T03:44:24.419673
+sickle cell disease,L-glutamine,L-GLUTAMINE,Renova Pharmaceuticals LLC,ANDA219750,sickle cell,openFDA,2026-05-24T03:44:24.419679
+sickle cell disease,DROXIA,HYDROXYUREA,Waylis Therapeutics LLC,NDA016295,sickle cell,openFDA,2026-05-24T03:44:24.419682
+sickle cell disease,XROMI,HYDROXYUREA,"Nova Laboratories, Ltd.",NDA216593,sickle cell,openFDA,2026-05-24T03:44:24.419686
+sickle cell disease,Siklos,HYDROXYUREA,Medunik,NDA208843,sickle cell,openFDA,2026-05-24T03:44:24.419691
+sickle cell disease,CASGEVY,EXAGAMGLOGENE AUTOTEMCEL,Vertex Pharmaceuticals Incorporated,BLA125787,sickle cell,openFDA,2026-05-24T03:44:24.419694
+sickle cell disease,FERRIPROX,DEFERIPRONE,"Chiesi USA, Inc.",NDA021825,sickle cell,openFDA,2026-05-24T03:44:24.419696
+sickle cell disease,ADAKVEO,CRIZANLIZUMAB,Novartis Pharmaceuticals Corporation,BLA761128,sickle cell,openFDA,2026-05-24T03:44:24.419701
+sickle cell disease,L-Glutamine,L-GLUTAMINE,"ANI Pharmaceuticals, Inc.",ANDA215647,sickle cell,openFDA,2026-05-24T03:44:24.419705
+sickle cell disease,Endari,GLUTAMINE,"Emmaus Medical, Inc.",NDA208587,sickle cell,openFDA,2026-05-24T03:44:24.419707
+systemic lupus erythematosus,PredniSONE,PREDNISONE,A-S Medication Solutions,ANDA080352,lupus,openFDA,2026-05-24T03:44:30.957939
+systemic lupus erythematosus,Prednisone,PREDNISONE,Bryant Ranch Prepack,ANDA040584,lupus,openFDA,2026-05-24T03:44:30.957955
+systemic lupus erythematosus,Betaloan SUIK,BETAMETHASONE SODIUM PHOSPHATE AND BETAMETHASONE ACETATE,"Advanced Rx Pharmacy of Tennessee, LLC",,lupus,openFDA,2026-05-24T03:44:30.957962
+systemic lupus erythematosus,Prednisone delayed release,PREDNISONE,Dr. Reddys Laboratories Inc.,ANDA219477,lupus,openFDA,2026-05-24T03:44:30.957966
+systemic lupus erythematosus,Dyural 40 Kit,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, SODIUM CHLORIDE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,lupus,openFDA,2026-05-24T03:44:30.957968
+systemic lupus erythematosus,Dyural 80 Kit,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, SODIUM CHLORIDE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,lupus,openFDA,2026-05-24T03:44:30.957971
+systemic lupus erythematosus,Dyural 80-LM,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,lupus,openFDA,2026-05-24T03:44:30.957973
+systemic lupus erythematosus,Bupivilog Kit,"MARCAINE, KENALOG, POVIDONE IODINE","Advanced Rx of Tennessee, LLC",,lupus,openFDA,2026-05-24T03:44:30.957975
+systemic lupus erythematosus,Dexamethasone,DEXAMETHASONE,"Advanced Rx Pharmacy of Tennessee, LLC",ANDA201270,lupus,openFDA,2026-05-24T03:44:30.957977
+systemic lupus erythematosus,MethylPREDNISolone,METHYLPREDNISOLONE,Bryant Ranch Prepack,ANDA040183,lupus,openFDA,2026-05-24T03:44:30.957978
+systemic lupus erythematosus,Dexamethasone Sodium Phosphate,DEXAMETHASONE SODIUM PHOSPHATE,Hikma Pharmaceuticals USA Inc.,ANDA087702,lupus,openFDA,2026-05-24T03:44:30.957981
+systemic lupus erythematosus,DEXAMETHASONE,DEXAMETHASONE,Kanchan Healthcare Inc,ANDA084754,lupus,openFDA,2026-05-24T03:44:30.957987
+systemic lupus erythematosus,prednisone,PREDNISONE,Amneal Pharmaceuticals NY LLC,ANDA213386,lupus,openFDA,2026-05-24T03:44:30.957988
+systemic lupus erythematosus,HYDROXYCHLOROQUINE SULFATE,HYDROXYCHLOROQUINE SULFATE,Creekwood Pharmaceuticals LLC,ANDA040150,lupus,openFDA,2026-05-24T03:44:30.957993
+systemic lupus erythematosus,Triamcinolone Acetonide,TRIAMCINOLONE ACETONIDE,Alembic Pharmaceuticals Inc.,ANDA218601,lupus,openFDA,2026-05-24T03:44:30.958003
+systemic lupus erythematosus,Methylprednisolone Sodium Succinate,METHYLPREDNISOLONE SODIUM SUCCINATE,Hikma Pharmaceuticals USA Inc.,ANDA203125,lupus,openFDA,2026-05-24T03:44:30.958008
+systemic lupus erythematosus,Lidolog Kit,"LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,lupus,openFDA,2026-05-24T03:44:30.958011
+systemic lupus erythematosus,PREDNISOLONE,PREDNISOLONE,Aurobindo Pharma Limited,ANDA215673,lupus,openFDA,2026-05-24T03:44:30.958017
+systemic lupus erythematosus,MLK Kit F2,"MARCAINE, LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,lupus,openFDA,2026-05-24T03:44:30.958029
+systemic lupus erythematosus,PREDNISONE,PREDNISONE,REMEDYREPACK INC.,ANDA215672,lupus,openFDA,2026-05-24T03:44:30.958034
+systemic lupus erythematosus,HYDROCORTISONE,HYDROCORTISONE,Preferred Pharmaceuticals Inc.,ANDA040646,lupus,openFDA,2026-05-24T03:44:30.958042
+systemic lupus erythematosus,KENALOG-40,TRIAMCINOLONE ACETONIDE,"Asclemed USA, Inc.",NDA014901,lupus,openFDA,2026-05-24T03:44:30.958044
+systemic lupus erythematosus,MLK F1 Kit,"MARCAINE, LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,lupus,openFDA,2026-05-24T03:44:30.958046
+systemic lupus erythematosus,Physician EZ Use Joint Tunnel and Trigger Kit II,"LIDOCAINE HYDROCHLORIDE, TRIAMCINOLONE ACETONIDE, POVIDONE-IODINE","Asclemed USA, Inc.",,lupus,openFDA,2026-05-24T03:44:30.958048
+systemic lupus erythematosus,Hydrocortisone,HYDROCORTISONE,"ANI Pharmaceuticals, Inc.",ANDA217881,lupus,openFDA,2026-05-24T03:44:30.958050
+systemic lupus erythematosus,BENLYSTA,BELIMUMAB,GlaxoSmithKline LLC,BLA761043,SLE,openFDA,2026-05-24T03:44:34.552080
+systemic lupus erythematosus,SAPHNELO,ANIFROLUMAB-FNIA,AstraZeneca Pharmaceuticals LP,BLA761123,SLE,openFDA,2026-05-24T03:44:34.552103
+hidradenitis suppurativa,IDACIO,ADALIMUMAB-AACF,"Fresenius Kabi USA, LLC",BLA761255,hidradenitis,openFDA,2026-05-24T03:44:38.085581
+hidradenitis suppurativa,Cyltezo,ADALIMUMAB-ADBM,"Boehringer Ingelheim Pharmaceuticals, Inc.",BLA761058,hidradenitis,openFDA,2026-05-24T03:44:38.085591
+hidradenitis suppurativa,Simlandi,ADALIMUMAB-RYVK,"Teva Pharmaceuticals USA, Inc.",BLA761299,hidradenitis,openFDA,2026-05-24T03:44:38.085593
+hidradenitis suppurativa,HYRIMOZ,ADALIMUMAB-ADAZ,Sandoz Inc,BLA761071,hidradenitis,openFDA,2026-05-24T03:44:38.085595
+hidradenitis suppurativa,Adalimumab-aacf,ADALIMUMAB,"Fresenius Kabi USA, LLC",BLA761255,hidradenitis,openFDA,2026-05-24T03:44:38.085597
+hidradenitis suppurativa,Bimzelx,BIMEKIZUMAB,"UCB, Inc.",BLA761151,hidradenitis,openFDA,2026-05-24T03:44:38.085599
+hidradenitis suppurativa,Adalimumab-ryvk,ADALIMUMAB-RYVK,"Teva Pharmaceuticals USA, Inc.",BLA761299,hidradenitis,openFDA,2026-05-24T03:44:38.085601
+hidradenitis suppurativa,Adalimumab,ADALIMUMAB-ADAZ,Sandoz Inc,BLA761071,hidradenitis,openFDA,2026-05-24T03:44:38.085603
+hidradenitis suppurativa,Idacio,ADALIMUMAB-AACF,"Fresenius Kabi USA, LLC",BLA761255,hidradenitis,openFDA,2026-05-24T03:44:38.085606
+hidradenitis suppurativa,Humira,ADALIMUMAB,Cordavis Limited,BLA125057,hidradenitis,openFDA,2026-05-24T03:44:38.085608
+hidradenitis suppurativa,YUSIMRY,ADALIMUMAB-AQVH,Meitheal Pharmaceuticals Inc.,BLA761216,hidradenitis,openFDA,2026-05-24T03:44:38.085610
+hidradenitis suppurativa,Yuflyma,ADALIMUMAB-AATY,"CELLTRION USA, Inc.",BLA761219,hidradenitis,openFDA,2026-05-24T03:44:38.085612
+hidradenitis suppurativa,Adalimumab,ADALIMUMAB-FKJP,Biocon Biologics Inc,BLA761154,hidradenitis,openFDA,2026-05-24T03:44:38.085613
+hidradenitis suppurativa,ABRILADA,ADALIMUMAB-AFZB,Pfizer Laboratories Div Pfizer Inc,BLA761118,hidradenitis,openFDA,2026-05-24T03:44:38.085615
+hidradenitis suppurativa,Adalimumab-adbm,ADALIMUMAB-ADBM,"Boehringer Ingelheim Pharmaceuticals, Inc.",BLA761058,hidradenitis,openFDA,2026-05-24T03:44:38.085620
+hidradenitis suppurativa,HULIO,ADALIMUMAB-FKJP,Biocon Biologics Inc,BLA761154,hidradenitis,openFDA,2026-05-24T03:44:38.085621
+hidradenitis suppurativa,HADLIMA,ADALIMUMAB-BWWD,A-S Medication Solutions,BLA761059,hidradenitis,openFDA,2026-05-24T03:44:38.085623
+hidradenitis suppurativa,COSENTYX,SECUKINUMAB,Novartis Pharmaceuticals Corporation,BLA125504,hidradenitis,openFDA,2026-05-24T03:44:38.085625
+hidradenitis suppurativa,AMJEVITA,ADALIMUMAB-ATTO,"Amgen, Inc",BLA761024,hidradenitis,openFDA,2026-05-24T03:44:38.085629
+hidradenitis suppurativa,HUMIRA,ADALIMUMAB,A-S Medication Solutions,BLA125057,hidradenitis,openFDA,2026-05-24T03:44:38.085630
+hidradenitis suppurativa,Adalimumab-bwwd,ADALIMUMAB-BWWD,Cordavis Limited,BLA761059,hidradenitis,openFDA,2026-05-24T03:44:38.085635
+hidradenitis suppurativa,Adalimumab,ADALIMUMAB-AATY,"CELLTRION USA, Inc.",BLA761219,hidradenitis,openFDA,2026-05-24T03:44:38.085638
+diabetic nephropathy,Losartan Potassium,LOSARTAN POTASSIUM,"Cardinal Health 107, LLC",ANDA078243,diabetic nephropathy,openFDA,2026-05-24T03:44:44.959201
+diabetic nephropathy,Irbesartan,IRBESARTAN,REMEDYREPACK INC.,ANDA203071,diabetic nephropathy,openFDA,2026-05-24T03:44:44.959211
+diabetic nephropathy,"Losartan potassium Tablets, 100 mg",LOSARTAN POTASSIUM,Bryant Ranch Prepack,ANDA201170,diabetic nephropathy,openFDA,2026-05-24T03:44:44.959214
+diabetic nephropathy,Losartan potassium,LOSARTAN POTASSIUM,Preferred Pharmaceuticals Inc.,ANDA217396,diabetic nephropathy,openFDA,2026-05-24T03:44:44.959215
+diabetic nephropathy,IRBESARTAN,IRBESARTAN,Jubilant Cadista Pharmaceuticals Inc.,ANDA203534,diabetic nephropathy,openFDA,2026-05-24T03:44:44.959217
+diabetic nephropathy,captopril,CAPTOPRIL,AMICI PHARMACEUTICALS LLC,ANDA074677,diabetic nephropathy,openFDA,2026-05-24T03:44:44.959233
+diabetic nephropathy,Losortan Potassium,LOSARTAN POTASSIUM,Bryant Ranch Prepack,ANDA078243,diabetic nephropathy,openFDA,2026-05-24T03:44:44.959246
+diabetic nephropathy,"Losartan potassium Tablets, 25 mg",LOSARTAN POTASSIUM,Jubilant Cadista Pharmaceuticals Inc.,ANDA201170,diabetic nephropathy,openFDA,2026-05-24T03:44:44.959248
+diabetic nephropathy,Captopril,CAPTOPRIL,Ajanta Pharma USA Inc.,ANDA212809,diabetic nephropathy,openFDA,2026-05-24T03:44:44.959254
+diabetic nephropathy,LOSARTAN POTASSIUM,LOSARTAN POTASSIUM,"XLCare Pharmaceuticals, Inc.",ANDA203835,diabetic nephropathy,openFDA,2026-05-24T03:44:44.959256
+diabetic nephropathy,Amlodipine Besylate,AMLODIPINE BESYLATE,"Lupin Pharmaceuticals, Inc.",ANDA078043,diabetic kidney,openFDA,2026-05-24T03:44:47.628364
+diabetic nephropathy,Verapamil Hydrochloride,VERAPAMIL HYDROCHLORIDE,Bryant Ranch Prepack,ANDA070994,diabetic kidney,openFDA,2026-05-24T03:44:47.628379
+diabetic nephropathy,Valsartan,VALSARTAN,Archis Pharma LLC,ANDA205347,diabetic kidney,openFDA,2026-05-24T03:44:47.628384
+diabetic nephropathy,Lisinopril and Hydrochlorothiazide,LISINOPRIL AND HYDROCHLOROTHIAZIDE TABLETS,ST. MARY'S MEDICAL PARK PHARMACY,ANDA076230,diabetic kidney,openFDA,2026-05-24T03:44:47.628386
+diabetic nephropathy,Metoprolol Tartrate,METOPROLOL TARTRATE,"PD-Rx Pharmaceuticals, Inc.",ANDA077739,diabetic kidney,openFDA,2026-05-24T03:44:47.628388
+diabetic nephropathy,Lisinopril and Hydrochlorothiazide,LISINOPRIL AND HYDROCHLOROTHIAZIDE,"PD-Rx Pharmaceuticals, Inc.",ANDA077912,diabetic kidney,openFDA,2026-05-24T03:44:47.628391
+diabetic nephropathy,olmesartan medoxomil-hydrochlorothiazide,OLMESARTAN MEDOXOMIL-HYDROCHLOROTHIAZIDE,AvKARE,NDA021532,diabetic kidney,openFDA,2026-05-24T03:44:47.628397
+diabetic nephropathy,Metoprolol Succinate,METOPROLOL SUCCINATE ER TABLETS,Bryant Ranch Prepack,ANDA211143,diabetic kidney,openFDA,2026-05-24T03:44:47.628407
+diabetic nephropathy,Benazepril Hydrochloride,BENAZEPRIL HYDROCHLORIDE,Preferred Pharmaceuticals Inc.,ANDA076118,diabetic kidney,openFDA,2026-05-24T03:44:47.628410
+diabetic nephropathy,Lisinopril,LISINOPRIL,"Aphena Pharma Solutions - Tennessee, LLC",ANDA077321,diabetic kidney,openFDA,2026-05-24T03:44:47.628414
+diabetic nephropathy,Metoprolol Succinate,METOPROLOL SUCCINATE,"Cardinal Health 107, LLC",ANDA090617,diabetic kidney,openFDA,2026-05-24T03:44:47.628418
+diabetic nephropathy,Lopressor,METOPROLOL TARTRATE,Validus Pharmaceuticals LLC,NDA017963,diabetic kidney,openFDA,2026-05-24T03:44:47.628420
+diabetic nephropathy,LISINOPRIL,LISINOPRIL,Preferred Pharmaceuticals Inc.,ANDA076164,diabetic kidney,openFDA,2026-05-24T03:44:47.628426
+diabetic nephropathy,Amlodipine and Olmesartan Medoxomil,AMLODIPINE AND OLMESARTAN MEDOXOMIL,Amneal Pharmaceuticals NY LLC,ANDA209010,diabetic kidney,openFDA,2026-05-24T03:44:47.628431
+diabetic nephropathy,Olmesartan Medoxomil and Hydrochlorothiazide,OLMESARTAN MEDOXOMIL AND HYDROCHLOROTHIAZIDE,Bryant Ranch Prepack,ANDA205391,diabetic kidney,openFDA,2026-05-24T03:44:47.628438
+diabetic nephropathy,Losartan Potassium and Hydrochlorothiazide,LOSARTAN POTASSIUM AND HYDROCHLOROTHIAZIDE,REMEDYREPACK INC.,ANDA204901,diabetic kidney,openFDA,2026-05-24T03:44:47.628443
+diabetic nephropathy,Torsemide,TORSEMIDE,Heritage Pharmaceuticals Inc. d/b/a Avet Pharmaceuticals Inc.,ANDA076894,diabetic kidney,openFDA,2026-05-24T03:44:47.628445
+diabetic nephropathy,AMLODIPINE BESYLATE,AMLODIPINE BESYLATE,"Northwind Health Company, LLC",ANDA077073,diabetic kidney,openFDA,2026-05-24T03:44:47.628448
+diabetic nephropathy,OLMESARTAN MEDOXOMIL and HYDROCHLOROTHIAZIDE,OLMESARTAN MEDOXOMIL AND HYDROCHLOROTHIAZIDE,Macleods Pharmaceuticals Limited,ANDA204801,diabetic kidney,openFDA,2026-05-24T03:44:47.628450
+diabetic nephropathy,Amlodipine and Atorvastatin,AMLODIPINE AND ATORVASTATIN,Bryant Ranch Prepack,ANDA205199,diabetic kidney,openFDA,2026-05-24T03:44:47.628452
+diabetic nephropathy,Nebivolol,NEBIVOLOL,Bryant Ranch Prepack,ANDA208717,diabetic kidney,openFDA,2026-05-24T03:44:47.628456
+diabetic nephropathy,Olmesartan Medoxomil,OLMESARTAN MEDOXOMIL,A-S Medication Solutions,ANDA206763,diabetic kidney,openFDA,2026-05-24T03:44:47.628462
+diabetic nephropathy,Ramipril,RAMIPRIL,Zydus Pharmaceuticals USA Inc.,ANDA078832,diabetic kidney,openFDA,2026-05-24T03:44:47.628467
+diabetic nephropathy,OLMESARTAN MEDOXOMIL,OLMESARTAN MEDOXOMIL,Inventia Healthcare Limited,ANDA208659,diabetic kidney,openFDA,2026-05-24T03:44:47.628471
+diabetic nephropathy,Valsartan and Hydrochlorothiazide,VALSARTAN AND HYDROCHLOROTHIAZIDE,AvKARE,ANDA204382,diabetic kidney,openFDA,2026-05-24T03:44:47.628473
+diabetic nephropathy,Felodipine,FELODIPINE,Bryant Ranch Prepack,ANDA200815,diabetic kidney,openFDA,2026-05-24T03:44:47.628480
+multiple sclerosis,PredniSONE,PREDNISONE,A-S Medication Solutions,ANDA080352,multiple sclerosis,openFDA,2026-05-24T03:44:50.418353
+multiple sclerosis,BACLOFEN,BACLOFEN,REMEDYREPACK INC.,ANDA209102,multiple sclerosis,openFDA,2026-05-24T03:44:50.418377
+multiple sclerosis,Baclofen,BACLOFEN,"NuCare Pharmaceuticals,Inc.",ANDA215885,multiple sclerosis,openFDA,2026-05-24T03:44:50.418382
+multiple sclerosis,Betaloan SUIK,BETAMETHASONE SODIUM PHOSPHATE AND BETAMETHASONE ACETATE,"Advanced Rx Pharmacy of Tennessee, LLC",,multiple sclerosis,openFDA,2026-05-24T03:44:50.418386
+multiple sclerosis,Prednisone delayed release,PREDNISONE,Dr. Reddys Laboratories Inc.,ANDA219477,multiple sclerosis,openFDA,2026-05-24T03:44:50.418389
+multiple sclerosis,Bupivilog Kit,"MARCAINE, KENALOG, POVIDONE IODINE","Advanced Rx of Tennessee, LLC",,multiple sclerosis,openFDA,2026-05-24T03:44:50.418392
+multiple sclerosis,Dexamethasone,DEXAMETHASONE,"Advanced Rx Pharmacy of Tennessee, LLC",ANDA201270,multiple sclerosis,openFDA,2026-05-24T03:44:50.418396
+multiple sclerosis,MethylPREDNISolone,METHYLPREDNISOLONE,Bryant Ranch Prepack,ANDA040183,multiple sclerosis,openFDA,2026-05-24T03:44:50.418398
+multiple sclerosis,Dexamethasone Sodium Phosphate,DEXAMETHASONE SODIUM PHOSPHATE,Hikma Pharmaceuticals USA Inc.,ANDA087702,multiple sclerosis,openFDA,2026-05-24T03:44:50.418405
+multiple sclerosis,Glatopa,GLATIRAMER ACETATE,Bryant Ranch Prepack,ANDA206921,multiple sclerosis,openFDA,2026-05-24T03:44:50.418407
+multiple sclerosis,prednisone,PREDNISONE,Amneal Pharmaceuticals NY LLC,ANDA213386,multiple sclerosis,openFDA,2026-05-24T03:44:50.418412
+multiple sclerosis,Triamcinolone Acetonide,TRIAMCINOLONE ACETONIDE,Alembic Pharmaceuticals Inc.,ANDA218601,multiple sclerosis,openFDA,2026-05-24T03:44:50.418423
+multiple sclerosis,Methylprednisolone Sodium Succinate,METHYLPREDNISOLONE SODIUM SUCCINATE,Hikma Pharmaceuticals USA Inc.,ANDA203125,multiple sclerosis,openFDA,2026-05-24T03:44:50.418430
+multiple sclerosis,Lidolog Kit,"LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,multiple sclerosis,openFDA,2026-05-24T03:44:50.418439
+multiple sclerosis,PREDNISOLONE,PREDNISOLONE,Aurobindo Pharma Limited,ANDA215673,multiple sclerosis,openFDA,2026-05-24T03:44:50.418444
+multiple sclerosis,Dimethyl Fumarate,DIMETHYL FUMARATE,MSN LABORATORIES PRIVATE LIMITED,ANDA210460,multiple sclerosis,openFDA,2026-05-24T03:44:50.418447
+multiple sclerosis,Prednisone,PREDNISONE,Proficient Rx LP,ANDA211575,multiple sclerosis,openFDA,2026-05-24T03:44:50.418459
+multiple sclerosis,MLK Kit F2,"MARCAINE, LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,multiple sclerosis,openFDA,2026-05-24T03:44:50.418461
+multiple sclerosis,Plegridy Pen,PEGINTERFERON BETA-1A,Biogen Inc.,BLA125499,multiple sclerosis,openFDA,2026-05-24T03:44:50.418465
+multiple sclerosis,PREDNISONE,PREDNISONE,REMEDYREPACK INC.,ANDA215672,multiple sclerosis,openFDA,2026-05-24T03:44:50.418472
+multiple sclerosis,GLATIRAMER ACETATE,GLATIRAMER ACETATE,Zydus Pharmaceuticals USA Inc.,ANDA208468,multiple sclerosis,openFDA,2026-05-24T03:44:50.418482
+multiple sclerosis,KENALOG-40,TRIAMCINOLONE ACETONIDE,"Asclemed USA, Inc.",NDA014901,multiple sclerosis,openFDA,2026-05-24T03:44:50.418490
+multiple sclerosis,PONVORY,PONESIMOD,Vanda Pharmaceuticals Inc.,NDA213498,multiple sclerosis,openFDA,2026-05-24T03:44:50.418492
+multiple sclerosis,MLK F1 Kit,"MARCAINE, LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,multiple sclerosis,openFDA,2026-05-24T03:44:50.418495
+multiple sclerosis,Physician EZ Use Joint Tunnel and Trigger Kit II,"LIDOCAINE HYDROCHLORIDE, TRIAMCINOLONE ACETONIDE, POVIDONE-IODINE","Asclemed USA, Inc.",,multiple sclerosis,openFDA,2026-05-24T03:44:50.418500
+multiple sclerosis,Fingolimod,FINGOLIMOD HYDROCHLORIDE,"Ascend Laboratories, LLC",ANDA208004,MS,openFDA,2026-05-24T03:44:53.596510
+multiple sclerosis,Dalfampridine,DALFAMPRIDINE,"Golden State Medical Supply, Inc.",ANDA206765,MS,openFDA,2026-05-24T03:44:53.596511
+multiple sclerosis,Fingolimod,FINGOLIMOD,AvKARE,ANDA208008,MS,openFDA,2026-05-24T03:44:53.596514
+multiple sclerosis,Teriflunomide,TERIFLUNOMIDE,Mylan Pharmaceuticals Inc.,ANDA209702,MS,openFDA,2026-05-24T03:44:53.596515
+multiple sclerosis,Glatiramer Acetate,GLATIRAMER ACETATE,AJENAT PHARMACEUTICALS LLC,ANDA214022,MS,openFDA,2026-05-24T03:44:53.596518
+multiple sclerosis,TERIFLUNOMIDE,TERIFLUNOMIDE,CONCORD BIOTECH LIMITED,ANDA218663,MS,openFDA,2026-05-24T03:44:53.596523
+multiple sclerosis,Vumerity,DIROXIMEL FUMARATE,Biogen Inc.,NDA211855,MS,openFDA,2026-05-24T03:44:53.596524
+multiple sclerosis,DALFAMPRIDINE,DALFAMPRIDINE,Micro Labs Limited,ANDA210158,MS,openFDA,2026-05-24T03:44:53.596526
+multiple sclerosis,BOTOX,ONABOTULINUMTOXINA,"Allergan, Inc.",BLA103000,MS,openFDA,2026-05-24T03:44:53.596528
+multiple sclerosis,DIMETHYL FUMARATE,DIMETHYL FUMARATE,Quallent Pharmaceuticals Health LLC,ANDA210500,MS,openFDA,2026-05-24T03:44:53.596533
+multiple sclerosis,BRIUMVI,UBLITUXIMAB,"TG Therapeutics, Inc.",BLA761238,MS,openFDA,2026-05-24T03:44:53.596535
+multiple sclerosis,Cladribine,CLADRIBINE,Apotex Corp.,ANDA218425,MS,openFDA,2026-05-24T03:44:53.596536
+multiple sclerosis,MAYZENT,SIPONIMOD,Novartis Pharmaceuticals Corporation,NDA209884,MS,openFDA,2026-05-24T03:44:53.596539
+multiple sclerosis,Glatiramer Acetate,GLATIRAMER,Mylan Pharmaceuticals Inc.,ANDA206936,MS,openFDA,2026-05-24T03:44:53.596540
+multiple sclerosis,Aubagio,TERIFLUNOMIDE,Genzyme Corporation,NDA202992,MS,openFDA,2026-05-24T03:44:53.596541
+multiple sclerosis,dimethyl fumarate,DIMETHYL FUMARATE,"Upsher-Smith Laboratories, LLC",ANDA210382,MS,openFDA,2026-05-24T03:44:53.596542
+multiple sclerosis,FINGOLIMOD,FINGOLIMOD,Quallent Pharmaceuticals Health LLC,ANDA207979,MS,openFDA,2026-05-24T03:44:53.596545
+multiple sclerosis,AMPYRA,DALFAMPRIDINE,"Merz Pharmaceuticals, LLC",NDA022250,MS,openFDA,2026-05-24T03:44:53.596550
+multiple sclerosis,LEMTRADA,ALEMTUZUMAB,Genzyme Corporation,BLA103948,MS,openFDA,2026-05-24T03:44:53.596558
+multiple sclerosis,FINGOLIMOD HYDROCHLORIDE,FINGOLIMOD HYDROCHLORIDE,Accord Healthcare Inc.,ANDA207991,MS,openFDA,2026-05-24T03:44:53.596563
+multiple sclerosis,Betaseron,INTERFERON BETA-1B,Bayer HealthCare Pharmaceuticals Inc.,BLA103471,MS,openFDA,2026-05-24T03:44:53.596564
+multiple sclerosis,TECFIDERA,DIMETHYL FUMARATE,Biogen Inc.,NDA204063,MS,openFDA,2026-05-24T03:44:53.596566
+multiple sclerosis,KESIMPTA,OFATUMUMAB,Novartis Pharmaceuticals Corporation,BLA125326,MS,openFDA,2026-05-24T03:44:53.596570
+multiple sclerosis,DOXOrubicin Hydrochloride,DOXORUBICIN HYDROCHLORIDE,"Sun Pharmaceutical Industries, Inc.",ANDA091418,MS,openFDA,2026-05-24T03:44:53.596572
+multiple sclerosis,Glatiramer Acetate,GLATIRAMER ACETATE INJECTION,"UPSHER-SMITH LABORATORIES, LLC",ANDA214741,MS,openFDA,2026-05-24T03:44:53.596578
+multiple sclerosis,fingolimod,FINGOLIMOD,"Glenmark Pharmaceuticals Inc., USA",ANDA207985,MS,openFDA,2026-05-24T03:44:53.596590
+multiple sclerosis,ZEPOSIA 7-Day Starter Pack,OZANIMOD HYDROCHLORIDE,Celgene Corporation,NDA209899,MS,openFDA,2026-05-24T03:44:53.596591
+multiple sclerosis,fingolimod,FINGOLIMOD HCL,"Rising Pharma Holdings, Inc.",ANDA207939,MS,openFDA,2026-05-24T03:44:53.596596
+multiple sclerosis,Mavenclad,CLADRIBINE,"EMD Serono, Inc.",NDA022561,MS,openFDA,2026-05-24T03:44:53.596601
+multiple sclerosis,OCREVUS,OCRELIZUMAB,"Genentech, Inc.",BLA761053,MS,openFDA,2026-05-24T03:44:53.596603
+multiple sclerosis,BAFIERTAM,MONOMETHYL FUMARATE,Banner Life Sciences LLC,NDA210296,MS,openFDA,2026-05-24T03:44:53.596604
+multiple sclerosis,Copaxone,GLATIRAMER ACETATE,"Teva Neuroscience, Inc.",NDA020622,MS,openFDA,2026-05-24T03:44:53.596609
+multiple sclerosis,Ocrevus Zunovo,OCRELIZUMAB AND HYALURONIDASE,"Genentech, Inc.",BLA761371,MS,openFDA,2026-05-24T03:44:53.596612
+multiple sclerosis,PIROXICAM,PIROXICAM,Proficient Rx LP,ANDA206152,MS,openFDA,2026-05-24T03:44:53.596615
+rheumatoid arthritis,Naproxen,NAPROXEN,A-S Medication Solutions,ANDA078250,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573473
+rheumatoid arthritis,Etodolac,ETODOLAC,A-S Medication Solutions,ANDA208834,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573486
+rheumatoid arthritis,Tofidence,TOCILIZUMAB,Biogen MA Inc,BLA761354,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573492
+rheumatoid arthritis,PredniSONE,PREDNISONE,A-S Medication Solutions,ANDA080352,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573495
+rheumatoid arthritis,Prednisone,PREDNISONE,Bryant Ranch Prepack,ANDA040584,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573496
+rheumatoid arthritis,Leflunomide,LEFLUNOMIDE,"Chartwell RX, LLC",ANDA077086,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573498
+rheumatoid arthritis,Ibuprofen,IBUPROFEN,Aurobindo Pharma Limited,ANDA213794,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573501
+rheumatoid arthritis,Indomethacin,INDOMETHACIN,"PD-Rx Pharmaceuticals, Inc.",ANDA091276,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573503
+rheumatoid arthritis,CELECOXIB,CELECOXIB,A-S Medication Solutions,ANDA204776,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573507
+rheumatoid arthritis,Betaloan SUIK,BETAMETHASONE SODIUM PHOSPHATE AND BETAMETHASONE ACETATE,"Advanced Rx Pharmacy of Tennessee, LLC",,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573509
+rheumatoid arthritis,Nabumetone,NABUMETONE,Bryant Ranch Prepack,ANDA091083,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573514
+rheumatoid arthritis,Prednisone delayed release,PREDNISONE,Dr. Reddys Laboratories Inc.,ANDA219477,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573515
+rheumatoid arthritis,Dyural 40 Kit,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, SODIUM CHLORIDE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573517
+rheumatoid arthritis,Dyural 80 Kit,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, SODIUM CHLORIDE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573518
+rheumatoid arthritis,Dyural 80-LM,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573520
+rheumatoid arthritis,Bupivilog Kit,"MARCAINE, KENALOG, POVIDONE IODINE","Advanced Rx of Tennessee, LLC",,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573520
+rheumatoid arthritis,Dexamethasone,DEXAMETHASONE,"Advanced Rx Pharmacy of Tennessee, LLC",ANDA201270,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573522
+rheumatoid arthritis,Penicillamine,PENICILLAMINE,"Endo USA, Inc.",ANDA211231,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573523
+rheumatoid arthritis,MethylPREDNISolone,METHYLPREDNISOLONE,Bryant Ranch Prepack,ANDA040183,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573524
+rheumatoid arthritis,Dexamethasone Sodium Phosphate,DEXAMETHASONE SODIUM PHOSPHATE,Hikma Pharmaceuticals USA Inc.,ANDA087702,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573527
+rheumatoid arthritis,DEXAMETHASONE,DEXAMETHASONE,Kanchan Healthcare Inc,ANDA084754,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573532
+rheumatoid arthritis,prednisone,PREDNISONE,Amneal Pharmaceuticals NY LLC,ANDA213386,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573533
+rheumatoid arthritis,IBUPROFEN AND FAMOTIDINE,IBUPROFEN AND FAMOTIDINE,"Ascent Pharmaceuticals, Inc.",ANDA216814,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573537
+rheumatoid arthritis,Piroxicam,PIROXICAM,Bryant Ranch Prepack,ANDA074118,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573538
+rheumatoid arthritis,Diclofenac Sodium,DICLOFENAC SODIUM,Bryant Ranch Prepack,ANDA216548,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573541
+rheumatoid arthritis,Azathioprine,AZATHIOPRINE,American Health Packaging,ANDA077621,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573543
+rheumatoid arthritis,HYDROXYCHLOROQUINE SULFATE,HYDROXYCHLOROQUINE SULFATE,Creekwood Pharmaceuticals LLC,ANDA040150,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573544
+rheumatoid arthritis,METHOTREXATE,METHOTREXATE,Alembic Pharmaceuticals Inc.,ANDA217552,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573547
+rheumatoid arthritis,Celecoxib,CELECOXIB,"Actavis Pharma, Inc.",ANDA200562,rheumatoid arthritis,openFDA,2026-05-24T03:44:56.573550
+rheumatoid arthritis,AZACITIDINE,AZACITIDINE FOR,Pilnova Pharma Inc,ANDA207518,RA,openFDA,2026-05-24T03:44:59.436377
+rheumatoid arthritis,Hailey 1.5/30,NORETHINDRONE ACETATE AND ETHINYL ESTRADIOL,"Glenmark Pharmaceuticals Inc., USA",ANDA209297,RA,openFDA,2026-05-24T03:44:59.436381
+rheumatoid arthritis,Dolishale,LEVONORGESTREL AND ETHINYL ESTRADIOL,"Ingenus Pharmaceuticals, LLC",ANDA091692,RA,openFDA,2026-05-24T03:44:59.436383
+rheumatoid arthritis,JUNEL FE 28 DAY,NORETHINDRONE ACETATE AND ETHINYL ESTRADIOL AND FERROUS FUMARATE,A-S Medication Solutions,ANDA076064,RA,openFDA,2026-05-24T03:44:59.436388
+rheumatoid arthritis,NORETHINDRONE ACETATE AND ETHINYL ESTRADIOL AND FERROUS FUMARATE,NORETHINDRONE ACETATE AND ETHINYL ESTRADIOL AND FERROUS FUMARATE,Mylan Pharmaceuticals Inc.,ANDA205069,RA,openFDA,2026-05-24T03:44:59.436391
+rheumatoid arthritis,Azacitidine,AZACITIDINE,Dr. Reddy's Laboratories Inc.,ANDA201537,RA,openFDA,2026-05-24T03:44:59.436394
+rheumatoid arthritis,Meloxicam,MELOXICAM,"Lupin Pharmaceuticals, Inc.",ANDA077944,RA,openFDA,2026-05-24T03:44:59.436396
+rheumatoid arthritis,ORENCIA,ABATACEPT,"E.R. Squibb & Sons, L.L.C.",BLA125118,RA,openFDA,2026-05-24T03:44:59.436398
+rheumatoid arthritis,IDACIO,ADALIMUMAB-AACF,"Fresenius Kabi USA, LLC",BLA761255,RA,openFDA,2026-05-24T03:44:59.436400
+rheumatoid arthritis,celecoxib,CELECOXIB,ASCLEMED USA INC.,ANDA204590,RA,openFDA,2026-05-24T03:44:59.436401
+rheumatoid arthritis,Incassia,NORETHINDRONE,Aurobindo Pharma Limited,ANDA207304,RA,openFDA,2026-05-24T03:44:59.436407
+rheumatoid arthritis,Norethindrone,NORETHINDRONE,"Glenmark Pharmaceuticals Inc., USA",ANDA091209,RA,openFDA,2026-05-24T03:44:59.436410
+rheumatoid arthritis,Methotrexate,METHOTREXATE,"Hospira, Inc.",NDA011719,RA,openFDA,2026-05-24T03:44:59.436411
+rheumatoid arthritis,meloxicam,MELOXICAM,Quality Care Products LLC,ANDA077927,RA,openFDA,2026-05-24T03:44:59.436421
+rheumatoid arthritis,MELOXICAM,MELOXICAM,"NCS HealthCare of KY, LLC dba Vangard Labs",ANDA077929,RA,openFDA,2026-05-24T03:44:59.436424
+rheumatoid arthritis,Tilia Fe,NDAC AND EE TABLETS AND FERROUS FUMARATE TABLETS,Dr. Reddys Laboratories Inc.,ANDA202962,RA,openFDA,2026-05-24T03:44:59.436427
+rheumatoid arthritis,NORETHINDRONE,NORETHINDRONE,"Lupin Pharmaceuticals, Inc.",ANDA091325,RA,openFDA,2026-05-24T03:44:59.436431
+rheumatoid arthritis,Junel Fe 28 Day,NORETHINDRONE ACETATE AND ETHINYL ESTRADIOL AND FERROUS FUMARATE,Bryant Ranch Prepack,ANDA076081,RA,openFDA,2026-05-24T03:44:59.436433
+rheumatoid arthritis,Nortrel 28 Day,NORETHINDRONE AND ETHINYL ESTRADIOL,"Teva Pharmaceuticals USA, Inc.",ANDA072695,RA,openFDA,2026-05-24T03:44:59.436435
+crohn's disease,Prednisone delayed release,PREDNISONE,Dr. Reddys Laboratories Inc.,ANDA219477,crohn's disease,openFDA,2026-05-24T03:45:04.663947
+crohn's disease,Cyltezo,ADALIMUMAB-ADBM,"Boehringer Ingelheim Pharmaceuticals, Inc.",BLA761058,crohn's disease,openFDA,2026-05-24T03:45:04.663963
+crohn's disease,YESINTEK,USTEKINUMAB,Biocon Biologics Inc.,BLA761406,crohn's disease,openFDA,2026-05-24T03:45:04.663965
+crohn's disease,Orapred ODT,PREDNISOLONE SODIUM PHOSPHATE,Advanz Pharma (US) Corp.,NDA021959,crohn's disease,openFDA,2026-05-24T03:45:04.663968
+crohn's disease,TREMFYA,GUSELKUMAB,"Janssen Biotech, Inc.",BLA761061,crohn's disease,openFDA,2026-05-24T03:45:04.663970
+crohn's disease,ustekinumab,USTEKINUMAB,"Janssen Biotech, Inc.",BLA125261,crohn's disease,openFDA,2026-05-24T03:45:04.663973
+crohn's disease,Adalimumab-aacf,ADALIMUMAB,"Fresenius Kabi USA, LLC",BLA761255,crohn's disease,openFDA,2026-05-24T03:45:04.663974
+crohn's disease,budesonide,BUDESONIDE,"Golden State Medical Supply, Inc.",NDA021324,crohn's disease,openFDA,2026-05-24T03:45:04.663977
+crohn's disease,USTEKINUMAB-TTWE,USTEKINUMAB-TTWE,Quallent Pharmaceuticals Health LLC,BLA761373,crohn's disease,openFDA,2026-05-24T03:45:04.663982
+crohn's disease,INFLECTRA,INFLIXIMAB-DYYB,Pfizer Laboratories Div Pfizer Inc,BLA125544,crohn's disease,openFDA,2026-05-24T03:45:04.663986
+crohn's disease,Idacio,ADALIMUMAB-AACF,"Fresenius Kabi USA, LLC",BLA761255,crohn's disease,openFDA,2026-05-24T03:45:04.663991
+crohn's disease,Omvoh,MIRIKIZUMAB-MRKZ,Eli Lilly and Company,BLA761279,crohn's disease,openFDA,2026-05-24T03:45:04.663994
+crohn's disease,Budesonide,BUDESONIDE,Bryant Ranch Prepack,ANDA206200,crohn's disease,openFDA,2026-05-24T03:45:04.663996
+crohn's disease,YUSIMRY,ADALIMUMAB-AQVH,Meitheal Pharmaceuticals Inc.,BLA761216,crohn's disease,openFDA,2026-05-24T03:45:04.664000
+crohn's disease,Yuflyma,ADALIMUMAB-AATY,"CELLTRION USA, Inc.",BLA761219,crohn's disease,openFDA,2026-05-24T03:45:04.664001
+crohn's disease,ABRILADA,ADALIMUMAB-AFZB,Pfizer Laboratories Div Pfizer Inc,BLA761118,crohn's disease,openFDA,2026-05-24T03:45:04.664007
+crohn's disease,Adalimumab-adbm,ADALIMUMAB-ADBM,"Boehringer Ingelheim Pharmaceuticals, Inc.",BLA761058,crohn's disease,openFDA,2026-05-24T03:45:04.664008
+crohn's disease,STEQEYMA,USTEKINUMAB-STBA,"CELLTRION USA, Inc.",BLA761338,crohn's disease,openFDA,2026-05-24T03:45:04.664010
+crohn's disease,ENTYVIO,VEDOLIZUMAB,"Takeda Pharmaceuticals America, Inc.",BLA761133,crohn's disease,openFDA,2026-05-24T03:45:04.664012
+crohn's disease,Skyrizi,RISANKIZUMAB-RZAA,AbbVie Inc.,BLA761105,crohn's disease,openFDA,2026-05-24T03:45:04.664015
+crohn's disease,Otulfi,USTEKINUMAB-AAUZ,"Fresenius Kabi USA, LLC",BLA761379,crohn's disease,openFDA,2026-05-24T03:45:04.664018
+crohn's disease,ZYMFENTRA,INFLIXIMAB-DYYB,CELLTRION USA Inc.,BLA761358,crohn's disease,openFDA,2026-05-24T03:45:04.664020
+crohn's disease,AMJEVITA,ADALIMUMAB-ATTO,"Amgen, Inc",BLA761024,crohn's disease,openFDA,2026-05-24T03:45:04.664022
+crohn's disease,REMICADE,INFLIXIMAB,"Janssen Biotech, Inc.",BLA103772,crohn's disease,openFDA,2026-05-24T03:45:04.664024
+crohn's disease,WEZLANA,USTEKINUMAB-AUUB,Nuvaila Limited,BLA761285,crohn's disease,openFDA,2026-05-24T03:45:04.664026
+crohn's disease,USTEKINUMAB-AAUZ,USTEKINUMAB-AAUZ,"Fresenius Kabi USA, LLC",BLA761379,crohn's disease,openFDA,2026-05-24T03:45:04.664027
+crohn's disease,INFLIXIMAB,INFLIXIMAB,"Janssen Biotech, Inc.",BLA103772,crohn's disease,openFDA,2026-05-24T03:45:04.664029
+crohn's disease,Cimzia,CERTOLIZUMAB PEGOL,"UCB, Inc.",BLA125160,crohn's disease,openFDA,2026-05-24T03:45:04.664031
+crohn's disease,Adalimumab,ADALIMUMAB-AATY,"CELLTRION USA, Inc.",BLA761219,crohn's disease,openFDA,2026-05-24T03:45:04.664034
+crohn's disease,TYSABRI,NATALIZUMAB,Biogen Inc.,BLA125104,crohn's disease,openFDA,2026-05-24T03:45:04.664035
+crohn's disease,Stelara,USTEKINUMAB,"Janssen Biotech, Inc.",BLA761044,crohn's disease,openFDA,2026-05-24T03:45:04.664036
+crohn's disease,Renflexis,INFLIXIMAB,Organon LLC,BLA761054,crohn's disease,openFDA,2026-05-24T03:45:04.664040
+crohn's disease,AVSOLA,INFLIXIMAB-AXXQ,"Amgen, Inc",BLA761086,crohn's disease,openFDA,2026-05-24T03:45:04.664041
+crohn's disease,PYZCHIVA,USTEKINUMAB-TTWE,SANDOZ INC,BLA761373,crohn's disease,openFDA,2026-05-24T03:45:04.664044
+crohn's disease,prednisolone sodium phosphate ODT,PREDNISOLONE SODIUM PHOSPHATE,"Ingenus Pharmaceuticals, LLC",NDA021959,crohn's disease,openFDA,2026-05-24T03:45:04.664045
+crohn's disease,TYRUKO,NATALIZUMAB-SZTN,Sandoz Inc,BLA761322,crohn's disease,openFDA,2026-05-24T03:45:04.664047
+psoriasis,anti itch,HYDROCORTISONE,"Meijer, Inc.",M017,psoriasis,openFDA,2026-05-24T03:45:07.443106
+psoriasis,PredniSONE,PREDNISONE,A-S Medication Solutions,ANDA080352,psoriasis,openFDA,2026-05-24T03:45:07.443123
+psoriasis,Prednisone,PREDNISONE,Bryant Ranch Prepack,ANDA040584,psoriasis,openFDA,2026-05-24T03:45:07.443126
+psoriasis,"PS-2896 Hydrocortisone Cream 1%, 0.9g","PS-2896 HYDROCORTISONE CREAM 1%, 0.9G",ProStat First Aid LLC,M032,psoriasis,openFDA,2026-05-24T03:45:07.443128
+psoriasis,hydrocortisone,HYDROCORTISONE,Padagis Israel Pharmaceuticals Ltd,M017,psoriasis,openFDA,2026-05-24T03:45:07.443132
+psoriasis,TheraCare Hydrocortisone Cream,HYDROCORTISONE,Veridian Healthcare,M017,psoriasis,openFDA,2026-05-24T03:45:07.443135
+psoriasis,Cortizone 10 Fast Acting Itch Relief Cooling,HYDROCORTISONE,"Chattem, Inc.",M017,psoriasis,openFDA,2026-05-24T03:45:07.443136
+psoriasis,MethylPREDNISolone,METHYLPREDNISOLONE,Bryant Ranch Prepack,ANDA040183,psoriasis,openFDA,2026-05-24T03:45:07.443137
+psoriasis,TAZORAC,TAZAROTENE,"Almirall, LLC",NDA021184,psoriasis,openFDA,2026-05-24T03:45:07.443139
+psoriasis,Dexamethasone Sodium Phosphate,DEXAMETHASONE SODIUM PHOSPHATE,Hikma Pharmaceuticals USA Inc.,ANDA087702,psoriasis,openFDA,2026-05-24T03:45:07.443141
+psoriasis,Tazarotene,TAZAROTENE,Mayne Pharma,ANDA208662,psoriasis,openFDA,2026-05-24T03:45:07.443144
+psoriasis,DEXAMETHASONE,DEXAMETHASONE,Kanchan Healthcare Inc,ANDA084754,psoriasis,openFDA,2026-05-24T03:45:07.443147
+psoriasis,Hydrocortisone,ANTI ITCH,NeilMed Pharmaceuticals Inc,M017,psoriasis,openFDA,2026-05-24T03:45:07.443150
+psoriasis,prednisone,PREDNISONE,Amneal Pharmaceuticals NY LLC,ANDA213386,psoriasis,openFDA,2026-05-24T03:45:07.443151
+psoriasis,Hydrocortisone with aloe,HYDROCORTISONE WITH ALOE ANTI ITCH,NeilMed Pharmaceuticals Inc.,M017,psoriasis,openFDA,2026-05-24T03:45:07.443153
+psoriasis,Shopko Hydrocortisone Maximum Strength,HYDROCORTISONE,"Shopko Stores Operating Co., LLC",M017,psoriasis,openFDA,2026-05-24T03:45:07.443158
+psoriasis,Live Better Hydrocortisone with Aloe,HYDROCORTISONE,The Great Atlantic & Pacific Tea Company,M017,psoriasis,openFDA,2026-05-24T03:45:07.443159
+psoriasis,"amazon basics therapeutic tar gel anti-dandruff Extra Strength Anti-dandruff, anti-seborrheic dermatitis, anti-psoriasis",COAL TAR,AMAZON.COM SERVICES LLC,M032,psoriasis,openFDA,2026-05-24T03:45:07.443161
+psoriasis,METHOTREXATE,METHOTREXATE,Alembic Pharmaceuticals Inc.,ANDA217552,psoriasis,openFDA,2026-05-24T03:45:07.443163
+psoriasis,Clobetasol Propionate,CLOBETASOL PROPIONATE,"Sun Pharmaceutical Industries, Inc.",ANDA214867,psoriasis,openFDA,2026-05-24T03:45:07.443165
+psoriasis,Ustekinumab-aekn,USTEKINUMAB-AEKN,"Teva Pharmaceuticals USA, Inc.",BLA761343,psoriasis,openFDA,2026-05-24T03:45:07.443166
+psoriasis,Hydrocortisone Plus 12 Moisturizers,HYDROCORTISONE,RITE AID CORPORATION,M017,psoriasis,openFDA,2026-05-24T03:45:07.443167
+psoriasis,RevitaDERM PSORIASIS,COAL TAR,Blaine Labs Inc.,M032,psoriasis,openFDA,2026-05-24T03:45:07.443171
+psoriasis,equaline anti itch maximum strength,HYDROCORTISONE,"United Natural Foods, Inc. dba UNFI",M017,psoriasis,openFDA,2026-05-24T03:45:07.443173
+psoriasis,"TopCare Therapeutic Anti-Dandruff Anti-dandruff, anti-seborrheic dermatitis, anti-psoriasis",COAL TAR,Topco Associates LLC,M032,psoriasis,openFDA,2026-05-24T03:45:07.443175
+psoriasis,PREDNISOLONE,PREDNISOLONE,Aurobindo Pharma Limited,ANDA215673,psoriasis,openFDA,2026-05-24T03:45:07.443176
+psoriasis,good sense anti itch,HYDROCORTISONE,A-S Medication Solutions,M017,psoriasis,openFDA,2026-05-24T03:45:07.443178
+psoriasis,Freds Hydrocortisone with Aloe,HYDROCORTISONE,"FRED'S, INC.",M017,psoriasis,openFDA,2026-05-24T03:45:07.443182
+psoriasis,Medicasp Anti-Dandruff,COAL TAR,Genomma Lab USA,M032,psoriasis,openFDA,2026-05-24T03:45:07.443184
+psoriasis,ACITRETIN,ACITRETIN,Bryant Ranch Prepack,ANDA204633,psoriasis,openFDA,2026-05-24T03:45:07.443191
+psoriasis,IDACIO,ADALIMUMAB-AACF,"Fresenius Kabi USA, LLC",BLA761255,psoriasis,openFDA,2026-05-24T03:45:07.443192
+psoriasis,Urea Cream 40 Percent,UREA,"Method Pharmaceuticals, LLC",,psoriasis,openFDA,2026-05-24T03:45:07.443194
+psoriasis,Fluocinolone acetonide,FLUOCINOLONE ACETONIDE,A-S Medication Solutions,ANDA202848,psoriasis,openFDA,2026-05-24T03:45:07.443196
+psoriasis,HAIRCARE Physicians Recommended,SALICYLIC ACID,LAWRENCE E SAMUELS MD INC,M032,psoriasis,openFDA,2026-05-24T03:45:07.443197
+psoriasis,Cortisone 10 Intensive Moisture Creme,HYDROCORTISONE,"Chattem, Inc.",M017,psoriasis,openFDA,2026-05-24T03:45:07.443198
+psoriasis,Evara,UREA 40.5 CREAM,"Oncora Pharma, LLC",,psoriasis,openFDA,2026-05-24T03:45:07.443199
+psoriasis,Methotrexate,METHOTREXATE,Aurobindo Pharma Limited,ANDA210454,psoriasis,openFDA,2026-05-24T03:45:07.443201
+psoriasis,PREDNISONE,PREDNISONE,REMEDYREPACK INC.,ANDA215672,psoriasis,openFDA,2026-05-24T03:45:07.443202
+psoriasis,Acitretin,ACITRETIN,Alembic Pharmaceuticals Inc.,ANDA217774,psoriasis,openFDA,2026-05-24T03:45:07.443204
+psoriasis,Betaloan SUIK,BETAMETHASONE SODIUM PHOSPHATE AND BETAMETHASONE ACETATE,"Advanced Rx Pharmacy of Tennessee, LLC",,psoriatic,openFDA,2026-05-24T03:45:09.990464
+psoriasis,Prednisone delayed release,PREDNISONE,Dr. Reddys Laboratories Inc.,ANDA219477,psoriatic,openFDA,2026-05-24T03:45:09.990468
+psoriasis,Dyural 40 Kit,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, SODIUM CHLORIDE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,psoriatic,openFDA,2026-05-24T03:45:09.990470
+psoriasis,Dyural 80 Kit,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, SODIUM CHLORIDE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,psoriatic,openFDA,2026-05-24T03:45:09.990472
+psoriasis,Dyural 80-LM,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,psoriatic,openFDA,2026-05-24T03:45:09.990473
+psoriasis,Bupivilog Kit,"MARCAINE, KENALOG, POVIDONE IODINE","Advanced Rx of Tennessee, LLC",,psoriatic,openFDA,2026-05-24T03:45:09.990475
+psoriasis,Dexamethasone,DEXAMETHASONE,"Advanced Rx Pharmacy of Tennessee, LLC",ANDA201270,psoriatic,openFDA,2026-05-24T03:45:09.990477
+psoriasis,Triamcinolone Acetonide,TRIAMCINOLONE ACETONIDE,Alembic Pharmaceuticals Inc.,ANDA218601,psoriatic,openFDA,2026-05-24T03:45:09.990495
+psoriasis,Methylprednisolone Sodium Succinate,METHYLPREDNISOLONE SODIUM SUCCINATE,Hikma Pharmaceuticals USA Inc.,ANDA203125,psoriatic,openFDA,2026-05-24T03:45:09.990499
+psoriasis,Lidolog Kit,"LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,psoriatic,openFDA,2026-05-24T03:45:09.990503
+psoriasis,ORENCIA,ABATACEPT,"E.R. Squibb & Sons, L.L.C.",BLA125118,psoriatic,openFDA,2026-05-24T03:45:09.990516
+psoriasis,MLK Kit F2,"MARCAINE, LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,psoriatic,openFDA,2026-05-24T03:45:09.990519
+psoriasis,HYDROCORTISONE,HYDROCORTISONE,Preferred Pharmaceuticals Inc.,ANDA040646,psoriatic,openFDA,2026-05-24T03:45:09.990530
+psoriasis,KENALOG-40,TRIAMCINOLONE ACETONIDE,"Asclemed USA, Inc.",NDA014901,psoriatic,openFDA,2026-05-24T03:45:09.990531
+psoriasis,MLK F1 Kit,"MARCAINE, LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,psoriatic,openFDA,2026-05-24T03:45:09.990533
+psoriasis,Physician EZ Use Joint Tunnel and Trigger Kit II,"LIDOCAINE HYDROCHLORIDE, TRIAMCINOLONE ACETONIDE, POVIDONE-IODINE","Asclemed USA, Inc.",,psoriatic,openFDA,2026-05-24T03:45:09.990536
+psoriasis,Hydrocortisone,HYDROCORTISONE,"ANI Pharmaceuticals, Inc.",ANDA217881,psoriatic,openFDA,2026-05-24T03:45:09.990537
+ulcerative colitis,PredniSONE,PREDNISONE,A-S Medication Solutions,ANDA080352,ulcerative colitis,openFDA,2026-05-24T03:45:12.134966
+ulcerative colitis,Prednisone,PREDNISONE,Bryant Ranch Prepack,ANDA040584,ulcerative colitis,openFDA,2026-05-24T03:45:12.134980
+ulcerative colitis,Mesalamine,MESALAMINE,Amneal Pharmaceuticals LLC,ANDA215067,ulcerative colitis,openFDA,2026-05-24T03:45:12.134984
+ulcerative colitis,Betaloan SUIK,BETAMETHASONE SODIUM PHOSPHATE AND BETAMETHASONE ACETATE,"Advanced Rx Pharmacy of Tennessee, LLC",,ulcerative colitis,openFDA,2026-05-24T03:45:12.134986
+ulcerative colitis,Prednisone delayed release,PREDNISONE,Dr. Reddys Laboratories Inc.,ANDA219477,ulcerative colitis,openFDA,2026-05-24T03:45:12.134990
+ulcerative colitis,Dyural 40 Kit,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, SODIUM CHLORIDE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,ulcerative colitis,openFDA,2026-05-24T03:45:12.134991
+ulcerative colitis,Dyural 80 Kit,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, SODIUM CHLORIDE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,ulcerative colitis,openFDA,2026-05-24T03:45:12.134993
+ulcerative colitis,Dyural 80-LM,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,ulcerative colitis,openFDA,2026-05-24T03:45:12.134995
+ulcerative colitis,Bupivilog Kit,"MARCAINE, KENALOG, POVIDONE IODINE","Advanced Rx of Tennessee, LLC",,ulcerative colitis,openFDA,2026-05-24T03:45:12.134997
+ulcerative colitis,Dexamethasone,DEXAMETHASONE,"Advanced Rx Pharmacy of Tennessee, LLC",ANDA201270,ulcerative colitis,openFDA,2026-05-24T03:45:12.134999
+ulcerative colitis,MethylPREDNISolone,METHYLPREDNISOLONE,Bryant Ranch Prepack,ANDA040183,ulcerative colitis,openFDA,2026-05-24T03:45:12.135000
+ulcerative colitis,PHYTONADIONE PHYTONADIONE,PHYTONADIONE,Dr.Reddy's Laboratories Inc,ANDA207719,ulcerative colitis,openFDA,2026-05-24T03:45:12.135002
+ulcerative colitis,Dexamethasone Sodium Phosphate,DEXAMETHASONE SODIUM PHOSPHATE,Hikma Pharmaceuticals USA Inc.,ANDA087702,ulcerative colitis,openFDA,2026-05-24T03:45:12.135004
+ulcerative colitis,Sulfasalazine,SULFASALAZINE,"Chartwell RX, LLC.",ANDA080197,ulcerative colitis,openFDA,2026-05-24T03:45:12.135006
+ulcerative colitis,Balsalazide Disodium,BALSALAZIDE DISODIUM,"Golden State Medical Supply, Inc.",ANDA077806,ulcerative colitis,openFDA,2026-05-24T03:45:12.135008
+ulcerative colitis,Phytonadione,PHYTONADIONE,"Fresenius Kabi USA, LLC",ANDA219212,ulcerative colitis,openFDA,2026-05-24T03:45:12.135010
+ulcerative colitis,DEXAMETHASONE,DEXAMETHASONE,Kanchan Healthcare Inc,ANDA084754,ulcerative colitis,openFDA,2026-05-24T03:45:12.135014
+ulcerative colitis,prednisone,PREDNISONE,Amneal Pharmaceuticals NY LLC,ANDA213386,ulcerative colitis,openFDA,2026-05-24T03:45:12.135016
+ulcerative colitis,Hydrocortisone Acetate,HYDROCORTISONE ACETATE,A-S Medication Solutions,,ulcerative colitis,openFDA,2026-05-24T03:45:12.135017
+ulcerative colitis,Ustekinumab-aekn,USTEKINUMAB-AEKN,"Teva Pharmaceuticals USA, Inc.",BLA761343,ulcerative colitis,openFDA,2026-05-24T03:45:12.135032
+ulcerative colitis,Triamcinolone Acetonide,TRIAMCINOLONE ACETONIDE,Alembic Pharmaceuticals Inc.,ANDA218601,ulcerative colitis,openFDA,2026-05-24T03:45:12.135036
+ulcerative colitis,Methylprednisolone Sodium Succinate,METHYLPREDNISOLONE SODIUM SUCCINATE,Hikma Pharmaceuticals USA Inc.,ANDA203125,ulcerative colitis,openFDA,2026-05-24T03:45:12.135040
+ulcerative colitis,MESALAMINE,MESALAMINE,Bryant Ranch Prepack,ANDA217337,ulcerative colitis,openFDA,2026-05-24T03:45:12.135044
+ulcerative colitis,Lidolog Kit,"LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,ulcerative colitis,openFDA,2026-05-24T03:45:12.135046
+ulcerative colitis,PREDNISOLONE,PREDNISOLONE,Aurobindo Pharma Limited,ANDA215673,ulcerative colitis,openFDA,2026-05-24T03:45:12.135050
+ulcerative colitis,MLK Kit F2,"MARCAINE, LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,ulcerative colitis,openFDA,2026-05-24T03:45:12.135065
+ulcerative colitis,IDACIO,ADALIMUMAB-AACF,"Fresenius Kabi USA, LLC",BLA761255,ulcerative colitis,openFDA,2026-05-24T03:45:12.135066
+ulcerative colitis,PREDNISONE,PREDNISONE,REMEDYREPACK INC.,ANDA215672,ulcerative colitis,openFDA,2026-05-24T03:45:12.135069
+ulcerative colitis,HYDROCORTISONE,HYDROCORTISONE,Preferred Pharmaceuticals Inc.,ANDA040646,ulcerative colitis,openFDA,2026-05-24T03:45:12.135076
+ulcerative colitis,KENALOG-40,TRIAMCINOLONE ACETONIDE,"Asclemed USA, Inc.",NDA014901,ulcerative colitis,openFDA,2026-05-24T03:45:12.135078
+ulcerative colitis,MLK F1 Kit,"MARCAINE, LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,ulcerative colitis,openFDA,2026-05-24T03:45:12.135079
+ulcerative colitis,Physician EZ Use Joint Tunnel and Trigger Kit II,"LIDOCAINE HYDROCHLORIDE, TRIAMCINOLONE ACETONIDE, POVIDONE-IODINE","Asclemed USA, Inc.",,ulcerative colitis,openFDA,2026-05-24T03:45:12.135081
+ulcerative colitis,tofacitinib,TOFACITINIB,Zydus Pharmaceuticals USA Inc.,ANDA214264,UC,openFDA,2026-05-24T03:45:15.832664
+ulcerative colitis,ustekinumab,USTEKINUMAB,"Janssen Biotech, Inc.",BLA125261,UC,openFDA,2026-05-24T03:45:15.832667
+ulcerative colitis,Adalimumab-aacf,ADALIMUMAB,"Fresenius Kabi USA, LLC",BLA761255,UC,openFDA,2026-05-24T03:45:15.832669
+ulcerative colitis,Rinvoq,UPADACITINIB,AbbVie Inc.,NDA211675,UC,openFDA,2026-05-24T03:45:15.832671
+ulcerative colitis,INFLECTRA,INFLIXIMAB-DYYB,Pfizer Laboratories Div Pfizer Inc,BLA125544,UC,openFDA,2026-05-24T03:45:15.832673
+ulcerative colitis,Idacio,ADALIMUMAB-AACF,"Fresenius Kabi USA, LLC",BLA761255,UC,openFDA,2026-05-24T03:45:15.832674
+ulcerative colitis,BAVENCIO,AVELUMAB,"EMD Serono, Inc.",BLA761049,UC,openFDA,2026-05-24T03:45:15.832676
+ulcerative colitis,Adalimumab,ADALIMUMAB-FKJP,Biocon Biologics Inc,BLA761154,UC,openFDA,2026-05-24T03:45:15.832678
+ulcerative colitis,Velsipity,ETRASIMOD,Pfizer Laboratories Div Pfizer Inc,NDA216956,UC,openFDA,2026-05-24T03:45:15.832679
+ulcerative colitis,HULIO,ADALIMUMAB-FKJP,Biocon Biologics Inc,BLA761154,UC,openFDA,2026-05-24T03:45:15.832680
+ulcerative colitis,XELJANZ,TOFACITINIB,U.S. Pharmaceuticals,NDA203214,UC,openFDA,2026-05-24T03:45:15.832681
+ulcerative colitis,ENTYVIO,VEDOLIZUMAB,"Takeda Pharmaceuticals America, Inc.",BLA761133,UC,openFDA,2026-05-24T03:45:15.832683
+ulcerative colitis,HADLIMA,ADALIMUMAB-BWWD,A-S Medication Solutions,BLA761059,UC,openFDA,2026-05-24T03:45:15.832685
+ulcerative colitis,OPDIVO QVANTIG,NIVOLUMAB AND HYALURONIDASE-NVHY,"E.R. Squibb & Sons, L.L.C.",BLA761381,UC,openFDA,2026-05-24T03:45:15.832687
+ulcerative colitis,ZEPOSIA 7-Day Starter Pack,OZANIMOD HYDROCHLORIDE,Celgene Corporation,NDA209899,UC,openFDA,2026-05-24T03:45:15.832688
+ulcerative colitis,HUMIRA,ADALIMUMAB,A-S Medication Solutions,BLA125057,UC,openFDA,2026-05-24T03:45:15.832690
+ulcerative colitis,REMICADE,INFLIXIMAB,"Janssen Biotech, Inc.",BLA103772,UC,openFDA,2026-05-24T03:45:15.832691
+ulcerative colitis,INFLIXIMAB,INFLIXIMAB,"Janssen Biotech, Inc.",BLA103772,UC,openFDA,2026-05-24T03:45:15.832692
+ulcerative colitis,Simlandi,ADALIMUMAB-RYVK,A-S Medication Solutions,BLA761299,UC,openFDA,2026-05-24T03:45:15.832694
+ulcerative colitis,Stelara,USTEKINUMAB,"Janssen Biotech, Inc.",BLA761044,UC,openFDA,2026-05-24T03:45:15.832695
+ulcerative colitis,YUSIMRY,ADALIMUMAB-AQVH,Coherus BioSciences Inc,BLA761216,UC,openFDA,2026-05-24T03:45:15.832696
+ulcerative colitis,XELJANZ XR,TOFACITINIB,Pfizer Laboratories Div Pfizer Inc,NDA208246,UC,openFDA,2026-05-24T03:45:15.832697
+ulcerative colitis,Renflexis,INFLIXIMAB,Organon LLC,BLA761054,UC,openFDA,2026-05-24T03:45:15.832699
+ulcerative colitis,AVSOLA,INFLIXIMAB-AXXQ,"Amgen, Inc",BLA761086,UC,openFDA,2026-05-24T03:45:15.832701
+ulcerative colitis,Simponi,GOLIMUMAB,"Janssen Biotech, Inc.",BLA125289,UC,openFDA,2026-05-24T03:45:15.832705
+ankylosing spondylitis,Naproxen,NAPROXEN,A-S Medication Solutions,ANDA078250,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585500
+ankylosing spondylitis,PredniSONE,PREDNISONE,A-S Medication Solutions,ANDA080352,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585521
+ankylosing spondylitis,Prednisone,PREDNISONE,Bryant Ranch Prepack,ANDA040584,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585523
+ankylosing spondylitis,Indomethacin,INDOMETHACIN,"PD-Rx Pharmaceuticals, Inc.",ANDA091276,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585527
+ankylosing spondylitis,CELECOXIB,CELECOXIB,A-S Medication Solutions,ANDA204776,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585530
+ankylosing spondylitis,Betaloan SUIK,BETAMETHASONE SODIUM PHOSPHATE AND BETAMETHASONE ACETATE,"Advanced Rx Pharmacy of Tennessee, LLC",,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585534
+ankylosing spondylitis,Prednisone delayed release,PREDNISONE,Dr. Reddys Laboratories Inc.,ANDA219477,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585539
+ankylosing spondylitis,Dyural 40 Kit,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, SODIUM CHLORIDE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585542
+ankylosing spondylitis,Dyural 80 Kit,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, SODIUM CHLORIDE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585544
+ankylosing spondylitis,Dyural 80-LM,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585546
+ankylosing spondylitis,Bupivilog Kit,"MARCAINE, KENALOG, POVIDONE IODINE","Advanced Rx of Tennessee, LLC",,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585547
+ankylosing spondylitis,Dexamethasone,DEXAMETHASONE,"Advanced Rx Pharmacy of Tennessee, LLC",ANDA201270,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585549
+ankylosing spondylitis,Penicillamine,PENICILLAMINE,"Endo USA, Inc.",ANDA211231,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585551
+ankylosing spondylitis,MethylPREDNISolone,METHYLPREDNISOLONE,Bryant Ranch Prepack,ANDA040183,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585552
+ankylosing spondylitis,Dexamethasone Sodium Phosphate,DEXAMETHASONE SODIUM PHOSPHATE,Hikma Pharmaceuticals USA Inc.,ANDA087702,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585555
+ankylosing spondylitis,DEXAMETHASONE,DEXAMETHASONE,Kanchan Healthcare Inc,ANDA084754,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585562
+ankylosing spondylitis,prednisone,PREDNISONE,Amneal Pharmaceuticals NY LLC,ANDA213386,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585564
+ankylosing spondylitis,Diclofenac Sodium,DICLOFENAC SODIUM,Bryant Ranch Prepack,ANDA216548,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585568
+ankylosing spondylitis,Celecoxib,CELECOXIB,"Actavis Pharma, Inc.",ANDA200562,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585572
+ankylosing spondylitis,Triamcinolone Acetonide,TRIAMCINOLONE ACETONIDE,Alembic Pharmaceuticals Inc.,ANDA218601,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585578
+ankylosing spondylitis,Methylprednisolone Sodium Succinate,METHYLPREDNISOLONE SODIUM SUCCINATE,Hikma Pharmaceuticals USA Inc.,ANDA203125,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585583
+ankylosing spondylitis,Lidolog Kit,"LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585590
+ankylosing spondylitis,PREDNISOLONE,PREDNISOLONE,Aurobindo Pharma Limited,ANDA215673,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585595
+ankylosing spondylitis,MLK Kit F2,"MARCAINE, LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585608
+ankylosing spondylitis,IDACIO,ADALIMUMAB-AACF,"Fresenius Kabi USA, LLC",BLA761255,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585611
+ankylosing spondylitis,celecoxib,CELECOXIB,ASCLEMED USA INC.,ANDA204590,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585613
+ankylosing spondylitis,PREDNISONE,PREDNISONE,REMEDYREPACK INC.,ANDA215672,ankylosing spondylitis,openFDA,2026-05-24T03:45:18.585615
+ankylosing spondylitis,SILICEA,SILICEA,"Rxhomeo Private Limited d.b.a. Rxhomeo, Inc",,AS,openFDA,2026-05-24T03:45:21.200554
+ankylosing spondylitis,Mekinist,TRAMETINIB,Novartis Pharmaceuticals Corporation,NDA204114,AS,openFDA,2026-05-24T03:45:21.200568
+ankylosing spondylitis,Glimepiride,GLIMEPIRIDE,American Health Packaging,ANDA077091,AS,openFDA,2026-05-24T03:45:21.200571
+ankylosing spondylitis,Methocarbamol,METHOCARBAMOL,Proficient Rx LP,ANDA086988,AS,openFDA,2026-05-24T03:45:21.200574
+ankylosing spondylitis,Varenicline,VARENICLINE,Aurobindo Pharma Limited,ANDA214595,AS,openFDA,2026-05-24T03:45:21.200577
+ankylosing spondylitis,OASIS Tears Lubricant Eye,GLYCERIN,"OASIS Medical, Inc.",M018,AS,openFDA,2026-05-24T03:45:21.200579
+ankylosing spondylitis,Sertraline Hydrochloride,SERTRALINE HYDROCHLORIDE,Proficient Rx LP,ANDA077397,AS,openFDA,2026-05-24T03:45:21.200583
+ankylosing spondylitis,FOREVER SKIN GLOW 24h wear radiant foundation Perfection and hydration Concentrated floral skincare with suncreen Broad spectrum SPF 15 00,"OCTISALATE, TITANIUM DIOXIDE",Parfums Christian Dior,M020,AS,openFDA,2026-05-24T03:45:21.200584
+ankylosing spondylitis,Foster and Thrive Advanced Relief Eye Drops,"POLYETHYLENE GLYCOL 400, TETRAHYDROZOLINE HCL",Strategic Sourcing Services LLC,M018,AS,openFDA,2026-05-24T03:45:21.200587
+ankylosing spondylitis,Fludrocortisone Acetate,FLUDROCORTISONE ACETATE,American Health Packaging,ANDA040431,AS,openFDA,2026-05-24T03:45:21.200591
+ankylosing spondylitis,LACOSAMIDE,LACOSAMIDE,"Somerset Therapeutics, LLC",ANDA214960,AS,openFDA,2026-05-24T03:45:21.200593
+ankylosing spondylitis,Leader Earwax Removal Drops Earwax Removal Aid,CARBAMIDE PEROXIDE,"Cardinal Health, Inc.",M014,AS,openFDA,2026-05-24T03:45:21.200595
+ankylosing spondylitis,Amphetamine Sulfate,AMPHETAMINE SULFATE,SpecGx LLC,ANDA213583,AS,openFDA,2026-05-24T03:45:21.200596
+ankylosing spondylitis,Olay Regenerist Regenerating with Sunscreen Broad Spectrum SPF 15,"AVOBENZONE, HOMOSALATE, OCTISALATE, AND OCTOCRYLENE",The Procter & Gamble Manufacturing Company,M020,AS,openFDA,2026-05-24T03:45:21.200599
+ankylosing spondylitis,Nu Skin Sunright Lip Balm Broad Spectrum SPF 15,"OCTINOXATE, AVOBENZONE, AND OCTOCRYLENE","NSE Products, Inc",M020,AS,openFDA,2026-05-24T03:45:21.200601
+ankylosing spondylitis,Equate Honey Lemon Cough Drops,MENTHOL,WalMart,M012,AS,openFDA,2026-05-24T03:45:21.200602
+ankylosing spondylitis,Eminence Radiant Protection SPF Fluid,ZINC OXIDE,Eminence Organic Skin Care,M020,AS,openFDA,2026-05-24T03:45:21.200603
+ankylosing spondylitis,Olanzapine,OLANZAPINE,"Lannett Company, Inc.",ANDA208146,AS,openFDA,2026-05-24T03:45:21.200605
+ankylosing spondylitis,Neutrogena Mineral Invisible Daily Defense Face Sunscreen Broad Spectrum SPF 30,"TITANIUM DIOXIDE, ZINC OXIDE",Kenvue Brands LLC,M020,AS,openFDA,2026-05-24T03:45:21.200607
+ankylosing spondylitis,Azithromycin,AZITHROMYCIN,Preferred Pharmaceuticals Inc.,ANDA207398,AS,openFDA,2026-05-24T03:45:21.200610
+ankylosing spondylitis,Divalproex Sodium,DIVALPROEX SODIUM,Mylan Pharmaceuticals Inc.,ANDA077567,AS,openFDA,2026-05-24T03:45:21.200611
+ankylosing spondylitis,Metoclopramide,METOCLOPRAMIDE,American Health Packaging,ANDA071402,AS,openFDA,2026-05-24T03:45:21.200613
+ankylosing spondylitis,Lamotrigine,LAMOTRIGINE,"Par Health USA, LLC",ANDA204158,AS,openFDA,2026-05-24T03:45:21.200615
+ankylosing spondylitis,Cisplatin,CISPLATIN,Sagent Pharmaceuticals,ANDA207323,AS,openFDA,2026-05-24T03:45:21.200617
+ankylosing spondylitis,Equate SF Menthol Cough Drops,MENTHOL,WalMart,M012,AS,openFDA,2026-05-24T03:45:21.200618
+ankylosing spondylitis,Amlodipine Besylate,AMLODIPINE BESYLATE,"Lupin Pharmaceuticals, Inc.",ANDA078043,AS,openFDA,2026-05-24T03:45:21.200620
+ankylosing spondylitis,Private Label Moisturizing Oil Free Paraben Free SPF43,SUNSCREEN,"Swiss-American CDMO, LLC",M020,AS,openFDA,2026-05-24T03:45:21.200622
+ankylosing spondylitis,Foster and Thrive Redness Relief Eye Drops,"GLYCERIN, NAPHAZOLINE HCL",Strategic Sourcing Services LLC,M018,AS,openFDA,2026-05-24T03:45:21.200624
+ankylosing spondylitis,Ketorolac Tromethamine,KETOROLAC TROMETHAMINE,"Asclemed USA, Inc.",ANDA074802,AS,openFDA,2026-05-24T03:45:21.200625
+ankylosing spondylitis,Dipyridamole,DIPYRIDAMOLE,Zydus Pharmaceuticals USA Inc.,ANDA040874,AS,openFDA,2026-05-24T03:45:21.200627
+ankylosing spondylitis,Rompe Pechito DM for Kids,"DEXTROMETHORPHAN HBR, GUAIFENESIN",Efficient Laboratories Inc,M012,AS,openFDA,2026-05-24T03:45:21.200629
+ankylosing spondylitis,buPropion Hydrochloride XL,BUPROPION HYDROCHLORIDE,Oryza pharmaceuticals Inc.,ANDA211200,AS,openFDA,2026-05-24T03:45:21.200630
+ankylosing spondylitis,TRAMADOL HYDROCHLORIDE,TRAMADOL HYDROCHLORIDE,"Sun Pharmaceutical Industries, Inc.",ANDA201384,AS,openFDA,2026-05-24T03:45:21.200633
+ankylosing spondylitis,Lorbrena,LORLATINIB,U.S. Pharmaceuticals,NDA210868,AS,openFDA,2026-05-24T03:45:21.200634
+ankylosing spondylitis,Allopurinol,ALLOPURINOL,Bryant Ranch Prepack,ANDA075798,AS,openFDA,2026-05-24T03:45:21.200636
+ankylosing spondylitis,Gas Relief Ultra Strength,SIMETHICONE,Walgreens,M002,AS,openFDA,2026-05-24T03:45:21.200637
+ankylosing spondylitis,KIZO LAB UV DEFENSE CLEAR SUNSCREN SPF50,"AVOBENZONE,HOMOSALATE,OCTISALATE,OCTOCRYLENE",YB CHEMIA LLC,M020,AS,openFDA,2026-05-24T03:45:21.200639
+ankylosing spondylitis,Low Dose Aspirin,ASPIRIN,"P & L Development, LLC",M013,AS,openFDA,2026-05-24T03:45:21.200641
+ankylosing spondylitis,Reef Kids SPF 30 Oxybenzone Free,"OCTOCRYLENE, OCTISALATE, AND AVOBENZONE","Tropical Seas, Inc.",M020,AS,openFDA,2026-05-24T03:45:21.200642
+ankylosing spondylitis,Oseltamivir Phosphate,OSELTAMIVIR PHOSPHATE,"Lannett Company, Inc.",ANDA213594,AS,openFDA,2026-05-24T03:45:21.200643
+ankylosing spondylitis,Botnia Gentle Sun SPF 30,ZINC OXIDE,"Botnia, Inc",M020,AS,openFDA,2026-05-24T03:45:21.200644
+ankylosing spondylitis,ATROPINE SULFATE,ATROPINE SULFATE,"HF Acquisition Co LLC, DBA HealthFirst",ANDA216120,AS,openFDA,2026-05-24T03:45:21.200646
+ankylosing spondylitis,Doxorubicin Hydrochloride,DOXORUBICIN HYDROCHLORIDE,Pfizer Laboratories Div Pfizer Inc,NDA050629,AS,openFDA,2026-05-24T03:45:21.200649
+ankylosing spondylitis,Palonosetron Hydrochloride,PALONOSETRON HYDROCHLORIDE,"Avenacy, Inc.",ANDA202951,AS,openFDA,2026-05-24T03:45:21.200650
+atopic dermatitis,PredniSONE,PREDNISONE,A-S Medication Solutions,ANDA080352,atopic dermatitis,openFDA,2026-05-24T03:45:22.927969
+atopic dermatitis,Prednisone,PREDNISONE,Bryant Ranch Prepack,ANDA040584,atopic dermatitis,openFDA,2026-05-24T03:45:22.927985
+atopic dermatitis,Betaloan SUIK,BETAMETHASONE SODIUM PHOSPHATE AND BETAMETHASONE ACETATE,"Advanced Rx Pharmacy of Tennessee, LLC",,atopic dermatitis,openFDA,2026-05-24T03:45:22.927990
+atopic dermatitis,Prednisone delayed release,PREDNISONE,Dr. Reddys Laboratories Inc.,ANDA219477,atopic dermatitis,openFDA,2026-05-24T03:45:22.927994
+atopic dermatitis,Dyural 40 Kit,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, SODIUM CHLORIDE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,atopic dermatitis,openFDA,2026-05-24T03:45:22.927995
+atopic dermatitis,Dyural 80 Kit,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, SODIUM CHLORIDE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,atopic dermatitis,openFDA,2026-05-24T03:45:22.927996
+atopic dermatitis,Dyural 80-LM,"METHYLPREDNISOLONE ACETATE, LIDOCAINE HYDROCHLORIDE, BUPIVACAINE HYDROCHLORIDE, POVIDINE IODINE, ISOPROPYL ALCOHOL","Advanced Rx Pharmacy of Tennessee, LLC",,atopic dermatitis,openFDA,2026-05-24T03:45:22.927997
+atopic dermatitis,Bupivilog Kit,"MARCAINE, KENALOG, POVIDONE IODINE","Advanced Rx of Tennessee, LLC",,atopic dermatitis,openFDA,2026-05-24T03:45:22.927999
+atopic dermatitis,Dexamethasone,DEXAMETHASONE,"Advanced Rx Pharmacy of Tennessee, LLC",ANDA201270,atopic dermatitis,openFDA,2026-05-24T03:45:22.928000
+atopic dermatitis,MethylPREDNISolone,METHYLPREDNISOLONE,Bryant Ranch Prepack,ANDA040183,atopic dermatitis,openFDA,2026-05-24T03:45:22.928001
+atopic dermatitis,Dexamethasone Sodium Phosphate,DEXAMETHASONE SODIUM PHOSPHATE,Hikma Pharmaceuticals USA Inc.,ANDA087702,atopic dermatitis,openFDA,2026-05-24T03:45:22.928003
+atopic dermatitis,DEXAMETHASONE,DEXAMETHASONE,Kanchan Healthcare Inc,ANDA084754,atopic dermatitis,openFDA,2026-05-24T03:45:22.928008
+atopic dermatitis,prednisone,PREDNISONE,Amneal Pharmaceuticals NY LLC,ANDA213386,atopic dermatitis,openFDA,2026-05-24T03:45:22.928009
+atopic dermatitis,Triamcinolone Acetonide,TRIAMCINOLONE ACETONIDE,Alembic Pharmaceuticals Inc.,ANDA218601,atopic dermatitis,openFDA,2026-05-24T03:45:22.928015
+atopic dermatitis,Methylprednisolone Sodium Succinate,METHYLPREDNISOLONE SODIUM SUCCINATE,Hikma Pharmaceuticals USA Inc.,ANDA203125,atopic dermatitis,openFDA,2026-05-24T03:45:22.928018
+atopic dermatitis,Lidolog Kit,"LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,atopic dermatitis,openFDA,2026-05-24T03:45:22.928021
+atopic dermatitis,PREDNISOLONE,PREDNISOLONE,Aurobindo Pharma Limited,ANDA215673,atopic dermatitis,openFDA,2026-05-24T03:45:22.928024
+atopic dermatitis,MLK Kit F2,"MARCAINE, LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,atopic dermatitis,openFDA,2026-05-24T03:45:22.928033
+atopic dermatitis,PREDNISONE,PREDNISONE,REMEDYREPACK INC.,ANDA215672,atopic dermatitis,openFDA,2026-05-24T03:45:22.928036
+atopic dermatitis,HYDROCORTISONE,HYDROCORTISONE,Preferred Pharmaceuticals Inc.,ANDA040646,atopic dermatitis,openFDA,2026-05-24T03:45:22.928043
+atopic dermatitis,KENALOG-40,TRIAMCINOLONE ACETONIDE,"Asclemed USA, Inc.",NDA014901,atopic dermatitis,openFDA,2026-05-24T03:45:22.928045
+atopic dermatitis,MLK F1 Kit,"MARCAINE, LIDOCAINE, KENALOG, POVIDONE IODINE","Asclemed USA, Inc.",,atopic dermatitis,openFDA,2026-05-24T03:45:22.928046
+atopic dermatitis,Physician EZ Use Joint Tunnel and Trigger Kit II,"LIDOCAINE HYDROCHLORIDE, TRIAMCINOLONE ACETONIDE, POVIDONE-IODINE","Asclemed USA, Inc.",,atopic dermatitis,openFDA,2026-05-24T03:45:22.928048
+atopic dermatitis,Hydrocortisone,HYDROCORTISONE,"ANI Pharmaceuticals, Inc.",ANDA217881,atopic dermatitis,openFDA,2026-05-24T03:45:22.928050
+atopic dermatitis,anti itch,HYDROCORTISONE,"Meijer, Inc.",M017,eczema,openFDA,2026-05-24T03:45:24.489141
+atopic dermatitis,VERADEX-E,PETROLATUM AND LANOLIN,"ABBE Laboratories, Inc.",M016,eczema,openFDA,2026-05-24T03:45:24.489158
+atopic dermatitis,"PS-2896 Hydrocortisone Cream 1%, 0.9g","PS-2896 HYDROCORTISONE CREAM 1%, 0.9G",ProStat First Aid LLC,M032,eczema,openFDA,2026-05-24T03:45:24.489161
+atopic dermatitis,hydrocortisone,HYDROCORTISONE,Padagis Israel Pharmaceuticals Ltd,M017,eczema,openFDA,2026-05-24T03:45:24.489163
+atopic dermatitis,TheraCare Hydrocortisone Cream,HYDROCORTISONE,Veridian Healthcare,M017,eczema,openFDA,2026-05-24T03:45:24.489166
+atopic dermatitis,Cortizone 10 Fast Acting Itch Relief Cooling,HYDROCORTISONE,"Chattem, Inc.",M017,eczema,openFDA,2026-05-24T03:45:24.489167
+atopic dermatitis,Olay Sensitive Soothing Moisturizer Skin Protectant Fragrance-Free,COLLOIDAL OATMEAL,The Procter & Gamble Manufacturing Company,M016,eczema,openFDA,2026-05-24T03:45:24.489169
+atopic dermatitis,Equate Cortisone,HYDROCORTISONE 1%,Walmart Inc,M017,eczema,openFDA,2026-05-24T03:45:24.489171
+atopic dermatitis,Dermarest Eczema Medicated,HYDROCORTISONE,Insight Pharmaceuticals LLC,M017,eczema,openFDA,2026-05-24T03:45:24.489172
+atopic dermatitis,Cetaphil Eczema Rapid Relief Cream,COLLOIDAL OATMEAL,"Galderma Laboratories, L.P.",M016,eczema,openFDA,2026-05-24T03:45:24.489174
+atopic dermatitis,Hydrocortisone,ANTI ITCH,NeilMed Pharmaceuticals Inc,M017,eczema,openFDA,2026-05-24T03:45:24.489176
+atopic dermatitis,Hydrocortisone with aloe,HYDROCORTISONE WITH ALOE ANTI ITCH,NeilMed Pharmaceuticals Inc.,M017,eczema,openFDA,2026-05-24T03:45:24.489177
+atopic dermatitis,ECZEMA HAND RELIEF,COLLOIDAL OATMEAL,"Skinfix, Inc.",M016,eczema,openFDA,2026-05-24T03:45:24.489180
+atopic dermatitis,Shopko Hydrocortisone Maximum Strength,HYDROCORTISONE,"Shopko Stores Operating Co., LLC",M017,eczema,openFDA,2026-05-24T03:45:24.489183
+atopic dermatitis,Live Better Hydrocortisone with Aloe,HYDROCORTISONE,The Great Atlantic & Pacific Tea Company,M017,eczema,openFDA,2026-05-24T03:45:24.489185
+atopic dermatitis,Aveeno Baby Eczema Therapy Nighttime Balm,OATMEAL,Kenvue Brands LLC,M016,eczema,openFDA,2026-05-24T03:45:24.489187
+atopic dermatitis,Pain Relieving Petro Carbo,PHENOL,"J.R. Watkins, LLC.",M017,eczema,openFDA,2026-05-24T03:45:24.489188
+atopic dermatitis,Hydrocortisone Plus 12 Moisturizers,HYDROCORTISONE,RITE AID CORPORATION,M017,eczema,openFDA,2026-05-24T03:45:24.489190
+atopic dermatitis,RevitaDERM PSORIASIS,COAL TAR,Blaine Labs Inc.,M032,eczema,openFDA,2026-05-24T03:45:24.489192
+atopic dermatitis,GLADSKIN ECZEMACT ECZEMA,COLLOIDAL OATMEAL,"Micreos North America, Inc.",M016,eczema,openFDA,2026-05-24T03:45:24.489194
+atopic dermatitis,equaline anti itch maximum strength,HYDROCORTISONE,"United Natural Foods, Inc. dba UNFI",M017,eczema,openFDA,2026-05-24T03:45:24.489196
+atopic dermatitis,good sense anti itch,HYDROCORTISONE,A-S Medication Solutions,M017,eczema,openFDA,2026-05-24T03:45:24.489197
+atopic dermatitis,Freds Hydrocortisone with Aloe,HYDROCORTISONE,"FRED'S, INC.",M017,eczema,openFDA,2026-05-24T03:45:24.489199
+atopic dermatitis,EmuAid,SILVER,"Speer Laboratories, LLC",,eczema,openFDA,2026-05-24T03:45:24.489201
+atopic dermatitis,Babo Botanicals Sensitive Baby Healing,COLLOIDAL OATMEAL,"Babo Botanicals, Inc.",M016,eczema,openFDA,2026-05-24T03:45:24.489203
+atopic dermatitis,Urea Cream 40 Percent,UREA,"Method Pharmaceuticals, LLC",,eczema,openFDA,2026-05-24T03:45:24.489206
+atopic dermatitis,Cortisone 10 Intensive Moisture Creme,HYDROCORTISONE,"Chattem, Inc.",M017,eczema,openFDA,2026-05-24T03:45:24.489207
+atopic dermatitis,Evara,UREA 40.5 CREAM,"Oncora Pharma, LLC",,eczema,openFDA,2026-05-24T03:45:24.489209
+atopic dermatitis,Hydrocortisone 1%,HYDROCORTISONE,Trifecta Pharmaceuticals Usa Llc,M017,eczema,openFDA,2026-05-24T03:45:24.489213
+atopic dermatitis,EczemaHoneyBodyLotion,COLLOIDAL OATMEAL,Allure Labs,M016,eczema,openFDA,2026-05-24T03:45:24.489214
+atopic dermatitis,Relief,COLLOIDAL OATMEAL 1%,"Era Organics, Inc.",M006,eczema,openFDA,2026-05-24T03:45:24.489216
+atopic dermatitis,Gerigentle,HYDROCORTISONE,GERI-GENTLE CORPORATION,M017,eczema,openFDA,2026-05-24T03:45:24.489218
+atopic dermatitis,Hydrocortisone with Aloe,HYDROCORTISONE,Proficient Rx LP,M017,eczema,openFDA,2026-05-24T03:45:24.489219
+atopic dermatitis,Bloop Itch Soothing Topical,HYDROCORTISONE,Three Nations Corp,M017,eczema,openFDA,2026-05-24T03:45:24.489222
+atopic dermatitis,ECZEMA INTENSIVE DAILY RELIEF BODY,COLLOIDAL OATMEAL CREAM,"Skinfix, Inc.",M016,eczema,openFDA,2026-05-24T03:45:24.489224
+atopic dermatitis,ANTI ITCH,HYDROCORTISONE,Safeway,M017,eczema,openFDA,2026-05-24T03:45:24.489226
+atopic dermatitis,Aveeno Soothing Bath Treatment,OATMEAL,Kenvue Brands LLC,M016,eczema,openFDA,2026-05-24T03:45:24.489228
+atopic dermatitis,Hydrocortisone,HYDROCORTISONE 1%,"Weeks & Leo Co., Inc.",M017,eczema,openFDA,2026-05-24T03:45:24.489229
+atopic dermatitis,Westlake Anti-itch,HYDROCORTISONE,Westlake Pharma LLC,M017,eczema,openFDA,2026-05-24T03:45:24.489231
+atopic dermatitis,Rite Aid Anti-itch,HYDROCORTISONE,Rite Aid,M017,eczema,openFDA,2026-05-24T03:45:24.489232
+atopic dermatitis,Anti-itch Paraben Free,HYDROCORTISONE,"Weeks & Leo Co., Inc.",M017,eczema,openFDA,2026-05-24T03:45:24.489234
+atopic dermatitis,Good Neighbor Pharmacy Hydrocortisone with Aloe,HYDROCORTISONE,AmerisourceBergen,M017,eczema,openFDA,2026-05-24T03:45:24.489235
+atopic dermatitis,Rite Aid Hydrocortisone,HYDROCORTISONE 1%,Rite Aid,M017,eczema,openFDA,2026-05-24T03:45:24.489237
+atopic dermatitis,Anti itch,HYDROCORTISONE,"Weeks & Leo Co., Inc.",M017,eczema,openFDA,2026-05-24T03:45:24.489238
+atopic dermatitis,Urea Cream 40%,UREA,Akron Pharma Inc.,,eczema,openFDA,2026-05-24T03:45:24.489241
+atopic dermatitis,Cetaphil Eczema Soothing Moisturizer,COLLOIDAL OATMEAL,"Galderma Laboratories, L.P.",M016,eczema,openFDA,2026-05-24T03:45:24.489242
+atopic dermatitis,Hydrocortisone 1% with healing aloe,HYDROCORTISONE,Trifecta Pharmaceuticals Usa Llc,M017,eczema,openFDA,2026-05-24T03:45:24.489244
+atopic dermatitis,Systemistat,"BERBERIS VULGARIS, CHELIDONIUM MAJUS, LAPPA MAJOR, HYDRASTIS CANADENSIS, HEPAR SULPHURIS CALCAREUM, LYCOPODIUM CLAVATUM, SULPHUR, CALCAREA CARBONICA, MERCURIUS SOLUBILIS, THUJA OCCIDENTALIS","Energique, Inc.",,eczema,openFDA,2026-05-24T03:45:24.489245
+atopic dermatitis,UREDEX,UREA,"Blue Heron Pharmaceuticals, LLC",,eczema,openFDA,2026-05-24T03:45:24.489247
+atopic dermatitis,Hydrocortisone Cream 1%,HYDROCORTISONE CREAM 1%,Front Line Safety,M032,eczema,openFDA,2026-05-24T03:45:24.489249
+atopic dermatitis,UREA,UREA,"Cintex Services, LLC",,eczema,openFDA,2026-05-24T03:45:24.489251
+type 1 diabetes,Glimepiride,GLIMEPIRIDE,American Health Packaging,ANDA077091,type 1 diabetes,openFDA,2026-05-24T03:45:28.428704
+type 1 diabetes,ZITUVIMET,SITAGLIPTIN AND METFORMIN HYDROCHLORIDE,Zydus Lifesciences Limited,NDA216743,type 1 diabetes,openFDA,2026-05-24T03:45:28.428718
+type 1 diabetes,COLESEVELAM HYDROCHLORIDE,COLESEVELAM HYDROCHLORIDE,A-S Medication Solutions,NDA021176,type 1 diabetes,openFDA,2026-05-24T03:45:28.428725
+type 1 diabetes,FARXIGA,DAPAGLIFLOZIN,A-S Medication Solutions,NDA202293,type 1 diabetes,openFDA,2026-05-24T03:45:28.428729
+type 1 diabetes,Glipizide,GLIPIZIDE,REMEDYREPACK INC.,ANDA204720,type 1 diabetes,openFDA,2026-05-24T03:45:28.428732
+type 1 diabetes,PIOGLITAZONE HYDROCHLORIDE,PIOGLITAZONE HYDROCHLORIDE,QUALLENT PHARMACEUTICALS HEALTH LLC,ANDA200268,type 1 diabetes,openFDA,2026-05-24T03:45:28.428734
+type 1 diabetes,DAPAGLIFLOZIN,DAPAGLIFLOZIN,"Teva Pharmaceuticals, Inc.",ANDA211541,type 1 diabetes,openFDA,2026-05-24T03:45:28.428738
+type 1 diabetes,Pioglitazone,PIOGLITAZONE,"Preferred Pharmaceuticals, Inc.",ANDA200268,type 1 diabetes,openFDA,2026-05-24T03:45:28.428743
+type 1 diabetes,Dapagliflozin,DAPAGLIFLOZIN,"Lupin Pharmaceuticals, Inc.",ANDA211531,type 1 diabetes,openFDA,2026-05-24T03:45:28.428750
+type 1 diabetes,TRULICITY,DULAGLUTIDE,A-S Medication Solutions,BLA125469,type 1 diabetes,openFDA,2026-05-24T03:45:28.428756
+type 1 diabetes,BASAGLAR KwikPen,INSULIN GLARGINE,Eli Lilly and Company,BLA205692,type 1 diabetes,openFDA,2026-05-24T03:45:28.428758
+type 1 diabetes,Liraglutide,LIRAGLUTIDE,A-S Medication Solutions,NDA022341,type 1 diabetes,openFDA,2026-05-24T03:45:28.428763
+type 1 diabetes,Nateglinide,NATEGLINIDE,Strides Pharma Science Limited,ANDA077463,type 1 diabetes,openFDA,2026-05-24T03:45:28.428770
+type 1 diabetes,Colesevelam hydrochloride,COLESEVELAM HYDROCHLORIDE,A-S Medication Solutions,ANDA209946,type 1 diabetes,openFDA,2026-05-24T03:45:28.428775
+type 1 diabetes,Synjardy,EMPAGLIFLOZIN AND METFORMIN HYDROCHLORIDE,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA206111,type 1 diabetes,openFDA,2026-05-24T03:45:28.428778
+type 1 diabetes,alogliptin and metformin hydrochloride,ALOGLIPTIN AND METFORMIN HYDROCHLORIDE,Padagis Israel Pharmaceuticals Ltd,NDA203414,type 1 diabetes,openFDA,2026-05-24T03:45:28.428791
+type 1 diabetes,JARDIANCE,EMPAGLIFLOZIN,A-S Medication Solutions,NDA204629,type 1 diabetes,openFDA,2026-05-24T03:45:28.428800
+type 1 diabetes,JANUVIA,SITAGLIPTIN,A-S Medication Solutions,NDA021995,type 1 diabetes,openFDA,2026-05-24T03:45:28.428803
+type 1 diabetes,Bexagliflozin,BEXAGLIFLOZIN,"Golden State Medical Supply, Inc.",NDA214373,type 1 diabetes,openFDA,2026-05-24T03:45:28.428807
+type 1 diabetes,PIOGLITAZONE,PIOGLITAZONE,Solco Healthcare LLC,ANDA207806,type 1 diabetes,openFDA,2026-05-24T03:45:28.428812
+type 1 diabetes,DAPAGLIFLOZIN AND SAXAGLIPTIN,DAPAGLIFLOZIN AND SAXAGLIPTIN,Novadoz Pharmaceuticals LLC,ANDA211533,type 1 diabetes,openFDA,2026-05-24T03:45:28.428815
+type 1 diabetes,Victoza,LIRAGLUTIDE,A-S Medication Solutions,NDA022341,type 1 diabetes,openFDA,2026-05-24T03:45:28.428816
+type 1 diabetes,Pioglitazone Hydrochloride and Metformin Hydrochloride,PIOGLITAZONE HYDROCHLORIDE AND METFORMIN HYDROCHLORIDE,Aurobindo Pharma Limited,ANDA200823,type 1 diabetes,openFDA,2026-05-24T03:45:28.428821
+type 1 diabetes,NATEGLINIDE,NATEGLINIDE,"Nivagen Pharmaceuticals, Inc.",ANDA206432,type 1 diabetes,openFDA,2026-05-24T03:45:28.428825
+type 1 diabetes,TZIELD,TEPLIZUMAB-MZWV,"Provention Bio, Inc.",BLA761183,T1D,openFDA,2026-05-24T03:45:30.304417
+celiac disease,PHYTONADIONE PHYTONADIONE,PHYTONADIONE,Dr.Reddy's Laboratories Inc,ANDA207719,celiac,openFDA,2026-05-24T03:45:32.092903
+celiac disease,Phytonadione,PHYTONADIONE,"Fresenius Kabi USA, LLC",ANDA219212,celiac,openFDA,2026-05-24T03:45:32.092921
+celiac disease,PHYTONADIONE,PHYTONADIONE,"Henry Schein, Inc.",ANDA083722,celiac,openFDA,2026-05-24T03:45:32.092927
+celiac disease,phytonadione,PHYTONADIONE,Amneal Pharmaceuticals LLC,ANDA216601,celiac,openFDA,2026-05-24T03:45:32.092936
+celiac disease,VITAMIN K1 - PHYTONADIONE,VITAMIN K1 - PHYTONADIONE,"HF Acquisition Co LLC, DBA HealthFirst",ANDA087955,celiac,openFDA,2026-05-24T03:45:32.092975
+celiac disease,VITAMIN K1 PHYTONADIONE,"VITAMIN K1, PHYTONADIONE","HF Acquisition Co LLC, DBA HealthFirst",ANDA087954,celiac,openFDA,2026-05-24T03:45:32.092978
+celiac disease,Vitamin K1,PHYTONADIONE,"Hospira, Inc.",ANDA087954,celiac,openFDA,2026-05-24T03:45:32.092982
+inflammatory bowel disease,Loperamide Hydrochloride,LOPERAMIDE HYDROCHLORIDE,"Advagen Pharma Ltd.,",ANDA216876,inflammatory bowel,openFDA,2026-05-24T03:45:36.293344
+inflammatory bowel disease,LOPERAMIDE HYDROCHLORIDE,LOPERAMIDE HYDROCHLORIDE,"NuCare Pharmaceuticals,Inc.",ANDA218122,inflammatory bowel,openFDA,2026-05-24T03:45:36.293360
+inflammatory bowel disease,Loperamide hydrochloride,LOPERAMIDE HYDROCHLORIDE,Viona Pharmaceuticals Inc,ANDA217471,inflammatory bowel,openFDA,2026-05-24T03:45:36.293371
+inflammatory bowel disease,CERETEC,TECHNETIUM TC-99M EXAMETAZIME,Medi-Physics Inc. dba GE Healthcare.,NDA019829,inflammatory bowel,openFDA,2026-05-24T03:45:36.293382
+inflammatory bowel disease,Ceretec,TECHNETIUM TC-99M EXAMETAZIME AND COBALTOUS CHLORIDE,"Medi-Physics, Inc. dba GE Healthcare",NDA019829,inflammatory bowel,openFDA,2026-05-24T03:45:36.293437

@@ -270,7 +270,7 @@ jobs:
         python3 << 'EOF'
         import pandas as pd
         import sys
-        from datetime import datetime, timedelta
+        from datetime import datetime, timedelta, timezone
         
         print("\n" + "="*70)
         print("DATA FRESHNESS CHECK")
@@ -284,7 +284,7 @@ jobs:
             latest = collection_dates.max()
             oldest = collection_dates.min()
             
-            now = datetime.now()
+            now = datetime.now(timezone.utc)
             age_days = (now - latest).days
             
             print(f"Latest collection: {latest}")

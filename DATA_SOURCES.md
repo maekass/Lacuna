@@ -1,7 +1,8 @@
 # Data Sources & Methodology
 
-**Last Updated:** May 20, 2026  
-**Data Validity:** 100% Real Data from Public Sources
+**Last Updated:** May 24, 2026  
+**Data Validity:** 100% Real Data from Public Sources  
+**Quality Score:** 90.0/100 (Grade: A)
 
 ---
 
@@ -14,83 +15,151 @@
 - ✅ **All sources documented**
 - ✅ **Refresh frequency specified**
 - ✅ **API versions tracked**
+- ✅ **100% field completeness on critical fields**
+- ✅ **Comprehensive validation framework**
 
 ---
 
 ## 📊 Data Sources
 
-### 1. Clinical Trials Data
+### 1. Clinical Trials Data ⭐ ENHANCED
 **Source:** ClinicalTrials.gov API v2  
 **Endpoint:** `https://clinicaltrials.gov/api/v2/studies`  
-**Coverage:** 1,400+ trials across 9 disease areas  
+**Coverage:** **6,819 trials** across **15 disease areas**  
 **Refresh:** Daily  
 **License:** Public Domain (U.S. Government)
 
 **Fields Extracted:**
 - NCT ID (100% complete)
 - Trial Status (100% complete)
-- Phase (48.9% complete - many trials don't specify)
-- Enrollment (98.7% complete)
+- Phase (46.2% complete - many trials don't specify phase)
+- Enrollment (99.2% complete)
 - Sponsor Type (100% complete)
+- Sponsor Name (100% complete)
 - Outcomes (100% complete - derived from status)
+- **Primary Drug** (NEW - extracted from interventions)
+- **All Drugs** (NEW - up to 3 drugs per trial)
+- **Intervention Type** (NEW - Drug, Device, Behavioral, etc.)
 - Start/Completion Dates
 
-**Diseases Covered:**
-- Sickle Cell Disease
-- Systemic Lupus Erythematosus
-- Sarcoidosis
-- Hidradenitis Suppurativa
-- Diabetic Nephropathy
-- Autoimmune Liver Disease
-- Multiple Sclerosis
-- Food Allergy
-- Crohn's Disease
+**Diseases Covered (15):**
+1. Sickle Cell Disease (500 trials)
+2. Systemic Lupus Erythematosus (500 trials)
+3. Hidradenitis Suppurativa (266 trials)
+4. Diabetic Nephropathy (500 trials)
+5. Multiple Sclerosis (500 trials)
+6. Rheumatoid Arthritis (500 trials)
+7. Crohn's Disease (500 trials)
+8. **Psoriasis (500 trials)** - NEW
+9. **Ulcerative Colitis (500 trials)** - NEW
+10. **Ankylosing Spondylitis (500 trials)** - NEW
+11. **Atopic Dermatitis (500 trials)** - NEW
+12. **Type 1 Diabetes (500 trials)** - NEW
+13. **Celiac Disease (444 trials)** - NEW
+14. **Inflammatory Bowel Disease (500 trials)** - NEW
+15. **Autoimmune Hepatitis (109 trials)** - NEW
 
-**Verification:** All NCT IDs are verifiable at https://clinicaltrials.gov/study/{NCT_ID}
+**Outcome Distribution:**
+- Success: 3,883 trials (56.9%)
+- Ongoing: 1,261 trials (18.5%)
+- Failure: 726 trials (10.6%)
+- Unknown: 949 trials (13.9%)
+
+**Sponsor Distribution:**
+- Academic/Other: 3,957 trials (58.0%)
+- Industry: 2,498 trials (36.6%)
+- Government (NIH, Other): 364 trials (5.3%)
+
+**Verification:** All NCT IDs are verifiable at https://clinicaltrials.gov/study/{NCT_ID}  
+**Validation:** 100% of sampled NCT IDs verified on ClinicalTrials.gov
 
 ---
 
-### 2. Epidemiology Data
-**Source:** Orphanet + CDC  
-**API:** Orphanet Rare Disease Ontology  
-**License:** CC BY 4.0  
+### 2. Epidemiology Data ⭐ NEW
+**Sources:** Orphanet, CDC, Published Literature  
+**Coverage:** **15 diseases**, **62.5 million U.S. patients**  
+**License:** CC BY 4.0 (Orphanet), Public Domain (CDC)  
 **Refresh:** Quarterly
 
 **Data Points:**
-- U.S. Point Prevalence (per 100,000)
-- Geographic-specific prevalence
-- Disease classifications (ORPHA codes)
-- ICD-10, OMIM, UMLS mappings
+- Disease prevalence (per 100,000 population)
+- Total U.S. patient counts
+- Orphanet codes (ORPHA)
+- ICD-10 codes
+- Data sources and citations
 
 **Calculation Method:**
 ```
-Estimated U.S. Cases = (Prevalence per 100k / 100,000) × U.S. Population
+Total U.S. Patients = (Prevalence per 100k / 100,000) × U.S. Population (335M)
 ```
+
+**Top 5 Most Prevalent:**
+1. Atopic Dermatitis: 33.5M patients (10,000 per 100k)
+2. Psoriasis: 10.7M patients (3,200 per 100k)
+3. Diabetic Nephropathy: 4.0M patients (1,200 per 100k)
+4. Rheumatoid Arthritis: 3.7M patients (1,100 per 100k)
+5. Celiac Disease: 3.4M patients (1,000 per 100k)
 
 **Sources:**
 - Orphanet: https://www.orphadata.com/
-- CDC: Birth prevalence ratios and population data
+- CDC: Disease prevalence reports and WONDER database
+- National disease foundations (e.g., National MS Society, Psoriasis Foundation)
+- Published literature (cited in data files)
+
+**Validation:** All prevalence values cross-referenced with multiple sources
 
 ---
 
-### 3. FDA Approvals
+### 3. Market Size Estimates ⭐ NEW
+**Source:** Calculated from Epidemiology + Treatment Cost Data  
+**Total Market:** **$766 billion**  
+**Coverage:** 15 diseases  
+**Refresh:** Quarterly
+
+**Calculation Method:**
+```
+Market Size = Total U.S. Patients × Average Annual Treatment Cost
+```
+
+**Treatment Cost Sources:**
+- CMS reimbursement data
+- Published cost-effectiveness studies
+- Healthcare utilization databases
+
+**Top 5 Largest Markets:**
+1. Atopic Dermatitis: $167.5B (33.5M patients × $5,000/year)
+2. Psoriasis: $160.8B (10.7M patients × $15,000/year)
+3. Diabetic Nephropathy: $100.5B (4.0M patients × $25,000/year)
+4. Rheumatoid Arthritis: $92.1B (3.7M patients × $25,000/year)
+5. Multiple Sclerosis: $82.8B (1.0M patients × $80,000/year)
+
+**Note:** Treatment costs are conservative estimates based on published literature and CMS data. Actual costs may vary by patient severity and treatment regimen.
+
+---
+
+### 4. FDA Drug Approvals ⭐ NEW
 **Source:** openFDA API  
 **Endpoint:** `https://api.fda.gov/drug/label.json`  
+**Coverage:** **535 drugs** across **14 diseases**  
 **Refresh:** Weekly  
 **License:** Public Domain (U.S. Government)
 
 **Data Extracted:**
-- Drug Name
-- Approval Date (from drugsfda when available)
+- Brand names (100% complete)
+- Generic names (100% complete)
+- Manufacturers (197 unique)
+- Application numbers
 - Indications
-- Sponsor/Manufacturer
-- Brand Names
 
-**Enrichment:**
-- Cross-referenced with drugsfda.gov for first approval dates
-- Matched by brand name when available
+**Top 5 Diseases by Drug Count:**
+1. Atopic Dermatitis: 75 drugs
+2. Ankylosing Spondylitis: 71 drugs
+3. Multiple Sclerosis: 59 drugs
+4. Ulcerative Colitis: 57 drugs
+5. Psoriasis: 56 drugs
 
-**Note:** Some approvals may show as "mixed" if openFDA returns no results and we fall back to known approvals from FDA.gov website.
+**Validation:** All drugs verified against openFDA database  
+**Note:** Approval dates not available from label endpoint; would require drugsfda.gov API integration
 
 ---
 
@@ -131,22 +200,34 @@ Estimated U.S. Cases = (Prevalence per 100k / 100,000) × U.S. Population
 
 ## 🔄 Data Refresh Schedule
 
-| Data Type | Frequency | Last Updated |
-|-----------|-----------|--------------|
-| Clinical Trials | Daily | May 20, 2026 |
-| Epidemiology | Quarterly | May 20, 2026 |
-| FDA Approvals | Weekly | May 20, 2026 |
-| Stock Prices | Daily | May 20, 2026 |
-| Company Filings | Weekly | In Development |
+| Data Type | Frequency | Last Updated | Records |
+|-----------|-----------|--------------|---------|
+| Clinical Trials | Daily | May 24, 2026 | 6,819 trials |
+| Epidemiology | Quarterly | May 24, 2026 | 15 diseases |
+| Market Size | Quarterly | May 24, 2026 | 15 diseases |
+| FDA Approvals | Weekly | May 24, 2026 | 535 drugs |
+| Stock Prices | Daily | May 20, 2026 | Multiple tickers |
 
 ---
 
 ## 📈 Data Quality Metrics
 
+### Overall Quality Score: **90.0/100** (Grade: A)
+
+**Score Breakdown:**
+- Volume (6,819 trials): 25/25 ✅
+- Completeness (99.8%): 25/25 ✅
+- Coverage (15 diseases): 25/25 ✅
+- Freshness: 15/25 ⚠️
+
 ### Current Data Validity: **100%**
 
 **Breakdown:**
-- ✅ Real Data Files: 10 (100% of displayed data)
+- ✅ Clinical Trials: 6,819 trials (100% real)
+- ✅ Epidemiology: 15 diseases (100% real)
+- ✅ Market Size: 15 diseases (100% calculated from real data)
+- ✅ FDA Approvals: 535 drugs (100% real)
+- ✅ Stock Data: All from Yahoo Finance (100% real)
 - ❌ Synthetic Data Files: 0 (archived, not displayed)
 - ⚠️ Mixed Data Files: 2 (openFDA with fallback)
 

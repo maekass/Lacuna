@@ -1,0 +1,46 @@
+{
+  "certification_date": "2026-05-24T04:09:58.822580",
+  "tests": {
+    "test_1_clinical_trials": {
+      "status": "PASS",
+      "total_trials": 6819,
+      "diseases": 15,
+      "verification_rate": 100.0,
+      "completeness": {
+        "nct_id": 100.0,
+        "status": 100.0,
+        "enrollment": 99.20809502859656,
+        "sponsor_type": 100.0,
+        "outcome": 100.0
+      }
+    },
+    "test_2_epidemiology": {
+      "status": "PASS",
+      "total_diseases": 15,
+      "sources_cited": 15,
+      "total_patients": 62500949
+    },
+    "test_3_fda_approvals": {
+      "status": "PASS",
+      "total_drugs": 535,
+      "diseases": 14,
+      "manufacturers": 197
+    },
+    "test_4_no_synthetic": {
+      "status": "PASS",
+      "synthetic_files_present": 0,
+      "real_files_present": 9
+    },
+    "test_5_quality_score": {
+      "status": "PASS",
+      "quality_score": 99.96040475142982
+    }
+  },
+  "overall_status": "PASSED",
+  "certification_level": "FULLY CERTIFIED",
+  "tests_passed": 5,
+  "tests_warned": 0,
+  "tests_failed": 0,
+  "total_tests": 5,
+  "certification_hash": "971ACF8592ADEA0E"
+}

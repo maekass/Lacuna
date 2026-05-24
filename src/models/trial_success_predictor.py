@@ -20,8 +20,16 @@ from src.data_collection.disease_config import DiseaseConfig
 try:
     from xgboost import XGBClassifier
     XGBOOST_AVAILABLE = True
-except ImportError:
+except (ImportError, Exception) as e:
+    # XGBoost may fail to load due to missing OpenMP (libomp.dylib)
+    # Gracefully fall back to sklearn models only
     XGBOOST_AVAILABLE = False
+    if "libomp" in str(e) or "OpenMP" in str(e):
+        warnings.warn(
+            "XGBoost unavailable (OpenMP not installed). Using sklearn models only. "
+            "To enable XGBoost: brew install libomp",
+            UserWarning
+        )
 
 
 class TrialSuccessPredictor:

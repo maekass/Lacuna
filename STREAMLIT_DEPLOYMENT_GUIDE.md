@@ -1,7 +1,7 @@
 # Streamlit Cloud Deployment Guide
 
 **Repository:** https://github.com/maekass/MPK1  
-**Branch:** `enhanced-data-collection`  
+**Branch:** `main`  
 **Status:** ✅ Ready to Deploy
 
 ---
@@ -37,7 +37,7 @@ Click the **"New app"** button
 **Repository Settings:**
 ```
 Repository: maekass/MPK1
-Branch: enhanced-data-collection
+Branch: main
 Main file path: dashboard/app.py
 ```
 
@@ -164,7 +164,7 @@ font = "sans serif"
 ```bash
 git add requirements.txt
 git commit -m "Add missing dependency"
-git push origin enhanced-data-collection
+git push origin main
 ```
 
 ### Issue: Data not loading
@@ -191,7 +191,7 @@ Streamlit Cloud Dashboard → Your App → Logs
 # Make changes locally
 git add .
 git commit -m "Update description"
-git push origin enhanced-data-collection
+git push origin main
 
 # Streamlit Cloud auto-deploys on push
 ```
@@ -214,7 +214,7 @@ After deployment, your app will be available at:
 
 **Default URL:**
 ```
-https://maekass-mpk1-dashboardapp-enhanced-data-collection.streamlit.app
+https://maekass-mpk1-dashboardapp-main.streamlit.app
 ```
 
 **Custom URL (if configured):**
@@ -273,7 +273,7 @@ The deployed app includes:
 Before clicking "Deploy":
 
 1. ✅ Repository: `maekass/MPK1`
-2. ✅ Branch: `enhanced-data-collection`
+2. ✅ Branch: `main`
 3. ✅ Main file: `dashboard/app.py`
 4. ✅ Python version: 3.9.18 (auto-detected)
 5. ✅ All files committed and pushed

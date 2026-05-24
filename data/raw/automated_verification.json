@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-05-20T10:00:29.029704+00:00",
+  "timestamp": "2026-05-21T05:25:17.086035+00:00",
   "checks": {
     "api_health": {
       "status": "PASS",
-      "response_time_ms": 137.65800000000002
+      "response_time_ms": 390.132
     },
     "data_quality": {
       "status": "PASS",
@@ -30,7 +30,7 @@
         },
         "enrollment": {
           "status": "PASS",
-          "completeness": 98.71,
+          "completeness": 99.0,
           "threshold": 95.0
         }
       },
@@ -39,30 +39,13 @@
     "data_freshness": {
       "status": "PASS",
       "age_days": 0,
-      "latest_collection": "2026-05-20T07:12:44.971792+00:00"
+      "latest_collection": "2026-05-21T03:44:37.443315+00:00"
     },
     "synthetic_data": {
-      "status": "FAIL",
-      "synthetic_files": [
-        "gene_therapy_pipeline_scd.csv",
-        "pipeline_sle.csv",
-        "pipeline_sarc.csv",
-        "vc_deals_scd.csv",
-        "growth_equity_deals_scd.csv",
-        "public_equity_companies_scd.csv",
-        "stage_returns_analysis.csv",
-        "precision_medicine_pipeline.csv",
-        "market_size_scd.csv",
-        "large_pharma_investments_scd.csv",
-        "competitive_landscape_scd.csv",
-        "deal_flow_scd.csv",
-        "regulatory_landscape_scd.csv",
-        "investment_attractiveness_scd.csv"
-      ]
+      "status": "PASS",
+      "synthetic_files": []
     }
   },
-  "status": "FAIL",
-  "alerts": [
-    "Synthetic data detected: 14 file(s)"
-  ]
+  "status": "PASS",
+  "alerts": []
 }
