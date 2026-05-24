@@ -9,6 +9,7 @@ from typing import Any
 
 import plotly.graph_objects as go
 import streamlit as st
+from streamlit_lottie import st_lottie
 
 # 2026 Clinical Professional Palette - Light Green & Neutral Taupe
 COLORS = {
@@ -318,16 +319,6 @@ p, .stCaption, label { color: #5A6B5F; font-weight: 400; }
 [data-testid="stDataFrame"] tr:hover td {
     background: #F8FAF7 !important;
 }
-[data-testid="stExpander"] {
-    background: #FFFFFF !important;
-    border: 1px solid #D8E3D6 !important;
-    border-radius: 10px !important;
-    box-shadow: 0 1px 2px rgba(42, 59, 46, 0.02) !important;
-}
-[data-testid="stExpander"] summary {
-    font-weight: 500 !important;
-    color: #2A3B2E !important;
-}
 [data-testid="stMetric"] {
     background: #FFFFFF;
     border: 1px solid #D8E3D6;
@@ -571,6 +562,79 @@ p, .stCaption, label { color: #5A6B5F; font-weight: 400; }
     font-size: 0.875rem;
 }
 
+/* ---- Spinner ---- */
+.stSpinner > div {
+    border-color: #5A8A6F transparent transparent transparent !important;
+}
+.stSpinner > div + div {
+    color: #5A6B5F !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+}
+
+/* ---- Tooltips ---- */
+[data-testid="stTooltipIcon"] {
+    color: #8FA89A !important;
+    transition: color 0.15s ease;
+}
+[data-testid="stTooltipIcon"]:hover {
+    color: #5A8A6F !important;
+}
+
+/* ---- Expanders (collapsible) ---- */
+[data-testid="stExpander"] {
+    background: #FFFFFF !important;
+    border: 1px solid #D8E3D6 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 1px 2px rgba(42, 59, 46, 0.02) !important;
+    margin-bottom: 0.75rem !important;
+    transition: box-shadow 0.2s ease !important;
+}
+[data-testid="stExpander"]:hover {
+    box-shadow: 0 2px 6px rgba(42, 59, 46, 0.05) !important;
+}
+[data-testid="stExpander"] summary {
+    font-weight: 500 !important;
+    color: #2A3B2E !important;
+    font-size: 0.875rem !important;
+    padding: 0.75rem 1rem !important;
+}
+[data-testid="stExpander"] summary:hover {
+    color: #1E2D22 !important;
+}
+[data-testid="stExpander"] [data-testid="stExpanderContent"] {
+    padding: 0 1rem 0.75rem !important;
+}
+
+/* ---- Empty state ---- */
+.empty-state {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: #FAFCFA;
+    border: 1px dashed #D8E3D6;
+    border-radius: 12px;
+    margin: 1rem 0;
+}
+.empty-state .icon { font-size: 2rem; margin-bottom: 0.75rem; color: #8FA89A; }
+.empty-state .title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #2A3B2E;
+    margin-bottom: 0.375rem;
+}
+.empty-state .detail {
+    font-size: 0.8125rem;
+    color: #6B7C6F;
+    line-height: 1.6;
+}
+.empty-state code {
+    background: #E8F2EC;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8em;
+    color: #3D7A55;
+}
+
 hr { border-color: #E2E8E4 !important; margin: 1.5rem 0 !important; }
 </style>
 """
@@ -689,6 +753,107 @@ def styled_bar_chart(fig: go.Figure) -> go.Figure:
     return fig
 
 
+def _lottie_pulse_animation() -> dict[str, Any]:
+    """Minimal Lottie JSON: three pulsing dots in clinical green."""
+    green = [90, 138, 111]  # #5A8A6F as RGB 0-255
+
+    def _dot(delay: float, cx: int) -> dict[str, Any]:
+        return {
+            "ty": "gr",
+            "it": [
+                {
+                    "ty": "el",
+                    "p": {"a": 0, "k": [cx, 50]},
+                    "s": {"a": 0, "k": [16, 16]},
+                },
+                {
+                    "ty": "fl",
+                    "c": {"a": 0, "k": [green[0] / 255, green[1] / 255, green[2] / 255, 1]},
+                    "o": {"a": 0, "k": 100},
+                },
+                {
+                    "ty": "tr",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "a": {"a": 0, "k": [0, 0]},
+                    "s": {
+                        "a": 1,
+                        "k": [
+                            {"t": 0 + delay, "s": [100, 100], "e": [140, 140]},
+                            {"t": 10 + delay, "s": [140, 140], "e": [100, 100]},
+                            {"t": 20 + delay, "s": [100, 100]},
+                        ],
+                    },
+                    "o": {
+                        "a": 1,
+                        "k": [
+                            {"t": 0 + delay, "s": [50], "e": [100]},
+                            {"t": 10 + delay, "s": [100], "e": [50]},
+                            {"t": 20 + delay, "s": [50]},
+                        ],
+                    },
+                    "r": {"a": 0, "k": 0},
+                },
+            ],
+        }
+
+    return {
+        "v": "5.7.1",
+        "fr": 30,
+        "ip": 0,
+        "op": 40,
+        "w": 120,
+        "h": 100,
+        "assets": [],
+        "layers": [
+            {
+                "ty": 4,
+                "ip": 0,
+                "op": 40,
+                "st": 0,
+                "sr": 1,
+                "ks": {
+                    "o": {"a": 0, "k": 100},
+                    "p": {"a": 0, "k": [60, 50, 0]},
+                    "a": {"a": 0, "k": [60, 50, 0]},
+                    "s": {"a": 0, "k": [100, 100, 100]},
+                    "r": {"a": 0, "k": 0},
+                },
+                "shapes": [_dot(0, 30), _dot(6, 60), _dot(12, 90)],
+            }
+        ],
+    }
+
+
+_LOTTIE_ANIM = _lottie_pulse_animation()
+_lottie_counter = 0
+
+
+def lottie_loading(message: str = "Loading...") -> None:
+    """Display a Lottie loading animation with a message."""
+    global _lottie_counter
+    _lottie_counter += 1
+    cols = st.columns([1, 2, 1])
+    with cols[1]:
+        st_lottie(_LOTTIE_ANIM, height=60, key=f"lottie_load_{_lottie_counter}")
+        st.markdown(
+            f'<p style="text-align:center;color:#5A6B5F;font-size:0.8125rem;'
+            f'font-weight:500;margin-top:-0.5rem;">{html.escape(message)}</p>',
+            unsafe_allow_html=True,
+        )
+
+
+def empty_state(title: str, detail: str, *, icon: str = "&#128269;") -> None:
+    """Render a styled empty state placeholder."""
+    st.markdown(
+        f'<div class="empty-state">'
+        f'<div class="icon">{icon}</div>'
+        f'<div class="title">{html.escape(title)}</div>'
+        f'<div class="detail">{detail}</div>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
+
+
 def styled_dataframe(
     df: "pd.DataFrame",
     *,
@@ -697,9 +862,10 @@ def styled_dataframe(
 ) -> None:
     """Render a DataFrame with professional styling."""
     display = df.head(max_rows) if max_rows else df
-    st.dataframe(
-        display,
-        use_container_width=True,
-        hide_index=True,
-        height=height,
-    )
+    kwargs: dict[str, Any] = {
+        "use_container_width": True,
+        "hide_index": True,
+    }
+    if height is not None:
+        kwargs["height"] = height
+    st.dataframe(display, **kwargs)
