@@ -1180,7 +1180,7 @@ elif page == "ML Model Explainability":
         barmode='group',
         title='Model Performance Metrics',
         labels={'Score': 'Score (0-1)'},
-        color_discrete_sequence=['#5A8A6F', '#8FA89A', '#6B8E7A', '#5B8A9A']  # Sage green palette
+        color_discrete_sequence=['#3D7A55', '#5A8A6F', '#8FA89A', '#B8A99A']  # Darker to lighter: success green, sage, light sage, taupe
     )
     fig_comparison.update_layout(
         height=400,
