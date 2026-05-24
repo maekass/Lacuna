@@ -19,10 +19,6 @@
 
 **Certification Hash:** `971ACF8592ADEA0E` | **Grade:** A+ (Excellent) | **[View Certificate →](DATA_VERIFICATION_CERTIFICATE.md)**
 
-### Don't Trust Me. Verify It Yourself. (2 Minutes)
-
-**I claim 100% real data. Prove me wrong (or right):**
-
 #### Option 1: One-Click Verification (Zero Installation)
 
 **Just click links - no code, no installation:**
@@ -46,7 +42,7 @@
 - Validates all sources are cited
 - Generates hash: `971ACF8592ADEA0E`
 
-**[ VERIFY THIS DATA - Challenge Me! →](VERIFY_THIS_DATA.md)** | **[ Verification Guide →](VERIFY.md)** | **[ Spot Check →](https://clinicaltrials.gov/study/NCT04846959)**
+**[ Verification Guide →](VERIFY.md)** | **[ Spot Check →](https://clinicaltrials.gov/study/NCT04846959)**
 
 > ** Automated Daily Certification:** This data is automatically verified every day at 6 AM UTC via GitHub Actions. [View workflow →](https://github.com/maekass/MPK1/actions/workflows/daily-data-certification.yml)
 
