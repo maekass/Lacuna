@@ -103,11 +103,11 @@ Status: PASSED"
             
             The automated daily data certification check has failed. This means one or more of the following tests did not pass:
             
-            - FAILED: Clinical Trials Verification (6,819 trials)
-            - FAILED: Epidemiology Data Verification (15 diseases)
-            - FAILED: FDA Drug Approval Verification (535 drugs)
-            - FAILED: Synthetic Data Absence Check
-            - FAILED: Quality Score Verification (>= 90/100)
+            - ❌ Clinical Trials Verification (6,819 trials)
+            - ❌ Epidemiology Data Verification (15 diseases)
+            - ❌ FDA Drug Approval Verification (535 drugs)
+            - ❌ Synthetic Data Absence Check
+            - ❌ Quality Score Verification (>= 90/100)
             
             ### Action Required
             
@@ -145,7 +145,7 @@ Status: PASSED"
               });
             }
       
-      - name: Upload Certification Report
+      - name: 📈 Upload Certification Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -156,22 +156,22 @@ Status: PASSED"
             certification_output.txt
           retention-days: 90
       
-      - name: Post Success Comment
+      - name: 🎉 Post Success Comment
         if: success() && github.event_name == 'push'
         uses: actions/github-script@v7
         with:
           script: |
-            const message = `##  Data Certification Passed
+            const message = `## ✅ Data Certification Passed
             
             **Hash:** \`${{ steps.certification.outputs.cert_hash }}\`
             **Date:** ${new Date().toUTCString()}
             
             All data quality checks passed:
-            - PASSED: 6,819 clinical trials verified
-            - PASSED: 15 diseases with epidemiology data
-            - PASSED: 535 FDA drugs verified
-            - PASSED: Zero synthetic data
-            - PASSED: Quality score: 99.96/100
+            - ✅ 6,819 clinical trials verified
+            - ✅ 15 diseases with epidemiology data
+            - ✅ 535 FDA drugs verified
+            - ✅ Zero synthetic data
+            - ✅ Quality score: 99.96/100
             
             [View Certificate](${context.payload.repository.html_url}/blob/main/DATA_VERIFICATION_CERTIFICATE.md)
             `;
@@ -199,7 +199,7 @@ Status: PASSED"
     if: always()
     
     steps:
-      - name: Certification Summary
+      - name: 📊 Certification Summary
         run: |
           echo "=================================="
           echo "DAILY DATA CERTIFICATION SUMMARY"

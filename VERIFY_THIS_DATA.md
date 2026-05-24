@@ -1,4 +1,4 @@
-# 🔐 VERIFY THIS DATA - CHALLENGE ME!
+# VERIFY THIS DATA - CHALLENGE ME!
 
 ## Don't Trust Me. Verify It Yourself.
 
@@ -6,7 +6,7 @@
 
 ---
 
-## ⚡ 2-Minute Challenge
+## 2-Minute Challenge
 
 Run this ONE command and see for yourself:
 
@@ -15,44 +15,44 @@ Run this ONE command and see for yourself:
 ```
 
 **What this does:**
-- ✅ Verifies 10 random clinical trials on ClinicalTrials.gov (live API calls)
-- ✅ Checks all 6,819 trials have complete data
-- ✅ Confirms zero synthetic/demo files exist
-- ✅ Validates all epidemiology sources are cited
-- ✅ Verifies all 535 FDA drugs are from openFDA
-- ✅ Generates cryptographic hash: `971ACF8592ADEA0E`
+- Verifies 10 random clinical trials on ClinicalTrials.gov (live API calls)
+- Checks all 6,819 trials have complete data
+- Confirms zero synthetic/demo files exist
+- Validates all epidemiology sources are cited
+- Verifies all 535 FDA drugs are from openFDA
+- Generates cryptographic hash: `971ACF8592ADEA0E`
 
-**Expected result:** All tests pass ✅
+**Expected result:** All tests pass 
 
 **If ANY test fails, this certification is invalid.** 
 
 ---
 
-## 🎯 What You'll Independently Confirm
+## What You'll Independently Confirm
 
 After running verification, you will have **personally verified**:
 
 | Claim | Your Verification |
 |-------|-------------------|
-| "6,819 clinical trials" | ✅ You verify 10 random NCT IDs on ClinicalTrials.gov |
-| "100% real data" | ✅ You confirm zero synthetic files exist |
-| "99.96/100 quality score" | ✅ You see the calculation yourself |
-| "62.5M patients" | ✅ You check all sources are cited |
-| "535 FDA drugs" | ✅ You verify all are from openFDA |
-| "Zero synthetic data" | ✅ You scan the entire data folder |
+| "6,819 clinical trials" | You verify 10 random NCT IDs on ClinicalTrials.gov |
+| "100% real data" | You confirm zero synthetic files exist |
+| "99.96/100 quality score" | You see the calculation yourself |
+| "62.5M patients" | You check all sources are cited |
+| "535 FDA drugs" | You verify all are from openFDA |
+| "Zero synthetic data" | You scan the entire data folder |
 
 **No trust required. Just verification.**
 
 ---
 
-## 🚀 Three Ways to Verify (Pick Your Level)
+## Three Ways to Verify (Pick Your Level)
 
 ### Level 1: Trust Nothing (Automated Verification)
 ```bash
 ./verify_data.sh
 ```
-**Time:** 2 minutes  
-**Difficulty:** Copy-paste  
+**Time:** 2 minutes 
+**Difficulty:** Copy-paste 
 **What it does:** Runs all 5 certification tests automatically
 
 ---
@@ -61,8 +61,8 @@ After running verification, you will have **personally verified**:
 ```bash
 python3 scripts/generate_data_certification.py
 ```
-**Time:** 2 minutes  
-**Difficulty:** Basic Python  
+**Time:** 2 minutes 
+**Difficulty:** Basic Python 
 **What it does:** Same as Level 1, but you run the Python directly
 
 ---
@@ -94,7 +94,7 @@ python3 scripts/generate_data_certification.py
 
 ---
 
-## 🔬 What The Verification Actually Does
+## What The Verification Actually Does
 
 ### Test 1: Clinical Trials (Most Important)
 ```python
@@ -109,7 +109,7 @@ python3 scripts/generate_data_certification.py
 - https://clinicaltrials.gov/study/NCT03979352
 - https://clinicaltrials.gov/study/NCT05114278
 
-All should load successfully! ✅
+All should load successfully! 
 
 ### Test 2: Epidemiology Sources
 ```python
@@ -144,7 +144,7 @@ All should load successfully! ✅
 
 ---
 
-## 🎓 For Skeptics
+## For Skeptics
 
 ### "How do I know the verification isn't fake?"
 
@@ -161,8 +161,8 @@ It makes REAL API calls to ClinicalTrials.gov. You can see the URLs in the code.
 
 Try it twice:
 ```bash
-./verify_data.sh  # Run 1
-./verify_data.sh  # Run 2 - different NCT IDs verified
+./verify_data.sh # Run 1
+./verify_data.sh # Run 2 - different NCT IDs verified
 ```
 
 ### "What if ClinicalTrials.gov is down?"
@@ -182,14 +182,14 @@ head -100 data/processed/enhanced_clinical_trials.csv | tail -1
 
 ---
 
-## 🏆 The Challenge
+## The Challenge
 
 **I challenge you to find:**
-- ❌ A single NCT ID that doesn't exist on ClinicalTrials.gov
-- ❌ A single synthetic/demo data file
-- ❌ A single disease without a cited source
-- ❌ A single FDA drug not from openFDA
-- ❌ Any evidence the quality score is inflated
+- A single NCT ID that doesn't exist on ClinicalTrials.gov
+- A single synthetic/demo data file
+- A single disease without a cited source
+- A single FDA drug not from openFDA
+- Any evidence the quality score is inflated
 
 **If you find ANY of these, the certification is invalid.**
 
@@ -197,32 +197,32 @@ head -100 data/processed/enhanced_clinical_trials.csv | tail -1
 
 ---
 
-## 📊 Expected Output
+## Expected Output
 
 When you run `./verify_data.sh`, you should see:
 
 ```
 ================================================================================
-✅ VERIFICATION COMPLETE - ALL TESTS PASSED!
+VERIFICATION COMPLETE - ALL TESTS PASSED!
 ================================================================================
 
 Your verification confirms:
-  ✅ 6,819 clinical trials verified on ClinicalTrials.gov
-  ✅ 100% real data from verified public sources
-  ✅ Zero synthetic or demo data
-  ✅ Quality score: 99.96/100 (Grade: A+)
-  ✅ Certification hash matches: 971ACF8592ADEA0E
+6,819 clinical trials verified on ClinicalTrials.gov
+100% real data from verified public sources
+Zero synthetic or demo data
+Quality score: 99.96/100 (Grade: A+)
+Certification hash matches: 971ACF8592ADEA0E
 
-📄 Full certificate: DATA_VERIFICATION_CERTIFICATE.md
+Full certificate: DATA_VERIFICATION_CERTIFICATE.md
 ```
 
-**If you see this, every claim is verified.** ✅
+**If you see this, every claim is verified.** 
 
-**If you see errors, something is wrong.** ❌
+**If you see errors, something is wrong.** 
 
 ---
 
-## 🚨 What If Verification Fails?
+## What If Verification Fails?
 
 If verification fails, it means:
 1. The data has been modified
@@ -233,7 +233,7 @@ If verification fails, it means:
 
 ---
 
-## 💡 Why This Matters
+## Why This Matters
 
 ### Most Data Science Projects:
 - "I used real data" ← No proof
@@ -247,7 +247,7 @@ If verification fails, it means:
 
 ---
 
-## 🎯 Bottom Line
+## Bottom Line
 
 **You don't have to trust me.**
 
@@ -259,7 +259,7 @@ If verification fails, it means:
 
 ---
 
-## ⚡ Ready?
+## Ready?
 
 ```bash
 ./verify_data.sh
@@ -269,7 +269,7 @@ If verification fails, it means:
 
 ---
 
-## 📞 Questions?
+## Questions?
 
 - **How long does it take?** 1-2 minutes
 - **Do I need to install anything?** No, the script auto-installs dependencies
@@ -280,4 +280,4 @@ If verification fails, it means:
 
 ---
 
-**Don't take my word for it. Verify it yourself.** 🔐
+**Don't take my word for it. Verify it yourself.** 

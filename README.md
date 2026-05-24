@@ -7,7 +7,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 [![Daily Certification](https://github.com/maekass/MPK1/actions/workflows/daily-data-certification.yml/badge.svg)](https://github.com/maekass/MPK1/actions/workflows/daily-data-certification.yml)
 
-## 🏆 Data Verification Certification
+## Data Verification Certification
 
 [![Data Quality](https://img.shields.io/badge/Data%20Quality-99.96%2F100-brightgreen?style=for-the-badge&logo=checkmarx)](DATA_VERIFICATION_CERTIFICATE.md)
 [![Certified Real Data](https://img.shields.io/badge/Certified-100%25%20Real%20Data-success?style=for-the-badge&logo=shield)](DATA_VERIFICATION_CERTIFICATE.md)
@@ -15,7 +15,7 @@
 
 **Certification Hash:** `971ACF8592ADEA0E` | **Grade:** A+ (Excellent) | **[View Certificate →](DATA_VERIFICATION_CERTIFICATE.md)**
 
-### ⚡ Don't Trust Me. Verify It Yourself. (2 Minutes)
+### Don't Trust Me. Verify It Yourself. (2 Minutes)
 
 **I claim 100% real data. Prove me wrong (or right):**
 
@@ -24,14 +24,14 @@
 ```
 
 **What this does:**
-- ✅ Verifies 10 random NCT IDs on ClinicalTrials.gov (live API calls)
-- ✅ Confirms zero synthetic files exist
-- ✅ Validates all sources are cited
-- ✅ Generates hash: `971ACF8592ADEA0E`
+- Verifies 10 random NCT IDs on ClinicalTrials.gov (live API calls)
+- Confirms zero synthetic files exist
+- Validates all sources are cited
+- Generates hash: `971ACF8592ADEA0E`
 
-**[� VERIFY THIS DATA - Challenge Me! →](VERIFY_THIS_DATA.md)** | **[📖 Verification Guide →](VERIFY.md)** | **[🔍 Spot Check →](https://clinicaltrials.gov/study/NCT04846959)**
+**[ VERIFY THIS DATA - Challenge Me! →](VERIFY_THIS_DATA.md)** | **[ Verification Guide →](VERIFY.md)** | **[ Spot Check →](https://clinicaltrials.gov/study/NCT04846959)**
 
-> **🤖 Automated Daily Certification:** This data is automatically verified every day at 6 AM UTC via GitHub Actions. [View workflow →](https://github.com/maekass/MPK1/actions/workflows/daily-data-certification.yml)
+> ** Automated Daily Certification:** This data is automatically verified every day at 6 AM UTC via GitHub Actions. [View workflow →](https://github.com/maekass/MPK1/actions/workflows/daily-data-certification.yml)
 
 ---
 
@@ -39,16 +39,16 @@
 
 | Metric | Value | Verification |
 |--------|-------|--------------|
-| **Clinical Trials** | 6,819 trials | ✅ 100% verified on ClinicalTrials.gov |
-| **Diseases Covered** | 15 diseases | ✅ All with epidemiology data |
-| **U.S. Patients** | 62.5 million | ✅ All sources cited (Orphanet, CDC) |
-| **Total Market** | $766 billion | ✅ Calculated from real prevalence data |
-| **FDA Drugs** | 535 drugs | ✅ 100% from openFDA API |
-| **Synthetic Data** | 0 files | ✅ Independently verified |
-| **NCT ID Verification** | 100% | ✅ Random sample verified |
-| **Field Completeness** | 99.2% | ✅ All critical fields |
+| **Clinical Trials** | 6,819 trials | 100% verified on ClinicalTrials.gov |
+| **Diseases Covered** | 15 diseases | All with epidemiology data |
+| **U.S. Patients** | 62.5 million | All sources cited (Orphanet, CDC) |
+| **Total Market** | $766 billion | Calculated from real prevalence data |
+| **FDA Drugs** | 535 drugs | 100% from openFDA API |
+| **Synthetic Data** | 0 files | Independently verified |
+| **NCT ID Verification** | 100% | Random sample verified |
+| **Field Completeness** | 99.2% | All critical fields |
 
-**🔐 Independent Verification:** Run `python scripts/generate_data_certification.py` to verify all claims.
+** Independent Verification:** Run `python scripts/generate_data_certification.py` to verify all claims.
 
 ---
 
@@ -82,7 +82,7 @@
 
 ---
 
-## ⚠️ Legal Disclaimer
+## Legal Disclaimer
 
 **FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY**
 
@@ -93,11 +93,11 @@ This platform is designed for academic research and learning. It is **NOT**:
 - Approved for clinical or regulatory decision-making
 
 **Data Compliance:**
-- ✅ All data is publicly available and delayed (15+ minutes for market data)
-- ✅ No patient-level or private health information (HIPAA compliant)
-- ✅ No insider trading or material non-public information
-- ✅ Illustrative scores and private-market figures are demo weights only
-- ✅ Users must verify compliance with applicable securities (SEC, FINRA) and health-data regulations before any production or commercial use
+- All data is publicly available and delayed (15+ minutes for market data)
+- No patient-level or private health information (HIPAA compliant)
+- No insider trading or material non-public information
+- Illustrative scores and private-market figures are demo weights only
+- Users must verify compliance with applicable securities (SEC, FINRA) and health-data regulations before any production or commercial use
 
 **Model Limitations:**
 - Past performance does not guarantee future results
@@ -212,47 +212,47 @@ Professional, publication-ready charts using Tableau design principles:
 
 ```
 immunology-investment-platform/
-├── data/
-│   ├── raw/                           # Raw data from APIs
-│   │   ├── data_manifest.json         # Data provenance tracking (gitignored)
-│   │   └── .gitkeep
-│   └── processed/                     # Cleaned, feature-engineered data
-├── notebooks/
-│   ├── 01_data_exploration.ipynb
-│   ├── 02_trial_success_prediction.ipynb
-│   ├── 03_event_study_analysis.ipynb
-│   └── 04_portfolio_optimization.ipynb
-├── src/
-│   ├── data_collection/
-│   │   ├── collect_all_data.py        # Main orchestrator
-│   │   ├── collect_health_data.py     # Clinical trials, FDA data
-│   │   ├── collect_stock_data.py      # Stock prices, financials
-│   │   ├── collect_vc_growth_data.py  # Private market data
-│   │   ├── disease_config.py          # Disease-specific configs
-│   │   └── data_manifest.py           # Provenance tracking
-│   ├── models/
-│   │   ├── trial_success_predictor.py # Base ML trial predictor
-│   │   ├── enhanced_trial_predictor.py # Enhanced with NLP + 30+ features
-│   │   ├── market_analysis.py         # Market sizing, TAM
-│   │   └── investment_stage_analysis.py
-│   ├── quant_framework/
-│   │   ├── event_study.py
-│   │   ├── factor_models.py
-│   │   ├── portfolio_optimizer.py
-│   │   ├── risk_metrics.py
-│   │   ├── pairs_trading.py           # Statistical arbitrage (NEW)
-│   │   └── regime_detection.py        # HMM market regimes (NEW)
-│   └── visualization/
-│       └── dashboard_components.py
-├── dashboard/
-│   ├── app.py                         # Streamlit dashboard
-│   └── advanced_visualizations.py     # 8 new viz types (NEW)
-├── docs/
-│   ├── index.html                     # Landing page
-│   └── article-draft.md               # Medium/LinkedIn article (NEW)
-├── requirements.txt
-├── .gitignore
-└── README.md
+data/
+raw/ # Raw data from APIs
+data_manifest.json # Data provenance tracking (gitignored)
+.gitkeep
+processed/ # Cleaned, feature-engineered data
+notebooks/
+01_data_exploration.ipynb
+02_trial_success_prediction.ipynb
+03_event_study_analysis.ipynb
+04_portfolio_optimization.ipynb
+src/
+data_collection/
+collect_all_data.py # Main orchestrator
+collect_health_data.py # Clinical trials, FDA data
+collect_stock_data.py # Stock prices, financials
+collect_vc_growth_data.py # Private market data
+disease_config.py # Disease-specific configs
+data_manifest.py # Provenance tracking
+models/
+trial_success_predictor.py # Base ML trial predictor
+enhanced_trial_predictor.py # Enhanced with NLP + 30+ features
+market_analysis.py # Market sizing, TAM
+investment_stage_analysis.py
+quant_framework/
+event_study.py
+factor_models.py
+portfolio_optimizer.py
+risk_metrics.py
+pairs_trading.py # Statistical arbitrage (NEW)
+regime_detection.py # HMM market regimes (NEW)
+visualization/
+dashboard_components.py
+dashboard/
+app.py # Streamlit dashboard
+advanced_visualizations.py # 8 new viz types (NEW)
+docs/
+index.html # Landing page
+article-draft.md # Medium/LinkedIn article (NEW)
+requirements.txt
+.gitignore
+README.md
 ```
 
 ---
@@ -275,11 +275,11 @@ immunology-investment-platform/
 
 ### Enhanced ML Model
 - **30+ Features** including:
-  - **NLP Extraction**: Keywords from trial descriptions (novel, breakthrough, gene therapy, etc.)
-  - **Enrollment Velocity**: Patients/month as efficacy signal
-  - **Sponsor Intelligence**: Big pharma vs biotech vs academic, historical approval count
-  - **Competitive Landscape**: Competing trials, market saturation metrics
-  - **Temporal Patterns**: Trial duration, time since last update
+- **NLP Extraction**: Keywords from trial descriptions (novel, breakthrough, gene therapy, etc.)
+- **Enrollment Velocity**: Patients/month as efficacy signal
+- **Sponsor Intelligence**: Big pharma vs biotech vs academic, historical approval count
+- **Competitive Landscape**: Competing trials, market saturation metrics
+- **Temporal Patterns**: Trial duration, time since last update
 - **Ensemble Architecture**: RF + GB + LR + XGBoost with optimized weights
 - **Calibration**: Isotonic calibration to published success rates
 
@@ -311,7 +311,7 @@ cd Immunology-Investment-Intelligence
 
 # Create virtual environment
 python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
+source .venv/bin/activate # Windows: .venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
@@ -350,14 +350,14 @@ After running data collection, the platform generates `data/raw/data_manifest.js
 **Important Considerations:**
 
 1. **Population Metrics**: Epidemiological data (e.g., `cdc_sickle_cell_data.csv`) are currently **illustrative time series** generated for demonstration. For authoritative research:
-   - Replace with primary sources ([CDC](https://www.cdc.gov/ncbddd/sicklecell/data.html), peer-reviewed studies, agency surveillance)
-   - Document extraction dates and methodology
-   - Cite all data sources properly
+- Replace with primary sources ([CDC](https://www.cdc.gov/ncbddd/sicklecell/data.html), peer-reviewed studies, agency surveillance)
+- Document extraction dates and methodology
+- Cite all data sources properly
 
 2. **Health Equity**: Disparate disease burden and treatment access are legitimate research topics. However:
-   - Keep population-level public statistics separate from investment framing
-   - Avoid implying that communities exist to validate financial theses
-   - Approach with appropriate sensitivity and ethical consideration
+- Keep population-level public statistics separate from investment framing
+- Avoid implying that communities exist to validate financial theses
+- Approach with appropriate sensitivity and ethical consideration
 
 3. **Dashboard Disclaimers**: The Streamlit app displays non-advisory disclaimers on all pages
 
@@ -408,7 +408,7 @@ After running data collection, the platform generates `data/raw/data_manifest.js
 
 ## Roadmap
 
-### ✅ Completed
+### Completed
 - [x] Multi-disease data collection infrastructure
 - [x] Clinical trial API integration
 - [x] ML trial success predictor (base + enhanced with 30+ features)
@@ -422,11 +422,11 @@ After running data collection, the platform generates `data/raw/data_manifest.js
 - [x] **Medium/LinkedIn article** (6,000+ words)
 - [x] **Case study** (sickle cell gene therapy analysis)
 
-### 🚧 In Progress
+### In Progress
 - [ ] Real-time event study automation
 - [ ] Integration of advanced viz into main dashboard
 
-### 📋 Planned
+### Planned
 - [ ] Deep learning models (LSTM, Transformers)
 - [ ] Automated report generation
 - [ ] API endpoint for predictions
@@ -465,7 +465,7 @@ Project Link: [https://github.com/maekass/Immunology-Investment-Intelligence](ht
 
 ---
 
-## � Advanced Python Demonstrations
+## Advanced Python Demonstrations
 
 **NEW**: Comprehensive module showcasing advanced Python proficiency (1,500+ lines)
 
@@ -522,7 +522,7 @@ python3 src/advanced_python/data_structures_algorithms.py
 
 ---
 
-## �💼 Commercial Viability for Healthcare Investors
+## Commercial Viability for Healthcare Investors
 
 This platform is designed with rare disease investment analysis in mind and can be adapted for commercial use with proper validation:
 
@@ -555,7 +555,7 @@ This platform is designed with rare disease investment analysis in mind and can 
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 - **[Internal Tools Appendix](docs/INTERNAL_TOOLS_APPENDIX.md)** - Complete guide to all analytical tools and models
 - **[Deployment Guide](DEPLOYMENT.md)** - Streamlit Cloud deployment instructions
@@ -566,4 +566,4 @@ This platform is designed with rare disease investment analysis in mind and can 
 
 ---
 
-**⭐ If you find this project useful for your research or learning, please consider giving it a star!**
+** If you find this project useful for your research or learning, please consider giving it a star!**

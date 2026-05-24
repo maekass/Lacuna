@@ -33,7 +33,7 @@ def test_1_clinical_trials_verification():
     if len(df) == 0:
         return {"status": "FAIL", "reason": "No data in file"}
     
-    print(f"PASS: Test 1.1: File exists with {len(df):,} trials")
+    print(f"✅ Test 1.1: File exists with {len(df):,} trials")
     
     # Test 1.2: All required fields present
     required_fields = ['nct_id', 'status', 'enrollment', 'sponsor_type', 'outcome']
@@ -42,7 +42,7 @@ def test_1_clinical_trials_verification():
     if missing_fields:
         return {"status": "FAIL", "reason": f"Missing fields: {missing_fields}"}
     
-    print(f"PASS: Test 1.2: All required fields present")
+    print(f"✅ Test 1.2: All required fields present")
     
     # Test 1.3: Field completeness >= 95%
     completeness_failures = []
@@ -54,14 +54,14 @@ def test_1_clinical_trials_verification():
     if completeness_failures:
         return {"status": "FAIL", "reason": f"Low completeness: {completeness_failures}"}
     
-    print(f"PASS: Test 1.3: Field completeness >= 95%")
+    print(f"✅ Test 1.3: Field completeness >= 95%")
     
     # Test 1.4: Verify random NCT IDs on ClinicalTrials.gov
     sample_size = min(10, len(df))
     sample_ncts = df['nct_id'].sample(sample_size).tolist()
     verified = 0
     
-    print(f"\nVerifying Test 1.4: Verifying {sample_size} random NCT IDs...")
+    print(f"\n🔍 Test 1.4: Verifying {sample_size} random NCT IDs...")
     
     for nct_id in sample_ncts:
         try:
@@ -69,18 +69,18 @@ def test_1_clinical_trials_verification():
             response = requests.get(url, timeout=10)
             if response.status_code == 200:
                 verified += 1
-                print(f"   PASS: {nct_id}: Verified")
+                print(f"   ✅ {nct_id}: Verified")
             else:
-                print(f"   FAIL: {nct_id}: Not found (HTTP {response.status_code})")
+                print(f"   ❌ {nct_id}: Not found (HTTP {response.status_code})")
         except Exception as e:
-            print(f"   WARN:  {nct_id}: Error - {str(e)[:30]}")
+            print(f"   ⚠️  {nct_id}: Error - {str(e)[:30]}")
     
     verification_rate = (verified / sample_size) * 100
     
     if verification_rate < 80:
         return {"status": "FAIL", "reason": f"Low verification rate: {verification_rate:.0f}%"}
     
-    print(f"PASS: Test 1.4: {verified}/{sample_size} NCT IDs verified ({verification_rate:.0f}%)")
+    print(f"✅ Test 1.4: {verified}/{sample_size} NCT IDs verified ({verification_rate:.0f}%)")
     
     # Test 1.5: No synthetic data patterns
     synthetic_patterns = ['DEMO', 'TEST', 'SYNTHETIC', 'FAKE', 'SAMPLE']
@@ -93,7 +93,7 @@ def test_1_clinical_trials_verification():
     if synthetic_found:
         return {"status": "FAIL", "reason": f"Synthetic patterns found: {synthetic_found}"}
     
-    print(f"PASS: Test 1.5: No synthetic data patterns detected")
+    print(f"✅ Test 1.5: No synthetic data patterns detected")
     
     return {
         "status": "PASS",
@@ -125,7 +125,7 @@ def test_2_epidemiology_verification():
     if sources_missing > 0:
         return {"status": "FAIL", "reason": f"{sources_missing} diseases missing sources"}
     
-    print(f"PASS: Test 2.1: All {len(df)} diseases have sources cited")
+    print(f"✅ Test 2.1: All {len(df)} diseases have sources cited")
     
     # Test 2.2: Prevalence values are reasonable
     if 'prevalence_per_100k' not in df.columns:
@@ -135,14 +135,14 @@ def test_2_epidemiology_verification():
     if len(unreasonable) > 0:
         return {"status": "FAIL", "reason": f"{len(unreasonable)} diseases with unreasonable prevalence"}
     
-    print(f"PASS: Test 2.2: All prevalence values are reasonable (<100% of population)")
+    print(f"✅ Test 2.2: All prevalence values are reasonable (<100% of population)")
     
     # Test 2.3: ICD-10 codes present
     if 'icd10_code' not in df.columns:
         return {"status": "WARN", "reason": "No ICD-10 codes"}
     
     icd10_present = df['icd10_code'].notna().sum()
-    print(f"PASS: Test 2.3: {icd10_present}/{len(df)} diseases have ICD-10 codes")
+    print(f"✅ Test 2.3: {icd10_present}/{len(df)} diseases have ICD-10 codes")
     
     return {
         "status": "PASS",
@@ -173,7 +173,7 @@ def test_3_fda_verification():
     if len(no_name) > 0:
         return {"status": "FAIL", "reason": f"{len(no_name)} drugs with no name"}
     
-    print(f"PASS: Test 3.1: All {len(df)} drugs have brand or generic names")
+    print(f"✅ Test 3.1: All {len(df)} drugs have brand or generic names")
     
     # Test 3.2: Source is openFDA
     if 'source' in df.columns:
@@ -181,7 +181,7 @@ def test_3_fda_verification():
         if len(non_openfda) > 0:
             return {"status": "WARN", "reason": f"{len(non_openfda)} drugs from non-openFDA sources"}
     
-    print(f"PASS: Test 3.2: All drugs sourced from openFDA")
+    print(f"✅ Test 3.2: All drugs sourced from openFDA")
     
     return {
         "status": "PASS",
@@ -217,7 +217,7 @@ def test_4_no_synthetic_data():
     if synthetic_present:
         return {"status": "FAIL", "reason": f"{len(synthetic_present)} synthetic files present: {synthetic_present[:3]}"}
     
-    print(f"PASS: Test 4.1: No synthetic files marked as present in manifest")
+    print(f"✅ Test 4.1: No synthetic files marked as present in manifest")
     
     # Test 4.2: data/demo folder doesn't exist
     demo_path = ROOT / "data" / "demo"
@@ -226,7 +226,7 @@ def test_4_no_synthetic_data():
         if demo_files:
             return {"status": "FAIL", "reason": f"{len(demo_files)} files in data/demo"}
     
-    print(f"PASS: Test 4.2: No data/demo folder (or empty)")
+    print(f"✅ Test 4.2: No data/demo folder (or empty)")
     
     # Test 4.3: archived_synthetic is gitignored
     gitignore_path = ROOT / ".gitignore"
@@ -237,7 +237,7 @@ def test_4_no_synthetic_data():
         if "archived_synthetic" not in gitignore:
             return {"status": "WARN", "reason": "archived_synthetic not in .gitignore"}
     
-    print(f"PASS: Test 4.3: archived_synthetic/ is gitignored")
+    print(f"✅ Test 4.3: archived_synthetic/ is gitignored")
     
     return {
         "status": "PASS",
@@ -265,7 +265,7 @@ def test_5_data_quality_score():
     if quality_score < 90:
         return {"status": "FAIL", "reason": f"Quality score too low: {quality_score}/100"}
     
-    print(f"PASS: Test 5.1: Quality score is {quality_score}/100 (>= 90 required)")
+    print(f"✅ Test 5.1: Quality score is {quality_score}/100 (>= 90 required)")
     
     return {
         "status": "PASS",
@@ -342,19 +342,19 @@ def generate_certification():
     print("CERTIFICATION SUMMARY")
     print("="*80)
     
-    print(f"\nStats: Test Results:")
+    print(f"\n📊 Test Results:")
     for name, result in all_tests.items():
         status = result.get("status", "UNKNOWN")
-        emoji = "PASS:" if status == "PASS" else "WARN:" if status == "WARN" else "FAIL:"
+        emoji = "✅" if status == "PASS" else "⚠️" if status == "WARN" else "❌"
         print(f"{emoji} {name:30}: {status}")
         if status == "FAIL":
             print(f"   Reason: {result.get('reason', 'Unknown')}")
     
-    print(f"\nTarget: Overall Status: {overall_status}")
-    print(f"Grade: Certification Level: {certification_level}")
-    print(f"Hash: Certification Hash: {results['certification_hash']}")
+    print(f"\n🎯 Overall Status: {overall_status}")
+    print(f"🏆 Certification Level: {certification_level}")
+    print(f"🔐 Certification Hash: {results['certification_hash']}")
     
-    print(f"\nSaved: Certificates saved:")
+    print(f"\n💾 Certificates saved:")
     print(f"   - {cert_path}")
     print(f"   - {cert_md_path}")
     
@@ -363,10 +363,10 @@ def generate_certification():
         print("🎉 CERTIFICATION GRANTED! 🎉")
         print("="*80)
         print("\nYour data platform is officially certified as:")
-        print("  PASS: 100% Real Data from Verified Public Sources")
-        print("  PASS: No Synthetic or Illustrative Data")
-        print("  PASS: All Claims Independently Verified")
-        print("  PASS: Quality Score >= 90/100")
+        print("  ✅ 100% Real Data from Verified Public Sources")
+        print("  ✅ No Synthetic or Illustrative Data")
+        print("  ✅ All Claims Independently Verified")
+        print("  ✅ Quality Score >= 90/100")
         print("\nYou may display the certification badge and reference")
         print("the certification hash in your documentation.")
     
@@ -378,7 +378,7 @@ def generate_certificate_markdown(results):
     
     cert_date = datetime.fromisoformat(results["certification_date"]).strftime("%B %d, %Y at %H:%M UTC")
     
-    md = f"""# Grade: DATA VERIFICATION CERTIFICATE
+    md = f"""# 🏆 DATA VERIFICATION CERTIFICATE
 
 **Certification Level:** {results['certification_level']}  
 **Certification Date:** {cert_date}  
@@ -390,11 +390,11 @@ def generate_certificate_markdown(results):
 
 This certificate verifies that the data platform has undergone comprehensive automated testing and validation to ensure:
 
-1. PASS: **100% Real Data** - All data sourced from verified public APIs
-2. PASS: **Zero Synthetic Data** - No illustrative, demo, or synthetic data present
-3. PASS: **Verifiable Claims** - All NCT IDs verifiable on ClinicalTrials.gov
-4. PASS: **Proper Citations** - All epidemiology data properly sourced
-5. PASS: **High Quality** - Data quality score >= 90/100
+1. ✅ **100% Real Data** - All data sourced from verified public APIs
+2. ✅ **Zero Synthetic Data** - No illustrative, demo, or synthetic data present
+3. ✅ **Verifiable Claims** - All NCT IDs verifiable on ClinicalTrials.gov
+4. ✅ **Proper Citations** - All epidemiology data properly sourced
+5. ✅ **High Quality** - Data quality score >= 90/100
 
 ---
 
@@ -466,7 +466,7 @@ This certificate verifies that the data platform has undergone comprehensive aut
     
     md += f"""---
 
-## Stats: Overall Results
+## 📊 Overall Results
 
 - **Tests Passed:** {results['tests_passed']}/{results['total_tests']}
 - **Tests with Warnings:** {results['tests_warned']}/{results['total_tests']}
@@ -474,7 +474,7 @@ This certificate verifies that the data platform has undergone comprehensive aut
 
 ---
 
-## Hash: Verification
+## 🔐 Verification
 
 This certification can be independently verified by:
 
@@ -524,7 +524,7 @@ def main():
             return 1
             
     except Exception as e:
-        print(f"\nFAIL: Certification failed with error: {e}")
+        print(f"\n❌ Certification failed with error: {e}")
         import traceback
         traceback.print_exc()
         return 1
