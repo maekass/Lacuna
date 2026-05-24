@@ -25,6 +25,7 @@ from dashboard.theme import (
     empty_state,
     equity_context_card,
     glass_hero,
+    lottie_loading,
     section_header,
     sidebar_brand,
     styled_bar_chart,
@@ -794,17 +795,21 @@ if page in _ZONE_FOR_PAGE:
     zone_banner(z, label)
 
 if not data_is_present(DATA):
-    with st.spinner("Bootstrapping demo datasets — this only runs once per session…"):
-        try:
-            _bootstrap_data_cached()
-            st.rerun()
-        except Exception as exc:
-            empty_state(
-                "Data Bootstrap Failed",
-                f"Could not load data: {html.escape(str(exc))}. "
-                "Run <code>python3 src/data_collection/collect_all_data.py</code> from the project root.",
-                icon="&#9888;",
-            )
+    _boot_ph = st.empty()
+    with _boot_ph.container():
+        lottie_loading("Bootstrapping demo datasets — this only runs once per session…")
+    try:
+        _bootstrap_data_cached()
+        _boot_ph.empty()
+        st.rerun()
+    except Exception as exc:
+        _boot_ph.empty()
+        empty_state(
+            "Data Bootstrap Failed",
+            f"Could not load data: {html.escape(str(exc))}. "
+            "Run <code>python3 src/data_collection/collect_all_data.py</code> from the project root.",
+            icon="&#9888;",
+        )
 
 _manifest = load_manifest()
 render_sidebar_provenance(page, _manifest, disease_id=disease_id)
@@ -852,9 +857,12 @@ elif page == "Overview":
         f"Pipeline — {_ctx.display_name}",
         f"MeSH {_ctx.mesh_id} · SNOMED {_ctx.snomed_id} · ICD-10 {_ctx.icd10_code}",
     )
-    with st.spinner("Loading pipeline data..."):
-        pipeline = load_csv(_ctx.pipeline_artifact) if _ctx.is_registry else None
-        fda = load_csv(_ctx.fda_artifact) if _ctx.is_registry else None
+    _ov_ph = st.empty()
+    with _ov_ph.container():
+        lottie_loading("Loading pipeline data…")
+    pipeline = load_csv(_ctx.pipeline_artifact) if _ctx.is_registry else None
+    fda = load_csv(_ctx.fda_artifact) if _ctx.is_registry else None
+    _ov_ph.empty()
     if pipeline is not None:
         pipeline = enrich_artifact(_ctx.pipeline_artifact, pipeline)
         onto = _ontology_display_cols(pipeline)
@@ -948,10 +956,13 @@ elif page == "Stock Analysis":
     )
     if not _ctx.is_registry:
         st.info("Equity tables are wired for **Focus indications** registry tickers only.")
-    with st.spinner("Loading equity data..."):
-        fin = load_csv("company_financials.csv")
-        prices = load_csv("stock_prices_companies.csv")
-        tickers = us_tickers(_ctx.companies)
+    _eq_ph = st.empty()
+    with _eq_ph.container():
+        lottie_loading("Loading equity data…")
+    fin = load_csv("company_financials.csv")
+    prices = load_csv("stock_prices_companies.csv")
+    tickers = us_tickers(_ctx.companies)
+    _eq_ph.empty()
     if fin is not None:
         if "disease_id" in fin.columns:
             fin = fin[fin["disease_id"] == registry_disease_id(disease_id)]
@@ -990,11 +1001,14 @@ elif page == "ML Models":
             icon="&#129302;",
         )
     else:
-        with st.spinner("Loading model artifacts..."):
-            metrics = load_ml_json("model_metrics.json")
-            comparison = load_csv("model_comparison.csv", ML_DATA)
-            reg_train = load_csv("regression_training.csv", ML_DATA)
-            trial_train = load_csv("trial_success_training.csv", ML_DATA)
+        _ml_ph = st.empty()
+        with _ml_ph.container():
+            lottie_loading("Loading model artifacts…")
+        metrics = load_ml_json("model_metrics.json")
+        comparison = load_csv("model_comparison.csv", ML_DATA)
+        reg_train = load_csv("regression_training.csv", ML_DATA)
+        trial_train = load_csv("trial_success_training.csv", ML_DATA)
+        _ml_ph.empty()
 
         if metrics:
             st.markdown(f"**Last trained (UTC):** `{metrics.get('trained_at_utc', '—')}`")
@@ -1083,17 +1097,20 @@ elif page == "ML Models":
             if st.button("Run ensemble prediction"):
                 from src.models.trial_success_predictor import TrialSuccessPredictor
 
-                with st.spinner("Training model and running prediction..."):
-                    pred = TrialSuccessPredictor()
-                    pred.train(verbose=False)
-                    out = pred.predict(
-                        phase=phase,
-                        enrollment=enrollment,
-                        sponsor=sponsor,
-                        mechanism=mechanism,
-                        duration_months=36,
-                        disease_name="Sickle Cell Disease",
-                    )
+                _pred_ph = st.empty()
+                with _pred_ph.container():
+                    lottie_loading("Training model and running prediction…")
+                pred = TrialSuccessPredictor()
+                pred.train(verbose=False)
+                out = pred.predict(
+                    phase=phase,
+                    enrollment=enrollment,
+                    sponsor=sponsor,
+                    mechanism=mechanism,
+                    duration_months=36,
+                    disease_name="Sickle Cell Disease",
+                )
+                _pred_ph.empty()
                 st.metric("Success probability (demo)", f"{out['probability']:.1%}")
                 with st.expander("Full Prediction Output", expanded=False):
                     st.json(out)
