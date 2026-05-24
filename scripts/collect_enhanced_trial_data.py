@@ -11,7 +11,7 @@ sys.path.insert(0, str(ROOT))
 
 import requests
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timezone
 from src.data_collection.parsers.clinical_trials import parse_v2_studies
 
 
