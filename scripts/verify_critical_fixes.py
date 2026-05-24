@@ -14,7 +14,6 @@ def test_timezone_imports():
     """Test that timezone is imported correctly."""
     print("\n🔍 Test 1: Timezone imports...")
     try:
-        from datetime import datetime, timezone
         from scripts.automated_verification import AutomatedVerification
         
         # Check that timestamp uses timezone
@@ -38,7 +37,7 @@ def test_import_path():
     print("\n🔍 Test 2: Import path...")
     try:
         from src.models.real_data_validator import RealDataValidator
-        validator = RealDataValidator()
+        RealDataValidator()
         print("✅ Import path correct")
         return True
     except ImportError as e:
@@ -60,13 +59,9 @@ def test_empty_dataframe_handling():
         # Create empty CSV
         with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as f:
             f.write("nct_id,status\n")
-            temp_path = f.name
         
         # Try to check quality on empty file
         verifier = AutomatedVerification()
-        
-        # Monkey patch the data path
-        original_path = ROOT / "data" / "processed" / "enhanced_clinical_trials.csv"
         
         # Create empty test file
         test_path = ROOT / "data" / "processed" / "test_empty.csv"
@@ -149,8 +144,6 @@ def test_manifest_format():
     """Test that manifest format is handled correctly."""
     print("\n🔍 Test 5: Manifest format handling...")
     try:
-        import json
-        
         # Test with v2 manifest format
         test_manifest = {
             "manifest_version": 2,
@@ -194,12 +187,9 @@ def test_error_recording():
         # Manually test the error handling
         checks = [("Test Check", crashing_check)]
         
-        all_passed = True
         for name, check_func in checks:
             try:
-                passed = check_func()
-                if not passed:
-                    all_passed = False
+                check_func()
             except Exception as e:
                 check_key = name.lower().replace(" ", "_")
                 verifier.results["checks"][check_key] = {
@@ -207,7 +197,6 @@ def test_error_recording():
                     "error": f"Check crashed: {str(e)}"
                 }
                 verifier.results["alerts"].append(f"{name} check crashed: {e}")
-                all_passed = False
         
         # Verify error was recorded
         if "test_check" in verifier.results["checks"]:

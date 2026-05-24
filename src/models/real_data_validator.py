@@ -363,18 +363,18 @@ class RealDataValidator:
         
         print(f"\nYour Model (Best): {best_model[0]}")
         print(f"  Accuracy: {best_accuracy:.1%}")
-        print(f"\nNote: This predicts trial COMPLETION (reaching planned end), NOT drug efficacy.")
-        print(f"ClinicalTrials.gov does not report whether a drug was effective.")
+        print("\nNote: This predicts trial COMPLETION (reaching planned end), NOT drug efficacy.")
+        print("ClinicalTrials.gov does not report whether a drug was effective.")
         
-        print(f"\nPublished Benchmarks (drug success rates, for reference):")
-        print(f"  Hay et al. (2014):")
+        print("\nPublished Benchmarks (drug success rates, for reference):")
+        print("  Hay et al. (2014):")
         print(f"    Overall drug success rate: {PUBLISHED_BENCHMARKS['hay_2014']['overall']:.1%}")
         print(f"    Phase 1→2: {PUBLISHED_BENCHMARKS['hay_2014']['phase_1_to_2']:.1%}")
         print(f"    Phase 2→3: {PUBLISHED_BENCHMARKS['hay_2014']['phase_2_to_3']:.1%}")
-        print(f"\n  Wong et al. (2019):")
+        print("\n  Wong et al. (2019):")
         print(f"    Overall drug success rate: {PUBLISHED_BENCHMARKS['wong_2019']['overall']:.1%}")
-        print(f"\n  Our model predicts trial COMPLETION (different from drug success).")
-        print(f"  ~80% of trials complete; ~20% terminate early. Baseline: 80% (majority class).")
+        print("\n  Our model predicts trial COMPLETION (different from drug success).")
+        print("  ~80% of trials complete; ~20% terminate early. Baseline: 80% (majority class).")
         
         comparison = {
             'your_model': best_model[0],
@@ -549,11 +549,11 @@ def main():
     print("="*60)
     print("\nYou can now claim:")
     print(f"  'Validated on {len(df)} real clinical trials from ClinicalTrials.gov'")
-    print(f"  'Temporal out-of-sample validation (train: 2010-2020, test: 2021-2023)'")
-    print(f"  'Predicts trial completion vs early termination (not drug efficacy)'")
+    print("  'Temporal out-of-sample validation (train: 2010-2020, test: 2021-2023)'")
+    print("  'Predicts trial completion vs early termination (not drug efficacy)'")
     best_acc = max(validator.validation_results.items(), key=lambda x: x[1]['accuracy'])[1]['accuracy']
     print(f"  'Performance: {best_acc:.1%} accuracy on held-out test set'")
-    print(f"\nSee validation_report.json for full details")
+    print("\nSee validation_report.json for full details")
 
 
 if __name__ == "__main__":
