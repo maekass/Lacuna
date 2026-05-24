@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-24T03:40:14.354607",
+  "timestamp": "2026-05-24T03:50:03.776633",
   "clinicaltrials_gov": {
     "sickle cell disease": {
       "status": "\u2705",
@@ -82,13 +82,13 @@
     }
   },
   "current_data": {
-    "total_trials": 1400,
-    "diseases": 7,
+    "total_trials": 6819,
+    "diseases": 15,
     "completeness": {
       "nct_id": 100.0,
       "status": 100.0,
-      "phase": 47.785714285714285,
-      "enrollment": 99.21428571428571,
+      "phase": 46.15046194456665,
+      "enrollment": 99.20809502859656,
       "sponsor_type": 100.0,
       "outcome": 100.0
     }
@@ -140,5 +140,5 @@
       "impact": "Low - nice to have"
     }
   ],
-  "quality_score": 69.12738095238095
+  "quality_score": 89.96040475142982
 }
