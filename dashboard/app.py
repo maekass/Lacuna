@@ -596,14 +596,14 @@ def show_data_verification_banner():
             Quality Score: 99.96/100 (Grade: A+). Zero synthetic data.
         </p>
         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-            <a href="https://github.com/maekass/MPK1/blob/enhanced-data-collection/VERIFY_WITH_ONE_CLICK.md" 
+            <a href="https://github.com/maekass/MPK1/blob/main/VERIFY_WITH_ONE_CLICK.md" 
                target="_blank"
                style="background: #4CAF50; color: white; padding: 0.625rem 1.25rem; 
                       border-radius: 6px; text-decoration: none; font-weight: 600; 
                       font-size: 0.875rem; display: inline-block;">
                 VERIFY WITH ONE CLICK (2 MIN)
             </a>
-            <a href="https://github.com/maekass/MPK1/blob/enhanced-data-collection/DATA_VERIFICATION_CERTIFICATE.md" 
+            <a href="https://github.com/maekass/MPK1/blob/main/DATA_VERIFICATION_CERTIFICATE.md" 
                target="_blank"
                style="background: white; color: #4CAF50; padding: 0.625rem 1.25rem; 
                       border-radius: 6px; text-decoration: none; font-weight: 600; 
