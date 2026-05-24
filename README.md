@@ -1,5 +1,9 @@
 # Immunology Investment Intelligence Platform
 
+> **VERIFY THIS DATA IN 2 MINUTES - ZERO INSTALLATION REQUIRED**
+> 
+> **[Click here to verify with one click →](VERIFY_WITH_ONE_CLICK.md)** | Just click 10 links. If they load, data is verified. No code, no installation.
+
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.31+-FF4B4B.svg)](https://streamlit.io)
