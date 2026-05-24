@@ -1,15 +1,20 @@
-# Immunology Investment Intelligence Platform
+# AI-Powered Clinical Intelligence Platform
 
-> **VERIFY THIS DATA IN 2 MINUTES - ZERO INSTALLATION REQUIRED**
+> **ML-Driven Trial Success Prediction • 6,819 Verified Trials • 99.96/100 Quality Score**
 > 
-> **[Click here to verify with one click →](VERIFY_WITH_ONE_CLICK.md)** | Just click 10 links. If they load, data is verified. No code, no installation.
+> Production-grade clinical intelligence platform with ensemble ML models (78% accuracy) predicting trial outcomes across 15 diseases. Automated data certification with cryptographic verification. Venture-ready infrastructure for biotech investment analytics.
 
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Scikit-learn](https://img.shields.io/badge/scikit--learn-1.3+-orange.svg)](https://scikit-learn.org/)
+[![XGBoost](https://img.shields.io/badge/XGBoost-2.0+-red.svg)](https://xgboost.readthedocs.io/)
+[![OpenAI](https://img.shields.io/badge/OpenAI-API-412991.svg)](https://openai.com/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.31+-FF4B4B.svg)](https://streamlit.io)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Daily Certification](https://github.com/maekass/MPK1/actions/workflows/daily-data-certification.yml/badge.svg)](https://github.com/maekass/MPK1/actions/workflows/daily-data-certification.yml)
+
+**Tech Stack:** Python • Scikit-learn • XGBoost • OpenAI API • ClinicalTrials.gov API v2 • GitHub Actions • Streamlit
+
+> **VERIFY THIS DATA IN 2 MINUTES:** [One-click verification →](VERIFY_WITH_ONE_CLICK.md) | No installation required
 
 ## Data Verification Certification
 
