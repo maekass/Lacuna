@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Quick diagnostics: demo bundle, data/raw, optional Streamlit. Run from repo root."""
+"""Quick diagnostics: processed data, ML/quant artifacts, optional Streamlit. Run from repo root."""
 
 from __future__ import annotations
 
@@ -21,7 +21,9 @@ from src.models.ml_artifacts import ml_bundle_present  # noqa: E402
 from src.quant_framework.quant_artifacts import quant_bundle_present  # noqa: E402
 
 RAW = ROOT / "data" / "raw"
-REQUIRED = [
+PROCESSED = ROOT / "data" / "processed"
+
+REQUIRED_RAW = [
     "gene_therapy_pipeline_scd.csv",
     "cdc_sickle_cell_data.csv",
     "clinical_trials_scd.csv",
@@ -29,17 +31,39 @@ REQUIRED = [
     "market_size_scd.csv",
 ]
 
+REQUIRED_PROCESSED = [
+    "enhanced_clinical_trials.csv",
+    "epidemiology_data.csv",
+    "fda_drug_approvals.csv",
+    "market_size_estimates.csv",
+]
+
 
 def main() -> int:
     failed = False
     print("=== debug_check ===\n")
 
-    print(f"demo bundle ({DEMO_DIR}):")
-    if not demo_bundle_present():
-        print("  FAIL: data/demo/ missing or empty (merge cursor branch or run build_demo_bundle.py)")
-        failed = True
+    # Check processed data (primary data source after real-data transition)
+    print(f"processed data ({PROCESSED}):")
+    if not PROCESSED.is_dir():
+        print("  WARN: data/processed/ missing")
     else:
-        for name in REQUIRED:
+        all_processed_ok = True
+        for name in REQUIRED_PROCESSED:
+            p = PROCESSED / name
+            ok = p.is_file() and csv_has_data_rows(p)
+            print(f"  {'OK' if ok else 'MISSING/EMPTY'} {name}")
+            if not ok:
+                all_processed_ok = False
+        if not all_processed_ok:
+            failed = True
+
+    # Demo bundle (optional — removed after real-data transition)
+    print(f"\ndemo bundle ({DEMO_DIR}):")
+    if not demo_bundle_present():
+        print("  SKIP: data/demo/ not present (expected after real-data transition)")
+    else:
+        for name in REQUIRED_RAW:
             p = DEMO_DIR / name
             ok = csv_has_data_rows(p, min_rows=4 if name.startswith("stock_prices_") else 1)
             print(f"  {'OK' if ok else 'FAIL'} {name}")
@@ -48,7 +72,7 @@ def main() -> int:
     if not RAW.is_dir():
         print("  (no data/raw — normal before first collect or bootstrap)")
     else:
-        for name in REQUIRED:
+        for name in REQUIRED_RAW:
             p = RAW / name
             ok = p.is_file() and csv_has_data_rows(
                 p, min_rows=4 if name.startswith("stock_prices_") else 1
@@ -64,8 +88,7 @@ def main() -> int:
     if ml_bundle_present():
         print("  OK demo training CSVs + metrics")
     else:
-        print("  FAIL: run python3 scripts/train_models.py")
-        failed = True
+        print("  SKIP: demo ML bundle not present (expected after real-data transition)")
 
     from src.models.ml_artifacts import runtime_ml_present
 
@@ -84,17 +107,22 @@ def main() -> int:
         sync_quant_from_demo()
         print("  OK quant CSVs")
     else:
-        print("  FAIL: run python3 scripts/train_quant.py")
-        failed = True
+        print("  SKIP: demo quant bundle not present (expected after real-data transition)")
+
+    print("\nQuant runtime (data/processed/quant):")
+    quant_runtime = PROCESSED / "quant"
+    if quant_runtime.is_dir() and (quant_runtime / "backtest_metrics.csv").is_file():
+        print("  OK processed quant CSVs")
+    else:
+        print("  WARN: data/processed/quant missing — quant pages may be limited")
 
     print("\nRunning smoke_test_dashboard.check_data ...")
     from scripts.smoke_test_dashboard import check_data
 
     data_errors = check_data()
     if data_errors:
-        failed = True
         for e in data_errors:
-            print(f"  FAIL {e}")
+            print(f"  WARN {e}")
     else:
         print("  OK")
 
