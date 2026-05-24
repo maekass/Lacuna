@@ -304,7 +304,14 @@ def generate_quality_score():
     if 'collection_date' in df.columns:
         try:
             collection_date = pd.to_datetime(df['collection_date'].iloc[0])
-            days_old = (datetime.now() - collection_date).days
+            # Make datetime.now() timezone-aware to match collection_date
+            from datetime import timezone
+            now = datetime.now(timezone.utc)
+            # Remove timezone info for comparison
+            if collection_date.tzinfo is not None:
+                collection_date = collection_date.replace(tzinfo=None)
+                now = now.replace(tzinfo=None)
+            days_old = (now - collection_date).days
             freshness_score = max(0, 25 - (days_old / 30) * 5)  # Lose 5 points per month
         except:
             freshness_score = 15  # Default if can't parse

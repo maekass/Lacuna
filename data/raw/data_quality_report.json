@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-24T03:50:03.776633",
+  "timestamp": "2026-05-24T03:55:17.349025",
   "clinicaltrials_gov": {
     "sickle cell disease": {
       "status": "\u2705",
@@ -140,5 +140,5 @@
       "impact": "Low - nice to have"
     }
   ],
-  "quality_score": 89.96040475142982
+  "quality_score": 99.96040475142982
 }
