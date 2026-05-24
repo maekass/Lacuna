@@ -355,7 +355,7 @@ def sidebar_brand() -> None:
         """
 <div class="sidebar-brand">
   <div class="logo">Research platform</div>
-  <div class="name">Immunology Investment</div>
+  <div class="name">Immunology Investment Intelligence</div>
 </div>
 """,
         unsafe_allow_html=True,
