@@ -1183,14 +1183,15 @@ elif page == "ML Model Explainability":
         color_discrete_sequence=['#3D7A55', '#5A8A6F', '#8FA89A', '#B8A99A']  # Darker to lighter: success green, sage, light sage, taupe
     )
     fig_comparison.update_layout(
-        height=400,
+        height=450,
         legend=dict(
             orientation="h",
             yanchor="bottom",
             y=1.02,
             xanchor="right",
             x=1
-        )
+        ),
+        margin=dict(t=80)  # Increase top margin for title
     )
     st.plotly_chart(apply_plotly_theme(fig_comparison), use_container_width=True)
     
