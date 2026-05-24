@@ -3,6 +3,7 @@ Immunology Investment Intelligence Dashboard
 Interactive Streamlit dashboard (run from project root).
 """
 
+import html
 import json
 import sys
 from datetime import datetime, timezone
@@ -21,6 +22,7 @@ if str(ROOT) not in sys.path:
 from dashboard.theme import (
     apply_glass_theme,
     apply_plotly_theme,
+    empty_state,
     equity_context_card,
     glass_hero,
     section_header,
@@ -698,6 +700,7 @@ _indication_mode = st.sidebar.radio(
     "Source",
     ["Focus indications", "Search any disease"],
     horizontal=True,
+    help="Focus indications: curated disease datasets with full pipeline/equity data. Search: live Orphanet & CDC lookups.",
 )
 _disease_labels = {d.disease_id: d.display_name for d in list_diseases()}
 disease_id = "scd"
@@ -709,6 +712,7 @@ if _indication_mode == "Focus indications":
         options=list(_disease_labels.keys()),
         format_func=lambda k: _disease_labels[k],
         index=0,
+        help="Select a curated disease with pre-built pipeline, epidemiology, and equity datasets.",
     )
     _ctx = IndicationView.from_registry(disease_id)
 else:
@@ -716,7 +720,7 @@ else:
         "Universe",
         ["Both", "Orphanet", "CDC NNDSS"],
         horizontal=True,
-        help="CDC NNDSS: nationally notifiable infectious conditions on data.cdc.gov (~130 labels).",
+        help="Orphanet: ~11k rare diseases with prevalence data. CDC NNDSS: ~130 nationally notifiable conditions from data.cdc.gov.",
     )
     _search_q = st.sidebar.text_input(
         "Search disease name",
@@ -770,6 +774,7 @@ page = st.sidebar.radio(
         "Investment Stages",
         "Market Analysis",
     ],
+    help="Pages 1–5 focus on clinical data and technology. Pages 6–11 cover quantitative finance demos.",
 )
 _ZONE_FOR_PAGE = {
     "Disease Lookup": ("epidemiology", "Orphanet search · public metrics"),
@@ -789,14 +794,16 @@ if page in _ZONE_FOR_PAGE:
     zone_banner(z, label)
 
 if not data_is_present(DATA):
-    with st.spinner("Loading demo datasets (tables and charts)…"):
+    with st.spinner("Bootstrapping demo datasets — this only runs once per session…"):
         try:
             _bootstrap_data_cached()
             st.rerun()
         except Exception as exc:
-            st.error(
-                f"Could not load data: {exc}. "
-                "From the project root run `python3 src/data_collection/collect_all_data.py`."
+            empty_state(
+                "Data Bootstrap Failed",
+                f"Could not load data: {html.escape(str(exc))}. "
+                "Run <code>python3 src/data_collection/collect_all_data.py</code> from the project root.",
+                icon="&#9888;",
             )
 
 _manifest = load_manifest()
@@ -845,17 +852,15 @@ elif page == "Overview":
         f"Pipeline — {_ctx.display_name}",
         f"MeSH {_ctx.mesh_id} · SNOMED {_ctx.snomed_id} · ICD-10 {_ctx.icd10_code}",
     )
-    pipeline = load_csv(_ctx.pipeline_artifact) if _ctx.is_registry else None
-    fda = load_csv(_ctx.fda_artifact) if _ctx.is_registry else None
+    with st.spinner("Loading pipeline data..."):
+        pipeline = load_csv(_ctx.pipeline_artifact) if _ctx.is_registry else None
+        fda = load_csv(_ctx.fda_artifact) if _ctx.is_registry else None
     if pipeline is not None:
         pipeline = enrich_artifact(_ctx.pipeline_artifact, pipeline)
         onto = _ontology_display_cols(pipeline)
         if onto:
-            st.markdown(
-                '<div class="table-label">Ontology Anchors <span class="badge">MeSH / ICD</span></div>',
-                unsafe_allow_html=True,
-            )
-            styled_dataframe(pipeline[onto].drop_duplicates())
+            with st.expander("Ontology Anchors (MeSH / ICD)", expanded=False):
+                styled_dataframe(pipeline[onto].drop_duplicates())
         styled_dataframe(pipeline)
         color_col = "technology" if "technology" in pipeline.columns else "clinical_phase"
         fig = px.bar(
@@ -868,7 +873,11 @@ elif page == "Overview":
         )
         st.plotly_chart(styled_bar_chart(fig), use_container_width=True)
     else:
-        st.info("Run `python3 scripts/build_disease_demo_bundle.py` or collectors to populate pipeline tables.")
+        empty_state(
+            "No Pipeline Data",
+            "Run <code>python3 scripts/build_disease_demo_bundle.py</code> or collectors to populate pipeline tables.",
+            icon="&#128300;",
+        )
     if fda is not None:
         section_header(
             "Approved Therapies",
@@ -897,10 +906,11 @@ elif page == "Health Trends":
         trials = _ctx.metrics.get("trials_df") if _ctx.metrics else None
 
     if epi is None and (trials is None or trials.empty):
-        st.warning(
-            "No health data files for this indication. Run:\n"
-            "`python3 scripts/build_disease_demo_bundle.py` and refresh, or "
-            "`python3 src/data_collection/collect_all_data.py`"
+        empty_state(
+            "No Health Data Available",
+            "Run <code>python3 scripts/build_disease_demo_bundle.py</code> and refresh, "
+            "or <code>python3 src/data_collection/collect_all_data.py</code>",
+            icon="&#128202;",
         )
     elif epi is not None:
         render_health_trends_charts(epi, trials, disease_id=disease_id, display_name=_ctx.display_name)
@@ -925,11 +935,8 @@ elif page == "Health Trends":
             )
         onto = _ontology_display_cols(display_trials)
         if onto:
-            st.markdown(
-                '<div class="table-label">Indication Disambiguation <span class="badge">Ontology</span></div>',
-                unsafe_allow_html=True,
-            )
-            styled_dataframe(display_trials[["nct_id", "title"] + onto], max_rows=20)
+            with st.expander("Indication Disambiguation (Ontology)", expanded=False):
+                styled_dataframe(display_trials[["nct_id", "title"] + onto], max_rows=20)
         styled_dataframe(display_trials, max_rows=20)
     elif trials is not None:
         st.info("Clinical trials file exists but has no rows. Re-run collectors with network access.")
@@ -941,9 +948,10 @@ elif page == "Stock Analysis":
     )
     if not _ctx.is_registry:
         st.info("Equity tables are wired for **Focus indications** registry tickers only.")
-    fin = load_csv("company_financials.csv")
-    prices = load_csv("stock_prices_companies.csv")
-    tickers = us_tickers(_ctx.companies)
+    with st.spinner("Loading equity data..."):
+        fin = load_csv("company_financials.csv")
+        prices = load_csv("stock_prices_companies.csv")
+        tickers = us_tickers(_ctx.companies)
     if fin is not None:
         if "disease_id" in fin.columns:
             fin = fin[fin["disease_id"] == registry_disease_id(disease_id)]
@@ -966,20 +974,27 @@ elif page == "Stock Analysis":
         except Exception:
             st.caption("Price chart unavailable for current CSV shape; table above lists fundamentals.")
     if fin is None and prices is None:
-        st.info("Run `python3 src/data_collection/collect_all_data.py` to load equity data.")
+        empty_state(
+            "No Equity Data",
+            "Run <code>python3 src/data_collection/collect_all_data.py</code> to load equity data.",
+            icon="&#128200;",
+        )
 
 elif page == "ML Models":
     section_header("Machine Learning", "Demo models on illustrative features — not clinical or investment signals")
     if not _ensure_ml_artifacts_cached():
-        st.warning(
-            "No fitted models found. From the project root run `python3 scripts/train_models.py` "
-            "(requires `data/raw` or `data/demo` CSVs)."
+        empty_state(
+            "No Fitted Models",
+            "Run <code>python3 scripts/train_models.py</code> from the project root "
+            "(requires <code>data/raw</code> or <code>data/demo</code> CSVs).",
+            icon="&#129302;",
         )
     else:
-        metrics = load_ml_json("model_metrics.json")
-        comparison = load_csv("model_comparison.csv", ML_DATA)
-        reg_train = load_csv("regression_training.csv", ML_DATA)
-        trial_train = load_csv("trial_success_training.csv", ML_DATA)
+        with st.spinner("Loading model artifacts..."):
+            metrics = load_ml_json("model_metrics.json")
+            comparison = load_csv("model_comparison.csv", ML_DATA)
+            reg_train = load_csv("regression_training.csv", ML_DATA)
+            trial_train = load_csv("trial_success_training.csv", ML_DATA)
 
         if metrics:
             st.markdown(f"**Last trained (UTC):** `{metrics.get('trained_at_utc', '—')}`")
@@ -1005,26 +1020,27 @@ elif page == "ML Models":
             )
             st.plotly_chart(styled_bar_chart(fig_cmp), use_container_width=True)
 
-        col_a, col_b = st.columns(2)
-        with col_a:
-            if reg_train is not None:
-                st.markdown(
-                    '<div class="table-label">Regression Training <span class="badge">Sample</span></div>',
-                    unsafe_allow_html=True,
-                )
-                styled_dataframe(reg_train, max_rows=12)
-        with col_b:
-            if trial_train is not None:
-                st.markdown(
-                    '<div class="table-label">Trial-Success Training <span class="badge">Sample</span></div>',
-                    unsafe_allow_html=True,
-                )
-                show_cols = [
-                    c
-                    for c in ["phase", "enrollment_log", "duration_months", "disease", "success"]
-                    if c in trial_train.columns
-                ]
-                styled_dataframe(trial_train[show_cols], max_rows=12)
+        with st.expander("Training Data Samples", expanded=False):
+            col_a, col_b = st.columns(2)
+            with col_a:
+                if reg_train is not None:
+                    st.markdown(
+                        '<div class="table-label">Regression Training <span class="badge">Sample</span></div>',
+                        unsafe_allow_html=True,
+                    )
+                    styled_dataframe(reg_train, max_rows=12)
+            with col_b:
+                if trial_train is not None:
+                    st.markdown(
+                        '<div class="table-label">Trial-Success Training <span class="badge">Sample</span></div>',
+                        unsafe_allow_html=True,
+                    )
+                    show_cols = [
+                        c
+                        for c in ["phase", "enrollment_log", "duration_months", "disease", "success"]
+                        if c in trial_train.columns
+                    ]
+                    styled_dataframe(trial_train[show_cols], max_rows=12)
 
         if metrics and metrics.get("trial_success_cv_auc"):
             _ml_cert = load_certification()
@@ -1046,29 +1062,41 @@ elif page == "ML Models":
             ]
             styled_dataframe(pd.DataFrame(auc_rows))
 
-        st.markdown("**Interactive trial-success demo**")
-        phase = st.slider("Phase", 1, 3, 2)
-        enrollment = st.number_input("Enrollment", 50, 3000, 200, step=50)
-        sponsor = st.selectbox("Sponsor type", ["biotech", "pharma", "academic"])
-        mechanism = st.selectbox(
-            "Mechanism",
-            ["Gene Editing", "Monoclonal Antibody", "Small Molecule", "Novel Mechanism"],
-        )
-        if st.button("Run ensemble prediction"):
-            from src.models.trial_success_predictor import TrialSuccessPredictor
-
-            pred = TrialSuccessPredictor()
-            pred.train(verbose=False)
-            out = pred.predict(
-                phase=phase,
-                enrollment=enrollment,
-                sponsor=sponsor,
-                mechanism=mechanism,
-                duration_months=36,
-                disease_name="Sickle Cell Disease",
+        with st.expander("Interactive Trial-Success Demo", expanded=True):
+            phase = st.slider(
+                "Phase", 1, 3, 2,
+                help="Clinical trial phase (1 = early, 3 = late-stage). Higher phases generally have higher success rates.",
             )
-            st.metric("Success probability (demo)", f"{out['probability']:.1%}")
-            st.json(out)
+            enrollment = st.number_input(
+                "Enrollment", 50, 3000, 200, step=50,
+                help="Number of participants enrolled. Larger trials tend to have more reliable outcomes.",
+            )
+            sponsor = st.selectbox(
+                "Sponsor type", ["biotech", "pharma", "academic"],
+                help="Organization type running the trial. Pharma sponsors often have higher completion rates.",
+            )
+            mechanism = st.selectbox(
+                "Mechanism",
+                ["Gene Editing", "Monoclonal Antibody", "Small Molecule", "Novel Mechanism"],
+                help="Drug mechanism of action. Different mechanisms have different historical success rates.",
+            )
+            if st.button("Run ensemble prediction"):
+                from src.models.trial_success_predictor import TrialSuccessPredictor
+
+                with st.spinner("Training model and running prediction..."):
+                    pred = TrialSuccessPredictor()
+                    pred.train(verbose=False)
+                    out = pred.predict(
+                        phase=phase,
+                        enrollment=enrollment,
+                        sponsor=sponsor,
+                        mechanism=mechanism,
+                        duration_months=36,
+                        disease_name="Sickle Cell Disease",
+                    )
+                st.metric("Success probability (demo)", f"{out['probability']:.1%}")
+                with st.expander("Full Prediction Output", expanded=False):
+                    st.json(out)
 
 elif page == "Quant Strategy":
     section_header("Quant Strategy", "Backtests and factor models on delayed-vendor return samples")
