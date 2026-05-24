@@ -659,89 +659,57 @@ st.markdown(
 # ============================================================================
 # HERO SECTION - DATA-DRIVEN CLAIMS
 # ============================================================================
-st.markdown("""
-<div style="background: linear-gradient(135deg, #1a1f2e 0%, #2d3748 100%); 
-            padding: 3rem 2.5rem; border-radius: 16px; margin-bottom: 2.5rem; 
-            border: 1px solid #4a5568; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
-    <div style="text-align: center; margin-bottom: 2rem;">
-        <h1 style="color: #ffffff; margin: 0 0 0.75rem 0; font-family: 'Inter', sans-serif; 
-                   font-weight: 700; font-size: 2.25rem; letter-spacing: -0.02em;">
-            Immunology Investment Intelligence Platform
-        </h1>
-        <p style="color: #a0aec0; margin: 0; font-size: 1.125rem; font-weight: 400; line-height: 1.6;">
-            Real-time clinical trial analysis powered by 100% verified public data
-        </p>
-    </div>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-                gap: 1.5rem; margin-top: 2rem;">
-        <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; 
-                    border: 1px solid rgba(255,255,255,0.1); text-align: center;">
-            <div style="color: #68d391; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
-                6,523
-            </div>
-            <div style="color: #e2e8f0; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; 
-                       letter-spacing: 0.05em;">
-                Real Clinical Trials
-            </div>
-            <div style="color: #a0aec0; font-size: 0.75rem; margin-top: 0.5rem;">
-                ClinicalTrials.gov API v2
-            </div>
-        </div>
-        
-        <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; 
-                    border: 1px solid rgba(255,255,255,0.1); text-align: center;">
-            <div style="color: #63b3ed; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
-                82%
-            </div>
-            <div style="color: #e2e8f0; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; 
-                       letter-spacing: 0.05em;">
-                Trial Success Rate
-            </div>
-            <div style="color: #a0aec0; font-size: 0.75rem; margin-top: 0.5rem;">
-                2010-2023 outcomes
-            </div>
-        </div>
-        
-        <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; 
-                    border: 1px solid rgba(255,255,255,0.1); text-align: center;">
-            <div style="color: #f6ad55; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
-                5
-            </div>
-            <div style="color: #e2e8f0; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; 
-                       letter-spacing: 0.05em;">
-                Disease Areas
-            </div>
-            <div style="color: #a0aec0; font-size: 0.75rem; margin-top: 0.5rem;">
-                Multi-disease validation
-            </div>
-        </div>
-        
-        <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; 
-                    border: 1px solid rgba(255,255,255,0.1); text-align: center;">
-            <div style="color: #fc8181; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
-                100%
-            </div>
-            <div style="color: #e2e8f0; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; 
-                       letter-spacing: 0.05em;">
-                Real Data
-            </div>
-            <div style="color: #a0aec0; font-size: 0.75rem; margin-top: 0.5rem;">
-                Zero synthetic data
-            </div>
-        </div>
-    </div>
-    
-    <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); 
-                text-align: center;">
-        <p style="color: #cbd5e0; font-size: 0.9375rem; margin: 0; line-height: 1.7;">
-            <strong style="color: #68d391;">✓ Verified Sources:</strong> FDA.gov · ClinicalTrials.gov · CDC · Orphanet · SEC EDGAR<br>
-            <strong style="color: #63b3ed;">✓ ML Models:</strong> Trained on real trials (not synthetic)<br>
-            <strong style="color: #f6ad55;">✓ Scientific Integrity:</strong> All data verifiable and reproducible
-        </p>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+st.markdown(
+    '<div style="background: linear-gradient(135deg, #1a1f2e 0%, #2d3748 100%); '
+    'padding: 3rem 2.5rem; border-radius: 16px; margin-bottom: 2.5rem; '
+    'border: 1px solid #4a5568; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">'
+    '<div style="text-align: center; margin-bottom: 2rem;">'
+    '<h1 style="color: #ffffff; margin: 0 0 0.75rem 0; font-family: Inter, sans-serif; '
+    'font-weight: 700; font-size: 2.25rem; letter-spacing: -0.02em;">'
+    'Immunology Investment Intelligence Platform</h1>'
+    '<p style="color: #a0aec0; margin: 0; font-size: 1.125rem; font-weight: 400; line-height: 1.6;">'
+    'Real-time clinical trial analysis powered by 100% verified public data</p>'
+    '</div>'
+    '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); '
+    'gap: 1.5rem; margin-top: 2rem;">'
+    '<div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; '
+    'border: 1px solid rgba(255,255,255,0.1); text-align: center;">'
+    '<div style="color: #68d391; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">6,523</div>'
+    '<div style="color: #e2e8f0; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; '
+    'letter-spacing: 0.05em;">Real Clinical Trials</div>'
+    '<div style="color: #a0aec0; font-size: 0.75rem; margin-top: 0.5rem;">ClinicalTrials.gov API v2</div>'
+    '</div>'
+    '<div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; '
+    'border: 1px solid rgba(255,255,255,0.1); text-align: center;">'
+    '<div style="color: #63b3ed; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">82%</div>'
+    '<div style="color: #e2e8f0; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; '
+    'letter-spacing: 0.05em;">Trial Success Rate</div>'
+    '<div style="color: #a0aec0; font-size: 0.75rem; margin-top: 0.5rem;">2010-2023 outcomes</div>'
+    '</div>'
+    '<div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; '
+    'border: 1px solid rgba(255,255,255,0.1); text-align: center;">'
+    '<div style="color: #f6ad55; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">5</div>'
+    '<div style="color: #e2e8f0; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; '
+    'letter-spacing: 0.05em;">Disease Areas</div>'
+    '<div style="color: #a0aec0; font-size: 0.75rem; margin-top: 0.5rem;">Multi-disease validation</div>'
+    '</div>'
+    '<div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; '
+    'border: 1px solid rgba(255,255,255,0.1); text-align: center;">'
+    '<div style="color: #fc8181; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">100%</div>'
+    '<div style="color: #e2e8f0; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; '
+    'letter-spacing: 0.05em;">Real Data</div>'
+    '<div style="color: #a0aec0; font-size: 0.75rem; margin-top: 0.5rem;">Zero synthetic data</div>'
+    '</div>'
+    '</div>'
+    '<div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); '
+    'text-align: center;">'
+    '<p style="color: #cbd5e0; font-size: 0.9375rem; margin: 0; line-height: 1.7;">'
+    '<strong style="color: #68d391;">&#10003; Verified Sources:</strong> FDA.gov · ClinicalTrials.gov · CDC · Orphanet · SEC EDGAR<br>'
+    '<strong style="color: #63b3ed;">&#10003; ML Models:</strong> Trained on real trials (not synthetic)<br>'
+    '<strong style="color: #f6ad55;">&#10003; Scientific Integrity:</strong> All data verifiable and reproducible'
+    '</p></div></div>',
+    unsafe_allow_html=True,
+)
 
 sidebar_brand()
 st.sidebar.markdown(
