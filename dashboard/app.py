@@ -1146,7 +1146,8 @@ elif page == "ML Model Explainability":
         y='feature',
         orientation='h',
         title='Top 15 Features for Trial Success Prediction',
-        labels={'importance': 'Feature Importance', 'feature': 'Feature'}
+        labels={'importance': 'Feature Importance', 'feature': 'Feature'},
+        color_discrete_sequence=['#5A8A6F']  # Professional sage green
     )
     fig.update_layout(height=500)
     st.plotly_chart(apply_plotly_theme(fig), use_container_width=True)
@@ -1178,7 +1179,8 @@ elif page == "ML Model Explainability":
         color='Metric',
         barmode='group',
         title='Model Performance Metrics',
-        labels={'Score': 'Score (0-1)'}
+        labels={'Score': 'Score (0-1)'},
+        color_discrete_sequence=['#5A8A6F', '#8FA89A', '#6B8E7A', '#5B8A9A']  # Sage green palette
     )
     fig_comparison.update_layout(height=400)
     st.plotly_chart(apply_plotly_theme(fig_comparison), use_container_width=True)
