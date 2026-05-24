@@ -1182,7 +1182,16 @@ elif page == "ML Model Explainability":
         labels={'Score': 'Score (0-1)'},
         color_discrete_sequence=['#5A8A6F', '#8FA89A', '#6B8E7A', '#5B8A9A']  # Sage green palette
     )
-    fig_comparison.update_layout(height=400)
+    fig_comparison.update_layout(
+        height=400,
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        )
+    )
     st.plotly_chart(apply_plotly_theme(fig_comparison), use_container_width=True)
     
     # Info box
