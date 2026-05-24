@@ -5,7 +5,6 @@ Interactive Streamlit dashboard (run from project root).
 
 import html
 import json
-import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -15,50 +14,6 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
-
-# Anthropic Claude integration
-try:
-    import anthropic
-    ANTHROPIC_AVAILABLE = True
-except ImportError:
-    ANTHROPIC_AVAILABLE = False
-    anthropic = None
-
-# Check for API key
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
-LLM_ENABLED = ANTHROPIC_AVAILABLE and ANTHROPIC_API_KEY is not None
-
-if LLM_ENABLED:
-    anthropic_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-else:
-    anthropic_client = None
-
-# System prompt for clinical trial analyst assistant
-SYSTEM_PROMPT = """You are a clinical trial analyst assistant with access to a database of 6,819 verified clinical trials across 15 rare and immunological diseases including Sickle Cell Disease, Lupus, and Sarcoidosis.
-
-Your role:
-- Analyze clinical trial data and provide insights on trial design, success factors, and drug development trends
-- Identify investment opportunities in biotech based on trial pipeline analysis
-- Explain disease mechanisms and treatment approaches in accessible terms
-- Help users understand trial success predictions and confidence intervals
-
-Your capabilities:
-- Access to real trial data from ClinicalTrials.gov (verified, zero synthetic data)
-- Knowledge of ML model predictions (78% accuracy ensemble model)
-- Understanding of epidemiology, disease burden, and patient populations
-- Familiarity with FDA approval processes and regulatory pathways
-
-Your style:
-- Accurate and data-driven: Always cite specific NCT IDs when discussing trials
-- Multi-audience: Serve quant investors, epidemiologists, and patients equally
-- Transparent: Clearly state when information is not available in the database
-- Actionable: Provide concrete insights for investment decisions and treatment understanding
-
-Limitations:
-- You can only discuss trials in the verified database (6,819 trials)
-- You cannot provide medical advice or investment recommendations
-- You cannot predict future trial outcomes with certainty
-- Always acknowledge uncertainty and refer to confidence intervals"""
 
 ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
@@ -803,22 +758,6 @@ else:
         disease_id = "scd"
 
 st.sidebar.caption(_ctx.disparity_note)
-
-# LLM Integration Status
-with st.sidebar.expander("🤖 AI Assistant Status", expanded=False):
-    if LLM_ENABLED:
-        st.success("✓ Claude API Connected")
-        st.caption(f"Model: Anthropic Claude")
-        st.caption(f"System prompt: {len(SYSTEM_PROMPT)} chars")
-    elif ANTHROPIC_AVAILABLE:
-        st.warning("⚠ API Key Missing")
-        st.caption("Set ANTHROPIC_API_KEY environment variable")
-        st.code("export ANTHROPIC_API_KEY='your-key'", language="bash")
-    else:
-        st.error("✗ Anthropic Library Not Installed")
-        st.caption("Install with:")
-        st.code("pip install anthropic", language="bash")
-
 st.sidebar.header("Navigation")
 st.sidebar.caption("Epidemiology · Pipeline · Portfolio")
 page = st.sidebar.radio(
