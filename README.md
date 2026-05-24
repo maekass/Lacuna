@@ -567,3 +567,5 @@ This platform is designed with rare disease investment analysis in mind and can 
 ---
 
 ** If you find this project useful for your research or learning, please consider giving it a star!**
+
+> **Why Trust The Hash?** The hash alone isn't proof - anyone can verify it by running `./verify_data.sh` themselves. If the hash matches, the data is authentic. If it doesn't, the data was modified. The real verification is that the script makes live API calls to ClinicalTrials.gov. [Learn more →](HASH_VERIFICATION.md)
