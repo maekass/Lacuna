@@ -26,6 +26,7 @@ from dashboard.theme import (
     section_header,
     sidebar_brand,
     styled_bar_chart,
+    styled_dataframe,
     styled_line_chart,
     zone_banner,
 )
@@ -348,8 +349,11 @@ def render_disease_metrics_panel(metrics: dict[str, Any]) -> None:
 
     prev_rows = metrics.get("prevalence_entries") or []
     if prev_rows:
-        st.markdown("**Orphanet prevalence sources (sample)**")
-        st.dataframe(pd.DataFrame(prev_rows), use_container_width=True, hide_index=True)
+        st.markdown(
+            '<div class="table-label">Orphanet Prevalence Sources <span class="badge">Sample</span></div>',
+            unsafe_allow_html=True,
+        )
+        styled_dataframe(pd.DataFrame(prev_rows))
 
     if metrics.get("cdc_label") and not metrics.get("orpha_code"):
         st.info(
@@ -401,11 +405,10 @@ def render_health_trends_charts(
         )
     )
     fig_prev.update_layout(
-        title=f"{label} — U.S. prevalence estimate (Orphanet rate × Census population)",
+        title=f"{label} — U.S. Prevalence Estimate",
         xaxis_title="Date",
-        yaxis_title="Estimated prevalence (persons)",
-        height=360,
-        margin=dict(t=50, b=40),
+        yaxis_title="Estimated Prevalence (Persons)",
+        height=380,
         yaxis=dict(tickformat=",.0f"),
     )
     st.plotly_chart(styled_line_chart(fig_prev), use_container_width=True)
@@ -420,15 +423,13 @@ def render_health_trends_charts(
                 x=by_year["year"],
                 y=by_year["trial_count"],
                 name="Trials in sample",
-                marker_color="#818cf8",
             )
         )
         fig_trials.update_layout(
-            title="Clinical trials in this repo sample by trial start year (ClinicalTrials.gov)",
-            xaxis_title="Start year",
-            yaxis_title="Number of trials in CSV sample",
-            height=360,
-            margin=dict(t=50, b=40),
+            title="Clinical Trials by Start Year — ClinicalTrials.gov Sample",
+            xaxis_title="Start Year",
+            yaxis_title="Trial Count",
+            height=380,
             xaxis=dict(dtick=1),
         )
         st.plotly_chart(styled_bar_chart(fig_trials), use_container_width=True)
@@ -448,11 +449,10 @@ def render_health_trends_charts(
             )
         )
         fig_placeholder.update_layout(
-            title="Active trials — illustrative placeholder (not ClinicalTrials.gov)",
+            title="Active Trials — Illustrative Placeholder",
             xaxis_title="Date",
-            yaxis_title="Count (illustrative)",
-            height=360,
-            margin=dict(t=50, b=40),
+            yaxis_title="Count (Illustrative)",
+            height=380,
         )
         st.plotly_chart(styled_line_chart(fig_placeholder), use_container_width=True)
     else:
@@ -829,7 +829,7 @@ if page == "Disease Lookup":
             )
         elif trials_live is not None and not trials_live.empty:
             st.markdown("**Clinical trials (live sample)**")
-            st.dataframe(trials_live.head(25), use_container_width=True, hide_index=True)
+            styled_dataframe(trials_live, max_rows=25)
         st.caption(
             "Live public APIs (Orphanet, CDC data.cdc.gov NNDSS, ClinicalTrials.gov). No bundled pipeline, equity, or FDA tables "
             "for ad-hoc diseases — use **Focus indications** for full demo datasets."
@@ -851,16 +851,20 @@ elif page == "Overview":
         pipeline = enrich_artifact(_ctx.pipeline_artifact, pipeline)
         onto = _ontology_display_cols(pipeline)
         if onto:
-            st.markdown("**Ontology anchors (MeSH / ICD)**")
-            st.dataframe(pipeline[onto].drop_duplicates(), use_container_width=True, hide_index=True)
-        st.dataframe(pipeline, use_container_width=True)
+            st.markdown(
+                '<div class="table-label">Ontology Anchors <span class="badge">MeSH / ICD</span></div>',
+                unsafe_allow_html=True,
+            )
+            styled_dataframe(pipeline[onto].drop_duplicates())
+        styled_dataframe(pipeline)
         color_col = "technology" if "technology" in pipeline.columns else "clinical_phase"
         fig = px.bar(
             pipeline,
             x="company",
             y="probability_of_success",
             color=color_col,
-            title=f"Illustrative POS by company — {_ctx.display_name} (demo)",
+            title=f"Illustrative POS by Company — {_ctx.display_name}",
+            labels={"probability_of_success": "Probability of Success", "company": "Company"},
         )
         st.plotly_chart(styled_bar_chart(fig), use_container_width=True)
     else:
@@ -870,7 +874,7 @@ elif page == "Overview":
             "Approved Therapies",
             "openFDA drug labels + drugsfda first approval when brand matches (see collectors with network)",
         )
-        st.dataframe(enrich_artifact(_ctx.fda_artifact, fda), use_container_width=True, hide_index=True)
+        styled_dataframe(enrich_artifact(_ctx.fda_artifact, fda))
 
 elif page == "Health Trends":
     section_header(
@@ -921,13 +925,12 @@ elif page == "Health Trends":
             )
         onto = _ontology_display_cols(display_trials)
         if onto:
-            st.markdown("**Indication disambiguation**")
-            st.dataframe(
-                display_trials[["nct_id", "title"] + onto].head(20),
-                use_container_width=True,
-                hide_index=True,
+            st.markdown(
+                '<div class="table-label">Indication Disambiguation <span class="badge">Ontology</span></div>',
+                unsafe_allow_html=True,
             )
-        st.dataframe(display_trials.head(20), use_container_width=True, hide_index=True)
+            styled_dataframe(display_trials[["nct_id", "title"] + onto], max_rows=20)
+        styled_dataframe(display_trials, max_rows=20)
     elif trials is not None:
         st.info("Clinical trials file exists but has no rows. Re-run collectors with network access.")
 
@@ -946,7 +949,11 @@ elif page == "Stock Analysis":
             fin = fin[fin["disease_id"] == registry_disease_id(disease_id)]
         elif "ticker" in fin.columns:
             fin = fin[fin["ticker"].isin(tickers.values())]
-        st.dataframe(fin, use_container_width=True, hide_index=True)
+        st.markdown(
+            '<div class="table-label">Company Financials <span class="badge">Delayed</span></div>',
+            unsafe_allow_html=True,
+        )
+        styled_dataframe(fin)
     if prices is not None and tickers:
         try:
             price_df = prices.copy()
@@ -978,34 +985,46 @@ elif page == "ML Models":
             st.markdown(f"**Last trained (UTC):** `{metrics.get('trained_at_utc', '—')}`")
 
         if comparison is not None:
-            st.markdown("**Regression model comparison** (target: next-period stock return)")
-            st.dataframe(comparison, use_container_width=True, hide_index=True)
+            st.markdown(
+                '<div class="table-label">Regression Model Comparison <span class="badge">Demo</span></div>',
+                unsafe_allow_html=True,
+            )
+            styled_dataframe(comparison)
             fig_cmp = px.bar(
                 comparison,
                 x="model",
                 y="R2",
-                title="Out-of-sample R² (demo — not investment signal)",
+                title="Out-of-Sample R² — Regression Models",
                 text="R2",
+                labels={"R2": "R² Score", "model": "Model"},
             )
-            fig_cmp.update_traces(texttemplate="%{text:.3f}", textposition="outside")
+            fig_cmp.update_traces(
+                texttemplate="%{text:.3f}",
+                textposition="outside",
+                textfont=dict(size=11, color="#1E2D22", weight=600),
+            )
             st.plotly_chart(styled_bar_chart(fig_cmp), use_container_width=True)
 
         col_a, col_b = st.columns(2)
         with col_a:
             if reg_train is not None:
-                st.markdown("**Regression training matrix** (sample)")
-                st.dataframe(reg_train.head(12), use_container_width=True, hide_index=True)
+                st.markdown(
+                    '<div class="table-label">Regression Training <span class="badge">Sample</span></div>',
+                    unsafe_allow_html=True,
+                )
+                styled_dataframe(reg_train, max_rows=12)
         with col_b:
             if trial_train is not None:
-                st.markdown("**Trial-success training matrix** (sample)")
+                st.markdown(
+                    '<div class="table-label">Trial-Success Training <span class="badge">Sample</span></div>',
+                    unsafe_allow_html=True,
+                )
                 show_cols = [
                     c
                     for c in ["phase", "enrollment_log", "duration_months", "disease", "success"]
                     if c in trial_train.columns
                 ]
-                st.dataframe(
-                    trial_train[show_cols].head(12), use_container_width=True, hide_index=True
-                )
+                styled_dataframe(trial_train[show_cols], max_rows=12)
 
         if metrics and metrics.get("trial_success_cv_auc"):
             _ml_cert = load_certification()
@@ -1017,12 +1036,15 @@ elif page == "ML Models":
                 '</div>',
                 unsafe_allow_html=True,
             )
-            st.markdown("**Trial-success CV AUC (real data training)**")
+            st.markdown(
+                '<div class="table-label">Trial-Success CV AUC <span class="badge">Real Data</span></div>',
+                unsafe_allow_html=True,
+            )
             auc_rows = [
                 {"model": k, "auc_mean": round(v.get("auc_mean", 0), 3)}
                 for k, v in metrics["trial_success_cv_auc"].items()
             ]
-            st.dataframe(pd.DataFrame(auc_rows), use_container_width=True, hide_index=True)
+            styled_dataframe(pd.DataFrame(auc_rows))
 
         st.markdown("**Interactive trial-success demo**")
         phase = st.slider("Phase", 1, 3, 2)

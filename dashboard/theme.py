@@ -38,27 +38,50 @@ ZONE_COLORS = {
 
 PLOTLY_LAYOUT: dict[str, Any] = dict(
     paper_bgcolor="rgba(0,0,0,0)",
-    plot_bgcolor="#FAFBFA",
+    plot_bgcolor="#FAFCFB",
     font=dict(color="#2A3B2E", family="'Inter', 'SF Pro Display', system-ui, sans-serif", size=12),
-    title=dict(font=dict(size=14, color="#2A3B2E", family="'Inter', 'SF Pro Display', system-ui, sans-serif", weight=600), x=0, xanchor="left"),
-    margin=dict(t=52, b=40, l=48, r=24),
-    legend=dict(bgcolor="rgba(255,255,255,0.95)", bordercolor="#D9E2DE", borderwidth=1, font=dict(size=11, color="#5C6B73")),
-    hoverlabel=dict(bgcolor="#FFFFFF", bordercolor="#D9E2DE", font=dict(family="'Source Sans 3', sans-serif", size=11, color="#1F2933")),
+    title=dict(
+        font=dict(size=14, color="#1E2D22", family="'Inter', 'SF Pro Display', system-ui, sans-serif", weight=600),
+        x=0,
+        xanchor="left",
+        pad=dict(b=12),
+    ),
+    margin=dict(t=56, b=48, l=56, r=28),
+    legend=dict(
+        bgcolor="rgba(255,255,255,0.97)",
+        bordercolor="#D8E3D6",
+        borderwidth=1,
+        font=dict(size=11, color="#475569"),
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="left",
+        x=0,
+    ),
+    hoverlabel=dict(
+        bgcolor="#FFFFFF",
+        bordercolor="#D8E3D6",
+        font=dict(family="'Inter', 'SF Pro Display', sans-serif", size=12, color="#1E2D22"),
+    ),
     xaxis=dict(
-        gridcolor="#E8EDEA",
-        zerolinecolor="#D9E2DE",
+        gridcolor="#EDF1EE",
+        griddash="dot",
+        zerolinecolor="#D8E3D6",
         linecolor="#CBD5D0",
-        tickfont=dict(color="#5C6B73", size=11),
-        title_font=dict(color="#475569", size=12),
+        tickfont=dict(color="#5A6B5F", size=11),
+        title_font=dict(color="#3A4D40", size=12, weight=500),
+        title_standoff=12,
     ),
     yaxis=dict(
-        gridcolor="#E8EDEA",
-        zerolinecolor="#D9E2DE",
+        gridcolor="#EDF1EE",
+        griddash="dot",
+        zerolinecolor="#D8E3D6",
         linecolor="#CBD5D0",
-        tickfont=dict(color="#5C6B73", size=11),
-        title_font=dict(color="#475569", size=12),
+        tickfont=dict(color="#5A6B5F", size=11),
+        title_font=dict(color="#3A4D40", size=12, weight=500),
+        title_standoff=12,
     ),
-    colorway=["#5A8A6F", "#8FA89A", "#6B8E7A", "#B8A99A", "#A3C4B5", "#D4C4B8"],
+    colorway=["#5A8A6F", "#5B8A9A", "#8FA89A", "#6B8E7A", "#B8A99A", "#A3C4B5", "#7A9BB5", "#D4C4B8"],
 )
 
 CLINICAL_CSS = """
@@ -276,6 +299,25 @@ p, .stCaption, label { color: #5A6B5F; font-weight: 400; }
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(42, 59, 46, 0.03);
 }
+[data-testid="stDataFrame"] table { font-size: 0.8125rem !important; }
+[data-testid="stDataFrame"] th {
+    background: #F4F7F2 !important;
+    color: #1E2D22 !important;
+    font-weight: 600 !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    border-bottom: 2px solid #D8E3D6 !important;
+    padding: 0.625rem 0.75rem !important;
+}
+[data-testid="stDataFrame"] td {
+    color: #2A3B2E !important;
+    padding: 0.5rem 0.75rem !important;
+    border-bottom: 1px solid #EDF1EE !important;
+}
+[data-testid="stDataFrame"] tr:hover td {
+    background: #F8FAF7 !important;
+}
 [data-testid="stExpander"] {
     background: #FFFFFF !important;
     border: 1px solid #D8E3D6 !important;
@@ -299,6 +341,35 @@ p, .stCaption, label { color: #5A6B5F; font-weight: 400; }
 }
 [data-testid="stMetricLabel"] { color: #7A8F84 !important; font-size: 0.72rem !important; text-transform: uppercase; letter-spacing: 0.06em; }
 [data-testid="stMetricValue"] { color: #1E2D22 !important; font-weight: 700 !important; }
+
+/* ---- Chart containers ---- */
+[data-testid="stPlotlyChart"] {
+    background: #FFFFFF;
+    border: 1px solid #D8E3D6;
+    border-radius: 10px;
+    padding: 0.5rem;
+    box-shadow: 0 1px 3px rgba(42, 59, 46, 0.03);
+    margin-bottom: 1rem;
+}
+
+/* ---- Table labels ---- */
+.table-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #1E2D22;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.table-label .badge {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: #5A8A6F;
+    background: #E8F2EC;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+}
 
 /* ---- Buttons ---- */
 .stButton > button {
@@ -566,34 +637,69 @@ def sidebar_brand() -> None:
 
 
 def apply_plotly_theme(fig: go.Figure) -> go.Figure:
+    """Apply clinical theme to any Plotly figure."""
     fig.update_layout(**PLOTLY_LAYOUT)
-    fig.update_xaxes(showgrid=True, gridwidth=1)
-    fig.update_yaxes(showgrid=True, gridwidth=1)
+    fig.update_xaxes(showgrid=True, gridwidth=1, showline=True, linewidth=1)
+    fig.update_yaxes(showgrid=True, gridwidth=1, showline=True, linewidth=1)
     return fig
 
 
 def styled_line_chart(fig: go.Figure, *, accent: str | None = None) -> go.Figure:
+    """Style a line chart with spline curves and themed markers."""
     accent = accent or COLORS["accent"]
     apply_plotly_theme(fig)
+    cw = PLOTLY_LAYOUT["colorway"]
     for i, trace in enumerate(fig.data):
         if isinstance(trace, go.Scatter) and trace.mode and "lines" in str(trace.mode):
-            color = PLOTLY_LAYOUT["colorway"][i % len(PLOTLY_LAYOUT["colorway"])]
+            color = cw[i % len(cw)] if i else accent
             fig.data[i].update(
-                line=dict(width=2.25, color=color if i else accent, shape="spline"),
-                marker=dict(size=4, color=color if i else accent, line=dict(width=1, color="#FFFFFF")),
+                line=dict(width=2.5, color=color, shape="spline"),
+                marker=dict(
+                    size=5,
+                    color=color,
+                    line=dict(width=1.5, color="#FFFFFF"),
+                    symbol="circle",
+                ),
             )
+    fig.update_layout(
+        hovermode="x unified",
+    )
     return fig
 
 
 def styled_bar_chart(fig: go.Figure) -> go.Figure:
+    """Style a bar chart with themed colors, rounded corners, and text labels."""
     apply_plotly_theme(fig)
-    if fig.data:
-        fig.data[0].update(
-            marker=dict(
-                color=COLORS["accent_blue"],
-                line=dict(width=0),
-                opacity=0.88,
-                cornerradius=4,
-            ),
-        )
+    cw = PLOTLY_LAYOUT["colorway"]
+    for i, trace in enumerate(fig.data):
+        if isinstance(trace, go.Bar):
+            color = cw[i % len(cw)] if i else COLORS["accent_blue"]
+            trace.update(
+                marker=dict(
+                    color=color,
+                    line=dict(width=0),
+                    opacity=0.9,
+                    cornerradius=4,
+                ),
+            )
+    fig.update_layout(
+        bargap=0.3,
+        bargroupgap=0.1,
+    )
     return fig
+
+
+def styled_dataframe(
+    df: "pd.DataFrame",
+    *,
+    height: int | None = None,
+    max_rows: int | None = None,
+) -> None:
+    """Render a DataFrame with professional styling."""
+    display = df.head(max_rows) if max_rows else df
+    st.dataframe(
+        display,
+        use_container_width=True,
+        hide_index=True,
+        height=height,
+    )
