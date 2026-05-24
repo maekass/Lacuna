@@ -11,7 +11,7 @@ sys.path.insert(0, str(ROOT))
 
 import requests
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timezone
 from src.data_collection.parsers.clinical_trials import parse_v2_studies
 
 
@@ -87,21 +87,31 @@ def main():
     print("  ✓ Sponsor type")
     print("  ✓ Outcomes (Success/Failure)")
     
-    # Diseases to collect
+    # Diseases to collect (expanded to 15)
     diseases = [
+        # Original 7
         "sickle cell disease",
         "systemic lupus erythematosus",
         "hidradenitis suppurativa",
         "diabetic nephropathy",
         "multiple sclerosis",
         "rheumatoid arthritis",
-        "crohn's disease"
+        "crohn's disease",
+        # New 8
+        "psoriasis",
+        "ulcerative colitis",
+        "ankylosing spondylitis",
+        "atopic dermatitis",
+        "type 1 diabetes",
+        "celiac disease",
+        "inflammatory bowel disease",
+        "autoimmune hepatitis"
     ]
     
     all_trials = []
     
     for disease in diseases:
-        df = collect_trials_for_disease(disease, max_trials=200)
+        df = collect_trials_for_disease(disease, max_trials=500)
         if not df.empty:
             all_trials.append(df)
     

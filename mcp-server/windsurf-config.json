@@ -1,0 +1,10 @@
+{
+  "cascade-registry": {
+    "command": "node",
+    "args": [
+      "/Users/maekaess/CascadeProjects/windsurf-project/mcp-server/dist/index.js"
+    ],
+    "env": {},
+    "description": "Biotech/Pharma Clinical Trial Intelligence - Search 1,400+ trials, predict success with ML, analyze disease burden, query FDA approvals, and run market analysis across 9 immunology disease areas"
+  }
+}

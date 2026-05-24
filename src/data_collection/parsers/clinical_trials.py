@@ -152,6 +152,7 @@ def parse_v2_studies(payload: dict[str, Any], *, max_trials: int = 50) -> list[d
         sm = ps.get("statusModule", {}) or {}
         dm = ps.get("designModule", {}) or {}
         sponsor_mod = ps.get("sponsorCollaboratorsModule", {}) or {}
+        arms_mod = ps.get("armsInterventionsModule", {}) or {}
         
         # Dates
         start_struct = sm.get("startDateStruct") or {}
@@ -172,6 +173,23 @@ def parse_v2_studies(payload: dict[str, Any], *, max_trials: int = 50) -> list[d
         sponsor_name = lead_sponsor.get("name", "")
         sponsor_class = lead_sponsor.get("class", "")
         
+        # Interventions/Drugs
+        interventions = arms_mod.get("interventions", []) or []
+        drug_names = []
+        intervention_types = []
+        for intervention in interventions:
+            if isinstance(intervention, dict):
+                int_type = intervention.get("type", "")
+                int_name = intervention.get("name", "")
+                if int_name:
+                    if int_type.upper() == "DRUG":
+                        drug_names.append(int_name)
+                    intervention_types.append(int_type)
+        
+        primary_drug = drug_names[0] if drug_names else ""
+        all_drugs = "; ".join(drug_names[:3]) if drug_names else ""  # Limit to 3 for readability
+        intervention_type = intervention_types[0] if intervention_types else ""
+        
         # Outcome (success/failure based on status)
         trial_status = sm.get("overallStatus", "")
         outcome = _determine_outcome(trial_status)
@@ -188,6 +206,9 @@ def parse_v2_studies(payload: dict[str, Any], *, max_trials: int = 50) -> list[d
                 "sponsor_name": sponsor_name,
                 "sponsor_type": sponsor_class,
                 "outcome": outcome,
+                "primary_drug": primary_drug,
+                "all_drugs": all_drugs,
+                "intervention_type": intervention_type,
             }
         )
     return trials

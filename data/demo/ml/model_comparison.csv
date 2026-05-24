@@ -1,3 +1,0 @@
-model,R2,MAE,RMSE,n_features,n_train
-random_forest,-0.2824,0.187744,0.225185,9,48
-ridge,-0.3986,0.205285,0.235166,9,48

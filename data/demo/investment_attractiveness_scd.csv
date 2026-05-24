@@ -1,9 +1,0 @@
-company,ticker,technology_score,clinical_stage_score,market_position_score,financial_strength_score,partnership_score,regulatory_advantage_score,overall_score,investment_recommendation
-Vertex Pharmaceuticals,VRTX,9,9,8,9,9,8,8.75,Strong Buy
-CRISPR Therapeutics,CRSP,9,9,7,7,8,8,8.2,Strong Buy
-Bristol Myers Squibb,BMY,5,9,9,9,9,8,7.9,Buy
-Novartis,NVS,5,9,9,9,8,8,7.8,Buy
-Pfizer,PFE,4,6,8,9,9,7,6.65,Hold
-Intellia Therapeutics,NTLA,7,8,6,4,6,7,6.55,Hold
-Beam Therapeutics,BEAM,6,7,7,5,5,7,6.25,Hold
-Editas Medicine,EDIT,8,5,5,6,5,6,6.0,Hold
