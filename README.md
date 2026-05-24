@@ -14,17 +14,21 @@
 
 **Certification Hash:** `72602DA18EE94F6A` | **Grade:** A+ (Excellent) | **[View Certificate →](DATA_VERIFICATION_CERTIFICATE.md)**
 
-### ⚡ Verify It Yourself (2 Minutes)
+### ⚡ Don't Trust Me. Verify It Yourself. (2 Minutes)
 
-**Don't trust, verify!** Run this one command to independently verify all claims:
+**I claim 100% real data. Prove me wrong (or right):**
 
 ```bash
 ./verify_data.sh
 ```
 
-Or manually: `python3 scripts/generate_data_certification.py`
+**What this does:**
+- ✅ Verifies 10 random NCT IDs on ClinicalTrials.gov (live API calls)
+- ✅ Confirms zero synthetic files exist
+- ✅ Validates all sources are cited
+- ✅ Generates hash: `72602DA18EE94F6A`
 
-**[📖 Full Verification Guide →](VERIFY.md)** | **[🔍 Spot Check NCT IDs →](https://clinicaltrials.gov/)**
+**[� VERIFY THIS DATA - Challenge Me! →](VERIFY_THIS_DATA.md)** | **[📖 Verification Guide →](VERIFY.md)** | **[🔍 Spot Check →](https://clinicaltrials.gov/study/NCT04846959)**
 
 ---
 
