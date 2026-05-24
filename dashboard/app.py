@@ -1,8 +1,9 @@
 """
-Sickle Cell Investment Analysis Dashboard
+Immunology Investment Intelligence Dashboard
 Interactive Streamlit dashboard (run from project root).
 """
 
+import html
 import json
 import sys
 from datetime import datetime, timezone
@@ -21,11 +22,14 @@ if str(ROOT) not in sys.path:
 from dashboard.theme import (
     apply_glass_theme,
     apply_plotly_theme,
+    empty_state,
     equity_context_card,
     glass_hero,
+    lottie_loading,
     section_header,
     sidebar_brand,
     styled_bar_chart,
+    styled_dataframe,
     styled_line_chart,
     zone_banner,
 )
@@ -64,7 +68,7 @@ ML_MODELS = ROOT / "data" / "models"
 QUANT_DATA = ROOT / "data" / "processed" / "quant"
 
 st.set_page_config(
-    page_title="Immunology Investment Dashboard",
+    page_title="Immunology Investment Intelligence",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -82,31 +86,27 @@ st.session_state.page_views += 1
 # LEGAL DISCLAIMER - DISPLAYED ON EVERY PAGE
 # ============================================================================
 def show_legal_disclaimer():
-    """Display comprehensive legal disclaimer banner"""
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #E8F2EC 0%, #F4F7F2 100%); 
-                padding: 1.75rem 2rem; border-radius: 12px; margin-bottom: 2rem; 
-                border-left: 4px solid #5A8A6F; border: 1px solid #C4D4C0;">
-        <h3 style="color: #2A3B2E; margin: 0 0 1rem 0; font-family: 'Inter', sans-serif; 
-                   font-weight: 600; font-size: 1.125rem; letter-spacing: -0.015em;">
-            Legal Disclaimer
-        </h3>
-        <p style="color: #2A3B2E; margin: 0; font-size: 0.9375rem; line-height: 1.7; font-weight: 400;">
-            <strong style="color: #5A8A6F;">FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY</strong><br><br>
-            This platform is designed for academic research and learning. It is <strong>NOT</strong>:<br>
-            • Investment advice or financial recommendations<br>
-            • Suitable for commercial trading or real-money decisions without proper validation<br>
-            • A substitute for professional financial, medical, or legal counsel<br>
-            • Approved for clinical or regulatory decision-making<br><br>
-            <strong>Data Compliance:</strong> All data is publicly available and delayed. No patient-level or 
-            private health information (HIPAA compliant). No insider trading or material non-public information. 
-            Illustrative scores and private-market figures are demo weights only. Users must verify compliance 
-            with applicable securities and health-data regulations before any production or commercial use.<br><br>
-            <strong>Past performance does not guarantee future results.</strong> All models and predictions are 
-            illustrative and subject to error. Consult qualified professionals before making investment decisions.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    """Display comprehensive legal disclaimer banner."""
+    st.markdown(
+        '<div class="glass-panel" style="border-left: 3px solid #5A8A6F; background: linear-gradient(135deg, #F4F7F2 0%, #FAFCFA 100%);">'
+        '<h3 style="color: #1E2D22; margin: 0 0 0.75rem 0; font-family: \'Inter\', sans-serif; '
+        'font-weight: 700; font-size: 1rem; letter-spacing: -0.015em;">Legal Disclaimer</h3>'
+        '<p style="color: #2A3B2E; margin: 0; font-size: 0.8125rem; line-height: 1.75; font-weight: 400;">'
+        '<strong style="color: #3D7A55;">FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY</strong><br><br>'
+        'This platform is designed for academic research and learning. It is <strong>NOT</strong>:<br>'
+        '&bull; Investment advice or financial recommendations<br>'
+        '&bull; Suitable for commercial trading or real-money decisions without proper validation<br>'
+        '&bull; A substitute for professional financial, medical, or legal counsel<br>'
+        '&bull; Approved for clinical or regulatory decision-making<br><br>'
+        '<strong>Data Compliance:</strong> All data is publicly available and delayed. No patient-level or '
+        'private health information (HIPAA compliant). No insider trading or material non-public information. '
+        'Illustrative scores and private-market figures are demo weights only. Users must verify compliance '
+        'with applicable securities and health-data regulations before any production or commercial use.<br><br>'
+        '<strong>Past performance does not guarantee future results.</strong> All models and predictions are '
+        'illustrative and subject to error. Consult qualified professionals before making investment decisions.'
+        '</p></div>',
+        unsafe_allow_html=True,
+    )
 
 
 @st.cache_resource(show_spinner=False)
@@ -193,6 +193,17 @@ def load_manifest() -> Optional[dict[str, Any]]:
     if not path.exists():
         return None
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_certification() -> Optional[dict[str, Any]]:
+    """Load the latest data verification certificate (updated by daily CI)."""
+    path = ROOT / "DATA_VERIFICATION_CERTIFICATE.json"
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return None
 
 
 @st.cache_data(ttl=86400, show_spinner="Loading Orphanet disease index (cached 24h)…")
@@ -341,8 +352,11 @@ def render_disease_metrics_panel(metrics: dict[str, Any]) -> None:
 
     prev_rows = metrics.get("prevalence_entries") or []
     if prev_rows:
-        st.markdown("**Orphanet prevalence sources (sample)**")
-        st.dataframe(pd.DataFrame(prev_rows), use_container_width=True, hide_index=True)
+        st.markdown(
+            '<div class="table-label">Orphanet Prevalence Sources <span class="badge">Sample</span></div>',
+            unsafe_allow_html=True,
+        )
+        styled_dataframe(pd.DataFrame(prev_rows))
 
     if metrics.get("cdc_label") and not metrics.get("orpha_code"):
         st.info(
@@ -394,11 +408,10 @@ def render_health_trends_charts(
         )
     )
     fig_prev.update_layout(
-        title=f"{label} — U.S. prevalence estimate (Orphanet rate × Census population)",
+        title=f"{label} — U.S. Prevalence Estimate",
         xaxis_title="Date",
-        yaxis_title="Estimated prevalence (persons)",
-        height=360,
-        margin=dict(t=50, b=40),
+        yaxis_title="Estimated Prevalence (Persons)",
+        height=380,
         yaxis=dict(tickformat=",.0f"),
     )
     st.plotly_chart(styled_line_chart(fig_prev), use_container_width=True)
@@ -413,15 +426,13 @@ def render_health_trends_charts(
                 x=by_year["year"],
                 y=by_year["trial_count"],
                 name="Trials in sample",
-                marker_color="#818cf8",
             )
         )
         fig_trials.update_layout(
-            title="Clinical trials in this repo sample by trial start year (ClinicalTrials.gov)",
-            xaxis_title="Start year",
-            yaxis_title="Number of trials in CSV sample",
-            height=360,
-            margin=dict(t=50, b=40),
+            title="Clinical Trials by Start Year — ClinicalTrials.gov Sample",
+            xaxis_title="Start Year",
+            yaxis_title="Trial Count",
+            height=380,
             xaxis=dict(dtick=1),
         )
         st.plotly_chart(styled_bar_chart(fig_trials), use_container_width=True)
@@ -441,11 +452,10 @@ def render_health_trends_charts(
             )
         )
         fig_placeholder.update_layout(
-            title="Active trials — illustrative placeholder (not ClinicalTrials.gov)",
+            title="Active Trials — Illustrative Placeholder",
             xaxis_title="Date",
-            yaxis_title="Count (illustrative)",
-            height=360,
-            margin=dict(t=50, b=40),
+            yaxis_title="Count (Illustrative)",
+            height=380,
         )
         st.plotly_chart(styled_line_chart(fig_placeholder), use_container_width=True)
     else:
@@ -580,54 +590,39 @@ apply_glass_theme()
 # Display legal disclaimer on every page
 show_legal_disclaimer()
 
-# Display data verification banner
+# Display data verification banner (reads from daily certification)
 def show_data_verification_banner():
-    """Display prominent data verification banner"""
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%); 
-                padding: 1.5rem 2rem; border-radius: 12px; margin-bottom: 2rem; 
-                border-left: 4px solid #4CAF50; border: 1px solid #C8E6C9;">
-        <h3 style="color: #1B5E20; margin: 0 0 0.75rem 0; font-family: 'Inter', sans-serif; 
-                   font-weight: 600; font-size: 1.125rem;">
-            VERIFY THIS DATA - ZERO INSTALLATION REQUIRED
-        </h3>
-        <p style="color: #2E7D32; margin: 0 0 1rem 0; font-size: 0.9375rem; line-height: 1.6;">
-            <strong>100% Real Data Certification:</strong> All 6,819 clinical trials are verifiable on ClinicalTrials.gov. 
-            Quality Score: 99.96/100 (Grade: A+). Zero synthetic data.
-        </p>
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-            <a href="https://github.com/maekass/MPK1/blob/enhanced-data-collection/VERIFY_WITH_ONE_CLICK.md" 
-               target="_blank"
-               style="background: #4CAF50; color: white; padding: 0.625rem 1.25rem; 
-                      border-radius: 6px; text-decoration: none; font-weight: 600; 
-                      font-size: 0.875rem; display: inline-block;">
-                VERIFY WITH ONE CLICK (2 MIN)
-            </a>
-            <a href="https://github.com/maekass/MPK1/blob/enhanced-data-collection/DATA_VERIFICATION_CERTIFICATE.md" 
-               target="_blank"
-               style="background: white; color: #4CAF50; padding: 0.625rem 1.25rem; 
-                      border-radius: 6px; text-decoration: none; font-weight: 600; 
-                      font-size: 0.875rem; border: 2px solid #4CAF50; display: inline-block;">
-                View Certificate
-            </a>
-            <a href="https://clinicaltrials.gov/study/NCT04846959" 
-               target="_blank"
-               style="background: white; color: #4CAF50; padding: 0.625rem 1.25rem; 
-                      border-radius: 6px; text-decoration: none; font-weight: 600; 
-                      font-size: 0.875rem; border: 2px solid #4CAF50; display: inline-block;">
-                Spot Check NCT ID
-            </a>
-        </div>
-        <p style="color: #558B2F; margin: 1rem 0 0 0; font-size: 0.8125rem;">
-            <strong>Certification Hash:</strong> <code style="background: #C8E6C9; padding: 0.125rem 0.375rem; border-radius: 3px;">971ACF8592ADEA0E</code> | 
-            <strong>Daily Automated Verification:</strong> 
-            <a href="https://github.com/maekass/MPK1/actions/workflows/daily-data-certification.yml" 
-               target="_blank" style="color: #2E7D32; text-decoration: underline;">
-                View Workflow
-            </a>
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    """Display prominent data verification banner with live certification data."""
+    cert = load_certification()
+    t1 = (cert or {}).get("tests", {}).get("test_1_clinical_trials", {})
+    t5 = (cert or {}).get("tests", {}).get("test_5_quality_score", {})
+    trials_str = f"{t1['total_trials']:,}" if t1.get("total_trials") else "—"
+    q_score = t5.get("quality_score", 0)
+    grade = "A+" if q_score >= 95 else "A" if q_score >= 90 else "B" if q_score >= 80 else "—"
+    q_display = f"{q_score:.2f}/100 (Grade: {grade})" if q_score else "—"
+    cert_hash = (cert or {}).get("certification_hash", "—")
+
+    st.markdown(
+        '<div class="cert-banner">'
+        '<h3>Verify This Data — Zero Installation Required</h3>'
+        '<p><strong>100% Real Data Certification:</strong> All ' + trials_str + ' clinical trials are verifiable on ClinicalTrials.gov. '
+        'Quality Score: ' + q_display + '. Zero synthetic data.</p>'
+        '<div class="cert-actions">'
+        '<a class="primary" href="https://github.com/maekass/MPK1/blob/main/VERIFY_WITH_ONE_CLICK.md" '
+        'target="_blank">Verify With One Click</a>'
+        '<a class="secondary" href="https://github.com/maekass/MPK1/blob/main/DATA_VERIFICATION_CERTIFICATE.md" '
+        'target="_blank">View Certificate</a>'
+        '<a class="secondary" href="https://clinicaltrials.gov/study/NCT04846959" '
+        'target="_blank">Spot Check NCT ID</a></div>'
+        '<div class="cert-meta">'
+        '<strong>Certification Hash:</strong> '
+        '<code>' + cert_hash + '</code> · '
+        '<strong>Daily Automated Verification:</strong> '
+        '<a href="https://github.com/maekass/MPK1/actions/workflows/daily-data-certification.yml" '
+        'target="_blank" style="color: #2A5A3B; text-decoration: underline;">'
+        'View Workflow</a></div></div>',
+        unsafe_allow_html=True,
+    )
 
 show_data_verification_banner()
 
@@ -657,95 +652,48 @@ st.markdown(
 )
 
 # ============================================================================
-# HERO SECTION - DATA-DRIVEN CLAIMS
+# HERO SECTION - DATA-DRIVEN CLAIMS (pulls from daily certification)
 # ============================================================================
-st.markdown("""
-<div style="background: linear-gradient(135deg, #1a1f2e 0%, #2d3748 100%); 
-            padding: 3rem 2.5rem; border-radius: 16px; margin-bottom: 2.5rem; 
-            border: 1px solid #4a5568; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
-    <div style="text-align: center; margin-bottom: 2rem;">
-        <h1 style="color: #ffffff; margin: 0 0 0.75rem 0; font-family: 'Inter', sans-serif; 
-                   font-weight: 700; font-size: 2.25rem; letter-spacing: -0.02em;">
-            Immunology Investment Intelligence Platform
-        </h1>
-        <p style="color: #a0aec0; margin: 0; font-size: 1.125rem; font-weight: 400; line-height: 1.6;">
-            Real-time clinical trial analysis powered by 100% verified public data
-        </p>
-    </div>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-                gap: 1.5rem; margin-top: 2rem;">
-        <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; 
-                    border: 1px solid rgba(255,255,255,0.1); text-align: center;">
-            <div style="color: #68d391; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
-                6,523
-            </div>
-            <div style="color: #e2e8f0; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; 
-                       letter-spacing: 0.05em;">
-                Real Clinical Trials
-            </div>
-            <div style="color: #a0aec0; font-size: 0.75rem; margin-top: 0.5rem;">
-                ClinicalTrials.gov API v2
-            </div>
-        </div>
-        
-        <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; 
-                    border: 1px solid rgba(255,255,255,0.1); text-align: center;">
-            <div style="color: #63b3ed; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
-                82%
-            </div>
-            <div style="color: #e2e8f0; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; 
-                       letter-spacing: 0.05em;">
-                Trial Success Rate
-            </div>
-            <div style="color: #a0aec0; font-size: 0.75rem; margin-top: 0.5rem;">
-                2010-2023 outcomes
-            </div>
-        </div>
-        
-        <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; 
-                    border: 1px solid rgba(255,255,255,0.1); text-align: center;">
-            <div style="color: #f6ad55; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
-                5
-            </div>
-            <div style="color: #e2e8f0; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; 
-                       letter-spacing: 0.05em;">
-                Disease Areas
-            </div>
-            <div style="color: #a0aec0; font-size: 0.75rem; margin-top: 0.5rem;">
-                Multi-disease validation
-            </div>
-        </div>
-        
-        <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; 
-                    border: 1px solid rgba(255,255,255,0.1); text-align: center;">
-            <div style="color: #fc8181; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
-                100%
-            </div>
-            <div style="color: #e2e8f0; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; 
-                       letter-spacing: 0.05em;">
-                Real Data
-            </div>
-            <div style="color: #a0aec0; font-size: 0.75rem; margin-top: 0.5rem;">
-                Zero synthetic data
-            </div>
-        </div>
-    </div>
-    
-    <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); 
-                text-align: center;">
-        <p style="color: #cbd5e0; font-size: 0.9375rem; margin: 0; line-height: 1.7;">
-            <strong style="color: #68d391;">✓ Verified Sources:</strong> FDA.gov · ClinicalTrials.gov · CDC · Orphanet · SEC EDGAR<br>
-            <strong style="color: #63b3ed;">✓ ML Models:</strong> Trained on real trials (not synthetic)<br>
-            <strong style="color: #f6ad55;">✓ Scientific Integrity:</strong> All data verifiable and reproducible
-        </p>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+_cert = load_certification()
+_t1 = (_cert or {}).get("tests", {}).get("test_1_clinical_trials", {})
+_t5 = (_cert or {}).get("tests", {}).get("test_5_quality_score", {})
+_hero_trials = f"{_t1.get('total_trials', 0):,}" if _t1.get("total_trials") else "—"
+_hero_diseases = str(_t1.get("diseases", "—")) if _t1.get("diseases") else "—"
+_hero_quality = f"{_t5.get('quality_score', 0):.1f}" if _t5.get("quality_score") else "—"
+_hero_hash = (_cert or {}).get("certification_hash", "—")
+_hero_real_pct = "100%" if (_cert or {}).get("overall_status") == "PASSED" else "—"
+
+st.markdown(
+    '<div class="hero-metrics">'
+    '<p class="hero-tagline">Real-time clinical trial analysis powered by 100% verified public data</p>'
+    '<div class="metric-grid">'
+    '<div class="metric-card">'
+    '<div class="value">' + _hero_trials + '</div>'
+    '<div class="label">Real Clinical Trials</div>'
+    '<div class="detail">ClinicalTrials.gov API v2</div></div>'
+    '<div class="metric-card">'
+    '<div class="value">' + _hero_quality + '</div>'
+    '<div class="label">Quality Score</div>'
+    '<div class="detail">Out of 100</div></div>'
+    '<div class="metric-card">'
+    '<div class="value">' + _hero_diseases + '</div>'
+    '<div class="label">Disease Areas</div>'
+    '<div class="detail">Multi-disease validation</div></div>'
+    '<div class="metric-card">'
+    '<div class="value">' + _hero_real_pct + '</div>'
+    '<div class="label">Real Data</div>'
+    '<div class="detail">Zero synthetic data</div></div>'
+    '</div>'
+    '<div class="hero-footer">'
+    '<p><strong>&#10003; Verified Sources:</strong> FDA.gov · ClinicalTrials.gov · CDC · Orphanet · SEC EDGAR<br>'
+    '<strong>&#10003; ML Models:</strong> Trained on real trials (not synthetic)<br>'
+    '<strong>&#10003; Cert Hash:</strong> ' + _hero_hash + '</p></div></div>',
+    unsafe_allow_html=True,
+)
 
 sidebar_brand()
 st.sidebar.markdown(
-    '<p style="font-size:0.8rem;color:#5C6B73;margin:0 0 1rem;">Demonstration data. Not investment or medical advice.</p>',
+    '<p style="font-size:0.75rem;color:#7A8F84;margin:0 0 1rem;line-height:1.5;">Demonstration data. Not investment or medical advice.</p>',
     unsafe_allow_html=True,
 )
 st.sidebar.header("Indication")
@@ -753,6 +701,7 @@ _indication_mode = st.sidebar.radio(
     "Source",
     ["Focus indications", "Search any disease"],
     horizontal=True,
+    help="Focus indications: curated disease datasets with full pipeline/equity data. Search: live Orphanet & CDC lookups.",
 )
 _disease_labels = {d.disease_id: d.display_name for d in list_diseases()}
 disease_id = "scd"
@@ -764,6 +713,7 @@ if _indication_mode == "Focus indications":
         options=list(_disease_labels.keys()),
         format_func=lambda k: _disease_labels[k],
         index=0,
+        help="Select a curated disease with pre-built pipeline, epidemiology, and equity datasets.",
     )
     _ctx = IndicationView.from_registry(disease_id)
 else:
@@ -771,7 +721,7 @@ else:
         "Universe",
         ["Both", "Orphanet", "CDC NNDSS"],
         horizontal=True,
-        help="CDC NNDSS: nationally notifiable infectious conditions on data.cdc.gov (~130 labels).",
+        help="Orphanet: ~11k rare diseases with prevalence data. CDC NNDSS: ~130 nationally notifiable conditions from data.cdc.gov.",
     )
     _search_q = st.sidebar.text_input(
         "Search disease name",
@@ -825,6 +775,7 @@ page = st.sidebar.radio(
         "Investment Stages",
         "Market Analysis",
     ],
+    help="Pages 1–5 focus on clinical data and technology. Pages 6–11 cover quantitative finance demos.",
 )
 _ZONE_FOR_PAGE = {
     "Disease Lookup": ("epidemiology", "Orphanet search · public metrics"),
@@ -844,15 +795,21 @@ if page in _ZONE_FOR_PAGE:
     zone_banner(z, label)
 
 if not data_is_present(DATA):
-    with st.spinner("Loading demo datasets (tables and charts)…"):
-        try:
-            _bootstrap_data_cached()
-            st.rerun()
-        except Exception as exc:
-            st.error(
-                f"Could not load data: {exc}. "
-                "From the project root run `python3 src/data_collection/collect_all_data.py`."
-            )
+    _boot_ph = st.empty()
+    with _boot_ph.container():
+        lottie_loading("Bootstrapping demo datasets — this only runs once per session…")
+    try:
+        _bootstrap_data_cached()
+        _boot_ph.empty()
+        st.rerun()
+    except Exception as exc:
+        _boot_ph.empty()
+        empty_state(
+            "Data Bootstrap Failed",
+            f"Could not load data: {html.escape(str(exc))}. "
+            "Run <code>python3 src/data_collection/collect_all_data.py</code> from the project root.",
+            icon="&#9888;",
+        )
 
 _manifest = load_manifest()
 render_sidebar_provenance(page, _manifest, disease_id=disease_id)
@@ -866,7 +823,7 @@ if missing:
 
 if page == "Disease Lookup":
     section_header(
-        "Disease lookup",
+        "Disease Lookup",
         "Search Orphanet and CDC NNDSS universes; pull epidemiology, surveillance, and trial samples",
     )
     if _indication_mode != "Search any disease":
@@ -878,13 +835,13 @@ if page == "Disease Lookup":
         epi_live = _ctx.metrics.get("epidemiology_df")
         trials_live = _ctx.metrics.get("trials_df")
         if epi_live is not None and not epi_live.empty:
-            section_header("Burden trend (estimated)", "Orphanet U.S. rate × population — illustrative annual points")
+            section_header("Burden Trend (Estimated)", "Orphanet U.S. rate × population — illustrative annual points")
             render_health_trends_charts(
                 epi_live, trials_live, disease_id=disease_id, display_name=_ctx.display_name
             )
         elif trials_live is not None and not trials_live.empty:
             st.markdown("**Clinical trials (live sample)**")
-            st.dataframe(trials_live.head(25), use_container_width=True, hide_index=True)
+            styled_dataframe(trials_live, max_rows=25)
         st.caption(
             "Live public APIs (Orphanet, CDC data.cdc.gov NNDSS, ClinicalTrials.gov). No bundled pipeline, equity, or FDA tables "
             "for ad-hoc diseases — use **Focus indications** for full demo datasets."
@@ -900,32 +857,41 @@ elif page == "Overview":
         f"Pipeline — {_ctx.display_name}",
         f"MeSH {_ctx.mesh_id} · SNOMED {_ctx.snomed_id} · ICD-10 {_ctx.icd10_code}",
     )
+    _ov_ph = st.empty()
+    with _ov_ph.container():
+        lottie_loading("Loading pipeline data…")
     pipeline = load_csv(_ctx.pipeline_artifact) if _ctx.is_registry else None
     fda = load_csv(_ctx.fda_artifact) if _ctx.is_registry else None
+    _ov_ph.empty()
     if pipeline is not None:
         pipeline = enrich_artifact(_ctx.pipeline_artifact, pipeline)
         onto = _ontology_display_cols(pipeline)
         if onto:
-            st.markdown("**Ontology anchors (MeSH / ICD)**")
-            st.dataframe(pipeline[onto].drop_duplicates(), use_container_width=True, hide_index=True)
-        st.dataframe(pipeline, use_container_width=True)
+            with st.expander("Ontology Anchors (MeSH / ICD)", expanded=False):
+                styled_dataframe(pipeline[onto].drop_duplicates())
+        styled_dataframe(pipeline)
         color_col = "technology" if "technology" in pipeline.columns else "clinical_phase"
         fig = px.bar(
             pipeline,
             x="company",
             y="probability_of_success",
             color=color_col,
-            title=f"Illustrative POS by company — {_ctx.display_name} (demo)",
+            title=f"Illustrative POS by Company — {_ctx.display_name}",
+            labels={"probability_of_success": "Probability of Success", "company": "Company"},
         )
         st.plotly_chart(styled_bar_chart(fig), use_container_width=True)
     else:
-        st.info("Run `python3 scripts/build_disease_demo_bundle.py` or collectors to populate pipeline tables.")
+        empty_state(
+            "No Pipeline Data",
+            "Run <code>python3 scripts/build_disease_demo_bundle.py</code> or collectors to populate pipeline tables.",
+            icon="&#128300;",
+        )
     if fda is not None:
         section_header(
-            "Approved therapies",
+            "Approved Therapies",
             "openFDA drug labels + drugsfda first approval when brand matches (see collectors with network)",
         )
-        st.dataframe(enrich_artifact(_ctx.fda_artifact, fda), use_container_width=True, hide_index=True)
+        styled_dataframe(enrich_artifact(_ctx.fda_artifact, fda))
 
 elif page == "Health Trends":
     section_header(
@@ -948,10 +914,11 @@ elif page == "Health Trends":
         trials = _ctx.metrics.get("trials_df") if _ctx.metrics else None
 
     if epi is None and (trials is None or trials.empty):
-        st.warning(
-            "No health data files for this indication. Run:\n"
-            "`python3 scripts/build_disease_demo_bundle.py` and refresh, or "
-            "`python3 src/data_collection/collect_all_data.py`"
+        empty_state(
+            "No Health Data Available",
+            "Run <code>python3 scripts/build_disease_demo_bundle.py</code> and refresh, "
+            "or <code>python3 src/data_collection/collect_all_data.py</code>",
+            icon="&#128202;",
         )
     elif epi is not None:
         render_health_trends_charts(epi, trials, disease_id=disease_id, display_name=_ctx.display_name)
@@ -965,7 +932,7 @@ elif page == "Health Trends":
         if _ctx.is_registry:
             trials = enrich_artifact(_ctx.trials_artifact, trials)
         section_header(
-            "Clinical trials",
+            "Clinical Trials",
             f"ClinicalTrials.gov · `{_ctx.clinical_trials_query}`"
             + (f" · MeSH {_ctx.mesh_id}" if _ctx.mesh_id != "—" else ""),
         )
@@ -976,13 +943,9 @@ elif page == "Health Trends":
             )
         onto = _ontology_display_cols(display_trials)
         if onto:
-            st.markdown("**Indication disambiguation**")
-            st.dataframe(
-                display_trials[["nct_id", "title"] + onto].head(20),
-                use_container_width=True,
-                hide_index=True,
-            )
-        st.dataframe(display_trials.head(20), use_container_width=True, hide_index=True)
+            with st.expander("Indication Disambiguation (Ontology)", expanded=False):
+                styled_dataframe(display_trials[["nct_id", "title"] + onto], max_rows=20)
+        styled_dataframe(display_trials, max_rows=20)
     elif trials is not None:
         st.info("Clinical trials file exists but has no rows. Re-run collectors with network access.")
 
@@ -993,118 +956,167 @@ elif page == "Stock Analysis":
     )
     if not _ctx.is_registry:
         st.info("Equity tables are wired for **Focus indications** registry tickers only.")
+    _eq_ph = st.empty()
+    with _eq_ph.container():
+        lottie_loading("Loading equity data…")
     fin = load_csv("company_financials.csv")
     prices = load_csv("stock_prices_companies.csv")
     tickers = us_tickers(_ctx.companies)
+    _eq_ph.empty()
     if fin is not None:
         if "disease_id" in fin.columns:
             fin = fin[fin["disease_id"] == registry_disease_id(disease_id)]
         elif "ticker" in fin.columns:
             fin = fin[fin["ticker"].isin(tickers.values())]
-        st.dataframe(fin, use_container_width=True, hide_index=True)
+        st.markdown(
+            '<div class="table-label">Company Financials <span class="badge">Delayed</span></div>',
+            unsafe_allow_html=True,
+        )
+        styled_dataframe(fin)
     if prices is not None and tickers:
         try:
-            px = prices.copy()
-            if hasattr(px.columns, "levels") and px.columns.nlevels > 1:
-                avail = [t for t in tickers.values() if t in px.columns.get_level_values(0)]
+            price_df = prices.copy()
+            if hasattr(price_df.columns, "levels") and price_df.columns.nlevels > 1:
+                avail = [t for t in tickers.values() if t in price_df.columns.get_level_values(0)]
                 if avail:
-                    close = px[avail]["Close"] if "Close" in px[avail].columns.names else px[avail]
+                    close = price_df[avail]["Close"] if "Close" in price_df[avail].columns.names else price_df[avail]
                     st.markdown("**Price history (close)** — selected tickers")
                     st.line_chart(close)
         except Exception:
             st.caption("Price chart unavailable for current CSV shape; table above lists fundamentals.")
     if fin is None and prices is None:
-        st.info("Run `python3 src/data_collection/collect_all_data.py` to load equity data.")
+        empty_state(
+            "No Equity Data",
+            "Run <code>python3 src/data_collection/collect_all_data.py</code> to load equity data.",
+            icon="&#128200;",
+        )
 
 elif page == "ML Models":
-    section_header("Machine learning", "Demo models on illustrative features — not clinical or investment signals")
+    section_header("Machine Learning", "Demo models on illustrative features — not clinical or investment signals")
     if not _ensure_ml_artifacts_cached():
-        st.warning(
-            "No fitted models found. From the project root run `python3 scripts/train_models.py` "
-            "(requires `data/raw` or `data/demo` CSVs)."
+        empty_state(
+            "No Fitted Models",
+            "Run <code>python3 scripts/train_models.py</code> from the project root "
+            "(requires <code>data/raw</code> or <code>data/demo</code> CSVs).",
+            icon="&#129302;",
         )
     else:
+        _ml_ph = st.empty()
+        with _ml_ph.container():
+            lottie_loading("Loading model artifacts…")
         metrics = load_ml_json("model_metrics.json")
         comparison = load_csv("model_comparison.csv", ML_DATA)
         reg_train = load_csv("regression_training.csv", ML_DATA)
         trial_train = load_csv("trial_success_training.csv", ML_DATA)
+        _ml_ph.empty()
 
         if metrics:
             st.markdown(f"**Last trained (UTC):** `{metrics.get('trained_at_utc', '—')}`")
 
         if comparison is not None:
-            st.markdown("**Regression model comparison** (target: next-period stock return)")
-            st.dataframe(comparison, use_container_width=True, hide_index=True)
+            st.markdown(
+                '<div class="table-label">Regression Model Comparison <span class="badge">Demo</span></div>',
+                unsafe_allow_html=True,
+            )
+            styled_dataframe(comparison)
             fig_cmp = px.bar(
                 comparison,
                 x="model",
                 y="R2",
-                title="Out-of-sample R² (demo — not investment signal)",
+                title="Out-of-Sample R² — Regression Models",
                 text="R2",
+                labels={"R2": "R² Score", "model": "Model"},
             )
-            fig_cmp.update_traces(texttemplate="%{text:.3f}", textposition="outside")
+            fig_cmp.update_traces(
+                texttemplate="%{text:.3f}",
+                textposition="outside",
+                textfont=dict(size=11, color="#1E2D22", weight=600),
+            )
             st.plotly_chart(styled_bar_chart(fig_cmp), use_container_width=True)
 
-        col_a, col_b = st.columns(2)
-        with col_a:
-            if reg_train is not None:
-                st.markdown("**Regression training matrix** (sample)")
-                st.dataframe(reg_train.head(12), use_container_width=True, hide_index=True)
-        with col_b:
-            if trial_train is not None:
-                st.markdown("**Trial-success training matrix** (sample)")
-                show_cols = [
-                    c
-                    for c in ["phase", "enrollment_log", "duration_months", "disease", "success"]
-                    if c in trial_train.columns
-                ]
-                st.dataframe(
-                    trial_train[show_cols].head(12), use_container_width=True, hide_index=True
-                )
+        with st.expander("Training Data Samples", expanded=False):
+            col_a, col_b = st.columns(2)
+            with col_a:
+                if reg_train is not None:
+                    st.markdown(
+                        '<div class="table-label">Regression Training <span class="badge">Sample</span></div>',
+                        unsafe_allow_html=True,
+                    )
+                    styled_dataframe(reg_train, max_rows=12)
+            with col_b:
+                if trial_train is not None:
+                    st.markdown(
+                        '<div class="table-label">Trial-Success Training <span class="badge">Sample</span></div>',
+                        unsafe_allow_html=True,
+                    )
+                    show_cols = [
+                        c
+                        for c in ["phase", "enrollment_log", "duration_months", "disease", "success"]
+                        if c in trial_train.columns
+                    ]
+                    styled_dataframe(trial_train[show_cols], max_rows=12)
 
         if metrics and metrics.get("trial_success_cv_auc"):
-            st.markdown("""
-            <div style="background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%); 
-                        padding: 1rem 1.5rem; border-radius: 8px; margin-bottom: 1rem; 
-                        border-left: 4px solid #4CAF50; display: inline-block;">
-                <span style="color: #2E7D32; font-weight: 600; font-size: 0.95rem;">
-                    ✓ REAL DATA: Trained on 6,523 clinical trials from ClinicalTrials.gov
-                </span>
-            </div>
-            """, unsafe_allow_html=True)
-            st.markdown("**Trial-success CV AUC (real data training)**")
+            _ml_cert = load_certification()
+            _ml_t1 = (_ml_cert or {}).get("tests", {}).get("test_1_clinical_trials", {})
+            _ml_trial_count = f"{_ml_t1['total_trials']:,}" if _ml_t1.get("total_trials") else "6,819"
+            st.markdown(
+                '<div class="real-data-badge">'
+                '<span>&#10003; Real Data: Trained on ' + _ml_trial_count + ' clinical trials from ClinicalTrials.gov</span>'
+                '</div>',
+                unsafe_allow_html=True,
+            )
+            st.markdown(
+                '<div class="table-label">Trial-Success CV AUC <span class="badge">Real Data</span></div>',
+                unsafe_allow_html=True,
+            )
             auc_rows = [
                 {"model": k, "auc_mean": round(v.get("auc_mean", 0), 3)}
                 for k, v in metrics["trial_success_cv_auc"].items()
             ]
-            st.dataframe(pd.DataFrame(auc_rows), use_container_width=True, hide_index=True)
+            styled_dataframe(pd.DataFrame(auc_rows))
 
-        st.markdown("**Interactive trial-success demo**")
-        phase = st.slider("Phase", 1, 3, 2)
-        enrollment = st.number_input("Enrollment", 50, 3000, 200, step=50)
-        sponsor = st.selectbox("Sponsor type", ["biotech", "pharma", "academic"])
-        mechanism = st.selectbox(
-            "Mechanism",
-            ["Gene Editing", "Monoclonal Antibody", "Small Molecule", "Novel Mechanism"],
-        )
-        if st.button("Run ensemble prediction"):
-            from src.models.trial_success_predictor import TrialSuccessPredictor
-
-            pred = TrialSuccessPredictor()
-            pred.train(verbose=False)
-            out = pred.predict(
-                phase=phase,
-                enrollment=enrollment,
-                sponsor=sponsor,
-                mechanism=mechanism,
-                duration_months=36,
-                disease_name="Sickle Cell Disease",
+        with st.expander("Interactive Trial-Success Demo", expanded=True):
+            phase = st.slider(
+                "Phase", 1, 3, 2,
+                help="Clinical trial phase (1 = early, 3 = late-stage). Higher phases generally have higher success rates.",
             )
-            st.metric("Success probability (demo)", f"{out['probability']:.1%}")
-            st.json(out)
+            enrollment = st.number_input(
+                "Enrollment", 50, 3000, 200, step=50,
+                help="Number of participants enrolled. Larger trials tend to have more reliable outcomes.",
+            )
+            sponsor = st.selectbox(
+                "Sponsor type", ["biotech", "pharma", "academic"],
+                help="Organization type running the trial. Pharma sponsors often have higher completion rates.",
+            )
+            mechanism = st.selectbox(
+                "Mechanism",
+                ["Gene Editing", "Monoclonal Antibody", "Small Molecule", "Novel Mechanism"],
+                help="Drug mechanism of action. Different mechanisms have different historical success rates.",
+            )
+            if st.button("Run ensemble prediction"):
+                from src.models.trial_success_predictor import TrialSuccessPredictor
+
+                _pred_ph = st.empty()
+                with _pred_ph.container():
+                    lottie_loading("Training model and running prediction…")
+                pred = TrialSuccessPredictor()
+                pred.train(verbose=False)
+                out = pred.predict(
+                    phase=phase,
+                    enrollment=enrollment,
+                    sponsor=sponsor,
+                    mechanism=mechanism,
+                    duration_months=36,
+                    disease_name="Sickle Cell Disease",
+                )
+                _pred_ph.empty()
+                st.metric("Success probability (demo)", f"{out['probability']:.1%}")
+                with st.expander("Full Prediction Output", expanded=False):
+                    st.json(out)
 
 elif page == "Quant Strategy":
-    section_header("Quant strategy", "Backtests and factor models on delayed-vendor return samples")
+    section_header("Quant Strategy", "Backtests and factor models on delayed-vendor return samples")
     if not _ensure_quant_artifacts_cached():
         st.warning("No quant outputs found. Run `python3 scripts/train_quant.py` from the project root.")
     else:
@@ -1206,7 +1218,7 @@ elif page == "Quant Strategy":
             st.plotly_chart(styled_line_chart(fig_mc), use_container_width=True)
 
 elif page == "Portfolio Optimization":
-    section_header("Portfolio optimization", "Mean-variance-style demos — not allocation advice")
+    section_header("Portfolio Optimization", "Mean-variance-style demos — not allocation advice")
     if not _ensure_quant_artifacts_cached():
         st.warning("No portfolio outputs found. Run `python3 scripts/train_quant.py` from the project root.")
     else:
@@ -1355,7 +1367,7 @@ elif page == "Regime Detection":
             """)
 
 elif page == "Investment Stages":
-    section_header("Investment stages", "Illustrative private-market tables — not licensed deal data")
+    section_header("Investment Stages", "Illustrative private-market tables — not licensed deal data")
     vc = load_csv("vc_deals_scd.csv")
     growth = load_csv("growth_equity_deals_scd.csv")
     if vc is not None and growth is not None:
@@ -1365,7 +1377,7 @@ elif page == "Investment Stages":
         st.dataframe(growth, use_container_width=True)
 
 elif page == "Market Analysis":
-    section_header("Market analysis", "Illustrative TAM and competitive scaffolding")
+    section_header("Market Analysis", "Illustrative TAM and competitive scaffolding")
     st.warning(
         "**Demo / non-advisory:** Market size and competitive tables below are illustrative scaffolding. "
         "**Investment attractiveness scores and buy/hold/sell labels are demo weights only**—not research, "

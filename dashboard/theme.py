@@ -9,6 +9,7 @@ from typing import Any
 
 import plotly.graph_objects as go
 import streamlit as st
+from streamlit_lottie import st_lottie
 
 # 2026 Clinical Professional Palette - Light Green & Neutral Taupe
 COLORS = {
@@ -25,6 +26,9 @@ COLORS = {
     "taupe_light": "#E5DED6",     # Light taupe for subtle backgrounds
     "notice_bg": "#F4F7F2",       # Subtle notice background
     "notice_border": "#C4D4C0",   # Soft green border
+    "accent_blue": "#5B8A9A",     # Muted teal for charts
+    "success": "#3D7A55",         # Darker green for success states
+    "warning": "#B8860B",         # Dark goldenrod for warnings
 }
 
 ZONE_COLORS = {
@@ -35,33 +39,57 @@ ZONE_COLORS = {
 
 PLOTLY_LAYOUT: dict[str, Any] = dict(
     paper_bgcolor="rgba(0,0,0,0)",
-    plot_bgcolor="#FAFBFA",
+    plot_bgcolor="#FAFCFB",
     font=dict(color="#2A3B2E", family="'Inter', 'SF Pro Display', system-ui, sans-serif", size=12),
-    title=dict(font=dict(size=14, color="#2A3B2E", family="'Inter', 'SF Pro Display', system-ui, sans-serif", weight=600), x=0, xanchor="left"),
-    margin=dict(t=52, b=40, l=48, r=24),
-    legend=dict(bgcolor="rgba(255,255,255,0.95)", bordercolor="#D9E2DE", borderwidth=1, font=dict(size=11, color="#5C6B73")),
-    hoverlabel=dict(bgcolor="#FFFFFF", bordercolor="#D9E2DE", font=dict(family="'Source Sans 3', sans-serif", size=11, color="#1F2933")),
+    title=dict(
+        font=dict(size=14, color="#1E2D22", family="'Inter', 'SF Pro Display', system-ui, sans-serif", weight=600),
+        x=0,
+        xanchor="left",
+        pad=dict(b=12),
+    ),
+    margin=dict(t=56, b=48, l=56, r=28),
+    legend=dict(
+        bgcolor="rgba(255,255,255,0.97)",
+        bordercolor="#D8E3D6",
+        borderwidth=1,
+        font=dict(size=11, color="#475569"),
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="left",
+        x=0,
+    ),
+    hoverlabel=dict(
+        bgcolor="#FFFFFF",
+        bordercolor="#D8E3D6",
+        font=dict(family="'Inter', 'SF Pro Display', sans-serif", size=12, color="#1E2D22"),
+    ),
     xaxis=dict(
-        gridcolor="#E8EDEA",
-        zerolinecolor="#D9E2DE",
+        gridcolor="#EDF1EE",
+        griddash="dot",
+        zerolinecolor="#D8E3D6",
         linecolor="#CBD5D0",
-        tickfont=dict(color="#5C6B73", size=11),
-        title_font=dict(color="#475569", size=12),
+        tickfont=dict(color="#5A6B5F", size=11),
+        title_font=dict(color="#3A4D40", size=12, weight=500),
+        title_standoff=12,
     ),
     yaxis=dict(
-        gridcolor="#E8EDEA",
-        zerolinecolor="#D9E2DE",
+        gridcolor="#EDF1EE",
+        griddash="dot",
+        zerolinecolor="#D8E3D6",
         linecolor="#CBD5D0",
-        tickfont=dict(color="#5C6B73", size=11),
-        title_font=dict(color="#475569", size=12),
+        tickfont=dict(color="#5A6B5F", size=11),
+        title_font=dict(color="#3A4D40", size=12, weight=500),
+        title_standoff=12,
     ),
-    colorway=["#5A8A6F", "#8FA89A", "#6B8E7A", "#B8A99A", "#A3C4B5", "#D4C4B8"],
+    colorway=["#5A8A6F", "#5B8A9A", "#8FA89A", "#6B8E7A", "#B8A99A", "#A3C4B5", "#7A9BB5", "#D4C4B8"],
 )
 
 CLINICAL_CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* ---- Global ---- */
 html, body, [data-testid="stAppViewContainer"] {
     font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -78,23 +106,23 @@ html, body, [data-testid="stAppViewContainer"] {
 .block-container {
     padding-top: 1.5rem;
     padding-bottom: 3rem;
-    max-width: 1120px;
+    max-width: 1140px;
 }
 
-/* Hero */
+/* ---- Hero ---- */
 .glass-hero {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
     padding: 2.5rem 2.75rem;
     border-radius: 16px;
     background: linear-gradient(135deg, #FFFFFF 0%, #FAFCFA 100%);
-    border: 1px solid #E8F2EC;
-    box-shadow: 0 1px 3px rgba(42, 59, 46, 0.03), 0 12px 32px rgba(42, 59, 46, 0.04);
+    border: 1px solid #D8E3D6;
+    box-shadow: 0 1px 3px rgba(42, 59, 46, 0.04), 0 8px 24px rgba(42, 59, 46, 0.05);
 }
 .glass-hero .eyebrow {
     display: inline-block;
     margin-bottom: 0.875rem;
     padding: 0.375rem 0.875rem;
-    border-radius: 6px;
+    border-radius: 20px;
     background: #E8F2EC;
     color: #5A8A6F;
     font-size: 0.6875rem;
@@ -106,51 +134,55 @@ html, body, [data-testid="stAppViewContainer"] {
     margin: 0 0 0.75rem;
     font-family: 'Inter', 'SF Pro Display', system-ui, sans-serif;
     font-size: 1.875rem;
-    font-weight: 600;
-    letter-spacing: -0.025em;
-    line-height: 1.2;
-    color: #2A3B2E;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: #1E2D22;
 }
 .glass-hero p {
     margin: 0;
     max-width: 52rem;
-    color: #6B7C6F;
+    color: #5A6B5F;
     font-size: 0.9375rem;
     line-height: 1.65;
     font-weight: 400;
 }
 
-/* Panels */
+/* ---- Panels ---- */
 .glass-panel {
     background: #FFFFFF;
-    border: 1px solid #E8F2EC;
+    border: 1px solid #D8E3D6;
     border-radius: 12px;
     padding: 1.25rem 1.5rem;
     margin-bottom: 1rem;
-    box-shadow: 0 1px 3px rgba(42, 59, 46, 0.02), 0 4px 12px rgba(42, 59, 46, 0.03);
+    box-shadow: 0 1px 3px rgba(42, 59, 46, 0.03);
+    transition: box-shadow 0.2s ease;
+}
+.glass-panel:hover {
+    box-shadow: 0 2px 8px rgba(42, 59, 46, 0.06);
 }
 .glass-section {
-    margin: 2rem 0 1rem;
-    padding-bottom: 0.375rem;
-    border-bottom: 1px solid #E8F2EC;
+    margin: 2.25rem 0 1.125rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #E8F2EC;
 }
 .glass-section h2 {
     margin: 0;
     font-family: 'Inter', 'SF Pro Display', system-ui, sans-serif;
     font-size: 1.25rem;
     font-weight: 600;
-    color: #2A3B2E !important;
-    letter-spacing: -0.015em;
+    color: #1E2D22 !important;
+    letter-spacing: -0.02em;
 }
 .glass-section p.sub {
-    margin: 0.5rem 0 0.875rem;
-    font-size: 0.875rem;
+    margin: 0.375rem 0 0.75rem;
+    font-size: 0.8125rem;
     color: #6B7C6F;
     line-height: 1.6;
     font-weight: 400;
 }
 
-/* Disclaimer / notice */
+/* ---- Disclaimer / notice ---- */
 .glass-disclaimer {
     background: #F4F7F2;
     border: 1px solid #C4D4C0;
@@ -159,7 +191,7 @@ html, body, [data-testid="stAppViewContainer"] {
     padding: 1.125rem 1.5rem;
     margin-bottom: 1.5rem;
     color: #2A3B2E !important;
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     line-height: 1.7;
     font-weight: 400;
 }
@@ -181,32 +213,33 @@ html, body, [data-testid="stAppViewContainer"] {
     color: #8FA89A;
 }
 
-/* Sidebar */
+/* ---- Sidebar ---- */
 [data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #FAFCFA 0%, #FFFFFF 100%) !important;
-    border-right: 1px solid #E8F2EC !important;
-    box-shadow: 2px 0 16px rgba(42, 59, 46, 0.02);
+    background: #FAFCFA !important;
+    border-right: 1px solid #D8E3D6 !important;
 }
 [data-testid="stSidebar"] > div:first-child { padding-top: 1.5rem; }
 .sidebar-brand {
-    padding: 0 1rem 1.5rem;
+    padding: 0.25rem 1rem 1.25rem;
     margin: 0 0.5rem 1.25rem;
-    border-bottom: 1px solid #E8F2EC;
+    border-bottom: 2px solid #E8F2EC;
 }
 .sidebar-brand .logo {
-    font-size: 0.6875rem;
+    font-size: 0.625rem;
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: #8FA89A;
+    margin-bottom: 0.25rem;
 }
 .sidebar-brand .name {
     font-family: 'Inter', 'SF Pro Display', system-ui, sans-serif;
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #2A3B2E;
-    margin-top: 0.5rem;
-    letter-spacing: -0.015em;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: #1E2D22;
+    margin-top: 0.375rem;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
 }
 [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {
     font-size: 0.6875rem !important;
@@ -231,55 +264,105 @@ html, body, [data-testid="stAppViewContainer"] {
     transition: all 0.15s ease !important;
 }
 [data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
-    background: #F4F7F2 !important;
+    background: #E8F2EC !important;
 }
 [data-testid="stSidebar"] [data-testid="stRadio"] label[data-checked="true"],
 [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) {
-    background: #E8F2EC !important;
-    color: #2A3B2E !important;
+    background: #D4E8DC !important;
+    color: #1E2D22 !important;
     font-weight: 600 !important;
 }
 [data-testid="stSidebar"] [data-testid="stSelectbox"] > div > div {
-    background: #FAFCFA !important;
-    border: 1px solid #E8F2EC !important;
-    border-radius: 10px !important;
+    background: #FFFFFF !important;
+    border: 1px solid #D8E3D6 !important;
+    border-radius: 8px !important;
     color: #2A3B2E !important;
 }
 
-/* Main */
+/* ---- Main typography ---- */
 h1, h2, h3, .stSubheader {
     font-family: 'Inter', 'SF Pro Display', system-ui, sans-serif !important;
-    color: #2A3B2E !important;
+    color: #1E2D22 !important;
     font-weight: 600 !important;
-    letter-spacing: -0.015em !important;
+    letter-spacing: -0.02em !important;
 }
-p, .stCaption, label { color: #6B7C6F; font-weight: 400; }
+p, .stCaption, label { color: #5A6B5F; font-weight: 400; }
 .stAlert {
-    border-radius: 8px !important;
-    border: 1px solid #D9E2DE !important;
+    border-radius: 10px !important;
+    border: 1px solid #D8E3D6 !important;
     background: #FAFBFA !important;
 }
 
+/* ---- Data display ---- */
 [data-testid="stDataFrame"] {
-    border: 1px solid #D9E2DE;
-    border-radius: 8px;
+    border: 1px solid #D8E3D6;
+    border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0 1px 3px rgba(42, 59, 46, 0.03);
 }
-[data-testid="stExpander"] {
-    background: #FFFFFF !important;
-    border: 1px solid #D9E2DE !important;
-    border-radius: 8px !important;
+[data-testid="stDataFrame"] table { font-size: 0.8125rem !important; }
+[data-testid="stDataFrame"] th {
+    background: #F4F7F2 !important;
+    color: #1E2D22 !important;
+    font-weight: 600 !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    border-bottom: 2px solid #D8E3D6 !important;
+    padding: 0.625rem 0.75rem !important;
+}
+[data-testid="stDataFrame"] td {
+    color: #2A3B2E !important;
+    padding: 0.5rem 0.75rem !important;
+    border-bottom: 1px solid #EDF1EE !important;
+}
+[data-testid="stDataFrame"] tr:hover td {
+    background: #F8FAF7 !important;
 }
 [data-testid="stMetric"] {
     background: #FFFFFF;
-    border: 1px solid #D9E2DE;
-    border-radius: 8px;
-    padding: 0.85rem 1rem;
-    box-shadow: 0 1px 2px rgba(31, 41, 51, 0.03);
+    border: 1px solid #D8E3D6;
+    border-radius: 10px;
+    padding: 1rem 1.125rem;
+    box-shadow: 0 1px 3px rgba(42, 59, 46, 0.03);
+    transition: box-shadow 0.2s ease;
+}
+[data-testid="stMetric"]:hover {
+    box-shadow: 0 2px 8px rgba(42, 59, 46, 0.06);
 }
 [data-testid="stMetricLabel"] { color: #7A8F84 !important; font-size: 0.72rem !important; text-transform: uppercase; letter-spacing: 0.06em; }
-[data-testid="stMetricValue"] { color: #1F2933 !important; font-weight: 600 !important; }
+[data-testid="stMetricValue"] { color: #1E2D22 !important; font-weight: 700 !important; }
 
+/* ---- Chart containers ---- */
+[data-testid="stPlotlyChart"] {
+    background: #FFFFFF;
+    border: 1px solid #D8E3D6;
+    border-radius: 10px;
+    padding: 0.5rem;
+    box-shadow: 0 1px 3px rgba(42, 59, 46, 0.03);
+    margin-bottom: 1rem;
+}
+
+/* ---- Table labels ---- */
+.table-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #1E2D22;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.table-label .badge {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: #5A8A6F;
+    background: #E8F2EC;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+}
+
+/* ---- Buttons ---- */
 .stButton > button {
     border-radius: 8px !important;
     border: 1px solid #4A6B5C !important;
@@ -287,12 +370,269 @@ p, .stCaption, label { color: #6B7C6F; font-weight: 400; }
     color: #FFFFFF !important;
     font-weight: 600 !important;
     font-size: 0.875rem !important;
-    transition: background 0.15s ease, border-color 0.15s ease !important;
+    padding: 0.5rem 1.25rem !important;
+    transition: all 0.2s ease !important;
 }
 .stButton > button:hover {
     background: #3D5A4E !important;
     border-color: #3D5A4E !important;
+    box-shadow: 0 2px 6px rgba(61, 90, 78, 0.2) !important;
+    transform: translateY(-1px) !important;
+}
+.stButton > button:active {
+    transform: translateY(0) !important;
     box-shadow: none !important;
+}
+
+/* ---- Tabs ---- */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 0.25rem;
+    border-bottom: 2px solid #E8F2EC;
+}
+.stTabs [data-baseweb="tab"] {
+    border-radius: 8px 8px 0 0;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    color: #6B7C6F;
+    transition: all 0.15s ease;
+}
+.stTabs [data-baseweb="tab"]:hover { background: #F4F7F2; color: #2A3B2E; }
+.stTabs [aria-selected="true"] {
+    font-weight: 600 !important;
+    color: #1E2D22 !important;
+    border-bottom-color: #5A8A6F !important;
+}
+
+/* ---- Number input / sliders ---- */
+[data-testid="stNumberInput"] input,
+[data-testid="stTextInput"] input {
+    border-radius: 8px !important;
+    border: 1px solid #D8E3D6 !important;
+    font-size: 0.875rem !important;
+}
+.stSlider [data-testid="stThumbValue"] { font-weight: 600 !important; color: #1E2D22 !important; }
+
+/* ---- Verification banner ---- */
+.cert-banner {
+    background: linear-gradient(135deg, #F0F7F2 0%, #E8F2EC 100%);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    margin-bottom: 1.75rem;
+    border: 1px solid #C4D4C0;
+    border-left: 4px solid #3D7A55;
+}
+.cert-banner h3 {
+    color: #1E3A28;
+    margin: 0 0 0.625rem 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: -0.015em;
+}
+.cert-banner p {
+    color: #2A5A3B;
+    margin: 0 0 1rem 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+.cert-banner .cert-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+.cert-banner .cert-actions a {
+    padding: 0.5rem 1.125rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    display: inline-block;
+    transition: all 0.15s ease;
+}
+.cert-banner .cert-actions a.primary {
+    background: #3D7A55;
+    color: white;
+}
+.cert-banner .cert-actions a.primary:hover { background: #2D6444; }
+.cert-banner .cert-actions a.secondary {
+    background: white;
+    color: #3D7A55;
+    border: 1.5px solid #3D7A55;
+}
+.cert-banner .cert-actions a.secondary:hover { background: #F0F7F2; }
+.cert-banner .cert-meta {
+    color: #5A7A63;
+    font-size: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #C4D4C0;
+}
+.cert-banner .cert-meta code {
+    background: #D4E8DC;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+    color: #1E3A28;
+}
+
+/* ---- Hero metric cards ---- */
+.hero-metrics {
+    background: #F4F7F2;
+    padding: 1.75rem 2rem;
+    border-radius: 12px;
+    margin-bottom: 1.75rem;
+    border: 1px solid #D8E3D6;
+}
+.hero-metrics .hero-tagline {
+    color: #5A6B5F;
+    margin: 0 0 1.5rem 0;
+    font-size: 0.9375rem;
+    text-align: center;
+    line-height: 1.6;
+}
+.hero-metrics .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+.hero-metrics .metric-card {
+    background: #FFFFFF;
+    padding: 1.375rem 1.25rem;
+    border-radius: 10px;
+    border: 1px solid #D8E3D6;
+    text-align: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(42, 59, 46, 0.03);
+}
+.hero-metrics .metric-card:hover {
+    border-color: #5A8A6F;
+    box-shadow: 0 4px 12px rgba(90, 138, 111, 0.1);
+    transform: translateY(-2px);
+}
+.hero-metrics .metric-card .value {
+    color: #3D7A55;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+}
+.hero-metrics .metric-card .label {
+    color: #1E2D22;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.hero-metrics .metric-card .detail {
+    color: #7A8F84;
+    font-size: 0.6875rem;
+    margin-top: 0.375rem;
+}
+.hero-metrics .hero-footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #D8E3D6;
+    text-align: center;
+}
+.hero-metrics .hero-footer p {
+    color: #5A6B5F;
+    font-size: 0.8125rem;
+    margin: 0;
+    line-height: 1.7;
+}
+.hero-metrics .hero-footer strong {
+    color: #3D7A55;
+}
+
+/* ---- Real data badge ---- */
+.real-data-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    background: linear-gradient(135deg, #E8F2EC 0%, #D4E8DC 100%);
+    padding: 0.625rem 1.125rem;
+    border-radius: 8px;
+    border-left: 3px solid #3D7A55;
+    margin-bottom: 1rem;
+}
+.real-data-badge span {
+    color: #1E3A28;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+/* ---- Spinner ---- */
+.stSpinner > div {
+    border-color: #5A8A6F transparent transparent transparent !important;
+}
+.stSpinner > div + div {
+    color: #5A6B5F !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+}
+
+/* ---- Tooltips ---- */
+[data-testid="stTooltipIcon"] {
+    color: #8FA89A !important;
+    transition: color 0.15s ease;
+}
+[data-testid="stTooltipIcon"]:hover {
+    color: #5A8A6F !important;
+}
+
+/* ---- Expanders (collapsible) ---- */
+[data-testid="stExpander"] {
+    background: #FFFFFF !important;
+    border: 1px solid #D8E3D6 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 1px 2px rgba(42, 59, 46, 0.02) !important;
+    margin-bottom: 0.75rem !important;
+    transition: box-shadow 0.2s ease !important;
+}
+[data-testid="stExpander"]:hover {
+    box-shadow: 0 2px 6px rgba(42, 59, 46, 0.05) !important;
+}
+[data-testid="stExpander"] summary {
+    font-weight: 500 !important;
+    color: #2A3B2E !important;
+    font-size: 0.875rem !important;
+    padding: 0.75rem 1rem !important;
+}
+[data-testid="stExpander"] summary:hover {
+    color: #1E2D22 !important;
+}
+[data-testid="stExpander"] [data-testid="stExpanderContent"] {
+    padding: 0 1rem 0.75rem !important;
+}
+
+/* ---- Empty state ---- */
+.empty-state {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: #FAFCFA;
+    border: 1px dashed #D8E3D6;
+    border-radius: 12px;
+    margin: 1rem 0;
+}
+.empty-state .icon { font-size: 2rem; margin-bottom: 0.75rem; color: #8FA89A; }
+.empty-state .title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #2A3B2E;
+    margin-bottom: 0.375rem;
+}
+.empty-state .detail {
+    font-size: 0.8125rem;
+    color: #6B7C6F;
+    line-height: 1.6;
+}
+.empty-state code {
+    background: #E8F2EC;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8em;
+    color: #3D7A55;
 }
 
 hr { border-color: #E2E8E4 !important; margin: 1.5rem 0 !important; }
@@ -352,38 +692,180 @@ def equity_context_card(note: str) -> None:
 
 def sidebar_brand() -> None:
     st.sidebar.markdown(
-        """
-<div class="sidebar-brand">
-  <div class="logo">Research platform</div>
-  <div class="name">Immunology Investment</div>
-</div>
-""",
+        '<div class="sidebar-brand">'
+        '<div class="logo">&#9670; Research Platform</div>'
+        '<div class="name">Immunology Investment Intelligence</div>'
+        '</div>',
         unsafe_allow_html=True,
     )
 
 
 def apply_plotly_theme(fig: go.Figure) -> go.Figure:
+    """Apply clinical theme to any Plotly figure."""
     fig.update_layout(**PLOTLY_LAYOUT)
-    fig.update_xaxes(showgrid=True, gridwidth=1)
-    fig.update_yaxes(showgrid=True, gridwidth=1)
+    fig.update_xaxes(showgrid=True, gridwidth=1, showline=True, linewidth=1)
+    fig.update_yaxes(showgrid=True, gridwidth=1, showline=True, linewidth=1)
     return fig
 
 
 def styled_line_chart(fig: go.Figure, *, accent: str | None = None) -> go.Figure:
+    """Style a line chart with spline curves and themed markers."""
     accent = accent or COLORS["accent"]
     apply_plotly_theme(fig)
+    cw = PLOTLY_LAYOUT["colorway"]
     for i, trace in enumerate(fig.data):
         if isinstance(trace, go.Scatter) and trace.mode and "lines" in str(trace.mode):
-            color = PLOTLY_LAYOUT["colorway"][i % len(PLOTLY_LAYOUT["colorway"])]
+            color = cw[i % len(cw)] if i else accent
             fig.data[i].update(
-                line=dict(width=2.25, color=color if i else accent, shape="spline"),
-                marker=dict(size=4, color=color if i else accent, line=dict(width=1, color="#FFFFFF")),
+                line=dict(width=2.5, color=color, shape="spline"),
+                marker=dict(
+                    size=5,
+                    color=color,
+                    line=dict(width=1.5, color="#FFFFFF"),
+                    symbol="circle",
+                ),
             )
+    fig.update_layout(
+        hovermode="x unified",
+    )
     return fig
 
 
 def styled_bar_chart(fig: go.Figure) -> go.Figure:
+    """Style a bar chart with themed colors, rounded corners, and text labels."""
     apply_plotly_theme(fig)
-    if fig.data:
-        fig.data[0].update(marker=dict(color=COLORS["accent_blue"], line=dict(width=0), opacity=0.85))
+    cw = PLOTLY_LAYOUT["colorway"]
+    for i, trace in enumerate(fig.data):
+        if isinstance(trace, go.Bar):
+            color = cw[i % len(cw)] if i else COLORS["accent_blue"]
+            trace.update(
+                marker=dict(
+                    color=color,
+                    line=dict(width=0),
+                    opacity=0.9,
+                    cornerradius=4,
+                ),
+            )
+    fig.update_layout(
+        bargap=0.3,
+        bargroupgap=0.1,
+    )
     return fig
+
+
+def _lottie_pulse_animation() -> dict[str, Any]:
+    """Minimal Lottie JSON: three pulsing dots in clinical green."""
+    green = [90, 138, 111]  # #5A8A6F as RGB 0-255
+
+    def _dot(delay: float, cx: int) -> dict[str, Any]:
+        return {
+            "ty": "gr",
+            "it": [
+                {
+                    "ty": "el",
+                    "p": {"a": 0, "k": [cx, 50]},
+                    "s": {"a": 0, "k": [16, 16]},
+                },
+                {
+                    "ty": "fl",
+                    "c": {"a": 0, "k": [green[0] / 255, green[1] / 255, green[2] / 255, 1]},
+                    "o": {"a": 0, "k": 100},
+                },
+                {
+                    "ty": "tr",
+                    "p": {"a": 0, "k": [0, 0]},
+                    "a": {"a": 0, "k": [0, 0]},
+                    "s": {
+                        "a": 1,
+                        "k": [
+                            {"t": 0 + delay, "s": [100, 100], "e": [140, 140]},
+                            {"t": 10 + delay, "s": [140, 140], "e": [100, 100]},
+                            {"t": 20 + delay, "s": [100, 100]},
+                        ],
+                    },
+                    "o": {
+                        "a": 1,
+                        "k": [
+                            {"t": 0 + delay, "s": [50], "e": [100]},
+                            {"t": 10 + delay, "s": [100], "e": [50]},
+                            {"t": 20 + delay, "s": [50]},
+                        ],
+                    },
+                    "r": {"a": 0, "k": 0},
+                },
+            ],
+        }
+
+    return {
+        "v": "5.7.1",
+        "fr": 30,
+        "ip": 0,
+        "op": 40,
+        "w": 120,
+        "h": 100,
+        "assets": [],
+        "layers": [
+            {
+                "ty": 4,
+                "ip": 0,
+                "op": 40,
+                "st": 0,
+                "sr": 1,
+                "ks": {
+                    "o": {"a": 0, "k": 100},
+                    "p": {"a": 0, "k": [60, 50, 0]},
+                    "a": {"a": 0, "k": [60, 50, 0]},
+                    "s": {"a": 0, "k": [100, 100, 100]},
+                    "r": {"a": 0, "k": 0},
+                },
+                "shapes": [_dot(0, 30), _dot(6, 60), _dot(12, 90)],
+            }
+        ],
+    }
+
+
+_LOTTIE_ANIM = _lottie_pulse_animation()
+_lottie_counter = 0
+
+
+def lottie_loading(message: str = "Loading...") -> None:
+    """Display a Lottie loading animation with a message."""
+    global _lottie_counter
+    _lottie_counter += 1
+    cols = st.columns([1, 2, 1])
+    with cols[1]:
+        st_lottie(_LOTTIE_ANIM, height=60, key=f"lottie_load_{_lottie_counter}")
+        st.markdown(
+            f'<p style="text-align:center;color:#5A6B5F;font-size:0.8125rem;'
+            f'font-weight:500;margin-top:-0.5rem;">{html.escape(message)}</p>',
+            unsafe_allow_html=True,
+        )
+
+
+def empty_state(title: str, detail: str, *, icon: str = "&#128269;") -> None:
+    """Render a styled empty state placeholder."""
+    st.markdown(
+        f'<div class="empty-state">'
+        f'<div class="icon">{icon}</div>'
+        f'<div class="title">{html.escape(title)}</div>'
+        f'<div class="detail">{detail}</div>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
+
+
+def styled_dataframe(
+    df: "pd.DataFrame",
+    *,
+    height: int | None = None,
+    max_rows: int | None = None,
+) -> None:
+    """Render a DataFrame with professional styling."""
+    display = df.head(max_rows) if max_rows else df
+    kwargs: dict[str, Any] = {
+        "use_container_width": True,
+        "hide_index": True,
+    }
+    if height is not None:
+        kwargs["height"] = height
+    st.dataframe(display, **kwargs)

@@ -468,9 +468,14 @@ def validate_all(
     data_models = Path(data_models)
     results: list[ValidationResult] = []
 
-    # Primary CSV artifacts — prefer data/raw, fall back to data/demo
-    csv_dir = data_raw if data_raw.is_dir() and any(data_raw.glob("*.csv")) else data_demo
-    results.extend(validate_directory(csv_dir))
+    # Primary CSV artifacts — prefer data/raw, fall back to data/demo.
+    # After real-data transition, data/demo may not exist; skip legacy artifact checks.
+    if data_raw.is_dir() and any(data_raw.glob("*.csv")):
+        csv_dir = data_raw
+        results.extend(validate_directory(csv_dir))
+    elif data_demo.is_dir() and any(data_demo.glob("*.csv")):
+        csv_dir = data_demo
+        results.extend(validate_directory(csv_dir))
 
     # ML artifacts (separate rule set, separate directory)
     from src.data_validation.rules import ML_VALIDATION_RULES

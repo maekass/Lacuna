@@ -9,9 +9,9 @@ on:
   pull_request:
     branches: [ main ]
   
-  # Run daily at 2 AM UTC
+  # Run daily at 6 AM UTC
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '0 6 * * *'
   
   # Allow manual trigger
   workflow_dispatch:
@@ -270,7 +270,7 @@ jobs:
         python3 << 'EOF'
         import pandas as pd
         import sys
-        from datetime import datetime, timedelta
+        from datetime import datetime, timedelta, timezone
         
         print("\n" + "="*70)
         print("DATA FRESHNESS CHECK")
@@ -284,7 +284,7 @@ jobs:
             latest = collection_dates.max()
             oldest = collection_dates.min()
             
-            now = datetime.now()
+            now = datetime.now(timezone.utc)
             age_days = (now - latest).days
             
             print(f"Latest collection: {latest}")

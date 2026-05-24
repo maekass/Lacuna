@@ -248,14 +248,16 @@ def backtest_regime_strategy(returns: pd.Series, n_states: int = 3) -> dict:
     
     # Performance metrics
     total_return = (1 + strategy_returns).prod() - 1
-    ann_return = (1 + total_return) ** (252 / len(strategy_returns)) - 1
+    n_obs = len(strategy_returns)
+    ann_return = (1 + total_return) ** (252 / n_obs) - 1 if n_obs > 0 else 0.0
     ann_vol = strategy_returns.std() * np.sqrt(252)
     sharpe = ann_return / ann_vol if ann_vol > 0 else 0
     
     # Buy-and-hold benchmark
     bh_returns = returns.loc[strategy_returns.index]
     bh_total = (1 + bh_returns).prod() - 1
-    bh_ann = (1 + bh_total) ** (252 / len(bh_returns)) - 1
+    n_bh = len(bh_returns)
+    bh_ann = (1 + bh_total) ** (252 / n_bh) - 1 if n_bh > 0 else 0.0
     bh_vol = bh_returns.std() * np.sqrt(252)
     bh_sharpe = bh_ann / bh_vol if bh_vol > 0 else 0
     
