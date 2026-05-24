@@ -82,31 +82,27 @@ st.session_state.page_views += 1
 # LEGAL DISCLAIMER - DISPLAYED ON EVERY PAGE
 # ============================================================================
 def show_legal_disclaimer():
-    """Display comprehensive legal disclaimer banner"""
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #E8F2EC 0%, #F4F7F2 100%); 
-                padding: 1.75rem 2rem; border-radius: 12px; margin-bottom: 2rem; 
-                border-left: 4px solid #5A8A6F; border: 1px solid #C4D4C0;">
-        <h3 style="color: #2A3B2E; margin: 0 0 1rem 0; font-family: 'Inter', sans-serif; 
-                   font-weight: 600; font-size: 1.125rem; letter-spacing: -0.015em;">
-            Legal Disclaimer
-        </h3>
-        <p style="color: #2A3B2E; margin: 0; font-size: 0.9375rem; line-height: 1.7; font-weight: 400;">
-            <strong style="color: #5A8A6F;">FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY</strong><br><br>
-            This platform is designed for academic research and learning. It is <strong>NOT</strong>:<br>
-            • Investment advice or financial recommendations<br>
-            • Suitable for commercial trading or real-money decisions without proper validation<br>
-            • A substitute for professional financial, medical, or legal counsel<br>
-            • Approved for clinical or regulatory decision-making<br><br>
-            <strong>Data Compliance:</strong> All data is publicly available and delayed. No patient-level or 
-            private health information (HIPAA compliant). No insider trading or material non-public information. 
-            Illustrative scores and private-market figures are demo weights only. Users must verify compliance 
-            with applicable securities and health-data regulations before any production or commercial use.<br><br>
-            <strong>Past performance does not guarantee future results.</strong> All models and predictions are 
-            illustrative and subject to error. Consult qualified professionals before making investment decisions.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    """Display comprehensive legal disclaimer banner."""
+    st.markdown(
+        '<div class="glass-panel" style="border-left: 3px solid #5A8A6F; background: linear-gradient(135deg, #F4F7F2 0%, #FAFCFA 100%);">'
+        '<h3 style="color: #1E2D22; margin: 0 0 0.75rem 0; font-family: \'Inter\', sans-serif; '
+        'font-weight: 700; font-size: 1rem; letter-spacing: -0.015em;">Legal Disclaimer</h3>'
+        '<p style="color: #2A3B2E; margin: 0; font-size: 0.8125rem; line-height: 1.75; font-weight: 400;">'
+        '<strong style="color: #3D7A55;">FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY</strong><br><br>'
+        'This platform is designed for academic research and learning. It is <strong>NOT</strong>:<br>'
+        '&bull; Investment advice or financial recommendations<br>'
+        '&bull; Suitable for commercial trading or real-money decisions without proper validation<br>'
+        '&bull; A substitute for professional financial, medical, or legal counsel<br>'
+        '&bull; Approved for clinical or regulatory decision-making<br><br>'
+        '<strong>Data Compliance:</strong> All data is publicly available and delayed. No patient-level or '
+        'private health information (HIPAA compliant). No insider trading or material non-public information. '
+        'Illustrative scores and private-market figures are demo weights only. Users must verify compliance '
+        'with applicable securities and health-data regulations before any production or commercial use.<br><br>'
+        '<strong>Past performance does not guarantee future results.</strong> All models and predictions are '
+        'illustrative and subject to error. Consult qualified professionals before making investment decisions.'
+        '</p></div>',
+        unsafe_allow_html=True,
+    )
 
 
 @st.cache_resource(show_spinner=False)
@@ -604,38 +600,24 @@ def show_data_verification_banner():
     cert_hash = (cert or {}).get("certification_hash", "—")
 
     st.markdown(
-        '<div style="background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%); '
-        'padding: 1.5rem 2rem; border-radius: 12px; margin-bottom: 2rem; '
-        'border-left: 4px solid #4CAF50; border: 1px solid #C8E6C9;">'
-        '<h3 style="color: #1B5E20; margin: 0 0 0.75rem 0; font-family: \'Inter\', sans-serif; '
-        'font-weight: 600; font-size: 1.125rem;">'
-        'VERIFY THIS DATA - ZERO INSTALLATION REQUIRED</h3>'
-        '<p style="color: #2E7D32; margin: 0 0 1rem 0; font-size: 0.9375rem; line-height: 1.6;">'
-        '<strong>100% Real Data Certification:</strong> All ' + trials_str + ' clinical trials are verifiable on ClinicalTrials.gov. '
+        '<div class="cert-banner">'
+        '<h3>Verify This Data — Zero Installation Required</h3>'
+        '<p><strong>100% Real Data Certification:</strong> All ' + trials_str + ' clinical trials are verifiable on ClinicalTrials.gov. '
         'Quality Score: ' + q_display + '. Zero synthetic data.</p>'
-        '<div style="display: flex; gap: 1rem; flex-wrap: wrap;">'
-        '<a href="https://github.com/maekass/MPK1/blob/main/VERIFY_WITH_ONE_CLICK.md" '
-        'target="_blank" style="background: #4CAF50; color: white; padding: 0.625rem 1.25rem; '
-        'border-radius: 6px; text-decoration: none; font-weight: 600; '
-        'font-size: 0.875rem; display: inline-block;">'
-        'VERIFY WITH ONE CLICK (2 MIN)</a>'
-        '<a href="https://github.com/maekass/MPK1/blob/main/DATA_VERIFICATION_CERTIFICATE.md" '
-        'target="_blank" style="background: white; color: #4CAF50; padding: 0.625rem 1.25rem; '
-        'border-radius: 6px; text-decoration: none; font-weight: 600; '
-        'font-size: 0.875rem; border: 2px solid #4CAF50; display: inline-block;">'
-        'View Certificate</a>'
-        '<a href="https://clinicaltrials.gov/study/NCT04846959" '
-        'target="_blank" style="background: white; color: #4CAF50; padding: 0.625rem 1.25rem; '
-        'border-radius: 6px; text-decoration: none; font-weight: 600; '
-        'font-size: 0.875rem; border: 2px solid #4CAF50; display: inline-block;">'
-        'Spot Check NCT ID</a></div>'
-        '<p style="color: #558B2F; margin: 1rem 0 0 0; font-size: 0.8125rem;">'
+        '<div class="cert-actions">'
+        '<a class="primary" href="https://github.com/maekass/MPK1/blob/main/VERIFY_WITH_ONE_CLICK.md" '
+        'target="_blank">Verify With One Click</a>'
+        '<a class="secondary" href="https://github.com/maekass/MPK1/blob/main/DATA_VERIFICATION_CERTIFICATE.md" '
+        'target="_blank">View Certificate</a>'
+        '<a class="secondary" href="https://clinicaltrials.gov/study/NCT04846959" '
+        'target="_blank">Spot Check NCT ID</a></div>'
+        '<div class="cert-meta">'
         '<strong>Certification Hash:</strong> '
-        '<code style="background: #C8E6C9; padding: 0.125rem 0.375rem; border-radius: 3px;">' + cert_hash + '</code> | '
+        '<code>' + cert_hash + '</code> · '
         '<strong>Daily Automated Verification:</strong> '
         '<a href="https://github.com/maekass/MPK1/actions/workflows/daily-data-certification.yml" '
-        'target="_blank" style="color: #2E7D32; text-decoration: underline;">'
-        'View Workflow</a></p></div>',
+        'target="_blank" style="color: #2A5A3B; text-decoration: underline;">'
+        'View Workflow</a></div></div>',
         unsafe_allow_html=True,
     )
 
@@ -679,54 +661,36 @@ _hero_hash = (_cert or {}).get("certification_hash", "—")
 _hero_real_pct = "100%" if (_cert or {}).get("overall_status") == "PASSED" else "—"
 
 st.markdown(
-    '<div style="background: #F4F7F2; padding: 2rem 2.5rem; border-radius: 12px; '
-    'margin-bottom: 2rem; border: 1px solid #D8E3D6;">'
-    '<p style="color: #6B7C6F; margin: 0 0 1.5rem 0; font-size: 1rem; text-align: center; '
-    'line-height: 1.6;">Real-time clinical trial analysis powered by 100% verified public data</p>'
-    '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); '
-    'gap: 1.25rem;">'
-    '<div style="background: #FFFFFF; padding: 1.25rem; border-radius: 10px; '
-    'border: 1px solid #D8E3D6; text-align: center;">'
-    '<div style="color: #5A8A6F; font-size: 2rem; font-weight: 700; margin-bottom: 0.375rem;">' + _hero_trials + '</div>'
-    '<div style="color: #2A3B2E; font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; '
-    'letter-spacing: 0.04em;">Real Clinical Trials</div>'
-    '<div style="color: #6B7C6F; font-size: 0.75rem; margin-top: 0.375rem;">ClinicalTrials.gov API v2</div>'
+    '<div class="hero-metrics">'
+    '<p class="hero-tagline">Real-time clinical trial analysis powered by 100% verified public data</p>'
+    '<div class="metric-grid">'
+    '<div class="metric-card">'
+    '<div class="value">' + _hero_trials + '</div>'
+    '<div class="label">Real Clinical Trials</div>'
+    '<div class="detail">ClinicalTrials.gov API v2</div></div>'
+    '<div class="metric-card">'
+    '<div class="value">' + _hero_quality + '</div>'
+    '<div class="label">Quality Score</div>'
+    '<div class="detail">Out of 100</div></div>'
+    '<div class="metric-card">'
+    '<div class="value">' + _hero_diseases + '</div>'
+    '<div class="label">Disease Areas</div>'
+    '<div class="detail">Multi-disease validation</div></div>'
+    '<div class="metric-card">'
+    '<div class="value">' + _hero_real_pct + '</div>'
+    '<div class="label">Real Data</div>'
+    '<div class="detail">Zero synthetic data</div></div>'
     '</div>'
-    '<div style="background: #FFFFFF; padding: 1.25rem; border-radius: 10px; '
-    'border: 1px solid #D8E3D6; text-align: center;">'
-    '<div style="color: #5A8A6F; font-size: 2rem; font-weight: 700; margin-bottom: 0.375rem;">' + _hero_quality + '</div>'
-    '<div style="color: #2A3B2E; font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; '
-    'letter-spacing: 0.04em;">Quality Score</div>'
-    '<div style="color: #6B7C6F; font-size: 0.75rem; margin-top: 0.375rem;">Out of 100</div>'
-    '</div>'
-    '<div style="background: #FFFFFF; padding: 1.25rem; border-radius: 10px; '
-    'border: 1px solid #D8E3D6; text-align: center;">'
-    '<div style="color: #5A8A6F; font-size: 2rem; font-weight: 700; margin-bottom: 0.375rem;">' + _hero_diseases + '</div>'
-    '<div style="color: #2A3B2E; font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; '
-    'letter-spacing: 0.04em;">Disease Areas</div>'
-    '<div style="color: #6B7C6F; font-size: 0.75rem; margin-top: 0.375rem;">Multi-disease validation</div>'
-    '</div>'
-    '<div style="background: #FFFFFF; padding: 1.25rem; border-radius: 10px; '
-    'border: 1px solid #D8E3D6; text-align: center;">'
-    '<div style="color: #5A8A6F; font-size: 2rem; font-weight: 700; margin-bottom: 0.375rem;">' + _hero_real_pct + '</div>'
-    '<div style="color: #2A3B2E; font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; '
-    'letter-spacing: 0.04em;">Real Data</div>'
-    '<div style="color: #6B7C6F; font-size: 0.75rem; margin-top: 0.375rem;">Zero synthetic data</div>'
-    '</div>'
-    '</div>'
-    '<div style="margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #D8E3D6; '
-    'text-align: center;">'
-    '<p style="color: #6B7C6F; font-size: 0.875rem; margin: 0; line-height: 1.7;">'
-    '<strong style="color: #5A8A6F;">&#10003; Verified Sources:</strong> FDA.gov · ClinicalTrials.gov · CDC · Orphanet · SEC EDGAR<br>'
-    '<strong style="color: #5A8A6F;">&#10003; ML Models:</strong> Trained on real trials (not synthetic)<br>'
-    '<strong style="color: #5A8A6F;">&#10003; Cert Hash:</strong> ' + _hero_hash + ''
-    '</p></div></div>',
+    '<div class="hero-footer">'
+    '<p><strong>&#10003; Verified Sources:</strong> FDA.gov · ClinicalTrials.gov · CDC · Orphanet · SEC EDGAR<br>'
+    '<strong>&#10003; ML Models:</strong> Trained on real trials (not synthetic)<br>'
+    '<strong>&#10003; Cert Hash:</strong> ' + _hero_hash + '</p></div></div>',
     unsafe_allow_html=True,
 )
 
 sidebar_brand()
 st.sidebar.markdown(
-    '<p style="font-size:0.8rem;color:#5C6B73;margin:0 0 1rem;">Demonstration data. Not investment or medical advice.</p>',
+    '<p style="font-size:0.75rem;color:#7A8F84;margin:0 0 1rem;line-height:1.5;">Demonstration data. Not investment or medical advice.</p>',
     unsafe_allow_html=True,
 )
 st.sidebar.header("Indication")
@@ -1048,12 +1012,9 @@ elif page == "ML Models":
             _ml_t1 = (_ml_cert or {}).get("tests", {}).get("test_1_clinical_trials", {})
             _ml_trial_count = f"{_ml_t1['total_trials']:,}" if _ml_t1.get("total_trials") else "6,819"
             st.markdown(
-                '<div style="background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%); '
-                'padding: 1rem 1.5rem; border-radius: 8px; margin-bottom: 1rem; '
-                'border-left: 4px solid #4CAF50; display: inline-block;">'
-                '<span style="color: #2E7D32; font-weight: 600; font-size: 0.95rem;">'
-                '✓ REAL DATA: Trained on ' + _ml_trial_count + ' clinical trials from ClinicalTrials.gov'
-                '</span></div>',
+                '<div class="real-data-badge">'
+                '<span>&#10003; Real Data: Trained on ' + _ml_trial_count + ' clinical trials from ClinicalTrials.gov</span>'
+                '</div>',
                 unsafe_allow_html=True,
             )
             st.markdown("**Trial-success CV AUC (real data training)**")
