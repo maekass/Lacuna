@@ -862,9 +862,10 @@ def styled_dataframe(
 ) -> None:
     """Render a DataFrame with professional styling."""
     display = df.head(max_rows) if max_rows else df
-    st.dataframe(
-        display,
-        use_container_width=True,
-        hide_index=True,
-        height=height,
-    )
+    kwargs: dict[str, Any] = {
+        "use_container_width": True,
+        "hide_index": True,
+    }
+    if height is not None:
+        kwargs["height"] = height
+    st.dataframe(display, **kwargs)
