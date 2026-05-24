@@ -140,7 +140,7 @@ A comprehensive Python research platform that bridges **public health analytics*
 - **Deep Quant Analysis**: OLS regression, Granger causality, event studies, factor models
 - **Investment Stage Analysis**: VC → Growth Equity → Public Markets
 - **Portfolio Optimization**: Modern Portfolio Theory with risk metrics
-- **Interactive Dashboard**: Modern Streamlit interface with clinical green design system
+- **Interactive Dashboard**: Modern Streamlit interface with clinical green design system, Lottie animations, and professional UX
 
 ---
 
@@ -259,8 +259,9 @@ regime_detection.py # HMM market regimes (NEW)
 visualization/
 dashboard_components.py
 dashboard/
-app.py # Streamlit dashboard
-advanced_visualizations.py # 8 new viz types (NEW)
+app.py # Streamlit dashboard (11 pages)
+theme.py # Clinical design system (CSS, Plotly themes, components)
+advanced_visualizations.py # 8 new viz types
 docs/
 index.html # Landing page
 article-draft.md # Medium/LinkedIn article (NEW)
@@ -391,9 +392,11 @@ After running data collection, the platform generates `data/raw/data_manifest.js
 - **Backtesting**: Custom framework
 
 ### Visualization & UI
-- **Dashboard**: Streamlit
-- **Charts**: Plotly, matplotlib, seaborn
-- **Interactive**: Plotly Express
+- **Dashboard**: Streamlit with custom CSS design system
+- **Charts**: Plotly (themed templates), matplotlib, seaborn
+- **Interactive**: Plotly Express with clinical green palette
+- **Animations**: streamlit-lottie (loading states)
+- **Styling**: Custom CSS theming (clinical sage/forest palette, glass cards, hover effects)
 
 ### Data Collection
 - **APIs**: requests (ClinicalTrials.gov, openFDA)
@@ -439,10 +442,20 @@ After running data collection, the platform generates `data/raw/data_manifest.js
 - [x] **Dynamic dashboard metrics** (hero section reads from certification JSON)
 - [x] **Real data transition** (removed synthetic CSVs, 6,819 verified trials)
 - [x] **Clinical green design system** (professional sage/forest palette from theme.py)
+- [x] **UI professionalization** (CSS theming, glass cards, hover effects, refined layout — PR #33)
+- [x] **Professional charts & data tables** (Plotly themed templates, sage header rows, status badges, hover highlights — PR #34)
+- [x] **Lottie loading animations** (clinical green pulsing dots replace plain spinners — PR #35)
+- [x] **Tooltips & contextual help** (info icons on all input controls — PR #35)
+- [x] **Collapsible sections** (expandable detail panels to reduce visual clutter — PR #35)
+- [x] **Empty state cards** (friendly placeholders when no data is selected — PR #35)
+- [x] **Bug fixes pages 1-5** (px shadowing, dynamic trial counts, accent_blue KeyError — PRs #29, #31, #32)
+- [x] **Daily 6 AM UTC certification** (cron aligned, test_4 false-positive fixed — PR #31)
+- [x] **Title Case standardization** (all headers and sidebar brand — PR #31)
 
 ### In Progress
 - [ ] Real-time event study automation
 - [ ] Integration of advanced viz into main dashboard
+- [ ] Advanced UI/UX libraries (streamlit-aggrid, streamlit-elements, streamlit-echarts — researched, pending implementation)
 
 ### Planned
 - [ ] Deep learning models (LSTM, Transformers)
@@ -588,6 +601,34 @@ The Streamlit dashboard reads metrics directly from `DATA_VERIFICATION_CERTIFICA
 - **Hero section metric cards**: trial count, quality score, disease areas, real data percentage
 - **Verification banner**: trial count, quality score/grade, certification hash
 - **Footer**: certification hash for independent verification
+
+---
+
+## Dashboard UX Design System
+
+The dashboard uses a custom clinical design system built on top of Streamlit (`dashboard/theme.py`):
+
+### Color Palette
+| Token | Hex | Use |
+|-------|-----|-----|
+| `accent` | `#5A8A6F` | Primary sage green — buttons, highlights, chart accents |
+| `text` | `#2A3B2E` | Deep forest green — headings, body text |
+| `surface` | `#FFFFFF` | Pure white — card backgrounds |
+| `border` | `#D8E3D6` | Soft green-gray — card borders, dividers |
+| `accent_blue` | `#5B8A9A` | Muted teal — secondary chart color |
+| `taupe` | `#B8A99A` | Warm neutral — subtle accents |
+
+### UI Components (PRs #33–#35)
+- **Glass hero section** — dynamic metric cards reading from certification JSON
+- **Verification banner** — real-time data quality badge with cert hash
+- **Lottie loading animations** — clinical green pulsing dots during data loads
+- **Tooltips** — ℹ️ info icons on all input controls with contextual help text
+- **Collapsible sections** — `st.expander` with custom CSS (white bg, green border, hover shadow)
+- **Empty state cards** — friendly placeholders when no disease/data selected
+- **Styled data tables** — sage header rows, alternating row colors, status badges
+- **Themed Plotly charts** — dotted gridlines, clinical green palette, horizontal legends
+- **Section headers** — zone-colored left borders (green = epidemiology, sage = pipeline, forest = portfolio)
+- **Sidebar brand** — styled "Immunology Investment Intelligence" with version indicator
 
 ---
 
