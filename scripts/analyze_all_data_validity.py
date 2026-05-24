@@ -67,17 +67,17 @@ def analyze_data_validity():
     mixed_percentage = (mixed_files / total_files * 100) if total_files > 0 else 0
     
     # Print summary
-    print(f"\n📊 OVERALL STATISTICS")
-    print(f"{'='*80}")
+    print("\n📊 OVERALL STATISTICS")
+    print("=" * 80)
     print(f"Total Data Files: {total_files}")
-    print(f"")
+    print()
     print(f"✅ Real Data Files: {real_files} ({real_percentage:.1f}%)")
     print(f"❌ Synthetic Data Files: {synthetic_files} ({synthetic_percentage:.1f}%)")
     print(f"⚠️  Mixed Data Files: {mixed_files} ({mixed_percentage:.1f}%)")
     
     # Print by category
-    print(f"\n📁 BREAKDOWN BY CATEGORY")
-    print(f"{'='*80}")
+    print("\n📁 BREAKDOWN BY CATEGORY")
+    print("=" * 80)
     
     print(f"\n✅ REAL DATA - Sourced from Public APIs ({len(categories['sourced_public'])} files):")
     for f in sorted(categories["sourced_public"]):
@@ -104,10 +104,8 @@ def analyze_data_validity():
         print(f"    └─ {source}")
     
     # Identify what needs to be replaced
-    print(f"\n🎯 ACTION ITEMS")
-    print(f"{'='*80}")
-    
-    needs_replacement = []
+    print("\n🎯 ACTION ITEMS")
+    print("=" * 80)
     
     # Group synthetic files by type
     synthetic_by_type = defaultdict(list)
@@ -134,17 +132,17 @@ def analyze_data_validity():
         
         # Suggest replacement source
         if "Pipeline" in data_type:
-            print(f"  💡 Replace with: ClinicalTrials.gov API + company SEC filings")
+            print("  💡 Replace with: ClinicalTrials.gov API + company SEC filings")
         elif "Investment/Deal" in data_type:
-            print(f"  💡 Replace with: SEC EDGAR filings + press releases")
+            print("  💡 Replace with: SEC EDGAR filings + press releases")
         elif "Market Size" in data_type:
-            print(f"  💡 Replace with: CDC prevalence data + market research reports")
+            print("  💡 Replace with: CDC prevalence data + market research reports")
         elif "Competitive" in data_type:
-            print(f"  💡 Replace with: Company SEC filings + ClinicalTrials.gov")
+            print("  💡 Replace with: Company SEC filings + ClinicalTrials.gov")
         elif "Regulatory" in data_type:
-            print(f"  💡 Replace with: FDA.gov + openFDA API")
+            print("  💡 Replace with: FDA.gov + openFDA API")
         elif "Investment Scoring" in data_type:
-            print(f"  💡 Replace with: Calculated metrics from real data sources")
+            print("  💡 Replace with: Calculated metrics from real data sources")
     
     # Save detailed report
     report = {
@@ -172,18 +170,18 @@ def analyze_data_validity():
     print(f"\n📄 Detailed report saved to: {report_path}")
     
     # Final summary
-    print(f"\n{'='*80}")
-    print(f"SUMMARY")
-    print(f"{'='*80}")
+    print("\n" + "=" * 80)
+    print("SUMMARY")
+    print("=" * 80)
     print(f"Current Data Validity: {real_percentage:.1f}% real data")
-    print(f"Target: 100% real data")
+    print("Target: 100% real data")
     print(f"Files to Replace: {synthetic_files}")
-    print(f"")
-    print(f"Next Steps:")
+    print()
+    print("Next Steps:")
     print(f"1. Replace {synthetic_files} synthetic files with real data sources")
     print(f"2. Update {mixed_files} mixed files to be fully sourced")
-    print(f"3. Document all data collection methods")
-    print(f"4. Re-run validation to confirm 100% real data")
+    print("3. Document all data collection methods")
+    print("4. Re-run validation to confirm 100% real data")
     
     return report
 

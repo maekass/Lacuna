@@ -14,7 +14,6 @@ Usage:
 """
 
 import re
-import sys
 from pathlib import Path
 from typing import List, Tuple
 
@@ -250,7 +249,6 @@ def fix_hardcoded_paths() -> List[Path]:
         
         try:
             content = file_path.read_text()
-            original = content
             
             # Look for hardcoded paths like /Users/... or C:\...
             if re.search(r'["\']/(Users|home)/[^"\']+["\']', content):
@@ -260,7 +258,7 @@ def fix_hardcoded_paths() -> List[Path]:
             if 'Path(__file__)' in content:
                 print(f"  ✓ {file_path.relative_to(ROOT)} uses relative paths")
         
-        except Exception as e:
+        except Exception:
             pass
     
     return fixes
