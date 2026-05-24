@@ -985,11 +985,11 @@ elif page == "Stock Analysis":
         st.dataframe(fin, use_container_width=True, hide_index=True)
     if prices is not None and tickers:
         try:
-            px = prices.copy()
-            if hasattr(px.columns, "levels") and px.columns.nlevels > 1:
-                avail = [t for t in tickers.values() if t in px.columns.get_level_values(0)]
+            price_df = prices.copy()
+            if hasattr(price_df.columns, "levels") and price_df.columns.nlevels > 1:
+                avail = [t for t in tickers.values() if t in price_df.columns.get_level_values(0)]
                 if avail:
-                    close = px[avail]["Close"] if "Close" in px[avail].columns.names else px[avail]
+                    close = price_df[avail]["Close"] if "Close" in price_df[avail].columns.names else price_df[avail]
                     st.markdown("**Price history (close)** — selected tickers")
                     st.line_chart(close)
         except Exception:
@@ -1044,15 +1044,18 @@ elif page == "ML Models":
                 )
 
         if metrics and metrics.get("trial_success_cv_auc"):
-            st.markdown("""
-            <div style="background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%); 
-                        padding: 1rem 1.5rem; border-radius: 8px; margin-bottom: 1rem; 
-                        border-left: 4px solid #4CAF50; display: inline-block;">
-                <span style="color: #2E7D32; font-weight: 600; font-size: 0.95rem;">
-                    ✓ REAL DATA: Trained on 6,523 clinical trials from ClinicalTrials.gov
-                </span>
-            </div>
-            """, unsafe_allow_html=True)
+            _ml_cert = load_certification()
+            _ml_t1 = (_ml_cert or {}).get("tests", {}).get("test_1_clinical_trials", {})
+            _ml_trial_count = f"{_ml_t1['total_trials']:,}" if _ml_t1.get("total_trials") else "6,819"
+            st.markdown(
+                '<div style="background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%); '
+                'padding: 1rem 1.5rem; border-radius: 8px; margin-bottom: 1rem; '
+                'border-left: 4px solid #4CAF50; display: inline-block;">'
+                '<span style="color: #2E7D32; font-weight: 600; font-size: 0.95rem;">'
+                '✓ REAL DATA: Trained on ' + _ml_trial_count + ' clinical trials from ClinicalTrials.gov'
+                '</span></div>',
+                unsafe_allow_html=True,
+            )
             st.markdown("**Trial-success CV AUC (real data training)**")
             auc_rows = [
                 {"model": k, "auc_mean": round(v.get("auc_mean", 0), 3)}
