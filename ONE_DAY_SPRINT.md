@@ -56,7 +56,7 @@ Venture-ready infrastructure for biotech investment analytics.
 
 - [ ] **20 min:** Add "AI/ML Architecture" section
 ```markdown
-## 🤖 AI/ML Architecture
+## AI/ML Architecture
 
 ### Ensemble Prediction Model (78% Accuracy)
 - **Models:** RandomForest + GradientBoosting + XGBoost + LogisticRegression
@@ -610,3 +610,144 @@ echo "OPENAI_API_KEY=your-key-here" >> .env
 **Start time:** ___________
 **Target completion:** 8-10 hours later
 **First task:** README transformation (1.5 hours)
+
+---
+
+## Post-Sprint: Advanced Technical Phases
+
+### Phase 4: Real-Time Monitoring ⭐ NEXT PRIORITY
+**Effort:** Medium (2-3 days) | **Value:** Immediate investor ROI
+
+**What to build:**
+- Daily diff tracking from ClinicalTrials.gov API
+- Alert system for trial status changes (Recruiting → Completed, etc.)
+- Enrollment velocity dashboard (track patient recruitment over time)
+- Change history visualization (what changed when)
+- Email/SMS notifications for key events
+
+**Why this first:**
+- Immediate value for investors (daily actionable signals)
+- Uses existing infrastructure (ClinicalTrials.gov API already integrated)
+- Clear competitive advantage (few platforms do this well)
+- Relatively straightforward to implement
+
+**Implementation approach:**
+1. Create daily snapshot system (store trial states)
+2. Build diff detection algorithm (compare today vs yesterday)
+3. Add alert dashboard page to Streamlit
+4. Implement notification system (email via SendGrid/Mailgun)
+5. Add enrollment velocity charts (Plotly time series)
+
+---
+
+### Phase 5: NLP & Text Analysis
+**Effort:** High (1-2 weeks) | **Value:** Unlock unstructured data
+
+**What to build:**
+- Extract endpoints from trial descriptions (primary, secondary)
+- Classify interventions automatically (drug, device, behavioral)
+- Parse eligibility criteria into structured data
+- Semantic search across protocols (find similar trials)
+- Adverse event prediction from protocol text
+
+**Why this is powerful:**
+- Most trial intelligence is locked in unstructured text
+- Highly publishable (academic credibility boost)
+- Differentiates from competitors (most don't do NLP well)
+- Enables new analytics (endpoint-based analysis, similarity matching)
+
+**Implementation approach:**
+1. Use spaCy/transformers for NLP (BioBERT for medical text)
+2. Build endpoint extraction pipeline (regex + ML)
+3. Create intervention classifier (fine-tuned BERT)
+4. Add semantic search (sentence-transformers embeddings)
+5. Build eligibility criteria parser (rule-based + ML)
+
+---
+
+### Phase 6: Advanced Forecasting
+**Effort:** Very High (2-3 weeks) | **Value:** Cutting-edge methodology
+
+**What to build:**
+- Bayesian trial completion prediction (probabilistic forecasting)
+- Regulatory pathway prediction (FDA approval probability)
+- Synthetic control arm generation (reduce trial costs)
+- Monte Carlo simulation for trial outcomes
+- FDA advisory committee outcome forecasting
+
+**Why this is ambitious:**
+- Positions you as thought leader (academic publications)
+- FDA-relevant methodology (regulatory credibility)
+- Complex but high-impact (investors will pay premium)
+- Publishable research (Nature/NEJM level)
+
+**Implementation approach:**
+1. Build Bayesian models (PyMC3/Stan)
+2. Create regulatory pathway classifier (historical FDA data)
+3. Implement synthetic control methodology (FDA guidance compliant)
+4. Add Monte Carlo simulation engine
+5. Build advisory committee outcome predictor
+
+---
+
+### Implementation Priority
+
+**Recommended order:**
+1. **Phase 4 first** - Quick win, immediate value, validates demand
+2. **Phase 5 next** - Unlocks massive value, highly publishable
+3. **Phase 6 last** - Once you have users who need forecasting
+
+**Decision framework:**
+- Build Phase 4 if you need immediate investor traction
+- Build Phase 5 if you want academic credibility
+- Build Phase 6 if you have validated demand for forecasting
+
+**Validation before building:**
+- Get 10 users to test current platform
+- Ask what features they'd pay for
+- Build what they actually request (not what you imagine)
+
+---
+
+### Quick Wins (Low Effort, High Impact)
+
+**If you want to add features quickly:**
+
+1. **Trial Timeline Visualization** (4 hours)
+   - Gantt charts showing phase progression
+   - Visual trial history
+
+2. **Sponsor Portfolio View** (3 hours)
+   - All trials by company with success rates
+   - Company-level analytics
+
+3. **Geographic Heatmaps** (3 hours)
+   - Trial site locations and enrollment density
+   - Regional analysis
+
+4. **Endpoint Taxonomy** (4 hours)
+   - Standardized endpoint classification
+   - Endpoint-based filtering
+
+5. **Alert System** (6 hours)
+   - Email notifications for trial status changes
+   - Customizable alert rules
+
+---
+
+### Resources for Advanced Phases
+
+**Phase 4 (Real-Time Monitoring):**
+- ClinicalTrials.gov API docs: https://clinicaltrials.gov/api/
+- SendGrid for emails: https://sendgrid.com/
+- Celery for background tasks: https://docs.celeryproject.org/
+
+**Phase 5 (NLP):**
+- BioBERT: https://github.com/dmis-lab/biobert
+- spaCy medical models: https://spacy.io/models
+- Hugging Face transformers: https://huggingface.co/
+
+**Phase 6 (Forecasting):**
+- PyMC3 Bayesian models: https://docs.pymc.io/
+- FDA guidance on synthetic controls: https://www.fda.gov/
+- Lifelines survival analysis: https://lifelines.readthedocs.io/
