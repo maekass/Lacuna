@@ -763,6 +763,7 @@ st.sidebar.caption("Epidemiology · Pipeline · Portfolio")
 page = st.sidebar.radio(
     "Select Page",
     [
+        "Mission",
         "Disease Lookup",
         "Overview",
         "Health Trends",
@@ -779,9 +780,10 @@ page = st.sidebar.radio(
         "Investment Stages",
         "Market Analysis",
     ],
-    help="Pages 1–8 focus on clinical data and analytics. Pages 9–15 cover quantitative finance demos.",
+    help="Start with Mission to understand our purpose. Pages 2–9 focus on clinical data and analytics. Pages 10–16 cover quantitative finance demos.",
 )
 _ZONE_FOR_PAGE = {
+    "Mission": ("epidemiology", "Our purpose · Bridging complexity and understanding"),
     "Disease Lookup": ("epidemiology", "Orphanet search · public metrics"),
     "Overview": ("pipeline", "Gene therapy & FDA pipeline"),
     "Health Trends": ("epidemiology", "Burden, trials, ontology-anchored conditions"),
@@ -829,7 +831,160 @@ if missing:
         "`python3 src/data_collection/collect_all_data.py` and `python3 src/models/market_analysis.py`."
     )
 
-if page == "Disease Lookup":
+if page == "Mission":
+    st.markdown("# 🫀 Our Mission")
+    
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                padding: 2rem; 
+                border-radius: 10px; 
+                color: white; 
+                font-size: 1.1rem; 
+                line-height: 1.8; 
+                margin: 2rem 0;">
+        <strong>We bridge the gap between clinical complexity and human understanding.</strong>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Three Columns for Three Audiences
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("### 📈 For Investors")
+        st.markdown("""
+        **Quantitative biotech investors** seeking alpha in clinical trial markets need:
+        - Real-time trial updates
+        - Survival analysis for cash burn prediction
+        - Network analysis for partnership intelligence
+        - Causal inference for true ROI drivers
+        
+        **You get:** Investment-grade analytics with institutional rigor.
+        """)
+    
+    with col2:
+        st.markdown("### 🔬 For Scientists")
+        st.markdown("""
+        **Epidemiologists and immunologists** demanding statistical rigor need:
+        - Peer-reviewed methodologies (Cox PH, propensity scoring)
+        - Transparent data sources (ClinicalTrials.gov, FDA, PubMed)
+        - Reproducible analyses
+        - Honest limitations
+        
+        **You get:** Academic-grade tools with clinical validity.
+        """)
+    
+    with col3:
+        st.markdown("### 🏥 For Patients")
+        st.markdown("""
+        **Patients** navigating life-altering treatment decisions need:
+        - Accessible explanations
+        - Understanding of trial timelines
+        - Hope grounded in real data
+        - Clarity without condescension
+        
+        **You get:** Dignity, respect, and actionable information.
+        """)
+    
+    st.markdown("---")
+    
+    # What We Believe
+    st.markdown("## 💡 What We Believe")
+    
+    belief_col1, belief_col2 = st.columns(2)
+    
+    with belief_col1:
+        st.markdown("""
+        ### Transparency is Trust
+        - ✅ **6,819 verified clinical trials** from ClinicalTrials.gov
+        - ✅ **Real data only** - no synthetic data masquerading as real
+        - ✅ **Honest limitations** - we say when we don't know
+        - ✅ **Verifiable sources** - every claim links to evidence
+        """)
+    
+    with belief_col2:
+        st.markdown("""
+        ### Sophistication ≠ Inaccessibility
+        - ✅ **Institutional-grade analytics** (survival, causal, network)
+        - ✅ **Multi-audience explanations** that respect intelligence
+        - ✅ **Real-time data** from authoritative sources
+        - ✅ **Professional tools** (export, filtering, visualization)
+        """)
+    
+    st.markdown("---")
+    
+    # The Impact
+    st.markdown("## 🎯 The Impact")
+    
+    st.markdown("""
+    <div style="background-color: #f0f2f6; 
+                padding: 1.5rem; 
+                border-left: 5px solid #5A8A6F; 
+                border-radius: 5px; 
+                font-size: 1.05rem; 
+                line-height: 1.7;">
+        This platform transforms <strong>6,819 verified clinical trials</strong> into actionable intelligence 
+        for three audiences who rarely speak the same language. By combining institutional-grade analytics 
+        with real-time data from authoritative sources and multi-audience explanations that respect everyone's 
+        intelligence, we prove that <strong>sophisticated science doesn't require sacrificing accessibility</strong>, 
+        that <strong>investment-grade metrics can coexist with patient-centered hope</strong>, and that 
+        <strong>transparency is the foundation of trust</strong>.
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("")
+    
+    st.markdown("""
+    <div style="text-align: center; 
+                font-size: 1.3rem; 
+                font-weight: bold; 
+                color: #5A8A6F; 
+                margin: 2rem 0;">
+        We don't just analyze clinical trials.<br>
+        We translate complexity into clarity, data into decisions, and research into human impact.
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Platform Capabilities
+    st.markdown("## 🚀 Platform Capabilities")
+    
+    cap_col1, cap_col2, cap_col3 = st.columns(3)
+    
+    with cap_col1:
+        st.markdown("#### 📊 Advanced Analytics")
+        st.markdown("""
+        - Survival Analysis (Kaplan-Meier, Cox PH)
+        - Causal Inference (Propensity Scoring)
+        - Network Analysis (Collaboration Graphs)
+        - ML Prediction Models (78% accuracy)
+        """)
+    
+    with cap_col2:
+        st.markdown("#### 🔴 Real-Time Data")
+        st.markdown("""
+        - ClinicalTrials.gov API
+        - FDA Approval Tracker
+        - PubMed Integration
+        - Daily Automated Verification
+        """)
+    
+    with cap_col3:
+        st.markdown("#### 💼 Professional Tools")
+        st.markdown("""
+        - Advanced Filtering (multi-select, dates)
+        - Excel/CSV Export
+        - Interactive Visualizations
+        - Multi-Audience Insights
+        """)
+    
+    st.markdown("---")
+    
+    st.info("👉 **Start exploring:** Use the sidebar to navigate to Disease Lookup, Overview, or any of our 15 specialized pages.")
+
+elif page == "Disease Lookup":
     section_header(
         "Disease Lookup",
         "Search Orphanet and CDC NNDSS universes; pull epidemiology, surveillance, and trial samples",

@@ -1,5 +1,11 @@
 # AI-Powered Clinical Intelligence Platform
 
+## 🫀 Our Mission
+
+**We bridge the gap between clinical complexity and human understanding.** This platform transforms 6,819 verified clinical trials into actionable intelligence for three audiences who rarely speak the same language: quantitative investors seeking alpha in biotech markets, epidemiologists and immunologists demanding statistical rigor, and patients navigating life-altering treatment decisions. By combining institutional-grade analytics (survival analysis, causal inference, network graphs) with real-time data from authoritative sources (ClinicalTrials.gov, FDA, PubMed) and multi-audience explanations that respect everyone's intelligence, we prove that sophisticated science doesn't require sacrificing accessibility, that investment-grade metrics can coexist with patient-centered hope, and that transparency—real data, honest limitations, verifiable sources—is the foundation of trust. **We don't just analyze clinical trials. We translate complexity into clarity, data into decisions, and research into human impact.**
+
+---
+
 > **ML-Driven Trial Success Prediction • 6,819 Verified Trials • 99.96/100 Quality Score**
 > 
 > Production-grade clinical intelligence platform with ensemble ML models (78% accuracy) predicting trial outcomes across 15 diseases. Automated data certification with cryptographic verification. Venture-ready infrastructure for biotech investment analytics.
