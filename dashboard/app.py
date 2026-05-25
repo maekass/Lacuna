@@ -770,6 +770,8 @@ page = st.sidebar.radio(
         "ML Models",
         "ML Model Explainability",
         "Survival Analysis",
+        "Causal Inference",
+        "Network Analysis",
         "Quant Strategy",
         "Portfolio Optimization",
         "Pairs Trading",
@@ -777,7 +779,7 @@ page = st.sidebar.radio(
         "Investment Stages",
         "Market Analysis",
     ],
-    help="Pages 1–6 focus on clinical data and analytics. Pages 7–13 cover quantitative finance demos.",
+    help="Pages 1–8 focus on clinical data and analytics. Pages 9–15 cover quantitative finance demos.",
 )
 _ZONE_FOR_PAGE = {
     "Disease Lookup": ("epidemiology", "Orphanet search · public metrics"),
@@ -787,6 +789,8 @@ _ZONE_FOR_PAGE = {
     "ML Models": ("pipeline", "Trial-success & return models"),
     "ML Model Explainability": ("pipeline", "Feature importance & model performance"),
     "Survival Analysis": ("pipeline", "Kaplan-Meier curves · Cox proportional hazards"),
+    "Causal Inference": ("pipeline", "Propensity scoring · Treatment effects"),
+    "Network Analysis": ("pipeline", "Collaboration networks · Drug repurposing"),
     "Quant Strategy": ("portfolio", "Factor & backtest analytics"),
     "Portfolio Optimization": ("portfolio", "Efficient frontier & weights"),
     "Pairs Trading": ("portfolio", "Statistical arbitrage & cointegration"),
