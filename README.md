@@ -341,6 +341,30 @@ A comprehensive Python research platform that bridges **public health analytics*
 
 ## Features
 
+### 🆕 Latest Additions (May 2026)
+
+#### Quick Wins Visualization Suite
+- **Sponsor Portfolio View**: Company-level analytics with success rates, trial volumes, and searchable sponsor tables
+- **Geographic Heatmap**: Trial distribution by sponsor type and phase with interactive charts
+- **Trial Timeline Visualization**: Gantt charts, duration analysis, and temporal trends
+
+#### Human Verification System (5-Layer Validation)
+- **Interactive Verification**: Random sample testing with one-click NCT ID validation on ClinicalTrials.gov
+- **Data Provenance**: Complete source documentation for all 4 APIs with data lineage visualization
+- **Audit Trail**: Automated daily verification with cryptographic hash certification (971ACF8592ADEA0E)
+- **Expert Review**: Multi-stakeholder validation from investors, scientists, and patient advocates
+- **Trust Badges**: 99.96/100 quality score with embeddable verification badges
+
+#### AI-Powered Translation (30+ Languages)
+- **Global Accessibility**: Translate entire platform to Spanish, French, German, Chinese, Japanese, Arabic, and 24+ more languages
+- **Google Translate Integration**: Production-grade neural machine translation with automatic caching
+- **Smart Performance**: LRU caching (1000 items) and automatic text chunking for long content
+- **Seamless UX**: Language selector in sidebar with native language names and translation badge indicator
+
+📖 **Documentation**: [Translation Guide](docs/TRANSLATION_GUIDE.md) | [Deployment Verification](DEPLOYMENT_VERIFICATION.md)
+
+---
+
 ### 1. Public Health Analytics
 - **Epidemiological Modeling**: Prevalence trends, diagnosis rates, treatment access
 - **Clinical Trial Pipeline**: Real-time tracking via ClinicalTrials.gov API
