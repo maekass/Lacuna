@@ -1,8 +1,8 @@
 # AI-Powered Clinical Intelligence Platform
 
-## 🫀 Our Mission
+## Mission
 
-**We bridge the gap between clinical complexity and human understanding.** This platform transforms 6,819 verified clinical trials into actionable intelligence for three audiences who rarely speak the same language: quantitative investors seeking alpha in biotech markets, epidemiologists and immunologists demanding statistical rigor, and patients navigating life-altering treatment decisions. By combining institutional-grade analytics (survival analysis, causal inference, network graphs) with real-time data from authoritative sources (ClinicalTrials.gov, FDA, PubMed) and multi-audience explanations that respect everyone's intelligence, we prove that sophisticated science doesn't require sacrificing accessibility, that investment-grade metrics can coexist with patient-centered hope, and that transparency—real data, honest limitations, verifiable sources—is the foundation of trust. **We don't just analyze clinical trials. We translate complexity into clarity, data into decisions, and research into human impact.**
+**Bridging clinical complexity and human understanding through transparent, institutional-grade analytics.** This platform transforms 6,819 verified clinical trials into actionable intelligence for three distinct audiences: quantitative investors seeking alpha in biotech markets, epidemiologists and immunologists demanding statistical rigor, and patients navigating life-altering treatment decisions. By combining institutional-grade methodologies—survival analysis, causal inference, network graphs—with real-time data from authoritative sources (ClinicalTrials.gov, FDA, PubMed) and multi-audience explanations that respect intelligence across all stakeholder groups, we demonstrate that sophisticated science need not sacrifice accessibility, that investment-grade metrics can coexist with patient-centered insights, and that transparency—real data, honest limitations, verifiable sources—forms the foundation of trust. **We translate clinical trial complexity into clarity, data into decisions, and research into measurable human impact.**
 
 ---
 

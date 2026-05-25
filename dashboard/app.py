@@ -832,17 +832,18 @@ if missing:
     )
 
 if page == "Mission":
-    st.markdown("# 🫀 Our Mission")
+    st.markdown("# Mission Statement")
     
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+    <div style="background-color: #2C3E50; 
                 padding: 2rem; 
-                border-radius: 10px; 
+                border-radius: 5px; 
                 color: white; 
                 font-size: 1.1rem; 
                 line-height: 1.8; 
-                margin: 2rem 0;">
-        <strong>We bridge the gap between clinical complexity and human understanding.</strong>
+                margin: 2rem 0;
+                border-left: 5px solid #5A8A6F;">
+        <strong>Bridging clinical complexity and human understanding through transparent, institutional-grade analytics.</strong>
     </div>
     """, unsafe_allow_html=True)
     
@@ -852,70 +853,70 @@ if page == "Mission":
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.markdown("### 📈 For Investors")
+        st.markdown("### Quantitative Investors")
         st.markdown("""
-        **Quantitative biotech investors** seeking alpha in clinical trial markets need:
-        - Real-time trial updates
+        **Biotech investors** seeking alpha in clinical trial markets require:
+        - Real-time trial updates and change detection
         - Survival analysis for cash burn prediction
         - Network analysis for partnership intelligence
-        - Causal inference for true ROI drivers
+        - Causal inference for identifying true ROI drivers
         
-        **You get:** Investment-grade analytics with institutional rigor.
+        **Platform delivers:** Investment-grade analytics with institutional rigor and verifiable methodologies.
         """)
     
     with col2:
-        st.markdown("### 🔬 For Scientists")
+        st.markdown("### Clinical Researchers")
         st.markdown("""
-        **Epidemiologists and immunologists** demanding statistical rigor need:
-        - Peer-reviewed methodologies (Cox PH, propensity scoring)
+        **Epidemiologists and immunologists** demanding statistical rigor require:
+        - Peer-reviewed methodologies (Cox proportional hazards, propensity scoring)
         - Transparent data sources (ClinicalTrials.gov, FDA, PubMed)
-        - Reproducible analyses
-        - Honest limitations
+        - Reproducible analyses with documented assumptions
+        - Honest limitations and confidence intervals
         
-        **You get:** Academic-grade tools with clinical validity.
+        **Platform delivers:** Academic-grade tools with clinical validity and methodological transparency.
         """)
     
     with col3:
-        st.markdown("### 🏥 For Patients")
+        st.markdown("### Patient Advocates")
         st.markdown("""
-        **Patients** navigating life-altering treatment decisions need:
-        - Accessible explanations
-        - Understanding of trial timelines
-        - Hope grounded in real data
-        - Clarity without condescension
+        **Patients and advocates** navigating treatment decisions require:
+        - Accessible explanations without oversimplification
+        - Understanding of trial timelines and phases
+        - Evidence-based insights grounded in real data
+        - Clarity that respects intelligence
         
-        **You get:** Dignity, respect, and actionable information.
+        **Platform delivers:** Dignified, transparent information with actionable context.
         """)
     
     st.markdown("---")
     
-    # What We Believe
-    st.markdown("## 💡 What We Believe")
+    # Core Principles
+    st.markdown("## Core Principles")
     
     belief_col1, belief_col2 = st.columns(2)
     
     with belief_col1:
         st.markdown("""
-        ### Transparency is Trust
-        - ✅ **6,819 verified clinical trials** from ClinicalTrials.gov
-        - ✅ **Real data only** - no synthetic data masquerading as real
-        - ✅ **Honest limitations** - we say when we don't know
-        - ✅ **Verifiable sources** - every claim links to evidence
+        ### Transparency as Foundation
+        - **6,819 verified clinical trials** from ClinicalTrials.gov
+        - **Real data exclusively** - no synthetic data presented as authentic
+        - **Documented limitations** - explicit acknowledgment of uncertainty
+        - **Verifiable sources** - every assertion linked to primary evidence
         """)
     
     with belief_col2:
         st.markdown("""
-        ### Sophistication ≠ Inaccessibility
-        - ✅ **Institutional-grade analytics** (survival, causal, network)
-        - ✅ **Multi-audience explanations** that respect intelligence
-        - ✅ **Real-time data** from authoritative sources
-        - ✅ **Professional tools** (export, filtering, visualization)
+        ### Rigor Without Compromise
+        - **Institutional-grade analytics** (survival analysis, causal inference, network graphs)
+        - **Multi-stakeholder communication** that respects diverse expertise
+        - **Real-time integration** from authoritative sources (ClinicalTrials.gov, FDA, PubMed)
+        - **Professional tooling** (advanced filtering, multi-format export, interactive visualization)
         """)
     
     st.markdown("---")
     
-    # The Impact
-    st.markdown("## 🎯 The Impact")
+    # Value Proposition
+    st.markdown("## Value Proposition")
     
     st.markdown("""
     <div style="background-color: #f0f2f6; 
@@ -925,11 +926,11 @@ if page == "Mission":
                 font-size: 1.05rem; 
                 line-height: 1.7;">
         This platform transforms <strong>6,819 verified clinical trials</strong> into actionable intelligence 
-        for three audiences who rarely speak the same language. By combining institutional-grade analytics 
-        with real-time data from authoritative sources and multi-audience explanations that respect everyone's 
-        intelligence, we prove that <strong>sophisticated science doesn't require sacrificing accessibility</strong>, 
-        that <strong>investment-grade metrics can coexist with patient-centered hope</strong>, and that 
-        <strong>transparency is the foundation of trust</strong>.
+        for three distinct stakeholder groups. By combining institutional-grade methodologies with real-time data 
+        from authoritative sources and multi-audience explanations that respect diverse expertise, we demonstrate 
+        that <strong>sophisticated science need not sacrifice accessibility</strong>, that 
+        <strong>investment-grade metrics can coexist with patient-centered insights</strong>, and that 
+        <strong>transparency forms the foundation of credibility</strong>.
     </div>
     """, unsafe_allow_html=True)
     
@@ -941,20 +942,19 @@ if page == "Mission":
                 font-weight: bold; 
                 color: #5A8A6F; 
                 margin: 2rem 0;">
-        We don't just analyze clinical trials.<br>
-        We translate complexity into clarity, data into decisions, and research into human impact.
+        We translate clinical trial complexity into clarity, data into decisions, and research into measurable human impact.
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("---")
     
     # Platform Capabilities
-    st.markdown("## 🚀 Platform Capabilities")
+    st.markdown("## Platform Capabilities")
     
     cap_col1, cap_col2, cap_col3 = st.columns(3)
     
     with cap_col1:
-        st.markdown("#### 📊 Advanced Analytics")
+        st.markdown("#### Advanced Analytics")
         st.markdown("""
         - Survival Analysis (Kaplan-Meier, Cox PH)
         - Causal Inference (Propensity Scoring)
@@ -963,7 +963,7 @@ if page == "Mission":
         """)
     
     with cap_col2:
-        st.markdown("#### 🔴 Real-Time Data")
+        st.markdown("#### Real-Time Data Integration")
         st.markdown("""
         - ClinicalTrials.gov API
         - FDA Approval Tracker
@@ -972,7 +972,7 @@ if page == "Mission":
         """)
     
     with cap_col3:
-        st.markdown("#### 💼 Professional Tools")
+        st.markdown("#### Professional Tooling")
         st.markdown("""
         - Advanced Filtering (multi-select, dates)
         - Excel/CSV Export
@@ -982,7 +982,7 @@ if page == "Mission":
     
     st.markdown("---")
     
-    st.info("👉 **Start exploring:** Use the sidebar to navigate to Disease Lookup, Overview, or any of our 15 specialized pages.")
+    st.info("**Navigation:** Use the sidebar to access Disease Lookup, Overview, or any of the 15 specialized analytical pages.")
 
 elif page == "Disease Lookup":
     section_header(
