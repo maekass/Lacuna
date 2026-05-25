@@ -37,7 +37,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          pip install pandas requests
+          pip install pandas requests numpy scipy scikit-learn lifelines networkx
       
       - name: Run Data Certification
         id: certification
