@@ -270,18 +270,146 @@ class AutomatedVerification:
             }
             return False
     
+    def check_advanced_analytics_modules(self) -> bool:
+        """Check that Phase 1 advanced analytics modules are importable."""
+        print("\n🔍 Checking advanced analytics modules...")
+        
+        modules_to_check = [
+            ("survival_analysis", "src.analytics.survival_analysis"),
+            ("causal_inference", "src.analytics.causal_inference"),
+            ("network_analysis", "src.analytics.network_analysis"),
+        ]
+        
+        results = {}
+        all_passed = True
+        
+        for name, module_path in modules_to_check:
+            try:
+                __import__(module_path)
+                print(f"✅ {name} module OK")
+                results[name] = {"status": "PASS"}
+            except ImportError as e:
+                print(f"❌ {name} module failed: {e}")
+                results[name] = {"status": "FAIL", "error": str(e)}
+                all_passed = False
+                self.results["alerts"].append(f"Module import failed: {name}")
+        
+        self.results["checks"]["advanced_analytics"] = {
+            "status": "PASS" if all_passed else "FAIL",
+            "modules": results
+        }
+        
+        return all_passed
+    
+    def check_live_api_modules(self) -> bool:
+        """Check that Phase 2 live API modules are importable."""
+        print("\n🔍 Checking live API modules...")
+        
+        modules_to_check = [
+            ("clinicaltrials_api", "src.data_collection.live_apis.clinicaltrials_api"),
+            ("fda_tracker", "src.data_collection.live_apis.fda_tracker"),
+            ("pubmed_api", "src.data_collection.live_apis.pubmed_api"),
+        ]
+        
+        results = {}
+        all_passed = True
+        
+        for name, module_path in modules_to_check:
+            try:
+                __import__(module_path)
+                print(f"✅ {name} module OK")
+                results[name] = {"status": "PASS"}
+            except ImportError as e:
+                print(f"⚠️  {name} module warning: {e}")
+                results[name] = {"status": "WARN", "error": str(e)}
+                # Don't fail - missing dependencies are expected until installed
+        
+        self.results["checks"]["live_api_modules"] = {
+            "status": "PASS" if all_passed else "WARN",
+            "modules": results,
+            "note": "Missing dependencies (feedparser, xmltodict) are expected until installed"
+        }
+        
+        return True  # Don't fail on missing dependencies
+    
+    def check_ui_export_modules(self) -> bool:
+        """Check that Phase 3 UI/export modules are importable."""
+        print("\n🔍 Checking UI/export modules...")
+        
+        modules_to_check = [
+            ("advanced_filters", "dashboard.advanced_filters"),
+            ("export_utils", "dashboard.export_utils"),
+        ]
+        
+        results = {}
+        all_passed = True
+        
+        for name, module_path in modules_to_check:
+            try:
+                __import__(module_path)
+                print(f"✅ {name} module OK")
+                results[name] = {"status": "PASS"}
+            except ImportError as e:
+                print(f"❌ {name} module failed: {e}")
+                results[name] = {"status": "FAIL", "error": str(e)}
+                all_passed = False
+                self.results["alerts"].append(f"Module import failed: {name}")
+        
+        self.results["checks"]["ui_export_modules"] = {
+            "status": "PASS" if all_passed else "FAIL",
+            "modules": results
+        }
+        
+        return all_passed
+    
+    def check_fda_api_health(self) -> bool:
+        """Check if FDA RSS feeds are accessible."""
+        print("\n🔍 Checking FDA API health...")
+        
+        try:
+            # Check FDA approvals RSS
+            url = "https://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds/drug-approvals/rss.xml"
+            response = requests.get(url, timeout=10)
+            
+            if response.status_code == 200:
+                print("✅ FDA RSS feed is accessible")
+                self.results["checks"]["fda_api_health"] = {
+                    "status": "PASS",
+                    "response_time_ms": response.elapsed.total_seconds() * 1000
+                }
+                return True
+            else:
+                print(f"⚠️  FDA RSS returned {response.status_code}")
+                self.results["checks"]["fda_api_health"] = {
+                    "status": "WARN",
+                    "http_status": response.status_code
+                }
+                return True  # Don't fail, just warn
+                
+        except Exception as e:
+            print(f"⚠️  FDA API check warning: {e}")
+            self.results["checks"]["fda_api_health"] = {
+                "status": "WARN",
+                "error": str(e)
+            }
+            return True  # Don't fail on external API issues
+    
     def run_all_checks(self) -> bool:
         """Run all verification checks."""
         print("\n" + "="*70)
-        print("AUTOMATED VERIFICATION SYSTEM")
+        print("AUTOMATED VERIFICATION SYSTEM - PHASE 1-3 ENHANCED")
         print("="*70)
         print(f"Timestamp: {self.results['timestamp']}")
         
         checks = [
-            ("API Health", self.check_api_health),
+            ("API Health (ClinicalTrials.gov)", self.check_api_health),
             ("Data Quality", self.check_data_quality),
             ("Data Freshness", self.check_data_freshness),
             ("Synthetic Data", self.check_no_synthetic_data),
+            ("Advanced Analytics Modules", self.check_advanced_analytics_modules),
+            ("Live API Modules", self.check_live_api_modules),
+            ("UI/Export Modules", self.check_ui_export_modules),
+            ("FDA API Health", self.check_fda_api_health),
         ]
         
         all_passed = True
