@@ -33,6 +33,12 @@ from dashboard.theme import (
     styled_line_chart,
     zone_banner,
 )
+from dashboard.translation import (
+    get_language_selector,
+    translate_if_needed,
+    get_translation_badge,
+    t,
+)
 try:
     from dashboard.advanced_visualizations import (
         plot_regime_timeline,
@@ -810,9 +816,18 @@ _ZONE_FOR_PAGE = {
     "Investment Stages": ("portfolio", "Private-market stages"),
     "Market Analysis": ("pipeline", "Market sizing & competitive landscape"),
 }
+
+# Add language selector to sidebar
+selected_language = get_language_selector()
+
+# Show zone banner with translation
 if page in _ZONE_FOR_PAGE:
     z, label = _ZONE_FOR_PAGE[page]
-    zone_banner(z, label)
+    zone_banner(z, t(label))
+
+# Show translation badge if not English
+if selected_language != 'en':
+    st.markdown(get_translation_badge(selected_language), unsafe_allow_html=True)
 
 if not data_is_present(DATA):
     _boot_ph = st.empty()
@@ -842,15 +857,15 @@ if missing:
     )
 
 if page == "Mission":
-    st.markdown("# Mission")
+    st.markdown(f"# {t('Mission')}")
     
-    st.markdown("""
+    st.markdown(t("""
     This platform addresses a fundamental challenge in translational medicine: the **asymmetric distribution 
     of clinical trial intelligence** across stakeholder groups with divergent epistemological frameworks. 
     We synthesize **6,819 verified clinical trials** into a unified analytical infrastructure that serves 
     three constituencies—quantitative investors, clinical researchers, and patient advocates—without 
     privileging any single perspective or compromising methodological rigor.
-    """)
+    """))
     
     st.markdown("---")
     

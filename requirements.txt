@@ -34,3 +34,4 @@ pytest>=8.0.0
 openpyxl>=3.1.0  # Excel export
 
 tenacity>=8.0.0  # Retry logic with exponential backoff
+deep-translator>=1.11.0  # AI-powered translation (Google Translate, DeepL, etc.)
