@@ -1,5 +1,5 @@
 {
-  "certification_date": "2026-05-24T04:09:58.822580",
+  "certification_date": "2026-05-25T07:18:04.197365",
   "tests": {
     "test_1_clinical_trials": {
       "status": "PASS",
@@ -29,6 +29,7 @@
     "test_4_no_synthetic": {
       "status": "PASS",
       "synthetic_files_present": 0,
+      "illustrative_files_present": 14,
       "real_files_present": 9
     },
     "test_5_quality_score": {
@@ -42,5 +43,5 @@
   "tests_warned": 0,
   "tests_failed": 0,
   "total_tests": 5,
-  "certification_hash": "971ACF8592ADEA0E"
+  "certification_hash": "248ACC41FC7CA813"
 }

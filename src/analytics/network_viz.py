@@ -84,7 +84,7 @@ def plot_network_graph(
                      'Trials: %{customdata[0]}<br>' +
                      'Completion Rate: %{customdata[1]:.1%}<extra></extra>',
         customdata=nodes_df[['n_trials', 'completion_rate']].values
-    ))
+    )
     
     fig = go.Figure(data=edge_traces + [node_trace])
     
@@ -234,7 +234,7 @@ def plot_bipartite_network(
         name='Drugs',
         hovertemplate='<b>%{text}</b><br>Trials: %{customdata}<extra></extra>',
         customdata=drugs['n_trials']
-    ))
+    )
     
     # Disease nodes
     disease_trace = go.Scatter(
