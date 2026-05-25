@@ -1248,7 +1248,9 @@ elif page == "Sponsor Portfolio":
         with col2:
             st.metric("Total Trials", sponsor_stats['Total Trials'].sum())
         with col3:
-            avg_success = sponsor_stats['Success Rate'].mean()
+            # Filter out inf/nan values for average calculation
+            valid_success_rates = sponsor_stats['Success Rate'].replace([float('inf'), -float('inf')], float('nan')).dropna()
+            avg_success = valid_success_rates.mean() if len(valid_success_rates) > 0 else 0
             st.metric("Avg Success Rate", f"{avg_success:.1f}%")
         with col4:
             st.metric("Total Patients", f"{sponsor_stats['Total Enrollment'].sum():,.0f}")
