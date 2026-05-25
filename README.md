@@ -2,7 +2,19 @@
 
 ## Mission
 
-**Bridging clinical complexity and human understanding through transparent, institutional-grade analytics.** This platform transforms 6,819 verified clinical trials into actionable intelligence for three distinct audiences: quantitative investors seeking alpha in biotech markets, epidemiologists and immunologists demanding statistical rigor, and patients navigating life-altering treatment decisions. By combining institutional-grade methodologies—survival analysis, causal inference, network graphs—with real-time data from authoritative sources (ClinicalTrials.gov, FDA, PubMed) and multi-audience explanations that respect intelligence across all stakeholder groups, we demonstrate that sophisticated science need not sacrifice accessibility, that investment-grade metrics can coexist with patient-centered insights, and that transparency—real data, honest limitations, verifiable sources—forms the foundation of trust. **We translate clinical trial complexity into clarity, data into decisions, and research into measurable human impact.**
+This platform addresses a fundamental challenge in translational medicine: the asymmetric distribution of clinical trial intelligence across stakeholder groups with divergent epistemological frameworks. We synthesize 6,819 verified clinical trials into a unified analytical infrastructure that serves three constituencies—quantitative investors, clinical researchers, and patient advocates—without privileging any single perspective or compromising methodological rigor.
+
+### Core Principles
+
+Our approach rests on five foundational commitments:
+
+1. **Bridge clinical complexity and human understanding** — Deploy institutional-grade methodologies (survival analysis, causal inference, network science) while maintaining accessibility across expertise gradients
+2. **Serve investors, scientists, and patients equally** — Construct multi-audience explanations that respect diverse cognitive frameworks without reductive simplification
+3. **Maintain transparency as foundation** — Ground all assertions in verifiable primary sources (ClinicalTrials.gov, FDA, PubMed) with explicit acknowledgment of limitations and uncertainty
+4. **Prove sophistication need not sacrifice accessibility** — Demonstrate that statistical rigor and interpretive clarity are complementary rather than competing objectives
+5. **Translate research into measurable human impact** — Convert clinical trial data into actionable intelligence that informs capital allocation, research design, and treatment decisions
+
+By integrating real-time data streams from authoritative sources with advanced analytical frameworks—Cox proportional hazards models, propensity score matching, graph-theoretic centrality measures—we establish that investment-grade metrics, academic validity, and patient-centered insights can coexist within a single coherent system. **This platform operationalizes the principle that transparency, rigor, and accessibility form a mutually reinforcing triad rather than a zero-sum trade-off.**
 
 ---
 

@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-05-25T10:35:54.290446+00:00",
+  "timestamp": "2026-05-25T11:41:14.955149+00:00",
   "checks": {
     "api_health": {
       "status": "PASS",
-      "response_time_ms": 357.375
+      "response_time_ms": 304.641
     },
     "data_quality": {
       "status": "PASS",
@@ -78,16 +78,13 @@
       "status": "PASS",
       "modules": {
         "clinicaltrials_api": {
-          "status": "WARN",
-          "error": "No module named 'feedparser'"
+          "status": "PASS"
         },
         "fda_tracker": {
-          "status": "WARN",
-          "error": "No module named 'feedparser'"
+          "status": "PASS"
         },
         "pubmed_api": {
-          "status": "WARN",
-          "error": "No module named 'feedparser'"
+          "status": "PASS"
         }
       },
       "note": "Missing dependencies (feedparser, xmltodict) are expected until installed"
