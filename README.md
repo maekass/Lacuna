@@ -1,5 +1,17 @@
 # AI-Powered Clinical Intelligence Platform
 
+> **🎯 Portfolio Highlight:** Full-stack ML platform analyzing 6,819 clinical trials with 78% prediction accuracy, 30+ language AI translation, and institutional-grade data verification. Built with Python, Scikit-learn, XGBoost, and Streamlit.
+
+**Key Achievements:**
+- 🤖 **ML Ensemble Model:** 78% accuracy predicting trial success (RandomForest + XGBoost + GradientBoosting)
+- 🌍 **AI Translation:** 30+ languages via Google Translate API with smart caching
+- ✅ **Data Verification:** 5-layer validation system with 99.96/100 quality score
+- 📊 **Real-Time Analytics:** Live dashboards with Plotly visualizations
+- 🔗 **API Integration:** ClinicalTrials.gov, FDA OpenFDA, PubMed, Orphanet
+- 📈 **Production Ready:** Automated testing, daily certification, cryptographic verification
+
+---
+
 ## Mission
 
 This platform addresses a fundamental challenge in translational medicine: the asymmetric distribution of clinical trial intelligence across stakeholder groups with divergent epistemological frameworks. We synthesize 6,819 verified clinical trials into a unified analytical infrastructure that serves three constituencies—quantitative investors, clinical researchers, and patient advocates—without privileging any single perspective or compromising methodological rigor.
@@ -526,8 +538,8 @@ README.md
 
 ```bash
 # Clone repository
-git clone https://github.com/maekass/Immunology-Investment-Intelligence.git
-cd Immunology-Investment-Intelligence
+git clone https://github.com/maekass/MPK1.git
+cd MPK1
 
 # Create virtual environment
 python -m venv .venv
