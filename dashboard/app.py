@@ -764,6 +764,7 @@ page = st.sidebar.radio(
     "Select Page",
     [
         "Mission",
+        "Roadmap",
         "Disease Lookup",
         "Overview",
         "Health Trends",
@@ -780,10 +781,11 @@ page = st.sidebar.radio(
         "Investment Stages",
         "Market Analysis",
     ],
-    help="Start with Mission to understand our purpose. Pages 2–9 focus on clinical data and analytics. Pages 10–16 cover quantitative finance demos.",
+    help="Start with Mission to understand our purpose. Roadmap shows technical development phases. Pages 3–10 focus on clinical data and analytics. Pages 11–17 cover quantitative finance demos.",
 )
 _ZONE_FOR_PAGE = {
     "Mission": ("epidemiology", "Our purpose · Bridging complexity and understanding"),
+    "Roadmap": ("epidemiology", "Technical development phases · Future features"),
     "Disease Lookup": ("epidemiology", "Orphanet search · public metrics"),
     "Overview": ("pipeline", "Gene therapy & FDA pipeline"),
     "Health Trends": ("epidemiology", "Burden, trials, ontology-anchored conditions"),
@@ -1002,6 +1004,179 @@ if page == "Mission":
     st.markdown("---")
     
     st.info("**Navigation Protocol:** Utilize the sidebar navigation interface to access Disease Lookup, Overview, or any of the 15 specialized analytical modules, each designed to serve specific investigative workflows across the three stakeholder constituencies.")
+
+elif page == "Roadmap":
+    st.markdown("# Technical Roadmap")
+    
+    st.markdown("""
+    Our development philosophy prioritizes validated user demand over speculative features, 
+    maintaining Stanford PhD-level rigor while delivering immediate stakeholder value.
+    """)
+    
+    st.markdown("---")
+    
+    # Completed Phases
+    st.markdown("## Completed Phases ✅")
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("""
+        ### Phase 1: Advanced Analytics
+        **Status:** Complete
+        
+        - **Survival Analysis** — Kaplan-Meier estimators, Cox proportional hazards regression
+        - **Causal Inference** — Propensity score stratification, difference-in-differences
+        - **Network Analysis** — Collaboration graphs, drug repurposing identification
+        
+        **Impact:** Institutional-grade methodologies accessible to all stakeholder groups
+        """)
+    
+    with col2:
+        st.markdown("""
+        ### Phase 2: Live Data APIs
+        **Status:** Complete
+        
+        - **ClinicalTrials.gov API v2** — Real-time trial synchronization
+        - **FDA Tracker** — RSS feeds + OpenFDA integration
+        - **PubMed E-utilities** — Automated literature linkage
+        
+        **Impact:** Continuous data freshness with authoritative provenance
+        """)
+    
+    with col3:
+        st.markdown("""
+        ### Phase 3: Advanced UI & Export
+        **Status:** Complete
+        
+        - **Multi-dimensional Filtering** — Multi-select, date ranges, numeric sliders
+        - **Professional Export** — Excel/CSV with metadata preservation
+        - **Stakeholder Views** — Adaptive presentation layers
+        
+        **Impact:** Professional tooling for diverse analytical workflows
+        """)
+    
+    st.markdown("---")
+    
+    # Next Phases
+    st.markdown("## Next Phases 🚀")
+    
+    # Phase 4
+    st.markdown("""
+    <div style="background-color: #2C3E50; 
+                padding: 1.5rem; 
+                border-radius: 5px; 
+                color: white; 
+                margin: 1rem 0;
+                border-left: 5px solid #5A8A6F;">
+        <h3 style="color: white; margin-top: 0;">Phase 4: Real-Time Monitoring ⭐ NEXT PRIORITY</h3>
+        <p><strong>Timeline:</strong> 2-3 days | <strong>Value:</strong> Immediate investor ROI</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    **Features:**
+    - Daily trial change detection (diff tracking from ClinicalTrials.gov)
+    - Alert system for status changes (Recruiting → Completed, Terminated, etc.)
+    - Enrollment velocity dashboard (patient recruitment tracking over time)
+    - Change history visualization (audit trail of all modifications)
+    - Email/SMS notifications for key events
+    
+    **Why this matters:** Investors require daily actionable signals. Few platforms provide real-time monitoring 
+    with this level of granularity and institutional rigor.
+    """)
+    
+    st.markdown("---")
+    
+    # Phase 5
+    st.markdown("""
+    <div style="background-color: #34495E; 
+                padding: 1.5rem; 
+                border-radius: 5px; 
+                color: white; 
+                margin: 1rem 0;
+                border-left: 5px solid #7BA88C;">
+        <h3 style="color: white; margin-top: 0;">Phase 5: NLP & Text Analysis</h3>
+        <p><strong>Timeline:</strong> 1-2 weeks | <strong>Value:</strong> Unlock unstructured data</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    **Features:**
+    - Endpoint extraction from trial descriptions (primary, secondary outcomes)
+    - Intervention classification (drug, device, behavioral, combination)
+    - Eligibility criteria parsing into structured data
+    - Semantic search across protocols (find similar trials by meaning)
+    - Adverse event prediction from protocol text
+    
+    **Why this matters:** 80% of trial intelligence is locked in unstructured text. NLP unlocks massive 
+    analytical value and enables publication-grade research with academic credibility.
+    """)
+    
+    st.markdown("---")
+    
+    # Phase 6
+    st.markdown("""
+    <div style="background-color: #2C3E50; 
+                padding: 1.5rem; 
+                border-radius: 5px; 
+                color: white; 
+                margin: 1rem 0;
+                border-left: 5px solid #5A8A6F;">
+        <h3 style="color: white; margin-top: 0;">Phase 6: Advanced Forecasting</h3>
+        <p><strong>Timeline:</strong> 2-3 weeks | <strong>Value:</strong> Cutting-edge methodology</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    **Features:**
+    - Bayesian trial completion prediction (probabilistic forecasting with uncertainty)
+    - Regulatory pathway prediction (FDA approval probability modeling)
+    - Synthetic control arm generation (FDA guidance-compliant methodology)
+    - Monte Carlo simulation for trial outcomes
+    - Advisory committee outcome forecasting
+    
+    **Why this matters:** Positions platform as thought leader with FDA-relevant, publishable methodology. 
+    Enables academic publications and regulatory credibility at the highest level.
+    """)
+    
+    st.markdown("---")
+    
+    # Quick Wins
+    st.markdown("## Quick Wins (Low Effort, High Impact)")
+    
+    st.markdown("""
+    **Available for rapid implementation:**
+    
+    1. **Trial Timeline Visualization** (4 hours) — Gantt charts showing phase progression
+    2. **Sponsor Portfolio View** (3 hours) — Company-level analytics with success rates
+    3. **Geographic Heatmaps** (3 hours) — Trial site locations and enrollment density
+    4. **Endpoint Taxonomy** (4 hours) — Standardized endpoint classification
+    5. **Alert System** (6 hours) — Customizable email notifications
+    """)
+    
+    st.markdown("---")
+    
+    # Implementation Philosophy
+    st.markdown("## Implementation Philosophy")
+    
+    st.markdown("""
+    <div style="background-color: #f0f2f6; 
+                padding: 1.5rem; 
+                border-left: 5px solid #5A8A6F; 
+                border-radius: 5px; 
+                line-height: 1.7;">
+        <strong>Data-driven development:</strong>
+        <ul>
+            <li>Build features based on validated user demand, not assumptions</li>
+            <li>Prioritize immediate value over long-term complexity</li>
+            <li>Maintain Stanford PhD-level rigor across all additions</li>
+            <li>Ensure transparency and verifiability in all new analytics</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.info("**Detailed implementation guides available in [ONE_DAY_SPRINT.md](https://github.com/maekass/MPK1/blob/main/ONE_DAY_SPRINT.md) and [FUTURE_FEATURES_QUEUE.md](https://github.com/maekass/MPK1/blob/main/FUTURE_FEATURES_QUEUE.md)**")
 
 elif page == "Disease Lookup":
     section_header(
