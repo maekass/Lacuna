@@ -1,5 +1,37 @@
 # AI-Powered Clinical Intelligence Platform
 
+## Legal Disclaimer
+
+**FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY**
+
+This platform is designed for academic research and learning. It is **NOT**:
+- Investment advice or financial recommendations
+- Suitable for commercial trading or real-money decisions without proper validation
+- A substitute for professional financial, medical, or legal counsel
+- Approved for clinical or regulatory decision-making
+
+**Data Compliance:**
+- All data is publicly available and delayed (15+ minutes for market data)
+- No patient-level or private health information (HIPAA compliant)
+- No insider trading or material non-public information
+- Illustrative scores and private-market figures are demo weights only
+- Users must verify compliance with applicable securities (SEC, FINRA) and health-data regulations before any production or commercial use
+
+**Model Limitations:**
+- Past performance does not guarantee future results
+- Models are calibrated to historical data and may not predict unprecedented events
+- All predictions and scores are illustrative and subject to error
+- Users accept full responsibility for validation and decisions
+
+**For Commercial Use:**
+- Consult legal counsel regarding securities regulations
+- Validate all data sources and model outputs
+- Implement proper risk management and compliance controls
+- Maintain audit trails for regulatory purposes
+- See [Internal Tools Appendix](docs/INTERNAL_TOOLS_APPENDIX.md) for detailed guidance
+
+---
+
 > **Portfolio Highlight:** Full-stack ML platform analyzing 6,819 clinical trials with 78% prediction accuracy, 30+ language AI translation, and institutional-grade data verification. Built with Python, Scikit-learn, XGBoost, and Streamlit.
 
 **Key Achievements:**
@@ -217,38 +249,6 @@ API Response / Dashboard Visualization
 - Multi-dimensional filtering (multi-select, date ranges, numeric sliders)
 - Professional export tools (Excel/CSV with metadata)
 - Stakeholder-specific presentation layers
-
----
-
-## Legal Disclaimer
-
-**FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY**
-
-This platform is designed for academic research and learning. It is **NOT**:
-- Investment advice or financial recommendations
-- Suitable for commercial trading or real-money decisions without proper validation
-- A substitute for professional financial, medical, or legal counsel
-- Approved for clinical or regulatory decision-making
-
-**Data Compliance:**
-- All data is publicly available and delayed (15+ minutes for market data)
-- No patient-level or private health information (HIPAA compliant)
-- No insider trading or material non-public information
-- Illustrative scores and private-market figures are demo weights only
-- Users must verify compliance with applicable securities (SEC, FINRA) and health-data regulations before any production or commercial use
-
-**Model Limitations:**
-- Past performance does not guarantee future results
-- Models are calibrated to historical data and may not predict unprecedented events
-- All predictions and scores are illustrative and subject to error
-- Users accept full responsibility for validation and decisions
-
-**For Commercial Use:**
-- Consult legal counsel regarding securities regulations
-- Validate all data sources and model outputs
-- Implement proper risk management and compliance controls
-- Maintain audit trails for regulatory purposes
-- See [Internal Tools Appendix](docs/INTERNAL_TOOLS_APPENDIX.md) for detailed guidance
 
 ---
 
