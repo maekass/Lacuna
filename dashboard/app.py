@@ -1553,6 +1553,305 @@ elif page == "Survival Analysis":
             - Phase 3 trials typically take longest but have highest success rates
             """)
 
+elif page == "Causal Inference":
+    section_header("Causal Inference", "Estimating treatment effects and identifying causal relationships")
+    
+    # Load modules
+    try:
+        from src.analytics.causal_inference import (
+            propensity_score_matching,
+            treatment_heterogeneity
+        )
+        from src.analytics.causal_viz import (
+            plot_propensity_scores,
+            plot_covariate_balance,
+            plot_treatment_effect,
+            plot_subgroup_effects
+        )
+    except ImportError as e:
+        st.error(f"**Error loading causal inference modules:** {e}")
+        st.stop()
+    
+    # Load trial data
+    trials = load_csv(f"clinical_trials_{disease_id}.csv")
+    
+    if trials is None or len(trials) < 30:
+        empty_state(
+            "Insufficient Data",
+            "Causal inference requires at least 30 trials. Run data collectors or select a different disease.",
+            icon="📊"
+        )
+    else:
+        st.markdown(f"""
+        **Causal inference** goes beyond correlation to estimate actual treatment effects:
+        - Does industry sponsorship **cause** higher success rates?
+        - What's the **causal effect** of trial phase on completion time?
+        - Which trial features have **genuine causal impact** vs mere association?
+        
+        Analyzing **{len(trials)} trials** for {_ctx.display_name}.
+        """)
+        
+        # Propensity Score Matching
+        st.subheader("🎯 Propensity Score Matching")
+        st.markdown("""
+        **Propensity score matching** creates comparable treatment and control groups by matching trials
+        with similar characteristics, allowing us to estimate causal treatment effects.
+        """)
+        
+        # Choose treatment
+        treatment_options = {
+            'Industry Sponsorship': ('is_industry_sponsored', ['phase_numeric', 'log_enrollment']),
+            'Phase 3 vs Earlier': ('is_phase3', ['log_enrollment'])
+        }
+        
+        # Create treatment variables
+        trials['is_industry_sponsored'] = (trials['sponsor_type'] == 'INDUSTRY').astype(int)
+        trials['is_phase3'] = (trials['phase'] == 'PHASE3').astype(int)
+        
+        treatment_choice = st.selectbox(
+            "Select Treatment to Analyze",
+            list(treatment_options.keys())
+        )
+        
+        treatment_col, covariates = treatment_options[treatment_choice]
+        
+        try:
+            matched_df, results = propensity_score_matching(
+                trials,
+                treatment_col=treatment_col,
+                covariates=covariates
+            )
+            
+            # Display results
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric(
+                    "Average Treatment Effect",
+                    f"{results['average_treatment_effect']:.3f}",
+                    help="Difference in success rates between treated and control groups"
+                )
+            with col2:
+                st.metric(
+                    "P-value",
+                    f"{results['p_value']:.4f}",
+                    help="Statistical significance (p < 0.05 is significant)"
+                )
+            with col3:
+                st.metric(
+                    "Matched Pairs",
+                    f"{results['n_treated']}",
+                    help="Number of successfully matched treatment-control pairs"
+                )
+            
+            # Propensity score distribution
+            fig_ps = plot_propensity_scores(matched_df)
+            st.plotly_chart(apply_plotly_theme(fig_ps), width="stretch")
+            
+            # Treatment effect
+            fig_ate = plot_treatment_effect(results)
+            st.plotly_chart(apply_plotly_theme(fig_ate), width="stretch")
+            
+            # Covariate balance
+            st.subheader("⚖️ Covariate Balance")
+            st.markdown("After matching, covariates should be balanced between groups (|SMD| < 0.1):")
+            
+            balance_df = results['covariate_balance']
+            fig_balance = plot_covariate_balance(balance_df)
+            st.plotly_chart(apply_plotly_theme(fig_balance), width="stretch")
+            
+            st.dataframe(balance_df, width="stretch", hide_index=True)
+            
+        except Exception as e:
+            st.warning(f"Could not perform propensity score matching: {str(e)}")
+        
+        # Treatment Heterogeneity
+        st.subheader("🔍 Treatment Effect Heterogeneity")
+        st.markdown("""
+        **Heterogeneity analysis** examines whether treatment effects vary across subgroups.
+        Different trial phases or disease types may respond differently to the same treatment.
+        """)
+        
+        subgroup_choice = st.selectbox(
+            "Analyze Heterogeneity By",
+            ['phase', 'sponsor_type']
+        )
+        
+        try:
+            heterogeneity_df = treatment_heterogeneity(
+                trials,
+                treatment_col=treatment_col,
+                outcome_col='outcome_binary',
+                subgroup_col=subgroup_choice
+            )
+            
+            if len(heterogeneity_df) > 0:
+                fig_het = plot_subgroup_effects(heterogeneity_df)
+                st.plotly_chart(apply_plotly_theme(fig_het), width="stretch")
+                
+                st.dataframe(heterogeneity_df, width="stretch", hide_index=True)
+            else:
+                st.info("No subgroup data available for heterogeneity analysis")
+                
+        except Exception as e:
+            st.warning(f"Could not perform heterogeneity analysis: {str(e)}")
+        
+        # Key Insights
+        with st.expander("💡 Key Insights for Decision Makers", expanded=False):
+            st.markdown("""
+            ### For Quant Investors:
+            - **Causal effects** inform investment decisions (not just correlations)
+            - **Propensity matching** controls for confounders in trial success
+            - **Heterogeneity** identifies which trial types have highest ROI
+            
+            ### For Epidemiologists:
+            - **Rigorous causal inference** separates true effects from selection bias
+            - **Covariate balance** ensures valid comparisons
+            - **Subgroup analysis** identifies populations that benefit most
+            
+            ### For Patients:
+            - Causal analysis shows which trial features truly improve outcomes
+            - Helps identify most promising treatment pathways
+            - Informs patient advocacy for better trial design
+            """)
+
+elif page == "Network Analysis":
+    section_header("Network Analysis", "Collaboration networks and drug repurposing opportunities")
+    
+    # Load modules
+    try:
+        from src.analytics.network_analysis import (
+            build_collaboration_network,
+            calculate_centrality_metrics,
+            drug_disease_bipartite_network,
+            identify_drug_repurposing_opportunities,
+            find_key_players
+        )
+        from src.analytics.network_viz import (
+            plot_network_graph,
+            plot_centrality_ranking,
+            plot_bipartite_network,
+            plot_repurposing_candidates
+        )
+    except ImportError as e:
+        st.error(f"**Error loading network analysis modules:** {e}")
+        st.stop()
+    
+    # Load trial data
+    trials = load_csv(f"clinical_trials_{disease_id}.csv")
+    
+    if trials is None or len(trials) < 10:
+        empty_state(
+            "Insufficient Data",
+            "Network analysis requires trial data. Run data collectors or select a different disease.",
+            icon="🕸️"
+        )
+    else:
+        st.markdown(f"""
+        **Network analysis** reveals hidden patterns in clinical trial ecosystems:
+        - Which companies collaborate on similar drugs?
+        - What drugs are being repurposed across diseases?
+        - Who are the key players in the trial network?
+        
+        Analyzing **{len(trials)} trials** for {_ctx.display_name}.
+        """)
+        
+        # Collaboration Network
+        st.subheader("🤝 Company Collaboration Network")
+        st.markdown("""
+        Companies working on similar drugs form collaboration networks. Node size = number of trials.
+        Color intensity = completion rate.
+        """)
+        
+        try:
+            nodes_df, edges_df, stats = build_collaboration_network(trials)
+            
+            if len(nodes_df) > 0:
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.metric("Companies", stats['n_nodes'])
+                with col2:
+                    st.metric("Connections", stats['n_edges'])
+                with col3:
+                    st.metric("Network Density", f"{stats['density']:.3f}")
+                
+                # Network graph
+                fig_network = plot_network_graph(nodes_df, edges_df)
+                st.plotly_chart(apply_plotly_theme(fig_network), width="stretch")
+                
+                # Key players
+                st.subheader("⭐ Key Network Players")
+                nodes_with_centrality = calculate_centrality_metrics(nodes_df, edges_df)
+                top_players = find_key_players(nodes_with_centrality, edges_df, top_n=10)
+                
+                fig_centrality = plot_centrality_ranking(top_players)
+                st.plotly_chart(apply_plotly_theme(fig_centrality), width="stretch")
+                
+            else:
+                st.info("Not enough sponsor data to build collaboration network")
+                
+        except Exception as e:
+            st.warning(f"Could not build collaboration network: {str(e)}")
+        
+        # Drug Repurposing
+        st.subheader("💊 Drug Repurposing Opportunities")
+        st.markdown("""
+        **Drug repurposing** identifies drugs tested across multiple diseases - potential candidates
+        for new indications with reduced development risk.
+        """)
+        
+        try:
+            repurposing_df = identify_drug_repurposing_opportunities(trials)
+            
+            if len(repurposing_df) > 0:
+                fig_repurpose = plot_repurposing_candidates(repurposing_df)
+                st.plotly_chart(apply_plotly_theme(fig_repurpose), width="stretch")
+                
+                st.dataframe(
+                    repurposing_df.head(15),
+                    width="stretch",
+                    hide_index=True
+                )
+            else:
+                st.info("No multi-disease drugs found in current dataset")
+                
+        except Exception as e:
+            st.warning(f"Could not identify repurposing opportunities: {str(e)}")
+        
+        # Drug-Disease Network
+        st.subheader("🔗 Drug-Disease Bipartite Network")
+        st.markdown("Drugs (left) connected to diseases (right) they're being tested for:")
+        
+        try:
+            drug_nodes, drug_edges = drug_disease_bipartite_network(trials)
+            
+            if len(drug_nodes) > 0 and len(drug_edges) > 0:
+                fig_bipartite = plot_bipartite_network(drug_nodes, drug_edges)
+                st.plotly_chart(apply_plotly_theme(fig_bipartite), width="stretch")
+            else:
+                st.info("Insufficient drug-disease data for network visualization")
+                
+        except Exception as e:
+            st.warning(f"Could not build drug-disease network: {str(e)}")
+        
+        # Key Insights
+        with st.expander("💡 Strategic Insights", expanded=False):
+            st.markdown("""
+            ### For Quant Investors:
+            - **Network centrality** identifies influential companies worth tracking
+            - **Collaboration patterns** reveal strategic partnerships
+            - **Repurposing candidates** = lower-risk investment opportunities
+            
+            ### For Epidemiologists:
+            - **Network structure** shows research coordination (or lack thereof)
+            - **Drug repurposing** accelerates treatment availability
+            - **Collaboration gaps** highlight areas needing more research
+            
+            ### For Patients:
+            - Repurposed drugs reach patients faster (already safety-tested)
+            - Network analysis identifies which companies are most active
+            - Shows breadth of treatment options being explored
+            """)
+
 elif page == "Quant Strategy":
     section_header("Quant Strategy", "Backtests and factor models on delayed-vendor return samples")
     if not _ensure_quant_artifacts_cached():
