@@ -414,7 +414,7 @@ def render_health_trends_charts(
         height=380,
         yaxis=dict(tickformat=",.0f"),
     )
-    st.plotly_chart(styled_line_chart(fig_prev), use_container_width=True)
+    st.plotly_chart(styled_line_chart(fig_prev), width="stretch")
 
     # --- Chart 2: trials from ClinicalTrials.gov sample when available ---
     by_year = _trials_by_start_year(trials) if trials is not None and not trials.empty else pd.DataFrame()
@@ -435,7 +435,7 @@ def render_health_trends_charts(
             height=380,
             xaxis=dict(dtick=1),
         )
-        st.plotly_chart(styled_bar_chart(fig_trials), use_container_width=True)
+        st.plotly_chart(styled_bar_chart(fig_trials), width="stretch")
         st.caption(
             f"Counts {len(trials)} studies returned by the collector query—not total global trial volume."
         )
@@ -457,7 +457,7 @@ def render_health_trends_charts(
             yaxis_title="Count (Illustrative)",
             height=380,
         )
-        st.plotly_chart(styled_line_chart(fig_placeholder), use_container_width=True)
+        st.plotly_chart(styled_line_chart(fig_placeholder), width="stretch")
     else:
         st.info("Run `collect_all_data.py` to load ClinicalTrials.gov rows for the trials chart.")
 
@@ -538,7 +538,7 @@ def render_sidebar_provenance(
                 if (artifact_dir / name).is_file()
             ]
             if rows_custom:
-                st.dataframe(pd.DataFrame(rows_custom), use_container_width=True, hide_index=True)
+                st.dataframe(pd.DataFrame(rows_custom), width="stretch", hide_index=True)
             else:
                 st.caption(
                     f"Run `python3 scripts/train_{'models' if page == 'ML Models' else 'quant'}.py`."
@@ -574,10 +574,10 @@ def render_sidebar_provenance(
                     }
                 )
 
-        st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+        st.dataframe(pd.DataFrame(rows), width="stretch", hide_index=True)
         if audit_rows:
             st.caption("Latest API pull (from provenance log)")
-            st.dataframe(pd.DataFrame(audit_rows), use_container_width=True, hide_index=True)
+            st.dataframe(pd.DataFrame(audit_rows), width="stretch", hide_index=True)
         else:
             st.caption(
                 "Bundled or locally copied data — no API pull logged yet. "
@@ -887,7 +887,7 @@ elif page == "Overview":
             title=f"Illustrative POS by Company — {_ctx.display_name}",
             labels={"probability_of_success": "Probability of Success", "company": "Company"},
         )
-        st.plotly_chart(styled_bar_chart(fig), use_container_width=True)
+        st.plotly_chart(styled_bar_chart(fig), width="stretch")
     else:
         empty_state(
             "No Pipeline Data",
@@ -1040,7 +1040,7 @@ elif page == "ML Models":
                 textposition="outside",
                 textfont=dict(size=11, color="#1E2D22", weight=600),
             )
-            st.plotly_chart(styled_bar_chart(fig_cmp), use_container_width=True)
+            st.plotly_chart(styled_bar_chart(fig_cmp), width="stretch")
 
         with st.expander("Training Data Samples", expanded=False):
             col_a, col_b = st.columns(2)
@@ -1186,7 +1186,7 @@ elif page == "ML Model Explainability":
         color_discrete_sequence=['#5A8A6F']  # Professional sage green
     )
     fig.update_layout(height=500)
-    st.plotly_chart(apply_plotly_theme(fig), use_container_width=True)
+    st.plotly_chart(apply_plotly_theme(fig), width="stretch")
     
     st.caption("Feature importance from ensemble model (RandomForest + GradientBoosting + XGBoost + LogisticRegression)")
     
@@ -1244,7 +1244,7 @@ elif page == "ML Model Explainability":
         ),
         margin=dict(t=80, b=140, l=80, r=40)
     )
-    st.plotly_chart(apply_plotly_theme(fig_comparison), use_container_width=True)
+    st.plotly_chart(apply_plotly_theme(fig_comparison), width="stretch")
     
     # Info box
     st.info("**Validated Performance:** These metrics are from temporal out-of-sample testing (trained on trials before 2024, tested on 2024+ trials). "
@@ -1306,7 +1306,7 @@ elif page == "ML Model Explainability":
         showlegend=False,
         xaxis=dict(tickformat='.0%')
     )
-    st.plotly_chart(apply_plotly_theme(fig_dist), use_container_width=True)
+    st.plotly_chart(apply_plotly_theme(fig_dist), width="stretch")
     
     # Summary statistics
     col1, col2, col3 = st.columns(3)
@@ -1864,7 +1864,7 @@ elif page == "Quant Strategy":
         backtest = load_csv("backtest_metrics.csv", QUANT_DATA)
         if backtest is not None:
             st.markdown("**In-sample backtest** (full history — equal weight vs health-tilt demo)")
-            st.dataframe(backtest, use_container_width=True, hide_index=True)
+            st.dataframe(backtest, width="stretch", hide_index=True)
 
         wf_compound = load_csv("walk_forward_compounded_summary.csv", QUANT_DATA)
         wf_summary = load_csv("walk_forward_summary.csv", QUANT_DATA)
@@ -1892,7 +1892,7 @@ elif page == "Quant Strategy":
                 f"**Walk-forward OOS — {_ctx.display_name}** "
                 "(24m train · 6m test · chained test windows)"
             )
-            st.dataframe(wf_compound, use_container_width=True, hide_index=True)
+            st.dataframe(wf_compound, width="stretch", hide_index=True)
 
         if wf_curve is not None and not wf_curve.empty:
             curve = wf_curve.copy()
@@ -1915,13 +1915,13 @@ elif page == "Quant Strategy":
                 height=380,
                 legend=dict(orientation="h", yanchor="bottom", y=1.02),
             )
-            st.plotly_chart(styled_line_chart(fig_oos), use_container_width=True)
+            st.plotly_chart(styled_line_chart(fig_oos), width="stretch")
 
         if wf_summary is not None and not wf_summary.empty:
             with st.expander("Fold-average test metrics (per window)", expanded=False):
-                st.dataframe(wf_summary, use_container_width=True, hide_index=True)
+                st.dataframe(wf_summary, width="stretch", hide_index=True)
             if wf_folds is not None and not wf_folds.empty:
-                st.dataframe(wf_folds, use_container_width=True, hide_index=True)
+                st.dataframe(wf_folds, width="stretch", hide_index=True)
             st.caption(
                 "Chart uses chained OOS test returns only. Fold table averages separate test windows."
             )
@@ -1929,7 +1929,7 @@ elif page == "Quant Strategy":
         factors = load_csv("factor_model_betas.csv", QUANT_DATA)
         if factors is not None and not factors.empty:
             st.markdown("**Factor model** (monthly returns ~ IBB + XBI−IBB spread)")
-            st.dataframe(factors, use_container_width=True, hide_index=True)
+            st.dataframe(factors, width="stretch", hide_index=True)
             fig_f = px.bar(
                 factors,
                 x="ticker",
@@ -1937,7 +1937,7 @@ elif page == "Quant Strategy":
                 title="IBB beta by ticker (demo)",
                 color="r_squared",
             )
-            st.plotly_chart(styled_bar_chart(fig_f), use_container_width=True)
+            st.plotly_chart(styled_bar_chart(fig_f), width="stretch")
 
         mc = load_csv("monte_carlo_fan.csv", QUANT_DATA)
         if mc is not None:
@@ -1952,7 +1952,7 @@ elif page == "Quant Strategy":
                 yaxis_title="Growth of $1",
                 height=360,
             )
-            st.plotly_chart(styled_line_chart(fig_mc), use_container_width=True)
+            st.plotly_chart(styled_line_chart(fig_mc), width="stretch")
 
 elif page == "Portfolio Optimization":
     section_header("Portfolio Optimization", "Mean-variance-style demos — not allocation advice")
@@ -1970,17 +1970,17 @@ elif page == "Portfolio Optimization":
                 title="Return vs volatility (color = Sharpe, demo)",
                 labels={"volatility": "Annualized vol", "expected_return": "Annualized return"},
             )
-            st.plotly_chart(apply_plotly_theme(fig_ef), use_container_width=True)
+            st.plotly_chart(apply_plotly_theme(fig_ef), width="stretch")
 
         weights = load_csv("portfolio_weights.csv", QUANT_DATA)
         if weights is not None and not weights.empty:
             st.markdown("**Optimized weights by strategy**")
             pivot = weights.pivot(index="ticker", columns="strategy", values="weight").fillna(0)
-            st.dataframe(pivot, use_container_width=True)
+            st.dataframe(pivot, width="stretch")
             selected = st.selectbox("Strategy detail", sorted(weights["strategy"].unique()))
             st.dataframe(
                 weights[weights["strategy"] == selected].sort_values("weight", ascending=False),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
 
@@ -2002,13 +2002,13 @@ elif page == "Pairs Trading":
         
         if pairs_data is not None and not pairs_data.empty:
             st.subheader("Cointegrated Pairs")
-            st.dataframe(pairs_data, use_container_width=True, hide_index=True)
+            st.dataframe(pairs_data, width="stretch", hide_index=True)
             
             # Show pair metrics
             pair_metrics = load_csv("pair_backtest_metrics.csv", QUANT_DATA)
             if pair_metrics is not None and not pair_metrics.empty:
                 st.subheader("Backtest Performance")
-                st.dataframe(pair_metrics, use_container_width=True, hide_index=True)
+                st.dataframe(pair_metrics, width="stretch", hide_index=True)
                 
                 # Show top pair details
                 if len(pairs_data) > 0:
@@ -2064,13 +2064,13 @@ elif page == "Regime Detection":
             regime_stats = load_csv("regime_statistics.csv", QUANT_DATA)
             if regime_stats is not None and not regime_stats.empty:
                 st.subheader("Regime Statistics")
-                st.dataframe(regime_stats, use_container_width=True, hide_index=True)
+                st.dataframe(regime_stats, width="stretch", hide_index=True)
             
             # Transition matrix
             transition_matrix = load_csv("regime_transitions.csv", QUANT_DATA)
             if transition_matrix is not None and not transition_matrix.empty:
                 st.subheader("Transition Probability Matrix")
-                st.dataframe(transition_matrix, use_container_width=True)
+                st.dataframe(transition_matrix, width="stretch")
                 st.caption("Each cell shows P(transition from row regime to column regime)")
             
             # Performance comparison
@@ -2109,9 +2109,9 @@ elif page == "Investment Stages":
     growth = load_csv("growth_equity_deals_scd.csv")
     if vc is not None and growth is not None:
         st.write("**VC funding (illustrative)**")
-        st.dataframe(vc, use_container_width=True)
+        st.dataframe(vc, width="stretch")
         st.write("**Growth equity (illustrative)**")
-        st.dataframe(growth, use_container_width=True)
+        st.dataframe(growth, width="stretch")
 
 elif page == "Market Analysis":
     section_header("Market Analysis", "Illustrative TAM and competitive scaffolding")
@@ -2136,7 +2136,7 @@ elif page == "Market Analysis":
             )
     if _tier_rows:
         with st.expander("Data tier reference (this page’s CSVs)", expanded=False):
-            st.dataframe(pd.DataFrame(_tier_rows), use_container_width=True, hide_index=True)
+            st.dataframe(pd.DataFrame(_tier_rows), width="stretch", hide_index=True)
             st.caption(
                 "**Tier** labels: `demo_tier_3` = illustrative market scaffolding; "
                 "`sourced_public` / `mixed` = see manifest after running collectors. "
@@ -2146,7 +2146,7 @@ elif page == "Market Analysis":
     attr = load_csv("investment_attractiveness_scd.csv")
     if mkt is not None:
         st.caption("market_size_scd.csv — illustrative TAM-style rows unless you replace with sourced estimates.")
-        st.dataframe(mkt, use_container_width=True)
+        st.dataframe(mkt, width="stretch")
     if attr is not None:
         st.caption("investment_attractiveness_scd.csv — demo scores only; do not use for real decisions.")
-        st.dataframe(attr, use_container_width=True)
+        st.dataframe(attr, width="stretch")
