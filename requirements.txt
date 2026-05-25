@@ -23,6 +23,8 @@ seaborn>=0.12.0
 # Data Collection
 requests>=2.31.0
 beautifulsoup4>=4.12.0
+feedparser>=6.0.10  # FDA RSS feeds
+xmltodict>=0.13.0  # XML parsing for PubMed
 
 # Utilities
 python-dotenv>=1.0.0
