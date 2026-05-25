@@ -1,5 +1,17 @@
 # AI-Powered Clinical Intelligence Platform
 
+> **🎯 Portfolio Highlight:** Full-stack ML platform analyzing 6,819 clinical trials with 78% prediction accuracy, 30+ language AI translation, and institutional-grade data verification. Built with Python, Scikit-learn, XGBoost, and Streamlit.
+
+**Key Achievements:**
+- 🤖 **ML Ensemble Model:** 78% accuracy predicting trial success (RandomForest + XGBoost + GradientBoosting)
+- 🌍 **AI Translation:** 30+ languages via Google Translate API with smart caching
+- ✅ **Data Verification:** 5-layer validation system with 99.96/100 quality score
+- 📊 **Real-Time Analytics:** Live dashboards with Plotly visualizations
+- 🔗 **API Integration:** ClinicalTrials.gov, FDA OpenFDA, PubMed, Orphanet
+- 📈 **Production Ready:** Automated testing, daily certification, cryptographic verification
+
+---
+
 ## Mission
 
 This platform addresses a fundamental challenge in translational medicine: the asymmetric distribution of clinical trial intelligence across stakeholder groups with divergent epistemological frameworks. We synthesize 6,819 verified clinical trials into a unified analytical infrastructure that serves three constituencies—quantitative investors, clinical researchers, and patient advocates—without privileging any single perspective or compromising methodological rigor.
@@ -341,6 +353,30 @@ A comprehensive Python research platform that bridges **public health analytics*
 
 ## Features
 
+### 🆕 Latest Additions (May 2026)
+
+#### Quick Wins Visualization Suite
+- **Sponsor Portfolio View**: Company-level analytics with success rates, trial volumes, and searchable sponsor tables
+- **Geographic Heatmap**: Trial distribution by sponsor type and phase with interactive charts
+- **Trial Timeline Visualization**: Gantt charts, duration analysis, and temporal trends
+
+#### Human Verification System (5-Layer Validation)
+- **Interactive Verification**: Random sample testing with one-click NCT ID validation on ClinicalTrials.gov
+- **Data Provenance**: Complete source documentation for all 4 APIs with data lineage visualization
+- **Audit Trail**: Automated daily verification with cryptographic hash certification (971ACF8592ADEA0E)
+- **Expert Review**: Multi-stakeholder validation from investors, scientists, and patient advocates
+- **Trust Badges**: 99.96/100 quality score with embeddable verification badges
+
+#### AI-Powered Translation (30+ Languages)
+- **Global Accessibility**: Translate entire platform to Spanish, French, German, Chinese, Japanese, Arabic, and 24+ more languages
+- **Google Translate Integration**: Production-grade neural machine translation with automatic caching
+- **Smart Performance**: LRU caching (1000 items) and automatic text chunking for long content
+- **Seamless UX**: Language selector in sidebar with native language names and translation badge indicator
+
+📖 **Documentation**: [Translation Guide](docs/TRANSLATION_GUIDE.md) | [Deployment Verification](DEPLOYMENT_VERIFICATION.md)
+
+---
+
 ### 1. Public Health Analytics
 - **Epidemiological Modeling**: Prevalence trends, diagnosis rates, treatment access
 - **Clinical Trial Pipeline**: Real-time tracking via ClinicalTrials.gov API
@@ -502,8 +538,8 @@ README.md
 
 ```bash
 # Clone repository
-git clone https://github.com/maekass/Immunology-Investment-Intelligence.git
-cd Immunology-Investment-Intelligence
+git clone https://github.com/maekass/MPK1.git
+cd MPK1
 
 # Create virtual environment
 python -m venv .venv
