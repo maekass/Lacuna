@@ -769,6 +769,7 @@ page = st.sidebar.radio(
         "Stock Analysis",
         "ML Models",
         "ML Model Explainability",
+        "Survival Analysis",
         "Quant Strategy",
         "Portfolio Optimization",
         "Pairs Trading",
@@ -776,7 +777,7 @@ page = st.sidebar.radio(
         "Investment Stages",
         "Market Analysis",
     ],
-    help="Pages 1–5 focus on clinical data and technology. Pages 6–12 cover quantitative finance demos.",
+    help="Pages 1–6 focus on clinical data and analytics. Pages 7–13 cover quantitative finance demos.",
 )
 _ZONE_FOR_PAGE = {
     "Disease Lookup": ("epidemiology", "Orphanet search · public metrics"),
@@ -785,6 +786,7 @@ _ZONE_FOR_PAGE = {
     "Stock Analysis": ("portfolio", "Equity & fundamentals"),
     "ML Models": ("pipeline", "Trial-success & return models"),
     "ML Model Explainability": ("pipeline", "Feature importance & model performance"),
+    "Survival Analysis": ("pipeline", "Kaplan-Meier curves · Cox proportional hazards"),
     "Quant Strategy": ("portfolio", "Factor & backtest analytics"),
     "Portfolio Optimization": ("portfolio", "Efficient frontier & weights"),
     "Pairs Trading": ("portfolio", "Statistical arbitrage & cointegration"),
@@ -1381,6 +1383,171 @@ elif page == "ML Model Explainability":
     st.write(styled_df.to_html(escape=False), unsafe_allow_html=True)
     
     st.caption("Illustrative examples showing how the Combined Ensemble model evaluates trials. NCT IDs are real and verifiable on ClinicalTrials.gov. Specific probability scores are representative examples for educational purposes, not actual model outputs for these particular trials.")
+
+elif page == "Survival Analysis":
+    section_header("Survival Analysis", "Time-to-event analysis for clinical trial outcomes")
+    
+    # Check if lifelines is available
+    try:
+        from src.analytics.survival_analysis import (
+            kaplan_meier_analysis,
+            cox_proportional_hazards,
+            competing_risks_analysis,
+            trial_duration_statistics,
+            LIFELINES_AVAILABLE
+        )
+        from src.analytics.survival_viz import (
+            plot_kaplan_meier,
+            plot_cox_hazard_ratios,
+            plot_competing_risks,
+            plot_duration_distribution
+        )
+        
+        if not LIFELINES_AVAILABLE:
+            st.error("**Survival analysis requires the lifelines package.**")
+            st.code("pip install lifelines", language="bash")
+            st.stop()
+            
+    except ImportError as e:
+        st.error(f"**Error loading survival analysis modules:** {e}")
+        st.code("pip install lifelines", language="bash")
+        st.stop()
+    
+    # Load trial data
+    trials = load_csv(f"clinical_trials_{disease_id}.csv")
+    
+    if trials is None or len(trials) < 10:
+        empty_state(
+            "Insufficient Trial Data",
+            "Survival analysis requires at least 10 trials with date information. "
+            "Run data collectors or select a different disease.",
+            icon="📊"
+        )
+    else:
+        st.markdown(f"""
+        **Survival analysis** examines time-to-event data for clinical trials, answering questions like:
+        - How long do trials typically take to complete?
+        - What factors influence trial duration?
+        - What's the probability a trial will still be ongoing after X years?
+        
+        Analyzing **{len(trials)} trials** for {_ctx.display_name}.
+        """)
+        
+        # Summary Statistics
+        st.subheader("📈 Trial Duration Statistics")
+        stats = trial_duration_statistics(trials)
+        
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric(
+                "Median Duration",
+                f"{stats['overall']['median_days']/365.25:.1f} years",
+                help="Median time from start to completion across all trials"
+            )
+        with col2:
+            completed_pct = (stats['completed']['n_trials'] / stats['overall']['n_trials']) * 100
+            st.metric(
+                "Completion Rate",
+                f"{completed_pct:.1f}%",
+                help="Percentage of trials that reached completion"
+            )
+        with col3:
+            st.metric(
+                "Total Trials",
+                f"{stats['overall']['n_trials']}",
+                help="Number of trials with valid date information"
+            )
+        
+        # Kaplan-Meier Survival Curves
+        st.subheader("📉 Kaplan-Meier Survival Curves")
+        st.markdown("""
+        **Kaplan-Meier curves** show the probability that a trial will still be ongoing over time.
+        The curve drops when trials complete or terminate. Steeper drops indicate faster completion rates.
+        """)
+        
+        # Overall curve
+        survival_table, metadata = kaplan_meier_analysis(trials, label=f"{_ctx.display_name} Trials")
+        fig_km = plot_kaplan_meier(survival_table, metadata, title=f"Trial Survival Curve - {_ctx.display_name}")
+        st.plotly_chart(apply_plotly_theme(fig_km), width="stretch")
+        
+        # Stratified by phase
+        st.subheader("🔬 Survival by Trial Phase")
+        survival_table_phase, metadata_phase = kaplan_meier_analysis(trials, stratify_by='phase')
+        fig_km_phase = plot_kaplan_meier(
+            survival_table_phase,
+            metadata_phase,
+            title="Trial Survival by Phase"
+        )
+        st.plotly_chart(apply_plotly_theme(fig_km_phase), width="stretch")
+        
+        # Show median survival times by phase
+        if metadata_phase['type'] == 'stratified':
+            phase_stats = []
+            for phase, stats_dict in metadata_phase['groups'].items():
+                if phase != 'logrank_p_value':
+                    phase_stats.append({
+                        'Phase': phase,
+                        'Median Days': f"{stats_dict['median_survival']:.0f}" if stats_dict['median_survival'] else 'N/A',
+                        'N Trials': stats_dict['n_trials'],
+                        'N Events': stats_dict['n_events']
+                    })
+            if phase_stats:
+                st.dataframe(pd.DataFrame(phase_stats), width="stretch", hide_index=True)
+        
+        # Cox Proportional Hazards
+        st.subheader("⚖️ Cox Proportional Hazards Model")
+        st.markdown("""
+        **Cox regression** identifies which factors increase or decrease trial duration risk.
+        - **Hazard Ratio > 1**: Factor increases risk of trial ending (shorter duration)
+        - **Hazard Ratio < 1**: Factor decreases risk of trial ending (longer duration)
+        """)
+        
+        try:
+            cox_coef, cox_meta = cox_proportional_hazards(trials)
+            fig_cox = plot_cox_hazard_ratios(cox_coef, cox_meta)
+            st.plotly_chart(apply_plotly_theme(fig_cox), width="stretch")
+            
+            st.dataframe(cox_coef, width="stretch", hide_index=True)
+            
+            st.info(f"**Model Performance:** C-index = {cox_meta['concordance_index']:.3f} "
+                   f"(0.5 = random, 1.0 = perfect prediction)")
+        except Exception as e:
+            st.warning(f"Could not fit Cox model: {str(e)}")
+        
+        # Competing Risks
+        st.subheader("🎯 Competing Risks: Completion vs Termination")
+        st.markdown("""
+        **Competing risks analysis** separates trials that completed successfully from those that were terminated.
+        This shows the cumulative probability of each outcome over time.
+        """)
+        
+        cif_df = competing_risks_analysis(trials)
+        fig_cif = plot_competing_risks(cif_df)
+        st.plotly_chart(apply_plotly_theme(fig_cif), width="stretch")
+        
+        # Duration Distribution
+        st.subheader("📊 Duration Distribution by Phase")
+        fig_dist = plot_duration_distribution(trials, stratify_by='phase')
+        st.plotly_chart(apply_plotly_theme(fig_dist), width="stretch")
+        
+        # Key Insights
+        with st.expander("💡 Key Insights for Investors & Scientists", expanded=False):
+            st.markdown(f"""
+            ### For Quant Investors:
+            - **Median trial duration:** {stats['overall']['median_days']/365.25:.1f} years
+            - **Completion rate:** {completed_pct:.1f}% (risk of trial failure)
+            - **Time-to-event modeling** helps predict cash burn and milestone timing
+            
+            ### For Epidemiologists:
+            - **Phase-specific timelines** inform trial design and patient recruitment strategies
+            - **Cox regression** identifies modifiable factors that accelerate/delay trials
+            - **Competing risks** separate successful completion from early termination
+            
+            ### For Patients:
+            - Longer trials may indicate complex endpoints or rare diseases
+            - Higher completion rates suggest established treatment pathways
+            - Phase 3 trials typically take longest but have highest success rates
+            """)
 
 elif page == "Quant Strategy":
     section_header("Quant Strategy", "Backtests and factor models on delayed-vendor return samples")
