@@ -768,6 +768,9 @@ page = st.sidebar.radio(
         "Disease Lookup",
         "Overview",
         "Health Trends",
+        "Sponsor Portfolio",
+        "Geographic Heatmap",
+        "Trial Timeline",
         "Stock Analysis",
         "ML Models",
         "ML Model Explainability",
@@ -781,7 +784,7 @@ page = st.sidebar.radio(
         "Investment Stages",
         "Market Analysis",
     ],
-    help="Start with Mission to understand our purpose. Roadmap shows technical development phases. Pages 3–10 focus on clinical data and analytics. Pages 11–17 cover quantitative finance demos.",
+    help="Start with Mission to understand our purpose. Roadmap shows technical development phases. Pages 3–13 focus on clinical data and analytics. Pages 14–20 cover quantitative finance demos.",
 )
 _ZONE_FOR_PAGE = {
     "Mission": ("epidemiology", "Our purpose · Bridging complexity and understanding"),
@@ -789,6 +792,9 @@ _ZONE_FOR_PAGE = {
     "Disease Lookup": ("epidemiology", "Orphanet search · public metrics"),
     "Overview": ("pipeline", "Gene therapy & FDA pipeline"),
     "Health Trends": ("epidemiology", "Burden, trials, ontology-anchored conditions"),
+    "Sponsor Portfolio": ("pipeline", "Company-level analytics · Success rates"),
+    "Geographic Heatmap": ("pipeline", "Trial site locations · Regional density"),
+    "Trial Timeline": ("pipeline", "Phase progression · Gantt visualization"),
     "Stock Analysis": ("portfolio", "Equity & fundamentals"),
     "ML Models": ("pipeline", "Trial-success & return models"),
     "ML Model Explainability": ("pipeline", "Feature importance & model performance"),
@@ -1203,6 +1209,295 @@ elif page == "Disease Lookup":
             "Live public APIs (Orphanet, CDC data.cdc.gov NNDSS, ClinicalTrials.gov). No bundled pipeline, equity, or FDA tables "
             "for ad-hoc diseases — use **Focus indications** for full demo datasets."
         )
+
+elif page == "Sponsor Portfolio":
+    section_header(
+        "Sponsor Portfolio View",
+        "Company-level analytics · Success rates · Competitive intelligence"
+    )
+    
+    # Load trial data
+    trials_df = load_csv("enhanced_clinical_trials.csv", ML_DATA)
+    
+    if trials_df is None or trials_df.empty:
+        st.warning("No trial data available")
+    else:
+        # Filter out missing sponsors
+        trials_with_sponsors = trials_df[trials_df['sponsor_name'].notna() & (trials_df['sponsor_name'] != '')]
+        
+        # Aggregate by sponsor
+        sponsor_stats = trials_with_sponsors.groupby('sponsor_name').agg({
+            'nct_id': 'count',
+            'status': lambda x: (x == 'COMPLETED').sum(),
+            'outcome': lambda x: (x == 'Success').sum(),
+            'phase': lambda x: x.mode()[0] if len(x.mode()) > 0 else 'Unknown',
+            'enrollment': 'sum'
+        }).reset_index()
+        
+        sponsor_stats.columns = ['Sponsor', 'Total Trials', 'Completed', 'Successful', 'Most Common Phase', 'Total Enrollment']
+        sponsor_stats['Success Rate'] = (sponsor_stats['Successful'] / sponsor_stats['Completed'] * 100).fillna(0).round(1)
+        sponsor_stats['Completion Rate'] = (sponsor_stats['Completed'] / sponsor_stats['Total Trials'] * 100).fillna(0).round(1)
+        
+        # Sort by total trials
+        sponsor_stats = sponsor_stats.sort_values('Total Trials', ascending=False)
+        
+        # Summary metrics
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Total Sponsors", len(sponsor_stats))
+        with col2:
+            st.metric("Total Trials", sponsor_stats['Total Trials'].sum())
+        with col3:
+            # Filter out inf/nan values for average calculation
+            valid_success_rates = sponsor_stats['Success Rate'].replace([float('inf'), -float('inf')], float('nan')).dropna()
+            avg_success = valid_success_rates.mean() if len(valid_success_rates) > 0 else 0
+            st.metric("Avg Success Rate", f"{avg_success:.1f}%")
+        with col4:
+            st.metric("Total Patients", f"{sponsor_stats['Total Enrollment'].sum():,.0f}")
+        
+        st.markdown("---")
+        
+        # Top sponsors by trial count
+        st.subheader("Top 20 Sponsors by Trial Volume")
+        top_sponsors = sponsor_stats.head(20)
+        
+        fig = px.bar(
+            top_sponsors,
+            x='Total Trials',
+            y='Sponsor',
+            orientation='h',
+            title='Trial Volume by Sponsor',
+            labels={'Total Trials': 'Number of Trials', 'Sponsor': 'Sponsor Name'},
+            color='Success Rate',
+            color_continuous_scale='RdYlGn',
+            hover_data=['Completed', 'Successful', 'Success Rate']
+        )
+        fig.update_layout(height=600, yaxis={'categoryorder': 'total ascending'})
+        st.plotly_chart(fig, use_container_width=True)
+        
+        st.markdown("---")
+        
+        # Success rate analysis
+        st.subheader("Success Rate Distribution")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            # Filter sponsors with at least 5 completed trials
+            qualified_sponsors = sponsor_stats[sponsor_stats['Completed'] >= 5]
+            
+            fig = px.histogram(
+                qualified_sponsors,
+                x='Success Rate',
+                nbins=20,
+                title='Success Rate Distribution (Sponsors with 5+ Completed Trials)',
+                labels={'Success Rate': 'Success Rate (%)', 'count': 'Number of Sponsors'}
+            )
+            st.plotly_chart(fig, use_container_width=True)
+        
+        with col2:
+            # Scatter: trials vs success rate
+            fig = px.scatter(
+                qualified_sponsors,
+                x='Total Trials',
+                y='Success Rate',
+                size='Total Enrollment',
+                hover_data=['Sponsor', 'Completed', 'Successful'],
+                title='Trial Volume vs Success Rate',
+                labels={'Total Trials': 'Number of Trials', 'Success Rate': 'Success Rate (%)'}
+            )
+            st.plotly_chart(fig, use_container_width=True)
+        
+        st.markdown("---")
+        
+        # Detailed sponsor table
+        st.subheader("Detailed Sponsor Analytics")
+        
+        # Add search/filter
+        search_term = st.text_input("Search sponsors", placeholder="Enter sponsor name...")
+        if search_term:
+            filtered_sponsors = sponsor_stats[sponsor_stats['Sponsor'].str.contains(search_term, case=False, na=False)]
+        else:
+            filtered_sponsors = sponsor_stats
+        
+        st.dataframe(
+            filtered_sponsors.style.background_gradient(subset=['Success Rate'], cmap='RdYlGn', vmin=0, vmax=100),
+            use_container_width=True,
+            height=400
+        )
+        
+        st.caption(f"**Data Source:** {len(trials_with_sponsors):,} trials from ClinicalTrials.gov with sponsor information")
+
+elif page == "Geographic Heatmap":
+    section_header(
+        "Geographic Heatmap",
+        "Trial site locations · Regional density · Global distribution"
+    )
+    
+    # Load trial data
+    trials_df = load_csv("enhanced_clinical_trials.csv", ML_DATA)
+    
+    if trials_df is None or trials_df.empty:
+        st.warning("No trial data available")
+    else:
+        st.info("**Note:** Geographic data extraction from trial locations is in development. This page will show trial site density, enrollment by region, and interactive maps.")
+        
+        # For now, show country-level analysis based on sponsor location (placeholder)
+        st.subheader("Trial Distribution by Sponsor Type")
+        
+        sponsor_type_counts = trials_df['sponsor_type'].value_counts().reset_index()
+        sponsor_type_counts.columns = ['Sponsor Type', 'Count']
+        
+        fig = px.pie(
+            sponsor_type_counts,
+            values='Count',
+            names='Sponsor Type',
+            title='Trials by Sponsor Type',
+            hole=0.4
+        )
+        st.plotly_chart(fig, use_container_width=True)
+        
+        st.markdown("---")
+        
+        # Phase distribution
+        st.subheader("Trial Distribution by Phase")
+        
+        phase_counts = trials_df['phase'].value_counts().reset_index()
+        phase_counts.columns = ['Phase', 'Count']
+        
+        fig = px.bar(
+            phase_counts,
+            x='Phase',
+            y='Count',
+            title='Trials by Phase',
+            labels={'Phase': 'Clinical Trial Phase', 'Count': 'Number of Trials'}
+        )
+        st.plotly_chart(fig, use_container_width=True)
+        
+        st.markdown("---")
+        
+        st.markdown("""
+        ### Coming Soon: Full Geographic Analysis
+        
+        **Phase 4 Implementation will include:**
+        - Interactive world map with trial site markers
+        - Regional enrollment density heatmaps
+        - Country-level trial distribution
+        - Site activation timeline by geography
+        - Patient recruitment rates by region
+        
+        **Data sources:**
+        - ClinicalTrials.gov location data
+        - Site-level enrollment information
+        - Geographic coordinates for mapping
+        """)
+
+elif page == "Trial Timeline":
+    section_header(
+        "Trial Timeline Visualization",
+        "Phase progression · Gantt charts · Temporal analysis"
+    )
+    
+    # Load trial data
+    trials_df = load_csv("enhanced_clinical_trials.csv", ML_DATA)
+    
+    if trials_df is None or trials_df.empty:
+        st.warning("No trial data available")
+    else:
+        # Convert dates
+        trials_df['start_date'] = pd.to_datetime(trials_df['start_date'], errors='coerce')
+        trials_df['completion_date'] = pd.to_datetime(trials_df['completion_date'], errors='coerce')
+        
+        # Filter trials with valid dates
+        trials_with_dates = trials_df[trials_df['start_date'].notna() & trials_df['completion_date'].notna()].copy()
+        
+        if trials_with_dates.empty:
+            st.warning("No trials with complete date information available")
+        else:
+            # Calculate duration
+            trials_with_dates['duration_days'] = (trials_with_dates['completion_date'] - trials_with_dates['start_date']).dt.days
+            trials_with_dates['duration_years'] = trials_with_dates['duration_days'] / 365.25
+            
+            # Summary metrics
+            col1, col2, col3, col4 = st.columns(4)
+            with col1:
+                st.metric("Trials with Dates", len(trials_with_dates))
+            with col2:
+                avg_duration = trials_with_dates['duration_years'].mean()
+                st.metric("Avg Duration", f"{avg_duration:.1f} years")
+            with col3:
+                median_duration = trials_with_dates['duration_years'].median()
+                st.metric("Median Duration", f"{median_duration:.1f} years")
+            with col4:
+                ongoing = len(trials_df[trials_df['status'].isin(['RECRUITING', 'ACTIVE_NOT_RECRUITING', 'ENROLLING_BY_INVITATION'])])
+                st.metric("Ongoing Trials", ongoing)
+            
+            st.markdown("---")
+            
+            # Duration by phase
+            st.subheader("Trial Duration by Phase")
+            
+            phase_duration = trials_with_dates.groupby('phase')['duration_years'].agg(['mean', 'median', 'count']).reset_index()
+            phase_duration.columns = ['Phase', 'Mean Duration (years)', 'Median Duration (years)', 'Count']
+            phase_duration = phase_duration[phase_duration['Count'] >= 5]  # Filter phases with at least 5 trials
+            
+            fig = px.bar(
+                phase_duration,
+                x='Phase',
+                y='Mean Duration (years)',
+                title='Average Trial Duration by Phase',
+                labels={'Mean Duration (years)': 'Duration (years)', 'Phase': 'Clinical Trial Phase'},
+                hover_data=['Median Duration (years)', 'Count']
+            )
+            st.plotly_chart(fig, use_container_width=True)
+            
+            st.markdown("---")
+            
+            # Timeline visualization (Gantt-style)
+            st.subheader("Trial Timeline Gantt Chart")
+            
+            # Let user select top N trials by enrollment
+            top_n = st.slider("Number of trials to display", min_value=10, max_value=50, value=20, step=5)
+            
+            # Get top trials by enrollment
+            top_trials = trials_with_dates.nlargest(top_n, 'enrollment')
+            
+            # Create Gantt chart
+            fig = px.timeline(
+                top_trials,
+                x_start='start_date',
+                x_end='completion_date',
+                y='nct_id',
+                color='phase',
+                title=f'Top {top_n} Trials by Enrollment (Timeline View)',
+                labels={'nct_id': 'Trial ID', 'phase': 'Phase'},
+                hover_data=['title', 'sponsor_name', 'enrollment', 'status']
+            )
+            fig.update_yaxes(categoryorder='total ascending')
+            fig.update_layout(height=600)
+            st.plotly_chart(fig, use_container_width=True)
+            
+            st.markdown("---")
+            
+            # Temporal trends
+            st.subheader("Trial Starts Over Time")
+            
+            # Group by year
+            trials_with_dates['start_year'] = trials_with_dates['start_date'].dt.year
+            yearly_starts = trials_with_dates.groupby('start_year').size().reset_index()
+            yearly_starts.columns = ['Year', 'Trials Started']
+            
+            fig = px.line(
+                yearly_starts,
+                x='Year',
+                y='Trials Started',
+                title='Clinical Trial Starts by Year',
+                labels={'Year': 'Year', 'Trials Started': 'Number of Trials Started'},
+                markers=True
+            )
+            st.plotly_chart(fig, use_container_width=True)
+            
+            st.caption(f"**Data Source:** {len(trials_with_dates):,} trials with complete date information from ClinicalTrials.gov")
 
 elif page == "Overview":
     if not _ctx.is_registry:
