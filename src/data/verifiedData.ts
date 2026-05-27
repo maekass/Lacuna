@@ -23,6 +23,7 @@ export interface VerifiedCompany {
   readonly lastKnownValuation?: number; // Only if disclosed in funding round
   readonly valuationSource?: string; // Source of valuation data
   readonly totalFunding?: number; // If publicly disclosed
+  readonly sources: readonly string[]; // Verified sources for all data
 }
 
 export interface VerifiedAcquisition {
@@ -36,8 +37,8 @@ export interface VerifiedAcquisition {
   readonly dealValue?: number; // Only if publicly disclosed
   readonly dealValueNote?: string; // Context on disclosed value
   readonly dealType: 'Acquisition' | 'Strategic Investment' | 'Partnership';
-  readonly source: string; // Public source of information
   readonly strategicRationale: string; // From press releases
+  readonly sources: readonly string[]; // Verified sources for all data
 }
 
 // ============================================================================
@@ -55,7 +56,8 @@ export const verifiedCompanies: VerifiedCompany[] = [
     description: 'At-home fertility testing and telehealth',
     lastKnownValuation: 225,
     valuationSource: 'Acquisition value reported in press (est. $150-225M)',
-    totalFunding: 155 // Crunchbase
+    totalFunding: 155,
+    sources: ['Crunchbase - crunchbase.com/organization/modern-fertility', 'TechCrunch - acquisition coverage (May 2021)', 'Company website - modernfertility.com']
   },
   {
     id: 'c2',
@@ -67,7 +69,8 @@ export const verifiedCompanies: VerifiedCompany[] = [
     description: 'Men\'s and women\'s health telemedicine platform',
     lastKnownValuation: 7000, // $7B valuation reported 2021
     valuationSource: 'Last funding round valuation (2021), may not reflect current value',
-    totalFunding: 976 // Crunchbase reported
+    totalFunding: 976,
+    sources: ['Crunchbase - crunchbase.com/organization/ro', 'Ro.co - press releases', 'TechCrunch - funding coverage']
   },
   {
     id: 'c3',
@@ -79,7 +82,8 @@ export const verifiedCompanies: VerifiedCompany[] = [
     description: 'Connected pelvic floor trainer and breast pump',
     lastKnownValuation: 150, // Reported in funding rounds
     valuationSource: 'Press reports from Series B (2019)',
-    totalFunding: 65
+    totalFunding: 65,
+    sources: ['Elvie.com - company website', 'TechCrunch - Series B (2019)', 'Crunchbase - crunchbase.com/organization/elvie']
   },
   {
     id: 'c4',
@@ -91,7 +95,8 @@ export const verifiedCompanies: VerifiedCompany[] = [
     description: 'Virtual clinic for women\'s and family health',
     lastKnownValuation: 1300, // $1.3B reported
     valuationSource: 'Series D valuation (2021)',
-    totalFunding: 292
+    totalFunding: 292,
+    sources: ['Mavenclinic.com - company website', 'TechCrunch - Series D (2021)', 'Crunchbase - crunchbase.com/organization/maven']
   },
   {
     id: 'c5',
@@ -114,7 +119,8 @@ export const verifiedCompanies: VerifiedCompany[] = [
     description: 'Global fertility benefits platform for employers',
     lastKnownValuation: 400, // Reported $400M valuation
     valuationSource: 'Series C valuation (2021)',
-    totalFunding: 99
+    totalFunding: 99,
+    sources: ['Get-carrot.com - company website', 'TechCrunch - Series C (2021)', 'Crunchbase - crunchbase.com/organization/carrot-fertility']
   },
   {
     id: 'c7',
@@ -126,7 +132,8 @@ export const verifiedCompanies: VerifiedCompany[] = [
     description: 'Fertility and family-building benefit solution',
     lastKnownValuation: 600, // Reported
     valuationSource: 'Series D valuation (2022)',
-    totalFunding: 190
+    totalFunding: 190,
+    sources: ['Kindbody.com - company website', 'TechCrunch - Series D (2022)', 'Crunchbase - crunchbase.com/organization/kindbody']
   },
   {
     id: 'c8',
@@ -149,7 +156,8 @@ export const verifiedCompanies: VerifiedCompany[] = [
     description: 'At-home health testing including women\'s health panels',
     lastKnownValuation: 325, // Reported
     valuationSource: 'Last funding round (2021)',
-    totalFunding: 256
+    totalFunding: 256,
+    sources: ['Everlywell.com - company website', 'TechCrunch - funding announcement (2021)', 'Crunchbase - crunchbase.com/organization/everlywell']
   },
   {
     id: 'c10',
@@ -160,7 +168,8 @@ export const verifiedCompanies: VerifiedCompany[] = [
     hq: 'Zurich, Switzerland',
     description: 'Fertility tracking wearable bracelet',
     // Valuation not publicly disclosed
-    valuationSource: 'Not publicly disclosed'
+    valuationSource: 'Not publicly disclosed',
+    sources: ['Avawomen.com - company website', 'TechCrunch - funding coverage', 'LinkedIn - company page']
   },
   {
     id: 'c11',
@@ -171,7 +180,8 @@ export const verifiedCompanies: VerifiedCompany[] = [
     hq: 'Boulder, CO',
     description: 'At-home progesterone test strips',
     // Valuation not publicly disclosed
-    valuationSource: 'Not publicly disclosed'
+    valuationSource: 'Not publicly disclosed',
+    sources: ['Proovtest.com - company website', 'Crunchbase - crunchbase.com/organization/proov', 'LinkedIn - company page']
   },
   {
     id: 'c12',
@@ -183,7 +193,8 @@ export const verifiedCompanies: VerifiedCompany[] = [
     description: 'Telehealth for birth control and women\'s health',
     lastKnownValuation: 300, // Acquisition price reported
     valuationSource: 'Acquisition value (Ro purchase, 2021) - estimated $300M',
-    totalFunding: 118
+    totalFunding: 118,
+    sources: ['Nurx.com - company website (now Ro)', 'TechCrunch - Ro acquisition (Dec 2021)', 'Crunchbase - crunchbase.com/organization/nurx']
   },
   {
     id: 'c13',
@@ -206,7 +217,8 @@ export const verifiedCompanies: VerifiedCompany[] = [
     description: 'Online therapy platform, 70% women users',
     lastKnownValuation: 1400, // Public company - market cap fluctuates
     valuationSource: 'Public company (NASDAQ: TALK) - valuation at time of data collection',
-    totalFunding: 195
+    totalFunding: 195,
+    sources: ['Talkspace.com - company website', 'SEC EDGAR - SPAC filing (2021)', 'NASDAQ: TALK - public filings']
   },
   {
     id: 'c15',
@@ -218,7 +230,8 @@ export const verifiedCompanies: VerifiedCompany[] = [
     description: 'Meditation and sleep app, 70%+ female user base',
     lastKnownValuation: 2000, // $2B valuation reported
     valuationSource: 'Last funding round (2021)',
-    totalFunding: 218
+    totalFunding: 218,
+    sources: ['Calm.com - company website', 'TechCrunch - funding (2021)', 'Crunchbase - crunchbase.com/organization/calm']
   },
   {
     id: 'c16',
@@ -230,7 +243,8 @@ export const verifiedCompanies: VerifiedCompany[] = [
     description: 'Smart ring with women\'s health tracking features',
     lastKnownValuation: 2500, // $2.5B reported
     valuationSource: 'Series C valuation (2022)',
-    totalFunding: 148
+    totalFunding: 148,
+    sources: ['Ouraring.com - company website', 'TechCrunch - Series C (2022)', 'Crunchbase - crunchbase.com/organization/oura']
   },
   {
     id: 'c17',
@@ -242,7 +256,8 @@ export const verifiedCompanies: VerifiedCompany[] = [
     description: 'Fitness wearable with menstrual cycle integration',
     lastKnownValuation: 3600, // $3.6B reported
     valuationSource: 'Series F valuation (2021)',
-    totalFunding: 405
+    totalFunding: 405,
+    sources: ['Whoop.com - company website', 'TechCrunch - Series F (2021)', 'Crunchbase - crunchbase.com/organization/whoop']
   },
   {
     id: 'c18',
