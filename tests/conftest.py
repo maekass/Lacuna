@@ -3,10 +3,24 @@ Pytest configuration and fixtures
 """
 
 import sys
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
+
+# Create a proper mock for streamlit that supports session_state dict operations
+class MockSessionState(dict):
+    """Mock session state that behaves like a dict but supports attribute access"""
+    def __getattr__(self, name):
+        return self.get(name)
+    def __setattr__(self, name, value):
+        self[name] = value
+
+_mock_st = MagicMock()
+_mock_st.session_state = MockSessionState()
+_mock_st.empty = MagicMock(return_value=MagicMock())
+_mock_st.container = MagicMock(return_value=MagicMock())
+_mock_st.__version__ = "1.31.0"
 
 # Mock streamlit before any imports try to use it
-sys.modules['streamlit'] = MagicMock()
+sys.modules['streamlit'] = _mock_st
 sys.modules['streamlit_lottie'] = MagicMock()
 
 import pytest
@@ -144,3 +158,10 @@ def xss_payloads():
         "<iframe src='malicious.com'>",
         "<body onload=alert('xss')>",
     ]
+
+
+@pytest.fixture
+def streamlit_session_state():
+    """Provide access to mocked streamlit session state"""
+    import streamlit as st
+    return st.session_state
