@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Company, Acquisition, DealMetrics, ValidationResult } from '@/lib/types';
+import { Company, Acquisition, DealMetrics } from '@/lib/types';
 import { Validation } from '@/lib/validation';
 import { Analytics } from '@/lib/analytics';
 
@@ -87,7 +87,6 @@ export function useData(
     validateAndLoad();
     
     return () => { isCancelled = true; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rawCompanies, rawAcquisitions, refreshCounter]);
 
   const metrics = useMemo(() => {

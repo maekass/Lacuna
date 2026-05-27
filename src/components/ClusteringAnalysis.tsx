@@ -8,6 +8,7 @@ import * as ss from 'simple-statistics';
 export default function ClusteringAnalysis() {
   const clusters = useMemo(() => {
     // K-means clustering (k=3) based on valuation and employees
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const K = 3;
     const data = companies.map(c => ({
       x: c.valuation || 50,

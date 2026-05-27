@@ -4,12 +4,6 @@ import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { companies } from '@/data/maDeals';
 
-interface SimilarityResult {
-  company: typeof companies[0];
-  similarity: number;
-  sharedFactors: string[];
-}
-
 export default function CompanySimilarity() {
   const [selectedCompany, setSelectedCompany] = useState<string>(companies[0]?.id || '');
 
