@@ -15,7 +15,7 @@ import BayesianCausalAnalysis from '@/components/BayesianCausalAnalysis';
 import CausalDAG from '@/components/CausalDAG';
 import ImpactOpportunityCard from '@/components/ImpactOpportunityCard';
 import ValidationTracker from '@/components/ValidationTracker';
-import FairnessAudit from '@/components/FairnessAudit';
+import FairnessAuditV2 from '@/components/FairnessAuditV2';
 import TemporalValidation from '@/components/TemporalValidation';
 import CausalInferenceEngine from '@/components/CausalInferenceEngine';
 import { 
@@ -230,7 +230,7 @@ export default function Home() {
           <ValidationTracker />
         </motion.section>
 
-        {/* Fairness Audit */}
+        {/* Fairness Audit V2 - Modular Architecture */}
         <motion.section
           id="fairness-audit"
           initial={{ opacity: 0, y: 20 }}
@@ -240,9 +240,9 @@ export default function Home() {
         >
           <div className="mb-6">
             <h3 className="text-2xl font-semibold text-slate-800">Fairness Audit</h3>
-            <p className="text-slate-600">Honest fairness measurement with explicit limitations | Demographic parity only</p>
+            <p className="text-slate-600">Modular framework: Wilson CIs, Fisher&apos;s exact, Bonferroni correction, power analysis</p>
           </div>
-          <FairnessAudit />
+          <FairnessAuditV2 />
         </motion.section>
 
         {/* Causal DAG & Identification Strategy */}
