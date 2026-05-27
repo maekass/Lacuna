@@ -84,41 +84,47 @@ def translate_text(text: str, target_lang: str, source_lang: str = 'en') -> str:
 def get_language_selector() -> str:
     """
     Render language selector in sidebar and return selected language code.
+    Includes fallback for non-Streamlit contexts (e.g., pytest, CI).
     
     Returns:
         Selected language code (e.g., 'en', 'es', 'zh-CN')
     """
-    # Initialize session state for language
-    if 'selected_language' not in st.session_state:
-        st.session_state['selected_language'] = 'en'
-    
-    # Language selector in sidebar
-    st.sidebar.markdown("---")
-    st.sidebar.markdown("### 🌍 Language / 语言 / Idioma")
-    
-    # Create display options (code: native name)
-    language_options = {code: name for code, name in SUPPORTED_LANGUAGES.items()}
-    
-    # Selectbox with native language names
-    selected_display = st.sidebar.selectbox(
-        "Select Language",
-        options=list(language_options.values()),
-        index=list(language_options.values()).index(language_options[st.session_state['selected_language']]),
-        key='language_selector'
-    )
-    
-    # Get language code from display name
-    selected_code = [code for code, name in language_options.items() if name == selected_display][0]
-    
-    # Update session state
-    st.session_state['selected_language'] = selected_code
-    
-    # Show translation info
-    if selected_code != 'en':
-        st.sidebar.caption(f"🤖 AI-powered translation to {selected_display}")
-        st.sidebar.caption("Translation quality: Google Translate API")
-    
-    return selected_code
+    try:
+        # Initialize session state for language
+        if 'selected_language' not in st.session_state:
+            st.session_state['selected_language'] = 'en'
+        
+        # Language selector in sidebar
+        st.sidebar.markdown("---")
+        st.sidebar.markdown("### 🌍 Language / 语言 / Idioma")
+        
+        # Create display options (code: native name)
+        language_options = {code: name for code, name in SUPPORTED_LANGUAGES.items()}
+        
+        # Selectbox with native language names
+        selected_display = st.sidebar.selectbox(
+            "Select Language",
+            options=list(language_options.values()),
+            index=list(language_options.values()).index(language_options[st.session_state['selected_language']]),
+            key='language_selector'
+        )
+        
+        # Get language code from display name
+        selected_code = [code for code, name in language_options.items() if name == selected_display][0]
+        
+        # Update session state
+        st.session_state['selected_language'] = selected_code
+        
+        # Show translation info
+        if selected_code != 'en':
+            st.sidebar.caption(f"🤖 AI-powered translation to {selected_display}")
+            st.sidebar.caption("Translation quality: Google Translate API")
+        
+        return selected_code
+    except (AttributeError, RuntimeError, KeyError, ValueError):
+        # Fallback for test/non-Streamlit contexts (e.g., CI, pytest)
+        # Streamlit not running properly, return default language
+        return 'en'
 
 
 def translate_if_needed(text: str, target_lang: Optional[str] = None) -> str:
