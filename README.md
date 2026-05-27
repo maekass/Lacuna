@@ -2,6 +2,15 @@
 
 > *Network Intelligence Platform for Women's Health M&A*
 
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://typescriptlang.org)
+[![D3.js](https://img.shields.io/badge/D3.js-v7-orange?style=flat-square&logo=d3.js)](https://d3js.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-0055FF?style=flat-square)](https://framer.com/motion)
+[![License](https://img.shields.io/badge/License-BSL_1.1-purple?style=flat-square)](LICENSE)
+
+**Tools & Stack:** Next.js 14 · TypeScript · D3.js (force simulation, hierarchy, scales) · Framer Motion · Tailwind CSS · visx patterns
+
 Lacuna maps the acquisition landscape across FemTech, digital health, and women's wellness sectors—visualizing strategic relationships, exit patterns, and market dynamics through sophisticated network analysis.
 
 ## Architecture
