@@ -9,12 +9,8 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-import sys
-from pathlib import Path
 
-# Add project root to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-
+# Import quant modules
 from src.quant.risk_analytics import ValueAtRisk, RiskMetrics, MonteCarloSimulator, StressTesting
 from src.quant.portfolio_optimization import ModernPortfolioTheory, SmartBetaFactors, RiskParity
 from src.quant.options_pricing import BlackScholesModel, MonteCarloOptionPricing
