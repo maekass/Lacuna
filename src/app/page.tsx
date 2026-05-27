@@ -13,6 +13,7 @@ import { HealthEquityRoadmap } from '@/components/HealthEquityDashboard';
 import SensitivityAnalysis from '@/components/SensitivityAnalysis';
 import BayesianCausalAnalysis from '@/components/BayesianCausalAnalysis';
 import CausalDAG from '@/components/CausalDAG';
+import ImpactOpportunityCard from '@/components/ImpactOpportunityCard';
 import TemporalValidation from '@/components/TemporalValidation';
 import CausalInferenceEngine from '@/components/CausalInferenceEngine';
 import { 
@@ -195,6 +196,21 @@ export default function Home() {
           <div className="mt-8">
             <HealthEquityRoadmap />
           </div>
+        </motion.section>
+
+        {/* Health Impact Assessment - OAIS Framework */}
+        <motion.section
+          id="impact-assessment"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.56 }}
+          className="mb-16"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-slate-800">Health Impact Assessment</h3>
+            <p className="text-slate-600">Opportunity-Adjusted Impact Score (OAIS) - Transparent about what we CAN vs CANNOT measure</p>
+          </div>
+          <ImpactOpportunityCard />
         </motion.section>
 
         {/* Causal DAG & Identification Strategy */}
