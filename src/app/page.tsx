@@ -30,7 +30,7 @@ export default function Home() {
             </div>
             <div>
               <h1 className="text-xl font-bold text-slate-800">Lacuna</h1>
-              <p className="text-xs text-slate-500">M&A Intelligence · Women's Health</p>
+              <p className="text-xs text-slate-500">M&amp;A Intelligence · Women&apos;s Health</p>
             </div>
           </div>
           <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600">
@@ -53,12 +53,12 @@ export default function Home() {
           <div className="max-w-3xl">
             <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
               The Exit Map for
-              <span className="bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent"> Women's Health</span>
+              <span className="bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent"> Women&apos;s Health</span>
             </h2>
             <p className="text-lg text-slate-600 leading-relaxed">
-              Sophisticated network intelligence platform tracking M&A trends, 
+              Sophisticated network intelligence platform tracking M&amp;A trends, 
               strategic acquirers, and exit opportunities across FemTech, digital 
-              health, and women's wellness sectors.
+              health, and women&apos;s wellness sectors.
             </p>
           </div>
         </motion.section>
