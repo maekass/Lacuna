@@ -44,26 +44,26 @@
   
   <!-- Main content group -->
   <g transform="translate(640, 320)">
-    <!-- Logo icon -->
-    <g transform="translate(-40, -140)">
-      <rect x="0" y="0" width="80" height="80" rx="16" fill="white" opacity="0.95"/>
-      <text x="40" y="56" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="700" fill="#4a3f6b" text-anchor="middle">L</text>
+    <!-- Elegant L Logo -->
+    <g transform="translate(-50, -150)">
+      <rect x="0" y="0" width="100" height="100" rx="20" fill="white" opacity="0.9"/>
+      <text x="50" y="72" font-family="'Playfair Display', 'Times New Roman', serif" font-size="60" font-weight="400" font-style="italic" fill="#4a3f6b" text-anchor="middle" style="font-family: Georgia, 'Times New Roman', serif; font-style: italic;">L</text>
     </g>
     
-    <!-- Lacuna title -->
-    <text x="0" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="700" fill="white" text-anchor="middle" filter="url(#glow)">Lacuna</text>
+    <!-- Lacuna title - elegant cursive -->
+    <text x="0" y="20" font-family="'Playfair Display', 'Cormorant Garamond', 'Times New Roman', serif" font-size="84" font-weight="400" font-style="italic" fill="white" text-anchor="middle" filter="url(#glow)" letter-spacing="2" style="font-family: 'Brush Script MT', 'Edwardian Script ITC', 'Snell Roundhand', cursive;">Lacuna</text>
     
-    <!-- Tagline -->
-    <text x="0" y="70" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="400" fill="white" opacity="0.95" text-anchor="middle">M&amp;A Intelligence for Women&apos;s Health</text>
+    <!-- Tagline - refined serif -->
+    <text x="0" y="75" font-family="'Cormorant Garamond', 'Times New Roman', serif" font-size="26" font-weight="300" fill="white" opacity="0.95" text-anchor="middle" letter-spacing="1" style="font-family: Georgia, 'Times New Roman', serif; font-style: italic;">M&amp;A Intelligence for Women&apos;s Health</text>
     
-    <!-- Subtitle -->
-    <text x="0" y="110" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="300" fill="white" opacity="0.75" text-anchor="middle">Network visualization · ML-powered insights · FemTech analytics</text>
+    <!-- Subtitle - elegant light -->
+    <text x="0" y="115" font-family="'Cormorant Garamond', 'Times New Roman', serif" font-size="16" font-weight="300" fill="white" opacity="0.8" text-anchor="middle" letter-spacing="0.5" style="font-family: Georgia, 'Times New Roman', serif;">Network visualization · ML-powered insights · FemTech analytics</text>
   </g>
   
   <!-- Bottom badge -->
   <g transform="translate(640, 580)">
     <rect x="-120" y="-20" width="240" height="40" rx="20" fill="white" opacity="0.15"/>
-    <text x="0" y="6" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="white" opacity="0.9" text-anchor="middle">Educational Project · 2026</text>
+    <text x="0" y="6" font-family="'Cormorant Garamond', 'Times New Roman', serif" font-size="14" font-weight="400" fill="white" opacity="0.9" text-anchor="middle" style="font-family: Georgia, 'Times New Roman', serif; font-style: italic;">Educational Project · 2026</text>
   </g>
   
   <!-- Corner accents -->
