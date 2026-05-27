@@ -2,6 +2,13 @@
 Pytest configuration and fixtures
 """
 
+import sys
+from unittest.mock import MagicMock
+
+# Mock streamlit before any imports try to use it
+sys.modules['streamlit'] = MagicMock()
+sys.modules['streamlit_lottie'] = MagicMock()
+
 import pytest
 import pandas as pd
 import numpy as np
