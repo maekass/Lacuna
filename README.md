@@ -13,12 +13,33 @@
 
 Lacuna maps the acquisition landscape across FemTech, digital health, and women's wellness sectors—visualizing strategic relationships, exit patterns, and market dynamics through sophisticated network analysis.
 
-## Architecture
+## Core Functionality
 
-- **Force-Directed Network Graph**: D3.js-powered interactive visualization of acquirer-target relationships with physics-based clustering by sector and deal velocity
-- **Temporal Deal Flow Analysis**: Animated Sankey-style flow showing capital movement across time periods
-- **Multi-Dimensional Valuation Matrix**: Cross-filterable heatmap analyzing valuation multiples by sector × stage × acquirer type
-- **Network Embeddings**: Company similarity scoring using deal history and sector proximity
+### Interactive Network Visualization (`ForceNetwork.tsx`)
+- **D3.js force simulation** with physics-based node positioning
+- **Dynamic charge forces**: Acquirers repel strongly (-800), targets moderately (-400)
+- **Collision detection**: Prevents node overlap based on valuation size
+- **Interactive controls**: Drag nodes, zoom canvas, click for details
+- **Sector color coding**: 9 distinct colors for health verticals
+- **Deal type differentiation**: Solid lines (acquisitions) vs dashed (strategic investments)
+- **Responsive sizing**: Node radius = √(valuation) for visual hierarchy
+
+### Deal Flow Analytics (`DealFlowChart.tsx`)
+- **Temporal analysis**: Year-over-year transaction counting
+- **Animated bar chart**: Framer Motion staggered entrance
+- **Gradient visualization**: Pink-to-purple gradient bars
+- **Hover tooltips**: Exact deal counts per year
+
+### Valuation Matrix (`ValuationMatrix.tsx`)
+- **Cross-dimensional analysis**: Sector × Stage heatmap
+- **Dynamic color scaling**: 4-tier intensity based on average valuations
+- **Interactive cells**: Hover reveals company counts and deal activity
+- **Matrix computation**: Real-time average valuation calculations
+
+### Data Layer (`maDeals.ts`)
+- **Type-safe interfaces**: Company, Acquisition with strict typing
+- **Derived statistics**: Network nodes/links generation, sector distribution, deal value totals
+- **Sample dataset**: 20 companies, 15 acquirers, 10 tracked deals, $2B+ disclosed value
 
 ## Technology Stack
 
