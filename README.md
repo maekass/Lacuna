@@ -111,6 +111,21 @@ npm run build
 vercel --prod
 ```
 
+## Design System
+
+### 2026 Pantone Spring/Summer Color Palette
+
+The visual identity uses the **Pantone Spring/Summer 2026** color trend forecast:
+
+| Color | Pantone Name | Hex | Usage |
+|-------|--------------|-----|-------|
+| ![#E8B4B8](https://via.placeholder.com/15/E8B4B8/E8B4B8.png) | **Transcendent Pink** | `#E8B4B8` | Gradient start — ethereal, soft |
+| ![#B8A9C9](https://via.placeholder.com/15/B8A9C9/B8A9C9.png) | Soft Lavender | `#B8A9C9` | Bridge transition |
+| ![#4A5D8A](https://via.placeholder.com/15/4A5D8A/4A5D8A.png) | **Cosmic Blue** | `#4A5D8A` | Gradient middle — celestial depth |
+| ![#5D4E6D](https://via.placeholder.com/15/5D4E6D/5D4E6D.png) | **Deep Plum** | `#5D4E6D` | Gradient end — rich, elegant |
+
+**Philosophy:** Ethereal opening (Transcendent Pink) flowing through cosmic depth (Cosmic Blue) to grounded sophistication (Deep Plum) — reflecting the journey from early-stage innovation to mature market leadership.
+
 ## Data Provenance
 
 All data in this repository is compiled from **publicly available sources only**:
