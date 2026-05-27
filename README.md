@@ -48,6 +48,8 @@ This platform is designed for academic research and learning. It is **NOT**:
 
 This platform addresses a fundamental challenge in translational medicine: the asymmetric distribution of clinical trial intelligence across stakeholder groups with divergent epistemological frameworks. We synthesize 6,819 verified clinical trials into a unified analytical infrastructure that serves three constituencies—quantitative investors, clinical researchers, and patient advocates—without privileging any single perspective or compromising methodological rigor.
 
+**Health Equity Focus:** Our roadmap prioritizes features that identify and quantify investment opportunities in diseases disproportionately affecting Black women—including maternal health, uterine fibroids, lupus, and sickle cell disease. We demonstrate that addressing health disparities is both ethically imperative and financially compelling, providing dual-metric scoring that combines ROI potential with measurable health equity impact.
+
 ### Core Principles
 
 Our approach rests on five foundational commitments:
@@ -249,6 +251,43 @@ API Response / Dashboard Visualization
 - Multi-dimensional filtering (multi-select, date ranges, numeric sliders)
 - Professional export tools (Excel/CSV with metadata)
 - Stakeholder-specific presentation layers
+
+### Planned Phases (Health Equity Focus)
+
+**Phase 7: Health Equity Dashboard**
+- Diseases disproportionately affecting Black women (fibroids, lupus, maternal health, sickle cell)
+- Trial diversity metrics (% Black women enrolled)
+- Funding gap analysis (high burden, low investment diseases)
+- Companies addressing health disparities
+- Dual-metric scoring: ROI potential + health equity impact
+
+**Phase 8: Trial Diversity Tracker**
+- Participant diversity by race/ethnicity (when available)
+- Trials explicitly recruiting diverse populations
+- Geographic diversity mapping (trials in predominantly Black communities)
+- Sponsor diversity commitments and track records
+- Diversity score for each trial and company
+
+**Phase 9: Impact Investment Scorecard**
+- Dual-metric system: Financial Returns + Health Equity Impact
+- Population affected (% Black women with disease)
+- Disease burden reduction potential
+- Access improvement and affordability metrics
+- Combined score showing high-impact, high-return opportunities
+
+**Phase 10: Underserved Disease Analyzer**
+- High-burden, low-investment disease identification
+- Market opportunity analysis (unmet need = profit potential)
+- Companies working in underserved spaces
+- Funding gap quantification
+- Focus: fibroids, maternal health, lupus, sickle cell, cardiovascular disease
+
+**Phase 11: Community Impact Predictor**
+- ML model predicting lives saved/improved per $1M invested
+- Maternal mortality reduction estimates
+- Quality of life improvement metrics
+- Economic impact on communities
+- Healthcare cost savings projections
 
 ---
 
