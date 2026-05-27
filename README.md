@@ -2,7 +2,7 @@
 
 > *Network Intelligence Platform for Women's Health M&A*
 
-⚠️ **EDUCATIONAL PROJECT**: This is a demonstration/educational project for portfolio and learning purposes. Not a commercial product. Data is compiled from public sources for educational visualization.
+⚠️ **EDUCATIONAL CODE PROJECT**: This repository contains demonstration code for portfolio and learning purposes. It is not a deployed live application or commercial product. Run locally with `npm run dev` to view the interactive dashboard. Data is compiled from public sources for educational visualization.
 
 <p align="center">
   <img src="./public/social-preview.svg" alt="Lacuna - M&A Intelligence for Women's Health" width="100%">
