@@ -339,7 +339,7 @@ export default function BayesianCausalAnalysis() {
       {/* HTE Warning */}
       <div className="bg-gray-800 text-white p-4 rounded-lg">
         <h4 className="font-medium mb-2" style={{ fontFamily: "'Arial Narrow', sans-serif", textTransform: 'uppercase' }}>
-          Why We're NOT Using Causal Forests
+          Why We&apos;re NOT Using Causal Forests
         </h4>
         <div className="text-sm space-y-1 text-gray-300">
           <p>Causal forest requirements vs. our data:</p>

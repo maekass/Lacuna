@@ -12,6 +12,9 @@ import HealthEquityDashboard from '@/components/HealthEquityDashboard';
 import { HealthEquityRoadmap } from '@/components/HealthEquityDashboard';
 import SensitivityAnalysis from '@/components/SensitivityAnalysis';
 import BayesianCausalAnalysis from '@/components/BayesianCausalAnalysis';
+import CausalDAG from '@/components/CausalDAG';
+import TemporalValidation from '@/components/TemporalValidation';
+import CausalInferenceEngine from '@/components/CausalInferenceEngine';
 import { 
   verifiedCompanies, 
   verifiedAcquisitions, 
@@ -194,17 +197,62 @@ export default function Home() {
           </div>
         </motion.section>
 
-        {/* Causal Inference & Sensitivity Analysis */}
+        {/* Causal DAG & Identification Strategy */}
         <motion.section
-          id="causal"
+          id="causal-dag"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.58 }}
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-slate-800">Causal Inference</h3>
-            <p className="text-slate-600">Sensitivity analysis (Oster&apos;s δ, Rotnitzky bounds) for robust causal claims</p>
+            <h3 className="text-2xl font-semibold text-slate-800">Causal Identification Strategy</h3>
+            <p className="text-slate-600">Pearl backdoor criterion with measured and unmeasured confounders</p>
+          </div>
+          <CausalDAG />
+        </motion.section>
+
+        {/* Causal Inference Engine - Main Effects */}
+        <motion.section
+          id="causal-engine"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.59 }}
+          className="mb-16"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-slate-800">Causal Inference Engine</h3>
+            <p className="text-slate-600">Main effects with 95% CIs, specification robustness, Oster&apos;s δ</p>
+          </div>
+          <CausalInferenceEngine />
+        </motion.section>
+
+        {/* Temporal Validation - Event Study */}
+        <motion.section
+          id="temporal"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.60 }}
+          className="mb-16"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-slate-800">Temporal Validation</h3>
+            <p className="text-slate-600">Event study methodology with parallel trends testing</p>
+          </div>
+          <TemporalValidation />
+        </motion.section>
+
+        {/* Sensitivity Analysis */}
+        <motion.section
+          id="sensitivity"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.61 }}
+          className="mb-16"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-slate-800">Sensitivity Analysis</h3>
+            <p className="text-slate-600">Rotnitzky bounds and Oster&apos;s δ for unobserved confounding</p>
           </div>
           <SensitivityAnalysis />
         </motion.section>
@@ -214,12 +262,12 @@ export default function Home() {
           id="bayesian-causal"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.59 }}
+          transition={{ duration: 0.6, delay: 0.62 }}
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-slate-800">Bayesian Causal Analysis</h3>
-            <p className="text-slate-600">Small sample approach (n=22) with pre-registered hypotheses and main effects only</p>
+            <h3 className="text-2xl font-semibold text-slate-800">Bayesian Small Sample Analysis</h3>
+            <p className="text-slate-600">Pre-registered hypotheses with main effects only (n=22)</p>
           </div>
           <BayesianCausalAnalysis />
         </motion.section>
