@@ -852,6 +852,323 @@ export function communityDetection(
 }
 
 /**
+ * Strategic Positioning Analysis
+ * 
+ * Qualitative 2D mapping of acquirers:
+ * - X: Buyer breadth (sector diversity, Shannon entropy)
+ * - Y: Deal velocity (acquisitions per year)
+ * 
+ * This is QUALITATIVE insight, not statistical hypothesis testing.
+ */
+export interface StrategicPosition {
+  acquirerId: string;
+  acquirerName: string;
+  dealCount: number;
+  yearSpan: number;
+  velocity: number; // deals per year
+  sectorBreadth: number; // 0-1, normalized Shannon entropy
+  uniqueSectors: number;
+  targets: string[];
+  classification: 'specialist_low_velocity' | 'specialist_high_velocity' | 'generalist_low_velocity' | 'generalist_high_velocity';
+  qualitativeDescription: string;
+}
+
+export interface StrategicPositioningResult {
+  positions: StrategicPosition[];
+  patterns: string[];
+  caveat: string;
+}
+
+export function strategicPositioning(
+  nodes: NetworkNode[], 
+  edges: NetworkEdge[]
+): StrategicPositioningResult {
+  const acquirers = nodes.filter(n => n.type === 'acquirer');
+  
+  const positions: StrategicPosition[] = acquirers.map(acquirer => {
+    // Find all deals by this acquirer
+    const acquirerEdges = edges.filter(e => e.source === acquirer.id);
+    const targets = acquirerEdges
+      .map(e => nodes.find(n => n.id === e.target))
+      .filter((n): n is NetworkNode => n !== undefined);
+    
+    const sectors = targets.map(t => t.sector || 'Unknown');
+    const sectorCounts = new Map<string, number>();
+    sectors.forEach(s => sectorCounts.set(s, (sectorCounts.get(s) || 0) + 1));
+    
+    // Shannon entropy for sector breadth
+    let entropy = 0;
+    const total = sectors.length;
+    if (total > 0) {
+      sectorCounts.forEach(count => {
+        const p = count / total;
+        if (p > 0) entropy -= p * Math.log2(p);
+      });
+    }
+    // Normalize by max possible entropy
+    const maxEntropy = Math.log2(Math.max(2, sectorCounts.size));
+    const sectorBreadth = maxEntropy > 0 ? entropy / maxEntropy : 0;
+    
+    // Deal velocity
+    const years = acquirerEdges.map(e => e.year).filter((y): y is number => y !== undefined);
+    const yearSpan = years.length > 0 
+      ? Math.max(...years) - Math.min(...years) + 1 
+      : 1;
+    const velocity = years.length / Math.max(1, yearSpan);
+    
+    // Classification (4 quadrants)
+    const isSpecialist = sectorBreadth < 0.5;
+    const isHighVelocity = velocity > 0.5;
+    
+    let classification: StrategicPosition['classification'];
+    let qualitativeDescription: string;
+    
+    if (isSpecialist && isHighVelocity) {
+      classification = 'specialist_high_velocity';
+      qualitativeDescription = 'Focused, aggressive: specialized sector with rapid acquisition pace';
+    } else if (isSpecialist && !isHighVelocity) {
+      classification = 'specialist_low_velocity';
+      qualitativeDescription = 'Selective specialist: focused sector with measured acquisition pace';
+    } else if (!isSpecialist && isHighVelocity) {
+      classification = 'generalist_high_velocity';
+      qualitativeDescription = 'Aggressive diversifier: broad sector coverage with rapid acquisition pace';
+    } else {
+      classification = 'generalist_low_velocity';
+      qualitativeDescription = 'Diversified observer: broad coverage with selective acquisition pace';
+    }
+    
+    return {
+      acquirerId: acquirer.id,
+      acquirerName: acquirer.label,
+      dealCount: acquirerEdges.length,
+      yearSpan,
+      velocity,
+      sectorBreadth,
+      uniqueSectors: sectorCounts.size,
+      targets: targets.map(t => t.label),
+      classification,
+      qualitativeDescription
+    };
+  });
+  
+  // Identify patterns
+  const patterns: string[] = [];
+  
+  const specialists = positions.filter(p => p.sectorBreadth < 0.5);
+  const generalists = positions.filter(p => p.sectorBreadth >= 0.5);
+  
+  if (specialists.length > generalists.length) {
+    patterns.push(`${specialists.length} specialist acquirers vs ${generalists.length} generalists - market favors focused strategies`);
+  } else if (generalists.length > specialists.length) {
+    patterns.push(`${generalists.length} generalist acquirers vs ${specialists.length} specialists - market favors diversification`);
+  }
+  
+  // Sector-based patterns
+  const healthcareAcquirers = positions.filter(p => 
+    nodes.find(n => n.id === p.acquirerId)?.sector?.toLowerCase().includes('health') ||
+    nodes.find(n => n.id === p.acquirerId)?.sector?.toLowerCase().includes('medical')
+  );
+  const techAcquirers = positions.filter(p => 
+    nodes.find(n => n.id === p.acquirerId)?.sector?.toLowerCase().includes('tech')
+  );
+  
+  if (healthcareAcquirers.length > 0 && techAcquirers.length > 0) {
+    const hcAvgBreadth = healthcareAcquirers.reduce((s, p) => s + p.sectorBreadth, 0) / healthcareAcquirers.length;
+    const techAvgBreadth = techAcquirers.reduce((s, p) => s + p.sectorBreadth, 0) / techAcquirers.length;
+    
+    if (techAvgBreadth > hcAvgBreadth + 0.15) {
+      patterns.push('Tech acquirers tend to be more diversified than healthcare acquirers');
+    } else if (hcAvgBreadth > techAvgBreadth + 0.15) {
+      patterns.push('Healthcare acquirers tend to be more diversified than tech acquirers');
+    }
+  }
+  
+  const highVelocity = positions.filter(p => p.velocity > 0.5);
+  if (highVelocity.length > 0) {
+    patterns.push(`${highVelocity.length} acquirers showing high deal velocity (>0.5/year)`);
+  }
+  
+  return {
+    positions,
+    patterns,
+    caveat: `Strategic positioning is QUALITATIVE insight from n=${acquirers.length} acquirers. Not statistical hypothesis test. Patterns are exploratory.`
+  };
+}
+
+/**
+ * Network Stability Analysis
+ * 
+ * Tests robustness of findings to adding new acquisitions.
+ * Critical for determining if conclusions would survive larger samples.
+ */
+export interface StabilityAnalysisResult {
+  // Stability of each metric under data perturbation
+  metricStability: {
+    gini: { mean: number; sd: number; cv: number; isStable: boolean };
+    hhi: { mean: number; sd: number; cv: number; isStable: boolean };
+    top3: { mean: number; sd: number; cv: number; isStable: boolean };
+    density: { mean: number; sd: number; cv: number; isStable: boolean };
+    averageDegree: { mean: number; sd: number; cv: number; isStable: boolean };
+  };
+  // What sample size would give us stable metrics?
+  recommendedSampleSize: number;
+  // Specific findings ranked by reliability
+  findingReliability: Array<{
+    finding: string;
+    reliability: 'high' | 'medium' | 'low';
+    cv: number;
+  }>;
+  // Validation strategy
+  validationStrategy: string[];
+  caveats: string[];
+}
+
+export function networkStabilityAnalysis(
+  nodes: NetworkNode[],
+  edges: NetworkEdge[],
+  numSimulations: number = 100
+): StabilityAnalysisResult {
+  const acquirers = nodes.filter(n => n.type === 'acquirer');
+  
+  if (acquirers.length === 0 || edges.length === 0) {
+    return {
+      metricStability: {
+        gini: { mean: 0, sd: 0, cv: 0, isStable: false },
+        hhi: { mean: 0, sd: 0, cv: 0, isStable: false },
+        top3: { mean: 0, sd: 0, cv: 0, isStable: false },
+        density: { mean: 0, sd: 0, cv: 0, isStable: false },
+        averageDegree: { mean: 0, sd: 0, cv: 0, isStable: false }
+      },
+      recommendedSampleSize: 100,
+      findingReliability: [],
+      validationStrategy: ['Insufficient data for stability analysis'],
+      caveats: ['No data to analyze']
+    };
+  }
+  
+  // Simulate adding 50% more edges (representing future data)
+  const samples: {
+    gini: number[];
+    hhi: number[];
+    top3: number[];
+    density: number[];
+    averageDegree: number[];
+  } = {
+    gini: [],
+    hhi: [],
+    top3: [],
+    density: [],
+    averageDegree: []
+  };
+  
+  for (let sim = 0; sim < numSimulations; sim++) {
+    // Random sampling with bootstrapping
+    const sampleEdges: NetworkEdge[] = [];
+    const targetSize = Math.max(1, Math.floor(edges.length * (0.7 + Math.random() * 0.6)));
+    for (let i = 0; i < targetSize; i++) {
+      sampleEdges.push(edges[Math.floor(Math.random() * edges.length)]);
+    }
+    
+    // Calculate metrics
+    const sampleAcquirerDeals = acquirers.map(a => 
+      sampleEdges.filter(e => e.source === a.id && e.type === 'acquisition').length
+    );
+    
+    const gini = giniCoefficient(sampleAcquirerDeals);
+    const hhi = herfindahlIndex(sampleAcquirerDeals);
+    const density = networkDensity(nodes.length, sampleEdges.length);
+    const degree = degreeDistribution(nodes, sampleEdges);
+    
+    samples.gini.push(gini.gini);
+    samples.hhi.push(hhi.hhi);
+    samples.top3.push(gini.topConcentration.top3);
+    samples.density.push(density.density);
+    samples.averageDegree.push(degree.mean);
+  }
+  
+  // Calculate stability statistics
+  const calcStability = (values: number[]) => {
+    const mean = values.reduce((s, v) => s + v, 0) / values.length;
+    const variance = values.reduce((s, v) => s + (v - mean) ** 2, 0) / values.length;
+    const sd = Math.sqrt(variance);
+    const cv = mean > 0 ? sd / mean : 0; // Coefficient of variation
+    const isStable = cv < 0.15; // <15% CV is stable
+    return { mean, sd, cv, isStable };
+  };
+  
+  const metricStability = {
+    gini: calcStability(samples.gini),
+    hhi: calcStability(samples.hhi),
+    top3: calcStability(samples.top3),
+    density: calcStability(samples.density),
+    averageDegree: calcStability(samples.averageDegree)
+  };
+  
+  // Estimate recommended sample size based on observed CV
+  const avgCV = Object.values(metricStability).reduce((s, m) => s + m.cv, 0) / 5;
+  // Rule of thumb: to halve CV, need 4x sample size
+  const currentN = nodes.length;
+  const targetCV = 0.1; // 10% CV target for stable
+  const sampleSizeMultiplier = (avgCV / targetCV) ** 2;
+  const recommendedSampleSize = Math.max(currentN, Math.ceil(currentN * sampleSizeMultiplier));
+  
+  // Rank findings by reliability
+  const reliabilityLevel = (cv: number): 'high' | 'medium' | 'low' => 
+    cv < 0.1 ? 'high' : cv < 0.2 ? 'medium' : 'low';
+
+  const findingReliability: StabilityAnalysisResult['findingReliability'] = [
+    {
+      finding: `Gini coefficient = ${metricStability.gini.mean.toFixed(3)}`,
+      reliability: reliabilityLevel(metricStability.gini.cv),
+      cv: metricStability.gini.cv
+    },
+    {
+      finding: `HHI = ${metricStability.hhi.mean.toFixed(0)}`,
+      reliability: reliabilityLevel(metricStability.hhi.cv),
+      cv: metricStability.hhi.cv
+    },
+    {
+      finding: `Top-3 concentration = ${(metricStability.top3.mean * 100).toFixed(0)}%`,
+      reliability: reliabilityLevel(metricStability.top3.cv),
+      cv: metricStability.top3.cv
+    },
+    {
+      finding: `Network density = ${(metricStability.density.mean * 100).toFixed(1)}%`,
+      reliability: reliabilityLevel(metricStability.density.cv),
+      cv: metricStability.density.cv
+    },
+    {
+      finding: `Average degree = ${metricStability.averageDegree.mean.toFixed(2)}`,
+      reliability: reliabilityLevel(metricStability.averageDegree.cv),
+      cv: metricStability.averageDegree.cv
+    }
+  ].sort((a, b) => a.cv - b.cv);
+  
+  const validationStrategy = [
+    `Current sample n=${currentN}. Target for stability: n=${recommendedSampleSize}`,
+    'Refit all models when sample reaches 25 acquisitions',
+    'Compare metrics: substantial change (>20%) means findings were unstable',
+    'Stable findings: gain confidence | Unstable findings: revise interpretation',
+    'Pre-register expected results to avoid post-hoc rationalization'
+  ];
+  
+  const caveats = [
+    `Stability assessed via ${numSimulations} bootstrap simulations`,
+    'CV < 15% = stable; CV > 30% = highly unstable',
+    'Findings with low reliability should be reported as exploratory only',
+    'Real-world stability may differ from simulated stability'
+  ];
+  
+  return {
+    metricStability,
+    recommendedSampleSize,
+    findingReliability,
+    validationStrategy,
+    caveats
+  };
+}
+
+/**
  * Why we DON'T fit power laws (educational function)
  */
 export const POWER_LAW_LIMITATIONS = {

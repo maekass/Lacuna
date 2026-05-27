@@ -26,10 +26,13 @@ import {
   nullModelComparison,
   temporalAnalysis,
   communityDetection,
+  strategicPositioning,
+  networkStabilityAnalysis,
   POWER_LAW_LIMITATIONS,
   type NetworkNode,
   type NetworkEdge
 } from '@/lib/network/networkStatistics';
+import StrategicPositioningMap from './StrategicPositioningMap';
 
 // Sample network based on verified FemTech acquisitions
 const SAMPLE_NODES: NetworkNode[] = [
@@ -66,7 +69,7 @@ const SAMPLE_EDGES: NetworkEdge[] = [
 ];
 
 export default function NetworkAnalysisHonest() {
-  const [activeTab, setActiveTab] = useState<'descriptive' | 'concentration' | 'temporal' | 'communities' | 'null_model' | 'limitations'>('descriptive');
+  const [activeTab, setActiveTab] = useState<'descriptive' | 'concentration' | 'temporal' | 'communities' | 'positioning' | 'stability' | 'null_model' | 'limitations'>('descriptive');
 
   // Calculate all network statistics
   const stats = useMemo(() => {
@@ -86,8 +89,10 @@ export default function NetworkAnalysisHonest() {
     const nullModel = nullModelComparison(acquirerDeals);
     const temporal = temporalAnalysis(SAMPLE_EDGES);
     const communities = communityDetection(SAMPLE_NODES, SAMPLE_EDGES);
+    const positioning = strategicPositioning(SAMPLE_NODES, SAMPLE_EDGES);
+    const stability = networkStabilityAnalysis(SAMPLE_NODES, SAMPLE_EDGES);
     
-    return { degree, density, clustering, paths, gini, hhi, nullModel, temporal, communities, acquirers, acquirerDeals };
+    return { degree, density, clustering, paths, gini, hhi, nullModel, temporal, communities, positioning, stability, acquirers, acquirerDeals };
   }, []);
 
   return (
@@ -131,6 +136,8 @@ export default function NetworkAnalysisHonest() {
             { id: 'concentration', label: 'Buyer Concentration' },
             { id: 'temporal', label: 'Temporal Analysis' },
             { id: 'communities', label: 'Community Detection' },
+            { id: 'positioning', label: 'Strategic Positioning' },
+            { id: 'stability', label: 'Stability Analysis' },
             { id: 'null_model', label: 'Null Model Comparison' },
             { id: 'limitations', label: 'What We Cannot Claim' }
           ].map(tab => (
@@ -660,6 +667,142 @@ export default function NetworkAnalysisHonest() {
                 ? ' Qualitative description: communities tend to cluster by sector and acquirer relationships.' 
                 : ''}
               <strong> Adding 5 more nodes would likely change community structure significantly.</strong>
+            </p>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Strategic Positioning Tab */}
+      {activeTab === 'positioning' && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <StrategicPositioningMap result={stats.positioning} />
+        </motion.div>
+      )}
+
+      {/* Stability Analysis Tab */}
+      {activeTab === 'stability' && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
+          <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <h4 className="font-medium mb-4" style={{ fontFamily: "'Bodoni MT', Didot, serif" }}>
+              Network Stability Analysis
+            </h4>
+            <p className="text-sm text-gray-600 mb-4">
+              How robust are findings to adding more data? Lower coefficient of variation (CV) = more stable.
+            </p>
+
+            {/* Stability Overview */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+              <div className="bg-gray-50 p-3 rounded-lg text-center">
+                <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#5D4E6D' }}>
+                  {stats.stability.recommendedSampleSize}
+                </div>
+                <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                  Target Sample Size
+                </div>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-lg text-center">
+                <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#4A5D8A' }}>
+                  {stats.stability.findingReliability.filter(f => f.reliability === 'high').length}
+                </div>
+                <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                  High Reliability Findings
+                </div>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-lg text-center">
+                <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#e76f51' }}>
+                  {stats.stability.findingReliability.filter(f => f.reliability === 'low').length}
+                </div>
+                <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                  Low Reliability Findings
+                </div>
+              </div>
+            </div>
+
+            {/* Metric Stability Table */}
+            <table className="w-full text-sm mb-4">
+              <thead>
+                <tr className="text-xs text-gray-500 uppercase border-b border-gray-200" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                  <th className="text-left py-2">Metric</th>
+                  <th className="text-right py-2">Mean</th>
+                  <th className="text-right py-2">SD</th>
+                  <th className="text-right py-2">CV</th>
+                  <th className="text-center py-2">Stable?</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(stats.stability.metricStability).map(([metric, s]) => (
+                  <tr key={metric} className="border-b border-gray-100">
+                    <td className="py-2 font-medium capitalize">{metric.replace(/_/g, ' ')}</td>
+                    <td className="py-2 text-right">{s.mean.toFixed(3)}</td>
+                    <td className="py-2 text-right text-gray-500">{s.sd.toFixed(3)}</td>
+                    <td className={`py-2 text-right ${s.cv < 0.15 ? 'text-green-600' : s.cv < 0.30 ? 'text-yellow-600' : 'text-red-600'}`}>
+                      {(s.cv * 100).toFixed(1)}%
+                    </td>
+                    <td className="py-2 text-center">
+                      {s.isStable ? '✓' : '✗'}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {/* Finding Reliability Rankings */}
+            <div className="mb-4">
+              <h5 className="text-sm font-medium mb-3" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                Findings Ranked by Reliability (most → least stable)
+              </h5>
+              <div className="space-y-2">
+                {stats.stability.findingReliability.map((f, i) => (
+                  <div key={i} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div className="flex-1">
+                      <div className="font-medium text-sm">{f.finding}</div>
+                      <div className="text-xs text-gray-500">CV = {(f.cv * 100).toFixed(1)}%</div>
+                    </div>
+                    <span className={`text-xs px-2 py-1 rounded uppercase ${
+                      f.reliability === 'high' ? 'bg-green-100 text-green-700' :
+                      f.reliability === 'medium' ? 'bg-yellow-100 text-yellow-700' :
+                      'bg-red-100 text-red-700'
+                    }`}>
+                      {f.reliability}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Validation Strategy */}
+            <div className="bg-blue-50 border border-blue-200 rounded p-4 mb-4">
+              <h5 className="font-medium text-blue-800 mb-2 text-sm" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                Validation Strategy
+              </h5>
+              <ul className="space-y-1 text-sm text-blue-700">
+                {stats.stability.validationStrategy.map((step, i) => (
+                  <li key={i}>{i + 1}. {step}</li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Caveats */}
+            <div className="bg-amber-50 border border-amber-200 rounded p-3">
+              <h5 className="font-medium text-amber-800 mb-1 text-sm">Caveats</h5>
+              <ul className="space-y-0.5 text-sm text-amber-700">
+                {stats.stability.caveats.map((caveat, i) => (
+                  <li key={i}>• {caveat}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Honest Interpretation */}
+          <div className="bg-gradient-to-r from-[#E8B4B8] via-[#B8A9C9] to-[#4A5D8A] p-6 rounded-lg text-white">
+            <h4 className="font-medium mb-3" style={{ fontFamily: "'Arial Narrow', sans-serif", textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+              Stability Summary
+            </h4>
+            <p className="text-sm leading-relaxed">
+              Of 5 network metrics tested, {Object.values(stats.stability.metricStability).filter(m => m.isStable).length} are stable (CV &lt; 15%). 
+              Recommend collecting data to n={stats.stability.recommendedSampleSize} for reliable findings. 
+              <strong> Treat low-reliability findings as exploratory only.</strong> When sample reaches 25 acquisitions, 
+              refit all models and compare - substantial changes (&gt;20%) indicate original findings were unstable.
             </p>
           </div>
         </motion.div>
