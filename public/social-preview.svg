@@ -45,26 +45,26 @@
   
   <!-- Main content group -->
   <g transform="translate(640, 320)">
-    <!-- Elegant L Logo -->
+    <!-- 2026 Avant-Garde Logo - Compressed Display -->
     <g transform="translate(-50, -150)">
-      <rect x="0" y="0" width="100" height="100" rx="20" fill="white" opacity="0.9"/>
-      <text x="50" y="72" font-family="'Playfair Display', 'Times New Roman', serif" font-size="60" font-weight="400" font-style="italic" fill="#5D4E6D" text-anchor="middle" style="font-family: Georgia, 'Times New Roman', serif; font-style: italic;">L</text>
+      <rect x="0" y="0" width="100" height="100" rx="16" fill="white" opacity="0.95"/>
+      <text x="50" y="68" font-family="'Arial Narrow', 'Helvetica Condensed', 'Impact', sans-serif" font-size="64" font-weight="700" fill="#5D4E6D" text-anchor="middle" letter-spacing="-3" style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-stretch: condensed;">L</text>
     </g>
     
-    <!-- Lacuna title - elegant cursive -->
-    <text x="0" y="20" font-family="'Playfair Display', 'Cormorant Garamond', 'Times New Roman', serif" font-size="84" font-weight="400" font-style="italic" fill="white" text-anchor="middle" letter-spacing="2" style="font-family: 'Brush Script MT', 'Edwardian Script ITC', 'Snell Roundhand', cursive;">Lacuna</text>
+    <!-- Lacuna title - 2026 Avant-Garde: Extreme contrast, tight tracking -->
+    <text x="0" y="20" font-family="'Bodoni Moda', 'Didot', 'Bodoni', serif" font-size="92" font-weight="300" fill="white" text-anchor="middle" letter-spacing="-2" style="font-family: 'Bodoni MT', Didot, 'Times New Roman', serif; font-weight: 300; text-transform: uppercase;">LACUNA</text>
     
-    <!-- Tagline - refined serif -->
-    <text x="0" y="75" font-family="'Cormorant Garamond', 'Times New Roman', serif" font-size="26" font-weight="300" fill="white" opacity="0.95" text-anchor="middle" letter-spacing="1" style="font-family: Georgia, 'Times New Roman', serif; font-style: italic;">M&amp;A Intelligence for Women&apos;s Health</text>
+    <!-- Tagline - 2026 Experimental: Condensed sans, extreme tracking -->
+    <text x="0" y="78" font-family="'Arial Narrow', 'Helvetica Neue Condensed', sans-serif" font-size="20" font-weight="500" fill="white" opacity="0.95" text-anchor="middle" letter-spacing="6" style="font-family: 'Arial Narrow', 'Helvetica Condensed', sans-serif; text-transform: uppercase; font-stretch: condensed;">M&amp;A INTELLIGENCE FOR WOMEN&apos;S HEALTH</text>
     
-    <!-- Subtitle - elegant light -->
-    <text x="0" y="115" font-family="'Cormorant Garamond', 'Times New Roman', serif" font-size="16" font-weight="300" fill="white" opacity="0.8" text-anchor="middle" letter-spacing="0.5" style="font-family: Georgia, 'Times New Roman', serif;">Network visualization · ML-powered insights · FemTech analytics</text>
+    <!-- Subtitle - 2026 Micro typography: Tight, technical -->
+    <text x="0" y="118" font-family="'Courier New', 'Monaco', monospace" font-size="13" font-weight="400" fill="white" opacity="0.75" text-anchor="middle" letter-spacing="1.5" style="font-family: 'Courier New', Consolas, monospace; text-transform: uppercase;">Network Visualization · ML-Powered · FemTech Analytics</text>
   </g>
   
   <!-- Bottom badge -->
   <g transform="translate(640, 580)">
     <rect x="-120" y="-20" width="240" height="40" rx="20" fill="white" opacity="0.15"/>
-    <text x="0" y="6" font-family="'Cormorant Garamond', 'Times New Roman', serif" font-size="14" font-weight="400" fill="white" opacity="0.9" text-anchor="middle" style="font-family: Georgia, 'Times New Roman', serif; font-style: italic;">Educational Project · 2026</text>
+    <text x="0" y="6" font-family="'Arial Narrow', sans-serif" font-size="11" font-weight="500" fill="white" opacity="0.9" text-anchor="middle" letter-spacing="4" style="font-family: 'Arial Narrow', sans-serif; text-transform: uppercase;">Educational Project · 2026</text>
   </g>
   
   <!-- Corner accents -->

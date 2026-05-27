@@ -113,6 +113,20 @@ vercel --prod
 
 ## Design System
 
+### 2026 Typography: Avant-Garde Summer Trends
+
+Following **Vogue 2026 summer typography trends** — extreme contrast, experimental tracking, compressed forms:
+
+| Element | Font | Weight | Tracking | Style |
+|---------|------|--------|----------|-------|
+| **Logo** | Compressed Display (Impact/Arial Narrow) | 700 | -3px | Condensed, bold |
+| **Title** | High-Contrast Serif (Bodoni/Didot) | 300 | -2px | All caps, elegant |
+| **Tagline** | Condensed Sans (Arial Narrow) | 500 | +6px | All caps, wide |
+| **Subtitle** | Technical Mono (Courier New) | 400 | +1.5px | All caps, precise |
+| **Footer** | Compressed Sans | 500 | +4px | All caps, minimal |
+
+**Philosophy:** *Legibility secondary to expression* — 2026 design embraces typography as visual art. Tight tracking on display type creates tension; extreme letter-spacing on condensed forms creates runway-inspired sophistication.
+
 ### 2026 Pantone Spring/Summer Color Palette
 
 The visual identity uses the **Pantone Spring/Summer 2026** color trend forecast:
