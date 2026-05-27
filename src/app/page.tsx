@@ -17,8 +17,10 @@ import ImpactOpportunityCard from '@/components/ImpactOpportunityCard';
 import ValidationTracker from '@/components/ValidationTracker';
 import FairnessAuditV2 from '@/components/FairnessAuditV2';
 import NetworkAnalysisHonest from '@/components/NetworkAnalysisHonest';
+import CompetitiveAnalysisDashboard from '@/components/CompetitiveAnalysisDashboard';
 import TemporalValidation from '@/components/TemporalValidation';
 import CausalInferenceEngine from '@/components/CausalInferenceEngine';
+import DataCoverageCard from '@/components/DataCoverageCard';
 import { 
   verifiedCompanies, 
   verifiedAcquisitions, 
@@ -91,7 +93,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10"
         >
           {stats.map((stat) => (
             <div
@@ -102,6 +104,16 @@ export default function Home() {
               <p className="text-sm text-slate-500 mt-1">{stat.label}</p>
             </div>
           ))}
+        </motion.section>
+
+        {/* Data Coverage */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="mb-16"
+        >
+          <DataCoverageCard />
         </motion.section>
 
         {/* Force-Directed Network */}
@@ -259,6 +271,21 @@ export default function Home() {
             <p className="text-slate-600">Honest small-N analysis: Bootstrap CIs, Gini/HHI concentration, null model comparison</p>
           </div>
           <NetworkAnalysisHonest />
+        </motion.section>
+
+        {/* Competitive Analysis - Descriptive */}
+        <motion.section
+          id="competitive-analysis"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.579 }}
+          className="mb-16"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-slate-800">Competitive Analysis</h3>
+            <p className="text-slate-600">Descriptive acquirer behavior: portfolio, velocity, market structure, type comparison</p>
+          </div>
+          <CompetitiveAnalysisDashboard />
         </motion.section>
 
         {/* Causal DAG & Identification Strategy */}

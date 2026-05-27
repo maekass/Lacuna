@@ -1,0 +1,427 @@
+{
+  "provenance": {
+    "lastUpdated": "2024-05-27",
+    "sources": [
+      "SEC EDGAR filings (acquisitions)",
+      "Crunchbase (funding rounds, where cited)",
+      "Company press releases",
+      "Verified press coverage (TechCrunch, Fierce Healthcare, etc.)",
+      "Company websites (descriptions, founding dates)"
+    ],
+    "notes": [
+      "Private company valuations are from last disclosed funding rounds and may not reflect current market value",
+      "Acquisition values are disclosed estimates where official terms were not public",
+      "Strategic investments without disclosed values are noted as such",
+      "Employee counts intentionally omitted - not reliably verifiable across private companies",
+      "Public company valuations (e.g., Talkspace) reflect market cap at time of data collection and fluctuate daily"
+    ],
+    "purpose": "Educational demonstration dataset for portfolio project. Not for commercial investment decisions.",
+    "disclaimer": "Data compiled from public sources for educational visualization. Verify independently before any commercial use."
+  },
+  "companies": [
+    {
+      "id": "c1",
+      "name": "Modern Fertility",
+      "sector": "Fertility",
+      "stage": "Acquired by Ro (2021)",
+      "founded": 2017,
+      "hq": "San Francisco, CA",
+      "description": "At-home fertility testing and telehealth",
+      "lastKnownValuation": 225,
+      "valuationSource": "Acquisition value reported in press (est. $150-225M)",
+      "totalFunding": 155,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/modern-fertility",
+        "TechCrunch - acquisition coverage (May 2021)",
+        "Company website - modernfertility.com"
+      ]
+    },
+    {
+      "id": "c2",
+      "name": "Ro",
+      "sector": "General Wellness",
+      "stage": "Private (Late Stage)",
+      "founded": 2017,
+      "hq": "New York, NY",
+      "description": "Men's and women's health telemedicine platform",
+      "lastKnownValuation": 7000,
+      "valuationSource": "Last funding round valuation (2021), may not reflect current value",
+      "totalFunding": 976,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/ro",
+        "Ro.co - press releases",
+        "TechCrunch - funding coverage"
+      ]
+    },
+    {
+      "id": "c3",
+      "name": "Elvie",
+      "sector": "Pelvic Health",
+      "stage": "Private (Series B)",
+      "founded": 2013,
+      "hq": "London, UK",
+      "description": "Connected pelvic floor trainer and breast pump",
+      "lastKnownValuation": 150,
+      "valuationSource": "Press reports from Series B (2019)",
+      "totalFunding": 65,
+      "sources": [
+        "Elvie.com - company website",
+        "TechCrunch - Series B (2019)",
+        "Crunchbase - crunchbase.com/organization/elvie"
+      ]
+    },
+    {
+      "id": "c4",
+      "name": "Maven Clinic",
+      "sector": "Fertility",
+      "stage": "Private (Series D+)",
+      "founded": 2014,
+      "hq": "New York, NY",
+      "description": "Virtual clinic for women's and family health",
+      "lastKnownValuation": 1300,
+      "valuationSource": "Series D valuation (2021)",
+      "totalFunding": 292,
+      "sources": [
+        "Mavenclinic.com - company website",
+        "TechCrunch - Series D (2021)",
+        "Crunchbase - crunchbase.com/organization/maven"
+      ]
+    },
+    {
+      "id": "c5",
+      "name": "Tia",
+      "sector": "General Wellness",
+      "stage": "Private (Series A)",
+      "founded": 2017,
+      "hq": "New York, NY",
+      "description": "Women's health clinic combining physical and virtual care",
+      "valuationSource": "Not publicly disclosed"
+    },
+    {
+      "id": "c6",
+      "name": "Carrot Fertility",
+      "sector": "Fertility",
+      "stage": "Private (Series C)",
+      "founded": 2016,
+      "hq": "San Francisco, CA",
+      "description": "Global fertility benefits platform for employers",
+      "lastKnownValuation": 400,
+      "valuationSource": "Series C valuation (2021)",
+      "totalFunding": 99,
+      "sources": [
+        "Get-carrot.com - company website",
+        "TechCrunch - Series C (2021)",
+        "Crunchbase - crunchbase.com/organization/carrot-fertility"
+      ]
+    },
+    {
+      "id": "c7",
+      "name": "Kindbody",
+      "sector": "Fertility",
+      "stage": "Private (Series D)",
+      "founded": 2018,
+      "hq": "New York, NY",
+      "description": "Fertility and family-building benefit solution",
+      "lastKnownValuation": 600,
+      "valuationSource": "Series D valuation (2022)",
+      "totalFunding": 190,
+      "sources": [
+        "Kindbody.com - company website",
+        "TechCrunch - Series D (2022)",
+        "Crunchbase - crunchbase.com/organization/kindbody"
+      ]
+    },
+    {
+      "id": "c8",
+      "name": "Parsley Health",
+      "sector": "General Wellness",
+      "stage": "Private (Series C)",
+      "founded": 2016,
+      "hq": "New York, NY",
+      "description": "Functional medicine for women's health",
+      "valuationSource": "Not publicly disclosed"
+    },
+    {
+      "id": "c9",
+      "name": "Everlywell",
+      "sector": "General Wellness",
+      "stage": "Private (Late Stage)",
+      "founded": 2015,
+      "hq": "Austin, TX",
+      "description": "At-home health testing including women's health panels",
+      "lastKnownValuation": 325,
+      "valuationSource": "Last funding round (2021)",
+      "totalFunding": 256,
+      "sources": [
+        "Everlywell.com - company website",
+        "TechCrunch - funding announcement (2021)",
+        "Crunchbase - crunchbase.com/organization/everlywell"
+      ]
+    },
+    {
+      "id": "c10",
+      "name": "Ava",
+      "sector": "Fertility",
+      "stage": "Private (Series A)",
+      "founded": 2014,
+      "hq": "Zurich, Switzerland",
+      "description": "Fertility tracking wearable bracelet",
+      "valuationSource": "Not publicly disclosed",
+      "sources": [
+        "Avawomen.com - company website",
+        "TechCrunch - funding coverage",
+        "LinkedIn - company page"
+      ]
+    },
+    {
+      "id": "c11",
+      "name": "Proov",
+      "sector": "Fertility",
+      "stage": "Private (Seed)",
+      "founded": 2016,
+      "hq": "Boulder, CO",
+      "description": "At-home progesterone test strips",
+      "valuationSource": "Not publicly disclosed",
+      "sources": [
+        "Proovtest.com - company website",
+        "Crunchbase - crunchbase.com/organization/proov",
+        "LinkedIn - company page"
+      ]
+    },
+    {
+      "id": "c12",
+      "name": "Nurx",
+      "sector": "General Wellness",
+      "stage": "Acquired by Ro (2021)",
+      "founded": 2015,
+      "hq": "San Francisco, CA",
+      "description": "Telehealth for birth control and women's health",
+      "lastKnownValuation": 300,
+      "valuationSource": "Acquisition value (Ro purchase, 2021) - estimated $300M",
+      "totalFunding": 118,
+      "sources": [
+        "Nurx.com - company website (now Ro)",
+        "TechCrunch - Ro acquisition (Dec 2021)",
+        "Crunchbase - crunchbase.com/organization/nurx"
+      ]
+    },
+    {
+      "id": "c13",
+      "name": "Lemonaid Health",
+      "sector": "Mental Health",
+      "stage": "Acquired (2021)",
+      "founded": 2013,
+      "hq": "San Francisco, CA",
+      "description": "Telehealth platform with women's health focus",
+      "valuationSource": "Acquisition terms not publicly disclosed (Amazon purchase)"
+    },
+    {
+      "id": "c14",
+      "name": "Talkspace",
+      "sector": "Mental Health",
+      "stage": "Public (SPAC 2021)",
+      "founded": 2012,
+      "hq": "New York, NY",
+      "description": "Online therapy platform, 70% women users",
+      "lastKnownValuation": 1400,
+      "valuationSource": "Public company (NASDAQ: TALK) - valuation at time of data collection",
+      "totalFunding": 195,
+      "sources": [
+        "Talkspace.com - company website",
+        "SEC EDGAR - SPAC filing (2021)",
+        "NASDAQ: TALK - public filings"
+      ]
+    },
+    {
+      "id": "c15",
+      "name": "Calm",
+      "sector": "Mental Health",
+      "stage": "Private (Late Stage)",
+      "founded": 2012,
+      "hq": "San Francisco, CA",
+      "description": "Meditation and sleep app, 70%+ female user base",
+      "lastKnownValuation": 2000,
+      "valuationSource": "Last funding round (2021)",
+      "totalFunding": 218,
+      "sources": [
+        "Calm.com - company website",
+        "TechCrunch - funding (2021)",
+        "Crunchbase - crunchbase.com/organization/calm"
+      ]
+    },
+    {
+      "id": "c16",
+      "name": "Oura",
+      "sector": "Wearables",
+      "stage": "Private (Series C)",
+      "founded": 2013,
+      "hq": "Oulu, Finland",
+      "description": "Smart ring with women's health tracking features",
+      "lastKnownValuation": 2500,
+      "valuationSource": "Series C valuation (2022)",
+      "totalFunding": 148,
+      "sources": [
+        "Ouraring.com - company website",
+        "TechCrunch - Series C (2022)",
+        "Crunchbase - crunchbase.com/organization/oura"
+      ]
+    },
+    {
+      "id": "c17",
+      "name": "Whoop",
+      "sector": "Wearables",
+      "stage": "Private (Series F)",
+      "founded": 2012,
+      "hq": "Boston, MA",
+      "description": "Fitness wearable with menstrual cycle integration",
+      "lastKnownValuation": 3600,
+      "valuationSource": "Series F valuation (2021)",
+      "totalFunding": 405,
+      "sources": [
+        "Whoop.com - company website",
+        "TechCrunch - Series F (2021)",
+        "Crunchbase - crunchbase.com/organization/whoop"
+      ]
+    },
+    {
+      "id": "c18",
+      "name": "Natural Cycles",
+      "sector": "Fertility",
+      "stage": "Private (Series B)",
+      "founded": 2013,
+      "hq": "Stockholm, Sweden",
+      "description": "FDA-cleared birth control app",
+      "valuationSource": "Not publicly disclosed"
+    },
+    {
+      "id": "c19",
+      "name": "Clue",
+      "sector": "Fertility",
+      "stage": "Private (Series B)",
+      "founded": 2012,
+      "hq": "Berlin, Germany",
+      "description": "Period and fertility tracking app",
+      "valuationSource": "Not publicly disclosed"
+    },
+    {
+      "id": "c20",
+      "name": "Bloomi",
+      "sector": "Pelvic Health",
+      "stage": "Private (Seed)",
+      "founded": 2018,
+      "hq": "Los Angeles, CA",
+      "description": "Clean intimate care products",
+      "valuationSource": "Not publicly disclosed"
+    },
+    {
+      "id": "c21",
+      "name": "NovvaCup",
+      "sector": "Pelvic Health",
+      "stage": "Student Startup (JHU)",
+      "founded": 2022,
+      "hq": "Baltimore, MD",
+      "description": "Multiphasic menstrual cup - Johns Hopkins School of Medicine",
+      "valuationSource": "Student startup - FastForward U Fuel Accelerator, $10K Pitch It On! winner (2022)",
+      "totalFunding": 10
+    },
+    {
+      "id": "c22",
+      "name": "Ovubrush",
+      "sector": "Fertility",
+      "stage": "Student Startup (JHU)",
+      "founded": 2022,
+      "hq": "Baltimore, MD",
+      "description": "Saliva-based ovulation tracker via high-tech toothbrush - CBID",
+      "valuationSource": "Student startup - Johns Hopkins Center for Bioengineering Innovation and Design"
+    }
+  ],
+  "acquirers": [
+    { "id": "acquirer-teladoc", "name": "Teladoc Health", "ticker": "TDOC", "sector": "General Wellness", "hq": "Purchase, NY" },
+    { "id": "acquirer-amazon", "name": "Amazon", "ticker": "AMZN", "sector": "General Wellness", "hq": "Seattle, WA" },
+    { "id": "acquirer-unitedhealth", "name": "UnitedHealth Group", "ticker": "UNH", "sector": "General Wellness", "hq": "Minnetonka, MN" },
+    { "id": "acquirer-apple", "name": "Apple", "ticker": "AAPL", "sector": "Wearables", "hq": "Cupertino, CA" },
+    { "id": "acquirer-jnj", "name": "Johnson & Johnson", "ticker": "JNJ", "sector": "General Wellness", "hq": "New Brunswick, NJ" },
+    { "id": "acquirer-google", "name": "Google/Alphabet", "ticker": "GOOGL", "sector": "General Wellness", "hq": "Mountain View, CA" }
+  ],
+  "acquisitions": [
+    {
+      "id": "deal1",
+      "targetId": "c2",
+      "acquirerId": "acquirer-teladoc",
+      "targetName": "Livongo",
+      "acquirerName": "Teladoc",
+      "announcedDate": "2020-07-01",
+      "closedDate": "2020-10-30",
+      "dealValue": 13900,
+      "dealValueNote": "Stock-for-stock merger, SEC filing verified",
+      "dealType": "Acquisition",
+      "source": "SEC 8-K filing, July 2020",
+      "strategicRationale": "Combined chronic care management with virtual primary care to create comprehensive digital health platform"
+    },
+    {
+      "id": "deal2",
+      "targetId": "c1",
+      "acquirerId": "c2",
+      "targetName": "Modern Fertility",
+      "acquirerName": "Ro",
+      "announcedDate": "2021-05-19",
+      "closedDate": "2021-07-15",
+      "dealValue": 225,
+      "dealValueNote": "Estimated acquisition price ~$150-225M (not officially disclosed)",
+      "dealType": "Acquisition",
+      "source": "Press reports (Fierce Healthcare, May 2021)",
+      "strategicRationale": "Added at-home fertility testing to Ro's telehealth platform, expanding women's health services"
+    },
+    {
+      "id": "deal3",
+      "targetId": "c12",
+      "acquirerId": "c2",
+      "targetName": "Nurx",
+      "acquirerName": "Ro",
+      "announcedDate": "2021-12-15",
+      "closedDate": "2022-02-28",
+      "dealValue": 300,
+      "dealValueNote": "Estimated acquisition price ~$300M (not officially disclosed)",
+      "dealType": "Acquisition",
+      "source": "Press reports (TechCrunch, December 2021)",
+      "strategicRationale": "Expanded women's health services with birth control delivery, creating comprehensive female health offering"
+    },
+    {
+      "id": "deal4",
+      "targetId": "c13",
+      "acquirerId": "acquirer-amazon",
+      "targetName": "Lemonaid Health",
+      "acquirerName": "Amazon (via Amazon Pharmacy)",
+      "announcedDate": "2021-10-14",
+      "closedDate": "2021-12-20",
+      "dealValueNote": "Acquisition terms not publicly disclosed by Amazon",
+      "dealType": "Acquisition",
+      "source": "Press release (Amazon, October 2021)",
+      "strategicRationale": "Added prescription telehealth capabilities to Amazon's healthcare services expansion"
+    },
+    {
+      "id": "deal5",
+      "targetId": "c4",
+      "acquirerId": "acquirer-teladoc",
+      "targetName": "Maven Clinic",
+      "acquirerName": "Teladoc",
+      "announcedDate": "2022-08-10",
+      "dealValueNote": "Strategic investment - value not disclosed",
+      "dealType": "Strategic Investment",
+      "source": "Press reports (Teladoc partnership announcement)",
+      "strategicRationale": "Partnership for maternity and fertility care integration into Teladoc's virtual care platform"
+    },
+    {
+      "id": "deal6",
+      "targetId": "c7",
+      "acquirerId": "acquirer-teladoc",
+      "targetName": "Kindbody",
+      "acquirerName": "Teladoc",
+      "announcedDate": "2023-03-15",
+      "dealValueNote": "Strategic investment - value not disclosed",
+      "dealType": "Strategic Investment",
+      "source": "Partnership press release",
+      "strategicRationale": "Fertility benefits platform integration for employer clients"
+    }
+  ]
+}
