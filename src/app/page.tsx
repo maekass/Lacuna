@@ -10,6 +10,7 @@ import ClusteringAnalysis from '@/components/ClusteringAnalysis';
 import WearablesTracker from '@/components/WearablesTracker';
 import HealthEquityDashboard from '@/components/HealthEquityDashboard';
 import { HealthEquityRoadmap } from '@/components/HealthEquityDashboard';
+import SensitivityAnalysis from '@/components/SensitivityAnalysis';
 import { 
   verifiedCompanies, 
   verifiedAcquisitions, 
@@ -190,6 +191,21 @@ export default function Home() {
           <div className="mt-8">
             <HealthEquityRoadmap />
           </div>
+        </motion.section>
+
+        {/* Causal Inference & Sensitivity Analysis */}
+        <motion.section
+          id="causal"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.58 }}
+          className="mb-16"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-slate-800">Causal Inference</h3>
+            <p className="text-slate-600">Sensitivity analysis (Oster&apos;s δ, Rotnitzky bounds) for robust causal claims</p>
+          </div>
+          <SensitivityAnalysis />
         </motion.section>
 
         {/* AI/ML Intelligence Section */}
