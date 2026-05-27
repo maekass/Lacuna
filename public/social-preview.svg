@@ -51,7 +51,7 @@
     </g>
     
     <!-- Lacuna title - elegant cursive -->
-    <text x="0" y="20" font-family="'Playfair Display', 'Cormorant Garamond', 'Times New Roman', serif" font-size="84" font-weight="400" font-style="italic" fill="white" text-anchor="middle" filter="url(#glow)" letter-spacing="2" style="font-family: 'Brush Script MT', 'Edwardian Script ITC', 'Snell Roundhand', cursive;">Lacuna</text>
+    <text x="0" y="20" font-family="'Playfair Display', 'Cormorant Garamond', 'Times New Roman', serif" font-size="84" font-weight="400" font-style="italic" fill="white" text-anchor="middle" letter-spacing="2" style="font-family: 'Brush Script MT', 'Edwardian Script ITC', 'Snell Roundhand', cursive;">Lacuna</text>
     
     <!-- Tagline - refined serif -->
     <text x="0" y="75" font-family="'Cormorant Garamond', 'Times New Roman', serif" font-size="26" font-weight="300" fill="white" opacity="0.95" text-anchor="middle" letter-spacing="1" style="font-family: Georgia, 'Times New Roman', serif; font-style: italic;">M&amp;A Intelligence for Women&apos;s Health</text>
