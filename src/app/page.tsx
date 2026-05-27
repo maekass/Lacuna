@@ -8,6 +8,8 @@ import ExitPredictor from '@/components/ExitPredictor';
 import CompanySimilarity from '@/components/CompanySimilarity';
 import ClusteringAnalysis from '@/components/ClusteringAnalysis';
 import WearablesTracker from '@/components/WearablesTracker';
+import HealthEquityDashboard from '@/components/HealthEquityDashboard';
+import { HealthEquityRoadmap } from '@/components/HealthEquityDashboard';
 import { 
   verifiedCompanies, 
   verifiedAcquisitions, 
@@ -174,6 +176,20 @@ export default function Home() {
           className="mb-16"
         >
           <WearablesTracker />
+        </motion.section>
+
+        {/* Health Equity Section - Ported from windsurf-project */}
+        <motion.section
+          id="health-equity"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.55 }}
+          className="mb-16"
+        >
+          <HealthEquityDashboard />
+          <div className="mt-8">
+            <HealthEquityRoadmap />
+          </div>
         </motion.section>
 
         {/* AI/ML Intelligence Section */}
