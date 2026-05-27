@@ -790,6 +790,7 @@ page = st.sidebar.radio(
         "Regime Detection",
         "Investment Stages",
         "Market Analysis",
+        "Advanced Quant Analytics",
     ],
     help="Start with Mission to understand our purpose. Human Verification shows data quality validation. Pages 4–14 focus on clinical data and analytics. Pages 15–21 cover quantitative finance demos.",
 )
@@ -815,6 +816,7 @@ _ZONE_FOR_PAGE = {
     "Regime Detection": ("portfolio", "HMM market state identification"),
     "Investment Stages": ("portfolio", "Private-market stages"),
     "Market Analysis": ("pipeline", "Market sizing & competitive landscape"),
+    "Advanced Quant Analytics": ("portfolio", "Institutional-grade risk & portfolio optimization"),
 }
 
 # Add language selector to sidebar
@@ -3277,3 +3279,14 @@ elif page == "Market Analysis":
     if attr is not None:
         st.caption("investment_attractiveness_scd.csv — demo scores only; do not use for real decisions.")
         st.dataframe(attr, width="stretch")
+
+elif page == "Advanced Quant Analytics":
+    section_header("Advanced Quantitative Analytics", "Institutional-grade risk & portfolio optimization")
+    st.warning(
+        "**Demo / educational:** All quant models and calculations are for demonstration and educational purposes. "
+        "Not investment advice. Past performance does not guarantee future results."
+    )
+    
+    # Import and render the advanced quant page
+    from dashboard.pages.advanced_quant import render_advanced_quant_page
+    render_advanced_quant_page()
