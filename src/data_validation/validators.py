@@ -186,7 +186,8 @@ def _check_date_columns(
     for col in rules.get("date_columns", []):
         if col not in df.columns:
             continue
-        parsed = pd.to_datetime(df[col], errors="coerce")
+        # Use format='mixed' to handle both YYYY-MM-DD and YYYY-MM formats
+        parsed = pd.to_datetime(df[col], errors="coerce", format="mixed")
         unparsed = int(df[col].notna().sum() - parsed.notna().sum())
         passed = unparsed == 0
         results.append(
