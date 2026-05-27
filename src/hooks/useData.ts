@@ -28,51 +28,67 @@ export function useData(
     acquisitions: Acquisition[];
   }>({ companies: [], acquisitions: [] });
 
-  const loadData = useCallback(() => {
-    setState('loading');
-    setErrors([]);
+  // Manual refresh counter
+  const [refreshCounter, setRefreshCounter] = useState(0);
+  const refresh = useCallback(() => {
+    setRefreshCounter(c => c + 1);
+  }, []);
 
-    try {
-      // Validate companies
-      const companyResult = Validation.companies(rawCompanies);
-      
-      // Validate acquisitions
-      const acquisitionErrors: string[] = [];
-      const validAcquisitions: Acquisition[] = [];
-      
-      rawAcquisitions.forEach((item, index) => {
-        const result = Validation.acquisition(item);
-        if (result.isValid && result.data) {
-          validAcquisitions.push(result.data);
-        } else {
-          acquisitionErrors.push(`[${index}]: ${result.errors.join(', ')}`);
-        }
-      });
-
-      const allErrors = [...companyResult.errors, ...acquisitionErrors];
-      
-      if (allErrors.length > 0) {
-        setErrors(allErrors);
-        setState('error');
-        return;
-      }
-
-      if (companyResult.data) {
-        setData({
-          companies: companyResult.data,
-          acquisitions: validAcquisitions
-        });
-        setState('success');
-      }
-    } catch (error) {
-      setErrors([error instanceof Error ? error.message : 'Unknown error']);
-      setState('error');
-    }
-  }, [rawCompanies, rawAcquisitions]);
-
+  // Load data effect - validates on mount, data changes, or manual refresh
   useEffect(() => {
-    loadData();
-  }, [loadData]);
+    let isCancelled = false;
+    
+    const validateAndLoad = () => {
+      if (isCancelled) return;
+      
+      setState('loading');
+      setErrors([]);
+
+      try {
+        // Validate companies
+        const companyResult = Validation.companies(rawCompanies);
+        
+        // Validate acquisitions
+        const acquisitionErrors: string[] = [];
+        const validAcquisitions: Acquisition[] = [];
+        
+        rawAcquisitions.forEach((item, index) => {
+          const result = Validation.acquisition(item);
+          if (result.isValid && result.data) {
+            validAcquisitions.push(result.data);
+          } else {
+            acquisitionErrors.push(`[${index}]: ${result.errors.join(', ')}`);
+          }
+        });
+
+        const allErrors = [...companyResult.errors, ...acquisitionErrors];
+        
+        if (allErrors.length > 0) {
+          setErrors(allErrors);
+          setState('error');
+          return;
+        }
+
+        if (companyResult.data && !isCancelled) {
+          setData({
+            companies: companyResult.data,
+            acquisitions: validAcquisitions
+          });
+          setState('success');
+        }
+      } catch (error) {
+        if (!isCancelled) {
+          setErrors([error instanceof Error ? error.message : 'Unknown error']);
+          setState('error');
+        }
+      }
+    };
+
+    validateAndLoad();
+    
+    return () => { isCancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rawCompanies, rawAcquisitions, refreshCounter]);
 
   const metrics = useMemo(() => {
     if (data.acquisitions.length === 0) return null;
@@ -85,7 +101,7 @@ export function useData(
     metrics,
     state,
     errors,
-    refresh: loadData,
+    refresh,
     isValid: state === 'success' && errors.length === 0
   };
 }

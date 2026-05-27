@@ -55,7 +55,7 @@ export default function WearablesTracker() {
         <div>
           <h3 className="text-xl font-semibold text-slate-800">Wearables Ecosystem Tracker</h3>
           <p className="text-sm text-slate-500 mt-1">
-            M&A intelligence for women's health wearables — athlete performance & biomarker tracking
+            M&amp;A intelligence for women&apos;s health wearables — athlete performance &amp; biomarker tracking
           </p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 bg-purple-50 rounded-full">
@@ -97,7 +97,7 @@ export default function WearablesTracker() {
       {/* Company List */}
       <div className="space-y-3">
         <h4 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">
-          Key Players in Women's Health Wearables
+          Key Players in Women&apos;s Health Wearables
         </h4>
         
         {wearablesData.companies.map((company, i) => (
