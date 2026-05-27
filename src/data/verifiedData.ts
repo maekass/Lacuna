@@ -276,6 +276,29 @@ export const verifiedCompanies: VerifiedCompany[] = [
     description: 'Clean intimate care products',
     // Valuation not publicly disclosed
     valuationSource: 'Not publicly disclosed'
+  },
+  {
+    id: 'c21',
+    name: 'NovvaCup',
+    sector: 'Pelvic Health',
+    stage: 'Student Startup (JHU)',
+    founded: 2022,
+    hq: 'Baltimore, MD',
+    description: 'Multiphasic menstrual cup - Johns Hopkins School of Medicine',
+    // Early stage - no valuation yet
+    valuationSource: 'Student startup - FastForward U Fuel Accelerator, $10K Pitch It On! winner (2022)',
+    totalFunding: 10 // Pitch competition prize
+  },
+  {
+    id: 'c22',
+    name: 'Ovubrush',
+    sector: 'Fertility',
+    stage: 'Student Startup (JHU)',
+    founded: 2022,
+    hq: 'Baltimore, MD',
+    description: 'Saliva-based ovulation tracker via high-tech toothbrush - CBID',
+    // Early stage - no valuation yet
+    valuationSource: 'Student startup - Johns Hopkins Center for Bioengineering Innovation and Design'
   }
 ];
 
