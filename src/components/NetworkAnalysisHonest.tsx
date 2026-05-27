@@ -24,6 +24,8 @@ import {
   giniCoefficient,
   herfindahlIndex,
   nullModelComparison,
+  temporalAnalysis,
+  communityDetection,
   POWER_LAW_LIMITATIONS,
   type NetworkNode,
   type NetworkEdge
@@ -64,7 +66,7 @@ const SAMPLE_EDGES: NetworkEdge[] = [
 ];
 
 export default function NetworkAnalysisHonest() {
-  const [activeTab, setActiveTab] = useState<'descriptive' | 'concentration' | 'null_model' | 'limitations'>('descriptive');
+  const [activeTab, setActiveTab] = useState<'descriptive' | 'concentration' | 'temporal' | 'communities' | 'null_model' | 'limitations'>('descriptive');
 
   // Calculate all network statistics
   const stats = useMemo(() => {
@@ -82,8 +84,10 @@ export default function NetworkAnalysisHonest() {
     const gini = giniCoefficient(acquirerDeals);
     const hhi = herfindahlIndex(acquirerDeals);
     const nullModel = nullModelComparison(acquirerDeals);
+    const temporal = temporalAnalysis(SAMPLE_EDGES);
+    const communities = communityDetection(SAMPLE_NODES, SAMPLE_EDGES);
     
-    return { degree, density, clustering, paths, gini, hhi, nullModel, acquirers, acquirerDeals };
+    return { degree, density, clustering, paths, gini, hhi, nullModel, temporal, communities, acquirers, acquirerDeals };
   }, []);
 
   return (
@@ -125,6 +129,8 @@ export default function NetworkAnalysisHonest() {
           {[
             { id: 'descriptive', label: 'Descriptives + CIs' },
             { id: 'concentration', label: 'Buyer Concentration' },
+            { id: 'temporal', label: 'Temporal Analysis' },
+            { id: 'communities', label: 'Community Detection' },
             { id: 'null_model', label: 'Null Model Comparison' },
             { id: 'limitations', label: 'What We Cannot Claim' }
           ].map(tab => (
@@ -407,6 +413,254 @@ export default function NetworkAnalysisHonest() {
                 })}
               </div>
             </div>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Temporal Analysis Tab */}
+      {activeTab === 'temporal' && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
+          <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <h4 className="font-medium mb-4" style={{ fontFamily: "'Bodoni MT', Didot, serif" }}>
+              Acquisition Velocity Over Time
+            </h4>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div className="bg-gray-50 p-3 rounded-lg text-center">
+                <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#5D4E6D' }}>
+                  {stats.temporal.totalAcquisitions}
+                </div>
+                <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                  Total Events
+                </div>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-lg text-center">
+                <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#4A5D8A' }}>
+                  {stats.temporal.yearRange[1] - stats.temporal.yearRange[0] + 1}
+                </div>
+                <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                  Year Span
+                </div>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-lg text-center">
+                <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#E8B4B8' }}>
+                  {stats.temporal.median}
+                </div>
+                <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                  Median/Year
+                </div>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-lg text-center">
+                <div className="text-lg font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#B8A9C9' }}>
+                  [{stats.temporal.iqr[0]}, {stats.temporal.iqr[1]}]
+                </div>
+                <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                  IQR
+                </div>
+              </div>
+            </div>
+
+            {/* Yearly Bar Chart */}
+            <div className="mb-4">
+              <div className="text-xs text-gray-500 uppercase mb-2" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                Deals per Year
+              </div>
+              <div className="flex items-end gap-2 h-32">
+                {(() => {
+                  const maxCount = Math.max(...stats.temporal.yearlyData.map(d => d.count), 1);
+                  return stats.temporal.yearlyData.map(d => (
+                    <div key={d.year} className="flex-1 flex flex-col items-center group">
+                      <div className="text-xs text-gray-600 mb-1">{d.count}</div>
+                      <div 
+                        className="w-full bg-gradient-to-t from-[#5D4E6D] to-[#B8A9C9] rounded-t hover:opacity-80 transition-opacity"
+                        style={{ height: `${(d.count / maxCount) * 100}%`, minHeight: d.count > 0 ? '4px' : '0' }}
+                        title={`${d.year}: ${d.count} deals`}
+                      />
+                      <div className="text-xs text-gray-500 mt-1 transform -rotate-45 origin-top-left whitespace-nowrap">
+                        {d.year}
+                      </div>
+                    </div>
+                  ));
+                })()}
+              </div>
+            </div>
+
+            {/* Trend Assessment */}
+            <div className="mt-8 bg-gray-50 p-4 rounded-lg">
+              <h5 className="text-sm font-medium mb-3" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                Trend Assessment (with caveats)
+              </h5>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                <div>
+                  <div className="text-xs text-gray-500 uppercase">Direction</div>
+                  <div className="font-medium capitalize">{stats.temporal.trend.interpretation.replace('_', ' ')}</div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-500 uppercase">Slope</div>
+                  <div className="font-medium">{stats.temporal.trend.slope.toFixed(2)}/year</div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-500 uppercase">R²</div>
+                  <div className="font-medium">{stats.temporal.trend.rSquared.toFixed(2)}</div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-500 uppercase">Confidence</div>
+                  <div className={`font-medium capitalize ${
+                    stats.temporal.trend.confidence === 'high' ? 'text-green-600' :
+                    stats.temporal.trend.confidence === 'medium' ? 'text-yellow-600' :
+                    'text-red-600'
+                  }`}>
+                    {stats.temporal.trend.confidence.replace('_', ' ')}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Caveats */}
+            <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+              <strong className="block mb-1">Caveats:</strong>
+              <ul className="space-y-0.5">
+                {stats.temporal.caveats.map((caveat, i) => (
+                  <li key={i}>• {caveat}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Honest Interpretation */}
+          <div className="bg-gradient-to-r from-[#E8B4B8] via-[#B8A9C9] to-[#4A5D8A] p-6 rounded-lg text-white">
+            <h4 className="font-medium mb-3" style={{ fontFamily: "'Arial Narrow', sans-serif", textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+              Temporal Interpretation
+            </h4>
+            <p className="text-sm leading-relaxed">
+              With {stats.temporal.totalAcquisitions} events over {stats.temporal.yearRange[1] - stats.temporal.yearRange[0] + 1} years, 
+              year-to-year variation is high. Trend shows {stats.temporal.trend.interpretation.replace('_', ' ')} pattern 
+              with R² = {stats.temporal.trend.rSquared.toFixed(2)} ({stats.temporal.trend.confidence.replace('_', ' ')} confidence). 
+              <strong> Do not extrapolate this trend forward</strong> - too noisy for forecasting.
+            </p>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Community Detection Tab */}
+      {activeTab === 'communities' && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
+          <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <h4 className="font-medium mb-4" style={{ fontFamily: "'Bodoni MT', Didot, serif" }}>
+              Community Detection (Simplified Louvain)
+            </h4>
+            <p className="text-sm text-gray-600 mb-4">
+              Identifies clusters via greedy modularity optimization. <strong>Treat as exploratory only.</strong>
+            </p>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+              <div className="bg-gray-50 p-3 rounded-lg text-center">
+                <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#5D4E6D' }}>
+                  {stats.communities.numCommunities}
+                </div>
+                <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                  Communities Found
+                </div>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-lg text-center">
+                <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#4A5D8A' }}>
+                  {stats.communities.modularity.toFixed(3)}
+                </div>
+                <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                  Modularity (Q)
+                </div>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-lg text-center">
+                <div className={`text-2xl font-light ${stats.communities.stability.score > 0.85 ? 'text-green-600' : stats.communities.stability.score > 0.7 ? 'text-yellow-600' : 'text-red-600'}`} style={{ fontFamily: "'Bodoni MT', Didot, serif" }}>
+                  {(stats.communities.stability.score * 100).toFixed(0)}%
+                </div>
+                <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                  Stability
+                </div>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-lg text-center">
+                <div className="text-lg font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: stats.communities.stability.isReliable ? '#22c55e' : '#e76f51' }}>
+                  {stats.communities.stability.isReliable ? 'Reliable' : 'Unreliable'}
+                </div>
+                <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                  Assessment
+                </div>
+              </div>
+            </div>
+
+            {/* Community Sizes */}
+            <div className="mb-4">
+              <h5 className="text-sm font-medium mb-2" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                Community Size Distribution
+              </h5>
+              <div className="space-y-2">
+                {stats.communities.communitySizes.map((size, i) => {
+                  const maxSize = Math.max(...stats.communities.communitySizes, 1);
+                  return (
+                    <div key={i} className="flex items-center gap-3">
+                      <div className="w-24 text-sm">Community {i + 1}</div>
+                      <div className="flex-1 h-5 bg-gray-100 rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-[#5D4E6D] flex items-center justify-end pr-2 text-xs text-white"
+                          style={{ width: `${(size / maxSize) * 100}%`, minWidth: '30px' }}
+                        >
+                          {size}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Qualitative Descriptions */}
+            <div className="mt-4 bg-gray-50 p-4 rounded-lg">
+              <h5 className="text-sm font-medium mb-3" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                Qualitative Descriptions
+              </h5>
+              <ul className="space-y-2 text-sm text-gray-700">
+                {stats.communities.qualitativeDescription.map((desc, i) => (
+                  <li key={i} className="border-l-2 border-[#5D4E6D] pl-3">{desc}</li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Stability Assessment */}
+            <div className={`mt-4 p-3 rounded border ${
+              stats.communities.stability.isReliable 
+                ? 'bg-green-50 border-green-200 text-green-800' 
+                : 'bg-amber-50 border-amber-200 text-amber-800'
+            } text-sm`}>
+              <strong>Stability Assessment:</strong> {stats.communities.stability.interpretation}. 
+              Score of {stats.communities.stability.score.toFixed(2)} measured via 10 random subset perturbations.
+            </div>
+
+            {/* Caveats */}
+            <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded text-sm text-red-800">
+              <strong className="block mb-1">Critical Caveats:</strong>
+              <ul className="space-y-0.5">
+                {stats.communities.caveats.map((caveat, i) => (
+                  <li key={i}>• {caveat}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Honest Interpretation */}
+          <div className="bg-gradient-to-r from-[#E8B4B8] via-[#B8A9C9] to-[#4A5D8A] p-6 rounded-lg text-white">
+            <h4 className="font-medium mb-3" style={{ fontFamily: "'Arial Narrow', sans-serif", textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+              Community Interpretation
+            </h4>
+            <p className="text-sm leading-relaxed">
+              Greedy modularity optimization identified {stats.communities.numCommunities} clusters with 
+              modularity Q = {stats.communities.modularity.toFixed(3)}. Stability assessment gives 
+              {(stats.communities.stability.score * 100).toFixed(0)}% consistency under perturbation, 
+              indicating <strong>{stats.communities.stability.isReliable ? 'meaningful structure' : 'likely small-n artifact'}</strong>. 
+              {stats.communities.qualitativeDescription.length > 0 
+                ? ' Qualitative description: communities tend to cluster by sector and acquirer relationships.' 
+                : ''}
+              <strong> Adding 5 more nodes would likely change community structure significantly.</strong>
+            </p>
           </div>
         </motion.div>
       )}

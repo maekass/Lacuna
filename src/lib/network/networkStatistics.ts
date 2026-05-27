@@ -481,6 +481,377 @@ export function nullModelComparison(
 }
 
 /**
+ * Temporal Analysis: Acquisitions per year with trend assessment
+ * 
+ * Honest about small-n: Wide CIs, no power law fits to time series
+ */
+export interface TemporalAnalysisResult {
+  yearlyData: { year: number; count: number }[];
+  totalAcquisitions: number;
+  yearRange: [number, number];
+  median: number;
+  mean: number;
+  iqr: [number, number];
+  trend: {
+    slope: number;
+    interpretation: 'accelerating' | 'decelerating' | 'flat' | 'too_noisy';
+    rSquared: number;
+    confidence: 'high' | 'medium' | 'low' | 'insufficient_data';
+  };
+  caveats: string[];
+}
+
+export function temporalAnalysis(edges: NetworkEdge[]): TemporalAnalysisResult {
+  // Filter to edges with year data
+  const dated = edges.filter(e => e.year !== undefined);
+  
+  if (dated.length === 0) {
+    return {
+      yearlyData: [],
+      totalAcquisitions: 0,
+      yearRange: [0, 0],
+      median: 0,
+      mean: 0,
+      iqr: [0, 0],
+      trend: { slope: 0, interpretation: 'too_noisy', rSquared: 0, confidence: 'insufficient_data' },
+      caveats: ['No temporal data available']
+    };
+  }
+  
+  // Aggregate by year
+  const yearCounts = new Map<number, number>();
+  dated.forEach(e => {
+    yearCounts.set(e.year!, (yearCounts.get(e.year!) || 0) + 1);
+  });
+  
+  const minYear = Math.min(...dated.map(e => e.year!));
+  const maxYear = Math.max(...dated.map(e => e.year!));
+  
+  // Fill in zero years for completeness
+  const yearlyData: { year: number; count: number }[] = [];
+  for (let y = minYear; y <= maxYear; y++) {
+    yearlyData.push({ year: y, count: yearCounts.get(y) || 0 });
+  }
+  
+  const counts = yearlyData.map(d => d.count).sort((a, b) => a - b);
+  const n = counts.length;
+  const median = counts[Math.floor(n / 2)];
+  const mean = counts.reduce((s, v) => s + v, 0) / n;
+  const iqr: [number, number] = [counts[Math.floor(n * 0.25)], counts[Math.floor(n * 0.75)]];
+  
+  // Simple linear regression for trend
+  const xs = yearlyData.map((_, i) => i);
+  const ys = yearlyData.map(d => d.count);
+  const xMean = xs.reduce((s, v) => s + v, 0) / xs.length;
+  const yMean = ys.reduce((s, v) => s + v, 0) / ys.length;
+  
+  const numerator = xs.reduce((s, x, i) => s + (x - xMean) * (ys[i] - yMean), 0);
+  const denominator = xs.reduce((s, x) => s + (x - xMean) ** 2, 0);
+  
+  const slope = denominator > 0 ? numerator / denominator : 0;
+  
+  // R-squared
+  const ssTotal = ys.reduce((s, y) => s + (y - yMean) ** 2, 0);
+  const intercept = yMean - slope * xMean;
+  const ssResidual = ys.reduce((s, y, i) => s + (y - (slope * xs[i] + intercept)) ** 2, 0);
+  const rSquared = ssTotal > 0 ? 1 - ssResidual / ssTotal : 0;
+  
+  let interpretation: 'accelerating' | 'decelerating' | 'flat' | 'too_noisy';
+  if (rSquared < 0.2) {
+    interpretation = 'too_noisy';
+  } else if (Math.abs(slope) < 0.1) {
+    interpretation = 'flat';
+  } else if (slope > 0) {
+    interpretation = 'accelerating';
+  } else {
+    interpretation = 'decelerating';
+  }
+  
+  let confidence: 'high' | 'medium' | 'low' | 'insufficient_data';
+  if (dated.length < 10) confidence = 'insufficient_data';
+  else if (dated.length < 20) confidence = 'low';
+  else if (dated.length < 50) confidence = 'medium';
+  else confidence = 'high';
+  
+  const caveats: string[] = [];
+  if (dated.length < 30) {
+    caveats.push(`Only ${dated.length} acquisitions across ${yearlyData.length} years - trends are noisy`);
+  }
+  if (rSquared < 0.3) {
+    caveats.push(`Low R² (${rSquared.toFixed(2)}) suggests trend is unreliable`);
+  }
+  if (yearlyData.length < 5) {
+    caveats.push('Fewer than 5 years of data - trend assessment not meaningful');
+  }
+  caveats.push('Do NOT fit power laws to time series with this sample size');
+  
+  return {
+    yearlyData,
+    totalAcquisitions: dated.length,
+    yearRange: [minYear, maxYear],
+    median,
+    mean,
+    iqr,
+    trend: { slope, interpretation, rSquared, confidence },
+    caveats
+  };
+}
+
+/**
+ * Simplified Louvain-style Community Detection
+ * 
+ * Uses greedy modularity optimization for small networks.
+ * Returns communities with explicit stability caveats.
+ */
+export interface CommunityDetectionResult {
+  communities: Map<string, number>; // nodeId -> communityId
+  numCommunities: number;
+  modularity: number;
+  communitySizes: number[];
+  stability: {
+    score: number; // 0-1, measured via subset perturbation
+    interpretation: string;
+    isReliable: boolean;
+  };
+  qualitativeDescription: string[];
+  caveats: string[];
+}
+
+export function communityDetection(
+  nodes: NetworkNode[], 
+  edges: NetworkEdge[]
+): CommunityDetectionResult {
+  if (nodes.length === 0) {
+    return {
+      communities: new Map(),
+      numCommunities: 0,
+      modularity: 0,
+      communitySizes: [],
+      stability: { score: 0, interpretation: 'No data', isReliable: false },
+      qualitativeDescription: [],
+      caveats: ['No nodes to analyze']
+    };
+  }
+  
+  // Build adjacency map
+  const adjacency = new Map<string, Set<string>>();
+  nodes.forEach(n => adjacency.set(n.id, new Set()));
+  edges.forEach(e => {
+    adjacency.get(e.source)?.add(e.target);
+    adjacency.get(e.target)?.add(e.source);
+  });
+  
+  // Initialize: each node in own community
+  const communities = new Map<string, number>();
+  nodes.forEach((n, i) => communities.set(n.id, i));
+  
+  // Greedy modularity optimization (simplified Louvain)
+  const m = edges.length;
+  if (m === 0) {
+    return {
+      communities,
+      numCommunities: nodes.length,
+      modularity: 0,
+      communitySizes: nodes.map(() => 1),
+      stability: { score: 0, interpretation: 'No edges to form communities', isReliable: false },
+      qualitativeDescription: ['No connections; each node is isolated'],
+      caveats: ['No edges in network']
+    };
+  }
+  
+  // Calculate node degrees
+  const degrees = new Map<string, number>();
+  nodes.forEach(n => degrees.set(n.id, adjacency.get(n.id)?.size || 0));
+  
+  // Greedy: for each node, move to neighbor's community if it improves modularity
+  let improved = true;
+  let iterations = 0;
+  const maxIterations = 100;
+  
+  while (improved && iterations < maxIterations) {
+    improved = false;
+    iterations++;
+    
+    for (const node of nodes) {
+      const neighbors = Array.from(adjacency.get(node.id) || []);
+      if (neighbors.length === 0) continue;
+      
+      const currentCommunity = communities.get(node.id)!;
+      const candidateCommunities = new Set(neighbors.map(n => communities.get(n)!));
+      
+      let bestCommunity = currentCommunity;
+      let bestGain = 0;
+      
+      candidateCommunities.forEach(c => {
+        if (c === currentCommunity) return;
+        
+        // Calculate modularity gain from moving to community c
+        let ki_in = 0;
+        let sigma_tot = 0;
+        
+        nodes.forEach(other => {
+          if (communities.get(other.id) === c) {
+            sigma_tot += degrees.get(other.id) || 0;
+            if (adjacency.get(node.id)?.has(other.id)) {
+              ki_in++;
+            }
+          }
+        });
+        
+        const ki = degrees.get(node.id) || 0;
+        const gain = ki_in / m - (sigma_tot * ki) / (2 * m * m);
+        
+        if (gain > bestGain) {
+          bestGain = gain;
+          bestCommunity = c;
+        }
+      });
+      
+      if (bestCommunity !== currentCommunity) {
+        communities.set(node.id, bestCommunity);
+        improved = true;
+      }
+    }
+  }
+  
+  // Renumber communities consecutively
+  const communityIds = Array.from(new Set(communities.values()));
+  const remap = new Map<number, number>();
+  communityIds.forEach((id, i) => remap.set(id, i));
+  communities.forEach((c, n) => communities.set(n, remap.get(c)!));
+  
+  const numCommunities = communityIds.length;
+  
+  // Calculate community sizes
+  const sizesMap = new Map<number, number>();
+  communities.forEach(c => sizesMap.set(c, (sizesMap.get(c) || 0) + 1));
+  const communitySizes = Array.from(sizesMap.values()).sort((a, b) => b - a);
+  
+  // Calculate final modularity
+  let modularity = 0;
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = 0; j < nodes.length; j++) {
+      if (communities.get(nodes[i].id) === communities.get(nodes[j].id)) {
+        const a_ij = adjacency.get(nodes[i].id)?.has(nodes[j].id) ? 1 : 0;
+        const k_i = degrees.get(nodes[i].id) || 0;
+        const k_j = degrees.get(nodes[j].id) || 0;
+        modularity += (a_ij - (k_i * k_j) / (2 * m));
+      }
+    }
+  }
+  modularity = modularity / (2 * m);
+  
+  // Stability assessment: run on 10 random subsets and measure consistency
+  const subsetSize = Math.floor(nodes.length * 0.85);
+  const numSubsets = 10;
+  let totalAgreement = 0;
+  let totalPairs = 0;
+  
+  for (let trial = 0; trial < numSubsets; trial++) {
+    // Random subset
+    const shuffled = [...nodes].sort(() => Math.random() - 0.5);
+    const subset = shuffled.slice(0, subsetSize);
+    const subsetIds = new Set(subset.map(n => n.id));
+    const subsetEdges = edges.filter(e => subsetIds.has(e.source) && subsetIds.has(e.target));
+    
+    // Quick community detection on subset
+    const subsetCommunities = new Map<string, number>();
+    subset.forEach((n, i) => subsetCommunities.set(n.id, i));
+    
+    // Simple agglomeration: merge connected nodes
+    subsetEdges.forEach(e => {
+      const c1 = subsetCommunities.get(e.source);
+      const c2 = subsetCommunities.get(e.target);
+      if (c1 !== undefined && c2 !== undefined && c1 !== c2) {
+        subsetCommunities.forEach((c, n) => {
+          if (c === c2) subsetCommunities.set(n, c1);
+        });
+      }
+    });
+    
+    // Compare to original
+    for (let i = 0; i < subset.length; i++) {
+      for (let j = i + 1; j < subset.length; j++) {
+        const sameInOriginal = communities.get(subset[i].id) === communities.get(subset[j].id);
+        const sameInSubset = subsetCommunities.get(subset[i].id) === subsetCommunities.get(subset[j].id);
+        if (sameInOriginal === sameInSubset) totalAgreement++;
+        totalPairs++;
+      }
+    }
+  }
+  
+  const stabilityScore = totalPairs > 0 ? totalAgreement / totalPairs : 0;
+  
+  let stabilityInterpretation: string;
+  let isReliable: boolean;
+  if (stabilityScore > 0.85) {
+    stabilityInterpretation = 'High stability - communities likely meaningful';
+    isReliable = true;
+  } else if (stabilityScore > 0.7) {
+    stabilityInterpretation = 'Moderate stability - some structural signal';
+    isReliable = false;
+  } else {
+    stabilityInterpretation = 'Low stability - communities likely artifact of small n';
+    isReliable = false;
+  }
+  
+  // Qualitative descriptions based on community composition
+  const qualitativeDescription: string[] = [];
+  for (let cId = 0; cId < numCommunities; cId++) {
+    const members = nodes.filter(n => communities.get(n.id) === cId);
+    if (members.length === 0) continue;
+    
+    // Determine dominant sector
+    const sectorCounts = new Map<string, number>();
+    members.forEach(m => {
+      if (m.sector) sectorCounts.set(m.sector, (sectorCounts.get(m.sector) || 0) + 1);
+    });
+    
+    let dominantSector: string | null = null;
+    let maxCount = 0;
+    sectorCounts.forEach((count, sector) => {
+      if (count > maxCount) {
+        maxCount = count;
+        dominantSector = sector;
+      }
+    });
+    
+    qualitativeDescription.push(
+      `Community ${cId + 1} (${members.length} nodes): ${
+        dominantSector 
+          ? `Centered on ${dominantSector}` 
+          : 'Mixed sectors'
+      } - members: ${members.slice(0, 3).map(m => m.label).join(', ')}${members.length > 3 ? `, +${members.length - 3} more` : ''}`
+    );
+  }
+  
+  const caveats: string[] = [];
+  if (nodes.length < 20) {
+    caveats.push(`With n=${nodes.length}, detected communities are unstable`);
+  }
+  caveats.push('Adding 5 more nodes would likely change community structure');
+  if (stabilityScore < 0.7) {
+    caveats.push(`Stability score ${stabilityScore.toFixed(2)} indicates communities may be artifacts`);
+  }
+  caveats.push('Do NOT report as "statistically significant communities" - wrong language for small n');
+  caveats.push('Treat as exploratory clustering, not confirmatory analysis');
+  
+  return {
+    communities,
+    numCommunities,
+    modularity,
+    communitySizes,
+    stability: {
+      score: stabilityScore,
+      interpretation: stabilityInterpretation,
+      isReliable
+    },
+    qualitativeDescription,
+    caveats
+  };
+}
+
+/**
  * Why we DON'T fit power laws (educational function)
  */
 export const POWER_LAW_LIMITATIONS = {
