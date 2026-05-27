@@ -11,6 +11,7 @@ import WearablesTracker from '@/components/WearablesTracker';
 import HealthEquityDashboard from '@/components/HealthEquityDashboard';
 import { HealthEquityRoadmap } from '@/components/HealthEquityDashboard';
 import SensitivityAnalysis from '@/components/SensitivityAnalysis';
+import BayesianCausalAnalysis from '@/components/BayesianCausalAnalysis';
 import { 
   verifiedCompanies, 
   verifiedAcquisitions, 
@@ -206,6 +207,21 @@ export default function Home() {
             <p className="text-slate-600">Sensitivity analysis (Oster&apos;s δ, Rotnitzky bounds) for robust causal claims</p>
           </div>
           <SensitivityAnalysis />
+        </motion.section>
+
+        {/* Bayesian Small Sample Analysis */}
+        <motion.section
+          id="bayesian-causal"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.59 }}
+          className="mb-16"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-slate-800">Bayesian Causal Analysis</h3>
+            <p className="text-slate-600">Small sample approach (n=22) with pre-registered hypotheses and main effects only</p>
+          </div>
+          <BayesianCausalAnalysis />
         </motion.section>
 
         {/* AI/ML Intelligence Section */}
