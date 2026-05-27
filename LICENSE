@@ -1,0 +1,73 @@
+Business Source License 1.1
+
+Parameters
+
+Licensor:             Lacuna Project Authors
+Licensed Work:        Lacuna - M&A Intelligence Platform for Women's Health
+                      The Licensed Work is (c) 2024 Lacuna Project Authors
+Additional Use Grant: You may make production use of the Licensed Work, provided 
+                      that you do not use the Licensed Work for a Database 
+                      Competitive Offering or a Product Competitive Offering.
+                      
+                      A "Database Competitive Offering" is a product, service, 
+                      or other offering that competes with the Licensed Work in 
+                      the market for women's health M&A intelligence platforms.
+                      
+                      A "Product Competitive Offering" is any offering that 
+                      offers M&A deal tracking, network visualization, or exit 
+                      strategy analysis for the healthcare or life sciences sectors.
+
+Change Date:          Four years from the date the Licensed Work is published
+
+Change License:       Apache License, Version 2.0
+
+For information about alternative licensing arrangements for the Licensed Work,
+please contact: licensing@lacuna.io
+
+Notice
+
+The Business Source License (this document, or the "License") is not an Open 
+Source license. However, the Licensed Work will eventually be made available 
+under an Open Source License, as stated in this License.
+
+License text copyright (c) 2017 MariaDB Corporation Ab, All Rights Reserved.
+"Business Source License" is a trademark of MariaDB Corporation Ab.
+
+---------------------------------------------------------------------
+
+Business Source License 1.1 Terms
+
+The Licensor hereby grants you the right to copy, modify, create derivative
+works, redistribute, and make non-production use of the Licensed Work. The
+Licensor may add an Additional Use Grant above that permits limited production
+use.
+
+Effective on the Change Date, or the fourth anniversary of the first publicly
+available distribution of a specific version of the Licensed Work under this
+License, whichever comes first, the Licensor hereby grants you rights under
+the terms of the Change License, and the rights granted in the paragraph above
+terminate.
+
+If your use of the Licensed Work does not comply with the requirements
+currently in effect as described in this License, you must purchase a
+commercial license from the Licensor, its affiliated entities, or authorized
+resellers, or you must refrain from using the Licensed Work.
+
+All copies of the original and modified Licensed Work, and derivative works
+of the Licensed Work, are subject to this License. This License applies
+separately for each version of the Licensed Work. This License does not
+grant any rights to use any other Licensor's trademarks or logos, and you
+must remove all such trademarks and logos before distributing a modified
+version of the Licensed Work.
+
+THIS LICENSE DOES NOT GRANT YOU ANY RIGHT IN ANY TRADEMARK OR LOGO OF
+LICENSOR OR ITS AFFILIATES (PROVIDED THAT YOU MAY USE A TRADEMARK OR LOGO TO
+IDENTIFY THE SOURCE OF THE LICENSED WORK).
+
+THE LICENSED WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE LICENSED WORK OR THE USE OR OTHER DEALINGS IN
+THE LICENSED WORK.

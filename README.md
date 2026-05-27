@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lacuna
 
-## Getting Started
+> *Network Intelligence Platform for Women's Health M&A*
 
-First, run the development server:
+Lacuna maps the acquisition landscape across FemTech, digital health, and women's wellness sectors—visualizing strategic relationships, exit patterns, and market dynamics through sophisticated network analysis.
+
+## Architecture
+
+- **Force-Directed Network Graph**: D3.js-powered interactive visualization of acquirer-target relationships with physics-based clustering by sector and deal velocity
+- **Temporal Deal Flow Analysis**: Animated Sankey-style flow showing capital movement across time periods
+- **Multi-Dimensional Valuation Matrix**: Cross-filterable heatmap analyzing valuation multiples by sector × stage × acquirer type
+- **Network Embeddings**: Company similarity scoring using deal history and sector proximity
+
+## Technology Stack
+
+- **Framework**: Next.js 14 (App Router) + TypeScript
+- **Visualizations**: D3.js (force simulation, scales, shapes) + visx patterns
+- **Animation**: Framer Motion for orchestrated UI transitions
+- **Styling**: Tailwind CSS + shadcn/ui components
+- **Data Layer**: Static TypeScript interfaces with derived statistical computations
+
+## Key Features
+
+- **Interactive Deal Network**: Drag, zoom, and explore acquisition relationships
+- **Sector Color Coding**: Visual differentiation across 9 women's health verticals
+- **Real-time Filtering**: Dynamic data slicing by stage, sector, deal type
+- **Predictive Scoring**: ML-ready data structure for exit probability modeling
+- **Responsive Design**: Optimized for institutional investor workflows
+
+## Data Coverage
+
+- 20+ emerging companies across fertility, mental health, wearables, pelvic health
+- 15 strategic acquirers (Fortune 500 health, tech giants, specialized buyers)
+- 10 tracked transactions with deal values and strategic rationale
+- $2B+ in disclosed transaction value
+
+## Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
+
+# Deploy to Vercel
+vercel --prod
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## License
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Business Source License 1.1 © 2024 Lacuna Project Authors
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The Licensed Work becomes available under Apache 2.0 four years from publication date. Commercial licensing available upon request.
