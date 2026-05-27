@@ -2,7 +2,9 @@
 
 > *Network Intelligence Platform for Women's Health M&A*
 
-⚠️ **EDUCATIONAL CODE PROJECT**: This repository contains demonstration code for portfolio and learning purposes. It is not a deployed live application or commercial product. Run locally with `npm run dev` to view the interactive dashboard. Data is compiled from public sources for educational visualization.
+**Live demo:** [https://lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app)
+
+⚠️ **EDUCATIONAL CODE PROJECT**: This repository contains demonstration code for portfolio and learning purposes. It is not a commercial product. Data is compiled from public sources for educational visualization. Run locally with `npm run dev` or use the live demo above.
 
 <p align="center">
   <img src="./public/social-preview.svg" alt="Lacuna - M&A Intelligence for Women's Health" width="100%">
@@ -15,6 +17,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-0055FF?style=flat-square)](https://framer.com/motion)
 [![License](https://img.shields.io/badge/License-BSL_1.1-purple?style=flat-square)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://lacuna-maekass.vercel.app)
 
 **Tools & Stack:** Next.js 14 · TypeScript · D3.js (force simulation, hierarchy, scales) · TensorFlow.js · simple-statistics · ml-matrix · Framer Motion · Tailwind CSS · visx patterns
 
@@ -122,6 +125,102 @@ Lacuna maps the acquisition landscape across FemTech, digital health, and women'
 - **Feature analysis**: Menstrual tracking, fertility prediction, holistic health
 - **Investment thesis**: Market gaps, innovation opportunities
 - **Integration patterns**: How wearables connect to broader health ecosystem
+
+## Academic-Rigor Analytical Frameworks
+
+Lacuna implements **6 academically rigorous frameworks** with explicit acknowledgment of small-sample limitations (n=20). Every framework follows the principle: *be honest about what you can and cannot reliably claim*.
+
+### 1. Causal Inference Engine
+**Files:** `CausalDAG.tsx`, `CausalInferenceEngine.tsx`, `TemporalValidation.tsx`, `SensitivityAnalysis.tsx`, `BayesianCausalAnalysis.tsx`
+
+- **Pearl Backdoor Criterion**: DAG with measured + unmeasured confounders
+- **Main effects with 95% CIs**: NOT point estimates alone
+- **Specification robustness**: 3 model specs compared
+- **Oster's δ**: Sensitivity to unobserved confounding
+- **Rotnitzky bounds**: Bounds under maximum confounding
+- **Event study methodology**: Pre/post temporal validation
+- **Bayesian small-sample**: Pre-registered hypotheses with credible intervals
+
+**Reference**: Pearl (2009), Oster (2019), Rubin (1974)
+
+### 2. Health Impact Assessment (OAIS Framework)
+**Files:** `oaisCalculator.ts`, `ImpactOpportunityCard.tsx`, `ValidationTracker.tsx`, `ConfidenceLevelIndicator.tsx`
+
+**Opportunity-Adjusted Impact Score (OAIS):**
+```
+OAIS = [Addressable Pop] × [Penetration Gap] × [Stage Credibility]
+       × [Founder Quality] × [Acquirer Scaling] / [Market Saturation]
+```
+
+**3-Tier Data Framework:**
+- **Tier 1 (Measured)**: CDC/NICHD epidemiology with 95% CIs
+- **Tier 2 (Proxy)**: Stage, founder LinkedIn, acquirer track record
+- **Tier 3 (Cannot Measure)**: Patient volume, clinical efficacy, outcomes
+
+**Why NOT DALYs?**: Requires patient volume + efficacy data we don't have. OAIS measures opportunity magnitude only.
+
+### 3. Fairness Audit (Modular V2)
+**Files:** `FairnessAuditV2.tsx`, `GenderInferenceQuality.tsx`, `FounderCharacteristics.tsx`, `FairnessLimitations.tsx`, `statisticalMethods.ts`
+
+**Rigorous statistical methods:**
+- **Wilson confidence intervals** (better than normal approximation for small n)
+- **Fisher's exact test** (preferred over chi-square for n<30)
+- **Newcombe's method** for proportion differences
+- **Bonferroni correction** for multiple testing
+- **Benjamini-Hochberg FDR** for less conservative alternative
+- **Cohen's h** for proper effect size
+- **Logistic regression** with Newton-Raphson + Wald tests
+
+**Single fairness metric (Demographic Parity)** chosen per Kleinberg et al. (2016) — three fairness metrics mathematically incompatible.
+
+**Reference**: Kleinberg, Mullainathan, Raghavan (2016), Hardt et al. (2016)
+
+### 4. Network Analysis (Honest Small-N)
+**Files:** `NetworkAnalysisHonest.tsx`, `StrategicPositioningMap.tsx`, `networkStatistics.ts`
+
+**8 analytical tabs:**
+
+| Tab | Method |
+|-----|--------|
+| **Descriptives + CIs** | Bootstrap CIs, median + IQR (not mean ± SD) |
+| **Buyer Concentration** | Gini coefficient, Herfindahl-Hirschman Index (DOJ-aligned) |
+| **Temporal Analysis** | Yearly trends with R² + confidence tiers |
+| **Community Detection** | Simplified Louvain with stability assessment (10 random perturbations) |
+| **Strategic Positioning** | 2D map: Sector breadth × Deal velocity (qualitative quadrants) |
+| **Stability Analysis** | 100 bootstrap simulations, finding reliability rankings |
+| **Null Model Comparison** | 1000 random simulations for baseline comparison |
+| **What We Cannot Claim** | Explicit limitations (no power laws, no preferential attachment) |
+
+**Why NOT power laws?**: Requires n>100 (Clauset et al., 2009). With n=15, use Gini/HHI instead.
+
+**Reference**: Newman (2003, 2010), Clauset et al. (2009), Blondel et al. (2008)
+
+### Documentation
+
+Comprehensive methodology documents in `docs/`:
+- `OAIS_METHODOLOGY.md` — Health impact framework
+- `FAIRNESS_AUDIT_METHODOLOGY.md` — Fairness audit with explicit limitations
+- `NETWORK_ANALYSIS_METHODOLOGY.md` — Network analysis with language guidelines
+
+### Common Principles
+
+All frameworks follow these academic standards:
+
+✅ **DO:**
+- Report confidence intervals (not point estimates alone)
+- Use bootstrap for small samples (no distributional assumptions)
+- Apply multiple testing corrections
+- Acknowledge selection bias explicitly
+- Use language: "exploratory", "preliminary", "with n=20 we cannot..."
+- Document all data sources
+
+❌ **DO NOT:**
+- Claim causal effects without addressing endogeneity
+- Estimate heterogeneous treatment effects with n<50
+- Fit power laws with n<100
+- Use chi-square for small samples (use Fisher's exact)
+- Treat proxies as measurements
+- Make policy recommendations from exploratory analysis
 
 ## Technology Stack
 
