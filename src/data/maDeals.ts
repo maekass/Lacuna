@@ -404,98 +404,79 @@ export const acquirers: Company[] = [
 export const acquisitions: Acquisition[] = [
   {
     id: 'deal1',
-    targetId: 'c1',
-    acquirerId: 'a2',
-    announcedDate: '2023-05-15',
-    closedDate: '2023-08-22',
-    dealValue: 225,
+    targetId: 'c2',
+    acquirerId: 'a6',
+    announcedDate: '2020-07-01',
+    closedDate: '2020-10-30',
+    dealValue: 13900,
     dealType: 'Acquisition',
-    strategicRationale: 'Expand consumer diagnostics portfolio with fertility focus',
-    multiples: { revenue: 12.5 }
+    strategicRationale: 'Combined chronic care management with virtual primary care',
+    multiples: { revenue: 18.2 }
   },
   {
     id: 'deal2',
-    targetId: 'c12',
-    acquirerId: 'a6',
-    announcedDate: '2022-02-10',
-    closedDate: '2022-04-15',
-    dealValue: 300,
+    targetId: 'c1',
+    acquirerId: 'c2',
+    announcedDate: '2021-05-19',
+    closedDate: '2021-07-15',
+    dealValue: 225,
     dealType: 'Acquisition',
-    strategicRationale: 'Add women\'s health specialty to telehealth platform',
+    strategicRationale: 'Added at-home fertility testing to telehealth platform',
     multiples: { revenue: 15.0 }
   },
   {
     id: 'deal3',
-    targetId: 'c13',
-    acquirerId: 'a11',
-    announcedDate: '2020-11-03',
-    closedDate: '2021-01-20',
-    dealValue: 500,
+    targetId: 'c12',
+    acquirerId: 'c2',
+    announcedDate: '2021-12-15',
+    closedDate: '2022-02-28',
+    dealValue: 300,
     dealType: 'Acquisition',
-    strategicRationale: 'Integrate into Amazon Pharmacy and healthcare services',
-    multiples: { revenue: 18.5 }
+    strategicRationale: 'Expanded women\'s health services with birth control delivery',
+    multiples: { revenue: 12.5 }
   },
   {
     id: 'deal4',
-    targetId: 'c16',
-    acquirerId: 'a9',
-    announcedDate: '2024-03-01',
-    dealType: 'Strategic Investment',
-    strategicRationale: 'Strategic partnership for health ring integration',
+    targetId: 'c13',
+    acquirerId: 'a11',
+    announcedDate: '2021-10-14',
+    closedDate: '2021-12-20',
+    dealValue: 400,
+    dealType: 'Acquisition',
+    strategicRationale: 'Added prescription telehealth to healthcare services',
+    multiples: { revenue: 11.0 }
   },
   {
     id: 'deal5',
-    targetId: 'c18',
-    acquirerId: 'a2',
-    announcedDate: '2024-06-15',
-    dealType: 'Acquisition',
-    strategicRationale: 'Add FDA-cleared contraceptive technology to portfolio'
+    targetId: 'c4',
+    acquirerId: 'a6',
+    announcedDate: '2022-08-10',
+    dealType: 'Strategic Investment',
+    strategicRationale: 'Partner for maternity and fertility care integration'
   },
   {
     id: 'deal6',
-    targetId: 'c3',
-    acquirerId: 'a4',
-    announcedDate: '2023-11-20',
-    closedDate: '2024-02-28',
-    dealValue: 150,
-    dealType: 'Acquisition',
-    strategicRationale: 'Expand connected device portfolio in women\'s health',
-    multiples: { revenue: 8.5 }
+    targetId: 'c7',
+    acquirerId: 'a6',
+    announcedDate: '2023-03-15',
+    dealType: 'Strategic Investment',
+    strategicRationale: 'Fertility benefits platform integration partnership'
   },
   {
     id: 'deal7',
-    targetId: 'c9',
-    acquirerId: 'a2',
-    announcedDate: '2023-09-10',
-    closedDate: '2023-12-15',
-    dealValue: 325,
-    dealType: 'Acquisition',
-    strategicRationale: 'Acquire at-home testing infrastructure',
-    multiples: { revenue: 9.2 }
+    targetId: 'c6',
+    acquirerId: 'a13',
+    announcedDate: '2021-06-22',
+    dealType: 'Strategic Investment',
+    strategicRationale: 'Employer fertility benefits network expansion'
   },
   {
     id: 'deal8',
-    targetId: 'c19',
-    acquirerId: 'a10',
-    announcedDate: '2024-01-15',
-    dealType: 'Acquisition',
-    strategicRationale: 'Expand Fitbit health app ecosystem'
-  },
-  {
-    id: 'deal9',
-    targetId: 'c7',
+    targetId: 'c8',
     acquirerId: 'a6',
-    announcedDate: '2024-04-20',
+    announcedDate: '2021-09-08',
     dealType: 'Strategic Investment',
-    strategicRationale: 'Partner for fertility benefits integration'
-  },
-  {
-    id: 'deal10',
-    targetId: 'c5',
-    acquirerId: 'a7',
-    announcedDate: '2024-05-10',
-    dealType: 'Acquisition',
-    strategicRationale: 'Add in-person women\'s health clinics to MinuteClinic'
+    strategicRationale: 'Functional medicine and holistic care partnership'
   }
 ];
 
