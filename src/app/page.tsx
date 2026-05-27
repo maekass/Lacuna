@@ -14,6 +14,7 @@ import SensitivityAnalysis from '@/components/SensitivityAnalysis';
 import BayesianCausalAnalysis from '@/components/BayesianCausalAnalysis';
 import CausalDAG from '@/components/CausalDAG';
 import ImpactOpportunityCard from '@/components/ImpactOpportunityCard';
+import ValidationTracker from '@/components/ValidationTracker';
 import TemporalValidation from '@/components/TemporalValidation';
 import CausalInferenceEngine from '@/components/CausalInferenceEngine';
 import { 
@@ -211,6 +212,21 @@ export default function Home() {
             <p className="text-slate-600">Opportunity-Adjusted Impact Score (OAIS) - Transparent about what we CAN vs CANNOT measure</p>
           </div>
           <ImpactOpportunityCard />
+        </motion.section>
+
+        {/* Post-Acquisition Validation Tracker */}
+        <motion.section
+          id="validation-tracker"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.57 }}
+          className="mb-16"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-slate-800">Post-Acquisition Validation</h3>
+            <p className="text-slate-600">Pre-acquisition predictions vs post-acquisition reality | Model calibration</p>
+          </div>
+          <ValidationTracker />
         </motion.section>
 
         {/* Causal DAG & Identification Strategy */}
