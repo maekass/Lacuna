@@ -1,10 +1,11 @@
 <svg width="1280" height="640" viewBox="0 0 1280 640" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Pink-to-purple gradient matching the app -->
+    <!-- Sophisticated rose-to-plum gradient -->
     <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#ec4899"/>
-      <stop offset="50%" style="stop-color:#a855f7"/>
-      <stop offset="100%" style="stop-color:#7c3aed"/>
+      <stop offset="0%" style="stop-color:#c97b7e"/>
+      <stop offset="30%" style="stop-color:#a68bc8"/>
+      <stop offset="70%" style="stop-color:#7a6fa8"/>
+      <stop offset="100%" style="stop-color:#4a3f6b"/>
     </linearGradient>
     
     <!-- Subtle grid pattern -->
@@ -46,7 +47,7 @@
     <!-- Logo icon -->
     <g transform="translate(-40, -140)">
       <rect x="0" y="0" width="80" height="80" rx="16" fill="white" opacity="0.95"/>
-      <text x="40" y="56" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="700" fill="#7c3aed" text-anchor="middle">L</text>
+      <text x="40" y="56" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="700" fill="#4a3f6b" text-anchor="middle">L</text>
     </g>
     
     <!-- Lacuna title -->
