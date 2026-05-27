@@ -79,14 +79,19 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Initialize session state for production
-if 'initialized' not in st.session_state:
-    st.session_state.initialized = True
-    st.session_state.page_views = 0
-    st.session_state.session_start = datetime.now(timezone.utc)
+# Initialize session state for production (guard for non-Streamlit contexts like CI/tests)
+try:
+    if hasattr(st, 'session_state') and 'initialized' not in st.session_state:
+        st.session_state.initialized = True
+        st.session_state.page_views = 0
+        st.session_state.session_start = datetime.now(timezone.utc)
     
-# Track page views
-st.session_state.page_views += 1
+    # Track page views
+    if hasattr(st, 'session_state'):
+        st.session_state.page_views += 1
+except (AttributeError, RuntimeError):
+    # Streamlit not running (e.g., in tests or CI)
+    pass
 
 # ============================================================================
 # LEGAL DISCLAIMER - DISPLAYED ON EVERY PAGE
@@ -819,17 +824,24 @@ _ZONE_FOR_PAGE = {
     "Advanced Quant Analytics": ("portfolio", "Institutional-grade risk & portfolio optimization"),
 }
 
-# Add language selector to sidebar
-selected_language = get_language_selector()
+# Add language selector to sidebar (guard for non-Streamlit contexts)
+try:
+    selected_language = get_language_selector()
+except (AttributeError, RuntimeError):
+    # Streamlit not running (e.g., in tests or CI)
+    selected_language = 'en'
 
 # Show zone banner with translation
 if page in _ZONE_FOR_PAGE:
     z, label = _ZONE_FOR_PAGE[page]
     zone_banner(z, t(label))
 
-# Show translation badge if not English
-if selected_language != 'en':
-    st.markdown(get_translation_badge(selected_language), unsafe_allow_html=True)
+# Show translation badge if not English (guard for non-Streamlit contexts)
+try:
+    if selected_language != 'en':
+        st.markdown(get_translation_badge(selected_language), unsafe_allow_html=True)
+except (AttributeError, RuntimeError):
+    pass
 
 if not data_is_present(DATA):
     _boot_ph = st.empty()
