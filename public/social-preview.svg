@@ -1,11 +1,12 @@
 <svg width="1280" height="640" viewBox="0 0 1280 640" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Sophisticated rose-to-plum gradient -->
+    <!-- 2026 Pantone Spring/Summer Color Scheme -->
+    <!-- Transcendent Pink -> Cosmic Blue -> Deep Plum gradient -->
     <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#c97b7e"/>
-      <stop offset="30%" style="stop-color:#a68bc8"/>
-      <stop offset="70%" style="stop-color:#7a6fa8"/>
-      <stop offset="100%" style="stop-color:#4a3f6b"/>
+      <stop offset="0%" style="stop-color:#E8B4B8"/>  <!-- Pantone Transcendent Pink -->
+      <stop offset="35%" style="stop-color:#B8A9C9"/> <!-- Soft lavender transition -->
+      <stop offset="65%" style="stop-color:#4A5D8A"/>  <!-- Pantone Cosmic Blue -->
+      <stop offset="100%" style="stop-color:#5D4E6D"/> <!-- Pantone Deep Plum -->
     </linearGradient>
     
     <!-- Subtle grid pattern -->
@@ -47,7 +48,7 @@
     <!-- Elegant L Logo -->
     <g transform="translate(-50, -150)">
       <rect x="0" y="0" width="100" height="100" rx="20" fill="white" opacity="0.9"/>
-      <text x="50" y="72" font-family="'Playfair Display', 'Times New Roman', serif" font-size="60" font-weight="400" font-style="italic" fill="#4a3f6b" text-anchor="middle" style="font-family: Georgia, 'Times New Roman', serif; font-style: italic;">L</text>
+      <text x="50" y="72" font-family="'Playfair Display', 'Times New Roman', serif" font-size="60" font-weight="400" font-style="italic" fill="#5D4E6D" text-anchor="middle" style="font-family: Georgia, 'Times New Roman', serif; font-style: italic;">L</text>
     </g>
     
     <!-- Lacuna title - elegant cursive -->
