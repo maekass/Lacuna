@@ -507,6 +507,35 @@ README.md
 
 ### Quick Start
 
+**Choose your path:**
+
+#### Path 1: For Investors/Analysts (No Installation Required)
+
+**Step 1: Verify Data Quality**
+- View [Data Verification Certificate](DATA_VERIFICATION_CERTIFICATE.md)
+- Check [Deployment Verification](DEPLOYMENT_VERIFICATION.md)
+- Review [Human Verification System](https://github.com/maekass/MPK1#human-verification-system-5-layer-validation)
+
+**Step 2: Explore Dashboard**
+```bash
+# Clone and run (5 minutes)
+git clone https://github.com/maekass/MPK1.git
+cd MPK1
+pip install -r requirements.txt
+streamlit run dashboard/app.py
+```
+Dashboard opens at `http://localhost:8501`
+
+**Step 3: Query Data**
+- Navigate to "ML Models" page for predictions
+- Use "Disease Lookup" for trial search
+- Export data via "Advanced Filters" (Excel/CSV)
+
+---
+
+#### Path 2: For Developers (Full Setup)
+
+**Step 1: Clone & Install**
 ```bash
 # Clone repository
 git clone https://github.com/maekass/MPK1.git
@@ -514,23 +543,42 @@ cd MPK1
 
 # Create virtual environment
 python -m venv .venv
-source .venv/bin/activate # Windows: .venv\Scripts\activate
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
+```
 
+**Step 2: Collect Data**
+```bash
 # Collect all data (takes 5-10 minutes)
 python src/data_collection/collect_all_data.py
 
 # Run analysis models
 python src/models/investment_stage_analysis.py
 python src/models/market_analysis.py
+```
 
+**Step 3: Run Predictions**
+```bash
+# Test ML model
+python src/models/trial_success_predictor.py
+
+# View predictions in data/processed/
+```
+
+**Step 4: Start Dashboard**
+```bash
 # Launch interactive dashboard
 streamlit run dashboard/app.py
 ```
 
-The dashboard will open in your browser at `http://localhost:8501`
+Dashboard opens at `http://localhost:8501`
+
+**Step 5: Explore API**
+- Data available in `data/processed/enhanced_clinical_trials.csv`
+- Model outputs in `data/processed/trial_predictions.csv`
+- See [API Documentation](docs/ADVANCED_FEATURES_GUIDE.md) for integration
 
 ### Data Sources & API Notes
 
