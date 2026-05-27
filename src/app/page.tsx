@@ -183,7 +183,7 @@ export default function Home() {
               <span className="text-sm font-medium text-slate-700">Lacuna</span>
             </div>
             <p className="text-sm text-slate-500">
-              Licensed under Business Source License 1.1 · © 2024
+              Licensed under Business Source License 1.1 · © 2026 · Educational Project
             </p>
             <div className="flex items-center gap-4 text-sm text-slate-500">
               <a href="https://github.com" className="hover:text-slate-700 transition-colors">GitHub</a>

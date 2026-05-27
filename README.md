@@ -2,6 +2,8 @@
 
 > *Network Intelligence Platform for Women's Health M&A*
 
+⚠️ **EDUCATIONAL PROJECT**: This is a demonstration/educational project for portfolio and learning purposes. Not a commercial product. Data is compiled from public sources for educational visualization.
+
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://typescriptlang.org)
 [![D3.js](https://img.shields.io/badge/D3.js-v7-orange?style=flat-square&logo=d3.js)](https://d3js.org)
@@ -107,6 +109,6 @@ vercel --prod
 
 ## License
 
-Business Source License 1.1 © 2024 Lacuna Project Authors
+Business Source License 1.1 © 2026 Lacuna Project Authors
 
 The Licensed Work becomes available under Apache 2.0 four years from publication date. Commercial licensing available upon request.
