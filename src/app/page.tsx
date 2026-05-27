@@ -16,6 +16,7 @@ import CausalDAG from '@/components/CausalDAG';
 import ImpactOpportunityCard from '@/components/ImpactOpportunityCard';
 import ValidationTracker from '@/components/ValidationTracker';
 import FairnessAuditV2 from '@/components/FairnessAuditV2';
+import NetworkAnalysisHonest from '@/components/NetworkAnalysisHonest';
 import TemporalValidation from '@/components/TemporalValidation';
 import CausalInferenceEngine from '@/components/CausalInferenceEngine';
 import { 
@@ -243,6 +244,21 @@ export default function Home() {
             <p className="text-slate-600">Modular framework: Wilson CIs, Fisher&apos;s exact, Bonferroni correction, power analysis</p>
           </div>
           <FairnessAuditV2 />
+        </motion.section>
+
+        {/* Network Analysis - Honest Small-N */}
+        <motion.section
+          id="network-analysis"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.578 }}
+          className="mb-16"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-slate-800">Network Analysis</h3>
+            <p className="text-slate-600">Honest small-N analysis: Bootstrap CIs, Gini/HHI concentration, null model comparison</p>
+          </div>
+          <NetworkAnalysisHonest />
         </motion.section>
 
         {/* Causal DAG & Identification Strategy */}
