@@ -5,11 +5,12 @@
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://typescriptlang.org)
 [![D3.js](https://img.shields.io/badge/D3.js-v7-orange?style=flat-square&logo=d3.js)](https://d3js.org)
+[![TensorFlow.js](https://img.shields.io/badge/TensorFlow.js-4.0-FF6F00?style=flat-square&logo=tensorflow)](https://tensorflow.org/js)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-0055FF?style=flat-square)](https://framer.com/motion)
 [![License](https://img.shields.io/badge/License-BSL_1.1-purple?style=flat-square)](LICENSE)
 
-**Tools & Stack:** Next.js 14 · TypeScript · D3.js (force simulation, hierarchy, scales) · Framer Motion · Tailwind CSS · visx patterns
+**Tools & Stack:** Next.js 14 · TypeScript · D3.js (force simulation, hierarchy, scales) · TensorFlow.js · simple-statistics · ml-matrix · Framer Motion · Tailwind CSS · visx patterns
 
 Lacuna maps the acquisition landscape across FemTech, digital health, and women's wellness sectors—visualizing strategic relationships, exit patterns, and market dynamics through sophisticated network analysis.
 
@@ -41,10 +42,34 @@ Lacuna maps the acquisition landscape across FemTech, digital health, and women'
 - **Derived statistics**: Network nodes/links generation, sector distribution, deal value totals
 - **Sample dataset**: 20 companies, 15 acquirers, 10 tracked deals, $2B+ disclosed value
 
+### AI/ML Intelligence Layer
+
+#### Exit Predictor (`ExitPredictor.tsx`)
+- **TensorFlow.js integration**: Client-side ML model inference
+- **Feature engineering**: Stage, valuation, sector heat, company age
+- **Probability scoring**: 0-95% exit likelihood with confidence intervals
+- **Acquirer prediction**: Sector-based strategic buyer matching
+- **Factor analysis**: Explainable ML with key decision drivers
+
+#### Company Similarity Engine (`CompanySimilarity.tsx`)
+- **Vector embeddings**: 8-dimensional feature vectors per company
+- **Cosine similarity**: Mathematical company comparison metric
+- **ml-matrix integration**: Fast matrix operations for similarity computation
+- **Shared factor detection**: Automatically identifies common attributes
+- **Recommendation system**: "Companies like this" discovery
+
+#### K-Means Clustering (`ClusteringAnalysis.tsx`)
+- **Unsupervised ML**: Lloyd's algorithm (k=3 clusters)
+- **simple-statistics**: Statistical computations (mean, standard deviation)
+- **Valuation × Employees**: 2D clustering space
+- **Market segmentation**: Emerging / Growth / Late-stage classification
+- **Automatic categorization**: Dynamic cluster assignment
+
 ## Technology Stack
 
 - **Framework**: Next.js 14 (App Router) + TypeScript
 - **Visualizations**: D3.js (force simulation, scales, shapes) + visx patterns
+- **Machine Learning**: TensorFlow.js · simple-statistics · ml-matrix
 - **Animation**: Framer Motion for orchestrated UI transitions
 - **Styling**: Tailwind CSS + shadcn/ui components
 - **Data Layer**: Static TypeScript interfaces with derived statistical computations

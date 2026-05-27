@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@tensorflow/tfjs": "^4.22.0",
     "@types/d3": "^7.4.3",
     "d3": "^7.9.0",
     "d3-array": "^3.2.4",
@@ -19,9 +20,11 @@
     "d3-shape": "^3.2.0",
     "d3-transition": "^3.0.1",
     "framer-motion": "^12.40.0",
+    "ml-matrix": "^6.12.2",
     "next": "16.2.6",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "simple-statistics": "^7.8.9"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
