@@ -71,6 +71,58 @@ Lacuna maps the acquisition landscape across FemTech, digital health, and women'
 - **Market segmentation**: Emerging / Growth / Late-stage classification
 - **Automatic categorization**: Dynamic cluster assignment
 
+### Clinical ML Intelligence (Ported from windsurf-project)
+
+#### Ensemble Predictor (`ensemblePredictor.ts`)
+- **TensorFlow.js neural network**: 78% accuracy pattern (simulated)
+- **Multi-model ensemble**: Neural network + logistic regression
+- **Trial success prediction**: Phase transition probability with 95% confidence intervals
+- **Feature importance**: Phase, sponsor, enrollment, mechanism analysis
+- **Health equity scoring**: Dual-metric ROI + equity impact for Black women's health
+
+#### Data Certification System (`dataCertification.ts`)
+- **5-layer validation**: Schema, Completeness, Consistency, Provenance, Quality
+- **SHA256 cryptographic hashing**: Tamper-evident data verification
+- **Quality scoring**: 0-100 scale with letter grades (A+, A, B+, etc.)
+- **Source tracking**: Per-record provenance with verified citations
+- **Daily certification**: Automated quality assurance
+
+### Health Equity Dashboard (`HealthEquityDashboard.tsx`)
+
+**Mission:** Investing in Black women's health isn't just the right thing to do—it's a massive market opportunity.
+
+#### Priority Diseases (Disproportionately Affecting Black Women)
+
+| Disease | Disparity | Market Size | Investment Thesis |
+|---------|-----------|-------------|-------------------|
+| **Maternal Health** | 3.4x higher mortality | $12B | Digital health, remote monitoring, culturally competent care |
+| **Uterine Fibroids** | 80% prevalence by age 50 | $34B | Non-surgical treatments, early detection, fertility preservation |
+| **Lupus** | 3x higher prevalence | $8B | AI diagnostics, biomarker discovery, precision medicine |
+| **Sickle Cell Disease** | Primarily affects Black populations | $5B | Gene therapy, CRISPR, curative treatments |
+| **Cardiovascular Disease** | 1.4x higher mortality | $15B | Wearables, early detection, culturally tailored interventions |
+
+**Combined market opportunity: $74B**
+
+#### Development Roadmap
+- **Phase 7** (Implemented): Health Equity Dashboard with dual-metric scoring
+- **Phase 8** (Planned): Trial Diversity Tracker with geographic mapping
+- **Phase 9** (Planned): Impact Investment Scorecard (ROI + equity combined)
+- **Phase 10** (Planned): Underserved Disease Analyzer
+- **Phase 11** (Planned): Community Impact Predictor (lives saved per $1M invested)
+
+### Clinical Trials Integration (`/api/clinical-trials`)
+- **ClinicalTrials.gov API v2**: Real-time trial search and filtering
+- **Search parameters**: Condition, phase, status, enrollment
+- **Trial data**: NCT ID, title, sponsor, locations, interventions
+- **Fallback data**: Curated trials for development/testing
+- **Batch lookup**: Multi-trial query endpoint
+
+### Wearables Ecosystem Tracker (`WearablesTracker.tsx`)
+- **Women's health wearables**: Oura, Whoop, Apple Watch, Natural Cycles
+- **Feature analysis**: Menstrual tracking, fertility prediction, holistic health
+- **Investment thesis**: Market gaps, innovation opportunities
+- **Integration patterns**: How wearables connect to broader health ecosystem
+
 ## Technology Stack
 
 - **Framework**: Next.js 14 (App Router) + TypeScript
@@ -90,10 +142,20 @@ Lacuna maps the acquisition landscape across FemTech, digital health, and women'
 
 ## Data Coverage
 
-- 20+ emerging companies across fertility, mental health, wearables, pelvic health
-- 15 strategic acquirers (Fortune 500 health, tech giants, specialized buyers)
-- 10 tracked transactions with deal values and strategic rationale
-- $2B+ in disclosed transaction value
+- **22 verified companies** across fertility, mental health, wearables, pelvic health
+  - Includes Johns Hopkins FemTech startups: NovvaCup, Ovubrush
+- **15 strategic acquirers** (Fortune 500 health, tech giants, specialized buyers)
+- **10 tracked transactions** with deal values and strategic rationale
+- **$2B+ in disclosed transaction value**
+- **Every data point sourced**: Company websites, SEC filings, TechCrunch, Crunchbase, FDA.gov, press releases
+
+### Johns Hopkins FemTech Innovation
+**Verified academic startups from JHTV (Johns Hopkins Technology Ventures):**
+
+| Company | Founders | Focus | Achievement |
+|---------|----------|-------|-------------|
+| **NovvaCup** | Danielle Nicklas (PhD), Alexis Lowe, Clarissa Ren (MD) | Multiphasic menstrual cup | $10K Pitch It On! winner (2022), FastForward U Fuel Accelerator |
+| **Ovubrush** | Janis Iourovitski (CBID) | Saliva-based ovulation tracker | Johns Hopkins Center for Bioengineering Innovation and Design |
 
 ## Quick Start
 
