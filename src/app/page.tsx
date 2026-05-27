@@ -15,6 +15,7 @@ import BayesianCausalAnalysis from '@/components/BayesianCausalAnalysis';
 import CausalDAG from '@/components/CausalDAG';
 import ImpactOpportunityCard from '@/components/ImpactOpportunityCard';
 import ValidationTracker from '@/components/ValidationTracker';
+import FairnessAudit from '@/components/FairnessAudit';
 import TemporalValidation from '@/components/TemporalValidation';
 import CausalInferenceEngine from '@/components/CausalInferenceEngine';
 import { 
@@ -227,6 +228,21 @@ export default function Home() {
             <p className="text-slate-600">Pre-acquisition predictions vs post-acquisition reality | Model calibration</p>
           </div>
           <ValidationTracker />
+        </motion.section>
+
+        {/* Fairness Audit */}
+        <motion.section
+          id="fairness-audit"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.575 }}
+          className="mb-16"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-slate-800">Fairness Audit</h3>
+            <p className="text-slate-600">Honest fairness measurement with explicit limitations | Demographic parity only</p>
+          </div>
+          <FairnessAudit />
         </motion.section>
 
         {/* Causal DAG & Identification Strategy */}
