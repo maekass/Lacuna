@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Company, Acquisition, DealMetrics, ValidationResult } from '@/lib/types';
 import { Validation } from '@/lib/validation';
 import { Analytics } from '@/lib/analytics';
@@ -140,15 +140,3 @@ export function useDebouncedValue<T>(value: T, delay: number): T {
   return debounced;
 }
 
-// Previous value hook using ref (no setState in effect)
-export function usePrevious<T>(value: T): T | undefined {
-  const prevRef = React.useRef<T | undefined>(undefined);
-  const currentRef = React.useRef<T | undefined>(undefined);
-  
-  if (currentRef.current !== value) {
-    prevRef.current = currentRef.current;
-    currentRef.current = value;
-  }
-  
-  return prevRef.current;
-}

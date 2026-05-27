@@ -111,6 +111,38 @@ npm run build
 vercel --prod
 ```
 
+## Data Provenance
+
+All data in this repository is compiled from **publicly available sources only**:
+
+### Sources
+- **SEC EDGAR filings** — Verified M&A transactions (e.g., Teladoc/Livongo $13.9B merger)
+- **Crunchbase** — Funding rounds and total raised (where publicly reported)
+- **Company press releases** — Strategic investments and partnerships
+- **Verified press coverage** — TechCrunch, Fierce Healthcare, Bloomberg (cross-referenced)
+- **Company websites** — Descriptions, founding dates, headquarters
+
+### What We Include
+- ✅ Publicly disclosed acquisition values (SEC filings, press releases)
+- ✅ Last known funding round valuations (from Crunchbase/press)
+- ✅ Total funding raised (publicly reported)
+- ✅ Company founding dates and locations (public record)
+- ✅ Strategic partnerships (press-reported, financial terms often undisclosed)
+
+### What We Omit
+- ❌ Employee counts — Not reliably verifiable across private companies
+- ❌ Estimated/reconstructed valuations — Only publicly disclosed figures
+- ❌ Projected/revenue multiples — Unless officially reported
+- ❌ Synthetic transactions — All M&A data is verified real deals
+
+### Important Notes
+- Private company valuations reflect **last disclosed funding rounds** and may not represent current market value
+- Some acquisition values are **press estimates** where official terms weren't disclosed (clearly marked)
+- **Strategic investments** often have undisclosed financial terms (marked as such)
+- Public company valuations (e.g., Talkspace) fluctuate with market prices
+
+**Purpose**: Educational visualization of M&A trends in women's health. Not for commercial investment decisions. Verify independently.
+
 ## License
 
 Business Source License 1.1 © 2026 Lacuna Project Authors

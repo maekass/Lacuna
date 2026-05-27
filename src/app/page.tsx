@@ -8,19 +8,27 @@ import ExitPredictor from '@/components/ExitPredictor';
 import CompanySimilarity from '@/components/CompanySimilarity';
 import ClusteringAnalysis from '@/components/ClusteringAnalysis';
 import WearablesTracker from '@/components/WearablesTracker';
-import { companies, acquisitions, getNetworkNodes, getNetworkLinks, getDealsByYear, getTotalDealValue } from '@/data/maDeals';
+import { 
+  verifiedCompanies, 
+  verifiedAcquisitions, 
+  getVerifiedNetworkNodes, 
+  getVerifiedNetworkLinks, 
+  getVerifiedDealsByYear, 
+  getVerifiedTotalDealValue,
+  dataProvenance 
+} from '@/data/verifiedData';
 
 export default function Home() {
-  const networkNodes = getNetworkNodes();
-  const networkLinks = getNetworkLinks();
-  const dealsByYear = getDealsByYear();
-  const totalDealValue = getTotalDealValue();
+  const networkNodes = getVerifiedNetworkNodes();
+  const networkLinks = getVerifiedNetworkLinks();
+  const dealsByYear = getVerifiedDealsByYear();
+  const totalDealValue = getVerifiedTotalDealValue();
 
   const stats = [
-    { label: 'Companies Tracked', value: companies.length.toString() },
-    { label: 'Acquisitions', value: acquisitions.length.toString() },
-    { label: 'Total Deal Value', value: `$${(totalDealValue / 1000).toFixed(1)}B` },
-    { label: 'Acquirers', value: '15' },
+    { label: 'Companies Tracked', value: verifiedCompanies.length.toString() },
+    { label: 'Verified Acquisitions', value: verifiedAcquisitions.length.toString() },
+    { label: 'Disclosed Deal Value', value: `$${(totalDealValue / 1000).toFixed(1)}B` },
+    { label: 'Data Sources', value: dataProvenance.sources.length.toString() },
   ];
 
   return (
@@ -122,18 +130,20 @@ export default function Home() {
             <h3 className="text-lg font-semibold text-slate-800 mb-2">Recent Activity</h3>
             <p className="text-sm text-slate-500 mb-6">Latest acquisitions and strategic investments</p>
             <div className="space-y-4">
-              {acquisitions.slice(0, 5).map((deal) => {
-                const target = companies.find(c => c.id === deal.targetId);
-                const acquirer = networkNodes.find(n => n.id === deal.acquirerId);
+              {verifiedAcquisitions.slice(0, 5).map((deal: typeof verifiedAcquisitions[0]) => {
+                const target = verifiedCompanies.find((c: typeof verifiedCompanies[0]) => c.id === deal.targetId);
+                const acquirer = networkNodes.find((n: typeof networkNodes[0]) => n.id === deal.acquirerId);
                 return (
                   <div key={deal.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                     <div>
                       <p className="font-medium text-slate-800">{target?.name}</p>
-                      <p className="text-xs text-slate-500">Acquired by {acquirer?.name}</p>
+                      <p className="text-xs text-slate-500">{deal.dealType} by {acquirer?.name || deal.acquirerName}</p>
                     </div>
                     <div className="text-right">
-                      {deal.dealValue && (
+                      {deal.dealValue ? (
                         <p className="font-semibold text-pink-600">${deal.dealValue}M</p>
+                      ) : (
+                        <p className="text-xs text-slate-400">Terms not disclosed</p>
                       )}
                       <p className="text-xs text-slate-400">{deal.announcedDate}</p>
                     </div>

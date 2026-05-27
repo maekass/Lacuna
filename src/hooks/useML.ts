@@ -1,9 +1,6 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Company, ExitPrediction, SimilarityScore, MarketCluster } from '@/lib/types';
+import { useCallback, useMemo } from 'react';
+import { Company, SimilarityScore, MarketCluster } from '@/lib/types';
 import * as ss from 'simple-statistics';
-
-// ML model loading states
-type MLState = 'idle' | 'loading' | 'ready' | 'error';
 
 // Re-export from usePredictions for cleaner API
 export { usePredictions } from './usePredictions';
