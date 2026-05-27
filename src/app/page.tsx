@@ -7,6 +7,7 @@ import ValuationMatrix from '@/components/ValuationMatrix';
 import ExitPredictor from '@/components/ExitPredictor';
 import CompanySimilarity from '@/components/CompanySimilarity';
 import ClusteringAnalysis from '@/components/ClusteringAnalysis';
+import WearablesTracker from '@/components/WearablesTracker';
 import { companies, acquisitions, getNetworkNodes, getNetworkLinks, getDealsByYear, getTotalDealValue } from '@/data/maDeals';
 
 export default function Home() {
@@ -154,12 +155,23 @@ export default function Home() {
           <ValuationMatrix />
         </motion.section>
 
+        {/* Wearables Ecosystem Section - Featured for Pitch */}
+        <motion.section
+          id="wearables"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mb-16"
+        >
+          <WearablesTracker />
+        </motion.section>
+
         {/* AI/ML Intelligence Section */}
         <motion.section
           id="ai-ml"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
           <div className="mb-6">
