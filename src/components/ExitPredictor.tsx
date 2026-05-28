@@ -3,7 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import * as tf from '@tensorflow/tfjs';
-import { companies, acquisitions } from '@/data/maDeals';
+import {
+  getVerifiedAcquisitionsForAnalysis,
+  getVerifiedCompaniesForAnalysis,
+} from '@/lib/data/verifiedDatasetAdapters';
+
+const companies = getVerifiedCompaniesForAnalysis();
+const acquisitions = getVerifiedAcquisitionsForAnalysis();
 
 interface Prediction {
   companyId: string;

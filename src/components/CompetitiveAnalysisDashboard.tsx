@@ -20,62 +20,22 @@ import {
   type AcquisitionRecord,
   type ExternalEvent
 } from '@/lib/competitive/acquirerAnalysis';
+import { getVerifiedCompetitiveAnalysisData } from '@/lib/data/verifiedDatasetAdapters';
+import { verifiedAcquisitions } from '@/data/verifiedData';
 
-// Synthetic but realistic dataset based on verified FemTech acquirers
-const ACQUIRERS: Acquirer[] = [
-  { id: 'teladoc', name: 'Teladoc', type: 'strategic_healthcare', marketCap: 25000, sizeTier: 'fortune_500', founded: 2002, headquarters: 'NY' },
-  { id: 'ro', name: 'Ro', type: 'strategic_healthcare', marketCap: 7000, sizeTier: 'mid_market', founded: 2017, headquarters: 'NY' },
-  { id: 'amazon', name: 'Amazon', type: 'strategic_tech', marketCap: 1500000, sizeTier: 'fortune_500', founded: 1994, headquarters: 'WA' },
-  { id: 'cvs', name: 'CVS Health', type: 'corporate_health', marketCap: 110000, sizeTier: 'fortune_500', founded: 1963, headquarters: 'RI' },
-  { id: 'stryker', name: 'Stryker', type: 'strategic_healthcare', marketCap: 95000, sizeTier: 'fortune_500', founded: 1941, headquarters: 'MI' },
-  { id: 'unitedhealth', name: 'UnitedHealth', type: 'corporate_health', marketCap: 480000, sizeTier: 'fortune_500', founded: 1977, headquarters: 'MN' },
-  { id: 'kkr', name: 'KKR', type: 'private_equity', marketCap: 90000, sizeTier: 'fortune_500', founded: 1976, headquarters: 'NY' },
-  { id: 'bain', name: 'Bain Capital', type: 'private_equity', marketCap: 165000, sizeTier: 'fortune_500', founded: 1984, headquarters: 'MA' }
-];
+const { acquirers: ACQUIRERS, companies: COMPANIES, acquisitions: ACQUISITIONS } =
+  getVerifiedCompetitiveAnalysisData();
 
-const COMPANIES: AcquiredCompany[] = [
-  { id: 'modern_fertility', name: 'Modern Fertility', sector: 'Fertility', stage: 'series_a', yearFounded: 2017, yearAcquired: 2021, acquisitionValue: 225, geography: 'us' },
-  { id: 'nurx', name: 'Nurx', sector: 'Wellness', stage: 'series_c', yearFounded: 2015, yearAcquired: 2021, acquisitionValue: 300, geography: 'us' },
-  { id: 'livongo', name: 'Livongo', sector: 'Diabetes Care', stage: 'public', yearFounded: 2008, yearAcquired: 2020, acquisitionValue: 18500, geography: 'us' },
-  { id: 'lemonaid', name: 'Lemonaid Health', sector: 'Wellness', stage: 'series_b', yearFounded: 2013, yearAcquired: 2021, acquisitionValue: 400, geography: 'us' },
-  { id: 'oneMedical', name: 'One Medical', sector: 'Primary Care', stage: 'public', yearFounded: 2007, yearAcquired: 2022, acquisitionValue: 3900, geography: 'us' },
-  { id: 'aetna', name: 'Aetna', sector: 'Insurance', stage: 'public', yearFounded: 1853, yearAcquired: 2018, acquisitionValue: 69000, geography: 'us' },
-  { id: 'simple_habit', name: 'Simple Habit', sector: 'Mental Health', stage: 'series_a', yearFounded: 2016, yearAcquired: 2022, acquisitionValue: 250, geography: 'us' },
-  { id: 'talkspace', name: 'Talkspace', sector: 'Mental Health', stage: 'public', yearFounded: 2012, yearAcquired: 2021, acquisitionValue: 1400, geography: 'us' },
-  { id: 'beam_health', name: 'Beam Health', sector: 'Pediatric', stage: 'series_b', yearFounded: 2014, yearAcquired: 2023, acquisitionValue: 180, geography: 'us' },
-  { id: 'novvacup', name: 'NovvaCup', sector: 'Menstrual Health', stage: 'pre_seed', yearFounded: 2022, yearAcquired: 2024, geography: 'us' },
-  { id: 'ovubrush', name: 'Ovubrush', sector: 'Fertility', stage: 'pre_seed', yearFounded: 2022, yearAcquired: 2024, geography: 'us' },
-  { id: 'maven', name: 'Maven Clinic', sector: 'Maternal Health', stage: 'series_b', yearFounded: 2014, yearAcquired: 2023, acquisitionValue: 1350, geography: 'us' },
-  { id: 'envolve', name: 'Envolve', sector: 'Wellness', stage: 'series_b', yearFounded: 2015, yearAcquired: 2022, acquisitionValue: 850, geography: 'us' }
-];
-
-const ACQUISITIONS: AcquisitionRecord[] = [
-  { acquirerId: 'ro', companyId: 'modern_fertility', year: 2021, value: 225 },
-  { acquirerId: 'ro', companyId: 'nurx', year: 2021, value: 300 },
-  { acquirerId: 'amazon', companyId: 'lemonaid', year: 2021, value: 400 },
-  { acquirerId: 'amazon', companyId: 'oneMedical', year: 2022, value: 3900 },
-  { acquirerId: 'teladoc', companyId: 'livongo', year: 2020, value: 18500 },
-  { acquirerId: 'teladoc', companyId: 'talkspace', year: 2021, value: 1400 },
-  { acquirerId: 'teladoc', companyId: 'simple_habit', year: 2022, value: 250 },
-  { acquirerId: 'cvs', companyId: 'aetna', year: 2018, value: 69000 },
-  { acquirerId: 'cvs', companyId: 'maven', year: 2023, value: 1350 },
-  { acquirerId: 'stryker', companyId: 'novvacup', year: 2024 },
-  { acquirerId: 'stryker', companyId: 'ovubrush', year: 2024 },
-  { acquirerId: 'stryker', companyId: 'beam_health', year: 2023, value: 180 },
-  { acquirerId: 'unitedhealth', companyId: 'envolve', year: 2022, value: 850 }
-];
-
-const EXTERNAL_EVENTS: ExternalEvent[] = [
-  { year: 2018, type: 'regulatory', description: 'CVS-Aetna merger approved' },
-  { year: 2020, type: 'strategy_announcement', description: 'Teladoc-Livongo digital health platform formed' },
-  { year: 2021, type: 'strategy_announcement', description: 'Ro announces womens health expansion' },
-  { year: 2022, type: 'strategy_announcement', description: 'Amazon acquires One Medical, signals primary care entry' },
-  { year: 2023, type: 'strategy_announcement', description: 'CVS announces virtual care expansion' }
-];
+/** Timeline markers from verified deal announcements only */
+const EXTERNAL_EVENTS: ExternalEvent[] = verifiedAcquisitions.map((d) => ({
+  year: new Date(d.announcedDate).getFullYear(),
+  type: 'strategy_announcement' as const,
+  description: `${d.acquirerName} — ${d.targetName} (${d.dealType})`,
+}));
 
 export default function CompetitiveAnalysisDashboard() {
   const [activeTab, setActiveTab] = useState<'portfolio' | 'velocity' | 'market_structure' | 'type_comparison'>('portfolio');
-  const [selectedAcquirer, setSelectedAcquirer] = useState<string>(ACQUIRERS[0].id);
+  const [selectedAcquirer, setSelectedAcquirer] = useState<string>(ACQUIRERS[0]?.id ?? '');
   
   const portfolioAnalyses = useMemo(() => 
     ACQUIRERS.map(a => analyzePortfolio(a, ACQUISITIONS, COMPANIES))

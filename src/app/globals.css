@@ -1,26 +1,50 @@
 @import "tailwindcss";
 
+/* Lacuna — Pantone Spring/Summer 2026 (README Design System) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --lacuna-pink: #e8b4b8;
+  --lacuna-lavender: #b8a9c9;
+  --lacuna-blue: #4a5d8a;
+  --lacuna-plum: #5d4e6d;
+  --background: #faf7f8;
+  --foreground: var(--lacuna-plum);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-lacuna-pink: var(--lacuna-pink);
+  --color-lacuna-lavender: var(--lacuna-lavender);
+  --color-lacuna-blue: var(--lacuna-blue);
+  --color-lacuna-plum: var(--lacuna-plum);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+.lacuna-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--lacuna-pink) 0%,
+    var(--lacuna-lavender) 35%,
+    var(--lacuna-blue) 70%,
+    var(--lacuna-plum) 100%
+  );
+}
+
+.lacuna-gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--lacuna-plum) 0%,
+    var(--lacuna-blue) 50%,
+    var(--lacuna-lavender) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }

@@ -16,7 +16,13 @@ import {
 import { useDataCertification, generateVerificationBadge } from '@/lib/validation/dataCertification';
 import { verifiedCompanies } from '@/data/verifiedData';
 
-// Disease cards with impact metrics
+const verifiedNames = new Set(verifiedCompanies.map((c) => c.name));
+
+function linkVerified(names: string[]) {
+  return names.filter((n) => verifiedNames.has(n));
+}
+
+// Epidemiology references (public health literature); company lists are verified-dataset only
 const DISEASE_METRICS = [
   {
     disease: 'Maternal Health',
@@ -24,7 +30,7 @@ const DISEASE_METRICS = [
     marketSize: 12,
     description: 'Black women face 3-4x higher maternal mortality than white women',
     investmentThesis: 'Digital health, remote monitoring, culturally competent care',
-    companies: ['Maven Clinic', 'Diana Health']
+    companies: linkVerified(['Maven Clinic'])
   },
   {
     disease: 'Uterine Fibroids',
@@ -32,7 +38,7 @@ const DISEASE_METRICS = [
     marketSize: 34,
     description: 'Affects 80% of Black women by age 50; leading cause of hysterectomy',
     investmentThesis: 'Non-surgical treatments, early detection, fertility preservation',
-    companies: ['Elvie', 'Bloomi']
+    companies: linkVerified(['Bloomi'])
   },
   {
     disease: 'Lupus',
@@ -56,7 +62,7 @@ const DISEASE_METRICS = [
     marketSize: 15,
     description: 'Higher mortality rates in Black women despite lower awareness',
     investmentThesis: 'Wearables, early detection, culturally tailored interventions',
-    companies: ['Oura', 'Whoop']
+    companies: linkVerified(['Oura', 'Whoop'])
   }
 ];
 

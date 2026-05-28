@@ -31,7 +31,7 @@ function calculateExitPredictions(companies: readonly Company[]): ExitPrediction
       companyName: company.name,
       exitProbability: probability,
       predictedAcquirer: sectorAcquirers[company.sector] || 'Strategic Buyer',
-      confidence: 0.7 + Math.random() * 0.25,
+      confidence: Math.min(0.95, 0.55 + probability * 0.35),
       factors: [
         isLateStage ? 'Late stage maturity' : 'Early stage growth',
         hasHighValuation ? 'High valuation attracts buyers' : 'Acquisition-friendly valuation',

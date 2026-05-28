@@ -16,6 +16,7 @@ import {
   type OAISResult,
   type OAISInputs
 } from '@/lib/impact/oaisCalculator';
+import { verifiedCompanies } from '@/data/verifiedData';
 
 interface CompanyProfile {
   name: string;
@@ -28,48 +29,16 @@ interface CompanyProfile {
   competitors: number;
 }
 
-const EXAMPLE_COMPANIES: CompanyProfile[] = [
-  {
-    name: 'Modern Fertility (acquired)',
-    condition: 'Fertility',
-    stage: 'post_rct',
-    founderExits: 1,
-    founderFDAExp: true,
-    likelyAcquirer: 'Ro',
-    acquirerScalingMult: 1.9,
-    competitors: 12
-  },
-  {
-    name: 'Maven Clinic',
-    condition: 'Maternal Health',
-    stage: 'clinical_validation',
-    founderExits: 0,
-    founderFDAExp: false,
-    likelyAcquirer: 'Teladoc',
-    acquirerScalingMult: 2.3,
-    competitors: 6
-  },
-  {
-    name: 'Elvie',
-    condition: 'Pelvic Health',
-    stage: 'clinical_validation',
-    founderExits: 1,
-    founderFDAExp: false,
-    likelyAcquirer: 'Amazon',
-    acquirerScalingMult: 3.1,
-    competitors: 4
-  },
-  {
-    name: 'NovvaCup (JHU Startup)',
-    condition: 'Menstrual Health',
-    stage: 'pilot',
-    founderExits: 0,
-    founderFDAExp: false,
-    likelyAcquirer: 'Stryker',
-    acquirerScalingMult: 1.5,
-    competitors: 3
-  }
-];
+const EXAMPLE_COMPANIES: CompanyProfile[] = verifiedCompanies.map((c) => ({
+  name: c.name,
+  condition: c.sector,
+  stage: 'clinical_validation' as const,
+  founderExits: 0,
+  founderFDAExp: false,
+  likelyAcquirer: 'See verified deal network',
+  acquirerScalingMult: 1,
+  competitors: 0,
+}));
 
 export default function ImpactOpportunityCard() {
   const [selectedCompany, setSelectedCompany] = useState(0);

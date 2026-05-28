@@ -2,18 +2,23 @@
 
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { companies } from '@/data/maDeals';
+import { verifiedCompanies } from '@/data/verifiedData';
 import * as ss from 'simple-statistics';
 
 export default function ClusteringAnalysis() {
   const clusters = useMemo(() => {
-    // K-means clustering (k=3) based on valuation and employees
+    const withMetrics = verifiedCompanies.filter(
+      (c) => c.lastKnownValuation != null && c.totalFunding != null
+    );
+    if (withMetrics.length < 3) return [];
+
+    // K-means (k=3) on disclosed valuation vs total funding (no fabricated headcount)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const K = 3;
-    const data = companies.map(c => ({
-      x: c.valuation || 50,
-      y: c.employees,
-      company: c
+    const data = withMetrics.map((c) => ({
+      x: c.lastKnownValuation!,
+      y: c.totalFunding!,
+      company: c,
     }));
 
     // Initialize centroids
@@ -48,16 +53,22 @@ export default function ClusteringAnalysis() {
 
     // Build cluster objects
     const clusterNames = ['Emerging Startups', 'Growth Stage', 'Late Stage Scale&#45;ups'];
-    const clusterColors = ['bg-blue-50 border-blue-200', 'bg-purple-50 border-purple-200', 'bg-pink-50 border-pink-200'];
+    const clusterColors = [
+      'bg-lacuna-pink/15 border-lacuna-pink/40',
+      'bg-lacuna-lavender/20 border-lacuna-lavender/50',
+      'bg-lacuna-blue/10 border-lacuna-blue/30',
+    ];
 
     return centroids.map((centroid, i) => {
       const clusterCompanies = data
         .filter((_, j) => assignments[j] === i)
         .map(d => d.company);
       
-      const avgValuation = ss.mean(clusterCompanies.map(c => c.valuation || 0));
-      const avgEmployees = ss.mean(clusterCompanies.map(c => c.employees));
-      const sectors = [...new Set(clusterCompanies.map(c => c.sector))];
+      const avgValuation = ss.mean(
+        clusterCompanies.map((c) => c.lastKnownValuation || 0)
+      );
+      const avgFunding = ss.mean(clusterCompanies.map((c) => c.totalFunding || 0));
+      const sectors = [...new Set(clusterCompanies.map((c) => c.sector))];
 
       return {
         id: i,
@@ -67,12 +78,24 @@ export default function ClusteringAnalysis() {
         color: clusterColors[i],
         characteristics: [
           `Avg valuation: $${Math.round(avgValuation)}M`,
-          `Avg team: ${Math.round(avgEmployees)} people`,
-          `Sectors: ${sectors.slice(0, 3).join(', ')}${sectors.length > 3 ? '...' : ''}`
-        ]
+          `Avg disclosed funding: $${Math.round(avgFunding)}M`,
+          `Sectors: ${sectors.slice(0, 3).join(', ')}${sectors.length > 3 ? '...' : ''}`,
+        ],
       };
     });
   }, []);
+
+  if (clusters.length === 0) {
+    return (
+      <div className="rounded-xl border border-lacuna-lavender/40 bg-white p-8 text-center">
+        <p className="text-lacuna-plum font-medium">Not enough disclosed metrics to cluster</p>
+        <p className="text-sm text-lacuna-blue mt-2">
+          K-means needs valuation and total funding for at least three companies. Many verified
+          records omit headcount and valuation by design.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <motion.div

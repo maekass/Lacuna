@@ -2,7 +2,13 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { companies, acquisitions } from '@/data/maDeals';
+import {
+  getVerifiedAcquisitionsForAnalysis,
+  getVerifiedCompaniesForAnalysis,
+} from '@/lib/data/verifiedDatasetAdapters';
+
+const companies = getVerifiedCompaniesForAnalysis();
+const acquisitions = getVerifiedAcquisitionsForAnalysis();
 
 interface MatrixCell {
   sector: string;

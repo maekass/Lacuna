@@ -2,7 +2,9 @@
 
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { companies } from '@/data/maDeals';
+import { getVerifiedCompaniesForAnalysis } from '@/lib/data/verifiedDatasetAdapters';
+
+const companies = getVerifiedCompaniesForAnalysis();
 
 export default function CompanySimilarity() {
   const [selectedCompany, setSelectedCompany] = useState<string>(companies[0]?.id || '');

@@ -16,7 +16,7 @@ export const Analytics = {
     // By year
     const byYear = new Map<number, number>();
     acquisitions.forEach(a => {
-      const year = a.announcedDate.getFullYear();
+      const year = new Date(a.announcedDate).getFullYear();
       byYear.set(year, (byYear.get(year) || 0) + 1);
     });
     

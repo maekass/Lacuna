@@ -33,40 +33,9 @@ import {
   type NetworkEdge
 } from '@/lib/network/networkStatistics';
 import StrategicPositioningMap from './StrategicPositioningMap';
+import { getVerifiedNetworkGraph } from '@/lib/data/verifiedDatasetAdapters';
 
-// Sample network based on verified FemTech acquisitions
-const SAMPLE_NODES: NetworkNode[] = [
-  { id: 'teladoc', label: 'Teladoc', type: 'acquirer', sector: 'Telehealth', valuation: 25000 },
-  { id: 'ro', label: 'Ro', type: 'acquirer', sector: 'Telehealth', valuation: 7000 },
-  { id: 'amazon', label: 'Amazon', type: 'acquirer', sector: 'Tech', valuation: 1500000 },
-  { id: 'stryker', label: 'Stryker', type: 'acquirer', sector: 'Medical Devices', valuation: 95000 },
-  { id: 'cvs', label: 'CVS Health', type: 'acquirer', sector: 'Healthcare', valuation: 110000 },
-  { id: 'modern_fertility', label: 'Modern Fertility', type: 'company', sector: 'Fertility', valuation: 225 },
-  { id: 'nurx', label: 'Nurx', type: 'company', sector: 'Wellness', valuation: 300 },
-  { id: 'lemonaid', label: 'Lemonaid', type: 'company', sector: 'Wellness', valuation: 400 },
-  { id: 'livongo', label: 'Livongo', type: 'company', sector: 'Diabetes Care', valuation: 18500 },
-  { id: 'talkspace', label: 'Talkspace', type: 'company', sector: 'Mental Health', valuation: 1400 },
-  { id: 'simple_habit', label: 'Simple Habit', type: 'company', sector: 'Mental Health', valuation: 250 },
-  { id: 'oneMedical', label: 'One Medical', type: 'company', sector: 'Primary Care', valuation: 3900 },
-  { id: 'aetna', label: 'Aetna (CVS)', type: 'company', sector: 'Insurance', valuation: 70000 },
-  { id: 'beam_health', label: 'Beam Health', type: 'company', sector: 'Pediatric', valuation: 180 },
-  { id: 'novvacup', label: 'NovvaCup', type: 'company', sector: 'Menstrual Health' },
-  { id: 'ovubrush', label: 'Ovubrush', type: 'company', sector: 'Fertility' }
-];
-
-const SAMPLE_EDGES: NetworkEdge[] = [
-  { source: 'ro', target: 'modern_fertility', type: 'acquisition', year: 2021 },
-  { source: 'ro', target: 'nurx', type: 'acquisition', year: 2021 },
-  { source: 'amazon', target: 'lemonaid', type: 'acquisition', year: 2021 },
-  { source: 'amazon', target: 'oneMedical', type: 'acquisition', year: 2022 },
-  { source: 'teladoc', target: 'livongo', type: 'acquisition', year: 2020 },
-  { source: 'teladoc', target: 'talkspace', type: 'partnership', year: 2021 },
-  { source: 'teladoc', target: 'simple_habit', type: 'partnership', year: 2022 },
-  { source: 'cvs', target: 'aetna', type: 'acquisition', year: 2018 },
-  { source: 'stryker', target: 'novvacup', type: 'partnership', year: 2024 },
-  { source: 'stryker', target: 'ovubrush', type: 'partnership', year: 2024 },
-  { source: 'stryker', target: 'beam_health', type: 'partnership', year: 2023 }
-];
+const { nodes: SAMPLE_NODES, edges: SAMPLE_EDGES } = getVerifiedNetworkGraph();
 
 export default function NetworkAnalysisHonest() {
   const [activeTab, setActiveTab] = useState<'descriptive' | 'concentration' | 'temporal' | 'communities' | 'positioning' | 'stability' | 'null_model' | 'limitations'>('descriptive');
