@@ -140,12 +140,47 @@ class TrialSuccessPredictor:
 
         return pd.DataFrame(records)
 
+    def _load_real_training_data(self) -> pd.DataFrame:
+        """
+        Load REAL training data from ClinicalTrials.gov exports.
+        Falls back to _generate_training_data only if real data unavailable.
+        """
+        from pathlib import Path
+        
+        # Try to load real trial data
+        real_data_path = Path("data/validation/real_trials_combined.csv")
+        if real_data_path.exists():
+            df = pd.read_csv(real_data_path)
+            if len(df) > 100:  # Ensure we have sufficient data
+                return df
+        
+        # Fallback: try individual disease files
+        import glob
+        validation_files = glob.glob("data/validation/real_trials_*.csv")
+        if validation_files:
+            dfs = [pd.read_csv(f) for f in validation_files if '_combined' not in f]
+            if dfs:
+                combined = pd.concat(dfs, ignore_index=True)
+                if len(combined) > 100:
+                    return combined
+        
+        # Last resort: generate synthetic data with prominent warning
+        import warnings
+        warnings.warn(
+            "REAL TRIAL DATA NOT FOUND. Using synthetic training data for demonstration only. "
+            "Run scripts/create_real_trial_predictor.py to fetch real data from ClinicalTrials.gov",
+            UserWarning,
+            stacklevel=2
+        )
+        return self._generate_training_data(3000)
+
     def train(self, verbose: bool = True) -> dict:
         """
         Train ensemble of classifiers and return CV performance metrics.
+        Uses REAL data from ClinicalTrials.gov when available.
         Returns dict with per-model AUC scores.
         """
-        df = self._generate_training_data(3000)
+        df = self._load_real_training_data()
         X = df[self.feature_names].values
         y = df["success"].values
 

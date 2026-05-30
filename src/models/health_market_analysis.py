@@ -81,9 +81,22 @@ class HealthMarketAnalyzer:
 
     def _make_synthetic_health_series(self, n_months: int = 36) -> pd.DataFrame:
         """
-        Generate synthetic but calibrated monthly health metric time series.
-        Real implementation would pull from CDC/ClinicalTrials.gov APIs.
+        DEPRECATED: Generate synthetic but calibrated monthly health metric time series.
+        
+        WARNING: This method generates synthetic data for demonstration purposes.
+        For production use, implement real data sources:
+        - CDC WONDER API (disease prevalence)
+        - ClinicalTrials.gov API (trial counts)
+        - FDA Orange Book (approval counts)
+        
+        TODO: Replace with real data integration
         """
+        import warnings
+        warnings.warn(
+            "Using synthetic health data. Implement real CDC/ClinicalTrials.gov data sources for production.",
+            DeprecationWarning,
+            stacklevel=2
+        )
         rng = np.random.default_rng(hash(self.disease_name) % (2**32))
         config = self.disease_config
         prevalence = config.get("prevalence_us", 100000)
