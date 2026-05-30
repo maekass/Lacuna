@@ -1,0 +1,55 @@
+'use client';
+
+const SECTION_LINKS = [
+  { href: '#data-coverage', label: 'Coverage' },
+  { href: '#network', label: 'Network' },
+  { href: '#matrix', label: 'Matrix' },
+  { href: '#health-equity', label: 'Health equity' },
+  { href: '#impact-assessment', label: 'Impact' },
+  { href: '#fairness-audit', label: 'Fairness' },
+  { href: '#network-analysis', label: 'Analysis' },
+  { href: '#causal-engine', label: 'Causal' },
+] as const;
+
+function NavLink({ href, label }: { href: string; label: string }) {
+  return (
+    <a
+      href={href}
+      className="whitespace-nowrap hover:text-lacuna-plum transition-colors shrink-0"
+    >
+      {label}
+    </a>
+  );
+}
+
+export default function SiteSectionNav() {
+  return (
+    <>
+      <nav
+        className="hidden lg:flex items-center gap-5 text-sm text-lacuna-blue"
+        aria-label="Page sections"
+      >
+        {SECTION_LINKS.map((link) => (
+          <NavLink key={link.href} {...link} />
+        ))}
+        <a
+          href="https://github.com/maekass/Lacuna"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-3 py-1 bg-lacuna-lavender/25 hover:bg-lacuna-lavender/40 rounded-full text-xs font-medium text-lacuna-plum transition-colors"
+        >
+          GitHub
+        </a>
+      </nav>
+
+      <nav
+        className="lg:hidden flex gap-3 overflow-x-auto pb-1 -mb-1 text-sm text-lacuna-blue max-w-[min(100vw-8rem,28rem)]"
+        aria-label="Page sections (mobile)"
+      >
+        {SECTION_LINKS.map((link) => (
+          <NavLink key={link.href} {...link} />
+        ))}
+      </nav>
+    </>
+  );
+}
