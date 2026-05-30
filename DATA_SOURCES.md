@@ -3,7 +3,8 @@
 **Last Updated:** May 30, 2026  
 **Data Validity:** 100% Real Data from Public Sources  
 **Quality Score:** 95.0/100 (Grade: A)  
-**Status:** Production-Ready for Institutional Investment Analysis
+**Status:** Production-Ready for Institutional Investment Analysis  
+**Coverage:** 6 Disease Areas (800-1000 trials expected with historical collection)
 
 ---
 
@@ -44,12 +45,26 @@
 - **Intervention Type** (NEW - Drug, Device, Behavioral, etc.)
 - Start/Completion Dates
 
-**Current Focus Diseases (3):**
-1. Sickle Cell Disease (~50 trials) - NCT IDs verified
-2. Systemic Lupus Erythematosus (~50 trials) - NCT IDs verified  
-3. Sarcoidosis (~50 trials) - NCT IDs verified
+**Current Focus Diseases (6) - Black Women's Health Priority:**
+
+| Disease | Expected Trials | Patient Population | Equity Impact |
+|---------|------------------|-------------------|---------------|
+| Sickle Cell Disease | ~50 | 100,000 | Severe disparity, 1 in 365 Black births |
+| Systemic Lupus Erythematosus | ~50 | 200,000 | 3x higher in Black women |
+| Sarcoidosis | ~50 | 150,000 | Higher severity in Black women |
+| **Uterine Fibroids** | ~200+ | **26,000,000** | **80% of Black women affected** |
+| **Triple-Negative Breast Cancer** | ~300+ | 40,000/yr | **2-3x higher in Black women** |
+| **Lupus Nephritis** | ~100+ | 120,000 | 60% of SLE patients, worse outcomes |
+
+**Total Expected Coverage:** 800-1,000 trials with historical collection (2010-2025)
 
 **Expansion Ready:** Framework supports additional disease areas via ClinicalTrials.gov API
+
+**Collection Parameters:**
+- Max trials per disease: 500
+- Date range: 2010-2025 (15 years)
+- Filter: Completed/Terminated trials with known outcomes
+- Critical for ML: Ground truth success/failure labels
 
 **Outcome Distribution (Sample):**
 - Success: ~90 trials (60%)

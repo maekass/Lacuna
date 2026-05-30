@@ -146,6 +146,96 @@ DISEASES: dict[str, DiseaseSpec] = {
         },
         openfda_query="sarcoidosis",
     ),
+    "fibroids": DiseaseSpec(
+        disease_id="fibroids",
+        code="FIB",
+        display_name="Uterine Fibroids",
+        clinical_trials_query="uterine fibroids",
+        disparity_note=(
+            "Uterine fibroids disproportionately affect Black women, with 80% developing fibroids by age 50 "
+            "(vs 70% of white women). Black women develop fibroids earlier, have larger/more numerous fibroids, "
+            "and experience more severe symptoms — a $34 billion market opportunity with significant health equity impact."
+        ),
+        mesh_id="D007889",
+        mesh_label="Leiomyoma",
+        snomed_id="95347000",
+        snomed_label="Uterine fibroids",
+        icd10_code="D25.9",
+        icd10_label="Leiomyoma of uterus, unspecified",
+        prevalence_us=26_000_000,  # 26M women affected
+        orpha_code=91387,
+        search_terms=("uterine fibroids", "leiomyoma", "fibroids"),
+        companies={
+            "Myovant Sciences": "MYOV",
+            "AbbVie": "ABBV",
+            "Pfizer": "PFE",
+            "Bayer": "BAYRY",
+            "Merck": "MRK",
+            "Gynecologic Oncology Group": "NR",
+        },
+        openfda_query="uterine fibroids",
+    ),
+    "tnbc": DiseaseSpec(
+        disease_id="tnbc",
+        code="TNBC",
+        display_name="Triple-Negative Breast Cancer",
+        clinical_trials_query="triple negative breast cancer",
+        disparity_note=(
+            "Triple-negative breast cancer is 2-3x more common in Black women and has worse outcomes. "
+            "TNBC lacks targeted therapies (ER/PR/HER2 negative), making it an urgent unmet need "
+            "with significant immunotherapy and ADC development activity."
+        ),
+        mesh_id="D058413",
+        mesh_label="Carcinoma, Triple Negative Breast",
+        snomed_id="712491000",
+        snomed_label="Triple-negative breast cancer",
+        icd10_code="C50.919",
+        icd10_label="Malignant neoplasm of unspecified site of unspecified female breast",
+        prevalence_us=40_000,  # Annual new cases
+        orpha_code=227535,
+        search_terms=("triple negative breast cancer", "TNBC", "basal-like breast cancer"),
+        companies={
+            "Gilead Sciences": "GILD",
+            "Merck": "MRK",
+            "Roche": "RHHBY",
+            "AstraZeneca": "AZN",
+            "Bristol Myers Squibb": "BMY",
+            "Pfizer": "PFE",
+            "Immunomedics": "GILD",
+            "Seagen": "PFE",
+        },
+        openfda_query="triple negative breast cancer",
+    ),
+    "lupus_nephritis": DiseaseSpec(
+        disease_id="lupus_nephritis",
+        code="SLE-N",
+        display_name="Lupus Nephritis",
+        clinical_trials_query="lupus nephritis",
+        disparity_note=(
+            "Lupus nephritis is a severe kidney complication of SLE that disproportionately affects Black women. "
+            "60% of SLE patients develop nephritis; Black patients have higher incidence, worse outcomes, "
+            "and faster progression to end-stage renal disease — a critical immunology equity target."
+        ),
+        mesh_id="D008180",
+        mesh_label="Lupus Nephritis",
+        snomed_id="85634009",
+        snomed_label="Lupus nephritis",
+        icd10_code="M32.14",
+        icd10_label="Systemic lupus erythematosus with organ/system involvement",
+        prevalence_us=120_000,  # 60% of SLE patients
+        orpha_code=536,
+        search_terms=("lupus nephritis", "SLE nephritis", "lupus kidney"),
+        companies={
+            "Aurinia Pharmaceuticals": "AUPH",
+            "GSK": "GSK",
+            "Eli Lilly": "LLY",
+            "Bristol Myers Squibb": "BMY",
+            "Novartis": "NVS",
+            "Roche": "RHHBY",
+            "Biogen": "BIIB",
+        },
+        openfda_query="lupus nephritis",
+    ),
 }
 
 
@@ -161,7 +251,7 @@ def union_us_tickers() -> dict[str, str]:
             out[name] = ticker
     return out
 
-FOCUS_DISEASE_IDS: tuple[str, ...] = ("scd", "sle", "sarc")
+FOCUS_DISEASE_IDS: tuple[str, ...] = ("scd", "sle", "sarc", "fibroids", "tnbc", "lupus_nephritis")
 
 
 def list_diseases() -> list[DiseaseSpec]:

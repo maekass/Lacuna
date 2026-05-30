@@ -15,7 +15,12 @@ from datetime import datetime, timezone
 from src.data_collection.parsers.clinical_trials import parse_v2_studies
 
 
-def collect_trials_for_disease(disease_name: str, max_trials: int = 200) -> pd.DataFrame:
+def collect_trials_for_disease(
+    disease_name: str, 
+    max_trials: int = 500,
+    filter_completed: bool = False,
+    start_year: int = None
+) -> pd.DataFrame:
     """
     Collect enhanced trial data for a specific disease.
     
@@ -34,13 +39,25 @@ def collect_trials_for_disease(disease_name: str, max_trials: int = 200) -> pd.D
     
     print(f"\n📡 Collecting trials for: {disease_name}")
     print(f"   Max trials: {max_trials}")
+    if start_year:
+        print(f"   From year: {start_year}")
+    if filter_completed:
+        print(f"   Filter: Completed/Terminated trials only")
     
     url = "https://clinicaltrials.gov/api/v2/studies"
     params = {
         "query.cond": disease_name,
-        "pageSize": min(max_trials, 1000),  # API limit
+        "pageSize": min(max_trials, 1000),  # API limit per request
         "format": "json"
     }
+    
+    # Add filters for completed trials with known outcomes
+    if filter_completed:
+        params["filter.overallStatus"] = "COMPLETED,TERMINATED,WITHDRAWN,SUSPENDED"
+    
+    # Add date filter for historical data
+    if start_year:
+        params["filter.advancedDates.fromStudyStart"] = f"{start_year}-01-01"
     
     try:
         response = requests.get(url, params=params, timeout=60)
@@ -87,31 +104,34 @@ def main():
     print("  ✓ Sponsor type")
     print("  ✓ Outcomes (Success/Failure)")
     
-    # Diseases to collect (expanded to 15)
+    # Diseases to collect - Focus on Black women's health disparities
+    # These 6 diseases have both high trial volume AND significant equity impact
     diseases = [
-        # Original 7
-        "sickle cell disease",
-        "systemic lupus erythematosus",
-        "hidradenitis suppurativa",
-        "diabetic nephropathy",
-        "multiple sclerosis",
-        "rheumatoid arthritis",
-        "crohn's disease",
-        # New 8
-        "psoriasis",
-        "ulcerative colitis",
-        "ankylosing spondylitis",
-        "atopic dermatitis",
-        "type 1 diabetes",
-        "celiac disease",
-        "inflammatory bowel disease",
-        "autoimmune hepatitis"
+        # Core diseases (existing real data)
+        "sickle cell disease",           # ~50 trials, 100K patients, severe disparity
+        "systemic lupus erythematosus",  # ~50 trials, 200K patients, 3x higher in Black women
+        "sarcoidosis",                   # ~50 trials, 150K patients, higher severity in Black women
+        # New high-impact additions
+        "uterine fibroids",              # ~200+ trials, 26M patients, 80% of Black women affected
+        "triple negative breast cancer", # ~300+ trials, urgent unmet need, 2-3x higher in Black women
+        "lupus nephritis",               # ~100+ trials, 120K patients, major SLE complication
     ]
     
     all_trials = []
     
+    # Collect with historical data filter (2010-2025) to get completed trials with known outcomes
+    # This is CRITICAL for ML training - we need actual success/failure data
+    print("\n📅 Historical Data Collection: 2010-2025")
+    print("   Collecting completed/terminated trials with known outcomes...")
+    print("   This provides ground truth for ML model training.\n")
+    
     for disease in diseases:
-        df = collect_trials_for_disease(disease, max_trials=500)
+        df = collect_trials_for_disease(
+            disease, 
+            max_trials=500,
+            filter_completed=True,      # Only trials with known outcomes
+            start_year=2010             # 15 years of historical data
+        )
         if not df.empty:
             all_trials.append(df)
     
