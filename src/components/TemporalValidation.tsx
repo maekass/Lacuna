@@ -6,10 +6,11 @@
 
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { getVerifiedDealsByYear } from '@/data/verifiedData';
+import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 export default function TemporalValidation() {
-  const dealsByYear = useMemo(() => getVerifiedDealsByYear(), []);
+  const { getVerifiedDealsByYear } = useVerifiedDataset();
+  const dealsByYear = useMemo(() => getVerifiedDealsByYear(), [getVerifiedDealsByYear]);
   const maxCount = Math.max(1, ...dealsByYear.map((d) => d.count));
 
   return (

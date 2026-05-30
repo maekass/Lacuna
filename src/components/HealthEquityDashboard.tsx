@@ -9,23 +9,20 @@
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useDataCertification, generateVerificationBadge } from '@/lib/validation/dataCertification';
-import { verifiedCompanies } from '@/data/verifiedData';
+import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
-const verifiedNames = new Set(verifiedCompanies.map((c) => c.name));
-
-function linkVerified(names: string[]) {
+function linkVerified(names: string[], verifiedNames: Set<string>) {
   return names.filter((n) => verifiedNames.has(n));
 }
 
-// Epidemiology references (public health literature); company lists are verified-dataset only
-const DISEASE_METRICS = [
+const DISEASE_METRIC_TEMPLATES = [
   {
     disease: 'Maternal Health',
     mortalityMultiplier: 3.4,
     marketSize: 12,
     description: 'Black women face 3-4x higher maternal mortality than white women',
     investmentThesis: 'Digital health, remote monitoring, culturally competent care',
-    companies: linkVerified(['Maven Clinic'])
+    companyCandidates: ['Maven Clinic'],
   },
   {
     disease: 'Uterine Fibroids',
@@ -33,7 +30,7 @@ const DISEASE_METRICS = [
     marketSize: 34,
     description: 'Affects 80% of Black women by age 50; leading cause of hysterectomy',
     investmentThesis: 'Non-surgical treatments, early detection, fertility preservation',
-    companies: linkVerified(['Bloomi'])
+    companyCandidates: ['Bloomi'],
   },
   {
     disease: 'Lupus',
@@ -41,7 +38,7 @@ const DISEASE_METRICS = [
     marketSize: 8,
     description: '3x higher prevalence in Black women; often misdiagnosed',
     investmentThesis: 'AI diagnostics, biomarker discovery, precision medicine',
-    companies: []
+    companyCandidates: [] as string[],
   },
   {
     disease: 'Sickle Cell Disease',
@@ -49,7 +46,7 @@ const DISEASE_METRICS = [
     marketSize: 5,
     description: 'Primarily affects Black populations; gene therapy breakthroughs',
     investmentThesis: 'Gene therapy, CRISPR, curative treatments',
-    companies: []
+    companyCandidates: [] as string[],
   },
   {
     disease: 'Cardiovascular Disease',
@@ -57,17 +54,25 @@ const DISEASE_METRICS = [
     marketSize: 15,
     description: 'Higher mortality rates in Black women despite lower awareness',
     investmentThesis: 'Wearables, early detection, culturally tailored interventions',
-    companies: linkVerified(['Oura', 'Whoop'])
-  }
-];
+    companyCandidates: ['Oura', 'Whoop'],
+  },
+] as const;
 
 export default function HealthEquityDashboard() {
+  const { verifiedCompanies } = useVerifiedDataset();
   const certifier = useDataCertification();
-  
-  // Certify data on mount
+
+  const diseaseMetrics = useMemo(() => {
+    const verifiedNames = new Set(verifiedCompanies.map((c) => c.name));
+    return DISEASE_METRIC_TEMPLATES.map((metric) => ({
+      ...metric,
+      companies: linkVerified([...metric.companyCandidates], verifiedNames),
+    }));
+  }, [verifiedCompanies]);
+
   const certification = useMemo(() => {
     return certifier.certify(verifiedCompanies, 'companies');
-  }, [certifier]);
+  }, [certifier, verifiedCompanies]);
 
   return (
     <motion.div
@@ -111,7 +116,7 @@ export default function HealthEquityDashboard() {
 
       {/* Disease Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {DISEASE_METRICS.map((disease, index) => (
+        {diseaseMetrics.map((disease, index) => (
           <motion.div
             key={disease.disease}
             initial={{ opacity: 0, y: 20 }}

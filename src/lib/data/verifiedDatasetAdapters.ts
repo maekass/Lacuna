@@ -3,11 +3,8 @@
  * No mock companies or fabricated deal records.
  */
 
-import {
-  verifiedAcquisitions,
-  verifiedAcquirers,
-  verifiedCompanies,
-} from '@/data/verifiedData';
+import { getDefaultVerifiedDerivedData } from '@/lib/data/VerifiedDatasetContext';
+import type { VerifiedDerivedData } from '@/lib/data/verifiedDataHelpers';
 import type { Company, Acquisition } from '@/lib/types';
 import type {
   Acquirer,
@@ -36,8 +33,10 @@ function mapDealType(dealType: string): Acquisition['dealType'] {
 }
 
 /** Companies for ML / matrix views (no fabricated employee counts). */
-export function getVerifiedCompaniesForAnalysis(): Company[] {
-  return verifiedCompanies.map((c) => ({
+export function getVerifiedCompaniesForAnalysis(
+  data: VerifiedDerivedData = getDefaultVerifiedDerivedData(),
+): Company[] {
+  return data.verifiedCompanies.map((c) => ({
     id: c.id,
     name: c.name,
     sector: c.sector as Company['sector'],
@@ -50,8 +49,10 @@ export function getVerifiedCompaniesForAnalysis(): Company[] {
   }));
 }
 
-export function getVerifiedAcquisitionsForAnalysis(): Acquisition[] {
-  return verifiedAcquisitions.map((d) => ({
+export function getVerifiedAcquisitionsForAnalysis(
+  data: VerifiedDerivedData = getDefaultVerifiedDerivedData(),
+): Acquisition[] {
+  return data.verifiedAcquisitions.map((d) => ({
     id: d.id,
     targetId: d.targetId,
     acquirerId: d.acquirerId,
@@ -85,11 +86,14 @@ function mapCompanyStage(stage: string): AcquiredCompany['stage'] {
 }
 
 /** Competitive analysis inputs derived only from verified acquisitions. */
-export function getVerifiedCompetitiveAnalysisData(): {
+export function getVerifiedCompetitiveAnalysisData(
+  data: VerifiedDerivedData = getDefaultVerifiedDerivedData(),
+): {
   acquirers: Acquirer[];
   companies: AcquiredCompany[];
   acquisitions: AcquisitionRecord[];
 } {
+  const { verifiedAcquirers, verifiedAcquisitions, verifiedCompanies } = data;
   const acquirerIds = new Set<string>();
   for (const a of verifiedAcquirers) acquirerIds.add(a.id);
   for (const d of verifiedAcquisitions) acquirerIds.add(d.acquirerId);
@@ -141,11 +145,14 @@ export function getVerifiedCompetitiveAnalysisData(): {
 }
 
 /** Network graph for honest network analysis (verified deals only). */
-export function getVerifiedNetworkGraph(): {
+export function getVerifiedNetworkGraph(
+  data: VerifiedDerivedData = getDefaultVerifiedDerivedData(),
+): {
   nodes: import('@/lib/network/networkStatistics').NetworkNode[];
   edges: import('@/lib/network/networkStatistics').NetworkEdge[];
 } {
-  const { acquirers, companies, acquisitions } = getVerifiedCompetitiveAnalysisData();
+  const { acquirers, companies, acquisitions } = getVerifiedCompetitiveAnalysisData(data);
+  const { verifiedAcquisitions } = data;
   const companyById = new Map(companies.map((c) => [c.id, c]));
   const acquirerById = new Map(acquirers.map((a) => [a.id, a]));
 

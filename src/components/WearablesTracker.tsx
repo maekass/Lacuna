@@ -2,9 +2,10 @@
 
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { verifiedCompanies, verifiedAcquisitions } from '@/data/verifiedData';
+import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 export default function WearablesTracker() {
+  const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
   const wearablesData = useMemo(() => {
     const wearables = verifiedCompanies.filter(c => c.sector === 'Wearables');
     const wearablesWithValuation = wearables.filter(
@@ -34,7 +35,7 @@ export default function WearablesTracker() {
       medianValuation,
       acquisitionCount: wearableAcquisitions.length,
     };
-  }, []);
+  }, [verifiedCompanies, verifiedAcquisitions]);
 
   if (wearablesData.companies.length === 0) {
     return (

@@ -29,44 +29,49 @@ import {
   powerAnalysis,
   wilsonConfidenceInterval
 } from '@/lib/fairness/statisticalMethods';
-import { verifiedAcquisitions, verifiedCompanies } from '@/data/verifiedData';
+import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 /** Founder gender is not in the verified public dataset — no name-inference panel. */
 const SAMPLE_FOUNDERS: FounderClassification[] = [];
-
-const SAMPLE_COMPANIES: CompanyProfile[] = verifiedCompanies.map((c) => {
-  const deal = verifiedAcquisitions.find((d) => d.targetId === c.id);
-  return {
-    id: c.id,
-    name: c.name,
-    sector: c.sector,
-    stage: c.stage,
-    yearFounded: c.founded,
-    yearAcquired: deal ? new Date(deal.announcedDate).getFullYear() : undefined,
-    acquisitionValue: deal?.dealValue,
-    hasWomenFounder: false,
-    founderCount: 0,
-  };
-});
 
 const hasFounderGenderLabels = false;
 
 type ActiveTab = 'overview' | 'limitations' | 'gender' | 'characteristics' | 'parity';
 
 export default function FairnessAuditV2() {
+  const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
+  const sampleCompanies = useMemo<CompanyProfile[]>(
+    () =>
+      verifiedCompanies.map((c) => {
+        const deal = verifiedAcquisitions.find((d) => d.targetId === c.id);
+        return {
+          id: c.id,
+          name: c.name,
+          sector: c.sector,
+          stage: c.stage,
+          yearFounded: c.founded,
+          yearAcquired: deal ? new Date(deal.announcedDate).getFullYear() : undefined,
+          acquisitionValue: deal?.dealValue,
+          hasWomenFounder: false,
+          founderCount: 0,
+        };
+      }),
+    [verifiedCompanies, verifiedAcquisitions],
+  );
+
   const [activeTab, setActiveTab] = useState<ActiveTab>('overview');
   
   // Calculate demographic parity with rigorous statistics
   const parityAnalysis = useMemo(() => {
     if (!hasFounderGenderLabels) {
-      const acquired = SAMPLE_COMPANIES.filter((c) => c.yearAcquired).length;
+      const acquired = sampleCompanies.filter((c) => c.yearAcquired).length;
       return {
         womenLed: 0,
-        menLed: SAMPLE_COMPANIES.length,
+        menLed: sampleCompanies.length,
         womenAcquired: 0,
         menAcquired: acquired,
         womenRate: 0,
-        menRate: SAMPLE_COMPANIES.length > 0 ? acquired / SAMPLE_COMPANIES.length : 0,
+        menRate: sampleCompanies.length > 0 ? acquired / sampleCompanies.length : 0,
         womenCI: [0, 0] as [number, number],
         menCI: [0, 0] as [number, number],
         difference: proportionDifferenceCI(0, 1, 0, 1),
@@ -77,8 +82,8 @@ export default function FairnessAuditV2() {
       };
     }
 
-    const womenLed = SAMPLE_COMPANIES.filter(c => c.hasWomenFounder);
-    const menLed = SAMPLE_COMPANIES.filter(c => !c.hasWomenFounder);
+    const womenLed = sampleCompanies.filter(c => c.hasWomenFounder);
+    const menLed = sampleCompanies.filter(c => !c.hasWomenFounder);
     
     const womenAcquired = womenLed.filter(c => c.yearAcquired).length;
     const menAcquired = menLed.filter(c => c.yearAcquired).length;
@@ -127,7 +132,7 @@ export default function FairnessAuditV2() {
       bonferroni,
       benjaminiHochberg: bh
     };
-  }, []);
+  }, [sampleCompanies]);
 
   return (
     <motion.div
@@ -144,7 +149,7 @@ export default function FairnessAuditV2() {
               Modular Fairness Audit Framework v2.0
             </h2>
             <p className="text-sm text-red-700 mt-1">
-              Verified companies n={SAMPLE_COMPANIES.length}.{' '}
+              Verified companies n={sampleCompanies.length}.{' '}
               {hasFounderGenderLabels
                 ? `Observed power: ${(parityAnalysis.power.power * 100).toFixed(0)}%.`
                 : 'Founder gender is not in the verified dataset — demographic parity by gender is disabled.'}{' '}
@@ -190,7 +195,7 @@ export default function FairnessAuditV2() {
                 Sample Size
               </div>
               <div className="text-3xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#5D4E6D' }}>
-                {SAMPLE_COMPANIES.length}
+                {sampleCompanies.length}
               </div>
               <div className="text-xs text-gray-600 mt-1">companies</div>
             </div>
@@ -200,9 +205,9 @@ export default function FairnessAuditV2() {
                 Women-Founded
               </div>
               <div className="text-3xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#E8B4B8' }}>
-                {((parityAnalysis.womenLed / SAMPLE_COMPANIES.length) * 100).toFixed(0)}%
+                {((parityAnalysis.womenLed / sampleCompanies.length) * 100).toFixed(0)}%
               </div>
-              <div className="text-xs text-gray-600 mt-1">{parityAnalysis.womenLed} of {SAMPLE_COMPANIES.length}</div>
+              <div className="text-xs text-gray-600 mt-1">{parityAnalysis.womenLed} of {sampleCompanies.length}</div>
             </div>
 
             <div className="bg-white border border-gray-200 p-4 rounded-lg">
@@ -289,7 +294,7 @@ export default function FairnessAuditV2() {
 
       {activeTab === 'limitations' && (
         <FairnessLimitations 
-          sampleSize={SAMPLE_COMPANIES.length}
+          sampleSize={sampleCompanies.length}
           observedEffect={Math.abs(parityAnalysis.difference.difference)}
           baselineRate={parityAnalysis.menRate}
         />
@@ -304,7 +309,7 @@ export default function FairnessAuditV2() {
       )}
 
       {activeTab === 'characteristics' && (
-        <FounderCharacteristics companies={SAMPLE_COMPANIES} />
+        <FounderCharacteristics companies={sampleCompanies} />
       )}
 
       {activeTab === 'parity' && (

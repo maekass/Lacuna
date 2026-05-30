@@ -2,7 +2,8 @@
 
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { verifiedCompanies, verifiedAcquisitions } from '@/data/verifiedData';
+import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
+import type { VerifiedAcquisitionView, VerifiedCompanyView } from '@/lib/data/verifiedDataHelpers';
 
 interface IndicatorScore {
   companyId: string;
@@ -24,7 +25,10 @@ const CURRENT_YEAR = 2026;
  * What we CAN do honestly: score each company on factors that, in our small
  * verified dataset, co-occurred with prior acquisitions.
  */
-function calculateIndicators(): IndicatorScore[] {
+function calculateIndicators(
+  verifiedCompanies: VerifiedCompanyView[],
+  verifiedAcquisitions: VerifiedAcquisitionView[],
+): IndicatorScore[] {
   const acquiredIds = new Set(verifiedAcquisitions.map(a => a.targetId));
 
   // Derive empirical priors from verified acquisitions in the dataset
@@ -81,7 +85,11 @@ function calculateIndicators(): IndicatorScore[] {
 }
 
 export default function ExitPredictor() {
-  const indicators = useMemo(() => calculateIndicators(), []);
+  const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
+  const indicators = useMemo(
+    () => calculateIndicators(verifiedCompanies, verifiedAcquisitions),
+    [verifiedCompanies, verifiedAcquisitions],
+  );
 
   const getScoreColor = (score: number) => {
     if (score > 0.6) return 'text-emerald-700 bg-emerald-50 border-emerald-200';

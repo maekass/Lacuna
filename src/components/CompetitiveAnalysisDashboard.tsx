@@ -18,42 +18,47 @@ import {
   type ExternalEvent
 } from '@/lib/competitive/acquirerAnalysis';
 import { getVerifiedCompetitiveAnalysisData } from '@/lib/data/verifiedDatasetAdapters';
-import { verifiedAcquisitions } from '@/data/verifiedData';
-
-const { acquirers: ACQUIRERS, companies: COMPANIES, acquisitions: ACQUISITIONS } =
-  getVerifiedCompetitiveAnalysisData();
-
-/** Timeline markers from verified deal announcements only */
-const EXTERNAL_EVENTS: ExternalEvent[] = verifiedAcquisitions.map((d) => ({
-  year: new Date(d.announcedDate).getFullYear(),
-  type: 'strategy_announcement' as const,
-  description: `${d.acquirerName} — ${d.targetName} (${d.dealType})`,
-}));
+import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 export default function CompetitiveAnalysisDashboard() {
+  const dataset = useVerifiedDataset();
+  const { acquirers: ACQUIRERS, companies: COMPANIES, acquisitions: ACQUISITIONS } = useMemo(
+    () => getVerifiedCompetitiveAnalysisData(dataset),
+    [dataset],
+  );
+  const externalEvents = useMemo<ExternalEvent[]>(
+    () =>
+      dataset.verifiedAcquisitions.map((d) => ({
+        year: new Date(d.announcedDate).getFullYear(),
+        type: 'strategy_announcement' as const,
+        description: `${d.acquirerName} — ${d.targetName} (${d.dealType})`,
+      })),
+    [dataset.verifiedAcquisitions],
+  );
+
   const [activeTab, setActiveTab] = useState<'portfolio' | 'velocity' | 'market_structure' | 'type_comparison'>('portfolio');
   const [selectedAcquirer, setSelectedAcquirer] = useState<string>(ACQUIRERS[0]?.id ?? '');
   
   const portfolioAnalyses = useMemo(() => 
     ACQUIRERS.map(a => analyzePortfolio(a, ACQUISITIONS, COMPANIES))
       .filter(p => p.totalAcquisitions > 0),
-    []
+    [ACQUIRERS, ACQUISITIONS, COMPANIES],
   );
   
   const velocityAnalyses = useMemo(() => 
-    ACQUIRERS.map(a => analyzeVelocity(a, ACQUISITIONS, EXTERNAL_EVENTS))
+    ACQUIRERS.map(a => analyzeVelocity(a, ACQUISITIONS, externalEvents))
       .filter(v => v.yearlyData.length > 0),
-    []
+    [ACQUIRERS, ACQUISITIONS, externalEvents],
   );
   
   const marketStructure = useMemo(() => 
     analyzeMarketStructure(ACQUIRERS, ACQUISITIONS, COMPANIES),
-    []
+    [ACQUIRERS, ACQUISITIONS, COMPANIES],
   );
   
   const typeComparison = useMemo(() => 
     compareAcquirerTypes(ACQUIRERS, ACQUISITIONS, COMPANIES),
-    []
+    [ACQUIRERS, ACQUISITIONS, COMPANIES],
   );
 
   const selectedPortfolio = portfolioAnalyses.find(p => p.acquirerId === selectedAcquirer);

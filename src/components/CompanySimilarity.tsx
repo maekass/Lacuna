@@ -2,12 +2,10 @@
 
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { verifiedCompanies } from '@/data/verifiedData';
+import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
+import type { VerifiedCompanyView } from '@/lib/data/verifiedDataHelpers';
 
 const CURRENT_YEAR = 2026;
-
-// Canonical sector list pulled from verified data (avoids drift from hard-coded values)
-const SECTORS = Array.from(new Set(verifiedCompanies.map(c => c.sector))).sort();
 
 interface FeatureVector {
   readonly values: readonly number[];
@@ -15,8 +13,8 @@ interface FeatureVector {
   readonly hasFunding: boolean;
 }
 
-function buildFeatureVector(company: typeof verifiedCompanies[number]): FeatureVector {
-  const sectorOneHot = SECTORS.map(s => (company.sector === s ? 1 : 0));
+function buildFeatureVector(company: VerifiedCompanyView, sectors: string[]): FeatureVector {
+  const sectorOneHot = sectors.map(s => (company.sector === s ? 1 : 0));
   const hasValuation = typeof company.lastKnownValuation === 'number';
   const hasFunding = typeof company.totalFunding === 'number';
 
@@ -43,18 +41,23 @@ function cosineSimilarity(a: readonly number[], b: readonly number[]): number {
 }
 
 export default function CompanySimilarity() {
+  const { verifiedCompanies } = useVerifiedDataset();
+  const sectors = useMemo(
+    () => Array.from(new Set(verifiedCompanies.map((c) => c.sector))).sort(),
+    [verifiedCompanies],
+  );
   const [selectedCompany, setSelectedCompany] = useState<string>(verifiedCompanies[0]?.id || '');
 
   const similarities = useMemo(() => {
     const target = verifiedCompanies.find(c => c.id === selectedCompany);
     if (!target) return [];
 
-    const targetVec = buildFeatureVector(target);
+    const targetVec = buildFeatureVector(target, sectors);
 
     return verifiedCompanies
       .filter(c => c.id !== selectedCompany)
       .map(company => {
-        const vec = buildFeatureVector(company);
+        const vec = buildFeatureVector(company, sectors);
         const similarity = cosineSimilarity(targetVec.values, vec.values);
 
         const shared: string[] = [];
@@ -76,7 +79,7 @@ export default function CompanySimilarity() {
       })
       .sort((a, b) => b.similarity - a.similarity)
       .slice(0, 5);
-  }, [selectedCompany]);
+  }, [selectedCompany, verifiedCompanies, sectors]);
 
   const selected = verifiedCompanies.find(c => c.id === selectedCompany);
 
@@ -164,7 +167,7 @@ export default function CompanySimilarity() {
 
       <div className="mt-4 pt-4 border-t border-slate-100">
         <p className="text-xs text-slate-400 leading-relaxed">
-          Feature vector: {SECTORS.length} sector one-hot dims + log(valuation) +
+          Feature vector: {sectors.length} sector one-hot dims + log(valuation) +
           log(funding) + normalized age + stage flags. Cosine similarity.
           Companies with undisclosed financials default to 0 on those dims (penalizes match) — flagged as &quot;partial data&quot;.
         </p>

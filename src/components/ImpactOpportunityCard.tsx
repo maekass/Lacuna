@@ -7,7 +7,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   calculateOAIS,
@@ -15,7 +15,7 @@ import {
   UNMEASURABLE_FACTORS,
   type OAISInputs
 } from '@/lib/impact/oaisCalculator';
-import { verifiedCompanies } from '@/data/verifiedData';
+import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 interface CompanyProfile {
   name: string;
@@ -28,22 +28,27 @@ interface CompanyProfile {
   competitors: number;
 }
 
-const EXAMPLE_COMPANIES: CompanyProfile[] = verifiedCompanies.map((c) => ({
-  name: c.name,
-  condition: c.sector,
-  stage: 'clinical_validation' as const,
-  founderExits: 0,
-  founderFDAExp: false,
-  likelyAcquirer: 'See verified deal network',
-  acquirerScalingMult: 1,
-  competitors: 0,
-}));
-
 export default function ImpactOpportunityCard() {
+  const { verifiedCompanies } = useVerifiedDataset();
+  const exampleCompanies = useMemo<CompanyProfile[]>(
+    () =>
+      verifiedCompanies.map((c) => ({
+        name: c.name,
+        condition: c.sector,
+        stage: 'clinical_validation' as const,
+        founderExits: 0,
+        founderFDAExp: false,
+        likelyAcquirer: 'See verified deal network',
+        acquirerScalingMult: 1,
+        competitors: 0,
+      })),
+    [verifiedCompanies],
+  );
+
   const [selectedCompany, setSelectedCompany] = useState(0);
   const [showTransparency, setShowTransparency] = useState(false);
 
-  const company = EXAMPLE_COMPANIES[selectedCompany];
+  const company = exampleCompanies[selectedCompany];
   
   // Get epidemiology data for this condition
   const epiData = EPIDEMIOLOGY_DATABASE.find(e => 
@@ -101,7 +106,7 @@ export default function ImpactOpportunityCard() {
 
       {/* Company Selector */}
       <div className="flex flex-wrap gap-2">
-        {EXAMPLE_COMPANIES.map((c, i) => (
+        {exampleCompanies.map((c, i) => (
           <button
             key={i}
             onClick={() => setSelectedCompany(i)}

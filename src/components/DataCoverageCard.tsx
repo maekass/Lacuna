@@ -1,9 +1,11 @@
-import { dataProvenance, verifiedCompanies, verifiedAcquisitions } from '@/data/verifiedData';
+'use client';
 
-function countDisclosedDealValues() {
+import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
+
+function countDisclosedDealValues(acquisitions: { dealValue?: number }[]) {
   let disclosed = 0;
   let undisclosed = 0;
-  for (const d of verifiedAcquisitions) {
+  for (const d of acquisitions) {
     if (typeof d.dealValue === 'number') disclosed += 1;
     else undisclosed += 1;
   }
@@ -16,7 +18,8 @@ function formatDate(iso: string) {
 }
 
 export default function DataCoverageCard() {
-  const { disclosed, undisclosed } = countDisclosedDealValues();
+  const { dataProvenance, verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
+  const { disclosed, undisclosed } = countDisclosedDealValues(verifiedAcquisitions);
   const lastUpdated = dataProvenance.lastUpdated ? formatDate(dataProvenance.lastUpdated) : '—';
 
   return (

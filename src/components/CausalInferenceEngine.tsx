@@ -7,7 +7,7 @@
 
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { verifiedAcquisitions, verifiedCompanies } from '@/data/verifiedData';
+import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 interface SectorRow {
   sector: string;
@@ -17,6 +17,7 @@ interface SectorRow {
 }
 
 export default function CausalInferenceEngine() {
+  const { verifiedAcquisitions, verifiedCompanies } = useVerifiedDataset();
   const sectorRows = useMemo((): SectorRow[] => {
     const acquiredIds = new Set(verifiedAcquisitions.map((d) => d.targetId));
     const bySector = new Map<string, { total: number; acquired: number }>();
@@ -36,7 +37,7 @@ export default function CausalInferenceEngine() {
         rate: total > 0 ? acquired / total : 0,
       }))
       .sort((a, b) => b.rate - a.rate);
-  }, []);
+  }, [verifiedAcquisitions, verifiedCompanies]);
 
   const totalDeals = verifiedAcquisitions.length;
 

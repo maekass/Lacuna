@@ -32,35 +32,39 @@ import {
 } from '@/lib/network/networkStatistics';
 import StrategicPositioningMap from './StrategicPositioningMap';
 import { getVerifiedNetworkGraph } from '@/lib/data/verifiedDatasetAdapters';
-
-const { nodes: SAMPLE_NODES, edges: SAMPLE_EDGES } = getVerifiedNetworkGraph();
+import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 export default function NetworkAnalysisHonest() {
+  const dataset = useVerifiedDataset();
+  const { nodes: sampleNodes, edges: sampleEdges } = useMemo(
+    () => getVerifiedNetworkGraph(dataset),
+    [dataset],
+  );
   const [activeTab, setActiveTab] = useState<'descriptive' | 'concentration' | 'temporal' | 'communities' | 'positioning' | 'stability' | 'null_model' | 'limitations'>('descriptive');
 
   // Calculate all network statistics
   const stats = useMemo(() => {
-    const degree = degreeDistribution(SAMPLE_NODES, SAMPLE_EDGES);
-    const density = networkDensity(SAMPLE_NODES.length, SAMPLE_EDGES.length);
-    const clustering = clusteringCoefficient(SAMPLE_NODES, SAMPLE_EDGES);
-    const paths = averageShortestPath(SAMPLE_NODES, SAMPLE_EDGES);
+    const degree = degreeDistribution(sampleNodes, sampleEdges);
+    const density = networkDensity(sampleNodes.length, sampleEdges.length);
+    const clustering = clusteringCoefficient(sampleNodes, sampleEdges);
+    const paths = averageShortestPath(sampleNodes, sampleEdges);
     
     // Acquirer concentration analysis
-    const acquirers = SAMPLE_NODES.filter(n => n.type === 'acquirer');
+    const acquirers = sampleNodes.filter(n => n.type === 'acquirer');
     const acquirerDeals = acquirers.map(a => {
-      return SAMPLE_EDGES.filter(e => e.source === a.id && e.type === 'acquisition').length;
+      return sampleEdges.filter(e => e.source === a.id && e.type === 'acquisition').length;
     });
     
     const gini = giniCoefficient(acquirerDeals);
     const hhi = herfindahlIndex(acquirerDeals);
     const nullModel = nullModelComparison(acquirerDeals);
-    const temporal = temporalAnalysis(SAMPLE_EDGES);
-    const communities = communityDetection(SAMPLE_NODES, SAMPLE_EDGES);
-    const positioning = strategicPositioning(SAMPLE_NODES, SAMPLE_EDGES);
-    const stability = networkStabilityAnalysis(SAMPLE_NODES, SAMPLE_EDGES);
+    const temporal = temporalAnalysis(sampleEdges);
+    const communities = communityDetection(sampleNodes, sampleEdges);
+    const positioning = strategicPositioning(sampleNodes, sampleEdges);
+    const stability = networkStabilityAnalysis(sampleNodes, sampleEdges);
     
     return { degree, density, clustering, paths, gini, hhi, nullModel, temporal, communities, positioning, stability, acquirers, acquirerDeals };
-  }, []);
+  }, [sampleNodes, sampleEdges]);
 
   return (
     <motion.div
@@ -77,7 +81,7 @@ export default function NetworkAnalysisHonest() {
               Small-N Network Analysis
             </h2>
             <p className="text-sm text-red-700 mt-1">
-              Network has only {SAMPLE_NODES.length} nodes and {SAMPLE_EDGES.length} edges. 
+              Network has only {sampleNodes.length} nodes and {sampleEdges.length} edges. 
               <strong> Standard network metrics (power laws, centrality) are unreliable at this scale.</strong> 
               Use descriptive concentration metrics instead.
             </p>
@@ -133,9 +137,9 @@ export default function NetworkAnalysisHonest() {
                 Network Size
               </div>
               <div className="text-3xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#5D4E6D' }}>
-                {SAMPLE_NODES.length}
+                {sampleNodes.length}
               </div>
-              <div className="text-xs text-gray-600 mt-1">nodes, {SAMPLE_EDGES.length} edges</div>
+              <div className="text-xs text-gray-600 mt-1">nodes, {sampleEdges.length} edges</div>
             </div>
 
             <div className="bg-white border border-gray-200 p-4 rounded-lg">
@@ -891,7 +895,7 @@ export default function NetworkAnalysisHonest() {
               <li>
                 <strong>✗ Power-law distribution</strong>
                 <div className="text-xs mt-1 ml-4">
-                  Power law fitting to n={SAMPLE_NODES.length} is unreliable. Requires n&gt;{POWER_LAW_LIMITATIONS.minimumSampleSize} 
+                  Power law fitting to n={sampleNodes.length} is unreliable. Requires n&gt;{POWER_LAW_LIMITATIONS.minimumSampleSize} 
                   (Clauset et al., 2009).
                 </div>
               </li>
@@ -944,7 +948,7 @@ export default function NetworkAnalysisHonest() {
               Honest Network Analysis Summary
             </h4>
             <p className="text-sm leading-relaxed">
-              With {SAMPLE_NODES.length} nodes and {SAMPLE_EDGES.length} edges, we focus on what&apos;s defensible: 
+              With {sampleNodes.length} nodes and {sampleEdges.length} edges, we focus on what&apos;s defensible: 
               bootstrap confidence intervals, robust concentration metrics (Gini, HHI), and null model comparison. 
               We <strong>do not</strong> fit power laws, claim preferential attachment, or rank specific 
               centralities. The acquisition network shows {stats.gini.interpretation.toLowerCase()} with top-3 

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { verifiedCompanies, verifiedAcquisitions } from '@/data/verifiedData';
+import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 type CanonicalStage = 'Seed' | 'Series A' | 'Series B' | 'Series C' | 'Series D+' | 'Public' | 'Acquired';
 const STAGE_ORDER: CanonicalStage[] = ['Seed', 'Series A', 'Series B', 'Series C', 'Series D+', 'Public', 'Acquired'];
@@ -33,6 +33,7 @@ interface MatrixCell {
 }
 
 export default function ValuationMatrix() {
+  const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
   const [hoveredCell, setHoveredCell] = useState<MatrixCell | null>(null);
 
   const { sectors, matrix, maxValuation, totalDisclosed, totalCompanies } = useMemo(() => {
@@ -75,7 +76,7 @@ export default function ValuationMatrix() {
       totalDisclosed: disclosed,
       totalCompanies: verifiedCompanies.length,
     };
-  }, []);
+  }, [verifiedCompanies, verifiedAcquisitions]);
 
   const getColor = (value: number) => {
     if (value === 0) return '#f8fafc';

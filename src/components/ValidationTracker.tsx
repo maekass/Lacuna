@@ -8,10 +8,10 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import ConfidenceLevelIndicator from './ConfidenceLevelIndicator';
-import { verifiedAcquisitions } from '@/data/verifiedData';
+import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 interface AcquisitionValidation {
   company: string;
@@ -122,18 +122,20 @@ const VALIDATION_DATA: AcquisitionValidation[] = [
   }
 ];
 
-const verifiedDealNames = new Set(
-  verifiedAcquisitions.flatMap((d) => [d.targetName, d.acquirerName])
-);
-
-const VALIDATION_ROWS = VALIDATION_DATA.filter((v) => verifiedDealNames.has(v.company));
-
 export default function ValidationTracker() {
+  const { verifiedAcquisitions } = useVerifiedDataset();
+  const validationRows = useMemo(() => {
+    const verifiedDealNames = new Set(
+      verifiedAcquisitions.flatMap((d) => [d.targetName, d.acquirerName]),
+    );
+    return VALIDATION_DATA.filter((v) => verifiedDealNames.has(v.company));
+  }, [verifiedAcquisitions]);
+
   const [selectedYear, setSelectedYear] = useState<string>('all');
 
-  const filteredData = selectedYear === 'all' 
-    ? VALIDATION_ROWS 
-    : VALIDATION_ROWS.filter(v => v.acquisitionDate.startsWith(selectedYear));
+  const filteredData = selectedYear === 'all'
+    ? validationRows
+    : validationRows.filter(v => v.acquisitionDate.startsWith(selectedYear));
 
   // Calculate calibration metrics
   const accurateCount = filteredData.filter(v => v.predictionAccuracy === 'accurate').length;
