@@ -48,26 +48,36 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg flex items-center justify-center">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+          <a href="#top" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
               <span className="text-white font-bold text-lg">L</span>
             </div>
             <div>
               <h1 className="text-xl font-bold text-slate-800">Lacuna</h1>
               <p className="text-xs text-slate-500">M&amp;A Intelligence · Women&apos;s Health</p>
             </div>
-          </div>
-          <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600">
+          </a>
+          <nav className="hidden lg:flex items-center gap-5 text-sm text-slate-600">
             <a href="#network" className="hover:text-pink-600 transition-colors">Network</a>
-            <a href="#analytics" className="hover:text-pink-600 transition-colors">Analytics</a>
             <a href="#matrix" className="hover:text-pink-600 transition-colors">Matrix</a>
-            <span className="px-3 py-1 bg-slate-100 rounded-full text-xs font-medium">v1.0.0</span>
+            <a href="#impact-assessment" className="hover:text-pink-600 transition-colors">Impact</a>
+            <a href="#fairness-audit" className="hover:text-pink-600 transition-colors">Fairness</a>
+            <a href="#network-analysis" className="hover:text-pink-600 transition-colors">Analysis</a>
+            <a href="#causal-engine" className="hover:text-pink-600 transition-colors">Causal</a>
+            <a
+              href="https://github.com/maekass/Lacuna"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-1 bg-slate-100 hover:bg-slate-200 rounded-full text-xs font-medium transition-colors"
+            >
+              GitHub
+            </a>
           </nav>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-12">
+      <main id="top" className="max-w-7xl mx-auto px-6 py-12">
         {/* Hero Section */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -76,14 +86,19 @@ export default function Home() {
           className="mb-16"
         >
           <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 bg-slate-100 rounded-full text-xs font-medium text-slate-600">
+              <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
+              Verified dataset · {verifiedCompanies.length} companies · {verifiedAcquisitions.length} acquisitions
+            </div>
             <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
               The Exit Map for
               <span className="bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent"> Women&apos;s Health</span>
             </h2>
             <p className="text-lg text-slate-600 leading-relaxed">
-              Sophisticated network intelligence platform tracking M&amp;A trends, 
-              strategic acquirers, and exit opportunities across FemTech, digital 
-              health, and women&apos;s wellness sectors.
+              An academically-honest M&amp;A intelligence platform for FemTech and
+              women&apos;s health. Every metric on this page is sourced from public
+              filings, every model discloses its assumptions, and small-sample
+              limitations are surfaced rather than hidden.
             </p>
           </div>
         </motion.section>
@@ -188,7 +203,7 @@ export default function Home() {
           <ValuationMatrix />
         </motion.section>
 
-        {/* Wearables Ecosystem Section - Featured for Pitch */}
+        {/* Wearables Ecosystem Section */}
         <motion.section
           id="wearables"
           initial={{ opacity: 0, y: 20 }}
@@ -199,7 +214,7 @@ export default function Home() {
           <WearablesTracker />
         </motion.section>
 
-        {/* Health Equity Section - Ported from windsurf-project */}
+        {/* Health Equity Section */}
         <motion.section
           id="health-equity"
           initial={{ opacity: 0, y: 20 }}
@@ -363,7 +378,7 @@ export default function Home() {
           <BayesianCausalAnalysis />
         </motion.section>
 
-        {/* AI/ML Intelligence Section */}
+        {/* Descriptive Scoring & Similarity */}
         <motion.section
           id="ai-ml"
           initial={{ opacity: 0, y: 20 }}
@@ -372,8 +387,8 @@ export default function Home() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-slate-800">AI/ML Intelligence</h3>
-            <p className="text-slate-600">Machine learning models for exit prediction, similarity analysis, and market clustering</p>
+            <h3 className="text-2xl font-semibold text-slate-800">Descriptive Scoring &amp; Similarity</h3>
+            <p className="text-slate-600">Deterministic factor scoring, cosine similarity, and capital-profile clustering — no fitted predictive models</p>
           </div>
           <div className="grid md:grid-cols-2 gap-8 mb-8">
             <ExitPredictor />
@@ -391,12 +406,26 @@ export default function Home() {
               </div>
               <span className="text-sm font-medium text-slate-700">Lacuna</span>
             </div>
-            <p className="text-sm text-slate-500">
-              Licensed under Business Source License 1.1 · © 2026 · Educational Project
+            <p className="text-sm text-slate-500 text-center">
+              Licensed under Business Source License 1.1 · © 2026 · Educational project — not investment advice
             </p>
             <div className="flex items-center gap-4 text-sm text-slate-500">
-              <a href="https://github.com" className="hover:text-slate-700 transition-colors">GitHub</a>
-              <a href="#" className="hover:text-slate-700 transition-colors">Documentation</a>
+              <a
+                href="https://github.com/maekass/Lacuna"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-slate-700 transition-colors"
+              >
+                GitHub
+              </a>
+              <a
+                href="https://github.com/maekass/Lacuna/tree/main/docs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-slate-700 transition-colors"
+              >
+                Methodology docs
+              </a>
             </div>
           </div>
         </footer>

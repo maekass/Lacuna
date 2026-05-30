@@ -1,57 +1,116 @@
 Business Source License 1.1
 
+===============================================================================
+ADAPTABLE PARAMETERS — Edit values below to retarget this license.
+All four fields (Licensor, Licensed Work, Additional Use Grant, Change Date)
+are required by BUSL 1.1. Change License must be a GPL-compatible OSI license.
+===============================================================================
+
 Parameters
 
-Licensor:             Lacuna Project Authors
-Licensed Work:        Lacuna - M&A Intelligence Platform for Women's Health
-                      The Licensed Work is (c) 2026 Lacuna Project Authors
-Additional Use Grant: You may make production use of the Licensed Work, provided 
-                      that you do not use the Licensed Work for a Database 
-                      Competitive Offering or a Product Competitive Offering.
-                      
-                      A "Database Competitive Offering" is a product, service, 
-                      or other offering that competes with the Licensed Work in 
-                      the market for women's health M&A intelligence platforms.
-                      
-                      A "Product Competitive Offering" is any offering that 
-                      offers M&A deal tracking, network visualization, or exit 
-                      strategy analysis for the healthcare or life sciences sectors.
+Licensor:             Lacuna (a DBA of Your Legal Name)
+                      Contact: you@example.com
 
-Change Date:          Four years from the date the Licensed Work is published
+Licensed Work:        Lacuna — M&A Intelligence Platform for Women's Health
+                      and FemTech
+                      The Licensed Work is © 2026 Your Legal Name,
+                      doing business as Lacuna. All rights reserved.
+
+Additional Use Grant: You may make production use of the Licensed Work for
+                      non-commercial research, academic study, journalism,
+                      regulatory analysis, or internal evaluation, provided
+                      that such use is NOT a Competitive Offering as defined
+                      below.
+
+                      Permitted production uses include, without limitation:
+                        (a) academic and clinical research;
+                        (b) non-profit public-interest reporting;
+                        (c) regulatory and policy analysis by government
+                            bodies, NGOs, and standards organizations;
+                        (d) internal evaluation by investors, founders, and
+                            operators considering adoption of the Licensed
+                            Work or a commercial license thereto;
+                        (e) educational use in accredited institutions.
+
+                      A "Competitive Offering" is any product, service,
+                      hosted platform, dataset, API, or subscription that:
+                        (i)   replicates or substantially derives from the
+                              analytical frameworks, datasets, scoring
+                              methodologies (including but not limited to the
+                              Opportunity-Adjusted Impact Score, Bayesian
+                              causal inference modules, fairness audit
+                              statistics, network analysis primitives, and
+                              competitive analysis components) contained in
+                              the Licensed Work; AND
+                        (ii)  is offered, sold, licensed, or made available
+                              to third parties on a commercial basis
+                              (including via paid SaaS, freemium SaaS with
+                              upsell, sponsored placement, or data resale);
+                              AND
+                        (iii) targets the market for M&A intelligence,
+                              market mapping, exit prediction, investor or
+                              acquirer intelligence, founder analytics, or
+                              health-equity scoring within the women's
+                              health, FemTech, reproductive health, maternal
+                              health, fertility, menopause, gynecologic, or
+                              adjacent life-sciences sectors.
+
+                      Forking, modifying, and self-hosting the Licensed Work
+                      for purposes that are NOT a Competitive Offering is
+                      expressly permitted and encouraged.
+
+Change Date:          May 30, 2030
+                      (Four years from initial publication on May 30, 2026.
+                      On this date the Licensed Work converts automatically
+                      to the Change License below for ALL prior and current
+                      versions of the Licensed Work.)
 
 Change License:       Apache License, Version 2.0
+                      (https://www.apache.org/licenses/LICENSE-2.0)
 
-For information about alternative licensing arrangements for the Licensed Work,
-please contact: licensing@lacuna.io
+===============================================================================
+
+For commercial licensing, partnership inquiries, or use cases that fall
+within the Competitive Offering definition but for which you would like to
+negotiate a separate arrangement, contact:
+
+    you@example.com
+
+Please include: (1) intended use case, (2) projected scale and revenue
+model, (3) which components of the Licensed Work you intend to use, and
+(4) whether you require any modifications to the Additional Use Grant.
+
+===============================================================================
 
 Notice
 
-The Business Source License (this document, or the "License") is not an Open 
-Source license. However, the Licensed Work will eventually be made available 
-under an Open Source License, as stated in this License.
+The Business Source License (this document, or the "License") is not an
+Open Source license. However, the Licensed Work will be made available
+under an Open Source license (the Change License above) on the Change
+Date, as stated in this License.
 
 License text copyright (c) 2017 MariaDB Corporation Ab, All Rights Reserved.
 "Business Source License" is a trademark of MariaDB Corporation Ab.
 
----------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
-Business Source License 1.1 Terms
+Business Source License 1.1 — Terms
 
 The Licensor hereby grants you the right to copy, modify, create derivative
 works, redistribute, and make non-production use of the Licensed Work. The
-Licensor may add an Additional Use Grant above that permits limited production
-use.
+Licensor may add an Additional Use Grant above that permits limited
+production use.
 
-Effective on the Change Date, or the fourth anniversary of the first publicly
-available distribution of a specific version of the Licensed Work under this
-License, whichever comes first, the Licensor hereby grants you rights under
-the terms of the Change License, and the rights granted in the paragraph above
-terminate.
+Effective on the Change Date, or the fourth anniversary of the first
+publicly available distribution of a specific version of the Licensed Work
+under this License, whichever comes first, the Licensor hereby grants you
+rights under the terms of the Change License, and the rights granted in
+the paragraph above terminate.
 
 If your use of the Licensed Work does not comply with the requirements
 currently in effect as described in this License, you must purchase a
-commercial license from the Licensor, its affiliated entities, or authorized
-resellers, or you must refrain from using the Licensed Work.
+commercial license from the Licensor, its affiliated entities, or
+authorized resellers, or you must refrain from using the Licensed Work.
 
 All copies of the original and modified Licensed Work, and derivative works
 of the Licensed Work, are subject to this License. This License applies
@@ -61,13 +120,31 @@ must remove all such trademarks and logos before distributing a modified
 version of the Licensed Work.
 
 THIS LICENSE DOES NOT GRANT YOU ANY RIGHT IN ANY TRADEMARK OR LOGO OF
-LICENSOR OR ITS AFFILIATES (PROVIDED THAT YOU MAY USE A TRADEMARK OR LOGO TO
-IDENTIFY THE SOURCE OF THE LICENSED WORK).
+LICENSOR OR ITS AFFILIATES (PROVIDED THAT YOU MAY USE A TRADEMARK OR LOGO
+TO IDENTIFY THE SOURCE OF THE LICENSED WORK).
 
-THE LICENSED WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE LICENSED WORK OR THE USE OR OTHER DEALINGS IN
-THE LICENSED WORK.
+THE LICENSED WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+LICENSED WORK OR THE USE OR OTHER DEALINGS IN THE LICENSED WORK.
+
+-------------------------------------------------------------------------------
+
+Covenants of the Licensor
+
+In consideration of the right to use this License's text, the Licensor
+commits to the following:
+
+  1. To specify as the Change License an OSI-approved license that is
+     compatible with GNU GPLv2 or any later version, or to indicate the
+     Change License as "None".
+
+  2. To specify an Additional Use Grant that does not impose any additional
+     restriction on the right granted in this License, as the Additional
+     Use Grant will not modify the rights granted under this License for
+     the Licensed Work after the Change Date.
+
+  3. Not to modify this License in any other way.

@@ -1,50 +1,84 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { companies, acquisitions } from '@/data/maDeals';
+import { verifiedCompanies, verifiedAcquisitions } from '@/data/verifiedData';
+
+type CanonicalStage = 'Seed' | 'Series A' | 'Series B' | 'Series C' | 'Series D+' | 'Public' | 'Acquired';
+const STAGE_ORDER: CanonicalStage[] = ['Seed', 'Series A', 'Series B', 'Series C', 'Series D+', 'Public', 'Acquired'];
+
+/**
+ * Normalize the verified dataset's free-form stage string
+ * (e.g. "Private (Series C)", "Public (SPAC 2021)", "Acquired by Ro (2021)")
+ * into a canonical bucket for matrix grouping.
+ */
+function canonicalStage(raw: string): CanonicalStage | null {
+  if (/Acquired/i.test(raw)) return 'Acquired';
+  if (/Public/i.test(raw)) return 'Public';
+  if (/Series D|Series E|Series F|Late Stage|Pre-IPO/i.test(raw)) return 'Series D+';
+  if (/Series C/i.test(raw)) return 'Series C';
+  if (/Series B/i.test(raw)) return 'Series B';
+  if (/Series A/i.test(raw)) return 'Series A';
+  if (/Seed/i.test(raw)) return 'Seed';
+  return null;
+}
 
 interface MatrixCell {
   sector: string;
-  stage: string;
-  avgValuation: number;
-  count: number;
-  deals: typeof acquisitions;
+  stage: CanonicalStage;
+  medianValuation: number;
+  disclosedCount: number;
+  totalCount: number;
+  dealCount: number;
 }
 
 export default function ValuationMatrix() {
   const [hoveredCell, setHoveredCell] = useState<MatrixCell | null>(null);
 
-  const sectors = [...new Set(companies.map(c => c.sector))].sort();
-  const stages = ['Seed', 'Series A', 'Series B', 'Series C', 'Series D', 'Late Stage', 'Pre-IPO'];
+  const { sectors, matrix, maxValuation, totalDisclosed, totalCompanies } = useMemo(() => {
+    const sectorList = Array.from(new Set(verifiedCompanies.map(c => c.sector))).sort();
 
-  // Build matrix data
-  const matrix: MatrixCell[][] = stages.map(stage => 
-    sectors.map(sector => {
-      const sectorCompanies = companies.filter(c => c.sector === sector && c.stage === stage && c.valuation);
-      const avgValuation = sectorCompanies.length > 0
-        ? sectorCompanies.reduce((sum, c) => sum + (c.valuation || 0), 0) / sectorCompanies.length
-        : 0;
-      
-      const deals = acquisitions.filter(a => {
-        const target = companies.find(c => c.id === a.targetId);
-        return target?.sector === sector && target?.stage === stage;
-      });
+    const grid: MatrixCell[][] = STAGE_ORDER.map(stage =>
+      sectorList.map(sector => {
+        const inCell = verifiedCompanies.filter(c => {
+          const cs = canonicalStage(c.stage);
+          return c.sector === sector && cs === stage;
+        });
+        const withVal = inCell.filter(c => typeof c.lastKnownValuation === 'number');
+        const valuations = withVal.map(c => c.lastKnownValuation as number).sort((a, b) => a - b);
+        const median = valuations.length > 0 ? valuations[Math.floor(valuations.length / 2)] : 0;
 
-      return {
-        sector,
-        stage,
-        avgValuation,
-        count: sectorCompanies.length,
-        deals
-      };
-    })
-  );
+        const deals = verifiedAcquisitions.filter(a => {
+          const target = verifiedCompanies.find(c => c.id === a.targetId);
+          if (!target) return false;
+          return target.sector === sector && canonicalStage(target.stage) === stage;
+        });
 
-  const maxValuation = Math.max(...matrix.flat().map(c => c.avgValuation));
+        return {
+          sector,
+          stage,
+          medianValuation: median,
+          disclosedCount: withVal.length,
+          totalCount: inCell.length,
+          dealCount: deals.length,
+        };
+      })
+    );
+
+    const max = Math.max(...grid.flat().map(c => c.medianValuation));
+    const disclosed = verifiedCompanies.filter(c => typeof c.lastKnownValuation === 'number').length;
+
+    return {
+      sectors: sectorList,
+      matrix: grid,
+      maxValuation: max,
+      totalDisclosed: disclosed,
+      totalCompanies: verifiedCompanies.length,
+    };
+  }, []);
 
   const getColor = (value: number) => {
-    if (value === 0) return '#f1f5f9';
+    if (value === 0) return '#f8fafc';
     const intensity = value / maxValuation;
     if (intensity < 0.25) return '#fce7f3';
     if (intensity < 0.5) return '#fbcfe8';
@@ -54,11 +88,18 @@ export default function ValuationMatrix() {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-      <h3 className="text-lg font-semibold text-slate-800 mb-2">Valuation Matrix</h3>
-      <p className="text-sm text-slate-500 mb-6">Average valuations by sector and stage ($M)</p>
+      <div className="flex items-start justify-between mb-2">
+        <div>
+          <h3 className="text-lg font-semibold text-slate-800">Valuation Matrix</h3>
+          <p className="text-sm text-slate-500">Median disclosed valuation ($M) by sector × normalized stage</p>
+        </div>
+        <span className="text-xs text-slate-500 px-2 py-1 bg-slate-50 rounded">
+          {totalDisclosed}/{totalCompanies} companies with public valuations
+        </span>
+      </div>
 
-      <div className="overflow-x-auto">
-        <div className="min-w-[600px]">
+      <div className="overflow-x-auto mt-4">
+        <div className="min-w-[640px]">
           {/* Header row */}
           <div className="grid" style={{ gridTemplateColumns: `120px repeat(${sectors.length}, 1fr)` }}>
             <div className="p-2"></div>
@@ -71,9 +112,9 @@ export default function ValuationMatrix() {
 
           {/* Matrix rows */}
           {matrix.map((row, rowIndex) => (
-            <div key={stages[rowIndex]} className="grid" style={{ gridTemplateColumns: `120px repeat(${sectors.length}, 1fr)` }}>
+            <div key={STAGE_ORDER[rowIndex]} className="grid" style={{ gridTemplateColumns: `120px repeat(${sectors.length}, 1fr)` }}>
               <div className="p-2 text-xs font-medium text-slate-600 flex items-center">
-                {stages[rowIndex]}
+                {STAGE_ORDER[rowIndex]}
               </div>
               {row.map((cell, colIndex) => (
                 <motion.div
@@ -84,15 +125,20 @@ export default function ValuationMatrix() {
                 >
                   <div
                     className="h-12 rounded-md flex items-center justify-center cursor-pointer transition-all hover:scale-105 hover:shadow-md"
-                    style={{ backgroundColor: getColor(cell.avgValuation) }}
+                    style={{ backgroundColor: getColor(cell.medianValuation) }}
+                    title={
+                      cell.totalCount > 0
+                        ? `${cell.totalCount} company${cell.totalCount === 1 ? '' : 'ies'} · ${cell.disclosedCount} disclosed`
+                        : 'No companies in this cell'
+                    }
                   >
-                    {cell.avgValuation > 0 && (
+                    {cell.medianValuation > 0 && (
                       <span className="text-xs font-semibold text-slate-700">
-                        ${Math.round(cell.avgValuation)}M
+                        ${cell.medianValuation}M
                       </span>
                     )}
-                    {cell.avgValuation === 0 && cell.count > 0 && (
-                      <span className="text-xs text-slate-400">—</span>
+                    {cell.medianValuation === 0 && cell.totalCount > 0 && (
+                      <span className="text-xs text-slate-400" title="Companies present, no public valuations">·{cell.totalCount}</span>
                     )}
                   </div>
                 </motion.div>
@@ -104,38 +150,46 @@ export default function ValuationMatrix() {
 
       {/* Legend */}
       <div className="mt-6 flex items-center gap-4">
-        <span className="text-xs text-slate-500">Low</span>
+        <span className="text-xs text-slate-500">Lower median</span>
         <div className="flex gap-1">
           {['#fce7f3', '#fbcfe8', '#f9a8d4', '#ec4899'].map((color, i) => (
             <div key={i} className="w-8 h-4 rounded" style={{ backgroundColor: color }} />
           ))}
         </div>
-        <span className="text-xs text-slate-500">High</span>
+        <span className="text-xs text-slate-500">Higher median</span>
       </div>
 
       {/* Tooltip */}
-      {hoveredCell && (hoveredCell.avgValuation > 0 || hoveredCell.deals.length > 0) && (
+      {hoveredCell && hoveredCell.totalCount > 0 && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-200"
         >
           <h4 className="font-semibold text-slate-800">{hoveredCell.stage} · {hoveredCell.sector}</h4>
-          {hoveredCell.avgValuation > 0 && (
+          {hoveredCell.medianValuation > 0 ? (
             <p className="text-sm text-slate-600 mt-1">
-              Average valuation: <span className="font-semibold">${Math.round(hoveredCell.avgValuation)}M</span>
+              Median valuation: <span className="font-semibold">${hoveredCell.medianValuation}M</span>
+              <span className="text-xs text-slate-400 ml-1">(among {hoveredCell.disclosedCount} disclosed)</span>
             </p>
+          ) : (
+            <p className="text-sm text-slate-500 mt-1 italic">No public valuations in this cell</p>
           )}
           <p className="text-sm text-slate-600">
-            Companies: <span className="font-semibold">{hoveredCell.count}</span>
+            Companies: <span className="font-semibold">{hoveredCell.totalCount}</span>
           </p>
-          {hoveredCell.deals.length > 0 && (
+          {hoveredCell.dealCount > 0 && (
             <p className="text-sm text-slate-600">
-              Acquisitions: <span className="font-semibold text-pink-600">{hoveredCell.deals.length}</span>
+              Verified acquisitions: <span className="font-semibold text-pink-600">{hoveredCell.dealCount}</span>
             </p>
           )}
         </motion.div>
       )}
+
+      <p className="mt-4 text-xs text-slate-400 leading-relaxed">
+        Empty cells reflect honest gaps in the verified dataset — not low activity.
+        Medians shown only where ≥1 company has a disclosed valuation.
+      </p>
     </div>
   );
 }

@@ -2,61 +2,83 @@
 
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { companies } from '@/data/maDeals';
+import { verifiedCompanies } from '@/data/verifiedData';
+
+const CURRENT_YEAR = 2026;
+
+// Canonical sector list pulled from verified data (avoids drift from hard-coded values)
+const SECTORS = Array.from(new Set(verifiedCompanies.map(c => c.sector))).sort();
+
+interface FeatureVector {
+  readonly values: readonly number[];
+  readonly hasValuation: boolean;
+  readonly hasFunding: boolean;
+}
+
+function buildFeatureVector(company: typeof verifiedCompanies[number]): FeatureVector {
+  const sectorOneHot = SECTORS.map(s => (company.sector === s ? 1 : 0));
+  const hasValuation = typeof company.lastKnownValuation === 'number';
+  const hasFunding = typeof company.totalFunding === 'number';
+
+  const logVal = hasValuation ? Math.log10((company.lastKnownValuation as number) + 1) / 4 : 0;
+  const logFund = hasFunding ? Math.log10((company.totalFunding as number) + 1) / 3 : 0;
+  const ageNorm = Math.min(1, (CURRENT_YEAR - company.founded) / 15);
+  const isLateStage = /Series C|Series D|Series E|Series F|Late Stage|Pre-IPO/i.test(company.stage) ? 1 : 0;
+  const isPublic = /Public/i.test(company.stage) ? 1 : 0;
+  const isAcquired = /Acquired/i.test(company.stage) ? 1 : 0;
+
+  return {
+    values: [...sectorOneHot, logVal, logFund, ageNorm, isLateStage, isPublic, isAcquired],
+    hasValuation,
+    hasFunding,
+  };
+}
+
+function cosineSimilarity(a: readonly number[], b: readonly number[]): number {
+  const dot = a.reduce((sum, v, i) => sum + v * b[i], 0);
+  const magA = Math.sqrt(a.reduce((sum, v) => sum + v * v, 0));
+  const magB = Math.sqrt(b.reduce((sum, v) => sum + v * v, 0));
+  const denom = magA * magB;
+  return denom === 0 ? 0 : dot / denom;
+}
 
 export default function CompanySimilarity() {
-  const [selectedCompany, setSelectedCompany] = useState<string>(companies[0]?.id || '');
+  const [selectedCompany, setSelectedCompany] = useState<string>(verifiedCompanies[0]?.id || '');
 
   const similarities = useMemo(() => {
-    const target = companies.find(c => c.id === selectedCompany);
+    const target = verifiedCompanies.find(c => c.id === selectedCompany);
     if (!target) return [];
 
-    // Compute cosine similarity based on features
-    const targetVector = [
-      target.sector === 'Fertility' ? 1 : 0,
-      target.sector === 'Mental Health' ? 1 : 0,
-      target.sector === 'Wearables' ? 1 : 0,
-      target.sector === 'General Wellness' ? 1 : 0,
-      target.sector === 'Pelvic Health' ? 1 : 0,
-      target.valuation ? Math.log(target.valuation) / 10 : 0,
-      target.employees / 1000,
-      ['Late Stage', 'Pre-IPO'].includes(target.stage) ? 1 : 0.5,
-    ];
+    const targetVec = buildFeatureVector(target);
 
-    return companies
+    return verifiedCompanies
       .filter(c => c.id !== selectedCompany)
       .map(company => {
-        const vector = [
-          company.sector === 'Fertility' ? 1 : 0,
-          company.sector === 'Mental Health' ? 1 : 0,
-          company.sector === 'Wearables' ? 1 : 0,
-          company.sector === 'General Wellness' ? 1 : 0,
-          company.sector === 'Pelvic Health' ? 1 : 0,
-          company.valuation ? Math.log(company.valuation) / 10 : 0,
-          company.employees / 1000,
-          ['Late Stage', 'Pre-IPO'].includes(company.stage) ? 1 : 0.5,
-        ];
+        const vec = buildFeatureVector(company);
+        const similarity = cosineSimilarity(targetVec.values, vec.values);
 
-        // Cosine similarity
-        const dot = targetVector.reduce((sum, v, i) => sum + v * vector[i], 0);
-        const magA = Math.sqrt(targetVector.reduce((sum, v) => sum + v * v, 0));
-        const magB = Math.sqrt(vector.reduce((sum, v) => sum + v * v, 0));
-        const similarity = dot / (magA * magB);
-
-        // Determine shared factors
         const shared: string[] = [];
         if (company.sector === target.sector) shared.push(`Same sector (${company.sector})`);
-        if (Math.abs((company.valuation || 0) - (target.valuation || 0)) < 200) shared.push('Similar valuation range');
-        if (company.stage === target.stage) shared.push(`Same stage (${company.stage})`);
-        if (Math.abs(company.employees - target.employees) < 100) shared.push('Similar team size');
+        if (company.stage === target.stage) shared.push(`Same stage`);
+        if (targetVec.hasValuation && vec.hasValuation) {
+          const ratio = Math.max(target.lastKnownValuation!, company.lastKnownValuation!) /
+                        Math.min(target.lastKnownValuation!, company.lastKnownValuation!);
+          if (ratio < 2) shared.push('Valuation within 2×');
+        }
+        if (Math.abs(company.founded - target.founded) <= 2) shared.push('Founded within 2 yrs');
 
-        return { company, similarity: isNaN(similarity) ? 0 : similarity, sharedFactors: shared };
+        return {
+          company,
+          similarity: isNaN(similarity) ? 0 : similarity,
+          sharedFactors: shared,
+          dataCompleteness: (vec.hasValuation ? 1 : 0) + (vec.hasFunding ? 1 : 0),
+        };
       })
       .sort((a, b) => b.similarity - a.similarity)
       .slice(0, 5);
   }, [selectedCompany]);
 
-  const selected = companies.find(c => c.id === selectedCompany);
+  const selected = verifiedCompanies.find(c => c.id === selectedCompany);
 
   return (
     <motion.div
@@ -67,10 +89,10 @@ export default function CompanySimilarity() {
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="text-lg font-semibold text-slate-800">Company Similarity Engine</h3>
-          <p className="text-sm text-slate-500">Vector embeddings + cosine similarity analysis</p>
+          <p className="text-sm text-slate-500">Cosine similarity over verified features (sector, valuation, funding, age, stage)</p>
         </div>
         <div className="flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full">
-          <span className="text-xs font-medium text-blue-700">ML-Matrix</span>
+          <span className="text-xs font-medium text-blue-700">n={verifiedCompanies.length}</span>
         </div>
       </div>
 
@@ -81,7 +103,7 @@ export default function CompanySimilarity() {
           onChange={(e) => setSelectedCompany(e.target.value)}
           className="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
         >
-          {companies.map(c => (
+          {verifiedCompanies.map(c => (
             <option key={c.id} value={c.id}>{c.name} — {c.sector}</option>
           ))}
         </select>
@@ -90,7 +112,11 @@ export default function CompanySimilarity() {
       {selected && (
         <div className="mb-4 p-3 bg-slate-50 rounded-lg">
           <p className="font-medium text-slate-800">{selected.name}</p>
-          <p className="text-sm text-slate-500">{selected.sector} · {selected.stage} · ${selected.valuation}M</p>
+          <p className="text-sm text-slate-500">
+            {selected.sector} · {selected.stage}
+            {selected.lastKnownValuation && ` · $${selected.lastKnownValuation}M valuation`}
+            {selected.totalFunding && ` · $${selected.totalFunding}M raised`}
+          </p>
         </div>
       )}
 
@@ -110,11 +136,20 @@ export default function CompanySimilarity() {
                 <span className="text-xs px-2 py-0.5 bg-slate-100 text-slate-600 rounded">
                   {result.company.sector}
                 </span>
+                {result.dataCompleteness < 2 && (
+                  <span className="text-xs px-2 py-0.5 bg-amber-50 text-amber-700 rounded" title="Some financial fields not publicly disclosed">
+                    partial data
+                  </span>
+                )}
               </div>
               <div className="flex flex-wrap gap-1 mt-1">
-                {result.sharedFactors.map((factor, j) => (
-                  <span key={j} className="text-xs text-slate-500">• {factor}</span>
-                ))}
+                {result.sharedFactors.length > 0 ? (
+                  result.sharedFactors.map((factor, j) => (
+                    <span key={j} className="text-xs text-slate-500">• {factor}</span>
+                  ))
+                ) : (
+                  <span className="text-xs text-slate-400">No structural overlap</span>
+                )}
               </div>
             </div>
             <div className="text-right">
@@ -128,9 +163,10 @@ export default function CompanySimilarity() {
       </div>
 
       <div className="mt-4 pt-4 border-t border-slate-100">
-        <p className="text-xs text-slate-400">
-          Similarity computed using 8-dimensional feature vectors: sector encoding, 
-          log(valuation), normalized employees, stage maturity. Cosine similarity metric.
+        <p className="text-xs text-slate-400 leading-relaxed">
+          Feature vector: {SECTORS.length} sector one-hot dims + log(valuation) +
+          log(funding) + normalized age + stage flags. Cosine similarity.
+          Companies with undisclosed financials default to 0 on those dims (penalizes match) — flagged as &quot;partial data&quot;.
         </p>
       </div>
     </motion.div>
