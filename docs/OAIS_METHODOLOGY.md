@@ -278,6 +278,21 @@ These appear prominently in all OAIS outputs:
 
 ---
 
+## Repository & Implementation
+
+**Code:** github.com/maekass/Lacuna
+
+**Core implementation:**
+- `src/lib/impact/oaisCalculator.ts` — OAIS formula, normalization, confidence-level tagging
+- `src/data/dataset.verified.json` — population estimates, source citations (CDC/NICHD)
+
+**UI components:**
+- `src/components/ImpactOpportunityCard.tsx` — primary OAIS dashboard rendered on the home page (`#impact-assessment` anchor)
+- `src/components/ValidationTracker.tsx` — pre/post-acquisition prediction-vs-reality calibration (`#validation-tracker` anchor)
+- `src/components/ConfidenceLevelIndicator.tsx` — sub-component: 🟢🟡🔴 confidence-tier badges used throughout
+
+---
+
 ## Contact & Contributions
 
 This methodology is open for review and improvement. Submit issues or pull requests to:
@@ -287,4 +302,4 @@ This methodology is open for review and improvement. Submit issues or pull reque
 
 ---
 
-*Last updated: May 27, 2026*
+*Last updated: May 30, 2026*

@@ -204,10 +204,17 @@ This prevents false discoveries from multiple comparisons.
 
 ## Repository
 
-**Code:** github.com/maekass/Lacuna  
-**Components:**
-- `src/lib/fairness/demographicParity.ts`
-- `src/components/FairnessAudit.tsx`
+**Code:** github.com/maekass/Lacuna
+
+**Core implementation:**
+- `src/lib/fairness/demographicParity.ts` — statistical parity, equalized odds, disparate impact ratio
+- `src/lib/fairness/statisticalMethods.ts` — confidence intervals, sample-size guards
+
+**UI components:**
+- `src/components/FairnessAuditV2.tsx` — primary dashboard rendered on the home page (`#fairness-audit` anchor)
+- `src/components/FounderCharacteristics.tsx` — sub-component: founder demographic breakdown
+- `src/components/GenderInferenceQuality.tsx` — sub-component: inference confidence display
+- `src/components/FairnessLimitations.tsx` — sub-component: prominent small-N + inference caveats
 
 ---
 
