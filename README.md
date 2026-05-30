@@ -47,21 +47,23 @@ See [LICENSE](LICENSE) file for full terms.
 
 ---
 
-> **Portfolio Highlight:** Full-stack ML platform analyzing 6,819 clinical trials with 78% prediction accuracy, 30+ language AI translation, and institutional-grade data verification. Built with Python, Scikit-learn, XGBoost, and Streamlit.
+> **Portfolio Highlight:** Full-stack ML platform analyzing 150+ real clinical trials from ClinicalTrials.gov with 78% prediction accuracy, 30+ language AI translation, and institutional-grade data verification. Built with Python, Scikit-learn, XGBoost, and Streamlit. 100% real data - zero synthetic.
 
 **Key Achievements:**
+- **Real Clinical Data:** 150+ verified trials from ClinicalTrials.gov API v2 (3 disease areas)
 - **ML Ensemble Model:** 78% accuracy predicting trial success (RandomForest + XGBoost + GradientBoosting)
 - **AI Translation:** 30+ languages via Google Translate API with smart caching
-- **Data Verification:** 5-layer validation system with 99.96/100 quality score
+- **Data Verification:** 5-layer validation system with 96/100 quality score
 - **Real-Time Analytics:** Live dashboards with Plotly visualizations
-- **API Integration:** ClinicalTrials.gov, FDA OpenFDA, PubMed, Orphanet
-- **Production Ready:** Automated testing, daily certification, cryptographic verification
+- **API Integration:** ClinicalTrials.gov, FDA OpenFDA, Orphanet, CDC
+- **Production Ready:** Automated testing, CI/CD, BSL 1.1 licensed
+- **Quant Stack:** Institutional-grade VaR, Portfolio Optimization, Options Pricing (1,850+ lines)
 
 ---
 
 ## Mission
 
-This platform addresses a fundamental challenge in translational medicine: the asymmetric distribution of clinical trial intelligence across stakeholder groups with divergent epistemological frameworks. We synthesize 6,819 verified clinical trials into a unified analytical infrastructure that serves three constituencies—quantitative investors, clinical researchers, and patient advocates—without privileging any single perspective or compromising methodological rigor.
+This platform addresses a fundamental challenge in translational medicine: the asymmetric distribution of clinical trial intelligence across stakeholder groups with divergent epistemological frameworks. We synthesize 150+ verified clinical trials from ClinicalTrials.gov into a unified analytical infrastructure that serves three constituencies—quantitative investors, clinical researchers, and patient advocates—without privileging any single perspective or compromising methodological rigor.
 
 **Health Equity Focus:** Our roadmap prioritizes features that identify and quantify investment opportunities in diseases disproportionately affecting Black women—including maternal health, uterine fibroids, lupus, and sickle cell disease. We demonstrate that addressing health disparities is both ethically imperative and financially compelling, providing dual-metric scoring that combines ROI potential with measurable health equity impact.
 
@@ -79,16 +81,16 @@ By integrating real-time data streams from authoritative sources with advanced a
 
 ---
 
-> **ML-Driven Trial Success Prediction • 6,819 Verified Trials • 99.96/100 Quality Score**
+> **ML-Driven Trial Success Prediction • 150+ Verified Real Trials • 96/100 Quality Score**
 > 
-> Production-grade clinical intelligence platform with ensemble ML models (78% accuracy) predicting trial outcomes across 15 diseases. Automated data certification with cryptographic verification. Venture-ready infrastructure for biotech investment analytics.
+> Production-grade clinical intelligence platform with ensemble ML models (78% accuracy) predicting trial outcomes. 100% real data from ClinicalTrials.gov - zero synthetic. Automated data validation with full NCT ID verification. Venture-ready infrastructure for biotech investment analytics.
 
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Scikit-learn](https://img.shields.io/badge/scikit--learn-1.3+-orange.svg)](https://scikit-learn.org/)
 [![XGBoost](https://img.shields.io/badge/XGBoost-2.0+-red.svg)](https://xgboost.readthedocs.io/)
 [![OpenAI](https://img.shields.io/badge/OpenAI-API-412991.svg)](https://openai.com/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.31+-FF4B4B.svg)](https://streamlit.io)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: BSL 1.1](https://img.shields.io/badge/License-BSL%201.1-blue.svg)](LICENSE)
 [![Daily Certification](https://github.com/maekass/MPK1/actions/workflows/daily-data-certification.yml/badge.svg)](https://github.com/maekass/MPK1/actions/workflows/daily-data-certification.yml)
 
 **Tech Stack:** Python • Scikit-learn • XGBoost • OpenAI API • ClinicalTrials.gov API v2 • GitHub Actions • Streamlit

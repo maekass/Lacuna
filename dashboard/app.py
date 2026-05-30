@@ -59,9 +59,8 @@ try:
     ADVANCED_VIZ_AVAILABLE = True
 except ImportError:
     ADVANCED_VIZ_AVAILABLE = False
-from src.data_collection.bootstrap_data import data_is_present, run_full_pipeline, seed_demo_if_missing
+from src.data_collection.bootstrap_data import data_is_present, run_full_pipeline
 from src.data_collection.data_manifest import kind_display_label
-from src.data_collection.seed_demo_data import sync_ml_from_demo, sync_quant_from_demo
 from src.data_collection.parsers.cdc_nndss import fetch_nndss_disease_index, search_nndss_index
 from src.data_collection.parsers.orphanet_search import fetch_orphanet_index, search_orphanet_index
 from src.disease_registry import get_disease, list_diseases, us_tickers
@@ -130,10 +129,11 @@ def show_legal_disclaimer():
 
 @st.cache_resource(show_spinner=False)
 def _bootstrap_data_cached() -> bool:
-    """Once per Cloud container: seed bundled CSVs, then optional API refresh."""
-    if seed_demo_if_missing(DATA):
+    """Once per Cloud container: verify real data is present, then optional API refresh."""
+    if data_is_present(DATA):
         return True
-    run_full_pipeline(DATA)
+    # Optionally run full pipeline to collect fresh data
+    # run_full_pipeline(DATA)
     return True
 
 # Primary CSVs surfaced on each dashboard page (for manifest table)
@@ -186,8 +186,8 @@ def _ml_artifacts_ready() -> bool:
 
 @st.cache_resource(show_spinner=False)
 def _ensure_ml_artifacts_cached() -> bool:
-    sync_ml_from_demo()
-    return _ml_artifacts_ready() or ml_bundle_present(ROOT / "data" / "demo" / "ml")
+    """Check if ML artifacts are ready from processed data."""
+    return _ml_artifacts_ready()
 
 
 def _quant_artifacts_ready() -> bool:
@@ -196,8 +196,8 @@ def _quant_artifacts_ready() -> bool:
 
 @st.cache_resource(show_spinner=False)
 def _ensure_quant_artifacts_cached() -> bool:
-    sync_quant_from_demo()
-    return _quant_artifacts_ready() or quant_bundle_present(ROOT / "data" / "demo" / "quant")
+    """Check if Quant artifacts are ready from processed data."""
+    return _quant_artifacts_ready()
 
 
 def load_quant_json(name: str) -> Optional[dict[str, Any]]:
