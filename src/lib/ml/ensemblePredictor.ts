@@ -111,7 +111,7 @@ export class EnsemblePredictor {
     return {
       successProbability: ensembleProbability,
       confidenceInterval,
-      featureImportance: this.calculateFeatureImportance(features),
+      featureImportance: this.calculateFeatureImportance(),
       modelContributions: {
         neuralNetwork: nnProbability,
         logisticRegression: lrProbability
@@ -145,7 +145,7 @@ export class EnsemblePredictor {
     return 1 / (1 + Math.exp(-z));
   }
 
-  private calculateFeatureImportance(_features: TrialFeatures): Record<string, number> {
+  private calculateFeatureImportance(): Record<string, number> {
     // Approximate feature importance based on clinical trial literature
     return {
       phase: 0.28,

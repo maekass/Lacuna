@@ -8,11 +8,6 @@
 
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  BLACK_WOMEN_PRIORITY_DISEASES, 
-  calculateHealthEquityScore,
-  getEnsemblePredictor
-} from '@/lib/ml/ensemblePredictor';
 import { useDataCertification, generateVerificationBadge } from '@/lib/validation/dataCertification';
 import { verifiedCompanies } from '@/data/verifiedData';
 

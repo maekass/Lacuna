@@ -29,8 +29,6 @@ import {
   strategicPositioning,
   networkStabilityAnalysis,
   POWER_LAW_LIMITATIONS,
-  type NetworkNode,
-  type NetworkEdge
 } from '@/lib/network/networkStatistics';
 import StrategicPositioningMap from './StrategicPositioningMap';
 import { getVerifiedNetworkGraph } from '@/lib/data/verifiedDatasetAdapters';

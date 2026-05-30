@@ -15,9 +15,6 @@ import {
   analyzeVelocity,
   analyzeMarketStructure,
   compareAcquirerTypes,
-  type Acquirer,
-  type AcquiredCompany,
-  type AcquisitionRecord,
   type ExternalEvent
 } from '@/lib/competitive/acquirerAnalysis';
 import { getVerifiedCompetitiveAnalysisData } from '@/lib/data/verifiedDatasetAdapters';

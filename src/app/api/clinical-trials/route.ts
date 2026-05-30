@@ -195,7 +195,7 @@ export async function POST(request: NextRequest) {
       trials: trials.filter(Boolean)
     });
 
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to fetch trials' },
       { status: 500 }

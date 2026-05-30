@@ -26,7 +26,6 @@ import {
   fishersExactTest,
   bonferroniCorrection,
   benjaminiHochbergCorrection,
-  logisticRegression,
   powerAnalysis,
   wilsonConfidenceInterval
 } from '@/lib/fairness/statisticalMethods';

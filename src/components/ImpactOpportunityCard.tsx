@@ -13,7 +13,6 @@ import {
   calculateOAIS,
   EPIDEMIOLOGY_DATABASE,
   UNMEASURABLE_FACTORS,
-  type OAISResult,
   type OAISInputs
 } from '@/lib/impact/oaisCalculator';
 import { verifiedCompanies } from '@/data/verifiedData';
@@ -66,12 +65,6 @@ export default function ImpactOpportunityCard() {
   };
 
   const oais = calculateOAIS(oaisInputs);
-
-  const getScoreColor = (score: number): string => {
-    if (score >= 7) return 'bg-green-500';
-    if (score >= 4) return 'bg-yellow-500';
-    return 'bg-orange-500';
-  };
 
   const getScoreInterpretation = (score: number): string => {
     if (score >= 7) return 'High Opportunity';

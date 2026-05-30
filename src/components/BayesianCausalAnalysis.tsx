@@ -12,8 +12,6 @@ import { motion } from 'framer-motion';
 import {
   smallSampleCausalAnalysis,
   PRE_REGISTERED_HYPOTHESES,
-  type SmallSampleAnalysis,
-  type PreRegisteredHypothesis
 } from '@/lib/causal/bayesianCausal';
 
 interface AnalysisInputs {
