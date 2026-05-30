@@ -30,53 +30,27 @@ import {
   powerAnalysis,
   wilsonConfidenceInterval
 } from '@/lib/fairness/statisticalMethods';
+import { verifiedAcquisitions, verifiedCompanies } from '@/data/verifiedData';
 
-// Verified dataset - based on real FemTech companies
-const SAMPLE_FOUNDERS: FounderClassification[] = [
-  { name: 'Afton Vechery', inferredGender: 'female', confidence: 0.92, source: 'common_name', nameOrigin: 'western' },
-  { name: 'Kate Ryder', inferredGender: 'female', confidence: 0.95, source: 'common_name', nameOrigin: 'western' },
-  { name: 'Tania Boler', inferredGender: 'female', confidence: 0.88, source: 'common_name', nameOrigin: 'western' },
-  { name: 'Gina Bartasi', inferredGender: 'female', confidence: 0.96, source: 'common_name', nameOrigin: 'western' },
-  { name: 'Carolyn Witte', inferredGender: 'female', confidence: 0.94, source: 'common_name', nameOrigin: 'western' },
-  { name: 'Felicity Yost', inferredGender: 'female', confidence: 0.89, source: 'common_name', nameOrigin: 'western' },
-  { name: 'Danielle Nicklas', inferredGender: 'female', confidence: 0.91, source: 'common_name', nameOrigin: 'western' },
-  { name: 'Clarissa Ren', inferredGender: 'female', confidence: 0.85, source: 'common_name', nameOrigin: 'east_asian' },
-  { name: 'Oren Frank', inferredGender: 'male', confidence: 0.93, source: 'common_name', nameOrigin: 'middle_eastern' },
-  { name: 'Zachariah Reitano', inferredGender: 'male', confidence: 0.91, source: 'common_name', nameOrigin: 'western' },
-  { name: 'Hans Gangeskar', inferredGender: 'male', confidence: 0.87, source: 'common_name', nameOrigin: 'western' },
-  { name: 'Janis Iourovitski', inferredGender: 'ambiguous', confidence: 0.62, source: 'inferred', nameOrigin: 'east_asian' },
-  { name: 'Akshay Suvarna', inferredGender: 'male', confidence: 0.89, source: 'common_name', nameOrigin: 'south_asian' },
-  { name: 'Justin Joffe', inferredGender: 'male', confidence: 0.92, source: 'common_name', nameOrigin: 'western' },
-  { name: 'Pooja Kumar', inferredGender: 'female', confidence: 0.83, source: 'common_name', nameOrigin: 'south_asian' },
-  { name: 'Jordan Brannon', inferredGender: 'ambiguous', confidence: 0.58, source: 'inferred', nameOrigin: 'western' },
-  { name: 'Christine Carrillo', inferredGender: 'female', confidence: 0.94, source: 'common_name', nameOrigin: 'western' },
-  { name: 'Bea Bischoff', inferredGender: 'female', confidence: 0.91, source: 'common_name', nameOrigin: 'western' },
-  { name: 'Anu Duggal', inferredGender: 'female', confidence: 0.86, source: 'common_name', nameOrigin: 'south_asian' },
-  { name: 'Marcus Schultz', inferredGender: 'male', confidence: 0.95, source: 'common_name', nameOrigin: 'western' }
-];
+/** Founder gender is not in the verified public dataset — no name-inference panel. */
+const SAMPLE_FOUNDERS: FounderClassification[] = [];
 
-const SAMPLE_COMPANIES: CompanyProfile[] = [
-  { id: 'c1', name: 'Modern Fertility', sector: 'Fertility', stage: 'Acquired', yearFounded: 2017, yearAcquired: 2021, acquisitionValue: 225, hasWomenFounder: true, founderCount: 2 },
-  { id: 'c2', name: 'Maven Clinic', sector: 'Maternal Health', stage: 'Series D', yearFounded: 2014, hasWomenFounder: true, founderCount: 1 },
-  { id: 'c3', name: 'Elvie', sector: 'Pelvic Health', stage: 'Series B', yearFounded: 2013, hasWomenFounder: true, founderCount: 1 },
-  { id: 'c4', name: 'Kindbody', sector: 'Fertility', stage: 'Series D', yearFounded: 2018, hasWomenFounder: true, founderCount: 1 },
-  { id: 'c5', name: 'Tia', sector: 'Wellness', stage: 'Series A', yearFounded: 2017, hasWomenFounder: true, founderCount: 2 },
-  { id: 'c6', name: 'Talkspace', sector: 'Mental Health', stage: 'Public', yearFounded: 2012, yearAcquired: 2021, acquisitionValue: 1400, hasWomenFounder: false, founderCount: 1 },
-  { id: 'c7', name: 'Ro', sector: 'Wellness', stage: 'Series E', yearFounded: 2017, hasWomenFounder: false, founderCount: 1 },
-  { id: 'c8', name: 'Nurx', sector: 'Wellness', stage: 'Acquired', yearFounded: 2015, yearAcquired: 2021, acquisitionValue: 300, hasWomenFounder: false, founderCount: 1 },
-  { id: 'c9', name: 'NovvaCup', sector: 'Menstrual Health', stage: 'Pre-Seed', yearFounded: 2022, hasWomenFounder: true, founderCount: 2 },
-  { id: 'c10', name: 'Ovubrush', sector: 'Fertility', stage: 'Pre-Seed', yearFounded: 2022, hasWomenFounder: false, founderCount: 1 },
-  { id: 'c11', name: 'Hims & Hers', sector: 'Wellness', stage: 'Public', yearFounded: 2017, hasWomenFounder: true, founderCount: 2 },
-  { id: 'c12', name: 'Tempo Health', sector: 'Mental Health', stage: 'Series A', yearFounded: 2019, hasWomenFounder: true, founderCount: 1 },
-  { id: 'c13', name: 'Cleo', sector: 'Maternal Health', stage: 'Series C', yearFounded: 2016, hasWomenFounder: true, founderCount: 1 },
-  { id: 'c14', name: 'Origin', sector: 'Pelvic Health', stage: 'Series A', yearFounded: 2018, hasWomenFounder: true, founderCount: 2 },
-  { id: 'c15', name: 'Hello Alpha', sector: 'Wellness', stage: 'Series A', yearFounded: 2018, hasWomenFounder: true, founderCount: 1 },
-  { id: 'c16', name: 'Twentyeight Health', sector: 'Wellness', stage: 'Series A', yearFounded: 2018, hasWomenFounder: true, founderCount: 2 },
-  { id: 'c17', name: 'Brightline', sector: 'Mental Health', stage: 'Series C', yearFounded: 2019, hasWomenFounder: false, founderCount: 1 },
-  { id: 'c18', name: 'Calibrate', sector: 'Wellness', stage: 'Series B', yearFounded: 2019, hasWomenFounder: true, founderCount: 1 },
-  { id: 'c19', name: 'Folx Health', sector: 'Wellness', stage: 'Series B', yearFounded: 2019, hasWomenFounder: false, founderCount: 1 },
-  { id: 'c20', name: 'Allara Health', sector: 'Wellness', stage: 'Series A', yearFounded: 2021, hasWomenFounder: true, founderCount: 1 }
-];
+const SAMPLE_COMPANIES: CompanyProfile[] = verifiedCompanies.map((c) => {
+  const deal = verifiedAcquisitions.find((d) => d.targetId === c.id);
+  return {
+    id: c.id,
+    name: c.name,
+    sector: c.sector,
+    stage: c.stage,
+    yearFounded: c.founded,
+    yearAcquired: deal ? new Date(deal.announcedDate).getFullYear() : undefined,
+    acquisitionValue: deal?.dealValue,
+    hasWomenFounder: false,
+    founderCount: 0,
+  };
+});
+
+const hasFounderGenderLabels = false;
 
 type ActiveTab = 'overview' | 'limitations' | 'gender' | 'characteristics' | 'parity';
 
@@ -85,6 +59,25 @@ export default function FairnessAuditV2() {
   
   // Calculate demographic parity with rigorous statistics
   const parityAnalysis = useMemo(() => {
+    if (!hasFounderGenderLabels) {
+      const acquired = SAMPLE_COMPANIES.filter((c) => c.yearAcquired).length;
+      return {
+        womenLed: 0,
+        menLed: SAMPLE_COMPANIES.length,
+        womenAcquired: 0,
+        menAcquired: acquired,
+        womenRate: 0,
+        menRate: SAMPLE_COMPANIES.length > 0 ? acquired / SAMPLE_COMPANIES.length : 0,
+        womenCI: [0, 0] as [number, number],
+        menCI: [0, 0] as [number, number],
+        difference: proportionDifferenceCI(0, 1, 0, 1),
+        fisher: fishersExactTest(0, 1, 0, 1),
+        power: powerAnalysis(0, 0, 1, 1),
+        bonferroni: bonferroniCorrection([1]),
+        benjaminiHochberg: benjaminiHochbergCorrection([1]),
+      };
+    }
+
     const womenLed = SAMPLE_COMPANIES.filter(c => c.hasWomenFounder);
     const menLed = SAMPLE_COMPANIES.filter(c => !c.hasWomenFounder);
     
@@ -117,9 +110,8 @@ export default function FairnessAuditV2() {
       menLed.length
     );
     
-    // Multiple testing correction (if running 5 tests)
-    const bonferroni = bonferroniCorrection([fisher.pValue, 0.08, 0.15, 0.22, 0.31]);
-    const bh = benjaminiHochbergCorrection([fisher.pValue, 0.08, 0.15, 0.22, 0.31]);
+    const bonferroni = bonferroniCorrection([fisher.pValue]);
+    const bh = benjaminiHochbergCorrection([fisher.pValue]);
     
     return {
       womenLed: womenLed.length,
@@ -153,9 +145,11 @@ export default function FairnessAuditV2() {
               Modular Fairness Audit Framework v2.0
             </h2>
             <p className="text-sm text-red-700 mt-1">
-              Sample size n={SAMPLE_COMPANIES.length} | Observed power: {(parityAnalysis.power.power * 100).toFixed(0)}% | 
-              Multiple testing correction: Bonferroni & Benjamini-Hochberg applied. 
-              <strong> Descriptive analysis only.</strong>
+              Verified companies n={SAMPLE_COMPANIES.length}.{' '}
+              {hasFounderGenderLabels
+                ? `Observed power: ${(parityAnalysis.power.power * 100).toFixed(0)}%.`
+                : 'Founder gender is not in the verified dataset — demographic parity by gender is disabled.'}{' '}
+              <strong>Descriptive analysis only.</strong>
             </p>
           </div>
         </div>

@@ -28,16 +28,14 @@ interface ForceNetworkProps {
   height?: number;
 }
 
+import { LACUNA_PALETTE, LACUNA_SECTOR_COLORS } from '@/lib/theme/palette';
+
 const sectorColors: Record<string, string> = {
-  'Fertility': '#FF6B9D',
-  'Mental Health': '#9D4EDD',
-  'Cardiovascular': '#E63946',
-  'Oncology': '#F72585',
-  'Menopause': '#F4A261',
-  'Pelvic Health': '#2A9D8F',
-  'General Wellness': '#457B9D',
-  'Wearables': '#1D3557',
-  'Sexual Wellness': '#E9C46A'
+  ...LACUNA_SECTOR_COLORS,
+  Cardiovascular: LACUNA_PALETTE.cosmicBlue,
+  Oncology: LACUNA_PALETTE.deepPlum,
+  Menopause: LACUNA_PALETTE.softLavender,
+  'Sexual Wellness': LACUNA_PALETTE.transcendentPink,
 };
 
 export default function ForceNetwork({ nodes, links, width = 800, height = 600 }: ForceNetworkProps) {

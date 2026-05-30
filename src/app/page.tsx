@@ -45,31 +45,31 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-lacuna-pink/15 via-background to-lacuna-lavender/20">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+      <header className="bg-white/80 backdrop-blur-md border-b border-lacuna-lavender/40 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
           <a href="#top" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 lacuna-gradient rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
               <span className="text-white font-bold text-lg">L</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-slate-800">Lacuna</h1>
-              <p className="text-xs text-slate-500">M&amp;A Intelligence · Women&apos;s Health</p>
+              <h1 className="text-xl font-bold text-lacuna-plum">Lacuna</h1>
+              <p className="text-xs text-lacuna-blue">M&amp;A Intelligence · Women&apos;s Health</p>
             </div>
           </a>
-          <nav className="hidden lg:flex items-center gap-5 text-sm text-slate-600">
-            <a href="#network" className="hover:text-pink-600 transition-colors">Network</a>
-            <a href="#matrix" className="hover:text-pink-600 transition-colors">Matrix</a>
-            <a href="#impact-assessment" className="hover:text-pink-600 transition-colors">Impact</a>
-            <a href="#fairness-audit" className="hover:text-pink-600 transition-colors">Fairness</a>
-            <a href="#network-analysis" className="hover:text-pink-600 transition-colors">Analysis</a>
-            <a href="#causal-engine" className="hover:text-pink-600 transition-colors">Causal</a>
+          <nav className="hidden lg:flex items-center gap-5 text-sm text-lacuna-blue">
+            <a href="#network" className="hover:text-lacuna-plum transition-colors">Network</a>
+            <a href="#matrix" className="hover:text-lacuna-plum transition-colors">Matrix</a>
+            <a href="#impact-assessment" className="hover:text-lacuna-plum transition-colors">Impact</a>
+            <a href="#fairness-audit" className="hover:text-lacuna-plum transition-colors">Fairness</a>
+            <a href="#network-analysis" className="hover:text-lacuna-plum transition-colors">Analysis</a>
+            <a href="#causal-engine" className="hover:text-lacuna-plum transition-colors">Causal</a>
             <a
               href="https://github.com/maekass/Lacuna"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1 bg-slate-100 hover:bg-slate-200 rounded-full text-xs font-medium transition-colors"
+              className="px-3 py-1 bg-lacuna-lavender/25 hover:bg-lacuna-lavender/40 rounded-full text-xs font-medium text-lacuna-plum transition-colors"
             >
               GitHub
             </a>
@@ -86,15 +86,15 @@ export default function Home() {
           className="mb-16"
         >
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 bg-slate-100 rounded-full text-xs font-medium text-slate-600">
+            <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 bg-lacuna-lavender/25 rounded-full text-xs font-medium text-lacuna-plum">
               <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
               Verified dataset · {verifiedCompanies.length} companies · {verifiedAcquisitions.length} acquisitions
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-lacuna-plum mb-4">
               The Exit Map for
-              <span className="bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent"> Women&apos;s Health</span>
+              <span className="lacuna-gradient-text"> Women&apos;s Health</span>
             </h2>
-            <p className="text-lg text-slate-600 leading-relaxed">
+            <p className="text-lg text-lacuna-blue leading-relaxed">
               An academically-honest M&amp;A intelligence platform for FemTech and
               women&apos;s health. Every metric on this page is sourced from public
               filings, every model discloses its assumptions, and small-sample
@@ -113,10 +113,10 @@ export default function Home() {
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow"
+              className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 p-6 hover:shadow-md transition-shadow"
             >
-              <p className="text-3xl font-bold text-slate-800">{stat.value}</p>
-              <p className="text-sm text-slate-500 mt-1">{stat.label}</p>
+              <p className="text-3xl font-bold text-lacuna-plum">{stat.value}</p>
+              <p className="text-sm text-lacuna-blue mt-1">{stat.label}</p>
             </div>
           ))}
         </motion.section>
@@ -140,8 +140,8 @@ export default function Home() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-slate-800">Acquisition Network</h3>
-            <p className="text-slate-600">Interactive force-directed graph of targets and acquirers. Drag to explore, scroll to zoom.</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Acquisition Network</h3>
+            <p className="text-lacuna-blue">Interactive force-directed graph of targets and acquirers. Drag to explore, scroll to zoom.</p>
           </div>
           <ForceNetwork
             nodes={networkNodes}
@@ -164,26 +164,26 @@ export default function Home() {
             width={550}
             height={300}
           />
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-            <h3 className="text-lg font-semibold text-slate-800 mb-2">Recent Activity</h3>
-            <p className="text-sm text-slate-500 mb-6">Latest acquisitions and strategic investments</p>
+          <div className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 p-6">
+            <h3 className="text-lg font-semibold text-lacuna-plum mb-2">Recent Activity</h3>
+            <p className="text-sm text-lacuna-blue mb-6">Latest acquisitions and strategic investments</p>
             <div className="space-y-4">
               {verifiedAcquisitions.slice(0, 5).map((deal: typeof verifiedAcquisitions[0]) => {
                 const target = verifiedCompanies.find((c: typeof verifiedCompanies[0]) => c.id === deal.targetId);
                 const acquirer = networkNodes.find((n: typeof networkNodes[0]) => n.id === deal.acquirerId);
                 return (
-                  <div key={deal.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                  <div key={deal.id} className="flex items-center justify-between p-3 bg-lacuna-pink/10 rounded-lg">
                     <div>
-                      <p className="font-medium text-slate-800">{target?.name}</p>
-                      <p className="text-xs text-slate-500">{deal.dealType} by {acquirer?.name || deal.acquirerName}</p>
+                      <p className="font-medium text-lacuna-plum">{target?.name}</p>
+                      <p className="text-xs text-lacuna-blue">{deal.dealType} by {acquirer?.name || deal.acquirerName}</p>
                     </div>
                     <div className="text-right">
                       {deal.dealValue ? (
-                        <p className="font-semibold text-pink-600">${deal.dealValue}M</p>
+                        <p className="font-semibold text-lacuna-plum">${deal.dealValue}M</p>
                       ) : (
-                        <p className="text-xs text-slate-400">Terms not disclosed</p>
+                        <p className="text-xs text-lacuna-blue/70">Terms not disclosed</p>
                       )}
-                      <p className="text-xs text-slate-400">{deal.announcedDate}</p>
+                      <p className="text-xs text-lacuna-blue/70">{deal.announcedDate}</p>
                     </div>
                   </div>
                 );
@@ -237,8 +237,8 @@ export default function Home() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-slate-800">Health Impact Assessment</h3>
-            <p className="text-slate-600">Opportunity-Adjusted Impact Score (OAIS) - Transparent about what we CAN vs CANNOT measure</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Health Impact Assessment</h3>
+            <p className="text-lacuna-blue">Opportunity-Adjusted Impact Score (OAIS) - Transparent about what we CAN vs CANNOT measure</p>
           </div>
           <ImpactOpportunityCard />
         </motion.section>
@@ -252,8 +252,8 @@ export default function Home() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-slate-800">Post-Acquisition Validation</h3>
-            <p className="text-slate-600">Pre-acquisition predictions vs post-acquisition reality | Model calibration</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Post-Acquisition Validation</h3>
+            <p className="text-lacuna-blue">Pre-acquisition predictions vs post-acquisition reality | Model calibration</p>
           </div>
           <ValidationTracker />
         </motion.section>
@@ -267,8 +267,8 @@ export default function Home() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-slate-800">Fairness Audit</h3>
-            <p className="text-slate-600">Modular framework: Wilson CIs, Fisher&apos;s exact, Bonferroni correction, power analysis</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Fairness Audit</h3>
+            <p className="text-lacuna-blue">Modular framework: Wilson CIs, Fisher&apos;s exact, Bonferroni correction, power analysis</p>
           </div>
           <FairnessAuditV2 />
         </motion.section>
@@ -282,8 +282,8 @@ export default function Home() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-slate-800">Network Analysis</h3>
-            <p className="text-slate-600">Honest small-N analysis: Bootstrap CIs, Gini/HHI concentration, null model comparison</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Network Analysis</h3>
+            <p className="text-lacuna-blue">Honest small-N analysis: Bootstrap CIs, Gini/HHI concentration, null model comparison</p>
           </div>
           <NetworkAnalysisHonest />
         </motion.section>
@@ -297,8 +297,8 @@ export default function Home() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-slate-800">Competitive Analysis</h3>
-            <p className="text-slate-600">Descriptive acquirer behavior: portfolio, velocity, market structure, type comparison</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Competitive Analysis</h3>
+            <p className="text-lacuna-blue">Descriptive acquirer behavior: portfolio, velocity, market structure, type comparison</p>
           </div>
           <CompetitiveAnalysisDashboard />
         </motion.section>
@@ -312,8 +312,8 @@ export default function Home() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-slate-800">Causal Identification Strategy</h3>
-            <p className="text-slate-600">Pearl backdoor criterion with measured and unmeasured confounders</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Causal Identification Strategy</h3>
+            <p className="text-lacuna-blue">Pearl backdoor criterion with measured and unmeasured confounders</p>
           </div>
           <CausalDAG />
         </motion.section>
@@ -327,8 +327,8 @@ export default function Home() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-slate-800">Causal Inference Engine</h3>
-            <p className="text-slate-600">Main effects with 95% CIs, specification robustness, Oster&apos;s δ</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Causal Inference Engine</h3>
+            <p className="text-lacuna-blue">Sector-level acquisition counts from verified deals (no simulated regressions)</p>
           </div>
           <CausalInferenceEngine />
         </motion.section>
@@ -342,8 +342,8 @@ export default function Home() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-slate-800">Temporal Validation</h3>
-            <p className="text-slate-600">Event study methodology with parallel trends testing</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Temporal Validation</h3>
+            <p className="text-lacuna-blue">Observed announcement timing from verified transactions</p>
           </div>
           <TemporalValidation />
         </motion.section>
@@ -357,8 +357,8 @@ export default function Home() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-slate-800">Sensitivity Analysis</h3>
-            <p className="text-slate-600">Rotnitzky bounds and Oster&apos;s δ for unobserved confounding</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Sensitivity Analysis</h3>
+            <p className="text-lacuna-blue">Rotnitzky bounds and Oster&apos;s δ for unobserved confounding</p>
           </div>
           <SensitivityAnalysis />
         </motion.section>
@@ -372,8 +372,8 @@ export default function Home() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-slate-800">Bayesian Small Sample Analysis</h3>
-            <p className="text-slate-600">Pre-registered hypotheses with main effects only (n=22)</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Bayesian Small Sample Analysis</h3>
+            <p className="text-lacuna-blue">Pre-registered hypotheses with main effects only (n=22)</p>
           </div>
           <BayesianCausalAnalysis />
         </motion.section>
@@ -387,8 +387,8 @@ export default function Home() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-slate-800">Descriptive Scoring &amp; Similarity</h3>
-            <p className="text-slate-600">Deterministic factor scoring, cosine similarity, and capital-profile clustering — no fitted predictive models</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Descriptive Scoring &amp; Similarity</h3>
+            <p className="text-lacuna-blue">Deterministic factor scoring, cosine similarity, and capital-profile clustering — no fitted predictive models</p>
           </div>
           <div className="grid md:grid-cols-2 gap-8 mb-8">
             <ExitPredictor />
@@ -398,23 +398,23 @@ export default function Home() {
         </motion.section>
 
         {/* Footer */}
-        <footer className="mt-20 pt-8 border-t border-slate-200">
+        <footer className="mt-20 pt-8 border-t border-lacuna-lavender/40">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-6 h-6 bg-gradient-to-br from-pink-500 to-purple-600 rounded flex items-center justify-center">
+              <div className="w-6 h-6 lacuna-gradient rounded flex items-center justify-center">
                 <span className="text-white font-bold text-xs">L</span>
               </div>
-              <span className="text-sm font-medium text-slate-700">Lacuna</span>
+              <span className="text-sm font-medium text-lacuna-plum">Lacuna</span>
             </div>
-            <p className="text-sm text-slate-500 text-center">
+            <p className="text-sm text-lacuna-blue text-center">
               Licensed under Business Source License 1.1 · © 2026 · Educational project — not investment advice
             </p>
-            <div className="flex items-center gap-4 text-sm text-slate-500">
+            <div className="flex items-center gap-4 text-sm text-lacuna-blue">
               <a
                 href="https://github.com/maekass/Lacuna"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-slate-700 transition-colors"
+                className="hover:text-lacuna-plum transition-colors"
               >
                 GitHub
               </a>
@@ -422,7 +422,7 @@ export default function Home() {
                 href="https://github.com/maekass/Lacuna/tree/main/docs"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-slate-700 transition-colors"
+                className="hover:text-lacuna-plum transition-colors"
               >
                 Methodology docs
               </a>

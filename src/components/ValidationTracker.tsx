@@ -11,6 +11,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import ConfidenceLevelIndicator from './ConfidenceLevelIndicator';
+import { verifiedAcquisitions } from '@/data/verifiedData';
 
 interface AcquisitionValidation {
   company: string;
@@ -121,12 +122,18 @@ const VALIDATION_DATA: AcquisitionValidation[] = [
   }
 ];
 
+const verifiedDealNames = new Set(
+  verifiedAcquisitions.flatMap((d) => [d.targetName, d.acquirerName])
+);
+
+const VALIDATION_ROWS = VALIDATION_DATA.filter((v) => verifiedDealNames.has(v.company));
+
 export default function ValidationTracker() {
   const [selectedYear, setSelectedYear] = useState<string>('all');
 
   const filteredData = selectedYear === 'all' 
-    ? VALIDATION_DATA 
-    : VALIDATION_DATA.filter(v => v.acquisitionDate.startsWith(selectedYear));
+    ? VALIDATION_ROWS 
+    : VALIDATION_ROWS.filter(v => v.acquisitionDate.startsWith(selectedYear));
 
   // Calculate calibration metrics
   const accurateCount = filteredData.filter(v => v.predictionAccuracy === 'accurate').length;

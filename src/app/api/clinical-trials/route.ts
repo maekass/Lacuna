@@ -137,93 +137,17 @@ export async function GET(request: NextRequest) {
 
   } catch (_err) {
     console.error('ClinicalTrials.gov API error:', _err);
-    
-    // Return fallback data for development
-    return NextResponse.json({
-      trials: getFallbackTrials(condition),
-      total: 5,
-      query: { condition, phase, status },
-      fallback: true
-    });
+
+    return NextResponse.json(
+      {
+        trials: [] as ClinicalTrial[],
+        total: 0,
+        query: { condition, phase, status },
+        error: 'ClinicalTrials.gov is unavailable. No placeholder trials are returned.',
+      },
+      { status: 502 }
+    );
   }
-}
-
-// Fallback trials for development/testing
-function getFallbackTrials(condition: string): ClinicalTrial[] {
-  const baseTrials: ClinicalTrial[] = [
-    {
-      nctId: 'NCT05123456',
-      title: 'Maternal Health Monitoring in High-Risk Populations',
-      phase: 'Phase 3',
-      status: 'Recruiting',
-      condition: 'Maternal Health, Pregnancy Complications',
-      sponsor: 'Johns Hopkins University',
-      enrollment: 500,
-      startDate: '2024-01-15',
-      completionDate: '2026-06-30',
-      locations: ['Baltimore, MD', 'Atlanta, GA'],
-      interventions: ['Remote monitoring device', 'Telehealth platform']
-    },
-    {
-      nctId: 'NCT05234567',
-      title: 'Novel Treatment for Uterine Fibroids',
-      phase: 'Phase 2',
-      status: 'Active, not recruiting',
-      condition: 'Uterine Fibroids',
-      sponsor: 'NIH/NICHD',
-      enrollment: 200,
-      startDate: '2023-06-01',
-      completionDate: '2025-12-31',
-      locations: ['Bethesda, MD', 'Boston, MA'],
-      interventions: ['Ulipristal acetate', 'Placebo']
-    },
-    {
-      nctId: 'NCT05345678',
-      title: 'Lupus Nephritis Biomarker Study',
-      phase: 'Phase 1',
-      status: 'Recruiting',
-      condition: 'Systemic Lupus Erythematosus',
-      sponsor: 'Lupus Research Alliance',
-      enrollment: 100,
-      startDate: '2024-03-01',
-      completionDate: '2025-03-01',
-      locations: ['New York, NY', 'Chicago, IL'],
-      interventions: ['Blood sample collection', 'Biomarker analysis']
-    },
-    {
-      nctId: 'NCT05456789',
-      title: 'Gene Therapy for Sickle Cell Disease',
-      phase: 'Phase 3',
-      status: 'Active, not recruiting',
-      condition: 'Sickle Cell Disease',
-      sponsor: 'bluebird bio',
-      enrollment: 35,
-      startDate: '2022-09-01',
-      completionDate: '2027-09-01',
-      locations: ['Boston, MA', 'Memphis, TN'],
-      interventions: ['LentiGlobin gene therapy']
-    },
-    {
-      nctId: 'NCT05567890',
-      title: 'Cardiovascular Risk in Black Women',
-      phase: 'Phase 2',
-      status: 'Recruiting',
-      condition: 'Cardiovascular Disease',
-      sponsor: 'American Heart Association',
-      enrollment: 300,
-      startDate: '2024-02-01',
-      completionDate: '2026-08-31',
-      locations: ['Multiple US sites'],
-      interventions: ['Wearable monitoring', 'Lifestyle intervention']
-    }
-  ];
-
-  if (!condition) return baseTrials;
-
-  // Filter by condition if provided
-  return baseTrials.filter(trial => 
-    trial.condition.toLowerCase().includes(condition.toLowerCase())
-  );
 }
 
 // POST endpoint for batch trial lookup
