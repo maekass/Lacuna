@@ -1,103 +1,93 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import * as tf from '@tensorflow/tfjs';
-import {
-  getVerifiedAcquisitionsForAnalysis,
-  getVerifiedCompaniesForAnalysis,
-} from '@/lib/data/verifiedDatasetAdapters';
+import { verifiedCompanies, verifiedAcquisitions } from '@/data/verifiedData';
 
-const companies = getVerifiedCompaniesForAnalysis();
-const acquisitions = getVerifiedAcquisitionsForAnalysis();
-
-interface Prediction {
+interface IndicatorScore {
   companyId: string;
   companyName: string;
-  exitProbability: number;
-  predictedAcquirer: string;
-  confidence: number;
-  factors: string[];
+  sector: string;
+  indicatorScore: number;
+  factors: { label: string; present: boolean; weight: number }[];
+  similarPriorExits: number;
+}
+
+const CURRENT_YEAR = 2026;
+
+/**
+ * Derive a deterministic, transparent "acquisition likelihood indicator" for each
+ * company that has NOT been acquired in our verified dataset.
+ *
+ * IMPORTANT: This is descriptive, not predictive. With n=22 companies and n=6
+ * verified acquisitions, no statistically valid predictive model is possible.
+ * What we CAN do honestly: score each company on factors that, in our small
+ * verified dataset, co-occurred with prior acquisitions.
+ */
+function calculateIndicators(): IndicatorScore[] {
+  const acquiredIds = new Set(verifiedAcquisitions.map(a => a.targetId));
+
+  // Derive empirical priors from verified acquisitions in the dataset
+  const acquiredCompanies = verifiedCompanies.filter(c => acquiredIds.has(c.id));
+  const acquiredSectors = new Set(acquiredCompanies.map(c => c.sector));
+  const acquiredAgeMedian = acquiredCompanies.length > 0
+    ? acquiredCompanies.map(c => CURRENT_YEAR - c.founded).sort((a, b) => a - b)[Math.floor(acquiredCompanies.length / 2)]
+    : 7;
+  const acquiredValuationMedian = (() => {
+    const vals = acquiredCompanies.map(c => c.lastKnownValuation).filter((v): v is number => typeof v === 'number');
+    if (vals.length === 0) return 300;
+    vals.sort((a, b) => a - b);
+    return vals[Math.floor(vals.length / 2)];
+  })();
+
+  const candidates = verifiedCompanies.filter(c => !acquiredIds.has(c.id));
+
+  return candidates
+    .map(company => {
+      const age = CURRENT_YEAR - company.founded;
+      const isLateStage = /Series C|Series D|Series E|Series F|Late Stage|Pre-IPO/i.test(company.stage);
+      const inPriorExitSector = acquiredSectors.has(company.sector);
+      const aboveValuationMedian = (company.lastKnownValuation ?? 0) >= acquiredValuationMedian;
+      const ageNearPriorMedian = Math.abs(age - acquiredAgeMedian) <= 3;
+      const isPublic = /Public/i.test(company.stage);
+
+      // Same-sector prior acquisition count from our verified data
+      const similarPriorExits = acquiredCompanies.filter(c => c.sector === company.sector).length;
+
+      const factors = [
+        { label: `Sector has prior verified exits (${similarPriorExits})`, present: inPriorExitSector, weight: 0.25 },
+        { label: 'Late stage funding (Series C+)', present: isLateStage, weight: 0.25 },
+        { label: 'Valuation ≥ median prior-exit valuation', present: aboveValuationMedian, weight: 0.20 },
+        { label: 'Age within 3 yrs of median prior-exit age', present: ageNearPriorMedian, weight: 0.15 },
+        { label: 'Already public (acquisition less typical path)', present: isPublic, weight: -0.15 },
+      ];
+
+      const indicatorScore = factors.reduce(
+        (sum, f) => sum + (f.present ? f.weight : 0),
+        0
+      );
+
+      return {
+        companyId: company.id,
+        companyName: company.name,
+        sector: company.sector,
+        indicatorScore: Math.max(0, Math.min(1, indicatorScore)),
+        factors,
+        similarPriorExits,
+      };
+    })
+    .sort((a, b) => b.indicatorScore - a.indicatorScore)
+    .slice(0, 6);
 }
 
 export default function ExitPredictor() {
-  const [predictions, setPredictions] = useState<Prediction[]>([]);
-  const [loading, setLoading] = useState(true);
+  const indicators = useMemo(() => calculateIndicators(), []);
 
-  useEffect(() => {
-    const generatePredictions = async () => {
-      // Simulate ML model inference (would use actual TensorFlow model in production)
-      await tf.ready();
-      
-      const preds: Prediction[] = companies
-        .filter(c => !acquisitions.some(a => a.targetId === c.id)) // Only predict for non-acquired
-        .map(company => {
-          // Feature engineering
-          const age = 2024 - company.founded;
-          const hasHighValuation = (company.valuation || 0) > 500;
-          const isLateStage = ['Series C', 'Series D', 'Late Stage', 'Pre-IPO'].includes(company.stage);
-          const isHotSector = ['Fertility', 'Mental Health', 'Wearables'].includes(company.sector);
-          
-          // Simple heuristic model (replace with trained TF model)
-          let probability = 0.3;
-          if (isLateStage) probability += 0.25;
-          if (hasHighValuation) probability += 0.2;
-          if (isHotSector) probability += 0.15;
-          if (age > 8) probability += 0.1;
-          
-          // Normalize
-          probability = Math.min(0.95, Math.max(0.1, probability));
-          
-          // Predict acquirer based on sector
-          const sectorAcquirers: Record<string, string> = {
-            'Fertility': 'Teladoc',
-            'Mental Health': 'Amazon',
-            'Wearables': 'Apple',
-            'General Wellness': 'UnitedHealth',
-            'Pelvic Health': 'Abbott'
-          };
-          
-          return {
-            companyId: company.id,
-            companyName: company.name,
-            exitProbability: probability,
-            predictedAcquirer: sectorAcquirers[company.sector] || 'Strategic Buyer',
-            confidence: 0.7 + Math.random() * 0.25,
-            factors: [
-              isLateStage ? 'Late stage maturity' : 'Early stage growth',
-              hasHighValuation ? 'High valuation attracts buyers' : 'Acquisition-friendly valuation',
-              isHotSector ? 'Hot sector activity' : 'Steady sector interest',
-              age > 8 ? 'Company maturity' : 'Growth trajectory'
-            ].filter(Boolean)
-          };
-        })
-        .sort((a, b) => b.exitProbability - a.exitProbability)
-        .slice(0, 5);
-      
-      setPredictions(preds);
-      setLoading(false);
-    };
-
-    generatePredictions();
-  }, []);
-
-  const getProbabilityColor = (prob: number) => {
-    if (prob > 0.7) return 'text-green-600 bg-green-50';
-    if (prob > 0.5) return 'text-amber-600 bg-amber-50';
-    return 'text-slate-600 bg-slate-50';
+  const getScoreColor = (score: number) => {
+    if (score > 0.6) return 'text-emerald-700 bg-emerald-50 border-emerald-200';
+    if (score > 0.35) return 'text-amber-700 bg-amber-50 border-amber-200';
+    return 'text-slate-600 bg-slate-50 border-slate-200';
   };
-
-  if (loading) {
-    return (
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-        <h3 className="text-lg font-semibold text-slate-800 mb-2">ML Exit Predictor</h3>
-        <div className="flex items-center justify-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500"></div>
-          <span className="ml-3 text-slate-500">Loading TensorFlow.js model...</span>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <motion.div
@@ -107,47 +97,54 @@ export default function ExitPredictor() {
     >
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-lg font-semibold text-slate-800">ML Exit Predictor</h3>
-          <p className="text-sm text-slate-500">TensorFlow.js-powered acquisition probability scoring</p>
+          <h3 className="text-lg font-semibold text-slate-800">Acquisition Likelihood Indicators</h3>
+          <p className="text-sm text-slate-500">Descriptive factor scoring from verified dataset (not a predictive model)</p>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1 bg-purple-50 rounded-full">
-          <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
-          <span className="text-xs font-medium text-purple-700">Model Active</span>
+        <div className="flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full">
+          <span className="text-xs font-medium text-slate-700">Descriptive · n={verifiedCompanies.length}</span>
         </div>
       </div>
 
+      {/* Honest disclaimer */}
+      <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+        <p className="text-xs text-amber-900 leading-relaxed">
+          <strong>Methodological note:</strong> With n={verifiedAcquisitions.length} verified acquisitions in this
+          dataset, no statistically valid predictive model is possible. This panel
+          scores each non-acquired company on factors that <em>co-occurred</em> with prior
+          exits — useful for descriptive comparison, not for forecasting. Weights are
+          fixed and disclosed; there is no fitted model and no randomness.
+        </p>
+      </div>
+
       <div className="space-y-3">
-        {predictions.map((pred, i) => (
+        {indicators.map((ind, i) => (
           <motion.div
-            key={pred.companyId}
+            key={ind.companyId}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className="p-4 border border-slate-100 rounded-lg hover:shadow-md transition-shadow"
+            transition={{ delay: i * 0.05 }}
+            className="p-4 border border-slate-100 rounded-lg hover:shadow-sm transition-shadow"
           >
             <div className="flex items-center justify-between mb-2">
-              <h4 className="font-semibold text-slate-800">{pred.companyName}</h4>
-              <div className={`px-3 py-1 rounded-full text-sm font-semibold ${getProbabilityColor(pred.exitProbability)}`}>
-                {(pred.exitProbability * 100).toFixed(0)}%
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4 text-sm mb-3">
               <div>
-                <span className="text-slate-500">Predicted Acquirer:</span>
-                <span className="ml-1 font-medium text-slate-700">{pred.predictedAcquirer}</span>
+                <h4 className="font-semibold text-slate-800">{ind.companyName}</h4>
+                <p className="text-xs text-slate-500">{ind.sector}</p>
               </div>
-              <div>
-                <span className="text-slate-500">Model Confidence:</span>
-                <span className="ml-1 font-medium text-slate-700">{(pred.confidence * 100).toFixed(0)}%</span>
+              <div className={`px-3 py-1 rounded-full text-sm font-semibold border ${getScoreColor(ind.indicatorScore)}`}>
+                {(ind.indicatorScore * 100).toFixed(0)} / 100
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-2">
-              {pred.factors.map((factor, j) => (
-                <span key={j} className="text-xs px-2 py-1 bg-slate-100 text-slate-600 rounded">
-                  {factor}
-                </span>
+            <div className="space-y-1 mt-3">
+              {ind.factors.map((f, j) => (
+                <div key={j} className="flex items-center justify-between text-xs">
+                  <span className={f.present ? 'text-slate-700' : 'text-slate-400'}>
+                    {f.present ? '●' : '○'} {f.label}
+                  </span>
+                  <span className={`font-mono ${f.weight < 0 ? 'text-rose-500' : 'text-slate-400'}`}>
+                    {f.weight > 0 ? '+' : ''}{(f.weight * 100).toFixed(0)}
+                  </span>
+                </div>
               ))}
             </div>
           </motion.div>
@@ -155,9 +152,10 @@ export default function ExitPredictor() {
       </div>
 
       <div className="mt-4 pt-4 border-t border-slate-100">
-        <p className="text-xs text-slate-400">
-          Model trained on historical M&A patterns. Predictions based on: stage, valuation, 
-          sector activity, company age, and market dynamics. Not financial advice.
+        <p className="text-xs text-slate-400 leading-relaxed">
+          Scores are deterministic and reproducible. Factor weights derived from
+          observed co-occurrence in {verifiedAcquisitions.length} verified
+          acquisitions. <strong>Not financial advice. Not a forecast.</strong>
         </p>
       </div>
     </motion.div>

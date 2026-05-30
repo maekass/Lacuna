@@ -5,97 +5,92 @@ import { motion } from 'framer-motion';
 import { verifiedCompanies } from '@/data/verifiedData';
 import * as ss from 'simple-statistics';
 
-export default function ClusteringAnalysis() {
-  const clusters = useMemo(() => {
-    const withMetrics = verifiedCompanies.filter(
-      (c) => c.lastKnownValuation != null && c.totalFunding != null
-    );
-    if (withMetrics.length < 3) return [];
+const K = 3;
 
-    // K-means (k=3) on disclosed valuation vs total funding (no fabricated headcount)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const K = 3;
-    const data = withMetrics.map((c) => ({
-      x: c.lastKnownValuation!,
-      y: c.totalFunding!,
+/**
+ * Capital-profile clustering on verified financial data only.
+ *
+ * Inputs (per company): log10(lastKnownValuation), log10(totalFunding).
+ * Companies missing either field are excluded from the cluster fit but
+ * shown in the "unclustered" footnote so they aren't invisible.
+ *
+ * Honest caveat: with n<25 included companies, k-means cluster boundaries
+ * are noisy. We use deterministic initial centroids on the log scale so
+ * the result is reproducible across reloads.
+ */
+export default function ClusteringAnalysis() {
+  const { clusters, unclusteredCount } = useMemo(() => {
+    const clusterable = verifiedCompanies.filter(
+      c => typeof c.lastKnownValuation === 'number' && typeof c.totalFunding === 'number'
+    );
+
+    const data = clusterable.map(c => ({
+      x: Math.log10((c.lastKnownValuation as number) + 1),
+      y: Math.log10((c.totalFunding as number) + 1),
       company: c,
     }));
 
-    // Initialize centroids
+    // Deterministic initial centroids spanning the log range
     let centroids = [
-      { x: 100, y: 50 },
-      { x: 500, y: 200 },
-      { x: 2000, y: 500 }
-    ];
+      { x: 1.5, y: 1.0 }, // smaller capital
+      { x: 2.5, y: 2.0 }, // mid capital
+      { x: 3.3, y: 2.5 }, // large capital
+    ].slice(0, K);
 
     let assignments: number[] = [];
-    
-    // Run 10 iterations of k-means
-    for (let iter = 0; iter < 10; iter++) {
-      // Assign to nearest centroid
+    for (let iter = 0; iter < 20; iter++) {
       assignments = data.map(point => {
-        const distances = centroids.map(c => 
+        const distances = centroids.map(c =>
           Math.sqrt(Math.pow(point.x - c.x, 2) + Math.pow(point.y - c.y, 2))
         );
         return distances.indexOf(Math.min(...distances));
       });
 
-      // Update centroids
-      centroids = centroids.map((_, i) => {
-        const clusterPoints = data.filter((_, j) => assignments[j] === i);
-        if (clusterPoints.length === 0) return centroids[i];
+      centroids = centroids.map((prev, i) => {
+        const pts = data.filter((_, j) => assignments[j] === i);
+        if (pts.length === 0) return prev;
         return {
-          x: ss.mean(clusterPoints.map(p => p.x)),
-          y: ss.mean(clusterPoints.map(p => p.y))
+          x: ss.mean(pts.map(p => p.x)),
+          y: ss.mean(pts.map(p => p.y)),
         };
       });
     }
 
-    // Build cluster objects
-    const clusterNames = ['Emerging Startups', 'Growth Stage', 'Late Stage Scale&#45;ups'];
+    const clusterNames = ['Smaller Capital', 'Mid Capital', 'Large Capital'];
     const clusterColors = [
-      'bg-lacuna-pink/15 border-lacuna-pink/40',
-      'bg-lacuna-lavender/20 border-lacuna-lavender/50',
-      'bg-lacuna-blue/10 border-lacuna-blue/30',
+      'bg-blue-50 border-blue-200',
+      'bg-purple-50 border-purple-200',
+      'bg-pink-50 border-pink-200',
     ];
 
-    return centroids.map((centroid, i) => {
-      const clusterCompanies = data
+    const built = centroids.map((centroid, i) => {
+      const members = data
         .filter((_, j) => assignments[j] === i)
         .map(d => d.company);
-      
-      const avgValuation = ss.mean(
-        clusterCompanies.map((c) => c.lastKnownValuation || 0)
-      );
-      const avgFunding = ss.mean(clusterCompanies.map((c) => c.totalFunding || 0));
-      const sectors = [...new Set(clusterCompanies.map((c) => c.sector))];
+
+      const valuations = members.map(c => c.lastKnownValuation as number);
+      const fundings = members.map(c => c.totalFunding as number);
+      const sectors = Array.from(new Set(members.map(c => c.sector)));
 
       return {
         id: i,
         name: clusterNames[i],
-        companies: clusterCompanies,
-        centroid: { valuation: centroid.x, employees: centroid.y },
+        companies: members,
+        centroid: { logVal: centroid.x, logFund: centroid.y },
         color: clusterColors[i],
         characteristics: [
-          `Avg valuation: $${Math.round(avgValuation)}M`,
-          `Avg disclosed funding: $${Math.round(avgFunding)}M`,
+          members.length > 0 && `Median valuation: $${Math.round(ss.median(valuations))}M`,
+          members.length > 0 && `Median funding: $${Math.round(ss.median(fundings))}M`,
           `Sectors: ${sectors.slice(0, 3).join(', ')}${sectors.length > 3 ? '...' : ''}`,
-        ],
+        ].filter(Boolean) as string[],
       };
     });
-  }, []);
 
-  if (clusters.length === 0) {
-    return (
-      <div className="rounded-xl border border-lacuna-lavender/40 bg-white p-8 text-center">
-        <p className="text-lacuna-plum font-medium">Not enough disclosed metrics to cluster</p>
-        <p className="text-sm text-lacuna-blue mt-2">
-          K-means needs valuation and total funding for at least three companies. Many verified
-          records omit headcount and valuation by design.
-        </p>
-      </div>
-    );
-  }
+    return {
+      clusters: built,
+      unclusteredCount: verifiedCompanies.length - clusterable.length,
+    };
+  }, []);
 
   return (
     <motion.div
@@ -105,12 +100,21 @@ export default function ClusteringAnalysis() {
     >
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-lg font-semibold text-slate-800">K-Means Clustering</h3>
-          <p className="text-sm text-slate-500">Unsupervised ML: valuation × employees (k=3)</p>
+          <h3 className="text-lg font-semibold text-slate-800">Capital Profile Clustering</h3>
+          <p className="text-sm text-slate-500">K-means (k={K}) on log(valuation) × log(funding), verified data only</p>
         </div>
         <div className="flex items-center gap-2 px-3 py-1 bg-green-50 rounded-full">
           <span className="text-xs font-medium text-green-700">simple-statistics</span>
         </div>
+      </div>
+
+      {/* Small-N caveat */}
+      <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+        <p className="text-xs text-amber-900 leading-relaxed">
+          <strong>Small-sample caveat:</strong> Cluster boundaries with n &lt; 25 companies are sensitive
+          to individual data points. Use these groupings descriptively, not as
+          definitive market segments. Initial centroids are fixed for reproducibility.
+        </p>
       </div>
 
       <div className="grid md:grid-cols-3 gap-4">
@@ -119,7 +123,7 @@ export default function ClusteringAnalysis() {
             <h4 className="font-semibold text-slate-800 mb-2">{cluster.name}</h4>
             <p className="text-2xl font-bold text-slate-900 mb-1">{cluster.companies.length}</p>
             <p className="text-xs text-slate-500 mb-3">companies</p>
-            
+
             <div className="space-y-1 mb-4">
               {cluster.characteristics.map((char, i) => (
                 <p key={i} className="text-xs text-slate-600">• {char}</p>
@@ -130,7 +134,7 @@ export default function ClusteringAnalysis() {
               {cluster.companies.slice(0, 4).map(company => (
                 <div key={company.id} className="flex items-center justify-between text-xs">
                   <span className="text-slate-700">{company.name}</span>
-                  <span className="text-slate-400">{company.stage}</span>
+                  <span className="text-slate-400 truncate ml-2 max-w-[80px]" title={company.stage}>{company.stage}</span>
                 </div>
               ))}
               {cluster.companies.length > 4 && (
@@ -141,11 +145,18 @@ export default function ClusteringAnalysis() {
         ))}
       </div>
 
-      <div className="mt-6 pt-4 border-t border-slate-100">
+      {unclusteredCount > 0 && (
+        <p className="mt-4 text-xs text-slate-500 italic">
+          {unclusteredCount} company{unclusteredCount === 1 ? '' : 'ies'} excluded from clustering
+          (missing publicly disclosed valuation or funding total).
+        </p>
+      )}
+
+      <div className="mt-4 pt-4 border-t border-slate-100">
         <div className="flex items-center justify-between text-xs text-slate-400">
-          <span>Algorithm: Lloyd&apos;s k-means clustering</span>
-          <span>Distance metric: Euclidean</span>
-          <span>Iterations: 10</span>
+          <span>Algorithm: Lloyd&apos;s k-means</span>
+          <span>Metric: Euclidean (log scale)</span>
+          <span>Iterations: 20</span>
         </div>
       </div>
     </motion.div>

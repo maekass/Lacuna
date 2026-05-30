@@ -1,6 +1,6 @@
 {
   "provenance": {
-    "lastUpdated": "2024-05-27",
+    "lastUpdated": "2026-05-30",
     "sources": [
       "SEC EDGAR filings (acquisitions)",
       "Crunchbase (funding rounds, where cited)",
@@ -13,7 +13,8 @@
       "Acquisition values are disclosed estimates where official terms were not public",
       "Strategic investments without disclosed values are noted as such",
       "Employee counts intentionally omitted - not reliably verifiable across private companies",
-      "Public company valuations (e.g., Talkspace) reflect market cap at time of data collection and fluctuate daily"
+      "Public company valuations (e.g., Talkspace) reflect market cap at time of data collection and fluctuate daily",
+      "Livongo Health (c23) included because it appears as target of deal1 (Teladoc merger); its primary product is not women's-health-specific but the user base is majority female and the deal is a frequently-cited digital-health M&A reference"
     ],
     "purpose": "Educational demonstration dataset for portfolio project. Not for commercial investment decisions.",
     "disclaimer": "Data compiled from public sources for educational visualization. Verify independently before any commercial use."
@@ -333,6 +334,23 @@
       "hq": "Baltimore, MD",
       "description": "Saliva-based ovulation tracker via high-tech toothbrush - CBID",
       "valuationSource": "Student startup - Johns Hopkins Center for Bioengineering Innovation and Design"
+    },
+    {
+      "id": "c23",
+      "name": "Livongo Health",
+      "sector": "General Wellness",
+      "stage": "Acquired by Teladoc (2020)",
+      "founded": 2008,
+      "hq": "Mountain View, CA",
+      "description": "Chronic condition management (diabetes, hypertension); large female user base; included for the Teladoc merger reference",
+      "lastKnownValuation": 13900,
+      "valuationSource": "Teladoc/Livongo merger close value (Oct 2020) — SEC 8-K",
+      "totalFunding": 240,
+      "sources": [
+        "SEC 8-K filing (Teladoc, Oct 2020)",
+        "Livongo.com / Teladoc press release",
+        "Crunchbase - crunchbase.com/organization/livongo-health"
+      ]
     }
   ],
   "acquirers": [
@@ -346,9 +364,9 @@
   "acquisitions": [
     {
       "id": "deal1",
-      "targetId": "c2",
+      "targetId": "c23",
       "acquirerId": "acquirer-teladoc",
-      "targetName": "Livongo",
+      "targetName": "Livongo Health",
       "acquirerName": "Teladoc",
       "announcedDate": "2020-07-01",
       "closedDate": "2020-10-30",

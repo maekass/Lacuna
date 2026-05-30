@@ -48,26 +48,36 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-lacuna-pink/15 via-background to-lacuna-lavender/20">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-lacuna-lavender/40 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 lacuna-gradient rounded-lg flex items-center justify-center">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+          <a href="#top" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 lacuna-gradient rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
               <span className="text-white font-bold text-lg">L</span>
             </div>
             <div>
               <h1 className="text-xl font-bold text-lacuna-plum">Lacuna</h1>
               <p className="text-xs text-lacuna-blue">M&amp;A Intelligence · Women&apos;s Health</p>
             </div>
-          </div>
-          <nav className="hidden md:flex items-center gap-6 text-sm text-lacuna-blue">
+          </a>
+          <nav className="hidden lg:flex items-center gap-5 text-sm text-lacuna-blue">
             <a href="#network" className="hover:text-lacuna-plum transition-colors">Network</a>
-            <a href="#analytics" className="hover:text-lacuna-plum transition-colors">Analytics</a>
             <a href="#matrix" className="hover:text-lacuna-plum transition-colors">Matrix</a>
-            <span className="px-3 py-1 bg-lacuna-lavender/25 rounded-full text-xs font-medium text-lacuna-plum">v1.0.0</span>
+            <a href="#impact-assessment" className="hover:text-lacuna-plum transition-colors">Impact</a>
+            <a href="#fairness-audit" className="hover:text-lacuna-plum transition-colors">Fairness</a>
+            <a href="#network-analysis" className="hover:text-lacuna-plum transition-colors">Analysis</a>
+            <a href="#causal-engine" className="hover:text-lacuna-plum transition-colors">Causal</a>
+            <a
+              href="https://github.com/maekass/Lacuna"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-1 bg-lacuna-lavender/25 hover:bg-lacuna-lavender/40 rounded-full text-xs font-medium text-lacuna-plum transition-colors"
+            >
+              GitHub
+            </a>
           </nav>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-12">
+      <main id="top" className="max-w-7xl mx-auto px-6 py-12">
         {/* Hero Section */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -76,14 +86,19 @@ export default function Home() {
           className="mb-16"
         >
           <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 bg-lacuna-lavender/25 rounded-full text-xs font-medium text-lacuna-plum">
+              <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
+              Verified dataset · {verifiedCompanies.length} companies · {verifiedAcquisitions.length} acquisitions
+            </div>
             <h2 className="text-4xl md:text-5xl font-bold text-lacuna-plum mb-4">
               The Exit Map for
               <span className="lacuna-gradient-text"> Women&apos;s Health</span>
             </h2>
             <p className="text-lg text-lacuna-blue leading-relaxed">
-              Sophisticated network intelligence platform tracking M&amp;A trends, 
-              strategic acquirers, and exit opportunities across FemTech, digital 
-              health, and women&apos;s wellness sectors.
+              An academically-honest M&amp;A intelligence platform for FemTech and
+              women&apos;s health. Every metric on this page is sourced from public
+              filings, every model discloses its assumptions, and small-sample
+              limitations are surfaced rather than hidden.
             </p>
           </div>
         </motion.section>
@@ -188,7 +203,7 @@ export default function Home() {
           <ValuationMatrix />
         </motion.section>
 
-        {/* Wearables Ecosystem Section - Featured for Pitch */}
+        {/* Wearables Ecosystem Section */}
         <motion.section
           id="wearables"
           initial={{ opacity: 0, y: 20 }}
@@ -199,7 +214,7 @@ export default function Home() {
           <WearablesTracker />
         </motion.section>
 
-        {/* Health Equity Section - Ported from windsurf-project */}
+        {/* Health Equity Section */}
         <motion.section
           id="health-equity"
           initial={{ opacity: 0, y: 20 }}
@@ -363,7 +378,7 @@ export default function Home() {
           <BayesianCausalAnalysis />
         </motion.section>
 
-        {/* AI/ML Intelligence Section */}
+        {/* Descriptive Scoring & Similarity */}
         <motion.section
           id="ai-ml"
           initial={{ opacity: 0, y: 20 }}
@@ -372,8 +387,8 @@ export default function Home() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">AI/ML Intelligence</h3>
-            <p className="text-lacuna-blue">Machine learning models for exit prediction, similarity analysis, and market clustering</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Descriptive Scoring &amp; Similarity</h3>
+            <p className="text-lacuna-blue">Deterministic factor scoring, cosine similarity, and capital-profile clustering — no fitted predictive models</p>
           </div>
           <div className="grid md:grid-cols-2 gap-8 mb-8">
             <ExitPredictor />
@@ -391,12 +406,26 @@ export default function Home() {
               </div>
               <span className="text-sm font-medium text-lacuna-plum">Lacuna</span>
             </div>
-            <p className="text-sm text-lacuna-blue">
-              Licensed under Business Source License 1.1 · © 2026 · Educational Project
+            <p className="text-sm text-lacuna-blue text-center">
+              Licensed under Business Source License 1.1 · © 2026 · Educational project — not investment advice
             </p>
             <div className="flex items-center gap-4 text-sm text-lacuna-blue">
-              <a href="https://github.com/maekass/Lacuna" className="hover:text-lacuna-plum transition-colors">GitHub</a>
-              <a href="#" className="hover:text-lacuna-plum transition-colors">Documentation</a>
+              <a
+                href="https://github.com/maekass/Lacuna"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-lacuna-plum transition-colors"
+              >
+                GitHub
+              </a>
+              <a
+                href="https://github.com/maekass/Lacuna/tree/main/docs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-lacuna-plum transition-colors"
+              >
+                Methodology docs
+              </a>
             </div>
           </div>
         </footer>

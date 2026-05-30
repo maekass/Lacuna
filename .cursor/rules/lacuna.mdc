@@ -1,0 +1,18 @@
+---
+description: Lacuna project context, stack, and coding conventions
+alwaysApply: true
+---
+
+# Lacuna
+
+Educational women's health M&A demo. Verified static dataset + honest provenance — not live institutional data.
+
+Stack: Next.js 16, React 19, TS strict, Tailwind v4, D3, TF.js. Data: `getVerifiedDataset()` from `src/data/dataset.verified.json`. Future DB: `LACUNA_DATA_MODE=db`.
+
+Paths: `@/*` → `src/*`. PascalCase in `src/components/`. Logic in `src/lib/`. API in `src/app/api/`.
+
+Do: fetch + NextResponse; verified dataset as source of truth; fix Deno lint (`require-await`, `no-unused-vars`); read Next 16 docs in `node_modules/next/dist/docs/`.
+
+Don't: synthetic maDeals data; axios/styled-jsx/Postgres unless asked; async without await.
+
+Full rules: AGENTS.md
