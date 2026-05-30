@@ -361,7 +361,7 @@ export default function ValidationTracker() {
           </p>
           <p className="mt-3 pt-3 border-t border-white/30">
             <strong>Future Calibration:</strong> As more acquisitions complete and disclose metrics, 
-            we'll update the model weights to improve prediction accuracy. Current model should be 
+            we&apos;ll update the model weights to improve prediction accuracy. Current model should be 
             considered exploratory until validated against more outcomes.
           </p>
         </div>

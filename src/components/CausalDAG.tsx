@@ -359,7 +359,7 @@ export default function CausalDAG() {
           ))}
         </div>
         <p className="text-sm text-red-700 mt-4 p-3 bg-white rounded border border-red-200">
-          <strong>Sensitivity Analysis Required:</strong> We calculate Oster's δ to determine 
+          <strong>Sensitivity Analysis Required:</strong> We calculate Oster&apos;s δ to determine 
           how strong these unmeasured confounders would need to be to flip our conclusions.
           See Sensitivity Analysis section for δ values.
         </p>
@@ -373,14 +373,14 @@ export default function CausalDAG() {
         <div className="space-y-2 text-sm">
           <p>
             <strong>We assume:</strong> Conditioning on {MEASURED_CONFOUNDERS.length} measured confounders 
-            blocks all backdoor paths, satisfying Pearl's backdoor criterion for measured variables.
+            blocks all backdoor paths, satisfying Pearl&apos;s backdoor criterion for measured variables.
           </p>
           <p>
             <strong>We acknowledge:</strong> {UNMEASURED_CONFOUNDERS.length} unmeasured confounders remain. 
             Our causal claims are valid ONLY IF these are weak relative to measured confounders.
           </p>
           <p>
-            <strong>We test:</strong> Sensitivity analysis (Oster's δ) quantifies how strong unmeasured 
+            <strong>We test:</strong> Sensitivity analysis (Oster&apos;s δ) quantifies how strong unmeasured 
             confounding would need to be to invalidate our conclusions.
           </p>
           <p className="mt-3 pt-3 border-t border-white/30 font-medium">
