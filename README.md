@@ -10,7 +10,8 @@
   <img src="./public/social-preview.svg" alt="Lacuna - M&A Intelligence for Women's Health" width="100%">
 </p>
 
-[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://typescriptlang.org)
 [![D3.js](https://img.shields.io/badge/D3.js-v7-orange?style=flat-square&logo=d3.js)](https://d3js.org)
 [![TensorFlow.js](https://img.shields.io/badge/TensorFlow.js-4.0-FF6F00?style=flat-square&logo=tensorflow)](https://tensorflow.org/js)
@@ -19,7 +20,7 @@
 [![License](https://img.shields.io/badge/License-BSL_1.1-purple?style=flat-square)](LICENSE)
 [![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://lacuna-maekass.vercel.app)
 
-**Tools & Stack:** Next.js 14 · TypeScript · D3.js (force simulation, hierarchy, scales) · TensorFlow.js · simple-statistics · ml-matrix · Framer Motion · Tailwind CSS · visx patterns
+**Tools & Stack:** Next.js 16 · React 19 · TypeScript · D3.js · TensorFlow.js · simple-statistics · ml-matrix · Framer Motion · Tailwind CSS v4 · Vitest · verified JSON dataset (`dataset.verified.json`)
 
 Lacuna maps the acquisition landscape across FemTech, digital health, and women's wellness sectors—visualizing strategic relationships, exit patterns, and market dynamics through sophisticated network analysis.
 
@@ -46,10 +47,18 @@ Lacuna maps the acquisition landscape across FemTech, digital health, and women'
 - **Interactive cells**: Hover reveals company counts and deal activity
 - **Matrix computation**: Real-time average valuation calculations
 
-### Data Layer (`maDeals.ts`)
-- **Type-safe interfaces**: Company, Acquisition with strict typing
-- **Derived statistics**: Network nodes/links generation, sector distribution, deal value totals
-- **Sample dataset**: 20 companies, 15 acquirers, 10 tracked deals, $2B+ disclosed value
+### Verified Data Layer (`dataset.verified.json`)
+- **Single source of truth**: Curated JSON at `src/data/dataset.verified.json` via `getVerifiedDataset()`
+- **Optional Postgres path**: Set `LACUNA_DATA_MODE=db` with migrations in `db/migrations/`
+- **Type-safe adapters**: Company, acquirer, and acquisition rows mapped for UI and API routes
+- **Provenance dashboard**: `DataCoverageCard` — sector/year breakdowns, disclosure rates, effective-n badges per module
+- **No synthetic M&A data**: Staging and SEC scans never auto-merge into the verified file
+
+### Data Curation Kit
+- **Checklist**: `docs/DATA_CURATION_CHECKLIST.md` — JSON schema, dual-attestation rules, pre-merge steps
+- **Staging template**: `staging/deals_candidates.template.csv` → human review → manual JSON edit
+- **Validation CLI**: `npm run validate:dataset` — FK checks, dual-source warnings, disclosure stats
+- **SEC candidate scan**: `npm run sec:scan` — 8-K discovery → `staging/sec_candidates.csv` only (requires `SEC_EDGAR_USER_AGENT`)
 
 ### AI/ML Intelligence Layer
 
@@ -128,7 +137,7 @@ Lacuna maps the acquisition landscape across FemTech, digital health, and women'
 
 ## Academic-Rigor Analytical Frameworks
 
-Lacuna implements **6 academically rigorous frameworks** with explicit acknowledgment of small-sample limitations (n=20). Every framework follows the principle: *be honest about what you can and cannot reliably claim*.
+Lacuna implements **6 academically rigorous frameworks** with explicit acknowledgment of small-sample limitations (n≈23 companies, n=6 deals). Every framework follows the principle: *be honest about what you can and cannot reliably claim*.
 
 ### 1. Causal Inference Engine
 **Files:** `CausalDAG.tsx`, `CausalInferenceEngine.tsx`, `TemporalValidation.tsx`, `SensitivityAnalysis.tsx`, `BayesianCausalAnalysis.tsx`
@@ -198,6 +207,7 @@ OAIS = [Addressable Pop] × [Penetration Gap] × [Stage Credibility]
 ### Documentation
 
 Comprehensive methodology documents in `docs/`:
+- `DATA_CURATION_CHECKLIST.md` — JSON schema, staging workflow, validation commands
 - `OAIS_METHODOLOGY.md` — Health impact framework
 - `FAIRNESS_AUDIT_METHODOLOGY.md` — Fairness audit with explicit limitations
 - `NETWORK_ANALYSIS_METHODOLOGY.md` — Network analysis with language guidelines
@@ -211,7 +221,7 @@ All frameworks follow these academic standards:
 - Use bootstrap for small samples (no distributional assumptions)
 - Apply multiple testing corrections
 - Acknowledge selection bias explicitly
-- Use language: "exploratory", "preliminary", "with n=20 we cannot..."
+- Use language: "exploratory", "preliminary", "with n=6 deals we cannot..."
 - Document all data sources
 
 ❌ **DO NOT:**
@@ -224,12 +234,13 @@ All frameworks follow these academic standards:
 
 ## Technology Stack
 
-- **Framework**: Next.js 14 (App Router) + TypeScript
-- **Visualizations**: D3.js (force simulation, scales, shapes) + visx patterns
+- **Framework**: Next.js 16 (App Router) + React 19 + TypeScript (strict)
+- **Visualizations**: D3.js (force simulation, scales, shapes)
 - **Machine Learning**: TensorFlow.js · simple-statistics · ml-matrix
 - **Animation**: Framer Motion for orchestrated UI transitions
-- **Styling**: Tailwind CSS + shadcn/ui components
-- **Data Layer**: Static TypeScript interfaces with derived statistical computations
+- **Styling**: Tailwind CSS v4
+- **Data**: Verified static JSON; optional PostgreSQL via `LACUNA_DATA_MODE=db`
+- **Testing**: Vitest with fixtures sliced from real verified JSON
 
 ## Key Features
 
@@ -241,12 +252,14 @@ All frameworks follow these academic standards:
 
 ## Data Coverage
 
-- **22 verified companies** across fertility, mental health, wearables, pelvic health
+Curated verified sample (see **Data coverage & provenance** card in the app for live stats):
+
+- **23 verified companies** across fertility, mental health, general wellness, wearables, pelvic health
   - Includes Johns Hopkins FemTech startups: NovvaCup, Ovubrush
-- **15 strategic acquirers** (Fortune 500 health, tech giants, specialized buyers)
-- **10 tracked transactions** with deal values and strategic rationale
-- **$2B+ in disclosed transaction value**
-- **Every data point sourced**: Company websites, SEC filings, TechCrunch, Crunchbase, FDA.gov, press releases
+- **6 tracked acquisitions** with strategic rationale and source citations
+- **3 disclosed deal prices** (50% disclosure rate; undisclosed deals carry `dealValueNote`)
+- **13 companies** with last-known valuation and documented `valuationSource`
+- **Every data point sourced**: Company websites, SEC filings, TechCrunch, Crunchbase, press releases
 
 ### Johns Hopkins FemTech Innovation
 **Verified academic startups from JHTV (Johns Hopkins Technology Ventures):**
@@ -265,12 +278,28 @@ npm install
 # Run development server
 npm run dev
 
+# Validate verified dataset (FK checks, disclosure stats)
+npm run validate:dataset
+
+# Run tests
+npm test
+
 # Build for production
 npm run build
 
-# Deploy to Vercel
+# Deploy to Vercel (or push to main for auto-deploy)
 vercel --prod
 ```
+
+### Optional: SEC staging scan
+
+Requires a SEC-compliant User-Agent string ([fair access policy](https://www.sec.gov/os/webmaster-faq#code-support)):
+
+```bash
+SEC_EDGAR_USER_AGENT="Lacuna Research you@example.com" npm run sec:scan
+```
+
+Output: `staging/sec_candidates.csv` — review manually; **do not** auto-merge into `dataset.verified.json`.
 
 ## Design System
 
