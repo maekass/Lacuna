@@ -319,7 +319,7 @@ export default function ImpactOpportunityCard() {
               Acquirer: {company.likelyAcquirer} | Historical scaling: {company.acquirerScalingMult}×
             </p>
             <p className="text-xs text-gray-500 mt-1">
-              Proxy for: Post-acquisition scaling (most acquirers don't disclose patient volumes)
+              Proxy for: Post-acquisition scaling (most acquirers don&apos;t disclose patient volumes)
             </p>
           </div>
         </div>

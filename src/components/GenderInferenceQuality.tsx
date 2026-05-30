@@ -381,7 +381,7 @@ export default function GenderInferenceQuality({
           <li>• Confidence threshold: 0.85 for high confidence (excluded otherwise)</li>
           <li>• Ambiguous names: Confidence &lt;0.65; excluded from primary analysis</li>
           <li>• Sensitivity analysis: Run with ambiguous names assigned to both genders</li>
-          <li>• Citation: Mihaljević et al. (2019). "Reflections on gender analyses of bibliographic corpora."</li>
+          <li>• Citation: Mihaljević et al. (2019). &quot;Reflections on gender analyses of bibliographic corpora.&quot;</li>
         </ul>
       </div>
     </motion.div>

@@ -921,7 +921,7 @@ export default function NetworkAnalysisHonest() {
 
           <div className="bg-white border border-gray-200 rounded-lg p-6">
             <h4 className="font-medium mb-4" style={{ fontFamily: "'Bodoni MT', Didot, serif" }}>
-              Why We Don't Fit Power Laws (Detailed)
+              Why We Don&apos;t Fit Power Laws (Detailed)
             </h4>
             <ul className="space-y-2 text-sm text-gray-700">
               {POWER_LAW_LIMITATIONS.whyNotFit.map((reason, i) => (
@@ -946,7 +946,7 @@ export default function NetworkAnalysisHonest() {
               Honest Network Analysis Summary
             </h4>
             <p className="text-sm leading-relaxed">
-              With {SAMPLE_NODES.length} nodes and {SAMPLE_EDGES.length} edges, we focus on what's defensible: 
+              With {SAMPLE_NODES.length} nodes and {SAMPLE_EDGES.length} edges, we focus on what&apos;s defensible: 
               bootstrap confidence intervals, robust concentration metrics (Gini, HHI), and null model comparison. 
               We <strong>do not</strong> fit power laws, claim preferential attachment, or rank specific 
               centralities. The acquisition network shows {stats.gini.interpretation.toLowerCase()} with top-3 

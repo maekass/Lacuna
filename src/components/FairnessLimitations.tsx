@@ -184,7 +184,7 @@ export default function FairnessLimitations({
             <thead>
               <tr className="text-xs text-gray-500 uppercase border-b border-gray-200" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
                 <th className="text-left py-2">Effect Size (Δ)</th>
-                <th className="text-left py-2">Cohen's h</th>
+                <th className="text-left py-2">Cohen&apos;s h</th>
                 <th className="text-right py-2">Power</th>
                 <th className="text-right py-2">Min n for 80%</th>
                 <th className="text-left py-2 pl-4">Interpretation</th>
@@ -217,8 +217,8 @@ export default function FairnessLimitations({
           <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded text-sm text-red-800">
             <strong>Bottom Line:</strong> With our current sample size, we can only reliably 
             detect very large effects (≥{(powerByEffect.find(p => p.power >= 0.8)?.effectSize || 0.4) * 100}pp). 
-            A null finding does NOT mean "no bias exists" - it means "we couldn't detect bias 
-            smaller than this threshold."
+            A null finding does NOT mean &quot;no bias exists&quot; - it means &quot;we couldn&apos;t detect bias 
+            smaller than this threshold.&quot;
           </div>
         </motion.div>
       )}
@@ -301,8 +301,8 @@ export default function FairnessLimitations({
 
           <div className="p-3 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
             <strong>Why this matters:</strong> If women-founded companies disproportionately fail 
-            (and therefore don't appear in our dataset), we are systematically undersampling 
-            "discrimination victims." Apparent equality in our data could mask substantial 
+            (and therefore don&apos;t appear in our dataset), we are systematically undersampling 
+            &quot;discrimination victims.&quot; Apparent equality in our data could mask substantial 
             discrimination in the broader population.
           </div>
 
@@ -333,20 +333,20 @@ export default function FairnessLimitations({
             <div className="bg-green-50 p-4 rounded-lg border border-green-200">
               <h5 className="text-sm font-medium text-green-800 mb-2">✓ We CAN claim (Descriptive)</h5>
               <ul className="text-xs text-green-700 space-y-1">
-                <li>• "In our dataset, women-founded companies comprise X%"</li>
-                <li>• "Acquisition rates differ by founder gender"</li>
-                <li>• "Sector distributions vary by founder gender"</li>
-                <li>• "After controlling for stage/sector, the gender coefficient is Z"</li>
+                <li>• &quot;In our dataset, women-founded companies comprise X%&quot;</li>
+                <li>• &quot;Acquisition rates differ by founder gender&quot;</li>
+                <li>• &quot;Sector distributions vary by founder gender&quot;</li>
+                <li>• &quot;After controlling for stage/sector, the gender coefficient is Z&quot;</li>
               </ul>
             </div>
 
             <div className="bg-red-50 p-4 rounded-lg border border-red-200">
               <h5 className="text-sm font-medium text-red-800 mb-2">✗ We CANNOT claim (Causal)</h5>
               <ul className="text-xs text-red-700 space-y-1">
-                <li>• "Women founders are discriminated against"</li>
-                <li>• "Gender causes lower acquisition rates"</li>
-                <li>• "Bias is responsible for the disparity"</li>
-                <li>• "This proves systemic gender inequity"</li>
+                <li>• &quot;Women founders are discriminated against&quot;</li>
+                <li>• &quot;Gender causes lower acquisition rates&quot;</li>
+                <li>• &quot;Bias is responsible for the disparity&quot;</li>
+                <li>• &quot;This proves systemic gender inequity&quot;</li>
               </ul>
             </div>
           </div>
@@ -376,7 +376,7 @@ export default function FairnessLimitations({
           <br/><br/>
           <strong>What we CAN do:</strong> Provide transparent descriptive analysis, quantify our 
           measurement uncertainty, conduct power analyses, and explicitly acknowledge what we 
-          don't know. This is the academically responsible approach for small-sample observational data.
+          don&apos;t know. This is the academically responsible approach for small-sample observational data.
           <br/><br/>
           <strong>What you should NOT do:</strong> Use this analysis to make policy decisions, 
           publish findings as evidence of discrimination, or extrapolate to broader populations 

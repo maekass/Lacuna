@@ -359,7 +359,7 @@ export default function CompetitiveAnalysisDashboard() {
               Sector Contestability
             </h4>
             <p className="text-sm text-gray-600 mb-4">
-              Companies with 3+ plausible buyers (same sector match) are "high contestability." 
+              Companies with 3+ plausible buyers (same sector match) are &quot;high contestability.&quot; 
               Higher rate = more competitive sector.
             </p>
 
