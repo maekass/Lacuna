@@ -16,7 +16,7 @@
 
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import FairnessLimitations from './FairnessLimitations';
 import GenderInferenceQuality, { type FounderClassification } from './GenderInferenceQuality';

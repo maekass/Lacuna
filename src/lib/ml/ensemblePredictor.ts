@@ -46,8 +46,8 @@ export class EnsemblePredictor {
   private neuralNetwork: tf.LayersModel | null = null;
   private isInitialized = false;
 
-  async initialize(): Promise<void> {
-    if (this.isInitialized) return;
+  initialize(): Promise<void> {
+    if (this.isInitialized) return Promise.resolve();
 
     // Create simple neural network (simulating RandomForest + XGBoost ensemble)
     this.neuralNetwork = tf.sequential({
@@ -68,6 +68,7 @@ export class EnsemblePredictor {
     });
 
     this.isInitialized = true;
+    return Promise.resolve();
   }
 
   predict(features: TrialFeatures): PredictionResult {

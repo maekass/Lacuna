@@ -7,7 +7,7 @@ function csvEscape(value: string) {
   return `"${escaped}"`;
 }
 
-export async function GET() {
+export function GET() {
   const header = [
     'id',
     'announcedDate',

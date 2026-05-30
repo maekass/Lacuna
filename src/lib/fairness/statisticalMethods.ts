@@ -282,7 +282,7 @@ export function powerAnalysis(
   recommendedSampleSize: number;
   interpretation: string;
 } {
-  const { h } = cohenH(p1, p2);
+  cohenH(p1, p2);
   
   // Standard error under alternative hypothesis
   const se = Math.sqrt(

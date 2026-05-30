@@ -8,7 +8,7 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import ConfidenceLevelIndicator from './ConfidenceLevelIndicator';
 import { verifiedAcquisitions } from '@/data/verifiedData';
