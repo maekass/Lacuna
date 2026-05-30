@@ -19,7 +19,7 @@ describe('dataset verified API', () => {
 
     expect(response.status).toBe(200);
     expect(body.companies).toHaveLength(2);
-    expect(body.acquisitions[0].id).toBe('d1');
+    expect(body.acquisitions[0].id).toBe('deal2');
   });
 
   it('GET propagates provider errors (error)', async () => {
@@ -46,8 +46,8 @@ describe('deals.csv export API', () => {
     expect(response.status).toBe(200);
     expect(response.headers.get('content-type')).toContain('text/csv');
     expect(csv.split('\n')[0]).toContain('announcedDate');
-    expect(csv).toContain('"Alpha Health"');
-    expect(csv).toContain('250');
+    expect(csv).toContain('"Modern Fertility"');
+    expect(csv).toContain('225');
   });
 
   it('GET handles missing optional deal fields (edge)', async () => {
@@ -68,7 +68,7 @@ describe('deals.csv export API', () => {
     const { GET } = await import('@/app/api/export/deals.csv/route');
     const csv = await (await GET()).text();
     const dataRow = csv.split('\n')[1];
-    expect(dataRow).toContain('"d1"');
+    expect(dataRow).toContain('"deal2"');
     expect(dataRow).not.toContain('undefined');
   });
 });

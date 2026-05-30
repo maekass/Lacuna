@@ -12,64 +12,134 @@ import { motion } from 'framer-motion';
 import {
   calculateOAIS,
   EPIDEMIOLOGY_DATABASE,
+  MARKET_PENETRATION_DATA,
   UNMEASURABLE_FACTORS,
-  type OAISInputs
+  type ClinicalStageProxy,
+  type OAISInputs,
 } from '@/lib/impact/oaisCalculator';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 interface CompanyProfile {
   name: string;
-  condition: string;
-  stage: 'pre_clinical' | 'pilot' | 'clinical_validation' | 'post_rct';
-  founderExits: number;
-  founderFDAExp: boolean;
-  likelyAcquirer: string;
-  acquirerScalingMult: number;
+  sector: string;
+  verifiedStage: string;
+  clinicalStage: ClinicalStageProxy['stage'];
+  likelyAcquirer: string | null;
   competitors: number;
 }
 
+function mapSectorToEpidemiology(sector: string) {
+  if (sector === 'Fertility') {
+    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes('Fertility')) ?? null;
+  }
+  if (sector === 'Mental Health') {
+    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes('Postpartum')) ?? null;
+  }
+  if (sector === 'Pelvic Health') {
+    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes('Fibroids')) ?? null;
+  }
+  return null;
+}
+
+function mapSectorToPenetration(sector: string) {
+  const categoryBySector: Record<string, string> = {
+    Fertility: 'Fertility Apps',
+    'Mental Health': "Mental Health Apps (Women's Focus)",
+    'Pelvic Health': 'Pelvic Health / Kegel Apps',
+  };
+  const category = categoryBySector[sector];
+  if (!category) return null;
+  return MARKET_PENETRATION_DATA.find((m) => m.category === category) ?? null;
+}
+
+function mapVerifiedStage(stage: string): ClinicalStageProxy['stage'] {
+  const s = stage.toLowerCase();
+  if (s.includes('acquired') || s.includes('public')) return 'post_rct';
+  if (s.includes('seed')) return 'pilot';
+  if (s.includes('series')) return 'clinical_validation';
+  return 'clinical_validation';
+}
+
 export default function ImpactOpportunityCard() {
-  const { verifiedCompanies } = useVerifiedDataset();
+  const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
   const exampleCompanies = useMemo<CompanyProfile[]>(
     () =>
-      verifiedCompanies.map((c) => ({
-        name: c.name,
-        condition: c.sector,
-        stage: 'clinical_validation' as const,
-        founderExits: 0,
-        founderFDAExp: false,
-        likelyAcquirer: 'See verified deal network',
-        acquirerScalingMult: 1,
-        competitors: 0,
-      })),
-    [verifiedCompanies],
+      verifiedCompanies.map((c) => {
+        const deal = verifiedAcquisitions.find((d) => d.targetId === c.id);
+        const competitors = verifiedCompanies.filter(
+          (other) => other.sector === c.sector && other.id !== c.id,
+        ).length;
+        return {
+          name: c.name,
+          sector: c.sector,
+          verifiedStage: c.stage,
+          clinicalStage: mapVerifiedStage(c.stage),
+          likelyAcquirer: deal?.acquirerName ?? null,
+          competitors,
+        };
+      }),
+    [verifiedCompanies, verifiedAcquisitions],
   );
 
   const [selectedCompany, setSelectedCompany] = useState(0);
   const [showTransparency, setShowTransparency] = useState(false);
 
-  const company = exampleCompanies[selectedCompany];
-  
-  // Get epidemiology data for this condition
-  const epiData = EPIDEMIOLOGY_DATABASE.find(e => 
-    company.condition.toLowerCase().includes(e.condition.toLowerCase().split(' ')[0])
-  ) || EPIDEMIOLOGY_DATABASE[0]; // Default to first if not found
+  const company = exampleCompanies[selectedCompany] ?? exampleCompanies[0];
 
-  // Estimate penetration (simplified - would come from market data)
-  const estimatedPenetration = 0.15 + (company.competitors * 0.02);
+  const epiData = company ? mapSectorToEpidemiology(company.sector) : null;
+  const penetrationData = company ? mapSectorToPenetration(company.sector) : null;
 
-  const oaisInputs: OAISInputs = {
-    condition: company.condition,
-    addressablePopulation: epiData.addressablePopulation.pointEstimate,
-    currentPenetration: estimatedPenetration,
-    clinicalStage: company.stage,
-    founderPriorExits: company.founderExits,
-    founderFDAExperience: company.founderFDAExp,
-    acquirerScalingMultiplier: company.acquirerScalingMult,
-    competitorCount: company.competitors
-  };
+  const estimatedPenetration =
+    epiData && penetrationData
+      ? Math.min(
+          1,
+          (penetrationData.activeUserEstimate.low + penetrationData.activeUserEstimate.high) /
+            2 /
+            epiData.addressablePopulation.pointEstimate,
+        )
+      : null;
 
-  const oais = calculateOAIS(oaisInputs);
+  const oais =
+    company && epiData && estimatedPenetration != null
+      ? calculateOAIS({
+          condition: company.sector,
+          addressablePopulation: epiData.addressablePopulation.pointEstimate,
+          currentPenetration: estimatedPenetration,
+          clinicalStage: company.clinicalStage,
+          founderPriorExits: 0,
+          founderFDAExperience: false,
+          acquirerScalingMultiplier: 1,
+          competitorCount: company.competitors,
+        } satisfies OAISInputs)
+      : null;
+
+  if (exampleCompanies.length === 0) {
+    return (
+      <div className="bg-white border border-gray-200 rounded-lg p-6 text-sm text-gray-600">
+        No verified companies available for OAIS illustration.
+      </div>
+    );
+  }
+
+  if (!company || !oais || !epiData || estimatedPenetration == null || !penetrationData) {
+    return (
+      <div className="space-y-4">
+        <div className="border-b border-gray-200 pb-4">
+          <h3
+            className="text-2xl font-light tracking-tight"
+            style={{ fontFamily: "'Bodoni MT', Didot, serif", textTransform: 'uppercase' }}
+          >
+            Opportunity-Adjusted Impact Score (OAIS)
+          </h3>
+        </div>
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-900">
+          OAIS requires cited epidemiology and market penetration data for the company&apos;s sector.
+          <strong> {company?.name ?? 'This company'}</strong> ({company?.sector ?? 'unknown sector'}) does
+          not have a mapped Tier-1 panel — no score is computed rather than using invented inputs.
+        </div>
+      </div>
+    );
+  }
 
   const getScoreInterpretation = (score: number): string => {
     if (score >= 7) return 'High Opportunity';
@@ -129,7 +199,7 @@ export default function ImpactOpportunityCard() {
             <h4 className="font-medium text-lg" style={{ fontFamily: "'Bodoni MT', Didot, serif" }}>
               {company.name}
             </h4>
-            <p className="text-sm text-gray-500">Condition: {company.condition}</p>
+            <p className="text-sm text-gray-500">Sector: {company.sector}</p>
           </div>
           <div className="text-right">
             <span className={`px-3 py-1 rounded text-xs font-medium ${getConfidenceBadge(oais.confidenceLevel).color}`}>
@@ -265,12 +335,11 @@ export default function ImpactOpportunityCard() {
               <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded">MEASURED PROXY</span>
             </div>
             <p className="text-xs text-gray-600 mt-1">
-              Current penetration: ~{(estimatedPenetration * 100).toFixed(0)}% | 
-              Gap: ~{((1 - estimatedPenetration) * 100).toFixed(0)}% unmet need
+              Current penetration: ~{(estimatedPenetration * 100).toFixed(0)}% | Gap: ~
+              {((1 - estimatedPenetration) * 100).toFixed(0)}% unmet need
             </p>
-            <p className="text-xs text-amber-600 mt-1">
-              ⚠ Transparency: Installed base ≠ active users; 30-50% overestimate likely
-            </p>
+            <p className="text-xs text-gray-400 mt-1">Source: {penetrationData.dataSource}</p>
+            <p className="text-xs text-amber-600 mt-1">{penetrationData.transparencyNote}</p>
           </div>
         </div>
       </div>
@@ -287,8 +356,7 @@ export default function ImpactOpportunityCard() {
               <span className="text-xs text-yellow-600 bg-yellow-50 px-2 py-1 rounded">PROXY</span>
             </div>
             <p className="text-xs text-gray-600 mt-1">
-              Stage: {company.stage.replace('_', ' ')} | 
-              Credibility score: {(oais.components.stageCredibilityScore * 100).toFixed(0)}%
+              Verified stage: {company.verifiedStage} | Proxy stage: {company.clinicalStage.replace('_', ' ')}
             </p>
             <p className="text-xs text-gray-500 mt-1">
               Proxy for: Clinical efficacy (unknown for most pre-acquisition companies)
@@ -301,10 +369,8 @@ export default function ImpactOpportunityCard() {
               <span className="text-xs text-yellow-600 bg-yellow-50 px-2 py-1 rounded">PROXY</span>
             </div>
             <p className="text-xs text-gray-600 mt-1">
-              Prior exits: {company.founderExits} | FDA experience: {company.founderFDAExp ? 'Yes' : 'No'}
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              Proxy for: Execution quality (limited to public LinkedIn data)
+              Not in verified dataset — founder exits and FDA experience are unmeasured; OAIS uses
+              neutral defaults (0 exits, no FDA flag).
             </p>
           </div>
 
@@ -314,10 +380,9 @@ export default function ImpactOpportunityCard() {
               <span className="text-xs text-yellow-600 bg-yellow-50 px-2 py-1 rounded">PROXY</span>
             </div>
             <p className="text-xs text-gray-600 mt-1">
-              Acquirer: {company.likelyAcquirer} | Historical scaling: {company.acquirerScalingMult}×
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              Proxy for: Post-acquisition scaling (most acquirers don&apos;t disclose patient volumes)
+              {company.likelyAcquirer
+                ? `Verified acquirer: ${company.likelyAcquirer}`
+                : 'No verified acquirer on record — scaling multiplier held at neutral 1.0×'}
             </p>
           </div>
         </div>
@@ -412,7 +477,8 @@ export default function ImpactOpportunityCard() {
           [{getConfidenceBadge(oais.confidenceLevel).text}]. 
           Addresses {oais.components.addressablePopScore}M women with {((oais.components.penetrationGapScore) * 100).toFixed(0)}% penetration gap. 
           Stage credibility {(oais.components.stageCredibilityScore * 100).toFixed(0)}%. 
-          Likely acquired by {company.likelyAcquirer} (historical scaling: {company.acquirerScalingMult}×). 
+          Likely acquirer: {company.likelyAcquirer ?? 'not in verified dataset'}.
+          Competitors in sector (verified): {company.competitors}.
           {oais.score >= 7 
             ? 'Strong opportunity for impact at scale.' 
             : oais.score >= 4 

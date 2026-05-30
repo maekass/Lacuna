@@ -16,11 +16,11 @@ describe('mapRowsToVerifiedDataset', () => {
       [sampleAcquisitionRow],
     );
 
-    expect(dataset.provenance.lastUpdated).toBe('2026-01-15');
-    expect(dataset.companies[0].lastKnownValuation).toBe(100);
-    expect(dataset.acquirers[0].ticker).toBe('BIG');
+    expect(dataset.provenance.lastUpdated).toBe('2026-05-30');
+    expect(dataset.companies[0].lastKnownValuation).toBe(225);
+    expect(dataset.acquirers[0].ticker).toBe('TDOC');
     expect(dataset.acquisitions[0].targetId).toBe('c1');
-    expect(dataset.acquisitions[0].dealValue).toBe(250);
+    expect(dataset.acquisitions[0].dealValue).toBe(225);
   });
 
   it('handles empty entity arrays (edge)', () => {

@@ -1,3 +1,4 @@
+import verifiedJson from '@/data/dataset.verified.json';
 import type { VerifiedDataset } from '@/lib/data/datasetTypes';
 import type {
   AcquisitionRow,
@@ -6,104 +7,61 @@ import type {
   ProvenanceRow,
 } from '@/lib/data/mapVerifiedDataset';
 
+const full = verifiedJson as VerifiedDataset;
+
+/** Minimal slice of the real verified JSON — not invented companies or deals. */
 export const minimalVerifiedDataset: VerifiedDataset = {
-  provenance: {
-    lastUpdated: '2026-01-15',
-    purpose: 'Test dataset',
-    disclaimer: 'Not for production',
-    sources: ['unit test'],
-    notes: ['fixture'],
-  },
-  companies: [
-    {
-      id: 'c1',
-      name: 'Alpha Health',
-      sector: 'Fertility',
-      stage: 'Series B',
-      founded: 2018,
-      hq: 'Boston, MA',
-      description: 'Test company',
-      lastKnownValuation: 100,
-      totalFunding: 40,
-      sources: ['crunchbase'],
-    },
-    {
-      id: 'c2',
-      name: 'Beta Wearables',
-      sector: 'Wearables',
-      stage: 'Series A',
-      founded: 2019,
-      hq: 'Austin, TX',
-      description: 'No financials disclosed',
-    },
-  ],
-  acquirers: [
-    {
-      id: 'a1',
-      name: 'Big Pharma Co',
-      ticker: 'BIG',
-      sector: 'Pharma',
-      hq: 'NJ',
-    },
-  ],
-  acquisitions: [
-    {
-      id: 'd1',
-      targetId: 'c1',
-      acquirerId: 'a1',
-      targetName: 'Alpha Health',
-      acquirerName: 'Big Pharma Co',
-      announcedDate: '2024-06-01',
-      closedDate: '2024-09-01',
-      dealValue: 250,
-      dealType: 'Acquisition',
-      source: 'press release',
-      strategicRationale: 'Expand fertility portfolio',
-    },
-  ],
+  provenance: full.provenance,
+  companies: full.companies.filter((c) => c.id === 'c1' || c.id === 'c2'),
+  acquirers: full.acquirers.slice(0, 1),
+  acquisitions: full.acquisitions.filter((d) => d.id === 'deal2'),
 };
 
+const company = minimalVerifiedDataset.companies[0];
+const acquirer = minimalVerifiedDataset.acquirers[0];
+const deal = minimalVerifiedDataset.acquisitions[0];
+
 export const sampleProvenanceRow: ProvenanceRow = {
-  last_updated: '2026-01-15',
-  purpose: 'Test dataset',
-  disclaimer: 'Not for production',
-  sources: ['unit test'],
-  notes: ['fixture'],
+  last_updated: minimalVerifiedDataset.provenance.lastUpdated,
+  purpose: minimalVerifiedDataset.provenance.purpose,
+  disclaimer: minimalVerifiedDataset.provenance.disclaimer,
+  sources: minimalVerifiedDataset.provenance.sources,
+  notes: minimalVerifiedDataset.provenance.notes,
 };
 
 export const sampleCompanyRow: CompanyRow = {
-  id: 'c1',
-  name: 'Alpha Health',
-  sector: 'Fertility',
-  stage: 'Series B',
-  founded: 2018,
-  hq: 'Boston, MA',
-  description: 'Test company',
-  last_known_valuation: '100',
-  valuation_source: 'Series B',
-  total_funding: 40,
-  sources: ['crunchbase'],
+  id: company.id,
+  name: company.name,
+  sector: company.sector,
+  stage: company.stage,
+  founded: company.founded,
+  hq: company.hq,
+  description: company.description,
+  last_known_valuation: company.lastKnownValuation ?? null,
+  valuation_source: company.valuationSource ?? null,
+  total_funding: company.totalFunding ?? null,
+  sources: company.sources ?? [],
 };
 
 export const sampleAcquirerRow: AcquirerRow = {
-  id: 'a1',
-  name: 'Big Pharma Co',
-  ticker: 'BIG',
-  sector: 'Pharma',
-  hq: 'NJ',
+  id: acquirer.id,
+  name: acquirer.name,
+  ticker: acquirer.ticker ?? null,
+  sector: acquirer.sector,
+  hq: acquirer.hq,
 };
 
 export const sampleAcquisitionRow: AcquisitionRow = {
-  id: 'd1',
-  target_id: 'c1',
-  acquirer_id: 'a1',
-  target_name: 'Alpha Health',
-  acquirer_name: 'Big Pharma Co',
-  announced_date: new Date('2024-06-01'),
-  closed_date: null,
-  deal_value: 250,
-  deal_value_note: null,
-  deal_type: 'Acquisition',
-  source: 'press release',
-  strategic_rationale: 'Expand fertility portfolio',
+  id: deal.id,
+  target_id: deal.targetId,
+  acquirer_id: deal.acquirerId,
+  target_name: deal.targetName,
+  acquirer_name: deal.acquirerName,
+  announced_date: deal.announcedDate,
+  closed_date: deal.closedDate ?? null,
+  deal_value: deal.dealValue ?? null,
+  deal_value_note: deal.dealValueNote ?? null,
+  deal_type: deal.dealType,
+  source: deal.source,
+  strategic_rationale: deal.strategicRationale,
 };

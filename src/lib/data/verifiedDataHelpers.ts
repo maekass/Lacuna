@@ -97,14 +97,14 @@ export function buildVerifiedDerivedData(dataset: VerifiedDataset): VerifiedDeri
         type: 'acquirer' as const,
         sector: a.sector,
         stage: 'Acquirer' as const,
-        valuation: 10000,
+        valuation: 0,
       })),
     ],
     getVerifiedNetworkLinks: () =>
       verifiedAcquisitions.map((deal) => ({
         source: deal.targetId,
         target: deal.acquirerId,
-        value: deal.dealValue ?? 50,
+        value: deal.dealValue ?? 0,
         dealType: deal.dealType,
         date: deal.announcedDate,
       })),

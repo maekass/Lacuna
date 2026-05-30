@@ -15,7 +15,7 @@ describe('verifiedDatasetAdapters', () => {
     const companies = getVerifiedCompaniesForAnalysis(derived);
     expect(companies[0].id).toBe('c1');
     expect(companies[0].employees).toBe(0);
-    expect(companies[0].valuation).toBe(100);
+    expect(companies[0].valuation).toBe(225);
   });
 
   it('getVerifiedAcquisitionsForAnalysis normalizes deal types (success)', () => {
@@ -25,7 +25,7 @@ describe('verifiedDatasetAdapters', () => {
 
   it('getVerifiedCompetitiveAnalysisData builds acquirer graph inputs (success)', () => {
     const { acquirers, companies, acquisitions } = getVerifiedCompetitiveAnalysisData(derived);
-    expect(acquirers.some((a) => a.id === 'a1')).toBe(true);
+    expect(acquirers.some((a) => a.id === 'c2')).toBe(true);
     expect(companies.some((c) => c.id === 'c1')).toBe(true);
     expect(acquisitions).toHaveLength(1);
   });
@@ -33,7 +33,7 @@ describe('verifiedDatasetAdapters', () => {
   it('getVerifiedNetworkGraph returns nodes and edges (success)', () => {
     const { nodes, edges } = getVerifiedNetworkGraph(derived);
     expect(nodes.length).toBeGreaterThan(0);
-    expect(edges[0].source).toBe('a1');
+    expect(edges[0].source).toBe('c2');
     expect(edges[0].target).toBe('c1');
   });
 

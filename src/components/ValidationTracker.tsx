@@ -1,156 +1,65 @@
 /**
  * Post-Acquisition Validation Tracker
- * 
- * Compares pre-acquisition OAIS predictions with post-acquisition reality
- * Tracks: patient volume disclosure, outcomes studies, product continuation
- * Used for model calibration over time
+ *
+ * Lists verified acquisitions only. Post-acquisition outcome metrics (patient
+ * volume, scaling, OAIS calibration) are not in the verified public dataset.
  */
 
 'use client';
 
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import ConfidenceLevelIndicator from './ConfidenceLevelIndicator';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
-interface AcquisitionValidation {
+interface VerifiedDealRow {
   company: string;
   acquirer: string;
   acquisitionDate: string;
-  preAcquisitionOAIS: number;
-  preAcquisitionPredictions: {
-    expectedScaling: number; // multiplier
-    expectedPatientVolume: number; // millions
-    productContinuation: 'standalone' | 'integrated' | 'discontinued';
-    outcomesStudyExpected: boolean;
-  };
-  postAcquisitionReality: {
-    actualScaling: number | null;
-    disclosedPatientVolume: number | null;
-    actualProductStatus: 'standalone' | 'integrated' | 'discontinued' | 'unknown';
-    outcomesStudyPublished: boolean | null;
-    publicDataAvailable: boolean;
-  };
-  predictionAccuracy: 'accurate' | 'overestimated' | 'underestimated' | 'unknown';
-  notes: string;
+  dealValue?: number;
+  dealValueNote?: string;
+  source: string;
+  strategicRationale: string;
 }
-
-const VALIDATION_DATA: AcquisitionValidation[] = [
-  {
-    company: 'Modern Fertility',
-    acquirer: 'Ro',
-    acquisitionDate: '2021-05',
-    preAcquisitionOAIS: 7.2,
-    preAcquisitionPredictions: {
-      expectedScaling: 1.9,
-      expectedPatientVolume: 0.8,
-      productContinuation: 'integrated',
-      outcomesStudyExpected: false
-    },
-    postAcquisitionReality: {
-      actualScaling: 2.1,
-      disclosedPatientVolume: null, // Not disclosed
-      actualProductStatus: 'integrated',
-      outcomesStudyPublished: false,
-      publicDataAvailable: true
-    },
-    predictionAccuracy: 'accurate',
-    notes: 'Scaling prediction within 10% of reality. Patient volume undisclosed (as expected).'
-  },
-  {
-    company: 'Livongo',
-    acquirer: 'Teladoc',
-    acquisitionDate: '2020-08',
-    preAcquisitionOAIS: 8.5,
-    preAcquisitionPredictions: {
-      expectedScaling: 2.5,
-      expectedPatientVolume: 0.5,
-      productContinuation: 'integrated',
-      outcomesStudyExpected: true
-    },
-    postAcquisitionReality: {
-      actualScaling: 1.8, // Lower than expected due to market shift
-      disclosedPatientVolume: 0.715, // Disclosed in earnings
-      actualProductStatus: 'integrated',
-      outcomesStudyPublished: true,
-      publicDataAvailable: true
-    },
-    predictionAccuracy: 'overestimated',
-    notes: 'Scaling slower than predicted. Patient volume exceeded expectations. Outcomes studies validated efficacy.'
-  },
-  {
-    company: 'Nurx',
-    acquirer: 'Ro',
-    acquisitionDate: '2021-12',
-    preAcquisitionOAIS: 6.8,
-    preAcquisitionPredictions: {
-      expectedScaling: 1.9,
-      expectedPatientVolume: 0.4,
-      productContinuation: 'standalone',
-      outcomesStudyExpected: false
-    },
-    postAcquisitionReality: {
-      actualScaling: null, // Not disclosed
-      disclosedPatientVolume: null,
-      actualProductStatus: 'standalone',
-      outcomesStudyPublished: null,
-      publicDataAvailable: false
-    },
-    predictionAccuracy: 'unknown',
-    notes: 'Acquirer has not disclosed post-acquisition metrics. Product continues as standalone.'
-  },
-  {
-    company: 'Lemonaid Health',
-    acquirer: 'Amazon',
-    acquisitionDate: '2021-10',
-    preAcquisitionOAIS: 7.5,
-    preAcquisitionPredictions: {
-      expectedScaling: 3.1,
-      expectedPatientVolume: 1.2,
-      productContinuation: 'integrated',
-      outcomesStudyExpected: false
-    },
-    postAcquisitionReality: {
-      actualScaling: null,
-      disclosedPatientVolume: null,
-      actualProductStatus: 'integrated',
-      outcomesStudyPublished: null,
-      publicDataAvailable: false
-    },
-    predictionAccuracy: 'unknown',
-    notes: 'Amazon does not disclose subsidiary patient metrics. Folded into broader health platform.'
-  }
-];
 
 export default function ValidationTracker() {
   const { verifiedAcquisitions } = useVerifiedDataset();
-  const validationRows = useMemo(() => {
-    const verifiedDealNames = new Set(
-      verifiedAcquisitions.flatMap((d) => [d.targetName, d.acquirerName]),
-    );
-    return VALIDATION_DATA.filter((v) => verifiedDealNames.has(v.company));
-  }, [verifiedAcquisitions]);
+  const validationRows = useMemo<VerifiedDealRow[]>(
+    () =>
+      verifiedAcquisitions.map((d) => ({
+        company: d.targetName,
+        acquirer: d.acquirerName,
+        acquisitionDate: d.announcedDate.slice(0, 7),
+        dealValue: d.dealValue,
+        dealValueNote: d.dealValueNote,
+        source: d.source,
+        strategicRationale: d.strategicRationale,
+      })),
+    [verifiedAcquisitions],
+  );
 
   const [selectedYear, setSelectedYear] = useState<string>('all');
 
-  const filteredData = selectedYear === 'all'
-    ? validationRows
-    : validationRows.filter(v => v.acquisitionDate.startsWith(selectedYear));
+  const filteredData =
+    selectedYear === 'all'
+      ? validationRows
+      : validationRows.filter((v) => v.acquisitionDate.startsWith(selectedYear));
 
-  // Calculate calibration metrics
-  const accurateCount = filteredData.filter(v => v.predictionAccuracy === 'accurate').length;
-  const knownCount = filteredData.filter(v => v.predictionAccuracy !== 'unknown').length;
-  const accuracyRate = knownCount > 0 ? (accurateCount / knownCount) * 100 : 0;
-  const dataAvailabilityRate = (filteredData.filter(v => v.postAcquisitionReality.publicDataAvailable).length / filteredData.length) * 100;
+  const disclosedValueCount = filteredData.filter((v) => typeof v.dealValue === 'number').length;
+  const disclosureRate =
+    filteredData.length > 0 ? (disclosedValueCount / filteredData.length) * 100 : 0;
 
-  const getAccuracyColor = (accuracy: string) => {
-    switch (accuracy) {
-      case 'accurate': return 'bg-green-100 text-green-700';
-      case 'overestimated': return 'bg-orange-100 text-orange-700';
-      case 'underestimated': return 'bg-blue-100 text-blue-700';
-      default: return 'bg-gray-100 text-gray-500';
-    }
-  };
+  const years = useMemo(() => {
+    const set = new Set(validationRows.map((v) => v.acquisitionDate.slice(0, 4)));
+    return ['all', ...Array.from(set).sort()];
+  }, [validationRows]);
+
+  if (validationRows.length === 0) {
+    return (
+      <div className="bg-white border border-gray-200 rounded-lg p-6 text-sm text-gray-600">
+        No verified acquisitions in the current dataset.
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -158,55 +67,74 @@ export default function ValidationTracker() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
-      {/* Header */}
       <div className="border-b border-gray-200 pb-4">
-        <h3 className="text-2xl font-light tracking-tight" style={{ fontFamily: "'Bodoni MT', Didot, serif", textTransform: 'uppercase' }}>
-          Post-Acquisition Validation Tracker
+        <h3
+          className="text-2xl font-light tracking-tight"
+          style={{ fontFamily: "'Bodoni MT', Didot, serif", textTransform: 'uppercase' }}
+        >
+          Verified Acquisition Tracker
         </h3>
-        <p className="text-sm tracking-widest text-gray-500 mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif", textTransform: 'uppercase' }}>
-          Pre-Acquisition Predictions vs Post-Acquisition Reality | Model Calibration
+        <p
+          className="text-sm tracking-widest text-gray-500 mt-1"
+          style={{ fontFamily: "'Arial Narrow', sans-serif", textTransform: 'uppercase' }}
+        >
+          Public deal records only — no synthetic post-acquisition outcomes
         </p>
       </div>
 
-      {/* Calibration Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-900">
+        Pre-acquisition OAIS scores, scaling multipliers, and post-close patient volumes are{' '}
+        <strong>not</strong> in the verified dataset. This view shows only disclosed deal facts
+        (dates, values where public, sources, rationale).
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <div className="bg-gray-50 p-4 rounded-lg text-center">
-          <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#5D4E6D' }}>
+          <div
+            className="text-2xl font-light"
+            style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#5D4E6D' }}
+          >
             {filteredData.length}
           </div>
-          <div className="text-xs text-gray-500 uppercase" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
-            Acquisitions Tracked
+          <div
+            className="text-xs text-gray-500 uppercase"
+            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+          >
+            Verified acquisitions
           </div>
         </div>
         <div className="bg-gray-50 p-4 rounded-lg text-center">
-          <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: accuracyRate >= 70 ? '#2d6a4f' : '#e76f51' }}>
-            {accuracyRate.toFixed(0)}%
+          <div
+            className="text-2xl font-light"
+            style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#4A5D8A' }}
+          >
+            {disclosureRate.toFixed(0)}%
           </div>
-          <div className="text-xs text-gray-500 uppercase" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
-            Prediction Accuracy
-          </div>
-        </div>
-        <div className="bg-gray-50 p-4 rounded-lg text-center">
-          <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#4A5D8A' }}>
-            {dataAvailabilityRate.toFixed(0)}%
-          </div>
-          <div className="text-xs text-gray-500 uppercase" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
-            Data Available
+          <div
+            className="text-xs text-gray-500 uppercase"
+            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+          >
+            Deal value disclosed
           </div>
         </div>
         <div className="bg-gray-50 p-4 rounded-lg text-center">
-          <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#E8B4B8' }}>
-            {filteredData.filter(v => v.postAcquisitionReality.outcomesStudyPublished).length}
+          <div
+            className="text-2xl font-light"
+            style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#E8B4B8' }}
+          >
+            0
           </div>
-          <div className="text-xs text-gray-500 uppercase" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
-            Outcomes Studies
+          <div
+            className="text-xs text-gray-500 uppercase"
+            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+          >
+            Post-close outcome panel
           </div>
         </div>
       </div>
 
-      {/* Year Filter */}
-      <div className="flex gap-2">
-        {['all', '2020', '2021', '2022'].map(year => (
+      <div className="flex flex-wrap gap-2">
+        {years.map((year) => (
           <button
             key={year}
             onClick={() => setSelectedYear(year)}
@@ -222,151 +150,66 @@ export default function ValidationTracker() {
         ))}
       </div>
 
-      {/* Validation Table */}
       <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-gray-50">
-            <tr className="text-xs text-gray-500 uppercase" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
-              <th className="text-left p-3">Company</th>
+            <tr
+              className="text-xs text-gray-500 uppercase"
+              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+            >
+              <th className="text-left p-3">Target</th>
               <th className="text-left p-3">Acquirer</th>
-              <th className="text-center p-3">Pre-OAIS</th>
-              <th className="text-center p-3">Predicted Scale</th>
-              <th className="text-center p-3">Actual Scale</th>
-              <th className="text-center p-3">Accuracy</th>
+              <th className="text-left p-3">Announced</th>
+              <th className="text-right p-3">Deal value ($M)</th>
+              <th className="text-left p-3">Source</th>
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((v, i) => (
-              <tr key={i} className="border-t border-gray-100 hover:bg-gray-50">
+            {filteredData.map((v) => (
+              <tr key={`${v.company}-${v.acquisitionDate}`} className="border-t border-gray-100 hover:bg-gray-50">
                 <td className="p-3 font-medium">{v.company}</td>
                 <td className="p-3 text-gray-600">{v.acquirer}</td>
-                <td className="p-3 text-center" style={{ fontFamily: "'Bodoni MT', Didot, serif" }}>
-                  {v.preAcquisitionOAIS}
+                <td className="p-3 text-gray-600">{v.acquisitionDate}</td>
+                <td className="p-3 text-right">
+                  {typeof v.dealValue === 'number' ? v.dealValue.toLocaleString() : 'Undisclosed'}
                 </td>
-                <td className="p-3 text-center">
-                  {v.preAcquisitionPredictions.expectedScaling}×
-                </td>
-                <td className="p-3 text-center">
-                  {v.postAcquisitionReality.actualScaling 
-                    ? `${v.postAcquisitionReality.actualScaling}×` 
-                    : <ConfidenceLevelIndicator level="assumption" label="UNKNOWN" size="sm" />}
-                </td>
-                <td className="p-3 text-center">
-                  <span className={`px-2 py-1 rounded text-xs ${getAccuracyColor(v.predictionAccuracy)}`}>
-                    {v.predictionAccuracy.toUpperCase()}
-                  </span>
-                </td>
+                <td className="p-3 text-gray-600 text-xs">{v.source}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      {/* Detailed Validations */}
       <div className="space-y-4">
-        {filteredData.map((v, i) => (
-          <div key={i} className="bg-white border border-gray-200 rounded-lg p-6">
-            <div className="flex items-start justify-between mb-4">
+        {filteredData.map((v) => (
+          <div
+            key={`detail-${v.company}-${v.acquisitionDate}`}
+            className="bg-white border border-gray-200 rounded-lg p-6"
+          >
+            <h4 className="font-medium text-lg" style={{ fontFamily: "'Bodoni MT', Didot, serif" }}>
+              {v.company} → {v.acquirer}
+            </h4>
+            <p className="text-sm text-gray-500 mt-1">Announced: {v.acquisitionDate}</p>
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
-                <h4 className="font-medium text-lg" style={{ fontFamily: "'Bodoni MT', Didot, serif" }}>
-                  {v.company} → {v.acquirer}
-                </h4>
-                <p className="text-sm text-gray-500">Acquired: {v.acquisitionDate}</p>
+                <span className="text-gray-500">Deal value: </span>
+                <span className="font-medium">
+                  {typeof v.dealValue === 'number'
+                    ? `$${v.dealValue.toLocaleString()}M`
+                    : 'Not disclosed'}
+                </span>
+                {v.dealValueNote ? (
+                  <p className="text-xs text-gray-500 mt-1">{v.dealValueNote}</p>
+                ) : null}
               </div>
-              <span className={`px-3 py-1 rounded text-xs font-medium ${getAccuracyColor(v.predictionAccuracy)}`}>
-                {v.predictionAccuracy.toUpperCase()}
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {/* Pre-Acquisition Predictions */}
-              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                <h5 className="text-xs uppercase tracking-wider text-blue-700 mb-3" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
-                  Pre-Acquisition Predictions
-                </h5>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">OAIS Score:</span>
-                    <span className="font-medium">{v.preAcquisitionOAIS}/10</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Expected Scaling:</span>
-                    <span className="font-medium">{v.preAcquisitionPredictions.expectedScaling}×</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Expected Volume:</span>
-                    <span className="font-medium">{v.preAcquisitionPredictions.expectedPatientVolume}M</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Product:</span>
-                    <span className="font-medium capitalize">{v.preAcquisitionPredictions.productContinuation}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Post-Acquisition Reality */}
-              <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                <h5 className="text-xs uppercase tracking-wider text-purple-700 mb-3" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
-                  Post-Acquisition Reality
-                </h5>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Actual Scaling:</span>
-                    <span className="font-medium">
-                      {v.postAcquisitionReality.actualScaling ? `${v.postAcquisitionReality.actualScaling}×` : 'Undisclosed'}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Disclosed Volume:</span>
-                    <span className="font-medium">
-                      {v.postAcquisitionReality.disclosedPatientVolume ? `${v.postAcquisitionReality.disclosedPatientVolume}M` : 'Undisclosed'}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Status:</span>
-                    <span className="font-medium capitalize">{v.postAcquisitionReality.actualProductStatus}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Outcomes Study:</span>
-                    <span className="font-medium">
-                      {v.postAcquisitionReality.outcomesStudyPublished === null 
-                        ? 'Unknown' 
-                        : v.postAcquisitionReality.outcomesStudyPublished ? 'Published' : 'Not published'}
-                    </span>
-                  </div>
-                </div>
+              <div>
+                <span className="text-gray-500">Source: </span>
+                <span>{v.source}</span>
               </div>
             </div>
-
-            <div className="mt-4 p-3 bg-gray-50 rounded text-sm text-gray-700">
-              <strong>Calibration Note:</strong> {v.notes}
-            </div>
+            <p className="mt-4 text-sm text-gray-700">{v.strategicRationale}</p>
           </div>
         ))}
-      </div>
-
-      {/* Model Calibration Summary */}
-      <div className="bg-gradient-to-r from-[#E8B4B8] via-[#B8A9C9] to-[#4A5D8A] p-6 rounded-lg text-white">
-        <h4 className="font-medium mb-3" style={{ fontFamily: "'Arial Narrow', sans-serif", textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-          Model Calibration Summary
-        </h4>
-        <div className="space-y-2 text-sm">
-          <p>
-            <strong>Track Record:</strong> {accurateCount}/{knownCount} predictions accurate ({accuracyRate.toFixed(0)}% accuracy rate on cases with available data).
-          </p>
-          <p>
-            <strong>Data Limitation:</strong> Only {dataAvailabilityRate.toFixed(0)}% of acquisitions have post-acquisition public data available.
-          </p>
-          <p>
-            <strong>Lesson Learned:</strong> Scaling predictions tend to be overestimated when based on small acquirer samples. 
-            Need to incorporate market conditions and acquirer maturity into model.
-          </p>
-          <p className="mt-3 pt-3 border-t border-white/30">
-            <strong>Future Calibration:</strong> As more acquisitions complete and disclose metrics, 
-            we&apos;ll update the model weights to improve prediction accuracy. Current model should be 
-            considered exploratory until validated against more outcomes.
-          </p>
-        </div>
       </div>
     </motion.div>
   );

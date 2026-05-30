@@ -1,0 +1,8 @@
+status,target_name,acquirer_name,acquirer_ticker,announced_date,closed_date,deal_type,deal_value_millions,deal_value_note,primary_source_url,secondary_source_url,strategic_rationale,inclusion_notes,reviewed_by,reviewed_at
+pending,,,,,,Acquisition,,,,,,,,
+# status: pending | approved | rejected | merged
+# deal_type: Acquisition | Strategic Investment | Partnership
+# deal_value_millions: leave empty if undisclosed; always fill deal_value_note when empty
+# primary_source_url: SEC filing or press release (required before merge)
+# secondary_source_url: independent corroboration (required before merge)
+# merged rows are copied into src/data/dataset.verified.json by a human reviewer — never auto-imported

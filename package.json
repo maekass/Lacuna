@@ -9,6 +9,8 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
+    "validate:dataset": "tsx scripts/validate-dataset.ts",
+    "sec:scan": "tsx scripts/sec-scan-acquirers.ts",
     "db:migrate": "tsx scripts/migrate.ts",
     "db:import": "tsx scripts/import-verified-json.ts"
   },

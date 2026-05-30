@@ -42,3 +42,7 @@ next-env.d.ts
 .cursor/*
 !.cursor/rules/
 !.cursor/rules/**
+
+# staging outputs (templates in staging/*.template.csv are tracked)
+staging/deals_candidates.csv
+staging/sec_candidates.csv

@@ -34,7 +34,7 @@ describe('loadVerifiedDatasetFromDb', () => {
     const { loadVerifiedDatasetFromDb } = await import('@/lib/data/loadVerifiedDatasetFromDb');
     const dataset = await loadVerifiedDatasetFromDb();
 
-    expect(dataset.companies[0].name).toBe('Alpha Health');
+    expect(dataset.companies[0].name).toBe('Modern Fertility');
     expect(mockQuery).toHaveBeenCalledTimes(4);
   });
 
