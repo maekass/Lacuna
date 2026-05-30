@@ -7,7 +7,6 @@
 
 'use client';
 
-import React from 'react';
 
 export type ConfidenceLevel = 'measured' | 'proxy' | 'assumption';
 

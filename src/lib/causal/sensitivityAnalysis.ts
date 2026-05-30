@@ -223,7 +223,7 @@ Sensitivity Analysis Summary:
  * Generate explicit transparency statement about assumptions
  */
 function generateTransparencyStatement(
-  config: SensitivityConfig,
+  _config: SensitivityConfig,
   oster: OsterDeltaResult,
   rotnitzky: RotnitzkyBounds
 ): string {
@@ -252,7 +252,7 @@ function generateTransparencyStatement(
  */
 function generateRecommendations(
   oster: OsterDeltaResult,
-  rotnitzky: RotnitzkyBounds
+  _rotnitzky: RotnitzkyBounds
 ): string[] {
   const recommendations: string[] = [];
 

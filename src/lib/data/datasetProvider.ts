@@ -2,13 +2,14 @@ import type { DataMode, VerifiedDataset } from './datasetTypes';
 
 // Static dataset is always available (demo never breaks).
 import staticVerifiedDataset from '@/data/dataset.verified.json';
+import process from "node:process";
 
 function getMode(): DataMode {
   const raw = process.env.LACUNA_DATA_MODE;
   return raw === 'db' ? 'db' : 'static';
 }
 
-async function getFromDb(): Promise<VerifiedDataset> {
+function getFromDb(): VerifiedDataset {
   /**
    * Placeholder for DB-backed mode.
    *
@@ -22,9 +23,9 @@ async function getFromDb(): Promise<VerifiedDataset> {
   return staticVerifiedDataset as VerifiedDataset;
 }
 
-export async function getVerifiedDataset(): Promise<VerifiedDataset> {
+export function getVerifiedDataset(): Promise<VerifiedDataset> {
   const mode = getMode();
-  if (mode === 'db') return getFromDb();
-  return staticVerifiedDataset as VerifiedDataset;
+  if (mode === 'db') return Promise.resolve(getFromDb());
+  return Promise.resolve(staticVerifiedDataset as VerifiedDataset);
 }
 

@@ -6,7 +6,7 @@
 
 'use client';
 
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useDataCertification, generateVerificationBadge } from '@/lib/validation/dataCertification';
 import { verifiedCompanies } from '@/data/verifiedData';
