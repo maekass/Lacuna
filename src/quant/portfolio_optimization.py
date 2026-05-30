@@ -1,6 +1,13 @@
+# Copyright (c) 2026 MAYA KASS, MPH - UN GOODWILL AMBASSADOR
+# Licensed under the Business Source License 1.1
+# See LICENSE file for full terms
+# Change Date: 2028-05-27 (becomes Apache 2.0)
+
 """
 Sophisticated Portfolio Optimization Module
 Modern Portfolio Theory with Black-Litterman and Machine Learning Enhancements
+
+LEGAL DISCLAIMER: For educational and research purposes only. Not investment advice.
 """
 
 import numpy as np
