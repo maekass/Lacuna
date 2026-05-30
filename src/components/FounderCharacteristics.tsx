@@ -131,8 +131,6 @@ export default function FounderCharacteristics({ companies }: FounderCharacteris
     };
   }, [womenLed, menLed]);
 
-  const maxBarWidth = 200;
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

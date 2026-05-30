@@ -376,8 +376,6 @@ export function analyzeMarketStructure(
   
   // For each company, find which acquirers could have plausibly bought it
   const contestableTargets: ContestableTarget[] = companies.map(company => {
-    const actualBuyer = acquisitions.find(a => a.companyId === company.id);
-    
     const potentialBuyers: ContestableTarget['potentialBuyers'] = [];
     
     acquirers.forEach(acquirer => {

@@ -26,7 +26,6 @@ import {
   fishersExactTest,
   bonferroniCorrection,
   benjaminiHochbergCorrection,
-  logisticRegression,
   powerAnalysis,
   wilsonConfidenceInterval
 } from '@/lib/fairness/statisticalMethods';
@@ -248,7 +247,7 @@ export default function FairnessAuditV2() {
                 {' '}[95% Newcombe CI: {(parityAnalysis.difference.lower * 100).toFixed(0)}pp, {(parityAnalysis.difference.upper * 100).toFixed(0)}pp]
               </li>
               <li>
-                • <strong>Fisher's exact test:</strong> p = {parityAnalysis.fisher.pValue.toFixed(3)} ({parityAnalysis.fisher.interpretation})
+                • <strong>Fisher&apos;s exact test:</strong> p = {parityAnalysis.fisher.pValue.toFixed(3)} ({parityAnalysis.fisher.interpretation})
               </li>
               <li>
                 • <strong>Bonferroni-corrected α:</strong> {parityAnalysis.bonferroni.adjustedAlpha.toFixed(3)} 
@@ -269,7 +268,7 @@ export default function FairnessAuditV2() {
             <p className="text-sm leading-relaxed">
               The observed difference of {(parityAnalysis.difference.difference * 100).toFixed(0)}pp 
               is <strong>{parityAnalysis.fisher.pValue < 0.05 ? '' : 'NOT '}statistically significant</strong> 
-              (Fisher's exact p={parityAnalysis.fisher.pValue.toFixed(3)}). The confidence interval 
+              (Fisher&apos;s exact p={parityAnalysis.fisher.pValue.toFixed(3)}). The confidence interval 
               [{(parityAnalysis.difference.lower * 100).toFixed(0)}pp, {(parityAnalysis.difference.upper * 100).toFixed(0)}pp] 
               {parityAnalysis.difference.lower * parityAnalysis.difference.upper > 0 
                 ? ' excludes zero' 
@@ -343,7 +342,7 @@ export default function FairnessAuditV2() {
 
               {/* Fisher's Exact */}
               <div className="bg-gray-50 p-4 rounded-lg">
-                <h5 className="font-medium text-sm mb-2">Fisher's Exact Test (preferred for small samples)</h5>
+                <h5 className="font-medium text-sm mb-2">Fisher&apos;s Exact Test (preferred for small samples)</h5>
                 <div className="text-sm">
                   <div>p-value: <strong>{parityAnalysis.fisher.pValue.toFixed(4)}</strong></div>
                   <div>Odds ratio: <strong>{parityAnalysis.fisher.oddsRatio.toFixed(2)}</strong></div>

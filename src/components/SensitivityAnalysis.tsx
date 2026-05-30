@@ -10,12 +10,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  calculateOsterDelta,
-  calculateRotnitzkyBounds,
   generateSensitivityReport,
   scenarioBounds,
   type SensitivityConfig,
-  type SensitivityReport
 } from '@/lib/causal/sensitivityAnalysis';
 
 interface AnalysisInputs {

@@ -131,7 +131,7 @@ export function calculateDemographicParity(
   
   // Power analysis
   const n = validCompanies.length;
-  const observedPower = calculateStatisticalPower(parityDifference, se, n);
+  const observedPower = calculateStatisticalPower(parityDifference, se);
   const minimumDetectableDifference = calculateMinimumDetectableDifference(se);
   
   // Sensitivity analysis for ambiguous names
@@ -139,13 +139,6 @@ export function calculateDemographicParity(
     c.founders.filter(f => f.inferredGender === 'ambiguous')
   );
   
-  // Best case: All ambiguous = women
-  const womenFoundedIfAmbiguousFemale = validCompanies.filter(c =>
-    c.founders.some(f => 
-      (f.inferredGender === 'female' && f.confidence >= GENDER_INFERENCE_QUALITY.highConfidenceThreshold) ||
-      f.inferredGender === 'ambiguous'
-    )
-  );
   const ifAllAmbiguousWomenRate = acquired.filter(c =>
     c.founders.some(f => f.inferredGender === 'female' || f.inferredGender === 'ambiguous')
   ).length / Math.max(1, acquired.length);
@@ -193,8 +186,7 @@ export function calculateDemographicParity(
  */
 function calculateStatisticalPower(
   effectSize: number,
-  standardError: number,
-  sampleSize: number
+  standardError: number
 ): number {
   if (standardError === 0) return 0;
   

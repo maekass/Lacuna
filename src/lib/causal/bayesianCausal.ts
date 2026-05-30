@@ -19,8 +19,6 @@
  * - Wager & Athey (2018): Causal forests (but noting limitations)
  */
 
-import * as tf from '@tensorflow/tfjs';
-
 export interface BayesianCausalConfig {
   nObservations: number;
   nTreatments: number;
