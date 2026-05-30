@@ -1,18 +1,6 @@
 <div align="center">
 
-# Michael Kaess
-
-### Machine Learning Engineer • Full-Stack Developer • Biotech Analytics
-
-*Building AI-powered systems for clinical trial intelligence and impact investing*
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/yourprofile)
-[![Email](https://img.shields.io/badge/Email-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:your.email@example.com)
-[![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=flat-square&logo=About.me&logoColor=white)](https://yourportfolio.com)
-
-</div>
-
----
+# MAE KASS
 
 ## What I Build
 
@@ -140,22 +128,6 @@ Data Quality & Verification
 ├── Audit trails
 └── Provenance tracking
 ```
-
----
-
-## GitHub Stats
-
-<div align="center">
-
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=maekass&show_icons=true&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true)
-
-![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=maekass&theme=tokyonight&hide_border=true)
-
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=maekass&layout=compact&theme=tokyonight&hide_border=true&langs_count=6)
-
-</div>
-
----
 
 ## What I'm Learning
 

@@ -32,6 +32,22 @@ This platform is designed for academic research and learning. It is **NOT**:
 
 ---
 
+## License
+
+**Business Source License 1.1 (BSL 1.1)**
+
+Copyright (c) 2026 MAYA KASS, MPH - UN GOODWILL AMBASSADOR 💕💚
+
+This software is licensed under the Business Source License 1.1. You may use this software for non-production purposes without charge. For production use, please contact the Licensor for a commercial license.
+
+- **Release Date:** 2026-05-27
+- **Change Date:** 2028-05-27 (becomes Apache License 2.0)
+- **Contact:** licensing@mayakass.com
+
+See [LICENSE](LICENSE) file for full terms.
+
+---
+
 > **Portfolio Highlight:** Full-stack ML platform analyzing 6,819 clinical trials with 78% prediction accuracy, 30+ language AI translation, and institutional-grade data verification. Built with Python, Scikit-learn, XGBoost, and Streamlit.
 
 **Key Achievements:**

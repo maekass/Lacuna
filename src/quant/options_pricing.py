@@ -80,28 +80,31 @@ class BlackScholesModel:
         Returns:
             Dictionary of Greeks: delta, gamma, theta, vega, rho
         """
+        # Minimum threshold to prevent division by zero and numerical instability
+        T_effective = max(T, 1e-6)
+        
         if T <= 0:
             return {'delta': 1.0 if S > K else 0.0, 'gamma': 0, 'theta': 0, 'vega': 0, 'rho': 0}
         
-        d1 = cls.d1(S, K, T, r, sigma)
-        d2 = cls.d2(S, K, T, r, sigma)
+        d1 = cls.d1(S, K, T_effective, r, sigma)
+        d2 = cls.d2(S, K, T_effective, r, sigma)
         
         # Delta
         delta = stats.norm.cdf(d1)
         
         # Gamma (same for calls and puts)
-        gamma = stats.norm.pdf(d1) / (S * sigma * np.sqrt(T))
+        gamma = stats.norm.pdf(d1) / (S * sigma * np.sqrt(T_effective))
         
         # Theta
-        theta = -(S * stats.norm.pdf(d1) * sigma) / (2 * np.sqrt(T)) \
-                - r * K * np.exp(-r * T) * stats.norm.cdf(d2)
+        theta = -(S * stats.norm.pdf(d1) * sigma) / (2 * np.sqrt(T_effective)) \
+                - r * K * np.exp(-r * T_effective) * stats.norm.cdf(d2)
         theta = theta / 365  # Daily theta
         
         # Vega (same for calls and puts)
-        vega = S * stats.norm.pdf(d1) * np.sqrt(T) / 100  # Per 1% change
+        vega = S * stats.norm.pdf(d1) * np.sqrt(T_effective) / 100  # Per 1% change
         
         # Rho
-        rho = K * T * np.exp(-r * T) * stats.norm.cdf(d2) / 100  # Per 1% rate change
+        rho = K * T_effective * np.exp(-r * T_effective) * stats.norm.cdf(d2) / 100  # Per 1% rate change
         
         return {
             'delta': delta,

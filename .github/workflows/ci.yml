@@ -41,6 +41,9 @@ jobs:
             src/quant_framework/quant_artifacts.py \
             src/quant_framework/walk_forward.py \
             src/quant \
+            src/analytics \
+            src/advanced_python \
+            src/utils \
             src/data_validation \
             scripts/validate_data.py
       - name: Unit tests (parsers, schemas, ontology, validation)

@@ -47,7 +47,8 @@ class ValueAtRisk:
     
     def monte_carlo_var(self, returns: pd.Series, 
                        n_simulations: int = 10000,
-                       holding_period: int = 1) -> Tuple[float, float]:
+                       holding_period: int = 1,
+                       random_state: Optional[int] = None) -> Tuple[float, float]:
         """
         Calculate VaR using Monte Carlo simulation
         
@@ -55,10 +56,14 @@ class ValueAtRisk:
             returns: Series of historical returns
             n_simulations: Number of Monte Carlo simulations
             holding_period: Days to hold position
+            random_state: Random seed for reproducibility
             
         Returns:
             Tuple of (VaR, standard error of VaR)
         """
+        if random_state is not None:
+            np.random.seed(random_state)
+        
         mean = returns.mean()
         std = returns.std()
         
@@ -68,11 +73,17 @@ class ValueAtRisk:
         # Calculate VaR
         var = np.percentile(simulated_returns, (1 - self.confidence_level) * 100)
         
-        # Calculate standard error using bootstrap
+        # Calculate standard error using bootstrap on original historical returns
+        # (not on simulated returns) for valid statistical inference
         bootstrap_vars = []
+        n_obs = len(returns)
         for _ in range(1000):
-            sample = np.random.choice(simulated_returns, size=len(simulated_returns), replace=True)
-            bootstrap_vars.append(np.percentile(sample, (1 - self.confidence_level) * 100))
+            sample = np.random.choice(returns, size=n_obs, replace=True)
+            # Simulate from bootstrap sample
+            sample_mean = sample.mean()
+            sample_std = sample.std()
+            sample_sim = np.random.normal(sample_mean, sample_std, n_simulations)
+            bootstrap_vars.append(np.percentile(sample_sim, (1 - self.confidence_level) * 100))
         
         std_error = np.std(bootstrap_vars)
         
@@ -90,7 +101,10 @@ class ValueAtRisk:
             CVaR as percentage
         """
         var = self.historical_var(returns, holding_period)
-        return returns[returns <= var].mean()
+        tail_returns = returns[returns <= var]
+        if len(tail_returns) == 0:
+            return var  # Fallback to VaR if no tail observations
+        return tail_returns.mean()
 
 
 class RiskMetrics:

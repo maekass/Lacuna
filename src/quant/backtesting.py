@@ -37,6 +37,7 @@ class Position:
     quantity: float
     avg_entry_price: float
     current_price: float
+    is_short: bool = False
     
     @property
     def market_value(self) -> float:
@@ -44,12 +45,17 @@ class Position:
     
     @property
     def unrealized_pnl(self) -> float:
+        """Calculate unrealized PnL. For shorts, profit when current < entry."""
+        if self.is_short:
+            return self.quantity * (self.avg_entry_price - self.current_price)
         return self.quantity * (self.current_price - self.avg_entry_price)
     
     @property
     def return_pct(self) -> float:
         if self.avg_entry_price == 0:
             return 0
+        if self.is_short:
+            return (self.avg_entry_price - self.current_price) / self.avg_entry_price
         return (self.current_price - self.avg_entry_price) / self.avg_entry_price
 
 

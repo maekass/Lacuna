@@ -78,7 +78,9 @@ class ModernPortfolioTheory:
                     portfolio[f'weight_{asset}'] = weights[i]
                 
                 portfolios.append(portfolio)
-            except:
+            except (ValueError, np.linalg.LinAlgError, RuntimeError) as e:
+                import warnings
+                warnings.warn(f"Optimization failed for target {target}: {e}")
                 continue
         
         return pd.DataFrame(portfolios)
@@ -206,7 +208,11 @@ class BlackLittermanModel:
     
     def _implied_equilibrium_returns(self) -> pd.Series:
         """Calculate implied equilibrium returns (Pi)"""
-        return self.risk_aversion * np.dot(self.cov_matrix, self.market_weights)
+        # Ensure cov_matrix and market_weights have aligned indices
+        cov = self.cov_matrix.values if isinstance(self.cov_matrix, pd.DataFrame) else self.cov_matrix
+        weights = self.market_weights.values if isinstance(self.market_weights, pd.Series) else self.market_weights
+        pi_values = self.risk_aversion * np.dot(cov, weights)
+        return pd.Series(pi_values, index=self.market_caps.index)
     
     def blend_views(self, 
                    views: pd.Series,
@@ -228,18 +234,31 @@ class BlackLittermanModel:
         Omega = np.diag(view_confidences * (1 - view_confidences))
         
         # Calculate posterior returns
-        tau_sigma = self.tau * self.cov_matrix.values
+        cov_matrix = self.cov_matrix.values if isinstance(self.cov_matrix, pd.DataFrame) else self.cov_matrix
+        tau_sigma = self.tau * cov_matrix
+        
+        # Ensure views and pi are aligned and have same length as market_caps
+        n_assets = len(self.market_caps)
+        pi_values = self.pi.values if isinstance(self.pi, pd.Series) else self.pi
+        views_values = views.values if isinstance(views, pd.Series) else views
+        
+        # Ensure 1D arrays of correct length
+        pi_values = np.asarray(pi_values).reshape(-1)[:n_assets]
+        views_values = np.asarray(views_values).reshape(-1)[:n_assets]
+        
+        # Pad if necessary
+        if len(pi_values) < n_assets:
+            pi_values = np.pad(pi_values, (0, n_assets - len(pi_values)))
+        if len(views_values) < n_assets:
+            views_values = np.pad(views_values, (0, n_assets - len(views_values)))
         
         try:
-            M = np.linalg.inv(
-                np.linalg.inv(tau_sigma) + 
-                P.T @ np.linalg.inv(Omega) @ P
-            )
+            inv_tau_sigma = np.linalg.inv(tau_sigma)
+            inv_omega = np.linalg.inv(Omega)
             
-            posterior = M @ (
-                np.linalg.inv(tau_sigma) @ self.pi.values + 
-                P.T @ np.linalg.inv(Omega) @ views.values
-            )
+            M = np.linalg.inv(inv_tau_sigma + P.T @ inv_omega @ P)
+            
+            posterior = M @ (inv_tau_sigma @ pi_values + P.T @ inv_omega @ views_values)
             
             return pd.Series(posterior, index=self.market_caps.index)
         except np.linalg.LinAlgError:

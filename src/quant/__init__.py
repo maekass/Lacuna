@@ -1,3 +1,8 @@
+# Copyright (c) 2026 MAYA KASS, MPH - UN GOODWILL AMBASSADOR
+# Licensed under the Business Source License 1.1
+# See LICENSE file for full terms
+# Change Date: 2028-05-27 (becomes Apache 2.0)
+
 """
 Quantitative Finance Module
 
@@ -7,6 +12,9 @@ This module provides institutional-grade quantitative finance tools including:
 - Options pricing (Black-Scholes, Binomial, Monte Carlo)
 - Alternative data (NLP sentiment, patent intelligence, regulatory analysis)
 - Backtesting (event-driven engine, walk-forward optimization)
+
+LEGAL DISCLAIMER: This software is for educational and research purposes only.
+Not investment advice. See LICENSE for full terms.
 """
 
 __version__ = "1.0.0"

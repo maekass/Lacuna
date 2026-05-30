@@ -1,0 +1,70 @@
+================================================================================
+BUSINESS SOURCE LICENSE 1.1 - NOTICE
+================================================================================
+
+Biotech Investment Analytics Platform
+Copyright (c) 2026 MAYA KASS, MPH - UN GOODWILL AMBASSADOR 💕💚
+
+This software is licensed under the Business Source License 1.1 (BSL 1.1).
+
+PERMITTED USE:
+- Non-production use (development, testing, research)
+- Educational and academic purposes
+- Personal learning and evaluation
+
+REQUIRES COMMERCIAL LICENSE:
+- Production deployment
+- Commercial trading or investment decisions
+- Use as part of a paid service or product
+- Any revenue-generating activity
+
+KEY DATES:
+- Release Date: 2026-05-27
+- Change Date: 2028-05-27 (software becomes Apache 2.0)
+
+CONTACT FOR LICENSING:
+Email: licensing@mayakass.com
+
+================================================================================
+DATA PROVENANCE
+================================================================================
+
+This platform aggregates data from the following sources:
+
+1. ClinicalTrials.gov - Public domain (NIH/National Library of Medicine)
+2. Orphanet - CC BY 4.0 (INSERM/Orphanet)
+3. FDA openFDA - Public domain (U.S. Food & Drug Administration)
+4. CDC NNDSS - Public domain (Centers for Disease Control)
+5. Yahoo Finance - Public API (delayed market data)
+
+All data used is publicly available and contains no patient-level information.
+
+================================================================================
+LEGAL DISCLAIMERS
+================================================================================
+
+INVESTMENT DISCLAIMER:
+This software is for informational and educational purposes only and does NOT
+constitute investment advice. Past performance is not indicative of future
+results. Users should consult with qualified financial advisors before making
+investment decisions. The author(s) are not registered investment advisors.
+
+MEDICAL DISCLAIMER:
+This software does not provide medical advice. Disease information is for
+educational purposes only. Always consult healthcare professionals for medical
+decisions.
+
+NO WARRANTY:
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+LIMITATION OF LIABILITY:
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+================================================================================
+See LICENSE file for complete terms and conditions.
+================================================================================

@@ -1,6 +1,14 @@
+# Copyright (c) 2026 MAYA KASS, MPH - UN GOODWILL AMBASSADOR
+# Licensed under the Business Source License 1.1
+# See LICENSE file for full terms
+# Change Date: 2028-05-27 (becomes Apache 2.0)
+
 """
 Immunology Investment Intelligence Dashboard
 Interactive Streamlit dashboard (run from project root).
+
+LEGAL DISCLAIMER: This software is for educational and research purposes only.
+Not investment advice. Not medical advice. See LICENSE for full terms.
 """
 
 import html
