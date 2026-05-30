@@ -1,4 +1,19 @@
-import type { VerifiedDataset } from './datasetTypes';
+/** Minimal shape for coverage stats — works with raw JSON or derived views. */
+export interface CoverageDatasetInput {
+  companies: ReadonlyArray<{
+    id: string;
+    sector: string;
+    lastKnownValuation?: number;
+  }>;
+  acquisitions: ReadonlyArray<{
+    targetId: string;
+    acquirerId: string;
+    announcedDate: string;
+    dealValue?: number;
+    dealValueNote?: string;
+  }>;
+  acquirers: ReadonlyArray<{ id: string }>;
+}
 
 export interface SectorDealCount {
   sector: string;
@@ -40,7 +55,7 @@ function tierFromN(n: number, thresholds: { insufficient: number; low: number; m
   return 'high';
 }
 
-export function computeDisclosureStats(dataset: VerifiedDataset): DisclosureStats {
+export function computeDisclosureStats(dataset: CoverageDatasetInput): DisclosureStats {
   const { companies, acquisitions } = dataset;
   let dealsDisclosed = 0;
   let dealsWithValueNote = 0;
@@ -62,7 +77,7 @@ export function computeDisclosureStats(dataset: VerifiedDataset): DisclosureStat
   };
 }
 
-export function computeSectorDealCounts(dataset: VerifiedDataset): SectorDealCount[] {
+export function computeSectorDealCounts(dataset: CoverageDatasetInput): SectorDealCount[] {
   const companySector = new Map(dataset.companies.map((c) => [c.id, c.sector]));
   const sectors = new Set(dataset.companies.map((c) => c.sector));
 
@@ -76,7 +91,7 @@ export function computeSectorDealCounts(dataset: VerifiedDataset): SectorDealCou
     });
 }
 
-export function computeYearDealCounts(dataset: VerifiedDataset): YearDealCount[] {
+export function computeYearDealCounts(dataset: CoverageDatasetInput): YearDealCount[] {
   const byYear = new Map<number, { count: number; disclosedPrices: number }>();
   for (const d of dataset.acquisitions) {
     const year = new Date(d.announcedDate).getFullYear();
@@ -90,7 +105,7 @@ export function computeYearDealCounts(dataset: VerifiedDataset): YearDealCount[]
     .map(([year, row]) => ({ year, ...row }));
 }
 
-export function computeEffectiveNBadges(dataset: VerifiedDataset): EffectiveNBadges {
+export function computeEffectiveNBadges(dataset: CoverageDatasetInput): EffectiveNBadges {
   const dealCount = dataset.acquisitions.length;
   const disclosed = dataset.acquisitions.filter((d) => typeof d.dealValue === 'number').length;
   const acquirerIds = new Set(dataset.acquisitions.map((d) => d.acquirerId));

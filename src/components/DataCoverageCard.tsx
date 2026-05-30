@@ -44,18 +44,31 @@ function EffectiveNBadge({
 }
 
 export default function DataCoverageCard() {
-  const dataset = useVerifiedDataset();
-  const { dataProvenance, verifiedCompanies, verifiedAcquisitions } = dataset;
+  const {
+    dataProvenance,
+    verifiedCompanies,
+    verifiedAcquisitions,
+    verifiedAcquirers,
+  } = useVerifiedDataset();
   const { disclosed, undisclosed } = countDisclosedDealValues(verifiedAcquisitions);
   const lastUpdated = dataProvenance.lastUpdated || '—';
 
-  const stats = useMemo(
-    () => computeDisclosureStats(dataset),
-    [dataset],
+  const coverageInput = useMemo(
+    () => ({
+      companies: verifiedCompanies,
+      acquisitions: verifiedAcquisitions,
+      acquirers: verifiedAcquirers,
+    }),
+    [verifiedCompanies, verifiedAcquisitions, verifiedAcquirers],
   );
-  const sectorCounts = useMemo(() => computeSectorDealCounts(dataset), [dataset]);
-  const yearCounts = useMemo(() => computeYearDealCounts(dataset), [dataset]);
-  const effectiveN = useMemo(() => computeEffectiveNBadges(dataset), [dataset]);
+
+  const stats = useMemo(
+    () => computeDisclosureStats(coverageInput),
+    [coverageInput],
+  );
+  const sectorCounts = useMemo(() => computeSectorDealCounts(coverageInput), [coverageInput]);
+  const yearCounts = useMemo(() => computeYearDealCounts(coverageInput), [coverageInput]);
+  const effectiveN = useMemo(() => computeEffectiveNBadges(coverageInput), [coverageInput]);
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
