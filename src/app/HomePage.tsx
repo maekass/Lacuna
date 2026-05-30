@@ -9,7 +9,6 @@ import CompanySimilarity from '@/components/CompanySimilarity';
 import ClusteringAnalysis from '@/components/ClusteringAnalysis';
 import WearablesTracker from '@/components/WearablesTracker';
 import HealthEquityDashboard from '@/components/HealthEquityDashboard';
-import { HealthEquityRoadmap } from '@/components/HealthEquityDashboard';
 import SensitivityAnalysis from '@/components/SensitivityAnalysis';
 import BayesianCausalAnalysis from '@/components/BayesianCausalAnalysis';
 import CausalDAG from '@/components/CausalDAG';
@@ -64,6 +63,7 @@ export default function HomePage() {
             <a href="#network" className="hover:text-lacuna-plum transition-colors">Network</a>
             <a href="#matrix" className="hover:text-lacuna-plum transition-colors">Matrix</a>
             <a href="#impact-assessment" className="hover:text-lacuna-plum transition-colors">Impact</a>
+            <a href="#health-equity" className="hover:text-lacuna-plum transition-colors">Equity</a>
             <a href="#fairness-audit" className="hover:text-lacuna-plum transition-colors">Fairness</a>
             <a href="#network-analysis" className="hover:text-lacuna-plum transition-colors">Analysis</a>
             <a href="#causal-engine" className="hover:text-lacuna-plum transition-colors">Causal</a>
@@ -225,9 +225,6 @@ export default function HomePage() {
           className="mb-16"
         >
           <HealthEquityDashboard />
-          <div className="mt-8">
-            <HealthEquityRoadmap />
-          </div>
         </motion.section>
 
         {/* Health Impact Assessment - OAIS Framework */}

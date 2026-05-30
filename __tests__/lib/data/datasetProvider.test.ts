@@ -58,4 +58,11 @@ describe('getStaticVerifiedDataset', () => {
     const dataset = getStaticVerifiedDataset();
     expect(dataset.acquisitions.length).toBeGreaterThan(0);
   });
+
+  it('includes provenance disclaimer from verified JSON (edge)', async () => {
+    const { getStaticVerifiedDataset } = await import('@/lib/data/staticDataset');
+    const dataset = getStaticVerifiedDataset();
+    expect(dataset.provenance.lastUpdated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(dataset.provenance.disclaimer.length).toBeGreaterThan(10);
+  });
 });
