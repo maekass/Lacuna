@@ -42,7 +42,6 @@ This software is licensed under the Business Source License 1.1. You may use thi
 
 - **Release Date:** 2026-05-27
 - **Change Date:** 2028-05-27 (becomes Apache License 2.0)
-- **Contact:** licensing@mayakass.com
 
 See [LICENSE](LICENSE) file for full terms.
 
