@@ -1,0 +1,6 @@
+# Lacuna — see AGENTS.md for full conventions.
+
+Stack: Next.js 16, React 19, Tailwind v4, fetch, verified JSON dataset.
+Paths: src/app, src/components, src/lib, src/data (@/*).
+CI: deno lint must pass. No synthetic demo data. Roadmap: Postgres, live APIs, Jest.
+Commits: feat: / fix: / chore:
