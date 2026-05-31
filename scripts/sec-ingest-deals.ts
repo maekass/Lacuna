@@ -30,7 +30,7 @@ async function main() {
   }
   if (keywordClassified.length > 0 && aiClassified.length === 0) {
     console.log(
-      'Keyword-only classification (set AI_GATEWAY_API_KEY or OPENAI_API_KEY for AI path)',
+      'Keyword-only classification (enable Vercel AI Gateway or set OPENAI_API_KEY for AI path)',
     );
   }
 

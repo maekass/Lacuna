@@ -6,6 +6,7 @@ import {
   classifyDeal,
   classifyDealAsync,
   classifyDealKeywordOnly,
+  hasAiGatewayAuth,
   isAiClassificationAvailable,
   shouldAutoInsert,
   statusForConfidence,
@@ -78,12 +79,21 @@ describe('dealClassificationEngine', () => {
 
   it('isAiClassificationAvailable is false without API keys', () => {
     delete process.env.AI_GATEWAY_API_KEY;
+    delete process.env.VERCEL_OIDC_TOKEN;
     delete process.env.OPENAI_API_KEY;
     expect(isAiClassificationAvailable()).toBe(false);
+    expect(hasAiGatewayAuth()).toBe(false);
+  });
+
+  it('hasAiGatewayAuth is true with VERCEL_OIDC_TOKEN', () => {
+    vi.stubEnv('VERCEL_OIDC_TOKEN', 'oidc-test-token');
+    expect(hasAiGatewayAuth()).toBe(true);
+    expect(isAiClassificationAvailable()).toBe(true);
   });
 
   it('classifyDealAsync uses keyword path when no API keys (fallback)', async () => {
     delete process.env.AI_GATEWAY_API_KEY;
+    delete process.env.VERCEL_OIDC_TOKEN;
     delete process.env.OPENAI_API_KEY;
 
     const result = await classifyDealAsync({

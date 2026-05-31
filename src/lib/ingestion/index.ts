@@ -16,6 +16,7 @@ export {
   shouldAutoInsert,
   CLASSIFICATION_GATEWAY_MODEL,
   CLASSIFICATION_OPENAI_MODEL,
+  hasAiGatewayAuth,
   WOMENS_HEALTH_KEYWORDS,
   syncDealsToDatabase,
   upsertLacunaDeal,

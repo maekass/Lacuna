@@ -3,8 +3,9 @@
  * Medium+ confidence → eligible for DB insert; low → pending_review.
  *
  * Environment (optional — keyword-only fallback when unset):
- * - AI_GATEWAY_API_KEY — Vercel AI Gateway (preferred; model openai/gpt-5.4-mini)
- * - OPENAI_API_KEY — direct OpenAI via @ai-sdk/openai when gateway key absent
+ * - VERCEL_OIDC_TOKEN — Vercel AI Gateway via OIDC (default on Vercel; `vercel env pull`)
+ * - AI_GATEWAY_API_KEY — static gateway key (CI / non-Vercel)
+ * - OPENAI_API_KEY — direct OpenAI via @ai-sdk/openai when gateway auth absent
  * - SEC_EDGAR_USER_AGENT — required for SEC fetch paths, not classification itself
  */
 
@@ -187,26 +188,36 @@ export function classifyDeal(input: DealClassificationInput): DealClassification
   return classifyDealKeywordOnly(input);
 }
 
-/** True when an AI provider API key is configured. */
-export function isAiClassificationAvailable(): boolean {
+/** True when Vercel AI Gateway auth (OIDC or API key) is configured. */
+export function hasAiGatewayAuth(): boolean {
   return Boolean(
-    process.env.AI_GATEWAY_API_KEY?.trim() || process.env.OPENAI_API_KEY?.trim(),
+    process.env.AI_GATEWAY_API_KEY?.trim() || process.env.VERCEL_OIDC_TOKEN?.trim(),
   );
+}
+
+/** True when any AI classification path is configured (gateway or direct OpenAI). */
+export function isAiClassificationAvailable(): boolean {
+  return hasAiGatewayAuth() || Boolean(process.env.OPENAI_API_KEY?.trim());
 }
 
 function resolveClassificationModel(
   override?: LanguageModel,
-): { model: LanguageModel; modelId: string } | null {
+): { model: LanguageModel; modelId: string; viaGateway: boolean } | null {
   if (override) {
-    return { model: override, modelId: 'mock' };
+    return { model: override, modelId: 'mock', viaGateway: false };
   }
-  if (process.env.AI_GATEWAY_API_KEY?.trim()) {
-    return { model: CLASSIFICATION_GATEWAY_MODEL, modelId: CLASSIFICATION_GATEWAY_MODEL };
+  if (hasAiGatewayAuth()) {
+    return {
+      model: CLASSIFICATION_GATEWAY_MODEL,
+      modelId: CLASSIFICATION_GATEWAY_MODEL,
+      viaGateway: true,
+    };
   }
   if (process.env.OPENAI_API_KEY?.trim()) {
     return {
       model: openai(CLASSIFICATION_OPENAI_MODEL),
       modelId: CLASSIFICATION_OPENAI_MODEL,
+      viaGateway: false,
     };
   }
   return null;
@@ -250,6 +261,15 @@ export async function classifyDealAsync(
   try {
     const { output } = await generateText({
       model: resolved.model,
+      ...(resolved.viaGateway
+        ? {
+            providerOptions: {
+              gateway: {
+                tags: ['feature:sec-ingest', 'pipeline:deal-classification'],
+              },
+            },
+          }
+        : {}),
       output: Output.object({
         name: 'WomensHealthDealClassification',
         description: 'Women\'s health relevance of an SEC 8-K acquisition filing',

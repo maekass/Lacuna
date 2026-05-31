@@ -28,6 +28,22 @@ Legacy keyword scan (no Item 2.01 parse): `secEdgarClient.ts` + `npm run sec:sca
 | `SEC_HEALTHCARE_SIC_ONLY` | No | `true` to skip non-283x/384x SIC companies |
 | `PGSSLMODE` | No | Set `disable` for local Postgres |
 
+### AI classification (optional)
+
+Structured classification uses the [Vercel AI Gateway](https://vercel.com/docs/ai-gateway) when gateway auth is present; otherwise keyword-only fallback (no API keys required).
+
+| Variable | Required | Description |
+| --- | --- | --- |
+| `VERCEL_OIDC_TOKEN` | On Vercel / local dev | Auto-provisioned OIDC token — run `vercel link` and `vercel env pull .env.local` (refreshes ~every 24h locally) |
+| `AI_GATEWAY_API_KEY` | CI / non-Vercel | Static gateway key when OIDC is unavailable |
+| `OPENAI_API_KEY` | Fallback | Direct OpenAI via `@ai-sdk/openai` when no gateway auth |
+
+**Auth priority:** `AI_GATEWAY_API_KEY` → `VERCEL_OIDC_TOKEN` → `OPENAI_API_KEY` → keyword-only.
+
+**Model:** `openai/gpt-5.4-mini` (gateway slug) — cost-efficient classification; requests tagged `feature:sec-ingest` for usage attribution.
+
+Enable AI Gateway in the Vercel project settings before deploying the cron route.
+
 ## Database
 
 ```bash

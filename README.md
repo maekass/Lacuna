@@ -33,7 +33,7 @@ Lacuna maps the acquisition landscape across FemTech, digital health, and women'
 | **Framework & UI** | Next.js 16 (App Router), React 19, Tailwind CSS v4 |
 | **Visualization** | D3.js v7, Framer Motion |
 | **ML & statistics** | TensorFlow.js, simple-statistics, ml-matrix |
-| **AI (ingest)** | Vercel AI SDK, OpenAI provider, Zod |
+| **AI (ingest)** | Vercel AI SDK + AI Gateway (`openai/gpt-5.4-mini`), OIDC or `AI_GATEWAY_API_KEY`, Zod |
 | **Data** | Verified JSON (`dataset.verified.json`); optional PostgreSQL (`pg`, `LACUNA_DATA_MODE=db`) |
 | **HTTP & APIs** | Native `fetch`, Next.js Route Handlers, ClinicalTrials.gov API |
 | **Testing & quality** | Vitest, ESLint, Deno lint (CI) |
