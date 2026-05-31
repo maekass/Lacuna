@@ -20,6 +20,7 @@ import CompetitiveAnalysisDashboard from '@/components/CompetitiveAnalysisDashbo
 import TemporalValidation from '@/components/TemporalValidation';
 import CausalInferenceEngine from '@/components/CausalInferenceEngine';
 import DataCoverageCard from '@/components/DataCoverageCard';
+import SiteSectionNav from '@/components/SiteSectionNav';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 export default function HomePage() {
@@ -49,8 +50,8 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-lacuna-pink/15 via-background to-lacuna-lavender/20">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-lacuna-lavender/40 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
-          <a href="#top" className="flex items-center gap-3 group">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <a href="#top" className="flex items-center gap-3 group shrink-0">
             <div className="w-10 h-10 lacuna-gradient rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
               <span className="text-white font-bold text-lg">L</span>
             </div>
@@ -59,23 +60,7 @@ export default function HomePage() {
               <p className="text-xs text-lacuna-blue">M&amp;A Intelligence · Women&apos;s Health</p>
             </div>
           </a>
-          <nav className="hidden lg:flex items-center gap-5 text-sm text-lacuna-blue">
-            <a href="#network" className="hover:text-lacuna-plum transition-colors">Network</a>
-            <a href="#matrix" className="hover:text-lacuna-plum transition-colors">Matrix</a>
-            <a href="#impact-assessment" className="hover:text-lacuna-plum transition-colors">Impact</a>
-            <a href="#health-equity" className="hover:text-lacuna-plum transition-colors">Equity</a>
-            <a href="#fairness-audit" className="hover:text-lacuna-plum transition-colors">Fairness</a>
-            <a href="#network-analysis" className="hover:text-lacuna-plum transition-colors">Analysis</a>
-            <a href="#causal-engine" className="hover:text-lacuna-plum transition-colors">Causal</a>
-            <a
-              href="https://github.com/maekass/Lacuna"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-3 py-1 bg-lacuna-lavender/25 hover:bg-lacuna-lavender/40 rounded-full text-xs font-medium text-lacuna-plum transition-colors"
-            >
-              GitHub
-            </a>
-          </nav>
+          <SiteSectionNav />
         </div>
       </header>
 
@@ -125,6 +110,7 @@ export default function HomePage() {
 
         {/* Data Coverage */}
         <motion.section
+          id="data-coverage"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
@@ -222,8 +208,14 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.55 }}
-          className="mb-16"
+          className="mb-16 scroll-mt-24"
         >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Health equity context</h3>
+            <p className="text-lacuna-blue">
+              Cited epidemiology mapped to verified portfolio companies — filter, expand records, or export overlap.
+            </p>
+          </div>
           <HealthEquityDashboard />
         </motion.section>
 
