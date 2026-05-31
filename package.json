@@ -11,12 +11,15 @@
     "test:watch": "vitest",
     "validate:dataset": "tsx scripts/validate-dataset.ts",
     "sec:scan": "tsx scripts/sec-scan-acquirers.ts",
+    "sec:ingest": "tsx scripts/sec-ingest-deals.ts",
     "db:migrate": "tsx scripts/migrate.ts",
     "db:import": "tsx scripts/import-verified-json.ts"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^3.0.67",
     "@tensorflow/tfjs": "^4.22.0",
     "@types/d3": "^7.4.3",
+    "ai": "^6.0.193",
     "d3": "^7.9.0",
     "d3-array": "^3.2.4",
     "d3-force": "^3.0.0",
@@ -31,7 +34,8 @@
     "pg": "^8.16.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "simple-statistics": "^7.8.9"
+    "simple-statistics": "^7.8.9",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

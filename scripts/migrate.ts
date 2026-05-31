@@ -1,11 +1,11 @@
 import process from 'node:process';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Pool } from 'pg';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const migrationPath = join(__dirname, '../db/migrations/001_verified_dataset.sql');
+const migrationsDir = join(__dirname, '../db/migrations');
 
 async function main() {
   const url = process.env.DATABASE_URL;
@@ -14,15 +14,22 @@ async function main() {
     process.exit(1);
   }
 
-  const sql = readFileSync(migrationPath, 'utf8');
+  const files = readdirSync(migrationsDir)
+    .filter((f) => f.endsWith('.sql'))
+    .sort();
+
   const pool = new Pool({
     connectionString: url,
     ssl: process.env.PGSSLMODE === 'disable' ? undefined : { rejectUnauthorized: false },
   });
 
   try {
-    await pool.query(sql);
-    console.log('Migration applied:', migrationPath);
+    for (const file of files) {
+      const path = join(migrationsDir, file);
+      const sql = readFileSync(path, 'utf8');
+      await pool.query(sql);
+      console.log('Migration applied:', file);
+    }
   } finally {
     await pool.end();
   }
