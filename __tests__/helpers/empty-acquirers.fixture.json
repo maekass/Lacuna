@@ -1,0 +1,19 @@
+{
+  "provenance": {
+    "lastUpdated": "2024-01-01",
+    "sources": ["test fixture"],
+    "notes": ["No acquirer tickers — used for secIngestPipeline error path"],
+    "purpose": "test",
+    "disclaimer": "test fixture only"
+  },
+  "companies": [],
+  "acquirers": [
+    {
+      "id": "a-no-ticker",
+      "name": "No Ticker Corp",
+      "sector": "General Wellness",
+      "hq": "Test"
+    }
+  ],
+  "acquisitions": []
+}
