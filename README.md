@@ -2,9 +2,44 @@
 
 > *Network Intelligence Platform for Women's Health M&A*
 
-**Live demo:** [https://lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app)
+Lacuna maps the acquisition landscape across FemTech, digital health, and women's wellness sectors—visualizing strategic relationships, exit patterns, and market dynamics through sophisticated network analysis.
 
-⚠️ **EDUCATIONAL CODE PROJECT**: This repository contains demonstration code for portfolio and learning purposes. It is not a commercial product. Data is compiled from public sources for educational visualization. Run locally with `npm run dev` or use the live demo above.
+## Project links
+
+| | |
+|---|---|
+| **Live demo** | [lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app) |
+| **GitHub** | [github.com/maekass/Lacuna](https://github.com/maekass/Lacuna) |
+| **License** | [Business Source License 1.1](LICENSE) (BSL 1.1) — becomes [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0) four years from publication |
+| **Licensing inquiries** | [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu) |
+
+## Methodology & documentation
+
+| Document | Description |
+|----------|-------------|
+| [`docs/DATA_CURATION_CHECKLIST.md`](docs/DATA_CURATION_CHECKLIST.md) | JSON schema, staging workflow, validation commands |
+| [`docs/OAIS_METHODOLOGY.md`](docs/OAIS_METHODOLOGY.md) | Health impact (OAIS) framework |
+| [`docs/FAIRNESS_AUDIT_METHODOLOGY.md`](docs/FAIRNESS_AUDIT_METHODOLOGY.md) | Fairness audit with explicit limitations |
+| [`docs/NETWORK_ANALYSIS_METHODOLOGY.md`](docs/NETWORK_ANALYSIS_METHODOLOGY.md) | Network analysis with language guidelines |
+| [`docs/COMPETITIVE_ANALYSIS_METHODOLOGY.md`](docs/COMPETITIVE_ANALYSIS_METHODOLOGY.md) | Competitive landscape methodology |
+| [`docs/SEC_INGESTION.md`](docs/SEC_INGESTION.md) | SEC EDGAR ingest pipeline, cron, and env vars |
+| [`AGENTS.md`](AGENTS.md) | Stack, conventions, and agent guidance |
+
+## Languages, libraries & tools
+
+| Category | Technologies |
+|----------|----------------|
+| **Languages** | TypeScript (strict), SQL |
+| **Framework & UI** | Next.js 16 (App Router), React 19, Tailwind CSS v4 |
+| **Visualization** | D3.js v7, Framer Motion |
+| **ML & statistics** | TensorFlow.js, simple-statistics, ml-matrix |
+| **AI (ingest)** | Vercel AI SDK + AI Gateway (`openai/gpt-5.4-mini`), OIDC or `AI_GATEWAY_API_KEY`, Zod |
+| **Data** | Verified JSON (`dataset.verified.json`); optional PostgreSQL (`pg`, `LACUNA_DATA_MODE=db`) |
+| **HTTP & APIs** | Native `fetch`, Next.js Route Handlers, ClinicalTrials.gov API |
+| **Testing & quality** | Vitest, ESLint, Deno lint (CI) |
+| **Tooling & deploy** | tsx, npm, Vercel |
+
+⚠️ **EDUCATIONAL CODE PROJECT**: Demonstration code for portfolio and learning—not a commercial product. Data is compiled from public sources for educational visualization. Run locally with `npm run dev` or use the [live demo](https://lacuna-maekass.vercel.app).
 
 <p align="center">
   <img src="./public/social-preview.svg" alt="Lacuna - M&A Intelligence for Women's Health" width="100%">
@@ -19,10 +54,6 @@
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-0055FF?style=flat-square)](https://framer.com/motion)
 [![License](https://img.shields.io/badge/License-BSL_1.1-purple?style=flat-square)](LICENSE)
 [![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://lacuna-maekass.vercel.app)
-
-**Tools & Stack:** Next.js 16 · React 19 · TypeScript · D3.js · TensorFlow.js · simple-statistics · ml-matrix · Framer Motion · Tailwind CSS v4 · Vitest · verified JSON dataset (`dataset.verified.json`)
-
-Lacuna maps the acquisition landscape across FemTech, digital health, and women's wellness sectors—visualizing strategic relationships, exit patterns, and market dynamics through sophisticated network analysis.
 
 ## Core Functionality
 
@@ -204,13 +235,7 @@ OAIS = [Addressable Pop] × [Penetration Gap] × [Stage Credibility]
 
 **Reference**: Newman (2003, 2010), Clauset et al. (2009), Blondel et al. (2008)
 
-### Documentation
-
-Comprehensive methodology documents in `docs/`:
-- `DATA_CURATION_CHECKLIST.md` — JSON schema, staging workflow, validation commands
-- `OAIS_METHODOLOGY.md` — Health impact framework
-- `FAIRNESS_AUDIT_METHODOLOGY.md` — Fairness audit with explicit limitations
-- `NETWORK_ANALYSIS_METHODOLOGY.md` — Network analysis with language guidelines
+See **[Methodology & documentation](#methodology--documentation)** at the top of this README for full doc links.
 
 ### Common Principles
 
@@ -231,16 +256,6 @@ All frameworks follow these academic standards:
 - Use chi-square for small samples (use Fisher's exact)
 - Treat proxies as measurements
 - Make policy recommendations from exploratory analysis
-
-## Technology Stack
-
-- **Framework**: Next.js 16 (App Router) + React 19 + TypeScript (strict)
-- **Visualizations**: D3.js (force simulation, scales, shapes)
-- **Machine Learning**: TensorFlow.js · simple-statistics · ml-matrix
-- **Animation**: Framer Motion for orchestrated UI transitions
-- **Styling**: Tailwind CSS v4
-- **Data**: Verified static JSON; optional PostgreSQL via `LACUNA_DATA_MODE=db`
-- **Testing**: Vitest with fixtures sliced from real verified JSON
 
 ## Key Features
 
@@ -364,6 +379,4 @@ All data in this repository is compiled from **publicly available sources only**
 
 ## License
 
-Business Source License 1.1 © 2026 Lacuna Project Authors
-
-The Licensed Work becomes available under Apache 2.0 four years from publication date. Commercial licensing available upon request.
+Business Source License 1.1 © 2026 Lacuna Project Authors — see [Project links](#project-links) above for terms summary and [LICENSE](LICENSE) for full text. Licensing inquiries: [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu).

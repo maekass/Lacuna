@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 /**
  * SEC EDGAR read-only client for acquisition filing discovery.
  * Does not write to the verified dataset — outputs belong in staging CSV only.
@@ -77,7 +79,7 @@ function secFetch(url: string): Promise<Response> {
   });
 }
 
-function padCik(cik: number): string {
+export function padCik(cik: number): string {
   return String(cik).padStart(10, '0');
 }
 
@@ -85,7 +87,7 @@ function stripAccessionDashes(accession: string): string {
   return accession.replace(/-/g, '');
 }
 
-function buildFilingUrl(cik: number, accessionNumber: string, primaryDocument: string): string {
+export function buildFilingUrl(cik: number, accessionNumber: string, primaryDocument: string): string {
   return `${SEC_ARCHIVES_BASE}/${cik}/${stripAccessionDashes(accessionNumber)}/${primaryDocument}`;
 }
 

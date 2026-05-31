@@ -14,27 +14,28 @@ describe('clinical-trials API', () => {
     it('transforms ClinicalTrials.gov response (success)', async () => {
       mockFetch.mockResolvedValue({
         ok: true,
-        json: async () => ({
-          totalCount: 1,
-          studies: [
-            {
-              protocolSection: {
-                identificationModule: { nctId: 'NCT0001', briefTitle: 'Trial One' },
-                statusModule: {
-                  overallStatus: 'Recruiting',
-                  startDateStruct: { date: '2024-01-01' },
-                },
-                sponsorCollaboratorsModule: { leadSponsor: { name: 'Acme Research' } },
-                designModule: { phases: ['Phase 2'], enrollmentInfo: { count: 120 } },
-                conditionsModule: { conditions: ['Endometriosis'] },
-                armsInterventionsModule: { interventions: [{ name: 'Drug A' }] },
-                contactsLocationsModule: {
-                  locations: [{ facility: { name: 'Hospital', address: { city: 'Boston' } } }],
+        json: () =>
+          Promise.resolve({
+            totalCount: 1,
+            studies: [
+              {
+                protocolSection: {
+                  identificationModule: { nctId: 'NCT0001', briefTitle: 'Trial One' },
+                  statusModule: {
+                    overallStatus: 'Recruiting',
+                    startDateStruct: { date: '2024-01-01' },
+                  },
+                  sponsorCollaboratorsModule: { leadSponsor: { name: 'Acme Research' } },
+                  designModule: { phases: ['Phase 2'], enrollmentInfo: { count: 120 } },
+                  conditionsModule: { conditions: ['Endometriosis'] },
+                  armsInterventionsModule: { interventions: [{ name: 'Drug A' }] },
+                  contactsLocationsModule: {
+                    locations: [{ facility: { name: 'Hospital', address: { city: 'Boston' } } }],
+                  },
                 },
               },
-            },
-          ],
-        }),
+            ],
+          }),
       });
 
       const request = new NextRequest(
@@ -62,7 +63,7 @@ describe('clinical-trials API', () => {
     });
 
     it('defaults limit to 10 when param missing (edge)', async () => {
-      mockFetch.mockResolvedValue({ ok: true, json: async () => ({ studies: [] }) });
+      mockFetch.mockResolvedValue({ ok: true, json: () => Promise.resolve({ studies: [] }) });
 
       const request = new NextRequest('http://localhost/api/clinical-trials');
       await GET(request);
@@ -75,15 +76,16 @@ describe('clinical-trials API', () => {
     it('batch-fetches trials by NCT id (success)', async () => {
       mockFetch.mockResolvedValue({
         ok: true,
-        json: async () => ({
-          protocolSection: {
-            identificationModule: { briefTitle: 'Batch Trial' },
-            designModule: { phases: ['Phase 1'] },
-            statusModule: { overallStatus: 'Completed' },
-            conditionsModule: { conditions: ['PCOS'] },
-            sponsorCollaboratorsModule: { leadSponsor: { name: 'Sponsor Inc' } },
-          },
-        }),
+        json: () =>
+          Promise.resolve({
+            protocolSection: {
+              identificationModule: { briefTitle: 'Batch Trial' },
+              designModule: { phases: ['Phase 1'] },
+              statusModule: { overallStatus: 'Completed' },
+              conditionsModule: { conditions: ['PCOS'] },
+              sponsorCollaboratorsModule: { leadSponsor: { name: 'Sponsor Inc' } },
+            },
+          }),
       });
 
       const request = new NextRequest('http://localhost/api/clinical-trials', {
@@ -111,7 +113,7 @@ describe('clinical-trials API', () => {
 
     it('filters out failed upstream lookups (edge)', async () => {
       mockFetch
-        .mockResolvedValueOnce({ ok: true, json: async () => ({ protocolSection: {} }) })
+        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve({ protocolSection: {} }) })
         .mockResolvedValueOnce({ ok: false, status: 404 });
 
       const request = new NextRequest('http://localhost/api/clinical-trials', {

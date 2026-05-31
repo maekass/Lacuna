@@ -78,7 +78,7 @@ describe('dbClient', () => {
   it('withTransaction rolls back on failure (error)', async () => {
     const { withTransaction } = await import('@/lib/data/dbClient');
     await expect(
-      withTransaction(async () => {
+      withTransaction(() => {
         throw new Error('insert failed');
       }),
     ).rejects.toThrow('insert failed');
