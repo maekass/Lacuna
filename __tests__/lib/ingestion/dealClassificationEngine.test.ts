@@ -23,7 +23,7 @@ const aiClassificationSchema = z.object({
 
 function mockAiModel(payload: z.infer<typeof aiClassificationSchema>) {
   return new MockLanguageModelV3({
-    doGenerate: async () => ({
+    doGenerate: () => ({
       content: [{ type: 'text', text: JSON.stringify(payload) }],
       finishReason: { unified: 'stop', raw: undefined },
       usage: {
@@ -78,9 +78,9 @@ describe('dealClassificationEngine', () => {
   });
 
   it('isAiClassificationAvailable is false without API keys', () => {
-    delete process.env.AI_GATEWAY_API_KEY;
-    delete process.env.VERCEL_OIDC_TOKEN;
-    delete process.env.OPENAI_API_KEY;
+    vi.stubEnv('AI_GATEWAY_API_KEY', '');
+    vi.stubEnv('VERCEL_OIDC_TOKEN', '');
+    vi.stubEnv('OPENAI_API_KEY', '');
     expect(isAiClassificationAvailable()).toBe(false);
     expect(hasAiGatewayAuth()).toBe(false);
   });
@@ -92,9 +92,9 @@ describe('dealClassificationEngine', () => {
   });
 
   it('classifyDealAsync uses keyword path when no API keys (fallback)', async () => {
-    delete process.env.AI_GATEWAY_API_KEY;
-    delete process.env.VERCEL_OIDC_TOKEN;
-    delete process.env.OPENAI_API_KEY;
+    vi.stubEnv('AI_GATEWAY_API_KEY', '');
+    vi.stubEnv('VERCEL_OIDC_TOKEN', '');
+    vi.stubEnv('OPENAI_API_KEY', '');
 
     const result = await classifyDealAsync({
       filingText: 'Acquisition of a fertility services network.',
@@ -131,7 +131,7 @@ describe('dealClassificationEngine', () => {
 
   it('classifyDealAsync falls back to keyword on AI failure', async () => {
     const model = new MockLanguageModelV3({
-      doGenerate: async () => {
+      doGenerate: () => {
         throw new Error('upstream failure');
       },
     });

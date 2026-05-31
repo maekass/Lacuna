@@ -1,3 +1,4 @@
+import process from 'node:process';
 import { NextResponse } from 'next/server';
 import { runSecIngest } from '@/lib/ingestion/secIngestPipeline';
 

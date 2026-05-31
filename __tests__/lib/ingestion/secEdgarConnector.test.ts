@@ -89,13 +89,14 @@ describe('secEdgarConnector fetch (mocked)', () => {
       'fetch',
       vi.fn().mockResolvedValue({
         ok: true,
-        json: async () => ({
-          name: 'Test Pharma Inc',
-          cik: '0000123456',
-          sic: '2834',
-          sicDescription: 'Pharmaceutical Preparations',
-          filings: { recent: { accessionNumber: [], filingDate: [], form: [], primaryDocument: [], primaryDocDescription: [] } },
-        }),
+        json: () =>
+          Promise.resolve({
+            name: 'Test Pharma Inc',
+            cik: '0000123456',
+            sic: '2834',
+            sicDescription: 'Pharmaceutical Preparations',
+            filings: { recent: { accessionNumber: [], filingDate: [], form: [], primaryDocument: [], primaryDocDescription: [] } },
+          }),
       }),
     );
 

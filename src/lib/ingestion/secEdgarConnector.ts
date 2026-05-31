@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 /**
  * SEC EDGAR connector — submissions API, 8-K Item 2.01 heuristic parse.
  * Callable from CLI, cron route, or future MCP server wrapper.

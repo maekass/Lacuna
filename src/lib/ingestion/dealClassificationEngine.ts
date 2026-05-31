@@ -9,6 +9,7 @@
  * - SEC_EDGAR_USER_AGENT — required for SEC fetch paths, not classification itself
  */
 
+import process from 'node:process';
 import { generateText, Output, type LanguageModel } from 'ai';
 import { openai } from '@ai-sdk/openai';
 import { z } from 'zod';

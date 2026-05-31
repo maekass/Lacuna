@@ -5,6 +5,7 @@
 
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import process from 'node:process';
 import type { VerifiedDataset } from '@/lib/data/datasetTypes';
 import {
   classifyDealAsync,
@@ -138,6 +139,7 @@ export {
   classifyDeal,
   classifyDealAsync,
   classifyDealKeywordOnly,
+  hasAiGatewayAuth,
   isAiClassificationAvailable,
   shouldAutoInsert,
   CLASSIFICATION_GATEWAY_MODEL,

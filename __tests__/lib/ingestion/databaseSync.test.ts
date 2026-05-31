@@ -49,11 +49,11 @@ describe('databaseSync', () => {
       query: mockClientQuery,
       release: mockRelease,
     });
-    mockClientQuery.mockImplementation(async (sql: string) => {
+    mockClientQuery.mockImplementation((sql: string) => {
       if (sql === 'BEGIN' || sql === 'COMMIT' || sql === 'ROLLBACK') {
-        return { rows: [] };
+        return Promise.resolve({ rows: [] });
       }
-      return { rows: [{ inserted: true }] };
+      return Promise.resolve({ rows: [{ inserted: true }] });
     });
     mockPoolQuery.mockResolvedValue({ rows: [{ inserted: true }] });
 

@@ -55,7 +55,7 @@ export async function loadVerifiedDatasetFromDb(): Promise<VerifiedDataset> {
 }
 
 /** Filter acquisitions by company sector (parameterized). */
-export async function loadAcquisitionsBySector(sector: string): Promise<AcquisitionRow[]> {
+export function loadAcquisitionsBySector(sector: string): Promise<AcquisitionRow[]> {
   return query<AcquisitionRow>(
     `
       SELECT

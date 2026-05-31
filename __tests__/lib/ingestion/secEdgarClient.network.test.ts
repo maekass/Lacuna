@@ -15,9 +15,10 @@ describe('secEdgarClient (mocked fetch)', () => {
       'fetch',
       vi.fn().mockResolvedValue({
         ok: true,
-        json: async () => ({
-          '0': { cik_str: 1477449, ticker: 'TDOC', title: 'Teladoc Health Inc' },
-        }),
+        json: () =>
+          Promise.resolve({
+            '0': { cik_str: 1477449, ticker: 'TDOC', title: 'Teladoc Health Inc' },
+          }),
       }),
     );
 
@@ -35,7 +36,7 @@ describe('secEdgarClient (mocked fetch)', () => {
       'fetch',
       vi.fn().mockResolvedValue({
         ok: true,
-        json: async () => ({}),
+        json: () => Promise.resolve({}),
       }),
     );
 
@@ -56,22 +57,23 @@ describe('secEdgarClient (mocked fetch)', () => {
       'fetch',
       vi.fn().mockResolvedValue({
         ok: true,
-        json: async () => ({
-          name: 'Teladoc Health Inc',
-          cik: '0001477449',
-          filings: {
-            recent: {
-              accessionNumber: ['0001193125-20-178123', '0001193125-20-100000'],
-              filingDate: ['2020-07-01', '2020-06-01'],
-              form: ['8-K', '8-K'],
-              primaryDocument: ['d8k.htm', 'other.htm'],
-              primaryDocDescription: [
-                'Entry into Material Definitive Agreement - Merger',
-                'Results of Operations',
-              ],
+        json: () =>
+          Promise.resolve({
+            name: 'Teladoc Health Inc',
+            cik: '0001477449',
+            filings: {
+              recent: {
+                accessionNumber: ['0001193125-20-178123', '0001193125-20-100000'],
+                filingDate: ['2020-07-01', '2020-06-01'],
+                form: ['8-K', '8-K'],
+                primaryDocument: ['d8k.htm', 'other.htm'],
+                primaryDocDescription: [
+                  'Entry into Material Definitive Agreement - Merger',
+                  'Results of Operations',
+                ],
+              },
             },
-          },
-        }),
+          }),
       }),
     );
 
@@ -98,7 +100,7 @@ describe('secEdgarClient (mocked fetch)', () => {
       'fetch',
       vi.fn().mockResolvedValue({
         ok: true,
-        json: async () => ({}),
+        json: () => Promise.resolve({}),
       }),
     );
 

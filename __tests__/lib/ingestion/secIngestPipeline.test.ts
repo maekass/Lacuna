@@ -1,3 +1,4 @@
+import process from 'node:process';
 import { join } from 'node:path';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ParsedAcquisition } from '@/lib/ingestion/secEdgarConnector';
@@ -60,7 +61,7 @@ describe('runSecIngest', () => {
     vi.stubEnv('SEC_SCAN_SINCE', '2024-01-01');
     vi.stubEnv('SEC_LIMIT_PER_TICKER', '5');
     vi.stubEnv('SEC_HEALTHCARE_SIC_ONLY', '');
-    delete process.env.DATABASE_URL;
+    vi.stubEnv('DATABASE_URL', '');
   });
 
   it('scans dataset tickers and classifies filings in dry run (success)', async () => {

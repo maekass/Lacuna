@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 /**
  * SEC EDGAR read-only client for acquisition filing discovery.
  * Does not write to the verified dataset — outputs belong in staging CSV only.
