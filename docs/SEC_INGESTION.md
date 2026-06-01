@@ -27,6 +27,10 @@ Legacy keyword scan (no Item 2.01 parse): `secEdgarClient.ts` + `npm run sec:sca
 | `SEC_EXTRA_TICKERS` | No | Comma-separated extra tickers |
 | `SEC_HEALTHCARE_SIC_ONLY` | No | `true` to skip non-283x/384x SIC companies |
 | `PGSSLMODE` | No | Set `disable` for local Postgres |
+| `SEC_MAX_TICKERS_PER_RUN` | No | Hard cap on tickers per ingest run (default: no cap) |
+| `SEC_MAX_PARSED_FILINGS_PER_RUN` | No | Hard cap on parsed filings per ingest run (default: no cap) |
+| `SEC_USE_DB_CURSOR` | No | `true` to use `lacuna_ingest_state.last_successful_since_date` when `SEC_SCAN_SINCE` is unset |
+| `LACUNA_INGEST_RUN_TRACKING` | No | `true` to persist `lacuna_ingest_runs` audit records during cron runs |
 
 ### AI classification (optional)
 
@@ -37,6 +41,8 @@ Structured classification uses the [Vercel AI Gateway](https://vercel.com/docs/a
 | `VERCEL_OIDC_TOKEN` | On Vercel / local dev | Auto-provisioned OIDC token — run `vercel link` and `vercel env pull .env.local` (refreshes ~every 24h locally) |
 | `AI_GATEWAY_API_KEY` | CI / non-Vercel | Static gateway key when OIDC is unavailable |
 | `OPENAI_API_KEY` | Fallback | Direct OpenAI via `@ai-sdk/openai` when no gateway auth |
+| `SENTRY_DSN` | No | Enable Sentry server/edge error reporting for cron + APIs |
+| `NEXT_PUBLIC_SENTRY_DSN` | No | Optional client DSN (browser errors + replays if enabled) |
 
 **Auth priority:** `AI_GATEWAY_API_KEY` → `VERCEL_OIDC_TOKEN` → `OPENAI_API_KEY` → keyword-only.
 
@@ -51,6 +57,32 @@ npm run db:migrate   # applies 001_verified_dataset.sql + 002_lacuna_deals.sql
 ```
 
 Table `lacuna_deals` — unique on `sec_accession`. Status flow: `pending` / `pending_review` → manual `approved` / `rejected`.
+
+### Ingest run state (recommended for production)
+
+Migration `003_lacuna_ingest_runs.sql` adds:
+
+- `lacuna_ingest_runs` — durable audit trail of each cron/CLI run (success/failure, counts)
+- `lacuna_ingest_state` — single-row cursor store (`last_successful_since_date`) for incremental daily scans
+
+### Production setup (Vercel Hobby)
+
+1. **Create a Postgres database** (Vercel Postgres / Neon) and copy its connection string.
+2. **Set Vercel environment variables** (Production):
+   - `DATABASE_URL` — Postgres connection string
+   - `LACUNA_INGEST_RUN_TRACKING=true` — persist `lacuna_ingest_runs`
+   - `SEC_USE_DB_CURSOR=true` — use `lacuna_ingest_state.last_successful_since_date` when `SEC_SCAN_SINCE` is unset
+   - `CRON_SECRET` — protects `/api/cron/sec-ingest`
+   - `SEC_EDGAR_USER_AGENT` — SEC fair-access UA
+3. **Apply migrations** against the production DB:
+
+```bash
+vercel link
+vercel env pull .env.local
+npm run db:migrate
+```
+
+After this, `/api/cron/sec-ingest/status` will return the latest ingest run row (or 503 if DB is missing).
 
 ## Run ingest
 

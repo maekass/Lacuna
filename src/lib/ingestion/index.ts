@@ -18,6 +18,11 @@ export {
   CLASSIFICATION_OPENAI_MODEL,
   hasAiGatewayAuth,
   WOMENS_HEALTH_KEYWORDS,
+  startIngestRun,
+  finishIngestRunSuccess,
+  finishIngestRunFailure,
+  getLatestIngestRun,
+  getIngestCursorSinceDate,
   syncDealsToDatabase,
   upsertLacunaDeal,
   alertApiFailure,
@@ -37,6 +42,7 @@ export type {
 } from '@/lib/ingestion/dealClassificationEngine';
 export type { ClassifiedDeal, SyncResult } from '@/lib/ingestion/databaseSync';
 export type { IngestLogEvent, IngestEventType } from '@/lib/ingestion/monitoringAlerts';
+export type { IngestRunRow, IngestRunStatus } from '@/lib/ingestion/ingestRunState';
 
 /** Alias for MCP / external tooling — same module as secEdgarConnector. */
 export * as secEdgarMcpConnector from '@/lib/ingestion/secEdgarConnector';

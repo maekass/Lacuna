@@ -38,6 +38,7 @@ Lacuna maps the acquisition landscape across FemTech, digital health, and women'
 | **HTTP & APIs** | Native `fetch`, Next.js Route Handlers, ClinicalTrials.gov API |
 | **Testing & quality** | Vitest, ESLint, Deno lint (CI) |
 | **Tooling & deploy** | tsx, npm, Vercel |
+| **Monitoring (optional)** | Sentry (`SENTRY_DSN` / `NEXT_PUBLIC_SENTRY_DSN`) |
 
 ⚠️ **EDUCATIONAL CODE PROJECT**: Demonstration code for portfolio and learning—not a commercial product. Data is compiled from public sources for educational visualization. Run locally with `npm run dev` or use the [live demo](https://lacuna-maekass.vercel.app).
 

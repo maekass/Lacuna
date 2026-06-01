@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.67",
+    "@sentry/nextjs": "^10.55.0",
     "@tensorflow/tfjs": "^4.22.0",
     "@types/d3": "^7.4.3",
     "ai": "^6.0.193",

@@ -1,12 +1,26 @@
 import { NextResponse } from 'next/server';
 import { getVerifiedDataset } from '@/lib/data/datasetProvider';
+import { getClientIp, rateLimit } from '@/lib/api/rateLimit';
 
 function csvEscape(value: string) {
-  const escaped = value.replace(/"/g, '""');
+  const raw = value ?? '';
+  // CSV injection hardening for spreadsheet apps (Excel/Sheets).
+  const needsNeutralize = /^[=+\-@]/.test(raw);
+  const safe = needsNeutralize ? `'${raw}` : raw;
+  const escaped = safe.replace(/"/g, '""');
   return `"${escaped}"`;
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const ip = getClientIp(request);
+  const limit = rateLimit({ key: `exportCsv:${ip}`, limit: 30, windowMs: 60_000 });
+  if (!limit.ok) {
+    return NextResponse.json(
+      { error: 'Rate limited', retryAt: limit.resetAtMs },
+      { status: 429 },
+    );
+  }
+
   const dataset = await getVerifiedDataset();
   const { acquisitions } = dataset;
 
@@ -44,6 +58,7 @@ export async function GET() {
     headers: {
       'content-type': 'text/csv; charset=utf-8',
       'content-disposition': 'attachment; filename="lacuna-deals.csv"',
+      'cache-control': 'public, max-age=60',
     },
   });
 }

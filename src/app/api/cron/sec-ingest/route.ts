@@ -29,6 +29,8 @@ export async function GET(request: Request) {
       parsed: result.parsedFilings.length,
       womensHealthCandidates: result.classified.filter((c) => c.womensHealthRelevant).length,
       sync: result.sync,
+      runId: result.runId ?? null,
+      sinceDateUsed: result.sinceDateUsed ?? null,
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'SEC ingest failed';
