@@ -385,3 +385,11 @@ Other projects: [Clinical Trials Intelligence Platform](https://github.com/maeka
 <p align="center">
   <sub>Educational code project for portfolio and learning. Data compiled from public sources.</sub>
 </p>
+
+---
+
+## 👤 About the Author
+
+**Created by [Mae Kass](https://github.com/maekass)** — Health tech founder building intelligent platforms for women's health equity.
+
+View my [GitHub Profile](https://github.com/maekass) for more projects in FemTech, machine learning, and health analytics.
