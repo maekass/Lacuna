@@ -1,6 +1,6 @@
 <!--
 SEO Meta Description: Lacuna - Network intelligence platform for FemTech M&A, women's health acquisitions, and digital health deal flow. Interactive D3.js visualization of strategic relationships, exit patterns, and M&A market dynamics in women's wellness sector.
-Keywords: FemTech M&A, women's health acquisitions, digital health deals, venture capital, network visualization, D3.js, exit strategy, health equity, Black women's health, clinical trials, TensorFlow.js
+Keywords: FemTech M&A, women's health acquisitions, digital health deals, venture capital, network visualization, D3.js, exit strategy, health equity, Black women's health, clinical trials, TensorFlow.js, Mae Kass, health tech founder
 -->
 
 <h1 align="center">Lacuna</h1>
@@ -48,6 +48,8 @@ Keywords: FemTech M&A, women's health acquisitions, digital health deals, ventur
 ## Overview
 
 **Lacuna** maps the acquisition landscape across [FemTech](#femtech-m&a-intelligence), [digital health](#digital-health-acquisitions), and [women's wellness](#womens-wellness-sector-analysis) sectors—visualizing strategic relationships, exit patterns, and market dynamics through sophisticated [network analysis](#network-visualization) and [machine learning](#machine-learning-predictions).
+
+*An open-source project by [Mae Kass](https://github.com/maekass) — exploring the intersection of health equity, network intelligence, and machine learning.*
 
 ### Target Audiences
 
@@ -364,7 +366,19 @@ For alternative licensing: [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu)
 
 ## Keywords & Tags
 
-`#FemTech` `#MA` `#VentureCapital` `#DigitalHealth` `#WomensHealth` `#NetworkVisualization` `#D3js` `#MachineLearning` `#TensorFlow` `#HealthEquity` `#BlackWomensHealth` `#ClinicalTrials` `#Nextjs` `#TypeScript` `#OpenSource` `#ImpactInvesting`
+`#FemTech` `#MA` `#VentureCapital` `#DigitalHealth` `#WomensHealth` `#NetworkVisualization` `#D3js` `#MachineLearning` `#TensorFlow` `#HealthEquity` `#BlackWomensHealth` `#ClinicalTrials` `#Nextjs` `#TypeScript` `#OpenSource` `#ImpactInvesting` `#MaeKass` `#HealthTechFounder`
+
+---
+
+## Author
+
+**Created by [Mae Kass](https://github.com/maekass)** — Health tech founder and software engineer focused on women's health equity, network intelligence, and machine learning for social impact.
+
+- 🐦 Twitter/X: [@maekass](https://twitter.com/maekass) (optional)
+- 💼 LinkedIn: [Mae Kass](https://linkedin.com/in/maekass) (optional)
+- 📧 Contact: [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu)
+
+Other projects: [Clinical Trials Intelligence Platform](https://github.com/maekass/MPK1)
 
 ---
 
