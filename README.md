@@ -16,13 +16,13 @@ Keywords: FemTech M&A, women's health acquisitions, digital health deals, ventur
 </p>
 
 <p align="center">
-  <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js" alt="Built with Next.js 16"></a>
-  <a href="https://react.dev"><img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react" alt="React 19"></a>
-  <a href="https://typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript" alt="TypeScript 5.0"></a>
-  <a href="https://d3js.org"><img src="https://img.shields.io/badge/D3.js-v7-orange?style=flat-square&logo=d3.js" alt="D3.js v7"></a>
-  <a href="https://tensorflow.org/js"><img src="https://img.shields.io/badge/TensorFlow.js-4.0-FF6F00?style=flat-square&logo=tensorflow" alt="TensorFlow.js"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-BSL_1.1-purple?style=flat-square" alt="Business Source License 1.1"></a>
-  <a href="https://lacuna-maekass.vercel.app"><img src="https://img.shields.io/badge/Live_Demo-Vercel-000000?style=flat-square&logo=vercel" alt="Live Demo on Vercel"></a>
+  <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-16-C8A8E9?style=flat-square&logo=next.js&logoColor=white" alt="Built with Next.js 16"></a>
+  <a href="https://react.dev"><img src="https://img.shields.io/badge/React-19-D4A5E0?style=flat-square&logo=react&logoColor=white" alt="React 19"></a>
+  <a href="https://typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-5.0-E8B4D9?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript 5.0"></a>
+  <a href="https://d3js.org"><img src="https://img.shields.io/badge/D3.js-v7-C9A0DC?style=flat-square&logo=d3.js&logoColor=white" alt="D3.js v7"></a>
+  <a href="https://tensorflow.org/js"><img src="https://img.shields.io/badge/TensorFlow.js-4.0-DDA0DD?style=flat-square&logo=tensorflow&logoColor=white" alt="TensorFlow.js"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-BSL_1.1-B19CD9?style=flat-square" alt="Business Source License 1.1"></a>
+  <a href="https://lacuna-maekass.vercel.app"><img src="https://img.shields.io/badge/Live_Demo-Vercel-C8A2C8?style=flat-square&logo=vercel&logoColor=white" alt="Live Demo on Vercel"></a>
 </p>
 
 ## Table of Contents
@@ -49,7 +49,7 @@ Keywords: FemTech M&A, women's health acquisitions, digital health deals, ventur
 
 **Lacuna** maps the acquisition landscape across [FemTech](#femtech-m&a-intelligence), [digital health](#digital-health-acquisitions), and [women's wellness](#womens-wellness-sector-analysis) sectors—visualizing strategic relationships, exit patterns, and market dynamics through sophisticated [network analysis](#network-visualization) and [machine learning](#machine-learning-predictions).
 
-*An open-source project by [Mae Kass](https://github.com/maekass) — exploring the intersection of health equity, network intelligence, and machine learning.*
+*An open-source project by [Mae Kass](https://github.com/maekass) — software engineer exploring the intersection of health equity, network intelligence, and machine learning.*
 
 ### Target Audiences
 
@@ -57,7 +57,7 @@ Keywords: FemTech M&A, women's health acquisitions, digital health deals, ventur
 |----------|-------------------|
 | **Venture Capital Firms** | Identify emerging acquisition targets in women's health |
 | **Corporate Development** | Map competitive landscape and strategic buyers |
-| **Founders & CEOs** | Understand exit patterns and valuation benchmarks |
+| **Startup Teams** | Understand exit patterns and valuation benchmarks |
 | **Impact Investors** | Health equity opportunities in Black women's health |
 | **Researchers** | Academic-rigor analytical frameworks with open data |
 
@@ -184,11 +184,8 @@ Lacuna identifies **high-impact investment opportunities** in diseases dispropor
 
 **Dual-metric scoring**: ROI potential + health equity impact
 
-- Phase 7 (Implemented): Health equity dashboard with disease tracking
-- Phase 8 (Planned): Trial diversity tracker with geographic mapping
-- Phase 9 (Planned): Impact investment scorecard (combined metrics)
-- Phase 10 (Planned): Underserved disease analyzer
-- Phase 11 (Planned): Community impact predictor (lives saved per $1M invested)
+- Health equity dashboard with disease tracking
+- Dual-metric visualization combining financial returns and health outcomes
 
 ---
 
@@ -320,7 +317,7 @@ Visit `http://localhost:3000` to view the application.
 - Company websites and press releases
 - SEC EDGAR filings (8-K, 10-K)
 - TechCrunch, Crunchbase, PitchBook
-- Johns Hopkins Technology Ventures
+- Academic technology ventures
 
 ### Data Curation Kit
 
@@ -328,17 +325,6 @@ Visit `http://localhost:3000` to view the application.
 - **Staging template**: `staging/deals_candidates.template.csv` → human review → JSON
 - **Validation CLI**: `npm run validate:dataset` — FK checks, disclosure stats
 - **SEC candidate scan**: `npm run sec:scan` — 8-K discovery (requires `SEC_EDGAR_USER_AGENT`)
-
-### Johns Hopkins FemTech Innovation
-
-**Verified academic startups** from JHTV:
-
-| Company | Founders | Focus | Recognition |
-|---------|----------|-------|-------------|
-| **NovvaCup** | Danielle Nicklas PhD, Alexis Lowe, Clarissa Ren MD | Multiphasic menstrual cup | $10K Pitch It On! winner, FastForward U Accelerator |
-| **Ovubrush** | Janis Iourovitski (CBID) | Saliva-based ovulation tracker | Johns Hopkins CBID |
-
----
 
 ## Documentation
 
@@ -366,30 +352,15 @@ For alternative licensing: [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu)
 
 ## Keywords & Tags
 
-`#FemTech` `#MA` `#VentureCapital` `#DigitalHealth` `#WomensHealth` `#NetworkVisualization` `#D3js` `#MachineLearning` `#TensorFlow` `#HealthEquity` `#BlackWomensHealth` `#ClinicalTrials` `#Nextjs` `#TypeScript` `#OpenSource` `#ImpactInvesting` `#MaeKass` `#HealthTechFounder`
+`#FemTech` `#MA` `#VentureCapital` `#DigitalHealth` `#WomensHealth` `#NetworkVisualization` `#D3js` `#MachineLearning` `#TensorFlow` `#HealthEquity` `#BlackWomensHealth` `#ClinicalTrials` `#Nextjs` `#TypeScript` `#OpenSource` `#ImpactInvesting` `#MaeKass` `#SoftwareEngineer` `#HealthTech`
 
 ---
 
 ## Author
 
-**Created by [Mae Kass](https://github.com/maekass)** — Health tech founder and software engineer focused on women's health equity, network intelligence, and machine learning for social impact.
+**Created by [Mae Kass](https://github.com/maekass)** — Software engineer building intelligent platforms for women's health equity, network intelligence, and machine learning for social impact.
 
-- Twitter/X: [@maekass](https://twitter.com/maekass) (optional)
 - LinkedIn: [Mae Kass](https://linkedin.com/in/maekass) (optional)
 - Contact: [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu)
 
 Other projects: [Clinical Trials Intelligence Platform](https://github.com/maekass/MPK1)
-
----
-
-<p align="center">
-  <sub>Educational code project for portfolio and learning. Data compiled from public sources.</sub>
-</p>
-
----
-
-## About the Author
-
-**Created by [Mae Kass](https://github.com/maekass)** — Health tech founder building intelligent platforms for women's health equity.
-
-View my [GitHub Profile](https://github.com/maekass) for more projects in FemTech, machine learning, and health analytics.
