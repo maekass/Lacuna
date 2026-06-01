@@ -25,7 +25,7 @@ Keywords: FemTech M&A, women's health acquisitions, digital health deals, ventur
   <a href="https://lacuna-maekass.vercel.app"><img src="https://img.shields.io/badge/Live_Demo-Vercel-000000?style=flat-square&logo=vercel" alt="Live Demo on Vercel"></a>
 </p>
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [What is Lacuna?](#what-is-lacuna)
@@ -67,17 +67,17 @@ Keywords: FemTech M&A, women's health acquisitions, digital health deals, ventur
 
 Lacuna is an open-source [network intelligence platform](#network-intelligence-platform) for tracking **M&A activity in women's health and FemTech**. It combines:
 
-- 🕸️ **Interactive network visualizations** (D3.js force-directed graphs)
-- 📊 **Deal flow analytics** (temporal trends, sector breakdowns)
-- 🤖 **Machine learning predictions** (exit probability scoring)
-- 🏥 **Clinical trials integration** (therapeutic area insights)
-- ⚖️ **Health equity analysis** (Black women's health investment opportunities)
+- **Interactive network visualizations** (D3.js force-directed graphs)
+- **Deal flow analytics** (temporal trends, sector breakdowns)
+- **Machine learning predictions** (exit probability scoring)
+- **Clinical trials integration** (therapeutic area insights)
+- **Health equity analysis** (Black women's health investment opportunities)
 
 ---
 
 ## Live Demo
 
-🚀 **[lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app)** — Try the interactive network visualization
+**[lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app)** — Try the interactive network visualization
 
 | Resource | Link |
 |----------|------|
@@ -184,7 +184,7 @@ Lacuna identifies **high-impact investment opportunities** in diseases dispropor
 
 **Dual-metric scoring**: ROI potential + health equity impact
 
-- Phase 7 (✅ Implemented): Health equity dashboard with disease tracking
+- Phase 7 (Implemented): Health equity dashboard with disease tracking
 - Phase 8 (Planned): Trial diversity tracker with geographic mapping
 - Phase 9 (Planned): Impact investment scorecard (combined metrics)
 - Phase 10 (Planned): Underserved disease analyzer
@@ -374,9 +374,9 @@ For alternative licensing: [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu)
 
 **Created by [Mae Kass](https://github.com/maekass)** — Health tech founder and software engineer focused on women's health equity, network intelligence, and machine learning for social impact.
 
-- 🐦 Twitter/X: [@maekass](https://twitter.com/maekass) (optional)
-- 💼 LinkedIn: [Mae Kass](https://linkedin.com/in/maekass) (optional)
-- 📧 Contact: [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu)
+- Twitter/X: [@maekass](https://twitter.com/maekass) (optional)
+- LinkedIn: [Mae Kass](https://linkedin.com/in/maekass) (optional)
+- Contact: [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu)
 
 Other projects: [Clinical Trials Intelligence Platform](https://github.com/maekass/MPK1)
 
@@ -388,7 +388,7 @@ Other projects: [Clinical Trials Intelligence Platform](https://github.com/maeka
 
 ---
 
-## 👤 About the Author
+## About the Author
 
 **Created by [Mae Kass](https://github.com/maekass)** — Health tech founder building intelligent platforms for women's health equity.
 
