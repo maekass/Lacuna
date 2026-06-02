@@ -49,7 +49,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-lacuna-pink/15 via-background to-lacuna-lavender/20">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-lacuna-lavender/40 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
           <a href="#top" className="flex items-center gap-3 group shrink-0">
             <div className="w-10 h-10 lacuna-gradient rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
               <span className="text-white font-bold text-lg">L</span>
@@ -63,7 +63,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      <main id="top" className="max-w-7xl mx-auto px-6 py-12">
+      <main id="top" className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Hero Section */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -113,7 +113,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
-          className="mb-16"
+          className="mb-16 scroll-mt-20"
         >
           <DataCoverageCard />
         </motion.section>
@@ -124,7 +124,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-16"
+          className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
             <h3 className="text-2xl font-semibold text-lacuna-plum">Acquisition Network</h3>
@@ -133,8 +133,6 @@ export default function HomePage() {
           <ForceNetwork
             nodes={networkNodes}
             links={networkLinks}
-            width={1200}
-            height={700}
           />
         </motion.section>
 
@@ -148,8 +146,6 @@ export default function HomePage() {
         >
           <DealFlowChart
             data={dealsByYear}
-            width={550}
-            height={300}
           />
           <div className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 p-6">
             <h3 className="text-lg font-semibold text-lacuna-plum mb-2">Recent Activity</h3>
@@ -159,12 +155,12 @@ export default function HomePage() {
                 const target = verifiedCompanies.find((c: typeof verifiedCompanies[0]) => c.id === deal.targetId);
                 const acquirer = networkNodes.find((n: typeof networkNodes[0]) => n.id === deal.acquirerId);
                 return (
-                  <div key={deal.id} className="flex items-center justify-between p-3 bg-lacuna-pink/10 rounded-lg">
-                    <div>
-                      <p className="font-medium text-lacuna-plum">{target?.name}</p>
-                      <p className="text-xs text-lacuna-blue">{deal.dealType} by {acquirer?.name || deal.acquirerName}</p>
+                  <div key={deal.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-0 p-3 bg-lacuna-pink/10 rounded-lg">
+                    <div className="min-w-0">
+                      <p className="font-medium text-lacuna-plum truncate">{target?.name}</p>
+                      <p className="text-xs text-lacuna-blue truncate">{deal.dealType} by {acquirer?.name || deal.acquirerName}</p>
                     </div>
-                    <div className="text-right">
+                    <div className="sm:text-right shrink-0">
                       {deal.dealValue ? (
                         <p className="font-semibold text-lacuna-plum">${deal.dealValue}M</p>
                       ) : (
@@ -185,7 +181,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mb-16"
+          className="mb-16 scroll-mt-20"
         >
           <ValuationMatrix />
         </motion.section>
@@ -207,7 +203,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.55 }}
-          className="mb-16 scroll-mt-24"
+          className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
             <h3 className="text-2xl font-semibold text-lacuna-plum">Health equity context</h3>
@@ -224,7 +220,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.56 }}
-          className="mb-16"
+          className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
             <h3 className="text-2xl font-semibold text-lacuna-plum">Health Impact Assessment</h3>
@@ -255,7 +251,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.578 }}
-          className="mb-16"
+          className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
             <h3 className="text-2xl font-semibold text-lacuna-plum">Network Analysis</h3>
@@ -300,7 +296,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.59 }}
-          className="mb-16"
+          className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
             <h3 className="text-2xl font-semibold text-lacuna-plum">Causal Inference Engine</h3>

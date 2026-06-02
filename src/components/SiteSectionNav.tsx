@@ -42,7 +42,7 @@ export default function SiteSectionNav() {
       </nav>
 
       <nav
-        className="lg:hidden flex gap-3 overflow-x-auto pb-1 -mb-1 text-sm text-lacuna-blue max-w-[min(100vw-8rem,28rem)]"
+        className="lg:hidden flex gap-3 overflow-x-auto hide-scrollbar pb-1 -mb-1 text-sm text-lacuna-blue"
         aria-label="Page sections (mobile)"
       >
         {SECTION_LINKS.map((link) => (
