@@ -66,7 +66,7 @@ export default function DataProvenanceBanner() {
             Open data
           </span>
           <span className="text-xs text-lacuna-blue truncate">
-            Sourced from SEC EDGAR, ClinicalTrials.gov, and public press releases · BUSL 1.1 licensed · Educational use
+            Women&apos;s health M&amp;A data from SEC EDGAR, ClinicalTrials.gov, and public filings · BUSL 1.1 licensed · Open-source research
           </span>
         </div>
         <svg
