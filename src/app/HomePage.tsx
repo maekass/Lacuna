@@ -23,6 +23,7 @@ import ClinicalTrialTracker from '@/components/ClinicalTrialTracker';
 import SiteSectionNav from '@/components/SiteSectionNav';
 import DataProvenanceBanner from '@/components/DataProvenanceBanner';
 import ExportToGamma from '@/components/ExportToGamma';
+import EvidenceMaturityDashboard from '@/components/EvidenceMaturityDashboard';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 export default function HomePage() {
@@ -221,6 +222,23 @@ export default function HomePage() {
             </p>
           </div>
           <ClinicalTrialTracker />
+        </motion.section>
+
+        {/* Evidence Maturity Scoring */}
+        <motion.section
+          id="evidence-maturity"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.47 }}
+          className="mb-16 scroll-mt-20"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-lacuna-plum">The Evidence Behind the Deal</h3>
+            <p className="text-lacuna-blue">
+              How strong is the clinical and regulatory evidence at the time of acquisition? We score each company on trial phase, FDA status, and published results
+            </p>
+          </div>
+          <EvidenceMaturityDashboard />
         </motion.section>
 
         {/* Wearables Ecosystem Section */}

@@ -5,6 +5,7 @@ const SECTION_LINKS = [
   { href: '#network', label: 'Network' },
   { href: '#matrix', label: 'Matrix' },
   { href: '#clinical-trials', label: 'Trials' },
+  { href: '#evidence-maturity', label: 'Evidence' },
   { href: '#health-equity', label: 'Health equity' },
   { href: '#impact-assessment', label: 'Impact' },
   { href: '#network-analysis', label: 'Analysis' },
