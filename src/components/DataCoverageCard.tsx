@@ -74,9 +74,9 @@ export default function DataCoverageCard() {
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="text-lg font-semibold text-slate-800">M&A Data Coverage &amp; Provenance</h3>
+          <h3 className="text-lg font-semibold text-slate-800">What Our Data Covers</h3>
           <p className="text-sm text-slate-500">
-            Verified women&apos;s health deal sample size, price disclosure rates, and statistical power per analytic module.
+            Here&apos;s an honest look at our dataset \u2014 how many deals we&apos;ve verified, what&apos;s disclosed, and where our analysis is strongest.
           </p>
         </div>
         <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">

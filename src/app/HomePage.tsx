@@ -42,10 +42,10 @@ export default function HomePage() {
   const totalDealValue = getVerifiedTotalDealValue();
 
   const stats = [
-    { label: 'Companies Tracked', value: verifiedCompanies.length.toString() },
-    { label: 'Verified M&A Deals', value: verifiedAcquisitions.length.toString() },
-    { label: 'Disclosed Deal Value', value: `$${(totalDealValue / 1000).toFixed(1)}B` },
-    { label: 'Public Sources Cited', value: dataProvenance.sources.length.toString() },
+    { label: 'Companies in our network', value: verifiedCompanies.length.toString() },
+    { label: 'Verified deals', value: verifiedAcquisitions.length.toString() },
+    { label: 'In disclosed value', value: `$${(totalDealValue / 1000).toFixed(1)}B` },
+    { label: 'Public sources cited', value: dataProvenance.sources.length.toString() },
   ];
 
   return (
@@ -59,7 +59,7 @@ export default function HomePage() {
             </div>
             <div>
               <h1 className="text-xl font-bold text-lacuna-plum">Lacuna</h1>
-              <p className="text-xs text-lacuna-blue">Women&apos;s Health M&amp;A Intelligence</p>
+              <p className="text-xs text-lacuna-blue">Illuminating Women&apos;s Health</p>
             </div>
           </a>
           <SiteSectionNav />
@@ -77,17 +77,17 @@ export default function HomePage() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 bg-lacuna-lavender/25 rounded-full text-xs font-medium text-lacuna-plum">
               <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
-              Verified dataset · {verifiedCompanies.length} companies · {verifiedAcquisitions.length} acquisitions
+              Curated with care · {verifiedCompanies.length} companies · {verifiedAcquisitions.length} deals
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-lacuna-plum mb-4">
-              Women&apos;s Health
-              <span className="lacuna-gradient-text"> M&amp;A Deal Tracker</span>
+              Making Sense of
+              <span className="lacuna-gradient-text"> Women&apos;s Health M&amp;A</span>
             </h2>
             <p className="text-lg text-lacuna-blue leading-relaxed">
-              Open-source mergers &amp; acquisitions intelligence for FemTech,
-              reproductive health, and precision medicine. Verified deal data from
-              SEC filings, clinical trial analytics from ClinicalTrials.gov, and
-              health equity research — with full data provenance and transparent methodology.
+              Welcome to Lacuna — a gentle, honest look at who&apos;s acquiring whom
+              in women&apos;s health. We bring together verified deal data, clinical
+              trial insights, and health equity research so you can explore the
+              landscape with confidence and clarity.
             </p>
           </div>
         </motion.section>
@@ -140,8 +140,8 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Women&apos;s Health Acquisition Network</h3>
-            <p className="text-lacuna-blue">Interactive visualization of FemTech and healthcare M&amp;A relationships — acquirers, targets, and deal connections</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Who&apos;s Connected to Whom</h3>
+            <p className="text-lacuna-blue">Explore the relationships between acquirers and the women&apos;s health companies they&apos;ve welcomed into their portfolios</p>
           </div>
           <ForceNetwork
             nodes={networkNodes}
@@ -161,8 +161,8 @@ export default function HomePage() {
             data={dealsByYear}
           />
           <div className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 p-6">
-            <h3 className="text-lg font-semibold text-lacuna-plum mb-2">Recent M&amp;A Activity</h3>
-            <p className="text-sm text-lacuna-blue mb-6">Latest women&apos;s health acquisitions and strategic investments</p>
+            <h3 className="text-lg font-semibold text-lacuna-plum mb-2">What&apos;s Happening Now</h3>
+            <p className="text-sm text-lacuna-blue mb-6">The latest deals shaping the women&apos;s health landscape</p>
             <div className="space-y-4">
               {verifiedAcquisitions.slice(0, 5).map((deal: typeof verifiedAcquisitions[0]) => {
                 const target = verifiedCompanies.find((c: typeof verifiedCompanies[0]) => c.id === deal.targetId);
@@ -208,9 +208,9 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Clinical Trial Pipeline Tracker</h3>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Clinical Trials Worth Watching</h3>
             <p className="text-lacuna-blue">
-              Live clinical trial data from ClinicalTrials.gov — women&apos;s health, oncology, genetic markers, and precision medicine research
+              A window into active research — women&apos;s health, oncology, genetic markers, and precision medicine trials sourced from ClinicalTrials.gov
             </p>
           </div>
           <ClinicalTrialTracker />
@@ -236,9 +236,9 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Health Equity &amp; Disparity Analysis</h3>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Health Equity &amp; the Gaps That Matter</h3>
             <p className="text-lacuna-blue">
-              Epidemiology data mapped to women&apos;s health portfolio companies — maternal mortality, PCOS, endometriosis, and reproductive health disparities
+              Understanding where disparities persist — maternal mortality, PCOS, endometriosis — and which companies are positioned to help close them
             </p>
           </div>
           <HealthEquityDashboard />
@@ -253,8 +253,8 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Health Impact Assessment</h3>
-            <p className="text-lacuna-blue">Opportunity-Adjusted Impact Score (OAIS) for women&apos;s health acquisitions — transparent methodology with disclosed limitations</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Measuring What Matters</h3>
+            <p className="text-lacuna-blue">How much real-world health impact could these acquisitions have? We score each honestly — and tell you what we can&apos;t measure, too</p>
           </div>
           <ImpactOpportunityCard />
         </motion.section>
@@ -268,8 +268,8 @@ export default function HomePage() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Post-Acquisition Validation</h3>
-            <p className="text-lacuna-blue">M&amp;A outcome tracking — pre-acquisition predictions vs post-deal reality for women&apos;s health companies</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Did the Deal Deliver?</h3>
+            <p className="text-lacuna-blue">Checking in on what happened after the acquisition — did the outcomes match the promise?</p>
           </div>
           <ValidationTracker />
         </motion.section>
@@ -284,8 +284,8 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">M&amp;A Network Analysis</h3>
-            <p className="text-lacuna-blue">Healthcare acquirer concentration metrics — Gini coefficient, HHI index, bootstrap confidence intervals, and community detection</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">A Closer Look at the Network</h3>
+            <p className="text-lacuna-blue">How concentrated is the acquirer landscape? We explore market structure with honest statistical measures and transparent confidence intervals</p>
           </div>
           <NetworkAnalysisHonest />
         </motion.section>
@@ -299,8 +299,8 @@ export default function HomePage() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Competitive Landscape Analysis</h3>
-            <p className="text-lacuna-blue">Women&apos;s health acquirer intelligence — deal velocity, portfolio strategy, and market structure comparison</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Getting to Know the Acquirers</h3>
+            <p className="text-lacuna-blue">Who&apos;s been most active, what are they building, and how do their strategies compare?</p>
           </div>
           <CompetitiveAnalysisDashboard />
         </motion.section>
@@ -314,8 +314,8 @@ export default function HomePage() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Causal Identification Strategy</h3>
-            <p className="text-lacuna-blue">Causal inference framework for M&amp;A analysis — Pearl backdoor criterion with measured and unmeasured confounders</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Understanding Cause &amp; Effect</h3>
+            <p className="text-lacuna-blue">Our approach to teasing apart what actually drives acquisition outcomes — with full transparency about what we can and can&apos;t claim</p>
           </div>
           <CausalDAG />
         </motion.section>
@@ -329,8 +329,8 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Causal Inference Engine</h3>
-            <p className="text-lacuna-blue">Sector-level women&apos;s health acquisition analysis from verified deal data — no simulated regressions</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">What the Data Actually Says</h3>
+            <p className="text-lacuna-blue">Sector-level patterns drawn directly from verified deals — no simulations, just what the numbers tell us</p>
           </div>
           <CausalInferenceEngine />
         </motion.section>
@@ -344,8 +344,8 @@ export default function HomePage() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">M&amp;A Timeline &amp; Temporal Validation</h3>
-            <p className="text-lacuna-blue">Women&apos;s health deal announcement timing and transaction cadence from verified public filings</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">The Story Over Time</h3>
+            <p className="text-lacuna-blue">When are deals happening, and how has the pace of women&apos;s health M&amp;A evolved?</p>
           </div>
           <TemporalValidation />
         </motion.section>
@@ -359,8 +359,8 @@ export default function HomePage() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Sensitivity Analysis</h3>
-            <p className="text-lacuna-blue">Robustness checks for M&amp;A models — Rotnitzky bounds and Oster&apos;s δ for unobserved confounding</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">How Robust Are Our Findings?</h3>
+            <p className="text-lacuna-blue">We stress-test our models so you know how much to trust them — because honest research means showing the seams</p>
           </div>
           <SensitivityAnalysis />
         </motion.section>
@@ -374,8 +374,8 @@ export default function HomePage() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Bayesian Small Sample Analysis</h3>
-            <p className="text-lacuna-blue">Bayesian inference for women&apos;s health M&amp;A — pre-registered hypotheses with main effects (n={verifiedAcquisitions.length} deals)</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Small Dataset, Big Questions</h3>
+            <p className="text-lacuna-blue">With {verifiedAcquisitions.length} verified deals, we use Bayesian methods designed for small samples — because every data point matters</p>
           </div>
           <BayesianCausalAnalysis />
         </motion.section>
@@ -389,8 +389,8 @@ export default function HomePage() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Company Scoring &amp; Similarity</h3>
-            <p className="text-lacuna-blue">Women&apos;s health company comparison — factor scoring, cosine similarity, and capital-profile clustering</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Finding Companies Like Each Other</h3>
+            <p className="text-lacuna-blue">Which women&apos;s health companies share similar profiles? Explore natural groupings and see how they compare</p>
           </div>
           <div className="grid md:grid-cols-2 gap-8 mb-8">
             <ExitPredictor />
@@ -408,8 +408,8 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Export &amp; Share</h3>
-            <p className="text-lacuna-blue">Export women&apos;s health M&amp;A data to a polished Gamma presentation, document, or report</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Share Your Findings</h3>
+            <p className="text-lacuna-blue">Ready to share what you&apos;ve discovered? Generate a polished presentation, document, or report with Gamma</p>
           </div>
           <ExportToGamma />
         </motion.section>
@@ -454,12 +454,11 @@ export default function HomePage() {
 
             <div className="text-[11px] text-lacuna-blue/50 text-center leading-relaxed max-w-3xl mx-auto">
               <p>
-                © 2026 Lacuna · Women&apos;s Health M&amp;A Intelligence · Licensed under BUSL 1.1 · Open-source research tool
+                © 2026 Lacuna · Made with care for women&apos;s health research · BUSL 1.1 · Open source
               </p>
               <p className="mt-1">
-                Verified mergers and acquisitions data from SEC EDGAR, company press releases, and public filings.
-                Clinical trial pipeline data via ClinicalTrials.gov API (42 USC §282(j)).
-                Covers FemTech, reproductive health, precision medicine, and women&apos;s health equity research. Not investment advice.
+                Built on verified, publicly available data from SEC EDGAR, company press releases, and ClinicalTrials.gov.
+                Covering FemTech, reproductive health, precision medicine, and health equity — because this work deserves honest, accessible tools. Not investment advice.
               </p>
             </div>
           </div>
