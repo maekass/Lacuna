@@ -19,11 +19,11 @@ export default function DealFlowChart({ data, width = 600, height = 300 }: DealF
   const scale = (height - 100) / maxCount;
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
       <h3 className="text-lg font-semibold text-slate-800 mb-2">Deal Activity Over Time</h3>
-      <p className="text-sm text-slate-500 mb-6">M&amp;A and strategic investments in women&apos;s health</p>
+      <p className="text-sm text-slate-500 mb-4 sm:mb-6">M&amp;A and strategic investments in women&apos;s health</p>
       
-      <svg width={width} height={height} className="w-full">
+      <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto">
         {/* Grid lines */}
         {[0, 0.25, 0.5, 0.75, 1].map((tick, i) => (
           <line

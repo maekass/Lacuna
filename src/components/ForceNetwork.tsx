@@ -38,10 +38,29 @@ const sectorColors: Record<string, string> = {
   'Sexual Wellness': LACUNA_PALETTE.transcendentPink,
 };
 
-export default function ForceNetwork({ nodes, links, width = 800, height = 600 }: ForceNetworkProps) {
+export default function ForceNetwork({ nodes, links, width: widthProp, height: heightProp }: ForceNetworkProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const [hoveredNode, setHoveredNode] = useState<Node | null>(null);
+  const [dims, setDims] = useState({ w: widthProp ?? 800, h: heightProp ?? 600 });
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const measure = () => {
+      const w = el.clientWidth;
+      const h = Math.max(400, Math.min(w * 0.6, 700));
+      setDims({ w, h });
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const width = widthProp ?? dims.w;
+  const height = heightProp ?? dims.h;
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -172,31 +191,32 @@ export default function ForceNetwork({ nodes, links, width = 800, height = 600 }
   }, [nodes, links, width, height]);
 
   return (
-    <div className="relative">
+    <div ref={containerRef} className="relative w-full">
       <svg
         ref={svgRef}
         width={width}
         height={height}
-        className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border border-slate-200"
+        className="w-full bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border border-slate-200"
+        style={{ maxHeight: '80vh' }}
       />
       
-      {/* Legend */}
+      {/* Legend — collapsible on small screens */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
-        className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-4 max-w-xs"
+        className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-2 sm:p-4 max-w-[10rem] sm:max-w-xs"
       >
-        <h4 className="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-3">Sectors</h4>
-        <div className="space-y-2">
+        <h4 className="text-[10px] sm:text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2 sm:mb-3">Sectors</h4>
+        <div className="space-y-1 sm:space-y-2">
           {Object.entries(sectorColors).map(([sector, color]) => (
-            <div key={sector} className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-              <span className="text-xs text-slate-600">{sector}</span>
+            <div key={sector} className="flex items-center gap-1.5 sm:gap-2">
+              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full shrink-0" style={{ backgroundColor: color }} />
+              <span className="text-[10px] sm:text-xs text-slate-600 truncate">{sector}</span>
             </div>
           ))}
-          <div className="flex items-center gap-2 mt-3 pt-2 border-t border-slate-200">
-            <div className="w-3 h-3 rounded-full bg-slate-800 border-2 border-amber-400" />
-            <span className="text-xs text-slate-600">Acquirer</span>
+          <div className="flex items-center gap-1.5 sm:gap-2 mt-2 sm:mt-3 pt-1.5 sm:pt-2 border-t border-slate-100">
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-800 border-2 border-amber-400 shrink-0" />
+            <span className="text-[10px] sm:text-xs text-slate-600">Acquirer</span>
           </div>
         </div>
       </motion.div>
@@ -206,7 +226,7 @@ export default function ForceNetwork({ nodes, links, width = 800, height = 600 }
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-4 max-w-sm"
+          className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-3 sm:p-4 max-w-[14rem] sm:max-w-sm"
         >
           <div className="flex items-start justify-between mb-2">
             <h3 className="font-semibold text-slate-800">{selectedNode.name}</h3>
