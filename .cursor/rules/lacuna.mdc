@@ -3,16 +3,32 @@ description: Lacuna project context, stack, and coding conventions
 alwaysApply: true
 ---
 
-# Lacuna
+# Lacuna — women's health M&A intelligence platform
 
-Educational women's health M&A demo. Verified static dataset + honest provenance — not live institutional data.
+Educational demo visualizing verified acquisition data, network relationships, health equity focus areas, and descriptive analytics. Honest provenance — not live institutional data.
 
-Stack: Next.js 16, React 19, TS strict, Tailwind v4, D3, TF.js. Data: `getVerifiedDataset()` from `src/data/dataset.verified.json`. Future DB: `LACUNA_DATA_MODE=db`.
+## Stack
+Next.js 16, React 19, TypeScript (strict: true), Tailwind CSS v4, D3.js v7, Framer Motion, TensorFlow.js.
 
-Paths: `@/*` → `src/*`. PascalCase in `src/components/`. Logic in `src/lib/`. API in `src/app/api/`.
+## Data
+Single source of truth: `getVerifiedDataset()` from `src/data/dataset.verified.json`.
+Three arrays: `companies` (55), `acquirers` (24), `acquisitions` (38 deals).
+Every deal cites public sources (SEC filings, press releases, investor relations).
+Future DB toggle: `LACUNA_DATA_MODE=db` in `src/lib/data/datasetProvider.ts`.
 
-Do: fetch + NextResponse; verified dataset as source of truth; fix Deno lint (`require-await`, `no-unused-vars`); read Next 16 docs in `node_modules/next/dist/docs/`.
+## Paths
+`@/*` → `src/*`. PascalCase in `src/components/`. Logic in `src/lib/`. API in `src/app/api/`.
 
-Don't: synthetic maDeals data; axios/styled-jsx/Postgres unless asked; async without await.
+## Do
+- `fetch` + `NextResponse`; verified dataset as source of truth
+- Fix Deno lint (`require-await`, `no-unused-vars`)
+- Read Next.js 16 docs in `node_modules/next/dist/docs/` before code changes
+- Functional React + hooks; `interface` for shared shapes; JSDoc on exported lib fns
+
+## Don't
+- Synthetic `maDeals` data
+- `axios` / `styled-jsx` / Postgres unless asked
+- `async` without `await` (Deno CI fails)
+- `any` type; components over ~300 lines
 
 Full rules: AGENTS.md

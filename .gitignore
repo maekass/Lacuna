@@ -39,9 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# cursor (keep rules tracked)
 .cursor/*
 !.cursor/rules/
 !.cursor/rules/**
+
+# vscode / cursor (keep shared settings tracked)
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
 
 # staging outputs (templates in staging/*.template.csv are tracked)
 staging/deals_candidates.csv
