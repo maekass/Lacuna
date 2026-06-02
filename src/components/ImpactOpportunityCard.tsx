@@ -29,14 +29,20 @@ interface CompanyProfile {
 }
 
 function mapSectorToEpidemiology(sector: string) {
-  if (sector === 'Fertility') {
+  if (sector === 'Fertility' || sector === 'Reproductive Health' || sector === 'Contraception') {
     return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes('Fertility')) ?? null;
   }
   if (sector === 'Mental Health') {
     return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes('Postpartum')) ?? null;
   }
-  if (sector === 'Pelvic Health') {
+  if (sector === 'Pelvic Health' || sector === 'Gynecological Surgery') {
     return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes('Fibroids')) ?? null;
+  }
+  if (sector === 'Breast Health' || sector === 'Precision Medicine') {
+    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes('Breast')) ?? null;
+  }
+  if (sector === 'Maternal Health') {
+    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes('Maternal')) ?? null;
   }
   return null;
 }

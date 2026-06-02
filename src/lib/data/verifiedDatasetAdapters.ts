@@ -72,6 +72,21 @@ function inferAcquirerType(name: string): Acquirer['type'] {
   return 'strategic_healthcare';
 }
 
+function inferGeography(hq: string | undefined): 'us' | 'eu' | 'asia' | 'global' {
+  if (!hq) return 'us';
+  const h = hq.toLowerCase();
+  if (
+    h.includes('uk') || h.includes('england') ||
+    h.includes('denmark') || h.includes('spain') ||
+    h.includes('finland') || h.includes('belgium') ||
+    h.includes('sweden') || h.includes('switzerland') ||
+    h.includes('hungary') || h.includes('germany') ||
+    h.includes('france') || h.includes('netherlands')
+  ) return 'eu';
+  if (h.includes('japan') || h.includes('china') || h.includes('korea') || h.includes('india')) return 'asia';
+  return 'us';
+}
+
 function mapCompanyStage(stage: string): AcquiredCompany['stage'] {
   const s = stage.toLowerCase();
   if (s.includes('pre-seed') || s.includes('student')) return 'pre_seed';
@@ -130,7 +145,7 @@ export function getVerifiedCompetitiveAnalysisData(
         yearFounded: c.founded,
         yearAcquired,
         acquisitionValue: deal?.dealValue,
-        geography: 'us',
+        geography: inferGeography(c.hq),
       };
     });
 

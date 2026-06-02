@@ -29,7 +29,7 @@ export const HEALTH_EQUITY_FOCUS_AREAS: readonly HealthEquityFocusArea[] = [
     dataTier: 'cited_epidemiology',
     source: 'CDC Pregnancy Mortality Surveillance System (2022)',
     sourceYear: 2022,
-    relatedSectors: ['Fertility', 'General Wellness'],
+    relatedSectors: ['Fertility', 'General Wellness', 'Maternal Health'],
     epidemiologyCondition: 'Maternal Health Complications',
   },
   {
@@ -41,19 +41,19 @@ export const HEALTH_EQUITY_FOCUS_AREAS: readonly HealthEquityFocusArea[] = [
     dataTier: 'cited_epidemiology',
     source: "NIH/NICHD Fibroid Research (2020), Journal of Women's Health",
     sourceYear: 2020,
-    relatedSectors: ['Pelvic Health'],
+    relatedSectors: ['Pelvic Health', 'Gynecological Surgery'],
     epidemiologyCondition: 'Uterine Fibroids',
   },
   {
     id: 'fertility',
     title: 'Fertility challenges',
     summary:
-      'Reproductive-age women facing infertility; overlaps with FemTech and telehealth in our sample.',
+      'Reproductive-age women facing infertility; overlaps with FemTech, IVF devices, reproductive testing, and telehealth in our sample.',
     disparityLabel: '~12% of reproductive-age women (15–44) in the US (CDC NSFG)',
     dataTier: 'cited_epidemiology',
     source: 'CDC National Survey of Family Growth (2022)',
     sourceYear: 2022,
-    relatedSectors: ['Fertility'],
+    relatedSectors: ['Fertility', 'Reproductive Health', 'Diagnostics', 'Contraception'],
     epidemiologyCondition: 'Fertility Challenges',
   },
   {
@@ -77,5 +77,17 @@ export const HEALTH_EQUITY_FOCUS_AREAS: readonly HealthEquityFocusArea[] = [
     dataTier: 'illustrative_static',
     source: 'Illustrative framing only — not a live CDC feed; see OAIS methodology docs',
     relatedSectors: ['Wearables'],
+  },
+  {
+    id: 'breast-cancer',
+    title: 'Breast cancer diagnostics & precision medicine',
+    summary:
+      'Breast cancer is the most common cancer among women globally; genomic profiling and precision diagnostics are transforming treatment decisions.',
+    disparityLabel: 'Black women: 40% higher breast cancer mortality (ACS 2023)',
+    dataTier: 'cited_epidemiology',
+    source: 'American Cancer Society Cancer Statistics 2023; SEER Program',
+    sourceYear: 2023,
+    relatedSectors: ['Breast Health', 'Precision Medicine'],
+    epidemiologyCondition: 'Breast Cancer',
   },
 ] as const;
