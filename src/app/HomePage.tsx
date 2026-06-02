@@ -22,6 +22,7 @@ import DataCoverageCard from '@/components/DataCoverageCard';
 import ClinicalTrialTracker from '@/components/ClinicalTrialTracker';
 import SiteSectionNav from '@/components/SiteSectionNav';
 import DataProvenanceBanner from '@/components/DataProvenanceBanner';
+import ExportToGamma from '@/components/ExportToGamma';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 export default function HomePage() {
@@ -396,6 +397,21 @@ export default function HomePage() {
             <CompanySimilarity />
           </div>
           <ClusteringAnalysis />
+        </motion.section>
+
+        {/* Export to Gamma */}
+        <motion.section
+          id="export"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.65 }}
+          className="mb-16 scroll-mt-20"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Export &amp; Share</h3>
+            <p className="text-lacuna-blue">Generate a polished Gamma presentation from Lacuna&apos;s verified dataset</p>
+          </div>
+          <ExportToGamma />
         </motion.section>
 
         {/* Footer */}
