@@ -19,6 +19,7 @@ import CompetitiveAnalysisDashboard from '@/components/CompetitiveAnalysisDashbo
 import TemporalValidation from '@/components/TemporalValidation';
 import CausalInferenceEngine from '@/components/CausalInferenceEngine';
 import DataCoverageCard from '@/components/DataCoverageCard';
+import ClinicalTrialTracker from '@/components/ClinicalTrialTracker';
 import SiteSectionNav from '@/components/SiteSectionNav';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
@@ -186,6 +187,23 @@ export default function HomePage() {
           <ValuationMatrix />
         </motion.section>
 
+        {/* Clinical Trial Tracker */}
+        <motion.section
+          id="clinical-trials"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.45 }}
+          className="mb-16 scroll-mt-20"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Clinical Trial Pipeline</h3>
+            <p className="text-lacuna-blue">
+              Live trial intelligence from ClinicalTrials.gov — women&apos;s health, oncology, genetic markers, and precision medicine
+            </p>
+          </div>
+          <ClinicalTrialTracker />
+        </motion.section>
+
         {/* Wearables Ecosystem Section */}
         <motion.section
           id="wearables"
@@ -345,7 +363,7 @@ export default function HomePage() {
         >
           <div className="mb-6">
             <h3 className="text-2xl font-semibold text-lacuna-plum">Bayesian Small Sample Analysis</h3>
-            <p className="text-lacuna-blue">Pre-registered hypotheses with main effects only (n=22)</p>
+            <p className="text-lacuna-blue">Pre-registered hypotheses with main effects only (n={verifiedAcquisitions.length})</p>
           </div>
           <BayesianCausalAnalysis />
         </motion.section>
