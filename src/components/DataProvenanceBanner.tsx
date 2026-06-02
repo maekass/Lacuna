@@ -31,20 +31,20 @@ const DATA_SOURCES = [
 
 const COMPLIANCE_ITEMS = [
   {
-    title: 'No personal data collected',
-    detail: 'All data concerns corporate entities, public filings, and registered clinical trials. No PII, PHI, or individual patient data is accessed or stored.',
+    title: 'Your privacy is respected',
+    detail: 'Everything here concerns corporate entities and public filings — no personal, patient, or individual data is ever accessed or stored.',
   },
   {
-    title: 'Ethical retrieval only',
-    detail: 'Data sourced exclusively via official public APIs and published press releases. No web scraping, no paywall circumvention, no proprietary database access.',
+    title: 'Gathered with integrity',
+    detail: 'We only use official public APIs and published press releases. No scraping, no paywall workarounds, no proprietary database access.',
   },
   {
-    title: 'Educational & research purpose',
-    detail: 'This tool is designed for bona-fide academic research, policy analysis, and educational use. It does not constitute investment advice, medical guidance, or commercial intelligence.',
+    title: 'Built for learning & research',
+    detail: 'Lacuna is designed for academic research, policy analysis, and education. It\'s not investment advice or commercial intelligence — just an honest research companion.',
   },
   {
-    title: 'Transparent methodology',
-    detail: 'All analytical models disclose assumptions, limitations, and sample sizes. Small-N constraints are surfaced rather than hidden. Methodology documentation available on GitHub.',
+    title: 'We show our work',
+    detail: 'Every model discloses its assumptions and limitations. When our sample is small, we say so. Full methodology documentation is available on GitHub.',
   },
 ] as const;
 
@@ -66,7 +66,7 @@ export default function DataProvenanceBanner() {
             Open data
           </span>
           <span className="text-xs text-lacuna-blue truncate">
-            Women&apos;s health M&amp;A data from SEC EDGAR, ClinicalTrials.gov, and public filings · BUSL 1.1 licensed · Open-source research
+            Thoughtfully sourced from SEC EDGAR, ClinicalTrials.gov, and public filings · Open-source · BUSL 1.1
           </span>
         </div>
         <svg

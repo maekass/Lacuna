@@ -22,7 +22,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Lacuna — Women's Health M&A Intelligence | FemTech Deal Tracker & Analytics",
   description:
-    "Track 50+ verified women's health mergers and acquisitions across FemTech, precision medicine, and reproductive health. Open-source M&A deal flow analytics, clinical trial pipeline, network analysis, and health equity research powered by SEC EDGAR and ClinicalTrials.gov data.",
+    "Explore the landscape of women's health mergers and acquisitions. Lacuna brings together verified FemTech, precision medicine, and reproductive health deal data with clinical trial insights and health equity research — openly sourced, honestly presented.",
   keywords: [
     "women's health M&A",
     "FemTech acquisitions",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lacuna — Women's Health M&A Intelligence",
     description:
-      "Open-source platform tracking 50+ verified FemTech and women's health acquisitions. Deal flow analytics, clinical trial pipeline, network analysis, and health equity research.",
+      "Explore verified women's health acquisitions, clinical trial pipelines, and health equity research — all in one welcoming, open-source platform.",
     url: "https://lacuna-maekass.vercel.app",
     siteName: "Lacuna",
     type: "website",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Lacuna — Women's Health M&A Intelligence",
     description:
-      "Track 50+ verified women's health mergers & acquisitions. Open-source FemTech deal analytics, clinical trials, and health equity research.",
+      "Explore verified women's health M&A deals, clinical trials, and health equity research — openly sourced and honestly presented.",
   },
   robots: {
     index: true,
@@ -88,7 +88,7 @@ export default function RootLayout({
               name: "Lacuna",
               url: "https://lacuna-maekass.vercel.app",
               description:
-                "Open-source women's health M&A intelligence platform tracking verified FemTech, precision medicine, and reproductive health acquisitions.",
+                "An open-source platform that brings together verified women's health M&A data, clinical trial insights, and health equity research in one welcoming space.",
               applicationCategory: "BusinessApplication",
               operatingSystem: "Web",
               isAccessibleForFree: true,
