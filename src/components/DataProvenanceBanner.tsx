@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 const DATA_SOURCES = [
   {
@@ -50,6 +51,7 @@ const COMPLIANCE_ITEMS = [
 
 export default function DataProvenanceBanner() {
   const [expanded, setExpanded] = useState(false);
+  const { dataProvenance, verifiedAcquisitions } = useVerifiedDataset();
 
   return (
     <div className="rounded-xl border border-lacuna-lavender/30 bg-white/60 backdrop-blur-sm overflow-hidden">
@@ -66,7 +68,10 @@ export default function DataProvenanceBanner() {
             Open data
           </span>
           <span className="text-xs text-lacuna-blue truncate">
-            Thoughtfully sourced from SEC EDGAR, ClinicalTrials.gov, and public filings · Open-source · BUSL 1.1
+            Thoughtfully sourced from SEC EDGAR, ClinicalTrials.gov, and public filings
+            {' · '}{verifiedAcquisitions.length} verified acquisitions
+            {' · '}{dataProvenance.datasetVersion} · updated {dataProvenance.lastUpdated}
+            {' · '}Open-source · BUSL 1.1
           </span>
         </div>
         <svg

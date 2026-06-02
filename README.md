@@ -94,9 +94,10 @@ Lacuna is an open-source [network intelligence platform](#network-intelligence-p
 
 Track acquisitions, strategic investments, and exit patterns across the women's health technology ecosystem:
 
-- **23 verified companies** across fertility, mental health, wellness, wearables, pelvic health
-- **6 tracked acquisitions** with disclosed valuations and strategic rationale
+- **58 verified acquisitions** spanning fertility, oncology, diagnostics, menopause, pelvic health, and precision medicine
+- Acquirers including Hologic (7 deals), KKR, Pfizer, Gilead, Boston Scientific, and more
 - **$74B combined market opportunity** in priority disease areas
+- Dataset v5 · last updated June 2026 · sourced from SEC EDGAR, press releases, and public filings
 
 ### Interactive Network Visualization (`ForceNetwork.tsx`)
 
@@ -134,13 +135,13 @@ Track acquisitions, strategic investments, and exit patterns across the women's 
 
 ### Exit Predictor (`ExitPredictor.tsx`)
 
-**TensorFlow.js-powered acquisition likelihood scoring**:
+**Transparent, deterministic acquisition likelihood indicator**:
 
-- **78% accuracy** ensemble model (neural network + logistic regression)
-- **Feature engineering**: Stage, valuation, sector heat, company age
-- **Probability scoring**: 0-95% exit likelihood with confidence intervals
-- **Acquirer prediction**: Sector-based strategic buyer matching
-- **Explainable AI**: Factor analysis with key decision drivers
+- **Honest small-n design**: With n=58 acquisitions, no statistically valid predictive model is possible — this is a descriptive tool, not a forecast
+- **Disclosed factor weights**: Stage, valuation vs. median, sector prior exits, company age — all weights fixed and fully documented
+- **Explainable scoring**: Every factor visible to the user; no hidden model
+- **Reproducible**: Deterministic output with no randomness; same input always yields same score
+- See [`docs/MODEL_CARD.md`](docs/MODEL_CARD.md) for full methodology, limitations, and baseline comparisons
 
 ### Company Similarity Engine (`CompanySimilarity.tsx`)
 
@@ -330,6 +331,7 @@ Visit `http://localhost:3000` to view the application.
 
 | Document | Description |
 |----------|-------------|
+| [MODEL_CARD.md](docs/MODEL_CARD.md) | Acquisition likelihood indicator — methodology, honest limitations, baseline |
 | [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md) | JSON schema, staging workflow, validation |
 | [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md) | Health impact scoring framework |
 | [FAIRNESS_AUDIT_METHODOLOGY.md](docs/FAIRNESS_AUDIT_METHODOLOGY.md) | Statistical methods with limitations |

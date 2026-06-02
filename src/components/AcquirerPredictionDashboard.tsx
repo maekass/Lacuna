@@ -20,6 +20,7 @@ import {
   type CompetitiveAnalysis,
   type AcquirerMatch
 } from '@/data/acquirer-prediction-engine';
+import AIInsightsPanel from './AIInsightsPanel';
 
 // Generate company profiles from verified dataset
 function generateCompanyProfiles(verifiedCompanies: any[]): CompanyProfile[] {
@@ -197,6 +198,20 @@ export default function AcquirerPredictionDashboard() {
                 </div>
               </div>
             )}
+
+            {/* AI-Generated Insights */}
+            <div className="mt-6 pt-6 border-t border-gray-100">
+              <AIInsightsPanel
+                companyName={selectedAnalysis.company.name}
+                sector={selectedAnalysis.company.sector}
+                analysis={{
+                  topAcquirer: selectedAnalysis.topMatches[0]?.acquirer.name || 'N/A',
+                  matchScore: selectedAnalysis.topMatches[0]?.matchScore || 0,
+                  estimatedValue: selectedAnalysis.fairValueEstimate.median,
+                  competitiveThreat: selectedAnalysis.competitiveThreatLevel
+                }}
+              />
+            </div>
           </div>
 
           {/* Acquirer Rankings */}
