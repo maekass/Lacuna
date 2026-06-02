@@ -10,7 +10,7 @@ Shared guidance for Cursor, Windsurf, and other AI assistants.
 
 ## Project context
 
-Lacuna is an educational M&A intelligence demo for women's health. It visualizes verified acquisition data, network relationships, fairness audits, and descriptive analytics.
+Lacuna is an educational M&A intelligence demo for women's health. It visualizes verified acquisition data, network relationships, health equity focus areas, and descriptive analytics.
 
 **Live demo:** https://lacuna-maekass.vercel.app
 

@@ -1,6 +1,27 @@
-# Lacuna — see AGENTS.md for full conventions.
+# Lacuna — women's health M&A intelligence platform
 
-Stack: Next.js 16, React 19, Tailwind v4, fetch, verified JSON dataset.
-Paths: src/app, src/components, src/lib, src/data (@/*).
-CI: deno lint must pass. No synthetic demo data. Roadmap: Postgres, live APIs, Jest.
-Commits: feat: / fix: / chore:
+See AGENTS.md for full conventions.
+
+## Stack
+Next.js 16, React 19, TypeScript (strict), Tailwind CSS v4, D3.js v7, Framer Motion, TensorFlow.js.
+HTTP: native `fetch` only (no axios). Data: `getVerifiedDataset()` from `src/data/dataset.verified.json`.
+
+## Project layout
+- `src/app/` — pages + API routes (Next.js App Router)
+- `src/components/` — React components (PascalCase filenames)
+- `src/lib/` — business logic, utilities, adapters
+- `src/data/` — verified JSON dataset (single source of truth)
+- `@/*` path alias resolves to `src/*`
+
+## Dataset structure
+`dataset.verified.json` has three arrays: `companies`, `acquirers`, `acquisitions`.
+Every deal links `acquirerId` → `targetId` with public source citations.
+
+## Key rules
+- No `async` without `await` (Deno CI fails)
+- No synthetic `maDeals` data — only verified dataset
+- Components ~300 lines max; prefer `interface` for shared shapes
+- Commits: `feat:` / `fix:` / `chore:` — short, why-focused
+
+## CI
+`npm run lint` (ESLint) + `deno lint` (require-await, no-unused-vars) + Vercel deploy preview
