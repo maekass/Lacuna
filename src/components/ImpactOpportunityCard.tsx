@@ -176,7 +176,7 @@ export default function ImpactOpportunityCard() {
           Opportunity-Adjusted Impact Score (OAIS)
         </h3>
         <p className="text-sm tracking-widest text-gray-500 mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif", textTransform: 'uppercase' }}>
-          Defensible Health Impact Assessment | What We CAN vs CANNOT Measure
+          Defensible Health Impact Assessment | Honest About What We Can Measure
         </p>
       </div>
 
@@ -394,28 +394,6 @@ export default function ImpactOpportunityCard() {
         </div>
       </div>
 
-      {/* What We CANNOT Measure */}
-      <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-        <h4 className="font-medium text-red-800 mb-4" style={{ fontFamily: "'Arial Narrow', sans-serif", textTransform: 'uppercase' }}>
-          ✗ What We CANNOT Measure (Tier 3 - Acknowledged Limitations)
-        </h4>
-        <div className="space-y-3">
-          {UNMEASURABLE_FACTORS.slice(0, 3).map((factor, i) => (
-            <div key={i} className="bg-white p-3 rounded border border-red-100">
-              <div className="flex items-center justify-between">
-                <span className="font-medium text-sm text-red-700">{factor.factor}</span>
-                <span className="text-xs text-red-600 bg-red-50 px-2 py-1 rounded">UNMEASURABLE</span>
-              </div>
-              <p className="text-xs text-gray-600 mt-1">{factor.why}</p>
-              <p className="text-xs text-amber-600 mt-1">
-                Proxy used: {factor.proxyUsed}<br />
-                Limitation: {factor.proxyLimitation}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Transparency Toggle */}
       <div className="bg-gray-50 rounded-lg">
         <button
@@ -460,6 +438,17 @@ export default function ImpactOpportunityCard() {
                   epidemiology data quality.
                 </li>
               </ol>
+
+              <h5 className="font-medium mt-5 mb-2 text-sm text-gray-600" style={{ fontFamily: "'Arial Narrow', sans-serif", textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                What we cannot measure directly
+              </h5>
+              <ul className="text-sm space-y-1.5 text-gray-600 list-disc list-inside">
+                {UNMEASURABLE_FACTORS.slice(0, 3).map((factor, i) => (
+                  <li key={i}>
+                    <strong className="text-gray-700">{factor.factor}</strong> — {factor.why}. <span className="text-gray-500 italic">Proxy: {factor.proxyUsed}</span>
+                  </li>
+                ))}
+              </ul>
 
               <div className="mt-4 p-3 bg-amber-50 rounded border border-amber-200">
                 <p className="text-sm text-amber-800">
