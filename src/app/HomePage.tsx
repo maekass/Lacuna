@@ -84,10 +84,17 @@ export default function HomePage() {
               <span className="lacuna-gradient-text"> Women&apos;s Health M&amp;A</span>
             </h2>
             <p className="text-lg text-lacuna-blue leading-relaxed">
-              Welcome to Lacuna — a gentle, honest look at who&apos;s acquiring whom
-              in women&apos;s health. We bring together verified deal data, clinical
-              trial insights, and health equity research so you can explore the
-              landscape with confidence and clarity.
+              Welcome to Lacuna — an honest, clear-eyed look at who&apos;s acquiring whom
+              in women&apos;s health and precision medicine. Beyond trends and buzzwords,
+              we bring together verified deal data, clinical trial insights, and health
+              equity research to help lay investors and institutional allocators alike
+              see the structural opportunity in this space.
+            </p>
+            <p className="text-sm text-lacuna-blue/70 mt-3 leading-relaxed">
+              Women&apos;s health has been historically underfunded relative to its
+              clinical burden — and that gap is closing. Lacuna is here to make the
+              investment case visible, grounded in public filings and real science,
+              not hype.
             </p>
           </div>
         </motion.section>
@@ -458,7 +465,8 @@ export default function HomePage() {
               </p>
               <p className="mt-1">
                 Built on verified, publicly available data from SEC EDGAR, company press releases, and ClinicalTrials.gov.
-                Covering FemTech, reproductive health, precision medicine, and health equity — because this work deserves honest, accessible tools. Not investment advice.
+                Designed for anyone — from first-time investors to institutional allocators — who wants to understand the
+                structural opportunity in women&apos;s health and precision medicine. Not investment advice.
               </p>
             </div>
           </div>

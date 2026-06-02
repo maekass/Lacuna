@@ -22,7 +22,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Lacuna — Women's Health M&A Intelligence | FemTech Deal Tracker & Analytics",
   description:
-    "Explore the landscape of women's health mergers and acquisitions. Lacuna brings together verified FemTech, precision medicine, and reproductive health deal data with clinical trial insights and health equity research — openly sourced, honestly presented.",
+    "Explore the investment landscape of women's health mergers and acquisitions. Lacuna brings together verified FemTech, precision medicine, and reproductive health deal data with clinical trial insights and health equity research — helping lay and institutional investors see the structural opportunity, grounded in public filings and real science.",
   keywords: [
     "women's health M&A",
     "FemTech acquisitions",
@@ -33,6 +33,8 @@ export const metadata: Metadata = {
     "clinical trials women's health",
     "health equity analytics",
     "FemTech investment intelligence",
+    "women's health investing",
+    "precision medicine investment case",
     "women's health startups",
     "healthcare deal flow",
     "M&A network analysis",
@@ -44,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lacuna — Women's Health M&A Intelligence",
     description:
-      "Explore verified women's health acquisitions, clinical trial pipelines, and health equity research — all in one welcoming, open-source platform.",
+      "Explore the investment case for women's health — verified acquisitions, clinical trial pipelines, and health equity research in one open-source platform.",
     url: "https://lacuna-maekass.vercel.app",
     siteName: "Lacuna",
     type: "website",
