@@ -21,6 +21,7 @@ import CausalInferenceEngine from '@/components/CausalInferenceEngine';
 import DataCoverageCard from '@/components/DataCoverageCard';
 import ClinicalTrialTracker from '@/components/ClinicalTrialTracker';
 import SiteSectionNav from '@/components/SiteSectionNav';
+import DataProvenanceBanner from '@/components/DataProvenanceBanner';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 export default function HomePage() {
@@ -88,6 +89,16 @@ export default function HomePage() {
               limitations are surfaced rather than hidden.
             </p>
           </div>
+        </motion.section>
+
+        {/* Data provenance & compliance */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.05 }}
+          className="mb-10"
+        >
+          <DataProvenanceBanner />
         </motion.section>
 
         {/* Stats Grid */}
@@ -389,33 +400,51 @@ export default function HomePage() {
 
         {/* Footer */}
         <footer className="mt-20 pt-8 border-t border-lacuna-lavender/40">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 lacuna-gradient rounded flex items-center justify-center">
-                <span className="text-white font-bold text-xs">L</span>
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 lacuna-gradient rounded flex items-center justify-center">
+                  <span className="text-white font-bold text-xs">L</span>
+                </div>
+                <span className="text-sm font-medium text-lacuna-plum">Lacuna</span>
               </div>
-              <span className="text-sm font-medium text-lacuna-plum">Lacuna</span>
+              <div className="flex items-center gap-4 text-sm text-lacuna-blue">
+                <a
+                  href="https://github.com/maekass/Lacuna"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-lacuna-plum transition-colors"
+                >
+                  GitHub
+                </a>
+                <a
+                  href="https://github.com/maekass/Lacuna/blob/main/LICENSE"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-lacuna-plum transition-colors"
+                >
+                  License (BUSL 1.1)
+                </a>
+                <a
+                  href="https://github.com/maekass/Lacuna/tree/main/docs"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-lacuna-plum transition-colors"
+                >
+                  Methodology
+                </a>
+              </div>
             </div>
-            <p className="text-sm text-lacuna-blue text-center">
-              Licensed under Business Source License 1.1 · © 2026 · Educational project — not investment advice
-            </p>
-            <div className="flex items-center gap-4 text-sm text-lacuna-blue">
-              <a
-                href="https://github.com/maekass/Lacuna"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-lacuna-plum transition-colors"
-              >
-                GitHub
-              </a>
-              <a
-                href="https://github.com/maekass/Lacuna/tree/main/docs"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-lacuna-plum transition-colors"
-              >
-                Methodology docs
-              </a>
+
+            <div className="text-[11px] text-lacuna-blue/50 text-center leading-relaxed max-w-3xl mx-auto">
+              <p>
+                © 2026 Lacuna · Licensed under Business Source License 1.1 · Open-source educational project
+              </p>
+              <p className="mt-1">
+                All M&amp;A data sourced from public SEC EDGAR filings, company press releases, and verified news coverage.
+                Clinical trial data retrieved via ClinicalTrials.gov public API (42 USC §282(j)).
+                No personal, proprietary, or paywalled data is accessed. Not investment advice.
+              </p>
             </div>
           </div>
         </footer>
