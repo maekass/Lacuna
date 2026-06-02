@@ -252,47 +252,80 @@ export default function NetworkAnalysisHonest() {
             </div>
           </div>
 
-          {/* Clustering with Bootstrap CI */}
+          {/* Clustering — bipartite network caveat */}
           <div className="bg-white border border-gray-200 rounded-lg p-6">
             <h4 className="font-medium mb-4" style={{ fontFamily: "'Bodoni MT', Didot, serif" }}>
-              Clustering Coefficient (with Bootstrap CI)
+              Clustering Coefficient
             </h4>
-            
-            <div className="grid grid-cols-3 gap-4 mb-4">
-              <div className="bg-gray-50 p-3 rounded-lg text-center">
-                <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#5D4E6D' }}>
-                  {stats.clustering.average.toFixed(3)}
-                </div>
-                <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
-                  Average
-                </div>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-lg text-center">
-                <div className="text-lg font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#4A5D8A' }}>
-                  [{stats.clustering.bootstrap.lower.toFixed(3)}, {stats.clustering.bootstrap.upper.toFixed(3)}]
-                </div>
-                <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
-                  95% Bootstrap CI
-                </div>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-lg text-center">
-                <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#B8A9C9' }}>
-                  {stats.clustering.bootstrap.numSamples}
-                </div>
-                <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
-                  Bootstrap Samples
-                </div>
-              </div>
-            </div>
 
-            <div className="p-3 bg-blue-50 border border-blue-200 rounded text-sm text-blue-800">
-              <strong>Interpretation:</strong> Average clustering of {stats.clustering.average.toFixed(3)} 
-              with wide 95% CI of [{stats.clustering.bootstrap.lower.toFixed(3)}, {stats.clustering.bootstrap.upper.toFixed(3)}] 
-              reflects substantial uncertainty due to small n. 
-              {stats.clustering.average < 0.1 ? 'Low clustering suggests minimal triadic closure (few acquirer cliques).' : 
-               stats.clustering.average < 0.3 ? 'Moderate clustering suggests some acquirer overlap.' :
-               'High clustering suggests strong acquirer community structure.'}
-            </div>
+            {stats.clustering.average === 0 ? (
+              <>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div className="bg-gray-50 p-3 rounded-lg text-center">
+                    <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#5D4E6D' }}>
+                      0.000
+                    </div>
+                    <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                      Average
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg text-center">
+                    <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#E8B4B8' }}>
+                      Bipartite
+                    </div>
+                    <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                      Network Type
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-3 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+                  <strong>Why zero?</strong>{' '}
+                  This acquisition network is <strong>bipartite</strong> — edges only connect acquirers to targets, never acquirer-to-acquirer or target-to-target.
+                  Triangles cannot form in a bipartite graph, so the standard clustering coefficient is always 0.
+                  This is a structural property of acquisition networks, not a data quality issue.
+                  Use <strong>buyer concentration</strong> (Gini, HHI) in the next tab for meaningful structure analysis.
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="grid grid-cols-3 gap-4 mb-4">
+                  <div className="bg-gray-50 p-3 rounded-lg text-center">
+                    <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#5D4E6D' }}>
+                      {stats.clustering.average.toFixed(3)}
+                    </div>
+                    <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                      Average
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg text-center">
+                    <div className="text-lg font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#4A5D8A' }}>
+                      [{stats.clustering.bootstrap.lower.toFixed(3)}, {stats.clustering.bootstrap.upper.toFixed(3)}]
+                    </div>
+                    <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                      95% Bootstrap CI
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg text-center">
+                    <div className="text-2xl font-light" style={{ fontFamily: "'Bodoni MT', Didot, serif", color: '#B8A9C9' }}>
+                      {stats.clustering.bootstrap.numSamples}
+                    </div>
+                    <div className="text-xs text-gray-500 uppercase mt-1" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+                      Bootstrap Samples
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-3 bg-blue-50 border border-blue-200 rounded text-sm text-blue-800">
+                  <strong>Interpretation:</strong>{' '}
+                  Average clustering of {stats.clustering.average.toFixed(3)}{' '}
+                  with 95% CI of [{stats.clustering.bootstrap.lower.toFixed(3)}, {stats.clustering.bootstrap.upper.toFixed(3)}].{' '}
+                  {stats.clustering.average < 0.1 ? 'Low clustering suggests minimal triadic closure (few acquirer cliques).' :
+                   stats.clustering.average < 0.3 ? 'Moderate clustering suggests some acquirer overlap.' :
+                   'High clustering suggests strong acquirer community structure.'}
+                </div>
+              </>
+            )}
           </div>
         </motion.div>
       )}

@@ -1,12 +1,15 @@
 {
   "provenance": {
-    "lastUpdated": "2026-05-30",
+    "lastUpdated": "2026-06-02",
     "sources": [
-      "SEC EDGAR filings (acquisitions)",
+      "SEC EDGAR filings (acquisitions, 8-K/10-K)",
       "Crunchbase (funding rounds, where cited)",
-      "Company press releases",
-      "Verified press coverage (TechCrunch, Fierce Healthcare, etc.)",
-      "Company websites (descriptions, founding dates)"
+      "Company press releases and investor relations pages",
+      "Verified press coverage (TechCrunch, Fierce Healthcare, Business Wire, etc.)",
+      "Company websites (descriptions, founding dates)",
+      "Oslo Stock Exchange filings (ORIGIO tender offer)",
+      "Cision / PR Newswire (Vitrolife-Igenomix)",
+      "Budapest Stock Exchange filings (Gedeon Richter)"
     ],
     "notes": [
       "Private company valuations are from last disclosed funding rounds and may not reflect current market value",
@@ -14,7 +17,10 @@
       "Strategic investments without disclosed values are noted as such",
       "Employee counts intentionally omitted - not reliably verifiable across private companies",
       "Public company valuations (e.g., Talkspace) reflect market cap at time of data collection and fluctuate daily",
-      "Livongo Health (c23) included because it appears as target of deal1 (Teladoc merger); its primary product is not women's-health-specific but the user base is majority female and the deal is a frequently-cited digital-health M&A reference"
+      "Livongo Health (c23) included because it appears as target of deal1 (Teladoc merger); its primary product is not women's-health-specific but the user base is majority female and the deal is a frequently-cited digital-health M&A reference",
+      "Scope expanded beyond FemTech to include broader women's health (breast health, maternal care, gynecological surgery, reproductive diagnostics, precision medicine) and European market",
+      "Precision medicine entries (Foundation Medicine, Genomic Health, Flatiron Health) included for breast/ovarian cancer relevance — genomic profiling and real-world evidence directly inform women's oncology treatment decisions",
+      "EUR-denominated deal values converted to USD at approximate rate at time of deal close"
     ],
     "purpose": "Educational demonstration dataset for portfolio project. Not for commercial investment decisions.",
     "disclaimer": "Data compiled from public sources for educational visualization. Verify independently before any commercial use."
@@ -351,6 +357,244 @@
         "Livongo.com / Teladoc press release",
         "Crunchbase - crunchbase.com/organization/livongo-health"
       ]
+    },
+    {
+      "id": "c24",
+      "name": "Biotheranostics",
+      "sector": "Breast Health",
+      "stage": "Acquired by Hologic (2021)",
+      "founded": 2006,
+      "hq": "San Diego, CA",
+      "description": "Molecular diagnostic tests for breast and metastatic cancers (Breast Cancer Index, CancerTYPE ID)",
+      "lastKnownValuation": 230,
+      "valuationSource": "Acquisition price ~$230M (Hologic press release, Jan 2021)",
+      "sources": [
+        "Hologic investor relations - press release (Jan 5, 2021)",
+        "Business Wire - acquisition completion (Feb 22, 2021)"
+      ]
+    },
+    {
+      "id": "c25",
+      "name": "Endomagnetics",
+      "sector": "Breast Health",
+      "stage": "Acquired by Hologic (2024)",
+      "founded": 2007,
+      "hq": "Cambridge, UK",
+      "description": "Magnetic marker and localization technology for breast cancer surgery (Magseed, Sentimag)",
+      "lastKnownValuation": 310,
+      "valuationSource": "Acquisition price ~$310M (Hologic/Nasdaq press release, Jul 2024)",
+      "sources": [
+        "Nasdaq press release - Hologic acquisition (Jul 25, 2024)",
+        "Endomagnetics company website - endomagnetics.com"
+      ]
+    },
+    {
+      "id": "c26",
+      "name": "Gynesonics",
+      "sector": "Gynecological Surgery",
+      "stage": "Acquired by Hologic (2024)",
+      "founded": 2005,
+      "hq": "Redwood City, CA",
+      "description": "Minimally invasive treatment for uterine fibroids (Sonata System for transcervical fibroid ablation)",
+      "lastKnownValuation": 350,
+      "valuationSource": "Acquisition price ~$350M (Hologic press release, Oct 2024)",
+      "sources": [
+        "Tracxn - Hologic acquisition list (Oct 14, 2024)",
+        "Gynesonics company website - gynesonics.com"
+      ]
+    },
+    {
+      "id": "c27",
+      "name": "ORIGIO a/s",
+      "sector": "Fertility",
+      "stage": "Acquired by CooperSurgical (2012)",
+      "founded": 2005,
+      "hq": "Måløv, Denmark",
+      "description": "Global IVF medical device company — culture media, micro-tools, and labware for fertility treatment",
+      "lastKnownValuation": 147,
+      "valuationSource": "Acquisition price ~$147M net of cash (SEC 10-K, CooperCompanies FY2012)",
+      "sources": [
+        "SEC EDGAR - CooperCompanies 10-K (FY2012, acquisition details)",
+        "Oslo Stock Exchange - ORIGIO tender offer (Jun 2012)"
+      ]
+    },
+    {
+      "id": "c28",
+      "name": "Generate Life Sciences",
+      "sector": "Reproductive Health",
+      "stage": "Acquired by CooperSurgical (2022)",
+      "founded": 2020,
+      "hq": "Los Angeles, CA",
+      "description": "Donor egg and sperm for fertility, cryopreservation services, and newborn stem cell storage (cord blood and tissue)",
+      "lastKnownValuation": 1600,
+      "valuationSource": "Acquisition price ~$1.6B (CooperCompanies press release, Nov 2021)",
+      "totalFunding": 250,
+      "sources": [
+        "CooperCompanies investor relations - press release (Nov 10, 2021)",
+        "Globe Newswire - acquisition announcement"
+      ]
+    },
+    {
+      "id": "c29",
+      "name": "Cook Medical Reproductive Health",
+      "sector": "Fertility",
+      "stage": "Acquired by CooperSurgical (2022)",
+      "founded": 1963,
+      "hq": "Bloomington, IN",
+      "description": "Reproductive health business unit of Cook Medical — IVF catheters, embryo transfer devices, and assisted reproduction products",
+      "valuationSource": "Acquisition terms not publicly disclosed",
+      "sources": [
+        "CooperCompanies investor relations - press release (Feb 7, 2022)",
+        "Cook Medical company website"
+      ]
+    },
+    {
+      "id": "c30",
+      "name": "ZyMōt Fertility",
+      "sector": "Fertility",
+      "stage": "Acquired by CooperSurgical (2024)",
+      "founded": 2017,
+      "hq": "Gaithersburg, MD",
+      "description": "First-of-its-kind sperm separation device using microfluidic technology for IVF",
+      "valuationSource": "Acquisition terms not publicly disclosed",
+      "sources": [
+        "CooperSurgical press release (Jun 10, 2024)",
+        "DxNow/ZyMōt company information"
+      ]
+    },
+    {
+      "id": "c31",
+      "name": "Alydia Health",
+      "sector": "Maternal Health",
+      "stage": "Acquired by Organon (2021)",
+      "founded": 2011,
+      "hq": "Menlo Park, CA",
+      "description": "Medical device company focused on preventing maternal morbidity from postpartum hemorrhage (Jada System)",
+      "valuationSource": "Acquisition terms structured with milestones (Merck/Organon press release, Mar 2021)",
+      "sources": [
+        "Organon.com - press release (Mar 30, 2021)",
+        "Business Wire - Merck acquisition on behalf of Organon spinoff"
+      ]
+    },
+    {
+      "id": "c32",
+      "name": "Forendo Pharma",
+      "sector": "Reproductive Health",
+      "stage": "Acquired by Organon (2021)",
+      "founded": 2016,
+      "hq": "Turku, Finland",
+      "description": "Clinical-stage drug development for endometriosis and PCOS — first-in-class HSD17B1 inhibitor (FOR-6219)",
+      "lastKnownValuation": 75,
+      "valuationSource": "$75M upfront + up to $879M in milestones (Organon press release, Dec 2021)",
+      "sources": [
+        "Organon.com - press release (Nov 11, 2021)",
+        "Business Wire - acquisition completion (Dec 13, 2021)"
+      ]
+    },
+    {
+      "id": "c33",
+      "name": "Igenomix",
+      "sector": "Diagnostics",
+      "stage": "Acquired by Vitrolife (2021)",
+      "founded": 2011,
+      "hq": "Valencia, Spain",
+      "description": "Global leader in reproductive genetic testing services for IVF clinics — preimplantation genetic testing across 26 countries",
+      "lastKnownValuation": 1450,
+      "valuationSource": "Enterprise value ~€1.25B / ~$1.45B (Vitrolife/Cision press release, Jul 2021)",
+      "sources": [
+        "Cision/Vitrolife press release (Jul 8, 2021)",
+        "PR Newswire - acquisition completion (Nov 30, 2021)",
+        "EQT Group - sale announcement"
+      ]
+    },
+    {
+      "id": "c34",
+      "name": "Estetra (Mithra assets)",
+      "sector": "Contraception",
+      "stage": "Acquired by Gedeon Richter (2024)",
+      "founded": 2012,
+      "hq": "Liège, Belgium",
+      "description": "Estetrol (E4) platform — native estrogen for contraception (ESTELLE) and menopause (DONESTA), acquired from Mithra Pharmaceuticals",
+      "lastKnownValuation": 195,
+      "valuationSource": "Enterprise value ~€175M / ~$195M including assumed net debt (Gedeon Richter press release, Jun 2024)",
+      "sources": [
+        "Gedeon Richter press release (Jun 12, 2024)",
+        "Budapest Stock Exchange filing"
+      ]
+    },
+    {
+      "id": "c35",
+      "name": "Celmatix",
+      "sector": "Fertility",
+      "stage": "Acquired by Gedeon Richter (2026)",
+      "founded": 2009,
+      "hq": "New York, NY",
+      "description": "Women's health biotech — oral FSH receptor agonist for fertility, JNK inhibitor for endometriosis, and AMH antibodies for ovarian aging",
+      "valuationSource": "Upfront payment + development milestones (Gedeon Richter press release, Mar 2026)",
+      "sources": [
+        "Gedeon Richter press release (Mar 3, 2026)",
+        "Budapest Stock Exchange filing"
+      ]
+    },
+    {
+      "id": "c36",
+      "name": "Sequenom",
+      "sector": "Diagnostics",
+      "stage": "Acquired by LabCorp (2016)",
+      "founded": 2000,
+      "hq": "San Diego, CA",
+      "description": "Pioneer in non-invasive prenatal testing (NIPT) — MaterniT21 test for fetal chromosomal abnormalities, over 500K tests performed",
+      "lastKnownValuation": 371,
+      "valuationSource": "Total enterprise value ~$371M including net debt (SEC/LabCorp press release, Jul 2016)",
+      "sources": [
+        "SEC EDGAR - LabCorp/Sequenom merger filing (Jul 27, 2016)",
+        "Business Wire - acquisition announcement"
+      ]
+    },
+    {
+      "id": "c37",
+      "name": "Genomic Health",
+      "sector": "Precision Medicine",
+      "stage": "Acquired by Exact Sciences (2019)",
+      "founded": 2000,
+      "hq": "Redwood City, CA",
+      "description": "Oncotype DX genomic tests for breast, colon, and prostate cancer — used to guide chemotherapy decisions for early-stage breast cancer",
+      "lastKnownValuation": 2800,
+      "valuationSource": "Acquisition value ~$2.8B (Exact Sciences press release, Jul 2019)",
+      "sources": [
+        "Exact Sciences newsroom - press release (Jul 29, 2019)",
+        "SEC EDGAR - merger proxy filing"
+      ]
+    },
+    {
+      "id": "c38",
+      "name": "Foundation Medicine",
+      "sector": "Precision Medicine",
+      "stage": "Acquired by Roche (2018)",
+      "founded": 2010,
+      "hq": "Cambridge, MA",
+      "description": "Comprehensive genomic profiling (CGP) for cancer — FoundationOne tests guide precision treatment including breast and ovarian cancer",
+      "lastKnownValuation": 5300,
+      "valuationSource": "Total company value ~$5.3B fully diluted; Roche paid ~$2.4B for remaining shares (Roche press release, Jun 2018)",
+      "sources": [
+        "Roche media release (Jun 19, 2018)",
+        "Fierce Biotech - deal coverage"
+      ]
+    },
+    {
+      "id": "c39",
+      "name": "Flatiron Health",
+      "sector": "Precision Medicine",
+      "stage": "Acquired by Roche (2018)",
+      "founded": 2012,
+      "hq": "New York, NY",
+      "description": "Oncology-specific EHR and real-world evidence platform — 265+ community cancer clinics, data includes breast and ovarian cancer outcomes",
+      "lastKnownValuation": 1900,
+      "valuationSource": "Transaction value ~$1.9B fully diluted (Roche press release, Apr 2018)",
+      "sources": [
+        "Roche media release (Apr 6, 2018)",
+        "Flatiron Health company website"
+      ]
     }
   ],
   "acquirers": [
@@ -359,7 +603,15 @@
     { "id": "acquirer-unitedhealth", "name": "UnitedHealth Group", "ticker": "UNH", "sector": "General Wellness", "hq": "Minnetonka, MN" },
     { "id": "acquirer-apple", "name": "Apple", "ticker": "AAPL", "sector": "Wearables", "hq": "Cupertino, CA" },
     { "id": "acquirer-jnj", "name": "Johnson & Johnson", "ticker": "JNJ", "sector": "General Wellness", "hq": "New Brunswick, NJ" },
-    { "id": "acquirer-google", "name": "Google/Alphabet", "ticker": "GOOGL", "sector": "General Wellness", "hq": "Mountain View, CA" }
+    { "id": "acquirer-google", "name": "Google/Alphabet", "ticker": "GOOGL", "sector": "General Wellness", "hq": "Mountain View, CA" },
+    { "id": "acquirer-hologic", "name": "Hologic", "ticker": "HOLX", "sector": "Breast Health", "hq": "Marlborough, MA" },
+    { "id": "acquirer-coopersurgical", "name": "CooperSurgical (CooperCompanies)", "ticker": "COO", "sector": "Fertility", "hq": "Trumbull, CT" },
+    { "id": "acquirer-organon", "name": "Organon", "ticker": "OGN", "sector": "Reproductive Health", "hq": "Jersey City, NJ" },
+    { "id": "acquirer-vitrolife", "name": "Vitrolife", "ticker": "VITR", "sector": "Fertility", "hq": "Gothenburg, Sweden" },
+    { "id": "acquirer-gedeonrichter", "name": "Gedeon Richter", "ticker": "RICHTER", "sector": "Reproductive Health", "hq": "Budapest, Hungary" },
+    { "id": "acquirer-labcorp", "name": "LabCorp", "ticker": "LH", "sector": "Diagnostics", "hq": "Burlington, NC" },
+    { "id": "acquirer-exactsciences", "name": "Exact Sciences", "ticker": "EXAS", "sector": "Precision Medicine", "hq": "Madison, WI" },
+    { "id": "acquirer-roche", "name": "Roche", "ticker": "ROG", "sector": "Precision Medicine", "hq": "Basel, Switzerland" }
   ],
   "acquisitions": [
     {
@@ -440,6 +692,224 @@
       "dealType": "Strategic Investment",
       "source": "Partnership press release",
       "strategicRationale": "Fertility benefits platform integration for employer clients"
+    },
+    {
+      "id": "deal7",
+      "targetId": "c24",
+      "acquirerId": "acquirer-hologic",
+      "targetName": "Biotheranostics",
+      "acquirerName": "Hologic",
+      "announcedDate": "2021-01-05",
+      "closedDate": "2021-02-22",
+      "dealValue": 230,
+      "dealValueNote": "~$230M subject to working capital adjustments",
+      "dealType": "Acquisition",
+      "source": "Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)",
+      "strategicRationale": "Entry into oncology growth market — Breast Cancer Index guides post-surgery treatment decisions for breast cancer patients"
+    },
+    {
+      "id": "deal8",
+      "targetId": "c25",
+      "acquirerId": "acquirer-hologic",
+      "targetName": "Endomagnetics",
+      "acquirerName": "Hologic",
+      "announcedDate": "2024-05-20",
+      "closedDate": "2024-07-25",
+      "dealValue": 310,
+      "dealValueNote": "~$310M (Nasdaq/Hologic press release)",
+      "dealType": "Acquisition",
+      "source": "Nasdaq press release (Jul 25, 2024)",
+      "strategicRationale": "Added magnetic seed and sentinel lymph node biopsy technology to breast health portfolio — expands international presence (UK-based)"
+    },
+    {
+      "id": "deal9",
+      "targetId": "c26",
+      "acquirerId": "acquirer-hologic",
+      "targetName": "Gynesonics",
+      "acquirerName": "Hologic",
+      "announcedDate": "2024-09-15",
+      "closedDate": "2024-10-14",
+      "dealValue": 350,
+      "dealValueNote": "~$350M (Hologic acquisition announcement)",
+      "dealType": "Acquisition",
+      "source": "Tracxn acquisition records; Hologic investor relations (Oct 2024)",
+      "strategicRationale": "Minimally invasive uterine fibroid treatment — Sonata System complements Hologic's gynecological surgery portfolio"
+    },
+    {
+      "id": "deal10",
+      "targetId": "c27",
+      "acquirerId": "acquirer-coopersurgical",
+      "targetName": "ORIGIO a/s",
+      "acquirerName": "CooperSurgical (CooperCompanies)",
+      "announcedDate": "2012-06-04",
+      "closedDate": "2012-07-11",
+      "dealValue": 147,
+      "dealValueNote": "~NOK 1,159M enterprise value (~$147M net of cash acquired)",
+      "dealType": "Acquisition",
+      "source": "SEC EDGAR — CooperCompanies 10-K (FY2012); Oslo Stock Exchange tender offer (Jun 2012)",
+      "strategicRationale": "Established CooperSurgical as global IVF device leader — ORIGIO's culture media and labware complemented existing fertility portfolio"
+    },
+    {
+      "id": "deal11",
+      "targetId": "c28",
+      "acquirerId": "acquirer-coopersurgical",
+      "targetName": "Generate Life Sciences",
+      "acquirerName": "CooperSurgical (CooperCompanies)",
+      "announcedDate": "2021-11-10",
+      "closedDate": "2022-01-31",
+      "dealValue": 1600,
+      "dealValueNote": "~$1.6B (CooperCompanies press release)",
+      "dealType": "Acquisition",
+      "source": "CooperCompanies investor relations — Globe Newswire (Nov 10, 2021)",
+      "strategicRationale": "Expanded fertility and L&D offerings with donor egg/sperm, cryopreservation, and cord blood storage — ~$250M trailing revenue"
+    },
+    {
+      "id": "deal12",
+      "targetId": "c29",
+      "acquirerId": "acquirer-coopersurgical",
+      "targetName": "Cook Medical Reproductive Health",
+      "acquirerName": "CooperSurgical (CooperCompanies)",
+      "announcedDate": "2022-02-07",
+      "closedDate": "2022-06-01",
+      "dealValueNote": "Terms not publicly disclosed",
+      "dealType": "Acquisition",
+      "source": "CooperCompanies investor relations press release (Feb 7, 2022)",
+      "strategicRationale": "Added IVF catheters, embryo transfer devices and assisted reproduction products to strengthen global fertility device market position"
+    },
+    {
+      "id": "deal13",
+      "targetId": "c30",
+      "acquirerId": "acquirer-coopersurgical",
+      "targetName": "ZyMōt Fertility",
+      "acquirerName": "CooperSurgical",
+      "announcedDate": "2024-06-10",
+      "dealValueNote": "Terms not publicly disclosed",
+      "dealType": "Acquisition",
+      "source": "CooperSurgical press release (Jun 10, 2024)",
+      "strategicRationale": "Microfluidic sperm separation technology adds to ART product portfolio — first-of-its-kind device for selecting motile sperm"
+    },
+    {
+      "id": "deal14",
+      "targetId": "c31",
+      "acquirerId": "acquirer-organon",
+      "targetName": "Alydia Health",
+      "acquirerName": "Organon (via Merck spinoff)",
+      "announcedDate": "2021-03-30",
+      "closedDate": "2021-07-01",
+      "dealValueNote": "Acquisition structured with milestones; closed after Organon spun off from Merck",
+      "dealType": "Acquisition",
+      "source": "Organon.com press release (Mar 30, 2021); Business Wire",
+      "strategicRationale": "Jada System addresses postpartum hemorrhage — aligns with Organon's mission as global women's health leader; potential EU/global expansion"
+    },
+    {
+      "id": "deal15",
+      "targetId": "c32",
+      "acquirerId": "acquirer-organon",
+      "targetName": "Forendo Pharma",
+      "acquirerName": "Organon",
+      "announcedDate": "2021-11-11",
+      "closedDate": "2021-12-13",
+      "dealValue": 75,
+      "dealValueNote": "$75M upfront + up to $270M development milestones + $600M commercial milestones (total potential ~$954M)",
+      "dealType": "Acquisition",
+      "source": "Business Wire (Dec 13, 2021); Organon.com press release",
+      "strategicRationale": "Novel endometriosis treatment (HSD17B1 inhibitor) — first-in-class tissue-specific approach without impacting systemic hormone levels; pipeline includes PCOS program"
+    },
+    {
+      "id": "deal16",
+      "targetId": "c33",
+      "acquirerId": "acquirer-vitrolife",
+      "targetName": "Igenomix",
+      "acquirerName": "Vitrolife",
+      "announcedDate": "2021-07-08",
+      "closedDate": "2021-11-30",
+      "dealValue": 1450,
+      "dealValueNote": "Enterprise value ~€1.25B (~$1.45B); part cash, part share consideration",
+      "dealType": "Acquisition",
+      "source": "Cision/Vitrolife press release (Jul 8, 2021); PR Newswire (Nov 30, 2021)",
+      "strategicRationale": "Combined IVF medical devices with reproductive genetic testing to create global reproductive health leader — Igenomix operated 26 labs across 26 countries"
+    },
+    {
+      "id": "deal17",
+      "targetId": "c34",
+      "acquirerId": "acquirer-gedeonrichter",
+      "targetName": "Estetra (Mithra assets)",
+      "acquirerName": "Gedeon Richter",
+      "announcedDate": "2024-06-12",
+      "closedDate": "2024-06-12",
+      "dealValue": 195,
+      "dealValueNote": "Enterprise value ~€175M (~$195M) including assumed net debt",
+      "dealType": "Acquisition",
+      "source": "Gedeon Richter press release (Jun 12, 2024); Budapest Stock Exchange filing",
+      "strategicRationale": "Acquired estetrol (E4) native estrogen platform — ESTELLE (contraception, marketed) and DONESTA (menopause, in development); enables US/Japan expansion of women's healthcare business"
+    },
+    {
+      "id": "deal18",
+      "targetId": "c35",
+      "acquirerId": "acquirer-gedeonrichter",
+      "targetName": "Celmatix",
+      "acquirerName": "Gedeon Richter",
+      "announcedDate": "2026-03-03",
+      "dealValueNote": "Upfront payment + development milestones (terms not fully disclosed)",
+      "dealType": "Acquisition",
+      "source": "Gedeon Richter press release (Mar 3, 2026); Budapest Stock Exchange filing",
+      "strategicRationale": "Women's health drug discovery — oral FSH agonist for fertility, JNK inhibitor for endometriosis, AMH antibodies for ovarian aging; development led by Belgian R&D hub"
+    },
+    {
+      "id": "deal19",
+      "targetId": "c36",
+      "acquirerId": "acquirer-labcorp",
+      "targetName": "Sequenom",
+      "acquirerName": "LabCorp",
+      "announcedDate": "2016-07-27",
+      "closedDate": "2016-09-06",
+      "dealValue": 371,
+      "dealValueNote": "Enterprise value ~$371M including net debt ($302M equity value at $2.40/share)",
+      "dealType": "Acquisition",
+      "source": "SEC EDGAR — LabCorp/Sequenom merger filing (Jul 27, 2016)",
+      "strategicRationale": "Created market leader in NIPT — MaterniT21 test complemented LabCorp's women's health and reproductive genetics offering; over 500K tests performed at time of deal"
+    },
+    {
+      "id": "deal20",
+      "targetId": "c37",
+      "acquirerId": "acquirer-exactsciences",
+      "targetName": "Genomic Health",
+      "acquirerName": "Exact Sciences",
+      "announcedDate": "2019-07-29",
+      "closedDate": "2019-11-08",
+      "dealValue": 2800,
+      "dealValueNote": "~$2.8B total consideration",
+      "dealType": "Acquisition",
+      "source": "Exact Sciences newsroom (Jul 29, 2019); SEC merger proxy",
+      "strategicRationale": "Combined Cologuard (colorectal) with Oncotype DX (breast cancer) to create leading global cancer diagnostics company — Oncotype DX guides chemotherapy decisions for ~50% of early-stage breast cancer patients"
+    },
+    {
+      "id": "deal21",
+      "targetId": "c38",
+      "acquirerId": "acquirer-roche",
+      "targetName": "Foundation Medicine",
+      "acquirerName": "Roche",
+      "announcedDate": "2018-06-19",
+      "closedDate": "2018-07-18",
+      "dealValue": 2400,
+      "dealValueNote": "$137/share for remaining shares (~$2.4B); total company value ~$5.3B fully diluted",
+      "dealType": "Acquisition",
+      "source": "Roche media release (Jun 19, 2018); Fierce Biotech",
+      "strategicRationale": "Comprehensive genomic profiling (CGP) — FoundationOne tests identify actionable mutations in breast, ovarian, and other cancers to guide precision treatment selection"
+    },
+    {
+      "id": "deal22",
+      "targetId": "c39",
+      "acquirerId": "acquirer-roche",
+      "targetName": "Flatiron Health",
+      "acquirerName": "Roche",
+      "announcedDate": "2018-01-08",
+      "closedDate": "2018-04-06",
+      "dealValue": 1900,
+      "dealValueNote": "~$1.9B fully diluted, subject to adjustments",
+      "dealType": "Acquisition",
+      "source": "Roche media release (Apr 6, 2018)",
+      "strategicRationale": "Oncology-specific EHR and real-world evidence — data from 265+ clinics enables precision medicine research including breast and ovarian cancer treatment outcomes"
     }
   ]
 }
