@@ -19,6 +19,7 @@ import CompetitiveAnalysisDashboard from '@/components/CompetitiveAnalysisDashbo
 import TemporalValidation from '@/components/TemporalValidation';
 import CausalInferenceEngine from '@/components/CausalInferenceEngine';
 import DataCoverageCard from '@/components/DataCoverageCard';
+import DataProvenanceBanner from '@/components/DataProvenanceBanner';
 import ClinicalTrialTracker from '@/components/ClinicalTrialTracker';
 import SiteSectionNav from '@/components/SiteSectionNav';
 import BusinessModelClassifier from '@/components/business-model-classifier';

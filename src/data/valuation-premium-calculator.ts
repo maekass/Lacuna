@@ -178,7 +178,7 @@ export class ValuationPremiumCalculator {
     
     // Adjust for reimbursement status
     let reimbursementPremium = 1.0;
-    let keyFactors: string[] = [];
+    const keyFactors: string[] = [];
 
     if (input.reimbursementStatus.hasCPTCode) {
       if (input.reimbursementStatus.codeType === 'established') {
@@ -336,7 +336,17 @@ export class ValuationPremiumCalculator {
     const normalizedSector = sector.toLowerCase().replace(/\s+/g, '_');
     
     // Sample transaction data
-    const transactions: Record<string, any[]> = {
+    const transactions: Record<
+      string,
+      Array<{
+        company: string;
+        acquirer: string;
+        valuation: number;
+        multiple: number;
+        reimbursementStatus: string;
+        date: string;
+      }>
+    > = {
       'fertility': [
         { company: 'Modern Fertility', acquirer: 'Ro', valuation: 225000000, multiple: 2.5, reimbursementStatus: 'limited', date: '2021-05' },
         { company: 'Ava Science', acquirer: 'Ovia Health', valuation: 80000000, multiple: 1.8, reimbursementStatus: 'consumer-only', date: '2020-03' }

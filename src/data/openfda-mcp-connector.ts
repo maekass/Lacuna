@@ -236,76 +236,104 @@ export class OpenFDAClient {
     return Array.from(variants);
   }
 
-  private parseDevices(results: any[]): FDAProduct[] {
-    return results.map(r => ({
-      productId: r.k_number || r.id,
-      productName: r.device_name || r.openfda?.device_name || 'Unknown',
-      companyName: r.applicant || r.sponsor_name || '',
+  private parseDevices(results: unknown[]): FDAProduct[] {
+    return results.map((raw) => {
+      const r = this.asRecord(raw);
+      const openfda = this.asRecord(r.openfda);
+      return {
+        productId: this.asString(r.k_number) || this.asString(r.id),
+        productName: this.asString(r.device_name) || this.asString(openfda.device_name) || 'Unknown',
+        companyName: this.asString(r.applicant) || this.asString(r.sponsor_name),
       type: 'device',
       clearanceType: '510k',
-      approvalDate: r.date_received || r.decision_date || '',
-      productClass: this.parseDeviceClass(r.openfda?.device_class),
-      indications: r.openfda?.indications_for_use ? [r.openfda.indications_for_use] : [],
-      devicePanel: r.openfda?.medical_specialty_description,
-      reviewTimeDays: r.clearance_date && r.date_received ? 
-        Math.round((new Date(r.clearance_date).getTime() - new Date(r.date_received).getTime()) / (1000 * 60 * 60 * 24)) : undefined
-    }));
+        approvalDate: this.asString(r.date_received) || this.asString(r.decision_date),
+        productClass: this.parseDeviceClass(openfda.device_class),
+        indications: this.asString(openfda.indications_for_use) ? [this.asString(openfda.indications_for_use)] : [],
+        devicePanel: this.asOptionalString(openfda.medical_specialty_description),
+        reviewTimeDays:
+          this.asString(r.clearance_date) && this.asString(r.date_received)
+            ? Math.round(
+                (new Date(this.asString(r.clearance_date)).getTime() -
+                  new Date(this.asString(r.date_received)).getTime()) /
+                  (1000 * 60 * 60 * 24),
+              )
+            : undefined,
+      };
+    });
   }
 
-  private parsePMA(results: any[]): FDAProduct[] {
-    return results.map(r => ({
-      productId: r.pma_number || r.id,
-      productName: r.openfda?.device_name || 'Unknown',
-      companyName: r.applicant || '',
+  private parsePMA(results: unknown[]): FDAProduct[] {
+    return results.map((raw) => {
+      const r = this.asRecord(raw);
+      const openfda = this.asRecord(r.openfda);
+      return {
+        productId: this.asString(r.pma_number) || this.asString(r.id),
+        productName: this.asString(openfda.device_name) || 'Unknown',
+        companyName: this.asString(r.applicant),
       type: 'device',
       clearanceType: 'PMA',
-      approvalDate: r.decision_date || '',
+        approvalDate: this.asString(r.decision_date),
       productClass: 'CLASS_III',
-      indications: r.supplement_reason || []
-    }));
+        indications: this.asArray(r.supplement_reason).map((x) => this.asString(x)).filter(Boolean),
+      };
+    });
   }
 
-  private parseDeNovo(results: any[]): FDAProduct[] {
-    return results.map(r => ({
-      productId: r.denovo_number || r.id,
-      productName: r.device_name || r.openfda?.device_name || 'Unknown',
-      companyName: r.applicant || '',
+  private parseDeNovo(results: unknown[]): FDAProduct[] {
+    return results.map((raw) => {
+      const r = this.asRecord(raw);
+      const openfda = this.asRecord(r.openfda);
+      return {
+        productId: this.asString(r.denovo_number) || this.asString(r.id),
+        productName: this.asString(r.device_name) || this.asString(openfda.device_name) || 'Unknown',
+        companyName: this.asString(r.applicant),
       type: 'device',
       clearanceType: 'DENovo',
-      approvalDate: r.decision_date || r.date_received || '',
+        approvalDate: this.asString(r.decision_date) || this.asString(r.date_received),
       productClass: 'CLASS_II',
-      indications: r.openfda?.indications_for_use ? [r.openfda.indications_for_use] : []
-    }));
+        indications: this.asString(openfda.indications_for_use) ? [this.asString(openfda.indications_for_use)] : [],
+      };
+    });
   }
 
-  private parseDrugs(results: any[]): FDAProduct[] {
-    return results.flatMap(r => {
-      const submissions = r.submissions || [];
-      return submissions.map((s: any) => ({
-        productId: s.application_number || r.id,
-        productName: r.products?.[0]?.brand_name || r.products?.[0]?.generic_name || 'Unknown',
-        companyName: r.sponsor_name || '',
+  private parseDrugs(results: unknown[]): FDAProduct[] {
+    return results.flatMap((raw) => {
+      const r = this.asRecord(raw);
+      const submissions = this.asArray(r.submissions).map((s) => this.asRecord(s));
+      const firstProduct = this.asRecord(this.asArray(r.products)[0]);
+      const firstAi = this.asRecord(this.asArray(firstProduct.active_ingredients)[0]);
+
+      return submissions.map((s) => ({
+        productId: this.asString(s.application_number) || this.asString(r.id),
+        productName:
+          this.asString(firstProduct.brand_name) ||
+          this.asString(firstProduct.generic_name) ||
+          'Unknown',
+        companyName: this.asString(r.sponsor_name),
         type: 'drug',
-        clearanceType: this.parseDrugType(s.submission_type || s.application_number),
-        approvalDate: s.submission_status_date || s.submission_class_date || '',
-        drugActiveIngredient: r.products?.[0]?.active_ingredients?.[0]?.name,
-        indications: r.products?.[0]?.indications_and_usage ? [r.products[0].indications_and_usage] : []
+        clearanceType: this.parseDrugType(s.submission_type ?? s.application_number),
+        approvalDate: this.asString(s.submission_status_date) || this.asString(s.submission_class_date),
+        drugActiveIngredient: this.asOptionalString(firstAi.name),
+        indications: this.asString(firstProduct.indications_and_usage)
+          ? [this.asString(firstProduct.indications_and_usage)]
+          : [],
       }));
     });
   }
 
-  private parseDeviceClass(deviceClass: string): ProductClass {
-    const cls = deviceClass?.toUpperCase();
+  private parseDeviceClass(deviceClass: unknown): ProductClass {
+    const cls = this.asString(deviceClass).toUpperCase();
     if (cls === '1' || cls === 'I') return 'CLASS_I';
     if (cls === '2' || cls === 'II') return 'CLASS_II';
     if (cls === '3' || cls === 'III') return 'CLASS_III';
     return 'UNCLASSIFIED';
   }
 
-  private parseDrugType(appNumber: string): DrugApprovalType {
-    if (appNumber?.startsWith('NDA')) return 'NDA';
-    if (appNumber?.startsWith('ANDA')) return 'ANDA';
-    if (appNumber?.startsWith('BLA')) return 'BLA';
+  private parseDrugType(appNumber: unknown): DrugApprovalType {
+    const s = this.asString(appNumber);
+    if (s.startsWith('NDA')) return 'NDA';
+    if (s.startsWith('ANDA')) return 'ANDA';
+    if (s.startsWith('BLA')) return 'BLA';
     return 'OTC';
   }
 
@@ -321,6 +349,24 @@ export class OpenFDAClient {
     const dates = products.map(p => new Date(p.approvalDate)).filter(d => !isNaN(d.getTime()));
     if (dates.length === 0) return undefined;
     return new Date(Math.max(...dates.map(d => d.getTime()))).toISOString().split('T')[0];
+  }
+
+  private asRecord(value: unknown): Record<string, unknown> {
+    if (value && typeof value === 'object' && !Array.isArray(value)) return value as Record<string, unknown>;
+    return {};
+  }
+
+  private asArray(value: unknown): unknown[] {
+    return Array.isArray(value) ? value : [];
+  }
+
+  private asString(value: unknown): string {
+    return typeof value === 'string' ? value : '';
+  }
+
+  private asOptionalString(value: unknown): string | undefined {
+    const s = this.asString(value);
+    return s ? s : undefined;
   }
 }
 

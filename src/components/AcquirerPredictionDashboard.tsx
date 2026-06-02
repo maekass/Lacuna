@@ -23,16 +23,29 @@ import {
 import AIInsightsPanel from './AIInsightsPanel';
 
 // Generate company profiles from verified dataset
-function generateCompanyProfiles(verifiedCompanies: any[]): CompanyProfile[] {
+type VerifiedCompanyLike = {
+  id?: string;
+  name: string;
+  sector?: string;
+  industry?: string;
+  stage?: string;
+  fundingStage?: string;
+  description?: string;
+  business?: string;
+  fundingTotal?: number;
+  foundedDate?: string;
+};
+
+function generateCompanyProfiles(verifiedCompanies: VerifiedCompanyLike[]): CompanyProfile[] {
   return verifiedCompanies.slice(0, 8).map((company, idx) => ({
-    id: company.id || `comp-${idx}`,
+    id: company.id ?? `comp-${idx}`,
     name: company.name,
-    sector: mapToSector(company.sector || company.industry || 'digital_health'),
-    stage: mapToStage(company.stage || company.fundingStage || 'series_a'),
-    capabilities: extractCapabilities(company.description || company.business || ''),
-    technology: extractTechnologies(company.description || ''),
-    fundingTotal: company.fundingTotal || 5000000,
-    foundingDate: company.foundedDate || '2018-01-01',
+    sector: mapToSector(company.sector ?? company.industry ?? 'digital_health'),
+    stage: mapToStage(company.stage ?? company.fundingStage ?? 'series_a'),
+    capabilities: extractCapabilities(company.description ?? company.business ?? ''),
+    technology: extractTechnologies(company.description ?? ''),
+    fundingTotal: company.fundingTotal ?? 5000000,
+    foundingDate: company.foundedDate ?? '2018-01-01',
     fdaStatus: idx % 3 === 0 ? 'cleared' : idx % 3 === 1 ? 'pending' : 'none'
   }));
 }
@@ -56,7 +69,7 @@ function mapToSector(sector: string): string {
   return 'digital_health';
 }
 
-function mapToStage(stage: string): any {
+function mapToStage(stage: string): CompanyProfile['stage'] {
   const normalized = stage.toLowerCase();
   if (normalized.includes('seed')) return 'seed';
   if (normalized.includes('a')) return 'series_a';

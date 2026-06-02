@@ -89,40 +89,56 @@ export class ClinicalTrialsClient {
     return Array.from(variants);
   }
 
-  private parseTrials(studies: any[]): ClinicalTrial[] {
-    return studies.map(s => this.parseTrial(s));
+  private parseTrials(studies: unknown[]): ClinicalTrial[] {
+    return studies.map((s) => this.parseTrial(s));
   }
 
-  private parseTrial(study: any): ClinicalTrial {
-    const p = study.Study?.ProtocolSection || {};
-    const d = study.Study?.DerivedSection || {};
-    const id = p.IdentificationModule || {};
-    const status = p.StatusModule || {};
-    const sponsor = p.SponsorCollaboratorsModule || {};
-    const design = p.DesignModule || {};
-    const arms = p.ArmsInterventionsModule || {};
-    const conditions = p.ConditionsModule || {};
-    const pubs = d.PublicationModule?.PublicationList?.Publication || [];
+  private parseTrial(study: unknown): ClinicalTrial {
+    const root = this.asRecord(study);
+    const studyNode = this.asRecord(root.Study);
+    const protocol = this.asRecord(studyNode.ProtocolSection);
+    const derived = this.asRecord(studyNode.DerivedSection);
+
+    const id = this.asRecord(protocol.IdentificationModule);
+    const status = this.asRecord(protocol.StatusModule);
+    const sponsor = this.asRecord(protocol.SponsorCollaboratorsModule);
+    const design = this.asRecord(protocol.DesignModule);
+    const arms = this.asRecord(protocol.ArmsInterventionsModule);
+    const conditions = this.asRecord(protocol.ConditionsModule);
+
+    const pubModule = this.asRecord(derived.PublicationModule);
+    const pubList = this.asRecord(pubModule.PublicationList);
+    const pubs = this.asArray(pubList.Publication).map((p) => this.asRecord(p));
 
     return {
-      nctId: id.NCTId || '',
-      title: id.BriefTitle || id.OfficialTitle || '',
-      phase: this.parsePhase(design.PhaseList?.Phase?.[0] || 'NA'),
-      status: this.parseStatus(status.OverallStatus || 'UNKNOWN'),
-      sponsor: sponsor.LeadSponsor?.LeadSponsorName || '',
-      enrollmentCount: parseInt(design.EnrollmentInfo?.EnrollmentCount) || 0,
-      startDate: status.StartDate || '',
-      completionDate: status.CompletionDate || undefined,
-      postedResults: status.HasResults || false,
-      resultsDate: status.ResultsFirstSubmitDate || undefined,
-      studyType: (design.StudyType || 'Interventional') as any,
-      conditions: conditions.ConditionList?.Condition || [],
-      interventions: arms.InterventionList?.Intervention?.map((i: any) => i.InterventionName) || [],
-      primaryOutcome: p.OutcomesModule?.PrimaryOutcomeList?.PrimaryOutcome?.[0]?.PrimaryOutcomeMeasure,
+      nctId: this.asString(id.NCTId),
+      title: this.asString(id.BriefTitle) || this.asString(id.OfficialTitle),
+      phase: this.parsePhase(this.firstStringFromList(this.asRecord(design.PhaseList).Phase) || 'NA'),
+      status: this.parseStatus(this.asString(status.OverallStatus) || 'UNKNOWN'),
+      sponsor: this.asString(this.asRecord(this.asRecord(sponsor.LeadSponsor)).LeadSponsorName),
+      enrollmentCount: this.parseIntSafe(this.asRecord(design.EnrollmentInfo).EnrollmentCount),
+      startDate: this.asString(status.StartDate),
+      completionDate: this.asOptionalString(status.CompletionDate),
+      postedResults: this.asBoolean(status.HasResults),
+      resultsDate: this.asOptionalString(status.ResultsFirstSubmitDate),
+      studyType: this.parseStudyType(design.StudyType),
+      conditions: this.asArray(this.asRecord(conditions.ConditionList).Condition).map((c) => this.asString(c)).filter(Boolean),
+      interventions: this.asArray(this.asRecord(this.asRecord(arms.InterventionList)).Intervention)
+        .map((i) => this.asString(this.asRecord(i).InterventionName))
+        .filter(Boolean),
+      primaryOutcome: this.asOptionalString(
+        this.asRecord(this.asRecord(protocol.OutcomesModule).PrimaryOutcomeList).PrimaryOutcome &&
+          this.asRecord(this.asArray(this.asRecord(this.asRecord(protocol.OutcomesModule).PrimaryOutcomeList).PrimaryOutcome)[0])
+            .PrimaryOutcomeMeasure,
+      ),
       hasPublishedResults: pubs.length > 0,
-      publicationDoi: pubs[0]?.PublicationPMID || undefined,
-      journalName: pubs[0]?.PublicationJournal || undefined,
-      isFlagshipJournal: pubs.some((p: any) => FLAGSHIP_JOURNALS.some(j => p.PublicationJournal?.toLowerCase().includes(j.toLowerCase())))
+      publicationDoi: this.asOptionalString(pubs[0]?.PublicationPMID),
+      journalName: this.asOptionalString(pubs[0]?.PublicationJournal),
+      isFlagshipJournal: pubs.some((p) =>
+        FLAGSHIP_JOURNALS.some((j) =>
+          this.asString(p.PublicationJournal).toLowerCase().includes(j.toLowerCase()),
+        ),
+      ),
     };
   }
 
@@ -136,6 +152,49 @@ export class ClinicalTrialsClient {
 
   private parseStatus(status: string): TrialStatus {
     return (status?.toUpperCase().replace(/\s/g, '_') as TrialStatus) || 'UNKNOWN';
+  }
+
+  private parseStudyType(value: unknown): ClinicalTrial['studyType'] {
+    const v = this.asString(value);
+    if (v === 'Interventional' || v === 'Observational' || v === 'Expanded Access') return v;
+    return 'Interventional';
+  }
+
+  private asRecord(value: unknown): Record<string, unknown> {
+    if (value && typeof value === 'object' && !Array.isArray(value)) return value as Record<string, unknown>;
+    return {};
+  }
+
+  private asArray(value: unknown): unknown[] {
+    return Array.isArray(value) ? value : [];
+  }
+
+  private asString(value: unknown): string {
+    return typeof value === 'string' ? value : '';
+  }
+
+  private asOptionalString(value: unknown): string | undefined {
+    const s = this.asString(value);
+    return s ? s : undefined;
+  }
+
+  private asBoolean(value: unknown): boolean {
+    return value === true;
+  }
+
+  private parseIntSafe(value: unknown): number {
+    if (typeof value === 'number' && Number.isFinite(value)) return Math.trunc(value);
+    const s = this.asString(value);
+    const n = Number.parseInt(s, 10);
+    return Number.isFinite(n) ? n : 0;
+  }
+
+  private firstStringFromList(value: unknown): string | undefined {
+    const arr = this.asArray(value);
+    if (arr.length === 0) return undefined;
+    const first = arr[0];
+    const s = this.asString(first);
+    return s ? s : undefined;
   }
 }
 
