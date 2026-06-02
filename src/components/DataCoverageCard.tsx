@@ -138,7 +138,6 @@ export default function DataCoverageCard() {
           <EffectiveNBadge title="Competitive analysis" badge={effectiveN.competitive} />
           <EffectiveNBadge title="Price analytics" badge={effectiveN.priceAnalytics} />
           <EffectiveNBadge title="Deal velocity" badge={effectiveN.dealVelocity} />
-          <EffectiveNBadge title="Fairness audit" badge={effectiveN.fairness} />
         </div>
       </div>
 

@@ -6,7 +6,6 @@ const SECTION_LINKS = [
   { href: '#matrix', label: 'Matrix' },
   { href: '#health-equity', label: 'Health equity' },
   { href: '#impact-assessment', label: 'Impact' },
-  { href: '#fairness-audit', label: 'Fairness' },
   { href: '#network-analysis', label: 'Analysis' },
   { href: '#causal-engine', label: 'Causal' },
 ] as const;
