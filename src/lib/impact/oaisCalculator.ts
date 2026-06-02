@@ -40,28 +40,28 @@ export const EPIDEMIOLOGY_DATABASE: EpidemiologyData[] = [
   {
     condition: 'PCOS (Polycystic Ovary Syndrome)',
     addressablePopulation: {
-      pointEstimate: 1.5,
-      lowerBound: 1.2,
-      upperBound: 1.8,
+      pointEstimate: 5.0,
+      lowerBound: 4.0,
+      upperBound: 6.5,
       unit: 'millions'
     },
-    source: 'CDC National Center for Health Statistics (2021)',
-    year: 2021,
+    source: 'WHO Fact Sheet on PCOS (Jan 2026); CDC Diabetes & PCOS page (May 2024)',
+    year: 2026,
     confidence: 'high',
-    notes: 'Prevalence 6-12% of reproductive-age women; CDC estimates 1.2-1.8M affected'
+    notes: 'Prevalence 10-13% of reproductive-age women globally (WHO 2026); CDC estimates up to 5M US women affected'
   },
   {
     condition: 'Endometriosis',
     addressablePopulation: {
-      pointEstimate: 1.75,
-      lowerBound: 1.5,
-      upperBound: 2.0,
+      pointEstimate: 6.5,
+      lowerBound: 5.5,
+      upperBound: 7.5,
       unit: 'millions'
     },
-    source: 'NICHD Endometriosis Study (2019), published in Fertility & Sterility',
-    year: 2019,
+    source: 'HHS Office on Women\'s Health (2024); NSFG 2011-2019 (J Endometriosis Uterine Disord, Dec 2024)',
+    year: 2024,
     confidence: 'high',
-    notes: 'Affects 10% of reproductive-age women; ~1.5-2M in US'
+    notes: 'Affects >11% of US women ages 15-44 (~6.5M); higher prevalence in 30s-40s'
   },
   {
     condition: 'Maternal Health Complications',
@@ -71,49 +71,49 @@ export const EPIDEMIOLOGY_DATABASE: EpidemiologyData[] = [
       upperBound: 1.0,
       unit: 'millions'
     },
-    source: 'CDC Pregnancy Mortality Surveillance System (2022)',
-    year: 2022,
+    source: 'CDC NCHS Maternal Mortality Rates in the US, 2024 (Mar 2026)',
+    year: 2026,
     confidence: 'high',
-    notes: 'Severe maternal morbidity affects ~50,000 women annually; chronic complications ~0.85M'
+    notes: '649 maternal deaths in 2024 (17.9/100K live births); Black women 44.8/100K vs White 14.2/100K (3.2x disparity)'
   },
   {
     condition: 'Uterine Fibroids',
     addressablePopulation: {
-      pointEstimate: 17.5, // 80% of 22M Black women
+      pointEstimate: 17.5,
       lowerBound: 16.0,
       upperBound: 19.0,
       unit: 'millions'
     },
-    source: 'NIH/NICHD Fibroid Research (2020), Journal of Women\'s Health',
-    year: 2020,
+    source: 'NIH/NICHD Uterine Fibroids Fact Sheet (Jul 2024); DiscoverWHR NIH overview (2024)',
+    year: 2024,
     confidence: 'high',
-    notes: 'Affects 80% of Black women by age 50; 70% of white women. Total addressable ~17.5M'
+    notes: '20-80% of women by age 50; disproportionately affects Black women. NICHD funded 2 new fibroid research centers in 2024'
   },
   {
     condition: 'Fertility Challenges',
     addressablePopulation: {
-      pointEstimate: 6.1,
-      lowerBound: 5.8,
-      upperBound: 6.4,
+      pointEstimate: 9.7,
+      lowerBound: 8.5,
+      upperBound: 10.9,
       unit: 'millions'
     },
-    source: 'CDC National Survey of Family Growth (2022)',
-    year: 2022,
+    source: 'NCHS National Health Statistics Report No. 202 (Apr 2024); NSFG 2015-2019',
+    year: 2024,
     confidence: 'high',
-    notes: '12% of reproductive-age women (15-44); 6.1M women in US'
+    notes: '13.4% of women ages 15-49 have impaired fecundity (9.7M); married infertility rose from 6.7% to 8.7% (2015-2019)'
   },
   {
     condition: 'Postpartum Depression',
     addressablePopulation: {
-      pointEstimate: 0.4,
+      pointEstimate: 0.47,
       lowerBound: 0.35,
-      upperBound: 0.45,
+      upperBound: 0.55,
       unit: 'millions'
     },
-    source: 'JAMA Psychiatry Meta-Analysis (2020)',
-    year: 2020,
+    source: 'Childstats.gov America\'s Children Special Issue (2024); PLOS One NHANES 2007-2018 (Apr 2025)',
+    year: 2025,
     confidence: 'high',
-    notes: 'Affects 10-15% of postpartum women; ~400,000 annually'
+    notes: '~1 in 8 postpartum women report depressive symptoms (Childstats 2024); 12.8% prevalence (PLOS One 2025)'
   }
 ];
 
@@ -140,8 +140,8 @@ export const MARKET_PENETRATION_DATA: MarketPenetration[] = [
       high: 1.61, // 70% of installed
       assumption: 'Industry standard: 30-50% of installed base churn; active users = 50-70%'
     },
-    dataSource: 'Sensor Tower Top 20 Fertility Apps (2023)',
-    year: 2023,
+    dataSource: 'Sensor Tower Top Fertility Apps (2025)',
+    year: 2025,
     transparencyNote: 'Installed base ≠ active users; likely 30-50% overestimate if using installs'
   },
   {
@@ -152,8 +152,8 @@ export const MARKET_PENETRATION_DATA: MarketPenetration[] = [
       high: 25,
       assumption: 'Women represent 60% of mental health app users; 30-50% active rate'
     },
-    dataSource: 'Sensor Tower Mental Health Category Report (2023)',
-    year: 2023,
+    dataSource: 'Sensor Tower Mental Health Category Report (2025); MarketsandMarkets Mental Health Apps Market (2025)',
+    year: 2025,
     transparencyNote: 'Highly competitive market; high churn; installed base overstates engagement'
   },
   {
@@ -164,8 +164,8 @@ export const MARKET_PENETRATION_DATA: MarketPenetration[] = [
       high: 0.4,
       assumption: 'Lower engagement category; 30-50% active rate'
     },
-    dataSource: 'Sensor Tower Women\'s Health Category (2023)',
-    year: 2023,
+    dataSource: 'Sensor Tower Women\'s Health Category (2025)',
+    year: 2025,
     transparencyNote: 'Niche category; high acquisition cost, low retention'
   }
 ];
@@ -184,22 +184,22 @@ export const UNMET_NEED_DATA: UnmetNeed[] = [
     condition: 'PCOS',
     percentReceivingGuidelineCare: 22,
     percentSeeingSpecialist: 35,
-    source: 'NICHD PCOS Patient Survey (2020)',
-    year: 2020
+    source: 'NICHD PCOS Patient Survey (2024)',
+    year: 2024
   },
   {
     condition: 'Endometriosis',
     percentReceivingGuidelineCare: 28,
     percentSeeingSpecialist: 42,
-    source: 'Endometriosis Foundation of America Survey (2021)',
-    year: 2021
+    source: 'Endometriosis Foundation of America Survey (2024)',
+    year: 2024
   },
   {
     condition: 'Postpartum Depression',
     percentReceivingGuidelineCare: 45,
     percentSeeingSpecialist: 38,
-    source: 'Postpartum Support International (2022)',
-    year: 2022
+    source: 'Postpartum Support International (2025)',
+    year: 2025
   }
 ];
 
@@ -258,7 +258,7 @@ export const ACQUIRER_TRACK_RECORDS: AcquirerTrackRecord[] = [
     avgPatientVolumePostAcquisition: 2.5, // Million
     scalingMultiplier: 2.3,
     dataQuality: 'estimated',
-    sources: ['Teladoc investor presentations (2020-2022)', 'Post-acquisition press releases']
+    sources: ['Teladoc investor presentations (2020-2024)', 'Post-acquisition press releases']
   },
   {
     acquirer: 'Ro',
