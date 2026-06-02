@@ -10,7 +10,17 @@ export interface Company {
     | 'Pelvic Health'
     | 'General Wellness'
     | 'Wearables'
-    | 'Sexual Wellness';
+    | 'Sexual Wellness'
+    | 'Breast Health'
+    | 'Gynecological Surgery'
+    | 'Reproductive Health'
+    | 'Diagnostics'
+    | 'Contraception'
+    | 'Precision Medicine'
+    | 'Maternal Health'
+    | 'Medical Devices'
+    | 'Dermatology'
+    | 'Digital Health';
   stage:
     | 'Seed'
     | 'Series A'
@@ -35,7 +45,7 @@ export interface Acquisition {
   announcedDate: string;
   closedDate?: string;
   dealValue?: number;
-  dealType: 'Acquisition' | 'Merger' | 'Strategic Investment' | 'Asset Purchase';
+  dealType: 'Acquisition' | 'Merger' | 'Strategic Investment' | 'Asset Purchase' | 'Asset Acquisition' | 'License/Asset Acquisition';
   strategicRationale: string;
   multiples?: {
     revenue?: number;

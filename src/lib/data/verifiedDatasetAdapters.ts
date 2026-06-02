@@ -29,6 +29,8 @@ function mapStage(stage: string): Company['stage'] {
 function mapDealType(dealType: string): Acquisition['dealType'] {
   if (dealType === 'Strategic Investment') return 'Strategic Investment';
   if (dealType === 'Partnership') return 'Strategic Investment';
+  if (dealType === 'Asset Acquisition') return 'Asset Acquisition';
+  if (dealType === 'License/Asset Acquisition') return 'License/Asset Acquisition';
   return 'Acquisition';
 }
 

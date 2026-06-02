@@ -12,7 +12,7 @@ Next.js 16, React 19, TypeScript (strict: true), Tailwind CSS v4, D3.js v7, Fram
 
 ## Data
 Single source of truth: `getVerifiedDataset()` from `src/data/dataset.verified.json`.
-Three arrays: `companies` (55), `acquirers` (24), `acquisitions` (38 deals).
+Three arrays: `companies` (75), `acquirers` (35), `acquisitions` (58 deals).
 Every deal cites public sources (SEC filings, press releases, investor relations).
 Future DB toggle: `LACUNA_DATA_MODE=db` in `src/lib/data/datasetProvider.ts`.
 
