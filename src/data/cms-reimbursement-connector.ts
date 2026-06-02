@@ -209,26 +209,20 @@ class CMSDataStore {
   private hcpcsCodes: Map<string, HCPCSCode> = new Map();
   private isLoaded: boolean = false;
 
-  async loadData(dataPath?: string): Promise<void> {
+  async loadData(): Promise<void> {
     if (this.isLoaded) return;
 
     try {
-      // Load from cached JSON files
-      const cptPath = join(process.cwd(), 'src', 'data', 'cached-cpt-codes.json');
-      const hcpcsPath = join(process.cwd(), 'src', 'data', 'cached-hcpcs-codes.json');
-
-      const cptData = await fs.readFile(cptPath, 'utf-8');
-      const hcpcsData = await fs.readFile(hcpcsPath, 'utf-8');
-
-      const cptCodes: CPTCode[] = JSON.parse(cptData);
-      const hcpcsCodes: HCPCSCode[] = JSON.parse(hcpcsData);
+      // Load from imported JSON data (client-side compatible)
+      const cptCodes: CPTCode[] = cptCodesData as CPTCode[];
+      const hcpcsCodes: HCPCSCode[] = hcpcsCodesData as HCPCSCode[];
 
       cptCodes.forEach(code => this.cptCodes.set(code.code, code));
       hcpcsCodes.forEach(code => this.hcpcsCodes.set(code.code, code));
 
       this.isLoaded = true;
     } catch (error) {
-      console.warn('CMS data files not found, using fallback data');
+      console.warn('Error loading CMS data, using fallback:', error);
       this.loadFallbackData();
     }
   }
