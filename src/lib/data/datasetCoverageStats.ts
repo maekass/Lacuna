@@ -45,7 +45,6 @@ export interface EffectiveNBadges {
   competitive: { n: number; label: string; tier: 'insufficient' | 'low' | 'medium' | 'high' };
   priceAnalytics: { n: number; label: string; tier: 'insufficient' | 'low' | 'medium' | 'high' };
   dealVelocity: { n: number; label: string; tier: 'insufficient' | 'low' | 'medium' | 'high' };
-  fairness: { n: number; label: string; tier: 'insufficient' | 'low' | 'medium' | 'high' };
 }
 
 function tierFromN(n: number, thresholds: { insufficient: number; low: number; medium: number }): EffectiveNBadges['network']['tier'] {
@@ -131,11 +130,6 @@ export function computeEffectiveNBadges(dataset: CoverageDatasetInput): Effectiv
       n: dealCount,
       label: `${dealCount} deals`,
       tier: tierFromN(dealCount, { insufficient: 5, low: 20, medium: 50 }),
-    },
-    fairness: {
-      n: 0,
-      label: 'Founder gender not in verified dataset',
-      tier: 'insufficient',
     },
   };
 }

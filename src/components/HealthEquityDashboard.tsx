@@ -355,7 +355,7 @@ export default function HealthEquityDashboard() {
         <ul className="mt-2 space-y-1 text-xs text-slate-600 list-disc pl-5">
           <li>Filter by focus area, sector, or company; expand a row for sources and deal provenance.</li>
           <li>Epidemiology numbers are static citations (OAIS reference list), not a live CDC feed.</li>
-          <li>Dual-metric ROI scoring lives under Impact Assessment; fairness metrics under Fairness Audit.</li>
+          <li>Dual-metric ROI scoring lives under Impact Assessment.</li>
         </ul>
       </div>
 
