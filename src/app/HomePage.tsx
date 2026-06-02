@@ -24,6 +24,7 @@ import SiteSectionNav from '@/components/SiteSectionNav';
 import BusinessModelClassifier from '@/components/business-model-classifier';
 import ReimbursementIntelligenceDashboard from '@/components/ReimbursementIntelligenceDashboard';
 import EvidenceMaturityDashboard from '@/components/EvidenceMaturityDashboard';
+import AcquirerPredictionDashboard from '@/components/AcquirerPredictionDashboard';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 export default function HomePage() {
@@ -467,6 +468,25 @@ export default function HomePage() {
           </div>
 
           <EvidenceMaturityDashboard />
+        </motion.section>
+
+        {/* Acquirer Prediction */}
+        <motion.section
+          id="acquirer-prediction"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.65 }}
+          className="mb-16 scroll-mt-24"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Acquirer Prediction</h3>
+            <p className="text-lacuna-blue">
+              Strategic analysis of potential acquirers for each company. Match scores based on 
+              capability fit, acquisition history, and financial capacity.
+            </p>
+          </div>
+
+          <AcquirerPredictionDashboard />
         </motion.section>
 
         {/* Footer */}

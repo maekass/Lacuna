@@ -12,6 +12,7 @@ const SECTION_LINKS = [
   { href: '#causal-engine', label: 'Causal' },
   { href: '#export', label: 'Export' },
   { href: '#reimbursement-intelligence', label: 'Reimbursement' },
+  { href: '#acquirer-prediction', label: 'Acquirers' },
 ] as const;
 
 function NavLink({ href, label }: { href: string; label: string }) {
