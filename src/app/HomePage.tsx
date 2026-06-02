@@ -23,6 +23,7 @@ import ClinicalTrialTracker from '@/components/ClinicalTrialTracker';
 import SiteSectionNav from '@/components/SiteSectionNav';
 import BusinessModelClassifier from '@/components/business-model-classifier';
 import ReimbursementIntelligenceDashboard from '@/components/ReimbursementIntelligenceDashboard';
+import EvidenceMaturityDashboard from '@/components/EvidenceMaturityDashboard';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 export default function HomePage() {
@@ -447,6 +448,25 @@ export default function HomePage() {
               <BusinessModelClassifier />
             </div>
           </div>
+        </motion.section>
+
+        {/* Evidence Maturity */}
+        <motion.section
+          id="evidence-maturity"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.64 }}
+          className="mb-16 scroll-mt-24"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Evidence Maturity</h3>
+            <p className="text-lacuna-blue">
+              Clinical trial phase, FDA regulatory status, and publication analysis.
+              Evidence-rich companies (Phase 3+, FDA-approved) command premium valuations.
+            </p>
+          </div>
+
+          <EvidenceMaturityDashboard />
         </motion.section>
 
         {/* Footer */}
