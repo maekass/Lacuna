@@ -39,8 +39,8 @@ const COMPLIANCE_ITEMS = [
     detail: 'We only use official public APIs and published press releases. No scraping, no paywall workarounds, no proprietary database access.',
   },
   {
-    title: 'Built for learning & research',
-    detail: 'Lacuna is designed for academic research, policy analysis, and education. It\'s not investment advice or commercial intelligence — just an honest research companion.',
+    title: 'Built for learning, research & investment clarity',
+    detail: 'Lacuna is designed for anyone exploring the women\'s health investment landscape — from students and researchers to lay investors and institutional allocators. It\'s not investment advice, but an honest starting point for understanding the structural opportunity in precision medicine and women\'s health.',
   },
   {
     title: 'We show our work',
