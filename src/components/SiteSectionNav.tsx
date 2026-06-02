@@ -11,6 +11,7 @@ const SECTION_LINKS = [
   { href: '#network-analysis', label: 'Analysis' },
   { href: '#causal-engine', label: 'Causal' },
   { href: '#export', label: 'Export' },
+  { href: '#reimbursement-intelligence', label: 'Reimbursement' },
 ] as const;
 
 function NavLink({ href, label }: { href: string; label: string }) {

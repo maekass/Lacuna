@@ -21,9 +21,8 @@ import CausalInferenceEngine from '@/components/CausalInferenceEngine';
 import DataCoverageCard from '@/components/DataCoverageCard';
 import ClinicalTrialTracker from '@/components/ClinicalTrialTracker';
 import SiteSectionNav from '@/components/SiteSectionNav';
-import DataProvenanceBanner from '@/components/DataProvenanceBanner';
-import ExportToGamma from '@/components/ExportToGamma';
-import EvidenceMaturityDashboard from '@/components/EvidenceMaturityDashboard';
+import BusinessModelClassifier from '@/components/business-model-classifier';
+import ReimbursementIntelligenceDashboard from '@/components/ReimbursementIntelligenceDashboard';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 export default function HomePage() {
@@ -424,19 +423,30 @@ export default function HomePage() {
           <ClusteringAnalysis />
         </motion.section>
 
-        {/* Export to Gamma */}
+        {/* Reimbursement Intelligence */}
         <motion.section
-          id="export"
+          id="reimbursement-intelligence"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.65 }}
-          className="mb-16 scroll-mt-20"
+          transition={{ duration: 0.6, delay: 0.63 }}
+          className="mb-16 scroll-mt-24"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Share Your Findings</h3>
-            <p className="text-lacuna-blue">Ready to share what you&apos;ve discovered? Generate a polished presentation, document, or report with Gamma</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Reimbursement Intelligence</h3>
+            <p className="text-lacuna-blue">
+              CMS CPT/HCPCS code analysis to assess insurance reimbursement status and valuation impact.
+              Reimbursement-rich companies command 3-5x valuation premiums over consumer-only models.
+            </p>
           </div>
-          <ExportToGamma />
+
+          <div className="grid lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <ReimbursementIntelligenceDashboard />
+            </div>
+            <div>
+              <BusinessModelClassifier />
+            </div>
+          </div>
         </motion.section>
 
         {/* Footer */}
