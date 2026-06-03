@@ -3,6 +3,7 @@ export type DataMode = 'static' | 'db';
 export interface VerifiedDataset {
   provenance: {
     lastUpdated: string;
+    datasetVersion?: string;
     sources: string[];
     notes: string[];
     purpose: string;

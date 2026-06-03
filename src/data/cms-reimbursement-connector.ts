@@ -10,9 +10,6 @@
  * - Medicare Physician Fee Schedule (MPFS) RVU data
  */
 
-import { promises as fs } from 'fs';
-import { join } from 'path';
-
 // Types
 export interface CPTCode {
   code: string;
@@ -209,22 +206,9 @@ class CMSDataStore {
   private hcpcsCodes: Map<string, HCPCSCode> = new Map();
   private isLoaded: boolean = false;
 
-  async loadData(): Promise<void> {
+  loadData(): void {
     if (this.isLoaded) return;
-
-    try {
-      // Load from imported JSON data (client-side compatible)
-      const cptCodes: CPTCode[] = cptCodesData as CPTCode[];
-      const hcpcsCodes: HCPCSCode[] = hcpcsCodesData as HCPCSCode[];
-
-      cptCodes.forEach(code => this.cptCodes.set(code.code, code));
-      hcpcsCodes.forEach(code => this.hcpcsCodes.set(code.code, code));
-
-      this.isLoaded = true;
-    } catch (error) {
-      console.warn('Error loading CMS data, using fallback:', error);
-      this.loadFallbackData();
-    }
+    this.loadFallbackData();
   }
 
   private loadFallbackData(): void {

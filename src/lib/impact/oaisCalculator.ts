@@ -114,6 +114,19 @@ export const EPIDEMIOLOGY_DATABASE: EpidemiologyData[] = [
     year: 2025,
     confidence: 'high',
     notes: '~1 in 8 postpartum women report depressive symptoms (Childstats 2024); 12.8% prevalence (PLOS One 2025)'
+  },
+  {
+    condition: 'Breast Cancer',
+    addressablePopulation: {
+      pointEstimate: 4.1,
+      lowerBound: 3.8,
+      upperBound: 4.4,
+      unit: 'millions'
+    },
+    source: 'ACS Breast Cancer Facts & Figures 2024-2025; ACS Cancer Statistics for Black People (Feb 2025)',
+    year: 2025,
+    confidence: 'high',
+    notes: 'Most common cancer among women globally; Black women face 38% higher mortality (ACS 2025)'
   }
 ];
 

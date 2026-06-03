@@ -187,7 +187,13 @@ export class OpenFDAClient {
       earliestApprovalDate: this.getEarliestDate(uniqueProducts),
       latestApprovalDate: this.getLatestDate(uniqueProducts),
       fdaMaturityScore: 0,
-      productClasses: Array.from(new Set(uniqueProducts.map(p => p.productClass).filter(Boolean)))
+      productClasses: Array.from(
+        new Set(
+          uniqueProducts
+            .map((p) => p.productClass)
+            .filter((value): value is ProductClass => value !== undefined),
+        ),
+      ),
     };
 
     profile.fdaMaturityScore = calculateFDAMaturityScore(profile);

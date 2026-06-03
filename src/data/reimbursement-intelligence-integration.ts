@@ -7,12 +7,12 @@
 
 import { 
   CMSReimbursementConnector, 
-  CPTCodeMatcher,
   CompanyReimbursementProfile,
   ReimbursementStatus,
   BusinessModel,
   SECTOR_REIMBURSEMENT_PATTERNS
 } from './cms-reimbursement-connector';
+import { CPTCodeMatcher } from './cpt-code-matcher';
 import { ValuationPremiumCalculator } from './valuation-premium-calculator';
 
 // Lacuna company type (from existing dataset)
@@ -74,7 +74,7 @@ export class ReimbursementIntelligenceIntegration {
   /**
    * Analyze a Lacuna company for reimbursement intelligence
    */
-  async analyzeCompany(company: LacunaCompany): Promise<ReimbursementAnalysisResult> {
+  analyzeCompany(company: LacunaCompany): ReimbursementAnalysisResult {
     // Match company product to CPT codes
     const matchedCodes = this.connector.matchProductToCodes(
       company.name,
@@ -285,12 +285,12 @@ export class ReimbursementIntelligenceIntegration {
   /**
    * Batch analyze multiple companies
    */
-  async analyzeCompanies(companies: LacunaCompany[]): Promise<ReimbursementAnalysisResult[]> {
+  analyzeCompanies(companies: LacunaCompany[]): ReimbursementAnalysisResult[] {
     const results: ReimbursementAnalysisResult[] = [];
     
     for (const company of companies) {
       try {
-        const result = await this.analyzeCompany(company);
+        const result = this.analyzeCompany(company);
         results.push(result);
       } catch (error) {
         console.error(`Error analyzing ${company.name}:`, error);

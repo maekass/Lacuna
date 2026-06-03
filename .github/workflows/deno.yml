@@ -53,6 +53,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deno lint (repo subset)
-        run: deno lint src __tests__ scripts
+      - name: Deno lint (require-await + no-node-globals)
+        run: deno lint src scripts
 

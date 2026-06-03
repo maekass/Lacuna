@@ -50,14 +50,14 @@ export default function ReimbursementIntelligenceDashboard() {
       
       // Map Lacuna companies to analysis format
       const companiesToAnalyze = verifiedCompanies.map(company => ({
-        id: company.id || String(Math.random()),
+        id: company.id,
         name: company.name,
-        productDescription: company.description || company.business || '',
-        sector: mapToStandardSector(company.sector || company.industry || 'digital_therapeutics'),
-        revenue: company.fundingTotal || 5000000
+        productDescription: company.description,
+        sector: mapToStandardSector(company.sector),
+        revenue: company.totalFunding ?? 5_000_000,
       }));
 
-      const results = await reimbursementIntelligence.analyzeCompanies(companiesToAnalyze);
+      const results = reimbursementIntelligence.analyzeCompanies(companiesToAnalyze);
       setAnalyses(results);
       setIsLoading(false);
     };

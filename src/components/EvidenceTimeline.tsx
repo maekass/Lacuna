@@ -177,7 +177,7 @@ export default function EvidenceTimeline({
     // X axis
     const xAxis = d3.axisBottom(xScale)
       .ticks(5)
-      .tickFormat((d) => d3.timeFormat('%b %Y')(d));
+      .tickFormat((d) => d3.timeFormat('%b %Y')(d as Date));
 
     g.append('g')
       .attr('transform', `translate(0,${innerHeight})`)

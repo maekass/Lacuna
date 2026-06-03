@@ -7,6 +7,13 @@ import { Pool } from 'pg';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const migrationsDir = join(__dirname, '../db/migrations');
 
+const MIGRATIONS_TABLE = `
+CREATE TABLE IF NOT EXISTS lacuna_schema_migrations (
+  filename TEXT PRIMARY KEY,
+  applied_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+`;
+
 async function main() {
   const url = process.env.DATABASE_URL;
   if (!url) {
@@ -24,11 +31,36 @@ async function main() {
   });
 
   try {
+    await pool.query(MIGRATIONS_TABLE);
+
     for (const file of files) {
+      const applied = await pool.query<{ filename: string }>(
+        'SELECT filename FROM lacuna_schema_migrations WHERE filename = $1',
+        [file],
+      );
+      if (applied.rowCount && applied.rowCount > 0) {
+        console.log('Skipped (already applied):', file);
+        continue;
+      }
+
       const path = join(migrationsDir, file);
       const sql = readFileSync(path, 'utf8');
-      await pool.query(sql);
-      console.log('Migration applied:', file);
+      const client = await pool.connect();
+      try {
+        await client.query('BEGIN');
+        await client.query(sql);
+        await client.query(
+          'INSERT INTO lacuna_schema_migrations (filename) VALUES ($1)',
+          [file],
+        );
+        await client.query('COMMIT');
+        console.log('Migration applied:', file);
+      } catch (error) {
+        await client.query('ROLLBACK');
+        throw error;
+      } finally {
+        client.release();
+      }
     }
   } finally {
     await pool.end();
