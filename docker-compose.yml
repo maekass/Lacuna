@@ -1,0 +1,25 @@
+# Local Postgres for LACUNA_DATA_MODE=db, migrations, and SEC ingest dev.
+# Start: docker compose up -d
+# Then: cp .env.example .env.local && npm run db:migrate && npm run db:import
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: lacuna-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lacuna
+      POSTGRES_PASSWORD: lacuna
+      POSTGRES_DB: lacuna
+    ports:
+      - "5432:5432"
+    volumes:
+      - lacuna_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lacuna -d lacuna"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  lacuna_pg_data:

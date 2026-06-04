@@ -14,6 +14,8 @@ Lacuna is an educational M&A intelligence demo for women's health. It visualizes
 
 **Live demo:** https://lacuna-maekass.vercel.app
 
+**Site split:** Product stays on **Vercel** (this repo). **Framer** ([framer.com](https://www.framer.com)) is for brand + narrative only (hero, methodology story, hiring/portfolio), with one primary CTA into the live app — not for hosting analytics. Build kit: [framer/BUILD_GUIDE.md](framer/BUILD_GUIDE.md). See [docs/SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md). (Do not confuse with **Framer Motion** in `package.json`.)
+
 This is portfolio/educational code. Be honest about data limits (curated static dataset, partial price disclosure, methodology in `docs/`).
 
 ## Current stack
@@ -32,7 +34,7 @@ This is portfolio/educational code. Be honest about data limits (curated static 
 
 ## Roadmap (not built — do not invent without request)
 
-PostgreSQL ingestion, SEC/ClinicalTrials/FDA/CMS connectors, Jest under `__tests__/`.
+PostgreSQL ingestion, SEC/ClinicalTrials/FDA/CMS connectors, Jest under `__tests__/`. Framer marketing site (separate from this repo) per [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md).
 
 ## Layout
 
@@ -55,7 +57,9 @@ Single source of truth: verified dataset + adapters. Do not reintroduce syntheti
 
 ## CI
 
-`npm run lint` · `deno lint` (fix `require-await`, `no-unused-vars`) · Datadog needs `DD_API_KEY` / `DD_APP_KEY` secrets
+`npm run lint` · `npm run validate:dataset` · `deno lint` (fix `require-await`, `no-unused-vars`) · Datadog needs `DD_API_KEY` / `DD_APP_KEY` secrets
+
+Ops runbook: [docs/INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md). Local Postgres: `docker compose up -d`. Readiness: `GET /api/health`, `npm run infra:check`.
 
 ## Commits
 

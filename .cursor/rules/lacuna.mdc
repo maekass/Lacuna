@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Lacuna — women's health M&A intelligence platform
 
-Educational demo visualizing verified acquisition data, network relationships, health equity focus areas, and descriptive analytics. Honest provenance — not live institutional data.
+Educational demo visualizing verified acquisition data, network relationships, health equity focus areas, and descriptive analytics. Honest provenance — not live institutional data. Product on Vercel only; Framer (framer.com) is marketing/narrative with CTA to the app — see `docs/SITE_ARCHITECTURE.md`.
 
 ## Stack
 Next.js 16, React 19, TypeScript (strict: true), Tailwind CSS v4, D3.js v7, Framer Motion. Server LLM: Vercel AI Gateway (`src/lib/ai/inference.ts`). No TensorFlow in the app bundle.
@@ -14,7 +14,7 @@ Next.js 16, React 19, TypeScript (strict: true), Tailwind CSS v4, D3.js v7, Fram
 Single source of truth: `getVerifiedDataset()` from `src/data/dataset.verified.json`.
 Three arrays: `companies` (75), `acquirers` (35), `acquisitions` (58 deals).
 Every deal cites public sources (SEC filings, press releases, investor relations).
-Future DB toggle: `LACUNA_DATA_MODE=db` in `src/lib/data/datasetProvider.ts`.
+Future DB toggle: `LACUNA_DATA_MODE=db` in `src/lib/data/datasetProvider.ts`. Ops: [docs/INFRASTRUCTURE.md](../../docs/INFRASTRUCTURE.md), `GET /api/health`, `docker compose`.
 
 ## Paths
 `@/*` → `src/*`. PascalCase in `src/components/`. Logic in `src/lib/`. API in `src/app/api/`.
