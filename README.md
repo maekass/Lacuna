@@ -1,28 +1,35 @@
 <!--
-SEO Meta Description: Lacuna - Network intelligence platform for FemTech M&A, women's health acquisitions, and digital health deal flow. Interactive D3.js visualization of strategic relationships, exit patterns, and M&A market dynamics in women's wellness sector.
-Keywords: FemTech M&A, women's health acquisitions, digital health deals, venture capital, network visualization, D3.js, exit strategy, health equity, Black women's health, clinical trials, TensorFlow.js, Mae Kass, health tech founder
+SEO Meta Description: Lacuna — educational women's health M&A demo. Curated verified deals (n=58), D3 visualization, descriptive analytics with public methodology. Not live market data or predictive ML.
 -->
 
 <h1 align="center">Lacuna</h1>
 
 <p align="center">
-  <strong>Network Intelligence Platform for Women's Health M&A and FemTech Acquisitions</strong>
+  <strong>Educational demo — women's health M&A visualization &amp; descriptive analytics</strong>
+</p>
+
+<blockquote align="center">
+  <p><strong>Curated dataset · n=58 verified deals · Not live market data · Scores are descriptive, not forecasts.</strong></p>
+</blockquote>
+
+<p align="center">
+  The live app reads <code>src/data/dataset.verified.json</code> by default. Server-side LLM calls use <a href="docs/INFERENCE.md">Vercel AI Gateway</a> only. TensorFlow code is <a href="src/lib/ml/_quarantine/">quarantined</a> (not in the app). See <a href="docs/MODEL_CARD.md">MODEL_CARD.md</a> before citing any score.
 </p>
 
 <p align="center">
   <a href="https://lacuna-maekass.vercel.app">
-    <img src="./public/social-preview.svg" alt="Lacuna Network Visualization - FemTech M&A Intelligence Platform showing women's health acquisition landscape with interactive D3.js force-directed graph" width="100%">
+    <img src="./public/social-preview.svg" alt="Lacuna — educational FemTech M&A network visualization from a curated verified dataset" width="100%">
   </a>
 </p>
 
 <p align="center">
-  <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-16-C8A8E9?style=flat-square&logo=next.js&logoColor=white" alt="Built with Next.js 16"></a>
+  <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-16-C8A8E9?style=flat-square&logo=next.js&logoColor=white" alt="Next.js 16"></a>
   <a href="https://react.dev"><img src="https://img.shields.io/badge/React-19-D4A5E0?style=flat-square&logo=react&logoColor=white" alt="React 19"></a>
-  <a href="https://typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-5.0-E8B4D9?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript 5.0"></a>
+  <a href="https://typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-5.0-E8B4D9?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript"></a>
   <a href="https://d3js.org"><img src="https://img.shields.io/badge/D3.js-v7-C9A0DC?style=flat-square&logo=d3.js&logoColor=white" alt="D3.js v7"></a>
-  <a href="https://tensorflow.org/js"><img src="https://img.shields.io/badge/TensorFlow.js-4.0-DDA0DD?style=flat-square&logo=tensorflow&logoColor=white" alt="TensorFlow.js"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-BSL_1.1-B19CD9?style=flat-square" alt="Business Source License 1.1"></a>
-  <a href="https://lacuna-maekass.vercel.app"><img src="https://img.shields.io/badge/Live_Demo-Vercel-C8A2C8?style=flat-square&logo=vercel&logoColor=white" alt="Live Demo on Vercel"></a>
+  <a href="docs/MODEL_CARD.md"><img src="https://img.shields.io/badge/Data-verified_JSON-E8B4D9?style=flat-square" alt="Verified JSON dataset"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-BSL_1.1-B19CD9?style=flat-square" alt="BSL 1.1"></a>
+  <a href="https://lacuna-maekass.vercel.app"><img src="https://img.shields.io/badge/Demo-Vercel-C8A2C8?style=flat-square&logo=vercel&logoColor=white" alt="Live demo"></a>
 </p>
 
 ## Table of Contents
@@ -31,12 +38,10 @@ Keywords: FemTech M&A, women's health acquisitions, digital health deals, ventur
 - [What is Lacuna?](#what-is-lacuna)
 - [Live Demo](#live-demo)
 - [Core Features](#core-features)
-- [Interactive Network Visualization](#interactive-network-visualization)
-- [Deal Flow Analytics](#deal-flow-analytics)
-- [AI/ML Intelligence Layer](#aiml-intelligence-layer)
-- [Health Equity & Black Women's Health](#health-equity--black-womens-health)
-- [Clinical Trials Integration](#clinical-trials-integration)
-- [Academic Frameworks](#academic-frameworks)
+- [Descriptive analytics](#descriptive-analytics-not-predictive-ml)
+- [Health Equity context](#health-equity--black-womens-health)
+- [Clinical Trials](#clinical-trials-integration)
+- [Academic frameworks](#academic-frameworks)
 - [Technology Stack](#technology-stack)
 - [Quick Start](#quick-start)
 - [Data Curation](#data-curation)
@@ -47,324 +52,183 @@ Keywords: FemTech M&A, women's health acquisitions, digital health deals, ventur
 
 ## Overview
 
-**Lacuna** maps the acquisition landscape across [FemTech](#femtech-m&a-intelligence), [digital health](#digital-health-acquisitions), and [women's wellness](#womens-wellness-sector-analysis) sectors—visualizing strategic relationships, exit patterns, and market dynamics from a **curated, verified static dataset** (not live market feeds). Analytical scores are **descriptive**, not forecasts.
+**Lacuna** is a **research and education demo**: a curated, source-linked snapshot of women's health M&A (58 verified deals), rendered as D3 network views and **descriptive** analytics with published methodology.
 
-*An open-source project by [Mae Kass](https://github.com/maekass) — software engineer exploring the intersection of health equity, network intelligence, and machine learning.*
+| Claim | Reality |
+|-------|---------|
+| Deal data | Static `dataset.verified.json` (manual verification from SEC, press, filings) |
+| Scores & “predictors” | Deterministic rules and small-*n* statistics — [MODEL_CARD.md](docs/MODEL_CARD.md) |
+| “ML” / TensorFlow | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app |
+| Server LLM | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev) |
+| Clinical trials panel | Live ClinicalTrials.gov search; **M&A panels** still use the curated dataset |
+| Production intelligence | **No** — not PitchBook, not a data SLA, not investment advice |
 
-### Target Audiences
+Open source under [BSL 1.1](LICENSE) for coursework, journalism, and self-hosted exploration. Commercial competitive products need a separate license — [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu).
 
-| Audience | Value Proposition |
-|----------|-------------------|
-| **Venture Capital Firms** | Identify emerging acquisition targets in women's health |
-| **Corporate Development** | Map competitive landscape and strategic buyers |
-| **Startup Teams** | Understand exit patterns and valuation benchmarks |
-| **Impact Investors** | Health equity opportunities in Black women's health |
-| **Researchers** | Academic-rigor analytical frameworks with open data |
+Portfolio project by [Mae Kass](https://github.com/maekass).
 
 ---
 
 ## What is Lacuna?
 
-Lacuna is an open-source [network intelligence platform](#network-intelligence-platform) for tracking **M&A activity in women's health and FemTech**. It combines:
+An open-source **educational sandbox** for exploring verified women's health / FemTech M&A:
 
-- **Interactive network visualizations** (D3.js force-directed graphs)
-- **Deal flow analytics** (temporal trends, sector breakdowns)
-- **Descriptive analytics** (factor scoring, similarity, clustering — not trained predictive models)
-- **Clinical trials integration** (therapeutic area insights)
-- **Health equity analysis** (Black women's health investment opportunities)
+- **D3.js** force-directed acquirer–target graphs
+- **Deal flow & valuation** charts (curated counts and disclosed values)
+- **Descriptive scoring** (factor weights, cosine similarity, k-means — no trained forecast models in the UI)
+- **ClinicalTrials.gov** lookup (live API; separate from deal JSON)
+- **Health-equity context** with cited disparity statistics (descriptive, not allocation advice)
+
+Every analytical panel in the app shows the provenance line above.
 
 ---
 
 ## Live Demo
 
-**[lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app)** — Try the interactive network visualization
+**[lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app)**
 
 | Resource | Link |
 |----------|------|
-| **Live Application** | [lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app) |
-| **GitHub Repository** | [github.com/maekass/Lacuna](https://github.com/maekass/Lacuna) |
-| **License** | [Business Source License 1.1](LICENSE) (converts to [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt) in 2028) |
-| **Contact** | [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu) |
+| **Application** | [lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app) |
+| **Repository** | [github.com/maekass/Lacuna](https://github.com/maekass/Lacuna) |
+| **Methodology** | [docs/MODEL_CARD.md](docs/MODEL_CARD.md) |
+| **License** | [BSL 1.1](LICENSE) → Apache 2.0 May 2030 |
 
 ---
 
 ## Core Features
 
-### FemTech M&A Intelligence
+### Verified deal explorer
 
-Track acquisitions, strategic investments, and exit patterns across the women's health technology ecosystem:
+- **58 verified acquisitions** (fertility, oncology, diagnostics, menopause, pelvic health, precision medicine)
+- Acquirers include Hologic, KKR, Pfizer, Gilead, Boston Scientific, and others named in sources
+- Dataset v5 · updated per `provenance.lastUpdated` in JSON
+- Sources: SEC EDGAR, press releases, investor relations (see [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md))
 
-- **58 verified acquisitions** spanning fertility, oncology, diagnostics, menopause, pelvic health, and precision medicine
-- Acquirers including Hologic (7 deals), KKR, Pfizer, Gilead, Boston Scientific, and more
-- **$74B combined market opportunity** in priority disease areas
-- Dataset v5 · last updated June 2026 · sourced from SEC EDGAR, press releases, and public filings
+### Interactive network (`ForceNetwork.tsx`)
 
-### Interactive Network Visualization (`ForceNetwork.tsx`)
+D3 force-directed graph: sector colors, deal-type edges, valuation-scaled nodes. Methodology: [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md).
 
-**D3.js-powered force-directed graph** for exploring acquisition relationships:
+### Deal flow (`DealFlowChart.tsx`)
 
-- **Physics-based positioning**: Charge forces, collision detection, drag interactions
-- **Sector color coding**: 9 distinct colors for health verticals (fertility, menopause, pelvic health, etc.)
-- **Deal type differentiation**: Solid lines (acquisitions) vs dashed (strategic investments)
-- **Valuation-based sizing**: Node radius = √(valuation) for visual hierarchy
-- **Dynamic forces**: Acquirers repel (-800), targets moderate (-400), collision prevention
+Year-over-year counts from verified `announcedDate` — animated bars, no synthetic deal generator.
 
-[Learn more about network visualization methodology →](docs/NETWORK_ANALYSIS_METHODOLOGY.md)
+### Valuation matrix (`ValuationMatrix.tsx`)
 
-### Deal Flow Analytics (`DealFlowChart.tsx`)
-
-**Temporal M&A trend analysis** with animated visualizations:
-
-- Year-over-year transaction counting
-- Framer Motion staggered entrance animations
-- Pink-to-purple gradient bar charts
-- Interactive hover tooltips with exact deal counts
-
-### Valuation Matrix (`ValuationMatrix.tsx`)
-
-**Cross-dimensional heatmap analysis**: Sector × Stage
-
-- Dynamic 4-tier color scaling by average valuations
-- Interactive cell hover reveals company counts
-- Real-time average valuation calculations
-- Market segmentation insights
+Sector × stage heatmap using disclosed values only; cells show company counts and averages.
 
 ---
 
-## Descriptive analytics (not predictive ML)
+## Descriptive analytics (heuristics, not trained models)
 
-All panels show a provenance banner: *Curated dataset · n=58 verified deals · Not live market data · Scores are descriptive, not forecasts.* The app serves static verified JSON by default; optional PostgreSQL (`LACUNA_DATA_MODE=db`) is for ingest staging, not live market ticks.
+> Curated dataset · n=58 verified deals · Not live market data · Scores are descriptive, not forecasts.
 
-### Exit Predictor (`ExitPredictor.tsx`)
+### Acquisition likelihood indicators (`ExitPredictor.tsx`)
 
-**Transparent, deterministic acquisition likelihood indicator**:
+Transparent factor scoring for **non-acquired** companies in the verified set. Fixed weights, full disclosure in UI and [MODEL_CARD.md](docs/MODEL_CARD.md). **Not** a predictive model; no TensorFlow.
 
-- **Honest small-n design**: With n=58 acquisitions, no statistically valid predictive model is possible — this is a descriptive tool, not a forecast
-- **Disclosed factor weights**: Stage, valuation vs. median, sector prior exits, company age — all weights fixed and fully documented
-- **Explainable scoring**: Every factor visible to the user; no hidden model
-- **Reproducible**: Deterministic output with no randomness; same input always yields same score
-- See [`docs/MODEL_CARD.md`](docs/MODEL_CARD.md) for full methodology, limitations, and baseline comparisons
+### Company similarity (`CompanySimilarity.tsx`)
 
-### Company Similarity Engine (`CompanySimilarity.tsx`)
+8-D feature vectors, cosine similarity via `ml-matrix` — “companies like this” for exploration.
 
-**Vector embedding-based company comparison**:
+### Clustering (`ClusteringAnalysis.tsx`)
 
-- 8-dimensional feature vectors per company
-- Cosine similarity mathematical comparison
-- ml-matrix integration for fast computation
-- "Companies like this" recommendation system
+k-means on valuation × employees — descriptive segments (Emerging / Growth / Late-stage labels).
 
-### K-Means Clustering (`ClusteringAnalysis.tsx`)
+### Optional server narratives ([INFERENCE.md](docs/INFERENCE.md))
 
-**Unsupervised market segmentation**:
-
-- Lloyd's algorithm (k=3 clusters)
-- simple-statistics for statistical computations
-- Valuation × Employees 2D clustering space
-- Automatic Emerging / Growth / Late-stage classification
+- UI blurbs via `POST /api/ai/insights` → Vercel AI Gateway (`anthropic/claude-sonnet-4` slug).
+- Exploratory copy only — heuristic scores on the curated dataset remain authoritative.
 
 ---
 
 ## Health Equity & Black Women's Health
 
-### Mission: Investing in Health Equity
+Descriptive context on disease areas with documented disparities and public market-size estimates — for learning, not buy/sell recommendations:
 
-> "Investing in Black women's health isn't just the right thing to do—it's a massive market opportunity."
+| Disease | Disparity (cited in docs) | Public market-size estimate |
+|---------|---------------------------|----------------------------|
+| Maternal Health | Higher mortality disparity | $12B |
+| Uterine Fibroids | High prevalence | $34B |
+| Lupus | Higher prevalence | $8B |
+| Sickle Cell Disease | Population concentration | $5B |
+| Cardiovascular Disease | Higher mortality | $15B |
 
-Lacuna identifies **high-impact investment opportunities** in diseases disproportionately affecting Black women:
-
-| Disease | Health Disparity | Market Size | Investment Focus |
-|---------|-----------------|-------------|------------------|
-| **Maternal Health** | 3.4x higher mortality rate | $12B | Digital health, remote monitoring, culturally competent care |
-| **Uterine Fibroids** | 80% prevalence by age 50 | $34B | Non-surgical treatments, early detection, fertility preservation |
-| **Lupus** | 3x higher prevalence | $8B | AI diagnostics, biomarker discovery, precision medicine |
-| **Sickle Cell Disease** | Primarily affects Black populations | $5B | Gene therapy, CRISPR, curative treatments |
-| **Cardiovascular Disease** | 1.4x higher mortality | $15B | Wearables, early detection, culturally tailored interventions |
-
-**Combined market opportunity: $74 billion**
-
-### Health Equity Dashboard (`HealthEquityDashboard.tsx`)
-
-**Dual-metric scoring**: ROI potential + health equity impact
-
-- Health equity dashboard with disease tracking
-- Dual-metric visualization combining financial returns and health outcomes
+See [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md) for scoring limits.
 
 ---
 
 ## Clinical Trials Integration
 
-### ClinicalTrials.gov API (`/api/clinical-trials`)
+- **Live**: `/api/clinical-trials` → ClinicalTrials.gov API v2 (search, batch lookup)
+- **Curated M&A**: unchanged — still `dataset.verified.json`
 
-Real-time access to **6,819 clinical trials**:
-
-- **ClinicalTrials.gov API v2**: Live trial search and filtering
-- **Search parameters**: Condition, phase, status, enrollment
-- **Trial data**: NCT ID, title, sponsor, locations, interventions
-- **Batch lookup**: Multi-trial query endpoint
-- **Health equity focus**: Priority diseases affecting Black women
-
-### Clinical trial lookup (live API)
-
-**ClinicalTrials.gov** search is live via `/api/clinical-trials`. Deal-level M&A analytics remain on the curated dataset above.
-
-### Experimental trial scorer (not production ML)
-
-**`ensemblePredictor.ts`** — illustrative TensorFlow.js demo only: untrained network + heuristic logistic blend. **Not validated**; do not cite accuracy claims. Kept for library tests, not user-facing forecasts.
+Do not conflate live trial search volume with verified deal coverage.
 
 ---
 
 ## Academic Frameworks
 
-Lacuna implements **6 academically rigorous analytical frameworks** with explicit small-sample limitations (n≈23 companies, n=6 deals):
-
-### 1. Causal Inference Engine
-
-**Pearl Backdoor Criterion** with DAG analysis:
-
-- Main effects with 95% confidence intervals
-- Specification robustness (3 model specs)
-- Oster's δ sensitivity to unobserved confounding
-- Event study methodology
-- Bayesian small-sample analysis
-
-*References: Pearl (2009), Oster (2019), Rubin (1974)*
-
-### 2. Health Impact Assessment (OAIS Framework)
-
-**Opportunity-Adjusted Impact Score**:
-
-```
-OAIS = [Addressable Pop] × [Penetration Gap] × [Stage Credibility]
-       × [Founder Quality] × [Acquirer Scaling] / [Market Saturation]
-```
-
-3-tier data framework: CDC/NICHD epidemiology → proxy variables → acknowledged limitations.
-
-### 3. Fairness Audit (Modular V2)
-
-**Rigorous statistical methods** for equity analysis:
-
-- Wilson confidence intervals (better for small n)
-- Fisher's exact test (n<30)
-- Newcombe's method for proportion differences
-- Bonferroni correction / Benjamini-Hochberg FDR
-- Cohen's h effect size
-- Logistic regression with Newton-Raphson
-
-*References: Kleinberg, Mullainathan, Raghavan (2016)*
-
-### 4. Network Analysis (Honest Small-N)
-
-**8 analytical tabs** with explicit limitations:
-
-- Bootstrap confidence intervals
-- Gini coefficient & HHI (DOJ-aligned concentration metrics)
-- Temporal trends with R²
-- Community detection (simplified Louvain)
-- Null model comparison (1000 random simulations)
-- **Explicit acknowledgment**: Cannot claim power laws with n=15
-
-*References: Newman (2003, 2010), Clauset et al. (2009)*
-
-[View all methodology documentation →](#documentation)
+Six frameworks with **explicit small-*n* limits** documented in `docs/` (causal DAG, fairness audit, network concentration, etc.). We state what cannot be claimed with n≈58 deals — see methodology files linked from the app.
 
 ---
 
 ## Technology Stack
 
-| Category | Technologies |
-|----------|--------------|
-| **Framework** | [Next.js 16](https://nextjs.org) (App Router), [React 19](https://react.dev), [Tailwind CSS v4](https://tailwindcss.com) |
-| **Languages** | [TypeScript](https://typescriptlang.org) (strict mode), SQL |
-| **Visualization** | [D3.js v7](https://d3js.org), [Framer Motion](https://framer.com/motion) |
-| **Statistics & vectors** | simple-statistics, ml-matrix (similarity/clustering) |
-| **Experimental (tests only)** | TensorFlow.js demo scorer in `ensemblePredictor.ts` — not production inference |
-| **AI/LLM** | Vercel AI SDK + AI Gateway (GPT-4), Zod validation |
-| **Data** | Verified JSON + optional PostgreSQL |
-| **Testing** | [Vitest](https://vitest.dev), ESLint |
-| **Deployment** | [Vercel](https://vercel.com) |
+| Layer | Used in production UI |
+|-------|----------------------|
+| Next.js 16, React 19, Tailwind v4 | App shell |
+| D3.js v7, Framer Motion | Visualization |
+| simple-statistics, ml-matrix | Descriptive stats / similarity |
+| Verified JSON (`getVerifiedDataset()`) | Default data path |
+| PostgreSQL | Optional `LACUNA_DATA_MODE=db` ingest only |
+| Vercel AI Gateway + AI SDK | Optional narratives + SEC classification ([INFERENCE.md](docs/INFERENCE.md)) |
+| TensorFlow.js | Quarantined — devDependency for Vitest only |
 
 ---
 
 ## Quick Start
 
 ```bash
-# Clone repository
 git clone https://github.com/maekass/Lacuna.git
 cd Lacuna
-
-# Install dependencies
 npm install
-
-# Run development server
 npm run dev
-
-# Validate dataset
 npm run validate:dataset
-
-# Run tests
 npm test
 ```
 
-Visit `http://localhost:3000` to view the application.
+Open `http://localhost:3000`. Data loads from `src/data/dataset.verified.json` unless `LACUNA_DATA_MODE=db` is set **and** Postgres is provisioned.
 
 ---
 
 ## Data Curation
 
-### Verified Data Layer (`dataset.verified.json`)
+Manual verification — no synthetic `maDeals`. Workflow: [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md), `npm run validate:dataset`, optional `npm run sec:scan`.
 
-**No synthetic M&A data** — all data manually verified from:
-
-- Company websites and press releases
-- SEC EDGAR filings (8-K, 10-K)
-- TechCrunch, Crunchbase, PitchBook
-- Academic technology ventures
-
-### Data Curation Kit
-
-- **[Data Curation Checklist](docs/DATA_CURATION_CHECKLIST.md)**: JSON schema, dual-attestation rules
-- **Staging template**: `staging/deals_candidates.template.csv` → human review → JSON
-- **Validation CLI**: `npm run validate:dataset` — FK checks, disclosure stats
-- **SEC candidate scan**: `npm run sec:scan` — 8-K discovery (requires `SEC_EDGAR_USER_AGENT`)
+---
 
 ## Documentation
 
-| Document | Description |
-|----------|-------------|
-| [MODEL_CARD.md](docs/MODEL_CARD.md) | Acquisition likelihood indicator — methodology, honest limitations, baseline |
-| [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md) | JSON schema, staging workflow, validation |
-| [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md) | Health impact scoring framework |
-| [FAIRNESS_AUDIT_METHODOLOGY.md](docs/FAIRNESS_AUDIT_METHODOLOGY.md) | Statistical methods with limitations |
-| [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md) | Network analysis with honest small-n |
-| [COMPETITIVE_ANALYSIS_METHODOLOGY.md](docs/COMPETITIVE_ANALYSIS_METHODOLOGY.md) | Market landscape methodology |
-| [SEC_INGESTION.md](docs/SEC_INGESTION.md) | SEC EDGAR pipeline, cron, environment |
-| [AGENTS.md](AGENTS.md) | Stack, conventions, agent guidance |
+| Doc | Purpose |
+|-----|---------|
+| [MODEL_CARD.md](docs/MODEL_CARD.md) | **Start here** — what each score is and is not |
+| [INFERENCE.md](docs/INFERENCE.md) | Server-side LLM (AI Gateway) |
+| [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md) | Schema, validation, staging |
+| [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md) | Graph metrics, small-*n* |
+| [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md) | Health impact scoring limits |
+| [AGENTS.md](AGENTS.md) | Contributor conventions |
 
 ---
 
 ## License
 
-**[Business Source License 1.1](LICENSE)** — Source-available license that becomes **[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)** four years from publication (2028).
+[BSL 1.1](LICENSE) — research/education production use allowed; **Competitive Offerings** (commercial women's-health M&A intelligence products) require a separate agreement. Converts to Apache 2.0 May 2030.
 
-**Additional Use Grant**: Production use permitted except for competing database or product offerings in the women's health M&A intelligence market.
-
-For alternative licensing: [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu)
-
----
-
-## Keywords & Tags
-
-`#FemTech` `#MA` `#VentureCapital` `#DigitalHealth` `#WomensHealth` `#NetworkVisualization` `#D3js` `#MachineLearning` `#TensorFlow` `#HealthEquity` `#BlackWomensHealth` `#ClinicalTrials` `#Nextjs` `#TypeScript` `#OpenSource` `#ImpactInvesting` `#MaeKass` `#SoftwareEngineer` `#HealthTech`
+[mps5cy@virginia.edu](mailto:mps5cy@virginia.edu) for commercial licensing.
 
 ---
 
 ## Author
 
-**Created by [Mae Kass](https://github.com/maekass)** — Software engineer building intelligent platforms for women's health equity, network intelligence, and machine learning for social impact.
-
-- LinkedIn: [Mae Kass](https://linkedin.com/in/maekass) (optional)
-- Contact: [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu)
-
-Other projects: [Clinical Trials Intelligence Platform](https://github.com/maekass/MPK1)
+**[Mae Kass](https://github.com/maekass)** — open educational tools for women's health data literacy and honest analytics.

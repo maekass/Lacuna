@@ -1,10 +1,8 @@
 'use client';
 
 /**
- * AI Insights Panel
- * 
- * Displays LLM-generated investment insights for acquisitions.
- * Generates insights on-demand using Claude API.
+ * Optional LLM-generated narrative blurbs (Vercel AI Gateway). Exploratory copy only —
+ * not validated analysis; parent panels use the curated verified dataset.
  */
 
 import React, { useState, useCallback, useEffect } from 'react';
@@ -164,8 +162,8 @@ export default function AIInsightsPanel({
           <div>
             <h4 className="font-medium text-amber-800">AI Insights Not Configured</h4>
             <p className="text-sm text-amber-700 mt-1">
-              Set ANTHROPIC_API_KEY (or NEXT_PUBLIC_ANTHROPIC_API_KEY) on the server to enable
-              AI-generated insights.
+              Enable Vercel AI Gateway (OIDC on Vercel or AI_GATEWAY_API_KEY) or set OPENAI_API_KEY
+              for optional narrative blurbs.
             </p>
           </div>
         </div>
@@ -195,7 +193,7 @@ export default function AIInsightsPanel({
     <div className={`space-y-3 ${className}`}>
       <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
         <Sparkles className="w-4 h-4" />
-        <span>AI-Generated Insights (Claude 3)</span>
+        <span>Exploratory LLM narrative (not validated research)</span>
       </div>
 
       {insightCards.filter(c => c.available).map(({ type, title }) => {

@@ -29,6 +29,7 @@ import {
   powerAnalysis,
   wilsonConfidenceInterval
 } from '@/lib/fairness/statisticalMethods';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 /** Founder gender is not in the verified public dataset — no name-inference panel. */
@@ -140,6 +141,7 @@ export default function FairnessAuditV2() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
+      <CuratedDatasetBanner />
       {/* Header with Top Warning */}
       <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
         <div className="flex items-start gap-3">

@@ -5,7 +5,7 @@ import {
   generateEvidenceSummary,
   generateReimbursementInsights,
   isAIConfigured,
-} from '@/lib/ai/anthropic';
+} from '@/lib/ai/insights';
 
 interface AcquisitionPayload {
   topAcquirer: string;
@@ -28,7 +28,7 @@ interface ReimbursementPayload {
   sectorBenchmark: number;
 }
 
-/** GET — whether server-side Anthropic credentials are configured. */
+/** GET — whether server-side inference (AI Gateway or OpenAI fallback) is configured. */
 export function GET() {
   return NextResponse.json({ configured: isAIConfigured() });
 }
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
 
   if (!isAIConfigured()) {
     return NextResponse.json(
-      { error: 'AI insights are not configured on the server.' },
+      { error: 'Server inference is not configured (AI Gateway or OPENAI_API_KEY).' },
       { status: 503 },
     );
   }

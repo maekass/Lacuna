@@ -1,5 +1,6 @@
 'use client';
 
+import { CURATED_DATASET_PROVENANCE_LINE } from '@/lib/constants/provenance';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 interface CuratedDatasetBannerProps {
@@ -12,14 +13,15 @@ interface CuratedDatasetBannerProps {
 export default function CuratedDatasetBanner({ className = '' }: CuratedDatasetBannerProps) {
   const { verifiedAcquisitions } = useVerifiedDataset();
   const dealCount = verifiedAcquisitions.length;
+  const line = CURATED_DATASET_PROVENANCE_LINE.replace('n=58', `n=${dealCount}`);
 
   return (
     <p
       role="note"
-      className={`rounded-lg border border-amber-200/80 bg-amber-50/90 px-3 py-2 text-xs text-amber-900 leading-relaxed ${className}`}
+      aria-label={line}
+      className={`rounded-lg border border-amber-200/80 bg-amber-50/90 px-3 py-2 text-xs font-medium text-amber-900 leading-relaxed ${className}`}
     >
-      Curated dataset · n={dealCount} verified deals · Not live market data · Scores are descriptive,
-      not forecasts
+      {line}
     </p>
   );
 }

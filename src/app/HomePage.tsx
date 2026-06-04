@@ -79,26 +79,23 @@ export default function HomePage() {
           className="mb-16"
         >
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 bg-lacuna-lavender/25 rounded-full text-xs font-medium text-lacuna-plum">
-              <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
-              Curated with care · {verifiedCompanies.length} companies · {verifiedAcquisitions.length} deals
-            </div>
+            <CuratedDatasetBanner className="mb-4" />
             <h2 className="text-4xl md:text-5xl font-bold text-lacuna-plum mb-4">
               Making Sense of
               <span className="lacuna-gradient-text"> Women&apos;s Health M&amp;A</span>
             </h2>
             <p className="text-lg text-lacuna-blue leading-relaxed">
-              Welcome to Lacuna — an honest, clear-eyed look at who&apos;s acquiring whom
-              in women&apos;s health and precision medicine. Beyond trends and buzzwords,
-              we bring together verified deal data, clinical trial insights, and health
-              equity research to help lay investors and institutional allocators alike
-              see the structural opportunity in this space.
+              Welcome to Lacuna — an educational demo for who&apos;s acquiring whom in
+              women&apos;s health and precision medicine. We combine verified deal data,
+              clinical trial lookup, and health-equity context so students, researchers,
+              and curious readers can explore the landscape with cited methodology — not
+              live market feeds or investment advice.
             </p>
             <p className="text-sm text-lacuna-blue/70 mt-3 leading-relaxed">
               Women&apos;s health has been historically underfunded relative to its
-              clinical burden — and that gap is closing. Lacuna is here to make the
-              investment case visible, grounded in public filings and real science,
-              not hype.
+              clinical burden. Lacuna makes that context visible with public filings and
+              documented methods — a learning sandbox under BSL 1.1, not a commercial
+              intelligence product.
             </p>
           </div>
         </motion.section>
@@ -226,9 +223,12 @@ export default function HomePage() {
             </p>
           </div>
           <ClinicalTrialTracker />
+          <p className="mt-3 text-xs text-lacuna-blue/70 text-center" role="note">
+            Trial search is live; M&amp;A counts are curated.
+          </p>
         </motion.section>
 
-        {/* Evidence Maturity Scoring */}
+        {/* Evidence maturity (descriptive) */}
         <motion.section
           id="evidence-maturity"
           initial={{ opacity: 0, y: 20 }}
@@ -237,9 +237,10 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">The Evidence Behind the Deal</h3>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Evidence maturity (descriptive)</h3>
             <p className="text-lacuna-blue">
-              How strong is the clinical and regulatory evidence at the time of acquisition? We score each company on trial phase, FDA status, and published results
+              Trial phase, FDA status, and publication flags scored from public metadata on verified
+              companies — not a validated evidence benchmark.
             </p>
           </div>
           <EvidenceMaturityDashboard />
@@ -411,7 +412,7 @@ export default function HomePage() {
 
         {/* Descriptive Scoring & Similarity */}
         <motion.section
-          id="ai-ml"
+          id="descriptive-scoring"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
@@ -437,10 +438,10 @@ export default function HomePage() {
           className="mb-16 scroll-mt-24"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Reimbursement Intelligence</h3>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Reimbursement context (descriptive)</h3>
             <p className="text-lacuna-blue">
-              CMS CPT/HCPCS code analysis to assess insurance reimbursement status and valuation impact.
-              Reimbursement-rich companies command 3-5x valuation premiums over consumer-only models.
+              Illustrative CMS code mapping and business-model labels on verified companies — exploratory
+              framing, not reimbursement advice or live claims data.
             </p>
           </div>
 
@@ -454,26 +455,7 @@ export default function HomePage() {
           </div>
         </motion.section>
 
-        {/* Evidence Maturity */}
-        <motion.section
-          id="evidence-maturity"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.64 }}
-          className="mb-16 scroll-mt-24"
-        >
-          <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Evidence Maturity</h3>
-            <p className="text-lacuna-blue">
-              Clinical trial phase, FDA regulatory status, and publication analysis.
-              Evidence-rich companies (Phase 3+, FDA-approved) command premium valuations.
-            </p>
-          </div>
-
-          <EvidenceMaturityDashboard />
-        </motion.section>
-
-        {/* Acquirer Prediction */}
+        {/* Strategic acquirer fit (descriptive) */}
         <motion.section
           id="acquirer-prediction"
           initial={{ opacity: 0, y: 20 }}
@@ -482,10 +464,10 @@ export default function HomePage() {
           className="mb-16 scroll-mt-24"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Acquirer Prediction</h3>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">Strategic acquirer fit (descriptive)</h3>
             <p className="text-lacuna-blue">
-              Strategic analysis of potential acquirers for each company. Match scores based on 
-              capability fit, acquisition history, and financial capacity.
+              Rule-based match scores from verified deal history and stated acquirer profiles — not a trained
+              prediction model. Optional LLM blurbs are exploratory copy, not validated research.
             </p>
           </div>
 
@@ -536,8 +518,8 @@ export default function HomePage() {
               </p>
               <p className="mt-1">
                 Built on verified, publicly available data from SEC EDGAR, company press releases, and ClinicalTrials.gov.
-                Designed for anyone — from first-time investors to institutional allocators — who wants to understand the
-                structural opportunity in women&apos;s health and precision medicine. Not investment advice.
+                Built for learning and research — students, journalists, founders, and policy readers exploring
+                women&apos;s health M&amp;A. Not investment advice; not institutional deal intelligence.
               </p>
             </div>
           </div>

@@ -1,13 +1,8 @@
 'use client';
 
 /**
- * Acquirer Prediction Dashboard
- * 
- * Shows potential acquirers for Lacuna companies with:
- * - Match scores and likelihood rankings
- * - Strategic fit analysis
- * - Valuation estimates
- * - Competitive threat assessment
+ * Strategic acquirer fit (descriptive) — rule-based matches from verified deals and
+ * static acquirer profiles. Not a trained model; see CuratedDatasetBanner and MODEL_CARD.md.
  */
 
 import React, { useState, useMemo } from 'react';
@@ -81,7 +76,7 @@ function mapToStage(stage: string): CompanyProfile['stage'] {
 
 function extractCapabilities(description: string): string[] {
   const caps: string[] = [];
-  if (description.includes('AI') || description.includes('machine learning')) caps.push('AI/ML');
+  if (description.includes('AI') || description.includes('machine learning')) caps.push('Software & analytics');
   if (description.includes('telehealth') || description.includes('virtual')) caps.push('telehealth');
   if (description.includes('diagnostic')) caps.push('diagnostics');
   if (description.includes('fertility')) caps.push('fertility services');

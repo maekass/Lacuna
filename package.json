@@ -18,7 +18,6 @@
   "dependencies": {
     "@ai-sdk/openai": "^3.0.67",
     "@sentry/nextjs": "^10.55.0",
-    "@tensorflow/tfjs": "^4.22.0",
     "@types/d3": "^7.4.3",
     "ai": "^6.0.193",
     "d3": "^7.9.0",
@@ -40,6 +39,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@tensorflow/tfjs": "^4.22.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/pg": "^8.15.2",

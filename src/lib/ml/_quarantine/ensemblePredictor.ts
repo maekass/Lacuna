@@ -1,7 +1,6 @@
 /**
- * Illustrative clinical-trial scoring demo (TensorFlow.js + heuristics).
- * NOT a trained or validated model — used in unit tests only; do not surface
- * as production ML or cite accuracy in the UI or README.
+ * QUARANTINED — not imported by the app. See ./_quarantine/README.md.
+ * Untrained TensorFlow.js stub + logistic heuristics for Vitest only.
  */
 
 import * as tf from '@tensorflow/tfjs';
@@ -41,7 +40,7 @@ export interface PredictionResult {
   };
 }
 
-// Ensemble predictor combining multiple models
+/** @deprecated Misleading name — untrained TF stub + heuristics for tests only. */
 export class EnsemblePredictor {
   private neuralNetwork: tf.LayersModel | null = null;
   private isInitialized = false;

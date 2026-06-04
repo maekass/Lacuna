@@ -15,7 +15,7 @@ In the [Vercel project](https://vercel.com) → Settings → Environment Variabl
 | `SEC_USE_DB_CURSOR` | Recommended | `true` — resume ingest across daily runs |
 | `SENTRY_DSN` | Optional | Server error reporting |
 | `NEXT_PUBLIC_SENTRY_DSN` | Optional | Client error reporting |
-| `OPENAI_API_KEY` or Vercel AI Gateway | Optional | LLM deal classification (keyword fallback always available) |
+| `AI_GATEWAY_API_KEY` / `VERCEL_OIDC_TOKEN` or `OPENAI_API_KEY` | Optional | Server inference per [INFERENCE.md](./INFERENCE.md) (SEC classification + UI narratives) |
 
 Tuning (optional): `SEC_MAX_TICKERS_PER_RUN`, `SEC_MAX_PARSED_FILINGS_PER_RUN`.
 

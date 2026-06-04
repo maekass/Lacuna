@@ -34,7 +34,7 @@ function mapDealType(dealType: string): Acquisition['dealType'] {
   return 'Acquisition';
 }
 
-/** Companies for ML / matrix views (no fabricated employee counts). */
+/** Companies for similarity / matrix views (no fabricated employee counts). */
 export function getVerifiedCompaniesForAnalysis(
   data: VerifiedDerivedData = getDefaultVerifiedDerivedData(),
 ): Company[] {

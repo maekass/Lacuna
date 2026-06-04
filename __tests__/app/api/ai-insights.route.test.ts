@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('@/lib/ai/anthropic', () => ({
+vi.mock('@/lib/ai/insights', () => ({
   isAIConfigured: vi.fn(),
   generateAcquisitionInsights: vi.fn(),
   generateEvidenceSummary: vi.fn(),
@@ -9,15 +9,15 @@ vi.mock('@/lib/ai/anthropic', () => ({
 
 describe('ai insights API', () => {
   beforeEach(async () => {
-    const anthropic = await import('@/lib/ai/anthropic');
-    vi.mocked(anthropic.isAIConfigured).mockReset();
-    vi.mocked(anthropic.generateAcquisitionInsights).mockReset();
-    vi.mocked(anthropic.generateEvidenceSummary).mockReset();
-    vi.mocked(anthropic.generateReimbursementInsights).mockReset();
+    const insights = await import('@/lib/ai/insights');
+    vi.mocked(insights.isAIConfigured).mockReset();
+    vi.mocked(insights.generateAcquisitionInsights).mockReset();
+    vi.mocked(insights.generateEvidenceSummary).mockReset();
+    vi.mocked(insights.generateReimbursementInsights).mockReset();
   });
 
   it('GET reports configured status', async () => {
-    const { isAIConfigured } = await import('@/lib/ai/anthropic');
+    const { isAIConfigured } = await import('@/lib/ai/insights');
     vi.mocked(isAIConfigured).mockReturnValue(true);
 
     const { GET } = await import('@/app/api/ai/insights/route');
@@ -29,7 +29,7 @@ describe('ai insights API', () => {
   });
 
   it('POST returns 503 when AI is not configured', async () => {
-    const { isAIConfigured } = await import('@/lib/ai/anthropic');
+    const { isAIConfigured } = await import('@/lib/ai/insights');
     vi.mocked(isAIConfigured).mockReturnValue(false);
 
     const { POST } = await import('@/app/api/ai/insights/route');
@@ -57,9 +57,9 @@ describe('ai insights API', () => {
   });
 
   it('POST generates acquisition insights', async () => {
-    const anthropic = await import('@/lib/ai/anthropic');
-    vi.mocked(anthropic.isAIConfigured).mockReturnValue(true);
-    vi.mocked(anthropic.generateAcquisitionInsights).mockResolvedValue('Strategic fit summary.');
+    const insights = await import('@/lib/ai/insights');
+    vi.mocked(insights.isAIConfigured).mockReturnValue(true);
+    vi.mocked(insights.generateAcquisitionInsights).mockResolvedValue('Strategic fit summary.');
 
     const { POST } = await import('@/app/api/ai/insights/route');
     const response = await POST(
@@ -84,7 +84,7 @@ describe('ai insights API', () => {
 
     expect(response.status).toBe(200);
     expect(body.content).toBe('Strategic fit summary.');
-    expect(anthropic.generateAcquisitionInsights).toHaveBeenCalledWith(
+    expect(insights.generateAcquisitionInsights).toHaveBeenCalledWith(
       'Acme',
       'Fertility',
       'BuyerCo',
@@ -96,7 +96,7 @@ describe('ai insights API', () => {
   });
 
   it('POST validates required fields', async () => {
-    const { isAIConfigured } = await import('@/lib/ai/anthropic');
+    const { isAIConfigured } = await import('@/lib/ai/insights');
     vi.mocked(isAIConfigured).mockReturnValue(true);
 
     const { POST } = await import('@/app/api/ai/insights/route');

@@ -4,7 +4,7 @@ import {
   calculateHealthEquityScore,
   getEnsemblePredictor,
   type TrialFeatures,
-} from '@/lib/ml/ensemblePredictor';
+} from '@/lib/ml/_quarantine/ensemblePredictor';
 
 const baseFeatures: TrialFeatures = {
   diseaseArea: 'Endometriosis',
