@@ -25,6 +25,7 @@ import {
   getIngestCursorSinceDate,
   startIngestRun,
 } from '@/lib/ingestion/ingestRunState';
+import { mapWithConcurrency } from '@/lib/util/concurrency';
 
 export interface SecIngestOptions extends ScanOptions {
   /** Extra tickers (comma-separated in env SEC_EXTRA_TICKERS). */
@@ -132,7 +133,12 @@ export async function runSecIngest(options: SecIngestOptions = {}): Promise<SecI
       ? parsedFilingsAll.slice(0, maxParsedFilings)
       : parsedFilingsAll;
 
-  const classified = await Promise.all(parsedFilings.map(classifyParsed));
+  const classifyConcurrency = Number(process.env.SEC_CLASSIFY_CONCURRENCY ?? 3);
+  const classified = await mapWithConcurrency(
+    parsedFilings,
+    Number.isFinite(classifyConcurrency) && classifyConcurrency > 0 ? classifyConcurrency : 3,
+    classifyParsed,
+  );
   const womensHealthCandidates = classified.filter((c) => c.womensHealthRelevant).length;
 
   let sync: SyncResult | null = null;

@@ -3,7 +3,6 @@
  * No mock companies or fabricated deal records.
  */
 
-import { getDefaultVerifiedDerivedData } from '@/lib/data/VerifiedDatasetContext';
 import type { VerifiedDerivedData } from '@/lib/data/verifiedDataHelpers';
 import type { Company, Acquisition } from '@/lib/types';
 import type {
@@ -35,9 +34,7 @@ function mapDealType(dealType: string): Acquisition['dealType'] {
 }
 
 /** Companies for similarity / matrix views (no fabricated employee counts). */
-export function getVerifiedCompaniesForAnalysis(
-  data: VerifiedDerivedData = getDefaultVerifiedDerivedData(),
-): Company[] {
+export function getVerifiedCompaniesForAnalysis(data: VerifiedDerivedData): Company[] {
   return data.verifiedCompanies.map((c) => ({
     id: c.id,
     name: c.name,
@@ -51,9 +48,7 @@ export function getVerifiedCompaniesForAnalysis(
   }));
 }
 
-export function getVerifiedAcquisitionsForAnalysis(
-  data: VerifiedDerivedData = getDefaultVerifiedDerivedData(),
-): Acquisition[] {
+export function getVerifiedAcquisitionsForAnalysis(data: VerifiedDerivedData): Acquisition[] {
   return data.verifiedAcquisitions.map((d) => ({
     id: d.id,
     targetId: d.targetId,
@@ -103,9 +98,7 @@ function mapCompanyStage(stage: string): AcquiredCompany['stage'] {
 }
 
 /** Competitive analysis inputs derived only from verified acquisitions. */
-export function getVerifiedCompetitiveAnalysisData(
-  data: VerifiedDerivedData = getDefaultVerifiedDerivedData(),
-): {
+export function getVerifiedCompetitiveAnalysisData(data: VerifiedDerivedData): {
   acquirers: Acquirer[];
   companies: AcquiredCompany[];
   acquisitions: AcquisitionRecord[];
@@ -162,9 +155,7 @@ export function getVerifiedCompetitiveAnalysisData(
 }
 
 /** Network graph for honest network analysis (verified deals only). */
-export function getVerifiedNetworkGraph(
-  data: VerifiedDerivedData = getDefaultVerifiedDerivedData(),
-): {
+export function getVerifiedNetworkGraph(data: VerifiedDerivedData): {
   nodes: import('@/lib/network/networkStatistics').NetworkNode[];
   edges: import('@/lib/network/networkStatistics').NetworkEdge[];
 } {

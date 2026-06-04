@@ -27,7 +27,7 @@ This is portfolio/educational code. Be honest about data limits (curated static 
 | Styling | **Tailwind CSS v4** + `globals.css` / `src/lib/theme/palette.ts` |
 | Viz | D3.js v7, Framer Motion |
 | Server LLM | Vercel AI Gateway via `src/lib/ai/inference.ts` (AI SDK); see `docs/INFERENCE.md` |
-| Scoring / vectors | simple-statistics, ml-matrix (heuristics — not trained models) |
+| Scoring / vectors | simple-statistics (heuristics — not trained models) |
 | HTTP | Native **`fetch`** (no axios) |
 | Data | `src/data/dataset.verified.json` via `getVerifiedDataset()` |
 | Future DB | `LACUNA_DATA_MODE=db` in `src/lib/data/datasetProvider.ts` |

@@ -1,20 +1,8 @@
 import { NextResponse } from 'next/server';
-import { runHealthCheck } from '@/lib/infra/healthCheck';
+import { runLivenessCheck } from '@/lib/infra/healthCheck';
 
+/** Liveness — constant-time; point synthetics here. */
 export async function GET() {
-  try {
-    const payload = await runHealthCheck();
-    return NextResponse.json(payload, { status: payload.ok ? 200 : 503 });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : 'health check failed';
-    return NextResponse.json(
-      {
-        ok: false,
-        service: 'lacuna',
-        error: message,
-        timestamp: new Date().toISOString(),
-      },
-      { status: 503 },
-    );
-  }
+  const payload = runLivenessCheck();
+  return NextResponse.json(payload, { status: 200 });
 }

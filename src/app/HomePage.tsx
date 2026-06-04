@@ -1,31 +1,33 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import ForceNetwork from '@/components/ForceNetwork';
-import DealFlowChart from '@/components/DealFlowChart';
-import ValuationMatrix from '@/components/ValuationMatrix';
-import ExitPredictor from '@/components/ExitPredictor';
-import CompanySimilarity from '@/components/CompanySimilarity';
-import ClusteringAnalysis from '@/components/ClusteringAnalysis';
-import WearablesTracker from '@/components/WearablesTracker';
-import HealthEquityDashboard from '@/components/HealthEquityDashboard';
-import SensitivityAnalysis from '@/components/SensitivityAnalysis';
-import BayesianCausalAnalysis from '@/components/BayesianCausalAnalysis';
-import CausalDAG from '@/components/CausalDAG';
-import ImpactOpportunityCard from '@/components/ImpactOpportunityCard';
-import ValidationTracker from '@/components/ValidationTracker';
-import NetworkAnalysisHonest from '@/components/NetworkAnalysisHonest';
-import CompetitiveAnalysisDashboard from '@/components/CompetitiveAnalysisDashboard';
-import TemporalValidation from '@/components/TemporalValidation';
-import CausalInferenceEngine from '@/components/CausalInferenceEngine';
+import {
+  AcquirerPredictionDashboard,
+  BayesianCausalAnalysis,
+  BusinessModelClassifier,
+  CausalDAG,
+  CausalInferenceEngine,
+  ClinicalTrialTracker,
+  ClusteringAnalysis,
+  CompanySimilarity,
+  CompetitiveAnalysisDashboard,
+  DealFlowChart,
+  EvidenceMaturityDashboard,
+  ExitPredictor,
+  ForceNetwork,
+  HealthEquityDashboard,
+  ImpactOpportunityCard,
+  NetworkAnalysisHonest,
+  ReimbursementIntelligenceDashboard,
+  SensitivityAnalysis,
+  TemporalValidation,
+  ValidationTracker,
+  ValuationMatrix,
+  WearablesTracker,
+} from '@/app/lazyDashboard';
 import DataCoverageCard from '@/components/DataCoverageCard';
 import DataProvenanceBanner from '@/components/DataProvenanceBanner';
-import ClinicalTrialTracker from '@/components/ClinicalTrialTracker';
 import SiteSectionNav from '@/components/SiteSectionNav';
-import BusinessModelClassifier from '@/components/business-model-classifier';
-import ReimbursementIntelligenceDashboard from '@/components/ReimbursementIntelligenceDashboard';
-import EvidenceMaturityDashboard from '@/components/EvidenceMaturityDashboard';
-import AcquirerPredictionDashboard from '@/components/AcquirerPredictionDashboard';
 import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 

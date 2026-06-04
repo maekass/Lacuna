@@ -4,6 +4,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { fetchWithTimeout } from '@/lib/api/fetchWithTimeout';
+import { getClientIp, rateLimit } from '@/lib/api/rateLimit';
 
 const OPENFDA_BASE = 'https://api.fda.gov';
 
@@ -62,6 +64,15 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'company parameter required' }, { status: 400 });
   }
 
+  const ip = getClientIp(request);
+  const bucket = rateLimit({ key: `evidence-fda:${ip}`, limit: 40, windowMs: 60_000 });
+  if (!bucket.ok) {
+    return NextResponse.json(
+      { error: 'Rate limited', retryAt: bucket.resetAtMs },
+      { status: 429 },
+    );
+  }
+
   try {
     const [deviceData, drugData] = await Promise.all([
       fetchDevices(company),
@@ -103,7 +114,7 @@ export async function GET(request: NextRequest) {
 async function fetchDevices(company: string): Promise<FDACompanySummary['devices']> {
   try {
     const encoded = encodeURIComponent(`"${company}"`);
-    const res = await fetch(
+    const res = await fetchWithTimeout(
       `${OPENFDA_BASE}/device/510k.json?search=applicant:${encoded}&limit=10`,
     );
     if (!res.ok) return [];
@@ -127,7 +138,7 @@ async function fetchDevices(company: string): Promise<FDACompanySummary['devices
 async function fetchDrugs(company: string): Promise<FDACompanySummary['drugs']> {
   try {
     const encoded = encodeURIComponent(`"${company}"`);
-    const res = await fetch(
+    const res = await fetchWithTimeout(
       `${OPENFDA_BASE}/drug/drugsfda.json?search=sponsor_name:${encoded}&limit=10`,
     );
     if (!res.ok) return [];

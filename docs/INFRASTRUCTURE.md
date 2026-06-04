@@ -83,12 +83,13 @@ AI and Sentry: [INFERENCE.md](./INFERENCE.md), [PRODUCTION_SETUP.md](./PRODUCTIO
 
 | Route | Auth | Purpose |
 | --- | --- | --- |
-| `GET /api/health` | Public | Readiness — dataset validation + optional DB ping |
+| `GET /api/health` | Public | **Liveness** — constant-time (use for synthetics) |
+| `GET /api/health/ready` | Public | **Readiness** — dataset validation + optional DB ping |
 | `GET /api/cron/sec-ingest` | `Bearer CRON_SECRET` | Run SEC ingest (Vercel Cron) |
 | `GET /api/cron/sec-ingest/status` | Public | Latest ingest run (needs `DATABASE_URL`) |
 | `GET /api/dataset/verified` | Public | Verified dataset JSON export |
 
-Point Datadog synthetics (or uptime checks) at `/api/health` — expect HTTP 200 and `ok: true`.
+Point Datadog synthetics (or uptime checks) at `/api/health` — expect HTTP 200 and `probe: "live"`. Use `/api/health/ready` sparingly (deploy smoke or manual checks).
 
 ## Vercel deploy
 

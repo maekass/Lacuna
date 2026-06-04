@@ -4,6 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { guardedUpstreamFetch } from '@/lib/api/guardedFetch';
 
 const CTG_API = 'https://clinicaltrials.gov/api/v2';
 
@@ -62,9 +63,12 @@ export async function GET(request: NextRequest) {
       sort: 'LastUpdatePostDate:desc',
     });
 
-    const res = await fetch(`${CTG_API}/studies?${params}`, {
-      headers: { Accept: 'application/json' },
-    });
+    const res = await guardedUpstreamFetch(
+      `${CTG_API}/studies?${params}`,
+      { headers: { Accept: 'application/json' } },
+      { request, rateLimitKey: 'evidence-ctg', limit: 40, windowMs: 60_000 },
+    );
+    if (res instanceof NextResponse) return res;
 
     if (!res.ok) throw new Error(`CTG API ${res.status}`);
 
