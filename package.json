@@ -14,7 +14,8 @@
     "sec:ingest": "tsx scripts/sec-ingest-deals.ts",
     "db:migrate": "tsx scripts/migrate.ts",
     "db:import": "tsx scripts/import-verified-json.ts",
-    "infra:check": "tsx scripts/infra-check.ts"
+    "infra:check": "tsx scripts/infra-check.ts",
+    "monitor:liveness": "sh scripts/monitor-liveness.sh"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.67",

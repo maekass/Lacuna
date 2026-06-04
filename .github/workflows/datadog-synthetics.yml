@@ -1,9 +1,14 @@
 # Optional Datadog Synthetic CI gate — manual only until keys are configured.
 # GitHub Actions does not allow `secrets.*` in job-level `if` (workflow would fail at parse time).
 #
+# Uptime monitors must hit LIVENESS only (constant-time):
+#   GET https://lacuna-maekass.vercel.app/api/health
+# Do NOT schedule synthetics against /api/health/ready — see docs/MONITORING.md
+#
 # Setup:
 # 1. Add repository secrets DD_API_KEY and DD_APP_KEY.
-# 2. Run this workflow from Actions → "Run Datadog Synthetic tests" → Run workflow.
+# 2. In Datadog, create/configure synthetics tagged e2e-tests → URL /api/health, assert probe=live.
+# 3. Run this workflow from Actions → "Run Datadog Synthetic tests" → Run workflow.
 
 name: Run Datadog Synthetic tests
 

@@ -224,6 +224,7 @@ Manual verification — no synthetic `maDeals`. Workflow: [DATA_CURATION_CHECKLI
 | [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md) | Health impact scoring limits |
 | [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md) | CI, Vercel, Postgres, cron, `/api/health` |
 | [PERFORMANCE.md](docs/PERFORMANCE.md) | Bundle, caching, probe split, fan-out limits |
+| [MONITORING.md](docs/MONITORING.md) | Uptime URL: `/api/health` only (not `/ready`) |
 | [PRODUCTION_SETUP.md](docs/PRODUCTION_SETUP.md) | Vercel env vars and migrations |
 | [SEC_INGESTION.md](docs/SEC_INGESTION.md) | SEC EDGAR cron pipeline |
 | [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md) | Vercel product vs Framer marketing (no analytics in Framer) |

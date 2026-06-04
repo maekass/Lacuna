@@ -59,7 +59,7 @@ Single source of truth: verified dataset + adapters. Do not reintroduce syntheti
 
 `npm run lint` · `npm run validate:dataset` · `deno lint` (fix `require-await`, `no-unused-vars`) · Datadog needs `DD_API_KEY` / `DD_APP_KEY` secrets
 
-Ops runbook: [docs/INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md). Local Postgres: `docker compose up -d`. Readiness: `GET /api/health`, `npm run infra:check`.
+Ops runbook: [docs/INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md). Uptime monitors: `GET /api/health` only — [docs/MONITORING.md](docs/MONITORING.md). Local Postgres: `docker compose up -d`. Deploy smoke: `GET /api/health/ready`. `npm run infra:check`, `npm run monitor:liveness`.
 
 ## Commits
 

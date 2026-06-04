@@ -89,7 +89,7 @@ AI and Sentry: [INFERENCE.md](./INFERENCE.md), [PRODUCTION_SETUP.md](./PRODUCTIO
 | `GET /api/cron/sec-ingest/status` | Public | Latest ingest run (needs `DATABASE_URL`) |
 | `GET /api/dataset/verified` | Public | Verified dataset JSON export |
 
-Point Datadog synthetics (or uptime checks) at `/api/health` — expect HTTP 200 and `probe: "live"`. Use `/api/health/ready` sparingly (deploy smoke or manual checks).
+**Uptime monitors:** `GET /api/health` only — see [MONITORING.md](./MONITORING.md). Expect HTTP 200 and `probe: "live"`. Never schedule `/api/health/ready` (deploy smoke / manual only).
 
 ## Vercel deploy
 
