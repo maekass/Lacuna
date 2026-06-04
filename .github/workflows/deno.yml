@@ -47,6 +47,9 @@ jobs:
       - name: ESLint
         run: npm run lint
 
+      - name: Validate verified dataset
+        run: npm run validate:dataset
+
       - name: Vitest
         run: npm test
 

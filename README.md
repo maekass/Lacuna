@@ -67,6 +67,8 @@ Open source under [BSL 1.1](LICENSE) for coursework, journalism, and self-hosted
 
 Portfolio project by [Mae Kass](https://github.com/maekass).
 
+**Deployment:** The analytics product runs on **Vercel** (this repo). A separate **Framer** site is for brand and narrative only, with one primary CTA into the live demo — see [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md) and the [framer/](framer/) build kit.
+
 ---
 
 ## What is Lacuna?
@@ -195,10 +197,13 @@ cd Lacuna
 npm install
 npm run dev
 npm run validate:dataset
+npm run infra:check
 npm test
 ```
 
 Open `http://localhost:3000`. Data loads from `src/data/dataset.verified.json` unless `LACUNA_DATA_MODE=db` is set **and** Postgres is provisioned.
+
+**Optional local Postgres:** `docker compose up -d` → copy [`.env.example`](.env.example) to `.env.local` → `npm run db:migrate && npm run db:import`. See [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md).
 
 ---
 
@@ -217,6 +222,11 @@ Manual verification — no synthetic `maDeals`. Workflow: [DATA_CURATION_CHECKLI
 | [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md) | Schema, validation, staging |
 | [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md) | Graph metrics, small-*n* |
 | [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md) | Health impact scoring limits |
+| [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md) | CI, Vercel, Postgres, cron, `/api/health` |
+| [PRODUCTION_SETUP.md](docs/PRODUCTION_SETUP.md) | Vercel env vars and migrations |
+| [SEC_INGESTION.md](docs/SEC_INGESTION.md) | SEC EDGAR cron pipeline |
+| [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md) | Vercel product vs Framer marketing (no analytics in Framer) |
+| [framer/BUILD_GUIDE.md](framer/BUILD_GUIDE.md) | Framer marketing site — copy, tokens, HTML prototype |
 | [AGENTS.md](AGENTS.md) | Contributor conventions |
 
 ---

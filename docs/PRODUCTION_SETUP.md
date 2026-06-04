@@ -48,6 +48,9 @@ The Datadog workflow is **manual only** (`workflow_dispatch`) until you add `DD_
 
 ## 5. Verify
 
-- `npm run lint && npm test && npm run build` locally
+- `npm run lint && npm test && npm run build && npm run infra:check` locally
 - Push a PR and confirm **CI** is green
+- Production smoke: `GET /api/health` returns `ok: true`
 - After env vars: hit `/api/cron/sec-ingest/status` on production
+
+See [INFRASTRUCTURE.md](./INFRASTRUCTURE.md) for the full ops map.

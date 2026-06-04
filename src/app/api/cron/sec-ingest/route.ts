@@ -1,16 +1,10 @@
 import process from 'node:process';
 import { NextResponse } from 'next/server';
+import { isCronAuthorized } from '@/lib/infra/cronAuth';
 import { runSecIngest } from '@/lib/ingestion/secIngestPipeline';
 
-function isAuthorized(request: Request): boolean {
-  const secret = process.env.CRON_SECRET?.trim();
-  if (!secret) return process.env.NODE_ENV !== 'production';
-  const auth = request.headers.get('authorization');
-  return auth === `Bearer ${secret}`;
-}
-
 export async function GET(request: Request) {
-  if (!isAuthorized(request)) {
+  if (!isCronAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

@@ -13,7 +13,8 @@
     "sec:scan": "tsx scripts/sec-scan-acquirers.ts",
     "sec:ingest": "tsx scripts/sec-ingest-deals.ts",
     "db:migrate": "tsx scripts/migrate.ts",
-    "db:import": "tsx scripts/import-verified-json.ts"
+    "db:import": "tsx scripts/import-verified-json.ts",
+    "infra:check": "tsx scripts/infra-check.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.67",
