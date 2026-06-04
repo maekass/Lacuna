@@ -13,6 +13,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 
 interface DAGNode {
   id: string;
@@ -107,6 +108,7 @@ export default function CausalDAG() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
+      <CuratedDatasetBanner />
       {/* Header */}
       <div className="border-b border-gray-200 pb-4">
         <h3 className="text-2xl font-light tracking-tight" style={{ fontFamily: "'Bodoni MT', Didot, serif", textTransform: 'uppercase' }}>

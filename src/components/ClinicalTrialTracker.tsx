@@ -1,6 +1,7 @@
 'use client';
 
 import { useReducer, useEffect } from 'react';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 
 /* ─── types ─── */
 interface Trial {
@@ -147,6 +148,7 @@ export default function ClinicalTrialTracker() {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 p-4 sm:p-6">
+      <CuratedDatasetBanner className="mb-4" />
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-5">
         <div>
           <h3 className="text-lg font-semibold text-lacuna-plum">

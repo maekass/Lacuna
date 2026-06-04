@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 import { computeCapitalClusters } from '@/lib/data/capitalClustering';
 
@@ -20,6 +21,7 @@ export default function ClusteringAnalysis() {
       animate={{ opacity: 1, y: 0 }}
       className="bg-white rounded-xl shadow-sm border border-slate-200 p-6"
     >
+      <CuratedDatasetBanner className="mb-4" />
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="text-lg font-semibold text-slate-800">Capital Profile Clustering</h3>

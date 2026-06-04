@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 type CanonicalStage = 'Seed' | 'Series A' | 'Series B' | 'Series C' | 'Series D+' | 'Public' | 'Acquired';
@@ -89,6 +90,7 @@ export default function ValuationMatrix() {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+      <CuratedDatasetBanner className="mb-4" />
       <div className="flex items-start justify-between mb-2">
         <div>
           <h3 className="text-lg font-semibold text-slate-800">Valuation Matrix</h3>

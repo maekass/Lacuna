@@ -47,7 +47,7 @@ Keywords: FemTech M&A, women's health acquisitions, digital health deals, ventur
 
 ## Overview
 
-**Lacuna** maps the acquisition landscape across [FemTech](#femtech-m&a-intelligence), [digital health](#digital-health-acquisitions), and [women's wellness](#womens-wellness-sector-analysis) sectors—visualizing strategic relationships, exit patterns, and market dynamics through sophisticated [network analysis](#network-visualization) and [machine learning](#machine-learning-predictions).
+**Lacuna** maps the acquisition landscape across [FemTech](#femtech-m&a-intelligence), [digital health](#digital-health-acquisitions), and [women's wellness](#womens-wellness-sector-analysis) sectors—visualizing strategic relationships, exit patterns, and market dynamics from a **curated, verified static dataset** (not live market feeds). Analytical scores are **descriptive**, not forecasts.
 
 *An open-source project by [Mae Kass](https://github.com/maekass) — software engineer exploring the intersection of health equity, network intelligence, and machine learning.*
 
@@ -69,7 +69,7 @@ Lacuna is an open-source [network intelligence platform](#network-intelligence-p
 
 - **Interactive network visualizations** (D3.js force-directed graphs)
 - **Deal flow analytics** (temporal trends, sector breakdowns)
-- **Machine learning predictions** (exit probability scoring)
+- **Descriptive analytics** (factor scoring, similarity, clustering — not trained predictive models)
 - **Clinical trials integration** (therapeutic area insights)
 - **Health equity analysis** (Black women's health investment opportunities)
 
@@ -131,7 +131,9 @@ Track acquisitions, strategic investments, and exit patterns across the women's 
 
 ---
 
-## AI/ML Intelligence Layer
+## Descriptive analytics (not predictive ML)
+
+All panels show a provenance banner: *Curated dataset · n=58 verified deals · Not live market data · Scores are descriptive, not forecasts.* The app serves static verified JSON by default; optional PostgreSQL (`LACUNA_DATA_MODE=db`) is for ingest staging, not live market ticks.
 
 ### Exit Predictor (`ExitPredictor.tsx`)
 
@@ -202,14 +204,13 @@ Real-time access to **6,819 clinical trials**:
 - **Batch lookup**: Multi-trial query endpoint
 - **Health equity focus**: Priority diseases affecting Black women
 
-### Clinical ML Intelligence
+### Clinical trial lookup (live API)
 
-**Ensemble Predictor** (`ensemblePredictor.ts`):
+**ClinicalTrials.gov** search is live via `/api/clinical-trials`. Deal-level M&A analytics remain on the curated dataset above.
 
-- TensorFlow.js neural network with 78% accuracy
-- Trial success prediction with 95% confidence intervals
-- Feature importance: Phase, sponsor, enrollment, mechanism
-- Health equity scoring for investment decisions
+### Experimental trial scorer (not production ML)
+
+**`ensemblePredictor.ts`** — illustrative TensorFlow.js demo only: untrained network + heuristic logistic blend. **Not validated**; do not cite accuracy claims. Kept for library tests, not user-facing forecasts.
 
 ---
 
@@ -277,7 +278,8 @@ OAIS = [Addressable Pop] × [Penetration Gap] × [Stage Credibility]
 | **Framework** | [Next.js 16](https://nextjs.org) (App Router), [React 19](https://react.dev), [Tailwind CSS v4](https://tailwindcss.com) |
 | **Languages** | [TypeScript](https://typescriptlang.org) (strict mode), SQL |
 | **Visualization** | [D3.js v7](https://d3js.org), [Framer Motion](https://framer.com/motion) |
-| **Machine Learning** | [TensorFlow.js](https://tensorflow.org/js), simple-statistics, ml-matrix |
+| **Statistics & vectors** | simple-statistics, ml-matrix (similarity/clustering) |
+| **Experimental (tests only)** | TensorFlow.js demo scorer in `ensemblePredictor.ts` — not production inference |
 | **AI/LLM** | Vercel AI SDK + AI Gateway (GPT-4), Zod validation |
 | **Data** | Verified JSON + optional PostgreSQL |
 | **Testing** | [Vitest](https://vitest.dev), ESLint |

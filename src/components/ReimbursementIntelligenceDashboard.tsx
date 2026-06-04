@@ -9,6 +9,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 import { reimbursementIntelligence, ReimbursementAnalysisResult } from '@/data/reimbursement-intelligence-integration';
 import { 
@@ -113,6 +114,7 @@ export default function ReimbursementIntelligenceDashboard() {
 
   return (
     <div className="space-y-6">
+      <CuratedDatasetBanner />
       {/* Overview Stats */}
       {stats && (
         <motion.div

@@ -9,6 +9,7 @@
 
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import {
   calculateOAIS,
   EPIDEMIOLOGY_DATABASE,
@@ -122,6 +123,7 @@ export default function ImpactOpportunityCard() {
   if (exampleCompanies.length === 0) {
     return (
       <div className="bg-white border border-gray-200 rounded-lg p-6 text-sm text-gray-600">
+        <CuratedDatasetBanner className="mb-4" />
         No verified companies available for OAIS illustration.
       </div>
     );
@@ -130,6 +132,7 @@ export default function ImpactOpportunityCard() {
   if (!company || !oais || !epiData || estimatedPenetration == null || !penetrationData) {
     return (
       <div className="space-y-4">
+        <CuratedDatasetBanner />
         <div className="border-b border-gray-200 pb-4">
           <h3
             className="text-2xl font-light tracking-tight"
@@ -170,6 +173,7 @@ export default function ImpactOpportunityCard() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
+      <CuratedDatasetBanner />
       {/* Header */}
       <div className="border-b border-gray-200 pb-4">
         <h3 className="text-2xl font-light tracking-tight" style={{ fontFamily: "'Bodoni MT', Didot, serif", textTransform: 'uppercase' }}>

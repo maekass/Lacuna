@@ -8,6 +8,7 @@
  */
 
 import React, { useState, useMemo } from 'react';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { 
   CompanyReimbursementProfile, 
   ReimbursementStatus,
@@ -130,6 +131,7 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
 
   return (
     <div className={`bg-white rounded-lg shadow-lg p-6 ${className}`}>
+      <CuratedDatasetBanner className="mb-4" />
       <h2 className="text-xl font-bold mb-4 text-purple-900">Business Model & Reimbursement Classifier</h2>
       
       {/* Input Controls */}

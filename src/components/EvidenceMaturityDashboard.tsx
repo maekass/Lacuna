@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useReducer } from 'react';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 import {
   computeEvidenceMaturity,
@@ -198,6 +199,7 @@ export default function EvidenceMaturityDashboard() {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 p-4 sm:p-6">
+      <CuratedDatasetBanner className="mb-4" />
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-5">
         <div>

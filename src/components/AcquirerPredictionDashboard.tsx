@@ -12,6 +12,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 import {
   analyzeCompetitiveDynamics,
@@ -134,6 +135,7 @@ export default function AcquirerPredictionDashboard() {
 
   return (
     <div className="space-y-6">
+      <CuratedDatasetBanner />
       {/* Company Selector */}
       <div className="bg-white rounded-lg shadow p-4">
         <h4 className="text-sm font-semibold text-lacuna-plum mb-3">Select Company to Analyze</h4>

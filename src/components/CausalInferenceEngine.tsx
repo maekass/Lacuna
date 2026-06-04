@@ -7,6 +7,7 @@
 
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 interface SectorRow {
@@ -47,6 +48,7 @@ export default function CausalInferenceEngine() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
+      <CuratedDatasetBanner />
       <div className="bg-lacuna-lavender/25 border-l-4 border-lacuna-plum p-4 rounded-r-lg">
         <h2 className="font-medium text-lacuna-plum text-lg">Observed deal patterns (verified)</h2>
         <p className="text-sm text-lacuna-blue mt-1">

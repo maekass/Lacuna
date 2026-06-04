@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 import { EPIDEMIOLOGY_DATABASE } from '@/lib/impact/oaisCalculator';
 import {
@@ -337,6 +338,7 @@ export default function HealthEquityDashboard() {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+      <CuratedDatasetBanner className="mb-4" />
       <div className="flex items-start justify-between gap-4">
         <div>
           <h3 className="text-lg font-semibold text-slate-800">Health equity context</h3>

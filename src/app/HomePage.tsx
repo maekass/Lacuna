@@ -26,6 +26,7 @@ import BusinessModelClassifier from '@/components/business-model-classifier';
 import ReimbursementIntelligenceDashboard from '@/components/ReimbursementIntelligenceDashboard';
 import EvidenceMaturityDashboard from '@/components/EvidenceMaturityDashboard';
 import AcquirerPredictionDashboard from '@/components/AcquirerPredictionDashboard';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 export default function HomePage() {
@@ -171,6 +172,7 @@ export default function HomePage() {
             data={dealsByYear}
           />
           <div className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 p-6">
+            <CuratedDatasetBanner className="mb-4" />
             <h3 className="text-lg font-semibold text-lacuna-plum mb-2">What&apos;s Happening Now</h3>
             <p className="text-sm text-lacuna-blue mb-6">The latest deals shaping the women&apos;s health landscape</p>
             <div className="space-y-4">

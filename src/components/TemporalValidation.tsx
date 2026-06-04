@@ -6,6 +6,7 @@
 
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 export default function TemporalValidation() {
@@ -19,6 +20,7 @@ export default function TemporalValidation() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
+      <CuratedDatasetBanner />
       <div className="bg-lacuna-pink/20 border-l-4 border-lacuna-blue p-4 rounded-r-lg">
         <h2 className="font-medium text-lacuna-plum text-lg">Deal announcement timing</h2>
         <p className="text-sm text-lacuna-blue mt-1">

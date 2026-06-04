@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 export default function WearablesTracker() {
@@ -40,6 +41,7 @@ export default function WearablesTracker() {
   if (wearablesData.companies.length === 0) {
     return (
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <CuratedDatasetBanner className="mb-4" />
         <h3 className="text-xl font-semibold text-slate-800">Wearables Ecosystem</h3>
         <p className="text-sm text-slate-500 mt-2">
           No companies in this sector are in the verified dataset yet.
@@ -54,6 +56,7 @@ export default function WearablesTracker() {
       animate={{ opacity: 1, y: 0 }}
       className="bg-white rounded-xl shadow-sm border border-slate-200 p-6"
     >
+      <CuratedDatasetBanner className="mb-4" />
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="text-xl font-semibold text-slate-800">Wearables Ecosystem</h3>

@@ -9,6 +9,7 @@
 
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 
 interface VerifiedDealRow {
@@ -56,6 +57,7 @@ export default function ValidationTracker() {
   if (validationRows.length === 0) {
     return (
       <div className="bg-white border border-gray-200 rounded-lg p-6 text-sm text-gray-600">
+        <CuratedDatasetBanner className="mb-4" />
         No verified acquisitions in the current dataset.
       </div>
     );
@@ -67,6 +69,7 @@ export default function ValidationTracker() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
+      <CuratedDatasetBanner />
       <div className="border-b border-gray-200 pb-4">
         <h3
           className="text-2xl font-light tracking-tight"

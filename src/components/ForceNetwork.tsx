@@ -28,6 +28,7 @@ interface ForceNetworkProps {
   height?: number;
 }
 
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { LACUNA_PALETTE, LACUNA_SECTOR_COLORS } from '@/lib/theme/palette';
 
 const sectorColors: Record<string, string> = {
@@ -192,6 +193,7 @@ export default function ForceNetwork({ nodes, links, width: widthProp, height: h
 
   return (
     <div ref={containerRef} className="relative w-full">
+      <CuratedDatasetBanner className="mb-3" />
       <svg
         ref={svgRef}
         width={width}

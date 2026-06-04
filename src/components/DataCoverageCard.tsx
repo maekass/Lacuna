@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
 import {
   computeDisclosureStats,
@@ -72,6 +73,7 @@ export default function DataCoverageCard() {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+      <CuratedDatasetBanner className="mb-4" />
       <div className="flex items-start justify-between gap-4">
         <div>
           <h3 className="text-lg font-semibold text-slate-800">What Our Data Covers</h3>

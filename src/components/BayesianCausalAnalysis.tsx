@@ -9,6 +9,7 @@
 
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
 import {
   smallSampleCausalAnalysis,
   PRE_REGISTERED_HYPOTHESES,
@@ -56,6 +57,7 @@ export default function BayesianCausalAnalysis() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
+      <CuratedDatasetBanner />
       {/* Warning Banner */}
       <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
         <div className="flex items-start gap-3">

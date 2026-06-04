@@ -1,7 +1,7 @@
 /**
- * Clinical Trial Success Predictor
- * Ensemble ML model (TensorFlow.js) ported from Python windsurf-project
- * Predicts trial phase transition and approval probability
+ * Illustrative clinical-trial scoring demo (TensorFlow.js + heuristics).
+ * NOT a trained or validated model — used in unit tests only; do not surface
+ * as production ML or cite accuracy in the UI or README.
  */
 
 import * as tf from '@tensorflow/tfjs';
