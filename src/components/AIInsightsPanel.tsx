@@ -7,15 +7,9 @@
  * Generates insights on-demand using Claude API.
  */
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, AlertCircle, Loader2, RefreshCw } from 'lucide-react';
-import {
-  generateAcquisitionInsights,
-  generateEvidenceSummary,
-  generateReimbursementInsights,
-  isAIConfigured
-} from '@/lib/ai/anthropic';
 
 interface AIInsightsPanelProps {
   companyName: string;
@@ -65,6 +59,22 @@ export default function AIInsightsPanel({
   });
 
   const [expanded, setExpanded] = useState<InsightType | null>(null);
+  const [configured, setConfigured] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/ai/insights')
+      .then((res) => res.json())
+      .then((data: { configured?: boolean }) => {
+        if (!cancelled) setConfigured(Boolean(data.configured));
+      })
+      .catch(() => {
+        if (!cancelled) setConfigured(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const generateInsight = useCallback(async (type: InsightType) => {
     if (insights[type].loading) return;
@@ -76,50 +86,45 @@ export default function AIInsightsPanel({
     }));
 
     try {
-      let content = '';
+      const payload: Record<string, unknown> = { type, companyName, sector };
 
       switch (type) {
         case 'acquisition':
           if (!analysis) {
             throw new Error('Acquisition analysis data required');
           }
-          content = await generateAcquisitionInsights(
-            companyName,
-            sector,
-            analysis.topAcquirer,
-            analysis.matchScore,
-            analysis.estimatedValue,
-            analysis.competitiveThreat,
-            evidence?.overallScore
-          );
+          payload.analysis = analysis;
+          if (evidence?.overallScore !== undefined) {
+            payload.evidenceScore = evidence.overallScore;
+          }
           break;
 
         case 'evidence':
           if (!evidence) {
             throw new Error('Evidence data required');
           }
-          content = await generateEvidenceSummary(
-            companyName,
-            evidence.phase,
-            evidence.fdaStatus,
-            evidence.trialCount,
-            evidence.overallScore
-          );
+          payload.evidence = evidence;
           break;
 
         case 'reimbursement':
           if (!reimbursement) {
             throw new Error('Reimbursement data required');
           }
-          content = await generateReimbursementInsights(
-            companyName,
-            reimbursement.businessModel,
-            reimbursement.insuranceRevenue,
-            reimbursement.valuationMultiple,
-            reimbursement.sectorBenchmark
-          );
+          payload.reimbursement = reimbursement;
           break;
       }
+
+      const response = await fetch('/api/ai/insights', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = (await response.json()) as { content?: string; error?: string };
+      if (!response.ok) {
+        throw new Error(data.error ?? `Request failed (${response.status})`);
+      }
+      const content = data.content ?? '';
 
       setInsights(prev => ({
         ...prev,
@@ -140,9 +145,18 @@ export default function AIInsightsPanel({
     }
   }, [companyName, sector, analysis, evidence, reimbursement, insights]);
 
-  const configStatus = isAIConfigured();
+  if (configured === null) {
+    return (
+      <div className={`bg-gray-50 border border-gray-200 rounded-lg p-4 ${className}`}>
+        <div className="flex items-center gap-2 text-sm text-gray-500">
+          <Loader2 className="w-4 h-4 animate-spin" />
+          <span>Checking AI configuration…</span>
+        </div>
+      </div>
+    );
+  }
 
-  if (!configStatus) {
+  if (!configured) {
     return (
       <div className={`bg-amber-50 border border-amber-200 rounded-lg p-4 ${className}`}>
         <div className="flex items-start gap-3">
@@ -150,7 +164,8 @@ export default function AIInsightsPanel({
           <div>
             <h4 className="font-medium text-amber-800">AI Insights Not Configured</h4>
             <p className="text-sm text-amber-700 mt-1">
-              Add ANTHROPIC_API_KEY to environment variables to enable AI-generated insights.
+              Set ANTHROPIC_API_KEY (or NEXT_PUBLIC_ANTHROPIC_API_KEY) on the server to enable
+              AI-generated insights.
             </p>
           </div>
         </div>

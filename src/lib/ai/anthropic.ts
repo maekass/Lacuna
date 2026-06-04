@@ -5,7 +5,13 @@
  * Uses Claude 3 Sonnet for cost-effective, high-quality analysis.
  */
 
-const ANTHROPIC_API_KEY = process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY || '';
+import process from 'node:process';
+
+/** Server-only; NEXT_PUBLIC_* kept for backward-compatible Vercel env setups. */
+const ANTHROPIC_API_KEY =
+  process.env.ANTHROPIC_API_KEY?.trim() ||
+  process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY?.trim() ||
+  '';
 const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages';
 
 export interface LLMMessage {
