@@ -57,3 +57,6 @@ next-env.d.ts
 # staging outputs (templates in staging/*.template.csv are tracked)
 staging/deals_candidates.csv
 staging/sec_candidates.csv
+
+# framer brand site (separate concern from the analytics app — see AGENTS.md)
+/framer/
