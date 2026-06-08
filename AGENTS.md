@@ -27,7 +27,7 @@ This is portfolio/educational code. Be honest about data limits (curated static 
 | Styling | **Tailwind CSS v4** + `globals.css` / `src/lib/theme/palette.ts` |
 | Viz | D3.js v7, Framer Motion |
 | Server LLM | Vercel AI Gateway via `src/lib/ai/inference.ts` (AI SDK); see `docs/INFERENCE.md` |
-| Scoring / vectors | simple-statistics, ml-matrix (heuristics — not trained models) |
+| Scoring / vectors | simple-statistics (heuristics — not trained models) |
 | HTTP | Native **`fetch`** (no axios) |
 | Data | `src/data/dataset.verified.json` via `getVerifiedDataset()` |
 | Future DB | `LACUNA_DATA_MODE=db` in `src/lib/data/datasetProvider.ts` |
@@ -59,7 +59,7 @@ Single source of truth: verified dataset + adapters. Do not reintroduce syntheti
 
 `npm run lint` · `npm run validate:dataset` · `deno lint` (fix `require-await`, `no-unused-vars`) · Datadog needs `DD_API_KEY` / `DD_APP_KEY` secrets
 
-Ops runbook: [docs/INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md). Local Postgres: `docker compose up -d`. Readiness: `GET /api/health`, `npm run infra:check`.
+Ops runbook: [docs/INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md). Uptime monitors: `GET /api/health` only — [docs/MONITORING.md](docs/MONITORING.md). Local Postgres: `docker compose up -d`. Deploy smoke: `GET /api/health/ready`. `npm run infra:check`, `npm run monitor:liveness`.
 
 ## Commits
 

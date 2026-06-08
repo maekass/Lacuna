@@ -14,7 +14,8 @@
     "sec:ingest": "tsx scripts/sec-ingest-deals.ts",
     "db:migrate": "tsx scripts/migrate.ts",
     "db:import": "tsx scripts/import-verified-json.ts",
-    "infra:check": "tsx scripts/infra-check.ts"
+    "infra:check": "tsx scripts/infra-check.ts",
+    "monitor:liveness": "sh scripts/monitor-liveness.sh"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.67",
@@ -31,7 +32,6 @@
     "d3-transition": "^3.0.1",
     "framer-motion": "^12.40.0",
     "lucide-react": "^1.17.0",
-    "ml-matrix": "^6.12.2",
     "next": "16.2.6",
     "pg": "^8.16.0",
     "react": "19.2.4",

@@ -15,6 +15,8 @@ function getPool(): Pool {
   if (!pool) {
     pool = new Pool({
       connectionString: getDatabaseUrl(),
+      max: Number(process.env.PG_POOL_MAX ?? 3),
+      idleTimeoutMillis: 10_000,
       ssl: process.env.PGSSLMODE === 'disable' ? undefined : { rejectUnauthorized: false },
     });
   }

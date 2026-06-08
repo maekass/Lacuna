@@ -1,5 +1,5 @@
 import process from 'node:process';
-import { getStaticVerifiedDataset } from './staticDataset';
+import { getCachedStaticVerifiedDataset } from './cachedDataset';
 import type { DataMode, VerifiedDataset } from './datasetTypes';
 
 function getMode(): DataMode {
@@ -16,5 +16,5 @@ export async function getVerifiedDataset(): Promise<VerifiedDataset> {
     const { loadVerifiedDatasetFromDb } = await import('./loadVerifiedDatasetFromDb');
     return loadVerifiedDatasetFromDb();
   }
-  return getStaticVerifiedDataset();
+  return getCachedStaticVerifiedDataset();
 }

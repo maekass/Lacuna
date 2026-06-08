@@ -1,5 +1,5 @@
 import process from 'node:process';
-import { runHealthCheck } from '../src/lib/infra/healthCheck';
+import { runLivenessCheck, runReadinessCheck } from '../src/lib/infra/healthCheck';
 
 interface EnvRequirement {
   key: string;
@@ -10,11 +10,15 @@ interface EnvRequirement {
 const ENV_REQUIREMENTS: EnvRequirement[] = [
   { key: 'LACUNA_DATA_MODE', when: 'always (defaults to static)', required: false },
   { key: 'DATABASE_URL', when: 'LACUNA_DATA_MODE=db or SEC ingest', required: false },
-  { key: 'CRON_SECRET', when: 'production Vercel cron', required: false },
+  { key: 'CRON_SECRET', when: 'production Vercel cron (required on Vercel prod)', required: false },
   { key: 'SEC_EDGAR_USER_AGENT', when: 'SEC ingest / cron', required: false },
   { key: 'LACUNA_INGEST_RUN_TRACKING', when: 'recommended for production ingest', required: false },
   { key: 'SEC_USE_DB_CURSOR', when: 'recommended for incremental cron', required: false },
 ];
+
+function isProductionEnv(): boolean {
+  return process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
+}
 
 function printEnvChecklist(): void {
   const mode = process.env.LACUNA_DATA_MODE === 'db' ? 'db' : 'static';
@@ -25,7 +29,8 @@ function printEnvChecklist(): void {
     const flag = set ? 'set' : 'unset';
     const req =
       (item.key === 'DATABASE_URL' && mode === 'db' && !set) ||
-      (item.key === 'SEC_EDGAR_USER_AGENT' && !set)
+      (item.key === 'SEC_EDGAR_USER_AGENT' && !set) ||
+      (item.key === 'CRON_SECRET' && isProductionEnv() && !set)
         ? ' ← needed for your mode/workflow'
         : '';
     console.log(`  [${flag}] ${item.key} — ${item.when}${req}`);
@@ -37,9 +42,11 @@ async function main() {
   console.log('Lacuna infrastructure check\n');
   printEnvChecklist();
 
-  const health = await runHealthCheck();
+  const live = runLivenessCheck();
+  const health = await runReadinessCheck();
   console.log('Health summary:');
-  console.log(`  ok: ${health.ok}`);
+  console.log(`  live: ${live.ok} (${live.probe})`);
+  console.log(`  ready: ${health.ok} (${health.probe})`);
   console.log(`  dataMode: ${health.dataMode}`);
   console.log(
     `  dataset: ${health.checks.dataset.companies} companies, ${health.checks.dataset.acquisitions} deals (${health.checks.dataset.source})`,

@@ -42,15 +42,28 @@ Require the **CI** workflow (`.github/workflows/deno.yml`) before merging to `ma
 
 Requires `gh` CLI and admin access on `maekass/Lacuna`. Manual alternative: Repository → Settings → Branches → Add rule for `main` → Require status checks → select **ci**.
 
-## 4. Datadog synthetics (optional)
+## 4. Uptime monitoring
 
-The Datadog workflow is **manual only** (`workflow_dispatch`) until you add `DD_API_KEY` and `DD_APP_KEY`. Run from Actions when ready.
+Configure all recurring checks on **liveness only**:
+
+```text
+https://lacuna-maekass.vercel.app/api/health
+```
+
+Full provider examples: [MONITORING.md](./MONITORING.md). Local smoke: `npm run monitor:liveness`.
+
+Do **not** point Datadog, UptimeRobot, or similar at `/api/health/ready` on an interval.
+
+### Datadog synthetics (optional)
+
+The Datadog workflow is **manual only** (`workflow_dispatch`) until you add `DD_API_KEY` and `DD_APP_KEY`. Tag synthetics `e2e-tests` and target `/api/health`, not `/ready`. Run from Actions when ready.
 
 ## 5. Verify
 
 - `npm run lint && npm test && npm run build && npm run infra:check` locally
 - Push a PR and confirm **CI** is green
-- Production smoke: `GET /api/health` returns `ok: true`
+- Uptime: `npm run monitor:liveness` (or `GET /api/health` → `ok: true`, `probe: "live"`)
+- Post-deploy once: `GET /api/health/ready`
 - After env vars: hit `/api/cron/sec-ingest/status` on production
 
 See [INFRASTRUCTURE.md](./INFRASTRUCTURE.md) for the full ops map.

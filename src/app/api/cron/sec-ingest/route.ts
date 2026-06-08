@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 import { isCronAuthorized } from '@/lib/infra/cronAuth';
 import { runSecIngest } from '@/lib/ingestion/secIngestPipeline';
 
+export const maxDuration = 300;
+
 export async function GET(request: Request) {
   if (!isCronAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

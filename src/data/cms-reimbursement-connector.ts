@@ -1,13 +1,35 @@
 /**
- * CMS Reimbursement Intelligence Connector
- * 
- * Ingests CMS HCPCS/CPT codes and matches to Lacuna companies
- * to assess insurance reimbursement status and valuation impact.
- * 
- * Data Sources:
- * - CMS HCPCS codes: https://www.cms.gov/medicare/medicare-fee-for-service-payment/physician-fee-schedule/overview
- * - CPT codes: American Medical Association (cached reference data)
- * - Medicare Physician Fee Schedule (MPFS) RVU data
+ * CMS Reimbursement Reference (local snapshot)
+ *
+ * ⚠️  THIS IS NOT A LIVE CMS API CLIENT.
+ *
+ * This module ships a small curated snapshot of publicly available CMS
+ * reimbursement reference data, plus heuristics for matching Lacuna
+ * companies to CPT/HCPCS codes and inferring valuation impact. Despite the
+ * "Connector" name (preserved for backward compatibility with existing
+ * imports), no network calls are made — everything is local.
+ *
+ * Confidence tiers used in this module (mirrors the OAIS framework in
+ * `src/lib/impact/oaisCalculator.ts`):
+ *   🟢 MEASURED     — sourced directly from CMS MPFS or peer-reviewed work
+ *   🟡 PROXY        — derived heuristic with documented assumptions
+ *   🔴 ILLUSTRATIVE — industry-rule-of-thumb estimate; replace with sourced
+ *                  data before external reporting
+ *
+ * Required source updates before production / external reporting:
+ *   - CPT base rates: refresh from current MPFS conversion factor (rates
+ *     here are a 2024 final-rule snapshot)
+ *   - Sector avgCoverage %: replace with sourced payer-coverage data
+ *     (e.g. Milliman, AIS Health)
+ *   - Valuation multiples: replace with CB Insights / PitchBook / disclosed-
+ *     comparable data
+ *
+ * Originally added in commit b286c0c (May 2026).
+ *
+ * Reference URLs:
+ * - CMS Physician Fee Schedule: https://www.cms.gov/medicare/payment/fee-schedules/physician
+ * - HCPCS quarterly updates: https://www.cms.gov/medicare/coding-billing/healthcare-common-procedure-system
+ * - AMA CPT: https://www.ama-assn.org/practice-management/cpt
  */
 
 // Types
@@ -112,6 +134,28 @@ export type BusinessModel =
   | 'hybrid'            // Some insurance, some direct pay
   | 'unclear';
 
+/**
+ * Default assumed annual usage per CPT code, used when no real frequency
+ * data is available (🔴 ILLUSTRATIVE).
+ *
+ * Replace with actual claim-volume data (e.g. from CMS Public Use Files)
+ * when available. Current value is a flat heuristic and will systematically
+ * over- or under-estimate depending on the procedure.
+ */
+export const DEFAULT_ANNUAL_USES_PER_CODE = 100;
+
+/**
+ * Sector-level reimbursement benchmarks (🔴 ILLUSTRATIVE).
+ *
+ * `avgCoverage` is an industry rule-of-thumb estimate for the percentage
+ * of sector services typically reimbursed by commercial / Medicare payers.
+ * These values are curated heuristics, not sourced from a single citable
+ * dataset — treat them as starting points and replace with sourced payer-
+ * coverage data before external use.
+ *
+ * `typicalCodes` references real CPT codes; the sector-to-code mapping is
+ * curated by hand and may not be exhaustive.
+ */
 // Sector reimbursement patterns (industry benchmarks)
 export const SECTOR_REIMBURSEMENT_PATTERNS: Record<string, {
   avgCoverage: number;
@@ -181,6 +225,16 @@ export const SECTOR_REIMBURSEMENT_PATTERNS: Record<string, {
   }
 };
 
+/**
+ * Valuation multiples by reimbursement strength (🔴 ILLUSTRATIVE).
+ *
+ * Industry rule-of-thumb starting points for revenue-multiple comparisons.
+ * Real-world multiples depend heavily on growth rate, margin profile, deal
+ * structure, and market conditions. The `examples` list cites public deals
+ * but the multiples themselves are not pulled from any specific transaction
+ * — replace with comparable-set data from CB Insights / PitchBook before
+ * reporting externally.
+ */
 // Valuation multiples by reimbursement type (industry benchmarks)
 export const VALUATION_MULTIPLES = {
   reimbursement_rich: {
@@ -211,8 +265,18 @@ class CMSDataStore {
     this.loadFallbackData();
   }
 
+  /**
+   * Loads the curated snapshot of essential women's-health CPT codes
+   * (🟢 MEASURED — values are from the CMS MPFS 2024 final rule).
+   *
+   * Only 3 codes are bundled today; this is the entire dataset — there is
+   * no upstream "real" load path. To expand coverage, either:
+   *   1. Append more rows to `essentialCodes` below (and cite the snapshot year), or
+   *   2. Wire a real CMS ingestion path (e.g. quarterly HCPCS update files)
+   *      and replace this method.
+   */
   private loadFallbackData(): void {
-    // Essential women's health CPT codes as fallback
+    // Essential women's health CPT codes — CMS MPFS 2024 final rule snapshot
     const essentialCodes: CPTCode[] = [
       {
         code: '59400',
@@ -222,9 +286,9 @@ class CMSDataStore {
         rvuPracticeExpense: 12.32,
         rvuMalpractice: 3.21,
         totalRVU: 45.08,
-        medicareRate: 1548.64,
+        medicareRate: 1548.64, // 🟢 CMS MPFS 2024 final rule
         status: 'active',
-        effectiveDate: '2024-01-01'
+        effectiveDate: '2024-01-01' // MPFS 2024 effective date
       },
       {
         code: '76801',
@@ -234,7 +298,7 @@ class CMSDataStore {
         rvuPracticeExpense: 3.45,
         rvuMalpractice: 0.28,
         totalRVU: 5.85,
-        medicareRate: 201.33,
+        medicareRate: 201.33, // 🟢 CMS MPFS 2024 final rule
         status: 'active',
         effectiveDate: '2024-01-01'
       },
@@ -246,7 +310,7 @@ class CMSDataStore {
         rvuPracticeExpense: 0.89,
         rvuMalpractice: 0.15,
         totalRVU: 3.72,
-        medicareRate: 128.01,
+        medicareRate: 128.01, // 🟢 CMS MPFS 2024 final rule
         status: 'active',
         effectiveDate: '2024-01-01'
       }
@@ -285,6 +349,14 @@ class CMSDataStore {
 // Singleton instance
 const cmsDataStore = new CMSDataStore();
 
+/**
+ * Reference / calculator for CMS reimbursement data.
+ *
+ * NOTE: Class name is `CMSReimbursementConnector` for backward compatibility
+ * with existing imports — it does NOT make network calls. All data is loaded
+ * from the local snapshot in `CMSDataStore`. To consume real-time CMS data,
+ * wire a fetch-based ingestion layer and feed it into this calculator.
+ */
 // Main connector class
 export class CMSReimbursementConnector {
   private dataStore = cmsDataStore;
@@ -482,7 +554,8 @@ export class CMSReimbursementConnector {
 
     // Calculate estimated annual reimbursement
     const totalRate = activeCodes.reduce((sum, c) => sum + c.medicareRate, 0);
-    const estimatedAnnual = totalRate * 100; // Assume 100 uses/year per code
+    // 🔴 ILLUSTRATIVE: flat per-code usage assumption (see DEFAULT_ANNUAL_USES_PER_CODE)
+    const estimatedAnnual = totalRate * DEFAULT_ANNUAL_USES_PER_CODE;
 
     // Determine rate category
     const avgRate = totalRate / activeCodes.length;
@@ -530,7 +603,12 @@ export class CMSReimbursementConnector {
   }
 
   /**
-   * Get comparable companies for valuation analysis
+   * Returns a small set of public-comparable healthcare companies.
+   *
+   * 🔴 ILLUSTRATIVE: `valuationMultiple` values here are press-snapshot
+   * estimates at the time of acquisition (or last public valuation event).
+   * They do not reflect current market multiples. Refresh before external
+   * use; consider sourcing from CB Insights, PitchBook, or SEC filings.
    */
   private getComparables(targetMultiple: number): ComparableCompany[] {
     const comparables: ComparableCompany[] = [

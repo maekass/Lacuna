@@ -154,7 +154,8 @@ export default function EvidenceMaturityDashboard() {
 
   /* ─── live enrichment ─── */
   async function enrichFromAPIs() {
-    const companies = [...new Set(verifiedCompanies.map((c) => c.name))];
+    const MAX_ENRICH_COMPANIES = 20;
+    const companies = [...new Set(verifiedCompanies.map((c) => c.name))].slice(0, MAX_ENRICH_COMPANIES);
     dispatch({ type: 'START', total: companies.length * 2 });
 
     for (const name of companies) {

@@ -131,7 +131,7 @@ Transparent factor scoring for **non-acquired** companies in the verified set. F
 
 ### Company similarity (`CompanySimilarity.tsx`)
 
-8-D feature vectors, cosine similarity via `ml-matrix` — “companies like this” for exploration.
+8-D feature vectors, inline cosine similarity — “companies like this” for exploration.
 
 ### Clustering (`ClusteringAnalysis.tsx`)
 
@@ -181,7 +181,7 @@ Six frameworks with **explicit small-*n* limits** documented in `docs/` (causal 
 |-------|----------------------|
 | Next.js 16, React 19, Tailwind v4 | App shell |
 | D3.js v7, Framer Motion | Visualization |
-| simple-statistics, ml-matrix | Descriptive stats / similarity |
+| simple-statistics | Descriptive stats / similarity |
 | Verified JSON (`getVerifiedDataset()`) | Default data path |
 | PostgreSQL | Optional `LACUNA_DATA_MODE=db` ingest only |
 | Vercel AI Gateway + AI SDK | Optional narratives + SEC classification ([INFERENCE.md](docs/INFERENCE.md)) |
@@ -223,6 +223,8 @@ Manual verification — no synthetic `maDeals`. Workflow: [DATA_CURATION_CHECKLI
 | [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md) | Graph metrics, small-*n* |
 | [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md) | Health impact scoring limits |
 | [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md) | CI, Vercel, Postgres, cron, `/api/health` |
+| [PERFORMANCE.md](docs/PERFORMANCE.md) | Bundle, caching, probe split, fan-out limits |
+| [MONITORING.md](docs/MONITORING.md) | Uptime URL: `/api/health` only (not `/ready`) |
 | [PRODUCTION_SETUP.md](docs/PRODUCTION_SETUP.md) | Vercel env vars and migrations |
 | [SEC_INGESTION.md](docs/SEC_INGESTION.md) | SEC EDGAR cron pipeline |
 | [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md) | Vercel product vs Framer marketing (no analytics in Framer) |

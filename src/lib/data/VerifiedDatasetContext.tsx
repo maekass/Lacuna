@@ -2,16 +2,12 @@
 
 import { createContext, useContext, useMemo, type ReactNode } from 'react';
 import type { VerifiedDataset } from '@/lib/data/datasetTypes';
-import { getStaticVerifiedDataset } from '@/lib/data/staticDataset';
 import {
   buildVerifiedDerivedData,
   type VerifiedDerivedData,
 } from '@/lib/data/verifiedDataHelpers';
 
-const staticDataset = getStaticVerifiedDataset();
-const staticDerived = buildVerifiedDerivedData(staticDataset);
-
-const VerifiedDatasetContext = createContext<VerifiedDerivedData>(staticDerived);
+const VerifiedDatasetContext = createContext<VerifiedDerivedData | null>(null);
 
 interface VerifiedDatasetProviderProps {
   dataset: VerifiedDataset;
@@ -25,12 +21,11 @@ export function VerifiedDatasetProvider({ dataset, children }: VerifiedDatasetPr
   );
 }
 
-/** Access verified companies, deals, and derived helpers (static or DB-backed). */
+/** Access verified companies, deals, and derived helpers (from server-provided dataset only). */
 export function useVerifiedDataset(): VerifiedDerivedData {
-  return useContext(VerifiedDatasetContext);
-}
-
-/** Static fallback for modules that cannot use hooks (e.g. lib adapters at import time). */
-export function getDefaultVerifiedDerivedData(): VerifiedDerivedData {
-  return staticDerived;
+  const value = useContext(VerifiedDatasetContext);
+  if (!value) {
+    throw new Error('useVerifiedDataset requires VerifiedDatasetProvider with a dataset prop');
+  }
+  return value;
 }

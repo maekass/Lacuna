@@ -50,6 +50,9 @@ jobs:
       - name: Validate verified dataset
         run: npm run validate:dataset
 
+      - name: Infrastructure check
+        run: npm run infra:check
+
       - name: Vitest
         run: npm test
 

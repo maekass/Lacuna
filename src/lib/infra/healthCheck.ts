@@ -27,9 +27,20 @@ export interface DatasetHealth {
   validationWarnings: number;
 }
 
-export interface HealthPayload {
+export interface LivenessPayload {
+  ok: true;
+  service: 'lacuna';
+  probe: 'live';
+  version: string;
+  dataMode: 'static' | 'db';
+  timestamp: string;
+  buildSha: string | null;
+}
+
+export interface ReadinessPayload {
   ok: boolean;
   service: 'lacuna';
+  probe: 'ready';
   version: string;
   dataMode: 'static' | 'db';
   timestamp: string;
@@ -51,9 +62,10 @@ function readAppVersion(): string {
   }
 }
 
-function loadStaticDataset(): VerifiedDataset {
+function loadStaticDatasetMeta(): Pick<VerifiedDataset, 'provenance' | 'companies' | 'acquirers' | 'acquisitions'> {
   const path = join(repoRoot, 'src/data/dataset.verified.json');
-  return JSON.parse(readFileSync(path, 'utf8')) as VerifiedDataset;
+  const dataset = JSON.parse(readFileSync(path, 'utf8')) as VerifiedDataset;
+  return dataset;
 }
 
 async function pingDatabase(): Promise<DatabaseHealth> {
@@ -82,7 +94,36 @@ async function pingDatabase(): Promise<DatabaseHealth> {
   }
 }
 
-async function checkDataset(): Promise<DatasetHealth> {
+async function countDatasetFromDb(): Promise<DatasetHealth> {
+  const { query } = await import('@/lib/data/dbClient');
+  const [provenanceRows, companyRows, acquirerRows, acquisitionRows] = await Promise.all([
+    query<{ last_updated: string }>(
+      'SELECT last_updated::text FROM dataset_provenance WHERE id = $1',
+      [1],
+    ),
+    query<{ count: string }>('SELECT COUNT(*)::text AS count FROM companies'),
+    query<{ count: string }>('SELECT COUNT(*)::text AS count FROM acquirers'),
+    query<{ count: string }>('SELECT COUNT(*)::text AS count FROM acquisitions'),
+  ]);
+
+  const companies = Number(companyRows[0]?.count ?? 0);
+  const acquirers = Number(acquirerRows[0]?.count ?? 0);
+  const acquisitions = Number(acquisitionRows[0]?.count ?? 0);
+  const hasProvenance = provenanceRows.length > 0;
+
+  return {
+    ok: hasProvenance && companies > 0 && acquisitions > 0,
+    source: 'db',
+    companies,
+    acquirers,
+    acquisitions,
+    lastUpdated: provenanceRows[0]?.last_updated,
+    validationErrors: hasProvenance ? 0 : 1,
+    validationWarnings: 0,
+  };
+}
+
+async function checkDatasetFull(): Promise<DatasetHealth> {
   const mode = getDataMode();
   let dataset: VerifiedDataset;
 
@@ -90,7 +131,7 @@ async function checkDataset(): Promise<DatasetHealth> {
     const { loadVerifiedDatasetFromDb } = await import('@/lib/data/loadVerifiedDatasetFromDb');
     dataset = await loadVerifiedDatasetFromDb();
   } else {
-    dataset = loadStaticDataset();
+    dataset = loadStaticDatasetMeta() as VerifiedDataset;
   }
 
   const report = validateVerifiedDataset(dataset);
@@ -107,18 +148,41 @@ async function checkDataset(): Promise<DatasetHealth> {
   };
 }
 
-/** Aggregate readiness for load balancers, Datadog synthetics, and `npm run infra:check`. */
-export async function runHealthCheck(): Promise<HealthPayload> {
-  const [dataset, database] = await Promise.all([checkDataset(), pingDatabase()]);
+/** Cheap liveness for uptime probes — no dataset load or validation. */
+export function runLivenessCheck(): LivenessPayload {
+  return {
+    ok: true,
+    service: 'lacuna',
+    probe: 'live',
+    version: readAppVersion(),
+    dataMode: getDataMode(),
+    timestamp: new Date().toISOString(),
+    buildSha: process.env.VERCEL_GIT_COMMIT_SHA?.trim() ?? null,
+  };
+}
+
+/** Readiness with counts; db mode uses COUNT(*) instead of full hydration. */
+export async function runReadinessCheck(): Promise<ReadinessPayload> {
+  const mode = getDataMode();
+  const [dataset, database] = await Promise.all([
+    mode === 'db' ? countDatasetFromDb() : checkDatasetFull(),
+    pingDatabase(),
+  ]);
   const ok = dataset.ok && database.ok;
 
   return {
     ok,
     service: 'lacuna',
+    probe: 'ready',
     version: readAppVersion(),
-    dataMode: getDataMode(),
+    dataMode: mode,
     timestamp: new Date().toISOString(),
     buildSha: process.env.VERCEL_GIT_COMMIT_SHA?.trim() ?? null,
     checks: { dataset, database },
   };
+}
+
+/** @deprecated Use runLivenessCheck or runReadinessCheck. */
+export async function runHealthCheck(): Promise<ReadinessPayload> {
+  return runReadinessCheck();
 }

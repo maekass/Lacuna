@@ -49,15 +49,23 @@ export default function ForceNetwork({ nodes, links, width: widthProp, height: h
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
+    let debounceId: ReturnType<typeof setTimeout> | undefined;
     const measure = () => {
       const w = el.clientWidth;
       const h = Math.max(400, Math.min(w * 0.6, 700));
       setDims({ w, h });
     };
+    const scheduleMeasure = () => {
+      if (debounceId) clearTimeout(debounceId);
+      debounceId = setTimeout(measure, 150);
+    };
     measure();
-    const ro = new ResizeObserver(measure);
+    const ro = new ResizeObserver(scheduleMeasure);
     ro.observe(el);
-    return () => ro.disconnect();
+    return () => {
+      if (debounceId) clearTimeout(debounceId);
+      ro.disconnect();
+    };
   }, []);
 
   const width = widthProp ?? dims.w;

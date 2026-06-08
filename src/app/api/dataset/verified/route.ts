@@ -15,7 +15,7 @@ export async function GET(request: Request) {
   const dataset = await getVerifiedDataset();
   return NextResponse.json(dataset, {
     headers: {
-      'cache-control': 'public, max-age=60',
+      'cache-control': 'public, max-age=3600, stale-while-revalidate=86400',
     },
   });
 }
