@@ -120,6 +120,7 @@ Full behavior: [SEC_INGESTION.md](./SEC_INGESTION.md). Candidates land in `lacun
 
 | Symptom | Check |
 | --- | --- |
+| `/api/health` 401 | Vercel Deployment Protection — bypass header or exempt liveness; see [MONITORING.md](./MONITORING.md) |
 | `/api/health` 503 | `npm run validate:dataset`; if `db` mode, `npm run db:import` |
 | Cron 401 | `CRON_SECRET` matches Vercel env |
 | Cron 503 SEC | `SEC_EDGAR_USER_AGENT` set |
