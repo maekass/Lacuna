@@ -1,80 +1,110 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
-import type {
-  VerifiedAcquisitionView,
-  VerifiedCompanyView,
-} from "@/lib/data/verifiedDataHelpers";
+import { getVerifiedCompaniesForAnalysis } from "@/lib/data/verifiedDatasetAdapters";
+import type { VerifiedDerivedData } from "@/lib/data/verifiedDataHelpers";
+import type { Company, ExitPrediction } from "@/lib/types";
 
-interface IndicatorScore {
-  companyId: string;
-  companyName: string;
-  sector: string;
+interface PredictionFactor {
+  label: string;
+  present: boolean;
+  weight: number;
+}
+
+interface PredictionRow extends ExitPrediction {
+  sector: Company["sector"];
+  stage: Company["stage"];
+  isAcquired: boolean;
   indicatorScore: number;
-  factors: { label: string; present: boolean; weight: number }[];
+  factorDetails: PredictionFactor[];
   similarPriorExits: number;
 }
 
+type PredictorMode = "single" | "leaderboard";
+
 const CURRENT_YEAR = 2026;
 
-/**
- * Derive a deterministic, transparent "acquisition likelihood indicator" for each
- * company that has NOT been acquired in our verified dataset.
- *
- * IMPORTANT: This is descriptive, not predictive. With n=22 companies and n=6
- * verified acquisitions, no statistically valid predictive model is possible.
- * What we CAN do honestly: score each company on factors that, in our small
- * verified dataset, co-occurred with prior acquisitions.
- */
-function calculateIndicators(
-  verifiedCompanies: VerifiedCompanyView[],
-  verifiedAcquisitions: VerifiedAcquisitionView[],
-): IndicatorScore[] {
-  const acquiredIds = new Set(verifiedAcquisitions.map((a) => a.targetId));
+function clamp(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, value));
+}
 
-  // Derive empirical priors from verified acquisitions in the dataset
-  const acquiredCompanies = verifiedCompanies.filter((c) =>
-    acquiredIds.has(c.id)
+function getMedian(values: number[], fallback: number) {
+  if (values.length === 0) return fallback;
+  const sorted = [...values].sort((a, b) => a - b);
+  return sorted[Math.floor(sorted.length / 2)];
+}
+
+function pickLikelyAcquirer(
+  sectorAcquirerCounts: Map<string, number> | undefined,
+  overallAcquirerCounts: Map<string, number>,
+) {
+  const source = sectorAcquirerCounts && sectorAcquirerCounts.size > 0
+    ? sectorAcquirerCounts
+    : overallAcquirerCounts;
+
+  const topAcquirer = [...source.entries()].sort((a, b) => {
+    if (b[1] === a[1]) return a[0].localeCompare(b[0]);
+    return b[1] - a[1];
+  })[0];
+
+  return topAcquirer?.[0] ?? "No clear analog";
+}
+
+function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
+  const analysisCompanies = getVerifiedCompaniesForAnalysis(data);
+  const acquiredIds = new Set(data.verifiedAcquisitions.map((a) => a.targetId));
+  const acquisitionByTargetId = new Map(
+    data.verifiedAcquisitions.map((deal) => [deal.targetId, deal]),
+  );
+  const acquiredCompanies = analysisCompanies.filter((company) =>
+    acquiredIds.has(company.id)
   );
   const acquiredSectors = new Set(acquiredCompanies.map((c) => c.sector));
-  const acquiredAgeMedian = acquiredCompanies.length > 0
-    ? acquiredCompanies.map((c) => CURRENT_YEAR - c.founded).sort((a, b) =>
-      a - b
-    )[Math.floor(acquiredCompanies.length / 2)]
-    : 7;
-  const acquiredValuationMedian = (() => {
-    const vals = acquiredCompanies.map((c) => c.lastKnownValuation).filter((
-      v,
-    ): v is number => typeof v === "number");
-    if (vals.length === 0) return 300;
-    vals.sort((a, b) => a - b);
-    return vals[Math.floor(vals.length / 2)];
-  })();
+  const acquiredAgeMedian = getMedian(
+    acquiredCompanies.map((c) => CURRENT_YEAR - c.founded),
+    7,
+  );
+  const acquiredValuationMedian = getMedian(
+    acquiredCompanies.map((c) => c.valuation).filter((v): v is number => typeof v === "number"),
+    300,
+  );
 
-  const candidates = verifiedCompanies.filter((c) => !acquiredIds.has(c.id));
+  const acquirerNameById = new Map<string, string>([
+    ...data.verifiedAcquirers.map((a): [string, string] => [a.id, a.name]),
+    ...data.verifiedCompanies.map((c): [string, string] => [c.id, c.name]),
+  ]);
+  const companyById = new Map(analysisCompanies.map((company) => [company.id, company]));
+  const sectorAcquirerCounts = new Map<string, Map<string, number>>();
+  const overallAcquirerCounts = new Map<string, number>();
 
-  return candidates
+  for (const deal of data.verifiedAcquisitions) {
+    const targetCompany = companyById.get(deal.targetId);
+    if (!targetCompany) continue;
+
+    const acquirerName = acquirerNameById.get(deal.acquirerId) ?? deal.acquirerName;
+    const sectorCounts = sectorAcquirerCounts.get(targetCompany.sector) ?? new Map<string, number>();
+    sectorCounts.set(acquirerName, (sectorCounts.get(acquirerName) ?? 0) + 1);
+    sectorAcquirerCounts.set(targetCompany.sector, sectorCounts);
+    overallAcquirerCounts.set(
+      acquirerName,
+      (overallAcquirerCounts.get(acquirerName) ?? 0) + 1,
+    );
+  }
+
+  return analysisCompanies
     .map((company) => {
       const age = CURRENT_YEAR - company.founded;
-      const isLateStage =
-        /Series C|Series D|Series E|Series F|Late Stage|Pre-IPO/i.test(
-          company.stage,
-        );
+      const isLateStage = ["Series C", "Series D", "Series F", "Late Stage", "Pre-IPO"].includes(company.stage);
       const inPriorExitSector = acquiredSectors.has(company.sector);
-      const aboveValuationMedian =
-        (company.lastKnownValuation ?? 0) >= acquiredValuationMedian;
+      const aboveValuationMedian = (company.valuation ?? 0) >= acquiredValuationMedian;
       const ageNearPriorMedian = Math.abs(age - acquiredAgeMedian) <= 3;
-      const isPublic = /Public/i.test(company.stage);
+      const isPublic = company.stage === "Public";
+      const similarPriorExits = acquiredCompanies.filter((c) => c.sector === company.sector).length;
 
-      // Same-sector prior acquisition count from our verified data
-      const similarPriorExits = acquiredCompanies.filter((c) =>
-        c.sector === company.sector
-      ).length;
-
-      const factors = [
+      const factorDetails: PredictionFactor[] = [
         {
           label: `Sector has prior verified exits (${similarPriorExits})`,
           present: inPriorExitSector,
@@ -88,7 +118,7 @@ function calculateIndicators(
         {
           label: "Valuation ≥ median prior-exit valuation",
           present: aboveValuationMedian,
-          weight: 0.20,
+          weight: 0.2,
         },
         {
           label: "Age within 3 yrs of median prior-exit age",
@@ -102,35 +132,104 @@ function calculateIndicators(
         },
       ];
 
-      const indicatorScore = factors.reduce(
-        (sum, f) => sum + (f.present ? f.weight : 0),
+      const indicatorScore = clamp(
+        factorDetails.reduce((sum, factor) => sum + (factor.present ? factor.weight : 0), 0),
         0,
+        1,
+      );
+      const acquisition = acquisitionByTargetId.get(company.id);
+      const predictedAcquirer = acquisition
+        ? (acquirerNameById.get(acquisition.acquirerId) ?? acquisition.acquirerName)
+        : pickLikelyAcquirer(
+          sectorAcquirerCounts.get(company.sector),
+          overallAcquirerCounts,
+        );
+      const confidence = clamp(
+        0.35 +
+          factorDetails.filter((factor) => factor.present && factor.weight > 0).length * 0.1 +
+          Math.min(similarPriorExits * 0.05, 0.2) +
+          (acquisition ? 0.1 : 0),
+        0.35,
+        0.95,
       );
 
       return {
         companyId: company.id,
         companyName: company.name,
         sector: company.sector,
-        indicatorScore: Math.max(0, Math.min(1, indicatorScore)),
-        factors,
+        stage: company.stage,
+        exitProbability: indicatorScore,
+        predictedAcquirer,
+        confidence,
+        factors: factorDetails.filter((factor) => factor.present).map((factor) => factor.label),
+        calculatedAt: new Date(),
+        isAcquired: acquiredIds.has(company.id),
+        indicatorScore,
+        factorDetails,
         similarPriorExits,
       };
     })
-    .sort((a, b) => b.indicatorScore - a.indicatorScore)
-    .slice(0, 6);
+    .sort((a, b) => b.exitProbability - a.exitProbability);
 }
 
+function toCsvValue(value: string | number) {
+  const stringValue = String(value).replace(/"/g, '""');
+  return `"${stringValue}"`;
+}
+
+/**
+ * Derive a deterministic, transparent acquisition likelihood indicator from the
+ * verified dataset. This panel is descriptive, not predictive.
+ */
 export default function ExitPredictor() {
-  const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
+  const dataset = useVerifiedDataset();
+  const { verifiedCompanies, verifiedAcquisitions } = dataset;
+  const [mode, setMode] = useState<PredictorMode>("single");
+  const predictions = useMemo(
+    () => buildPredictions(dataset),
+    [dataset],
+  );
   const indicators = useMemo(
-    () => calculateIndicators(verifiedCompanies, verifiedAcquisitions),
-    [verifiedCompanies, verifiedAcquisitions],
+    () => predictions.filter((prediction) => !prediction.isAcquired).slice(0, 6),
+    [predictions],
   );
 
   const getScoreColor = (score: number) => {
     if (score > 0.6) return "text-emerald-700 bg-emerald-50 border-emerald-200";
     if (score > 0.35) return "text-amber-700 bg-amber-50 border-amber-200";
     return "text-slate-600 bg-slate-50 border-slate-200";
+  };
+
+  const downloadLeaderboardCsv = () => {
+    const header = [
+      "Rank",
+      "Company",
+      "Sector",
+      "Stage",
+      "Exit Probability",
+      "Predicted Acquirer",
+      "Confidence",
+      "Acquired",
+    ];
+    const rows = predictions.map((prediction, index) => [
+      index + 1,
+      prediction.companyName,
+      prediction.sector,
+      prediction.stage,
+      (prediction.exitProbability * 100).toFixed(1),
+      prediction.predictedAcquirer,
+      (prediction.confidence * 100).toFixed(1),
+      prediction.isAcquired ? "Yes" : "No",
+    ]);
+    const csvString = [header, ...rows]
+      .map((row) => row.map((value) => toCsvValue(value)).join(","))
+      .join("\n");
+    const url = URL.createObjectURL(new Blob([csvString], { type: "text/csv" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "lacuna-exit-probability-leaderboard.csv";
+    link.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -140,20 +239,48 @@ export default function ExitPredictor() {
       className="bg-white rounded-xl shadow-sm border border-slate-200 p-6"
     >
       <CuratedDatasetBanner className="mb-4" />
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col gap-4 mb-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
           <h3 className="text-lg font-semibold text-slate-800">
             Acquisition Likelihood Indicators
           </h3>
           <p className="text-sm text-slate-500">
-            Descriptive factor scoring from verified dataset (not a predictive
-            model)
+            {mode === "single"
+              ? "Descriptive factor scoring from verified dataset (not a predictive model)"
+              : "Ranked descriptive baseline across all verified companies, including historical acquisitions"}
           </p>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full">
-          <span className="text-xs font-medium text-slate-700">
-            Descriptive · n={verifiedCompanies.length}
-          </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="inline-flex rounded-xl bg-lacuna-pink/10 p-1">
+            <button
+              type="button"
+              onClick={() => setMode("single")}
+              className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${mode === "single" ? "bg-white text-lacuna-plum shadow-sm" : "text-lacuna-blue"}`}
+            >
+              Single Company
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode("leaderboard")}
+              className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${mode === "leaderboard" ? "bg-white text-lacuna-plum shadow-sm" : "text-lacuna-blue"}`}
+            >
+              Leaderboard
+            </button>
+          </div>
+          {mode === "leaderboard" && (
+            <button
+              type="button"
+              onClick={downloadLeaderboardCsv}
+              className="px-3 py-1.5 rounded-xl border border-lacuna-lavender/40 bg-white text-sm font-medium text-lacuna-plum hover:bg-lacuna-pink/10 transition-colors"
+            >
+              Export CSV
+            </button>
+          )}
+          <div className="flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full">
+            <span className="text-xs font-medium text-slate-700">
+              Descriptive · n={verifiedCompanies.length}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -163,64 +290,140 @@ export default function ExitPredictor() {
           <strong>Methodological note:</strong>{" "}
           With n={verifiedAcquisitions.length}{" "}
           verified acquisitions in this dataset, no statistically valid
-          predictive model is possible. This panel scores each non-acquired
-          company on factors that <em>co-occurred</em>{" "}
-          with prior exits — useful for descriptive comparison, not for
-          forecasting. Weights are fixed and disclosed; there is no fitted model
-          and no randomness.
+          predictive model is possible. {mode === "single"
+            ? (
+              <>
+                This panel scores each non-acquired company on factors that <em>co-occurred</em>{" "}
+                with prior exits — useful for descriptive comparison, not for forecasting.
+              </>
+            )
+            : (
+              <>
+                The leaderboard applies the same deterministic factor scoring across all companies,
+                including acquired companies as a historical baseline.
+              </>
+            )}{" "}
+          Weights are fixed and disclosed; there is no fitted model and no randomness.
         </p>
       </div>
 
-      <div className="space-y-3">
-        {indicators.map((ind, i) => (
-          <motion.div
-            key={ind.companyId}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.05 }}
-            className="p-4 border border-slate-100 rounded-lg hover:shadow-sm transition-shadow"
-          >
-            <div className="flex items-center justify-between mb-2">
-              <div>
-                <h4 className="font-semibold text-slate-800">
-                  {ind.companyName}
-                </h4>
-                <p className="text-xs text-slate-500">{ind.sector}</p>
-              </div>
-              <div
-                className={`px-3 py-1 rounded-full text-sm font-semibold border ${
-                  getScoreColor(ind.indicatorScore)
-                }`}
-              >
-                {(ind.indicatorScore * 100).toFixed(0)} / 100
-              </div>
-            </div>
-
-            <div className="space-y-1 mt-3">
-              {ind.factors.map((f, j) => (
-                <div
-                  key={j}
-                  className="flex items-center justify-between text-xs"
-                >
-                  <span
-                    className={f.present ? "text-slate-700" : "text-slate-400"}
-                  >
-                    {f.present ? "●" : "○"} {f.label}
-                  </span>
-                  <span
-                    className={`font-mono ${
-                      f.weight < 0 ? "text-rose-500" : "text-slate-400"
-                    }`}
-                  >
-                    {f.weight > 0 ? "+" : ""}
-                    {(f.weight * 100).toFixed(0)}
-                  </span>
+      {mode === "single" ? (
+        <div className="space-y-3">
+          {indicators.map((ind, i) => (
+            <motion.div
+              key={ind.companyId}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: i * 0.05 }}
+              className="p-4 border border-slate-100 rounded-lg hover:shadow-sm transition-shadow"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <div>
+                  <h4 className="font-semibold text-slate-800">
+                    {ind.companyName}
+                  </h4>
+                  <p className="text-xs text-slate-500">{ind.sector}</p>
                 </div>
+                <div
+                  className={`px-3 py-1 rounded-full text-sm font-semibold border ${
+                    getScoreColor(ind.indicatorScore)
+                  }`}
+                >
+                  {(ind.indicatorScore * 100).toFixed(0)} / 100
+                </div>
+              </div>
+
+              <div className="space-y-1 mt-3">
+                {ind.factorDetails.map((f, j) => (
+                  <div
+                    key={j}
+                    className="flex items-center justify-between text-xs"
+                  >
+                    <span
+                      className={f.present ? "text-slate-700" : "text-slate-400"}
+                    >
+                      {f.present ? "●" : "○"} {f.label}
+                    </span>
+                    <span
+                      className={`font-mono ${
+                        f.weight < 0 ? "text-rose-500" : "text-slate-400"
+                      }`}
+                    >
+                      {f.weight > 0 ? "+" : ""}
+                      {(f.weight * 100).toFixed(0)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      ) : (
+        <div className="overflow-x-auto rounded-xl border border-lacuna-lavender/40 bg-white">
+          <table className="min-w-full text-sm">
+            <thead className="bg-lacuna-pink/10 text-lacuna-plum">
+              <tr>
+                <th className="px-4 py-3 text-left font-semibold">Rank</th>
+                <th className="px-4 py-3 text-left font-semibold">Company</th>
+                <th className="px-4 py-3 text-left font-semibold">Sector</th>
+                <th className="px-4 py-3 text-left font-semibold">Stage</th>
+                <th className="px-4 py-3 text-left font-semibold">Exit Probability</th>
+                <th className="px-4 py-3 text-left font-semibold">Predicted Acquirer</th>
+                <th className="px-4 py-3 text-left font-semibold">Confidence</th>
+              </tr>
+            </thead>
+            <tbody>
+              {predictions.map((prediction, index) => (
+                <tr
+                  key={prediction.companyId}
+                  className="border-t border-lacuna-lavender/20 hover:bg-lacuna-pink/10"
+                >
+                  <td className="px-4 py-3 font-semibold text-lacuna-plum">
+                    #{index + 1}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-lacuna-plum">
+                        {prediction.companyName}
+                      </span>
+                      {prediction.isAcquired && (
+                        <span className="rounded-full bg-lacuna-pink/10 px-2 py-0.5 text-xs font-medium text-lacuna-plum">
+                          Acquired ✓
+                        </span>
+                      )}
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 text-lacuna-blue">
+                    {prediction.sector}
+                  </td>
+                  <td className="px-4 py-3 text-lacuna-blue">
+                    {prediction.stage}
+                  </td>
+                  <td className="px-4 py-3 min-w-[220px]">
+                    <div className="flex items-center gap-3">
+                      <div className="h-2 w-32 overflow-hidden rounded-full bg-lacuna-pink/10">
+                        <div
+                          className="h-full rounded-full bg-lacuna-plum"
+                          style={{ width: `${(prediction.exitProbability * 100).toFixed(1)}%` }}
+                        />
+                      </div>
+                      <span className="text-xs font-medium text-lacuna-plum">
+                        {(prediction.exitProbability * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 text-lacuna-blue">
+                    {prediction.predictedAcquirer}
+                  </td>
+                  <td className="px-4 py-3 text-lacuna-blue">
+                    {(prediction.confidence * 100).toFixed(0)}%
+                  </td>
+                </tr>
               ))}
-            </div>
-          </motion.div>
-        ))}
-      </div>
+            </tbody>
+          </table>
+        </div>
+      )}
 
       <div className="mt-4 pt-4 border-t border-slate-100">
         <p className="text-xs text-slate-400 leading-relaxed">
