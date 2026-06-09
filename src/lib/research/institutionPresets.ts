@@ -13,14 +13,6 @@ export interface InstitutionTrialPreset {
 
 export const DOMESTIC_TRIAL_PRESETS: readonly InstitutionTrialPreset[] = [
   {
-    id: "womens-health-market",
-    label: "Women's Health Market",
-    condition:
-      "endometriosis infertility fertility pregnancy postpartum menopause uterine fibroids PCOS",
-    description:
-      "Broad market scan — fertility, pelvic pain, maternal health, menopause, and reproductive endocrinology",
-  },
-  {
     id: "nih-cancer",
     label: "NIH Cancer (NCI)",
     sponsor: "National Cancer Institute",
