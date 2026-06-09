@@ -1,32 +1,32 @@
-'use client';
+"use client";
 
-import { useMemo } from 'react';
-import { motion } from 'framer-motion';
-import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
-import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
+import { useMemo } from "react";
+import { motion } from "framer-motion";
+import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 
 export default function WearablesTracker() {
   const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
   const wearablesData = useMemo(() => {
-    const wearables = verifiedCompanies.filter(c => c.sector === 'Wearables');
+    const wearables = verifiedCompanies.filter((c) => c.sector === "Wearables");
     const wearablesWithValuation = wearables.filter(
       (c): c is typeof wearables[number] & { lastKnownValuation: number } =>
-        typeof c.lastKnownValuation === 'number'
+        typeof c.lastKnownValuation === "number",
     );
 
     const totalDisclosedValuation = wearablesWithValuation.reduce(
       (sum, c) => sum + c.lastKnownValuation,
-      0
+      0,
     );
     const medianValuation = wearablesWithValuation.length > 0
       ? wearablesWithValuation
-          .map(c => c.lastKnownValuation)
-          .sort((a, b) => a - b)[Math.floor(wearablesWithValuation.length / 2)]
+        .map((c) => c.lastKnownValuation)
+        .sort((a, b) => a - b)[Math.floor(wearablesWithValuation.length / 2)]
       : 0;
 
-    const wearableAcquisitions = verifiedAcquisitions.filter(a => {
-      const target = verifiedCompanies.find(c => c.id === a.targetId);
-      return target?.sector === 'Wearables';
+    const wearableAcquisitions = verifiedAcquisitions.filter((a) => {
+      const target = verifiedCompanies.find((c) => c.id === a.targetId);
+      return target?.sector === "Wearables";
     });
 
     return {
@@ -42,7 +42,9 @@ export default function WearablesTracker() {
     return (
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
         <CuratedDatasetBanner className="mb-4" />
-        <h3 className="text-xl font-semibold text-slate-800">Wearables Ecosystem</h3>
+        <h3 className="text-xl font-semibold text-slate-800">
+          Wearables Ecosystem
+        </h3>
         <p className="text-sm text-slate-500 mt-2">
           No companies in this sector are in the verified dataset yet.
         </p>
@@ -59,7 +61,9 @@ export default function WearablesTracker() {
       <CuratedDatasetBanner className="mb-4" />
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-xl font-semibold text-slate-800">Wearables Ecosystem</h3>
+          <h3 className="text-xl font-semibold text-slate-800">
+            Wearables Ecosystem
+          </h3>
           <p className="text-sm text-slate-500 mt-1">
             Verified women&apos;s-health wearables tracked in this dataset
           </p>
@@ -77,17 +81,24 @@ export default function WearablesTracker() {
           <p className="text-2xl font-bold text-slate-800">
             ${(wearablesData.totalDisclosedValuation / 1000).toFixed(1)}B
           </p>
-          <p className="text-xs text-slate-600 mt-1">Sum of disclosed valuations</p>
+          <p className="text-xs text-slate-600 mt-1">
+            Sum of disclosed valuations
+          </p>
           <p className="text-[10px] text-slate-400 mt-0.5">
-            {wearablesData.withValuation}/{wearablesData.companies.length} companies
+            {wearablesData.withValuation}/{wearablesData.companies.length}{" "}
+            companies
           </p>
         </div>
         <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-4">
           <p className="text-2xl font-bold text-slate-800">
             ${wearablesData.medianValuation}M
           </p>
-          <p className="text-xs text-slate-600 mt-1">Median disclosed valuation</p>
-          <p className="text-[10px] text-slate-400 mt-0.5">Among those with public data</p>
+          <p className="text-xs text-slate-600 mt-1">
+            Median disclosed valuation
+          </p>
+          <p className="text-[10px] text-slate-400 mt-0.5">
+            Among those with public data
+          </p>
         </div>
         <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg p-4">
           <p className="text-2xl font-bold text-slate-800">
@@ -101,7 +112,9 @@ export default function WearablesTracker() {
             {wearablesData.companies.length - wearablesData.withValuation}
           </p>
           <p className="text-xs text-slate-600 mt-1">Undisclosed valuations</p>
-          <p className="text-[10px] text-slate-400 mt-0.5">Honestly tracked as gaps</p>
+          <p className="text-[10px] text-slate-400 mt-0.5">
+            Honestly tracked as gaps
+          </p>
         </div>
       </div>
 
@@ -121,19 +134,29 @@ export default function WearablesTracker() {
           >
             <div className="flex-1">
               <div className="flex items-center gap-2">
-                <span className="font-medium text-slate-800">{company.name}</span>
+                <span className="font-medium text-slate-800">
+                  {company.name}
+                </span>
                 <span className="text-xs px-2 py-0.5 bg-white text-slate-600 rounded border border-slate-200">
                   {company.hq}
                 </span>
               </div>
-              <p className="text-xs text-slate-500 mt-0.5">{company.description}</p>
+              <p className="text-xs text-slate-500 mt-0.5">
+                {company.description}
+              </p>
             </div>
             <div className="text-right ml-4">
-              {typeof company.lastKnownValuation === 'number' ? (
-                <p className="font-semibold text-slate-700">${company.lastKnownValuation}M</p>
-              ) : (
-                <p className="text-xs text-slate-400 italic">Not disclosed</p>
-              )}
+              {typeof company.lastKnownValuation === "number"
+                ? (
+                  <p className="font-semibold text-slate-700">
+                    ${company.lastKnownValuation}M
+                  </p>
+                )
+                : (
+                  <p className="text-xs text-slate-400 italic">
+                    Not disclosed
+                  </p>
+                )}
               <p className="text-xs text-slate-400">{company.stage}</p>
             </div>
           </motion.div>
@@ -142,10 +165,10 @@ export default function WearablesTracker() {
 
       {/* Footer note */}
       <div className="mt-4 pt-4 border-t border-slate-100 text-xs text-slate-400 leading-relaxed">
-        All figures sourced from press releases, Crunchbase, and company filings.
-        Valuations reflect the last publicly disclosed round and may not represent
-        current market value. Companies without a public valuation are listed
-        without one rather than estimated.
+        All figures sourced from press releases, Crunchbase, and company
+        filings. Valuations reflect the last publicly disclosed round and may
+        not represent current market value. Companies without a public valuation
+        are listed without one rather than estimated.
       </div>
     </motion.div>
   );

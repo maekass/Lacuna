@@ -1,21 +1,21 @@
-import process from 'node:process';
-import { readFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import type { VerifiedDataset } from '../src/lib/data/datasetTypes';
-import { closePool, withTransaction } from '../src/lib/data/dbClient';
+import process from "node:process";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import type { VerifiedDataset } from "../src/lib/data/datasetTypes";
+import { closePool, withTransaction } from "../src/lib/data/dbClient";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const datasetPath = join(__dirname, '../src/data/dataset.verified.json');
+const datasetPath = join(__dirname, "../src/data/dataset.verified.json");
 
 function loadJson(): VerifiedDataset {
-  const raw = readFileSync(datasetPath, 'utf8');
+  const raw = readFileSync(datasetPath, "utf8");
   return JSON.parse(raw) as VerifiedDataset;
 }
 
 async function main() {
   if (!process.env.DATABASE_URL) {
-    console.error('DATABASE_URL is required');
+    console.error("DATABASE_URL is required");
     process.exit(1);
   }
 
@@ -23,7 +23,9 @@ async function main() {
   const { provenance, companies, acquirers, acquisitions } = dataset;
 
   await withTransaction(async (client) => {
-    await client.query('TRUNCATE acquisitions, companies, acquirers, dataset_provenance RESTART IDENTITY CASCADE');
+    await client.query(
+      "TRUNCATE acquisitions, companies, acquirers, dataset_provenance RESTART IDENTITY CASCADE",
+    );
 
     await client.query(
       `INSERT INTO dataset_provenance (id, last_updated, purpose, disclaimer, sources, notes)

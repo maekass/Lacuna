@@ -9,9 +9,10 @@ import {
   INSIGHTS_OPENAI_MODEL,
   isServerInferenceConfigured,
   resolveInferenceModel,
-} from '@/lib/ai/inference';
+} from "@/lib/ai/inference";
 
-const INSIGHTS_SYSTEM = `You are a women's health M&A educator helping readers interpret curated, verified deal data.
+const INSIGHTS_SYSTEM =
+  `You are a women's health M&A educator helping readers interpret curated, verified deal data.
 
 GUIDELINES:
 - Be concise and evidence-based
@@ -20,13 +21,16 @@ GUIDELINES:
 - Avoid promotional language and prediction claims
 - Do not present yourself as a trained model or forecast engine`;
 
-async function runInsightPrompt(prompt: string, maxOutputTokens: number): Promise<string> {
+async function runInsightPrompt(
+  prompt: string,
+  maxOutputTokens: number,
+): Promise<string> {
   const resolved = resolveInferenceModel({
     gatewayModel: INSIGHTS_GATEWAY_MODEL,
     openaiModel: INSIGHTS_OPENAI_MODEL,
   });
   if (!resolved) {
-    return 'Server inference is not configured (set AI Gateway or OPENAI_API_KEY).';
+    return "Server inference is not configured (set AI Gateway or OPENAI_API_KEY).";
   }
 
   try {
@@ -36,10 +40,12 @@ async function runInsightPrompt(prompt: string, maxOutputTokens: number): Promis
       prompt,
       maxOutputTokens,
       temperature: 0.2,
-      gatewayTags: ['feature:ui-insights'],
+      gatewayTags: ["feature:ui-insights"],
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Insight generation failed';
+    const message = error instanceof Error
+      ? error.message
+      : "Insight generation failed";
     return `Unable to generate narrative: ${message}`;
   }
 }
@@ -65,7 +71,11 @@ COMPANY: ${companyName} (${sector})
 Top acquirer fit (heuristic): ${topAcquirer} (${matchScore}% match)
 Estimated value context: $${estimatedValue}M
 Competitive threat label: ${competitiveThreat}
-${evidenceScore !== undefined ? `Evidence maturity score (descriptive): ${evidenceScore}/100` : ''}
+${
+    evidenceScore !== undefined
+      ? `Evidence maturity score (descriptive): ${evidenceScore}/100`
+      : ""
+  }
 `;
 
   return runInsightPrompt(prompt, 500);
@@ -98,8 +108,10 @@ export async function generateSectorInsights(
   const prompt = `
 Describe ${sector} patterns from a small verified deal sample (educational only).
 
-Deals: ${dealCount} · Avg multiple: ${avgMultiple.toFixed(1)}x · Median time to exit: ${medianTimeToExit} months
-Active acquirers: ${topAcquirers.join(', ')}
+Deals: ${dealCount} · Avg multiple: ${
+    avgMultiple.toFixed(1)
+  }x · Median time to exit: ${medianTimeToExit} months
+Active acquirers: ${topAcquirers.join(", ")}
 `;
 
   return runInsightPrompt(prompt, 400);
@@ -116,8 +128,12 @@ export async function generateReimbursementInsights(
   const prompt = `
 Explain reimbursement context for ${companyName} in 2-3 sentences (illustrative, not advice).
 
-Model: ${businessModel} · Insurance revenue est.: ${(insuranceRevenue * 100).toFixed(0)}%
-Multiple: ${valuationMultiple.toFixed(1)}x vs sector ${sectorBenchmark.toFixed(1)}x (${premium}% vs benchmark)
+Model: ${businessModel} · Insurance revenue est.: ${
+    (insuranceRevenue * 100).toFixed(0)
+  }%
+Multiple: ${valuationMultiple.toFixed(1)}x vs sector ${
+    sectorBenchmark.toFixed(1)
+  }x (${premium}% vs benchmark)
 `;
 
   return runInsightPrompt(prompt, 300);

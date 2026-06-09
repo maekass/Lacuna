@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { runLivenessCheck } from '@/lib/infra/healthCheck';
+import { NextResponse } from "next/server";
+import { runLivenessCheck } from "@/lib/infra/healthCheck";
 
 /** Liveness — constant-time. Point all uptime monitors here (not /api/health/ready). */
 export async function GET() {
@@ -7,8 +7,8 @@ export async function GET() {
   return NextResponse.json(payload, {
     status: 200,
     headers: {
-      'cache-control': 'no-store',
-      'x-lacuna-probe': 'live',
+      "cache-control": "no-store",
+      "x-lacuna-probe": "live",
     },
   });
 }

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
+import { motion } from "framer-motion";
+import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 
 interface DealYear {
   year: number;
@@ -14,17 +14,23 @@ interface DealFlowChartProps {
   height?: number;
 }
 
-export default function DealFlowChart({ data, width = 600, height = 300 }: DealFlowChartProps) {
-  const maxCount = Math.max(...data.map(d => d.count));
+export default function DealFlowChart(
+  { data, width = 600, height = 300 }: DealFlowChartProps,
+) {
+  const maxCount = Math.max(...data.map((d) => d.count));
   const barWidth = (width - 80) / data.length;
   const scale = (height - 100) / maxCount;
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
       <CuratedDatasetBanner className="mb-4" />
-      <h3 className="text-lg font-semibold text-slate-800 mb-2">Deal Activity Over Time</h3>
-      <p className="text-sm text-slate-500 mb-4 sm:mb-6">M&amp;A and strategic investments in women&apos;s health</p>
-      
+      <h3 className="text-lg font-semibold text-slate-800 mb-2">
+        Deal Activity Over Time
+      </h3>
+      <p className="text-sm text-slate-500 mb-4 sm:mb-6">
+        M&amp;A and strategic investments in women&apos;s health
+      </p>
+
       <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto">
         {/* Grid lines */}
         {[0, 0.25, 0.5, 0.75, 1].map((tick, i) => (
@@ -75,7 +81,7 @@ export default function DealFlowChart({ data, width = 600, height = 300 }: DealF
                 rx={4}
                 className="hover:opacity-80 transition-opacity cursor-pointer"
               />
-              
+
               {/* Value label */}
               <text
                 x={x + barWidth / 2}

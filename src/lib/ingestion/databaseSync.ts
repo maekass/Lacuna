@@ -3,13 +3,13 @@
  * Does not write to dataset.verified.json — human review required.
  */
 
-import { query, withTransaction } from '@/lib/data/dbClient';
+import { query, withTransaction } from "@/lib/data/dbClient";
 import type {
   ClassificationConfidence,
   ClassificationMethod,
-} from '@/lib/ingestion/dealClassificationEngine';
-import type { ParsedAcquisition } from '@/lib/ingestion/secEdgarConnector';
-import { alertNewDeal } from '@/lib/ingestion/monitoringAlerts';
+} from "@/lib/ingestion/dealClassificationEngine";
+import type { ParsedAcquisition } from "@/lib/ingestion/secEdgarConnector";
+import { alertNewDeal } from "@/lib/ingestion/monitoringAlerts";
 
 export interface ClassifiedDeal extends ParsedAcquisition {
   classificationConfidence: ClassificationConfidence;
@@ -17,7 +17,7 @@ export interface ClassifiedDeal extends ParsedAcquisition {
   womensHealthRelevant: boolean;
   classificationMethod?: ClassificationMethod;
   classificationModelId?: string;
-  status: 'pending' | 'pending_review';
+  status: "pending" | "pending_review";
 }
 
 export interface SyncResult {
@@ -107,11 +107,16 @@ function toParams(deal: ClassifiedDeal): unknown[] {
 }
 
 /** Upsert one classified deal; dedupes on sec_accession. */
-export async function upsertLacunaDeal(deal: ClassifiedDeal): Promise<'inserted' | 'updated'> {
+export async function upsertLacunaDeal(
+  deal: ClassifiedDeal,
+): Promise<"inserted" | "updated"> {
   const rows = await query<{ inserted: boolean }>(UPSERT_SQL, toParams(deal));
   const inserted = rows[0]?.inserted === true;
 
-  if (inserted && deal.womensHealthRelevant && deal.classificationConfidence !== 'low') {
+  if (
+    inserted && deal.womensHealthRelevant &&
+    deal.classificationConfidence !== "low"
+  ) {
     alertNewDeal({
       dealId: deal.dealId,
       acquirerName: deal.acquirerName,
@@ -121,11 +126,13 @@ export async function upsertLacunaDeal(deal: ClassifiedDeal): Promise<'inserted'
     });
   }
 
-  return inserted ? 'inserted' : 'updated';
+  return inserted ? "inserted" : "updated";
 }
 
 /** Sync batch of classified deals inside a transaction. */
-export async function syncDealsToDatabase(deals: ClassifiedDeal[]): Promise<SyncResult> {
+export async function syncDealsToDatabase(
+  deals: ClassifiedDeal[],
+): Promise<SyncResult> {
   let inserted = 0;
   let updated = 0;
   let skipped = 0;
@@ -137,10 +144,13 @@ export async function syncDealsToDatabase(deals: ClassifiedDeal[]): Promise<Sync
         continue;
       }
 
-      const result = await client.query<{ inserted: boolean }>(UPSERT_SQL, toParams(deal));
+      const result = await client.query<{ inserted: boolean }>(
+        UPSERT_SQL,
+        toParams(deal),
+      );
       if (result.rows[0]?.inserted) {
         inserted += 1;
-        if (deal.classificationConfidence !== 'low') {
+        if (deal.classificationConfidence !== "low") {
           alertNewDeal({
             dealId: deal.dealId,
             acquirerName: deal.acquirerName,

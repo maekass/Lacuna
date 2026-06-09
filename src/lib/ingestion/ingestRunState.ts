@@ -1,7 +1,7 @@
-import process from 'node:process';
-import { query, withTransaction } from '@/lib/data/dbClient';
+import process from "node:process";
+import { query, withTransaction } from "@/lib/data/dbClient";
 
-export type IngestRunStatus = 'running' | 'success' | 'failed';
+export type IngestRunStatus = "running" | "success" | "failed";
 
 export interface IngestRunRow {
   id: number;
@@ -37,7 +37,7 @@ export async function startIngestRun(input: {
     [input.trigger, input.modelId ?? null, getBuildSha()],
   );
   const id = rows[0]?.id;
-  if (!id) throw new Error('Failed to create ingest run record');
+  if (!id) throw new Error("Failed to create ingest run record");
   return id;
 }
 
@@ -142,4 +142,3 @@ export async function getIngestCursorSinceDate(): Promise<string | null> {
   );
   return rows[0]?.last_successful_since_date ?? null;
 }
-

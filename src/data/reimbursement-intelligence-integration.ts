@@ -1,19 +1,19 @@
 /**
  * Reimbursement Intelligence Integration
- * 
+ *
  * Integrates CMS reimbursement data with Lacuna's company database
  * to provide comprehensive reimbursement and valuation analysis.
  */
 
-import { 
-  CMSReimbursementConnector, 
+import {
+  BusinessModel,
+  CMSReimbursementConnector,
   CompanyReimbursementProfile,
   ReimbursementStatus,
-  BusinessModel,
-  SECTOR_REIMBURSEMENT_PATTERNS
-} from './cms-reimbursement-connector';
-import { CPTCodeMatcher } from './cpt-code-matcher';
-import { ValuationPremiumCalculator } from './valuation-premium-calculator';
+  SECTOR_REIMBURSEMENT_PATTERNS,
+} from "./cms-reimbursement-connector";
+import { CPTCodeMatcher } from "./cpt-code-matcher";
+import { ValuationPremiumCalculator } from "./valuation-premium-calculator";
 
 // Lacuna company type (from existing dataset)
 interface LacunaCompany {
@@ -40,18 +40,18 @@ export interface ReimbursementAnalysisResult {
     impliedValuation: number;
     valuationRange: { low: number; high: number };
     reimbursementPremium: number;
-    confidence: 'high' | 'medium' | 'low';
+    confidence: "high" | "medium" | "low";
   };
   sectorBenchmark: {
     avgReimbursementCoverage: number;
-    sectorReimbursementLevel: 'high' | 'medium' | 'low';
+    sectorReimbursementLevel: "high" | "medium" | "low";
     comparison: string;
   };
   acquirerAnalysis: {
     healthcareFit: { score: number; premium: number };
     techFit: { score: number; premium: number };
     pharmaFit: { score: number; premium: number };
-    recommended: 'healthcare' | 'tech' | 'pharma' | 'retail';
+    recommended: "healthcare" | "tech" | "pharma" | "retail";
   };
   insights: string[];
 }
@@ -79,19 +79,25 @@ export class ReimbursementIntelligenceIntegration {
     const matchedCodes = this.connector.matchProductToCodes(
       company.name,
       company.productDescription,
-      company.sector
+      company.sector,
     );
 
     // Calculate reimbursement status
-    const reimbursementStatus = this.connector.calculateReimbursementStatus(matchedCodes);
+    const reimbursementStatus = this.connector.calculateReimbursementStatus(
+      matchedCodes,
+    );
 
     // Determine business model
     const businessModel = this.classifyBusinessModel(reimbursementStatus);
 
     // Estimate insurance revenue
-    const estimatedInsuranceRevenue = company.revenue 
-      ? company.revenue * (businessModel === 'insurance-driven' ? 0.75 : 
-                          businessModel === 'hybrid' ? 0.45 : 0.05)
+    const estimatedInsuranceRevenue = company.revenue
+      ? company.revenue *
+        (businessModel === "insurance-driven"
+          ? 0.75
+          : businessModel === "hybrid"
+          ? 0.45
+          : 0.05)
       : 0;
 
     // Build company profile
@@ -102,9 +108,14 @@ export class ReimbursementIntelligenceIntegration {
       matchedCodes,
       reimbursementStatus,
       businessModel,
-      estimatedReimbursementPercentage: businessModel === 'insurance-driven' ? 75 : 
-                                       businessModel === 'hybrid' ? 45 : 5,
-      valuationImpact: this.connector.calculateValuationImpact(reimbursementStatus)
+      estimatedReimbursementPercentage: businessModel === "insurance-driven"
+        ? 75
+        : businessModel === "hybrid"
+        ? 45
+        : 5,
+      valuationImpact: this.connector.calculateValuationImpact(
+        reimbursementStatus,
+      ),
     };
 
     // Calculate valuation
@@ -113,12 +124,12 @@ export class ReimbursementIntelligenceIntegration {
       reimbursementStatus,
       sector: company.sector,
       growthRate: 35,
-      profitability: 'break-even',
-      acquirerType: 'healthcare'
+      profitability: "break-even",
+      acquirerType: "healthcare",
     });
 
     // Get sector benchmark
-    const sectorKey = company.sector.toLowerCase().replace(/\s+/g, '_');
+    const sectorKey = company.sector.toLowerCase().replace(/\s+/g, "_");
     const sectorPattern = SECTOR_REIMBURSEMENT_PATTERNS[sectorKey];
 
     // Analyze acquirer fit
@@ -133,7 +144,7 @@ export class ReimbursementIntelligenceIntegration {
       classification: {
         reimbursementStatus,
         businessModel,
-        estimatedInsuranceRevenue
+        estimatedInsuranceRevenue,
       },
       valuation: {
         baseMultiple: valuation.baseMultiple,
@@ -141,15 +152,15 @@ export class ReimbursementIntelligenceIntegration {
         impliedValuation: valuation.impliedValuation,
         valuationRange: { low: valuation.rangeLow, high: valuation.rangeHigh },
         reimbursementPremium: valuation.reimbursementPremium,
-        confidence: valuation.confidence
+        confidence: valuation.confidence,
       },
       sectorBenchmark: {
         avgReimbursementCoverage: sectorPattern?.avgCoverage || 40,
-        sectorReimbursementLevel: sectorPattern?.reimbursementLevel || 'medium',
-        comparison: this.compareToSector(profile, sectorPattern)
+        sectorReimbursementLevel: sectorPattern?.reimbursementLevel || "medium",
+        comparison: this.compareToSector(profile, sectorPattern),
       },
       acquirerAnalysis,
-      insights
+      insights,
     };
   }
 
@@ -158,18 +169,18 @@ export class ReimbursementIntelligenceIntegration {
    */
   private classifyBusinessModel(status: ReimbursementStatus): BusinessModel {
     if (!status.hasCPTCode) {
-      return 'b2c-consumer';
+      return "b2c-consumer";
     }
 
-    if (status.codeType === 'established' && status.rateCategory === 'high') {
-      return 'insurance-driven';
+    if (status.codeType === "established" && status.rateCategory === "high") {
+      return "insurance-driven";
     }
 
     if (status.codeCount > 0) {
-      return 'hybrid';
+      return "hybrid";
     }
 
-    return 'unclear';
+    return "unclear";
   }
 
   /**
@@ -177,10 +188,10 @@ export class ReimbursementIntelligenceIntegration {
    */
   private compareToSector(
     profile: CompanyReimbursementProfile,
-    sectorPattern?: typeof SECTOR_REIMBURSEMENT_PATTERNS[string]
+    sectorPattern?: typeof SECTOR_REIMBURSEMENT_PATTERNS[string],
   ): string {
     if (!sectorPattern) {
-      return 'Sector benchmark not available';
+      return "Sector benchmark not available";
     }
 
     const companyReimbursement = profile.estimatedReimbursementPercentage;
@@ -198,45 +209,53 @@ export class ReimbursementIntelligenceIntegration {
   /**
    * Analyze fit with different acquirer types
    */
-  private analyzeAcquirerFit(profile: CompanyReimbursementProfile): ReimbursementAnalysisResult['acquirerAnalysis'] {
+  private analyzeAcquirerFit(
+    profile: CompanyReimbursementProfile,
+  ): ReimbursementAnalysisResult["acquirerAnalysis"] {
     const healthcareFit = this.calculator.analyzeAcquirerFit(profile, {
-      type: 'healthcare',
-      name: 'Healthcare',
-      reimbursementCapability: 'strong',
-      typicalPremium: 1.35
+      type: "healthcare",
+      name: "Healthcare",
+      reimbursementCapability: "strong",
+      typicalPremium: 1.35,
     });
 
     const techFit = this.calculator.analyzeAcquirerFit(profile, {
-      type: 'tech',
-      name: 'Tech',
-      reimbursementCapability: 'weak',
-      typicalPremium: 0.95
+      type: "tech",
+      name: "Tech",
+      reimbursementCapability: "weak",
+      typicalPremium: 0.95,
     });
 
     const pharmaFit = this.calculator.analyzeAcquirerFit(profile, {
-      type: 'pharma',
-      name: 'Pharma',
-      reimbursementCapability: 'moderate',
-      typicalPremium: 1.25
+      type: "pharma",
+      name: "Pharma",
+      reimbursementCapability: "moderate",
+      typicalPremium: 1.25,
     });
 
     // Determine recommended acquirer
-    let recommended: 'healthcare' | 'tech' | 'pharma' | 'retail' = 'healthcare';
+    let recommended: "healthcare" | "tech" | "pharma" | "retail" = "healthcare";
     let highestFit = healthcareFit.fitScore;
 
     if (techFit.fitScore > highestFit) {
-      recommended = 'tech';
+      recommended = "tech";
       highestFit = techFit.fitScore;
     }
     if (pharmaFit.fitScore > highestFit) {
-      recommended = 'pharma';
+      recommended = "pharma";
     }
 
     return {
-      healthcareFit: { score: healthcareFit.fitScore, premium: healthcareFit.recommendedPremium },
+      healthcareFit: {
+        score: healthcareFit.fitScore,
+        premium: healthcareFit.recommendedPremium,
+      },
       techFit: { score: techFit.fitScore, premium: techFit.recommendedPremium },
-      pharmaFit: { score: pharmaFit.fitScore, premium: pharmaFit.recommendedPremium },
-      recommended
+      pharmaFit: {
+        score: pharmaFit.fitScore,
+        premium: pharmaFit.recommendedPremium,
+      },
+      recommended,
     };
   }
 
@@ -245,38 +264,54 @@ export class ReimbursementIntelligenceIntegration {
    */
   private generateInsights(
     profile: CompanyReimbursementProfile,
-    valuation: ReturnType<ValuationPremiumCalculator['calculateValuation']>,
-    sectorPattern?: typeof SECTOR_REIMBURSEMENT_PATTERNS[string]
+    valuation: ReturnType<ValuationPremiumCalculator["calculateValuation"]>,
+    sectorPattern?: typeof SECTOR_REIMBURSEMENT_PATTERNS[string],
   ): string[] {
     const insights: string[] = [];
 
     if (profile.reimbursementStatus.hasCPTCode) {
-      if (profile.reimbursementStatus.codeType === 'established') {
-        insights.push(`Established CPT codes provide predictable reimbursement revenue stream`);
+      if (profile.reimbursementStatus.codeType === "established") {
+        insights.push(
+          `Established CPT codes provide predictable reimbursement revenue stream`,
+        );
       } else {
-        insights.push(`New CPT codes may require payer education and coverage determination`);
+        insights.push(
+          `New CPT codes may require payer education and coverage determination`,
+        );
       }
 
-      if (profile.reimbursementStatus.reimbursementBreadth === 'multi-payer') {
-        insights.push(`Multi-payer coverage reduces revenue concentration risk`);
+      if (profile.reimbursementStatus.reimbursementBreadth === "multi-payer") {
+        insights.push(
+          `Multi-payer coverage reduces revenue concentration risk`,
+        );
       }
 
-      if (profile.reimbursementStatus.rateCategory === 'high') {
-        insights.push(`High RVU procedures command premium valuation multiples`);
+      if (profile.reimbursementStatus.rateCategory === "high") {
+        insights.push(
+          `High RVU procedures command premium valuation multiples`,
+        );
       }
     } else {
-      insights.push(`Consumer-only model limits revenue predictability; consider reimbursement strategy`);
+      insights.push(
+        `Consumer-only model limits revenue predictability; consider reimbursement strategy`,
+      );
     }
 
     if (sectorPattern) {
       const companyReimbursement = profile.estimatedReimbursementPercentage;
       if (companyReimbursement < sectorPattern.avgCoverage - 20) {
-        insights.push(`Opportunity to increase reimbursement coverage vs. sector peers`);
+        insights.push(
+          `Opportunity to increase reimbursement coverage vs. sector peers`,
+        );
       }
     }
 
     if (valuation.reimbursementPremium > 1.4) {
-      insights.push(`Strong reimbursement profile commands ${((valuation.reimbursementPremium - 1) * 100).toFixed(0)}% valuation premium`);
+      insights.push(
+        `Strong reimbursement profile commands ${
+          ((valuation.reimbursementPremium - 1) * 100).toFixed(0)
+        }% valuation premium`,
+      );
     }
 
     return insights;
@@ -287,7 +322,7 @@ export class ReimbursementIntelligenceIntegration {
    */
   analyzeCompanies(companies: LacunaCompany[]): ReimbursementAnalysisResult[] {
     const results: ReimbursementAnalysisResult[] = [];
-    
+
     for (const company of companies) {
       try {
         const result = this.analyzeCompany(company);
@@ -313,17 +348,27 @@ export class ReimbursementIntelligenceIntegration {
     sectorDistribution: Record<string, number>;
   } {
     const businessModels = {
-      insuranceDriven: analyses.filter(a => a.classification.businessModel === 'insurance-driven').length,
-      hybrid: analyses.filter(a => a.classification.businessModel === 'hybrid').length,
-      consumerOnly: analyses.filter(a => a.classification.businessModel === 'b2c-consumer').length
+      insuranceDriven:
+        analyses.filter((a) =>
+          a.classification.businessModel === "insurance-driven"
+        ).length,
+      hybrid:
+        analyses.filter((a) => a.classification.businessModel === "hybrid")
+          .length,
+      consumerOnly:
+        analyses.filter((a) =>
+          a.classification.businessModel === "b2c-consumer"
+        ).length,
     };
 
-    const avgMultiple = analyses.reduce((sum, a) => sum + a.valuation.adjustedMultiple, 0) / analyses.length;
+    const avgMultiple =
+      analyses.reduce((sum, a) => sum + a.valuation.adjustedMultiple, 0) /
+      analyses.length;
 
-    const premiums = analyses.map(a => a.valuation.reimbursementPremium);
+    const premiums = analyses.map((a) => a.valuation.reimbursementPremium);
 
     const sectorDist: Record<string, number> = {};
-    analyses.forEach(a => {
+    analyses.forEach((a) => {
       sectorDist[a.company.sector] = (sectorDist[a.company.sector] || 0) + 1;
     });
 
@@ -333,13 +378,14 @@ export class ReimbursementIntelligenceIntegration {
       avgValuationMultiple: avgMultiple,
       reimbursementPremiumRange: {
         min: Math.min(...premiums),
-        max: Math.max(...premiums)
+        max: Math.max(...premiums),
       },
-      sectorDistribution: sectorDist
+      sectorDistribution: sectorDist,
     };
   }
 }
 
 // Export singleton instance
-export const reimbursementIntelligence = new ReimbursementIntelligenceIntegration();
+export const reimbursementIntelligence =
+  new ReimbursementIntelligenceIntegration();
 export default reimbursementIntelligence;

@@ -60,3 +60,12 @@ staging/sec_candidates.csv
 
 # framer brand site (separate concern from the analytics app — see AGENTS.md)
 /framer/
+
+# large genomic blobs (metadata lives in ClickHouse)
+/data/variants/**
+!/data/variants/.gitkeep
+!/data/variants/README.md
+*.vcf
+*.vcf.gz
+*.gvcf
+*.bam

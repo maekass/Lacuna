@@ -3,11 +3,11 @@
  * and drug approvals (NDA, ANDA) by company name.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { fetchWithTimeout } from '@/lib/api/fetchWithTimeout';
-import { getClientIp, rateLimit } from '@/lib/api/rateLimit';
+import { NextRequest, NextResponse } from "next/server";
+import { fetchWithTimeout } from "@/lib/api/fetchWithTimeout";
+import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
 
-const OPENFDA_BASE = 'https://api.fda.gov';
+const OPENFDA_BASE = "https://api.fda.gov";
 
 interface DeviceResult {
   k_number?: string;
@@ -59,16 +59,22 @@ export interface FDACompanySummary {
 }
 
 export async function GET(request: NextRequest) {
-  const company = request.nextUrl.searchParams.get('company');
+  const company = request.nextUrl.searchParams.get("company");
   if (!company) {
-    return NextResponse.json({ error: 'company parameter required' }, { status: 400 });
+    return NextResponse.json({ error: "company parameter required" }, {
+      status: 400,
+    });
   }
 
   const ip = getClientIp(request);
-  const bucket = rateLimit({ key: `evidence-fda:${ip}`, limit: 40, windowMs: 60_000 });
+  const bucket = rateLimit({
+    key: `evidence-fda:${ip}`,
+    limit: 40,
+    windowMs: 60_000,
+  });
   if (!bucket.ok) {
     return NextResponse.json(
-      { error: 'Rate limited', retryAt: bucket.resetAtMs },
+      { error: "Rate limited", retryAt: bucket.resetAtMs },
       { status: 429 },
     );
   }
@@ -81,15 +87,17 @@ export async function GET(request: NextRequest) {
 
     const clearanceRank: Record<string, number> = {
       PMA: 3,
-      'DE NOVO': 2,
-      '510(K)': 1,
+      "DE NOVO": 2,
+      "510(K)": 1,
     };
     const highestDeviceClearance = deviceData.reduce(
       (best, d) => {
         const rank = clearanceRank[d.clearanceType.toUpperCase()] || 0;
-        return rank > (clearanceRank[best.toUpperCase()] || 0) ? d.clearanceType : best;
+        return rank > (clearanceRank[best.toUpperCase()] || 0)
+          ? d.clearanceType
+          : best;
       },
-      'None',
+      "None",
     );
 
     const summary: FDACompanySummary = {
@@ -103,15 +111,23 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(summary);
   } catch (err) {
-    console.error('openFDA error:', err);
+    console.error("openFDA error:", err);
     return NextResponse.json(
-      { companyName: company, devices: [], drugs: [], totalProducts: 0, error: 'openFDA unavailable' },
+      {
+        companyName: company,
+        devices: [],
+        drugs: [],
+        totalProducts: 0,
+        error: "openFDA unavailable",
+      },
       { status: 502 },
     );
   }
 }
 
-async function fetchDevices(company: string): Promise<FDACompanySummary['devices']> {
+async function fetchDevices(
+  company: string,
+): Promise<FDACompanySummary["devices"]> {
   try {
     const encoded = encodeURIComponent(`"${company}"`);
     const res = await fetchWithTimeout(
@@ -123,19 +139,21 @@ async function fetchDevices(company: string): Promise<FDACompanySummary['devices
     const results: DeviceResult[] = data.results || [];
 
     return results.map((r) => ({
-      number: r.k_number || r.pma_number || '',
-      name: r.openfda?.device_name || '',
-      clearanceType: r.clearance_type || '510(K)',
-      deviceClass: r.openfda?.device_class || '',
-      decisionDate: r.decision_date || '',
-      advisoryCommittee: r.advisory_committee_description || '',
+      number: r.k_number || r.pma_number || "",
+      name: r.openfda?.device_name || "",
+      clearanceType: r.clearance_type || "510(K)",
+      deviceClass: r.openfda?.device_class || "",
+      decisionDate: r.decision_date || "",
+      advisoryCommittee: r.advisory_committee_description || "",
     }));
   } catch {
     return [];
   }
 }
 
-async function fetchDrugs(company: string): Promise<FDACompanySummary['drugs']> {
+async function fetchDrugs(
+  company: string,
+): Promise<FDACompanySummary["drugs"]> {
   try {
     const encoded = encodeURIComponent(`"${company}"`);
     const res = await fetchWithTimeout(
@@ -148,16 +166,20 @@ async function fetchDrugs(company: string): Promise<FDACompanySummary['drugs']> 
 
     return results.map((r) => {
       const latestSubmission = r.submissions
-        ?.filter((s) => s.submission_status === 'AP')
-        .sort((a, b) => (b.submission_status_date || '').localeCompare(a.submission_status_date || ''))[0];
+        ?.filter((s) => s.submission_status === "AP")
+        .sort((a, b) =>
+          (b.submission_status_date || "").localeCompare(
+            a.submission_status_date || "",
+          )
+        )[0];
 
       return {
-        applicationNumber: r.application_number || '',
-        brandName: r.openfda?.brand_name?.[0] || '',
-        genericName: r.openfda?.generic_name?.[0] || '',
-        submissionType: latestSubmission?.submission_type || 'NDA',
-        approvalDate: latestSubmission?.submission_status_date || '',
-        marketingStatus: r.products?.[0]?.marketing_status || '',
+        applicationNumber: r.application_number || "",
+        brandName: r.openfda?.brand_name?.[0] || "",
+        genericName: r.openfda?.generic_name?.[0] || "",
+        submissionType: latestSubmission?.submission_type || "NDA",
+        approvalDate: latestSubmission?.submission_status_date || "",
+        marketingStatus: r.products?.[0]?.marketing_status || "",
       };
     });
   } catch {

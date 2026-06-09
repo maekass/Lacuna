@@ -1,4 +1,4 @@
-import type { VerifiedDataset } from './datasetTypes';
+import type { VerifiedDataset } from "./datasetTypes";
 
 export interface ProvenanceRow {
   last_updated: Date | string;
@@ -45,15 +45,19 @@ export interface AcquisitionRow {
   strategic_rationale: string;
 }
 
-function toIsoDate(value: Date | string | null | undefined): string | undefined {
+function toIsoDate(
+  value: Date | string | null | undefined,
+): string | undefined {
   if (value == null) return undefined;
   if (value instanceof Date) return value.toISOString().slice(0, 10);
   return String(value).slice(0, 10);
 }
 
-function toNumber(value: string | number | null | undefined): number | undefined {
-  if (value == null || value === '') return undefined;
-  const n = typeof value === 'number' ? value : Number(value);
+function toNumber(
+  value: string | number | null | undefined,
+): number | undefined {
+  if (value == null || value === "") return undefined;
+  const n = typeof value === "number" ? value : Number(value);
   return Number.isFinite(n) ? n : undefined;
 }
 
@@ -65,7 +69,7 @@ export function mapRowsToVerifiedDataset(
 ): VerifiedDataset {
   return {
     provenance: {
-      lastUpdated: toIsoDate(provenance.last_updated) ?? '',
+      lastUpdated: toIsoDate(provenance.last_updated) ?? "",
       purpose: provenance.purpose,
       disclaimer: provenance.disclaimer,
       sources: provenance.sources ?? [],
@@ -97,7 +101,7 @@ export function mapRowsToVerifiedDataset(
       acquirerId: d.acquirer_id,
       targetName: d.target_name,
       acquirerName: d.acquirer_name,
-      announcedDate: toIsoDate(d.announced_date) ?? '',
+      announcedDate: toIsoDate(d.announced_date) ?? "",
       closedDate: toIsoDate(d.closed_date),
       dealValue: toNumber(d.deal_value),
       dealValueNote: d.deal_value_note ?? undefined,

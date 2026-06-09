@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
 const SECTION_LINKS = [
-  { href: '#data-coverage', label: 'Coverage' },
-  { href: '#network', label: 'Network' },
-  { href: '#matrix', label: 'Matrix' },
-  { href: '#clinical-trials', label: 'Trials' },
-  { href: '#evidence-maturity', label: 'Evidence' },
-  { href: '#health-equity', label: 'Health equity' },
-  { href: '#impact-assessment', label: 'Impact' },
-  { href: '#network-analysis', label: 'Analysis' },
-  { href: '#causal-engine', label: 'Causal' },
-  { href: '#export', label: 'Export' },
-  { href: '#reimbursement-intelligence', label: 'Reimbursement' },
-  { href: '#acquirer-prediction', label: 'Acquirers' },
+  { href: "#data-coverage", label: "Coverage" },
+  { href: "#network", label: "Network" },
+  { href: "#matrix", label: "Matrix" },
+  { href: "#clinical-trials", label: "Trials" },
+  { href: "#evidence-maturity", label: "Evidence" },
+  { href: "#health-equity", label: "Health equity" },
+  { href: "#impact-assessment", label: "Impact" },
+  { href: "#network-analysis", label: "Analysis" },
+  { href: "#causal-engine", label: "Causal" },
+  { href: "#export", label: "Export" },
+  { href: "#reimbursement-intelligence", label: "Reimbursement" },
+  { href: "#acquirer-prediction", label: "Acquirers" },
 ] as const;
 
 function NavLink({ href, label }: { href: string; label: string }) {
@@ -33,9 +33,7 @@ export default function SiteSectionNav() {
         className="hidden lg:flex items-center gap-5 text-sm text-lacuna-blue"
         aria-label="Page sections"
       >
-        {SECTION_LINKS.map((link) => (
-          <NavLink key={link.href} {...link} />
-        ))}
+        {SECTION_LINKS.map((link) => <NavLink key={link.href} {...link} />)}
         <a
           href="https://github.com/maekass/Lacuna"
           target="_blank"
@@ -50,9 +48,7 @@ export default function SiteSectionNav() {
         className="lg:hidden flex gap-3 overflow-x-auto hide-scrollbar pb-1 -mb-1 text-sm text-lacuna-blue"
         aria-label="Page sections (mobile)"
       >
-        {SECTION_LINKS.map((link) => (
-          <NavLink key={link.href} {...link} />
-        ))}
+        {SECTION_LINKS.map((link) => <NavLink key={link.href} {...link} />)}
       </nav>
     </>
   );

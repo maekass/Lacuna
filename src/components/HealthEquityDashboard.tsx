@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import { useMemo, useState } from 'react';
-import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
-import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
-import { EPIDEMIOLOGY_DATABASE } from '@/lib/impact/oaisCalculator';
+import { useMemo, useState } from "react";
+import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import { EPIDEMIOLOGY_DATABASE } from "@/lib/impact/oaisCalculator";
 import {
   HEALTH_EQUITY_FOCUS_AREAS,
   type HealthEquityDataTier,
   type HealthEquityFocusArea,
-} from '@/lib/impact/healthEquityFocusAreas';
+} from "@/lib/impact/healthEquityFocusAreas";
 
 const tierBadgeStyles: Record<HealthEquityDataTier, string> = {
-  cited_epidemiology: 'bg-emerald-50 text-emerald-800 border-emerald-200',
-  illustrative_static: 'bg-amber-50 text-amber-900 border-amber-200',
+  cited_epidemiology: "bg-emerald-50 text-emerald-800 border-emerald-200",
+  illustrative_static: "bg-amber-50 text-amber-900 border-amber-200",
 };
 
 const tierLabels: Record<HealthEquityDataTier, string> = {
-  cited_epidemiology: 'Cited epidemiology (static)',
-  illustrative_static: 'Illustrative context only',
+  cited_epidemiology: "Cited epidemiology (static)",
+  illustrative_static: "Illustrative context only",
 };
 
 interface VerifiedCompanyOverlap {
@@ -49,7 +49,7 @@ function formatPopulation(condition: string): string | undefined {
 
 function downloadOverlapCsv(areas: FocusAreaView[]) {
   const header =
-    'focus_area,data_tier,disparity_label,source,company_id,company_name,sector,stage,deal_acquirer,deal_date';
+    "focus_area,data_tier,disparity_label,source,company_id,company_name,sector,stage,deal_acquirer,deal_date";
   const rows = [header];
   for (const area of areas) {
     if (area.verifiedCompanies.length === 0) {
@@ -59,13 +59,13 @@ function downloadOverlapCsv(areas: FocusAreaView[]) {
           tierLabels[area.dataTier],
           csvEscape(area.disparityLabel),
           csvEscape(area.source),
-          '',
-          '',
-          '',
-          '',
-          '',
-          '',
-        ].join(','),
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+        ].join(","),
       );
       continue;
     }
@@ -80,17 +80,19 @@ function downloadOverlapCsv(areas: FocusAreaView[]) {
           csvEscape(c.name),
           csvEscape(c.sector),
           csvEscape(c.stage),
-          csvEscape(c.deal?.acquirerName ?? ''),
-          c.deal?.announcedDate ?? '',
-        ].join(','),
+          csvEscape(c.deal?.acquirerName ?? ""),
+          c.deal?.announcedDate ?? "",
+        ].join(","),
       );
     }
   }
-  const blob = new Blob([`${rows.join('\n')}\n`], { type: 'text/csv;charset=utf-8' });
+  const blob = new Blob([`${rows.join("\n")}\n`], {
+    type: "text/csv;charset=utf-8",
+  });
   const url = URL.createObjectURL(blob);
-  const anchor = document.createElement('a');
+  const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = 'health-equity-portfolio-overlap.csv';
+  anchor.download = "health-equity-portfolio-overlap.csv";
   anchor.click();
   URL.revokeObjectURL(url);
 }
@@ -112,7 +114,9 @@ function CompanyOverlapRow({
   return (
     <li
       className={`rounded-md border px-3 py-2 text-sm ${
-        highlighted ? 'border-lacuna-plum/40 bg-lacuna-pink/10' : 'border-slate-100 bg-slate-50/50'
+        highlighted
+          ? "border-lacuna-plum/40 bg-lacuna-pink/10"
+          : "border-slate-100 bg-slate-50/50"
       }`}
     >
       <details>
@@ -124,20 +128,27 @@ function CompanyOverlapRow({
         </summary>
         <div className="mt-2 space-y-2 text-xs text-slate-600">
           <p>{company.description}</p>
-          {company.deal ? (
-            <p>
-              Verified deal: acquired by {company.deal.acquirerName} ({company.deal.announcedDate})
-              {company.deal.dealValueNote ? ` — ${company.deal.dealValueNote}` : ''}
-            </p>
-          ) : (
-            <p className="text-slate-500">No verified acquisition row for this company.</p>
-          )}
+          {company.deal
+            ? (
+              <p>
+                Verified deal: acquired by {company.deal.acquirerName}{" "}
+                ({company.deal.announcedDate})
+                {company.deal.dealValueNote
+                  ? ` — ${company.deal.dealValueNote}`
+                  : ""}
+              </p>
+            )
+            : (
+              <p className="text-slate-500">
+                No verified acquisition row for this company.
+              </p>
+            )}
           <div>
-            <p className="font-medium text-slate-700 mb-1">Sources ({company.sources.length})</p>
+            <p className="font-medium text-slate-700 mb-1">
+              Sources ({company.sources.length})
+            </p>
             <ul className="list-disc pl-4 space-y-0.5">
-              {company.sources.map((source) => (
-                <li key={source}>{source}</li>
-              ))}
+              {company.sources.map((source) => <li key={source}>{source}</li>)}
             </ul>
           </div>
           <div className="flex flex-wrap gap-2 pt-1">
@@ -174,14 +185,20 @@ function FocusAreaCard({
   return (
     <article
       className={`rounded-lg border p-5 flex flex-col gap-3 transition-colors ${
-        active ? 'border-lacuna-plum/50 ring-1 ring-lacuna-plum/20 bg-white' : 'border-slate-200 bg-white'
+        active
+          ? "border-lacuna-plum/50 ring-1 ring-lacuna-plum/20 bg-white"
+          : "border-slate-200 bg-white"
       }`}
     >
       <button type="button" onClick={onSelect} className="text-left w-full">
         <div className="flex flex-wrap items-start justify-between gap-2">
-          <h4 className="text-base font-semibold text-slate-800">{area.title}</h4>
+          <h4 className="text-base font-semibold text-slate-800">
+            {area.title}
+          </h4>
           <span
-            className={`text-[11px] font-medium px-2 py-0.5 rounded-full border ${tierBadgeStyles[area.dataTier]}`}
+            className={`text-[11px] font-medium px-2 py-0.5 rounded-full border ${
+              tierBadgeStyles[area.dataTier]
+            }`}
           >
             {tierLabels[area.dataTier]}
           </span>
@@ -192,48 +209,58 @@ function FocusAreaCard({
 
       <div className="rounded-md bg-slate-50 border border-slate-100 px-3 py-2 text-xs">
         <p className="text-slate-500">Disparity / prevalence (static)</p>
-        <p className="font-medium text-slate-800 mt-0.5">{area.disparityLabel}</p>
-        {area.addressablePopulation ? (
-          <p className="text-slate-600 mt-1">Addressable population: {area.addressablePopulation}</p>
-        ) : null}
+        <p className="font-medium text-slate-800 mt-0.5">
+          {area.disparityLabel}
+        </p>
+        {area.addressablePopulation
+          ? (
+            <p className="text-slate-600 mt-1">
+              Addressable population: {area.addressablePopulation}
+            </p>
+          )
+          : null}
         <p className="text-slate-500 mt-2">Source: {area.source}</p>
       </div>
 
       <div className="border-t border-slate-100 pt-3">
         <p className="text-xs font-medium text-slate-600 mb-2">
-          Verified portfolio overlap ({area.relatedSectors.join(', ')}) · {area.verifiedCompanies.length}{' '}
-          {area.verifiedCompanies.length === 1 ? 'company' : 'companies'}
+          Verified portfolio overlap ({area.relatedSectors.join(", ")}) ·{" "}
+          {area.verifiedCompanies.length}{" "}
+          {area.verifiedCompanies.length === 1 ? "company" : "companies"}
         </p>
-        {area.verifiedCompanies.length > 0 ? (
-          <ul className="space-y-2">
-            {area.verifiedCompanies.map((c) => (
-              <CompanyOverlapRow
-                key={c.id}
-                company={c}
-                highlighted={highlightedCompanyId === c.id}
-              />
-            ))}
-          </ul>
-        ) : (
-          <p className="text-sm text-slate-500">
-            No companies in the verified sample for these sectors yet — this is a dataset gap, not evidence
-            of no market activity.
-          </p>
-        )}
+        {area.verifiedCompanies.length > 0
+          ? (
+            <ul className="space-y-2">
+              {area.verifiedCompanies.map((c) => (
+                <CompanyOverlapRow
+                  key={c.id}
+                  company={c}
+                  highlighted={highlightedCompanyId === c.id}
+                />
+              ))}
+            </ul>
+          )
+          : (
+            <p className="text-sm text-slate-500">
+              No companies in the verified sample for these sectors yet — this
+              is a dataset gap, not evidence of no market activity.
+            </p>
+          )}
       </div>
     </article>
   );
 }
 
 export default function HealthEquityDashboard() {
-  const { verifiedCompanies, verifiedAcquisitions, dataProvenance } = useVerifiedDataset();
-  const lastUpdated = dataProvenance.lastUpdated || '—';
+  const { verifiedCompanies, verifiedAcquisitions, dataProvenance } =
+    useVerifiedDataset();
+  const lastUpdated = dataProvenance.lastUpdated || "—";
 
-  const [sectorFilter, setSectorFilter] = useState<string>('all');
-  const [focusFilter, setFocusFilter] = useState<string>('all');
+  const [sectorFilter, setSectorFilter] = useState<string>("all");
+  const [focusFilter, setFocusFilter] = useState<string>("all");
   const [portfolioOnly, setPortfolioOnly] = useState(false);
-  const [companyQuery, setCompanyQuery] = useState('');
-  const [highlightCompanyId, setHighlightCompanyId] = useState('');
+  const [companyQuery, setCompanyQuery] = useState("");
+  const [highlightCompanyId, setHighlightCompanyId] = useState("");
 
   const sectorOptions = useMemo(() => {
     const sectors = new Set<string>();
@@ -267,11 +294,11 @@ export default function HealthEquityDashboard() {
             sources: c.sources,
             deal: deal
               ? {
-                  id: deal.id,
-                  acquirerName: deal.acquirerName,
-                  announcedDate: deal.announcedDate,
-                  dealValueNote: deal.dealValueNote,
-                }
+                id: deal.id,
+                acquirerName: deal.acquirerName,
+                announcedDate: deal.announcedDate,
+                dealValueNote: deal.dealValueNote,
+              }
               : undefined,
           };
         });
@@ -290,16 +317,20 @@ export default function HealthEquityDashboard() {
     const query = companyQuery.trim().toLowerCase();
 
     return focusAreas
-      .filter((area) => focusFilter === 'all' || area.id === focusFilter)
-      .filter((area) => sectorFilter === 'all' || area.relatedSectors.includes(sectorFilter))
+      .filter((area) => focusFilter === "all" || area.id === focusFilter)
+      .filter((area) =>
+        sectorFilter === "all" || area.relatedSectors.includes(sectorFilter)
+      )
       .filter((area) => !portfolioOnly || area.verifiedCompanies.length > 0)
       .map((area) => {
         let companies = area.verifiedCompanies;
-        if (sectorFilter !== 'all') {
+        if (sectorFilter !== "all") {
           companies = companies.filter((c) => c.sector === sectorFilter);
         }
         if (query) {
-          companies = companies.filter((c) => c.name.toLowerCase().includes(query));
+          companies = companies.filter((c) =>
+            c.name.toLowerCase().includes(query)
+          );
         }
         if (highlightCompanyId) {
           companies = companies.filter((c) => c.id === highlightCompanyId);
@@ -307,18 +338,35 @@ export default function HealthEquityDashboard() {
         return { ...area, verifiedCompanies: companies };
       })
       .filter((area) => {
-        if (query || highlightCompanyId) return area.verifiedCompanies.length > 0;
+        if (query || highlightCompanyId) {
+          return area.verifiedCompanies.length > 0;
+        }
         if (portfolioOnly) return area.verifiedCompanies.length > 0;
         return true;
       });
-  }, [focusAreas, focusFilter, sectorFilter, portfolioOnly, companyQuery, highlightCompanyId]);
+  }, [
+    focusAreas,
+    focusFilter,
+    sectorFilter,
+    portfolioOnly,
+    companyQuery,
+    highlightCompanyId,
+  ]);
 
   const portfolioStats = useMemo(() => {
-    const sectorSet = new Set(HEALTH_EQUITY_FOCUS_AREAS.flatMap((a) => [...a.relatedSectors]));
-    const companiesInScope = verifiedCompanies.filter((c) => sectorSet.has(c.sector));
+    const sectorSet = new Set(
+      HEALTH_EQUITY_FOCUS_AREAS.flatMap((a) => [...a.relatedSectors]),
+    );
+    const companiesInScope = verifiedCompanies.filter((c) =>
+      sectorSet.has(c.sector)
+    );
     const companyIds = new Set(companiesInScope.map((c) => c.id));
-    const dealsInScope = verifiedAcquisitions.filter((d) => companyIds.has(d.targetId));
-    const areasWithPortfolio = focusAreas.filter((a) => a.verifiedCompanies.length > 0).length;
+    const dealsInScope = verifiedAcquisitions.filter((d) =>
+      companyIds.has(d.targetId)
+    );
+    const areasWithPortfolio = focusAreas.filter((a) =>
+      a.verifiedCompanies.length > 0
+    ).length;
 
     return {
       companiesInScope: companiesInScope.length,
@@ -329,11 +377,11 @@ export default function HealthEquityDashboard() {
   }, [verifiedCompanies, verifiedAcquisitions, focusAreas]);
 
   const resetFilters = () => {
-    setSectorFilter('all');
-    setFocusFilter('all');
+    setSectorFilter("all");
+    setFocusFilter("all");
     setPortfolioOnly(false);
-    setCompanyQuery('');
-    setHighlightCompanyId('');
+    setCompanyQuery("");
+    setHighlightCompanyId("");
   };
 
   return (
@@ -341,10 +389,13 @@ export default function HealthEquityDashboard() {
       <CuratedDatasetBanner className="mb-4" />
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="text-lg font-semibold text-slate-800">Health equity context</h3>
+          <h3 className="text-lg font-semibold text-slate-800">
+            Health equity context
+          </h3>
           <p className="text-sm text-slate-500 mt-1">
-            Public-health framing with cited static epidemiology, mapped to companies in the verified
-            sample. Filter, expand records, or export the overlap table.
+            Public-health framing with cited static epidemiology, mapped to
+            companies in the verified sample. Filter, expand records, or export
+            the overlap table.
           </p>
         </div>
         <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 shrink-0">
@@ -355,8 +406,14 @@ export default function HealthEquityDashboard() {
       <div className="mt-5 rounded-lg border border-sky-100 bg-sky-50/80 px-4 py-3 text-sm text-slate-700">
         <p className="font-medium text-slate-800">What you can do here</p>
         <ul className="mt-2 space-y-1 text-xs text-slate-600 list-disc pl-5">
-          <li>Filter by focus area, sector, or company; expand a row for sources and deal provenance.</li>
-          <li>Epidemiology numbers are static citations (OAIS reference list), not a live CDC feed.</li>
+          <li>
+            Filter by focus area, sector, or company; expand a row for sources
+            and deal provenance.
+          </li>
+          <li>
+            Epidemiology numbers are static citations (OAIS reference list), not
+            a live CDC feed.
+          </li>
           <li>Dual-metric ROI scoring lives under Impact Assessment.</li>
         </ul>
       </div>
@@ -400,7 +457,7 @@ export default function HealthEquityDashboard() {
             value={highlightCompanyId}
             onChange={(e) => {
               setHighlightCompanyId(e.target.value);
-              setCompanyQuery('');
+              setCompanyQuery("");
             }}
             className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800"
           >
@@ -420,7 +477,7 @@ export default function HealthEquityDashboard() {
             value={companyQuery}
             onChange={(e) => {
               setCompanyQuery(e.target.value);
-              setHighlightCompanyId('');
+              setHighlightCompanyId("");
             }}
             placeholder="e.g. Maven, Bloomi"
             className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800"
@@ -458,48 +515,73 @@ export default function HealthEquityDashboard() {
       <p className="mt-3 text-xs text-slate-500">
         Showing {filteredAreas.length} of {focusAreas.length} focus areas
         {filteredAreas.reduce((n, a) => n + a.verifiedCompanies.length, 0) > 0
-          ? ` · ${filteredAreas.reduce((n, a) => n + a.verifiedCompanies.length, 0)} company rows`
-          : ' · no matching companies for current filters'}
+          ? ` · ${
+            filteredAreas.reduce((n, a) => n + a.verifiedCompanies.length, 0)
+          } company rows`
+          : " · no matching companies for current filters"}
       </p>
 
       <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
         <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
-          <p className="text-2xl font-bold text-slate-800">{portfolioStats.areaCount}</p>
+          <p className="text-2xl font-bold text-slate-800">
+            {portfolioStats.areaCount}
+          </p>
           <p className="text-xs text-slate-500 mt-1">Focus areas</p>
         </div>
         <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
-          <p className="text-2xl font-bold text-slate-800">{portfolioStats.companiesInScope}</p>
-          <p className="text-xs text-slate-500 mt-1">Sample cos. in related sectors</p>
+          <p className="text-2xl font-bold text-slate-800">
+            {portfolioStats.companiesInScope}
+          </p>
+          <p className="text-xs text-slate-500 mt-1">
+            Sample cos. in related sectors
+          </p>
         </div>
         <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
-          <p className="text-2xl font-bold text-slate-800">{portfolioStats.dealsInScope}</p>
-          <p className="text-xs text-slate-500 mt-1">Verified deals (those targets)</p>
+          <p className="text-2xl font-bold text-slate-800">
+            {portfolioStats.dealsInScope}
+          </p>
+          <p className="text-xs text-slate-500 mt-1">
+            Verified deals (those targets)
+          </p>
         </div>
         <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
-          <p className="text-2xl font-bold text-slate-800">{portfolioStats.areasWithPortfolio}</p>
-          <p className="text-xs text-slate-500 mt-1">Areas with ≥1 sample company</p>
+          <p className="text-2xl font-bold text-slate-800">
+            {portfolioStats.areasWithPortfolio}
+          </p>
+          <p className="text-xs text-slate-500 mt-1">
+            Areas with ≥1 sample company
+          </p>
         </div>
       </div>
 
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-        {filteredAreas.length > 0 ? (
-          filteredAreas.map((area) => (
-            <FocusAreaCard
-              key={area.id}
-              area={area}
-              active={focusFilter === area.id}
-              highlightedCompanyId={highlightCompanyId}
-              onSelect={() => setFocusFilter((current) => (current === area.id ? 'all' : area.id))}
-            />
-          ))
-        ) : (
-          <div className="md:col-span-2 rounded-lg border border-dashed border-slate-200 p-8 text-center text-sm text-slate-500">
-            No focus areas match the current filters.{' '}
-            <button type="button" onClick={resetFilters} className="text-lacuna-plum underline">
-              Reset filters
-            </button>
-          </div>
-        )}
+        {filteredAreas.length > 0
+          ? (
+            filteredAreas.map((area) => (
+              <FocusAreaCard
+                key={area.id}
+                area={area}
+                active={focusFilter === area.id}
+                highlightedCompanyId={highlightCompanyId}
+                onSelect={() =>
+                  setFocusFilter((
+                    current,
+                  ) => (current === area.id ? "all" : area.id))}
+              />
+            ))
+          )
+          : (
+            <div className="md:col-span-2 rounded-lg border border-dashed border-slate-200 p-8 text-center text-sm text-slate-500">
+              No focus areas match the current filters.{" "}
+              <button
+                type="button"
+                onClick={resetFilters}
+                className="text-lacuna-plum underline"
+              >
+                Reset filters
+              </button>
+            </div>
+          )}
       </div>
 
       <div className="mt-6 rounded-lg border border-slate-200 overflow-x-auto">
@@ -520,9 +602,15 @@ export default function HealthEquityDashboard() {
                 onClick={() => setFocusFilter(area.id)}
               >
                 <td className="p-2 text-slate-700">{area.title}</td>
-                <td className="p-2 text-slate-600">{tierLabels[area.dataTier]}</td>
-                <td className="p-2 text-right text-slate-600">{area.verifiedCompanies.length}</td>
-                <td className="p-2 text-slate-500 max-w-xs truncate">{area.source}</td>
+                <td className="p-2 text-slate-600">
+                  {tierLabels[area.dataTier]}
+                </td>
+                <td className="p-2 text-right text-slate-600">
+                  {area.verifiedCompanies.length}
+                </td>
+                <td className="p-2 text-slate-500 max-w-xs truncate">
+                  {area.source}
+                </td>
               </tr>
             ))}
           </tbody>

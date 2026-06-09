@@ -1,6 +1,7 @@
-# Local Postgres for LACUNA_DATA_MODE=db, migrations, and SEC ingest dev.
+# Local Postgres + ClickHouse for db mode and variant call-set catalog.
 # Start: docker compose up -d
 # Then: cp .env.example .env.local && npm run db:migrate && npm run db:import
+# Variant store: npm run clickhouse:migrate && npm run clickhouse:seed
 
 services:
   postgres:
@@ -21,5 +22,26 @@ services:
       timeout: 5s
       retries: 5
 
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.8-alpine
+    container_name: lacuna-clickhouse
+    restart: unless-stopped
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    environment:
+      CLICKHOUSE_DB: lacuna
+      CLICKHOUSE_USER: lacuna
+      CLICKHOUSE_PASSWORD: lacuna
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+    volumes:
+      - lacuna_ch_data:/var/lib/clickhouse
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8123/ping | grep -q Ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
 volumes:
   lacuna_pg_data:
+  lacuna_ch_data:

@@ -2,35 +2,35 @@ export interface Company {
   id: string;
   name: string;
   sector:
-    | 'Fertility'
-    | 'Mental Health'
-    | 'Cardiovascular'
-    | 'Oncology'
-    | 'Menopause'
-    | 'Pelvic Health'
-    | 'General Wellness'
-    | 'Wearables'
-    | 'Sexual Wellness'
-    | 'Breast Health'
-    | 'Gynecological Surgery'
-    | 'Reproductive Health'
-    | 'Diagnostics'
-    | 'Contraception'
-    | 'Precision Medicine'
-    | 'Maternal Health'
-    | 'Medical Devices'
-    | 'Dermatology'
-    | 'Digital Health';
+    | "Fertility"
+    | "Mental Health"
+    | "Cardiovascular"
+    | "Oncology"
+    | "Menopause"
+    | "Pelvic Health"
+    | "General Wellness"
+    | "Wearables"
+    | "Sexual Wellness"
+    | "Breast Health"
+    | "Gynecological Surgery"
+    | "Reproductive Health"
+    | "Diagnostics"
+    | "Contraception"
+    | "Precision Medicine"
+    | "Maternal Health"
+    | "Medical Devices"
+    | "Dermatology"
+    | "Digital Health";
   stage:
-    | 'Seed'
-    | 'Series A'
-    | 'Series B'
-    | 'Series C'
-    | 'Series D'
-    | 'Series F'
-    | 'Late Stage'
-    | 'Pre-IPO'
-    | 'Public';
+    | "Seed"
+    | "Series A"
+    | "Series B"
+    | "Series C"
+    | "Series D"
+    | "Series F"
+    | "Late Stage"
+    | "Pre-IPO"
+    | "Public";
   founded: number;
   valuation?: number;
   employees: number;
@@ -45,7 +45,13 @@ export interface Acquisition {
   announcedDate: string;
   closedDate?: string;
   dealValue?: number;
-  dealType: 'Acquisition' | 'Merger' | 'Strategic Investment' | 'Asset Purchase' | 'Asset Acquisition' | 'License/Asset Acquisition';
+  dealType:
+    | "Acquisition"
+    | "Merger"
+    | "Strategic Investment"
+    | "Asset Purchase"
+    | "Asset Acquisition"
+    | "License/Asset Acquisition";
   strategicRationale: string;
   multiples?: {
     revenue?: number;
@@ -53,9 +59,9 @@ export interface Acquisition {
   };
 }
 
-export type Sector = Company['sector'];
-export type Stage = Company['stage'];
-export type DealType = Acquisition['dealType'];
+export type Sector = Company["sector"];
+export type Stage = Company["stage"];
+export type DealType = Acquisition["dealType"];
 export type Money = number;
 
 export interface ValidationResult<T> {

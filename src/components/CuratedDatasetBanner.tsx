@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { CURATED_DATASET_PROVENANCE_LINE } from '@/lib/constants/provenance';
-import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
+import { CURATED_DATASET_PROVENANCE_LINE } from "@/lib/constants/provenance";
+import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 
 interface CuratedDatasetBannerProps {
   className?: string;
@@ -10,10 +10,15 @@ interface CuratedDatasetBannerProps {
 /**
  * Standard provenance strip for analytical panels — curated static dataset, not live market feeds.
  */
-export default function CuratedDatasetBanner({ className = '' }: CuratedDatasetBannerProps) {
+export default function CuratedDatasetBanner(
+  { className = "" }: CuratedDatasetBannerProps,
+) {
   const { verifiedAcquisitions } = useVerifiedDataset();
   const dealCount = verifiedAcquisitions.length;
-  const line = CURATED_DATASET_PROVENANCE_LINE.replace('n=58', `n=${dealCount}`);
+  const line = CURATED_DATASET_PROVENANCE_LINE.replace(
+    "n=58",
+    `n=${dealCount}`,
+  );
 
   return (
     <p

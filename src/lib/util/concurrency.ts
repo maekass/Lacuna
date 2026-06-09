@@ -20,7 +20,10 @@ export async function mapWithConcurrency<T, R>(
     }
   }
 
-  const workers = Array.from({ length: Math.min(limit, items.length) }, () => worker());
+  const workers = Array.from(
+    { length: Math.min(limit, items.length) },
+    () => worker(),
+  );
   await Promise.all(workers);
   return results;
 }

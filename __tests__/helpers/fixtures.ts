@@ -1,20 +1,20 @@
-import verifiedJson from '@/data/dataset.verified.json';
-import type { VerifiedDataset } from '@/lib/data/datasetTypes';
+import verifiedJson from "@/data/dataset.verified.json";
+import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import type {
-  AcquisitionRow,
   AcquirerRow,
+  AcquisitionRow,
   CompanyRow,
   ProvenanceRow,
-} from '@/lib/data/mapVerifiedDataset';
+} from "@/lib/data/mapVerifiedDataset";
 
 const full = verifiedJson as VerifiedDataset;
 
 /** Minimal slice of the real verified JSON — not invented companies or deals. */
 export const minimalVerifiedDataset: VerifiedDataset = {
   provenance: full.provenance,
-  companies: full.companies.filter((c) => c.id === 'c1' || c.id === 'c2'),
+  companies: full.companies.filter((c) => c.id === "c1" || c.id === "c2"),
   acquirers: full.acquirers.slice(0, 1),
-  acquisitions: full.acquisitions.filter((d) => d.id === 'deal2'),
+  acquisitions: full.acquisitions.filter((d) => d.id === "deal2"),
 };
 
 const company = minimalVerifiedDataset.companies[0];
