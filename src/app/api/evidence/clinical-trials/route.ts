@@ -4,6 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { clampInt } from '@/lib/api/pageParams';
 import { guardedUpstreamFetch } from '@/lib/api/guardedFetch';
 
 const CTG_API = 'https://clinicaltrials.gov/api/v2';
@@ -57,9 +58,10 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    const pageSize = clampInt(request.nextUrl.searchParams.get('limit'), 50, 100);
     const params = new URLSearchParams({
       'query.spons': company,
-      pageSize: '50',
+      pageSize: String(pageSize),
       sort: 'LastUpdatePostDate:desc',
     });
 

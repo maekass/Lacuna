@@ -70,6 +70,15 @@ describe('clinical-trials API', () => {
 
       expect(mockFetch.mock.calls[0][0]).toContain('pageSize=10');
     });
+
+    it('clamps limit to 100 (edge)', async () => {
+      mockFetch.mockResolvedValue({ ok: true, json: () => Promise.resolve({ studies: [] }) });
+
+      const request = new NextRequest('http://localhost/api/clinical-trials?limit=500');
+      await GET(request);
+
+      expect(mockFetch.mock.calls[0][0]).toContain('pageSize=100');
+    });
   });
 
   describe('POST', () => {

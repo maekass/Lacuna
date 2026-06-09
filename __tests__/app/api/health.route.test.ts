@@ -27,5 +27,7 @@ describe('health API', () => {
     expect(body.checks.dataset.companies).toBeGreaterThan(0);
     expect(body.checks.dataset.acquisitions).toBeGreaterThan(0);
     expect(body.checks.database.configured).toBe(false);
+    expect(body.checks.variantStore.enabled).toBe(false);
+    expect(body.checks.variantStore.ok).toBe(true);
   });
 });

@@ -19,10 +19,14 @@ flowchart LR
   subgraph data [Data]
     json[dataset.verified.json]
     pg[(Postgres)]
+    ch[(ClickHouse)]
+    s3[Object storage]
   end
   ci --> vercel
   app --> json
   app -->|LACUNA_DATA_MODE=db| pg
+  app -->|LACUNA_VARIANT_STORE=clickhouse| ch
+  app -.->|VCF blobs| s3
   cron --> pg
 ```
 
@@ -32,7 +36,8 @@ flowchart LR
 | CI | `.github/workflows/deno.yml` | lint, test, build, dataset validation |
 | Cron | `vercel.json` → `/api/cron/sec-ingest` | 06:00 UTC daily (Hobby-safe) |
 | DB | `db/migrations/*.sql` | Verified dataset + `lacuna_deals` + ingest runs |
-| Local DB | `docker-compose.yml` | Postgres 16 for dev |
+| Local DB | `docker-compose.yml` | Postgres 16 + ClickHouse 24 for dev |
+| Variant store | `clickhouse/migrations/` | Callset catalog + variant summaries — [GENOMICS_VARIANT_STORE.md](./GENOMICS_VARIANT_STORE.md) |
 
 ## Quick local stack
 
@@ -54,6 +59,15 @@ npm run db:import
 LACUNA_DATA_MODE=db npm run dev
 ```
 
+### Optional variant call-set store (ClickHouse + object storage)
+
+```bash
+docker compose up -d clickhouse
+# .env.local: LACUNA_VARIANT_STORE=clickhouse, CLICKHOUSE_URL=http://lacuna:lacuna@localhost:8123
+npm run clickhouse:migrate
+npm run clickhouse:seed
+```
+
 ## Environment variables
 
 Copy [`.env.example`](../.env.example) to `.env.local`. Production checklist: [PRODUCTION_SETUP.md](./PRODUCTION_SETUP.md).
@@ -66,6 +80,8 @@ Copy [`.env.example`](../.env.example) to `.env.local`. Production checklist: [P
 | `SEC_EDGAR_USER_AGENT` | Required for SEC ingest |
 | `LACUNA_INGEST_RUN_TRACKING` | Recommended — `lacuna_ingest_runs` audit |
 | `SEC_USE_DB_CURSOR` | Recommended — incremental daily scans |
+| `LACUNA_VARIANT_STORE` | `off` (default) or `clickhouse` — see [GENOMICS_VARIANT_STORE.md](./GENOMICS_VARIANT_STORE.md) |
+| `CLICKHOUSE_URL` | Required when variant store enabled |
 
 AI and Sentry: [INFERENCE.md](./INFERENCE.md), [PRODUCTION_SETUP.md](./PRODUCTION_SETUP.md).
 
@@ -78,6 +94,9 @@ AI and Sentry: [INFERENCE.md](./INFERENCE.md), [PRODUCTION_SETUP.md](./PRODUCTIO
 | `npm run db:migrate` | Apply SQL migrations |
 | `npm run db:import` | Load `dataset.verified.json` into Postgres |
 | `npm run sec:ingest` | SEC pipeline (CLI) |
+| `npm run clickhouse:migrate` | Apply ClickHouse variant-store schema |
+| `npm run clickhouse:seed` | Infrastructure demo callset (local dev) |
+| `npm run clickhouse:ingest-vcf` | Stream VCF → object storage + ClickHouse summaries |
 
 ## HTTP endpoints (ops)
 

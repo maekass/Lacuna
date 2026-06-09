@@ -14,6 +14,8 @@ const ENV_REQUIREMENTS: EnvRequirement[] = [
   { key: 'SEC_EDGAR_USER_AGENT', when: 'SEC ingest / cron', required: false },
   { key: 'LACUNA_INGEST_RUN_TRACKING', when: 'recommended for production ingest', required: false },
   { key: 'SEC_USE_DB_CURSOR', when: 'recommended for incremental cron', required: false },
+  { key: 'LACUNA_VARIANT_STORE', when: 'clickhouse variant catalog (off by default)', required: false },
+  { key: 'CLICKHOUSE_URL', when: 'LACUNA_VARIANT_STORE=clickhouse', required: false },
 ];
 
 function isProductionEnv(): boolean {
@@ -63,6 +65,17 @@ async function main() {
     }
   } else {
     console.log('  database: not configured (ok for static demo)');
+  }
+
+  if (health.checks.variantStore.enabled) {
+    console.log(
+      `  variantStore: ${health.checks.variantStore.ok ? 'ok' : 'failed'} (${health.checks.variantStore.latencyMs ?? '?'} ms)`,
+    );
+    if (health.checks.variantStore.error) {
+      console.log(`  variantStore error: ${health.checks.variantStore.error}`);
+    }
+  } else {
+    console.log('  variantStore: disabled (ok for Vercel demo)');
   }
 
   if (!health.ok) {

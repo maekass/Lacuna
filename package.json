@@ -14,11 +14,17 @@
     "sec:ingest": "tsx scripts/sec-ingest-deals.ts",
     "db:migrate": "tsx scripts/migrate.ts",
     "db:import": "tsx scripts/import-verified-json.ts",
+    "clickhouse:migrate": "tsx scripts/clickhouse-migrate.ts",
+    "clickhouse:seed": "tsx scripts/seed-variant-callsets.ts",
+    "clickhouse:ingest-vcf": "tsx scripts/ingest-vcf-stream.ts",
     "infra:check": "tsx scripts/infra-check.ts",
     "monitor:liveness": "sh scripts/monitor-liveness.sh"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.67",
+    "@aws-sdk/client-s3": "^3.1064.0",
+    "@aws-sdk/s3-request-presigner": "^3.1064.0",
+    "@clickhouse/client": "^1.20.0",
     "@sentry/nextjs": "^10.55.0",
     "@types/d3": "^7.4.3",
     "ai": "^6.0.193",
@@ -40,8 +46,8 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@tensorflow/tfjs": "^4.22.0",
     "@tailwindcss/postcss": "^4",
+    "@tensorflow/tfjs": "^4.22.0",
     "@types/node": "^20",
     "@types/pg": "^8.15.2",
     "@types/react": "^19",

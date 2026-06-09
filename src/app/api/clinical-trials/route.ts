@@ -5,8 +5,12 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { clampInt } from '@/lib/api/pageParams';
 
 const CLINICAL_TRIALS_API_BASE = 'https://clinicaltrials.gov/api/v2';
+const DEFAULT_TRIAL_LIMIT = 10;
+const MAX_TRIAL_LIMIT = 100;
+const MAX_BATCH_NCT_IDS = 25;
 
 // ClinicalTrials.gov API types
 interface CTGStudy {
@@ -69,7 +73,7 @@ export async function GET(request: NextRequest) {
   const condition = searchParams.get('condition') || '';
   const phase = searchParams.get('phase') || '';
   const status = searchParams.get('status') || '';
-  const limit = parseInt(searchParams.get('limit') || '10');
+  const limit = clampInt(searchParams.get('limit'), DEFAULT_TRIAL_LIMIT, MAX_TRIAL_LIMIT);
 
   try {
     // Build query parameters
@@ -160,6 +164,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: 'nctIds must be an array' },
         { status: 400 }
+      );
+    }
+
+    if (nctIds.length > MAX_BATCH_NCT_IDS) {
+      return NextResponse.json(
+        { error: `nctIds exceeds maximum batch size of ${MAX_BATCH_NCT_IDS}` },
+        { status: 400 },
       );
     }
 

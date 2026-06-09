@@ -3,6 +3,8 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getDataMode } from '@/lib/data/datasetProvider';
+import { isVariantStoreEnabled } from '@/lib/genomics/variantStoreConfig';
+import { pingClickHouse } from '@/lib/genomics/clickhouseClient';
 import type { VerifiedDataset } from '@/lib/data/datasetTypes';
 import { validateVerifiedDataset } from '@/lib/data/validateVerifiedDataset';
 
@@ -37,6 +39,13 @@ export interface LivenessPayload {
   buildSha: string | null;
 }
 
+export interface VariantStoreHealth {
+  enabled: boolean;
+  ok: boolean;
+  latencyMs?: number;
+  error?: string;
+}
+
 export interface ReadinessPayload {
   ok: boolean;
   service: 'lacuna';
@@ -48,6 +57,7 @@ export interface ReadinessPayload {
   checks: {
     dataset: DatasetHealth;
     database: DatabaseHealth;
+    variantStore: VariantStoreHealth;
   };
 }
 
@@ -161,14 +171,29 @@ export function runLivenessCheck(): LivenessPayload {
   };
 }
 
+async function pingVariantStore(): Promise<VariantStoreHealth> {
+  if (!isVariantStoreEnabled()) {
+    return { enabled: false, ok: true };
+  }
+
+  const result = await pingClickHouse();
+  return {
+    enabled: true,
+    ok: result.ok,
+    latencyMs: result.latencyMs,
+    error: result.error,
+  };
+}
+
 /** Readiness with counts; db mode uses COUNT(*) instead of full hydration. */
 export async function runReadinessCheck(): Promise<ReadinessPayload> {
   const mode = getDataMode();
-  const [dataset, database] = await Promise.all([
+  const [dataset, database, variantStore] = await Promise.all([
     mode === 'db' ? countDatasetFromDb() : checkDatasetFull(),
     pingDatabase(),
+    pingVariantStore(),
   ]);
-  const ok = dataset.ok && database.ok;
+  const ok = dataset.ok && database.ok && variantStore.ok;
 
   return {
     ok,
@@ -178,7 +203,7 @@ export async function runReadinessCheck(): Promise<ReadinessPayload> {
     dataMode: mode,
     timestamp: new Date().toISOString(),
     buildSha: process.env.VERCEL_GIT_COMMIT_SHA?.trim() ?? null,
-    checks: { dataset, database },
+    checks: { dataset, database, variantStore },
   };
 }
 

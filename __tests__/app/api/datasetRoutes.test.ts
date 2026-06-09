@@ -3,6 +3,7 @@ import { minimalVerifiedDataset } from '../../helpers/fixtures';
 
 vi.mock('@/lib/data/datasetProvider', () => ({
   getVerifiedDataset: vi.fn(),
+  getVerifiedDatasetPage: vi.fn(),
 }));
 
 describe('dataset verified API', () => {
@@ -14,7 +15,7 @@ describe('dataset verified API', () => {
 
   it('GET returns verified dataset JSON (success)', async () => {
     const { GET } = await import('@/app/api/dataset/verified/route');
-    const response = await GET();
+    const response = await GET(new Request('http://localhost/api/dataset/verified'));
     const body = await response.json();
 
     expect(response.status).toBe(200);
@@ -22,12 +23,39 @@ describe('dataset verified API', () => {
     expect(body.acquisitions[0].id).toBe('deal2');
   });
 
+  it('GET returns paginated slice when limit is provided (success)', async () => {
+    const { getVerifiedDatasetPage } = await import('@/lib/data/datasetProvider');
+    vi.mocked(getVerifiedDatasetPage).mockResolvedValue({
+      provenance: minimalVerifiedDataset.provenance,
+      companies: minimalVerifiedDataset.companies.slice(0, 1),
+      acquirers: [],
+      acquisitions: [],
+      meta: {
+        resource: 'companies',
+        limit: 1,
+        offset: 0,
+        genomics: true,
+        total: { companies: 2, acquisitions: 1, acquirers: 1 },
+      },
+    });
+
+    const { GET } = await import('@/app/api/dataset/verified/route');
+    const response = await GET(
+      new Request('http://localhost/api/dataset/verified?resource=companies&limit=1&genomics=true'),
+    );
+    const body = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(body.companies).toHaveLength(1);
+    expect(body.meta.genomics).toBe(true);
+  });
+
   it('GET propagates provider errors (error)', async () => {
     const { getVerifiedDataset } = await import('@/lib/data/datasetProvider');
     vi.mocked(getVerifiedDataset).mockRejectedValue(new Error('db down'));
 
     const { GET } = await import('@/app/api/dataset/verified/route');
-    await expect(GET()).rejects.toThrow('db down');
+    await expect(GET(new Request('http://localhost/api/dataset/verified'))).rejects.toThrow('db down');
   });
 });
 

@@ -76,6 +76,9 @@ export const BusinessModelClassifier = dynamic(
   { loading: sectionFallback(),
   },
 );
+export const VariantCallsetBrowser = dynamic(() => import('@/components/VariantCallsetBrowser'), {
+  loading: sectionFallback('h-96 animate-pulse rounded-xl bg-lacuna-pink/10'),
+});
 export const AcquirerPredictionDashboard = dynamic(
   () => import('@/components/AcquirerPredictionDashboard'),
   { loading: sectionFallback('h-96 animate-pulse rounded-xl bg-lacuna-pink/10') },

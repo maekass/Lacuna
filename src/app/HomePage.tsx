@@ -23,6 +23,7 @@ import {
   TemporalValidation,
   ValidationTracker,
   ValuationMatrix,
+  VariantCallsetBrowser,
   WearablesTracker,
 } from '@/app/lazyDashboard';
 import DataCoverageCard from '@/components/DataCoverageCard';
@@ -246,6 +247,17 @@ export default function HomePage() {
             </p>
           </div>
           <EvidenceMaturityDashboard />
+        </motion.section>
+
+        {/* Variant call-set browser (ClickHouse + object storage) */}
+        <motion.section
+          id="variant-callsets"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.48 }}
+          className="mb-16 scroll-mt-20"
+        >
+          <VariantCallsetBrowser />
         </motion.section>
 
         {/* Wearables Ecosystem Section */}

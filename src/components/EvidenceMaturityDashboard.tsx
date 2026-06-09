@@ -13,6 +13,7 @@ import {
   type CompanyEvidence,
   type CorrelationResult,
 } from '@/lib/evidence/valuationCorrelation';
+import { isGenomicsRelevantCompany } from '@/lib/data/genomicsFilters';
 
 /* ─── types ─── */
 interface CompanyRow {
@@ -155,7 +156,11 @@ export default function EvidenceMaturityDashboard() {
   /* ─── live enrichment ─── */
   async function enrichFromAPIs() {
     const MAX_ENRICH_COMPANIES = 20;
-    const companies = [...new Set(verifiedCompanies.map((c) => c.name))].slice(0, MAX_ENRICH_COMPANIES);
+    const prioritized = [
+      ...verifiedCompanies.filter(isGenomicsRelevantCompany),
+      ...verifiedCompanies.filter((c) => !isGenomicsRelevantCompany(c)),
+    ];
+    const companies = [...new Set(prioritized.map((c) => c.name))].slice(0, MAX_ENRICH_COMPANIES);
     dispatch({ type: 'START', total: companies.length * 2 });
 
     for (const name of companies) {

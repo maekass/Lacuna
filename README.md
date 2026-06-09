@@ -41,6 +41,7 @@ SEO Meta Description: Lacuna — educational women's health M&A demo. Curated ve
 - [Descriptive analytics](#descriptive-analytics-not-predictive-ml)
 - [Health Equity context](#health-equity--black-womens-health)
 - [Clinical Trials](#clinical-trials-integration)
+- [Genomics variant store](#genomics-variant-store-optional)
 - [Academic frameworks](#academic-frameworks)
 - [Technology Stack](#technology-stack)
 - [Quick Start](#quick-start)
@@ -169,6 +170,31 @@ Do not conflate live trial search volume with verified deal coverage.
 
 ---
 
+## Genomics variant store (optional)
+
+Large VCF/gVCF call sets use a **two-tier** layout (off by default on Vercel):
+
+| Tier | Technology | Contents |
+|------|------------|----------|
+| Object storage | Local `data/variants/` or S3 | Multi-GB raw VCF blobs |
+| Variant catalog | ClickHouse | Callset metadata + queryable variant summaries |
+
+- **Dashboard:** `VariantCallsetBrowser` — browse callsets, filter by gene, presigned S3 download when configured
+- **APIs:** `/api/genomics/callsets`, `/api/genomics/variants`, `/api/genomics/callsets/{id}/object`
+- **Ingest:** `npm run clickhouse:ingest-vcf` — stream parser → object storage → batch INSERT
+- **Docs:** [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md)
+
+```bash
+docker compose up -d clickhouse
+# .env.local: LACUNA_VARIANT_STORE=clickhouse, CLICKHOUSE_URL=http://lacuna:lacuna@localhost:8123
+npm run clickhouse:migrate && npm run clickhouse:seed
+npm run dev
+```
+
+Not clinical-grade genomics infrastructure — infrastructure demo with honest provenance labels.
+
+---
+
 ## Academic Frameworks
 
 Six frameworks with **explicit small-*n* limits** documented in `docs/` (causal DAG, fairness audit, network concentration, etc.). We state what cannot be claimed with n≈58 deals — see methodology files linked from the app.
@@ -183,7 +209,8 @@ Six frameworks with **explicit small-*n* limits** documented in `docs/` (causal 
 | D3.js v7, Framer Motion | Visualization |
 | simple-statistics | Descriptive stats / similarity |
 | Verified JSON (`getVerifiedDataset()`) | Default data path |
-| PostgreSQL | Optional `LACUNA_DATA_MODE=db` ingest only |
+| PostgreSQL | Optional `LACUNA_DATA_MODE=db` |
+| ClickHouse + S3/local object storage | Optional variant call-set catalog (`LACUNA_VARIANT_STORE=clickhouse`) |
 | Vercel AI Gateway + AI SDK | Optional narratives + SEC classification ([INFERENCE.md](docs/INFERENCE.md)) |
 | TensorFlow.js | Quarantined — devDependency for Vitest only |
 
@@ -205,6 +232,8 @@ Open `http://localhost:3000`. Data loads from `src/data/dataset.verified.json` u
 
 **Optional local Postgres:** `docker compose up -d` → copy [`.env.example`](.env.example) to `.env.local` → `npm run db:migrate && npm run db:import`. See [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md).
 
+**Optional variant store:** `docker compose up -d clickhouse` → set `LACUNA_VARIANT_STORE=clickhouse` → `npm run clickhouse:migrate && npm run clickhouse:seed`. See [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md).
+
 ---
 
 ## Data Curation
@@ -224,6 +253,7 @@ Manual verification — no synthetic `maDeals`. Workflow: [DATA_CURATION_CHECKLI
 | [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md) | Health impact scoring limits |
 | [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md) | CI, Vercel, Postgres, cron, `/api/health` |
 | [PERFORMANCE.md](docs/PERFORMANCE.md) | Bundle, caching, probe split, fan-out limits |
+| [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md) | ClickHouse + object storage for large VCF catalogs |
 | [MONITORING.md](docs/MONITORING.md) | Uptime URL: `/api/health` only (not `/ready`) |
 | [PRODUCTION_SETUP.md](docs/PRODUCTION_SETUP.md) | Vercel env vars and migrations |
 | [SEC_INGESTION.md](docs/SEC_INGESTION.md) | SEC EDGAR cron pipeline |
