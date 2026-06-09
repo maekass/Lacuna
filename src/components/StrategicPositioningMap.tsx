@@ -10,12 +10,11 @@
 
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import type {
-  StrategicPosition,
-  StrategicPositioningResult,
-} from "@/lib/network/networkStatistics";
+import type { StrategicPositioningResult } from "@/lib/network/networkStatistics";
+import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
 
 interface StrategicPositioningMapProps {
   result: StrategicPositioningResult;
@@ -35,32 +34,143 @@ const QUADRANT_LABELS = {
   generalist_low_velocity: "Diversified Observer",
 };
 
+const pillarMap: Record<string, string> = {
+  Fertility: "Transformative Innovation",
+  "Mental Health": "Access",
+  "General Wellness": "Affordability",
+  "Pelvic Health": "Systemic Change",
+  Wearables: "Transformative Innovation",
+};
+
+const pillarColors: Record<string, string> = {
+  "Transformative Innovation": "#7C3AED",
+  Access: "#059669",
+  Affordability: "#D97706",
+  "Systemic Change": "#DC2626",
+};
+
+const sectorAxisPositions: Record<string, number> = {
+  Fertility: 0.14,
+  "Pelvic Health": 0.34,
+  "Mental Health": 0.54,
+  "General Wellness": 0.74,
+  Wearables: 0.9,
+};
+
+const stageAxisPositions = [
+  { label: "Public", value: 0.95 },
+  { label: "Pre-IPO", value: 0.86 },
+  { label: "Late Stage", value: 0.76 },
+  { label: "Series C+", value: 0.62 },
+  { label: "Series B", value: 0.48 },
+  { label: "Series A", value: 0.34 },
+  { label: "Seed", value: 0.18 },
+] as const;
+
+const sectorNodeColors: Record<string, string> = {
+  Fertility: "#B8A9C9",
+  "Mental Health": "#4A5D8A",
+  "General Wellness": "#E8B4B8",
+  "Pelvic Health": "#5D4E6D",
+  Wearables: "#94A3B8",
+};
+
+interface CompanyPosition extends VerifiedCompanyView {
+  xPosition: number;
+  yPosition: number;
+  pillar?: string;
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function hashString(value: string) {
+  let hash = 0;
+  for (let i = 0; i < value.length; i++) {
+    hash = (hash * 31 + value.charCodeAt(i)) >>> 0;
+  }
+  return hash;
+}
+
+function getStagePosition(stage: string) {
+  if (/public/i.test(stage)) return 0.95;
+  if (/pre-ipo/i.test(stage)) return 0.86;
+  if (/series d|series e|series f|late stage/i.test(stage)) return 0.76;
+  if (/series c/i.test(stage)) return 0.62;
+  if (/series b/i.test(stage)) return 0.48;
+  if (/series a/i.test(stage)) return 0.34;
+  if (/seed|pre-seed/i.test(stage)) return 0.18;
+  return 0.52;
+}
+
 export default function StrategicPositioningMap(
   { result }: StrategicPositioningMapProps,
 ) {
-  const [hoveredAcquirer, setHoveredAcquirer] = useState<
-    StrategicPosition | null
-  >(null);
-  const [selectedAcquirer, setSelectedAcquirer] = useState<
-    StrategicPosition | null
-  >(null);
+  const { verifiedCompanies } = useVerifiedDataset();
+  const [hoveredCompany, setHoveredCompany] = useState<CompanyPosition | null>(
+    null,
+  );
+  const [selectedCompany, setSelectedCompany] = useState<CompanyPosition | null>(
+    null,
+  );
+  const [showForegroundPillars, setShowForegroundPillars] = useState(false);
 
   // SVG dimensions
-  const width = 600;
-  const height = 500;
+  const width = 680;
+  const height = 520;
   const margin = { top: 40, right: 40, bottom: 60, left: 60 };
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
 
-  // Scales (X: 0-1 breadth, Y: 0-2 velocity)
-  const maxVelocity = Math.max(...result.positions.map((p) => p.velocity), 1.5);
+  const companyPositions = useMemo(
+    () =>
+      verifiedCompanies.map((company, index) => {
+        const hash = hashString(`${company.id}-${company.name}-${index}`);
+        const xJitter = (((hash % 11) - 5) / 100);
+        const yJitter = ((((Math.floor(hash / 11)) % 9) - 4) / 120);
+        return {
+          ...company,
+          xPosition: clamp(
+            (sectorAxisPositions[company.sector] ?? 0.5) + xJitter,
+            0.08,
+            0.94,
+          ),
+          yPosition: clamp(getStagePosition(company.stage) + yJitter, 0.12, 0.96),
+          pillar: pillarMap[company.sector],
+        };
+      }),
+    [verifiedCompanies],
+  );
+
+  const pillarPatterns = useMemo(() => {
+    const counts = new Map<string, number>();
+    companyPositions.forEach((company) => {
+      if (!company.pillar) return;
+      counts.set(company.pillar, (counts.get(company.pillar) ?? 0) + 1);
+    });
+    const ranked = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+    if (ranked.length === 0) {
+      return ["No companies map to a Foreground pillar in the current dataset."];
+    }
+    return ranked.map(([pillar, count]) => `${count} companies align with ${pillar}.`);
+  }, [companyPositions]);
+
+  const pillarCoverageSummary = useMemo(() => {
+    const covered = companyPositions.filter((company) => company.pillar).length;
+    return `${covered} of ${companyPositions.length} companies map to a Foreground Capital pillar.`;
+  }, [companyPositions]);
+
+  // Scales (X: sector grouping, Y: stage maturity)
   const xScale = (x: number) => margin.left + (x * innerWidth);
   const yScale = (y: number) =>
-    margin.top + innerHeight - (y / maxVelocity * innerHeight);
+    margin.top + innerHeight - (y * innerHeight);
 
-  // Dot size based on deal count
-  const maxDeals = Math.max(...result.positions.map((p) => p.dealCount), 1);
-  const dotSize = (deals: number) => 8 + (deals / maxDeals) * 16;
+  // Dot size based on valuation when available
+  const dotSize = (company: CompanyPosition) => {
+    const valuation = company.lastKnownValuation ?? 0;
+    return 9 + Math.min(Math.sqrt(Math.max(valuation, 0)) / 3, 10);
+  };
 
   return (
     <motion.div
@@ -77,102 +187,97 @@ export default function StrategicPositioningMap(
 
       {/* 2D Map */}
       <div className="bg-white border border-gray-200 rounded-lg p-6">
-        <h4
-          className="font-medium mb-4"
-          style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
-        >
-          Acquirer Strategic Positioning Map
-        </h4>
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h4
+            className="font-medium"
+            style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+          >
+            Company Strategic Positioning Map
+          </h4>
+          <button
+            type="button"
+            onClick={() => setShowForegroundPillars((value) => !value)}
+            className={`rounded-xl border px-4 py-2 text-sm font-medium transition-colors ${showForegroundPillars ? "border-lacuna-lavender/40 bg-lacuna-pink/10 text-lacuna-plum" : "border-gray-200 bg-white text-gray-600 hover:text-lacuna-plum"}`}
+          >
+            Foreground Pillars
+          </button>
+        </div>
 
         <div className="relative">
+          {showForegroundPillars && (
+            <div className="absolute right-3 top-3 z-10 rounded-lg border border-lacuna-lavender/40 bg-white/95 p-3 shadow-lg">
+              <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-lacuna-plum">
+                Foreground Pillars
+              </div>
+              <div className="space-y-2 text-xs">
+                {Object.entries(pillarColors).map(([pillar, color]) => (
+                  <div key={pillar} className="flex items-center gap-2 text-gray-700">
+                    <span
+                      className="inline-block h-3 w-3 rounded-full"
+                      style={{ backgroundColor: color }}
+                    />
+                    <span>{pillar}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
           <svg
             width={width}
             height={height}
             className="overflow-visible max-w-full"
           >
-            {/* Background quadrants */}
             <rect
               x={margin.left}
               y={margin.top}
-              width={innerWidth / 2}
-              height={innerHeight / 2}
-              fill="#E8B4B8"
-              opacity={0.08}
-            />
-            <rect
-              x={margin.left + innerWidth / 2}
-              y={margin.top}
-              width={innerWidth / 2}
-              height={innerHeight / 2}
-              fill="#4A5D8A"
-              opacity={0.08}
-            />
-            <rect
-              x={margin.left}
-              y={margin.top + innerHeight / 2}
-              width={innerWidth / 2}
-              height={innerHeight / 2}
-              fill="#B8A9C9"
-              opacity={0.08}
-            />
-            <rect
-              x={margin.left + innerWidth / 2}
-              y={margin.top + innerHeight / 2}
-              width={innerWidth / 2}
-              height={innerHeight / 2}
-              fill="#5D4E6D"
-              opacity={0.08}
+              width={innerWidth}
+              height={innerHeight}
+              fill="#FAFAFB"
             />
 
-            {/* Quadrant Labels */}
-            <text
-              x={margin.left + innerWidth / 4}
-              y={margin.top + 20}
-              textAnchor="middle"
-              className="text-xs fill-gray-600"
-              style={{
-                fontFamily: "'Arial Narrow', sans-serif",
-                letterSpacing: "0.05em",
-              }}
-            >
-              FOCUSED AGGRESSIVE
-            </text>
-            <text
-              x={margin.left + 3 * innerWidth / 4}
-              y={margin.top + 20}
-              textAnchor="middle"
-              className="text-xs fill-gray-600"
-              style={{
-                fontFamily: "'Arial Narrow', sans-serif",
-                letterSpacing: "0.05em",
-              }}
-            >
-              AGGRESSIVE DIVERSIFIER
-            </text>
-            <text
-              x={margin.left + innerWidth / 4}
-              y={margin.top + innerHeight - 5}
-              textAnchor="middle"
-              className="text-xs fill-gray-600"
-              style={{
-                fontFamily: "'Arial Narrow', sans-serif",
-                letterSpacing: "0.05em",
-              }}
-            >
-              SELECTIVE SPECIALIST
-            </text>
-            <text
-              x={margin.left + 3 * innerWidth / 4}
-              y={margin.top + innerHeight - 5}
-              textAnchor="middle"
-              className="text-xs fill-gray-600"
-              style={{
-                fontFamily: "'Arial Narrow', sans-serif",
-                letterSpacing: "0.05em",
-              }}
-            >
-              DIVERSIFIED OBSERVER
-            </text>
+            {Object.entries(sectorAxisPositions).map(([sector, value]) => (
+              <g key={sector}>
+                <line
+                  x1={xScale(value)}
+                  y1={margin.top}
+                  x2={xScale(value)}
+                  y2={margin.top + innerHeight}
+                  stroke="#E2E8F0"
+                  strokeWidth="1"
+                  strokeDasharray="4 4"
+                />
+                <text
+                  x={xScale(value)}
+                  y={margin.top - 10}
+                  textAnchor="middle"
+                  className="text-xs fill-gray-500"
+                >
+                  {sector}
+                </text>
+              </g>
+            ))}
+
+            {stageAxisPositions.map((stageTick) => (
+              <g key={stageTick.label}>
+                <line
+                  x1={margin.left}
+                  y1={yScale(stageTick.value)}
+                  x2={margin.left + innerWidth}
+                  y2={yScale(stageTick.value)}
+                  stroke="#E2E8F0"
+                  strokeWidth="1"
+                  strokeDasharray="4 4"
+                />
+                <text
+                  x={margin.left - 10}
+                  y={yScale(stageTick.value) + 4}
+                  textAnchor="end"
+                  className="text-xs fill-gray-500"
+                >
+                  {stageTick.label}
+                </text>
+              </g>
+            ))}
 
             {/* Axes */}
             <line
@@ -192,26 +297,6 @@ export default function StrategicPositioningMap(
               strokeWidth="1.5"
             />
 
-            {/* Midlines (quadrant dividers) */}
-            <line
-              x1={margin.left + innerWidth / 2}
-              y1={margin.top}
-              x2={margin.left + innerWidth / 2}
-              y2={margin.top + innerHeight}
-              stroke="#cbd5e1"
-              strokeWidth="1"
-              strokeDasharray="4 4"
-            />
-            <line
-              x1={margin.left}
-              y1={margin.top + innerHeight / 2}
-              x2={margin.left + innerWidth}
-              y2={margin.top + innerHeight / 2}
-              stroke="#cbd5e1"
-              strokeWidth="1"
-              strokeDasharray="4 4"
-            />
-
             {/* X-axis label */}
             <text
               x={margin.left + innerWidth / 2}
@@ -223,7 +308,7 @@ export default function StrategicPositioningMap(
                 letterSpacing: "0.08em",
               }}
             >
-              SECTOR BREADTH (SPECIALIST → GENERALIST)
+              SECTOR CLUSTERING
             </text>
 
             {/* Y-axis label */}
@@ -238,11 +323,11 @@ export default function StrategicPositioningMap(
                 letterSpacing: "0.08em",
               }}
             >
-              DEAL VELOCITY (SLOW → FAST)
+              COMPANY STAGE (EARLY → LATE)
             </text>
 
             {/* Axis ticks */}
-            {[0, 0.25, 0.5, 0.75, 1].map((t) => (
+            {Object.values(sectorAxisPositions).map((t) => (
               <g key={`x-${t}`}>
                 <line
                   x1={xScale(t)}
@@ -262,7 +347,7 @@ export default function StrategicPositioningMap(
                 </text>
               </g>
             ))}
-            {[0, 0.5, 1, 1.5].filter((t) => t <= maxVelocity).map((t) => (
+            {[0.18, 0.34, 0.48, 0.62, 0.76, 0.86, 0.95].map((t) => (
               <g key={`y-${t}`}>
                 <line
                   x1={margin.left - 5}
@@ -278,93 +363,113 @@ export default function StrategicPositioningMap(
                   textAnchor="end"
                   className="text-xs fill-gray-500"
                 >
-                  {t.toFixed(1)}/yr
+                  {t.toFixed(2)}
                 </text>
               </g>
             ))}
 
             {/* Data points */}
-            {result.positions.map((p) => (
+            {companyPositions.map((company) => {
+              const radius = dotSize(company);
+              const chipColor = company.pillar ? pillarColors[company.pillar] : undefined;
+              const chipWidth = company.pillar ? company.pillar.length * 6.4 + 16 : 0;
+              return (
               <g
-                key={p.acquirerId}
-                onMouseEnter={() => setHoveredAcquirer(p)}
-                onMouseLeave={() => setHoveredAcquirer(null)}
+                key={company.id}
+                onMouseEnter={() => setHoveredCompany(company)}
+                onMouseLeave={() => setHoveredCompany(null)}
                 onClick={() =>
-                  setSelectedAcquirer(p === selectedAcquirer ? null : p)}
+                  setSelectedCompany(company === selectedCompany ? null : company)}
                 className="cursor-pointer"
               >
                 <circle
-                  cx={xScale(p.sectorBreadth)}
-                  cy={yScale(p.velocity)}
-                  r={dotSize(p.dealCount)}
-                  fill={QUADRANT_COLORS[p.classification]}
-                  stroke={selectedAcquirer?.acquirerId === p.acquirerId
+                  cx={xScale(company.xPosition)}
+                  cy={yScale(company.yPosition)}
+                  r={radius}
+                  fill={sectorNodeColors[company.sector] ?? "#94A3B8"}
+                  stroke={selectedCompany?.id === company.id
                     ? "#000"
                     : "#fff"}
-                  strokeWidth={selectedAcquirer?.acquirerId === p.acquirerId
+                  strokeWidth={selectedCompany?.id === company.id
                     ? 3
                     : 2}
-                  opacity={hoveredAcquirer &&
-                      hoveredAcquirer.acquirerId !== p.acquirerId
+                  opacity={hoveredCompany && hoveredCompany.id !== company.id
                     ? 0.4
                     : 1}
                   className="transition-all"
                 />
                 <text
-                  x={xScale(p.sectorBreadth)}
-                  y={yScale(p.velocity) - dotSize(p.dealCount) - 5}
+                  x={xScale(company.xPosition)}
+                  y={yScale(company.yPosition) - radius - 8}
                   textAnchor="middle"
                   className="text-xs fill-gray-700 font-medium pointer-events-none"
                 >
-                  {p.acquirerName}
+                  {company.name}
                 </text>
+                {showForegroundPillars && company.pillar && chipColor && (
+                  <g>
+                    <rect
+                      x={xScale(company.xPosition) - chipWidth / 2}
+                      y={yScale(company.yPosition) - radius + 2}
+                      width={chipWidth}
+                      height={16}
+                      rx={8}
+                      fill={chipColor}
+                    />
+                    <text
+                      x={xScale(company.xPosition)}
+                      y={yScale(company.yPosition) - radius + 13}
+                      textAnchor="middle"
+                      className="pointer-events-none text-[10px] fill-white font-medium"
+                    >
+                      {company.pillar}
+                    </text>
+                  </g>
+                )}
               </g>
-            ))}
+              );
+            })}
           </svg>
 
           {/* Tooltip on hover */}
-          {hoveredAcquirer && (
-            <div className="absolute top-2 right-2 bg-white border border-gray-200 rounded-lg p-3 shadow-lg max-w-xs">
+          {hoveredCompany && (
+            <div className="absolute left-2 top-2 bg-white border border-gray-200 rounded-lg p-3 shadow-lg max-w-xs">
               <div
                 className="font-medium text-sm"
                 style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
               >
-                {hoveredAcquirer.acquirerName}
+                {hoveredCompany.name}
               </div>
               <div className="text-xs text-gray-600 mt-1">
-                {QUADRANT_LABELS[hoveredAcquirer.classification]}
+                {hoveredCompany.sector}
               </div>
               <div className="text-xs text-gray-500 mt-2 space-y-0.5">
-                <div>Deals: {hoveredAcquirer.dealCount}</div>
-                <div>Sectors: {hoveredAcquirer.uniqueSectors}</div>
-                <div>Velocity: {hoveredAcquirer.velocity.toFixed(2)}/year</div>
-                <div>
-                  Breadth: {(hoveredAcquirer.sectorBreadth * 100).toFixed(0)}%
-                </div>
+                <div>Stage: {hoveredCompany.stage}</div>
+                <div>Pillar: {hoveredCompany.pillar ?? "Not mapped"}</div>
+                {typeof hoveredCompany.lastKnownValuation === "number" && (
+                  <div>Valuation: ${hoveredCompany.lastKnownValuation}M</div>
+                )}
               </div>
             </div>
           )}
         </div>
 
         {/* Legend */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-4 text-xs">
-          {Object.entries(QUADRANT_LABELS).map(([key, label]) => (
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mt-4 text-xs">
+          {Object.entries(sectorNodeColors).map(([key, color]) => (
             <div key={key} className="flex items-center gap-2">
               <div
                 className="w-3 h-3 rounded-full"
-                style={{
-                  backgroundColor:
-                    QUADRANT_COLORS[key as keyof typeof QUADRANT_COLORS],
-                }}
+                style={{ backgroundColor: color }}
               />
-              <span className="text-gray-600">{label}</span>
+              <span className="text-gray-600">{key}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Selected Acquirer Detail */}
-      {selectedAcquirer && (
+      {selectedCompany && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -376,22 +481,23 @@ export default function StrategicPositioningMap(
                 className="font-medium text-lg"
                 style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
               >
-                {selectedAcquirer.acquirerName}
+                {selectedCompany.name}
               </h5>
               <p className="text-sm text-gray-600">
-                {selectedAcquirer.qualitativeDescription}
+                {selectedCompany.description}
               </p>
             </div>
-            <span
-              className="text-xs px-2 py-1 rounded uppercase"
-              style={{
-                backgroundColor:
-                  QUADRANT_COLORS[selectedAcquirer.classification] + "20",
-                color: QUADRANT_COLORS[selectedAcquirer.classification],
-              }}
-            >
-              {QUADRANT_LABELS[selectedAcquirer.classification]}
-            </span>
+            {selectedCompany.pillar && (
+              <span
+                className="text-xs px-2 py-1 rounded uppercase"
+                style={{
+                  backgroundColor: `${pillarColors[selectedCompany.pillar]}20`,
+                  color: pillarColors[selectedCompany.pillar],
+                }}
+              >
+                {selectedCompany.pillar}
+              </span>
+            )}
           </div>
 
           <div className="grid grid-cols-4 gap-3 mb-4">
@@ -400,13 +506,13 @@ export default function StrategicPositioningMap(
                 className="text-2xl font-light"
                 style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
               >
-                {selectedAcquirer.dealCount}
+                {selectedCompany.founded}
               </div>
               <div
                 className="text-xs text-gray-500 uppercase mt-1"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
-                Total Deals
+                Founded
               </div>
             </div>
             <div className="bg-gray-50 p-3 rounded-lg text-center">
@@ -414,13 +520,13 @@ export default function StrategicPositioningMap(
                 className="text-2xl font-light"
                 style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
               >
-                {selectedAcquirer.uniqueSectors}
+                {selectedCompany.sector}
               </div>
               <div
                 className="text-xs text-gray-500 uppercase mt-1"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
-                Unique Sectors
+                Sector
               </div>
             </div>
             <div className="bg-gray-50 p-3 rounded-lg text-center">
@@ -428,13 +534,13 @@ export default function StrategicPositioningMap(
                 className="text-2xl font-light"
                 style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
               >
-                {selectedAcquirer.velocity.toFixed(2)}
+                {selectedCompany.stage}
               </div>
               <div
                 className="text-xs text-gray-500 uppercase mt-1"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
-                Deals/Year
+                Stage
               </div>
             </div>
             <div className="bg-gray-50 p-3 rounded-lg text-center">
@@ -442,13 +548,15 @@ export default function StrategicPositioningMap(
                 className="text-2xl font-light"
                 style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
               >
-                {(selectedAcquirer.sectorBreadth * 100).toFixed(0)}%
+                {typeof selectedCompany.lastKnownValuation === "number"
+                  ? `$${selectedCompany.lastKnownValuation}M`
+                  : "N/A"}
               </div>
               <div
                 className="text-xs text-gray-500 uppercase mt-1"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
-                Breadth Score
+                Valuation
               </div>
             </div>
           </div>
@@ -458,17 +566,23 @@ export default function StrategicPositioningMap(
               className="text-xs text-gray-500 uppercase mb-1"
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
-              Targets ({selectedAcquirer.targets.length})
+              Foreground Fit
             </div>
             <div className="flex flex-wrap gap-1">
-              {selectedAcquirer.targets.map((target, i) => (
-                <span
-                  key={i}
-                  className="text-xs px-2 py-1 bg-gray-100 rounded text-gray-700"
-                >
-                  {target}
-                </span>
-              ))}
+              {selectedCompany.pillar
+                ? (
+                  <span
+                    className="text-xs px-2 py-1 rounded text-white"
+                    style={{ backgroundColor: pillarColors[selectedCompany.pillar] }}
+                  >
+                    {selectedCompany.pillar}
+                  </span>
+                )
+                : (
+                  <span className="text-xs px-2 py-1 bg-gray-100 rounded text-gray-700">
+                    No Foreground pillar mapping
+                  </span>
+                )}
             </div>
           </div>
         </motion.div>
@@ -482,10 +596,10 @@ export default function StrategicPositioningMap(
         >
           Qualitative Patterns Identified
         </h4>
-        {result.patterns.length > 0
+        {pillarPatterns.length > 0
           ? (
             <ul className="space-y-2 text-sm text-gray-700">
-              {result.patterns.map((pattern, i) => (
+              {pillarPatterns.map((pattern, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="text-[#5D4E6D] mt-0.5">→</span>
                   <span>{pattern}</span>
@@ -513,17 +627,13 @@ export default function StrategicPositioningMap(
           Strategic Positioning Summary
         </h4>
         <p className="text-sm leading-relaxed">
-          Mapped {result.positions.length}{" "}
-          acquirers across breadth × velocity dimensions.
-          {result.patterns.length > 0
-            ? " Identified " + result.patterns.length + " qualitative patterns."
-            : " Patterns are weak."}
+          Mapped {companyPositions.length}{" "}
+          companies across sector × stage dimensions. {pillarCoverageSummary}
           <strong>
             This is exploratory pattern recognition, not statistical hypothesis
             testing.
           </strong>
-          Findings should be confirmed with larger dataset and qualitative
-          validation (interviews with M&A teams).
+          Foreground pillar chips are a thematic overlay, not a modeled output.
         </p>
       </div>
     </motion.div>
