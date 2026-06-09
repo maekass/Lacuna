@@ -1,6 +1,6 @@
-import { getVerifiedDataset } from '@/lib/data/datasetProvider';
-import { VerifiedDatasetProvider } from '@/lib/data/VerifiedDatasetContext';
-import HomePage from './HomePage';
+import { getVerifiedDataset } from "@/lib/data/datasetProvider";
+import { VerifiedDatasetProvider } from "@/lib/data/VerifiedDatasetContext";
+import HomePage from "./HomePage";
 
 export const revalidate = 86_400;
 

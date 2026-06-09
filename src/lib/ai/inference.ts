@@ -3,17 +3,17 @@
  * @see docs/INFERENCE.md
  */
 
-import process from 'node:process';
-import { generateText, type LanguageModel } from 'ai';
-import { openai } from '@ai-sdk/openai';
+import process from "node:process";
+import { generateText, type LanguageModel } from "ai";
+import { openai } from "@ai-sdk/openai";
 
 /** Gateway slug for optional UI insight narratives. */
-export const INSIGHTS_GATEWAY_MODEL = 'anthropic/claude-sonnet-4' as const;
-export const INSIGHTS_OPENAI_MODEL = 'gpt-4o-mini' as const;
+export const INSIGHTS_GATEWAY_MODEL = "anthropic/claude-sonnet-4" as const;
+export const INSIGHTS_OPENAI_MODEL = "gpt-4o-mini" as const;
 
 /** Gateway slug for SEC 8-K women's-health classification. */
-export const CLASSIFICATION_GATEWAY_MODEL = 'openai/gpt-5.4-mini' as const;
-export const CLASSIFICATION_OPENAI_MODEL = 'gpt-4o-mini' as const;
+export const CLASSIFICATION_GATEWAY_MODEL = "openai/gpt-5.4-mini" as const;
+export const CLASSIFICATION_OPENAI_MODEL = "gpt-4o-mini" as const;
 
 export interface ResolvedInferenceModel {
   model: LanguageModel | string;
@@ -24,7 +24,8 @@ export interface ResolvedInferenceModel {
 /** True when Vercel AI Gateway auth (OIDC or API key) is configured. */
 export function hasAiGatewayAuth(): boolean {
   return Boolean(
-    process.env.AI_GATEWAY_API_KEY?.trim() || process.env.VERCEL_OIDC_TOKEN?.trim(),
+    process.env.AI_GATEWAY_API_KEY?.trim() ||
+      process.env.VERCEL_OIDC_TOKEN?.trim(),
   );
 }
 
@@ -39,7 +40,7 @@ export function resolveInferenceModel(options: {
   override?: LanguageModel;
 }): ResolvedInferenceModel | null {
   if (options.override) {
-    return { model: options.override, modelId: 'mock', viaGateway: false };
+    return { model: options.override, modelId: "mock", viaGateway: false };
   }
   if (hasAiGatewayAuth()) {
     return {
@@ -58,7 +59,9 @@ export function resolveInferenceModel(options: {
   return null;
 }
 
-export function gatewayProviderOptions(tags: string[]): Record<string, unknown> | undefined {
+export function gatewayProviderOptions(
+  tags: string[],
+): Record<string, unknown> | undefined {
   if (!hasAiGatewayAuth()) return undefined;
   return {
     gateway: { tags },

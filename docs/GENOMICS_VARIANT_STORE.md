@@ -2,13 +2,14 @@
 
 Lacuna separates **multi-GB raw files** from **queryable variant summaries**:
 
-| Layer | Technology | Holds |
-| --- | --- | --- |
-| Object storage | Local `data/variants/` or S3 | VCF/gVCF/BAM blobs |
-| Variant catalog | ClickHouse | Callset metadata + indexed variant rows |
-| M&A intelligence | Postgres / JSON | Verified deals (unchanged) |
+| Layer            | Technology                   | Holds                                   |
+| ---------------- | ---------------------------- | --------------------------------------- |
+| Object storage   | Local `data/variants/` or S3 | VCF/gVCF/BAM blobs                      |
+| Variant catalog  | ClickHouse                   | Callset metadata + indexed variant rows |
+| M&A intelligence | Postgres / JSON              | Verified deals (unchanged)              |
 
-The Vercel demo keeps `LACUNA_VARIANT_STORE=off`. Enable locally or on a backend with ClickHouse + object storage.
+The Vercel demo keeps `LACUNA_VARIANT_STORE=off`. Enable locally or on a backend
+with ClickHouse + object storage.
 
 ## Local setup
 
@@ -28,11 +29,11 @@ npm run dev
 
 ## API
 
-| Endpoint | Purpose |
-| --- | --- |
-| `GET /api/genomics/callsets` | Paginated callset catalog (`studyId`, `limit`, `offset`) |
-| `GET /api/genomics/variants` | Variant summaries — requires `callsetId` or `gene` |
-| `GET /api/genomics/callsets/{id}/object` | Resolve S3/local URI for the raw VCF (no streaming) |
+| Endpoint                                 | Purpose                                                  |
+| ---------------------------------------- | -------------------------------------------------------- |
+| `GET /api/genomics/callsets`             | Paginated callset catalog (`studyId`, `limit`, `offset`) |
+| `GET /api/genomics/variants`             | Variant summaries — requires `callsetId` or `gene`       |
+| `GET /api/genomics/callsets/{id}/object` | Resolve S3/local URI for the raw VCF (no streaming)      |
 
 Examples:
 
@@ -77,15 +78,20 @@ LACUNA_VARIANT_STORE=clickhouse CLICKHOUSE_URL=http://lacuna:lacuna@localhost:81
 
 ## Presigned S3 downloads
 
-When `LACUNA_OBJECT_STORAGE=s3` and AWS credentials are configured, `GET /api/genomics/callsets/{id}/object` returns a `presignedUrl` (1h TTL) for HTTPS download.
+When `LACUNA_OBJECT_STORAGE=s3` and AWS credentials are configured,
+`GET /api/genomics/callsets/{id}/object` returns a `presignedUrl` (1h TTL) for
+HTTPS download.
 
 ## Dashboard UI
 
-`VariantCallsetBrowser` on the home page lists callsets, filters variants by gene, and links to presigned VCF URLs when available.
+`VariantCallsetBrowser` on the home page lists callsets, filters variants by
+gene, and links to presigned VCF URLs when available.
 
 ## Seed data honesty
 
-`npm run clickhouse:seed` inserts **infrastructure demo** rows (`lacuna-infra-seed`) — not clinical truth and not part of `dataset.verified.json`.
+`npm run clickhouse:seed` inserts **infrastructure demo** rows
+(`lacuna-infra-seed`) — not clinical truth and not part of
+`dataset.verified.json`.
 
 ## Related
 

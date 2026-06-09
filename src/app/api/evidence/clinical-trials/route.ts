@@ -3,11 +3,11 @@
  * for the evidence maturity scoring system.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { clampInt } from '@/lib/api/pageParams';
-import { guardedUpstreamFetch } from '@/lib/api/guardedFetch';
+import { NextRequest, NextResponse } from "next/server";
+import { clampInt } from "@/lib/api/pageParams";
+import { guardedUpstreamFetch } from "@/lib/api/guardedFetch";
 
-const CTG_API = 'https://clinicaltrials.gov/api/v2';
+const CTG_API = "https://clinicaltrials.gov/api/v2";
 
 interface CTGStudy {
   protocolSection?: {
@@ -52,23 +52,29 @@ export interface CompanyTrialSummary {
 }
 
 export async function GET(request: NextRequest) {
-  const company = request.nextUrl.searchParams.get('company');
+  const company = request.nextUrl.searchParams.get("company");
   if (!company) {
-    return NextResponse.json({ error: 'company parameter required' }, { status: 400 });
+    return NextResponse.json({ error: "company parameter required" }, {
+      status: 400,
+    });
   }
 
   try {
-    const pageSize = clampInt(request.nextUrl.searchParams.get('limit'), 50, 100);
+    const pageSize = clampInt(
+      request.nextUrl.searchParams.get("limit"),
+      50,
+      100,
+    );
     const params = new URLSearchParams({
-      'query.spons': company,
+      "query.spons": company,
       pageSize: String(pageSize),
-      sort: 'LastUpdatePostDate:desc',
+      sort: "LastUpdatePostDate:desc",
     });
 
     const res = await guardedUpstreamFetch(
       `${CTG_API}/studies?${params}`,
-      { headers: { Accept: 'application/json' } },
-      { request, rateLimitKey: 'evidence-ctg', limit: 40, windowMs: 60_000 },
+      { headers: { Accept: "application/json" } },
+      { request, rateLimitKey: "evidence-ctg", limit: 40, windowMs: 60_000 },
     );
     if (res instanceof NextResponse) return res;
 
@@ -86,8 +92,8 @@ export async function GET(request: NextRequest) {
       const proto = s.protocolSection || {};
       const design = proto.designModule || {};
       const statusMod = proto.statusModule || {};
-      const phase = design.phases?.[0] || 'Not Applicable';
-      const status = statusMod.overallStatus || 'Unknown';
+      const phase = design.phases?.[0] || "Not Applicable";
+      const status = statusMod.overallStatus || "Unknown";
       const enrollment = design.enrollmentInfo?.count || 0;
       const studyHasResults = s.hasResults ?? false;
 
@@ -97,8 +103,8 @@ export async function GET(request: NextRequest) {
       if (studyHasResults) hasPostedResults = true;
 
       return {
-        nctId: proto.identificationModule?.nctId || '',
-        title: proto.identificationModule?.briefTitle || '',
+        nctId: proto.identificationModule?.nctId || "",
+        title: proto.identificationModule?.briefTitle || "",
         phase,
         status,
         enrollment,
@@ -108,8 +114,8 @@ export async function GET(request: NextRequest) {
       };
     });
 
-    const phaseOrder = ['PHASE3', 'PHASE2', 'PHASE1', 'EARLY_PHASE1', 'NA'];
-    const highestPhase = phaseOrder.find((p) => phaseBreakdown[p]) || 'None';
+    const phaseOrder = ["PHASE3", "PHASE2", "PHASE1", "EARLY_PHASE1", "NA"];
+    const highestPhase = phaseOrder.find((p) => phaseBreakdown[p]) || "None";
 
     const summary: CompanyTrialSummary = {
       companyName: company,
@@ -124,9 +130,14 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(summary);
   } catch (err) {
-    console.error('Evidence CTG error:', err);
+    console.error("Evidence CTG error:", err);
     return NextResponse.json(
-      { companyName: company, totalTrials: 0, trials: [], error: 'CTG unavailable' },
+      {
+        companyName: company,
+        totalTrials: 0,
+        trials: [],
+        error: "CTG unavailable",
+      },
       { status: 502 },
     );
   }

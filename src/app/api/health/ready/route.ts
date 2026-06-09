@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { runReadinessCheck } from '@/lib/infra/healthCheck';
+import { NextResponse } from "next/server";
+import { runReadinessCheck } from "@/lib/infra/healthCheck";
 
 /**
  * Readiness — dataset counts + optional DB ping (heavier).
@@ -11,17 +11,19 @@ export async function GET() {
     return NextResponse.json(payload, {
       status: payload.ok ? 200 : 503,
       headers: {
-        'cache-control': 'no-store',
-        'x-lacuna-probe': 'ready',
+        "cache-control": "no-store",
+        "x-lacuna-probe": "ready",
       },
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'readiness check failed';
+    const message = error instanceof Error
+      ? error.message
+      : "readiness check failed";
     return NextResponse.json(
       {
         ok: false,
-        service: 'lacuna',
-        probe: 'ready',
+        service: "lacuna",
+        probe: "ready",
         error: message,
         timestamp: new Date().toISOString(),
       },

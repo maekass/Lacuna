@@ -1,8 +1,8 @@
-import { describe, expect, it } from 'vitest';
-import { mapWithConcurrency } from '@/lib/util/concurrency';
+import { describe, expect, it } from "vitest";
+import { mapWithConcurrency } from "@/lib/util/concurrency";
 
-describe('mapWithConcurrency', () => {
-  it('maps all items with concurrency cap (success)', async () => {
+describe("mapWithConcurrency", () => {
+  it("maps all items with concurrency cap (success)", async () => {
     const order: number[] = [];
     const results = await mapWithConcurrency([1, 2, 3, 4], 2, async (n) => {
       order.push(n);

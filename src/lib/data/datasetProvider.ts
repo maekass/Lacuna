@@ -1,15 +1,15 @@
-import process from 'node:process';
-import { getCachedStaticVerifiedDataset } from './cachedDataset';
-import type { DataMode, VerifiedDataset } from './datasetTypes';
+import process from "node:process";
+import { getCachedStaticVerifiedDataset } from "./cachedDataset";
+import type { DataMode, VerifiedDataset } from "./datasetTypes";
 import {
-  sliceVerifiedDataset,
   type DatasetResource,
   type DatasetSliceResult,
-} from './sliceVerifiedDataset';
+  sliceVerifiedDataset,
+} from "./sliceVerifiedDataset";
 
 function getMode(): DataMode {
   const raw = process.env.LACUNA_DATA_MODE;
-  return raw === 'db' ? 'db' : 'static';
+  return raw === "db" ? "db" : "static";
 }
 
 export function getDataMode(): DataMode {
@@ -17,8 +17,10 @@ export function getDataMode(): DataMode {
 }
 
 export async function getVerifiedDataset(): Promise<VerifiedDataset> {
-  if (getMode() === 'db') {
-    const { loadVerifiedDatasetFromDb } = await import('./loadVerifiedDatasetFromDb');
+  if (getMode() === "db") {
+    const { loadVerifiedDatasetFromDb } = await import(
+      "./loadVerifiedDatasetFromDb"
+    );
     return loadVerifiedDatasetFromDb();
   }
   return getCachedStaticVerifiedDataset();
@@ -39,7 +41,7 @@ export interface VerifiedDatasetPageRequest {
 export async function getVerifiedDatasetPage(
   request: VerifiedDatasetPageRequest,
 ): Promise<DatasetSliceResult> {
-  const resource = request.resource ?? 'all';
+  const resource = request.resource ?? "all";
   const queryOpts = {
     limit: request.limit,
     offset: request.offset,
@@ -47,7 +49,7 @@ export async function getVerifiedDatasetPage(
     genomics: request.genomics,
   };
 
-  if (getMode() === 'db') {
+  if (getMode() === "db") {
     const {
       loadProvenanceRow,
       loadCompaniesPage,
@@ -56,25 +58,40 @@ export async function getVerifiedDatasetPage(
       countCompaniesPage,
       countAcquisitionsPage,
       countAcquirers,
-    } = await import('./loadVerifiedDatasetFromDb');
-    const { mapRowsToVerifiedDataset } = await import('./mapVerifiedDataset');
+    } = await import("./loadVerifiedDatasetFromDb");
+    const { mapRowsToVerifiedDataset } = await import("./mapVerifiedDataset");
 
-    const includeCompanies = resource === 'all' || resource === 'companies';
-    const includeAcquisitions = resource === 'all' || resource === 'acquisitions';
-    const includeAcquirers = resource === 'all' || resource === 'acquirers';
+    const includeCompanies = resource === "all" || resource === "companies";
+    const includeAcquisitions = resource === "all" ||
+      resource === "acquisitions";
+    const includeAcquirers = resource === "all" || resource === "acquirers";
 
-    const [provenance, companyRows, acquisitionRows, acquirerRows, companyTotal, acquisitionTotal, acquirerTotal] =
-      await Promise.all([
-        loadProvenanceRow(),
-        includeCompanies ? loadCompaniesPage(queryOpts) : Promise.resolve([]),
-        includeAcquisitions ? loadAcquisitionsPage(queryOpts) : Promise.resolve([]),
-        includeAcquirers ? loadAcquirersPage(queryOpts) : Promise.resolve([]),
-        countCompaniesPage(queryOpts),
-        countAcquisitionsPage(queryOpts),
-        countAcquirers(),
-      ]);
+    const [
+      provenance,
+      companyRows,
+      acquisitionRows,
+      acquirerRows,
+      companyTotal,
+      acquisitionTotal,
+      acquirerTotal,
+    ] = await Promise.all([
+      loadProvenanceRow(),
+      includeCompanies ? loadCompaniesPage(queryOpts) : Promise.resolve([]),
+      includeAcquisitions
+        ? loadAcquisitionsPage(queryOpts)
+        : Promise.resolve([]),
+      includeAcquirers ? loadAcquirersPage(queryOpts) : Promise.resolve([]),
+      countCompaniesPage(queryOpts),
+      countAcquisitionsPage(queryOpts),
+      countAcquirers(),
+    ]);
 
-    const mapped = mapRowsToVerifiedDataset(provenance, companyRows, acquirerRows, acquisitionRows);
+    const mapped = mapRowsToVerifiedDataset(
+      provenance,
+      companyRows,
+      acquirerRows,
+      acquisitionRows,
+    );
 
     return {
       provenance: mapped.provenance,

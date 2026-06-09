@@ -1,7 +1,11 @@
-import { createReadStream } from 'node:fs';
-import { S3Client, GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { getObjectStorageBackend, getS3Bucket } from './variantStoreConfig';
+import { createReadStream } from "node:fs";
+import {
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { getObjectStorageBackend, getS3Bucket } from "./variantStoreConfig";
 
 export interface S3Location {
   bucket: string;
@@ -16,7 +20,7 @@ export function parseS3Uri(uri: string): S3Location | null {
 }
 
 function getS3Client(): S3Client {
-  const region = process.env.LACUNA_S3_REGION?.trim() || 'us-east-1';
+  const region = process.env.LACUNA_S3_REGION?.trim() || "us-east-1";
   return new S3Client({ region });
 }
 
@@ -28,7 +32,7 @@ export async function presignS3GetObject(
   uri: string,
   expiresInSec = 3600,
 ): Promise<string | null> {
-  if (getObjectStorageBackend() !== 's3') return null;
+  if (getObjectStorageBackend() !== "s3") return null;
 
   const location = parseS3Uri(uri);
   if (!location) return null;
@@ -43,10 +47,13 @@ export async function presignS3GetObject(
 }
 
 /** Stream-upload a local file to the configured S3 bucket. */
-export async function uploadFileToS3(localPath: string, key: string): Promise<string> {
+export async function uploadFileToS3(
+  localPath: string,
+  key: string,
+): Promise<string> {
   const bucket = getS3Bucket();
   if (!bucket) {
-    throw new Error('LACUNA_S3_BUCKET required for S3 upload');
+    throw new Error("LACUNA_S3_BUCKET required for S3 upload");
   }
 
   const client = getS3Client();

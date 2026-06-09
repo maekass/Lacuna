@@ -1,16 +1,16 @@
 /**
  * Network Statistics with Bootstrap Confidence Intervals
- * 
+ *
  * Implements honest network analysis for small samples (n=15-20):
  * - Bootstrap resampling for CIs (instead of point estimates)
  * - Gini coefficient and Herfindahl index (instead of power law fitting)
  * - Null model comparison (random graph expectations)
  * - Robust descriptives (median, IQR over mean, SD)
- * 
+ *
  * Why these over power laws?
  * Clauset et al. (2009) showed power law fitting requires n>100 minimum.
  * For n=15-20, alternative concentration metrics are far more defensible.
- * 
+ *
  * References:
  * - Efron, B. (1979). "Bootstrap methods: Another look at the jackknife"
  * - Clauset, A., Shalizi, C.R., Newman, M.E.J. (2009). "Power-law distributions in empirical data"
@@ -20,7 +20,7 @@
 export interface NetworkNode {
   id: string;
   label: string;
-  type: 'company' | 'acquirer' | 'investor';
+  type: "company" | "acquirer" | "investor";
   sector?: string;
   valuation?: number;
 }
@@ -29,7 +29,7 @@ export interface NetworkEdge {
   source: string;
   target: string;
   weight?: number;
-  type?: 'acquisition' | 'investment' | 'partnership';
+  type?: "acquisition" | "investment" | "partnership";
   year?: number;
 }
 
@@ -50,15 +50,22 @@ export function bootstrap<T>(
   data: T[],
   statistic: (sample: T[]) => number,
   numResamples: number = 1000,
-  confidenceLevel: number = 0.95
+  confidenceLevel: number = 0.95,
 ): BootstrapResult {
   if (data.length === 0) {
-    return { estimate: 0, lower: 0, upper: 0, median: 0, iqr: [0, 0], numSamples: 0 };
+    return {
+      estimate: 0,
+      lower: 0,
+      upper: 0,
+      median: 0,
+      iqr: [0, 0],
+      numSamples: 0,
+    };
   }
-  
+
   const estimate = statistic(data);
   const samples: number[] = [];
-  
+
   for (let i = 0; i < numResamples; i++) {
     // Sample with replacement
     const resample: T[] = [];
@@ -67,7 +74,7 @@ export function bootstrap<T>(
     }
     samples.push(statistic(resample));
   }
-  
+
   samples.sort((a, b) => a - b);
   const alpha = 1 - confidenceLevel;
   const lowerIdx = Math.floor(numResamples * (alpha / 2));
@@ -75,21 +82,24 @@ export function bootstrap<T>(
   const medianIdx = Math.floor(numResamples * 0.5);
   const q1Idx = Math.floor(numResamples * 0.25);
   const q3Idx = Math.floor(numResamples * 0.75);
-  
+
   return {
     estimate,
     lower: samples[lowerIdx],
     upper: samples[upperIdx],
     median: samples[medianIdx],
     iqr: [samples[q1Idx], samples[q3Idx]],
-    numSamples: numResamples
+    numSamples: numResamples,
   };
 }
 
 /**
  * Degree distribution with summary statistics
  */
-export function degreeDistribution(nodes: NetworkNode[], edges: NetworkEdge[]): {
+export function degreeDistribution(
+  nodes: NetworkNode[],
+  edges: NetworkEdge[],
+): {
   degrees: Map<string, number>;
   median: number;
   mean: number;
@@ -99,20 +109,28 @@ export function degreeDistribution(nodes: NetworkNode[], edges: NetworkEdge[]): 
   distribution: number[];
 } {
   const degrees = new Map<string, number>();
-  nodes.forEach(n => degrees.set(n.id, 0));
-  
-  edges.forEach(e => {
+  nodes.forEach((n) => degrees.set(n.id, 0));
+
+  edges.forEach((e) => {
     degrees.set(e.source, (degrees.get(e.source) || 0) + 1);
     degrees.set(e.target, (degrees.get(e.target) || 0) + 1);
   });
-  
+
   const values = Array.from(degrees.values()).sort((a, b) => a - b);
   const n = values.length;
-  
+
   if (n === 0) {
-    return { degrees, median: 0, mean: 0, iqr: [0, 0], max: 0, min: 0, distribution: [] };
+    return {
+      degrees,
+      median: 0,
+      mean: 0,
+      iqr: [0, 0],
+      max: 0,
+      min: 0,
+      distribution: [],
+    };
   }
-  
+
   return {
     degrees,
     median: values[Math.floor(n / 2)],
@@ -120,32 +138,38 @@ export function degreeDistribution(nodes: NetworkNode[], edges: NetworkEdge[]): 
     iqr: [values[Math.floor(n * 0.25)], values[Math.floor(n * 0.75)]],
     max: values[n - 1],
     min: values[0],
-    distribution: values
+    distribution: values,
   };
 }
 
 /**
  * Network density: actual edges / possible edges
  */
-export function networkDensity(numNodes: number, numEdges: number, directed: boolean = false): {
+export function networkDensity(
+  numNodes: number,
+  numEdges: number,
+  directed: boolean = false,
+): {
   density: number;
   maxPossibleEdges: number;
   interpretation: string;
 } {
-  if (numNodes < 2) return { density: 0, maxPossibleEdges: 0, interpretation: 'Too few nodes' };
-  
-  const maxEdges = directed 
+  if (numNodes < 2) {
+    return { density: 0, maxPossibleEdges: 0, interpretation: "Too few nodes" };
+  }
+
+  const maxEdges = directed
     ? numNodes * (numNodes - 1)
     : (numNodes * (numNodes - 1)) / 2;
-  
+
   const density = numEdges / maxEdges;
-  
+
   let interpretation: string;
-  if (density < 0.1) interpretation = 'Sparse network';
-  else if (density < 0.3) interpretation = 'Moderately sparse';
-  else if (density < 0.5) interpretation = 'Moderately dense';
-  else interpretation = 'Dense network';
-  
+  if (density < 0.1) interpretation = "Sparse network";
+  else if (density < 0.3) interpretation = "Moderately sparse";
+  else if (density < 0.5) interpretation = "Moderately dense";
+  else interpretation = "Dense network";
+
   return { density, maxPossibleEdges: maxEdges, interpretation };
 }
 
@@ -153,30 +177,33 @@ export function networkDensity(numNodes: number, numEdges: number, directed: boo
  * Clustering coefficient (local) for each node
  * Returns average with bootstrap CI
  */
-export function clusteringCoefficient(nodes: NetworkNode[], edges: NetworkEdge[]): {
+export function clusteringCoefficient(
+  nodes: NetworkNode[],
+  edges: NetworkEdge[],
+): {
   byNode: Map<string, number>;
   average: number;
   bootstrap: BootstrapResult;
 } {
   // Build adjacency map
   const adjacency = new Map<string, Set<string>>();
-  nodes.forEach(n => adjacency.set(n.id, new Set()));
-  edges.forEach(e => {
+  nodes.forEach((n) => adjacency.set(n.id, new Set()));
+  edges.forEach((e) => {
     adjacency.get(e.source)?.add(e.target);
     adjacency.get(e.target)?.add(e.source);
   });
-  
+
   // Calculate local clustering for each node
   const clustering = new Map<string, number>();
-  nodes.forEach(n => {
+  nodes.forEach((n) => {
     const neighbors = Array.from(adjacency.get(n.id) || []);
     const k = neighbors.length;
-    
+
     if (k < 2) {
       clustering.set(n.id, 0);
       return;
     }
-    
+
     // Count triangles
     let triangles = 0;
     for (let i = 0; i < k; i++) {
@@ -186,21 +213,26 @@ export function clusteringCoefficient(nodes: NetworkNode[], edges: NetworkEdge[]
         }
       }
     }
-    
+
     const possibleTriangles = (k * (k - 1)) / 2;
-    clustering.set(n.id, possibleTriangles > 0 ? triangles / possibleTriangles : 0);
+    clustering.set(
+      n.id,
+      possibleTriangles > 0 ? triangles / possibleTriangles : 0,
+    );
   });
-  
+
   const values = Array.from(clustering.values());
-  const average = values.length > 0 ? values.reduce((s, v) => s + v, 0) / values.length : 0;
-  
+  const average = values.length > 0
+    ? values.reduce((s, v) => s + v, 0) / values.length
+    : 0;
+
   // Bootstrap CI
   const bootstrapCI = bootstrap(
     values,
     (sample) => sample.reduce((s, v) => s + v, 0) / Math.max(1, sample.length),
-    1000
+    1000,
   );
-  
+
   return { byNode: clustering, average, bootstrap: bootstrapCI };
 }
 
@@ -208,28 +240,36 @@ export function clusteringCoefficient(nodes: NetworkNode[], edges: NetworkEdge[]
  * Average shortest path length (using BFS)
  * Returns only for connected components
  */
-export function averageShortestPath(nodes: NetworkNode[], edges: NetworkEdge[]): {
+export function averageShortestPath(
+  nodes: NetworkNode[],
+  edges: NetworkEdge[],
+): {
   averagePathLength: number;
   diameter: number;
   isConnected: boolean;
   componentSizes: number[];
 } {
   if (nodes.length === 0) {
-    return { averagePathLength: 0, diameter: 0, isConnected: true, componentSizes: [] };
+    return {
+      averagePathLength: 0,
+      diameter: 0,
+      isConnected: true,
+      componentSizes: [],
+    };
   }
-  
+
   // Build adjacency
   const adjacency = new Map<string, string[]>();
-  nodes.forEach(n => adjacency.set(n.id, []));
-  edges.forEach(e => {
+  nodes.forEach((n) => adjacency.set(n.id, []));
+  edges.forEach((e) => {
     adjacency.get(e.source)?.push(e.target);
     adjacency.get(e.target)?.push(e.source);
   });
-  
+
   // Find connected components
   const visited = new Set<string>();
   const componentSizes: number[] = [];
-  
+
   for (const node of nodes) {
     if (!visited.has(node.id)) {
       const queue = [node.id];
@@ -239,35 +279,35 @@ export function averageShortestPath(nodes: NetworkNode[], edges: NetworkEdge[]):
         if (visited.has(current)) continue;
         visited.add(current);
         size++;
-        adjacency.get(current)?.forEach(neighbor => {
+        adjacency.get(current)?.forEach((neighbor) => {
           if (!visited.has(neighbor)) queue.push(neighbor);
         });
       }
       componentSizes.push(size);
     }
   }
-  
+
   const isConnected = componentSizes.length === 1;
-  
+
   // BFS for path lengths (only in largest component)
   const pathLengths: number[] = [];
   let diameter = 0;
-  
+
   for (let i = 0; i < nodes.length; i++) {
     const distances = new Map<string, number>();
     distances.set(nodes[i].id, 0);
     const queue: [string, number][] = [[nodes[i].id, 0]];
-    
+
     while (queue.length > 0) {
       const [current, dist] = queue.shift()!;
-      adjacency.get(current)?.forEach(neighbor => {
+      adjacency.get(current)?.forEach((neighbor) => {
         if (!distances.has(neighbor)) {
           distances.set(neighbor, dist + 1);
           queue.push([neighbor, dist + 1]);
         }
       });
     }
-    
+
     distances.forEach((d, _) => {
       if (d > 0) {
         pathLengths.push(d);
@@ -275,23 +315,23 @@ export function averageShortestPath(nodes: NetworkNode[], edges: NetworkEdge[]):
       }
     });
   }
-  
+
   const averagePathLength = pathLengths.length > 0
     ? pathLengths.reduce((s, v) => s + v, 0) / pathLengths.length
     : 0;
-  
+
   return {
     averagePathLength,
     diameter,
     isConnected,
-    componentSizes: componentSizes.sort((a, b) => b - a)
+    componentSizes: componentSizes.sort((a, b) => b - a),
   };
 }
 
 /**
  * Gini coefficient: measure of inequality
  * 0 = perfect equality, 1 = perfect inequality
- * 
+ *
  * More defensible than power law fitting for small n
  */
 export function giniCoefficient(values: number[]): {
@@ -300,44 +340,52 @@ export function giniCoefficient(values: number[]): {
   topConcentration: { top1: number; top3: number; top5: number };
 } {
   if (values.length === 0) {
-    return { gini: 0, interpretation: 'No data', topConcentration: { top1: 0, top3: 0, top5: 0 } };
+    return {
+      gini: 0,
+      interpretation: "No data",
+      topConcentration: { top1: 0, top3: 0, top5: 0 },
+    };
   }
-  
+
   const sorted = [...values].sort((a, b) => a - b);
   const n = sorted.length;
   const sum = sorted.reduce((s, v) => s + v, 0);
-  
+
   if (sum === 0) {
-    return { gini: 0, interpretation: 'No values', topConcentration: { top1: 0, top3: 0, top5: 0 } };
+    return {
+      gini: 0,
+      interpretation: "No values",
+      topConcentration: { top1: 0, top3: 0, top5: 0 },
+    };
   }
-  
+
   // Gini = (sum of (2i - n - 1) * x_i) / (n * sum)
   let weightedSum = 0;
   for (let i = 0; i < n; i++) {
     weightedSum += (2 * (i + 1) - n - 1) * sorted[i];
   }
-  
+
   const gini = weightedSum / (n * sum);
-  
+
   // Top X concentration (sorted descending for this)
   const desc = [...values].sort((a, b) => b - a);
   const top1 = desc.length > 0 ? desc[0] / sum : 0;
   const top3 = desc.slice(0, 3).reduce((s, v) => s + v, 0) / sum;
   const top5 = desc.slice(0, 5).reduce((s, v) => s + v, 0) / sum;
-  
+
   let interpretation: string;
-  if (gini < 0.2) interpretation = 'Very equal distribution';
-  else if (gini < 0.4) interpretation = 'Moderately equal';
-  else if (gini < 0.6) interpretation = 'Moderately unequal';
-  else if (gini < 0.8) interpretation = 'High concentration';
-  else interpretation = 'Extreme concentration';
-  
+  if (gini < 0.2) interpretation = "Very equal distribution";
+  else if (gini < 0.4) interpretation = "Moderately equal";
+  else if (gini < 0.6) interpretation = "Moderately unequal";
+  else if (gini < 0.8) interpretation = "High concentration";
+  else interpretation = "Extreme concentration";
+
   return { gini, interpretation, topConcentration: { top1, top3, top5 } };
 }
 
 /**
  * Herfindahl-Hirschman Index: sum of squared market shares
- * 
+ *
  * Interpretation (DOJ guidelines):
  * < 1500: Unconcentrated
  * 1500-2500: Moderately concentrated
@@ -347,40 +395,46 @@ export function herfindahlIndex(values: number[]): {
   hhi: number;
   normalizedHHI: number; // 0-1 scale
   interpretation: string;
-  doj_classification: 'unconcentrated' | 'moderately_concentrated' | 'highly_concentrated';
+  doj_classification:
+    | "unconcentrated"
+    | "moderately_concentrated"
+    | "highly_concentrated";
 } {
   const sum = values.reduce((s, v) => s + v, 0);
-  
+
   if (sum === 0) {
-    return { 
-      hhi: 0, 
-      normalizedHHI: 0, 
-      interpretation: 'No data', 
-      doj_classification: 'unconcentrated' 
+    return {
+      hhi: 0,
+      normalizedHHI: 0,
+      interpretation: "No data",
+      doj_classification: "unconcentrated",
     };
   }
-  
+
   // Shares as percentages (out of 100)
-  const shares = values.map(v => (v / sum) * 100);
+  const shares = values.map((v) => (v / sum) * 100);
   const hhi = shares.reduce((s, share) => s + share * share, 0);
-  
+
   // Normalized HHI (0-1 scale)
   const normalizedHHI = hhi / 10000;
-  
-  let doj_classification: 'unconcentrated' | 'moderately_concentrated' | 'highly_concentrated';
+
+  let doj_classification:
+    | "unconcentrated"
+    | "moderately_concentrated"
+    | "highly_concentrated";
   let interpretation: string;
-  
+
   if (hhi < 1500) {
-    doj_classification = 'unconcentrated';
-    interpretation = 'Unconcentrated market (DOJ classification)';
+    doj_classification = "unconcentrated";
+    interpretation = "Unconcentrated market (DOJ classification)";
   } else if (hhi < 2500) {
-    doj_classification = 'moderately_concentrated';
-    interpretation = 'Moderately concentrated (DOJ classification)';
+    doj_classification = "moderately_concentrated";
+    interpretation = "Moderately concentrated (DOJ classification)";
   } else {
-    doj_classification = 'highly_concentrated';
-    interpretation = 'Highly concentrated (DOJ classification)';
+    doj_classification = "highly_concentrated";
+    interpretation = "Highly concentrated (DOJ classification)";
   }
-  
+
   return { hhi, normalizedHHI, interpretation, doj_classification };
 }
 
@@ -390,10 +444,10 @@ export function herfindahlIndex(values: number[]): {
  */
 export function nullModelComparison(
   observedValues: number[],
-  numSimulations: number = 1000
+  numSimulations: number = 1000,
 ): {
   observed: { gini: number; hhi: number; top3: number };
-  randomBaseline: { 
+  randomBaseline: {
     gini: { mean: number; ci: [number, number] };
     hhi: { mean: number; ci: [number, number] };
     top3: { mean: number; ci: [number, number] };
@@ -403,32 +457,32 @@ export function nullModelComparison(
 } {
   const n = observedValues.length;
   const total = observedValues.reduce((s, v) => s + v, 0);
-  
+
   if (n === 0 || total === 0) {
     return {
       observed: { gini: 0, hhi: 0, top3: 0 },
       randomBaseline: {
         gini: { mean: 0, ci: [0, 0] },
         hhi: { mean: 0, ci: [0, 0] },
-        top3: { mean: 0, ci: [0, 0] }
+        top3: { mean: 0, ci: [0, 0] },
       },
       zScore: { gini: 0, hhi: 0, top3: 0 },
-      interpretation: 'No data'
+      interpretation: "No data",
     };
   }
-  
+
   // Observed metrics
   const observed = {
     gini: giniCoefficient(observedValues).gini,
     hhi: herfindahlIndex(observedValues).hhi,
-    top3: giniCoefficient(observedValues).topConcentration.top3
+    top3: giniCoefficient(observedValues).topConcentration.top3,
   };
-  
+
   // Simulate random allocation (each unit randomly assigned to a bucket)
   const randomGinis: number[] = [];
   const randomHHIs: number[] = [];
   const randomTop3s: number[] = [];
-  
+
   for (let sim = 0; sim < numSimulations; sim++) {
     const buckets = new Array(n).fill(0);
     for (let i = 0; i < total; i++) {
@@ -438,51 +492,67 @@ export function nullModelComparison(
     randomHHIs.push(herfindahlIndex(buckets).hhi);
     randomTop3s.push(giniCoefficient(buckets).topConcentration.top3);
   }
-  
+
   // Statistics on null distribution
   const meanGini = randomGinis.reduce((s, v) => s + v, 0) / numSimulations;
   const meanHHI = randomHHIs.reduce((s, v) => s + v, 0) / numSimulations;
   const meanTop3 = randomTop3s.reduce((s, v) => s + v, 0) / numSimulations;
-  
-  const sdGini = Math.sqrt(randomGinis.reduce((s, v) => s + (v - meanGini) ** 2, 0) / numSimulations);
-  const sdHHI = Math.sqrt(randomHHIs.reduce((s, v) => s + (v - meanHHI) ** 2, 0) / numSimulations);
-  const sdTop3 = Math.sqrt(randomTop3s.reduce((s, v) => s + (v - meanTop3) ** 2, 0) / numSimulations);
-  
+
+  const sdGini = Math.sqrt(
+    randomGinis.reduce((s, v) => s + (v - meanGini) ** 2, 0) / numSimulations,
+  );
+  const sdHHI = Math.sqrt(
+    randomHHIs.reduce((s, v) => s + (v - meanHHI) ** 2, 0) / numSimulations,
+  );
+  const sdTop3 = Math.sqrt(
+    randomTop3s.reduce((s, v) => s + (v - meanTop3) ** 2, 0) / numSimulations,
+  );
+
   // 95% CIs
   randomGinis.sort((a, b) => a - b);
   randomHHIs.sort((a, b) => a - b);
   randomTop3s.sort((a, b) => a - b);
   const lowerIdx = Math.floor(numSimulations * 0.025);
   const upperIdx = Math.floor(numSimulations * 0.975);
-  
+
   const randomBaseline = {
-    gini: { mean: meanGini, ci: [randomGinis[lowerIdx], randomGinis[upperIdx]] as [number, number] },
-    hhi: { mean: meanHHI, ci: [randomHHIs[lowerIdx], randomHHIs[upperIdx]] as [number, number] },
-    top3: { mean: meanTop3, ci: [randomTop3s[lowerIdx], randomTop3s[upperIdx]] as [number, number] }
+    gini: {
+      mean: meanGini,
+      ci: [randomGinis[lowerIdx], randomGinis[upperIdx]] as [number, number],
+    },
+    hhi: {
+      mean: meanHHI,
+      ci: [randomHHIs[lowerIdx], randomHHIs[upperIdx]] as [number, number],
+    },
+    top3: {
+      mean: meanTop3,
+      ci: [randomTop3s[lowerIdx], randomTop3s[upperIdx]] as [number, number],
+    },
   };
-  
+
   // Z-scores
   const zScore = {
     gini: sdGini > 0 ? (observed.gini - meanGini) / sdGini : 0,
     hhi: sdHHI > 0 ? (observed.hhi - meanHHI) / sdHHI : 0,
-    top3: sdTop3 > 0 ? (observed.top3 - meanTop3) / sdTop3 : 0
+    top3: sdTop3 > 0 ? (observed.top3 - meanTop3) / sdTop3 : 0,
   };
-  
+
   let interpretation: string;
   if (Math.abs(zScore.gini) > 3) {
-    interpretation = 'Observed concentration significantly different from random allocation';
+    interpretation =
+      "Observed concentration significantly different from random allocation";
   } else if (Math.abs(zScore.gini) > 2) {
-    interpretation = 'Observed concentration moderately different from random';
+    interpretation = "Observed concentration moderately different from random";
   } else {
-    interpretation = 'Observed concentration consistent with random allocation';
+    interpretation = "Observed concentration consistent with random allocation";
   }
-  
+
   return { observed, randomBaseline, zScore, interpretation };
 }
 
 /**
  * Temporal Analysis: Acquisitions per year with trend assessment
- * 
+ *
  * Honest about small-n: Wide CIs, no power law fits to time series
  */
 export interface TemporalAnalysisResult {
@@ -494,17 +564,17 @@ export interface TemporalAnalysisResult {
   iqr: [number, number];
   trend: {
     slope: number;
-    interpretation: 'accelerating' | 'decelerating' | 'flat' | 'too_noisy';
+    interpretation: "accelerating" | "decelerating" | "flat" | "too_noisy";
     rSquared: number;
-    confidence: 'high' | 'medium' | 'low' | 'insufficient_data';
+    confidence: "high" | "medium" | "low" | "insufficient_data";
   };
   caveats: string[];
 }
 
 export function temporalAnalysis(edges: NetworkEdge[]): TemporalAnalysisResult {
   // Filter to edges with year data
-  const dated = edges.filter(e => e.year !== undefined);
-  
+  const dated = edges.filter((e) => e.year !== undefined);
+
   if (dated.length === 0) {
     return {
       yearlyData: [],
@@ -513,78 +583,98 @@ export function temporalAnalysis(edges: NetworkEdge[]): TemporalAnalysisResult {
       median: 0,
       mean: 0,
       iqr: [0, 0],
-      trend: { slope: 0, interpretation: 'too_noisy', rSquared: 0, confidence: 'insufficient_data' },
-      caveats: ['No temporal data available']
+      trend: {
+        slope: 0,
+        interpretation: "too_noisy",
+        rSquared: 0,
+        confidence: "insufficient_data",
+      },
+      caveats: ["No temporal data available"],
     };
   }
-  
+
   // Aggregate by year
   const yearCounts = new Map<number, number>();
-  dated.forEach(e => {
+  dated.forEach((e) => {
     yearCounts.set(e.year!, (yearCounts.get(e.year!) || 0) + 1);
   });
-  
-  const minYear = Math.min(...dated.map(e => e.year!));
-  const maxYear = Math.max(...dated.map(e => e.year!));
-  
+
+  const minYear = Math.min(...dated.map((e) => e.year!));
+  const maxYear = Math.max(...dated.map((e) => e.year!));
+
   // Fill in zero years for completeness
   const yearlyData: { year: number; count: number }[] = [];
   for (let y = minYear; y <= maxYear; y++) {
     yearlyData.push({ year: y, count: yearCounts.get(y) || 0 });
   }
-  
-  const counts = yearlyData.map(d => d.count).sort((a, b) => a - b);
+
+  const counts = yearlyData.map((d) => d.count).sort((a, b) => a - b);
   const n = counts.length;
   const median = counts[Math.floor(n / 2)];
   const mean = counts.reduce((s, v) => s + v, 0) / n;
-  const iqr: [number, number] = [counts[Math.floor(n * 0.25)], counts[Math.floor(n * 0.75)]];
-  
+  const iqr: [number, number] = [
+    counts[Math.floor(n * 0.25)],
+    counts[Math.floor(n * 0.75)],
+  ];
+
   // Simple linear regression for trend
   const xs = yearlyData.map((_, i) => i);
-  const ys = yearlyData.map(d => d.count);
+  const ys = yearlyData.map((d) => d.count);
   const xMean = xs.reduce((s, v) => s + v, 0) / xs.length;
   const yMean = ys.reduce((s, v) => s + v, 0) / ys.length;
-  
-  const numerator = xs.reduce((s, x, i) => s + (x - xMean) * (ys[i] - yMean), 0);
+
+  const numerator = xs.reduce(
+    (s, x, i) => s + (x - xMean) * (ys[i] - yMean),
+    0,
+  );
   const denominator = xs.reduce((s, x) => s + (x - xMean) ** 2, 0);
-  
+
   const slope = denominator > 0 ? numerator / denominator : 0;
-  
+
   // R-squared
   const ssTotal = ys.reduce((s, y) => s + (y - yMean) ** 2, 0);
   const intercept = yMean - slope * xMean;
-  const ssResidual = ys.reduce((s, y, i) => s + (y - (slope * xs[i] + intercept)) ** 2, 0);
+  const ssResidual = ys.reduce(
+    (s, y, i) => s + (y - (slope * xs[i] + intercept)) ** 2,
+    0,
+  );
   const rSquared = ssTotal > 0 ? 1 - ssResidual / ssTotal : 0;
-  
-  let interpretation: 'accelerating' | 'decelerating' | 'flat' | 'too_noisy';
+
+  let interpretation: "accelerating" | "decelerating" | "flat" | "too_noisy";
   if (rSquared < 0.2) {
-    interpretation = 'too_noisy';
+    interpretation = "too_noisy";
   } else if (Math.abs(slope) < 0.1) {
-    interpretation = 'flat';
+    interpretation = "flat";
   } else if (slope > 0) {
-    interpretation = 'accelerating';
+    interpretation = "accelerating";
   } else {
-    interpretation = 'decelerating';
+    interpretation = "decelerating";
   }
-  
-  let confidence: 'high' | 'medium' | 'low' | 'insufficient_data';
-  if (dated.length < 10) confidence = 'insufficient_data';
-  else if (dated.length < 20) confidence = 'low';
-  else if (dated.length < 50) confidence = 'medium';
-  else confidence = 'high';
-  
+
+  let confidence: "high" | "medium" | "low" | "insufficient_data";
+  if (dated.length < 10) confidence = "insufficient_data";
+  else if (dated.length < 20) confidence = "low";
+  else if (dated.length < 50) confidence = "medium";
+  else confidence = "high";
+
   const caveats: string[] = [];
   if (dated.length < 30) {
-    caveats.push(`Only ${dated.length} acquisitions across ${yearlyData.length} years - trends are noisy`);
+    caveats.push(
+      `Only ${dated.length} acquisitions across ${yearlyData.length} years - trends are noisy`,
+    );
   }
   if (rSquared < 0.3) {
-    caveats.push(`Low R² (${rSquared.toFixed(2)}) suggests trend is unreliable`);
+    caveats.push(
+      `Low R² (${rSquared.toFixed(2)}) suggests trend is unreliable`,
+    );
   }
   if (yearlyData.length < 5) {
-    caveats.push('Fewer than 5 years of data - trend assessment not meaningful');
+    caveats.push(
+      "Fewer than 5 years of data - trend assessment not meaningful",
+    );
   }
-  caveats.push('Do NOT fit power laws to time series with this sample size');
-  
+  caveats.push("Do NOT fit power laws to time series with this sample size");
+
   return {
     yearlyData,
     totalAcquisitions: dated.length,
@@ -593,13 +683,13 @@ export function temporalAnalysis(edges: NetworkEdge[]): TemporalAnalysisResult {
     mean,
     iqr,
     trend: { slope, interpretation, rSquared, confidence },
-    caveats
+    caveats,
   };
 }
 
 /**
  * Simplified Louvain-style Community Detection
- * 
+ *
  * Uses greedy modularity optimization for small networks.
  * Returns communities with explicit stability caveats.
  */
@@ -618,8 +708,8 @@ export interface CommunityDetectionResult {
 }
 
 export function communityDetection(
-  nodes: NetworkNode[], 
-  edges: NetworkEdge[]
+  nodes: NetworkNode[],
+  edges: NetworkEdge[],
 ): CommunityDetectionResult {
   if (nodes.length === 0) {
     return {
@@ -627,24 +717,24 @@ export function communityDetection(
       numCommunities: 0,
       modularity: 0,
       communitySizes: [],
-      stability: { score: 0, interpretation: 'No data', isReliable: false },
+      stability: { score: 0, interpretation: "No data", isReliable: false },
       qualitativeDescription: [],
-      caveats: ['No nodes to analyze']
+      caveats: ["No nodes to analyze"],
     };
   }
-  
+
   // Build adjacency map
   const adjacency = new Map<string, Set<string>>();
-  nodes.forEach(n => adjacency.set(n.id, new Set()));
-  edges.forEach(e => {
+  nodes.forEach((n) => adjacency.set(n.id, new Set()));
+  edges.forEach((e) => {
     adjacency.get(e.source)?.add(e.target);
     adjacency.get(e.target)?.add(e.source);
   });
-  
+
   // Initialize: each node in own community
   const communities = new Map<string, number>();
   nodes.forEach((n, i) => communities.set(n.id, i));
-  
+
   // Greedy modularity optimization (simplified Louvain)
   const m = edges.length;
   if (m === 0) {
@@ -653,43 +743,49 @@ export function communityDetection(
       numCommunities: nodes.length,
       modularity: 0,
       communitySizes: nodes.map(() => 1),
-      stability: { score: 0, interpretation: 'No edges to form communities', isReliable: false },
-      qualitativeDescription: ['No connections; each node is isolated'],
-      caveats: ['No edges in network']
+      stability: {
+        score: 0,
+        interpretation: "No edges to form communities",
+        isReliable: false,
+      },
+      qualitativeDescription: ["No connections; each node is isolated"],
+      caveats: ["No edges in network"],
     };
   }
-  
+
   // Calculate node degrees
   const degrees = new Map<string, number>();
-  nodes.forEach(n => degrees.set(n.id, adjacency.get(n.id)?.size || 0));
-  
+  nodes.forEach((n) => degrees.set(n.id, adjacency.get(n.id)?.size || 0));
+
   // Greedy: for each node, move to neighbor's community if it improves modularity
   let improved = true;
   let iterations = 0;
   const maxIterations = 100;
-  
+
   while (improved && iterations < maxIterations) {
     improved = false;
     iterations++;
-    
+
     for (const node of nodes) {
       const neighbors = Array.from(adjacency.get(node.id) || []);
       if (neighbors.length === 0) continue;
-      
+
       const currentCommunity = communities.get(node.id)!;
-      const candidateCommunities = new Set(neighbors.map(n => communities.get(n)!));
-      
+      const candidateCommunities = new Set(
+        neighbors.map((n) => communities.get(n)!),
+      );
+
       let bestCommunity = currentCommunity;
       let bestGain = 0;
-      
-      candidateCommunities.forEach(c => {
+
+      candidateCommunities.forEach((c) => {
         if (c === currentCommunity) return;
-        
+
         // Calculate modularity gain from moving to community c
         let ki_in = 0;
         let sigma_tot = 0;
-        
-        nodes.forEach(other => {
+
+        nodes.forEach((other) => {
           if (communities.get(other.id) === c) {
             sigma_tot += degrees.get(other.id) || 0;
             if (adjacency.get(node.id)?.has(other.id)) {
@@ -697,36 +793,36 @@ export function communityDetection(
             }
           }
         });
-        
+
         const ki = degrees.get(node.id) || 0;
         const gain = ki_in / m - (sigma_tot * ki) / (2 * m * m);
-        
+
         if (gain > bestGain) {
           bestGain = gain;
           bestCommunity = c;
         }
       });
-      
+
       if (bestCommunity !== currentCommunity) {
         communities.set(node.id, bestCommunity);
         improved = true;
       }
     }
   }
-  
+
   // Renumber communities consecutively
   const communityIds = Array.from(new Set(communities.values()));
   const remap = new Map<number, number>();
   communityIds.forEach((id, i) => remap.set(id, i));
   communities.forEach((c, n) => communities.set(n, remap.get(c)!));
-  
+
   const numCommunities = communityIds.length;
-  
+
   // Calculate community sizes
   const sizesMap = new Map<number, number>();
-  communities.forEach(c => sizesMap.set(c, (sizesMap.get(c) || 0) + 1));
+  communities.forEach((c) => sizesMap.set(c, (sizesMap.get(c) || 0) + 1));
   const communitySizes = Array.from(sizesMap.values()).sort((a, b) => b - a);
-  
+
   // Calculate final modularity
   let modularity = 0;
   for (let i = 0; i < nodes.length; i++) {
@@ -735,31 +831,33 @@ export function communityDetection(
         const a_ij = adjacency.get(nodes[i].id)?.has(nodes[j].id) ? 1 : 0;
         const k_i = degrees.get(nodes[i].id) || 0;
         const k_j = degrees.get(nodes[j].id) || 0;
-        modularity += (a_ij - (k_i * k_j) / (2 * m));
+        modularity += a_ij - (k_i * k_j) / (2 * m);
       }
     }
   }
   modularity = modularity / (2 * m);
-  
+
   // Stability assessment: run on 10 random subsets and measure consistency
   const subsetSize = Math.floor(nodes.length * 0.85);
   const numSubsets = 10;
   let totalAgreement = 0;
   let totalPairs = 0;
-  
+
   for (let trial = 0; trial < numSubsets; trial++) {
     // Random subset
     const shuffled = [...nodes].sort(() => Math.random() - 0.5);
     const subset = shuffled.slice(0, subsetSize);
-    const subsetIds = new Set(subset.map(n => n.id));
-    const subsetEdges = edges.filter(e => subsetIds.has(e.source) && subsetIds.has(e.target));
-    
+    const subsetIds = new Set(subset.map((n) => n.id));
+    const subsetEdges = edges.filter((e) =>
+      subsetIds.has(e.source) && subsetIds.has(e.target)
+    );
+
     // Quick community detection on subset
     const subsetCommunities = new Map<string, number>();
     subset.forEach((n, i) => subsetCommunities.set(n.id, i));
-    
+
     // Simple agglomeration: merge connected nodes
-    subsetEdges.forEach(e => {
+    subsetEdges.forEach((e) => {
       const c1 = subsetCommunities.get(e.source);
       const c2 = subsetCommunities.get(e.target);
       if (c1 !== undefined && c2 !== undefined && c1 !== c2) {
@@ -768,45 +866,50 @@ export function communityDetection(
         });
       }
     });
-    
+
     // Compare to original
     for (let i = 0; i < subset.length; i++) {
       for (let j = i + 1; j < subset.length; j++) {
-        const sameInOriginal = communities.get(subset[i].id) === communities.get(subset[j].id);
-        const sameInSubset = subsetCommunities.get(subset[i].id) === subsetCommunities.get(subset[j].id);
+        const sameInOriginal =
+          communities.get(subset[i].id) === communities.get(subset[j].id);
+        const sameInSubset = subsetCommunities.get(subset[i].id) ===
+          subsetCommunities.get(subset[j].id);
         if (sameInOriginal === sameInSubset) totalAgreement++;
         totalPairs++;
       }
     }
   }
-  
+
   const stabilityScore = totalPairs > 0 ? totalAgreement / totalPairs : 0;
-  
+
   let stabilityInterpretation: string;
   let isReliable: boolean;
   if (stabilityScore > 0.85) {
-    stabilityInterpretation = 'High stability - communities likely meaningful';
+    stabilityInterpretation = "High stability - communities likely meaningful";
     isReliable = true;
   } else if (stabilityScore > 0.7) {
-    stabilityInterpretation = 'Moderate stability - some structural signal';
+    stabilityInterpretation = "Moderate stability - some structural signal";
     isReliable = false;
   } else {
-    stabilityInterpretation = 'Low stability - communities likely artifact of small n';
+    stabilityInterpretation =
+      "Low stability - communities likely artifact of small n";
     isReliable = false;
   }
-  
+
   // Qualitative descriptions based on community composition
   const qualitativeDescription: string[] = [];
   for (let cId = 0; cId < numCommunities; cId++) {
-    const members = nodes.filter(n => communities.get(n.id) === cId);
+    const members = nodes.filter((n) => communities.get(n.id) === cId);
     if (members.length === 0) continue;
-    
+
     // Determine dominant sector
     const sectorCounts = new Map<string, number>();
-    members.forEach(m => {
-      if (m.sector) sectorCounts.set(m.sector, (sectorCounts.get(m.sector) || 0) + 1);
+    members.forEach((m) => {
+      if (m.sector) {
+        sectorCounts.set(m.sector, (sectorCounts.get(m.sector) || 0) + 1);
+      }
     });
-    
+
     let dominantSector: string | null = null;
     let maxCount = 0;
     sectorCounts.forEach((count, sector) => {
@@ -815,27 +918,33 @@ export function communityDetection(
         dominantSector = sector;
       }
     });
-    
+
     qualitativeDescription.push(
       `Community ${cId + 1} (${members.length} nodes): ${
-        dominantSector 
-          ? `Centered on ${dominantSector}` 
-          : 'Mixed sectors'
-      } - members: ${members.slice(0, 3).map(m => m.label).join(', ')}${members.length > 3 ? `, +${members.length - 3} more` : ''}`
+        dominantSector ? `Centered on ${dominantSector}` : "Mixed sectors"
+      } - members: ${members.slice(0, 3).map((m) => m.label).join(", ")}${
+        members.length > 3 ? `, +${members.length - 3} more` : ""
+      }`,
     );
   }
-  
+
   const caveats: string[] = [];
   if (nodes.length < 20) {
     caveats.push(`With n=${nodes.length}, detected communities are unstable`);
   }
-  caveats.push('Adding 5 more nodes would likely change community structure');
+  caveats.push("Adding 5 more nodes would likely change community structure");
   if (stabilityScore < 0.7) {
-    caveats.push(`Stability score ${stabilityScore.toFixed(2)} indicates communities may be artifacts`);
+    caveats.push(
+      `Stability score ${
+        stabilityScore.toFixed(2)
+      } indicates communities may be artifacts`,
+    );
   }
-  caveats.push('Do NOT report as "statistically significant communities" - wrong language for small n');
-  caveats.push('Treat as exploratory clustering, not confirmatory analysis');
-  
+  caveats.push(
+    'Do NOT report as "statistically significant communities" - wrong language for small n',
+  );
+  caveats.push("Treat as exploratory clustering, not confirmatory analysis");
+
   return {
     communities,
     numCommunities,
@@ -844,20 +953,20 @@ export function communityDetection(
     stability: {
       score: stabilityScore,
       interpretation: stabilityInterpretation,
-      isReliable
+      isReliable,
     },
     qualitativeDescription,
-    caveats
+    caveats,
   };
 }
 
 /**
  * Strategic Positioning Analysis
- * 
+ *
  * Qualitative 2D mapping of acquirers:
  * - X: Buyer breadth (sector diversity, Shannon entropy)
  * - Y: Deal velocity (acquisitions per year)
- * 
+ *
  * This is QUALITATIVE insight, not statistical hypothesis testing.
  */
 export interface StrategicPosition {
@@ -869,7 +978,11 @@ export interface StrategicPosition {
   sectorBreadth: number; // 0-1, normalized Shannon entropy
   uniqueSectors: number;
   targets: string[];
-  classification: 'specialist_low_velocity' | 'specialist_high_velocity' | 'generalist_low_velocity' | 'generalist_high_velocity';
+  classification:
+    | "specialist_low_velocity"
+    | "specialist_high_velocity"
+    | "generalist_low_velocity"
+    | "generalist_high_velocity";
   qualitativeDescription: string;
 }
 
@@ -880,27 +993,27 @@ export interface StrategicPositioningResult {
 }
 
 export function strategicPositioning(
-  nodes: NetworkNode[], 
-  edges: NetworkEdge[]
+  nodes: NetworkNode[],
+  edges: NetworkEdge[],
 ): StrategicPositioningResult {
-  const acquirers = nodes.filter(n => n.type === 'acquirer');
-  
-  const positions: StrategicPosition[] = acquirers.map(acquirer => {
+  const acquirers = nodes.filter((n) => n.type === "acquirer");
+
+  const positions: StrategicPosition[] = acquirers.map((acquirer) => {
     // Find all deals by this acquirer
-    const acquirerEdges = edges.filter(e => e.source === acquirer.id);
+    const acquirerEdges = edges.filter((e) => e.source === acquirer.id);
     const targets = acquirerEdges
-      .map(e => nodes.find(n => n.id === e.target))
+      .map((e) => nodes.find((n) => n.id === e.target))
       .filter((n): n is NetworkNode => n !== undefined);
-    
-    const sectors = targets.map(t => t.sector || 'Unknown');
+
+    const sectors = targets.map((t) => t.sector || "Unknown");
     const sectorCounts = new Map<string, number>();
-    sectors.forEach(s => sectorCounts.set(s, (sectorCounts.get(s) || 0) + 1));
-    
+    sectors.forEach((s) => sectorCounts.set(s, (sectorCounts.get(s) || 0) + 1));
+
     // Shannon entropy for sector breadth
     let entropy = 0;
     const total = sectors.length;
     if (total > 0) {
-      sectorCounts.forEach(count => {
+      sectorCounts.forEach((count) => {
         const p = count / total;
         if (p > 0) entropy -= p * Math.log2(p);
       });
@@ -908,35 +1021,41 @@ export function strategicPositioning(
     // Normalize by max possible entropy
     const maxEntropy = Math.log2(Math.max(2, sectorCounts.size));
     const sectorBreadth = maxEntropy > 0 ? entropy / maxEntropy : 0;
-    
+
     // Deal velocity
-    const years = acquirerEdges.map(e => e.year).filter((y): y is number => y !== undefined);
-    const yearSpan = years.length > 0 
-      ? Math.max(...years) - Math.min(...years) + 1 
+    const years = acquirerEdges.map((e) => e.year).filter((y): y is number =>
+      y !== undefined
+    );
+    const yearSpan = years.length > 0
+      ? Math.max(...years) - Math.min(...years) + 1
       : 1;
     const velocity = years.length / Math.max(1, yearSpan);
-    
+
     // Classification (4 quadrants)
     const isSpecialist = sectorBreadth < 0.5;
     const isHighVelocity = velocity > 0.5;
-    
-    let classification: StrategicPosition['classification'];
+
+    let classification: StrategicPosition["classification"];
     let qualitativeDescription: string;
-    
+
     if (isSpecialist && isHighVelocity) {
-      classification = 'specialist_high_velocity';
-      qualitativeDescription = 'Focused, aggressive: specialized sector with rapid acquisition pace';
+      classification = "specialist_high_velocity";
+      qualitativeDescription =
+        "Focused, aggressive: specialized sector with rapid acquisition pace";
     } else if (isSpecialist && !isHighVelocity) {
-      classification = 'specialist_low_velocity';
-      qualitativeDescription = 'Selective specialist: focused sector with measured acquisition pace';
+      classification = "specialist_low_velocity";
+      qualitativeDescription =
+        "Selective specialist: focused sector with measured acquisition pace";
     } else if (!isSpecialist && isHighVelocity) {
-      classification = 'generalist_high_velocity';
-      qualitativeDescription = 'Aggressive diversifier: broad sector coverage with rapid acquisition pace';
+      classification = "generalist_high_velocity";
+      qualitativeDescription =
+        "Aggressive diversifier: broad sector coverage with rapid acquisition pace";
     } else {
-      classification = 'generalist_low_velocity';
-      qualitativeDescription = 'Diversified observer: broad coverage with selective acquisition pace';
+      classification = "generalist_low_velocity";
+      qualitativeDescription =
+        "Diversified observer: broad coverage with selective acquisition pace";
     }
-    
+
     return {
       acquirerId: acquirer.id,
       acquirerName: acquirer.label,
@@ -945,59 +1064,78 @@ export function strategicPositioning(
       velocity,
       sectorBreadth,
       uniqueSectors: sectorCounts.size,
-      targets: targets.map(t => t.label),
+      targets: targets.map((t) => t.label),
       classification,
-      qualitativeDescription
+      qualitativeDescription,
     };
   });
-  
+
   // Identify patterns
   const patterns: string[] = [];
-  
-  const specialists = positions.filter(p => p.sectorBreadth < 0.5);
-  const generalists = positions.filter(p => p.sectorBreadth >= 0.5);
-  
+
+  const specialists = positions.filter((p) => p.sectorBreadth < 0.5);
+  const generalists = positions.filter((p) => p.sectorBreadth >= 0.5);
+
   if (specialists.length > generalists.length) {
-    patterns.push(`${specialists.length} specialist acquirers vs ${generalists.length} generalists - market favors focused strategies`);
+    patterns.push(
+      `${specialists.length} specialist acquirers vs ${generalists.length} generalists - market favors focused strategies`,
+    );
   } else if (generalists.length > specialists.length) {
-    patterns.push(`${generalists.length} generalist acquirers vs ${specialists.length} specialists - market favors diversification`);
+    patterns.push(
+      `${generalists.length} generalist acquirers vs ${specialists.length} specialists - market favors diversification`,
+    );
   }
-  
+
   // Sector-based patterns
-  const healthcareAcquirers = positions.filter(p => 
-    nodes.find(n => n.id === p.acquirerId)?.sector?.toLowerCase().includes('health') ||
-    nodes.find(n => n.id === p.acquirerId)?.sector?.toLowerCase().includes('medical')
+  const healthcareAcquirers = positions.filter((p) =>
+    nodes.find((n) => n.id === p.acquirerId)?.sector?.toLowerCase().includes(
+      "health",
+    ) ||
+    nodes.find((n) => n.id === p.acquirerId)?.sector?.toLowerCase().includes(
+      "medical",
+    )
   );
-  const techAcquirers = positions.filter(p => 
-    nodes.find(n => n.id === p.acquirerId)?.sector?.toLowerCase().includes('tech')
+  const techAcquirers = positions.filter((p) =>
+    nodes.find((n) => n.id === p.acquirerId)?.sector?.toLowerCase().includes(
+      "tech",
+    )
   );
-  
+
   if (healthcareAcquirers.length > 0 && techAcquirers.length > 0) {
-    const hcAvgBreadth = healthcareAcquirers.reduce((s, p) => s + p.sectorBreadth, 0) / healthcareAcquirers.length;
-    const techAvgBreadth = techAcquirers.reduce((s, p) => s + p.sectorBreadth, 0) / techAcquirers.length;
-    
+    const hcAvgBreadth = healthcareAcquirers.reduce((s, p) =>
+      s + p.sectorBreadth, 0) / healthcareAcquirers.length;
+    const techAvgBreadth = techAcquirers.reduce((s, p) =>
+      s + p.sectorBreadth, 0) / techAcquirers.length;
+
     if (techAvgBreadth > hcAvgBreadth + 0.15) {
-      patterns.push('Tech acquirers tend to be more diversified than healthcare acquirers');
+      patterns.push(
+        "Tech acquirers tend to be more diversified than healthcare acquirers",
+      );
     } else if (hcAvgBreadth > techAvgBreadth + 0.15) {
-      patterns.push('Healthcare acquirers tend to be more diversified than tech acquirers');
+      patterns.push(
+        "Healthcare acquirers tend to be more diversified than tech acquirers",
+      );
     }
   }
-  
-  const highVelocity = positions.filter(p => p.velocity > 0.5);
+
+  const highVelocity = positions.filter((p) => p.velocity > 0.5);
   if (highVelocity.length > 0) {
-    patterns.push(`${highVelocity.length} acquirers showing high deal velocity (>0.5/year)`);
+    patterns.push(
+      `${highVelocity.length} acquirers showing high deal velocity (>0.5/year)`,
+    );
   }
-  
+
   return {
     positions,
     patterns,
-    caveat: `Strategic positioning is QUALITATIVE insight from n=${acquirers.length} acquirers. Not statistical hypothesis test. Patterns are exploratory.`
+    caveat:
+      `Strategic positioning is QUALITATIVE insight from n=${acquirers.length} acquirers. Not statistical hypothesis test. Patterns are exploratory.`,
   };
 }
 
 /**
  * Network Stability Analysis
- * 
+ *
  * Tests robustness of findings to adding new acquisitions.
  * Critical for determining if conclusions would survive larger samples.
  */
@@ -1015,7 +1153,7 @@ export interface StabilityAnalysisResult {
   // Specific findings ranked by reliability
   findingReliability: Array<{
     finding: string;
-    reliability: 'high' | 'medium' | 'low';
+    reliability: "high" | "medium" | "low";
     cv: number;
   }>;
   // Validation strategy
@@ -1026,10 +1164,10 @@ export interface StabilityAnalysisResult {
 export function networkStabilityAnalysis(
   nodes: NetworkNode[],
   edges: NetworkEdge[],
-  numSimulations: number = 100
+  numSimulations: number = 100,
 ): StabilityAnalysisResult {
-  const acquirers = nodes.filter(n => n.type === 'acquirer');
-  
+  const acquirers = nodes.filter((n) => n.type === "acquirer");
+
   if (acquirers.length === 0 || edges.length === 0) {
     return {
       metricStability: {
@@ -1037,15 +1175,15 @@ export function networkStabilityAnalysis(
         hhi: { mean: 0, sd: 0, cv: 0, isStable: false },
         top3: { mean: 0, sd: 0, cv: 0, isStable: false },
         density: { mean: 0, sd: 0, cv: 0, isStable: false },
-        averageDegree: { mean: 0, sd: 0, cv: 0, isStable: false }
+        averageDegree: { mean: 0, sd: 0, cv: 0, isStable: false },
       },
       recommendedSampleSize: 100,
       findingReliability: [],
-      validationStrategy: ['Insufficient data for stability analysis'],
-      caveats: ['No data to analyze']
+      validationStrategy: ["Insufficient data for stability analysis"],
+      caveats: ["No data to analyze"],
     };
   }
-  
+
   // Simulate adding 50% more edges (representing future data)
   const samples: {
     gini: number[];
@@ -1058,113 +1196,128 @@ export function networkStabilityAnalysis(
     hhi: [],
     top3: [],
     density: [],
-    averageDegree: []
+    averageDegree: [],
   };
-  
+
   for (let sim = 0; sim < numSimulations; sim++) {
     // Random sampling with bootstrapping
     const sampleEdges: NetworkEdge[] = [];
-    const targetSize = Math.max(1, Math.floor(edges.length * (0.7 + Math.random() * 0.6)));
+    const targetSize = Math.max(
+      1,
+      Math.floor(edges.length * (0.7 + Math.random() * 0.6)),
+    );
     for (let i = 0; i < targetSize; i++) {
       sampleEdges.push(edges[Math.floor(Math.random() * edges.length)]);
     }
-    
+
     // Calculate metrics
-    const sampleAcquirerDeals = acquirers.map(a => 
-      sampleEdges.filter(e => e.source === a.id && e.type === 'acquisition').length
+    const sampleAcquirerDeals = acquirers.map((a) =>
+      sampleEdges.filter((e) => e.source === a.id && e.type === "acquisition")
+        .length
     );
-    
+
     const gini = giniCoefficient(sampleAcquirerDeals);
     const hhi = herfindahlIndex(sampleAcquirerDeals);
     const density = networkDensity(nodes.length, sampleEdges.length);
     const degree = degreeDistribution(nodes, sampleEdges);
-    
+
     samples.gini.push(gini.gini);
     samples.hhi.push(hhi.hhi);
     samples.top3.push(gini.topConcentration.top3);
     samples.density.push(density.density);
     samples.averageDegree.push(degree.mean);
   }
-  
+
   // Calculate stability statistics
   const calcStability = (values: number[]) => {
     const mean = values.reduce((s, v) => s + v, 0) / values.length;
-    const variance = values.reduce((s, v) => s + (v - mean) ** 2, 0) / values.length;
+    const variance = values.reduce((s, v) => s + (v - mean) ** 2, 0) /
+      values.length;
     const sd = Math.sqrt(variance);
     const cv = mean > 0 ? sd / mean : 0; // Coefficient of variation
     const isStable = cv < 0.15; // <15% CV is stable
     return { mean, sd, cv, isStable };
   };
-  
+
   const metricStability = {
     gini: calcStability(samples.gini),
     hhi: calcStability(samples.hhi),
     top3: calcStability(samples.top3),
     density: calcStability(samples.density),
-    averageDegree: calcStability(samples.averageDegree)
+    averageDegree: calcStability(samples.averageDegree),
   };
-  
+
   // Estimate recommended sample size based on observed CV
-  const avgCV = Object.values(metricStability).reduce((s, m) => s + m.cv, 0) / 5;
+  const avgCV = Object.values(metricStability).reduce((s, m) => s + m.cv, 0) /
+    5;
   // Rule of thumb: to halve CV, need 4x sample size
   const currentN = nodes.length;
   const targetCV = 0.1; // 10% CV target for stable
   const sampleSizeMultiplier = (avgCV / targetCV) ** 2;
-  const recommendedSampleSize = Math.max(currentN, Math.ceil(currentN * sampleSizeMultiplier));
-  
-  // Rank findings by reliability
-  const reliabilityLevel = (cv: number): 'high' | 'medium' | 'low' => 
-    cv < 0.1 ? 'high' : cv < 0.2 ? 'medium' : 'low';
+  const recommendedSampleSize = Math.max(
+    currentN,
+    Math.ceil(currentN * sampleSizeMultiplier),
+  );
 
-  const findingReliability: StabilityAnalysisResult['findingReliability'] = [
+  // Rank findings by reliability
+  const reliabilityLevel = (cv: number): "high" | "medium" | "low" =>
+    cv < 0.1 ? "high" : cv < 0.2 ? "medium" : "low";
+
+  const findingReliability: StabilityAnalysisResult["findingReliability"] = [
     {
       finding: `Gini coefficient = ${metricStability.gini.mean.toFixed(3)}`,
       reliability: reliabilityLevel(metricStability.gini.cv),
-      cv: metricStability.gini.cv
+      cv: metricStability.gini.cv,
     },
     {
       finding: `HHI = ${metricStability.hhi.mean.toFixed(0)}`,
       reliability: reliabilityLevel(metricStability.hhi.cv),
-      cv: metricStability.hhi.cv
+      cv: metricStability.hhi.cv,
     },
     {
-      finding: `Top-3 concentration = ${(metricStability.top3.mean * 100).toFixed(0)}%`,
+      finding: `Top-3 concentration = ${
+        (metricStability.top3.mean * 100).toFixed(0)
+      }%`,
       reliability: reliabilityLevel(metricStability.top3.cv),
-      cv: metricStability.top3.cv
+      cv: metricStability.top3.cv,
     },
     {
-      finding: `Network density = ${(metricStability.density.mean * 100).toFixed(1)}%`,
+      finding: `Network density = ${
+        (metricStability.density.mean * 100).toFixed(1)
+      }%`,
       reliability: reliabilityLevel(metricStability.density.cv),
-      cv: metricStability.density.cv
+      cv: metricStability.density.cv,
     },
     {
-      finding: `Average degree = ${metricStability.averageDegree.mean.toFixed(2)}`,
+      finding: `Average degree = ${
+        metricStability.averageDegree.mean.toFixed(2)
+      }`,
       reliability: reliabilityLevel(metricStability.averageDegree.cv),
-      cv: metricStability.averageDegree.cv
-    }
+      cv: metricStability.averageDegree.cv,
+    },
   ].sort((a, b) => a.cv - b.cv);
-  
+
   const validationStrategy = [
     `Current sample n=${currentN}. Target for stability: n=${recommendedSampleSize}`,
-    'Refit all models when sample reaches 25 acquisitions',
-    'Compare metrics: substantial change (>20%) means findings were unstable',
-    'Stable findings: gain confidence | Unstable findings: revise interpretation',
-    'Pre-register expected results to avoid post-hoc rationalization'
+    "Refit all models when sample reaches 25 acquisitions",
+    "Compare metrics: substantial change (>20%) means findings were unstable",
+    "Stable findings: gain confidence | Unstable findings: revise interpretation",
+    "Pre-register expected results to avoid post-hoc rationalization",
   ];
-  
+
   const caveats = [
     `Stability assessed via ${numSimulations} bootstrap simulations`,
-    'CV < 15% = stable; CV > 30% = highly unstable',
-    'Findings with low reliability should be reported as exploratory only',
-    'Real-world stability may differ from simulated stability'
+    "CV < 15% = stable; CV > 30% = highly unstable",
+    "Findings with low reliability should be reported as exploratory only",
+    "Real-world stability may differ from simulated stability",
   ];
-  
+
   return {
     metricStability,
     recommendedSampleSize,
     findingReliability,
     validationStrategy,
-    caveats
+    caveats,
   };
 }
 
@@ -1174,18 +1327,19 @@ export function networkStabilityAnalysis(
 export const POWER_LAW_LIMITATIONS = {
   minimumSampleSize: 100,
   whyNotFit: [
-    'Power law fitting requires n>100 minimum (Clauset et al., 2009)',
-    'Maximum likelihood estimates are unstable for n<50',
-    'Kolmogorov-Smirnov tests have very low power for small n',
+    "Power law fitting requires n>100 minimum (Clauset et al., 2009)",
+    "Maximum likelihood estimates are unstable for n<50",
+    "Kolmogorov-Smirnov tests have very low power for small n",
     'Visual inspection ("log-log linearity") is unreliable for n<30',
-    'Alternative distributions (lognormal, exponential) often fit small samples equally well'
+    "Alternative distributions (lognormal, exponential) often fit small samples equally well",
   ],
   whatToDoInstead: [
-    'Use Gini coefficient for inequality measurement',
-    'Use Herfindahl-Hirschman Index for market concentration',
-    'Calculate top-k concentration percentages',
-    'Compare to null model (random allocation)',
-    'Report descriptive statistics with bootstrap CIs'
+    "Use Gini coefficient for inequality measurement",
+    "Use Herfindahl-Hirschman Index for market concentration",
+    "Calculate top-k concentration percentages",
+    "Compare to null model (random allocation)",
+    "Report descriptive statistics with bootstrap CIs",
   ],
-  reference: 'Clauset, A., Shalizi, C.R., Newman, M.E.J. (2009). "Power-law distributions in empirical data." SIAM Review, 51(4), 661-703.'
+  reference:
+    'Clauset, A., Shalizi, C.R., Newman, M.E.J. (2009). "Power-law distributions in empirical data." SIAM Review, 51(4), 661-703.',
 };

@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server';
-import { fetchWithTimeout } from '@/lib/api/fetchWithTimeout';
-import { getClientIp, rateLimit } from '@/lib/api/rateLimit';
+import { NextResponse } from "next/server";
+import { fetchWithTimeout } from "@/lib/api/fetchWithTimeout";
+import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
 
 export interface GuardedFetchOptions {
   request: Request;
@@ -24,7 +24,7 @@ export async function guardedUpstreamFetch(
   });
   if (!bucket.ok) {
     return NextResponse.json(
-      { error: 'Rate limited', retryAt: bucket.resetAtMs },
+      { error: "Rate limited", retryAt: bucket.resetAtMs },
       { status: 429 },
     );
   }

@@ -29,28 +29,33 @@ export interface EvidenceScore {
   fdaStatusScore: number;
   clinicalResultsScore: number;
   publicationScore: number;
-  tier: 'Pre-clinical' | 'Early Evidence' | 'Growing Evidence' | 'Strong Evidence' | 'Regulatory Validated';
+  tier:
+    | "Pre-clinical"
+    | "Early Evidence"
+    | "Growing Evidence"
+    | "Strong Evidence"
+    | "Regulatory Validated";
   tierColor: string;
   narrative: string;
 }
 
 const PHASE_SCORES: Record<string, number> = {
   None: 0,
-  'Not Applicable': 5,
+  "Not Applicable": 5,
   NA: 5,
   EARLY_PHASE1: 15,
   PHASE1: 20,
   PHASE2: 40,
   PHASE3: 70,
-  'PHASE3_COMPLETE': 100,
+  "PHASE3_COMPLETE": 100,
 };
 
 const FDA_SCORES: Record<string, number> = {
   None: 0,
-  '510(K)': 50,
-  '510(k)': 50,
-  'DE NOVO': 70,
-  'De Novo': 70,
+  "510(K)": 50,
+  "510(k)": 50,
+  "DE NOVO": 70,
+  "De Novo": 70,
   PMA: 85,
   NDA: 100,
 };
@@ -83,27 +88,35 @@ function calcPublicationProxy(
   hasDrugApproval: boolean,
 ): number {
   if (hasDrugApproval) return 80;
-  if (hasPostedResults && (highestPhase === 'PHASE3' || highestPhase === 'PHASE3_COMPLETE')) return 70;
+  if (
+    hasPostedResults &&
+    (highestPhase === "PHASE3" || highestPhase === "PHASE3_COMPLETE")
+  ) return 70;
   if (hasPostedResults) return 40;
-  if (highestPhase === 'PHASE2' || highestPhase === 'PHASE3') return 25;
+  if (highestPhase === "PHASE2" || highestPhase === "PHASE3") return 25;
   return 0;
 }
 
-function tier(score: number): EvidenceScore['tier'] {
-  if (score >= 75) return 'Regulatory Validated';
-  if (score >= 50) return 'Strong Evidence';
-  if (score >= 30) return 'Growing Evidence';
-  if (score >= 10) return 'Early Evidence';
-  return 'Pre-clinical';
+function tier(score: number): EvidenceScore["tier"] {
+  if (score >= 75) return "Regulatory Validated";
+  if (score >= 50) return "Strong Evidence";
+  if (score >= 30) return "Growing Evidence";
+  if (score >= 10) return "Early Evidence";
+  return "Pre-clinical";
 }
 
-function tierColor(t: EvidenceScore['tier']): string {
+function tierColor(t: EvidenceScore["tier"]): string {
   switch (t) {
-    case 'Regulatory Validated': return 'emerald';
-    case 'Strong Evidence': return 'sky';
-    case 'Growing Evidence': return 'amber';
-    case 'Early Evidence': return 'orange';
-    case 'Pre-clinical': return 'slate';
+    case "Regulatory Validated":
+      return "emerald";
+    case "Strong Evidence":
+      return "sky";
+    case "Growing Evidence":
+      return "amber";
+    case "Early Evidence":
+      return "orange";
+    case "Pre-clinical":
+      return "slate";
   }
 }
 
@@ -112,22 +125,32 @@ function narrative(inputs: EvidenceInputs, score: number): string {
     return `FDA-cleared/approved product with ${inputs.totalTrials} clinical trial(s) — strong regulatory validation at time of acquisition.`;
   }
   if (score >= 50) {
-    return `Significant clinical evidence (${inputs.highestPhase.replace('PHASE', 'Phase ').replace('_', '/')}) with ${inputs.totalTrials} trial(s) — acquirer had high confidence in efficacy data.`;
+    return `Significant clinical evidence (${
+      inputs.highestPhase.replace("PHASE", "Phase ").replace("_", "/")
+    }) with ${inputs.totalTrials} trial(s) — acquirer had high confidence in efficacy data.`;
   }
   if (score >= 30) {
-    return `Growing clinical evidence (${inputs.totalTrials} trial(s), ${inputs.highestPhase.replace('PHASE', 'Phase ')}) — acquisition likely driven by pipeline potential.`;
+    return `Growing clinical evidence (${inputs.totalTrials} trial(s), ${
+      inputs.highestPhase.replace("PHASE", "Phase ")
+    }) — acquisition likely driven by pipeline potential.`;
   }
   if (inputs.totalTrials > 0) {
     return `Early-stage evidence (${inputs.totalTrials} trial(s)) — acquisition may reflect strategic platform value or technology bet.`;
   }
-  return 'No clinical trials or FDA products found — acquisition likely based on technology, team, or market position rather than clinical evidence.';
+  return "No clinical trials or FDA products found — acquisition likely based on technology, team, or market position rather than clinical evidence.";
 }
 
 /** Compute Evidence Maturity Score for a company. */
 export function computeEvidenceMaturity(inputs: EvidenceInputs): EvidenceScore {
   const phaseScore = calcPhaseScore(inputs.highestPhase, inputs.totalTrials);
-  const fdaStatusScore = calcFDAScore(inputs.highestFDAClearance, inputs.hasDrugApproval);
-  const clinicalResultsScore = calcResultsScore(inputs.hasPostedResults, inputs.totalTrials);
+  const fdaStatusScore = calcFDAScore(
+    inputs.highestFDAClearance,
+    inputs.hasDrugApproval,
+  );
+  const clinicalResultsScore = calcResultsScore(
+    inputs.hasPostedResults,
+    inputs.totalTrials,
+  );
   const publicationScore = calcPublicationProxy(
     inputs.highestPhase,
     inputs.hasPostedResults,
@@ -136,9 +159,9 @@ export function computeEvidenceMaturity(inputs: EvidenceInputs): EvidenceScore {
 
   const overall = Math.round(
     phaseScore * 0.3 +
-    fdaStatusScore * 0.3 +
-    clinicalResultsScore * 0.2 +
-    publicationScore * 0.2,
+      fdaStatusScore * 0.3 +
+      clinicalResultsScore * 0.2 +
+      publicationScore * 0.2,
   );
 
   const t = tier(overall);

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useReducer, useEffect } from 'react';
+import { useEffect, useReducer } from "react";
 /* ─── types ─── */
 interface Trial {
   nctId: string;
@@ -22,22 +22,32 @@ interface FetchState {
 }
 
 type FetchAction =
-  | { type: 'FETCH_START' }
-  | { type: 'FETCH_OK'; trials: Trial[]; total: number }
-  | { type: 'FETCH_ERR'; error: string };
+  | { type: "FETCH_START" }
+  | { type: "FETCH_OK"; trials: Trial[]; total: number }
+  | { type: "FETCH_ERR"; error: string };
 
 function fetchReducer(state: FetchState, action: FetchAction): FetchState {
   switch (action.type) {
-    case 'FETCH_START':
+    case "FETCH_START":
       return { ...state, loading: true, error: null };
-    case 'FETCH_OK':
-      return { trials: action.trials, total: action.total, loading: false, error: null };
-    case 'FETCH_ERR':
+    case "FETCH_OK":
+      return {
+        trials: action.trials,
+        total: action.total,
+        loading: false,
+        error: null,
+      };
+    case "FETCH_ERR":
       return { trials: [], total: 0, loading: false, error: action.error };
   }
 }
 
-const INITIAL_STATE: FetchState = { trials: [], total: 0, loading: false, error: null };
+const INITIAL_STATE: FetchState = {
+  trials: [],
+  total: 0,
+  loading: false,
+  error: null,
+};
 
 interface CategoryConfig {
   label: string;
@@ -48,39 +58,41 @@ interface CategoryConfig {
 const CATEGORIES: CategoryConfig[] = [
   {
     label: "Women's Health",
-    query: 'women health female reproductive',
-    description: 'Fertility, maternal care, menopause, contraception, pelvic health',
+    query: "women health female reproductive",
+    description:
+      "Fertility, maternal care, menopause, contraception, pelvic health",
   },
   {
-    label: 'Oncology',
-    query: 'breast cancer ovarian cervical',
-    description: 'Breast, ovarian, cervical, and endometrial cancers',
+    label: "Oncology",
+    query: "breast cancer ovarian cervical",
+    description: "Breast, ovarian, cervical, and endometrial cancers",
   },
   {
-    label: 'Genetic Markers',
-    query: 'BRCA genetic biomarker hereditary cancer screening',
-    description: 'BRCA1/2, HER2, genomic profiling, carrier screening',
+    label: "Genetic Markers",
+    query: "BRCA genetic biomarker hereditary cancer screening",
+    description: "BRCA1/2, HER2, genomic profiling, carrier screening",
   },
   {
-    label: 'Precision Medicine',
-    query: 'precision medicine targeted therapy immunotherapy women',
-    description: 'Targeted therapies, ADCs, immunotherapy, companion diagnostics',
+    label: "Precision Medicine",
+    query: "precision medicine targeted therapy immunotherapy women",
+    description:
+      "Targeted therapies, ADCs, immunotherapy, companion diagnostics",
   },
 ];
 
 const STATUS_COLORS: Record<string, string> = {
-  RECRUITING: 'bg-emerald-100 text-emerald-800',
-  'ACTIVE_NOT_RECRUITING': 'bg-sky-100 text-sky-800',
-  COMPLETED: 'bg-slate-100 text-slate-700',
-  'NOT_YET_RECRUITING': 'bg-amber-100 text-amber-800',
-  TERMINATED: 'bg-red-100 text-red-700',
-  WITHDRAWN: 'bg-red-50 text-red-600',
-  SUSPENDED: 'bg-orange-100 text-orange-700',
-  UNKNOWN: 'bg-gray-100 text-gray-600',
+  RECRUITING: "bg-emerald-100 text-emerald-800",
+  "ACTIVE_NOT_RECRUITING": "bg-sky-100 text-sky-800",
+  COMPLETED: "bg-slate-100 text-slate-700",
+  "NOT_YET_RECRUITING": "bg-amber-100 text-amber-800",
+  TERMINATED: "bg-red-100 text-red-700",
+  WITHDRAWN: "bg-red-50 text-red-600",
+  SUSPENDED: "bg-orange-100 text-orange-700",
+  UNKNOWN: "bg-gray-100 text-gray-600",
 };
 
 function statusLabel(s: string): string {
-  return s.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  return s.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 /* ─── component ─── */
@@ -95,12 +107,12 @@ export default function ClinicalTrialTracker() {
   useEffect(() => {
     const controller = new AbortController();
 
-    dispatch({ type: 'FETCH_START' });
+    dispatch({ type: "FETCH_START" });
 
     const cat = CATEGORIES[activeCategory];
     const params = new URLSearchParams({
       condition: cat.query,
-      limit: '20',
+      limit: "20",
     });
 
     fetch(`/api/clinical-trials?${params}`, { signal: controller.signal })
@@ -109,11 +121,19 @@ export default function ClinicalTrialTracker() {
         return res.json();
       })
       .then((data) => {
-        dispatch({ type: 'FETCH_OK', trials: data.trials ?? [], total: data.total ?? 0 });
+        dispatch({
+          type: "FETCH_OK",
+          trials: data.trials ?? [],
+          total: data.total ?? 0,
+        });
       })
       .catch((err) => {
-        if (err instanceof DOMException && err.name === 'AbortError') return;
-        dispatch({ type: 'FETCH_ERR', error: 'ClinicalTrials.gov is currently unavailable. Try again later.' });
+        if (err instanceof DOMException && err.name === "AbortError") return;
+        dispatch({
+          type: "FETCH_ERR",
+          error:
+            "ClinicalTrials.gov is currently unavailable. Try again later.",
+        });
       });
 
     return () => controller.abort();
@@ -121,13 +141,13 @@ export default function ClinicalTrialTracker() {
 
   /* ─── derived stats ─── */
   const phaseDistribution = trials.reduce<Record<string, number>>((acc, t) => {
-    const p = t.phase || 'Not Applicable';
+    const p = t.phase || "Not Applicable";
     acc[p] = (acc[p] || 0) + 1;
     return acc;
   }, {});
 
   const statusDistribution = trials.reduce<Record<string, number>>((acc, t) => {
-    const s = t.status || 'Unknown';
+    const s = t.status || "Unknown";
     acc[s] = (acc[s] || 0) + 1;
     return acc;
   }, {});
@@ -136,7 +156,7 @@ export default function ClinicalTrialTracker() {
 
   const topSponsors = Object.entries(
     trials.reduce<Record<string, number>>((acc, t) => {
-      const sp = t.sponsor || 'Unknown';
+      const sp = t.sponsor || "Unknown";
       acc[sp] = (acc[sp] || 0) + 1;
       return acc;
     }, {}),
@@ -168,8 +188,8 @@ export default function ClinicalTrialTracker() {
             onClick={() => setActiveCategory(i)}
             className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
               i === activeCategory
-                ? 'bg-lacuna-plum text-white'
-                : 'bg-lacuna-lavender/20 text-lacuna-blue hover:bg-lacuna-lavender/40'
+                ? "bg-lacuna-plum text-white"
+                : "bg-lacuna-lavender/20 text-lacuna-blue hover:bg-lacuna-lavender/40"
             }`}
           >
             {cat.label}
@@ -273,7 +293,9 @@ export default function ClinicalTrialTracker() {
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {Object.entries(statusDistribution)
-                  .sort((a, b) => b[1] - a[1])
+                  .sort((a, b) =>
+                    b[1] - a[1]
+                  )
                   .map(([status, count]) => (
                     <span
                       key={status}
@@ -327,7 +349,8 @@ export default function ClinicalTrialTracker() {
                       {trial.title}
                     </p>
                     <p className="text-xs text-lacuna-blue mt-1 truncate">
-                      {trial.sponsor} · {trial.condition || 'Multiple conditions'}
+                      {trial.sponsor} ·{" "}
+                      {trial.condition || "Multiple conditions"}
                     </p>
                   </div>
                   <div className="flex items-center gap-2 shrink-0 mt-1 sm:mt-0">
@@ -375,7 +398,7 @@ export default function ClinicalTrialTracker() {
           {/* Disclaimer */}
           <div className="mt-4 pt-3 border-t border-slate-100">
             <p className="text-[11px] text-lacuna-blue/50">
-              Data sourced from{' '}
+              Data sourced from{" "}
               <a
                 href="https://clinicaltrials.gov"
                 target="_blank"
@@ -383,11 +406,11 @@ export default function ClinicalTrialTracker() {
                 className="underline underline-offset-2"
               >
                 ClinicalTrials.gov
-              </a>{' '}
-              API v2. Results reflect the most recent data available. This is not
-              a substitute for IQVIA i3 or other institutional trial intelligence
-              platforms — trial counts may differ due to query scope and
-              classification methodology.
+              </a>{" "}
+              API v2. Results reflect the most recent data available. This is
+              not a substitute for IQVIA i3 or other institutional trial
+              intelligence platforms — trial counts may differ due to query
+              scope and classification methodology.
             </p>
           </div>
         </>

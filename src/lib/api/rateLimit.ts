@@ -20,10 +20,9 @@ export function rateLimit(input: {
 }): RateLimitResult {
   const nowMs = input.nowMs ?? Date.now();
   const existing = buckets.get(input.key);
-  const fresh =
-    !existing || existing.resetAtMs <= nowMs
-      ? { count: 0, resetAtMs: nowMs + input.windowMs }
-      : existing;
+  const fresh = !existing || existing.resetAtMs <= nowMs
+    ? { count: 0, resetAtMs: nowMs + input.windowMs }
+    : existing;
 
   if (fresh.count >= input.limit) {
     buckets.set(input.key, fresh);
@@ -32,13 +31,16 @@ export function rateLimit(input: {
 
   const next = { ...fresh, count: fresh.count + 1 };
   buckets.set(input.key, next);
-  return { ok: true, remaining: Math.max(0, input.limit - next.count), resetAtMs: next.resetAtMs };
+  return {
+    ok: true,
+    remaining: Math.max(0, input.limit - next.count),
+    resetAtMs: next.resetAtMs,
+  };
 }
 
 export function getClientIp(request?: Request): string {
-  if (!request) return 'unknown';
-  const xff = request.headers.get('x-forwarded-for');
-  if (xff) return xff.split(',')[0]?.trim() || 'unknown';
-  return request.headers.get('x-real-ip')?.trim() || 'unknown';
+  if (!request) return "unknown";
+  const xff = request.headers.get("x-forwarded-for");
+  if (xff) return xff.split(",")[0]?.trim() || "unknown";
+  return request.headers.get("x-real-ip")?.trim() || "unknown";
 }
-

@@ -1,5 +1,10 @@
-import { getClickHouseClient } from './clickhouseClient';
-import type { CallsetPageResult, VariantCallset, VariantPageResult, VariantRecord } from './variantTypes';
+import { getClickHouseClient } from "./clickhouseClient";
+import type {
+  CallsetPageResult,
+  VariantCallset,
+  VariantPageResult,
+  VariantRecord,
+} from "./variantTypes";
 
 interface CallsetRow {
   callset_id: string;
@@ -75,7 +80,9 @@ export interface ListVariantsQuery {
 }
 
 /** Paginated callset catalog. */
-export async function listCallsets(query: ListCallsetsQuery): Promise<CallsetPageResult> {
+export async function listCallsets(
+  query: ListCallsetsQuery,
+): Promise<CallsetPageResult> {
   const ch = getClickHouseClient();
   const clauses: string[] = [];
   const params: Record<string, string | number> = {
@@ -84,16 +91,16 @@ export async function listCallsets(query: ListCallsetsQuery): Promise<CallsetPag
   };
 
   if (query.studyId) {
-    clauses.push('study_id = {studyId:String}');
+    clauses.push("study_id = {studyId:String}");
     params.studyId = query.studyId;
   }
 
-  const where = clauses.length ? `WHERE ${clauses.join(' AND ')}` : '';
+  const where = clauses.length ? `WHERE ${clauses.join(" AND ")}` : "";
 
   const countResult = await ch.query({
     query: `SELECT count() AS total FROM callsets ${where}`,
     query_params: params,
-    format: 'JSONEachRow',
+    format: "JSONEachRow",
   });
   const countRows = (await countResult.json()) as Array<{ total: string }>;
   const total = Number(countRows[0]?.total ?? 0);
@@ -109,7 +116,7 @@ export async function listCallsets(query: ListCallsetsQuery): Promise<CallsetPag
       LIMIT {limit:UInt32} OFFSET {offset:UInt32}
     `,
     query_params: params,
-    format: 'JSONEachRow',
+    format: "JSONEachRow",
   });
   const rows = (await dataResult.json()) as CallsetRow[];
 
@@ -125,7 +132,9 @@ export async function listCallsets(query: ListCallsetsQuery): Promise<CallsetPag
 }
 
 /** Paginated variant summary query — partition-pruned by callset_id when provided. */
-export async function listVariants(query: ListVariantsQuery): Promise<VariantPageResult> {
+export async function listVariants(
+  query: ListVariantsQuery,
+): Promise<VariantPageResult> {
   const ch = getClickHouseClient();
   const clauses: string[] = [];
   const params: Record<string, string | number> = {
@@ -134,27 +143,27 @@ export async function listVariants(query: ListVariantsQuery): Promise<VariantPag
   };
 
   if (query.callsetId) {
-    clauses.push('callset_id = {callsetId:String}');
+    clauses.push("callset_id = {callsetId:String}");
     params.callsetId = query.callsetId;
   }
   if (query.chrom) {
-    clauses.push('chrom = {chrom:String}');
+    clauses.push("chrom = {chrom:String}");
     params.chrom = query.chrom;
   }
   if (query.gene) {
-    clauses.push('gene_symbol = {gene:String}');
+    clauses.push("gene_symbol = {gene:String}");
     params.gene = query.gene;
   }
   if (query.pathogenicOnly) {
-    clauses.push('is_pathogenic = 1');
+    clauses.push("is_pathogenic = 1");
   }
 
-  const where = clauses.length ? `WHERE ${clauses.join(' AND ')}` : '';
+  const where = clauses.length ? `WHERE ${clauses.join(" AND ")}` : "";
 
   const countResult = await ch.query({
     query: `SELECT count() AS total FROM variant_records ${where}`,
     query_params: params,
-    format: 'JSONEachRow',
+    format: "JSONEachRow",
   });
   const countRows = (await countResult.json()) as Array<{ total: string }>;
   const total = Number(countRows[0]?.total ?? 0);
@@ -170,7 +179,7 @@ export async function listVariants(query: ListVariantsQuery): Promise<VariantPag
       LIMIT {limit:UInt32} OFFSET {offset:UInt32}
     `,
     query_params: params,
-    format: 'JSONEachRow',
+    format: "JSONEachRow",
   });
   const rows = (await dataResult.json()) as VariantRow[];
 
@@ -188,7 +197,9 @@ export async function listVariants(query: ListVariantsQuery): Promise<VariantPag
 }
 
 /** Lookup a single callset by id. */
-export async function getCallsetById(callsetId: string): Promise<VariantCallset | null> {
+export async function getCallsetById(
+  callsetId: string,
+): Promise<VariantCallset | null> {
   const ch = getClickHouseClient();
   const result = await ch.query({
     query: `
@@ -200,7 +211,7 @@ export async function getCallsetById(callsetId: string): Promise<VariantCallset 
       LIMIT 1
     `,
     query_params: { callsetId },
-    format: 'JSONEachRow',
+    format: "JSONEachRow",
   });
   const rows = (await result.json()) as CallsetRow[];
   return rows[0] ? mapCallset(rows[0]) : null;

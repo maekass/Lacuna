@@ -1,12 +1,12 @@
-import * as ss from 'simple-statistics';
-import type { VerifiedCompanyView } from './verifiedDataHelpers';
+import * as ss from "simple-statistics";
+import type { VerifiedCompanyView } from "./verifiedDataHelpers";
 
 const K = 3;
-const clusterNames = ['Smaller Capital', 'Mid Capital', 'Large Capital'];
+const clusterNames = ["Smaller Capital", "Mid Capital", "Large Capital"];
 const clusterColors = [
-  'bg-blue-50 border-blue-200',
-  'bg-purple-50 border-purple-200',
-  'bg-pink-50 border-pink-200',
+  "bg-blue-50 border-blue-200",
+  "bg-purple-50 border-purple-200",
+  "bg-pink-50 border-pink-200",
 ];
 
 export interface CapitalCluster {
@@ -18,12 +18,16 @@ export interface CapitalCluster {
   characteristics: string[];
 }
 
-export function computeCapitalClusters(verifiedCompanies: VerifiedCompanyView[]): {
+export function computeCapitalClusters(
+  verifiedCompanies: VerifiedCompanyView[],
+): {
   clusters: CapitalCluster[];
   unclusteredCount: number;
 } {
   const clusterable = verifiedCompanies.filter(
-    (c) => typeof c.lastKnownValuation === 'number' && typeof c.totalFunding === 'number',
+    (c) =>
+      typeof c.lastKnownValuation === "number" &&
+      typeof c.totalFunding === "number",
   );
 
   const data = clusterable.map((c) => ({
@@ -42,7 +46,7 @@ export function computeCapitalClusters(verifiedCompanies: VerifiedCompanyView[])
   for (let iter = 0; iter < 20; iter++) {
     assignments = data.map((point) => {
       const distances = centroids.map((c) =>
-        Math.sqrt((point.x - c.x) ** 2 + (point.y - c.y) ** 2),
+        Math.sqrt((point.x - c.x) ** 2 + (point.y - c.y) ** 2)
       );
       return distances.indexOf(Math.min(...distances));
     });
@@ -58,7 +62,9 @@ export function computeCapitalClusters(verifiedCompanies: VerifiedCompanyView[])
   }
 
   const clusters = centroids.map((centroid, i) => {
-    const members = data.filter((_, j) => assignments[j] === i).map((d) => d.company);
+    const members = data.filter((_, j) => assignments[j] === i).map((d) =>
+      d.company
+    );
     const valuations = members.map((c) => c.lastKnownValuation as number);
     const fundings = members.map((c) => c.totalFunding as number);
     const sectors = Array.from(new Set(members.map((c) => c.sector)));
@@ -70,9 +76,13 @@ export function computeCapitalClusters(verifiedCompanies: VerifiedCompanyView[])
       centroid: { logVal: centroid.x, logFund: centroid.y },
       color: clusterColors[i],
       characteristics: [
-        members.length > 0 && `Median valuation: $${Math.round(ss.median(valuations))}M`,
-        members.length > 0 && `Median funding: $${Math.round(ss.median(fundings))}M`,
-        `Sectors: ${sectors.slice(0, 3).join(', ')}${sectors.length > 3 ? '...' : ''}`,
+        members.length > 0 &&
+        `Median valuation: $${Math.round(ss.median(valuations))}M`,
+        members.length > 0 &&
+        `Median funding: $${Math.round(ss.median(fundings))}M`,
+        `Sectors: ${sectors.slice(0, 3).join(", ")}${
+          sectors.length > 3 ? "..." : ""
+        }`,
       ].filter(Boolean) as string[],
     };
   });

@@ -4,21 +4,21 @@
  *   CLICKHOUSE_URL=... npm run clickhouse:ingest-vcf -- --file ./sample.vcf.gz \
  *     --callset-id cohort-a-sample-1 --study-id brca-panel --sample-id SAMPLE-001
  */
-import process from 'node:process';
-import { createReadStream, mkdirSync, copyFileSync } from 'node:fs';
-import { dirname, basename, join } from 'node:path';
-import { createInterface } from 'node:readline';
-import { createGunzip } from 'node:zlib';
-import { buildObjectUri } from '../src/lib/genomics/objectStorage';
-import { getObjectStorageBackend } from '../src/lib/genomics/variantStoreConfig';
-import { uploadFileToS3 } from '../src/lib/genomics/s3Storage';
+import process from "node:process";
+import { copyFileSync, createReadStream, mkdirSync } from "node:fs";
+import { basename, dirname, join } from "node:path";
+import { createInterface } from "node:readline";
+import { createGunzip } from "node:zlib";
+import { buildObjectUri } from "../src/lib/genomics/objectStorage";
+import { getObjectStorageBackend } from "../src/lib/genomics/variantStoreConfig";
+import { uploadFileToS3 } from "../src/lib/genomics/s3Storage";
 import {
   BATCH_SIZE,
   insertVariantBatch,
   registerCallset,
-} from '../src/lib/genomics/registerCallset';
-import { parseVcfDataLine } from '../src/lib/genomics/vcfStreamParser';
-import type { ParsedVcfVariant } from '../src/lib/genomics/vcfStreamParser';
+} from "../src/lib/genomics/registerCallset";
+import { parseVcfDataLine } from "../src/lib/genomics/vcfStreamParser";
+import type { ParsedVcfVariant } from "../src/lib/genomics/vcfStreamParser";
 
 interface CliArgs {
   file: string;
@@ -32,21 +32,21 @@ function parseArgs(argv: string[]): CliArgs {
   const map = new Map<string, string>();
   for (let i = 0; i < argv.length; i += 1) {
     const token = argv[i];
-    if (token.startsWith('--')) {
-      map.set(token.slice(2), argv[i + 1] ?? '');
+    if (token.startsWith("--")) {
+      map.set(token.slice(2), argv[i + 1] ?? "");
       i += 1;
     }
   }
 
-  const file = map.get('file');
-  const callsetId = map.get('callset-id');
-  const studyId = map.get('study-id');
-  const sampleId = map.get('sample-id');
-  const assembly = map.get('assembly') ?? 'GRCh38';
+  const file = map.get("file");
+  const callsetId = map.get("callset-id");
+  const studyId = map.get("study-id");
+  const sampleId = map.get("sample-id");
+  const assembly = map.get("assembly") ?? "GRCh38";
 
   if (!file || !callsetId || !studyId || !sampleId) {
     console.error(
-      'Usage: npm run clickhouse:ingest-vcf -- --file <path.vcf[.gz]> --callset-id <id> --study-id <id> --sample-id <id> [--assembly GRCh38]',
+      "Usage: npm run clickhouse:ingest-vcf -- --file <path.vcf[.gz]> --callset-id <id> --study-id <id> --sample-id <id> [--assembly GRCh38]",
     );
     process.exit(1);
   }
@@ -54,7 +54,11 @@ function parseArgs(argv: string[]): CliArgs {
   return { file, callsetId, studyId, sampleId, assembly };
 }
 
-function objectKey(studyId: string, callsetId: string, fileName: string): string {
+function objectKey(
+  studyId: string,
+  callsetId: string,
+  fileName: string,
+): string {
   return `${studyId}/${callsetId}/${fileName}`;
 }
 
@@ -64,20 +68,23 @@ async function main() {
   const key = objectKey(args.studyId, args.callsetId, fileName);
 
   let objectUri: string;
-  if (getObjectStorageBackend() === 's3') {
+  if (getObjectStorageBackend() === "s3") {
     objectUri = await uploadFileToS3(args.file, key);
-    console.log('Uploaded to', objectUri);
+    console.log("Uploaded to", objectUri);
   } else {
     const relative = key;
-    const dest = join(process.env.LACUNA_OBJECT_STORAGE_LOCAL_ROOT?.trim() || 'data/variants', relative);
+    const dest = join(
+      process.env.LACUNA_OBJECT_STORAGE_LOCAL_ROOT?.trim() || "data/variants",
+      relative,
+    );
     mkdirSync(dirname(dest), { recursive: true });
     copyFileSync(args.file, dest);
     objectUri = buildObjectUri(relative);
-    console.log('Copied to', dest);
+    console.log("Copied to", dest);
   }
 
   const input = createReadStream(args.file);
-  const lineStream = args.file.endsWith('.gz')
+  const lineStream = args.file.endsWith(".gz")
     ? input.pipe(createGunzip())
     : input;
 

@@ -1,7 +1,14 @@
-import type { VerifiedDataset } from './datasetTypes';
-import { filterGenomicsAcquisitions, isGenomicsRelevantCompany } from './genomicsFilters';
+import type { VerifiedDataset } from "./datasetTypes";
+import {
+  filterGenomicsAcquisitions,
+  isGenomicsRelevantCompany,
+} from "./genomicsFilters";
 
-export type DatasetResource = 'companies' | 'acquisitions' | 'acquirers' | 'all';
+export type DatasetResource =
+  | "companies"
+  | "acquisitions"
+  | "acquirers"
+  | "all";
 
 export interface DatasetSliceOptions {
   resource?: DatasetResource;
@@ -12,10 +19,10 @@ export interface DatasetSliceOptions {
 }
 
 export interface DatasetSliceResult {
-  provenance: VerifiedDataset['provenance'];
-  companies: VerifiedDataset['companies'];
-  acquirers: VerifiedDataset['acquirers'];
-  acquisitions: VerifiedDataset['acquisitions'];
+  provenance: VerifiedDataset["provenance"];
+  companies: VerifiedDataset["companies"];
+  acquirers: VerifiedDataset["acquirers"];
+  acquisitions: VerifiedDataset["acquisitions"];
   meta: {
     resource: DatasetResource;
     limit: number;
@@ -35,7 +42,7 @@ export function sliceVerifiedDataset(
   dataset: VerifiedDataset,
   options: DatasetSliceOptions,
 ): DatasetSliceResult {
-  const resource = options.resource ?? 'all';
+  const resource = options.resource ?? "all";
   const companiesById = new Map(dataset.companies.map((c) => [c.id, c]));
 
   let companies = dataset.companies;
@@ -58,18 +65,15 @@ export function sliceVerifiedDataset(
     acquirers: dataset.acquirers.length,
   };
 
-  const slicedCompanies =
-    resource === 'all' || resource === 'companies'
-      ? paginate(companies, options.limit, options.offset)
-      : [];
-  const slicedAcquisitions =
-    resource === 'all' || resource === 'acquisitions'
-      ? paginate(acquisitions, options.limit, options.offset)
-      : [];
-  const slicedAcquirers =
-    resource === 'all' || resource === 'acquirers'
-      ? paginate(dataset.acquirers, options.limit, options.offset)
-      : [];
+  const slicedCompanies = resource === "all" || resource === "companies"
+    ? paginate(companies, options.limit, options.offset)
+    : [];
+  const slicedAcquisitions = resource === "all" || resource === "acquisitions"
+    ? paginate(acquisitions, options.limit, options.offset)
+    : [];
+  const slicedAcquirers = resource === "all" || resource === "acquirers"
+    ? paginate(dataset.acquirers, options.limit, options.offset)
+    : [];
 
   return {
     provenance: dataset.provenance,

@@ -1,33 +1,42 @@
-import { NextResponse } from 'next/server';
-import { getClientIp, rateLimit } from '@/lib/api/rateLimit';
-import { parsePageParams } from '@/lib/api/pageParams';
-import { listCallsets } from '@/lib/genomics/variantQueries';
-import { requireVariantStore } from '@/lib/genomics/variantStoreGuard';
+import { NextResponse } from "next/server";
+import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
+import { parsePageParams } from "@/lib/api/pageParams";
+import { listCallsets } from "@/lib/genomics/variantQueries";
+import { requireVariantStore } from "@/lib/genomics/variantStoreGuard";
 
 export async function GET(request: Request) {
   const disabled = requireVariantStore();
   if (disabled) return disabled;
 
   const ip = getClientIp(request);
-  const bucket = rateLimit({ key: `genomics-callsets:${ip}`, limit: 60, windowMs: 60_000 });
+  const bucket = rateLimit({
+    key: `genomics-callsets:${ip}`,
+    limit: 60,
+    windowMs: 60_000,
+  });
   if (!bucket.ok) {
     return NextResponse.json(
-      { error: 'Rate limited', retryAt: bucket.resetAtMs },
+      { error: "Rate limited", retryAt: bucket.resetAtMs },
       { status: 429 },
     );
   }
 
   try {
     const url = new URL(request.url);
-    const { limit, offset } = parsePageParams(url.searchParams, { defaultLimit: 25, maxLimit: 200 });
-    const studyId = url.searchParams.get('studyId') ?? undefined;
+    const { limit, offset } = parsePageParams(url.searchParams, {
+      defaultLimit: 25,
+      maxLimit: 200,
+    });
+    const studyId = url.searchParams.get("studyId") ?? undefined;
 
     const page = await listCallsets({ limit, offset, studyId });
     return NextResponse.json(page, {
-      headers: { 'cache-control': 'private, max-age=60' },
+      headers: { "cache-control": "private, max-age=60" },
     });
   } catch (error) {
-    console.error('genomics callsets error:', error);
-    return NextResponse.json({ error: 'Failed to list callsets' }, { status: 500 });
+    console.error("genomics callsets error:", error);
+    return NextResponse.json({ error: "Failed to list callsets" }, {
+      status: 500,
+    });
   }
 }

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import {
   AcquirerPredictionDashboard,
   BayesianCausalAnalysis,
@@ -25,12 +25,12 @@ import {
   ValuationMatrix,
   VariantCallsetBrowser,
   WearablesTracker,
-} from '@/app/lazyDashboard';
-import DataCoverageCard from '@/components/DataCoverageCard';
-import DataProvenanceBanner from '@/components/DataProvenanceBanner';
-import SiteSectionNav from '@/components/SiteSectionNav';
-import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
-import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
+} from "@/app/lazyDashboard";
+import DataCoverageCard from "@/components/DataCoverageCard";
+import DataProvenanceBanner from "@/components/DataProvenanceBanner";
+import SiteSectionNav from "@/components/SiteSectionNav";
+import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 
 export default function HomePage() {
   const {
@@ -49,10 +49,19 @@ export default function HomePage() {
   const totalDealValue = getVerifiedTotalDealValue();
 
   const stats = [
-    { label: 'Companies in our network', value: verifiedCompanies.length.toString() },
-    { label: 'Verified deals', value: verifiedAcquisitions.length.toString() },
-    { label: 'In disclosed value', value: `$${(totalDealValue / 1000).toFixed(1)}B` },
-    { label: 'Public sources cited', value: dataProvenance.sources.length.toString() },
+    {
+      label: "Companies in our network",
+      value: verifiedCompanies.length.toString(),
+    },
+    { label: "Verified deals", value: verifiedAcquisitions.length.toString() },
+    {
+      label: "In disclosed value",
+      value: `$${(totalDealValue / 1000).toFixed(1)}B`,
+    },
+    {
+      label: "Public sources cited",
+      value: dataProvenance.sources.length.toString(),
+    },
   ];
 
   return (
@@ -66,7 +75,9 @@ export default function HomePage() {
             </div>
             <div>
               <h1 className="text-xl font-bold text-lacuna-plum">Lacuna</h1>
-              <p className="text-xs text-lacuna-blue">Illuminating Women&apos;s Health</p>
+              <p className="text-xs text-lacuna-blue">
+                Illuminating Women&apos;s Health
+              </p>
             </div>
           </a>
           <SiteSectionNav />
@@ -85,20 +96,23 @@ export default function HomePage() {
             <CuratedDatasetBanner className="mb-4" />
             <h2 className="text-4xl md:text-5xl font-bold text-lacuna-plum mb-4">
               Making Sense of
-              <span className="lacuna-gradient-text"> Women&apos;s Health M&amp;A</span>
+              <span className="lacuna-gradient-text">
+                Women&apos;s Health M&amp;A
+              </span>
             </h2>
             <p className="text-lg text-lacuna-blue leading-relaxed">
-              Welcome to Lacuna — an educational demo for who&apos;s acquiring whom in
-              women&apos;s health and precision medicine. We combine verified deal data,
-              clinical trial lookup, and health-equity context so students, researchers,
-              and curious readers can explore the landscape with cited methodology — not
-              live market feeds or investment advice.
+              Welcome to Lacuna — an educational demo for who&apos;s acquiring
+              whom in women&apos;s health and precision medicine. We combine
+              verified deal data, clinical trial lookup, and health-equity
+              context so students, researchers, and curious readers can explore
+              the landscape with cited methodology — not live market feeds or
+              investment advice.
             </p>
             <p className="text-sm text-lacuna-blue/70 mt-3 leading-relaxed">
-              Women&apos;s health has been historically underfunded relative to its
-              clinical burden. Lacuna makes that context visible with public filings and
-              documented methods — a learning sandbox under BSL 1.1, not a commercial
-              intelligence product.
+              Women&apos;s health has been historically underfunded relative to
+              its clinical burden. Lacuna makes that context visible with public
+              filings and documented methods — a learning sandbox under BSL 1.1,
+              not a commercial intelligence product.
             </p>
           </div>
         </motion.section>
@@ -125,7 +139,9 @@ export default function HomePage() {
               key={stat.label}
               className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 p-6 hover:shadow-md transition-shadow"
             >
-              <p className="text-3xl font-bold text-lacuna-plum">{stat.value}</p>
+              <p className="text-3xl font-bold text-lacuna-plum">
+                {stat.value}
+              </p>
               <p className="text-sm text-lacuna-blue mt-1">{stat.label}</p>
             </div>
           ))}
@@ -151,8 +167,13 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Who&apos;s Connected to Whom</h3>
-            <p className="text-lacuna-blue">Explore the relationships between acquirers and the women&apos;s health companies they&apos;ve welcomed into their portfolios</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              Who&apos;s Connected to Whom
+            </h3>
+            <p className="text-lacuna-blue">
+              Explore the relationships between acquirers and the women&apos;s
+              health companies they&apos;ve welcomed into their portfolios
+            </p>
           </div>
           <ForceNetwork
             nodes={networkNodes}
@@ -173,29 +194,55 @@ export default function HomePage() {
           />
           <div className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 p-6">
             <CuratedDatasetBanner className="mb-4" />
-            <h3 className="text-lg font-semibold text-lacuna-plum mb-2">What&apos;s Happening Now</h3>
-            <p className="text-sm text-lacuna-blue mb-6">The latest deals shaping the women&apos;s health landscape</p>
+            <h3 className="text-lg font-semibold text-lacuna-plum mb-2">
+              What&apos;s Happening Now
+            </h3>
+            <p className="text-sm text-lacuna-blue mb-6">
+              The latest deals shaping the women&apos;s health landscape
+            </p>
             <div className="space-y-4">
-              {verifiedAcquisitions.slice(0, 5).map((deal: typeof verifiedAcquisitions[0]) => {
-                const target = verifiedCompanies.find((c: typeof verifiedCompanies[0]) => c.id === deal.targetId);
-                const acquirer = networkNodes.find((n: typeof networkNodes[0]) => n.id === deal.acquirerId);
-                return (
-                  <div key={deal.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-0 p-3 bg-lacuna-pink/10 rounded-lg">
-                    <div className="min-w-0">
-                      <p className="font-medium text-lacuna-plum truncate">{target?.name}</p>
-                      <p className="text-xs text-lacuna-blue truncate">{deal.dealType} by {acquirer?.name || deal.acquirerName}</p>
+              {verifiedAcquisitions.slice(0, 5).map(
+                (deal: typeof verifiedAcquisitions[0]) => {
+                  const target = verifiedCompanies.find((
+                    c: typeof verifiedCompanies[0],
+                  ) => c.id === deal.targetId);
+                  const acquirer = networkNodes.find((
+                    n: typeof networkNodes[0],
+                  ) => n.id === deal.acquirerId);
+                  return (
+                    <div
+                      key={deal.id}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-0 p-3 bg-lacuna-pink/10 rounded-lg"
+                    >
+                      <div className="min-w-0">
+                        <p className="font-medium text-lacuna-plum truncate">
+                          {target?.name}
+                        </p>
+                        <p className="text-xs text-lacuna-blue truncate">
+                          {deal.dealType} by{" "}
+                          {acquirer?.name || deal.acquirerName}
+                        </p>
+                      </div>
+                      <div className="sm:text-right shrink-0">
+                        {deal.dealValue
+                          ? (
+                            <p className="font-semibold text-lacuna-plum">
+                              ${deal.dealValue}M
+                            </p>
+                          )
+                          : (
+                            <p className="text-xs text-lacuna-blue/70">
+                              Terms not disclosed
+                            </p>
+                          )}
+                        <p className="text-xs text-lacuna-blue/70">
+                          {deal.announcedDate}
+                        </p>
+                      </div>
                     </div>
-                    <div className="sm:text-right shrink-0">
-                      {deal.dealValue ? (
-                        <p className="font-semibold text-lacuna-plum">${deal.dealValue}M</p>
-                      ) : (
-                        <p className="text-xs text-lacuna-blue/70">Terms not disclosed</p>
-                      )}
-                      <p className="text-xs text-lacuna-blue/70">{deal.announcedDate}</p>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                },
+              )}
             </div>
           </div>
         </motion.section>
@@ -220,13 +267,20 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Clinical Trials Worth Watching</h3>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              Clinical Trials Worth Watching
+            </h3>
             <p className="text-lacuna-blue">
-              A window into active research — women&apos;s health, oncology, genetic markers, and precision medicine trials sourced from ClinicalTrials.gov
+              A window into active research — women&apos;s health, oncology,
+              genetic markers, and precision medicine trials sourced from
+              ClinicalTrials.gov
             </p>
           </div>
           <ClinicalTrialTracker />
-          <p className="mt-3 text-xs text-lacuna-blue/70 text-center" role="note">
+          <p
+            className="mt-3 text-xs text-lacuna-blue/70 text-center"
+            role="note"
+          >
             Trial search is live; M&amp;A counts are curated.
           </p>
         </motion.section>
@@ -240,10 +294,13 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Evidence maturity (descriptive)</h3>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              Evidence maturity (descriptive)
+            </h3>
             <p className="text-lacuna-blue">
-              Trial phase, FDA status, and publication flags scored from public metadata on verified
-              companies — not a validated evidence benchmark.
+              Trial phase, FDA status, and publication flags scored from public
+              metadata on verified companies — not a validated evidence
+              benchmark.
             </p>
           </div>
           <EvidenceMaturityDashboard />
@@ -280,9 +337,13 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Health Equity &amp; the Gaps That Matter</h3>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              Health Equity &amp; the Gaps That Matter
+            </h3>
             <p className="text-lacuna-blue">
-              Understanding where disparities persist — maternal mortality, PCOS, endometriosis — and which companies are positioned to help close them
+              Understanding where disparities persist — maternal mortality,
+              PCOS, endometriosis — and which companies are positioned to help
+              close them
             </p>
           </div>
           <HealthEquityDashboard />
@@ -297,8 +358,14 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Measuring What Matters</h3>
-            <p className="text-lacuna-blue">How much real-world health impact could these acquisitions have? We score each honestly — and tell you what we can&apos;t measure, too</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              Measuring What Matters
+            </h3>
+            <p className="text-lacuna-blue">
+              How much real-world health impact could these acquisitions have?
+              We score each honestly — and tell you what we can&apos;t measure,
+              too
+            </p>
           </div>
           <ImpactOpportunityCard />
         </motion.section>
@@ -312,12 +379,16 @@ export default function HomePage() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Did the Deal Deliver?</h3>
-            <p className="text-lacuna-blue">Checking in on what happened after the acquisition — did the outcomes match the promise?</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              Did the Deal Deliver?
+            </h3>
+            <p className="text-lacuna-blue">
+              Checking in on what happened after the acquisition — did the
+              outcomes match the promise?
+            </p>
           </div>
           <ValidationTracker />
         </motion.section>
-
 
         {/* Network Analysis - Honest Small-N */}
         <motion.section
@@ -328,8 +399,14 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">A Closer Look at the Network</h3>
-            <p className="text-lacuna-blue">How concentrated is the acquirer landscape? We explore market structure with honest statistical measures and transparent confidence intervals</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              A Closer Look at the Network
+            </h3>
+            <p className="text-lacuna-blue">
+              How concentrated is the acquirer landscape? We explore market
+              structure with honest statistical measures and transparent
+              confidence intervals
+            </p>
           </div>
           <NetworkAnalysisHonest />
         </motion.section>
@@ -343,8 +420,13 @@ export default function HomePage() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Getting to Know the Acquirers</h3>
-            <p className="text-lacuna-blue">Who&apos;s been most active, what are they building, and how do their strategies compare?</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              Getting to Know the Acquirers
+            </h3>
+            <p className="text-lacuna-blue">
+              Who&apos;s been most active, what are they building, and how do
+              their strategies compare?
+            </p>
           </div>
           <CompetitiveAnalysisDashboard />
         </motion.section>
@@ -358,8 +440,14 @@ export default function HomePage() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Understanding Cause &amp; Effect</h3>
-            <p className="text-lacuna-blue">Our approach to teasing apart what actually drives acquisition outcomes — with full transparency about what we can and can&apos;t claim</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              Understanding Cause &amp; Effect
+            </h3>
+            <p className="text-lacuna-blue">
+              Our approach to teasing apart what actually drives acquisition
+              outcomes — with full transparency about what we can and can&apos;t
+              claim
+            </p>
           </div>
           <CausalDAG />
         </motion.section>
@@ -373,8 +461,13 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">What the Data Actually Says</h3>
-            <p className="text-lacuna-blue">Sector-level patterns drawn directly from verified deals — no simulations, just what the numbers tell us</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              What the Data Actually Says
+            </h3>
+            <p className="text-lacuna-blue">
+              Sector-level patterns drawn directly from verified deals — no
+              simulations, just what the numbers tell us
+            </p>
           </div>
           <CausalInferenceEngine />
         </motion.section>
@@ -388,8 +481,13 @@ export default function HomePage() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">The Story Over Time</h3>
-            <p className="text-lacuna-blue">When are deals happening, and how has the pace of women&apos;s health M&amp;A evolved?</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              The Story Over Time
+            </h3>
+            <p className="text-lacuna-blue">
+              When are deals happening, and how has the pace of women&apos;s
+              health M&amp;A evolved?
+            </p>
           </div>
           <TemporalValidation />
         </motion.section>
@@ -403,8 +501,13 @@ export default function HomePage() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">How Robust Are Our Findings?</h3>
-            <p className="text-lacuna-blue">We stress-test our models so you know how much to trust them — because honest research means showing the seams</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              How Robust Are Our Findings?
+            </h3>
+            <p className="text-lacuna-blue">
+              We stress-test our models so you know how much to trust them —
+              because honest research means showing the seams
+            </p>
           </div>
           <SensitivityAnalysis />
         </motion.section>
@@ -418,8 +521,14 @@ export default function HomePage() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Small Dataset, Big Questions</h3>
-            <p className="text-lacuna-blue">With {verifiedAcquisitions.length} verified deals, we use Bayesian methods designed for small samples — because every data point matters</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              Small Dataset, Big Questions
+            </h3>
+            <p className="text-lacuna-blue">
+              With {verifiedAcquisitions.length}{" "}
+              verified deals, we use Bayesian methods designed for small samples
+              — because every data point matters
+            </p>
           </div>
           <BayesianCausalAnalysis />
         </motion.section>
@@ -433,8 +542,13 @@ export default function HomePage() {
           className="mb-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Finding Companies Like Each Other</h3>
-            <p className="text-lacuna-blue">Which women&apos;s health companies share similar profiles? Explore natural groupings and see how they compare</p>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              Finding Companies Like Each Other
+            </h3>
+            <p className="text-lacuna-blue">
+              Which women&apos;s health companies share similar profiles?
+              Explore natural groupings and see how they compare
+            </p>
           </div>
           <div className="grid md:grid-cols-2 gap-8 mb-8">
             <ExitPredictor />
@@ -452,10 +566,13 @@ export default function HomePage() {
           className="mb-16 scroll-mt-24"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Reimbursement context (descriptive)</h3>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              Reimbursement context (descriptive)
+            </h3>
             <p className="text-lacuna-blue">
-              Illustrative CMS code mapping and business-model labels on verified companies — exploratory
-              framing, not reimbursement advice or live claims data.
+              Illustrative CMS code mapping and business-model labels on
+              verified companies — exploratory framing, not reimbursement advice
+              or live claims data.
             </p>
           </div>
 
@@ -478,10 +595,13 @@ export default function HomePage() {
           className="mb-16 scroll-mt-24"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold text-lacuna-plum">Strategic acquirer fit (descriptive)</h3>
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              Strategic acquirer fit (descriptive)
+            </h3>
             <p className="text-lacuna-blue">
-              Rule-based match scores from verified deal history and stated acquirer profiles — not a trained
-              prediction model. Optional LLM blurbs are exploratory copy, not validated research.
+              Rule-based match scores from verified deal history and stated
+              acquirer profiles — not a trained prediction model. Optional LLM
+              blurbs are exploratory copy, not validated research.
             </p>
           </div>
 
@@ -496,7 +616,9 @@ export default function HomePage() {
                 <div className="w-6 h-6 lacuna-gradient rounded flex items-center justify-center">
                   <span className="text-white font-bold text-xs">L</span>
                 </div>
-                <span className="text-sm font-medium text-lacuna-plum">Lacuna</span>
+                <span className="text-sm font-medium text-lacuna-plum">
+                  Lacuna
+                </span>
               </div>
               <div className="flex items-center gap-4 text-sm text-lacuna-blue">
                 <a
@@ -528,12 +650,15 @@ export default function HomePage() {
 
             <div className="text-[11px] text-lacuna-blue/50 text-center leading-relaxed max-w-3xl mx-auto">
               <p>
-                © 2026 Lacuna · Made with care for women&apos;s health research · BUSL 1.1 · Open source
+                © 2026 Lacuna · Made with care for women&apos;s health research
+                · BUSL 1.1 · Open source
               </p>
               <p className="mt-1">
-                Built on verified, publicly available data from SEC EDGAR, company press releases, and ClinicalTrials.gov.
-                Built for learning and research — students, journalists, founders, and policy readers exploring
-                women&apos;s health M&amp;A. Not investment advice; not institutional deal intelligence.
+                Built on verified, publicly available data from SEC EDGAR,
+                company press releases, and ClinicalTrials.gov. Built for
+                learning and research — students, journalists, founders, and
+                policy readers exploring women&apos;s health M&amp;A. Not
+                investment advice; not institutional deal intelligence.
               </p>
             </div>
           </div>

@@ -1,9 +1,9 @@
-import { NextResponse } from 'next/server';
-import { getClientIp, rateLimit } from '@/lib/api/rateLimit';
-import { resolveObjectUri } from '@/lib/genomics/objectStorage';
-import { presignS3GetObject } from '@/lib/genomics/s3Storage';
-import { getCallsetById } from '@/lib/genomics/variantQueries';
-import { requireVariantStore } from '@/lib/genomics/variantStoreGuard';
+import { NextResponse } from "next/server";
+import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
+import { resolveObjectUri } from "@/lib/genomics/objectStorage";
+import { presignS3GetObject } from "@/lib/genomics/s3Storage";
+import { getCallsetById } from "@/lib/genomics/variantQueries";
+import { requireVariantStore } from "@/lib/genomics/variantStoreGuard";
 
 interface RouteContext {
   params: Promise<{ callsetId: string }>;
@@ -15,10 +15,14 @@ export async function GET(request: Request, context: RouteContext) {
   if (disabled) return disabled;
 
   const ip = getClientIp(request);
-  const bucket = rateLimit({ key: `genomics-object:${ip}`, limit: 30, windowMs: 60_000 });
+  const bucket = rateLimit({
+    key: `genomics-object:${ip}`,
+    limit: 30,
+    windowMs: 60_000,
+  });
   if (!bucket.ok) {
     return NextResponse.json(
-      { error: 'Rate limited', retryAt: bucket.resetAtMs },
+      { error: "Rate limited", retryAt: bucket.resetAtMs },
       { status: 429 },
     );
   }
@@ -27,7 +31,7 @@ export async function GET(request: Request, context: RouteContext) {
     const { callsetId } = await context.params;
     const callset = await getCallsetById(callsetId);
     if (!callset) {
-      return NextResponse.json({ error: 'Callset not found' }, { status: 404 });
+      return NextResponse.json({ error: "Callset not found" }, { status: 404 });
     }
 
     const resolved = resolveObjectUri(callset.objectUri);
@@ -41,11 +45,13 @@ export async function GET(request: Request, context: RouteContext) {
       presignedUrl,
       presignedExpiresSec: presignedUrl ? 3600 : null,
       note: presignedUrl
-        ? 'Use presignedUrl for HTTPS download; blobs are not streamed through Next.js.'
-        : 'Raw VCF blobs are accessed via object storage — use accessHint for local/S3 CLI.',
+        ? "Use presignedUrl for HTTPS download; blobs are not streamed through Next.js."
+        : "Raw VCF blobs are accessed via object storage — use accessHint for local/S3 CLI.",
     });
   } catch (error) {
-    console.error('genomics object resolve error:', error);
-    return NextResponse.json({ error: 'Failed to resolve object URI' }, { status: 500 });
+    console.error("genomics object resolve error:", error);
+    return NextResponse.json({ error: "Failed to resolve object URI" }, {
+      status: 500,
+    });
   }
 }

@@ -8,4 +8,4 @@ export {
   generateReimbursementInsights,
   generateSectorInsights,
   isAIConfigured,
-} from '@/lib/ai/insights';
+} from "@/lib/ai/insights";

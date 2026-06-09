@@ -42,7 +42,7 @@ export interface CPTCode {
   rvuMalpractice: number;
   totalRVU: number;
   medicareRate: number;
-  status: 'active' | 'inactive' | 'deleted';
+  status: "active" | "inactive" | "deleted";
   effectiveDate: string;
   modifier?: string[];
 }
@@ -52,8 +52,8 @@ export interface HCPCSCode {
   description: string;
   shortDescription: string;
   category: string;
-  status: 'active' | 'inactive';
-  coverageType: 'A' | 'B' | 'C' | 'D' | 'E' | 'M';
+  status: "active" | "inactive";
+  coverageType: "A" | "B" | "C" | "D" | "E" | "M";
   /*
    * A = Services covered
    * B = Services not covered
@@ -69,7 +69,7 @@ export interface ReimbursementData {
   description: string;
   medicareReimbursement: number;
   commercialReimbursement: number;
-  stateVariability: 'low' | 'medium' | 'high';
+  stateVariability: "low" | "medium" | "high";
   payerCoverage: PayerCoverage[];
   rvuTotal: number;
   requiresPriorAuth: boolean;
@@ -79,7 +79,7 @@ export interface ReimbursementData {
 export interface PayerCoverage {
   payer: string;
   covers: boolean;
-  coverageLevel: 'full' | 'partial' | 'case-by-case';
+  coverageLevel: "full" | "partial" | "case-by-case";
   notes?: string;
 }
 
@@ -105,10 +105,10 @@ export interface MatchedCode {
 
 export interface ReimbursementStatus {
   hasCPTCode: boolean;
-  codeType: 'established' | 'new' | 'category3' | 'none';
+  codeType: "established" | "new" | "category3" | "none";
   codeCount: number;
-  reimbursementBreadth: 'medicare-only' | 'multi-payer' | 'global' | 'none';
-  rateCategory: 'low' | 'medium' | 'high' | 'none';
+  reimbursementBreadth: "medicare-only" | "multi-payer" | "global" | "none";
+  rateCategory: "low" | "medium" | "high" | "none";
   estimatedAnnualReimbursement: number;
 }
 
@@ -116,7 +116,7 @@ export interface ValuationImpact {
   reimbursementMultiple: number;
   benchmarkMultiple: number;
   premiumFactor: number;
-  confidence: 'high' | 'medium' | 'low';
+  confidence: "high" | "medium" | "low";
   comparableAnalysis: ComparableCompany[];
 }
 
@@ -128,11 +128,11 @@ export interface ComparableCompany {
   acquisitionPrice?: number;
 }
 
-export type BusinessModel = 
-  | 'insurance-driven'  // B2B payer, strong margins
-  | 'b2c-consumer'      // Limited reimbursement, cash pay
-  | 'hybrid'            // Some insurance, some direct pay
-  | 'unclear';
+export type BusinessModel =
+  | "insurance-driven" // B2B payer, strong margins
+  | "b2c-consumer" // Limited reimbursement, cash pay
+  | "hybrid" // Some insurance, some direct pay
+  | "unclear";
 
 /**
  * Default assumed annual usage per CPT code, used when no real frequency
@@ -160,69 +160,69 @@ export const DEFAULT_ANNUAL_USES_PER_CODE = 100;
 export const SECTOR_REIMBURSEMENT_PATTERNS: Record<string, {
   avgCoverage: number;
   typicalCodes: string[];
-  reimbursementLevel: 'high' | 'medium' | 'low';
+  reimbursementLevel: "high" | "medium" | "low";
   notes: string;
 }> = {
   fertility: {
     avgCoverage: 15,
-    typicalCodes: ['58321', '58322', '58970', '89250'],
-    reimbursementLevel: 'low',
-    notes: 'Most fertility services are cash pay; only diagnostics covered'
+    typicalCodes: ["58321", "58322", "58970", "89250"],
+    reimbursementLevel: "low",
+    notes: "Most fertility services are cash pay; only diagnostics covered",
   },
   maternal_health: {
     avgCoverage: 65,
-    typicalCodes: ['59400', '59510', '59618', '76801', '76805'],
-    reimbursementLevel: 'high',
-    notes: 'Pregnancy and delivery well-covered; prenatal care standard'
+    typicalCodes: ["59400", "59510", "59618", "76801", "76805"],
+    reimbursementLevel: "high",
+    notes: "Pregnancy and delivery well-covered; prenatal care standard",
   },
   mental_health: {
     avgCoverage: 80,
-    typicalCodes: ['90791', '90834', '90837', '96116', '96127'],
-    reimbursementLevel: 'high',
-    notes: 'Mental health parity laws mandate coverage'
+    typicalCodes: ["90791", "90834", "90837", "96116", "96127"],
+    reimbursementLevel: "high",
+    notes: "Mental health parity laws mandate coverage",
   },
   gynecology: {
     avgCoverage: 90,
-    typicalCodes: ['57420', '57421', '58100', '58300', '58558'],
-    reimbursementLevel: 'high',
-    notes: 'Standard procedures well-established with clear CPT codes'
+    typicalCodes: ["57420", "57421", "58100", "58300", "58558"],
+    reimbursementLevel: "high",
+    notes: "Standard procedures well-established with clear CPT codes",
   },
   pelvic_health: {
     avgCoverage: 55,
-    typicalCodes: ['51741', '51798', '57288', '57289'],
-    reimbursementLevel: 'medium',
-    notes: 'Mixed coverage; emerging field with evolving codes'
+    typicalCodes: ["51741", "51798", "57288", "57289"],
+    reimbursementLevel: "medium",
+    notes: "Mixed coverage; emerging field with evolving codes",
   },
   menopause: {
     avgCoverage: 45,
-    typicalCodes: ['99213', '99214', '84443', '82671'],
-    reimbursementLevel: 'medium',
-    notes: 'Hormone therapy and diagnostics covered; wellness limited'
+    typicalCodes: ["99213", "99214", "84443", "82671"],
+    reimbursementLevel: "medium",
+    notes: "Hormone therapy and diagnostics covered; wellness limited",
   },
   contraception: {
     avgCoverage: 85,
-    typicalCodes: ['58300', '58301', 'J7300', 'J7302'],
-    reimbursementLevel: 'high',
-    notes: 'ACA mandates contraceptive coverage without cost sharing'
+    typicalCodes: ["58300", "58301", "J7300", "J7302"],
+    reimbursementLevel: "high",
+    notes: "ACA mandates contraceptive coverage without cost sharing",
   },
   breast_health: {
     avgCoverage: 95,
-    typicalCodes: ['77067', '77063', '19101', '38525'],
-    reimbursementLevel: 'high',
-    notes: 'Screening and diagnostics comprehensive; cancer coverage strong'
+    typicalCodes: ["77067", "77063", "19101", "38525"],
+    reimbursementLevel: "high",
+    notes: "Screening and diagnostics comprehensive; cancer coverage strong",
   },
   wearable_monitoring: {
     avgCoverage: 25,
-    typicalCodes: ['99453', '99454', '99457', '99458'],
-    reimbursementLevel: 'low',
-    notes: 'Remote patient monitoring emerging; limited codes available'
+    typicalCodes: ["99453", "99454", "99457", "99458"],
+    reimbursementLevel: "low",
+    notes: "Remote patient monitoring emerging; limited codes available",
   },
   digital_therapeutics: {
     avgCoverage: 35,
-    typicalCodes: ['98960', '99421', '99422', '99423'],
-    reimbursementLevel: 'medium',
-    notes: 'New category; some codes established but coverage varies'
-  }
+    typicalCodes: ["98960", "99421", "99422", "99423"],
+    reimbursementLevel: "medium",
+    notes: "New category; some codes established but coverage varies",
+  },
 };
 
 /**
@@ -239,19 +239,19 @@ export const SECTOR_REIMBURSEMENT_PATTERNS: Record<string, {
 export const VALUATION_MULTIPLES = {
   reimbursement_rich: {
     multiple: 5.2,
-    description: 'Multiple CPT codes, high RVU, multi-payer',
-    examples: ['Teladoc (acquired Livongo)', 'Ro Health']
+    description: "Multiple CPT codes, high RVU, multi-payer",
+    examples: ["Teladoc (acquired Livongo)", "Ro Health"],
   },
   moderate_reimbursement: {
     multiple: 2.8,
-    description: '1-2 codes, medium RVU, limited payers',
-    examples: ['Modern Fertility', 'Tia']
+    description: "1-2 codes, medium RVU, limited payers",
+    examples: ["Modern Fertility", "Tia"],
   },
   limited_reimbursement: {
     multiple: 1.5,
-    description: 'No CPT codes or consumer-only model',
-    examples: ['Flo', 'Clue', 'Natural Cycles']
-  }
+    description: "No CPT codes or consumer-only model",
+    examples: ["Flo", "Clue", "Natural Cycles"],
+  },
 };
 
 // Cached CPT/HCPCS data store
@@ -279,44 +279,44 @@ class CMSDataStore {
     // Essential women's health CPT codes — CMS MPFS 2024 final rule snapshot
     const essentialCodes: CPTCode[] = [
       {
-        code: '59400',
-        description: 'Obstetrical care, antepartum, delivery, postpartum',
-        category: 'Maternity',
+        code: "59400",
+        description: "Obstetrical care, antepartum, delivery, postpartum",
+        category: "Maternity",
         rvuWork: 29.55,
         rvuPracticeExpense: 12.32,
         rvuMalpractice: 3.21,
         totalRVU: 45.08,
         medicareRate: 1548.64, // 🟢 CMS MPFS 2024 final rule
-        status: 'active',
-        effectiveDate: '2024-01-01' // MPFS 2024 effective date
+        status: "active",
+        effectiveDate: "2024-01-01", // MPFS 2024 effective date
       },
       {
-        code: '76801',
-        description: 'Ultrasound, pregnant uterus, first trimester',
-        category: 'Diagnostics',
+        code: "76801",
+        description: "Ultrasound, pregnant uterus, first trimester",
+        category: "Diagnostics",
         rvuWork: 2.12,
         rvuPracticeExpense: 3.45,
         rvuMalpractice: 0.28,
         totalRVU: 5.85,
         medicareRate: 201.33, // 🟢 CMS MPFS 2024 final rule
-        status: 'active',
-        effectiveDate: '2024-01-01'
+        status: "active",
+        effectiveDate: "2024-01-01",
       },
       {
-        code: '90791',
-        description: 'Psychiatric diagnostic evaluation',
-        category: 'Mental Health',
+        code: "90791",
+        description: "Psychiatric diagnostic evaluation",
+        category: "Mental Health",
         rvuWork: 2.68,
         rvuPracticeExpense: 0.89,
         rvuMalpractice: 0.15,
         totalRVU: 3.72,
         medicareRate: 128.01, // 🟢 CMS MPFS 2024 final rule
-        status: 'active',
-        effectiveDate: '2024-01-01'
-      }
+        status: "active",
+        effectiveDate: "2024-01-01",
+      },
     ];
 
-    essentialCodes.forEach(code => this.cptCodes.set(code.code, code));
+    essentialCodes.forEach((code) => this.cptCodes.set(code.code, code));
     this.isLoaded = true;
   }
 
@@ -385,21 +385,25 @@ export class CMSReimbursementConnector {
   matchProductToCodes(
     productName: string,
     productDescription: string,
-    sector: string
+    sector: string,
   ): MatchedCode[] {
     const matches: MatchedCode[] = [];
-    const searchTerms = this.extractSearchTerms(productName, productDescription, sector);
+    const searchTerms = this.extractSearchTerms(
+      productName,
+      productDescription,
+      sector,
+    );
 
     // Search for matches
     for (const term of searchTerms) {
       const codes = this.searchCPTCodes(term);
-      
+
       for (const code of codes) {
         const confidence = this.calculateMatchConfidence(
           productName,
           productDescription,
           code,
-          sector
+          sector,
         );
 
         if (confidence > 0.3) { // Threshold for relevance
@@ -409,7 +413,7 @@ export class CMSReimbursementConnector {
             matchConfidence: confidence,
             matchReason: `Matched on: ${term}`,
             medicareRate: code.medicareRate,
-            frequency: 1
+            frequency: 1,
           });
         }
       }
@@ -423,29 +427,52 @@ export class CMSReimbursementConnector {
   /**
    * Extract search terms from product info
    */
-  private extractSearchTerms(name: string, description: string, sector: string): string[] {
+  private extractSearchTerms(
+    name: string,
+    description: string,
+    sector: string,
+  ): string[] {
     const terms: string[] = [];
-    
+
     // Add product name keywords
     terms.push(...name.toLowerCase().split(/\s+/));
-    
+
     // Add description keywords
     if (description) {
       terms.push(...description.toLowerCase().split(/\s+/));
     }
-    
+
     // Add sector-specific keywords
     const sectorKeywords: Record<string, string[]> = {
-      fertility: ['fertility', 'ivf', 'insemination', 'egg', 'embryo', 'conception'],
-      maternal_health: ['pregnancy', 'prenatal', 'maternity', 'obstetric', 'delivery'],
-      mental_health: ['therapy', 'counseling', 'psychiatric', 'psychology', 'mental'],
-      gynecology: ['gynecology', 'pap', 'smear', 'exam', 'pelvic'],
-      pelvic_health: ['pelvic', 'incontinence', 'floor', 'bladder'],
-      menopause: ['menopause', 'hormone', 'hot flash', 'estrogen'],
-      contraception: ['contraception', 'birth control', 'iud', 'implant'],
-      breast_health: ['mammogram', 'breast', 'cancer', 'screening'],
-      wearable_monitoring: ['monitoring', 'wearable', 'tracking', 'sensor'],
-      digital_therapeutics: ['digital', 'therapeutic', 'app', 'program']
+      fertility: [
+        "fertility",
+        "ivf",
+        "insemination",
+        "egg",
+        "embryo",
+        "conception",
+      ],
+      maternal_health: [
+        "pregnancy",
+        "prenatal",
+        "maternity",
+        "obstetric",
+        "delivery",
+      ],
+      mental_health: [
+        "therapy",
+        "counseling",
+        "psychiatric",
+        "psychology",
+        "mental",
+      ],
+      gynecology: ["gynecology", "pap", "smear", "exam", "pelvic"],
+      pelvic_health: ["pelvic", "incontinence", "floor", "bladder"],
+      menopause: ["menopause", "hormone", "hot flash", "estrogen"],
+      contraception: ["contraception", "birth control", "iud", "implant"],
+      breast_health: ["mammogram", "breast", "cancer", "screening"],
+      wearable_monitoring: ["monitoring", "wearable", "tracking", "sensor"],
+      digital_therapeutics: ["digital", "therapeutic", "app", "program"],
     };
 
     if (sectorKeywords[sector]) {
@@ -462,36 +489,60 @@ export class CMSReimbursementConnector {
     productName: string,
     productDescription: string,
     cptCode: CPTCode,
-    sector: string
+    sector: string,
   ): number {
     let score = 0;
-    const productText = `${productName} ${productDescription || ''}`.toLowerCase();
+    const productText = `${productName} ${productDescription || ""}`
+      .toLowerCase();
     const codeDesc = cptCode.description.toLowerCase();
 
     // Exact word matches
     const productWords = productText.split(/\s+/);
     const codeWords = codeDesc.split(/\s+/);
-    
-    const commonWords = productWords.filter(w => codeWords.includes(w));
-    score += (commonWords.length / Math.max(productWords.length, codeWords.length)) * 0.4;
+
+    const commonWords = productWords.filter((w) => codeWords.includes(w));
+    score +=
+      (commonWords.length / Math.max(productWords.length, codeWords.length)) *
+      0.4;
 
     // Sector alignment
     const sectorKeywords: Record<string, string[]> = {
-      maternity: ['pregnancy', 'prenatal', 'obstetric', 'delivery', 'antenatal'],
-      gynecology: ['gynecology', 'gynecologic', 'cervical', 'vaginal', 'uterine'],
-      mental: ['psychiatric', 'psychology', 'therapy', 'counseling', 'behavioral'],
-      diagnostic: ['ultrasound', 'imaging', 'diagnostic', 'screening', 'test']
+      maternity: [
+        "pregnancy",
+        "prenatal",
+        "obstetric",
+        "delivery",
+        "antenatal",
+      ],
+      gynecology: [
+        "gynecology",
+        "gynecologic",
+        "cervical",
+        "vaginal",
+        "uterine",
+      ],
+      mental: [
+        "psychiatric",
+        "psychology",
+        "therapy",
+        "counseling",
+        "behavioral",
+      ],
+      diagnostic: ["ultrasound", "imaging", "diagnostic", "screening", "test"],
     };
 
     for (const [key, keywords] of Object.entries(sectorKeywords)) {
-      if (keywords.some(k => productText.includes(k)) && keywords.some(k => codeDesc.includes(k))) {
+      if (
+        keywords.some((k) => productText.includes(k)) &&
+        keywords.some((k) => codeDesc.includes(k))
+      ) {
         score += 0.3;
         break;
       }
     }
 
     // Code activity status
-    if (cptCode.status === 'active') {
+    if (cptCode.status === "active") {
       score += 0.2;
     }
 
@@ -508,7 +559,7 @@ export class CMSReimbursementConnector {
    */
   private deduplicateMatches(matches: MatchedCode[]): MatchedCode[] {
     const seen = new Map<string, MatchedCode>();
-    
+
     for (const match of matches) {
       const existing = seen.get(match.code);
       if (!existing || match.matchConfidence > existing.matchConfidence) {
@@ -518,39 +569,47 @@ export class CMSReimbursementConnector {
         seen.set(match.code, match);
       }
     }
-    
+
     return Array.from(seen.values());
   }
 
   /**
    * Get sector reimbursement benchmark
    */
-  getSectorBenchmark(sector: string): typeof SECTOR_REIMBURSEMENT_PATTERNS[string] | undefined {
-    return SECTOR_REIMBURSEMENT_PATTERNS[sector.toLowerCase().replace(/\s+/g, '_')];
+  getSectorBenchmark(
+    sector: string,
+  ): typeof SECTOR_REIMBURSEMENT_PATTERNS[string] | undefined {
+    return SECTOR_REIMBURSEMENT_PATTERNS[
+      sector.toLowerCase().replace(/\s+/g, "_")
+    ];
   }
 
   /**
    * Calculate reimbursement status for a company
    */
-  calculateReimbursementStatus(matchedCodes: MatchedCode[]): ReimbursementStatus {
-    const activeCodes = matchedCodes.filter(m => m.matchConfidence > 0.5);
-    
+  calculateReimbursementStatus(
+    matchedCodes: MatchedCode[],
+  ): ReimbursementStatus {
+    const activeCodes = matchedCodes.filter((m) => m.matchConfidence > 0.5);
+
     if (activeCodes.length === 0) {
       return {
         hasCPTCode: false,
-        codeType: 'none',
+        codeType: "none",
         codeCount: 0,
-        reimbursementBreadth: 'none',
-        rateCategory: 'none',
-        estimatedAnnualReimbursement: 0
+        reimbursementBreadth: "none",
+        rateCategory: "none",
+        estimatedAnnualReimbursement: 0,
       };
     }
 
     // Determine code type
-    const hasHighValueCodes = activeCodes.some(c => c.medicareRate > 500);
-    const codeType: ReimbursementStatus['codeType'] = 
-      activeCodes.length > 2 ? 'established' : 
-      hasHighValueCodes ? 'established' : 'new';
+    const hasHighValueCodes = activeCodes.some((c) => c.medicareRate > 500);
+    const codeType: ReimbursementStatus["codeType"] = activeCodes.length > 2
+      ? "established"
+      : hasHighValueCodes
+      ? "established"
+      : "new";
 
     // Calculate estimated annual reimbursement
     const totalRate = activeCodes.reduce((sum, c) => sum + c.medicareRate, 0);
@@ -559,17 +618,21 @@ export class CMSReimbursementConnector {
 
     // Determine rate category
     const avgRate = totalRate / activeCodes.length;
-    const rateCategory: ReimbursementStatus['rateCategory'] =
-      avgRate > 1000 ? 'high' :
-      avgRate > 200 ? 'medium' : 'low';
+    const rateCategory: ReimbursementStatus["rateCategory"] = avgRate > 1000
+      ? "high"
+      : avgRate > 200
+      ? "medium"
+      : "low";
 
     return {
       hasCPTCode: true,
       codeType,
       codeCount: activeCodes.length,
-      reimbursementBreadth: activeCodes.length > 1 ? 'multi-payer' : 'medicare-only',
+      reimbursementBreadth: activeCodes.length > 1
+        ? "multi-payer"
+        : "medicare-only",
       rateCategory,
-      estimatedAnnualReimbursement: estimatedAnnual
+      estimatedAnnualReimbursement: estimatedAnnual,
     };
   }
 
@@ -578,18 +641,18 @@ export class CMSReimbursementConnector {
    */
   calculateValuationImpact(status: ReimbursementStatus): ValuationImpact {
     let multiple = 1.5; // Base consumer-only multiple
-    let confidence: 'high' | 'medium' | 'low' = 'low';
+    let confidence: "high" | "medium" | "low" = "low";
 
     if (status.hasCPTCode) {
-      if (status.codeType === 'established' && status.rateCategory === 'high') {
+      if (status.codeType === "established" && status.rateCategory === "high") {
         multiple = 5.2;
-        confidence = 'high';
-      } else if (status.rateCategory === 'medium') {
+        confidence = "high";
+      } else if (status.rateCategory === "medium") {
         multiple = 2.8;
-        confidence = 'medium';
+        confidence = "medium";
       } else {
         multiple = 2.0;
-        confidence = 'medium';
+        confidence = "medium";
       }
     }
 
@@ -598,7 +661,7 @@ export class CMSReimbursementConnector {
       benchmarkMultiple: multiple,
       premiumFactor: multiple / 1.5,
       confidence,
-      comparableAnalysis: this.getComparables(multiple)
+      comparableAnalysis: this.getComparables(multiple),
     };
   }
 
@@ -612,19 +675,62 @@ export class CMSReimbursementConnector {
    */
   private getComparables(targetMultiple: number): ComparableCompany[] {
     const comparables: ComparableCompany[] = [
-      { name: 'Teladoc Health', sector: 'telehealth', reimbursementStatus: 'reimbursement-rich', valuationMultiple: 8.5 },
-      { name: 'Livongo (acquired)', sector: 'chronic care', reimbursementStatus: 'reimbursement-rich', valuationMultiple: 13.8, acquisitionPrice: 18500000000 },
-      { name: 'Ro Health', sector: 'telehealth', reimbursementStatus: 'moderate', valuationMultiple: 3.2 },
-      { name: 'Modern Fertility (acquired)', sector: 'fertility', reimbursementStatus: 'limited', valuationMultiple: 2.5, acquisitionPrice: 225000000 },
-      { name: 'Natural Cycles', sector: 'fertility', reimbursementStatus: 'limited', valuationMultiple: 1.8 },
-      { name: 'Tia', sector: 'womens health', reimbursementStatus: 'moderate', valuationMultiple: 3.0 },
-      { name: 'Parsley Health', sector: 'functional medicine', reimbursementStatus: 'hybrid', valuationMultiple: 2.2 },
-      { name: 'Flo', sector: 'fertility', reimbursementStatus: 'consumer-only', valuationMultiple: 1.4 }
+      {
+        name: "Teladoc Health",
+        sector: "telehealth",
+        reimbursementStatus: "reimbursement-rich",
+        valuationMultiple: 8.5,
+      },
+      {
+        name: "Livongo (acquired)",
+        sector: "chronic care",
+        reimbursementStatus: "reimbursement-rich",
+        valuationMultiple: 13.8,
+        acquisitionPrice: 18500000000,
+      },
+      {
+        name: "Ro Health",
+        sector: "telehealth",
+        reimbursementStatus: "moderate",
+        valuationMultiple: 3.2,
+      },
+      {
+        name: "Modern Fertility (acquired)",
+        sector: "fertility",
+        reimbursementStatus: "limited",
+        valuationMultiple: 2.5,
+        acquisitionPrice: 225000000,
+      },
+      {
+        name: "Natural Cycles",
+        sector: "fertility",
+        reimbursementStatus: "limited",
+        valuationMultiple: 1.8,
+      },
+      {
+        name: "Tia",
+        sector: "womens health",
+        reimbursementStatus: "moderate",
+        valuationMultiple: 3.0,
+      },
+      {
+        name: "Parsley Health",
+        sector: "functional medicine",
+        reimbursementStatus: "hybrid",
+        valuationMultiple: 2.2,
+      },
+      {
+        name: "Flo",
+        sector: "fertility",
+        reimbursementStatus: "consumer-only",
+        valuationMultiple: 1.4,
+      },
     ];
 
     // Sort by closest multiple
-    return comparables.sort((a, b) => 
-      Math.abs(a.valuationMultiple - targetMultiple) - Math.abs(b.valuationMultiple - targetMultiple)
+    return comparables.sort((a, b) =>
+      Math.abs(a.valuationMultiple - targetMultiple) -
+      Math.abs(b.valuationMultiple - targetMultiple)
     ).slice(0, 4);
   }
 }
@@ -633,7 +739,9 @@ export class CMSReimbursementConnector {
 export const cmsConnector = new CMSReimbursementConnector();
 
 // Helper function to initialize connector
-export async function initializeCMSConnector(): Promise<CMSReimbursementConnector> {
+export async function initializeCMSConnector(): Promise<
+  CMSReimbursementConnector
+> {
   const connector = new CMSReimbursementConnector();
   await connector.initialize();
   return connector;

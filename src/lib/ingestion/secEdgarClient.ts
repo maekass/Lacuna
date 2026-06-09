@@ -1,4 +1,4 @@
-import process from 'node:process';
+import process from "node:process";
 
 /**
  * SEC EDGAR read-only client for acquisition filing discovery.
@@ -8,19 +8,19 @@ import process from 'node:process';
  * Requires SEC_EDGAR_USER_AGENT env (e.g. "Lacuna Research you@example.com").
  */
 
-const SEC_DATA_BASE = 'https://data.sec.gov';
-const SEC_TICKERS_URL = 'https://www.sec.gov/files/company_tickers.json';
-const SEC_ARCHIVES_BASE = 'https://www.sec.gov/Archives/edgar/data';
+const SEC_DATA_BASE = "https://data.sec.gov";
+const SEC_TICKERS_URL = "https://www.sec.gov/files/company_tickers.json";
+const SEC_ARCHIVES_BASE = "https://www.sec.gov/Archives/edgar/data";
 
 const ACQUISITION_KEYWORDS = [
-  'acquisition',
-  'acquire',
-  'merger',
-  'merge',
-  'purchase agreement',
-  'definitive agreement',
-  'asset purchase',
-  'business combination',
+  "acquisition",
+  "acquire",
+  "merger",
+  "merge",
+  "purchase agreement",
+  "definitive agreement",
+  "asset purchase",
+  "business combination",
 ];
 
 export interface SecTickerEntry {
@@ -73,22 +73,28 @@ function getUserAgent(): string {
 function secFetch(url: string): Promise<Response> {
   return fetch(url, {
     headers: {
-      Accept: 'application/json',
-      'User-Agent': getUserAgent(),
+      Accept: "application/json",
+      "User-Agent": getUserAgent(),
     },
   });
 }
 
 export function padCik(cik: number): string {
-  return String(cik).padStart(10, '0');
+  return String(cik).padStart(10, "0");
 }
 
 function stripAccessionDashes(accession: string): string {
-  return accession.replace(/-/g, '');
+  return accession.replace(/-/g, "");
 }
 
-export function buildFilingUrl(cik: number, accessionNumber: string, primaryDocument: string): string {
-  return `${SEC_ARCHIVES_BASE}/${cik}/${stripAccessionDashes(accessionNumber)}/${primaryDocument}`;
+export function buildFilingUrl(
+  cik: number,
+  accessionNumber: string,
+  primaryDocument: string,
+): string {
+  return `${SEC_ARCHIVES_BASE}/${cik}/${
+    stripAccessionDashes(accessionNumber)
+  }/${primaryDocument}`;
 }
 
 function matchesAcquisition(text: string): string[] {
@@ -118,7 +124,9 @@ export async function loadSecTickerMap(): Promise<Map<string, SecTickerEntry>> {
   return tickerCache;
 }
 
-export async function resolveTicker(ticker: string): Promise<SecTickerEntry | undefined> {
+export async function resolveTicker(
+  ticker: string,
+): Promise<SecTickerEntry | undefined> {
   const map = await loadSecTickerMap();
   return map.get(ticker.toUpperCase());
 }
@@ -128,11 +136,13 @@ export async function fetchRecentFilings(
   cik: number,
   options: { forms?: string[]; sinceDate?: string; limit?: number } = {},
 ): Promise<SecFilingHit[]> {
-  const { forms = ['8-K'], sinceDate, limit = 50 } = options;
+  const { forms = ["8-K"], sinceDate, limit = 50 } = options;
   const url = `${SEC_DATA_BASE}/submissions/CIK${padCik(cik)}.json`;
   const response = await secFetch(url);
   if (!response.ok) {
-    throw new Error(`SEC submissions failed for CIK ${cik}: ${response.status}`);
+    throw new Error(
+      `SEC submissions failed for CIK ${cik}: ${response.status}`,
+    );
   }
 
   const data = (await response.json()) as SubmissionsJson;
@@ -146,7 +156,7 @@ export async function fetchRecentFilings(
     const filingDate = recent.filingDate[i];
     if (sinceDate && filingDate < sinceDate) continue;
 
-    const description = recent.primaryDocDescription[i] ?? '';
+    const description = recent.primaryDocDescription[i] ?? "";
     const matchedKeywords = matchesAcquisition(description);
     if (matchedKeywords.length === 0) continue;
 
@@ -154,7 +164,7 @@ export async function fetchRecentFilings(
     const primaryDocument = recent.primaryDocument[i];
 
     hits.push({
-      ticker: '',
+      ticker: "",
       cik: String(cik),
       companyName: data.name,
       form,
@@ -175,7 +185,10 @@ export async function scanAcquisitionFilings(
   tickers: string[],
   options: { sinceDate?: string; limitPerTicker?: number } = {},
 ): Promise<SecFilingHit[]> {
-  const { sinceDate = `${new Date().getFullYear() - 3}-01-01`, limitPerTicker = 20 } = options;
+  const {
+    sinceDate = `${new Date().getFullYear() - 3}-01-01`,
+    limitPerTicker = 20,
+  } = options;
   const results: SecFilingHit[] = [];
 
   for (const ticker of tickers) {
@@ -183,13 +196,17 @@ export async function scanAcquisitionFilings(
     if (!entry) continue;
 
     const filings = await fetchRecentFilings(entry.cik, {
-      forms: ['8-K'],
+      forms: ["8-K"],
       sinceDate,
       limit: limitPerTicker,
     });
 
     for (const filing of filings) {
-      results.push({ ...filing, ticker: entry.ticker, companyName: entry.title });
+      results.push({
+        ...filing,
+        ticker: entry.ticker,
+        companyName: entry.title,
+      });
     }
 
     // SEC fair access: stay under 10 req/s
@@ -201,28 +218,34 @@ export async function scanAcquisitionFilings(
 
 export function formatHitsAsCsvRows(hits: SecFilingHit[]): string[] {
   const header =
-    'status,target_name,acquirer_name,acquirer_ticker,announced_date,closed_date,deal_type,deal_value_millions,deal_value_note,primary_source_url,secondary_source_url,strategic_rationale,inclusion_notes,reviewed_by,reviewed_at';
+    "status,target_name,acquirer_name,acquirer_ticker,announced_date,closed_date,deal_type,deal_value_millions,deal_value_note,primary_source_url,secondary_source_url,strategic_rationale,inclusion_notes,reviewed_by,reviewed_at";
   const rows = [header];
 
   for (const hit of hits) {
     rows.push(
       [
-        'pending',
-        '',
+        "pending",
+        "",
         csvEscape(hit.companyName),
         hit.ticker,
         hit.filingDate,
-        '',
-        'Acquisition',
-        '',
-        csvEscape(`SEC ${hit.form} candidate — verify target and terms (${hit.matchedKeywords.join(', ')})`),
+        "",
+        "Acquisition",
+        "",
+        csvEscape(
+          `SEC ${hit.form} candidate — verify target and terms (${
+            hit.matchedKeywords.join(", ")
+          })`,
+        ),
         csvEscape(hit.filingUrl),
-        '',
+        "",
         csvEscape(hit.description.slice(0, 200)),
-        csvEscape(`Auto-discovered ${hit.form} ${hit.accessionNumber}; human review required`),
-        '',
-        '',
-      ].join(','),
+        csvEscape(
+          `Auto-discovered ${hit.form} ${hit.accessionNumber}; human review required`,
+        ),
+        "",
+        "",
+      ].join(","),
     );
   }
 

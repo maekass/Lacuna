@@ -1,4 +1,4 @@
-import type { VerifiedDataset } from './datasetTypes';
+import type { VerifiedDataset } from "./datasetTypes";
 
 export interface VerifiedCompanyView {
   readonly id: string;
@@ -41,11 +41,11 @@ export interface VerifiedDerivedData {
   verifiedCompanies: VerifiedCompanyView[];
   verifiedAcquisitions: VerifiedAcquisitionView[];
   verifiedAcquirers: VerifiedAcquirerView[];
-  dataProvenance: VerifiedDataset['provenance'];
+  dataProvenance: VerifiedDataset["provenance"];
   getVerifiedNetworkNodes: () => Array<{
     id: string;
     name: string;
-    type: 'target' | 'acquirer';
+    type: "target" | "acquirer";
     sector: string;
     stage: string;
     valuation: number;
@@ -61,17 +61,24 @@ export interface VerifiedDerivedData {
   getVerifiedDealsByYear: () => Array<{ year: number; count: number }>;
 }
 
-export function buildVerifiedDerivedData(dataset: VerifiedDataset): VerifiedDerivedData {
-  const verifiedCompanies: VerifiedCompanyView[] = dataset.companies.map((c) => ({
+export function buildVerifiedDerivedData(
+  dataset: VerifiedDataset,
+): VerifiedDerivedData {
+  const verifiedCompanies: VerifiedCompanyView[] = dataset.companies.map((
+    c,
+  ) => ({
     ...c,
     sources: c.sources ?? [],
   }));
 
-  const verifiedAcquisitions: VerifiedAcquisitionView[] = dataset.acquisitions.map((d) => ({
-    ...d,
-  }));
+  const verifiedAcquisitions: VerifiedAcquisitionView[] = dataset.acquisitions
+    .map((d) => ({
+      ...d,
+    }));
 
-  const verifiedAcquirers: VerifiedAcquirerView[] = dataset.acquirers.map((a) => ({
+  const verifiedAcquirers: VerifiedAcquirerView[] = dataset.acquirers.map((
+    a,
+  ) => ({
     ...a,
   }));
 
@@ -86,7 +93,7 @@ export function buildVerifiedDerivedData(dataset: VerifiedDataset): VerifiedDeri
       ...verifiedCompanies.map((c) => ({
         id: c.id,
         name: c.name,
-        type: 'target' as const,
+        type: "target" as const,
         sector: c.sector,
         stage: c.stage,
         valuation: c.lastKnownValuation ?? 0,
@@ -94,9 +101,9 @@ export function buildVerifiedDerivedData(dataset: VerifiedDataset): VerifiedDeri
       ...verifiedAcquirers.map((a) => ({
         id: a.id,
         name: a.name,
-        type: 'acquirer' as const,
+        type: "acquirer" as const,
         sector: a.sector,
-        stage: 'Acquirer' as const,
+        stage: "Acquirer" as const,
         valuation: 0,
       })),
     ],
@@ -109,13 +116,19 @@ export function buildVerifiedDerivedData(dataset: VerifiedDataset): VerifiedDeri
         date: deal.announcedDate,
       })),
     getVerifiedTotalDealValue: () =>
-      verifiedAcquisitions.reduce((sum, deal) => sum + (deal.dealValue ?? 0), 0),
+      verifiedAcquisitions.reduce(
+        (sum, deal) => sum + (deal.dealValue ?? 0),
+        0,
+      ),
     getVerifiedDealsByYear: () => {
-      const yearMap = verifiedAcquisitions.reduce<Record<number, number>>((acc, deal) => {
-        const year = new Date(deal.announcedDate).getFullYear();
-        acc[year] = (acc[year] ?? 0) + 1;
-        return acc;
-      }, {});
+      const yearMap = verifiedAcquisitions.reduce<Record<number, number>>(
+        (acc, deal) => {
+          const year = new Date(deal.announcedDate).getFullYear();
+          acc[year] = (acc[year] ?? 0) + 1;
+          return acc;
+        },
+        {},
+      );
       return Object.entries(yearMap)
         .map(([year, count]) => ({ year: parseInt(year, 10), count }))
         .sort((a, b) => a.year - b.year);

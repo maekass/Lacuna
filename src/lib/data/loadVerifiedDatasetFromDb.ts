@@ -1,12 +1,12 @@
-import { query } from './dbClient';
+import { query } from "./dbClient";
 import {
-  mapRowsToVerifiedDataset,
-  type AcquisitionRow,
   type AcquirerRow,
+  type AcquisitionRow,
   type CompanyRow,
+  mapRowsToVerifiedDataset,
   type ProvenanceRow,
-} from './mapVerifiedDataset';
-import type { VerifiedDataset } from './datasetTypes';
+} from "./mapVerifiedDataset";
+import type { VerifiedDataset } from "./datasetTypes";
 
 const PROVENANCE_SQL = `
   SELECT last_updated, purpose, disclaimer, sources, notes
@@ -41,7 +41,7 @@ export async function loadProvenanceRow(): Promise<ProvenanceRow> {
   const provenanceRows = await query<ProvenanceRow>(PROVENANCE_SQL, [1]);
   const provenance = provenanceRows[0];
   if (!provenance) {
-    throw new Error('dataset_provenance row missing — run npm run db:import');
+    throw new Error("dataset_provenance row missing — run npm run db:import");
   }
   return provenance;
 }
@@ -55,7 +55,12 @@ export async function loadVerifiedDatasetFromDb(): Promise<VerifiedDataset> {
     query<AcquisitionRow>(ACQUISITIONS_SQL),
   ]);
 
-  return mapRowsToVerifiedDataset(provenance, companies, acquirers, acquisitions);
+  return mapRowsToVerifiedDataset(
+    provenance,
+    companies,
+    acquirers,
+    acquisitions,
+  );
 }
 
 export interface PaginatedQuery {
@@ -74,7 +79,9 @@ const GENOMICS_WHERE = `
 `;
 
 /** Paginated acquirer load. */
-export function loadAcquirersPage(queryOpts: PaginatedQuery): Promise<AcquirerRow[]> {
+export function loadAcquirersPage(
+  queryOpts: PaginatedQuery,
+): Promise<AcquirerRow[]> {
   return query<AcquirerRow>(
     `
       SELECT id, name, ticker, sector, hq
@@ -87,9 +94,9 @@ export function loadAcquirersPage(queryOpts: PaginatedQuery): Promise<AcquirerRo
 }
 
 export function countAcquirers(): Promise<number> {
-  return query<{ count: string }>(`SELECT COUNT(*)::text AS count FROM acquirers`).then((rows) =>
-    Number(rows[0]?.count ?? 0),
-  );
+  return query<{ count: string }>(
+    `SELECT COUNT(*)::text AS count FROM acquirers`,
+  ).then((rows) => Number(rows[0]?.count ?? 0));
 }
 
 /** Count companies with optional sector / genomics filters. */
@@ -103,14 +110,19 @@ export function countCompaniesPage(queryOpts: PaginatedQuery): Promise<number> {
   if (queryOpts.genomics) {
     clauses.push(GENOMICS_WHERE);
   }
-  const where = clauses.length ? `WHERE ${clauses.join(' AND ')}` : '';
-  return query<{ count: string }>(`SELECT COUNT(*)::text AS count FROM companies c ${where}`, params).then(
+  const where = clauses.length ? `WHERE ${clauses.join(" AND ")}` : "";
+  return query<{ count: string }>(
+    `SELECT COUNT(*)::text AS count FROM companies c ${where}`,
+    params,
+  ).then(
     (rows) => Number(rows[0]?.count ?? 0),
   );
 }
 
 /** Paginated company load — avoids full-table reads for large catalogs. */
-export function loadCompaniesPage(queryOpts: PaginatedQuery): Promise<CompanyRow[]> {
+export function loadCompaniesPage(
+  queryOpts: PaginatedQuery,
+): Promise<CompanyRow[]> {
   const params: unknown[] = [];
   const clauses: string[] = [];
   if (queryOpts.sector) {
@@ -120,7 +132,7 @@ export function loadCompaniesPage(queryOpts: PaginatedQuery): Promise<CompanyRow
   if (queryOpts.genomics) {
     clauses.push(GENOMICS_WHERE);
   }
-  const where = clauses.length ? `WHERE ${clauses.join(' AND ')}` : '';
+  const where = clauses.length ? `WHERE ${clauses.join(" AND ")}` : "";
   params.push(queryOpts.limit, queryOpts.offset);
   const limitIdx = params.length - 1;
   const offsetIdx = params.length;
@@ -139,7 +151,9 @@ export function loadCompaniesPage(queryOpts: PaginatedQuery): Promise<CompanyRow
 }
 
 /** Paginated acquisitions — optional sector / genomics filter via target company join. */
-export function loadAcquisitionsPage(queryOpts: PaginatedQuery): Promise<AcquisitionRow[]> {
+export function loadAcquisitionsPage(
+  queryOpts: PaginatedQuery,
+): Promise<AcquisitionRow[]> {
   const params: unknown[] = [];
   const clauses: string[] = [];
   if (queryOpts.sector) {
@@ -149,7 +163,7 @@ export function loadAcquisitionsPage(queryOpts: PaginatedQuery): Promise<Acquisi
   if (queryOpts.genomics) {
     clauses.push(GENOMICS_WHERE);
   }
-  const where = clauses.length ? `WHERE ${clauses.join(' AND ')}` : '';
+  const where = clauses.length ? `WHERE ${clauses.join(" AND ")}` : "";
   params.push(queryOpts.limit, queryOpts.offset);
   const limitIdx = params.length - 1;
   const offsetIdx = params.length;
@@ -169,7 +183,9 @@ export function loadAcquisitionsPage(queryOpts: PaginatedQuery): Promise<Acquisi
   );
 }
 
-export function countAcquisitionsPage(queryOpts: PaginatedQuery): Promise<number> {
+export function countAcquisitionsPage(
+  queryOpts: PaginatedQuery,
+): Promise<number> {
   const params: unknown[] = [];
   const clauses: string[] = [];
   if (queryOpts.sector) {
@@ -179,7 +195,7 @@ export function countAcquisitionsPage(queryOpts: PaginatedQuery): Promise<number
   if (queryOpts.genomics) {
     clauses.push(GENOMICS_WHERE);
   }
-  const where = clauses.length ? `WHERE ${clauses.join(' AND ')}` : '';
+  const where = clauses.length ? `WHERE ${clauses.join(" AND ")}` : "";
   return query<{ count: string }>(
     `
       SELECT COUNT(*)::text AS count
@@ -192,7 +208,9 @@ export function countAcquisitionsPage(queryOpts: PaginatedQuery): Promise<number
 }
 
 /** Filter acquisitions by company sector (parameterized). */
-export function loadAcquisitionsBySector(sector: string): Promise<AcquisitionRow[]> {
+export function loadAcquisitionsBySector(
+  sector: string,
+): Promise<AcquisitionRow[]> {
   return query<AcquisitionRow>(
     `
       SELECT

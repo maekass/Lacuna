@@ -20,7 +20,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Lacuna — Women's Health M&A Education Demo | Verified Deals & Analytics",
+  title:
+    "Lacuna — Women's Health M&A Education Demo | Verified Deals & Analytics",
   description:
     "Open educational demo for women's health M&A: curated verified deals, D3 network visualization, descriptive analytics, and health-equity context from public filings. Not investment advice or commercial deal intelligence — BSL 1.1.",
   keywords: [
@@ -98,7 +99,10 @@ export default function RootLayout({
               },
               license: "https://github.com/maekass/Lacuna/blob/main/LICENSE",
               about: [
-                { "@type": "Thing", name: "Women's Health Mergers and Acquisitions" },
+                {
+                  "@type": "Thing",
+                  name: "Women's Health Mergers and Acquisitions",
+                },
                 { "@type": "Thing", name: "FemTech" },
                 { "@type": "Thing", name: "Precision Medicine" },
                 { "@type": "Thing", name: "Health Equity" },

@@ -1,4 +1,4 @@
-export type DataMode = 'static' | 'db';
+export type DataMode = "static" | "db";
 
 export interface VerifiedDataset {
   provenance: {
@@ -44,4 +44,3 @@ export interface VerifiedDataset {
     strategicRationale: string;
   }>;
 }
-

@@ -53,34 +53,44 @@ SEO Meta Description: Lacuna — educational women's health M&A demo. Curated ve
 
 ## Overview
 
-**Lacuna** is a **research and education demo**: a curated, source-linked snapshot of women's health M&A (58 verified deals), rendered as D3 network views and **descriptive** analytics with published methodology.
+**Lacuna** is a **research and education demo**: a curated, source-linked
+snapshot of women's health M&A (58 verified deals), rendered as D3 network views
+and **descriptive** analytics with published methodology.
 
-| Claim | Reality |
-|-------|---------|
-| Deal data | Static `dataset.verified.json` (manual verification from SEC, press, filings) |
-| Scores & “predictors” | Deterministic rules and small-*n* statistics — [MODEL_CARD.md](docs/MODEL_CARD.md) |
-| “ML” / TensorFlow | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app |
-| Server LLM | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev) |
-| Clinical trials panel | Live ClinicalTrials.gov search; **M&A panels** still use the curated dataset |
-| Production intelligence | **No** — not PitchBook, not a data SLA, not investment advice |
+| Claim                   | Reality                                                                                 |
+| ----------------------- | --------------------------------------------------------------------------------------- |
+| Deal data               | Static `dataset.verified.json` (manual verification from SEC, press, filings)           |
+| Scores & “predictors”   | Deterministic rules and small-_n_ statistics — [MODEL_CARD.md](docs/MODEL_CARD.md)      |
+| “ML” / TensorFlow       | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app               |
+| Server LLM              | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev) |
+| Clinical trials panel   | Live ClinicalTrials.gov search; **M&A panels** still use the curated dataset            |
+| Production intelligence | **No** — not PitchBook, not a data SLA, not investment advice                           |
 
-Open source under [BSL 1.1](LICENSE) for coursework, journalism, and self-hosted exploration. Commercial competitive products need a separate license — [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu).
+Open source under [BSL 1.1](LICENSE) for coursework, journalism, and self-hosted
+exploration. Commercial competitive products need a separate license —
+[mps5cy@virginia.edu](mailto:mps5cy@virginia.edu).
 
 Portfolio project by [Mae Kass](https://github.com/maekass).
 
-**Deployment:** The analytics product runs on **Vercel** (this repo). A separate **Framer** site is for brand and narrative only, with one primary CTA into the live demo — see [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md) and the [framer/](framer/) build kit.
+**Deployment:** The analytics product runs on **Vercel** (this repo). A separate
+**Framer** site is for brand and narrative only, with one primary CTA into the
+live demo — see [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md) and the
+[framer/](framer/) build kit.
 
 ---
 
 ## What is Lacuna?
 
-An open-source **educational sandbox** for exploring verified women's health / FemTech M&A:
+An open-source **educational sandbox** for exploring verified women's health /
+FemTech M&A:
 
 - **D3.js** force-directed acquirer–target graphs
 - **Deal flow & valuation** charts (curated counts and disclosed values)
-- **Descriptive scoring** (factor weights, cosine similarity, k-means — no trained forecast models in the UI)
+- **Descriptive scoring** (factor weights, cosine similarity, k-means — no
+  trained forecast models in the UI)
 - **ClinicalTrials.gov** lookup (live API; separate from deal JSON)
-- **Health-equity context** with cited disparity statistics (descriptive, not allocation advice)
+- **Health-equity context** with cited disparity statistics (descriptive, not
+  allocation advice)
 
 Every analytical panel in the app shows the provenance line above.
 
@@ -90,12 +100,12 @@ Every analytical panel in the app shows the provenance line above.
 
 **[lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app)**
 
-| Resource | Link |
-|----------|------|
+| Resource        | Link                                                           |
+| --------------- | -------------------------------------------------------------- |
 | **Application** | [lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app) |
-| **Repository** | [github.com/maekass/Lacuna](https://github.com/maekass/Lacuna) |
-| **Methodology** | [docs/MODEL_CARD.md](docs/MODEL_CARD.md) |
-| **License** | [BSL 1.1](LICENSE) → Apache 2.0 May 2030 |
+| **Repository**  | [github.com/maekass/Lacuna](https://github.com/maekass/Lacuna) |
+| **Methodology** | [docs/MODEL_CARD.md](docs/MODEL_CARD.md)                       |
+| **License**     | [BSL 1.1](LICENSE) → Apache 2.0 May 2030                       |
 
 ---
 
@@ -103,59 +113,74 @@ Every analytical panel in the app shows the provenance line above.
 
 ### Verified deal explorer
 
-- **58 verified acquisitions** (fertility, oncology, diagnostics, menopause, pelvic health, precision medicine)
-- Acquirers include Hologic, KKR, Pfizer, Gilead, Boston Scientific, and others named in sources
+- **58 verified acquisitions** (fertility, oncology, diagnostics, menopause,
+  pelvic health, precision medicine)
+- Acquirers include Hologic, KKR, Pfizer, Gilead, Boston Scientific, and others
+  named in sources
 - Dataset v5 · updated per `provenance.lastUpdated` in JSON
-- Sources: SEC EDGAR, press releases, investor relations (see [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md))
+- Sources: SEC EDGAR, press releases, investor relations (see
+  [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md))
 
 ### Interactive network (`ForceNetwork.tsx`)
 
-D3 force-directed graph: sector colors, deal-type edges, valuation-scaled nodes. Methodology: [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md).
+D3 force-directed graph: sector colors, deal-type edges, valuation-scaled nodes.
+Methodology:
+[NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md).
 
 ### Deal flow (`DealFlowChart.tsx`)
 
-Year-over-year counts from verified `announcedDate` — animated bars, no synthetic deal generator.
+Year-over-year counts from verified `announcedDate` — animated bars, no
+synthetic deal generator.
 
 ### Valuation matrix (`ValuationMatrix.tsx`)
 
-Sector × stage heatmap using disclosed values only; cells show company counts and averages.
+Sector × stage heatmap using disclosed values only; cells show company counts
+and averages.
 
 ---
 
 ## Descriptive analytics (heuristics, not trained models)
 
-> Curated dataset · n=58 verified deals · Not live market data · Scores are descriptive, not forecasts.
+> Curated dataset · n=58 verified deals · Not live market data · Scores are
+> descriptive, not forecasts.
 
 ### Acquisition likelihood indicators (`ExitPredictor.tsx`)
 
-Transparent factor scoring for **non-acquired** companies in the verified set. Fixed weights, full disclosure in UI and [MODEL_CARD.md](docs/MODEL_CARD.md). **Not** a predictive model; no TensorFlow.
+Transparent factor scoring for **non-acquired** companies in the verified set.
+Fixed weights, full disclosure in UI and [MODEL_CARD.md](docs/MODEL_CARD.md).
+**Not** a predictive model; no TensorFlow.
 
 ### Company similarity (`CompanySimilarity.tsx`)
 
-8-D feature vectors, inline cosine similarity — “companies like this” for exploration.
+8-D feature vectors, inline cosine similarity — “companies like this” for
+exploration.
 
 ### Clustering (`ClusteringAnalysis.tsx`)
 
-k-means on valuation × employees — descriptive segments (Emerging / Growth / Late-stage labels).
+k-means on valuation × employees — descriptive segments (Emerging / Growth /
+Late-stage labels).
 
 ### Optional server narratives ([INFERENCE.md](docs/INFERENCE.md))
 
-- UI blurbs via `POST /api/ai/insights` → Vercel AI Gateway (`anthropic/claude-sonnet-4` slug).
-- Exploratory copy only — heuristic scores on the curated dataset remain authoritative.
+- UI blurbs via `POST /api/ai/insights` → Vercel AI Gateway
+  (`anthropic/claude-sonnet-4` slug).
+- Exploratory copy only — heuristic scores on the curated dataset remain
+  authoritative.
 
 ---
 
 ## Health Equity & Black Women's Health
 
-Descriptive context on disease areas with documented disparities and public market-size estimates — for learning, not buy/sell recommendations:
+Descriptive context on disease areas with documented disparities and public
+market-size estimates — for learning, not buy/sell recommendations:
 
-| Disease | Disparity (cited in docs) | Public market-size estimate |
-|---------|---------------------------|----------------------------|
-| Maternal Health | Higher mortality disparity | $12B |
-| Uterine Fibroids | High prevalence | $34B |
-| Lupus | Higher prevalence | $8B |
-| Sickle Cell Disease | Population concentration | $5B |
-| Cardiovascular Disease | Higher mortality | $15B |
+| Disease                | Disparity (cited in docs)  | Public market-size estimate |
+| ---------------------- | -------------------------- | --------------------------- |
+| Maternal Health        | Higher mortality disparity | $12B                        |
+| Uterine Fibroids       | High prevalence            | $34B                        |
+| Lupus                  | Higher prevalence          | $8B                         |
+| Sickle Cell Disease    | Population concentration   | $5B                         |
+| Cardiovascular Disease | Higher mortality           | $15B                        |
 
 See [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md) for scoring limits.
 
@@ -163,7 +188,8 @@ See [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md) for scoring limits.
 
 ## Clinical Trials Integration
 
-- **Live**: `/api/clinical-trials` → ClinicalTrials.gov API v2 (search, batch lookup)
+- **Live**: `/api/clinical-trials` → ClinicalTrials.gov API v2 (search, batch
+  lookup)
 - **Curated M&A**: unchanged — still `dataset.verified.json`
 
 Do not conflate live trial search volume with verified deal coverage.
@@ -174,14 +200,17 @@ Do not conflate live trial search volume with verified deal coverage.
 
 Large VCF/gVCF call sets use a **two-tier** layout (off by default on Vercel):
 
-| Tier | Technology | Contents |
-|------|------------|----------|
-| Object storage | Local `data/variants/` or S3 | Multi-GB raw VCF blobs |
-| Variant catalog | ClickHouse | Callset metadata + queryable variant summaries |
+| Tier            | Technology                   | Contents                                       |
+| --------------- | ---------------------------- | ---------------------------------------------- |
+| Object storage  | Local `data/variants/` or S3 | Multi-GB raw VCF blobs                         |
+| Variant catalog | ClickHouse                   | Callset metadata + queryable variant summaries |
 
-- **Dashboard:** `VariantCallsetBrowser` — browse callsets, filter by gene, presigned S3 download when configured
-- **APIs:** `/api/genomics/callsets`, `/api/genomics/variants`, `/api/genomics/callsets/{id}/object`
-- **Ingest:** `npm run clickhouse:ingest-vcf` — stream parser → object storage → batch INSERT
+- **Dashboard:** `VariantCallsetBrowser` — browse callsets, filter by gene,
+  presigned S3 download when configured
+- **APIs:** `/api/genomics/callsets`, `/api/genomics/variants`,
+  `/api/genomics/callsets/{id}/object`
+- **Ingest:** `npm run clickhouse:ingest-vcf` — stream parser → object storage →
+  batch INSERT
 - **Docs:** [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md)
 
 ```bash
@@ -191,28 +220,31 @@ npm run clickhouse:migrate && npm run clickhouse:seed
 npm run dev
 ```
 
-Not clinical-grade genomics infrastructure — infrastructure demo with honest provenance labels.
+Not clinical-grade genomics infrastructure — infrastructure demo with honest
+provenance labels.
 
 ---
 
 ## Academic Frameworks
 
-Six frameworks with **explicit small-*n* limits** documented in `docs/` (causal DAG, fairness audit, network concentration, etc.). We state what cannot be claimed with n≈58 deals — see methodology files linked from the app.
+Six frameworks with **explicit small-_n_ limits** documented in `docs/` (causal
+DAG, fairness audit, network concentration, etc.). We state what cannot be
+claimed with n≈58 deals — see methodology files linked from the app.
 
 ---
 
 ## Technology Stack
 
-| Layer | Used in production UI |
-|-------|----------------------|
-| Next.js 16, React 19, Tailwind v4 | App shell |
-| D3.js v7, Framer Motion | Visualization |
-| simple-statistics | Descriptive stats / similarity |
-| Verified JSON (`getVerifiedDataset()`) | Default data path |
-| PostgreSQL | Optional `LACUNA_DATA_MODE=db` |
-| ClickHouse + S3/local object storage | Optional variant call-set catalog (`LACUNA_VARIANT_STORE=clickhouse`) |
-| Vercel AI Gateway + AI SDK | Optional narratives + SEC classification ([INFERENCE.md](docs/INFERENCE.md)) |
-| TensorFlow.js | Quarantined — devDependency for Vitest only |
+| Layer                                  | Used in production UI                                                        |
+| -------------------------------------- | ---------------------------------------------------------------------------- |
+| Next.js 16, React 19, Tailwind v4      | App shell                                                                    |
+| D3.js v7, Framer Motion                | Visualization                                                                |
+| simple-statistics                      | Descriptive stats / similarity                                               |
+| Verified JSON (`getVerifiedDataset()`) | Default data path                                                            |
+| PostgreSQL                             | Optional `LACUNA_DATA_MODE=db`                                               |
+| ClickHouse + S3/local object storage   | Optional variant call-set catalog (`LACUNA_VARIANT_STORE=clickhouse`)        |
+| Vercel AI Gateway + AI SDK             | Optional narratives + SEC classification ([INFERENCE.md](docs/INFERENCE.md)) |
+| TensorFlow.js                          | Quarantined — devDependency for Vitest only                                  |
 
 ---
 
@@ -228,44 +260,55 @@ npm run infra:check
 npm test
 ```
 
-Open `http://localhost:3000`. Data loads from `src/data/dataset.verified.json` unless `LACUNA_DATA_MODE=db` is set **and** Postgres is provisioned.
+Open `http://localhost:3000`. Data loads from `src/data/dataset.verified.json`
+unless `LACUNA_DATA_MODE=db` is set **and** Postgres is provisioned.
 
-**Optional local Postgres:** `docker compose up -d` → copy [`.env.example`](.env.example) to `.env.local` → `npm run db:migrate && npm run db:import`. See [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md).
+**Optional local Postgres:** `docker compose up -d` → copy
+[`.env.example`](.env.example) to `.env.local` →
+`npm run db:migrate && npm run db:import`. See
+[INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md).
 
-**Optional variant store:** `docker compose up -d clickhouse` → set `LACUNA_VARIANT_STORE=clickhouse` → `npm run clickhouse:migrate && npm run clickhouse:seed`. See [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md).
+**Optional variant store:** `docker compose up -d clickhouse` → set
+`LACUNA_VARIANT_STORE=clickhouse` →
+`npm run clickhouse:migrate && npm run clickhouse:seed`. See
+[GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md).
 
 ---
 
 ## Data Curation
 
-Manual verification — no synthetic `maDeals`. Workflow: [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md), `npm run validate:dataset`, optional `npm run sec:scan`.
+Manual verification — no synthetic `maDeals`. Workflow:
+[DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md),
+`npm run validate:dataset`, optional `npm run sec:scan`.
 
 ---
 
 ## Documentation
 
-| Doc | Purpose |
-|-----|---------|
-| [MODEL_CARD.md](docs/MODEL_CARD.md) | **Start here** — what each score is and is not |
-| [INFERENCE.md](docs/INFERENCE.md) | Server-side LLM (AI Gateway) |
-| [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md) | Schema, validation, staging |
-| [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md) | Graph metrics, small-*n* |
-| [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md) | Health impact scoring limits |
-| [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md) | CI, Vercel, Postgres, cron, `/api/health` |
-| [PERFORMANCE.md](docs/PERFORMANCE.md) | Bundle, caching, probe split, fan-out limits |
-| [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md) | ClickHouse + object storage for large VCF catalogs |
-| [MONITORING.md](docs/MONITORING.md) | Uptime URL: `/api/health` only (not `/ready`) |
-| [PRODUCTION_SETUP.md](docs/PRODUCTION_SETUP.md) | Vercel env vars and migrations |
-| [SEC_INGESTION.md](docs/SEC_INGESTION.md) | SEC EDGAR cron pipeline |
-| [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md) | Vercel product vs Framer marketing (no analytics in Framer) |
-| [framer/BUILD_GUIDE.md](framer/BUILD_GUIDE.md) | Framer marketing site — copy, tokens, HTML prototype |
-| [AGENTS.md](AGENTS.md) | Contributor conventions |
+| Doc                                                                     | Purpose                                                     |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------- |
+| [MODEL_CARD.md](docs/MODEL_CARD.md)                                     | **Start here** — what each score is and is not              |
+| [INFERENCE.md](docs/INFERENCE.md)                                       | Server-side LLM (AI Gateway)                                |
+| [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md)           | Schema, validation, staging                                 |
+| [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md) | Graph metrics, small-_n_                                    |
+| [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md)                         | Health impact scoring limits                                |
+| [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md)                             | CI, Vercel, Postgres, cron, `/api/health`                   |
+| [PERFORMANCE.md](docs/PERFORMANCE.md)                                   | Bundle, caching, probe split, fan-out limits                |
+| [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md)             | ClickHouse + object storage for large VCF catalogs          |
+| [MONITORING.md](docs/MONITORING.md)                                     | Uptime URL: `/api/health` only (not `/ready`)               |
+| [PRODUCTION_SETUP.md](docs/PRODUCTION_SETUP.md)                         | Vercel env vars and migrations                              |
+| [SEC_INGESTION.md](docs/SEC_INGESTION.md)                               | SEC EDGAR cron pipeline                                     |
+| [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md)                       | Vercel product vs Framer marketing (no analytics in Framer) |
+| [framer/BUILD_GUIDE.md](framer/BUILD_GUIDE.md)                          | Framer marketing site — copy, tokens, HTML prototype        |
+| [AGENTS.md](AGENTS.md)                                                  | Contributor conventions                                     |
 
 ---
 
 ## License
 
-[BSL 1.1](LICENSE) — research/education production use allowed; **Competitive Offerings** (commercial women's-health M&A intelligence products) require a separate agreement. Converts to Apache 2.0 May 2030.
+[BSL 1.1](LICENSE) — research/education production use allowed; **Competitive
+Offerings** (commercial women's-health M&A intelligence products) require a
+separate agreement. Converts to Apache 2.0 May 2030.
 
 [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu) for commercial licensing.
 
@@ -273,4 +316,5 @@ Manual verification — no synthetic `maDeals`. Workflow: [DATA_CURATION_CHECKLI
 
 ## Author
 
-**[Mae Kass](https://github.com/maekass)** — open educational tools for women's health data literacy and honest analytics.
+**[Mae Kass](https://github.com/maekass)** — open educational tools for women's
+health data literacy and honest analytics.

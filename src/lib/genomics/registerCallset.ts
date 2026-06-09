@@ -1,7 +1,7 @@
-import { createHash } from 'node:crypto';
-import { createReadStream, statSync } from 'node:fs';
-import { getClickHouseClient } from './clickhouseClient';
-import type { ParsedVcfVariant } from './vcfStreamParser';
+import { createHash } from "node:crypto";
+import { createReadStream, statSync } from "node:fs";
+import { getClickHouseClient } from "./clickhouseClient";
+import type { ParsedVcfVariant } from "./vcfStreamParser";
 
 const BATCH_SIZE = 1000;
 
@@ -16,11 +16,11 @@ export interface RegisterCallsetInput {
 
 function sha256File(path: string): Promise<string> {
   return new Promise((resolve, reject) => {
-    const hash = createHash('sha256');
+    const hash = createHash("sha256");
     const stream = createReadStream(path);
-    stream.on('data', (chunk) => hash.update(chunk));
-    stream.on('end', () => resolve(`sha256:${hash.digest('hex')}`));
-    stream.on('error', reject);
+    stream.on("data", (chunk) => hash.update(chunk));
+    stream.on("end", () => resolve(`sha256:${hash.digest("hex")}`));
+    stream.on("error", reject);
   });
 }
 
@@ -33,7 +33,7 @@ export async function insertVariantBatch(
 
   const ch = getClickHouseClient();
   await ch.insert({
-    table: 'variant_records',
+    table: "variant_records",
     values: variants.map((v) => ({
       callset_id: callsetId,
       chrom: v.chrom,
@@ -47,7 +47,7 @@ export async function insertVariantBatch(
       allele_frequency: 0,
       is_pathogenic: v.isPathogenic ? 1 : 0,
     })),
-    format: 'JSONEachRow',
+    format: "JSONEachRow",
   });
 }
 
@@ -59,10 +59,12 @@ export async function registerCallset(
 ): Promise<void> {
   const ch = getClickHouseClient();
   const bytes = localFileForChecksum ? statSync(localFileForChecksum).size : 0;
-  const checksum = localFileForChecksum ? await sha256File(localFileForChecksum) : '';
+  const checksum = localFileForChecksum
+    ? await sha256File(localFileForChecksum)
+    : "";
 
   await ch.insert({
-    table: 'callsets',
+    table: "callsets",
     values: [
       {
         callset_id: input.callsetId,
@@ -73,10 +75,10 @@ export async function registerCallset(
         bytes,
         variant_count: variantCount,
         checksum,
-        notes: input.notes ?? '',
+        notes: input.notes ?? "",
       },
     ],
-    format: 'JSONEachRow',
+    format: "JSONEachRow",
   });
 }
 

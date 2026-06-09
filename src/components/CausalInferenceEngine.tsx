@@ -3,12 +3,12 @@
  * Panel-style causal models require longitudinal data not present in this release.
  */
 
-'use client';
+"use client";
 
-import { useMemo } from 'react';
-import { motion } from 'framer-motion';
-import CuratedDatasetBanner from '@/components/CuratedDatasetBanner';
-import { useVerifiedDataset } from '@/lib/data/VerifiedDatasetContext';
+import { useMemo } from "react";
+import { motion } from "framer-motion";
+import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 
 interface SectorRow {
   sector: string;
@@ -50,10 +50,14 @@ export default function CausalInferenceEngine() {
     >
       <CuratedDatasetBanner />
       <div className="bg-lacuna-lavender/25 border-l-4 border-lacuna-plum p-4 rounded-r-lg">
-        <h2 className="font-medium text-lacuna-plum text-lg">Observed deal patterns (verified)</h2>
+        <h2 className="font-medium text-lacuna-plum text-lg">
+          Observed deal patterns (verified)
+        </h2>
         <p className="text-sm text-lacuna-blue mt-1">
-          This view reports counts from {totalDeals} verified transactions. Causal effect estimates
-          with confidence intervals require a longitudinal panel not included in the public dataset.
+          This view reports counts from {totalDeals}{" "}
+          verified transactions. Causal effect estimates with confidence
+          intervals require a longitudinal panel not included in the public
+          dataset.
         </p>
       </div>
 
@@ -69,10 +73,17 @@ export default function CausalInferenceEngine() {
           </thead>
           <tbody>
             {sectorRows.map((row) => (
-              <tr key={row.sector} className="border-t border-lacuna-lavender/30">
+              <tr
+                key={row.sector}
+                className="border-t border-lacuna-lavender/30"
+              >
                 <td className="p-3 text-lacuna-plum">{row.sector}</td>
-                <td className="p-3 text-right text-lacuna-blue">{row.companies}</td>
-                <td className="p-3 text-right text-lacuna-blue">{row.acquired}</td>
+                <td className="p-3 text-right text-lacuna-blue">
+                  {row.companies}
+                </td>
+                <td className="p-3 text-right text-lacuna-blue">
+                  {row.acquired}
+                </td>
                 <td className="p-3 text-right font-medium text-lacuna-plum">
                   {(row.rate * 100).toFixed(0)}%
                 </td>

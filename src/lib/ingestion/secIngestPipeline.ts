@@ -3,29 +3,33 @@
  * Exported for CLI, Vercel cron, and future MCP server tools.
  */
 
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
-import process from 'node:process';
-import type { VerifiedDataset } from '@/lib/data/datasetTypes';
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import process from "node:process";
+import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import {
   classifyDealAsync,
   shouldAutoInsert,
   statusForConfidence,
-} from '@/lib/ingestion/dealClassificationEngine';
-import { syncDealsToDatabase, type ClassifiedDeal, type SyncResult } from '@/lib/ingestion/databaseSync';
-import { logIngestComplete } from '@/lib/ingestion/monitoringAlerts';
+} from "@/lib/ingestion/dealClassificationEngine";
 import {
-  scanItem201Acquisitions,
+  type ClassifiedDeal,
+  syncDealsToDatabase,
+  type SyncResult,
+} from "@/lib/ingestion/databaseSync";
+import { logIngestComplete } from "@/lib/ingestion/monitoringAlerts";
+import {
   type ParsedAcquisition,
+  scanItem201Acquisitions,
   type ScanOptions,
-} from '@/lib/ingestion/secEdgarConnector';
+} from "@/lib/ingestion/secEdgarConnector";
 import {
   finishIngestRunFailure,
   finishIngestRunSuccess,
   getIngestCursorSinceDate,
   startIngestRun,
-} from '@/lib/ingestion/ingestRunState';
-import { mapWithConcurrency } from '@/lib/util/concurrency';
+} from "@/lib/ingestion/ingestRunState";
+import { mapWithConcurrency } from "@/lib/util/concurrency";
 
 export interface SecIngestOptions extends ScanOptions {
   /** Extra tickers (comma-separated in env SEC_EXTRA_TICKERS). */
@@ -45,7 +49,7 @@ export interface SecIngestResult {
 }
 
 function loadAcquirerTickers(datasetPath: string): string[] {
-  const raw = readFileSync(datasetPath, 'utf8');
+  const raw = readFileSync(datasetPath, "utf8");
   const dataset = JSON.parse(raw) as VerifiedDataset;
   return [
     ...new Set(
@@ -56,7 +60,9 @@ function loadAcquirerTickers(datasetPath: string): string[] {
   ];
 }
 
-async function classifyParsed(deal: ParsedAcquisition): Promise<ClassifiedDeal> {
+async function classifyParsed(
+  deal: ParsedAcquisition,
+): Promise<ClassifiedDeal> {
   const classification = await classifyDealAsync({
     filingText: deal.item201Excerpt ?? deal.filingTextSample,
     targetName: deal.targetName,
@@ -71,63 +77,78 @@ async function classifyParsed(deal: ParsedAcquisition): Promise<ClassifiedDeal> 
     ...deal,
     classificationConfidence: classification.confidence,
     classificationKeywords: [
-      ...new Set([...classification.matchedKeywords, ...classification.matchedThemes]),
+      ...new Set([
+        ...classification.matchedKeywords,
+        ...classification.matchedThemes,
+      ]),
     ],
     womensHealthRelevant: classification.womensHealthRelevant,
     classificationMethod: classification.method,
     classificationModelId: classification.modelId,
-    status: eligible ? statusForConfidence(classification.confidence) : 'pending_review',
+    status: eligible
+      ? statusForConfidence(classification.confidence)
+      : "pending_review",
   };
 }
 
 /**
  * Run full SEC EDGAR ingest: scan 8-K Item 2.01 → classify → upsert lacuna_deals.
  */
-export async function runSecIngest(options: SecIngestOptions = {}): Promise<SecIngestResult> {
-  const datasetPath =
-    options.datasetPath ?? join(process.cwd(), 'src/data/dataset.verified.json');
+export async function runSecIngest(
+  options: SecIngestOptions = {},
+): Promise<SecIngestResult> {
+  const datasetPath = options.datasetPath ??
+    join(process.cwd(), "src/data/dataset.verified.json");
 
-  const shouldPersistRun =
-    Boolean(process.env.DATABASE_URL) &&
+  const shouldPersistRun = Boolean(process.env.DATABASE_URL) &&
     options.dryRun !== true &&
-    process.env.LACUNA_INGEST_RUN_TRACKING === 'true';
-  const runId = shouldPersistRun ? await startIngestRun({ trigger: 'cron' }) : undefined;
+    process.env.LACUNA_INGEST_RUN_TRACKING === "true";
+  const runId = shouldPersistRun
+    ? await startIngestRun({ trigger: "cron" })
+    : undefined;
 
   const fromDataset = loadAcquirerTickers(datasetPath);
-  const fromEnv = (process.env.SEC_EXTRA_TICKERS ?? '')
-    .split(',')
+  const fromEnv = (process.env.SEC_EXTRA_TICKERS ?? "")
+    .split(",")
     .map((t) => t.trim().toUpperCase())
     .filter(Boolean);
   const extra = options.extraTickers ?? fromEnv;
   const tickers = [...new Set([...fromDataset, ...extra])];
 
   if (tickers.length === 0) {
-    throw new Error('No tickers to scan — add acquirer tickers to dataset or SEC_EXTRA_TICKERS');
+    throw new Error(
+      "No tickers to scan — add acquirer tickers to dataset or SEC_EXTRA_TICKERS",
+    );
   }
 
   // Since-date selection (priority): explicit option → env → DB cursor → default.
-  const useDbCursor = process.env.SEC_USE_DB_CURSOR === 'true';
+  const useDbCursor = process.env.SEC_USE_DB_CURSOR === "true";
   const cursorSinceDate =
-    useDbCursor && shouldPersistRun && !options.sinceDate && !process.env.SEC_SCAN_SINCE
+    useDbCursor && shouldPersistRun && !options.sinceDate &&
+      !process.env.SEC_SCAN_SINCE
       ? await getIngestCursorSinceDate()
       : null;
-  const sinceDateUsed =
-    options.sinceDate ??
+  const sinceDateUsed = options.sinceDate ??
     process.env.SEC_SCAN_SINCE ??
     cursorSinceDate ??
     `${new Date().getFullYear() - 1}-01-01`;
 
-  const maxTickers = Number(process.env.SEC_MAX_TICKERS_PER_RUN ?? '');
-  const tickersToScan =
-    Number.isFinite(maxTickers) && maxTickers > 0 ? tickers.slice(0, maxTickers) : tickers;
+  const maxTickers = Number(process.env.SEC_MAX_TICKERS_PER_RUN ?? "");
+  const tickersToScan = Number.isFinite(maxTickers) && maxTickers > 0
+    ? tickers.slice(0, maxTickers)
+    : tickers;
 
   const parsedFilingsAll = await scanItem201Acquisitions(tickersToScan, {
     sinceDate: sinceDateUsed,
-    limitPerTicker: options.limitPerTicker ?? Number(process.env.SEC_LIMIT_PER_TICKER ?? 15),
-    healthcareSicOnly: options.healthcareSicOnly ?? process.env.SEC_HEALTHCARE_SIC_ONLY === 'true',
+    limitPerTicker: options.limitPerTicker ??
+      Number(process.env.SEC_LIMIT_PER_TICKER ?? 15),
+    healthcareSicOnly: options.healthcareSicOnly ??
+      process.env.SEC_HEALTHCARE_SIC_ONLY === "true",
   });
 
-  const maxParsedFilings = Number(process.env.SEC_MAX_PARSED_FILINGS_PER_RUN ?? '');
+  const maxParsedFilings = Number(
+    process.env.SEC_MAX_PARSED_FILINGS_PER_RUN ?? "",
+  );
   const parsedFilings =
     Number.isFinite(maxParsedFilings) && maxParsedFilings > 0
       ? parsedFilingsAll.slice(0, maxParsedFilings)
@@ -136,10 +157,13 @@ export async function runSecIngest(options: SecIngestOptions = {}): Promise<SecI
   const classifyConcurrency = Number(process.env.SEC_CLASSIFY_CONCURRENCY ?? 3);
   const classified = await mapWithConcurrency(
     parsedFilings,
-    Number.isFinite(classifyConcurrency) && classifyConcurrency > 0 ? classifyConcurrency : 3,
+    Number.isFinite(classifyConcurrency) && classifyConcurrency > 0
+      ? classifyConcurrency
+      : 3,
     classifyParsed,
   );
-  const womensHealthCandidates = classified.filter((c) => c.womensHealthRelevant).length;
+  const womensHealthCandidates =
+    classified.filter((c) => c.womensHealthRelevant).length;
 
   let sync: SyncResult | null = null;
   try {
@@ -170,13 +194,16 @@ export async function runSecIngest(options: SecIngestOptions = {}): Promise<SecI
         womensHealthCandidates,
         inserted: sync?.inserted ?? 0,
         updated: sync?.updated ?? 0,
-        skipped: sync?.skipped ?? classified.filter((c) => !c.womensHealthRelevant).length,
+        skipped: sync?.skipped ??
+          classified.filter((c) => !c.womensHealthRelevant).length,
         sinceDateUsed,
       });
     }
   } catch (error) {
     if (runId) {
-      const message = error instanceof Error ? error.message : 'SEC ingest failed';
+      const message = error instanceof Error
+        ? error.message
+        : "SEC ingest failed";
       await finishIngestRunFailure({ runId, errorMessage: message });
     }
     throw error;
@@ -194,35 +221,38 @@ export async function runSecIngest(options: SecIngestOptions = {}): Promise<SecI
 
 // Re-export MCP-callable surface
 export {
-  scanItem201Acquisitions,
-  parseItem201,
   fetchFilingText,
   fetchSubmissions,
   isHealthcareSic,
   listHealthcareTickers,
-} from '@/lib/ingestion/secEdgarConnector';
+  parseItem201,
+  scanItem201Acquisitions,
+} from "@/lib/ingestion/secEdgarConnector";
 export {
+  CLASSIFICATION_GATEWAY_MODEL,
+  CLASSIFICATION_OPENAI_MODEL,
   classifyDeal,
   classifyDealAsync,
   classifyDealKeywordOnly,
   hasAiGatewayAuth,
   isAiClassificationAvailable,
   shouldAutoInsert,
-  CLASSIFICATION_GATEWAY_MODEL,
-  CLASSIFICATION_OPENAI_MODEL,
   WOMENS_HEALTH_KEYWORDS,
-} from '@/lib/ingestion/dealClassificationEngine';
+} from "@/lib/ingestion/dealClassificationEngine";
 export {
-  startIngestRun,
-  finishIngestRunSuccess,
   finishIngestRunFailure,
-  getLatestIngestRun,
+  finishIngestRunSuccess,
   getIngestCursorSinceDate,
-} from '@/lib/ingestion/ingestRunState';
-export { syncDealsToDatabase, upsertLacunaDeal } from '@/lib/ingestion/databaseSync';
+  getLatestIngestRun,
+  startIngestRun,
+} from "@/lib/ingestion/ingestRunState";
+export {
+  syncDealsToDatabase,
+  upsertLacunaDeal,
+} from "@/lib/ingestion/databaseSync";
 export {
   alertApiFailure,
   alertNewDeal,
   alertPartialParse,
   getIngestEvents,
-} from '@/lib/ingestion/monitoringAlerts';
+} from "@/lib/ingestion/monitoringAlerts";
