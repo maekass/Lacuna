@@ -32,14 +32,13 @@ jobs:
           cache: npm
 
       - name: Setup Deno
-        # uses: denoland/setup-deno@v1
-        uses: denoland/setup-deno@61fe2df320078202e33d7d5ad347e7dcfa0e8f31  # v1.1.2
+        uses: denoland/setup-deno@v1.2.0
         with:
           deno-version: v1.x
+          cache: true
 
-      # Uncomment this step to verify the use of 'deno fmt' on each commit.
-      # - name: Verify formatting
-      #   run: deno fmt --check
+      - name: Verify formatting
+        run: deno fmt --check
 
       - name: Install deps
         run: npm ci
@@ -61,4 +60,3 @@ jobs:
 
       - name: Deno lint (require-await + no-node-globals)
         run: deno lint src scripts
-
