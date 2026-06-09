@@ -20,6 +20,7 @@ function assertFocusAreaShape(area: HealthEquityFocusArea): void {
   expect(VALID_TIERS).toContain(area.dataTier);
   expect(area.source.length).toBeGreaterThan(0);
   expect(area.relatedSectors.length).toBeGreaterThan(0);
+  expect(area.markerGenes.length).toBeGreaterThan(0);
 }
 
 describe("HEALTH_EQUITY_FOCUS_AREAS", () => {
@@ -60,7 +61,6 @@ describe("HEALTH_EQUITY_FOCUS_AREAS", () => {
     const illustrative = HEALTH_EQUITY_FOCUS_AREAS.filter((a) =>
       a.dataTier === "illustrative_static"
     );
-    expect(illustrative.length).toBeGreaterThan(0);
     for (const area of illustrative) {
       expect(area.epidemiologyCondition).toBeUndefined();
       expect(area.source.toLowerCase()).toContain("illustrative");

@@ -141,6 +141,34 @@ export const EPIDEMIOLOGY_DATABASE: EpidemiologyData[] = [
     notes:
       "Most common cancer among women globally; Black women face 38% higher mortality (ACS 2025)",
   },
+  {
+    condition: "Sickle Cell Disease",
+    addressablePopulation: {
+      pointEstimate: 0.1,
+      lowerBound: 0.09,
+      upperBound: 0.12,
+      unit: "millions",
+    },
+    source: "CDC Sickle Cell Data Collection program (2024); NHLBI SCD guidelines",
+    year: 2024,
+    confidence: "high",
+    notes:
+      "~100K Americans live with SCD; 1 in 365 Black/African American births affected; 1 in 13 carry trait",
+  },
+  {
+    condition: "Systemic Lupus Erythematosus",
+    addressablePopulation: {
+      pointEstimate: 0.34,
+      lowerBound: 0.16,
+      upperBound: 0.5,
+      unit: "millions",
+    },
+    source: "Lupus Foundation of America prevalence estimates (2024); CDC NCHS reviews",
+    year: 2024,
+    confidence: "high",
+    notes:
+      "Affects 1.5M+ Americans; Black women at 2–3× higher incidence with worse outcomes",
+  },
 ];
 
 // Market penetration data (from Sensor Tower, public reports)

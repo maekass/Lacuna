@@ -39,12 +39,6 @@ export const EvidenceMaturityDashboard = dynamic(
     loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },
 );
-export const WearablesTracker = dynamic(
-  () => import("@/components/WearablesTracker"),
-  {
-    loading: sectionFallback(),
-  },
-);
 export const HealthEquityDashboard = dynamic(
   () => import("@/components/HealthEquityDashboard"),
   {

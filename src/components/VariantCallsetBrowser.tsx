@@ -2,6 +2,7 @@
 
 import { useEffect, useReducer } from "react";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import type { DiseaseMarkerPanel } from "@/lib/genomics/diseaseMarkers";
 
 interface Callset {
   callsetId: string;
@@ -26,6 +27,8 @@ interface VariantRow {
 interface State {
   status: "idle" | "disabled" | "loading" | "ready" | "error";
   callsets: Callset[];
+  markerPanels: DiseaseMarkerPanel[];
+  selectedPanelId: string;
   selectedId: string;
   geneFilter: string;
   variants: VariantRow[];
@@ -37,9 +40,10 @@ interface State {
 type Action =
   | { type: "DISABLED" }
   | { type: "LOADING" }
-  | { type: "CALLSETS"; callsets: Callset[] }
+  | { type: "CALLSETS"; callsets: Callset[]; markerPanels: DiseaseMarkerPanel[] }
   | { type: "ERROR"; message: string }
   | { type: "SELECT"; callsetId: string }
+  | { type: "PANEL"; panelId: string; gene: string }
   | { type: "GENE"; gene: string }
   | { type: "VARIANTS"; variants: VariantRow[]; total: number }
   | { type: "PRESIGN"; url: string | null };
@@ -59,6 +63,7 @@ function reducer(state: State, action: Action): State {
         ...state,
         status: "ready",
         callsets: action.callsets,
+        markerPanels: action.markerPanels,
         selectedId: action.callsets[0]?.callsetId ?? "",
       };
     case "ERROR":
@@ -71,8 +76,14 @@ function reducer(state: State, action: Action): State {
         total: 0,
         presignedUrl: null,
       };
+    case "PANEL":
+      return {
+        ...state,
+        selectedPanelId: action.panelId,
+        geneFilter: action.gene,
+      };
     case "GENE":
-      return { ...state, geneFilter: action.gene };
+      return { ...state, geneFilter: action.gene, selectedPanelId: "" };
     case "VARIANTS":
       return { ...state, variants: action.variants, total: action.total };
     case "PRESIGN":
@@ -83,6 +94,8 @@ function reducer(state: State, action: Action): State {
 const INITIAL: State = {
   status: "idle",
   callsets: [],
+  markerPanels: [],
+  selectedPanelId: "",
   selectedId: "",
   geneFilter: "",
   variants: [],
@@ -96,18 +109,29 @@ export default function VariantCallsetBrowser() {
 
   useEffect(() => {
     dispatch({ type: "LOADING" });
-    fetch("/api/genomics/callsets?limit=25")
-      .then(async (res) => {
-        if (res.status === 503) {
+    Promise.all([
+      fetch("/api/genomics/callsets?limit=25"),
+      fetch("/api/genomics/markers"),
+    ])
+      .then(async ([callsetsRes, markersRes]) => {
+        if (callsetsRes.status === 503) {
           dispatch({ type: "DISABLED" });
           return null;
         }
-        if (!res.ok) throw new Error(`callsets ${res.status}`);
-        return res.json();
+        if (!callsetsRes.ok) throw new Error(`callsets ${callsetsRes.status}`);
+        const callsetsData = await callsetsRes.json();
+        const markersData = markersRes.ok
+          ? await markersRes.json()
+          : { panels: [] };
+        return { callsetsData, markersData };
       })
-      .then((data) => {
-        if (!data) return;
-        dispatch({ type: "CALLSETS", callsets: data.callsets ?? [] });
+      .then((bundle) => {
+        if (!bundle) return;
+        dispatch({
+          type: "CALLSETS",
+          callsets: bundle.callsetsData.callsets ?? [],
+          markerPanels: bundle.markersData.panels ?? [],
+        });
       })
       .catch(() =>
         dispatch({ type: "ERROR", message: "Could not load callsets." })
@@ -156,11 +180,12 @@ export default function VariantCallsetBrowser() {
     <div className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 p-4 sm:p-6">
       <CuratedDatasetBanner className="mb-4" />
       <h3 className="text-lg font-semibold text-lacuna-plum mb-1">
-        Variant call-set browser
+        Disease-linked genetic markers
       </h3>
       <p className="text-sm text-lacuna-blue mb-4">
-        Queryable variant summaries from ClickHouse; multi-GB VCF blobs stay in
-        object storage.
+        PCOS, hereditary breast cancer, sickle cell (HBB), lupus, and Lynch
+        syndrome — queryable variant summaries with HIPAA/GDPR de-identification
+        by default.
       </p>
 
       {state.status === "disabled" && (
@@ -174,6 +199,30 @@ export default function VariantCallsetBrowser() {
         <p className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg p-3">
           {state.message}
         </p>
+      )}
+
+      {state.markerPanels.length > 0 && (
+        <div className="mb-4 flex flex-wrap gap-2">
+          {state.markerPanels.map((panel) => (
+            <button
+              key={panel.id}
+              type="button"
+              className={`rounded-full px-3 py-1 text-xs font-medium border transition-colors ${
+                state.selectedPanelId === panel.id
+                  ? "bg-lacuna-plum text-white border-lacuna-plum"
+                  : "bg-white text-lacuna-plum border-lacuna-lavender/60 hover:bg-lacuna-pink/20"
+              }`}
+              onClick={() =>
+                dispatch({
+                  type: "PANEL",
+                  panelId: panel.id,
+                  gene: panel.queryGenes[0] ?? "",
+                })}
+            >
+              {panel.title}
+            </button>
+          ))}
+        </div>
       )}
 
       {state.status === "ready" && (
@@ -198,7 +247,7 @@ export default function VariantCallsetBrowser() {
               Gene filter
               <input
                 className="mt-1 w-full rounded-lg border border-lacuna-lavender/50 px-3 py-2 text-lacuna-plum"
-                placeholder="e.g. BRCA1"
+                placeholder="e.g. BRCA1, HBB"
                 value={state.geneFilter}
                 onChange={(e) =>
                   dispatch({ type: "GENE", gene: e.target.value })}
@@ -208,7 +257,7 @@ export default function VariantCallsetBrowser() {
 
           {state.presignedUrl && (
             <p className="text-xs text-lacuna-blue mb-3">
-              Raw VCF:{" "}
+              Raw VCF (authorized access):{" "}
               <a
                 href={state.presignedUrl}
                 className="underline text-lacuna-plum"

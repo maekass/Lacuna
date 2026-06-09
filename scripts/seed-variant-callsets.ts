@@ -96,11 +96,37 @@ async function main() {
           allele_frequency: 0.00021,
           is_pathogenic: 0,
         },
+        {
+          callset_id: DEMO_CALLSET_ID,
+          chrom: "11",
+          pos: 5227002,
+          ref: "A",
+          alt: "T",
+          qual: 99.0,
+          filter: "PASS",
+          gene_symbol: "HBB",
+          consequence: "missense_variant",
+          allele_frequency: 0.08,
+          is_pathogenic: 1,
+        },
+        {
+          callset_id: DEMO_CALLSET_ID,
+          chrom: "9",
+          pos: 124900000,
+          ref: "G",
+          alt: "A",
+          qual: 95.5,
+          filter: "PASS",
+          gene_symbol: "DENND1A",
+          consequence: "intron_variant",
+          allele_frequency: 0.12,
+          is_pathogenic: 0,
+        },
       ],
       format: "JSONEachRow",
     });
 
-    console.log(`Seeded callset ${DEMO_CALLSET_ID} with 4 variant summaries`);
+    console.log(`Seeded callset ${DEMO_CALLSET_ID} with 6 variant summaries`);
     console.log(`Object URI: ${objectUri}`);
   } finally {
     await client.close();

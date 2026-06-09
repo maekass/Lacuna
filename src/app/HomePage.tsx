@@ -24,7 +24,6 @@ import {
   ValidationTracker,
   ValuationMatrix,
   VariantCallsetBrowser,
-  WearablesTracker,
 } from "@/app/lazyDashboard";
 import DataCoverageCard from "@/components/DataCoverageCard";
 import DataProvenanceBanner from "@/components/DataProvenanceBanner";
@@ -317,17 +316,6 @@ export default function HomePage() {
           <VariantCallsetBrowser />
         </motion.section>
 
-        {/* Wearables Ecosystem Section */}
-        <motion.section
-          id="wearables"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mb-16"
-        >
-          <WearablesTracker />
-        </motion.section>
-
         {/* Health Equity Section */}
         <motion.section
           id="health-equity"
@@ -338,12 +326,12 @@ export default function HomePage() {
         >
           <div className="mb-6">
             <h3 className="text-2xl font-semibold text-lacuna-plum">
-              Health Equity &amp; the Gaps That Matter
+              Genetic Markers &amp; Health Equity
             </h3>
             <p className="text-lacuna-blue">
-              Understanding where disparities persist — maternal mortality,
-              PCOS, endometriosis — and which companies are positioned to help
-              close them
+              PCOS, hereditary breast cancer, sickle cell, lupus, and Lynch
+              syndrome markers — with disparities that disproportionately affect
+              Black women in the verified portfolio
             </p>
           </div>
           <HealthEquityDashboard />

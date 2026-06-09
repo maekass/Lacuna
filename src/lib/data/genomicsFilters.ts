@@ -1,7 +1,7 @@
 import type { VerifiedDataset } from "./datasetTypes";
 
 const GENOMICS_KEYWORD =
-  /genomic|genome|sequenc|brca|biomarker|hereditary|carrier screening|cgp|profiling|variant|exome|oncotype/i;
+  /genomic|genome|sequenc|brca|biomarker|hereditary|carrier screening|cgp|profiling|variant|exome|oncotype|pcos|sickle|hbb|lynch|lupus|hla|palb2|chek2|dennd1a|fshr/i;
 
 export interface GenomicsCompanyRef {
   sector: string;
