@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as d3 from "d3";
 import { motion } from "framer-motion";
+import AcquirerProfile from "@/components/AcquirerProfile";
 import { foregroundPortfolio } from "@/data/verifiedData";
 
 interface Node extends d3.SimulationNodeDatum {
@@ -55,6 +56,7 @@ export default function ForceNetwork(
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
+  const [selectedAcquirerId, setSelectedAcquirerId] = useState<string | null>(null);
   const [hoveredNode, setHoveredNode] = useState<Node | null>(null);
   const [dims, setDims] = useState({
     w: widthProp ?? 800,
@@ -63,7 +65,7 @@ export default function ForceNetwork(
   const [isForegroundHighlightEnabled, setIsForegroundHighlightEnabled] =
     useState(highlightForeground);
   const foregroundPortfolioSet = useMemo(
-    () => new Set(foregroundPortfolio),
+    () => new Set<string>(foregroundPortfolio),
     [],
   );
 
@@ -279,7 +281,13 @@ export default function ForceNetwork(
     // Add interaction
     node
       .on("click", (event, d) => {
-        setSelectedNode(d);
+        if (d.type === "acquirer") {
+          setSelectedAcquirerId(d.id);
+          setSelectedNode(null);
+        } else {
+          setSelectedAcquirerId(null);
+          setSelectedNode(d);
+        }
         event.stopPropagation();
       })
       .on("mouseenter", (event, d) => {
@@ -423,6 +431,11 @@ export default function ForceNetwork(
           {hoveredNode.name}
         </motion.div>
       )}
+
+      <AcquirerProfile
+        acquirerId={selectedAcquirerId}
+        onClose={() => setSelectedAcquirerId(null)}
+      />
     </div>
   );
 }
