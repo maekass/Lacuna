@@ -30,6 +30,23 @@ export interface DomesticResearchStudy {
   clinicalTrialsSponsor?: string;
 }
 
+/**
+ * Representative ClinicalTrials.gov registry IDs per study (public citations).
+ * Observational cohorts without interventional trials are omitted.
+ */
+export const STUDY_TRIAL_NCT_LINKS: Readonly<
+  Partial<Record<string, readonly string[]>>
+> = {
+  "nih-whi": ["NCT00000611"],
+  "nih-nichd-pcos": ["NCT00166516"],
+  "nih-scd-initiative": ["NCT00081523"],
+  "nih-carriers": ["NCT03805919"],
+  "nih-lupus-cohort": ["NCT00001735"],
+  "harvard-bwh-brca": ["NCT01042379"],
+  "harvard-mgh-pcos": ["NCT00176971"],
+  "harvard-dfci-tnbc": ["NCT02488967"],
+};
+
 export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
   {
     studyId: "nih-all-of-us",
@@ -280,6 +297,9 @@ export function computeStudySampleStats(
   };
 }
 
+/**
+ * Page and filter the static domestic study catalog (in-memory source of truth).
+ */
 export function filterDomesticStudies(input: {
   institution?: DomesticInstitution;
   condition?: string;

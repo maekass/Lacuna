@@ -58,6 +58,7 @@ docker compose up -d
 # .env.local: DATABASE_URL=postgresql://lacuna:lacuna@localhost:5432/lacuna, PGSSLMODE=disable
 npm run db:migrate
 npm run db:import
+npm run db:seed-research   # domestic studies + NCT/callset links (not deal data)
 LACUNA_DATA_MODE=db npm run dev
 ```
 
@@ -118,6 +119,7 @@ AI and Sentry: [INFERENCE.md](./INFERENCE.md),
 | `npm run infra:check`           | Env checklist + health aggregate (exit 1 if unhealthy) |
 | `npm run db:migrate`            | Apply SQL migrations                                   |
 | `npm run db:import`             | Load `dataset.verified.json` into Postgres             |
+| `npm run db:seed-research`      | Seed `research_studies` + trial/callset links from catalog |
 | `npm run sec:ingest`            | SEC pipeline (CLI)                                     |
 | `npm run clickhouse:migrate`    | Apply ClickHouse variant-store schema                  |
 | `npm run clickhouse:seed`       | Infrastructure demo callset (local dev)                |

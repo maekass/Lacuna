@@ -14,6 +14,7 @@
     "sec:ingest": "tsx scripts/sec-ingest-deals.ts",
     "db:migrate": "tsx scripts/migrate.ts",
     "db:import": "tsx scripts/import-verified-json.ts",
+    "db:seed-research": "tsx scripts/seed-research-studies.ts",
     "clickhouse:migrate": "tsx scripts/clickhouse-migrate.ts",
     "clickhouse:seed": "tsx scripts/seed-variant-callsets.ts",
     "clickhouse:ingest-vcf": "tsx scripts/ingest-vcf-stream.ts",

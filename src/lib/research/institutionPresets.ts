@@ -1,4 +1,7 @@
-/** ClinicalTrials.gov sponsor presets for domestic research hubs. */
+/**
+ * ClinicalTrials.gov sponsor presets for domestic research hubs.
+ * Used by the live trial search panel — separate from Postgres `study_trial_links`.
+ */
 
 export interface InstitutionTrialPreset {
   id: string;
