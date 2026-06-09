@@ -13,7 +13,7 @@ function csvEscape(value: string) {
 
 export async function GET(request: Request) {
   const ip = getClientIp(request);
-  const limit = rateLimit({
+  const limit = await rateLimit({
     key: `exportCsv:${ip}`,
     limit: 30,
     windowMs: 60_000,

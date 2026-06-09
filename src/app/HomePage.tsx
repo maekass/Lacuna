@@ -76,7 +76,7 @@ export default function HomePage() {
             <div>
               <h1 className="text-xl font-bold text-lacuna-plum">Lacuna</h1>
               <p className="text-xs text-lacuna-blue">
-                Illuminating Women&apos;s Health
+                Women&apos;s Health M&amp;A · Diligence Stack
               </p>
             </div>
           </a>
@@ -94,25 +94,21 @@ export default function HomePage() {
         >
           <div className="max-w-3xl">
             <CuratedDatasetBanner className="mb-4" />
-            <h2 className="text-4xl md:text-5xl font-bold text-lacuna-plum mb-4">
-              Making Sense of
-              <span className="lacuna-gradient-text">
-                Women&apos;s Health M&amp;A
+            <h2 className="text-4xl md:text-5xl font-bold text-lacuna-plum mb-4 leading-tight">
+              <span className="block">Women&apos;s Health M&amp;A</span>
+              <span className="block lacuna-gradient-text">
+                Diligence Stack
               </span>
             </h2>
             <p className="text-lg text-lacuna-blue leading-relaxed">
-              Welcome to Lacuna — an educational demo for who&apos;s acquiring
-              whom in women&apos;s health and precision medicine. We combine
-              verified deal data, clinical trial lookup, and health-equity
-              context so students, researchers, and curious readers can explore
-              the landscape with cited methodology — not live market feeds or
-              investment advice.
+              Prototype investment-research environment — verified deal
+              provenance, clinical trial search, genomics governance, and cited
+              analytics from public sources.
             </p>
             <p className="text-sm text-lacuna-blue/70 mt-3 leading-relaxed">
-              Women&apos;s health has been historically underfunded relative to
-              its clinical burden. Lacuna makes that context visible with public
-              filings and documented methods — a learning sandbox under BSL 1.1,
-              not a commercial intelligence product.
+              n={verifiedAcquisitions.length} verified deals · SEC EDGAR ingest ·
+              HIPAA/GDPR genomics layer · descriptive analytics only. Not
+              PitchBook, not live market feeds, and not investment advice.
             </p>
           </div>
         </motion.section>
@@ -645,11 +641,10 @@ export default function HomePage() {
                 · BUSL 1.1 · Open source
               </p>
               <p className="mt-1">
-                Built on verified, publicly available data from SEC EDGAR,
-                company press releases, and ClinicalTrials.gov. Built for
-                learning and research — students, journalists, founders, and
-                policy readers exploring women&apos;s health M&amp;A. Not
-                investment advice; not institutional deal intelligence.
+                Verified data from SEC EDGAR, company disclosures, and
+                ClinicalTrials.gov. An open investment-research prototype for
+                women&apos;s health M&amp;A — not investment advice and not a
+                substitute for paid deal-intelligence products.
               </p>
             </div>
           </div>

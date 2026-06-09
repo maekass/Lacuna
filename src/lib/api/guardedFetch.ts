@@ -17,7 +17,7 @@ export async function guardedUpstreamFetch(
   options: GuardedFetchOptions,
 ): Promise<Response | NextResponse> {
   const ip = getClientIp(options.request);
-  const bucket = rateLimit({
+  const bucket = await rateLimit({
     key: `${options.rateLimitKey}:${ip}`,
     limit: options.limit ?? 30,
     windowMs: options.windowMs ?? 60_000,

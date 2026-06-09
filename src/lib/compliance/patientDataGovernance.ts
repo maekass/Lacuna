@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { writeAuditEvent } from "@/lib/compliance/auditEventSink";
 
 /**
  * HIPAA/GDPR governance for patient-linked genomic data (VCF call sets).
@@ -69,13 +70,33 @@ function effectiveMode(request: Request): PatientDataAccessMode {
   return configured;
 }
 
-/** Log access attempts — stdout for now; ship to SIEM in regulated deployments. */
-export function auditPatientDataAccess(event: Omit<PatientDataAuditEvent, "timestamp">): void {
+/** Log access attempts — ClickHouse when configured; stdout always for SIEM tailing. */
+export function auditPatientDataAccess(
+  event: Omit<PatientDataAuditEvent, "timestamp">,
+): void {
   const record: PatientDataAuditEvent = {
     ...event,
     timestamp: new Date().toISOString(),
   };
-  console.info("[patient-data-audit]", JSON.stringify(record));
+  console.info("[patient-data-audit]", JSON.stringify({
+    ...record,
+    actor: "[hashed-at-sink]",
+  }));
+
+  void (async () => {
+    try {
+      await writeAuditEvent({
+        timestamp: record.timestamp,
+        action: record.action,
+        resource: record.resource,
+        actor: record.actor,
+        allowed: record.allowed ? 1 : 0,
+        mode: record.mode,
+      });
+    } catch (error) {
+      console.error("[patient-data-audit] sink failed:", error);
+    }
+  })();
 }
 
 /**

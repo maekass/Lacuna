@@ -39,16 +39,42 @@ LACUNA_INGEST_CONSENT_REF=IRB-2024-001
 - `GET /api/genomics/callsets/{id}/object` — **403** unless `authorized` + Bearer token
 - `GET /api/genomics/markers` — static disease-marker catalog (no PHI)
 
-All genomics reads emit `[patient-data-audit]` JSON logs for SIEM export.
+All genomics reads emit `[patient-data-audit]` JSON logs. When `CLICKHOUSE_URL`
+is set, events are also persisted to the `audit_events` table (migration
+`002_audit_events.sql`) with **hashed client IP** — no raw `sample_id` or VCF
+paths in audit rows.
+
+### Why ClickHouse (not Postgres)
+
+| Factor            | ClickHouse                         | Postgres                    |
+| ----------------- | ---------------------------------- | --------------------------- |
+| Co-location       | Same store as variant summaries    | Separate from genomics path |
+| Access pattern    | Append-only audit time series      | OLTP row inserts            |
+| Vercel demo       | Optional — console fallback        | Would need `DATABASE_URL`   |
+
+ClickHouse keeps compliance logs beside genomics data without mixing PHI into
+the M&A Postgres schema. Apply with `npm run clickhouse:migrate`.
+
+| Column       | Notes                                      |
+| ------------ | ------------------------------------------ |
+| `timestamp`  | ISO-8601 access time                       |
+| `action`     | `read_summary` / `read_identifiers` / `download_raw` |
+| `resource`   | Route key only (sanitized)                   |
+| `actor_hash` | SHA-256 of IP + `LACUNA_AUDIT_SALT`        |
+| `allowed`    | 0 or 1                                     |
+| `mode`       | `blocked` / `de_identified` / `authorized` |
 
 ## Ingest governance
+
+VCF ingest runs on the **standalone ingest worker** — not Vercel serverless.
+`POST /api/genomics/ingest` returns 501. See [INGEST_WORKER.md](./INGEST_WORKER.md).
 
 ```bash
 # Demo seed — no consent ref required
 npm run clickhouse:seed
 
-# Real cohort — consent ref mandatory
-LACUNA_INGEST_CONSENT_REF=IRB-2024-001 npm run clickhouse:ingest-vcf -- \
+# Real cohort — consent ref mandatory (worker or CLI)
+LACUNA_INGEST_CONSENT_REF=IRB-2024-001 npm run ingest:worker -- \
   --file ./cohort.vcf.gz --callset-id c1 --study-id brca --sample-id S1
 ```
 

@@ -26,7 +26,7 @@ export async function GET(request: Request, context: RouteContext) {
   if (accessDenied) return accessDenied;
 
   const ip = getClientIp(request);
-  const bucket = rateLimit({
+  const bucket = await rateLimit({
     key: `genomics-object:${ip}`,
     limit: 30,
     windowMs: 60_000,

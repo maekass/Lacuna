@@ -1,11 +1,11 @@
 <!--
-SEO Meta Description: Lacuna — educational women's health M&A demo. Curated verified deals (n=58), D3 visualization, descriptive analytics with public methodology. Not live market data or predictive ML.
+SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified deals (n=58), clinical trial search, genomics governance, cited analytics. Not live market data or predictive ML.
 -->
 
 <h1 align="center">Lacuna</h1>
 
 <p align="center">
-  <strong>Educational demo — women's health M&A visualization &amp; descriptive analytics</strong>
+  <strong>Women's health M&A diligence stack — verified deals, genomics governance, cited analytics</strong>
 </p>
 
 <blockquote align="center">
@@ -18,7 +18,7 @@ SEO Meta Description: Lacuna — educational women's health M&A demo. Curated ve
 
 <p align="center">
   <a href="https://lacuna-maekass.vercel.app">
-    <img src="./public/social-preview.svg" alt="Lacuna — educational FemTech M&A network visualization from a curated verified dataset" width="100%">
+    <img src="./public/social-preview.svg" alt="Lacuna — women's health M&A investment research stack with verified deal network visualization" width="100%">
   </a>
 </p>
 
@@ -53,9 +53,10 @@ SEO Meta Description: Lacuna — educational women's health M&A demo. Curated ve
 
 ## Overview
 
-**Lacuna** is a **research and education demo**: a curated, source-linked
-snapshot of women's health M&A (58 verified deals), rendered as D3 network views
-and **descriptive** analytics with published methodology.
+**Lacuna** is an **investment research stack** — a diligence infrastructure
+prototype with a curated, source-linked snapshot of women's health M&A (58
+verified deals), rendered as D3 network views and **descriptive** analytics with
+published methodology.
 
 | Claim                   | Reality                                                                                 |
 | ----------------------- | --------------------------------------------------------------------------------------- |
@@ -66,9 +67,9 @@ and **descriptive** analytics with published methodology.
 | Clinical trials panel   | Live ClinicalTrials.gov search; **M&A panels** still use the curated dataset            |
 | Production intelligence | **No** — not PitchBook, not a data SLA, not investment advice                           |
 
-Open source under [BSL 1.1](LICENSE) for coursework, journalism, and self-hosted
-exploration. Commercial competitive products need a separate license —
-[mps5cy@virginia.edu](mailto:mps5cy@virginia.edu).
+Open source under [BSL 1.1](LICENSE) for corp VC diligence workflows, portfolio
+review, and self-hosted exploration. Commercial competitive products need a
+separate license — [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu).
 
 Portfolio project by [Mae Kass](https://github.com/maekass).
 
@@ -81,8 +82,8 @@ live demo — see [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md) and the
 
 ## What is Lacuna?
 
-An open-source **educational sandbox** for exploring verified women's health /
-FemTech M&A:
+An open-source **diligence prototype** for corporate VC and healthcare investors
+exploring verified women's health / FemTech M&A:
 
 - **D3.js** force-directed acquirer–target graphs
 - **Deal flow & valuation** charts (curated counts and disclosed values)
@@ -316,5 +317,5 @@ separate agreement. Converts to Apache 2.0 May 2030.
 
 ## Author
 
-**[Mae Kass](https://github.com/maekass)** — open educational tools for women's
+**[Mae Kass](https://github.com/maekass)** — open investment-research tools for women's
 health data literacy and honest analytics.

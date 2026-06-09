@@ -52,8 +52,9 @@ curl -s "http://localhost:3000/api/genomics/callsets/demo-brca-panel-grch38/obje
    - `LACUNA_VARIANT_STORE=clickhouse`
    - `CLICKHOUSE_URL` — HTTPS endpoint with credentials
    - `LACUNA_OBJECT_STORAGE=s3`, `LACUNA_S3_BUCKET`, `LACUNA_S3_REGION`
-3. Run `npm run clickhouse:migrate` from CI or an ingest worker.
-4. Stream VCF → object storage; batch-insert variant summaries into ClickHouse.
+3. Run `npm run clickhouse:migrate` from CI or the ingest worker.
+4. Stream VCF via [INGEST_WORKER.md](./INGEST_WORKER.md) — not Vercel serverless.
+5. Vercel app serves read-only `GET /api/genomics/*`; `POST /api/genomics/ingest` → 501.
 
 ## Ingest pattern (multi-GB VCF)
 
