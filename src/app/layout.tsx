@@ -21,9 +21,9 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title:
-    "Lacuna — Women's Health M&A Education Demo | Verified Deals & Analytics",
+    "Lacuna — Women's Health M&A Intelligence | Verified Research Demo",
   description:
-    "Open educational demo for women's health M&A: curated verified deals, D3 network visualization, descriptive analytics, and health-equity context from public filings. Not investment advice or commercial deal intelligence — BSL 1.1.",
+    "Open research environment for women's health M&A: curator-verified deals, network visualization, genetics-first equity context, and cited descriptive analytics from public filings. Not investment advice — BSL 1.1.",
   keywords: [
     "women's health M&A education",
     "FemTech acquisitions research",
@@ -42,9 +42,9 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Lacuna — Women's Health M&A Education Demo",
+    title: "Lacuna — Women's Health M&A Intelligence",
     description:
-      "Curated verified deals, interactive network viz, and honest descriptive analytics — an open research demo, not commercial intelligence.",
+      "Verified deal provenance, clinical trial search, and genetics-first equity context — an open research demo with cited methodology.",
     url: "https://lacuna-maekass.vercel.app",
     siteName: "Lacuna",
     type: "website",
@@ -52,9 +52,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lacuna — Women's Health M&A Education Demo",
+    title: "Lacuna — Women's Health M&A Intelligence",
     description:
-      "Verified deals, clinical trial lookup, and health-equity context — open educational demo under BSL 1.1. Not investment advice.",
+      "Curator-verified M&A research demo with clinical trials and equity context — BSL 1.1. Not investment advice.",
   },
   robots: {
     index: true,
@@ -88,7 +88,7 @@ export default function RootLayout({
               name: "Lacuna",
               url: "https://lacuna-maekass.vercel.app",
               description:
-                "Open educational demo for women's health M&A — verified curated deals, network visualization, and descriptive analytics from public sources.",
+                "Open research environment for women's health M&A — verified deals, network visualization, and cited descriptive analytics from public sources.",
               applicationCategory: "EducationalApplication",
               operatingSystem: "Web",
               isAccessibleForFree: true,

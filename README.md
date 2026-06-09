@@ -5,7 +5,7 @@ SEO Meta Description: Lacuna — educational women's health M&A demo. Curated ve
 <h1 align="center">Lacuna</h1>
 
 <p align="center">
-  <strong>Educational demo — women's health M&A visualization &amp; descriptive analytics</strong>
+  <strong>Women's health M&A intelligence — verified research demo with cited descriptive analytics</strong>
 </p>
 
 <blockquote align="center">
