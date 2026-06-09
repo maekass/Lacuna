@@ -1,16 +1,10 @@
 import { NextResponse } from "next/server";
 import { parsePageParams } from "@/lib/api/pageParams";
-import {
-  computeStudySampleStats,
-  filterDomesticStudies,
-  STUDY_TRIAL_NCT_LINKS,
-  type DomesticInstitution,
-  type DomesticResearchStudy,
-} from "@/lib/research/domesticStudyCatalog";
-import {
-  getStudyLinkageMap,
-  isResearchStudyDbSeeded,
-} from "@/lib/research/studyLinkage";
+import type { DomesticInstitution } from "@/lib/research/domesticStudyCatalog";
+import type { DomesticResearchStudy } from "@/lib/research/domesticStudyCatalog";
+import { getResearchStudyPage } from "@/lib/research/researchStudyProvider";
+import { getStudyLinkageMap } from "@/lib/research/studyLinkage";
+import { STUDY_TRIAL_NCT_LINKS } from "@/lib/research/domesticStudyCatalog";
 
 const VALID_INSTITUTIONS = new Set<DomesticInstitution>([
   "nih",
@@ -24,11 +18,12 @@ type StudyWithLinkage = DomesticResearchStudy & {
   linkedCallsetIds: string[];
 };
 
-/** Attach Postgres linkage when seeded; otherwise use static catalog hints. */
+/** Attach trial and callset links from Postgres linkage tables. */
 async function enrichStudiesWithLinkage(
   studies: DomesticResearchStudy[],
+  dataMode: "static" | "db",
 ): Promise<StudyWithLinkage[]> {
-  if (!process.env.DATABASE_URL) {
+  if (dataMode === "static" || !process.env.DATABASE_URL) {
     return studies.map((study) => ({
       ...study,
       nctIds: [...(STUDY_TRIAL_NCT_LINKS[study.studyId] ?? [])],
@@ -37,21 +32,13 @@ async function enrichStudiesWithLinkage(
   }
 
   try {
-    const seeded = await isResearchStudyDbSeeded();
-    if (!seeded) {
-      return studies.map((study) => ({
-        ...study,
-        nctIds: [...(STUDY_TRIAL_NCT_LINKS[study.studyId] ?? [])],
-        linkedCallsetIds: study.variantCallsetId ? [study.variantCallsetId] : [],
-      }));
-    }
-
     const linkage = await getStudyLinkageMap(studies.map((s) => s.studyId));
     return studies.map((study) => {
       const bundle = linkage.get(study.studyId);
       return {
         ...study,
-        nctIds: bundle?.nctIds ?? [],
+        nctIds: bundle?.nctIds ??
+          [...(STUDY_TRIAL_NCT_LINKS[study.studyId] ?? [])],
         linkedCallsetIds: bundle?.callsetIds ??
           (study.variantCallsetId ? [study.variantCallsetId] : []),
       };
@@ -83,24 +70,31 @@ export async function GET(request: Request) {
       ? (institutionRaw as DomesticInstitution)
       : undefined;
 
-    const page = filterDomesticStudies({
+    const page = await getResearchStudyPage({
       institution,
       condition,
       limit,
       offset,
     });
-    const stats = computeStudySampleStats();
-    const studies = await enrichStudiesWithLinkage(page.studies);
+    const studies = await enrichStudiesWithLinkage(page.studies, page.dataMode);
 
     return NextResponse.json(
       {
-        ...page,
         studies,
-        stats,
-        disclaimer:
-          "Static cited catalog — not live enrollment. See source field per study.",
+        meta: page.meta,
+        stats: page.stats,
+        dataMode: page.dataMode,
+        disclaimer: page.dataMode === "db"
+          ? "Postgres-backed catalog — run npm run db:seed-research after migrate. Not live enrollment."
+          : "Static cited catalog — not live enrollment. See source field per study.",
       },
-      { headers: { "cache-control": "public, max-age=3600" } },
+      {
+        headers: {
+          "cache-control": page.dataMode === "db"
+            ? "private, max-age=300"
+            : "public, max-age=3600",
+        },
+      },
     );
   } catch (error) {
     console.error("research studies error:", error);

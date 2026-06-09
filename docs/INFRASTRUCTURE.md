@@ -95,7 +95,7 @@ Copy [`.env.example`](../.env.example) to `.env.local`. Production checklist:
 
 | Variable                     | When                                                                                           |
 | ---------------------------- | ---------------------------------------------------------------------------------------------- |
-| `LACUNA_DATA_MODE`           | `static` (default) or `db`                                                                     |
+| `LACUNA_DATA_MODE`           | `static` (local demo) or `db` (**use `db` on staging/production**)                             |
 | `DATABASE_URL`               | db mode, SEC sync, `/api/cron/sec-ingest/status`                                               |
 | `CRON_SECRET`                | Production cron auth                                                                           |
 | `SEC_EDGAR_USER_AGENT`       | Required for SEC ingest                                                                        |
@@ -142,10 +142,16 @@ schedule `/api/health/ready` (deploy smoke / manual only).
 
 ## Vercel deploy
 
+**Staging and production should use `LACUNA_DATA_MODE=db`** with `DATABASE_URL`
+set (Neon/Postgres). Static JSON is for local demo only — verified deals, SEC
+ingest status, and `/api/research/studies` all read from Postgres in db mode.
+
 1. Link repo and set env vars (see PRODUCTION_SETUP).
-2. `vercel env pull .env.local` then `npm run db:migrate` against production DB.
-3. Confirm cron: Vercel → Cron Jobs shows `0 6 * * *` → `/api/cron/sec-ingest`.
-4. Smoke: `curl -s https://lacuna-maekass.vercel.app/api/health | jq .ok`
+2. Set `LACUNA_DATA_MODE=db` and `DATABASE_URL` on Preview + Production.
+3. `vercel env pull .env.local` then `npm run db:migrate` against production DB.
+4. `npm run db:import` and `npm run db:seed-research` after migrations.
+5. Confirm cron: Vercel → Cron Jobs shows `0 6 * * *` → `/api/cron/sec-ingest`.
+6. Smoke: `curl -s https://lacuna-maekass.vercel.app/api/health | jq .ok`
 
 Cron auth lives in `src/lib/infra/cronAuth.ts` — without `CRON_SECRET`,
 non-production allows open access; production requires the bearer token.
