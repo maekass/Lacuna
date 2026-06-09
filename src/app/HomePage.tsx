@@ -76,7 +76,7 @@ export default function HomePage() {
             <div>
               <h1 className="text-xl font-bold text-lacuna-plum">Lacuna</h1>
               <p className="text-xs text-lacuna-blue">
-                Women&apos;s Health M&amp;A Research
+                Women&apos;s Health M&amp;A · Investment Research
               </p>
             </div>
           </a>
@@ -97,20 +97,20 @@ export default function HomePage() {
             <h2 className="text-4xl md:text-5xl font-bold text-lacuna-plum mb-4 leading-tight">
               <span className="block">Women&apos;s Health M&amp;A</span>
               <span className="block lacuna-gradient-text">
-                Intelligence, Verified
+                Investment Research Stack
               </span>
             </h2>
             <p className="text-lg text-lacuna-blue leading-relaxed">
-              Lacuna is an open research environment for mergers and acquisitions
-              in women&apos;s health and precision medicine — curator-verified
-              deal provenance, live ClinicalTrials.gov search, and
-              genetics-first equity context from public sources.
+              A diligence infrastructure prototype for corporate VC and healthcare
+              investors — curator-verified deal provenance, live clinical-trial
+              signal, genomics-aware equity context, and full source lineage on
+              deployable infrastructure.
             </p>
             <p className="text-sm text-lacuna-blue/70 mt-3 leading-relaxed">
-              Built for students, researchers, journalists, and founders who need
-              cited methodology and honest data limits — not live market feeds,
-              predictive scores, or investment advice. A BSL 1.1 learning sandbox,
-              not institutional deal intelligence.
+              n={verifiedAcquisitions.length} verified deals · SEC EDGAR ingest ·
+              HIPAA/GDPR genomics layer · descriptive analytics only. Methodology
+              is transparent and cited — not PitchBook, not live market feeds, and
+              not investment advice.
             </p>
           </div>
         </motion.section>
@@ -644,9 +644,9 @@ export default function HomePage() {
               </p>
               <p className="mt-1">
                 Verified data from SEC EDGAR, company disclosures, and
-                ClinicalTrials.gov. An educational research demo for
-                women&apos;s health M&amp;A — not investment advice and not
-                commercial deal intelligence.
+                ClinicalTrials.gov. An open investment-research prototype for
+                women&apos;s health M&amp;A — not investment advice and not a
+                substitute for paid deal-intelligence products.
               </p>
             </div>
           </div>

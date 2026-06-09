@@ -21,20 +21,20 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title:
-    "Lacuna — Women's Health M&A Intelligence | Verified Research Demo",
+    "Lacuna — Women's Health M&A Investment Research Stack",
   description:
-    "Open research environment for women's health M&A: curator-verified deals, network visualization, genetics-first equity context, and cited descriptive analytics from public filings. Not investment advice — BSL 1.1.",
+    "Diligence infrastructure prototype for corp VC and healthcare investors: curator-verified deal provenance, clinical-trial signal, genomics-aware equity, and cited descriptive analytics from public filings. Not investment advice — BSL 1.1.",
   keywords: [
-    "women's health M&A education",
-    "FemTech acquisitions research",
-    "M&A visualization",
-    "healthcare deal data open source",
+    "women's health M&A diligence",
+    "FemTech corporate venture capital",
+    "healthcare investment research",
+    "M&A deal provenance",
     "clinical trials women's health",
-    "health equity analytics",
+    "genomics health equity",
     "descriptive M&A analytics",
-    "D3 network graph",
+    "SEC EDGAR deal ingest",
     "BSL open source",
-    "FemTech teaching tool",
+    "healthcare VC research stack",
     "M&A network analysis",
   ],
   metadataBase: new URL("https://lacuna-maekass.vercel.app"),
@@ -42,9 +42,9 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Lacuna — Women's Health M&A Intelligence",
+    title: "Lacuna — Women's Health M&A Investment Research Stack",
     description:
-      "Verified deal provenance, clinical trial search, and genetics-first equity context — an open research demo with cited methodology.",
+      "Curator-verified deal provenance, clinical-trial signal, and genomics-aware equity — an open diligence prototype with full source lineage.",
     url: "https://lacuna-maekass.vercel.app",
     siteName: "Lacuna",
     type: "website",
@@ -52,9 +52,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lacuna — Women's Health M&A Intelligence",
+    title: "Lacuna — Women's Health M&A Investment Research Stack",
     description:
-      "Curator-verified M&A research demo with clinical trials and equity context — BSL 1.1. Not investment advice.",
+      "Diligence prototype for healthcare investors — verified deals, clinical trials, genomics equity. BSL 1.1. Not investment advice.",
   },
   robots: {
     index: true,
@@ -88,8 +88,8 @@ export default function RootLayout({
               name: "Lacuna",
               url: "https://lacuna-maekass.vercel.app",
               description:
-                "Open research environment for women's health M&A — verified deals, network visualization, and cited descriptive analytics from public sources.",
-              applicationCategory: "EducationalApplication",
+                "Investment research stack for women's health M&A — curator-verified deals, clinical-trial signal, genomics-aware equity, and cited descriptive analytics from public sources.",
+              applicationCategory: "BusinessApplication",
               operatingSystem: "Web",
               isAccessibleForFree: true,
               creator: {

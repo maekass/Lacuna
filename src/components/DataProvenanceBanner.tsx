@@ -42,9 +42,9 @@ const COMPLIANCE_ITEMS = [
       "We only use official public APIs and published press releases. No scraping, no paywall workarounds, no proprietary database access.",
   },
   {
-    title: "Built for learning & research",
+    title: "Built for diligence & research",
     detail:
-      "Lacuna is an educational demo — for coursework, journalism, policy reading, and self-hosted exploration under BSL 1.1. It is not investment advice and not a substitute for paid M&A or market-intelligence products.",
+      "Lacuna is an investment-research prototype — for corp VC workflows, portfolio review, and self-hosted exploration under BSL 1.1. It is not investment advice and not a substitute for paid M&A or market-intelligence products.",
   },
   {
     title: "We show our work",
