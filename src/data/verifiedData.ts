@@ -36,6 +36,24 @@ export const verifiedAcquirers = staticDerived
   .verifiedAcquirers as VerifiedAcquirerView[];
 export const dataProvenance = staticDerived.dataProvenance;
 
+export const foregroundPortfolio = [
+  "Nurx",
+  "Evvy",
+  "Seven Starling",
+  "Cofertility",
+  "Mae",
+  "Millie",
+  "Bloomlife",
+  "Eli Health",
+  "Cadence OTC",
+  "AOA Dx",
+  "Vitra Labs",
+  "Ovian",
+  "Planera",
+  "Gesynta",
+  "Nadia Care",
+] as const;
+
 export const getVerifiedNetworkNodes = staticDerived.getVerifiedNetworkNodes;
 export const getVerifiedNetworkLinks = staticDerived.getVerifiedNetworkLinks;
 export const getVerifiedTotalDealValue =

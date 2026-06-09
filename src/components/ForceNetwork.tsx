@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as d3 from "d3";
 import { motion } from "framer-motion";
+import { foregroundPortfolio } from "@/data/verifiedData";
 
 interface Node extends d3.SimulationNodeDatum {
   id: string;
@@ -26,6 +27,7 @@ interface ForceNetworkProps {
   links: Link[];
   width?: number;
   height?: number;
+  highlightForeground?: boolean;
 }
 
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
@@ -39,8 +41,16 @@ const sectorColors: Record<string, string> = {
   "Sexual Wellness": LACUNA_PALETTE.transcendentPink,
 };
 
+const FOREGROUND_COLOR = "#7C3AED";
+
 export default function ForceNetwork(
-  { nodes, links, width: widthProp, height: heightProp }: ForceNetworkProps,
+  {
+    nodes,
+    links,
+    width: widthProp,
+    height: heightProp,
+    highlightForeground = true,
+  }: ForceNetworkProps,
 ) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -50,6 +60,12 @@ export default function ForceNetwork(
     w: widthProp ?? 800,
     h: heightProp ?? 600,
   });
+  const [isForegroundHighlightEnabled, setIsForegroundHighlightEnabled] =
+    useState(highlightForeground);
+  const foregroundPortfolioSet = useMemo(
+    () => new Set(foregroundPortfolio),
+    [],
+  );
 
   useEffect(() => {
     const el = containerRef.current;
@@ -81,6 +97,33 @@ export default function ForceNetwork(
 
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
+
+    svg.append("style").text(`
+      @keyframes lacuna-foreground-pulse {
+        0% {
+          opacity: 0.85;
+          stroke-width: 2;
+          transform: scale(1);
+          transform-origin: center;
+        }
+        70% {
+          opacity: 0;
+          stroke-width: 1;
+          transform: scale(1.6);
+          transform-origin: center;
+        }
+        100% {
+          opacity: 0;
+          stroke-width: 1;
+          transform: scale(1.6);
+          transform-origin: center;
+        }
+      }
+
+      .lacuna-foreground-pulse-ring {
+        animation: lacuna-foreground-pulse 2s ease-out infinite;
+      }
+    `);
 
     // Create container group
     const g = svg.append("g");
@@ -164,26 +207,69 @@ export default function ForceNetwork(
           }),
       );
 
+    const getNodeRadius = (d: Node) => Math.sqrt(d.valuation) / 2 + 5;
+    const isForegroundNode = (d: Node) =>
+      isForegroundHighlightEnabled && foregroundPortfolioSet.has(d.name);
+
+    node.filter((d) => isForegroundNode(d))
+      .append("circle")
+      .attr("class", "lacuna-foreground-pulse-ring")
+      .attr("r", (d) => getNodeRadius(d) + 6)
+      .attr("fill", "none")
+      .attr("stroke", FOREGROUND_COLOR)
+      .attr("stroke-opacity", 0.7)
+      .style("pointer-events", "none");
+
     // Add circles to nodes
     node.append("circle")
-      .attr("r", (d) => Math.sqrt(d.valuation) / 2 + 5)
+      .attr("r", (d) => getNodeRadius(d))
       .attr(
         "fill",
-        (d) =>
-          d.type === "acquirer"
+        (d) => {
+          if (isForegroundNode(d)) {
+            return FOREGROUND_COLOR;
+          }
+
+          return d.type === "acquirer"
             ? "#1e293b"
-            : (sectorColors[d.sector] || "#64748b"),
+            : (sectorColors[d.sector] || "#64748b");
+        },
       )
       .attr("stroke", (d) => d.type === "acquirer" ? "#fbbf24" : "#fff")
       .attr("stroke-width", (d) => d.type === "acquirer" ? 3 : 2)
       .attr("opacity", 0.9);
+
+    node.filter((d) => isForegroundNode(d))
+      .append("g")
+      .attr("transform", (d) => `translate(0, ${getNodeRadius(d) + 14})`)
+      .style("pointer-events", "none")
+      .call((group) => {
+        group.append("rect")
+          .attr("x", -12)
+          .attr("y", -7)
+          .attr("width", 24)
+          .attr("height", 14)
+          .attr("rx", 7)
+          .attr("fill", "#ffffff")
+          .attr("stroke", FOREGROUND_COLOR)
+          .attr("stroke-width", 1.5);
+
+        group.append("text")
+          .text("FG")
+          .attr("text-anchor", "middle")
+          .attr("dominant-baseline", "middle")
+          .attr("y", 0.5)
+          .attr("font-size", "9px")
+          .attr("font-weight", "700")
+          .attr("fill", FOREGROUND_COLOR);
+      });
 
     // Add labels
     node.append("text")
       .text((d) =>
         d.name.length > 15 ? d.name.substring(0, 12) + "..." : d.name
       )
-      .attr("x", (d) => Math.sqrt(d.valuation) / 2 + 8)
+      .attr("x", (d) => getNodeRadius(d) + 8)
       .attr("y", 4)
       .attr("font-size", "10px")
       .attr("font-weight", "500")
@@ -198,17 +284,19 @@ export default function ForceNetwork(
       })
       .on("mouseenter", (event, d) => {
         setHoveredNode(d);
-        d3.select(event.currentTarget).select("circle")
+        d3.select(event.currentTarget)
+          .select("circle:not(.lacuna-foreground-pulse-ring)")
           .transition()
           .duration(200)
-          .attr("r", Math.sqrt(d.valuation) / 2 + 10);
+          .attr("r", getNodeRadius(d) + 5);
       })
       .on("mouseleave", (event, d) => {
         setHoveredNode(null);
-        d3.select(event.currentTarget).select("circle")
+        d3.select(event.currentTarget)
+          .select("circle:not(.lacuna-foreground-pulse-ring)")
           .transition()
           .duration(200)
-          .attr("r", Math.sqrt(d.valuation) / 2 + 5);
+          .attr("r", getNodeRadius(d));
       });
 
     // Update positions on tick
@@ -226,11 +314,20 @@ export default function ForceNetwork(
     return () => {
       simulation.stop();
     };
-  }, [nodes, links, width, height]);
+  }, [nodes, links, width, height, isForegroundHighlightEnabled, foregroundPortfolioSet]);
 
   return (
     <div ref={containerRef} className="relative w-full">
-      <CuratedDatasetBanner className="mb-3" />
+      <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <CuratedDatasetBanner className="mb-0" />
+        <button
+          type="button"
+          onClick={() => setIsForegroundHighlightEnabled((value) => !value)}
+          className={`bg-white rounded-xl border border-lacuna-lavender/40 px-4 py-2 text-sm font-medium transition-colors ${isForegroundHighlightEnabled ? "text-lacuna-plum shadow-sm" : "text-lacuna-blue hover:text-lacuna-plum"}`}
+        >
+          Foreground Portfolio
+        </button>
+      </div>
       <svg
         ref={svgRef}
         width={width}

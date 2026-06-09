@@ -174,6 +174,7 @@ export default function HomePage() {
           <ForceNetwork
             nodes={networkNodes}
             links={networkLinks}
+            highlightForeground={true}
           />
         </motion.section>
 
