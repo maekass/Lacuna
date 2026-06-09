@@ -39,8 +39,28 @@ Readiness loads and validates the full dataset (and may query Postgres in db mod
 
 ### curl (cron on a bastion or CI smoke)
 
+Check status first (401 usually means Deployment Protection, not a bad URL):
+
+```bash
+curl -sS -o /dev/null -w "%{http_code}\n" "https://lacuna-maekass.vercel.app/api/health"
+```
+
+When production returns 200:
+
 ```bash
 curl -sf "https://lacuna-maekass.vercel.app/api/health" | jq -e '.ok == true and .probe == "live"'
+```
+
+Local dev (with `npm run dev` running):
+
+```bash
+LACUNA_MONITOR_URL=http://localhost:3000 npm run monitor:liveness
+```
+
+With Vercel automation bypass (Settings → Deployment Protection → Protection Bypass for Automation):
+
+```bash
+VERCEL_PROTECTION_BYPASS='your-secret' npm run monitor:liveness
 ```
 
 ### Datadog Synthetic (API test)
