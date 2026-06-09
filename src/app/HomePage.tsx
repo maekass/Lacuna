@@ -8,6 +8,7 @@ import {
   CausalDAG,
   CausalInferenceEngine,
   ClinicalTrialTracker,
+  DomesticStudyCatalog,
   ClusteringAnalysis,
   CompanySimilarity,
   CompetitiveAnalysisDashboard,
@@ -270,17 +271,19 @@ export default function HomePage() {
               Clinical Trials Worth Watching
             </h3>
             <p className="text-lacuna-blue">
-              A window into active research — women&apos;s health, oncology,
-              genetic markers, and precision medicine trials sourced from
-              ClinicalTrials.gov
+              Live NIH, Harvard, and MIT/Broad trial searches plus a cited
+              domestic sample-size catalog — PCOS, BRCA, sickle cell, and lupus
             </p>
           </div>
-          <ClinicalTrialTracker />
+          <div className="grid lg:grid-cols-2 gap-6 mb-6">
+            <ClinicalTrialTracker />
+            <DomesticStudyCatalog />
+          </div>
           <p
             className="mt-3 text-xs text-lacuna-blue/70 text-center"
             role="note"
           >
-            Trial search is live; M&amp;A counts are curated.
+            Trial search is live; cohort sample sizes are static citations.
           </p>
         </motion.section>
 

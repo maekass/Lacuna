@@ -105,6 +105,15 @@ Variant call sets may contain PHI. Default: `LACUNA_PATIENT_DATA_MODE=de_identif
 cancer (BRCA1/2), sickle cell (HBB), lupus, and Lynch syndrome — used by the
 dashboard gene filter chips.
 
+## Domestic study sample universe
+
+`GET /api/research/studies` returns a cited catalog of US cohorts from NIH,
+Harvard affiliates, and MIT/Broad with published sample sizes (All of Us, WHI,
+Nurses' Health Study II, Black Women's Health Study, gnomAD, etc.).
+
+`npm run clickhouse:seed` loads **7 infrastructure callsets** mapped to domestic
+study IDs — not clinical truth.
+
 ## Related
 
 - [PATIENT_DATA_GOVERNANCE.md](./PATIENT_DATA_GOVERNANCE.md) — HIPAA/GDPR controls

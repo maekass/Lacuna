@@ -52,31 +52,49 @@ const INITIAL_STATE: FetchState = {
 interface CategoryConfig {
   label: string;
   query: string;
+  sponsor?: string;
   description: string;
 }
 
 const CATEGORIES: CategoryConfig[] = [
   {
-    label: "Women's Health",
-    query: "women health female reproductive",
+    label: "NIH Women's Health",
+    sponsor:
+      "Eunice Kennedy Shriver National Institute of Child Health and Human Development",
+    query: "women reproductive PCOS fertility maternal",
     description:
-      "Fertility, maternal care, menopause, contraception, pelvic health",
+      "NICHD trials — PCOS, fertility, maternal health, reproductive endocrinology",
   },
   {
-    label: "Oncology",
-    query: "breast cancer ovarian cervical",
-    description: "Breast, ovarian, cervical, and endometrial cancers",
+    label: "NIH Cancer",
+    sponsor: "National Cancer Institute",
+    query: "breast ovarian hereditary BRCA cancer women",
+    description: "NCI trials — breast/ovarian cancer, hereditary cancer screening",
+  },
+  {
+    label: "Harvard Affiliates",
+    sponsor: "Harvard",
+    query: "women breast PCOS lupus genetics",
+    description: "Harvard Medical affiliates — BWH, MGH, Dana-Farber, Chan School",
+  },
+  {
+    label: "Broad (MIT/Harvard)",
+    sponsor: "Broad Institute",
+    query: "genomics cancer biomarker precision medicine",
+    description:
+      "Broad Institute — genomics, cancer dependencies, population references",
   },
   {
     label: "Genetic Markers",
-    query: "BRCA genetic biomarker hereditary cancer screening",
-    description: "BRCA1/2, HER2, genomic profiling, carrier screening",
+    query: "BRCA HBB sickle cell PCOS genetic biomarker",
+    description:
+      "BRCA1/2, HBB/sickle cell, PCOS loci, carrier screening, hereditary cancer",
   },
   {
-    label: "Precision Medicine",
-    query: "precision medicine targeted therapy immunotherapy women",
-    description:
-      "Targeted therapies, ADCs, immunotherapy, companion diagnostics",
+    label: "NIH Sickle Cell",
+    sponsor: "National Heart, Lung, and Blood Institute",
+    query: "sickle cell hemoglobinopathy HBB",
+    description: "NHLBI sickle cell disease and gene therapy trials",
   },
 ];
 
@@ -112,8 +130,9 @@ export default function ClinicalTrialTracker() {
     const cat = CATEGORIES[activeCategory];
     const params = new URLSearchParams({
       condition: cat.query,
-      limit: "20",
+      limit: "25",
     });
+    if (cat.sponsor) params.set("sponsor", cat.sponsor);
 
     fetch(`/api/clinical-trials?${params}`, { signal: controller.signal })
       .then((res) => {

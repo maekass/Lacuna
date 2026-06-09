@@ -33,6 +33,12 @@ export const ClinicalTrialTracker = dynamic(
     loading: sectionFallback("h-80 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },
 );
+export const DomesticStudyCatalog = dynamic(
+  () => import("@/components/DomesticStudyCatalog"),
+  {
+    loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
+  },
+);
 export const EvidenceMaturityDashboard = dynamic(
   () => import("@/components/EvidenceMaturityDashboard"),
   {
