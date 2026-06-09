@@ -268,8 +268,8 @@ export default function HomePage() {
               Clinical Trials Worth Watching
             </h3>
             <p className="text-lacuna-blue">
-              Live women&apos;s health, oncology, fertility, maternal health, menopause,
-              and academic sponsor searches plus a cited domestic sample-size catalog
+              Live oncology, pelvic health, fibroids, fertility, contraception,
+              maternal health, and sickle cell searches plus a cited domestic sample-size catalog
             </p>
           </div>
           <div className="grid lg:grid-cols-2 gap-6 mb-6">

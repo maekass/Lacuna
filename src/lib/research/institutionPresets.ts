@@ -21,21 +21,19 @@ export const DOMESTIC_TRIAL_PRESETS: readonly InstitutionTrialPreset[] = [
       "Broad market scan — fertility, pelvic pain, maternal health, menopause, and reproductive endocrinology",
   },
   {
-    id: "nih-womens-health",
-    label: "NIH Women's Health",
-    sponsor:
-      "Eunice Kennedy Shriver National Institute of Child Health and Human Development",
-    condition: "endometriosis infertility fertility pregnancy maternal reproductive",
-    description:
-      "NICHD trials — reproductive endocrinology, fertility, maternal health, and pregnancy",
-  },
-  {
     id: "nih-cancer",
     label: "NIH Cancer (NCI)",
     sponsor: "National Cancer Institute",
     condition: "breast ovarian cervical endometrial BRCA cancer",
     description:
       "NCI trials — breast and gynecologic oncology, hereditary cancer, genomic screening",
+  },
+  {
+    id: "breast-gyn-oncology",
+    label: "Breast & Gyn Oncology",
+    condition: "breast ovarian cervical endometrial BRCA cancer",
+    description:
+      "Broad oncology scan — breast, ovarian, cervical, and endometrial cancer plus hereditary risk",
   },
   {
     id: "pelvic-pain-endometriosis",
@@ -45,11 +43,25 @@ export const DOMESTIC_TRIAL_PRESETS: readonly InstitutionTrialPreset[] = [
       "Live pelvic health scan — endometriosis, adenomyosis, chronic pelvic pain, and fibroids",
   },
   {
-    id: "fertility-pcos",
-    label: "Fertility & PCOS",
-    condition: "PCOS infertility fertility ovulation reproductive",
+    id: "uterine-fibroids",
+    label: "Uterine Fibroids",
+    condition: "uterine fibroids leiomyoma heavy menstrual bleeding",
     description:
-      "Fertility landscape — PCOS, infertility, ovulatory disorders, and reproductive endocrinology",
+      "Fibroid care trials — uterine fibroids, leiomyoma, and heavy menstrual bleeding",
+  },
+  {
+    id: "infertility-ivf",
+    label: "Infertility & IVF",
+    condition: "infertility IVF assisted reproduction ovulation",
+    description:
+      "Fertility treatment trials — infertility, IVF, assisted reproduction, and ovulation support",
+  },
+  {
+    id: "contraception-family-planning",
+    label: "Contraception & Family Planning",
+    condition: "contraception contraceptive IUD family planning",
+    description:
+      "Family planning trials — contraception, contraceptive devices, IUDs, and reproductive planning",
   },
   {
     id: "maternal-health",
@@ -59,41 +71,19 @@ export const DOMESTIC_TRIAL_PRESETS: readonly InstitutionTrialPreset[] = [
       "Maternal health scan — pregnancy, postpartum care, hypertensive disorders, and gestational complications",
   },
   {
-    id: "menopause-aging",
-    label: "Menopause & Aging",
-    condition: "menopause vasomotor osteoporosis women",
+    id: "pregnancy-postpartum",
+    label: "Pregnancy & Postpartum",
+    condition: "pregnancy postpartum preeclampsia gestational maternal",
     description:
-      "Menopause and healthy aging — vasomotor symptoms, bone health, and midlife women",
+      "Pregnancy and postpartum trials — prenatal care, hypertensive disorders, delivery, and recovery",
   },
   {
-    id: "precision-genomics",
-    label: "Precision Genomics",
-    condition: "BRCA hereditary genomic biomarker precision oncology screening",
+    id: "perinatal-mental-health",
+    label: "Perinatal Mental Health",
+    condition:
+      "postpartum depression perinatal depression maternal mental health anxiety",
     description:
-      "Precision medicine scan — biomarkers, hereditary screening, BRCA, and genomic oncology",
-  },
-  {
-    id: "bwh",
-    label: "Brigham & Women's",
-    sponsor: "Brigham and Women's Hospital",
-    condition: "endometriosis fertility reproductive breast women",
-    description:
-      "BWH live sponsor feed — women's health, fertility, pelvic pain, and breast disease",
-  },
-  {
-    id: "mgh",
-    label: "Mass General",
-    sponsor: "Massachusetts General Hospital",
-    condition: "fertility infertility endometriosis reproductive",
-    description: "MGH reproductive endocrine, infertility, and pelvic care trials",
-  },
-  {
-    id: "dana-farber",
-    label: "Dana-Farber",
-    sponsor: "Dana-Farber Cancer Institute",
-    condition: "breast ovarian BRCA hereditary cancer",
-    description:
-      "DFCI precision oncology feed — breast and ovarian cancer, BRCA, and hereditary risk",
+      "Perinatal mental health trials — postpartum depression, perinatal depression, anxiety, and maternal behavioral health",
   },
   {
     id: "nih-scd",
