@@ -1,13 +1,11 @@
 /**
- * CLI wrapper for VCF stream ingest — delegates to ingest worker library.
- * Usage:
- *   CLICKHOUSE_URL=... npm run clickhouse:ingest-vcf -- --file ./sample.vcf.gz \
- *     --callset-id cohort-a-sample-1 --study-id brca-panel --sample-id SAMPLE-001
+ * Standalone VCF ingest worker — runs outside Vercel serverless.
+ * See docs/INGEST_WORKER.md for deploy steps.
  */
 import process from "node:process";
-import { ingestVcfStream } from "../src/lib/genomics/ingestVcfStream";
+import { ingestVcfStream } from "../../src/lib/genomics/ingestVcfStream";
 
-interface CliArgs {
+interface WorkerArgs {
   file: string;
   callsetId: string;
   studyId: string;
@@ -15,7 +13,7 @@ interface CliArgs {
   assembly: string;
 }
 
-function parseArgs(argv: string[]): CliArgs {
+function parseArgs(argv: string[]): WorkerArgs {
   const map = new Map<string, string>();
   for (let i = 0; i < argv.length; i += 1) {
     const token = argv[i];
@@ -33,7 +31,7 @@ function parseArgs(argv: string[]): CliArgs {
 
   if (!file || !callsetId || !studyId || !sampleId) {
     console.error(
-      "Usage: npm run clickhouse:ingest-vcf -- --file <path.vcf[.gz]> --callset-id <id> --study-id <id> --sample-id <id> [--assembly GRCh38]",
+      "Usage: ingest-worker --file <path.vcf[.gz]> --callset-id <id> --study-id <id> --sample-id <id> [--assembly GRCh38]",
     );
     process.exit(1);
   }
@@ -43,14 +41,17 @@ function parseArgs(argv: string[]): CliArgs {
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
+  console.log(
+    `[ingest-worker] starting callset=${args.callsetId} study=${args.studyId}`,
+  );
+
   const result = await ingestVcfStream(args);
   console.log(
-    `Done: ${result.variantCount} variant summaries for callset ${args.callsetId}`,
+    `[ingest-worker] complete variants=${result.variantCount} uri=${result.objectUri}`,
   );
-  console.log("Object URI:", result.objectUri);
 }
 
 main().catch((error) => {
-  console.error(error);
+  console.error("[ingest-worker] failed:", error);
   process.exit(1);
 });

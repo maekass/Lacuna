@@ -16,7 +16,7 @@ const VALID_RESOURCES = new Set<DatasetResource>([
 
 export async function GET(request: Request) {
   const ip = getClientIp(request);
-  const limit = rateLimit({
+  const limit = await rateLimit({
     key: `verifiedDataset:${ip}`,
     limit: 20,
     windowMs: 60_000,

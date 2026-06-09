@@ -17,6 +17,7 @@
     "clickhouse:migrate": "tsx scripts/clickhouse-migrate.ts",
     "clickhouse:seed": "tsx scripts/seed-variant-callsets.ts",
     "clickhouse:ingest-vcf": "tsx scripts/ingest-vcf-stream.ts",
+    "ingest:worker": "tsx services/ingest-worker/index.ts",
     "infra:check": "tsx scripts/infra-check.ts",
     "monitor:liveness": "sh scripts/monitor-liveness.sh"
   },
@@ -27,6 +28,7 @@
     "@clickhouse/client": "^1.20.0",
     "@sentry/nextjs": "^10.55.0",
     "@types/d3": "^7.4.3",
+    "@upstash/redis": "^1.38.0",
     "ai": "^6.0.193",
     "d3": "^7.9.0",
     "d3-array": "^3.2.4",

@@ -1,5 +1,12 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+vi.mock("@/lib/compliance/auditEventSink", () => ({
+  writeAuditEvent: vi.fn().mockResolvedValue(true),
+}));
+
+import { writeAuditEvent } from "@/lib/compliance/auditEventSink";
 import {
+  auditPatientDataAccess,
   getPatientDataAccessMode,
   isPatientDataAuthorized,
   pseudonymizeSampleId,
@@ -90,5 +97,25 @@ describe("patientDataGovernance", () => {
   it("waives consent for infrastructure seed study (edge)", () => {
     clearEnv();
     expect(requireIngestConsentRef("lacuna-infra-seed")).toBeNull();
+  });
+
+  it("auditPatientDataAccess dispatches async sink without blocking (success)", async () => {
+    vi.mocked(writeAuditEvent).mockClear();
+    auditPatientDataAccess({
+      action: "read_summary",
+      resource: "genomics/variants",
+      actor: "127.0.0.1",
+      allowed: true,
+      mode: "de_identified",
+    });
+    await Promise.resolve();
+    expect(writeAuditEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        action: "read_summary",
+        resource: "genomics/variants",
+        allowed: 1,
+        mode: "de_identified",
+      }),
+    );
   });
 });

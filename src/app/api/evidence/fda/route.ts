@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
   }
 
   const ip = getClientIp(request);
-  const bucket = rateLimit({
+  const bucket = await rateLimit({
     key: `evidence-fda:${ip}`,
     limit: 40,
     windowMs: 60_000,

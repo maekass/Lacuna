@@ -36,7 +36,7 @@ export function GET() {
 /** POST — generate one insight type for a company context. */
 export async function POST(request: NextRequest) {
   const ip = getClientIp(request);
-  const limit = rateLimit({
+  const limit = await rateLimit({
     key: `aiInsights:${ip}`,
     limit: 10,
     windowMs: 60_000,

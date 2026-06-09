@@ -1,11 +1,11 @@
 <!--
-SEO Meta Description: Lacuna — women's health M&A investment research stack. Curated verified deals (n=58), diligence prototype with cited provenance. Not live market data or predictive ML.
+SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified deals (n=58), clinical trial search, genomics governance, cited analytics. Not live market data or predictive ML.
 -->
 
 <h1 align="center">Lacuna</h1>
 
 <p align="center">
-  <strong>Women's health M&A investment research stack — curator-verified diligence prototype</strong>
+  <strong>Women's health M&A diligence stack — verified deals, genomics governance, cited analytics</strong>
 </p>
 
 <blockquote align="center">

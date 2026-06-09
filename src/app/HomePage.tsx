@@ -76,7 +76,7 @@ export default function HomePage() {
             <div>
               <h1 className="text-xl font-bold text-lacuna-plum">Lacuna</h1>
               <p className="text-xs text-lacuna-blue">
-                Women&apos;s Health M&amp;A · Investment Research
+                Women&apos;s Health M&amp;A · Diligence Stack
               </p>
             </div>
           </a>
@@ -97,20 +97,18 @@ export default function HomePage() {
             <h2 className="text-4xl md:text-5xl font-bold text-lacuna-plum mb-4 leading-tight">
               <span className="block">Women&apos;s Health M&amp;A</span>
               <span className="block lacuna-gradient-text">
-                Investment Research Stack
+                Diligence Stack
               </span>
             </h2>
             <p className="text-lg text-lacuna-blue leading-relaxed">
-              A diligence infrastructure prototype for corporate VC and healthcare
-              investors — curator-verified deal provenance, live clinical-trial
-              signal, genomics-aware equity context, and full source lineage on
-              deployable infrastructure.
+              Prototype investment-research environment — verified deal
+              provenance, clinical trial search, genomics governance, and cited
+              analytics from public sources.
             </p>
             <p className="text-sm text-lacuna-blue/70 mt-3 leading-relaxed">
               n={verifiedAcquisitions.length} verified deals · SEC EDGAR ingest ·
-              HIPAA/GDPR genomics layer · descriptive analytics only. Methodology
-              is transparent and cited — not PitchBook, not live market feeds, and
-              not investment advice.
+              HIPAA/GDPR genomics layer · descriptive analytics only. Not
+              PitchBook, not live market feeds, and not investment advice.
             </p>
           </div>
         </motion.section>

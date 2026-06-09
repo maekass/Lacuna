@@ -1,7 +1,8 @@
 # Local Postgres + ClickHouse for db mode and variant call-set catalog.
 # Start: docker compose up -d
 # Then: cp .env.example .env.local && npm run db:migrate && npm run db:import
-# Variant store: npm run clickhouse:migrate && npm run clickhouse:seed
+# Variant store: docker compose --profile genomics up -d
+#   npm run clickhouse:migrate && npm run clickhouse:seed
 
 services:
   postgres:
@@ -23,6 +24,7 @@ services:
       retries: 5
 
   clickhouse:
+    profiles: ["genomics"]
     image: clickhouse/clickhouse-server:24.8-alpine
     container_name: lacuna-clickhouse
     restart: unless-stopped
@@ -41,6 +43,27 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+
+  ingest-worker:
+    profiles: ["genomics"]
+    build:
+      context: .
+      dockerfile: Dockerfile.ingest
+    container_name: lacuna-ingest-worker
+    restart: "no"
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+    environment:
+      LACUNA_VARIANT_STORE: clickhouse
+      CLICKHOUSE_URL: http://lacuna:lacuna@clickhouse:8123
+      CLICKHOUSE_DATABASE: lacuna
+      LACUNA_OBJECT_STORAGE: local
+      LACUNA_OBJECT_STORAGE_LOCAL_ROOT: /data/variants
+      LACUNA_INGEST_CONSENT_REF: ${LACUNA_INGEST_CONSENT_REF:-local-dev-consent}
+    volumes:
+      - ./data/variants:/data/variants
+      - ./data/ingest:/ingest:ro
 
 volumes:
   lacuna_pg_data:

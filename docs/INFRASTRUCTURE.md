@@ -64,11 +64,28 @@ LACUNA_DATA_MODE=db npm run dev
 ### Optional variant call-set store (ClickHouse + object storage)
 
 ```bash
-docker compose up -d clickhouse
+docker compose --profile genomics up -d clickhouse
 # .env.local: LACUNA_VARIANT_STORE=clickhouse, CLICKHOUSE_URL=http://lacuna:lacuna@localhost:8123
-npm run clickhouse:migrate
+npm run clickhouse:migrate   # applies 001_variant_store + 002_audit_events
 npm run clickhouse:seed
 ```
+
+VCF ingest runs on the **standalone worker** — not Vercel. See
+[INGEST_WORKER.md](./INGEST_WORKER.md).
+
+### Rate limiting (Upstash Redis)
+
+Production API routes use **Upstash Redis** when configured; local dev falls
+back to in-memory buckets (not durable across serverless instances).
+
+```bash
+# Vercel Marketplace → Upstash Redis → add to project env
+UPSTASH_REDIS_REST_URL=https://....upstash.io
+UPSTASH_REDIS_REST_TOKEN=...
+```
+
+Unset both vars locally — `rateLimit()` in `src/lib/api/rateLimit.ts` uses
+in-memory fallback automatically.
 
 ## Environment variables
 
@@ -85,6 +102,10 @@ Copy [`.env.example`](../.env.example) to `.env.local`. Production checklist:
 | `SEC_USE_DB_CURSOR`          | Recommended — incremental daily scans                                                          |
 | `LACUNA_VARIANT_STORE`       | `off` (default) or `clickhouse` — see [GENOMICS_VARIANT_STORE.md](./GENOMICS_VARIANT_STORE.md) |
 | `CLICKHOUSE_URL`             | Required when variant store enabled                                                            |
+| `UPSTASH_REDIS_REST_URL`     | Production rate limits (optional locally)                                                      |
+| `UPSTASH_REDIS_REST_TOKEN`   | Production rate limits (optional locally)                                                      |
+| `LACUNA_AUDIT_SALT`          | Salt for hashed IPs in `audit_events` (ClickHouse)                                             |
+| `LACUNA_INGEST_CONSENT_REF`  | Required for non-demo VCF ingest on worker                                                     |
 
 AI and Sentry: [INFERENCE.md](./INFERENCE.md),
 [PRODUCTION_SETUP.md](./PRODUCTION_SETUP.md).
@@ -100,7 +121,8 @@ AI and Sentry: [INFERENCE.md](./INFERENCE.md),
 | `npm run sec:ingest`            | SEC pipeline (CLI)                                     |
 | `npm run clickhouse:migrate`    | Apply ClickHouse variant-store schema                  |
 | `npm run clickhouse:seed`       | Infrastructure demo callset (local dev)                |
-| `npm run clickhouse:ingest-vcf` | Stream VCF → object storage + ClickHouse summaries     |
+| `npm run clickhouse:ingest-vcf` | Stream VCF → object storage + ClickHouse (CLI)         |
+| `npm run ingest:worker`         | Same ingest logic — standalone worker entrypoint         |
 
 ## HTTP endpoints (ops)
 
@@ -158,6 +180,8 @@ Full behavior: [SEC_INGESTION.md](./SEC_INGESTION.md). Candidates land in
 
 ## Related docs
 
+- [INGEST_WORKER.md](./INGEST_WORKER.md) — VCF ingest off Vercel
+- [PATIENT_DATA_GOVERNANCE.md](./PATIENT_DATA_GOVERNANCE.md) — audit_events sink
 - [PRODUCTION_SETUP.md](./PRODUCTION_SETUP.md) — Vercel env checklist
 - [SEC_INGESTION.md](./SEC_INGESTION.md) — ingest pipeline
 - [DATA_CURATION_CHECKLIST.md](./DATA_CURATION_CHECKLIST.md) — verified dataset
