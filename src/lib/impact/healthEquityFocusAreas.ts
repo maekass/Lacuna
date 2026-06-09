@@ -30,7 +30,8 @@ export const HEALTH_EQUITY_FOCUS_AREAS: readonly HealthEquityFocusArea[] = [
     disparityLabel:
       "5M+ US women affected; cardiometabolic comorbidity burden is high (WHO 2026; CDC 2024)",
     dataTier: "cited_epidemiology",
-    source: "WHO Fact Sheet on PCOS (Jan 2026); NICHD PCOS Patient Survey (2024)",
+    source:
+      "WHO Fact Sheet on PCOS (Jan 2026); NICHD PCOS Patient Survey (2024)",
     sourceYear: 2026,
     relatedSectors: ["Diagnostics", "Reproductive Health", "Fertility"],
     markerGenes: ["DENND1A", "FSHR", "LHCGR", "INSR"],
@@ -59,7 +60,8 @@ export const HEALTH_EQUITY_FOCUS_AREAS: readonly HealthEquityFocusArea[] = [
     disparityLabel:
       "1 in 365 Black/African American births with SCD; 1 in 13 carry sickle cell trait (CDC 2024)",
     dataTier: "cited_epidemiology",
-    source: "CDC Sickle Cell Data Collection program (2024); NHLBI SCD guidelines",
+    source:
+      "CDC Sickle Cell Data Collection program (2024); NHLBI SCD guidelines",
     sourceYear: 2024,
     relatedSectors: ["Diagnostics", "Precision Medicine"],
     markerGenes: ["HBB", "HBA1", "HBA2"],
@@ -73,7 +75,8 @@ export const HEALTH_EQUITY_FOCUS_AREAS: readonly HealthEquityFocusArea[] = [
     disparityLabel:
       "Black women diagnosed younger with higher mortality vs white women (LFA 2024; ACR disparities reviews)",
     dataTier: "cited_epidemiology",
-    source: "Lupus Foundation of America; ACR lupus disparities literature (2024)",
+    source:
+      "Lupus Foundation of America; ACR lupus disparities literature (2024)",
     sourceYear: 2024,
     relatedSectors: ["Diagnostics", "Precision Medicine"],
     markerGenes: ["HLA-DRB1", "STAT4", "IRF5", "TNFSF4"],

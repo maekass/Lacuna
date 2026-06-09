@@ -1,9 +1,9 @@
 import {
   computeStudySampleStats,
   DOMESTIC_RESEARCH_STUDIES,
-  filterDomesticStudies,
   type DomesticInstitution,
   type DomesticResearchStudy,
+  filterDomesticStudies,
   type StudySampleStats,
 } from "@/lib/research/domesticStudyCatalog";
 import { getDataMode } from "@/lib/data/datasetProvider";

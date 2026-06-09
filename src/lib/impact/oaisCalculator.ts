@@ -149,7 +149,8 @@ export const EPIDEMIOLOGY_DATABASE: EpidemiologyData[] = [
       upperBound: 0.12,
       unit: "millions",
     },
-    source: "CDC Sickle Cell Data Collection program (2024); NHLBI SCD guidelines",
+    source:
+      "CDC Sickle Cell Data Collection program (2024); NHLBI SCD guidelines",
     year: 2024,
     confidence: "high",
     notes:
@@ -163,7 +164,8 @@ export const EPIDEMIOLOGY_DATABASE: EpidemiologyData[] = [
       upperBound: 0.5,
       unit: "millions",
     },
-    source: "Lupus Foundation of America prevalence estimates (2024); CDC NCHS reviews",
+    source:
+      "Lupus Foundation of America prevalence estimates (2024); CDC NCHS reviews",
     year: 2024,
     confidence: "high",
     notes:

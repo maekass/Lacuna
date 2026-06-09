@@ -317,5 +317,5 @@ separate agreement. Converts to Apache 2.0 May 2030.
 
 ## Author
 
-**[Mae Kass](https://github.com/maekass)** — open investment-research tools for women's
-health data literacy and honest analytics.
+**[Mae Kass](https://github.com/maekass)** — open investment-research tools for
+women's health data literacy and honest analytics.

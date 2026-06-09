@@ -85,8 +85,8 @@ Copy [`.env.example`](../.env.example) to `.env.local`. Production checklist:
 | `SEC_USE_DB_CURSOR`          | Recommended — incremental daily scans                                                          |
 | `LACUNA_VARIANT_STORE`       | `off` (default) or `clickhouse` — see [GENOMICS_VARIANT_STORE.md](./GENOMICS_VARIANT_STORE.md) |
 | `CLICKHOUSE_URL`             | Required when variant store enabled                                                            |
-| `UPSTASH_REDIS_REST_URL`    | Optional — Redis-backed rate limiting (production recommended)                                 |
-| `UPSTASH_REDIS_REST_TOKEN`  | Required when `UPSTASH_REDIS_REST_URL` set                                                     |
+| `UPSTASH_REDIS_REST_URL`     | Optional — Redis-backed rate limiting (production recommended)                                 |
+| `UPSTASH_REDIS_REST_TOKEN`   | Required when `UPSTASH_REDIS_REST_URL` set                                                     |
 
 AI and Sentry: [INFERENCE.md](./INFERENCE.md),
 [PRODUCTION_SETUP.md](./PRODUCTION_SETUP.md).
@@ -118,14 +118,16 @@ AI and Sentry: [INFERENCE.md](./INFERENCE.md),
 [MONITORING.md](./MONITORING.md). Expect HTTP 200 and `probe: "live"`. Never
 schedule `/api/health/ready` (deploy smoke / manual only).
 
-
 ## Rate limiting
 
-API routes use Redis-backed rate limiting via [Upstash Redis](https://upstash.com/). Without Redis, rate limiting falls back to in-memory (non-durable across serverless instances).
+API routes use Redis-backed rate limiting via
+[Upstash Redis](https://upstash.com/). Without Redis, rate limiting falls back
+to in-memory (non-durable across serverless instances).
 
 ### Setup Upstash Redis (production)
 
-1. Create a free Redis database at [console.upstash.com](https://console.upstash.com/)
+1. Create a free Redis database at
+   [console.upstash.com](https://console.upstash.com/)
 2. Copy **REST URL** and **REST Token** from the database dashboard
 3. Add to Vercel environment variables:
    ```
@@ -149,24 +151,25 @@ npm run dev
 
 Current limits (per IP, per minute):
 
-| Endpoint                    | Limit | Window |
-| --------------------------- | ----- | ------ |
-| `/api/ai/insights`          | 10    | 60s    |
-| `/api/genomics/*`           | 30    | 60s    |
-| `/api/evidence/fda`         | 30    | 60s    |
-| `/api/evidence/clinical-trials` | 40 | 60s    |
-| `/api/dataset/verified`     | 30    | 60s    |
-| `/api/export/deals.csv`     | 10    | 60s    |
+| Endpoint                        | Limit | Window |
+| ------------------------------- | ----- | ------ |
+| `/api/ai/insights`              | 10    | 60s    |
+| `/api/genomics/*`               | 30    | 60s    |
+| `/api/evidence/fda`             | 30    | 60s    |
+| `/api/evidence/clinical-trials` | 40    | 60s    |
+| `/api/dataset/verified`         | 30    | 60s    |
+| `/api/export/deals.csv`         | 10    | 60s    |
 
-Limits are enforced in `src/lib/api/rateLimit.ts`. Redis keys auto-expire using TTL.
+Limits are enforced in `src/lib/api/rateLimit.ts`. Redis keys auto-expire using
+TTL.
 
 ### Troubleshooting
 
-| Symptom                     | Check                                                                 |
-| --------------------------- | --------------------------------------------------------------------- |
-| Rate limits not shared      | Verify `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` set   |
-| Redis connection errors     | Check Upstash dashboard for database status                           |
-| Fallback to in-memory       | Expected when Redis env vars missing (console warns on Redis failure) |
+| Symptom                 | Check                                                                 |
+| ----------------------- | --------------------------------------------------------------------- |
+| Rate limits not shared  | Verify `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` set    |
+| Redis connection errors | Check Upstash dashboard for database status                           |
+| Fallback to in-memory   | Expected when Redis env vars missing (console warns on Redis failure) |
 
 ## Vercel deploy
 

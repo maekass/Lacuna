@@ -1,9 +1,9 @@
 import { afterEach, describe, expect, it } from "vitest";
 import {
   rateLimit,
+  type RateLimitRedisClient,
   resetInMemoryRateLimitBuckets,
   setRateLimitRedisClient,
-  type RateLimitRedisClient,
 } from "@/lib/api/rateLimit";
 
 function createMockRedis(): RateLimitRedisClient & {

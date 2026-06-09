@@ -69,13 +69,15 @@ const CATEGORIES: CategoryConfig[] = [
     label: "NIH Cancer",
     sponsor: "National Cancer Institute",
     query: "breast ovarian hereditary BRCA cancer women",
-    description: "NCI trials — breast/ovarian cancer, hereditary cancer screening",
+    description:
+      "NCI trials — breast/ovarian cancer, hereditary cancer screening",
   },
   {
     label: "Harvard Affiliates",
     sponsor: "Harvard",
     query: "women breast PCOS lupus genetics",
-    description: "Harvard Medical affiliates — BWH, MGH, Dana-Farber, Chan School",
+    description:
+      "Harvard Medical affiliates — BWH, MGH, Dana-Farber, Chan School",
   },
   {
     label: "Broad (MIT/Harvard)",

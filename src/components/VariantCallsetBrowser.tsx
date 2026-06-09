@@ -40,7 +40,11 @@ interface State {
 type Action =
   | { type: "DISABLED" }
   | { type: "LOADING" }
-  | { type: "CALLSETS"; callsets: Callset[]; markerPanels: DiseaseMarkerPanel[] }
+  | {
+    type: "CALLSETS";
+    callsets: Callset[];
+    markerPanels: DiseaseMarkerPanel[];
+  }
   | { type: "ERROR"; message: string }
   | { type: "SELECT"; callsetId: string }
   | { type: "PANEL"; panelId: string; gene: string }

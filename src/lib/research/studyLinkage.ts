@@ -58,7 +58,9 @@ export async function listResearchStudiesFromDb(): Promise<ResearchStudyRow[]> {
 /**
  * Return ClinicalTrials.gov NCT IDs linked to a domestic study.
  */
-export async function listTrialLinksForStudy(studyId: string): Promise<string[]> {
+export async function listTrialLinksForStudy(
+  studyId: string,
+): Promise<string[]> {
   const rows = await query<{ nct_id: string }>(
     `SELECT nct_id FROM study_trial_links WHERE study_id = $1 ORDER BY nct_id`,
     [studyId],
@@ -69,7 +71,9 @@ export async function listTrialLinksForStudy(studyId: string): Promise<string[]>
 /**
  * Return variant callset IDs linked to a domestic study (ClickHouse catalog keys).
  */
-export async function listCallsetLinksForStudy(studyId: string): Promise<string[]> {
+export async function listCallsetLinksForStudy(
+  studyId: string,
+): Promise<string[]> {
   const rows = await query<{ callset_id: string }>(
     `SELECT callset_id FROM study_callset_links WHERE study_id = $1 ORDER BY callset_id`,
     [studyId],
