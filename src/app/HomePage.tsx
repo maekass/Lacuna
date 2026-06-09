@@ -268,8 +268,8 @@ export default function HomePage() {
               Clinical Trials Worth Watching
             </h3>
             <p className="text-lacuna-blue">
-              Live NIH, Harvard, and MIT/Broad trial searches plus a cited
-              domestic sample-size catalog — PCOS, BRCA, sickle cell, and lupus
+              Live women&apos;s health, oncology, fertility, maternal health, menopause,
+              and academic sponsor searches plus a cited domestic sample-size catalog
             </p>
           </div>
           <div className="grid lg:grid-cols-2 gap-6 mb-6">
