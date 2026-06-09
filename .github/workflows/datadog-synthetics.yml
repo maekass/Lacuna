@@ -13,7 +13,9 @@
 name: Run Datadog Synthetic tests
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "0 6 * * *"  # Daily at 6 AM UTC
 
 jobs:
   synthetics:
@@ -22,7 +24,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run Datadog Synthetic tests
-        uses: DataDog/synthetics-ci-github-action@87b505388a22005bb8013481e3f73a367b9a53eb # v1.4.0
+        uses: DataDog/synthetics-ci-github-action@v1.4.0
         with:
           api_key: ${{ secrets.DD_API_KEY }}
           app_key: ${{ secrets.DD_APP_KEY }}
