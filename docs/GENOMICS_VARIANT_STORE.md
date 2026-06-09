@@ -93,7 +93,29 @@ gene, and links to presigned VCF URLs when available.
 (`lacuna-infra-seed`) — not clinical truth and not part of
 `dataset.verified.json`.
 
+## Patient data governance
+
+Variant call sets may contain PHI. Default: `LACUNA_PATIENT_DATA_MODE=de_identified`
+— summaries only, pseudonymized sample IDs, no presigned VCF URLs. See
+[PATIENT_DATA_GOVERNANCE.md](./PATIENT_DATA_GOVERNANCE.md).
+
+## Disease marker panels
+
+`GET /api/genomics/markers` returns curated panels for PCOS, hereditary breast
+cancer (BRCA1/2), sickle cell (HBB), lupus, and Lynch syndrome — used by the
+dashboard gene filter chips.
+
+## Domestic study sample universe
+
+`GET /api/research/studies` returns a cited catalog of US cohorts from NIH,
+Harvard affiliates, and MIT/Broad with published sample sizes (All of Us, WHI,
+Nurses' Health Study II, Black Women's Health Study, gnomAD, etc.).
+
+`npm run clickhouse:seed` loads **7 infrastructure callsets** mapped to domestic
+study IDs — not clinical truth.
+
 ## Related
 
+- [PATIENT_DATA_GOVERNANCE.md](./PATIENT_DATA_GOVERNANCE.md) — HIPAA/GDPR controls
 - [PERFORMANCE.md](./PERFORMANCE.md) — pagination and upstream caps
 - [INFRASTRUCTURE.md](./INFRASTRUCTURE.md) — docker compose stack

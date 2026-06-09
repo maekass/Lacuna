@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
+import {
+  getPatientDataAccessMode,
+  requirePatientDataAccess,
+} from "@/lib/compliance/patientDataGovernance";
 import { parsePageParams } from "@/lib/api/pageParams";
 import { listVariants } from "@/lib/genomics/variantQueries";
 import { requireVariantStore } from "@/lib/genomics/variantStoreGuard";
@@ -7,6 +11,13 @@ import { requireVariantStore } from "@/lib/genomics/variantStoreGuard";
 export async function GET(request: Request) {
   const disabled = requireVariantStore();
   if (disabled) return disabled;
+
+  const accessDenied = requirePatientDataAccess(
+    request,
+    "read_summary",
+    "genomics/variants",
+  );
+  if (accessDenied) return accessDenied;
 
   const ip = getClientIp(request);
   const bucket = rateLimit({
@@ -51,9 +62,15 @@ export async function GET(request: Request) {
       pathogenicOnly,
     });
 
-    return NextResponse.json(page, {
-      headers: { "cache-control": "private, max-age=30" },
-    });
+    return NextResponse.json(
+      {
+        ...page,
+        governance: { patientDataMode: getPatientDataAccessMode() },
+      },
+      {
+        headers: { "cache-control": "private, max-age=30" },
+      },
+    );
   } catch (error) {
     console.error("genomics variants error:", error);
     return NextResponse.json({ error: "Failed to query variants" }, {

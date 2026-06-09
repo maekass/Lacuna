@@ -1,0 +1,283 @@
+/** Infrastructure demo callsets mapped to domestic study catalog entries. */
+
+export interface SeedCallset {
+  callsetId: string;
+  studyId: string;
+  sampleId: string;
+  assembly: string;
+  objectKey: string;
+  bytes: number;
+  notes: string;
+  variants: Array<{
+    chrom: string;
+    pos: number;
+    ref: string;
+    alt: string;
+    qual: number;
+    filter: string;
+    gene_symbol: string;
+    consequence: string;
+    allele_frequency: number;
+    is_pathogenic: number;
+  }>;
+}
+
+export const DOMESTIC_CALLSET_SEED: readonly SeedCallset[] = [
+  {
+    callsetId: "demo-brca-panel-grch38",
+    studyId: "nih-tcga-breast",
+    sampleId: "TCGA-DEMO-001",
+    assembly: "GRCh38",
+    objectKey: "nih/tcga-brca-panel.vcf.gz",
+    bytes: 2_147_483_648,
+    notes: "Infrastructure seed — TCGA-BRCA style panel (not clinical truth)",
+    variants: [
+      {
+        chrom: "17",
+        pos: 43044295,
+        ref: "G",
+        alt: "A",
+        qual: 99.5,
+        filter: "PASS",
+        gene_symbol: "BRCA1",
+        consequence: "missense_variant",
+        allele_frequency: 0.00012,
+        is_pathogenic: 1,
+      },
+      {
+        chrom: "13",
+        pos: 32340300,
+        ref: "C",
+        alt: "T",
+        qual: 97.4,
+        filter: "PASS",
+        gene_symbol: "BRCA2",
+        consequence: "missense_variant",
+        allele_frequency: 0.00008,
+        is_pathogenic: 1,
+      },
+      {
+        chrom: "17",
+        pos: 41245466,
+        ref: "G",
+        alt: "A",
+        qual: 96.2,
+        filter: "PASS",
+        gene_symbol: "TP53",
+        consequence: "missense_variant",
+        allele_frequency: 0.00021,
+        is_pathogenic: 0,
+      },
+    ],
+  },
+  {
+    callsetId: "nih-nichd-pcos-grch38",
+    studyId: "nih-nichd-pcos",
+    sampleId: "NICHD-PCOS-001",
+    assembly: "GRCh38",
+    objectKey: "nih/nichd-pcos-cohort.vcf.gz",
+    bytes: 512_000_000,
+    notes: "NICHD PCOS RMN demo callset — infrastructure seed only",
+    variants: [
+      {
+        chrom: "9",
+        pos: 124900000,
+        ref: "G",
+        alt: "A",
+        qual: 95.5,
+        filter: "PASS",
+        gene_symbol: "DENND1A",
+        consequence: "intron_variant",
+        allele_frequency: 0.12,
+        is_pathogenic: 0,
+      },
+      {
+        chrom: "2",
+        pos: 49189461,
+        ref: "C",
+        alt: "T",
+        qual: 94.1,
+        filter: "PASS",
+        gene_symbol: "FSHR",
+        consequence: "missense_variant",
+        allele_frequency: 0.06,
+        is_pathogenic: 0,
+      },
+    ],
+  },
+  {
+    callsetId: "nih-scd-hbb-grch38",
+    studyId: "nih-scd-initiative",
+    sampleId: "NHLBI-SCD-001",
+    assembly: "GRCh38",
+    objectKey: "nih/scd-hbb-cohort.vcf.gz",
+    bytes: 384_000_000,
+    notes: "NHLBI SCD initiative demo — HBB focus",
+    variants: [
+      {
+        chrom: "11",
+        pos: 5227002,
+        ref: "A",
+        alt: "T",
+        qual: 99.0,
+        filter: "PASS",
+        gene_symbol: "HBB",
+        consequence: "missense_variant",
+        allele_frequency: 0.08,
+        is_pathogenic: 1,
+      },
+      {
+        chrom: "16",
+        pos: 222000,
+        ref: "G",
+        alt: "A",
+        qual: 92.3,
+        filter: "PASS",
+        gene_symbol: "HBA1",
+        consequence: "synonymous_variant",
+        allele_frequency: 0.02,
+        is_pathogenic: 0,
+      },
+    ],
+  },
+  {
+    callsetId: "harvard-bwhs-panel-grch38",
+    studyId: "harvard-bwhs",
+    sampleId: "BWHS-DEMO-001",
+    assembly: "GRCh38",
+    objectKey: "harvard/bwhs-panel.vcf.gz",
+    bytes: 768_000_000,
+    notes: "Black Women's Health Study genomics demo seed",
+    variants: [
+      {
+        chrom: "17",
+        pos: 43051077,
+        ref: "T",
+        alt: "G",
+        qual: 98.1,
+        filter: "PASS",
+        gene_symbol: "BRCA1",
+        consequence: "frameshift_variant",
+        allele_frequency: 0.00003,
+        is_pathogenic: 1,
+      },
+      {
+        chrom: "2",
+        pos: 191015880,
+        ref: "C",
+        alt: "T",
+        qual: 91.7,
+        filter: "PASS",
+        gene_symbol: "STAT4",
+        consequence: "missense_variant",
+        allele_frequency: 0.15,
+        is_pathogenic: 0,
+      },
+    ],
+  },
+  {
+    callsetId: "harvard-bwh-brca-grch38",
+    studyId: "harvard-bwh-brca",
+    sampleId: "BWH-BRCA-001",
+    assembly: "GRCh38",
+    objectKey: "harvard/bwh-brca-carriers.vcf.gz",
+    bytes: 256_000_000,
+    notes: "BWH hereditary cancer carrier demo seed",
+    variants: [
+      {
+        chrom: "16",
+        pos: 23634824,
+        ref: "G",
+        alt: "A",
+        qual: 97.8,
+        filter: "PASS",
+        gene_symbol: "PALB2",
+        consequence: "nonsense_variant",
+        allele_frequency: 0.00005,
+        is_pathogenic: 1,
+      },
+      {
+        chrom: "22",
+        pos: 29091841,
+        ref: "T",
+        alt: "C",
+        qual: 96.4,
+        filter: "PASS",
+        gene_symbol: "CHEK2",
+        consequence: "missense_variant",
+        allele_frequency: 0.00009,
+        is_pathogenic: 1,
+      },
+    ],
+  },
+  {
+    callsetId: "harvard-mgh-pcos-grch38",
+    studyId: "harvard-mgh-pcos",
+    sampleId: "MGH-PCOS-001",
+    assembly: "GRCh38",
+    objectKey: "harvard/mgh-pcos-cohort.vcf.gz",
+    bytes: 320_000_000,
+    notes: "MGH PCOS longitudinal demo seed",
+    variants: [
+      {
+        chrom: "2",
+        pos: 48998601,
+        ref: "A",
+        alt: "G",
+        qual: 93.2,
+        filter: "PASS",
+        gene_symbol: "LHCGR",
+        consequence: "missense_variant",
+        allele_frequency: 0.04,
+        is_pathogenic: 0,
+      },
+      {
+        chrom: "19",
+        pos: 7119091,
+        ref: "G",
+        alt: "A",
+        qual: 90.5,
+        filter: "PASS",
+        gene_symbol: "INSR",
+        consequence: "missense_variant",
+        allele_frequency: 0.03,
+        is_pathogenic: 0,
+      },
+    ],
+  },
+  {
+    callsetId: "nih-lupus-sle-grch38",
+    studyId: "nih-lupus-cohort",
+    sampleId: "NIAMS-SLE-001",
+    assembly: "GRCh38",
+    objectKey: "nih/lupus-sle-cohort.vcf.gz",
+    bytes: 448_000_000,
+    notes: "NIH lupus family registry demo seed",
+    variants: [
+      {
+        chrom: "7",
+        pos: 128487561,
+        ref: "G",
+        alt: "A",
+        qual: 94.8,
+        filter: "PASS",
+        gene_symbol: "IRF5",
+        consequence: "regulatory_region_variant",
+        allele_frequency: 0.18,
+        is_pathogenic: 0,
+      },
+      {
+        chrom: "1",
+        pos: 173225500,
+        ref: "C",
+        alt: "T",
+        qual: 92.0,
+        filter: "PASS",
+        gene_symbol: "TNFSF4",
+        consequence: "missense_variant",
+        allele_frequency: 0.11,
+        is_pathogenic: 0,
+      },
+    ],
+  },
+];

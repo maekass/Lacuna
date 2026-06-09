@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
 import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
+import {
+  getPatientDataAccessMode,
+  redactCallsetFields,
+  requirePatientDataAccess,
+} from "@/lib/compliance/patientDataGovernance";
 import { parsePageParams } from "@/lib/api/pageParams";
 import { listCallsets } from "@/lib/genomics/variantQueries";
 import { requireVariantStore } from "@/lib/genomics/variantStoreGuard";
@@ -7,6 +12,13 @@ import { requireVariantStore } from "@/lib/genomics/variantStoreGuard";
 export async function GET(request: Request) {
   const disabled = requireVariantStore();
   if (disabled) return disabled;
+
+  const accessDenied = requirePatientDataAccess(
+    request,
+    "read_summary",
+    "genomics/callsets",
+  );
+  if (accessDenied) return accessDenied;
 
   const ip = getClientIp(request);
   const bucket = rateLimit({
@@ -30,9 +42,17 @@ export async function GET(request: Request) {
     const studyId = url.searchParams.get("studyId") ?? undefined;
 
     const page = await listCallsets({ limit, offset, studyId });
-    return NextResponse.json(page, {
-      headers: { "cache-control": "private, max-age=60" },
-    });
+    const mode = getPatientDataAccessMode();
+    return NextResponse.json(
+      {
+        ...page,
+        callsets: page.callsets.map((c) => redactCallsetFields(c, mode)),
+        governance: { patientDataMode: mode },
+      },
+      {
+        headers: { "cache-control": "private, max-age=60" },
+      },
+    );
   } catch (error) {
     console.error("genomics callsets error:", error);
     return NextResponse.json({ error: "Failed to list callsets" }, {

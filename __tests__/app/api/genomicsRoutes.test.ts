@@ -5,6 +5,12 @@ vi.mock("@/lib/genomics/variantStoreGuard", () => ({
   variantStoreDisabledResponse: vi.fn(),
 }));
 
+vi.mock("@/lib/compliance/patientDataGovernance", () => ({
+  requirePatientDataAccess: vi.fn(() => null),
+  getPatientDataAccessMode: vi.fn(() => "de_identified"),
+  redactCallsetFields: vi.fn((c: { callsetId: string }) => c),
+}));
+
 vi.mock("@/lib/genomics/variantQueries", () => ({
   listCallsets: vi.fn(),
   listVariants: vi.fn(),

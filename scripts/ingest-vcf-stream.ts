@@ -17,6 +17,7 @@ import {
   insertVariantBatch,
   registerCallset,
 } from "../src/lib/genomics/registerCallset";
+import { requireIngestConsentRef } from "../src/lib/compliance/patientDataGovernance";
 import { parseVcfDataLine } from "../src/lib/genomics/vcfStreamParser";
 import type { ParsedVcfVariant } from "../src/lib/genomics/vcfStreamParser";
 
@@ -64,6 +65,12 @@ function objectKey(
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
+  const consentError = requireIngestConsentRef(args.studyId);
+  if (consentError) {
+    console.error(consentError);
+    process.exit(1);
+  }
+
   const fileName = basename(args.file);
   const key = objectKey(args.studyId, args.callsetId, fileName);
 

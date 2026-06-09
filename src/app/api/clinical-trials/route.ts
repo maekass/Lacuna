@@ -71,6 +71,7 @@ export interface ClinicalTrial {
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const condition = searchParams.get("condition") || "";
+  const sponsor = searchParams.get("sponsor") || "";
   const phase = searchParams.get("phase") || "";
   const status = searchParams.get("status") || "";
   const limit = clampInt(
@@ -83,6 +84,7 @@ export async function GET(request: NextRequest) {
     // Build query parameters
     const params = new URLSearchParams();
     if (condition) params.append("query.cond", condition);
+    if (sponsor) params.append("query.spons", sponsor);
     if (phase) params.append("filter.phase", phase);
     if (status) params.append("filter.status", status);
     params.append("pageSize", limit.toString());
@@ -139,6 +141,7 @@ export async function GET(request: NextRequest) {
       total: ctgData.totalCount || trials.length,
       query: {
         condition,
+        sponsor,
         phase,
         status,
       },

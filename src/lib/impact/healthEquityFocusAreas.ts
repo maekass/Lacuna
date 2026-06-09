@@ -1,7 +1,7 @@
 /**
- * Static health-equity focus areas for contextual framing.
+ * Genetic-marker focus areas for health-equity framing.
  * Epidemiology rows reuse citations from EPIDEMIOLOGY_DATABASE where available.
- * Portfolio overlap is computed at runtime from the verified company list — not stored here.
+ * Portfolio overlap is computed at runtime from the verified company list.
  */
 
 export type HealthEquityDataTier = "cited_epidemiology" | "illustrative_static";
@@ -15,95 +15,81 @@ export interface HealthEquityFocusArea {
   source: string;
   sourceYear?: number;
   relatedSectors: readonly string[];
+  /** Primary gene symbols for variant-store cross-reference */
+  markerGenes: readonly string[];
   /** Matches `condition` in EPIDEMIOLOGY_DATABASE when cited_epidemiology */
   epidemiologyCondition?: string;
 }
 
 export const HEALTH_EQUITY_FOCUS_AREAS: readonly HealthEquityFocusArea[] = [
   {
-    id: "maternal-health",
-    title: "Maternal health complications",
+    id: "pcos-genetics",
+    title: "PCOS genetic markers",
     summary:
-      "Severe maternal morbidity and mortality disproportionately affect Black women in the US.",
+      "Polygenic and rare-variant signals (DENND1A, FSHR, LHCGR) underpin PCOS susceptibility — relevant to diagnostics and reproductive-health M&A.",
     disparityLabel:
-      "Black women: 44.8 vs 14.2/100K live births — 3.2× disparity (CDC NCHS 2024)",
+      "5M+ US women affected; cardiometabolic comorbidity burden is high (WHO 2026; CDC 2024)",
     dataTier: "cited_epidemiology",
-    source: "CDC NCHS Maternal Mortality Rates in the US, 2024 (Mar 2026)",
+    source: "WHO Fact Sheet on PCOS (Jan 2026); NICHD PCOS Patient Survey (2024)",
     sourceYear: 2026,
-    relatedSectors: ["Fertility", "General Wellness", "Maternal Health"],
-    epidemiologyCondition: "Maternal Health Complications",
+    relatedSectors: ["Diagnostics", "Reproductive Health", "Fertility"],
+    markerGenes: ["DENND1A", "FSHR", "LHCGR", "INSR"],
+    epidemiologyCondition: "PCOS (Polycystic Ovary Syndrome)",
   },
   {
-    id: "uterine-fibroids",
-    title: "Uterine fibroids",
+    id: "breast-cancer-genetics",
+    title: "Hereditary breast & ovarian cancer markers",
     summary:
-      "Fibroids drive pain, anemia, and hysterectomy; prevalence is higher among Black women.",
+      "BRCA1/2, PALB2, and CHEK2 pathogenic variants drive HBOC risk; genomic profiling companies dominate precision-oncology deal flow.",
     disparityLabel:
-      "20–80% of women by age 50; disproportionately affects Black women (NIH/NICHD 2024)",
-    dataTier: "cited_epidemiology",
-    source:
-      "NIH/NICHD Uterine Fibroids Fact Sheet (Jul 2024); DiscoverWHR NIH overview (2024)",
-    sourceYear: 2024,
-    relatedSectors: ["Pelvic Health", "Gynecological Surgery"],
-    epidemiologyCondition: "Uterine Fibroids",
-  },
-  {
-    id: "fertility",
-    title: "Fertility challenges",
-    summary:
-      "Reproductive-age women facing infertility; overlaps with FemTech, IVF devices, reproductive testing, and telehealth in our sample.",
-    disparityLabel:
-      "13.4% of women ages 15–49 have impaired fecundity — 9.7M (NCHS 2024)",
-    dataTier: "cited_epidemiology",
-    source:
-      "NCHS National Health Statistics Report No. 202 (Apr 2024); NSFG 2015-2019",
-    sourceYear: 2024,
-    relatedSectors: [
-      "Fertility",
-      "Reproductive Health",
-      "Diagnostics",
-      "Contraception",
-    ],
-    epidemiologyCondition: "Fertility Challenges",
-  },
-  {
-    id: "mental-health",
-    title: "Postpartum depression",
-    summary:
-      "Postpartum mood disorders; mental-health apps in the verified sample are proxies, not clinical outcomes.",
-    disparityLabel:
-      "~1 in 8 postpartum women report depressive symptoms (Childstats 2024)",
-    dataTier: "cited_epidemiology",
-    source:
-      "Childstats.gov America's Children Special Issue (2024); PLOS One NHANES study (Apr 2025)",
-    sourceYear: 2025,
-    relatedSectors: ["Mental Health"],
-    epidemiologyCondition: "Postpartum Depression",
-  },
-  {
-    id: "wearables",
-    title: "Cardiovascular monitoring (wearables proxy)",
-    summary:
-      "Wearables may support early detection; CVD mortality disparities for Black women are documented in public health literature.",
-    disparityLabel:
-      "Higher CVD mortality vs white women — use cited reviews before investing claims",
-    dataTier: "illustrative_static",
-    source:
-      "Illustrative framing only — not a live CDC feed; see OAIS methodology docs",
-    relatedSectors: ["Wearables"],
-  },
-  {
-    id: "breast-cancer",
-    title: "Breast cancer diagnostics & precision medicine",
-    summary:
-      "Breast cancer is the most common cancer among women globally; genomic profiling and precision diagnostics are transforming treatment decisions.",
-    disparityLabel:
-      "Black women: 38% higher breast cancer mortality (ACS 2025)",
+      "Black women: 38% higher breast cancer mortality; younger-onset and TNBC more common (ACS 2025)",
     dataTier: "cited_epidemiology",
     source:
       "ACS Breast Cancer Facts & Figures 2024-2025; ACS Cancer Statistics for Black People (Feb 2025)",
     sourceYear: 2025,
-    relatedSectors: ["Breast Health", "Precision Medicine"],
+    relatedSectors: ["Breast Health", "Precision Medicine", "Diagnostics"],
+    markerGenes: ["BRCA1", "BRCA2", "PALB2", "CHEK2", "TP53"],
     epidemiologyCondition: "Breast Cancer",
+  },
+  {
+    id: "sickle-cell-genetics",
+    title: "Sickle cell disease (HBB)",
+    summary:
+      "HBB hemoglobin variants cause sickle cell disease and trait — a core gene-therapy and newborn-screening investment theme with stark racial disparities.",
+    disparityLabel:
+      "1 in 365 Black/African American births with SCD; 1 in 13 carry sickle cell trait (CDC 2024)",
+    dataTier: "cited_epidemiology",
+    source: "CDC Sickle Cell Data Collection program (2024); NHLBI SCD guidelines",
+    sourceYear: 2024,
+    relatedSectors: ["Diagnostics", "Precision Medicine"],
+    markerGenes: ["HBB", "HBA1", "HBA2"],
+    epidemiologyCondition: "Sickle Cell Disease",
+  },
+  {
+    id: "lupus-genetics",
+    title: "Lupus / SLE genetic susceptibility",
+    summary:
+      "HLA and interferon-pathway variants (STAT4, IRF5) contribute to lupus risk; Black women face earlier onset and higher organ damage.",
+    disparityLabel:
+      "Black women diagnosed younger with higher mortality vs white women (LFA 2024; ACR disparities reviews)",
+    dataTier: "cited_epidemiology",
+    source: "Lupus Foundation of America; ACR lupus disparities literature (2024)",
+    sourceYear: 2024,
+    relatedSectors: ["Diagnostics", "Precision Medicine"],
+    markerGenes: ["HLA-DRB1", "STAT4", "IRF5", "TNFSF4"],
+    epidemiologyCondition: "Systemic Lupus Erythematosus",
+  },
+  {
+    id: "lynch-hereditary-cancer",
+    title: "Lynch syndrome & multi-gene panels",
+    summary:
+      "Mismatch-repair genes (MLH1, MSH2, MSH6, PMS2) link endometrial and colorectal cancer risk — multi-gene panels overlap breast-health diagnostics.",
+    disparityLabel:
+      "Under-testing in underserved populations delays cascade screening and prevention",
+    dataTier: "illustrative_static",
+    source:
+      "Illustrative framing — NCCN Lynch guidelines; equity gap cited in ACMG access literature",
+    relatedSectors: ["Diagnostics", "Precision Medicine", "Breast Health"],
+    markerGenes: ["MLH1", "MSH2", "MSH6", "PMS2"],
   },
 ] as const;

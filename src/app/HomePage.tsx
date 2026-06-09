@@ -8,6 +8,7 @@ import {
   CausalDAG,
   CausalInferenceEngine,
   ClinicalTrialTracker,
+  DomesticStudyCatalog,
   ClusteringAnalysis,
   CompanySimilarity,
   CompetitiveAnalysisDashboard,
@@ -24,7 +25,6 @@ import {
   ValidationTracker,
   ValuationMatrix,
   VariantCallsetBrowser,
-  WearablesTracker,
 } from "@/app/lazyDashboard";
 import DataCoverageCard from "@/components/DataCoverageCard";
 import DataProvenanceBanner from "@/components/DataProvenanceBanner";
@@ -271,17 +271,19 @@ export default function HomePage() {
               Clinical Trials Worth Watching
             </h3>
             <p className="text-lacuna-blue">
-              A window into active research — women&apos;s health, oncology,
-              genetic markers, and precision medicine trials sourced from
-              ClinicalTrials.gov
+              Live NIH, Harvard, and MIT/Broad trial searches plus a cited
+              domestic sample-size catalog — PCOS, BRCA, sickle cell, and lupus
             </p>
           </div>
-          <ClinicalTrialTracker />
+          <div className="grid lg:grid-cols-2 gap-6 mb-6">
+            <ClinicalTrialTracker />
+            <DomesticStudyCatalog />
+          </div>
           <p
             className="mt-3 text-xs text-lacuna-blue/70 text-center"
             role="note"
           >
-            Trial search is live; M&amp;A counts are curated.
+            Trial search is live; cohort sample sizes are static citations.
           </p>
         </motion.section>
 
@@ -317,17 +319,6 @@ export default function HomePage() {
           <VariantCallsetBrowser />
         </motion.section>
 
-        {/* Wearables Ecosystem Section */}
-        <motion.section
-          id="wearables"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mb-16"
-        >
-          <WearablesTracker />
-        </motion.section>
-
         {/* Health Equity Section */}
         <motion.section
           id="health-equity"
@@ -338,12 +329,12 @@ export default function HomePage() {
         >
           <div className="mb-6">
             <h3 className="text-2xl font-semibold text-lacuna-plum">
-              Health Equity &amp; the Gaps That Matter
+              Genetic Markers &amp; Health Equity
             </h3>
             <p className="text-lacuna-blue">
-              Understanding where disparities persist — maternal mortality,
-              PCOS, endometriosis — and which companies are positioned to help
-              close them
+              PCOS, hereditary breast cancer, sickle cell, lupus, and Lynch
+              syndrome markers — with disparities that disproportionately affect
+              Black women in the verified portfolio
             </p>
           </div>
           <HealthEquityDashboard />

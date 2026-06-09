@@ -103,8 +103,11 @@ Founder Patterns: Statistical correlation
 
 ### Compliance
 
-- **GDPR**: No EU personal data collected
-- **HIPAA**: No PHI accessed
+- **GDPR**: No EU personal data in the verified M&A dataset; optional variant
+  store requires `LACUNA_INGEST_CONSENT_REF` for non-demo ingest — see
+  [PATIENT_DATA_GOVERNANCE.md](./PATIENT_DATA_GOVERNANCE.md)
+- **HIPAA**: No PHI in verified dataset; genomics APIs default to
+  `de_identified` mode (pseudonymized sample IDs, no raw VCF downloads)
 - **SEC**: Only public filings used
 - **BUSL 1.1**: Open source license
 

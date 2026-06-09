@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
+import {
+  getPatientDataAccessMode,
+  requirePatientDataAccess,
+} from "@/lib/compliance/patientDataGovernance";
 import { resolveObjectUri } from "@/lib/genomics/objectStorage";
 import { presignS3GetObject } from "@/lib/genomics/s3Storage";
 import { getCallsetById } from "@/lib/genomics/variantQueries";
@@ -13,6 +17,13 @@ interface RouteContext {
 export async function GET(request: Request, context: RouteContext) {
   const disabled = requireVariantStore();
   if (disabled) return disabled;
+
+  const accessDenied = requirePatientDataAccess(
+    request,
+    "download_raw",
+    "genomics/callsets/object",
+  );
+  if (accessDenied) return accessDenied;
 
   const ip = getClientIp(request);
   const bucket = rateLimit({
@@ -44,6 +55,7 @@ export async function GET(request: Request, context: RouteContext) {
       object: resolved,
       presignedUrl,
       presignedExpiresSec: presignedUrl ? 3600 : null,
+      governance: { patientDataMode: getPatientDataAccessMode() },
       note: presignedUrl
         ? "Use presignedUrl for HTTPS download; blobs are not streamed through Next.js."
         : "Raw VCF blobs are accessed via object storage — use accessHint for local/S3 CLI.",

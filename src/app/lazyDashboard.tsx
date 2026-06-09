@@ -33,16 +33,16 @@ export const ClinicalTrialTracker = dynamic(
     loading: sectionFallback("h-80 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },
 );
-export const EvidenceMaturityDashboard = dynamic(
-  () => import("@/components/EvidenceMaturityDashboard"),
+export const DomesticStudyCatalog = dynamic(
+  () => import("@/components/DomesticStudyCatalog"),
   {
     loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },
 );
-export const WearablesTracker = dynamic(
-  () => import("@/components/WearablesTracker"),
+export const EvidenceMaturityDashboard = dynamic(
+  () => import("@/components/EvidenceMaturityDashboard"),
   {
-    loading: sectionFallback(),
+    loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },
 );
 export const HealthEquityDashboard = dynamic(
