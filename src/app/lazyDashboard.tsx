@@ -120,6 +120,12 @@ export const ClusteringAnalysis = dynamic(
     loading: sectionFallback(),
   },
 );
+export const WhiteSpaceAnalysis = dynamic(
+  () => import("@/components/WhiteSpaceAnalysis"),
+  {
+    loading: sectionFallback(),
+  },
+);
 export const ReimbursementIntelligenceDashboard = dynamic(
   () => import("@/components/ReimbursementIntelligenceDashboard"),
   {

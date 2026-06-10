@@ -25,6 +25,7 @@ import {
   ValidationTracker,
   ValuationMatrix,
   VariantCallsetBrowser,
+  WhiteSpaceAnalysis,
 } from "@/app/lazyDashboard";
 import DataCoverageCard from "@/components/DataCoverageCard";
 import DataProvenanceBanner from "@/components/DataProvenanceBanner";
@@ -543,6 +544,24 @@ export default function HomePage() {
             <CompanySimilarity />
           </div>
           <ClusteringAnalysis />
+        </motion.section>
+
+        <motion.section
+          id="white-space-analysis"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.605 }}
+          className="mb-16 scroll-mt-20"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              White Space Analysis
+            </h3>
+            <p className="text-lacuna-blue">
+              Sectors with high company density but low M&amp;A activity — where the next wave may form.
+            </p>
+          </div>
+          <WhiteSpaceAnalysis />
         </motion.section>
 
         {/* Reimbursement Intelligence */}
