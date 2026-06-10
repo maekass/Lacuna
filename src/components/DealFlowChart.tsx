@@ -8,6 +8,24 @@ interface DealYear {
   count: number;
 }
 
+type MomentumLabel = "High" | "Stable" | "Cooling";
+
+const MOMENTUM_BADGE_CLASSES: Record<MomentumLabel, string> = {
+  High: "bg-emerald-50 text-emerald-700 border border-emerald-200",
+  Stable: "bg-amber-50 text-amber-700 border border-amber-200",
+  Cooling: "bg-red-50 text-red-700 border border-red-200",
+};
+
+function classifyMomentum(recentTotal: number, priorTotal: number): MomentumLabel {
+  if (recentTotal === 0 && priorTotal === 0) return "Stable";
+  if (priorTotal === 0) return recentTotal > 0 ? "High" : "Stable";
+
+  const ratio = recentTotal / priorTotal;
+  if (ratio > 1.2) return "High";
+  if (ratio < 0.8) return "Cooling";
+  return "Stable";
+}
+
 interface DealFlowChartProps {
   data: DealYear[];
   width?: number;
@@ -17,19 +35,44 @@ interface DealFlowChartProps {
 export default function DealFlowChart(
   { data, width = 600, height = 300 }: DealFlowChartProps,
 ) {
-  const maxCount = Math.max(...data.map((d) => d.count));
-  const barWidth = (width - 80) / data.length;
+  const maxCount = Math.max(1, ...data.map((d) => d.count));
+  const barWidth = data.length > 0 ? (width - 80) / data.length : 0;
   const scale = (height - 100) / maxCount;
+  const rollingAverage = data.map((point, index) => {
+    const window = data.slice(Math.max(0, index - 2), index + 1);
+    const total = window.reduce((sum, item) => sum + item.count, 0);
+    return {
+      year: point.year,
+      average: total / window.length,
+    };
+  });
+  const trendLinePoints = rollingAverage.map((point, index) => {
+    const x = 50 + index * barWidth + barWidth / 2;
+    const y = height - 50 - point.average * scale;
+    return `${x},${y}`;
+  }).join(" ");
+  const recentTotal = data.slice(-3).reduce((sum, point) => sum + point.count, 0);
+  const priorTotal = data.slice(-6, -3).reduce((sum, point) => sum + point.count, 0);
+  const momentum = classifyMomentum(recentTotal, priorTotal);
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
       <CuratedDatasetBanner className="mb-4" />
-      <h3 className="text-lg font-semibold text-slate-800 mb-2">
-        Deal Activity Over Time
-      </h3>
-      <p className="text-sm text-slate-500 mb-4 sm:mb-6">
-        M&amp;A and strategic investments in women&apos;s health
-      </p>
+      <div className="flex items-start justify-between gap-3 mb-4 sm:mb-6">
+        <div>
+          <h3 className="text-lg font-semibold text-slate-800 mb-2">
+            Deal Activity Over Time
+          </h3>
+          <p className="text-sm text-slate-500">
+            M&amp;A and strategic investments in women&apos;s health
+          </p>
+        </div>
+        <span
+          className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-medium ${MOMENTUM_BADGE_CLASSES[momentum]}`}
+        >
+          Momentum: {momentum}
+        </span>
+      </div>
 
       <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto">
         {/* Grid lines */}
@@ -104,6 +147,17 @@ export default function DealFlowChart(
             </motion.g>
           );
         })}
+
+        {trendLinePoints && (
+          <polyline
+            points={trendLinePoints}
+            stroke="#7C3AED"
+            strokeWidth={2}
+            fill="none"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+          />
+        )}
 
         {/* Gradient definition */}
         <defs>
