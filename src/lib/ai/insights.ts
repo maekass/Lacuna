@@ -1,6 +1,8 @@
 /**
  * Optional LLM narrative blurbs for the UI — Vercel AI Gateway only (see docs/INFERENCE.md).
  * Not validated research; heuristic scores remain the source of truth.
+ *
+ * Precision prompting v2: centralized templates, output sanitization, hallucination detection.
  */
 
 import {
@@ -10,16 +12,14 @@ import {
   isServerInferenceConfigured,
   resolveInferenceModel,
 } from "@/lib/ai/inference";
-
-const INSIGHTS_SYSTEM =
-  `You are a women's health M&A educator helping readers interpret curated, verified deal data.
-
-GUIDELINES:
-- Be concise and evidence-based
-- Cite specific data points when relevant
-- Flag uncertainty and limitations (small n, static dataset)
-- Avoid promotional language and prediction claims
-- Do not present yourself as a trained model or forecast engine`;
+import {
+  INSIGHTS_SYSTEM_PROMPT,
+  sanitizeLLMOutput,
+  buildAcquisitionInsightPrompt,
+  buildEvidenceSummaryPrompt,
+  buildSectorInsightPrompt,
+  buildReimbursementInsightPrompt,
+} from "@/lib/ai/prompts";
 
 async function runInsightPrompt(
   prompt: string,
@@ -34,14 +34,21 @@ async function runInsightPrompt(
   }
 
   try {
-    return await generateInferenceText({
+    const raw = await generateInferenceText({
       resolved,
-      system: INSIGHTS_SYSTEM,
+      system: INSIGHTS_SYSTEM_PROMPT,
       prompt,
       maxOutputTokens,
       temperature: 0.2,
       gatewayTags: ["feature:ui-insights"],
     });
+
+    const { clean, warnings } = sanitizeLLMOutput(raw);
+    if (warnings.length > 0) {
+      console.warn("[INSIGHTS] Sanitization warnings:", warnings);
+    }
+
+    return clean;
   } catch (error) {
     const message = error instanceof Error
       ? error.message
@@ -63,20 +70,15 @@ export async function generateAcquisitionInsights(
   competitiveThreat: string,
   evidenceScore?: number,
 ): Promise<string> {
-  const prompt = `
-Summarize this women's health M&A scenario in 2-3 short paragraphs for an educational demo.
-Stress that match scores are descriptive heuristics, not forecasts.
-
-COMPANY: ${companyName} (${sector})
-Top acquirer fit (heuristic): ${topAcquirer} (${matchScore}% match)
-Estimated value context: $${estimatedValue}M
-Competitive threat label: ${competitiveThreat}
-${
-    evidenceScore !== undefined
-      ? `Evidence maturity score (descriptive): ${evidenceScore}/100`
-      : ""
-  }
-`;
+  const prompt = buildAcquisitionInsightPrompt({
+    companyName,
+    sector,
+    topAcquirer,
+    matchScore,
+    estimatedValue,
+    competitiveThreat,
+    evidenceScore,
+  });
 
   return runInsightPrompt(prompt, 500);
 }
@@ -88,12 +90,13 @@ export async function generateEvidenceSummary(
   trialCount: number,
   overallScore: number,
 ): Promise<string> {
-  const prompt = `
-Summarize this clinical evidence profile in 2-3 sentences for learners (not investment advice).
-
-COMPANY: ${companyName}
-Phase: ${phase} · FDA: ${fdaStatus} · Trials: ${trialCount} · Descriptive score: ${overallScore}/100
-`;
+  const prompt = buildEvidenceSummaryPrompt({
+    companyName,
+    phase,
+    fdaStatus,
+    trialCount,
+    overallScore,
+  });
 
   return runInsightPrompt(prompt, 300);
 }
@@ -105,14 +108,13 @@ export async function generateSectorInsights(
   medianTimeToExit: number,
   topAcquirers: string[],
 ): Promise<string> {
-  const prompt = `
-Describe ${sector} patterns from a small verified deal sample (educational only).
-
-Deals: ${dealCount} · Avg multiple: ${
-    avgMultiple.toFixed(1)
-  }x · Median time to exit: ${medianTimeToExit} months
-Active acquirers: ${topAcquirers.join(", ")}
-`;
+  const prompt = buildSectorInsightPrompt({
+    sector,
+    dealCount,
+    avgMultiple,
+    medianTimeToExit,
+    topAcquirers,
+  });
 
   return runInsightPrompt(prompt, 400);
 }
@@ -124,17 +126,13 @@ export async function generateReimbursementInsights(
   valuationMultiple: number,
   sectorBenchmark: number,
 ): Promise<string> {
-  const premium = ((valuationMultiple / sectorBenchmark - 1) * 100).toFixed(0);
-  const prompt = `
-Explain reimbursement context for ${companyName} in 2-3 sentences (illustrative, not advice).
-
-Model: ${businessModel} · Insurance revenue est.: ${
-    (insuranceRevenue * 100).toFixed(0)
-  }%
-Multiple: ${valuationMultiple.toFixed(1)}x vs sector ${
-    sectorBenchmark.toFixed(1)
-  }x (${premium}% vs benchmark)
-`;
+  const prompt = buildReimbursementInsightPrompt({
+    companyName,
+    businessModel,
+    insuranceRevenue,
+    valuationMultiple,
+    sectorBenchmark,
+  });
 
   return runInsightPrompt(prompt, 300);
 }

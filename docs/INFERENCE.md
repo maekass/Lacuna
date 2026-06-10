@@ -28,9 +28,47 @@ local dev only.
 
 **Do not** call `api.anthropic.com` directly from app code — use gateway slugs.
 
-## Adding a new LLM feature
+## Precision prompting & constraint engineering
 
-1. Add prompts in `src/lib/ai/`.
-2. Call `generateInferenceText()` from `src/lib/ai/inference.ts`.
-3. Tag requests: `providerOptions.gateway.tags` (e.g. `feature:my-feature`).
-4. Document the model slug and fallback here.
+All prompts are centralized in `src/lib/ai/prompts.ts` (version `2.0.0`).
+
+### Design principles
+
+| Principle | Implementation |
+| --------- | -------------- |
+| **Versioned templates** | `PROMPT_VERSION` tag — bump on semantic changes |
+| **Pure functions** | Every `build*Prompt()` is `input → string`, deterministic and testable |
+| **Composable guardrails** | `ANTI_HALLUCINATION_GUARD`, `EDUCATIONAL_DISCLAIMER`, `OUTPUT_FORMAT_CONSTRAINT` — appended to every system prompt |
+| **Output sanitization** | `sanitizeLLMOutput()` strips markdown, detects hallucination patterns, enforces length limits |
+| **Template validation** | `validatePromptTemplate()` checks for unresolved variables, empty sections, length bounds |
+
+### Constraint layers
+
+```
+User input → build*Prompt() → system prompt + guardrails → LLM → sanitizeLLMOutput() → UI
+                                                              ↓
+                                                        validatePromptTemplate()
+```
+
+1. **Pre-inference**: Template functions enforce structure (DATA/TASK sections, no raw string interpolation)
+2. **System prompt**: Every call includes `ANTI_HALLUCINATION_GUARD` + `EDUCATIONAL_DISCLAIMER`
+3. **Post-inference**: `sanitizeLLMOutput()` strips formatting, flags suspicious claims, truncates long output
+
+### Hallucination detection
+
+`sanitizeLLMOutput()` checks for patterns the LLM should not produce given our constrained prompts:
+- Dollar amounts and specific deal values
+- FDA approval/clearance claims
+- Percentage growth/decline figures
+- Specific dates for announced/closed deals
+- Phase 4+ or pivotal trial claims
+
+### Adding a new LLM feature
+
+1. Add prompt templates in `src/lib/ai/prompts.ts` as pure functions.
+2. Add the system prompt with all guardrails composed in.
+3. Call `generateInferenceText()` from `src/lib/ai/inference.ts`.
+4. Apply `sanitizeLLMOutput()` on the raw response.
+5. Tag requests: `providerOptions.gateway.tags` (e.g. `feature:my-feature`).
+6. Document the model slug and fallback here.
+7. Add tests in `__tests__/lib/ai/prompts.test.ts`.
