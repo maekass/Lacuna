@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import {
   AcquirerPredictionDashboard,
@@ -32,6 +33,7 @@ import DataProvenanceBanner from "@/components/DataProvenanceBanner";
 import SiteSectionNav from "@/components/SiteSectionNav";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import { getValuationDisparity } from "@/lib/fairness/headlineStat";
 
 export default function HomePage() {
   const {
@@ -48,6 +50,8 @@ export default function HomePage() {
   const networkLinks = getVerifiedNetworkLinks();
   const dealsByYear = getVerifiedDealsByYear();
   const totalDealValue = getVerifiedTotalDealValue();
+
+  const valuationDisparity = useMemo(() => getValuationDisparity(), []);
 
   const stats = [
     {
@@ -143,6 +147,16 @@ export default function HomePage() {
             </div>
           ))}
         </motion.section>
+
+        {/* Fairness Audit Headline Banner */}
+        {valuationDisparity !== null && (
+          <div className="mb-8 p-4 bg-lacuna-lavender/20 border border-lacuna-lavender/40 rounded-xl flex items-start gap-3">
+            <span className="text-lacuna-plum text-sm font-medium shrink-0">⚡ Insight</span>
+            <span className="text-lacuna-blue text-sm">
+              Among disclosed valuations, {valuationDisparity.highSector} averages {valuationDisparity.percentDiff.toFixed(0)}% above {valuationDisparity.lowSector} — the widest sector gap in the dataset (n={valuationDisparity.highN} vs n={valuationDisparity.lowN} disclosed).
+            </span>
+          </div>
+        )}
 
         {/* Data Coverage */}
         <motion.section
