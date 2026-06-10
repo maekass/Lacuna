@@ -3,15 +3,24 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import { foregroundPortfolio } from "@/data/verifiedData";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
 
 const CURRENT_YEAR = 2026;
+type MatchMode = "single" | "foreground";
 
 interface FeatureVector {
   readonly values: readonly number[];
   readonly hasValuation: boolean;
   readonly hasFunding: boolean;
+}
+
+interface SimilarityResult {
+  readonly company: VerifiedCompanyView;
+  readonly similarity: number;
+  readonly sharedFactors: string[];
+  readonly dataCompleteness: number;
 }
 
 function buildFeatureVector(
@@ -61,40 +70,85 @@ function cosineSimilarity(a: readonly number[], b: readonly number[]): number {
   return denom === 0 ? 0 : dot / denom;
 }
 
+function featureDimensionLabels(sectors: string[]): string[] {
+  return [
+    ...sectors.map((sector) => `Sector affinity (${sector})`),
+    "Valuation profile",
+    "Funding profile",
+    "Company age",
+    "Late-stage profile",
+    "Public-market profile",
+    "Acquisition profile",
+  ];
+}
+
+function sharedFactorsAgainstCentroid(
+  values: readonly number[],
+  centroid: readonly number[],
+  sectors: string[],
+): string[] {
+  const labels = featureDimensionLabels(sectors);
+  return labels.filter((_, index) => {
+    const centroidValue = centroid[index] ?? 0;
+    if (centroidValue <= 0) return false;
+    return Math.abs((values[index] ?? 0) - centroidValue) <= centroidValue * 0.2;
+  });
+}
+
 export default function CompanySimilarity() {
   const { verifiedCompanies } = useVerifiedDataset();
   const sectors = useMemo(
     () => Array.from(new Set(verifiedCompanies.map((c) => c.sector))).sort(),
     [verifiedCompanies],
   );
+  const [mode, setMode] = useState<MatchMode>("single");
   const [selectedCompany, setSelectedCompany] = useState<string>(
     verifiedCompanies[0]?.id || "",
   );
+  const portfolioNameSet = useMemo(
+    () => new Set<string>(foregroundPortfolio),
+    [],
+  );
+  const companyVectors = useMemo(
+    () =>
+      verifiedCompanies.map((company) => ({
+        company,
+        vector: buildFeatureVector(company, sectors),
+      })),
+    [verifiedCompanies, sectors],
+  );
+  const companyVectorMap = useMemo(
+    () => new Map(companyVectors.map((entry) => [entry.company.id, entry])),
+    [companyVectors],
+  );
 
-  const similarities = useMemo(() => {
-    const target = verifiedCompanies.find((c) => c.id === selectedCompany);
-    if (!target) return [];
+  const similarities = useMemo<SimilarityResult[]>(() => {
+    const targetEntry = companyVectorMap.get(selectedCompany);
+    if (!targetEntry) return [];
 
-    const targetVec = buildFeatureVector(target, sectors);
-
-    return verifiedCompanies
-      .filter((c) => c.id !== selectedCompany)
-      .map((company) => {
-        const vec = buildFeatureVector(company, sectors);
-        const similarity = cosineSimilarity(targetVec.values, vec.values);
+    return companyVectors
+      .filter(({ company }) => company.id !== selectedCompany)
+      .map(({ company, vector }) => {
+        const similarity = cosineSimilarity(targetEntry.vector.values, vector.values);
 
         const shared: string[] = [];
-        if (company.sector === target.sector) {
+        if (company.sector === targetEntry.company.sector) {
           shared.push(`Same sector (${company.sector})`);
         }
-        if (company.stage === target.stage) shared.push(`Same stage`);
-        if (targetVec.hasValuation && vec.hasValuation) {
+        if (company.stage === targetEntry.company.stage) shared.push(`Same stage`);
+        if (targetEntry.vector.hasValuation && vector.hasValuation) {
           const ratio =
-            Math.max(target.lastKnownValuation!, company.lastKnownValuation!) /
-            Math.min(target.lastKnownValuation!, company.lastKnownValuation!);
+            Math.max(
+              targetEntry.company.lastKnownValuation!,
+              company.lastKnownValuation!,
+            ) /
+            Math.min(
+              targetEntry.company.lastKnownValuation!,
+              company.lastKnownValuation!,
+            );
           if (ratio < 2) shared.push("Valuation within 2×");
         }
-        if (Math.abs(company.founded - target.founded) <= 2) {
+        if (Math.abs(company.founded - targetEntry.company.founded) <= 2) {
           shared.push("Founded within 2 yrs");
         }
 
@@ -102,15 +156,60 @@ export default function CompanySimilarity() {
           company,
           similarity: isNaN(similarity) ? 0 : similarity,
           sharedFactors: shared,
-          dataCompleteness: (vec.hasValuation ? 1 : 0) +
-            (vec.hasFunding ? 1 : 0),
+          dataCompleteness: (vector.hasValuation ? 1 : 0) +
+            (vector.hasFunding ? 1 : 0),
         };
       })
       .sort((a, b) => b.similarity - a.similarity)
       .slice(0, 5);
-  }, [selectedCompany, verifiedCompanies, sectors]);
+  }, [selectedCompany, companyVectorMap, companyVectors]);
 
-  const selected = verifiedCompanies.find((c) => c.id === selectedCompany);
+  const foregroundMatches = useMemo(() => {
+    const portfolioEntries = companyVectors.filter(({ company }) =>
+      portfolioNameSet.has(company.name)
+    );
+
+    if (portfolioEntries.length === 0) {
+      return {
+        portfolioCount: 0,
+        matches: [] as SimilarityResult[],
+      };
+    }
+
+    const centroid = portfolioEntries[0].vector.values.map((_, index) =>
+      portfolioEntries.reduce(
+        (sum, entry) => sum + entry.vector.values[index],
+        0,
+      ) / portfolioEntries.length
+    );
+
+    const matches = companyVectors
+      .filter(({ company }) => !portfolioNameSet.has(company.name))
+      .map(({ company, vector }) => {
+        const similarity = cosineSimilarity(vector.values, centroid);
+        return {
+          company,
+          similarity: isNaN(similarity) ? 0 : similarity,
+          sharedFactors: sharedFactorsAgainstCentroid(
+            vector.values,
+            centroid,
+            sectors,
+          ),
+          dataCompleteness: (vector.hasValuation ? 1 : 0) +
+            (vector.hasFunding ? 1 : 0),
+        };
+      })
+      .sort((a, b) => b.similarity - a.similarity)
+      .slice(0, 10);
+
+    return {
+      portfolioCount: portfolioEntries.length,
+      matches,
+    };
+  }, [companyVectors, portfolioNameSet, sectors]);
+
+  const selected = companyVectorMap.get(selectedCompany)?.company;
+  const activeResults = mode === "single" ? similarities : foregroundMatches.matches;
 
   return (
     <motion.div
@@ -136,22 +235,45 @@ export default function CompanySimilarity() {
         </div>
       </div>
 
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-slate-700 mb-2">
-          Select Company
-        </label>
-        <select
-          value={selectedCompany}
-          onChange={(e) => setSelectedCompany(e.target.value)}
-          className="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+      <div className="mb-6 flex gap-2">
+        <button
+          type="button"
+          onClick={() => setMode("single")}
+          className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${mode === "single" ? "bg-lacuna-plum text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}
         >
-          {verifiedCompanies.map((c) => (
-            <option key={c.id} value={c.id}>{c.name} — {c.sector}</option>
-          ))}
-        </select>
+          Single Company
+        </button>
+        <button
+          type="button"
+          onClick={() => setMode("foreground")}
+          className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${mode === "foreground" ? "bg-lacuna-plum text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}
+        >
+          Foreground Match
+        </button>
       </div>
 
-      {selected && (
+      {mode === "single" && (
+        <div className="mb-6">
+          <label
+            htmlFor="company-similarity-select"
+            className="block text-sm font-medium text-slate-700 mb-2"
+          >
+            Select Company
+          </label>
+          <select
+            id="company-similarity-select"
+            value={selectedCompany}
+            onChange={(e) => setSelectedCompany(e.target.value)}
+            className="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+          >
+            {verifiedCompanies.map((c) => (
+              <option key={c.id} value={c.id}>{c.name} — {c.sector}</option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {mode === "single" && selected && (
         <div className="mb-4 p-3 bg-slate-50 rounded-lg">
           <p className="font-medium text-slate-800">{selected.name}</p>
           <p className="text-sm text-slate-500">
@@ -163,11 +285,32 @@ export default function CompanySimilarity() {
         </div>
       )}
 
+      {mode === "foreground" && (
+        <div className="mb-4 rounded-lg bg-slate-50 p-3">
+          <p className="font-medium text-slate-800">
+            Companies most similar to the Foreground Capital portfolio
+          </p>
+          <p className="text-sm text-slate-500">
+            {foregroundMatches.portfolioCount} portfolio compan{foregroundMatches.portfolioCount === 1 ? "y" : "ies"} used to compute the centroid
+          </p>
+        </div>
+      )}
+
+      {mode === "foreground" && foregroundMatches.portfolioCount < 3 && (
+        <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+          {foregroundMatches.portfolioCount === 0
+            ? "No Foreground portfolio companies were found in the verified dataset, so a portfolio centroid could not be computed."
+            : `Only ${foregroundMatches.portfolioCount} Foreground portfolio compan${foregroundMatches.portfolioCount === 1 ? "y" : "ies"} were found in the verified dataset, so these matches are directional.`}
+        </div>
+      )}
+
       <div className="space-y-3">
         <h4 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">
-          Most Similar Companies
+          {mode === "single"
+            ? "Most Similar Companies"
+            : "Companies most similar to the Foreground Capital portfolio"}
         </h4>
-        {similarities.map((result, i) => (
+        {activeResults.map((result, i) => (
           <motion.div
             key={result.company.id}
             initial={{ opacity: 0, x: -20 }}
@@ -216,6 +359,13 @@ export default function CompanySimilarity() {
             </div>
           </motion.div>
         ))}
+        {activeResults.length === 0 && (
+          <div className="rounded-lg border border-slate-100 p-4 text-sm text-slate-500">
+            {mode === "single"
+              ? "No similarity results available for the selected company."
+              : "No Foreground portfolio matches are available yet."}
+          </div>
+        )}
       </div>
 
       <div className="mt-4 pt-4 border-t border-slate-100">
