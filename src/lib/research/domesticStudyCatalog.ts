@@ -54,7 +54,8 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
     institution: "nih",
     institutionLabel: "NIH (All of Us)",
     sampleSize: 800_000,
-    sampleSizeNote: "800K+ consented US participants with genomic + EHR data (2024 milestone)",
+    sampleSizeNote:
+      "800K+ consented US participants with genomic + EHR data (2024 milestone)",
     conditions: ["Multi-disease", "Population genomics", "Health equity"],
     markerGenes: ["BRCA1", "BRCA2", "HBB", "APOE"],
     geography: "US",
@@ -69,8 +70,14 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
     institution: "nih",
     institutionLabel: "NIH NHLBI",
     sampleSize: 161_808,
-    sampleSizeNote: "161,808 postmenopausal women enrolled across clinical trial + observational cohorts",
-    conditions: ["Breast cancer", "Cardiovascular", "Osteoporosis", "Hormone therapy"],
+    sampleSizeNote:
+      "161,808 postmenopausal women enrolled across clinical trial + observational cohorts",
+    conditions: [
+      "Breast cancer",
+      "Cardiovascular",
+      "Osteoporosis",
+      "Hormone therapy",
+    ],
     markerGenes: ["BRCA1", "BRCA2", "ESR1"],
     geography: "US",
     dataTier: "cited_public",
@@ -89,9 +96,11 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
     markerGenes: ["DENND1A", "FSHR", "LHCGR", "INSR"],
     geography: "US",
     dataTier: "cited_public",
-    source: "NICHD Reproductive Medicine Network PCOS studies (ClinicalTrials.gov portfolio)",
+    source:
+      "NICHD Reproductive Medicine Network PCOS studies (ClinicalTrials.gov portfolio)",
     sourceYear: 2024,
-    clinicalTrialsSponsor: "Eunice Kennedy Shriver National Institute of Child Health and Human Development",
+    clinicalTrialsSponsor:
+      "Eunice Kennedy Shriver National Institute of Child Health and Human Development",
     variantCallsetId: "nih-nichd-pcos-grch38",
   },
   {
@@ -100,12 +109,14 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
     institution: "nih",
     institutionLabel: "NIH NHLBI / NIMHD",
     sampleSize: 7_500,
-    sampleSizeNote: "Multi-site SCD genomics + outcomes cohort (aggregate public trial enrollment)",
+    sampleSizeNote:
+      "Multi-site SCD genomics + outcomes cohort (aggregate public trial enrollment)",
     conditions: ["Sickle cell disease", "Sickle cell trait"],
     markerGenes: ["HBB", "HBA1", "HBA2"],
     geography: "US",
     dataTier: "cited_public",
-    source: "NHLBI Sickle Cell Disease Research and Treatment; CDC SCD surveillance (2024)",
+    source:
+      "NHLBI Sickle Cell Disease Research and Treatment; CDC SCD surveillance (2024)",
     sourceYear: 2024,
     clinicalTrialsSponsor: "National Heart, Lung, and Blood Institute",
     variantCallsetId: "nih-scd-hbb-grch38",
@@ -116,7 +127,8 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
     institution: "nih",
     institutionLabel: "NIH NCI / TCGA",
     sampleSize: 1_098,
-    sampleSizeNote: "1,098 breast tumor + matched normal genomic profiles in TCGA-BRCA",
+    sampleSizeNote:
+      "1,098 breast tumor + matched normal genomic profiles in TCGA-BRCA",
     conditions: ["Breast cancer", "Triple-negative breast cancer", "HER2+"],
     markerGenes: ["BRCA1", "BRCA2", "TP53", "PIK3CA", "GATA3"],
     geography: "US",
@@ -132,7 +144,8 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
     institution: "harvard",
     institutionLabel: "Harvard T.H. Chan School of Public Health",
     sampleSize: 116_686,
-    sampleSizeNote: "116,686 female nurses enrolled 1989–present; longitudinal reproductive + chronic disease",
+    sampleSizeNote:
+      "116,686 female nurses enrolled 1989–present; longitudinal reproductive + chronic disease",
     conditions: ["PCOS", "Endometriosis", "Breast cancer", "Fertility"],
     markerGenes: ["DENND1A", "BRCA1", "BRCA2"],
     geography: "US",
@@ -147,12 +160,14 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
     institution: "harvard",
     institutionLabel: "Boston University / Harvard-affiliated",
     sampleSize: 59_000,
-    sampleSizeNote: "~59,000 Black women followed since 1995 for cancer, reproductive, and cardiometabolic outcomes",
+    sampleSizeNote:
+      "~59,000 Black women followed since 1995 for cancer, reproductive, and cardiometabolic outcomes",
     conditions: ["Breast cancer", "Uterine fibroids", "Lupus", "Diabetes"],
     markerGenes: ["BRCA1", "BRCA2", "HBB", "STAT4"],
     geography: "US",
     dataTier: "cited_public",
-    source: "Black Women's Health Study (BWHS) cohort publications; BU Slone Epidemiology Center",
+    source:
+      "Black Women's Health Study (BWHS) cohort publications; BU Slone Epidemiology Center",
     sourceYear: 2024,
     variantCallsetId: "harvard-bwhs-panel-grch38",
   },
@@ -162,12 +177,18 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
     institution: "harvard",
     institutionLabel: "Harvard / Brigham and Women's Hospital",
     sampleSize: 4_200,
-    sampleSizeNote: "Hereditary cancer clinic carrier cohort — aggregate published enrollment range",
-    conditions: ["Hereditary breast cancer", "Ovarian cancer", "Lynch syndrome"],
+    sampleSizeNote:
+      "Hereditary cancer clinic carrier cohort — aggregate published enrollment range",
+    conditions: [
+      "Hereditary breast cancer",
+      "Ovarian cancer",
+      "Lynch syndrome",
+    ],
     markerGenes: ["BRCA1", "BRCA2", "PALB2", "CHEK2", "MLH1"],
     geography: "US",
     dataTier: "illustrative_static",
-    source: "Illustrative aggregate — BWH Center for Hereditary Cancer syndromes literature",
+    source:
+      "Illustrative aggregate — BWH Center for Hereditary Cancer syndromes literature",
     sourceYear: 2024,
     clinicalTrialsSponsor: "Brigham and Women's Hospital",
     variantCallsetId: "harvard-bwh-brca-grch38",
@@ -178,12 +199,14 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
     institution: "harvard",
     institutionLabel: "Harvard / Massachusetts General Hospital",
     sampleSize: 2_800,
-    sampleSizeNote: "Reproductive endocrine clinic PCOS phenotyping + metabolic profiling",
+    sampleSizeNote:
+      "Reproductive endocrine clinic PCOS phenotyping + metabolic profiling",
     conditions: ["PCOS", "Infertility", "Metabolic syndrome"],
     markerGenes: ["DENND1A", "FSHR", "INSR", "HMGA2"],
     geography: "US",
     dataTier: "illustrative_static",
-    source: "Illustrative aggregate — MGH Reproductive Endocrine Unit research portfolio",
+    source:
+      "Illustrative aggregate — MGH Reproductive Endocrine Unit research portfolio",
     sourceYear: 2024,
     clinicalTrialsSponsor: "Massachusetts General Hospital",
     variantCallsetId: "harvard-mgh-pcos-grch38",
@@ -194,7 +217,8 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
     institution: "harvard_mit_collab",
     institutionLabel: "Broad Institute of MIT and Harvard",
     sampleSize: 807_162,
-    sampleSizeNote: "807,162 genome sequences — population reference, not a disease cohort",
+    sampleSizeNote:
+      "807,162 genome sequences — population reference, not a disease cohort",
     conditions: ["Population reference", "Variant interpretation"],
     markerGenes: ["BRCA1", "BRCA2", "HBB", "DENND1A"],
     geography: "US",
@@ -209,7 +233,8 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
     institution: "mit",
     institutionLabel: "MIT / Broad Institute",
     sampleSize: 1_457,
-    sampleSizeNote: "1,457 cancer cell lines with genomic characterization — model systems, not patients",
+    sampleSizeNote:
+      "1,457 cancer cell lines with genomic characterization — model systems, not patients",
     conditions: ["Breast cancer", "Ovarian cancer", "Precision oncology"],
     markerGenes: ["BRCA1", "TP53", "PIK3CA", "ERBB2"],
     geography: "US",
@@ -224,7 +249,8 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
     institution: "nih",
     institutionLabel: "NIH NCI",
     sampleSize: 35_000,
-    sampleSizeNote: "35,000+ women unselected for cancer history screened for BRCA1/2 pathogenic variants",
+    sampleSizeNote:
+      "35,000+ women unselected for cancer history screened for BRCA1/2 pathogenic variants",
     conditions: ["Hereditary breast cancer", "Population screening"],
     markerGenes: ["BRCA1", "BRCA2"],
     geography: "US",
@@ -239,12 +265,14 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
     institution: "harvard",
     institutionLabel: "Harvard / Dana-Farber Cancer Institute",
     sampleSize: 1_650,
-    sampleSizeNote: "TNBC tumor sequencing cohort — aggregate published sample counts",
+    sampleSizeNote:
+      "TNBC tumor sequencing cohort — aggregate published sample counts",
     conditions: ["Triple-negative breast cancer", "Breast cancer disparities"],
     markerGenes: ["BRCA1", "BRCA2", "TP53", "BARD1"],
     geography: "US",
     dataTier: "illustrative_static",
-    source: "Illustrative aggregate — DFCI breast oncology genomics publications",
+    source:
+      "Illustrative aggregate — DFCI breast oncology genomics publications",
     sourceYear: 2024,
     clinicalTrialsSponsor: "Dana-Farber Cancer Institute",
   },
@@ -254,14 +282,16 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
     institution: "nih",
     institutionLabel: "NIH NIAMS / NIAID",
     sampleSize: 3_600,
-    sampleSizeNote: "Multigenerational lupus families with genetic + clinical phenotyping",
+    sampleSizeNote:
+      "Multigenerational lupus families with genetic + clinical phenotyping",
     conditions: ["Systemic lupus erythematosus", "Autoimmunity"],
     markerGenes: ["HLA-DRB1", "STAT4", "IRF5", "TNFSF4"],
     geography: "US",
     dataTier: "cited_public",
     source: "NIH Lupus Family Registry and Repository (LFRR) documentation",
     sourceYear: 2023,
-    clinicalTrialsSponsor: "National Institute of Arthritis and Musculoskeletal and Skin Diseases",
+    clinicalTrialsSponsor:
+      "National Institute of Arthritis and Musculoskeletal and Skin Diseases",
     variantCallsetId: "nih-lupus-sle-grch38",
   },
 ] as const;
@@ -269,7 +299,10 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
 export interface StudySampleStats {
   totalStudies: number;
   totalSampleSize: number;
-  byInstitution: Record<DomesticInstitution, { studies: number; sampleSize: number }>;
+  byInstitution: Record<
+    DomesticInstitution,
+    { studies: number; sampleSize: number }
+  >;
 }
 
 /** Aggregate sample-size universe across the domestic catalog. */

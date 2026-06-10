@@ -37,7 +37,9 @@ describe("patientDataGovernance", () => {
 
   it("blocks raw VCF download in de_identified mode (error)", () => {
     process.env.LACUNA_PATIENT_DATA_MODE = "de_identified";
-    const request = new Request("http://localhost/api/genomics/callsets/x/object");
+    const request = new Request(
+      "http://localhost/api/genomics/callsets/x/object",
+    );
     const denied = requirePatientDataAccess(
       request,
       "download_raw",
@@ -57,9 +59,12 @@ describe("patientDataGovernance", () => {
   it("authorizes bearer token for raw download when configured (success)", () => {
     process.env.LACUNA_PATIENT_DATA_MODE = "authorized";
     process.env.LACUNA_PATIENT_DATA_API_KEY = "test-secret-key";
-    const request = new Request("http://localhost/api/genomics/callsets/x/object", {
-      headers: { Authorization: "Bearer test-secret-key" },
-    });
+    const request = new Request(
+      "http://localhost/api/genomics/callsets/x/object",
+      {
+        headers: { Authorization: "Bearer test-secret-key" },
+      },
+    );
     expect(isPatientDataAuthorized(request)).toBe(true);
     expect(
       requirePatientDataAccess(
@@ -91,7 +96,9 @@ describe("patientDataGovernance", () => {
 
   it("requires consent ref for non-demo ingest (error)", () => {
     clearEnv();
-    expect(requireIngestConsentRef("cohort-a")).toMatch(/LACUNA_INGEST_CONSENT_REF/);
+    expect(requireIngestConsentRef("cohort-a")).toMatch(
+      /LACUNA_INGEST_CONSENT_REF/,
+    );
   });
 
   it("waives consent for infrastructure seed study (edge)", () => {

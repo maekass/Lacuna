@@ -12,9 +12,10 @@ describe("DOMESTIC_RESEARCH_STUDIES", () => {
     );
     expect(institutions.has("nih")).toBe(true);
     expect(institutions.has("harvard")).toBe(true);
-    expect(institutions.has("mit") || institutions.has("harvard_mit_collab")).toBe(
-      true,
-    );
+    expect(institutions.has("mit") || institutions.has("harvard_mit_collab"))
+      .toBe(
+        true,
+      );
   });
 
   it("aggregates sample sizes above 1M combined (success)", () => {

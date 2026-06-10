@@ -1,9 +1,9 @@
 import { createHash } from "node:crypto";
-import { createClient, type ClickHouseClient } from "@clickhouse/client";
+import { type ClickHouseClient, createClient } from "@clickhouse/client";
 import { query } from "@/lib/data/dbClient";
 import type {
-  PatientDataAccessMode,
   PatientDataAccessLevel,
+  PatientDataAccessMode,
 } from "@/lib/compliance/patientDataGovernance";
 
 export interface AuditEventRow {
@@ -18,7 +18,9 @@ export interface AuditEventRow {
 let clickhouseClient: ClickHouseClient | null = null;
 
 /** @internal Test hook — inject or disable ClickHouse client. */
-export function setAuditClickHouseClient(client: ClickHouseClient | null): void {
+export function setAuditClickHouseClient(
+  client: ClickHouseClient | null,
+): void {
   if (client) {
     clickhouseClient = client;
     return;

@@ -22,7 +22,9 @@ let redisClient: Redis | null = null;
 let redisConfigured: boolean | null = null;
 let injectedRedisClient: RateLimitRedisClient | undefined;
 
-export function setRateLimitRedisClient(client: RateLimitRedisClient | undefined): void {
+export function setRateLimitRedisClient(
+  client: RateLimitRedisClient | undefined,
+): void {
   injectedRedisClient = client;
 }
 

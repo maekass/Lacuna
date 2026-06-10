@@ -15,7 +15,8 @@ export const DOMESTIC_TRIAL_PRESETS: readonly InstitutionTrialPreset[] = [
   {
     id: "nih-womens-health",
     label: "NIH Women's Health",
-    sponsor: "Eunice Kennedy Shriver National Institute of Child Health and Human Development",
+    sponsor:
+      "Eunice Kennedy Shriver National Institute of Child Health and Human Development",
     condition: "women reproductive PCOS fertility maternal",
     description:
       "NICHD-sponsored trials — PCOS, fertility, maternal health, reproductive endocrinology",
