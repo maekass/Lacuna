@@ -2,18 +2,26 @@
 
 import { CURATED_DATASET_PROVENANCE_LINE } from "@/lib/constants/provenance";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import { useProvenanceContext } from "@/lib/provenance/ProvenanceContext";
 
 interface CuratedDatasetBannerProps {
   className?: string;
+  /** Show even when the global provenance bar is active (e.g. live API panels). */
+  forceShow?: boolean;
 }
 
 /**
  * Standard provenance strip for analytical panels — curated static dataset, not live market feeds.
  */
 export default function CuratedDatasetBanner(
-  { className = "" }: CuratedDatasetBannerProps,
+  { className = "", forceShow = false }: CuratedDatasetBannerProps,
 ) {
+  const { globalBarActive } = useProvenanceContext();
   const { verifiedAcquisitions } = useVerifiedDataset();
+
+  if (globalBarActive && !forceShow) {
+    return null;
+  }
   const dealCount = verifiedAcquisitions.length;
   const line = CURATED_DATASET_PROVENANCE_LINE.replace(
     "n=58",

@@ -61,6 +61,10 @@ staging/sec_candidates.csv
 # framer brand site (separate concern from the analytics app — see AGENTS.md)
 /framer/
 
+# playwright
+/test-results/
+/playwright-report/
+
 # large genomic blobs (metadata lives in ClickHouse)
 /data/variants/**
 !/data/variants/.gitkeep

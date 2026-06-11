@@ -41,8 +41,24 @@ Secondary links (GitHub, docs, email) are fine; avoid competing primary CTAs.
 Everything under `src/` today: verified JSON, visualizations, descriptive
 analytics, optional LLM narratives, clinical-trials panel, provenance banners.
 
-The in-app `HomePage` hero is the **product** entry, not a replacement for the
+The in-app **hub** (`/`) is the **product** entry, not a replacement for the
 Framer marketing site.
+
+## Product routes (Vercel app)
+
+| Route | Workspace | Purpose |
+| ----- | --------- | ------- |
+| `/` | Hub | Hero, provenance, headline stats, workspace cards |
+| `/deals` | Deals | Network, deal flow, matrix, acquirer landscape |
+| `/research` | Research | Trials, evidence, genomics, health equity |
+| `/methods` | Methods | Causal framing, temporal, sensitivity, Bayesian |
+| `/intelligence` | Intelligence | Reimbursement, acquirer fit, Gamma export |
+
+Legacy monolith hash bookmarks (`/#network`, etc.) redirect to the matching
+workspace route via `LegacyHashRedirect`.
+
+Shared chrome: `AppShell` (workspace nav, global provenance bar, section TOC,
+skip link, footer). Section modules live under `src/app/sections/`.
 
 ## Domains (optional, later)
 

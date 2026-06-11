@@ -4,15 +4,21 @@ import dynamic from "next/dynamic";
 
 function sectionFallback(
   className = "h-64 animate-pulse rounded-xl bg-lacuna-pink/10",
+  label = "Loading dashboard section",
 ) {
   return function SectionFallback() {
-    return <div className={className} aria-hidden />;
+    return (
+      <div className={className} aria-busy="true" aria-live="polite">
+        <span className="sr-only">{label}</span>
+      </div>
+    );
   };
 }
 
 export const ForceNetwork = dynamic(() => import("@/components/ForceNetwork"), {
   loading: sectionFallback(
     "h-[480px] animate-pulse rounded-xl bg-lacuna-pink/10",
+    "Loading network graph",
   ),
 });
 export const DealFlowChart = dynamic(
