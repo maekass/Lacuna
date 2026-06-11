@@ -3,7 +3,10 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
-import PitchBrief, { getConfidenceLabel, getMarketPosition } from "@/components/PitchBrief";
+import PitchBrief, {
+  getConfidenceLabel,
+  getMarketPosition,
+} from "@/components/PitchBrief";
 import { foregroundPortfolio } from "@/data/verifiedData";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { getVerifiedCompaniesForAnalysis } from "@/lib/data/verifiedDatasetAdapters";
@@ -73,7 +76,9 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
     7,
   );
   const acquiredValuationMedian = getMedian(
-    acquiredCompanies.map((c) => c.valuation).filter((v): v is number => typeof v === "number"),
+    acquiredCompanies.map((c) => c.valuation).filter((v): v is number =>
+      typeof v === "number"
+    ),
     300,
   );
 
@@ -81,7 +86,9 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
     ...data.verifiedAcquirers.map((a): [string, string] => [a.id, a.name]),
     ...data.verifiedCompanies.map((c): [string, string] => [c.id, c.name]),
   ]);
-  const companyById = new Map(analysisCompanies.map((company) => [company.id, company]));
+  const companyById = new Map(
+    analysisCompanies.map((company) => [company.id, company]),
+  );
   const sectorAcquirerCounts = new Map<string, Map<string, number>>();
   const overallAcquirerCounts = new Map<string, number>();
 
@@ -89,8 +96,10 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
     const targetCompany = companyById.get(deal.targetId);
     if (!targetCompany) continue;
 
-    const acquirerName = acquirerNameById.get(deal.acquirerId) ?? deal.acquirerName;
-    const sectorCounts = sectorAcquirerCounts.get(targetCompany.sector) ?? new Map<string, number>();
+    const acquirerName = acquirerNameById.get(deal.acquirerId) ??
+      deal.acquirerName;
+    const sectorCounts = sectorAcquirerCounts.get(targetCompany.sector) ??
+      new Map<string, number>();
     sectorCounts.set(acquirerName, (sectorCounts.get(acquirerName) ?? 0) + 1);
     sectorAcquirerCounts.set(targetCompany.sector, sectorCounts);
     overallAcquirerCounts.set(
@@ -102,12 +111,21 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
   return analysisCompanies
     .map((company) => {
       const age = CURRENT_YEAR - company.founded;
-      const isLateStage = ["Series C", "Series D", "Series F", "Late Stage", "Pre-IPO"].includes(company.stage);
+      const isLateStage = [
+        "Series C",
+        "Series D",
+        "Series F",
+        "Late Stage",
+        "Pre-IPO",
+      ].includes(company.stage);
       const inPriorExitSector = acquiredSectors.has(company.sector);
-      const aboveValuationMedian = (company.valuation ?? 0) >= acquiredValuationMedian;
+      const aboveValuationMedian =
+        (company.valuation ?? 0) >= acquiredValuationMedian;
       const ageNearPriorMedian = Math.abs(age - acquiredAgeMedian) <= 3;
       const isPublic = company.stage === "Public";
-      const similarPriorExits = acquiredCompanies.filter((c) => c.sector === company.sector).length;
+      const similarPriorExits = acquiredCompanies.filter((c) =>
+        c.sector === company.sector
+      ).length;
 
       const factorDetails: PredictionFactor[] = [
         {
@@ -138,20 +156,25 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
       ];
 
       const indicatorScore = clamp(
-        factorDetails.reduce((sum, factor) => sum + (factor.present ? factor.weight : 0), 0),
+        factorDetails.reduce(
+          (sum, factor) => sum + (factor.present ? factor.weight : 0),
+          0,
+        ),
         0,
         1,
       );
       const acquisition = acquisitionByTargetId.get(company.id);
       const predictedAcquirer = acquisition
-        ? (acquirerNameById.get(acquisition.acquirerId) ?? acquisition.acquirerName)
+        ? (acquirerNameById.get(acquisition.acquirerId) ??
+          acquisition.acquirerName)
         : pickLikelyAcquirer(
           sectorAcquirerCounts.get(company.sector),
           overallAcquirerCounts,
         );
       const confidence = clamp(
         0.35 +
-          factorDetails.filter((factor) => factor.present && factor.weight > 0).length * 0.1 +
+          factorDetails.filter((factor) => factor.present && factor.weight > 0)
+              .length * 0.1 +
           Math.min(similarPriorExits * 0.05, 0.2) +
           (acquisition ? 0.1 : 0),
         0.35,
@@ -166,7 +189,9 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
         exitProbability: indicatorScore,
         predictedAcquirer,
         confidence,
-        factors: factorDetails.filter((factor) => factor.present).map((factor) => factor.label),
+        factors: factorDetails.filter((factor) => factor.present).map((
+          factor,
+        ) => factor.label),
         calculatedAt: new Date(),
         isAcquired: acquiredIds.has(company.id),
         indicatorScore,
@@ -209,11 +234,12 @@ export default function ExitPredictor() {
     [],
   );
   const foregroundSectorSet = useMemo(
-    () => new Set(
-      verifiedCompanies
-        .filter((company) => foregroundNameSet.has(company.name))
-        .map((company) => company.sector),
-    ),
+    () =>
+      new Set(
+        verifiedCompanies
+          .filter((company) => foregroundNameSet.has(company.name))
+          .map((company) => company.sector),
+      ),
     [foregroundNameSet, verifiedCompanies],
   );
 
@@ -221,8 +247,10 @@ export default function ExitPredictor() {
   // longer selectable — derived here instead of synced via effects.
   const selectedPrediction = useMemo(
     () =>
-      selectablePredictions.find((prediction) => prediction.companyId === selectedCompanyId) ??
-      selectablePredictions[0],
+      selectablePredictions.find((prediction) =>
+        prediction.companyId === selectedCompanyId
+      ) ??
+        selectablePredictions[0],
     [selectablePredictions, selectedCompanyId],
   );
   const selectedCompany = selectedPrediction
@@ -232,7 +260,9 @@ export default function ExitPredictor() {
     if (!selectedCompany) return [] as VerifiedAcquisitionView[];
 
     return verifiedAcquisitions
-      .filter((deal) => companyById.get(deal.targetId)?.sector === selectedCompany.sector)
+      .filter((deal) =>
+        companyById.get(deal.targetId)?.sector === selectedCompany.sector
+      )
       .sort((a, b) => {
         const aTime = new Date(a.closedDate ?? a.announcedDate).getTime();
         const bTime = new Date(b.closedDate ?? b.announcedDate).getTime();
@@ -298,7 +328,9 @@ export default function ExitPredictor() {
     const csvString = [header, ...rows]
       .map((row) => row.map((value) => toCsvValue(value)).join(","))
       .join("\n");
-    const url = URL.createObjectURL(new Blob([csvString], { type: "text/csv" }));
+    const url = URL.createObjectURL(
+      new Blob([csvString], { type: "text/csv" }),
+    );
     const link = document.createElement("a");
     link.href = url;
     link.download = "lacuna-exit-probability-leaderboard.csv";
@@ -329,14 +361,22 @@ export default function ExitPredictor() {
             <button
               type="button"
               onClick={() => setMode("single")}
-              className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${mode === "single" ? "bg-white text-lacuna-plum shadow-sm" : "text-lacuna-blue"}`}
+              className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                mode === "single"
+                  ? "bg-white text-lacuna-plum shadow-sm"
+                  : "text-lacuna-blue"
+              }`}
             >
               Single Company
             </button>
             <button
               type="button"
               onClick={() => setMode("leaderboard")}
-              className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${mode === "leaderboard" ? "bg-white text-lacuna-plum shadow-sm" : "text-lacuna-blue"}`}
+              className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                mode === "leaderboard"
+                  ? "bg-white text-lacuna-plum shadow-sm"
+                  : "text-lacuna-blue"
+              }`}
             >
               Leaderboard
             </button>
@@ -367,193 +407,222 @@ export default function ExitPredictor() {
           predictive model is possible. {mode === "single"
             ? (
               <>
-                This panel scores each non-acquired company on factors that <em>co-occurred</em>{" "}
-                with prior exits — useful for descriptive comparison, not for forecasting.
+                This panel scores each non-acquired company on factors that{" "}
+                <em>co-occurred</em>{" "}
+                with prior exits — useful for descriptive comparison, not for
+                forecasting.
               </>
             )
             : (
               <>
-                The leaderboard applies the same deterministic factor scoring across all companies,
-                including acquired companies as a historical baseline.
+                The leaderboard applies the same deterministic factor scoring
+                across all companies, including acquired companies as a
+                historical baseline.
               </>
             )}{" "}
-          Weights are fixed and disclosed; there is no fitted model and no randomness.
+          Weights are fixed and disclosed; there is no fitted model and no
+          randomness.
         </p>
       </div>
 
-      {mode === "single" ? (
-        <div className="space-y-4">
-          <div>
-            <label
-              htmlFor="exit-predictor-company"
-              className="mb-2 block text-sm font-medium text-slate-700"
-            >
-              Select company
-            </label>
-            <select
-              id="exit-predictor-company"
-              value={selectedPrediction?.companyId ?? ""}
-              onChange={(event) => {
-                setSelectedCompanyId(event.target.value);
-                setIsPitchBriefOpen(false);
-              }}
-              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-lacuna-lavender/60 focus:ring-2 focus:ring-lacuna-lavender/30"
-            >
-              {selectablePredictions.map((prediction) => (
-                <option key={prediction.companyId} value={prediction.companyId}>
-                  {prediction.companyName}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {selectedPrediction && selectedCompany ? (
-            <motion.div
-              key={selectedPrediction.companyId}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="rounded-lg border border-slate-100 p-4 transition-shadow hover:shadow-sm"
-            >
-              <div className="mb-2 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <h4 className="font-semibold text-slate-800">
-                    {selectedPrediction.companyName}
-                  </h4>
-                  <p className="text-xs text-slate-500">
-                    {selectedPrediction.sector} · {selectedPrediction.stage} · {selectedCompany.hq}
-                  </p>
-                </div>
-                <div
-                  className={`w-fit rounded-full border px-3 py-1 text-sm font-semibold ${
-                    getScoreColor(selectedPrediction.indicatorScore)
-                  }`}
-                >
-                  {(selectedPrediction.exitProbability * 100).toFixed(0)} / 100
-                </div>
-              </div>
-
-              <div className="grid gap-3 text-sm text-slate-600 sm:grid-cols-2">
-                <div className="rounded-lg bg-slate-50 p-3">
-                  <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-                    Predicted acquirer
-                  </p>
-                  <p className="mt-1 font-medium text-slate-800">
-                    {selectedPrediction.predictedAcquirer}
-                  </p>
-                </div>
-                <div className="rounded-lg bg-slate-50 p-3">
-                  <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-                    Confidence
-                  </p>
-                  <p className="mt-1 font-medium text-slate-800">
-                    {getConfidenceLabel(selectedPrediction.confidence)} ({(selectedPrediction.confidence * 100).toFixed(0)}%)
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-3 space-y-1">
-                {selectedPrediction.factorDetails.map((f, j) => (
-                  <div
-                    key={j}
-                    className="flex items-center justify-between text-xs"
+      {mode === "single"
+        ? (
+          <div className="space-y-4">
+            <div>
+              <label
+                htmlFor="exit-predictor-company"
+                className="mb-2 block text-sm font-medium text-slate-700"
+              >
+                Select company
+              </label>
+              <select
+                id="exit-predictor-company"
+                value={selectedPrediction?.companyId ?? ""}
+                onChange={(event) => {
+                  setSelectedCompanyId(event.target.value);
+                  setIsPitchBriefOpen(false);
+                }}
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-lacuna-lavender/60 focus:ring-2 focus:ring-lacuna-lavender/30"
+              >
+                {selectablePredictions.map((prediction) => (
+                  <option
+                    key={prediction.companyId}
+                    value={prediction.companyId}
                   >
-                    <span
-                      className={f.present ? "text-slate-700" : "text-slate-400"}
-                    >
-                      {f.present ? "●" : "○"} {f.label}
-                    </span>
-                    <span
-                      className={`font-mono ${
-                        f.weight < 0 ? "text-rose-500" : "text-slate-400"
+                    {prediction.companyName}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {selectedPrediction && selectedCompany
+              ? (
+                <motion.div
+                  key={selectedPrediction.companyId}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="rounded-lg border border-slate-100 p-4 transition-shadow hover:shadow-sm"
+                >
+                  <div className="mb-2 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <h4 className="font-semibold text-slate-800">
+                        {selectedPrediction.companyName}
+                      </h4>
+                      <p className="text-xs text-slate-500">
+                        {selectedPrediction.sector} · {selectedPrediction.stage}
+                        {" "}
+                        · {selectedCompany.hq}
+                      </p>
+                    </div>
+                    <div
+                      className={`w-fit rounded-full border px-3 py-1 text-sm font-semibold ${
+                        getScoreColor(selectedPrediction.indicatorScore)
                       }`}
                     >
-                      {f.weight > 0 ? "+" : ""}
-                      {(f.weight * 100).toFixed(0)}
-                    </span>
+                      {(selectedPrediction.exitProbability * 100).toFixed(0)}
+                      {" "}
+                      / 100
+                    </div>
                   </div>
-                ))}
-              </div>
 
-              <button
-                type="button"
-                onClick={() => setIsPitchBriefOpen(true)}
-                className="mt-4 inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90 lacuna-gradient"
-              >
-                Generate Pitch Brief
-              </button>
-            </motion.div>
-          ) : (
-            <div className="rounded-lg border border-slate-100 bg-slate-50 p-4 text-sm text-slate-500">
-              No non-acquired companies are available for single-company analysis.
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="overflow-x-auto rounded-xl border border-lacuna-lavender/40 bg-white">
-          <table className="min-w-full text-sm">
-            <thead className="bg-lacuna-pink/10 text-lacuna-plum">
-              <tr>
-                <th className="px-4 py-3 text-left font-semibold">Rank</th>
-                <th className="px-4 py-3 text-left font-semibold">Company</th>
-                <th className="px-4 py-3 text-left font-semibold">Sector</th>
-                <th className="px-4 py-3 text-left font-semibold">Stage</th>
-                <th className="px-4 py-3 text-left font-semibold">Exit Probability</th>
-                <th className="px-4 py-3 text-left font-semibold">Predicted Acquirer</th>
-                <th className="px-4 py-3 text-left font-semibold">Confidence</th>
-              </tr>
-            </thead>
-            <tbody>
-              {predictions.map((prediction, index) => (
-                <tr
-                  key={prediction.companyId}
-                  className="border-t border-lacuna-lavender/20 hover:bg-lacuna-pink/10"
-                >
-                  <td className="px-4 py-3 font-semibold text-lacuna-plum">
-                    #{index + 1}
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-lacuna-plum">
-                        {prediction.companyName}
-                      </span>
-                      {prediction.isAcquired && (
-                        <span className="rounded-full bg-lacuna-pink/10 px-2 py-0.5 text-xs font-medium text-lacuna-plum">
-                          Acquired ✓
+                  <div className="grid gap-3 text-sm text-slate-600 sm:grid-cols-2">
+                    <div className="rounded-lg bg-slate-50 p-3">
+                      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                        Predicted acquirer
+                      </p>
+                      <p className="mt-1 font-medium text-slate-800">
+                        {selectedPrediction.predictedAcquirer}
+                      </p>
+                    </div>
+                    <div className="rounded-lg bg-slate-50 p-3">
+                      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                        Confidence
+                      </p>
+                      <p className="mt-1 font-medium text-slate-800">
+                        {getConfidenceLabel(selectedPrediction.confidence)}{" "}
+                        ({(selectedPrediction.confidence * 100).toFixed(0)}%)
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 space-y-1">
+                    {selectedPrediction.factorDetails.map((f, j) => (
+                      <div
+                        key={j}
+                        className="flex items-center justify-between text-xs"
+                      >
+                        <span
+                          className={f.present
+                            ? "text-slate-700"
+                            : "text-slate-400"}
+                        >
+                          {f.present ? "●" : "○"} {f.label}
                         </span>
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-lacuna-blue">
-                    {prediction.sector}
-                  </td>
-                  <td className="px-4 py-3 text-lacuna-blue">
-                    {prediction.stage}
-                  </td>
-                  <td className="px-4 py-3 min-w-[220px]">
-                    <div className="flex items-center gap-3">
-                      <div className="h-2 w-32 overflow-hidden rounded-full bg-lacuna-pink/10">
-                        <div
-                          className="h-full rounded-full bg-lacuna-plum"
-                          style={{ width: `${(prediction.exitProbability * 100).toFixed(1)}%` }}
-                        />
+                        <span
+                          className={`font-mono ${
+                            f.weight < 0 ? "text-rose-500" : "text-slate-400"
+                          }`}
+                        >
+                          {f.weight > 0 ? "+" : ""}
+                          {(f.weight * 100).toFixed(0)}
+                        </span>
                       </div>
-                      <span className="text-xs font-medium text-lacuna-plum">
-                        {(prediction.exitProbability * 100).toFixed(1)}%
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-lacuna-blue">
-                    {prediction.predictedAcquirer}
-                  </td>
-                  <td className="px-4 py-3 text-lacuna-blue">
-                    {(prediction.confidence * 100).toFixed(0)}%
-                  </td>
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setIsPitchBriefOpen(true)}
+                    className="mt-4 inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90 lacuna-gradient"
+                  >
+                    Generate Pitch Brief
+                  </button>
+                </motion.div>
+              )
+              : (
+                <div className="rounded-lg border border-slate-100 bg-slate-50 p-4 text-sm text-slate-500">
+                  No non-acquired companies are available for single-company
+                  analysis.
+                </div>
+              )}
+          </div>
+        )
+        : (
+          <div className="overflow-x-auto rounded-xl border border-lacuna-lavender/40 bg-white">
+            <table className="min-w-full text-sm">
+              <thead className="bg-lacuna-pink/10 text-lacuna-plum">
+                <tr>
+                  <th className="px-4 py-3 text-left font-semibold">Rank</th>
+                  <th className="px-4 py-3 text-left font-semibold">Company</th>
+                  <th className="px-4 py-3 text-left font-semibold">Sector</th>
+                  <th className="px-4 py-3 text-left font-semibold">Stage</th>
+                  <th className="px-4 py-3 text-left font-semibold">
+                    Exit Probability
+                  </th>
+                  <th className="px-4 py-3 text-left font-semibold">
+                    Predicted Acquirer
+                  </th>
+                  <th className="px-4 py-3 text-left font-semibold">
+                    Confidence
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+              </thead>
+              <tbody>
+                {predictions.map((prediction, index) => (
+                  <tr
+                    key={prediction.companyId}
+                    className="border-t border-lacuna-lavender/20 hover:bg-lacuna-pink/10"
+                  >
+                    <td className="px-4 py-3 font-semibold text-lacuna-plum">
+                      #{index + 1}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-lacuna-plum">
+                          {prediction.companyName}
+                        </span>
+                        {prediction.isAcquired && (
+                          <span className="rounded-full bg-lacuna-pink/10 px-2 py-0.5 text-xs font-medium text-lacuna-plum">
+                            Acquired ✓
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-lacuna-blue">
+                      {prediction.sector}
+                    </td>
+                    <td className="px-4 py-3 text-lacuna-blue">
+                      {prediction.stage}
+                    </td>
+                    <td className="px-4 py-3 min-w-[220px]">
+                      <div className="flex items-center gap-3">
+                        <div className="h-2 w-32 overflow-hidden rounded-full bg-lacuna-pink/10">
+                          <div
+                            className="h-full rounded-full bg-lacuna-plum"
+                            style={{
+                              width: `${
+                                (prediction.exitProbability * 100).toFixed(1)
+                              }%`,
+                            }}
+                          />
+                        </div>
+                        <span className="text-xs font-medium text-lacuna-plum">
+                          {(prediction.exitProbability * 100).toFixed(1)}%
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-lacuna-blue">
+                      {prediction.predictedAcquirer}
+                    </td>
+                    <td className="px-4 py-3 text-lacuna-blue">
+                      {(prediction.confidence * 100).toFixed(0)}%
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
       {isPitchBriefOpen && selectedPrediction && selectedCompany && (
         <PitchBrief

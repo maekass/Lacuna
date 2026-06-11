@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { DISEASE_MARKER_PANELS } from "@/lib/genomics/diseaseMarkers";
 
 /** Static catalog of disease-linked genetic markers (no PHI). */
-export async function GET() {
+export function GET() {
   return NextResponse.json(
     {
       panels: DISEASE_MARKER_PANELS,

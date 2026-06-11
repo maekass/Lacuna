@@ -8,7 +8,7 @@ export function getCachedStaticVerifiedDataset(): Promise<VerifiedDataset> {
     return Promise.resolve(getStaticVerifiedDataset());
   }
   return unstable_cache(
-    async () => getStaticVerifiedDataset(),
+    () => Promise.resolve(getStaticVerifiedDataset()),
     ["lacuna-verified-dataset-static"],
     { revalidate: 86_400, tags: ["verified-dataset"] },
   )();

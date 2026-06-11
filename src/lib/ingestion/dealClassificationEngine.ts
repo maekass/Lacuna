@@ -13,8 +13,8 @@ import {
   resolveInferenceModel,
 } from "@/lib/ai/inference";
 import {
-  CLASSIFICATION_SYSTEM_PROMPT,
   buildClassificationPrompt,
+  CLASSIFICATION_SYSTEM_PROMPT,
 } from "@/lib/ai/prompts";
 import { generateText, type LanguageModel, Output } from "ai";
 import { z } from "zod";
@@ -221,7 +221,6 @@ function resolveClassificationModel(override?: LanguageModel) {
     override,
   });
 }
-
 
 /**
  * Classify with AI structured output when API keys are set; otherwise keyword-only.

@@ -21,21 +21,28 @@ export default function AcquirerProfile(
 
   const acquirer = verifiedAcquirers.find((item) => item.id === acquirerId) ??
     verifiedCompanies.find((item) => item.id === acquirerId);
-  const companyById = new Map(verifiedCompanies.map((company) => [company.id, company]));
+  const companyById = new Map(
+    verifiedCompanies.map((company) => [company.id, company]),
+  );
   const deals = verifiedAcquisitions
     .filter((deal) => deal.acquirerId === acquirerId)
     .map((deal) => ({
       ...deal,
       targetCompany: companyById.get(deal.targetId),
     }));
-  const sectors = [...new Set(
-    deals.flatMap((deal) => deal.targetCompany ? [deal.targetCompany.sector] : []),
-  )];
+  const sectors = [
+    ...new Set(
+      deals.flatMap((deal) =>
+        deal.targetCompany ? [deal.targetCompany.sector] : []
+      ),
+    ),
+  ];
   const disclosedValues = deals
     .map((deal) => deal.dealValue)
     .filter((dealValue): dealValue is number => typeof dealValue === "number");
   const averageDealValue = disclosedValues.length > 0
-    ? disclosedValues.reduce((sum, value) => sum + value, 0) / disclosedValues.length
+    ? disclosedValues.reduce((sum, value) => sum + value, 0) /
+      disclosedValues.length
     : null;
   const mostRecentDealDate = deals.length > 0
     ? [...deals].sort((a, b) =>
@@ -75,14 +82,18 @@ export default function AcquirerProfile(
               <p className="text-xs uppercase tracking-wide text-lacuna-blue/70">
                 Deals
               </p>
-              <p className="mt-1 font-semibold text-lacuna-plum">{deals.length}</p>
+              <p className="mt-1 font-semibold text-lacuna-plum">
+                {deals.length}
+              </p>
             </div>
             <div className="rounded-xl bg-lacuna-pink/10 p-3">
               <p className="text-xs uppercase tracking-wide text-lacuna-blue/70">
                 Avg. Deal Value
               </p>
               <p className="mt-1 font-semibold text-lacuna-plum">
-                {averageDealValue === null ? "Undisclosed" : `$${averageDealValue.toFixed(1)}M`}
+                {averageDealValue === null
+                  ? "Undisclosed"
+                  : `$${averageDealValue.toFixed(1)}M`}
               </p>
             </div>
             <div className="rounded-xl bg-lacuna-pink/10 p-3 col-span-2">
@@ -102,16 +113,20 @@ export default function AcquirerProfile(
               Sectors Acquired
             </h4>
             <div className="mt-3 flex flex-wrap gap-2">
-              {sectors.length > 0 ? sectors.map((sector) => (
-                <span
-                  key={sector}
-                  className="rounded-full bg-lacuna-pink/10 px-3 py-1 text-xs font-medium text-lacuna-plum"
-                >
-                  {sector}
-                </span>
-              )) : (
-                <p className="text-sm text-lacuna-blue/70">No sector data available.</p>
-              )}
+              {sectors.length > 0
+                ? sectors.map((sector) => (
+                  <span
+                    key={sector}
+                    className="rounded-full bg-lacuna-pink/10 px-3 py-1 text-xs font-medium text-lacuna-plum"
+                  >
+                    {sector}
+                  </span>
+                ))
+                : (
+                  <p className="text-sm text-lacuna-blue/70">
+                    No sector data available.
+                  </p>
+                )}
             </div>
           </section>
 
@@ -120,28 +135,34 @@ export default function AcquirerProfile(
               Deal History
             </h4>
             <div className="mt-3 space-y-3">
-              {deals.length > 0 ? deals.map((deal) => (
-                <div
-                  key={deal.id}
-                  className="rounded-xl border border-lacuna-lavender/30 bg-white p-4"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="font-medium text-lacuna-plum">
-                        {deal.targetCompany?.name ?? deal.targetName}
-                      </p>
-                      <p className="mt-1 text-xs text-lacuna-blue/70">
-                        {deal.dealType} · {deal.announcedDate}
+              {deals.length > 0
+                ? deals.map((deal) => (
+                  <div
+                    key={deal.id}
+                    className="rounded-xl border border-lacuna-lavender/30 bg-white p-4"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="font-medium text-lacuna-plum">
+                          {deal.targetCompany?.name ?? deal.targetName}
+                        </p>
+                        <p className="mt-1 text-xs text-lacuna-blue/70">
+                          {deal.dealType} · {deal.announcedDate}
+                        </p>
+                      </div>
+                      <p className="text-sm font-medium text-lacuna-blue">
+                        {typeof deal.dealValue === "number"
+                          ? `$${deal.dealValue}M`
+                          : "Undisclosed"}
                       </p>
                     </div>
-                    <p className="text-sm font-medium text-lacuna-blue">
-                      {typeof deal.dealValue === "number" ? `$${deal.dealValue}M` : "Undisclosed"}
-                    </p>
                   </div>
-                </div>
-              )) : (
-                <p className="text-sm text-lacuna-blue/70">No verified acquisitions found for this acquirer.</p>
-              )}
+                ))
+                : (
+                  <p className="text-sm text-lacuna-blue/70">
+                    No verified acquisitions found for this acquirer.
+                  </p>
+                )}
             </div>
           </section>
 
@@ -150,16 +171,20 @@ export default function AcquirerProfile(
               Strategic Rationale
             </h4>
             <div className="mt-3 space-y-3">
-              {rationaleSnippets.length > 0 ? rationaleSnippets.map((snippet, index) => (
-                <div
-                  key={`${acquirerId}-${index}`}
-                  className="rounded-xl bg-lacuna-pink/10 p-4 text-sm leading-relaxed text-lacuna-blue"
-                >
-                  {snippet}
-                </div>
-              )) : (
-                <p className="text-sm text-lacuna-blue/70">No strategic rationale available.</p>
-              )}
+              {rationaleSnippets.length > 0
+                ? rationaleSnippets.map((snippet, index) => (
+                  <div
+                    key={`${acquirerId}-${index}`}
+                    className="rounded-xl bg-lacuna-pink/10 p-4 text-sm leading-relaxed text-lacuna-blue"
+                  >
+                    {snippet}
+                  </div>
+                ))
+                : (
+                  <p className="text-sm text-lacuna-blue/70">
+                    No strategic rationale available.
+                  </p>
+                )}
             </div>
           </section>
         </div>

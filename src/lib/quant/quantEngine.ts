@@ -216,7 +216,10 @@ export class ValuationEngine {
 
   valueByRevenueMultiple(company: QuantCompany): ValuationResult {
     if (!company.annualRevenue || company.annualRevenue <= 0) {
-      return emptyValuation("Revenue Multiple", "Company has no disclosed revenue");
+      return emptyValuation(
+        "Revenue Multiple",
+        "Company has no disclosed revenue",
+      );
     }
 
     const multiple = this.revenueMultiple(company);
@@ -243,7 +246,8 @@ export class ValuationEngine {
     }
 
     const multiple = this.ebitdaMultiple(company);
-    const estimate = company.ebitda * multiple * this.geographicMultiplier(company);
+    const estimate = company.ebitda * multiple *
+      this.geographicMultiplier(company);
 
     return {
       methodName: "EBITDA Multiple",
@@ -319,7 +323,10 @@ export class ValuationEngine {
     ];
 
     // Guard: nothing to value (e.g. no revenue, EBITDA, TAM, or funding).
-    const totalConfidence = valuations.reduce((sum, v) => sum + v.confidence, 0);
+    const totalConfidence = valuations.reduce(
+      (sum, v) => sum + v.confidence,
+      0,
+    );
     if (valuations.length === 0 || totalConfidence === 0) {
       return {
         valuations,
@@ -345,17 +352,27 @@ export class ValuationEngine {
       company.geographicFocus.includes("Africa") &&
       company.clinicalStage === "phase3"
     ) {
-      recommendation = "LIKELY UNDERVALUED (Africa discount may not be justified at Phase 3)";
+      recommendation =
+        "LIKELY UNDERVALUED (Africa discount may not be justified at Phase 3)";
     }
     if (company.clinicalStage === "fda_approved" && consensusEstimate < 50) {
       recommendation = "STRONG BUY (FDA approved below $50M)";
     }
 
-    return { valuations, consensusEstimate, consensusRange, recommendation, caveats };
+    return {
+      valuations,
+      consensusEstimate,
+      consensusRange,
+      recommendation,
+      caveats,
+    };
   }
 }
 
-function emptyValuation(methodName: string, reasoning: string): ValuationResult {
+function emptyValuation(
+  methodName: string,
+  reasoning: string,
+): ValuationResult {
   return {
     methodName,
     estimate: 0,
@@ -455,7 +472,10 @@ export class AcquisitionPredictor {
 
     // Heuristic base rate — a rough, un-calibrated proxy, NOT a fitted prior.
     const baseRate = 0.35;
-    const probability = Math.min(0.95, Math.max(0.05, weightedScore * baseRate));
+    const probability = Math.min(
+      0.95,
+      Math.max(0.05, weightedScore * baseRate),
+    );
 
     const ciWidth = company.clinicalStage === "fda_approved" ? 0.1 : 0.25;
     const confidenceInterval: [number, number] = [
@@ -471,9 +491,13 @@ export class AcquisitionPredictor {
     };
 
     const riskFactors: string[] = [];
-    if (driverScores.clinicalValidation < 5) riskFactors.push("Early clinical stage");
+    if (driverScores.clinicalValidation < 5) {
+      riskFactors.push("Early clinical stage");
+    }
     if (driverScores.teamQuality < 5) riskFactors.push("Weak management team");
-    if (!company.geographicFocus.includes("US")) riskFactors.push("Limited US presence");
+    if (!company.geographicFocus.includes("US")) {
+      riskFactors.push("Limited US presence");
+    }
     if (driverScores.geographicArbitrage < 2) {
       riskFactors.push("Geographic concentration risk");
     }
@@ -609,8 +633,12 @@ export class HealthImpactModeler {
       adoptionCurve,
       assumptions: [
         "Illustrative scenario — not a forecast. All inputs are stated assumptions.",
-        `At-risk population ${(targetPopulation / 1e6).toFixed(0)}M, ${(annualTestingRate * 100).toFixed(0)}% tested/yr.`,
-        `Baseline mortality ${(baselineMortalityRate * 100).toFixed(1)}% × bounded reduction ${(mortalityReduction * 100).toFixed(0)}%.`,
+        `At-risk population ${(targetPopulation / 1e6).toFixed(0)}M, ${
+          (annualTestingRate * 100).toFixed(0)
+        }% tested/yr.`,
+        `Baseline mortality ${
+          (baselineMortalityRate * 100).toFixed(1)
+        }% × bounded reduction ${(mortalityReduction * 100).toFixed(0)}%.`,
         "Effect size mapped to a capped mortality-reduction fraction, not applied directly.",
         "No counterfactual, adoption lag, or country-level stratification modeled.",
         "$1M/life cost is a placeholder, not actual intervention cost.",
@@ -695,7 +723,10 @@ export class PortfolioOptimizer {
       if (portfolio.length >= 5 || totalLivesSaved >= impactFloor) break;
     }
 
-    const totalInvestment = portfolio.reduce((s, c) => s + c.acquisitionPrice, 0);
+    const totalInvestment = portfolio.reduce(
+      (s, c) => s + c.acquisitionPrice,
+      0,
+    );
     const projectedExitValue = portfolio.reduce(
       (s, c) => s + c.projectedExitValue,
       0,
@@ -705,7 +736,8 @@ export class PortfolioOptimizer {
       : 0;
 
     // Placeholder linear synergy model — replace with deal-specific analysis.
-    const synergiesValue = portfolio.length * 5 + (portfolio.length > 0 ? 15 : 0);
+    const synergiesValue = portfolio.length * 5 +
+      (portfolio.length > 0 ? 15 : 0);
     const diversificationScore = conditionsUsed.size /
       Math.min(conditionsUsed.size + 1, 5);
 

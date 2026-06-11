@@ -218,6 +218,6 @@ export async function runReadinessCheck(): Promise<ReadinessPayload> {
 }
 
 /** @deprecated Use runLivenessCheck or runReadinessCheck. */
-export async function runHealthCheck(): Promise<ReadinessPayload> {
+export function runHealthCheck(): Promise<ReadinessPayload> {
   return runReadinessCheck();
 }

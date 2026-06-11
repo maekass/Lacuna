@@ -28,14 +28,14 @@ function getS3Client(): S3Client {
  * Issue a time-limited HTTPS GET URL for an s3:// object.
  * Returns null when object storage is not S3 or credentials are unavailable.
  */
-export async function presignS3GetObject(
+export function presignS3GetObject(
   uri: string,
   expiresInSec = 3600,
 ): Promise<string | null> {
-  if (getObjectStorageBackend() !== "s3") return null;
+  if (getObjectStorageBackend() !== "s3") return Promise.resolve(null);
 
   const location = parseS3Uri(uri);
-  if (!location) return null;
+  if (!location) return Promise.resolve(null);
 
   const client = getS3Client();
   const command = new GetObjectCommand({

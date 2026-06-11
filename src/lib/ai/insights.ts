@@ -13,12 +13,12 @@ import {
   resolveInferenceModel,
 } from "@/lib/ai/inference";
 import {
-  INSIGHTS_SYSTEM_PROMPT,
-  sanitizeLLMOutput,
   buildAcquisitionInsightPrompt,
   buildEvidenceSummaryPrompt,
-  buildSectorInsightPrompt,
   buildReimbursementInsightPrompt,
+  buildSectorInsightPrompt,
+  INSIGHTS_SYSTEM_PROMPT,
+  sanitizeLLMOutput,
 } from "@/lib/ai/prompts";
 
 async function runInsightPrompt(
@@ -61,7 +61,7 @@ export function isAIConfigured(): boolean {
   return isServerInferenceConfigured();
 }
 
-export async function generateAcquisitionInsights(
+export function generateAcquisitionInsights(
   companyName: string,
   sector: string,
   topAcquirer: string,
@@ -83,7 +83,7 @@ export async function generateAcquisitionInsights(
   return runInsightPrompt(prompt, 500);
 }
 
-export async function generateEvidenceSummary(
+export function generateEvidenceSummary(
   companyName: string,
   phase: string,
   fdaStatus: string,
@@ -101,7 +101,7 @@ export async function generateEvidenceSummary(
   return runInsightPrompt(prompt, 300);
 }
 
-export async function generateSectorInsights(
+export function generateSectorInsights(
   sector: string,
   dealCount: number,
   avgMultiple: number,
@@ -119,7 +119,7 @@ export async function generateSectorInsights(
   return runInsightPrompt(prompt, 400);
 }
 
-export async function generateReimbursementInsights(
+export function generateReimbursementInsights(
   companyName: string,
   businessModel: string,
   insuranceRevenue: number,

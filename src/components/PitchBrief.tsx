@@ -1,6 +1,9 @@
 "use client";
 
-import type { VerifiedAcquisitionView, VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
+import type {
+  VerifiedAcquisitionView,
+  VerifiedCompanyView,
+} from "@/lib/data/verifiedDataHelpers";
 import type { Company } from "@/lib/types";
 import type { PredictionRow } from "@/components/ExitPredictor";
 
@@ -38,7 +41,9 @@ export function getConfidenceLabel(confidence: number) {
 }
 
 /** Buckets a funding stage into the cluster labels used by the brief. */
-export function getMarketPosition(stage: Company["stage"]): "Emerging" | "Growth" | "Late-stage" {
+export function getMarketPosition(
+  stage: Company["stage"],
+): "Emerging" | "Growth" | "Late-stage" {
   if (stage === "Seed" || stage === "Series A") return "Emerging";
   if (stage === "Series B" || stage === "Series C") return "Growth";
   return "Late-stage";
@@ -58,8 +63,8 @@ export default function PitchBrief(
   const foregroundFitClasses = foregroundFitTone === "portfolio"
     ? "bg-lacuna-pink/10 text-lacuna-plum border-lacuna-lavender/40"
     : foregroundFitTone === "sector"
-      ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-      : "bg-slate-50 text-slate-600 border-slate-200";
+    ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+    : "bg-slate-50 text-slate-600 border-slate-200";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 p-4 print:block print:bg-transparent print:p-0">
@@ -120,32 +125,46 @@ export default function PitchBrief(
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <h5 className="text-sm font-semibold text-slate-800">Exit Outlook</h5>
+              <h5 className="text-sm font-semibold text-slate-800">
+                Exit Outlook
+              </h5>
               <div className="mt-3 space-y-2 text-sm text-slate-600">
                 <p>
-                  <span className="font-medium text-slate-800">Exit probability:</span>{" "}
+                  <span className="font-medium text-slate-800">
+                    Exit probability:
+                  </span>{" "}
                   {(prediction.exitProbability * 100).toFixed(1)}%
                 </p>
                 <p>
-                  <span className="font-medium text-slate-800">Predicted acquirer:</span>{" "}
+                  <span className="font-medium text-slate-800">
+                    Predicted acquirer:
+                  </span>{" "}
                   {prediction.predictedAcquirer}
                 </p>
                 <p>
-                  <span className="font-medium text-slate-800">Confidence level:</span>{" "}
-                  {getConfidenceLabel(prediction.confidence)} ({(prediction.confidence * 100).toFixed(0)}%)
+                  <span className="font-medium text-slate-800">
+                    Confidence level:
+                  </span>{" "}
+                  {getConfidenceLabel(prediction.confidence)}{" "}
+                  ({(prediction.confidence * 100).toFixed(0)}%)
                 </p>
               </div>
             </div>
 
             <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <h5 className="text-sm font-semibold text-slate-800">Market Position</h5>
+              <h5 className="text-sm font-semibold text-slate-800">
+                Market Position
+              </h5>
               <div className="mt-3 space-y-2 text-sm text-slate-600">
                 <p>
-                  <span className="font-medium text-slate-800">Cluster:</span>{" "}
+                  <span className="font-medium text-slate-800">Cluster:</span>
+                  {" "}
                   {marketPosition}
                 </p>
                 <p>
-                  <span className="font-medium text-slate-800">Stage basis:</span>{" "}
+                  <span className="font-medium text-slate-800">
+                    Stage basis:
+                  </span>{" "}
                   {prediction.stage}
                 </p>
               </div>
@@ -154,8 +173,12 @@ export default function PitchBrief(
 
           <div className="mt-4 rounded-xl border border-slate-200 bg-white p-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <h5 className="text-sm font-semibold text-slate-800">Foreground Fit</h5>
-              <span className={`rounded-full border px-3 py-1 text-xs font-medium ${foregroundFitClasses}`}>
+              <h5 className="text-sm font-semibold text-slate-800">
+                Foreground Fit
+              </h5>
+              <span
+                className={`rounded-full border px-3 py-1 text-xs font-medium ${foregroundFitClasses}`}
+              >
                 {foregroundFitLabel}
               </span>
             </div>
@@ -163,8 +186,12 @@ export default function PitchBrief(
 
           <div className="mt-6 rounded-xl border border-slate-200 bg-white p-4">
             <div className="mb-3 flex items-center justify-between gap-3">
-              <h5 className="text-sm font-semibold text-slate-800">Comparable Exits</h5>
-              <span className="text-xs text-slate-500">Same sector, verified dataset</span>
+              <h5 className="text-sm font-semibold text-slate-800">
+                Comparable Exits
+              </h5>
+              <span className="text-xs text-slate-500">
+                Same sector, verified dataset
+              </span>
             </div>
             <div className="space-y-3">
               {comparableExits.length > 0
@@ -175,19 +202,30 @@ export default function PitchBrief(
                   >
                     <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                       <div>
-                        <p className="font-medium text-slate-800">{deal.targetName}</p>
-                        <p className="text-sm text-slate-600">{deal.acquirerName}</p>
+                        <p className="font-medium text-slate-800">
+                          {deal.targetName}
+                        </p>
+                        <p className="text-sm text-slate-600">
+                          {deal.acquirerName}
+                        </p>
                       </div>
                       <div className="text-sm text-slate-600 sm:text-right">
-                        <p className="font-medium text-slate-800">{formatDealValue(deal.dealValue)}</p>
-                        <p>{formatDealDate(deal.closedDate ?? deal.announcedDate)}</p>
+                        <p className="font-medium text-slate-800">
+                          {formatDealValue(deal.dealValue)}
+                        </p>
+                        <p>
+                          {formatDealDate(
+                            deal.closedDate ?? deal.announcedDate,
+                          )}
+                        </p>
                       </div>
                     </div>
                   </div>
                 ))
                 : (
                   <p className="text-sm text-slate-500">
-                    No same-sector verified exits are available in the current dataset.
+                    No same-sector verified exits are available in the current
+                    dataset.
                   </p>
                 )}
             </div>

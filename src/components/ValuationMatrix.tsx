@@ -31,7 +31,10 @@ const MOMENTUM_CHIP_CLASSES: Record<MomentumLabel, string> = {
   Cooling: "bg-red-50 text-red-700 border border-red-200",
 };
 
-function classifyMomentum(recentTotal: number, priorTotal: number): MomentumLabel {
+function classifyMomentum(
+  recentTotal: number,
+  priorTotal: number,
+): MomentumLabel {
   if (recentTotal === 0 && priorTotal === 0) return "Stable";
   if (priorTotal === 0) return recentTotal > 0 ? "High" : "Stable";
 
@@ -79,87 +82,86 @@ export default function ValuationMatrix() {
     totalDisclosed,
     totalCompanies,
     sectorMomentum,
-  } =
-    useMemo(() => {
-      const companyById = new Map(
-        verifiedCompanies.map((company) => [company.id, company]),
-      );
-      const sectorList = Array.from(
-        new Set(verifiedCompanies.map((c) => c.sector)),
-      ).sort();
-      const sectorDealCounts = verifiedAcquisitions.reduce<
-        Record<string, Record<number, number>>
-      >((acc, acquisition) => {
-        const target = companyById.get(acquisition.targetId);
-        if (!target) return acc;
+  } = useMemo(() => {
+    const companyById = new Map(
+      verifiedCompanies.map((company) => [company.id, company]),
+    );
+    const sectorList = Array.from(
+      new Set(verifiedCompanies.map((c) => c.sector)),
+    ).sort();
+    const sectorDealCounts = verifiedAcquisitions.reduce<
+      Record<string, Record<number, number>>
+    >((acc, acquisition) => {
+      const target = companyById.get(acquisition.targetId);
+      if (!target) return acc;
 
-        const year = new Date(acquisition.announcedDate).getFullYear();
-        const sectorCounts = acc[target.sector] ?? (acc[target.sector] = {});
-        sectorCounts[year] = (sectorCounts[year] ?? 0) + 1;
-        return acc;
-      }, {});
+      const year = new Date(acquisition.announcedDate).getFullYear();
+      const sectorCounts = acc[target.sector] ?? (acc[target.sector] = {});
+      sectorCounts[year] = (sectorCounts[year] ?? 0) + 1;
+      return acc;
+    }, {});
 
-      const grid: MatrixCell[][] = STAGE_ORDER.map((stage) =>
-        sectorList.map((sector) => {
-          const inCell = verifiedCompanies.filter((c) => {
-            const cs = canonicalStage(c.stage);
-            return c.sector === sector && cs === stage;
-          });
-          const withVal = inCell.filter((c) =>
-            typeof c.lastKnownValuation === "number"
-          );
-          const valuations = withVal.map((c) => c.lastKnownValuation as number)
-            .sort((a, b) => a - b);
-          const median = valuations.length > 0
-            ? valuations[Math.floor(valuations.length / 2)]
-            : 0;
+    const grid: MatrixCell[][] = STAGE_ORDER.map((stage) =>
+      sectorList.map((sector) => {
+        const inCell = verifiedCompanies.filter((c) => {
+          const cs = canonicalStage(c.stage);
+          return c.sector === sector && cs === stage;
+        });
+        const withVal = inCell.filter((c) =>
+          typeof c.lastKnownValuation === "number"
+        );
+        const valuations = withVal.map((c) => c.lastKnownValuation as number)
+          .sort((a, b) => a - b);
+        const median = valuations.length > 0
+          ? valuations[Math.floor(valuations.length / 2)]
+          : 0;
 
-          const deals = verifiedAcquisitions.filter((a) => {
-            const target = companyById.get(a.targetId);
-            if (!target) return false;
-            return target.sector === sector &&
-              canonicalStage(target.stage) === stage;
-          });
+        const deals = verifiedAcquisitions.filter((a) => {
+          const target = companyById.get(a.targetId);
+          if (!target) return false;
+          return target.sector === sector &&
+            canonicalStage(target.stage) === stage;
+        });
 
-          return {
-            sector,
-            stage,
-            medianValuation: median,
-            disclosedCount: withVal.length,
-            totalCount: inCell.length,
-            dealCount: deals.length,
-          };
-        })
-      );
+        return {
+          sector,
+          stage,
+          medianValuation: median,
+          disclosedCount: withVal.length,
+          totalCount: inCell.length,
+          dealCount: deals.length,
+        };
+      })
+    );
 
-      const max = Math.max(...grid.flat().map((c) => c.medianValuation));
-      const disclosed = verifiedCompanies.filter((c) =>
-        typeof c.lastKnownValuation === "number"
-      ).length;
-      const momentumBySector = Object.fromEntries(
-        sectorList.map((sector) => {
-          const counts = sectorDealCounts[sector] ?? {};
-          const priorTotal = [2019, 2020, 2021].reduce(
-            (sum, year) => sum + (counts[year] ?? 0),
-            0,
-          );
-          const recentTotal = [2022, 2023, 2024].reduce(
-            (sum, year) => sum + (counts[year] ?? 0),
-            0,
-          );
-          return [sector, classifyMomentum(recentTotal, priorTotal)];
-        }),
-      ) as Record<string, MomentumLabel>;
+    const max = Math.max(...grid.flat().map((c) => c.medianValuation));
+    const disclosed = verifiedCompanies.filter((c) =>
+      typeof c.lastKnownValuation === "number"
+    ).length;
+    const momentumBySector = Object.fromEntries(
+      sectorList.map((sector) => {
+        const counts = sectorDealCounts[sector] ?? {};
+        const priorTotal = [2019, 2020, 2021].reduce(
+          (sum, year) => sum + (counts[year] ?? 0),
+          0,
+        );
+        const recentTotal = [2022, 2023, 2024].reduce(
+          (sum, year) => sum + (counts[year] ?? 0),
+          0,
+        );
+        return [sector, classifyMomentum(recentTotal, priorTotal)];
+      }),
+    ) as Record<string, MomentumLabel>;
 
-      return {
-        sectors: sectorList,
-        matrix: grid,
-        maxValuation: max,
-        totalDisclosed: disclosed,
-        totalCompanies: verifiedCompanies.length,
-        sectorMomentum: momentumBySector,
-      };
-    }, [verifiedCompanies, verifiedAcquisitions]);
+    return {
+      sectors: sectorList,
+      matrix: grid,
+      maxValuation: max,
+      totalDisclosed: disclosed,
+      totalCompanies: verifiedCompanies.length,
+      sectorMomentum: momentumBySector,
+    };
+  }, [verifiedCompanies, verifiedAcquisitions]);
 
   const getColor = (value: number) => {
     if (value === 0) return "#f8fafc";
@@ -206,7 +208,9 @@ export default function ValuationMatrix() {
                 <div className="flex flex-col items-center gap-1">
                   <span className="max-w-full truncate">{sector}</span>
                   <span
-                    className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${MOMENTUM_CHIP_CLASSES[sectorMomentum[sector]]}`}
+                    className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                      MOMENTUM_CHIP_CLASSES[sectorMomentum[sector]]
+                    }`}
                   >
                     {sectorMomentum[sector]}
                   </span>
