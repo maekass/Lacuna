@@ -63,8 +63,7 @@ export const WORKSPACES: Workspace[] = [
     slug: "intelligence",
     href: "/intelligence",
     label: "Intelligence",
-    description:
-      "Reimbursement context, acquirer fit scores, and deck export.",
+    description: "Reimbursement context, acquirer fit scores, and deck export.",
     sections: [
       { id: "reimbursement-intelligence", label: "Reimbursement" },
       { id: "acquirer-prediction", label: "Fit scores" },
@@ -74,12 +73,11 @@ export const WORKSPACES: Workspace[] = [
 ];
 
 /** Legacy monolith hash → workspace route (for bookmarks). */
-export const LEGACY_HASH_REDIRECTS: Record<string, string> =
-  Object.fromEntries(
-    WORKSPACES.flatMap((ws) =>
-      ws.sections.map((s) => [s.id, `${ws.href}#${s.id}`] as const),
-    ),
-  );
+export const LEGACY_HASH_REDIRECTS: Record<string, string> = Object.fromEntries(
+  WORKSPACES.flatMap((ws) =>
+    ws.sections.map((s) => [s.id, `${ws.href}#${s.id}`] as const)
+  ),
+);
 
 export function workspaceForPath(pathname: string): Workspace | undefined {
   const slug = pathname.replace(/^\//, "").split("/")[0];

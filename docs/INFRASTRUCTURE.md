@@ -109,15 +109,15 @@ AI and Sentry: [INFERENCE.md](./INFERENCE.md),
 
 ## HTTP endpoints (ops)
 
-| Route                             | Auth                 | Purpose                                               |
-| --------------------------------- | -------------------- | ----------------------------------------------------- |
-| `GET /api/health`                 | Public               | **Liveness** — constant-time (use for synthetics)     |
-| `GET /api/health/ready`           | Public               | **Readiness** — dataset validation + optional DB ping |
-| `GET /api/cron/sec-ingest`        | `Bearer CRON_SECRET` | Run SEC ingest (Vercel Cron)                          |
-| `GET /api/cron/sec-ingest/status` | Public               | Latest ingest run (needs `DATABASE_URL`)              |
-| `GET /api/ingest/sec/status`      | Public               | Same as cron status — app-facing alias                |
-| `GET /api/ingest/free-apis/status`| Public               | Latest `download:free-apis` export on disk            |
-| `GET /api/dataset/verified`       | Public               | Verified dataset JSON export                          |
+| Route                              | Auth                 | Purpose                                               |
+| ---------------------------------- | -------------------- | ----------------------------------------------------- |
+| `GET /api/health`                  | Public               | **Liveness** — constant-time (use for synthetics)     |
+| `GET /api/health/ready`            | Public               | **Readiness** — dataset validation + optional DB ping |
+| `GET /api/cron/sec-ingest`         | `Bearer CRON_SECRET` | Run SEC ingest (Vercel Cron)                          |
+| `GET /api/cron/sec-ingest/status`  | Public               | Latest ingest run (needs `DATABASE_URL`)              |
+| `GET /api/ingest/sec/status`       | Public               | Same as cron status — app-facing alias                |
+| `GET /api/ingest/free-apis/status` | Public               | Latest `download:free-apis` export on disk            |
+| `GET /api/dataset/verified`        | Public               | Verified dataset JSON export                          |
 
 **Uptime monitors:** `GET /api/health` only — see
 [MONITORING.md](./MONITORING.md). Expect HTTP 200 and `probe: "live"`. Never
@@ -220,7 +220,8 @@ Full behavior: [SEC_INGESTION.md](./SEC_INGESTION.md). Candidates land in
 
 - [PRODUCTION_SETUP.md](./PRODUCTION_SETUP.md) — Vercel env checklist
 - [SEC_INGESTION.md](./SEC_INGESTION.md) — ingest pipeline
-- [FREE_API_DOWNLOADS.md](./FREE_API_DOWNLOADS.md) — free public API batch exports
+- [FREE_API_DOWNLOADS.md](./FREE_API_DOWNLOADS.md) — free public API batch
+  exports
 - [DATA_CURATION_CHECKLIST.md](./DATA_CURATION_CHECKLIST.md) — verified dataset
   workflow
 - [AGENTS.md](../AGENTS.md) — contributor conventions

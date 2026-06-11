@@ -24,7 +24,8 @@ export default function WorkspaceNav() {
         Hub
       </Link>
       {WORKSPACES.map((ws) => {
-        const active = pathname === ws.href || pathname.startsWith(`${ws.href}/`);
+        const active = pathname === ws.href ||
+          pathname.startsWith(`${ws.href}/`);
         return (
           <Link
             key={ws.slug}

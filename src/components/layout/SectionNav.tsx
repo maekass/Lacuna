@@ -7,7 +7,9 @@ interface SectionNavProps {
   sections: SectionLink[];
 }
 
-function NavLink({ href, label, active }: { href: string; label: string; active: boolean }) {
+function NavLink(
+  { href, label, active }: { href: string; label: string; active: boolean },
+) {
   return (
     <a
       href={href}
@@ -86,14 +88,16 @@ export default function SectionNav({ sections }: SectionNavProps) {
         {drawerOpen ? "Close sections" : "Browse sections on this page"}
       </button>
 
-      {drawerOpen ? (
-        <div
-          id="section-drawer"
-          className="lg:hidden mb-6 rounded-xl border border-lacuna-lavender/40 bg-white p-3 shadow-sm"
-        >
-          <nav aria-label="Page sections">{list}</nav>
-        </div>
-      ) : null}
+      {drawerOpen
+        ? (
+          <div
+            id="section-drawer"
+            className="lg:hidden mb-6 rounded-xl border border-lacuna-lavender/40 bg-white p-3 shadow-sm"
+          >
+            <nav aria-label="Page sections">{list}</nav>
+          </div>
+        )
+        : null}
 
       <aside className="hidden lg:block">
         <nav

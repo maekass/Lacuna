@@ -1,8 +1,8 @@
 export { ALL_FREE_API_SOURCES } from "./clients";
 export { downloadFreeApiBundles } from "./downloadBundle";
 export {
-  readLatestFreeApiExport,
   type FreeApiExportSummary,
+  readLatestFreeApiExport,
 } from "./readLatestExport";
 export type {
   FreeApiDownloadManifest,

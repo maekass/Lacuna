@@ -40,7 +40,9 @@ function parseArgs(argv: string[]): {
     if (arg === "--limit" && argv[i + 1]) {
       out.limit = Number(argv[++i]);
     } else if (arg === "--sources" && argv[i + 1]) {
-      const ids = argv[++i].split(",").map((s) => s.trim()) as FreeApiSourceId[];
+      const ids = argv[++i].split(",").map((s) =>
+        s.trim()
+      ) as FreeApiSourceId[];
       const valid = new Set(ALL_FREE_API_SOURCES);
       const bad = ids.filter((id) => !valid.has(id));
       if (bad.length > 0) {
@@ -150,7 +152,9 @@ async function main() {
   );
 
   console.log("");
-  console.log(`Done. ${records.length} entities, ${okCount} OK fetches, ${errCount} skipped/errors.`);
+  console.log(
+    `Done. ${records.length} entities, ${okCount} OK fetches, ${errCount} skipped/errors.`,
+  );
   console.log(`Manifest: ${join(outDir, "manifest.json")}`);
 }
 

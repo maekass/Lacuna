@@ -3,11 +3,13 @@ import { expect, test } from "@playwright/test";
 test.describe("Lacuna workspace navigation", () => {
   test("hub loads and workspace routes resolve", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("heading", { name: /Diligence Stack/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Diligence Stack/i }))
+      .toBeVisible();
 
     await page.getByRole("link", { name: "Deals", exact: true }).click();
     await expect(page).toHaveURL(/\/deals$/);
-    await expect(page.getByRole("heading", { name: /Deals workspace/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Deals workspace/i }))
+      .toBeVisible();
 
     await page.getByRole("link", { name: "Research", exact: true }).click();
     await expect(page).toHaveURL(/\/research$/);

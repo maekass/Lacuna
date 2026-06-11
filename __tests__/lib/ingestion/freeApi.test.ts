@@ -1,7 +1,10 @@
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { fetchWikidataSearch, fetchPatentsView } from "@/lib/ingestion/freeApi/clients";
+import {
+  fetchPatentsView,
+  fetchWikidataSearch,
+} from "@/lib/ingestion/freeApi/clients";
 import { downloadFreeApiBundles } from "@/lib/ingestion/freeApi/downloadBundle";
 import { readLatestFreeApiExport } from "@/lib/ingestion/freeApi/readLatestExport";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
@@ -114,7 +117,9 @@ describe("readLatestFreeApiExport", () => {
       writeFileSync(
         join(dir, "manifest.json"),
         JSON.stringify({
-          downloadedAt: dir === newer ? "2099-01-02T12:00:00.000Z" : "2099-01-01T12:00:00.000Z",
+          downloadedAt: dir === newer
+            ? "2099-01-02T12:00:00.000Z"
+            : "2099-01-01T12:00:00.000Z",
           entityCount: 2,
           sourcesRequested: ["wikidata"],
           secUserAgentConfigured: true,
