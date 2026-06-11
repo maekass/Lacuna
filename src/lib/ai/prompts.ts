@@ -20,8 +20,7 @@ export const PROMPT_VERSION = "2.0.0" as const;
 // ---------------------------------------------------------------------------
 
 /** Base anti-hallucination guardrail — appended to every system prompt. */
-export const ANTI_HALLUCINATION_GUARD =
-  `CRITICAL CONSTRAINTS:
+export const ANTI_HALLUCINATION_GUARD = `CRITICAL CONSTRAINTS:
 - Only reference data explicitly provided in the prompt
 - If you are uncertain, state your uncertainty explicitly
 - Never invent statistics, deal values, company names, or trial results
@@ -92,7 +91,9 @@ export interface InsightPromptInput {
   evidenceScore?: number;
 }
 
-export function buildAcquisitionInsightPrompt(input: InsightPromptInput): string {
+export function buildAcquisitionInsightPrompt(
+  input: InsightPromptInput,
+): string {
   const evidenceLine = input.evidenceScore !== undefined
     ? `Evidence maturity score (descriptive heuristic): ${input.evidenceScore}/100`
     : "";
@@ -175,7 +176,11 @@ export function buildReimbursementInsightPrompt(
     `DATA:`,
     `Business model: ${input.businessModel}`,
     `Insurance revenue estimate: ${(input.insuranceRevenue * 100).toFixed(0)}%`,
-    `Valuation multiple: ${input.valuationMultiple.toFixed(1)}x vs sector benchmark ${input.sectorBenchmark.toFixed(1)}x (${premium}% difference)`,
+    `Valuation multiple: ${
+      input.valuationMultiple.toFixed(1)
+    }x vs sector benchmark ${
+      input.sectorBenchmark.toFixed(1)
+    }x (${premium}% difference)`,
     ``,
     `TASK: In 2-3 sentences, explain what the reimbursement model and valuation premium suggest about market positioning. This is illustrative, not investment advice.`,
   ].join("\n");

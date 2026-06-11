@@ -54,7 +54,9 @@ export default function WhiteSpaceAnalysis() {
     const sectors = [...new Set(verifiedCompanies.map((c) => c.sector))].sort();
 
     const rawPoints = sectors.map((sector) => {
-      const sectorCompanies = verifiedCompanies.filter((company) => company.sector === sector);
+      const sectorCompanies = verifiedCompanies.filter((company) =>
+        company.sector === sector
+      );
       const valuations = sectorCompanies
         .map((company) => company.lastKnownValuation)
         .filter((value): value is number => typeof value === "number");
@@ -87,7 +89,10 @@ export default function WhiteSpaceAnalysis() {
     );
 
     const maxDeals = Math.max(1, ...plottable.map((point) => point.dealCount));
-    const maxValuation = Math.max(1, ...plottable.map((point) => point.avgValuation));
+    const maxValuation = Math.max(
+      1,
+      ...plottable.map((point) => point.avgValuation),
+    );
     const plotWidth = CHART_WIDTH - LEFT_MARGIN - RIGHT_MARGIN;
     const plotHeight = CHART_HEIGHT - TOP_MARGIN - BOTTOM_MARGIN;
 
@@ -138,15 +143,20 @@ export default function WhiteSpaceAnalysis() {
             White Space Analysis
           </h3>
           <p className="text-sm text-slate-500">
-            Deal activity vs. company density across the verified women&apos;s health landscape
+            Deal activity vs. company density across the verified women&apos;s
+            health landscape
           </p>
         </div>
         <span className="rounded-full bg-lacuna-pink/10 px-3 py-1 text-xs font-medium text-lacuna-plum">
-          {whiteSpaceSectors.length} white-space sector{whiteSpaceSectors.length === 1 ? "" : "s"}
+          {whiteSpaceSectors.length}{" "}
+          white-space sector{whiteSpaceSectors.length === 1 ? "" : "s"}
         </span>
       </div>
 
-      <svg viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`} className="w-full h-auto">
+      <svg
+        viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`}
+        className="w-full h-auto"
+      >
         <line
           x1={LEFT_MARGIN}
           y1={CHART_HEIGHT - BOTTOM_MARGIN}
@@ -180,8 +190,10 @@ export default function WhiteSpaceAnalysis() {
           ⬦ White Space
         </text>
         {[0, 0.5, 1].map((tick) => {
-          const x = LEFT_MARGIN + tick * (CHART_WIDTH - LEFT_MARGIN - RIGHT_MARGIN);
-          const y = CHART_HEIGHT - BOTTOM_MARGIN - tick * (CHART_HEIGHT - TOP_MARGIN - BOTTOM_MARGIN);
+          const x = LEFT_MARGIN +
+            tick * (CHART_WIDTH - LEFT_MARGIN - RIGHT_MARGIN);
+          const y = CHART_HEIGHT - BOTTOM_MARGIN -
+            tick * (CHART_HEIGHT - TOP_MARGIN - BOTTOM_MARGIN);
           return (
             <g key={tick}>
               <line
@@ -231,7 +243,9 @@ export default function WhiteSpaceAnalysis() {
           x={18}
           y={(TOP_MARGIN + CHART_HEIGHT - BOTTOM_MARGIN) / 2}
           textAnchor="middle"
-          transform={`rotate(-90 18 ${(TOP_MARGIN + CHART_HEIGHT - BOTTOM_MARGIN) / 2})`}
+          transform={`rotate(-90 18 ${
+            (TOP_MARGIN + CHART_HEIGHT - BOTTOM_MARGIN) / 2
+          })`}
           className="text-xs fill-slate-500"
         >
           Average Valuation
@@ -253,7 +267,11 @@ export default function WhiteSpaceAnalysis() {
               className="fill-slate-700 text-[10px] font-semibold"
             >
               {sectorLabelLines(point.sector).map((line, index) => (
-                <tspan key={`${point.sector}-${line}`} x={point.x} dy={index === 0 ? 0 : 12}>
+                <tspan
+                  key={`${point.sector}-${line}`}
+                  x={point.x}
+                  dy={index === 0 ? 0 : 12}
+                >
                   {line}
                 </tspan>
               ))}
@@ -272,14 +290,19 @@ export default function WhiteSpaceAnalysis() {
               key={point.sector}
               className="rounded-lg border border-slate-100 bg-slate-50 p-3 text-sm text-slate-600"
             >
-              <span className="font-semibold text-slate-800">{point.sector}</span>
+              <span className="font-semibold text-slate-800">
+                {point.sector}
+              </span>
               {": "}
-              {point.companyCount} companies tracked, {point.dealCount} acquisitions — underrepresented in M&amp;A relative to market presence.
+              {point.companyCount} companies tracked, {point.dealCount}{" "}
+              acquisitions — underrepresented in M&amp;A relative to market
+              presence.
             </div>
           ))
           : (
             <div className="rounded-lg border border-slate-100 bg-slate-50 p-3 text-sm text-slate-500">
-              No sector currently screens as white space on the verified dataset mix.
+              No sector currently screens as white space on the verified dataset
+              mix.
             </div>
           )}
         {unplottedSectors.length > 0 && (

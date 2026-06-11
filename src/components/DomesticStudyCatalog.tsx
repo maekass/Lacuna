@@ -45,11 +45,15 @@ export default function DomesticStudyCatalog() {
   const [studies, setStudies] = useState<StudyRow[]>([]);
   const [stats, setStats] = useState<Stats | null>(null);
   const [filter, setFilter] = useState<"all" | DomesticInstitution>("all");
-  const [loading, setLoading] = useState(true);
+  // Loading is derived (fetched filter lags selected filter) — avoids a
+  // synchronous setState inside the effect.
+  const [loadedFilter, setLoadedFilter] = useState<
+    "all" | DomesticInstitution | null
+  >(null);
   const [error, setError] = useState("");
+  const loading = loadedFilter !== filter;
 
   useEffect(() => {
-    setLoading(true);
     const params = new URLSearchParams({ limit: "50" });
     if (filter !== "all") params.set("institution", filter);
 
@@ -64,7 +68,7 @@ export default function DomesticStudyCatalog() {
         setError("");
       })
       .catch(() => setError("Could not load domestic study catalog."))
-      .finally(() => setLoading(false));
+      .finally(() => setLoadedFilter(filter));
   }, [filter]);
 
   const filteredSampleTotal = useMemo(

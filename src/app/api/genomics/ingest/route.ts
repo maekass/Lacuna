@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 /**
  * VCF ingest is not supported in serverless — use the standalone ingest worker.
  */
-export async function POST() {
+export function POST() {
   return NextResponse.json(
     {
       error: "VCF ingest is not available on this deployment",

@@ -91,7 +91,8 @@ function sharedFactorsAgainstCentroid(
   return labels.filter((_, index) => {
     const centroidValue = centroid[index] ?? 0;
     if (centroidValue <= 0) return false;
-    return Math.abs((values[index] ?? 0) - centroidValue) <= centroidValue * 0.2;
+    return Math.abs((values[index] ?? 0) - centroidValue) <=
+      centroidValue * 0.2;
   });
 }
 
@@ -129,19 +130,23 @@ export default function CompanySimilarity() {
     return companyVectors
       .filter(({ company }) => company.id !== selectedCompany)
       .map(({ company, vector }) => {
-        const similarity = cosineSimilarity(targetEntry.vector.values, vector.values);
+        const similarity = cosineSimilarity(
+          targetEntry.vector.values,
+          vector.values,
+        );
 
         const shared: string[] = [];
         if (company.sector === targetEntry.company.sector) {
           shared.push(`Same sector (${company.sector})`);
         }
-        if (company.stage === targetEntry.company.stage) shared.push(`Same stage`);
+        if (company.stage === targetEntry.company.stage) {
+          shared.push(`Same stage`);
+        }
         if (targetEntry.vector.hasValuation && vector.hasValuation) {
-          const ratio =
-            Math.max(
-              targetEntry.company.lastKnownValuation!,
-              company.lastKnownValuation!,
-            ) /
+          const ratio = Math.max(
+            targetEntry.company.lastKnownValuation!,
+            company.lastKnownValuation!,
+          ) /
             Math.min(
               targetEntry.company.lastKnownValuation!,
               company.lastKnownValuation!,
@@ -209,7 +214,9 @@ export default function CompanySimilarity() {
   }, [companyVectors, portfolioNameSet, sectors]);
 
   const selected = companyVectorMap.get(selectedCompany)?.company;
-  const activeResults = mode === "single" ? similarities : foregroundMatches.matches;
+  const activeResults = mode === "single"
+    ? similarities
+    : foregroundMatches.matches;
 
   return (
     <motion.div
@@ -239,14 +246,22 @@ export default function CompanySimilarity() {
         <button
           type="button"
           onClick={() => setMode("single")}
-          className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${mode === "single" ? "bg-lacuna-plum text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}
+          className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+            mode === "single"
+              ? "bg-lacuna-plum text-white"
+              : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+          }`}
         >
           Single Company
         </button>
         <button
           type="button"
           onClick={() => setMode("foreground")}
-          className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${mode === "foreground" ? "bg-lacuna-plum text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}
+          className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+            mode === "foreground"
+              ? "bg-lacuna-plum text-white"
+              : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+          }`}
         >
           Foreground Match
         </button>
@@ -291,7 +306,10 @@ export default function CompanySimilarity() {
             Companies most similar to the Foreground Capital portfolio
           </p>
           <p className="text-sm text-slate-500">
-            {foregroundMatches.portfolioCount} portfolio compan{foregroundMatches.portfolioCount === 1 ? "y" : "ies"} used to compute the centroid
+            {foregroundMatches.portfolioCount}{" "}
+            portfolio compan{foregroundMatches.portfolioCount === 1
+              ? "y"
+              : "ies"} used to compute the centroid
           </p>
         </div>
       )}
@@ -300,7 +318,13 @@ export default function CompanySimilarity() {
         <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
           {foregroundMatches.portfolioCount === 0
             ? "No Foreground portfolio companies were found in the verified dataset, so a portfolio centroid could not be computed."
-            : `Only ${foregroundMatches.portfolioCount} of ${foregroundPortfolio.length} Foreground portfolio compan${foregroundMatches.portfolioCount === 1 ? "y is" : "ies are"} in the verified dataset — the "centroid" is effectively that compan${foregroundMatches.portfolioCount === 1 ? "y's profile" : "ies' average"}, so treat these matches as directional, not representative of the full portfolio.`}
+            : `Only ${foregroundMatches.portfolioCount} of ${foregroundPortfolio.length} Foreground portfolio compan${
+              foregroundMatches.portfolioCount === 1 ? "y is" : "ies are"
+            } in the verified dataset — the "centroid" is effectively that compan${
+              foregroundMatches.portfolioCount === 1
+                ? "y's profile"
+                : "ies' average"
+            }, so treat these matches as directional, not representative of the full portfolio.`}
         </div>
       )}
 

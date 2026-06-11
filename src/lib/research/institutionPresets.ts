@@ -58,7 +58,8 @@ export const DOMESTIC_TRIAL_PRESETS: readonly InstitutionTrialPreset[] = [
   {
     id: "maternal-health",
     label: "Maternal Health",
-    condition: "maternal mortality morbidity preeclampsia gestational hypertension",
+    condition:
+      "maternal mortality morbidity preeclampsia gestational hypertension",
     description:
       "Maternal health scan — maternal mortality and morbidity, hypertensive disorders, and gestational complications",
   },

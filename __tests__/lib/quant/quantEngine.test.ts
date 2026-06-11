@@ -75,7 +75,9 @@ describe("HealthImpactModeler", () => {
   const modeler = new HealthImpactModeler();
 
   it("keeps lives-saved finite and below total global maternal deaths", () => {
-    const impact = modeler.modelImpact(makeCompany({ geographicFocus: ["Africa"] }));
+    const impact = modeler.modelImpact(
+      makeCompany({ geographicFocus: ["Africa"] }),
+    );
     expect(Number.isFinite(impact.cumulativeLivesSaved)).toBe(true);
     expect(impact.cumulativeLivesSaved).toBeGreaterThanOrEqual(0);
     // ~287k maternal deaths/yr globally (WHO) → 5yr ceiling. Old model blew past this.
@@ -86,9 +88,24 @@ describe("HealthImpactModeler", () => {
 describe("PortfolioOptimizer", () => {
   it("produces varying ROI by stage and a valid bundle", () => {
     const candidates: QuantCompany[] = [
-      makeCompany({ id: "a", condition: "preeclampsia", clinicalStage: "preclinical", raisedToDate: 5 }),
-      makeCompany({ id: "b", condition: "pcos", clinicalStage: "fda_approved", raisedToDate: 30 }),
-      makeCompany({ id: "c", condition: "sickle_cell", clinicalStage: "phase3", raisedToDate: 15 }),
+      makeCompany({
+        id: "a",
+        condition: "preeclampsia",
+        clinicalStage: "preclinical",
+        raisedToDate: 5,
+      }),
+      makeCompany({
+        id: "b",
+        condition: "pcos",
+        clinicalStage: "fda_approved",
+        raisedToDate: 30,
+      }),
+      makeCompany({
+        id: "c",
+        condition: "sickle_cell",
+        clinicalStage: "phase3",
+        raisedToDate: 15,
+      }),
     ];
     const result = new PortfolioOptimizer().optimizePortfolio(candidates, 500);
     const rois = new Set(result.companies.map((c) => c.roi));

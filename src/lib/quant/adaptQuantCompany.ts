@@ -72,7 +72,9 @@ function inferGeographicFocus(hq: string): GeographicRegion[] {
 /** Map a women's-health sector onto the nearest maternal condition bucket. */
 function proxyCondition(sector: string): MaternalCondition {
   const s = sector.toLowerCase();
-  if (s.includes("maternal") || s.includes("preeclam") || s.includes("pregnan")) {
+  if (
+    s.includes("maternal") || s.includes("preeclam") || s.includes("pregnan")
+  ) {
     return "maternal_mortality";
   }
   if (s.includes("diabet")) return "gestational_diabetes";

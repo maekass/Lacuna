@@ -16,7 +16,10 @@ const MOMENTUM_BADGE_CLASSES: Record<MomentumLabel, string> = {
   Cooling: "bg-red-50 text-red-700 border border-red-200",
 };
 
-function classifyMomentum(recentTotal: number, priorTotal: number): MomentumLabel {
+function classifyMomentum(
+  recentTotal: number,
+  priorTotal: number,
+): MomentumLabel {
   if (recentTotal === 0 && priorTotal === 0) return "Stable";
   if (priorTotal === 0) return recentTotal > 0 ? "High" : "Stable";
 
@@ -51,8 +54,14 @@ export default function DealFlowChart(
     const y = height - 50 - point.average * scale;
     return `${x},${y}`;
   }).join(" ");
-  const recentTotal = data.slice(-3).reduce((sum, point) => sum + point.count, 0);
-  const priorTotal = data.slice(-6, -3).reduce((sum, point) => sum + point.count, 0);
+  const recentTotal = data.slice(-3).reduce(
+    (sum, point) => sum + point.count,
+    0,
+  );
+  const priorTotal = data.slice(-6, -3).reduce(
+    (sum, point) => sum + point.count,
+    0,
+  );
   const momentum = classifyMomentum(recentTotal, priorTotal);
 
   return (
@@ -68,7 +77,9 @@ export default function DealFlowChart(
           </p>
         </div>
         <span
-          className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-medium ${MOMENTUM_BADGE_CLASSES[momentum]}`}
+          className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-medium ${
+            MOMENTUM_BADGE_CLASSES[momentum]
+          }`}
         >
           Momentum: {momentum}
         </span>

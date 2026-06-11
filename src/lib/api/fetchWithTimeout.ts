@@ -1,7 +1,7 @@
 const DEFAULT_TIMEOUT_MS = 12_000;
 
 /** Upstream fetch with AbortSignal timeout — use for all external API routes. */
-export async function fetchWithTimeout(
+export function fetchWithTimeout(
   input: RequestInfo | URL,
   init?: RequestInit & { timeoutMs?: number },
 ): Promise<Response> {

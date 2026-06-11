@@ -37,7 +37,9 @@ export default function StrategicPositioningMap(
   const [hoveredCompany, setHoveredCompany] = useState<CompanyPosition | null>(
     null,
   );
-  const [selectedCompany, setSelectedCompany] = useState<CompanyPosition | null>(
+  const [selectedCompany, setSelectedCompany] = useState<
+    CompanyPosition | null
+  >(
     null,
   );
   const [showForegroundPillars, setShowForegroundPillars] = useState(false);
@@ -63,8 +65,8 @@ export default function StrategicPositioningMap(
     () =>
       mappedCompanies.map((company, index) => {
         const hash = hashString(`${company.id}-${company.name}-${index}`);
-        const xJitter = (((hash % 11) - 5) / 100);
-        const yJitter = ((((Math.floor(hash / 11)) % 9) - 4) / 120);
+        const xJitter = ((hash % 11) - 5) / 100;
+        const yJitter = (((Math.floor(hash / 11)) % 9) - 4) / 120;
         return {
           ...company,
           xPosition: clamp(
@@ -72,7 +74,11 @@ export default function StrategicPositioningMap(
             0.08,
             0.94,
           ),
-          yPosition: clamp(getStagePosition(company.stage) + yJitter, 0.12, 0.96),
+          yPosition: clamp(
+            getStagePosition(company.stage) + yJitter,
+            0.12,
+            0.96,
+          ),
           pillar: pillarMap[company.sector],
         };
       }),
@@ -81,7 +87,9 @@ export default function StrategicPositioningMap(
 
   const sectorCoverageNote =
     `Showing ${mappedCompanies.length} of ${verifiedCompanies.length} companies ` +
-    `across the ${Object.keys(sectorAxisPositions).length} sectors labeled on the x-axis.`;
+    `across the ${
+      Object.keys(sectorAxisPositions).length
+    } sectors labeled on the x-axis.`;
 
   const pillarPatterns = useMemo(() => {
     const counts = new Map<string, number>();
@@ -91,9 +99,13 @@ export default function StrategicPositioningMap(
     });
     const ranked = [...counts.entries()].sort((a, b) => b[1] - a[1]);
     if (ranked.length === 0) {
-      return ["No companies map to a Foreground pillar in the current dataset."];
+      return [
+        "No companies map to a Foreground pillar in the current dataset.",
+      ];
     }
-    return ranked.map(([pillar, count]) => `${count} companies align with ${pillar}.`);
+    return ranked.map(([pillar, count]) =>
+      `${count} companies align with ${pillar}.`
+    );
   }, [companyPositions]);
 
   const pillarCoverageSummary = useMemo(() => {
@@ -103,8 +115,7 @@ export default function StrategicPositioningMap(
 
   // Scales (X: sector grouping, Y: stage maturity)
   const xScale = (x: number) => margin.left + (x * innerWidth);
-  const yScale = (y: number) =>
-    margin.top + innerHeight - (y * innerHeight);
+  const yScale = (y: number) => margin.top + innerHeight - (y * innerHeight);
 
   // Dot size based on valuation when available
   const dotSize = (company: CompanyPosition) => {
@@ -138,7 +149,11 @@ export default function StrategicPositioningMap(
           <button
             type="button"
             onClick={() => setShowForegroundPillars((value) => !value)}
-            className={`rounded-xl border px-4 py-2 text-sm font-medium transition-colors ${showForegroundPillars ? "border-lacuna-lavender/40 bg-lacuna-pink/10 text-lacuna-plum" : "border-gray-200 bg-white text-gray-600 hover:text-lacuna-plum"}`}
+            className={`rounded-xl border px-4 py-2 text-sm font-medium transition-colors ${
+              showForegroundPillars
+                ? "border-lacuna-lavender/40 bg-lacuna-pink/10 text-lacuna-plum"
+                : "border-gray-200 bg-white text-gray-600 hover:text-lacuna-plum"
+            }`}
           >
             Foreground Pillars
           </button>
@@ -152,7 +167,10 @@ export default function StrategicPositioningMap(
               </div>
               <div className="space-y-2 text-xs">
                 {Object.entries(pillarColors).map(([pillar, color]) => (
-                  <div key={pillar} className="flex items-center gap-2 text-gray-700">
+                  <div
+                    key={pillar}
+                    className="flex items-center gap-2 text-gray-700"
+                  >
                     <span
                       className="inline-block h-3 w-3 rounded-full"
                       style={{ backgroundColor: color }}
@@ -312,62 +330,66 @@ export default function StrategicPositioningMap(
             {/* Data points */}
             {companyPositions.map((company) => {
               const radius = dotSize(company);
-              const chipColor = company.pillar ? pillarColors[company.pillar] : undefined;
-              const chipWidth = company.pillar ? company.pillar.length * 6.4 + 16 : 0;
+              const chipColor = company.pillar
+                ? pillarColors[company.pillar]
+                : undefined;
+              const chipWidth = company.pillar
+                ? company.pillar.length * 6.4 + 16
+                : 0;
               return (
-              <g
-                key={company.id}
-                onMouseEnter={() => setHoveredCompany(company)}
-                onMouseLeave={() => setHoveredCompany(null)}
-                onClick={() =>
-                  setSelectedCompany(company === selectedCompany ? null : company)}
-                className="cursor-pointer"
-              >
-                <circle
-                  cx={xScale(company.xPosition)}
-                  cy={yScale(company.yPosition)}
-                  r={radius}
-                  fill={sectorNodeColors[company.sector] ?? "#94A3B8"}
-                  stroke={selectedCompany?.id === company.id
-                    ? "#000"
-                    : "#fff"}
-                  strokeWidth={selectedCompany?.id === company.id
-                    ? 3
-                    : 2}
-                  opacity={hoveredCompany && hoveredCompany.id !== company.id
-                    ? 0.4
-                    : 1}
-                  className="transition-all"
-                />
-                <text
-                  x={xScale(company.xPosition)}
-                  y={yScale(company.yPosition) - radius - 8}
-                  textAnchor="middle"
-                  className="text-xs fill-gray-700 font-medium pointer-events-none"
+                <g
+                  key={company.id}
+                  onMouseEnter={() => setHoveredCompany(company)}
+                  onMouseLeave={() => setHoveredCompany(null)}
+                  onClick={() =>
+                    setSelectedCompany(
+                      company === selectedCompany ? null : company,
+                    )}
+                  className="cursor-pointer"
                 >
-                  {company.name}
-                </text>
-                {showForegroundPillars && company.pillar && chipColor && (
-                  <g>
-                    <rect
-                      x={xScale(company.xPosition) - chipWidth / 2}
-                      y={yScale(company.yPosition) - radius + 2}
-                      width={chipWidth}
-                      height={16}
-                      rx={8}
-                      fill={chipColor}
-                    />
-                    <text
-                      x={xScale(company.xPosition)}
-                      y={yScale(company.yPosition) - radius + 13}
-                      textAnchor="middle"
-                      className="pointer-events-none text-[10px] fill-white font-medium"
-                    >
-                      {company.pillar}
-                    </text>
-                  </g>
-                )}
-              </g>
+                  <circle
+                    cx={xScale(company.xPosition)}
+                    cy={yScale(company.yPosition)}
+                    r={radius}
+                    fill={sectorNodeColors[company.sector] ?? "#94A3B8"}
+                    stroke={selectedCompany?.id === company.id
+                      ? "#000"
+                      : "#fff"}
+                    strokeWidth={selectedCompany?.id === company.id ? 3 : 2}
+                    opacity={hoveredCompany && hoveredCompany.id !== company.id
+                      ? 0.4
+                      : 1}
+                    className="transition-all"
+                  />
+                  <text
+                    x={xScale(company.xPosition)}
+                    y={yScale(company.yPosition) - radius - 8}
+                    textAnchor="middle"
+                    className="text-xs fill-gray-700 font-medium pointer-events-none"
+                  >
+                    {company.name}
+                  </text>
+                  {showForegroundPillars && company.pillar && chipColor && (
+                    <g>
+                      <rect
+                        x={xScale(company.xPosition) - chipWidth / 2}
+                        y={yScale(company.yPosition) - radius + 2}
+                        width={chipWidth}
+                        height={16}
+                        rx={8}
+                        fill={chipColor}
+                      />
+                      <text
+                        x={xScale(company.xPosition)}
+                        y={yScale(company.yPosition) - radius + 13}
+                        textAnchor="middle"
+                        className="pointer-events-none text-[10px] fill-white font-medium"
+                      >
+                        {company.pillar}
+                      </text>
+                    </g>
+                  )}
+                </g>
               );
             })}
           </svg>
@@ -514,7 +536,9 @@ export default function StrategicPositioningMap(
                 ? (
                   <span
                     className="text-xs px-2 py-1 rounded text-white"
-                    style={{ backgroundColor: pillarColors[selectedCompany.pillar] }}
+                    style={{
+                      backgroundColor: pillarColors[selectedCompany.pillar],
+                    }}
                   >
                     {selectedCompany.pillar}
                   </span>

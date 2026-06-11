@@ -34,13 +34,13 @@ All prompts are centralized in `src/lib/ai/prompts.ts` (version `2.0.0`).
 
 ### Design principles
 
-| Principle | Implementation |
-| --------- | -------------- |
-| **Versioned templates** | `PROMPT_VERSION` tag — bump on semantic changes |
-| **Pure functions** | Every `build*Prompt()` is `input → string`, deterministic and testable |
+| Principle                 | Implementation                                                                                                     |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **Versioned templates**   | `PROMPT_VERSION` tag — bump on semantic changes                                                                    |
+| **Pure functions**        | Every `build*Prompt()` is `input → string`, deterministic and testable                                             |
 | **Composable guardrails** | `ANTI_HALLUCINATION_GUARD`, `EDUCATIONAL_DISCLAIMER`, `OUTPUT_FORMAT_CONSTRAINT` — appended to every system prompt |
-| **Output sanitization** | `sanitizeLLMOutput()` strips markdown, detects hallucination patterns, enforces length limits |
-| **Template validation** | `validatePromptTemplate()` checks for unresolved variables, empty sections, length bounds |
+| **Output sanitization**   | `sanitizeLLMOutput()` strips markdown, detects hallucination patterns, enforces length limits                      |
+| **Template validation**   | `validatePromptTemplate()` checks for unresolved variables, empty sections, length bounds                          |
 
 ### Constraint layers
 
@@ -50,13 +50,18 @@ User input → build*Prompt() → system prompt + guardrails → LLM → sanitiz
                                                         validatePromptTemplate()
 ```
 
-1. **Pre-inference**: Template functions enforce structure (DATA/TASK sections, no raw string interpolation)
-2. **System prompt**: Every call includes `ANTI_HALLUCINATION_GUARD` + `EDUCATIONAL_DISCLAIMER`
-3. **Post-inference**: `sanitizeLLMOutput()` strips formatting, flags suspicious claims, truncates long output
+1. **Pre-inference**: Template functions enforce structure (DATA/TASK sections,
+   no raw string interpolation)
+2. **System prompt**: Every call includes `ANTI_HALLUCINATION_GUARD` +
+   `EDUCATIONAL_DISCLAIMER`
+3. **Post-inference**: `sanitizeLLMOutput()` strips formatting, flags suspicious
+   claims, truncates long output
 
 ### Hallucination detection
 
-`sanitizeLLMOutput()` checks for patterns the LLM should not produce given our constrained prompts:
+`sanitizeLLMOutput()` checks for patterns the LLM should not produce given our
+constrained prompts:
+
 - Dollar amounts and specific deal values
 - FDA approval/clearance claims
 - Percentage growth/decline figures

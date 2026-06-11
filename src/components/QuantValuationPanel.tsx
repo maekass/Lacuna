@@ -5,10 +5,7 @@ import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { adaptQuantCompanies } from "@/lib/quant/adaptQuantCompany";
-import {
-  AcquisitionPredictor,
-  ValuationEngine,
-} from "@/lib/quant/quantEngine";
+import { AcquisitionPredictor, ValuationEngine } from "@/lib/quant/quantEngine";
 
 type DriverKey = keyof ReturnType<
   AcquisitionPredictor["predictAcquisition"]
@@ -109,9 +106,10 @@ export default function QuantValuationPanel() {
       >
         The verified dataset has no revenue, TAM, clinical-efficacy, or team
         data. Valuations run on disclosed funding and a stage proxy only, so
-        most companies show <em>insufficient inputs</em>. The engine&apos;s
-        health-impact and portfolio modeling are illustrative and live in the
-        library, not shown here, because the live data lacks clinical inputs.
+        most companies show{" "}
+        <em>insufficient inputs</em>. The engine&apos;s health-impact and
+        portfolio modeling are illustrative and live in the library, not shown
+        here, because the live data lacks clinical inputs.
       </div>
 
       <div className="overflow-x-auto">
@@ -123,7 +121,9 @@ export default function QuantValuationPanel() {
               <th className="py-2 px-3 font-medium">Stage (proxy)</th>
               <th className="py-2 px-3 font-medium text-right">Disclosed</th>
               <th className="py-2 px-3 font-medium text-right">Model est.</th>
-              <th className="py-2 px-3 font-medium text-right">P(exit&nbsp;5y)</th>
+              <th className="py-2 px-3 font-medium text-right">
+                P(exit&nbsp;5y)
+              </th>
               <th className="py-2 pl-3 font-medium">Top driver</th>
             </tr>
           </thead>
@@ -162,7 +162,9 @@ export default function QuantValuationPanel() {
                 <td className="py-2 px-3 text-right text-lacuna-plum">
                   {(row.acquisitionProbability * 100).toFixed(0)}%
                 </td>
-                <td className="py-2 pl-3 text-lacuna-blue/80">{row.topDriver}</td>
+                <td className="py-2 pl-3 text-lacuna-blue/80">
+                  {row.topDriver}
+                </td>
               </motion.tr>
             ))}
           </tbody>

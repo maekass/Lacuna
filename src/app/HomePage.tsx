@@ -156,9 +156,15 @@ export default function HomePage() {
         {/* Fairness Audit Headline Banner */}
         {valuationDisparity !== null && (
           <div className="mb-8 p-4 bg-lacuna-lavender/20 border border-lacuna-lavender/40 rounded-xl flex items-start gap-3">
-            <span className="text-lacuna-plum text-sm font-medium shrink-0">⚡ Insight</span>
+            <span className="text-lacuna-plum text-sm font-medium shrink-0">
+              ⚡ Insight
+            </span>
             <span className="text-lacuna-blue text-sm">
-              Among disclosed valuations, {valuationDisparity.highSector} averages {valuationDisparity.percentDiff.toFixed(0)}% above {valuationDisparity.lowSector} — the widest sector gap in the dataset (n={valuationDisparity.highN} vs n={valuationDisparity.lowN} disclosed).
+              Among disclosed valuations, {valuationDisparity.highSector}{" "}
+              averages {valuationDisparity.percentDiff.toFixed(0)}% above{" "}
+              {valuationDisparity.lowSector}{" "}
+              — the widest sector gap in the dataset (n={valuationDisparity
+                .highN} vs n={valuationDisparity.lowN} disclosed).
             </span>
           </div>
         )}
@@ -222,7 +228,9 @@ export default function HomePage() {
                 (deal: typeof verifiedAcquisitions[0]) => {
                   const target = verifiedCompanies.find((
                     c: typeof verifiedCompanies[0],
-                  ) => c.id === deal.targetId);
+                  ) =>
+                    c.id === deal.targetId
+                  );
                   const acquirer = networkNodes.find((
                     n: typeof networkNodes[0],
                   ) => n.id === deal.acquirerId);
@@ -310,7 +318,8 @@ export default function HomePage() {
             </h3>
             <p className="text-lacuna-blue">
               Live oncology, pelvic health, fibroids, fertility, contraception,
-              maternal health, and sickle cell searches plus a cited domestic sample-size catalog
+              maternal health, and sickle cell searches plus a cited domestic
+              sample-size catalog
             </p>
           </div>
           <div className="grid lg:grid-cols-2 gap-6 mb-6">
@@ -598,7 +607,8 @@ export default function HomePage() {
               White Space Analysis
             </h3>
             <p className="text-lacuna-blue">
-              Sectors with high company density but low M&amp;A activity — where the next wave may form.
+              Sectors with high company density but low M&amp;A activity — where
+              the next wave may form.
             </p>
           </div>
           <WhiteSpaceAnalysis />

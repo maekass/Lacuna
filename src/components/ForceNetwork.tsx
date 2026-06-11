@@ -56,7 +56,9 @@ export default function ForceNetwork(
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
-  const [selectedAcquirerId, setSelectedAcquirerId] = useState<string | null>(null);
+  const [selectedAcquirerId, setSelectedAcquirerId] = useState<string | null>(
+    null,
+  );
   const [hoveredNode, setHoveredNode] = useState<Node | null>(null);
   const [dims, setDims] = useState({
     w: widthProp ?? 800,
@@ -322,7 +324,14 @@ export default function ForceNetwork(
     return () => {
       simulation.stop();
     };
-  }, [nodes, links, width, height, isForegroundHighlightEnabled, foregroundPortfolioSet]);
+  }, [
+    nodes,
+    links,
+    width,
+    height,
+    isForegroundHighlightEnabled,
+    foregroundPortfolioSet,
+  ]);
 
   return (
     <div ref={containerRef} className="relative w-full">
@@ -331,7 +340,11 @@ export default function ForceNetwork(
         <button
           type="button"
           onClick={() => setIsForegroundHighlightEnabled((value) => !value)}
-          className={`bg-white rounded-xl border border-lacuna-lavender/40 px-4 py-2 text-sm font-medium transition-colors ${isForegroundHighlightEnabled ? "text-lacuna-plum shadow-sm" : "text-lacuna-blue hover:text-lacuna-plum"}`}
+          className={`bg-white rounded-xl border border-lacuna-lavender/40 px-4 py-2 text-sm font-medium transition-colors ${
+            isForegroundHighlightEnabled
+              ? "text-lacuna-plum shadow-sm"
+              : "text-lacuna-blue hover:text-lacuna-plum"
+          }`}
         >
           Foreground Portfolio
         </button>

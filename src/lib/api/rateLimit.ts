@@ -64,7 +64,7 @@ function getRedisClient(): Redis | null {
  * Uses Upstash Redis when UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN are set.
  * Falls back to in-memory (non-durable) when Redis is unavailable.
  */
-export async function rateLimit(input: {
+export function rateLimit(input: {
   key: string;
   limit: number;
   windowMs: number;
@@ -76,7 +76,7 @@ export async function rateLimit(input: {
     return rateLimitRedis(redis, input);
   }
 
-  return rateLimitInMemory(input);
+  return Promise.resolve(rateLimitInMemory(input));
 }
 
 async function rateLimitRedis(
@@ -98,7 +98,7 @@ async function rateLimitRedis(
     let count: number;
     let ttlMs: number;
 
-    if (typeof (redis as any).pipeline === "function") {
+    if (typeof (redis as { pipeline?: unknown }).pipeline === "function") {
       // Full Upstash Redis client with pipeline support
       const pipeline = redis.pipeline();
       pipeline.incr(redisKey);
