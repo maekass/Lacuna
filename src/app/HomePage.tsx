@@ -20,6 +20,7 @@ import {
   HealthEquityDashboard,
   ImpactOpportunityCard,
   NetworkAnalysisHonest,
+  QuantValuationPanel,
   ReimbursementIntelligenceDashboard,
   SensitivityAnalysis,
   TemporalValidation,
@@ -272,6 +273,27 @@ export default function HomePage() {
           className="mb-16 scroll-mt-20"
         >
           <ValuationMatrix />
+        </motion.section>
+
+        {/* Quant valuation & exit-likelihood (heuristic) */}
+        <motion.section
+          id="quant"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.42 }}
+          className="mb-16 scroll-mt-20"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              Putting a Number on It (Carefully)
+            </h3>
+            <p className="text-lacuna-blue">
+              A heuristic valuation and exit-likelihood pass over verified
+              companies — grounded in disclosed funding, honest about the
+              clinical and market inputs the dataset doesn&apos;t have.
+            </p>
+          </div>
+          <QuantValuationPanel />
         </motion.section>
 
         {/* Clinical Trial Tracker */}
