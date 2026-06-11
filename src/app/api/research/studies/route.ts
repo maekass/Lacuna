@@ -1,3 +1,4 @@
+import process from "node:process";
 import { NextResponse } from "next/server";
 import { parsePageParams } from "@/lib/api/pageParams";
 import type { DomesticInstitution } from "@/lib/research/domesticStudyCatalog";

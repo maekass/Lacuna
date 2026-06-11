@@ -1,3 +1,4 @@
+import process from "node:process";
 import { copyFileSync, createReadStream, mkdirSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { createInterface } from "node:readline";

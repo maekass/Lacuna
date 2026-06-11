@@ -1,3 +1,4 @@
+import process from "node:process";
 /**
  * Authorize Vercel Cron / manual cron hits to `/api/cron/*`.
  * Production requires `CRON_SECRET` and `Authorization: Bearer <secret>`.
