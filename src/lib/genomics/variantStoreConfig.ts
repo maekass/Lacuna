@@ -1,3 +1,4 @@
+import process from "node:process";
 export type VariantStoreMode = "off" | "clickhouse";
 
 export type ObjectStorageBackend = "local" | "s3";
