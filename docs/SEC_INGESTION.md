@@ -22,7 +22,7 @@ Legacy keyword scan (no Item 2.01 parse): `secEdgarClient.ts` +
 
 | Variable                         | Required        | Description                                                                                   |
 | -------------------------------- | --------------- | --------------------------------------------------------------------------------------------- |
-| `SEC_EDGAR_USER_AGENT`           | **Yes**         | SEC fair-access User-Agent, e.g. `Lacuna Research you@example.com`                            |
+| `SEC_EDGAR_USER_AGENT`           | **Yes**         | SEC fair-access User-Agent, e.g. `Lacuna Research mps5cy@virginia.edu`                            |
 | `DATABASE_URL`                   | For DB sync     | PostgreSQL connection string                                                                  |
 | `CRON_SECRET`                    | Production cron | Bearer token for `/api/cron/sec-ingest`                                                       |
 | `SEC_SCAN_SINCE`                 | No              | ISO date floor (default: Jan 1 prior year)                                                    |
@@ -102,7 +102,7 @@ After this, `/api/cron/sec-ingest/status` will return the latest ingest run row
 ## Run ingest
 
 ```bash
-export SEC_EDGAR_USER_AGENT="Lacuna Research you@example.com"
+export SEC_EDGAR_USER_AGENT="Lacuna Research mps5cy@virginia.edu"
 export DATABASE_URL="postgresql://..."
 
 npm run sec:ingest           # full pipeline

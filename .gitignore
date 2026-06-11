@@ -58,6 +58,10 @@ next-env.d.ts
 staging/deals_candidates.csv
 staging/sec_candidates.csv
 
+# free-API batch exports (see data/exports/free-apis/README.md)
+/data/exports/free-apis/**
+!/data/exports/free-apis/README.md
+
 # framer brand site (separate concern from the analytics app — see AGENTS.md)
 /framer/
 

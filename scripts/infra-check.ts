@@ -26,7 +26,9 @@ const ENV_REQUIREMENTS: EnvRequirement[] = [
     when: "production Vercel cron (required on Vercel prod)",
     required: false,
   },
-  { key: "SEC_EDGAR_USER_AGENT", when: "SEC ingest / cron", required: false },
+  { key: "SEC_EDGAR_USER_AGENT", when: "SEC ingest / cron / download:free-apis", required: false },
+  { key: "NCBI_TOOL_EMAIL", when: "download:free-apis (PubMed)", required: false },
+  { key: "PATENTSVIEW_API_KEY", when: "download:free-apis (optional)", required: false },
   {
     key: "LACUNA_INGEST_RUN_TRACKING",
     when: "recommended for production ingest",

@@ -5,7 +5,7 @@ import process from "node:process";
  * Does not write to the verified dataset — outputs belong in staging CSV only.
  *
  * @see https://www.sec.gov/os/webmaster-faq#code-support
- * Requires SEC_EDGAR_USER_AGENT env (e.g. "Lacuna Research you@example.com").
+ * Requires SEC_EDGAR_USER_AGENT env (e.g. "Lacuna Research mps5cy@virginia.edu").
  */
 
 const SEC_DATA_BASE = "https://data.sec.gov";
@@ -64,7 +64,7 @@ function getUserAgent(): string {
   const ua = process.env.SEC_EDGAR_USER_AGENT?.trim();
   if (!ua) {
     throw new Error(
-      'SEC_EDGAR_USER_AGENT is required (SEC policy). Example: "Lacuna Research you@example.com"',
+      'SEC_EDGAR_USER_AGENT is required (SEC policy). Example: "Lacuna Research mps5cy@virginia.edu"',
     );
   }
   return ua;

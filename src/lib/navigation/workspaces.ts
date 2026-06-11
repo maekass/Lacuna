@@ -20,6 +20,7 @@ export const WORKSPACES: Workspace[] = [
       "Network graph, deal flow, valuation matrix, and acquirer landscape.",
     sections: [
       { id: "data-coverage", label: "Coverage" },
+      { id: "data-pipelines", label: "Pipelines" },
       { id: "network", label: "Network" },
       { id: "analytics", label: "Activity" },
       { id: "matrix", label: "Matrix" },
