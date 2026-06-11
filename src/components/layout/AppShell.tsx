@@ -30,9 +30,9 @@ export default function AppShell({ children }: AppShellProps) {
         <GlobalProvenanceBar />
 
         <header className="sticky top-0 z-50 border-b border-lacuna-lavender/40 bg-white/80 backdrop-blur-md">
-          <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 sm:px-6 sm:py-4">
+          <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-2.5 sm:gap-3 sm:px-6 sm:py-4">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-              <Link href="/" className="group flex shrink-0 items-center gap-3">
+              <Link href="/" className="group flex shrink-0 items-center gap-2 sm:gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg lacuna-gradient transition-transform group-hover:scale-105">
                   <span className="text-lg font-bold text-white">L</span>
                 </div>
@@ -50,18 +50,21 @@ export default function AppShell({ children }: AppShellProps) {
 
         <main
           id="main-content"
-          className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12"
+          className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-12"
         >
           {sections.length > 0
             ? (
-              <div className="grid gap-8 lg:grid-cols-[220px_minmax(0,1fr)]">
+              <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[220px_minmax(0,1fr)]">
                 <SectionNav sections={sections} />
                 <div>{children}</div>
               </div>
             )
             : children}
-          <SiteFooter />
         </main>
+
+        <footer className="mx-auto max-w-7xl px-4 sm:px-6">
+          <SiteFooter />
+        </footer>
 
         <BackToTop />
       </div>

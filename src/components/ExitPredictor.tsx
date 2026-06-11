@@ -485,7 +485,7 @@ export default function ExitPredictor() {
                     </div>
                   </div>
 
-                  <div className="grid gap-3 text-sm text-lacuna-text-secondary sm:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-3 text-sm text-lacuna-text-secondary sm:grid-cols-2">
                     <div className="rounded-lg bg-lacuna-surface-muted p-3">
                       <p className="text-xs font-medium uppercase tracking-wide text-lacuna-text-muted">
                         Predicted acquirer

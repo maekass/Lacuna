@@ -224,7 +224,7 @@ export default function ClinicalTrialTracker() {
           </div>
 
           {/* Phase + Status + Sponsors row */}
-          <div className="grid md:grid-cols-3 gap-4 mb-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
             {/* Phase distribution */}
             <div className="rounded-lg border border-lacuna-border p-3">
               <p className="text-xs font-semibold text-lacuna-plum mb-2">
