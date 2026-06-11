@@ -14,6 +14,10 @@
  */
 
 import { quantile } from "simple-statistics";
+import {
+  type EmpiricalPriors,
+  getSectorPrior,
+} from "./empiricalPriors";
 
 // ==================== TYPES ====================
 
@@ -165,10 +169,14 @@ function classifyValuationType(sector: string): ValuationType {
 export class ValuationEngine {
   /**
    * Multi-method valuation for women's-health companies.
-   * Methods: Revenue Multiple, EBITDA Multiple, TAM-based, R&D Cost Multiple.
+   * Methods: Revenue Multiple, EBITDA Multiple, TAM-based, R&D Cost Multiple,
+   * and — when empirical priors are supplied — Comparable Deals (anchored on
+   * real verified sector deal medians and funding-to-exit multiples).
    * Geographic adjustment is configurable via company.africaDiscountMultiplier
    * (heuristic default 0.65 — not empirically validated).
    */
+
+  constructor(private readonly priors?: EmpiricalPriors) {}
 
   private MARKET_MULTIPLES = {
     revenue: {
@@ -281,6 +289,73 @@ export class ValuationEngine {
     };
   }
 
+  /**
+   * Comparable-deals method — anchored on REAL verified acquisitions in the
+   * same sector bucket. Uses the empirical funding-to-exit multiple when the
+   * company has disclosed funding; otherwise falls back to the sector's median
+   * deal value. Confidence scales with the sector's sample size.
+   */
+  valueByComparableDeals(company: QuantCompany): ValuationResult {
+    if (!this.priors) {
+      return emptyValuation(
+        "Comparable Deals",
+        "No empirical priors supplied (engine constructed without dataset)",
+      );
+    }
+    const prior = getSectorPrior(this.priors, company.sector);
+    if (!prior || prior.dealCount === 0) {
+      return emptyValuation(
+        "Comparable Deals",
+        "No verified deals in this sector bucket",
+      );
+    }
+
+    const geoMult = this.geographicMultiplier(company);
+
+    // Preferred anchor: sector funding-to-exit multiple × this company's funding.
+    if (
+      prior.medianFundingMultiple !== undefined &&
+      prior.fundingMultipleN >= 2 &&
+      company.raisedToDate > 0
+    ) {
+      const estimate = company.raisedToDate * prior.medianFundingMultiple *
+        geoMult;
+      const confidence = Math.min(0.75, 0.35 + prior.fundingMultipleN * 0.08);
+      return {
+        methodName: "Comparable Deals",
+        estimate,
+        lowBound: estimate * 0.6,
+        highBound: estimate * 1.6,
+        confidence,
+        reasoning:
+          `$${company.raisedToDate}M raised × ${
+            prior.medianFundingMultiple.toFixed(1)
+          }x median exit/funding multiple (n=${prior.fundingMultipleN} verified ${prior.sector} deals)`,
+      };
+    }
+
+    // Fallback anchor: sector median disclosed deal value.
+    if (prior.medianDealValue !== undefined) {
+      const estimate = prior.medianDealValue * geoMult;
+      const [low, high] = prior.dealValueIQR ??
+        [estimate * 0.5, estimate * 1.5];
+      return {
+        methodName: "Comparable Deals",
+        estimate,
+        lowBound: low,
+        highBound: high,
+        confidence: Math.min(0.5, 0.2 + prior.dealCount * 0.05),
+        reasoning:
+          `Median disclosed deal value in ${prior.sector} (n=${prior.dealCount} verified deals)`,
+      };
+    }
+
+    return emptyValuation(
+      "Comparable Deals",
+      "Sector deals exist but none disclosed a value",
+    );
+  }
+
   valueByRDCost(company: QuantCompany): ValuationResult {
     // Pre-revenue proxy: capital deployed × stage multiple.
     const stageMultiples: Record<ClinicalStage, number> = {
@@ -315,12 +390,19 @@ export class ValuationEngine {
       this.valueByEBITDAMultiple(company),
       this.valueByTAM(company),
       this.valueByRDCost(company),
+      this.valueByComparableDeals(company),
     ].filter((v) => v.estimate > 0 && v.confidence > 0);
 
-    const caveats = [
-      "Heuristic multiples, not a calibrated comparable-company set.",
-      "Africa-focus discount is a placeholder, not empirically validated.",
-    ];
+    const caveats = this.priors
+      ? [
+        "Comparable-deals method is anchored on verified sector deals; other multiples remain heuristic.",
+        this.priors.derivationNote,
+        "Africa-focus discount is a placeholder, not empirically validated.",
+      ]
+      : [
+        "Heuristic multiples, not a calibrated comparable-company set.",
+        "Africa-focus discount is a placeholder, not empirically validated.",
+      ];
 
     // Guard: nothing to value (e.g. no revenue, EBITDA, TAM, or funding).
     const totalConfidence = valuations.reduce(
@@ -388,9 +470,12 @@ function emptyValuation(
 export class AcquisitionPredictor {
   /**
    * Rule-based 5-year acquisition proxy from a weighted driver score.
-   * NOT a trained classifier — weights are heuristic and the base rate is an
-   * un-calibrated proxy. Treat as exploratory framing only.
+   * NOT a trained classifier — weights are heuristic. The base rate is the
+   * dataset's observed exit rate when empirical priors are supplied, else an
+   * un-calibrated 0.35 proxy. Treat as exploratory framing only.
    */
+
+  constructor(private readonly priors?: EmpiricalPriors) {}
 
   private scoreClinicalValidation(company: QuantCompany): number {
     const stageScores: Record<ClinicalStage, number> = {
@@ -470,8 +555,18 @@ export class AcquisitionPredictor {
       0,
     ) / 10;
 
-    // Heuristic base rate — a rough, un-calibrated proxy, NOT a fitted prior.
-    const baseRate = 0.35;
+    // Base rate: dataset's observed exit rate when priors supplied; the
+    // heuristic 0.35 proxy otherwise. Sector deal activity nudges it ±20%.
+    let baseRate = this.priors?.overallExitRate ?? 0.35;
+    if (this.priors) {
+      const sectorPrior = getSectorPrior(this.priors, company.sector);
+      if (sectorPrior && this.priors.dealCount > 0) {
+        const sectorShare = sectorPrior.dealCount / this.priors.dealCount;
+        // Sectors with above-average deal flow get a bounded uplift.
+        const sectorAdjustment = Math.min(1.2, Math.max(0.8, sectorShare * 5));
+        baseRate *= sectorAdjustment;
+      }
+    }
     const probability = Math.min(
       0.95,
       Math.max(0.05, weightedScore * baseRate),
@@ -504,7 +599,11 @@ export class AcquisitionPredictor {
 
     const modelCaveats = [
       "Driver weights are heuristic, not learned from outcome data.",
-      "Base acquisition rate is an un-calibrated proxy — empirical backtesting recommended.",
+      this.priors
+        ? `Base rate ${
+          (this.priors.overallExitRate * 100).toFixed(0)
+        }% is the dataset's observed exit share (n=${this.priors.companyCount} companies) — small-n, disclosure-biased.`
+        : "Base acquisition rate is an un-calibrated proxy — empirical backtesting recommended.",
       "Scores assume independent, additive drivers; real interactions are non-linear.",
     ];
 

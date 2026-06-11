@@ -33,8 +33,8 @@ export const HEALTH_EQUITY_FOCUS_AREAS: readonly HealthEquityFocusArea[] = [
     source:
       "CDC Pregnancy Mortality Surveillance System (2024); NIH IMPROVE Initiative; NIHB maternal health report (2023)",
     sourceYear: 2024,
-    relatedSectors: ["Maternal Care", "Digital Health", "Diagnostics", "Remote Monitoring"],
-    markerGenes: [],
+    relatedSectors: ["Maternal Health", "Diagnostics", "Wearables"],
+    markerGenes: ["FLT1", "ERAP2", "INHBA"],
     epidemiologyCondition: "Severe Maternal Morbidity",
   },
   {

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { adaptQuantCompanies } from "@/lib/quant/adaptQuantCompany";
+import { deriveEmpiricalPriors } from "@/lib/quant/empiricalPriors";
 import { AcquisitionPredictor, ValuationEngine } from "@/lib/quant/quantEngine";
 
 type DriverKey = keyof ReturnType<
@@ -26,6 +27,8 @@ interface Row {
   clinicalStageProxy: string;
   disclosedValuation?: number;
   modelEstimate: number | null;
+  /** True when the estimate includes the verified comparable-deals anchor. */
+  hasComparableAnchor: boolean;
   acquisitionProbability: number;
   topDriver: string;
 }
@@ -36,12 +39,18 @@ function formatM(value: number): string {
 }
 
 export default function QuantValuationPanel() {
-  const { verifiedCompanies } = useVerifiedDataset();
+  const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
   const [showAll, setShowAll] = useState(false);
 
-  const { rows, anchoredCount } = useMemo(() => {
-    const engine = new ValuationEngine();
-    const predictor = new AcquisitionPredictor();
+  const { rows, anchoredCount, priors } = useMemo(() => {
+    // Data retrieval: derive empirical priors from the verified deal history
+    // so valuations and exit base rates are anchored on real transactions.
+    const empiricalPriors = deriveEmpiricalPriors(
+      verifiedCompanies,
+      verifiedAcquisitions,
+    );
+    const engine = new ValuationEngine(empiricalPriors);
+    const predictor = new AcquisitionPredictor(empiricalPriors);
     const adapted = adaptQuantCompanies(verifiedCompanies);
 
     const built: Row[] = adapted.map(
@@ -52,6 +61,16 @@ export default function QuantValuationPanel() {
           DriverKey,
           number,
         ][]).sort((a, b) => b[1] - a[1])[0][0];
+        const hasComparableAnchor = valuation.valuations.some(
+          (v) => v.methodName === "Comparable Deals" && v.confidence > 0,
+        );
+        // A company is valuable-to-model if any method produced an estimate —
+        // including the comparable-deals anchor (no funding required for the
+        // sector-median fallback).
+        const modelEstimate =
+          hasValuationInput || valuation.consensusEstimate > 0
+            ? valuation.consensusEstimate
+            : null;
 
         return {
           id: company.id,
@@ -59,7 +78,10 @@ export default function QuantValuationPanel() {
           sector: company.sector,
           clinicalStageProxy: company.clinicalStage,
           disclosedValuation,
-          modelEstimate: hasValuationInput ? valuation.consensusEstimate : null,
+          modelEstimate: modelEstimate && modelEstimate > 0
+            ? modelEstimate
+            : null,
+          hasComparableAnchor,
           acquisitionProbability: prediction.probabilityOfAcquisition,
           topDriver: DRIVER_LABELS[topDriver],
         };
@@ -75,9 +97,10 @@ export default function QuantValuationPanel() {
 
     return {
       rows: built,
-      anchoredCount: built.filter((r) => r.modelEstimate !== null).length,
+      anchoredCount: built.filter((r) => r.hasComparableAnchor).length,
+      priors: empiricalPriors,
     };
-  }, [verifiedCompanies]);
+  }, [verifiedCompanies, verifiedAcquisitions]);
 
   const visibleRows = showAll ? rows : rows.slice(0, 12);
 
@@ -96,20 +119,26 @@ export default function QuantValuationPanel() {
           </p>
         </div>
         <span className="text-xs text-lacuna-blue/80 px-2 py-1 bg-lacuna-pink/10 rounded shrink-0">
-          {anchoredCount}/{rows.length} companies have a funding anchor
+          {anchoredCount}/{rows.length} anchored on verified comparable deals
         </span>
       </div>
 
       <div
-        className="mb-4 p-3 rounded-lg bg-amber-50 border border-amber-200 text-[13px] text-amber-800 leading-relaxed"
+        className="mb-4 p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-[13px] text-emerald-800 leading-relaxed"
         role="note"
       >
-        The verified dataset has no revenue, TAM, clinical-efficacy, or team
-        data. Valuations run on disclosed funding and a stage proxy only, so
-        most companies show{" "}
-        <em>insufficient inputs</em>. The engine&apos;s health-impact and
-        portfolio modeling are illustrative and live in the library, not shown
-        here, because the live data lacks clinical inputs.
+        <strong>Empirically anchored:</strong>{" "}
+        valuations now include a comparable-deals method derived from{" "}
+        {priors.dealCount} verified acquisitions ({priors.disclosedDealCount}
+        {" "}with disclosed values,{" "}
+        {priors.medianFundingMultipleAll !== undefined
+          ? `median exit/funding multiple ${
+            priors.medianFundingMultipleAll.toFixed(1)
+          }x`
+          : "no funding multiples available"}). The exit base rate is the
+        dataset&apos;s observed{" "}
+        {(priors.overallExitRate * 100).toFixed(0)}% exit share — small-n and
+        disclosure-biased, so treat as exploratory framing, not advice.
       </div>
 
       <div className="overflow-x-auto">
@@ -149,11 +178,22 @@ export default function QuantValuationPanel() {
                 </td>
                 <td className="py-2 px-3 text-right font-semibold text-lacuna-plum">
                   {row.modelEstimate !== null
-                    ? formatM(row.modelEstimate)
+                    ? (
+                      <span
+                        title={row.hasComparableAnchor
+                          ? "Includes verified comparable-deals anchor"
+                          : "Heuristic methods only — no sector comparables"}
+                      >
+                        {formatM(row.modelEstimate)}
+                        {row.hasComparableAnchor && (
+                          <span className="ml-1 text-emerald-600" aria-label="anchored on verified deals">●</span>
+                        )}
+                      </span>
+                    )
                     : (
                       <span
                         className="text-xs font-normal text-lacuna-blue/40"
-                        title="No disclosed funding to anchor a valuation"
+                        title="No verified inputs to anchor a valuation"
                       >
                         insufficient inputs
                       </span>
@@ -183,10 +223,13 @@ export default function QuantValuationPanel() {
 
       <p className="mt-4 text-xs text-lacuna-blue/60 leading-relaxed">
         Model estimate is a confidence-weighted blend of revenue, EBITDA, TAM,
-        and R&amp;D-cost methods — on live data, only the R&amp;D-cost method
-        has a verified input. Exit-likelihood weights are heuristic, the base
-        rate is un-calibrated, and disclosed valuations are point-in-time public
-        figures. Exploratory framing only.
+        R&amp;D-cost, and comparable-deals methods. The{" "}
+        <span className="text-emerald-600">●</span>{" "}
+        marker means the estimate includes an anchor from verified sector deals
+        (median exit/funding multiples or median disclosed deal values).
+        Exit-likelihood base rate is the dataset&apos;s observed exit share.
+        Driver weights remain heuristic; disclosed valuations are point-in-time
+        public figures. Exploratory framing only.
       </p>
     </div>
   );

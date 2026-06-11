@@ -50,6 +50,18 @@ interface InvestmentSignal {
   actionable: boolean;
 }
 
+/**
+ * Static bar styles for the payer-mix chart. Widths correspond to the fixed
+ * payerMix percentages in generateMarketSizing (42/28/15/15) using Tailwind
+ * arbitrary-value classes, avoiding inline styles.
+ */
+const PAYER_BAR_STYLES: Record<string, string> = {
+  commercial: "bg-blue-500 w-[42%]",
+  medicare: "bg-green-500 w-[28%]",
+  medicaid: "bg-amber-500 w-[15%]",
+  cash: "bg-slate-500 w-[15%]",
+};
+
 // Investment-grade scoring algorithm
 function calculateReimbursementRisk(company: VerifiedCompanyView): ReimbursementRiskScore {
   const riskFactors: string[] = [];
@@ -477,14 +489,8 @@ export default function InvestmentGradeReimbursementIntel() {
                       {Object.entries(analysis.marketSizing.payerMix).map(([payer, pct]) => (
                         <div key={payer} className="flex-1">
                           <div className="bg-slate-200 rounded-full h-4 mb-1 overflow-hidden">
-                            <div 
-                              className={`h-full rounded-full ${
-                                payer === "commercial" ? "bg-blue-500" :
-                                payer === "medicare" ? "bg-green-500" :
-                                payer === "medicaid" ? "bg-amber-500" : "bg-slate-500"
-                              }`}
-                              style={{ width: `${pct}%` }}
-                              data-width={pct}
+                            <div
+                              className={`h-full rounded-full ${PAYER_BAR_STYLES[payer] ?? "bg-slate-500 w-1/6"}`}
                             />
                           </div>
                           <div className="text-xs text-slate-600 capitalize">{payer}: {pct}%</div>
