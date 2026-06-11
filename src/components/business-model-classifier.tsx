@@ -141,7 +141,7 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
       case "b2c-consumer":
         return "bg-orange-100 text-orange-800 border-orange-300";
       default:
-        return "bg-gray-100 text-gray-800 border-gray-300";
+        return "bg-lacuna-surface-subtle text-lacuna-text-primary border-lacuna-border-strong";
     }
   };
 
@@ -169,13 +169,13 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
       {/* Input Controls */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-lacuna-text-primary mb-1">
             Sector
           </label>
           <select
             value={selectedSector}
             onChange={(e) => setSelectedSector(e.target.value)}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full border border-lacuna-border-strong rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
           >
             <option value="fertility">Fertility</option>
             <option value="maternal_health">Maternal Health</option>
@@ -191,7 +191,7 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-lacuna-text-primary mb-1">
             Annual Revenue
           </label>
           <input
@@ -203,13 +203,13 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
             onChange={(e) => setRevenue(Number(e.target.value))}
             className="w-full"
           />
-          <div className="text-sm text-gray-600 text-center">
+          <div className="text-sm text-lacuna-text-secondary text-center">
             {formatCurrency(revenue)}
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-lacuna-text-primary mb-1">
             Has CPT Code
           </label>
           <div className="flex gap-4">
@@ -237,7 +237,7 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
         {hasCPTCode && (
           <>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-lacuna-text-primary mb-1">
                 Number of Codes
               </label>
               <input
@@ -246,12 +246,12 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
                 max="20"
                 value={codeCount}
                 onChange={(e) => setCodeCount(Number(e.target.value))}
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                className="w-full border border-lacuna-border-strong rounded-md px-3 py-2"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-lacuna-text-primary mb-1">
                 Reimbursement Rate
               </label>
               <select
@@ -260,7 +260,7 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
                   setRateCategory(
                     e.target.value as ReimbursementStatus["rateCategory"],
                   )}
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                className="w-full border border-lacuna-border-strong rounded-md px-3 py-2"
               >
                 <option value="low">Low ($50-200)</option>
                 <option value="medium">Medium ($200-1000)</option>
@@ -271,14 +271,14 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
         )}
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-lacuna-text-primary mb-1">
             Likely Acquirer
           </label>
           <select
             value={acquirerType}
             onChange={(e) =>
               setAcquirerType(e.target.value as typeof acquirerType)}
-            className="w-full border border-gray-300 rounded-md px-3 py-2"
+            className="w-full border border-lacuna-border-strong rounded-md px-3 py-2"
           >
             <option value="healthcare">Healthcare (CVS, UnitedHealth)</option>
             <option value="pharma">Pharma (J&J, Roche)</option>
@@ -289,13 +289,13 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
       </div>
 
       {/* Classification Result */}
-      <div className="bg-gray-50 rounded-lg p-4 mb-6">
-        <h3 className="font-semibold text-gray-900 mb-3">
+      <div className="bg-lacuna-surface-muted rounded-lg p-4 mb-6">
+        <h3 className="font-semibold text-lacuna-text-primary mb-3">
           Classification Result
         </h3>
 
         <div className="flex items-center gap-3 mb-4">
-          <span className="text-sm font-medium text-gray-700">
+          <span className="text-sm font-medium text-lacuna-text-primary">
             Business Model:
           </span>
           <span
@@ -312,35 +312,35 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
             <div className="text-2xl font-bold text-purple-600">
               {classification.estimatedReimbursementPct}%
             </div>
-            <div className="text-xs text-gray-600">Est. Insurance Revenue</div>
+            <div className="text-xs text-lacuna-text-secondary">Est. Insurance Revenue</div>
           </div>
 
           <div className="bg-white rounded-lg p-3 shadow-sm">
             <div className="text-2xl font-bold text-purple-600">
               {classification.reimbursementStatus.codeCount}
             </div>
-            <div className="text-xs text-gray-600">CPT Codes</div>
+            <div className="text-xs text-lacuna-text-secondary">CPT Codes</div>
           </div>
 
           <div className="bg-white rounded-lg p-3 shadow-sm">
             <div className="text-2xl font-bold text-purple-600">
               {formatMultiple(classification.valuationImpact.adjustedMultiple)}
             </div>
-            <div className="text-xs text-gray-600">Valuation Multiple</div>
+            <div className="text-xs text-lacuna-text-secondary">Valuation Multiple</div>
           </div>
 
           <div className="bg-white rounded-lg p-3 shadow-sm">
             <div className="text-2xl font-bold text-purple-600">
               {formatCurrency(classification.valuationImpact.impliedValuation)}
             </div>
-            <div className="text-xs text-gray-600">Implied Valuation</div>
+            <div className="text-xs text-lacuna-text-secondary">Implied Valuation</div>
           </div>
         </div>
       </div>
 
       {/* Model Comparison */}
       <div className="mb-6">
-        <h3 className="font-semibold text-gray-900 mb-3">
+        <h3 className="font-semibold text-lacuna-text-primary mb-3">
           Insurance-Driven vs Consumer-Only Comparison
         </h3>
 
@@ -404,12 +404,12 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
 
       {/* Key Factors */}
       <div>
-        <h3 className="font-semibold text-gray-900 mb-3">Valuation Factors</h3>
+        <h3 className="font-semibold text-lacuna-text-primary mb-3">Valuation Factors</h3>
         <ul className="space-y-2">
           {classification.valuationImpact.keyFactors.map((factor, idx) => (
             <li
               key={idx}
-              className="flex items-start gap-2 text-sm text-gray-700"
+              className="flex items-start gap-2 text-sm text-lacuna-text-primary"
             >
               <span className="text-purple-500 mt-0.5">•</span>
               {factor}

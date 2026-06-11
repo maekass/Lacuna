@@ -159,7 +159,7 @@ export default function DataCoverageCard() {
       </div>
 
       <div className="mt-6">
-        <p className="text-xs font-medium text-slate-600 mb-2">
+        <p className="text-xs font-medium text-lacuna-text-secondary mb-2">
           Effective n by module
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
@@ -184,7 +184,7 @@ export default function DataCoverageCard() {
 
       <div className="mt-6 grid md:grid-cols-2 gap-4">
         <div>
-          <p className="text-xs font-medium text-slate-600 mb-2">
+          <p className="text-xs font-medium text-lacuna-text-secondary mb-2">
             Deals by sector (target)
           </p>
           <div className="overflow-x-auto rounded-lg border border-lacuna-lavender/40">
@@ -204,13 +204,13 @@ export default function DataCoverageCard() {
                     className="border-t border-lacuna-lavender/30"
                   >
                     <td className="p-2 text-lacuna-plum">{row.sector}</td>
-                    <td className="p-2 text-right text-slate-600">
+                    <td className="p-2 text-right text-lacuna-text-secondary">
                       {row.companies}
                     </td>
-                    <td className="p-2 text-right text-slate-600">
+                    <td className="p-2 text-right text-lacuna-text-secondary">
                       {row.deals}
                     </td>
-                    <td className="p-2 text-right text-slate-600">
+                    <td className="p-2 text-right text-lacuna-text-secondary">
                       {row.disclosedPrices}
                     </td>
                   </tr>
@@ -221,7 +221,7 @@ export default function DataCoverageCard() {
         </div>
 
         <div>
-          <p className="text-xs font-medium text-slate-600 mb-2">
+          <p className="text-xs font-medium text-lacuna-text-secondary mb-2">
             Deals by announcement year
           </p>
           <div className="overflow-x-auto rounded-lg border border-lacuna-lavender/40">
@@ -240,10 +240,10 @@ export default function DataCoverageCard() {
                     className="border-t border-lacuna-lavender/30"
                   >
                     <td className="p-2 text-lacuna-plum">{row.year}</td>
-                    <td className="p-2 text-right text-slate-600">
+                    <td className="p-2 text-right text-lacuna-text-secondary">
                       {row.count}
                     </td>
-                    <td className="p-2 text-right text-slate-600">
+                    <td className="p-2 text-right text-lacuna-text-secondary">
                       {row.disclosedPrices}
                     </td>
                   </tr>
@@ -255,7 +255,7 @@ export default function DataCoverageCard() {
       </div>
 
       <div className="mt-5">
-        <p className="text-xs font-medium text-slate-600 mb-2">
+        <p className="text-xs font-medium text-lacuna-text-secondary mb-2">
           Global source categories
         </p>
         <ul className="text-xs text-lacuna-blue space-y-1 list-disc pl-5">
@@ -263,7 +263,7 @@ export default function DataCoverageCard() {
         </ul>
         {dataProvenance.sources.length > 5
           ? (
-            <p className="text-[11px] text-slate-400 mt-2">
+            <p className="text-[11px] text-lacuna-text-muted mt-2">
               +{dataProvenance.sources.length - 5} more in dataset provenance.
             </p>
           )

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { MobileSheetNav } from "@/components/ui/Sheet";
 import type { SectionLink } from "@/lib/navigation/workspaces";
 
 interface SectionNavProps {
@@ -8,11 +9,17 @@ interface SectionNavProps {
 }
 
 function NavLink(
-  { href, label, active }: { href: string; label: string; active: boolean },
+  { href, label, active, onNavigate }: {
+    href: string;
+    label: string;
+    active: boolean;
+    onNavigate?: () => void;
+  },
 ) {
   return (
     <a
       href={href}
+      onClick={onNavigate}
       className={`block rounded-lg px-3 py-2 text-sm transition-colors touch-target-inline ${
         active
           ? "bg-lacuna-lavender/25 font-medium text-lacuna-plum"
@@ -27,7 +34,6 @@ function NavLink(
 
 export default function SectionNav({ sections }: SectionNavProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     const ids = sections.map((s) => s.id);
@@ -53,16 +59,7 @@ export default function SectionNav({ sections }: SectionNavProps) {
     return () => observer.disconnect();
   }, [sections]);
 
-  useEffect(() => {
-    if (!drawerOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setDrawerOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [drawerOpen]);
-
-  const list = (
+  const list = (onNavigate?: () => void) => (
     <ul className="space-y-1">
       {sections.map((section) => (
         <li key={section.id}>
@@ -70,6 +67,7 @@ export default function SectionNav({ sections }: SectionNavProps) {
             href={`#${section.id}`}
             label={section.label}
             active={activeId === section.id}
+            onNavigate={onNavigate}
           />
         </li>
       ))}
@@ -78,36 +76,24 @@ export default function SectionNav({ sections }: SectionNavProps) {
 
   return (
     <>
-      <button
-        type="button"
-        className="lg:hidden touch-target mb-4 w-full rounded-xl border border-lacuna-lavender/40 bg-white px-4 py-3 text-sm font-medium text-lacuna-plum shadow-sm"
-        aria-expanded={drawerOpen}
-        aria-controls="section-drawer"
-        onClick={() => setDrawerOpen((o) => !o)}
-      >
-        {drawerOpen ? "Close sections" : "Browse sections on this page"}
-      </button>
-
-      {drawerOpen
-        ? (
-          <div
-            id="section-drawer"
-            className="lg:hidden mb-6 rounded-xl border border-lacuna-lavender/40 bg-white p-3 shadow-sm"
-          >
-            <nav aria-label="Page sections">{list}</nav>
-          </div>
-        )
-        : null}
+      <div className="lg:hidden mb-4">
+        <MobileSheetNav
+          title="On this page"
+          triggerLabel="Browse sections"
+        >
+          <nav aria-label="Page sections">{list()}</nav>
+        </MobileSheetNav>
+      </div>
 
       <aside className="hidden lg:block">
         <nav
           aria-label="Page sections"
-          className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto rounded-xl border border-lacuna-lavender/30 bg-white/80 p-3 backdrop-blur-sm"
+          className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto rounded-xl border border-lacuna-lavender/30 bg-lacuna-surface/80 p-3 backdrop-blur-sm"
         >
           <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-wider text-lacuna-blue/70">
             On this page
           </p>
-          {list}
+          {list()}
         </nav>
       </aside>
     </>

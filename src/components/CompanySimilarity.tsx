@@ -222,15 +222,15 @@ export default function CompanySimilarity() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-xl shadow-sm border border-slate-200 p-6"
+      className="bg-white rounded-xl shadow-sm border border-lacuna-border p-6"
     >
       <CuratedDatasetBanner className="mb-4" />
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-lg font-semibold text-slate-800">
+          <h3 className="text-lg font-semibold text-lacuna-text-primary">
             Company Similarity Engine
           </h3>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-lacuna-text-muted">
             Cosine similarity over verified features (sector, valuation,
             funding, age, stage)
           </p>
@@ -249,7 +249,7 @@ export default function CompanySimilarity() {
           className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
             mode === "single"
               ? "bg-lacuna-plum text-white"
-              : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+              : "bg-lacuna-surface-subtle text-lacuna-text-secondary hover:bg-lacuna-surface-subtle"
           }`}
         >
           Single Company
@@ -260,7 +260,7 @@ export default function CompanySimilarity() {
           className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
             mode === "foreground"
               ? "bg-lacuna-plum text-white"
-              : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+              : "bg-lacuna-surface-subtle text-lacuna-text-secondary hover:bg-lacuna-surface-subtle"
           }`}
         >
           Foreground Match
@@ -271,7 +271,7 @@ export default function CompanySimilarity() {
         <div className="mb-6">
           <label
             htmlFor="company-similarity-select"
-            className="block text-sm font-medium text-slate-700 mb-2"
+            className="block text-sm font-medium text-lacuna-text-primary mb-2"
           >
             Select Company
           </label>
@@ -279,7 +279,7 @@ export default function CompanySimilarity() {
             id="company-similarity-select"
             value={selectedCompany}
             onChange={(e) => setSelectedCompany(e.target.value)}
-            className="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+            className="w-full p-2 border border-lacuna-border-strong rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
           >
             {verifiedCompanies.map((c) => (
               <option key={c.id} value={c.id}>{c.name} — {c.sector}</option>
@@ -289,9 +289,9 @@ export default function CompanySimilarity() {
       )}
 
       {mode === "single" && selected && (
-        <div className="mb-4 p-3 bg-slate-50 rounded-lg">
-          <p className="font-medium text-slate-800">{selected.name}</p>
-          <p className="text-sm text-slate-500">
+        <div className="mb-4 p-3 bg-lacuna-surface-muted rounded-lg">
+          <p className="font-medium text-lacuna-text-primary">{selected.name}</p>
+          <p className="text-sm text-lacuna-text-muted">
             {selected.sector} · {selected.stage}
             {selected.lastKnownValuation &&
               ` · $${selected.lastKnownValuation}M valuation`}
@@ -301,11 +301,11 @@ export default function CompanySimilarity() {
       )}
 
       {mode === "foreground" && (
-        <div className="mb-4 rounded-lg bg-slate-50 p-3">
-          <p className="font-medium text-slate-800">
+        <div className="mb-4 rounded-lg bg-lacuna-surface-muted p-3">
+          <p className="font-medium text-lacuna-text-primary">
             Companies most similar to the Foreground Capital portfolio
           </p>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-lacuna-text-muted">
             {foregroundMatches.portfolioCount}{" "}
             portfolio compan{foregroundMatches.portfolioCount === 1
               ? "y"
@@ -329,7 +329,7 @@ export default function CompanySimilarity() {
       )}
 
       <div className="space-y-3">
-        <h4 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">
+        <h4 className="text-sm font-semibold text-lacuna-text-primary uppercase tracking-wider">
           {mode === "single"
             ? "Most Similar Companies"
             : "Companies most similar to the Foreground Capital portfolio"}
@@ -340,14 +340,14 @@ export default function CompanySimilarity() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="flex items-center justify-between p-3 border border-slate-100 rounded-lg"
+            className="flex items-center justify-between p-3 border border-lacuna-border-subtle rounded-lg"
           >
             <div className="flex-1">
               <div className="flex items-center gap-2">
-                <span className="font-medium text-slate-800">
+                <span className="font-medium text-lacuna-text-primary">
                   {result.company.name}
                 </span>
-                <span className="text-xs px-2 py-0.5 bg-slate-100 text-slate-600 rounded">
+                <span className="text-xs px-2 py-0.5 bg-lacuna-surface-subtle text-lacuna-text-secondary rounded">
                   {result.company.sector}
                 </span>
                 {result.dataCompleteness < 2 && (
@@ -363,13 +363,13 @@ export default function CompanySimilarity() {
                 {result.sharedFactors.length > 0
                   ? (
                     result.sharedFactors.map((factor, j) => (
-                      <span key={j} className="text-xs text-slate-500">
+                      <span key={j} className="text-xs text-lacuna-text-muted">
                         • {factor}
                       </span>
                     ))
                   )
                   : (
-                    <span className="text-xs text-slate-400">
+                    <span className="text-xs text-lacuna-text-muted">
                       No structural overlap
                     </span>
                   )}
@@ -379,12 +379,12 @@ export default function CompanySimilarity() {
               <div className="text-lg font-bold text-pink-600">
                 {(result.similarity * 100).toFixed(0)}%
               </div>
-              <div className="text-xs text-slate-400">similarity</div>
+              <div className="text-xs text-lacuna-text-muted">similarity</div>
             </div>
           </motion.div>
         ))}
         {activeResults.length === 0 && (
-          <div className="rounded-lg border border-slate-100 p-4 text-sm text-slate-500">
+          <div className="rounded-lg border border-lacuna-border-subtle p-4 text-sm text-lacuna-text-muted">
             {mode === "single"
               ? "No similarity results available for the selected company."
               : "No Foreground portfolio matches are available yet."}
@@ -392,8 +392,8 @@ export default function CompanySimilarity() {
         )}
       </div>
 
-      <div className="mt-4 pt-4 border-t border-slate-100">
-        <p className="text-xs text-slate-400 leading-relaxed">
+      <div className="mt-4 pt-4 border-t border-lacuna-border-subtle">
+        <p className="text-xs text-lacuna-text-muted leading-relaxed">
           Feature vector: {sectors.length}{" "}
           sector one-hot dims + log(valuation) + log(funding) + normalized age +
           stage flags. Cosine similarity. Companies with undisclosed financials

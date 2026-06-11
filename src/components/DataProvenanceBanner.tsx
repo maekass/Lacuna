@@ -123,7 +123,7 @@ export default function DataProvenanceBanner() {
                 {DATA_SOURCES.map((src) => (
                   <div
                     key={src.name}
-                    className="rounded-lg bg-slate-50/80 border border-slate-100 px-3 py-2"
+                    className="rounded-lg bg-lacuna-surface-muted/80 border border-lacuna-border-subtle px-3 py-2"
                   >
                     <div className="flex items-center gap-2">
                       {src.url
@@ -146,7 +146,7 @@ export default function DataProvenanceBanner() {
                     <p className="text-[11px] text-lacuna-blue/70 mt-0.5">
                       {src.description}
                     </p>
-                    <p className="text-[11px] text-slate-500 mt-0.5 italic">
+                    <p className="text-[11px] text-lacuna-text-muted mt-0.5 italic">
                       {src.license}
                     </p>
                   </div>
@@ -163,7 +163,7 @@ export default function DataProvenanceBanner() {
                 {COMPLIANCE_ITEMS.map((item) => (
                   <div
                     key={item.title}
-                    className="rounded-lg bg-slate-50/80 border border-slate-100 px-3 py-2"
+                    className="rounded-lg bg-lacuna-surface-muted/80 border border-lacuna-border-subtle px-3 py-2"
                   >
                     <p className="text-xs font-medium text-lacuna-plum">
                       {item.title}
@@ -190,7 +190,7 @@ export default function DataProvenanceBanner() {
           </div>
 
           {/* License reference */}
-          <div className="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-lacuna-blue/50">
+          <div className="mt-4 pt-3 border-t border-lacuna-border-subtle flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-lacuna-blue/50">
             <span>Business Source License 1.1</span>
             <span>·</span>
             <a

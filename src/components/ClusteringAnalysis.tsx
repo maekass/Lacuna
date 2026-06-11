@@ -19,15 +19,15 @@ export default function ClusteringAnalysis() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-xl shadow-sm border border-slate-200 p-6"
+      className="bg-white rounded-xl shadow-sm border border-lacuna-border p-6"
     >
       <CuratedDatasetBanner className="mb-4" />
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-lg font-semibold text-slate-800">
+          <h3 className="text-lg font-semibold text-lacuna-text-primary">
             Capital Profile Clustering
           </h3>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-lacuna-text-muted">
             K-means (k={K}) on log(valuation) × log(funding), verified data only
           </p>
         </div>
@@ -54,17 +54,17 @@ export default function ClusteringAnalysis() {
             key={cluster.id}
             className={`p-4 rounded-lg border ${cluster.color}`}
           >
-            <h4 className="font-semibold text-slate-800 mb-2">
+            <h4 className="font-semibold text-lacuna-text-primary mb-2">
               {cluster.name}
             </h4>
-            <p className="text-2xl font-bold text-slate-900 mb-1">
+            <p className="text-2xl font-bold text-lacuna-text-primary mb-1">
               {cluster.companies.length}
             </p>
-            <p className="text-xs text-slate-500 mb-3">companies</p>
+            <p className="text-xs text-lacuna-text-muted mb-3">companies</p>
 
             <div className="space-y-1 mb-4">
               {cluster.characteristics.map((char, i) => (
-                <p key={i} className="text-xs text-slate-600">• {char}</p>
+                <p key={i} className="text-xs text-lacuna-text-secondary">• {char}</p>
               ))}
             </div>
 
@@ -74,9 +74,9 @@ export default function ClusteringAnalysis() {
                   key={company.id}
                   className="flex items-center justify-between text-xs"
                 >
-                  <span className="text-slate-700">{company.name}</span>
+                  <span className="text-lacuna-text-primary">{company.name}</span>
                   <span
-                    className="text-slate-400 truncate ml-2 max-w-[80px]"
+                    className="text-lacuna-text-muted truncate ml-2 max-w-[80px]"
                     title={company.stage}
                   >
                     {company.stage}
@@ -84,7 +84,7 @@ export default function ClusteringAnalysis() {
                 </div>
               ))}
               {cluster.companies.length > 4 && (
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-lacuna-text-muted">
                   +{cluster.companies.length - 4} more
                 </p>
               )}
@@ -94,15 +94,15 @@ export default function ClusteringAnalysis() {
       </div>
 
       {unclusteredCount > 0 && (
-        <p className="mt-4 text-xs text-slate-500 italic">
+        <p className="mt-4 text-xs text-lacuna-text-muted italic">
           {unclusteredCount} company{unclusteredCount === 1 ? "" : "ies"}{" "}
           excluded from clustering (missing publicly disclosed valuation or
           funding total).
         </p>
       )}
 
-      <div className="mt-4 pt-4 border-t border-slate-100">
-        <div className="flex items-center justify-between text-xs text-slate-400">
+      <div className="mt-4 pt-4 border-t border-lacuna-border-subtle">
+        <div className="flex items-center justify-between text-xs text-lacuna-text-muted">
           <span>Algorithm: Lloyd&apos;s k-means</span>
           <span>Metric: Euclidean (log scale)</span>
           <span>Iterations: 20</span>

@@ -116,17 +116,17 @@ function CompanyOverlapRow({
       className={`rounded-md border px-3 py-2 text-sm ${
         highlighted
           ? "border-lacuna-plum/40 bg-lacuna-pink/10"
-          : "border-slate-100 bg-slate-50/50"
+          : "border-lacuna-border-subtle bg-lacuna-surface-muted/50"
       }`}
     >
       <details>
-        <summary className="cursor-pointer font-medium text-slate-800 list-none flex flex-wrap items-center gap-x-2 gap-y-1">
+        <summary className="cursor-pointer font-medium text-lacuna-text-primary list-none flex flex-wrap items-center gap-x-2 gap-y-1">
           <span>{company.name}</span>
-          <span className="text-slate-500 font-normal text-xs">
+          <span className="text-lacuna-text-muted font-normal text-xs">
             {company.sector} · {company.stage}
           </span>
         </summary>
-        <div className="mt-2 space-y-2 text-xs text-slate-600">
+        <div className="mt-2 space-y-2 text-xs text-lacuna-text-secondary">
           <p>{company.description}</p>
           {company.deal
             ? (
@@ -139,12 +139,12 @@ function CompanyOverlapRow({
               </p>
             )
             : (
-              <p className="text-slate-500">
+              <p className="text-lacuna-text-muted">
                 No verified acquisition row for this company.
               </p>
             )}
           <div>
-            <p className="font-medium text-slate-700 mb-1">
+            <p className="font-medium text-lacuna-text-primary mb-1">
               Sources ({company.sources.length})
             </p>
             <ul className="list-disc pl-4 space-y-0.5">
@@ -154,13 +154,13 @@ function CompanyOverlapRow({
           <div className="flex flex-wrap gap-2 pt-1">
             <a
               href="#network"
-              className="inline-flex rounded border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-700 hover:bg-slate-50"
+              className="inline-flex rounded border border-lacuna-border bg-white px-2 py-1 text-[11px] font-medium text-lacuna-text-primary hover:bg-lacuna-surface-muted"
             >
               View network graph
             </a>
             <a
               href="/api/dataset/verified"
-              className="inline-flex rounded border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-700 hover:bg-slate-50"
+              className="inline-flex rounded border border-lacuna-border bg-white px-2 py-1 text-[11px] font-medium text-lacuna-text-primary hover:bg-lacuna-surface-muted"
             >
               Full dataset JSON
             </a>
@@ -187,12 +187,12 @@ function FocusAreaCard({
       className={`rounded-lg border p-5 flex flex-col gap-3 transition-colors ${
         active
           ? "border-lacuna-plum/50 ring-1 ring-lacuna-plum/20 bg-white"
-          : "border-slate-200 bg-white"
+          : "border-lacuna-border bg-white"
       }`}
     >
       <button type="button" onClick={onSelect} className="text-left w-full">
         <div className="flex flex-wrap items-start justify-between gap-2">
-          <h4 className="text-base font-semibold text-slate-800">
+          <h4 className="text-base font-semibold text-lacuna-text-primary">
             {area.title}
           </h4>
           <span
@@ -205,25 +205,25 @@ function FocusAreaCard({
         </div>
       </button>
 
-      <p className="text-sm text-slate-600 leading-relaxed">{area.summary}</p>
+      <p className="text-sm text-lacuna-text-secondary leading-relaxed">{area.summary}</p>
 
-      <div className="rounded-md bg-slate-50 border border-slate-100 px-3 py-2 text-xs">
-        <p className="text-slate-500">Disparity / prevalence (static)</p>
-        <p className="font-medium text-slate-800 mt-0.5">
+      <div className="rounded-md bg-lacuna-surface-muted border border-lacuna-border-subtle px-3 py-2 text-xs">
+        <p className="text-lacuna-text-muted">Disparity / prevalence (static)</p>
+        <p className="font-medium text-lacuna-text-primary mt-0.5">
           {area.disparityLabel}
         </p>
         {area.addressablePopulation
           ? (
-            <p className="text-slate-600 mt-1">
+            <p className="text-lacuna-text-secondary mt-1">
               Addressable population: {area.addressablePopulation}
             </p>
           )
           : null}
-        <p className="text-slate-500 mt-2">Source: {area.source}</p>
+        <p className="text-lacuna-text-muted mt-2">Source: {area.source}</p>
       </div>
 
-      <div className="border-t border-slate-100 pt-3">
-        <p className="text-xs font-medium text-slate-600 mb-2">
+      <div className="border-t border-lacuna-border-subtle pt-3">
+        <p className="text-xs font-medium text-lacuna-text-secondary mb-2">
           Verified portfolio overlap ({area.relatedSectors.join(", ")}) ·{" "}
           {area.verifiedCompanies.length}{" "}
           {area.verifiedCompanies.length === 1 ? "company" : "companies"}
@@ -241,7 +241,7 @@ function FocusAreaCard({
             </ul>
           )
           : (
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-lacuna-text-muted">
               No companies in the verified sample for these sectors yet — this
               is a dataset gap, not evidence of no market activity.
             </p>
@@ -385,27 +385,27 @@ export default function HealthEquityDashboard() {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+    <div className="bg-white rounded-xl shadow-sm border border-lacuna-border p-6">
       <CuratedDatasetBanner className="mb-4" />
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="text-lg font-semibold text-slate-800">
+          <h3 className="text-lg font-semibold text-lacuna-text-primary">
             Health equity context
           </h3>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-lacuna-text-muted mt-1">
             Public-health framing with cited static epidemiology, mapped to
             companies in the verified sample. Filter, expand records, or export
             the overlap table.
           </p>
         </div>
-        <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 shrink-0">
+        <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-lacuna-surface-subtle text-lacuna-text-primary shrink-0">
           Dataset {lastUpdated}
         </span>
       </div>
 
-      <div className="mt-5 rounded-lg border border-sky-100 bg-sky-50/80 px-4 py-3 text-sm text-slate-700">
-        <p className="font-medium text-slate-800">What you can do here</p>
-        <ul className="mt-2 space-y-1 text-xs text-slate-600 list-disc pl-5">
+      <div className="mt-5 rounded-lg border border-sky-100 bg-sky-50/80 px-4 py-3 text-sm text-lacuna-text-primary">
+        <p className="font-medium text-lacuna-text-primary">What you can do here</p>
+        <ul className="mt-2 space-y-1 text-xs text-lacuna-text-secondary list-disc pl-5">
           <li>
             Filter by focus area, sector, or company; expand a row for sources
             and deal provenance.
@@ -419,12 +419,12 @@ export default function HealthEquityDashboard() {
       </div>
 
       <div className="mt-5 flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-end">
-        <label className="flex flex-col gap-1 text-xs text-slate-600 min-w-[10rem]">
+        <label className="flex flex-col gap-1 text-xs text-lacuna-text-secondary min-w-[10rem]">
           Focus area
           <select
             value={focusFilter}
             onChange={(e) => setFocusFilter(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800"
+            className="rounded-lg border border-lacuna-border bg-white px-3 py-2 text-sm text-lacuna-text-primary"
           >
             <option value="all">All focus areas</option>
             {HEALTH_EQUITY_FOCUS_AREAS.map((area) => (
@@ -435,12 +435,12 @@ export default function HealthEquityDashboard() {
           </select>
         </label>
 
-        <label className="flex flex-col gap-1 text-xs text-slate-600 min-w-[10rem]">
+        <label className="flex flex-col gap-1 text-xs text-lacuna-text-secondary min-w-[10rem]">
           Sector
           <select
             value={sectorFilter}
             onChange={(e) => setSectorFilter(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800"
+            className="rounded-lg border border-lacuna-border bg-white px-3 py-2 text-sm text-lacuna-text-primary"
           >
             <option value="all">All related sectors</option>
             {sectorOptions.map((sector) => (
@@ -451,7 +451,7 @@ export default function HealthEquityDashboard() {
           </select>
         </label>
 
-        <label className="flex flex-col gap-1 text-xs text-slate-600 min-w-[10rem] flex-1">
+        <label className="flex flex-col gap-1 text-xs text-lacuna-text-secondary min-w-[10rem] flex-1">
           Company
           <select
             value={highlightCompanyId}
@@ -459,7 +459,7 @@ export default function HealthEquityDashboard() {
               setHighlightCompanyId(e.target.value);
               setCompanyQuery("");
             }}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800"
+            className="rounded-lg border border-lacuna-border bg-white px-3 py-2 text-sm text-lacuna-text-primary"
           >
             <option value="">All companies</option>
             {companyOptions.map((c) => (
@@ -470,7 +470,7 @@ export default function HealthEquityDashboard() {
           </select>
         </label>
 
-        <label className="flex flex-col gap-1 text-xs text-slate-600 min-w-[10rem] flex-1">
+        <label className="flex flex-col gap-1 text-xs text-lacuna-text-secondary min-w-[10rem] flex-1">
           Search company name
           <input
             type="search"
@@ -480,16 +480,16 @@ export default function HealthEquityDashboard() {
               setHighlightCompanyId("");
             }}
             placeholder="e.g. Maven, Bloomi"
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800"
+            className="rounded-lg border border-lacuna-border bg-white px-3 py-2 text-sm text-lacuna-text-primary"
           />
         </label>
 
-        <label className="flex items-center gap-2 text-sm text-slate-700 pb-2">
+        <label className="flex items-center gap-2 text-sm text-lacuna-text-primary pb-2">
           <input
             type="checkbox"
             checked={portfolioOnly}
             onChange={(e) => setPortfolioOnly(e.target.checked)}
-            className="rounded border-slate-300"
+            className="rounded border-lacuna-border-strong"
           />
           Only areas with sample companies
         </label>
@@ -498,21 +498,21 @@ export default function HealthEquityDashboard() {
           <button
             type="button"
             onClick={() => downloadOverlapCsv(filteredAreas)}
-            className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50"
+            className="inline-flex items-center justify-center rounded-lg border border-lacuna-border bg-white px-3 py-2 text-xs font-medium text-lacuna-text-primary hover:bg-lacuna-surface-muted"
           >
             Export overlap CSV
           </button>
           <button
             type="button"
             onClick={resetFilters}
-            className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100"
+            className="inline-flex items-center justify-center rounded-lg border border-lacuna-border bg-lacuna-surface-muted px-3 py-2 text-xs font-medium text-lacuna-text-secondary hover:bg-lacuna-surface-subtle"
           >
             Reset filters
           </button>
         </div>
       </div>
 
-      <p className="mt-3 text-xs text-slate-500">
+      <p className="mt-3 text-xs text-lacuna-text-muted">
         Showing {filteredAreas.length} of {focusAreas.length} focus areas
         {filteredAreas.reduce((n, a) => n + a.verifiedCompanies.length, 0) > 0
           ? ` · ${
@@ -522,33 +522,33 @@ export default function HealthEquityDashboard() {
       </p>
 
       <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
-          <p className="text-2xl font-bold text-slate-800">
+        <div className="rounded-lg bg-lacuna-surface-muted border border-lacuna-border p-3">
+          <p className="text-2xl font-bold text-lacuna-text-primary">
             {portfolioStats.areaCount}
           </p>
-          <p className="text-xs text-slate-500 mt-1">Focus areas</p>
+          <p className="text-xs text-lacuna-text-muted mt-1">Focus areas</p>
         </div>
-        <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
-          <p className="text-2xl font-bold text-slate-800">
+        <div className="rounded-lg bg-lacuna-surface-muted border border-lacuna-border p-3">
+          <p className="text-2xl font-bold text-lacuna-text-primary">
             {portfolioStats.companiesInScope}
           </p>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-lacuna-text-muted mt-1">
             Sample cos. in related sectors
           </p>
         </div>
-        <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
-          <p className="text-2xl font-bold text-slate-800">
+        <div className="rounded-lg bg-lacuna-surface-muted border border-lacuna-border p-3">
+          <p className="text-2xl font-bold text-lacuna-text-primary">
             {portfolioStats.dealsInScope}
           </p>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-lacuna-text-muted mt-1">
             Verified deals (those targets)
           </p>
         </div>
-        <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
-          <p className="text-2xl font-bold text-slate-800">
+        <div className="rounded-lg bg-lacuna-surface-muted border border-lacuna-border p-3">
+          <p className="text-2xl font-bold text-lacuna-text-primary">
             {portfolioStats.areasWithPortfolio}
           </p>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-lacuna-text-muted mt-1">
             Areas with ≥1 sample company
           </p>
         </div>
@@ -571,7 +571,7 @@ export default function HealthEquityDashboard() {
             ))
           )
           : (
-            <div className="md:col-span-2 rounded-lg border border-dashed border-slate-200 p-8 text-center text-sm text-slate-500">
+            <div className="md:col-span-2 rounded-lg border border-dashed border-lacuna-border p-8 text-center text-sm text-lacuna-text-muted">
               No focus areas match the current filters.{" "}
               <button
                 type="button"
@@ -584,9 +584,9 @@ export default function HealthEquityDashboard() {
           )}
       </div>
 
-      <div className="mt-6 rounded-lg border border-slate-200 overflow-x-auto">
+      <div className="mt-6 rounded-lg border border-lacuna-border overflow-x-auto">
         <table className="w-full text-xs min-w-[640px]">
-          <thead className="bg-slate-50 text-slate-500">
+          <thead className="bg-lacuna-surface-muted text-lacuna-text-muted">
             <tr>
               <th className="text-left p-2 font-medium">Focus area</th>
               <th className="text-left p-2 font-medium">Data tier</th>
@@ -598,17 +598,17 @@ export default function HealthEquityDashboard() {
             {filteredAreas.map((area) => (
               <tr
                 key={area.id}
-                className="border-t border-slate-100 hover:bg-slate-50/80 cursor-pointer"
+                className="border-t border-lacuna-border-subtle hover:bg-lacuna-surface-muted/80 cursor-pointer"
                 onClick={() => setFocusFilter(area.id)}
               >
-                <td className="p-2 text-slate-700">{area.title}</td>
-                <td className="p-2 text-slate-600">
+                <td className="p-2 text-lacuna-text-primary">{area.title}</td>
+                <td className="p-2 text-lacuna-text-secondary">
                   {tierLabels[area.dataTier]}
                 </td>
-                <td className="p-2 text-right text-slate-600">
+                <td className="p-2 text-right text-lacuna-text-secondary">
                   {area.verifiedCompanies.length}
                 </td>
-                <td className="p-2 text-slate-500 max-w-xs truncate">
+                <td className="p-2 text-lacuna-text-muted max-w-xs truncate">
                   {area.source}
                 </td>
               </tr>
@@ -618,17 +618,17 @@ export default function HealthEquityDashboard() {
       </div>
 
       <div className="mt-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <p className="text-xs text-slate-500">{dataProvenance.disclaimer}</p>
+        <p className="text-xs text-lacuna-text-muted">{dataProvenance.disclaimer}</p>
         <div className="flex flex-wrap gap-2">
           <a
             href="#impact-assessment"
-            className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50"
+            className="inline-flex items-center justify-center rounded-lg border border-lacuna-border bg-white px-3 py-2 text-xs font-medium text-lacuna-text-primary hover:bg-lacuna-surface-muted"
           >
             Impact Assessment (OAIS)
           </a>
           <a
             href="/api/export/deals.csv"
-            className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50"
+            className="inline-flex items-center justify-center rounded-lg border border-lacuna-border bg-white px-3 py-2 text-xs font-medium text-lacuna-text-primary hover:bg-lacuna-surface-muted"
           >
             Download deals CSV
           </a>

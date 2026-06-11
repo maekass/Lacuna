@@ -87,10 +87,10 @@ export default function ConfidenceLevelIndicator({
       </span>
 
       {showTooltip && (source || limitation) && (
-        <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block z-10 w-64 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-lg">
+        <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block z-10 w-64 p-3 bg-lacuna-surface-inverse text-white text-xs rounded-lg shadow-lg">
           <p className="font-medium mb-1">{config.description}</p>
           {source && (
-            <p className="text-gray-300 mt-2">
+            <p className="text-lacuna-text-muted/80 mt-2">
               <strong>Source:</strong> {source}
             </p>
           )}
@@ -114,15 +114,15 @@ export function ConfidenceLegend() {
     >
       <div className="flex items-center gap-2">
         <ConfidenceLevelIndicator level="measured" showTooltip={false} />
-        <span className="text-gray-600">Direct measurement</span>
+        <span className="text-lacuna-text-secondary">Direct measurement</span>
       </div>
       <div className="flex items-center gap-2">
         <ConfidenceLevelIndicator level="proxy" showTooltip={false} />
-        <span className="text-gray-600">Indirect proxy</span>
+        <span className="text-lacuna-text-secondary">Indirect proxy</span>
       </div>
       <div className="flex items-center gap-2">
         <ConfidenceLevelIndicator level="assumption" showTooltip={false} />
-        <span className="text-gray-600">Required assumption</span>
+        <span className="text-lacuna-text-secondary">Required assumption</span>
       </div>
     </div>
   );
@@ -155,7 +155,7 @@ export function DataPointWithConfidence({
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1">
           <div
-            className="text-xs text-gray-500 uppercase tracking-wider mb-1"
+            className="text-xs text-lacuna-text-muted uppercase tracking-wider mb-1"
             style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
             {label}
@@ -165,7 +165,7 @@ export function DataPointWithConfidence({
             style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
           >
             {value}
-            {unit && <span className="text-sm text-gray-500 ml-1">{unit}</span>}
+            {unit && <span className="text-sm text-lacuna-text-muted ml-1">{unit}</span>}
           </div>
         </div>
         <ConfidenceLevelIndicator
@@ -176,9 +176,9 @@ export function DataPointWithConfidence({
         />
       </div>
       {(source || limitation) && (
-        <div className="mt-2 pt-2 border-t border-gray-200 text-xs space-y-1">
+        <div className="mt-2 pt-2 border-t border-lacuna-border text-xs space-y-1">
           {source && (
-            <p className="text-gray-600">
+            <p className="text-lacuna-text-secondary">
               <strong>Source:</strong> {source}
             </p>
           )}

@@ -323,7 +323,7 @@ export default function EvidenceTimeline({
                 ? "bg-blue-100 text-blue-800"
                 : evidenceScore.overallScore >= 25
                 ? "bg-yellow-100 text-yellow-800"
-                : "bg-gray-100 text-gray-800"
+                : "bg-lacuna-surface-subtle text-lacuna-text-primary"
             }`}
           >
             {evidenceScore.maxPhase}
@@ -345,7 +345,7 @@ export default function EvidenceTimeline({
           <motion.div
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
-            className="absolute bg-gray-900 text-white p-3 rounded-lg shadow-xl text-xs z-10 pointer-events-none"
+            className="absolute bg-lacuna-surface-inverse text-white p-3 rounded-lg shadow-xl text-xs z-10 pointer-events-none"
             style={{
               left: "50%",
               bottom: "100%",
@@ -355,19 +355,19 @@ export default function EvidenceTimeline({
             }}
           >
             <div className="font-semibold mb-1">{hoveredEvent.title}</div>
-            <div className="text-gray-300 mb-1">
+            <div className="text-lacuna-text-muted/80 mb-1">
               {hoveredEvent.date.toLocaleDateString("en-US", {
                 month: "short",
                 year: "numeric",
               })}
             </div>
-            <div className="text-gray-400">{hoveredEvent.description}</div>
+            <div className="text-lacuna-text-muted">{hoveredEvent.description}</div>
           </motion.div>
         )}
       </div>
 
       {/* Stats summary */}
-      <div className="grid grid-cols-4 gap-4 mt-4 pt-4 border-t border-gray-100">
+      <div className="grid grid-cols-4 gap-4 mt-4 pt-4 border-t border-lacuna-border-subtle">
         <div className="text-center">
           <div className="text-lg font-bold text-lacuna-plum">
             {trialProfile.totalTrials}

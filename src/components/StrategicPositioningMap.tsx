@@ -138,7 +138,7 @@ export default function StrategicPositioningMap(
       </div>
 
       {/* 2D Map */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
+      <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <h4
             className="font-medium"
@@ -152,7 +152,7 @@ export default function StrategicPositioningMap(
             className={`rounded-xl border px-4 py-2 text-sm font-medium transition-colors ${
               showForegroundPillars
                 ? "border-lacuna-lavender/40 bg-lacuna-pink/10 text-lacuna-plum"
-                : "border-gray-200 bg-white text-gray-600 hover:text-lacuna-plum"
+                : "border-lacuna-border bg-white text-lacuna-text-secondary hover:text-lacuna-plum"
             }`}
           >
             Foreground Pillars
@@ -169,7 +169,7 @@ export default function StrategicPositioningMap(
                 {Object.entries(pillarColors).map(([pillar, color]) => (
                   <div
                     key={pillar}
-                    className="flex items-center gap-2 text-gray-700"
+                    className="flex items-center gap-2 text-lacuna-text-primary"
                   >
                     <span
                       className="inline-block h-3 w-3 rounded-full"
@@ -209,7 +209,7 @@ export default function StrategicPositioningMap(
                   x={xScale(value)}
                   y={margin.top - 10}
                   textAnchor="middle"
-                  className="text-xs fill-gray-500"
+                  className="text-xs fill-lacuna-text-muted"
                 >
                   {sector}
                 </text>
@@ -231,7 +231,7 @@ export default function StrategicPositioningMap(
                   x={margin.left - 10}
                   y={yScale(stageTick.value) + 4}
                   textAnchor="end"
-                  className="text-xs fill-gray-500"
+                  className="text-xs fill-lacuna-text-muted"
                 >
                   {stageTick.label}
                 </text>
@@ -261,7 +261,7 @@ export default function StrategicPositioningMap(
               x={margin.left + innerWidth / 2}
               y={height - 15}
               textAnchor="middle"
-              className="text-sm fill-gray-700 font-medium"
+              className="text-sm fill-lacuna-text-primary font-medium"
               style={{
                 fontFamily: "'Arial Narrow', sans-serif",
                 letterSpacing: "0.08em",
@@ -275,7 +275,7 @@ export default function StrategicPositioningMap(
               x={15}
               y={margin.top + innerHeight / 2}
               textAnchor="middle"
-              className="text-sm fill-gray-700 font-medium"
+              className="text-sm fill-lacuna-text-primary font-medium"
               transform={`rotate(-90, 15, ${margin.top + innerHeight / 2})`}
               style={{
                 fontFamily: "'Arial Narrow', sans-serif",
@@ -300,7 +300,7 @@ export default function StrategicPositioningMap(
                   x={xScale(t)}
                   y={margin.top + innerHeight + 18}
                   textAnchor="middle"
-                  className="text-xs fill-gray-500"
+                  className="text-xs fill-lacuna-text-muted"
                 >
                   {t.toFixed(2)}
                 </text>
@@ -320,7 +320,7 @@ export default function StrategicPositioningMap(
                   x={margin.left - 10}
                   y={yScale(t) + 4}
                   textAnchor="end"
-                  className="text-xs fill-gray-500"
+                  className="text-xs fill-lacuna-text-muted"
                 >
                   {t.toFixed(2)}
                 </text>
@@ -365,7 +365,7 @@ export default function StrategicPositioningMap(
                     x={xScale(company.xPosition)}
                     y={yScale(company.yPosition) - radius - 8}
                     textAnchor="middle"
-                    className="text-xs fill-gray-700 font-medium pointer-events-none"
+                    className="text-xs fill-lacuna-text-primary font-medium pointer-events-none"
                   >
                     {company.name}
                   </text>
@@ -396,17 +396,17 @@ export default function StrategicPositioningMap(
 
           {/* Tooltip on hover */}
           {hoveredCompany && (
-            <div className="absolute left-2 top-2 bg-white border border-gray-200 rounded-lg p-3 shadow-lg max-w-xs">
+            <div className="absolute left-2 top-2 bg-white border border-lacuna-border rounded-lg p-3 shadow-lg max-w-xs">
               <div
                 className="font-medium text-sm"
                 style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
               >
                 {hoveredCompany.name}
               </div>
-              <div className="text-xs text-gray-600 mt-1">
+              <div className="text-xs text-lacuna-text-secondary mt-1">
                 {hoveredCompany.sector}
               </div>
-              <div className="text-xs text-gray-500 mt-2 space-y-0.5">
+              <div className="text-xs text-lacuna-text-muted mt-2 space-y-0.5">
                 <div>Stage: {hoveredCompany.stage}</div>
                 <div>Pillar: {hoveredCompany.pillar ?? "Not mapped"}</div>
                 {typeof hoveredCompany.lastKnownValuation === "number" && (
@@ -425,7 +425,7 @@ export default function StrategicPositioningMap(
                 className="w-3 h-3 rounded-full"
                 style={{ backgroundColor: color }}
               />
-              <span className="text-gray-600">{key}</span>
+              <span className="text-lacuna-text-secondary">{key}</span>
             </div>
           ))}
         </div>
@@ -436,7 +436,7 @@ export default function StrategicPositioningMap(
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="bg-white border border-gray-200 rounded-lg p-6"
+          className="bg-white border border-lacuna-border rounded-lg p-6"
         >
           <div className="flex items-start justify-between mb-3">
             <div>
@@ -446,7 +446,7 @@ export default function StrategicPositioningMap(
               >
                 {selectedCompany.name}
               </h5>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-lacuna-text-secondary">
                 {selectedCompany.description}
               </p>
             </div>
@@ -464,7 +464,7 @@ export default function StrategicPositioningMap(
           </div>
 
           <div className="grid grid-cols-4 gap-3 mb-4">
-            <div className="bg-gray-50 p-3 rounded-lg text-center">
+            <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
               <div
                 className="text-2xl font-light"
                 style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
@@ -472,13 +472,13 @@ export default function StrategicPositioningMap(
                 {selectedCompany.founded}
               </div>
               <div
-                className="text-xs text-gray-500 uppercase mt-1"
+                className="text-xs text-lacuna-text-muted uppercase mt-1"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 Founded
               </div>
             </div>
-            <div className="bg-gray-50 p-3 rounded-lg text-center">
+            <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
               <div
                 className="text-2xl font-light"
                 style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
@@ -486,13 +486,13 @@ export default function StrategicPositioningMap(
                 {selectedCompany.sector}
               </div>
               <div
-                className="text-xs text-gray-500 uppercase mt-1"
+                className="text-xs text-lacuna-text-muted uppercase mt-1"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 Sector
               </div>
             </div>
-            <div className="bg-gray-50 p-3 rounded-lg text-center">
+            <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
               <div
                 className="text-2xl font-light"
                 style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
@@ -500,13 +500,13 @@ export default function StrategicPositioningMap(
                 {selectedCompany.stage}
               </div>
               <div
-                className="text-xs text-gray-500 uppercase mt-1"
+                className="text-xs text-lacuna-text-muted uppercase mt-1"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 Stage
               </div>
             </div>
-            <div className="bg-gray-50 p-3 rounded-lg text-center">
+            <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
               <div
                 className="text-2xl font-light"
                 style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
@@ -516,7 +516,7 @@ export default function StrategicPositioningMap(
                   : "N/A"}
               </div>
               <div
-                className="text-xs text-gray-500 uppercase mt-1"
+                className="text-xs text-lacuna-text-muted uppercase mt-1"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 Valuation
@@ -526,7 +526,7 @@ export default function StrategicPositioningMap(
 
           <div>
             <div
-              className="text-xs text-gray-500 uppercase mb-1"
+              className="text-xs text-lacuna-text-muted uppercase mb-1"
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               Foreground Fit
@@ -544,7 +544,7 @@ export default function StrategicPositioningMap(
                   </span>
                 )
                 : (
-                  <span className="text-xs px-2 py-1 bg-gray-100 rounded text-gray-700">
+                  <span className="text-xs px-2 py-1 bg-lacuna-surface-subtle rounded text-lacuna-text-primary">
                     No Foreground pillar mapping
                   </span>
                 )}
@@ -554,7 +554,7 @@ export default function StrategicPositioningMap(
       )}
 
       {/* Identified Patterns */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
+      <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <h4
           className="font-medium mb-3"
           style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
@@ -563,7 +563,7 @@ export default function StrategicPositioningMap(
         </h4>
         {pillarPatterns.length > 0
           ? (
-            <ul className="space-y-2 text-sm text-gray-700">
+            <ul className="space-y-2 text-sm text-lacuna-text-primary">
               {pillarPatterns.map((pattern, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="text-[#5D4E6D] mt-0.5">→</span>
@@ -573,7 +573,7 @@ export default function StrategicPositioningMap(
             </ul>
           )
           : (
-            <p className="text-sm text-gray-500 italic">
+            <p className="text-sm text-lacuna-text-muted italic">
               No strong patterns detected in current sample
             </p>
           )}

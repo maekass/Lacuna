@@ -51,7 +51,7 @@ export default function BayesianCausalAnalysis() {
     if (p > 0.9) return "text-green-600";
     if (p > 0.7) return "text-yellow-600";
     if (p > 0.5) return "text-orange-600";
-    return "text-gray-500";
+    return "text-lacuna-text-muted";
   };
 
   return (
@@ -85,7 +85,7 @@ export default function BayesianCausalAnalysis() {
       </div>
 
       {/* Header */}
-      <div className="border-b border-gray-200 pb-4">
+      <div className="border-b border-lacuna-border pb-4">
         <h3
           className="text-2xl font-light tracking-tight"
           style={{
@@ -96,7 +96,7 @@ export default function BayesianCausalAnalysis() {
           Bayesian Causal Inference
         </h3>
         <p
-          className="text-sm tracking-widest text-gray-500 mt-1"
+          className="text-sm tracking-widest text-lacuna-text-muted mt-1"
           style={{
             fontFamily: "'Arial Narrow', sans-serif",
             textTransform: "uppercase",
@@ -107,7 +107,7 @@ export default function BayesianCausalAnalysis() {
       </div>
 
       {/* Input Controls */}
-      <div className="bg-gray-50 p-4 rounded-lg space-y-4">
+      <div className="bg-lacuna-surface-muted p-4 rounded-lg space-y-4">
         <h4
           className="text-sm font-medium tracking-wider uppercase"
           style={{ fontFamily: "'Arial Narrow', sans-serif" }}
@@ -129,7 +129,7 @@ export default function BayesianCausalAnalysis() {
           ].map((field) => (
             <div key={field.key} className="space-y-1">
               <label
-                className="text-xs text-gray-500 uppercase"
+                className="text-xs text-lacuna-text-muted uppercase"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 {field.label}
@@ -144,7 +144,7 @@ export default function BayesianCausalAnalysis() {
                     ...inputs,
                     [field.key]: parseFloat(e.target.value) || 0,
                   })}
-                className="w-full px-3 py-2 border border-gray-200 rounded text-sm"
+                className="w-full px-3 py-2 border border-lacuna-border rounded text-sm"
               />
             </div>
           ))}
@@ -152,7 +152,7 @@ export default function BayesianCausalAnalysis() {
       </div>
 
       {/* Main Effects Result */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
+      <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <div className="flex items-center justify-between mb-4">
           <h4
             className="font-medium"
@@ -168,7 +168,7 @@ export default function BayesianCausalAnalysis() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {/* Posterior Mean */}
-          <div className="text-center p-4 bg-gray-50 rounded-lg">
+          <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
             <div
               className="text-3xl font-light mb-1"
               style={{
@@ -179,7 +179,7 @@ export default function BayesianCausalAnalysis() {
               {analysis.mainEffects.posteriorMean.toFixed(3)}
             </div>
             <div
-              className="text-xs text-gray-500 uppercase tracking-wider"
+              className="text-xs text-lacuna-text-muted uppercase tracking-wider"
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               Posterior Mean
@@ -187,7 +187,7 @@ export default function BayesianCausalAnalysis() {
           </div>
 
           {/* Credible Interval */}
-          <div className="text-center p-4 bg-gray-50 rounded-lg">
+          <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
             <div
               className="text-lg font-light mb-1"
               style={{
@@ -199,7 +199,7 @@ export default function BayesianCausalAnalysis() {
               {analysis.mainEffects.credibleInterval[1].toFixed(3)}]
             </div>
             <div
-              className="text-xs text-gray-500 uppercase tracking-wider"
+              className="text-xs text-lacuna-text-muted uppercase tracking-wider"
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               95% Credible Interval
@@ -207,7 +207,7 @@ export default function BayesianCausalAnalysis() {
           </div>
 
           {/* Probabilities */}
-          <div className="text-center p-4 bg-gray-50 rounded-lg">
+          <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
             <div
               className={`text-2xl font-light mb-1 ${
                 getProbabilityColor(
@@ -220,7 +220,7 @@ export default function BayesianCausalAnalysis() {
               {(analysis.mainEffects.probabilityPositive * 100).toFixed(1)}%
             </div>
             <div
-              className="text-xs text-gray-500 uppercase tracking-wider"
+              className="text-xs text-lacuna-text-muted uppercase tracking-wider"
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               P(Effect &gt; 0)
@@ -228,7 +228,7 @@ export default function BayesianCausalAnalysis() {
           </div>
 
           {/* Bayes Factor */}
-          <div className="text-center p-4 bg-gray-50 rounded-lg">
+          <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
             <div
               className="text-2xl font-light mb-1"
               style={{
@@ -243,7 +243,7 @@ export default function BayesianCausalAnalysis() {
               {analysis.mainEffects.bayesFactor.toFixed(1)}
             </div>
             <div
-              className="text-xs text-gray-500 uppercase tracking-wider"
+              className="text-xs text-lacuna-text-muted uppercase tracking-wider"
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               Bayes Factor
@@ -252,8 +252,8 @@ export default function BayesianCausalAnalysis() {
         </div>
 
         {/* Interpretation */}
-        <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-          <p className="text-sm text-gray-700">
+        <div className="mt-4 p-4 bg-lacuna-surface-muted rounded-lg">
+          <p className="text-sm text-lacuna-text-primary">
             <strong>Interpretation:</strong>{" "}
             {analysis.mainEffects.probabilityPositive > 0.8
               ? `Evidence supports positive effect (P=${
@@ -275,7 +275,7 @@ export default function BayesianCausalAnalysis() {
               ? "moderate"
               : "weak"} evidence for effect vs. no effect.
           </p>
-          <p className="text-xs text-gray-500 mt-2">
+          <p className="text-xs text-lacuna-text-muted mt-2">
             Prior influence:{" "}
             {(analysis.mainEffects.priorInfluence * 100).toFixed(1)}% —
             {analysis.mainEffects.priorInfluence > 0.5
@@ -286,7 +286,7 @@ export default function BayesianCausalAnalysis() {
       </div>
 
       {/* Pre-Registered Hypotheses */}
-      <div className="bg-white border border-gray-200 rounded-lg">
+      <div className="bg-white border border-lacuna-border rounded-lg">
         <button
           onClick={() => setShowPreRegistration(!showPreRegistration)}
           className="w-full px-6 py-4 flex items-center justify-between text-left"
@@ -302,7 +302,7 @@ export default function BayesianCausalAnalysis() {
             >
               Pre-Registered Hypotheses
             </span>
-            <span className="text-xs text-gray-500 ml-2">
+            <span className="text-xs text-lacuna-text-muted ml-2">
               ({PRE_REGISTERED_HYPOTHESES.length}{" "}
               hypotheses specified before data analysis)
             </span>
@@ -328,22 +328,22 @@ export default function BayesianCausalAnalysis() {
               {analysis.preRegisteredResults.map((result) => (
                 <div
                   key={result.hypothesis.id}
-                  className="border border-gray-200 rounded-lg p-4"
+                  className="border border-lacuna-border rounded-lg p-4"
                 >
                   <div className="flex items-start justify-between">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-mono bg-gray-100 px-2 py-0.5 rounded">
+                        <span className="text-xs font-mono bg-lacuna-surface-subtle px-2 py-0.5 rounded">
                           {result.hypothesis.id}
                         </span>
                         <span className="font-medium">
                           {result.hypothesis.name}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-600 mt-1">
+                      <p className="text-sm text-lacuna-text-secondary mt-1">
                         {result.hypothesis.description}
                       </p>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-lacuna-text-muted mt-1">
                         Expected:{" "}
                         {result.hypothesis.expectedEffect > 0 ? "+" : ""}
                         {result.hypothesis.expectedEffect}
@@ -354,7 +354,7 @@ export default function BayesianCausalAnalysis() {
                       className={`px-2 py-1 rounded text-xs ${
                         result.status === "tested"
                           ? "bg-blue-100 text-blue-800"
-                          : "bg-gray-100 text-gray-600"
+                          : "bg-lacuna-surface-subtle text-lacuna-text-secondary"
                       }`}
                     >
                       {result.status.replace("_", " ")}
@@ -362,7 +362,7 @@ export default function BayesianCausalAnalysis() {
                   </div>
 
                   {result.result && (
-                    <div className="mt-3 pt-3 border-t border-gray-100 grid grid-cols-3 gap-4 text-center">
+                    <div className="mt-3 pt-3 border-t border-lacuna-border-subtle grid grid-cols-3 gap-4 text-center">
                       <div>
                         <div
                           className="text-lg font-light"
@@ -370,7 +370,7 @@ export default function BayesianCausalAnalysis() {
                         >
                           {result.result.posteriorMean.toFixed(3)}
                         </div>
-                        <div className="text-xs text-gray-500">
+                        <div className="text-xs text-lacuna-text-muted">
                           Posterior Mean
                         </div>
                       </div>
@@ -393,7 +393,7 @@ export default function BayesianCausalAnalysis() {
                               0,
                             )}%
                         </div>
-                        <div className="text-xs text-gray-500">
+                        <div className="text-xs text-lacuna-text-muted">
                           P(Hypothesis)
                         </div>
                       </div>
@@ -407,14 +407,14 @@ export default function BayesianCausalAnalysis() {
                         >
                           {result.result.bayesFactor.toFixed(1)}
                         </div>
-                        <div className="text-xs text-gray-500">
+                        <div className="text-xs text-lacuna-text-muted">
                           Bayes Factor
                         </div>
                       </div>
                     </div>
                   )}
 
-                  <p className="text-xs text-gray-500 mt-2">{result.note}</p>
+                  <p className="text-xs text-lacuna-text-muted mt-2">{result.note}</p>
                 </div>
               ))}
             </div>
@@ -444,7 +444,7 @@ export default function BayesianCausalAnalysis() {
       </div>
 
       {/* Transparency Toggle */}
-      <div className="bg-gray-50 rounded-lg">
+      <div className="bg-lacuna-surface-muted rounded-lg">
         <button
           onClick={() => setShowTransparency(!showTransparency)}
           className="w-full px-6 py-4 flex items-center justify-between text-left"
@@ -468,7 +468,7 @@ export default function BayesianCausalAnalysis() {
             animate={{ height: "auto", opacity: 1 }}
             className="px-6 pb-6"
           >
-            <pre className="bg-white p-4 rounded border border-gray-200 text-xs font-mono whitespace-pre-wrap leading-relaxed">
+            <pre className="bg-white p-4 rounded border border-lacuna-border text-xs font-mono whitespace-pre-wrap leading-relaxed">
               {analysis.transparencyStatement}
             </pre>
           </motion.div>
@@ -498,7 +498,7 @@ export default function BayesianCausalAnalysis() {
       </div>
 
       {/* HTE Warning */}
-      <div className="bg-gray-800 text-white p-4 rounded-lg">
+      <div className="bg-lacuna-surface-inverse text-white p-4 rounded-lg">
         <h4
           className="font-medium mb-2"
           style={{
@@ -508,7 +508,7 @@ export default function BayesianCausalAnalysis() {
         >
           Why We&apos;re NOT Using Causal Forests
         </h4>
-        <div className="text-sm space-y-1 text-gray-300">
+        <div className="text-sm space-y-1 text-lacuna-text-muted/80">
           <p>Causal forest requirements vs. our data:</p>
           <ul className="ml-4 space-y-1">
             <li>• Required: n≥200 | We have: n={inputs.sampleSize} ❌</li>

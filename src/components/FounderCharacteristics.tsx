@@ -184,7 +184,7 @@ export default function FounderCharacteristics(
       className="space-y-6"
     >
       {/* Header */}
-      <div className="border-b border-gray-200 pb-4">
+      <div className="border-b border-lacuna-border pb-4">
         <h3
           className="text-xl font-light tracking-tight"
           style={{
@@ -195,7 +195,7 @@ export default function FounderCharacteristics(
           Founder Characteristics Analysis
         </h3>
         <p
-          className="text-xs tracking-widest text-gray-500 mt-1"
+          className="text-xs tracking-widest text-lacuna-text-muted mt-1"
           style={{
             fontFamily: "'Arial Narrow', sans-serif",
             textTransform: "uppercase",
@@ -223,7 +223,7 @@ export default function FounderCharacteristics(
           >
             {womenLed.length}
           </div>
-          <div className="text-xs text-gray-600 mt-1">
+          <div className="text-xs text-lacuna-text-secondary mt-1">
             {((womenLed.length / companies.length) * 100).toFixed(0)}% of
             dataset
           </div>
@@ -245,7 +245,7 @@ export default function FounderCharacteristics(
           >
             {menLed.length}
           </div>
-          <div className="text-xs text-gray-600 mt-1">
+          <div className="text-xs text-lacuna-text-secondary mt-1">
             {((menLed.length / companies.length) * 100).toFixed(0)}% of dataset
           </div>
         </div>
@@ -260,7 +260,7 @@ export default function FounderCharacteristics(
             className={`px-4 py-2 rounded text-sm transition-colors ${
               view === v
                 ? "bg-[#5D4E6D] text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-subtle"
             }`}
             style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
@@ -280,7 +280,7 @@ export default function FounderCharacteristics(
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="bg-white border border-gray-200 rounded-lg p-6"
+          className="bg-white border border-lacuna-border rounded-lg p-6"
         >
           <h4
             className="font-medium mb-4"
@@ -321,7 +321,7 @@ export default function FounderCharacteristics(
                         minWidth: s.womenCount > 0 ? "20px" : "0",
                       }}
                     />
-                    <span className="text-xs text-gray-600">
+                    <span className="text-xs text-lacuna-text-secondary">
                       {s.womenCount} ({s.womenPct.toFixed(0)}%)
                     </span>
                   </div>
@@ -338,7 +338,7 @@ export default function FounderCharacteristics(
                         minWidth: s.menCount > 0 ? "20px" : "0",
                       }}
                     />
-                    <span className="text-xs text-gray-600">
+                    <span className="text-xs text-lacuna-text-secondary">
                       {s.menCount} ({s.menPct.toFixed(0)}%)
                     </span>
                   </div>
@@ -366,7 +366,7 @@ export default function FounderCharacteristics(
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="bg-white border border-gray-200 rounded-lg p-6"
+          className="bg-white border border-lacuna-border rounded-lg p-6"
         >
           <h4
             className="font-medium mb-4"
@@ -415,7 +415,7 @@ export default function FounderCharacteristics(
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="bg-white border border-gray-200 rounded-lg p-6"
+          className="bg-white border border-lacuna-border rounded-lg p-6"
         >
           <h4
             className="font-medium mb-4"
@@ -441,12 +441,12 @@ export default function FounderCharacteristics(
               >
                 {timeToAcq.women.mean.toFixed(1)}y
               </div>
-              <div className="text-xs text-gray-600 mt-1">
+              <div className="text-xs text-lacuna-text-secondary mt-1">
                 Median: {timeToAcq.women.median}y | n={timeToAcq.women.count}
                 {" "}
                 acquisitions
               </div>
-              <div className="text-xs text-gray-500 mt-1">
+              <div className="text-xs text-lacuna-text-muted mt-1">
                 Range: {timeToAcq.women.range[0]}-{timeToAcq.women.range[1]}y
               </div>
             </div>
@@ -467,17 +467,17 @@ export default function FounderCharacteristics(
               >
                 {timeToAcq.men.mean.toFixed(1)}y
               </div>
-              <div className="text-xs text-gray-600 mt-1">
+              <div className="text-xs text-lacuna-text-secondary mt-1">
                 Median: {timeToAcq.men.median}y | n={timeToAcq.men.count}{" "}
                 acquisitions
               </div>
-              <div className="text-xs text-gray-500 mt-1">
+              <div className="text-xs text-lacuna-text-muted mt-1">
                 Range: {timeToAcq.men.range[0]}-{timeToAcq.men.range[1]}y
               </div>
             </div>
           </div>
 
-          <div className="mt-4 p-3 bg-gray-50 rounded text-sm text-gray-700">
+          <div className="mt-4 p-3 bg-lacuna-surface-muted rounded text-sm text-lacuna-text-primary">
             <strong>Difference:</strong>{" "}
             {Math.abs(timeToAcq.women.mean - timeToAcq.men.mean).toFixed(1)}
             {" "}
@@ -498,7 +498,7 @@ export default function FounderCharacteristics(
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="bg-white border border-gray-200 rounded-lg p-6"
+          className="bg-white border border-lacuna-border rounded-lg p-6"
         >
           <h4
             className="font-medium mb-4"
@@ -524,14 +524,14 @@ export default function FounderCharacteristics(
               >
                 ${valueComparison.women.mean.toFixed(0)}M
               </div>
-              <div className="text-xs text-gray-600 mt-1">
+              <div className="text-xs text-lacuna-text-secondary mt-1">
                 Mean acquisition value
               </div>
               <div className="mt-2 pt-2 border-t border-pink-200">
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-lacuna-text-muted">
                   Median: ${valueComparison.women.median}M
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-lacuna-text-muted">
                   Total: ${valueComparison.women.total.toFixed(0)}M
                 </div>
               </div>
@@ -553,14 +553,14 @@ export default function FounderCharacteristics(
               >
                 ${valueComparison.men.mean.toFixed(0)}M
               </div>
-              <div className="text-xs text-gray-600 mt-1">
+              <div className="text-xs text-lacuna-text-secondary mt-1">
                 Mean acquisition value
               </div>
               <div className="mt-2 pt-2 border-t border-blue-200">
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-lacuna-text-muted">
                   Median: ${valueComparison.men.median}M
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-lacuna-text-muted">
                   Total: ${valueComparison.men.total.toFixed(0)}M
                 </div>
               </div>

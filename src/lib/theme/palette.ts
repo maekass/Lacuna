@@ -8,6 +8,34 @@ export const LACUNA_PALETTE = {
   deepPlum: "#5D4E6D",
 } as const;
 
+/** Semantic tokens for surfaces, text, borders, and chart chrome. */
+export const LACUNA_SEMANTIC = {
+  surface: {
+    default: "#FFFFFF",
+    muted: "#FAF7F8",
+    subtle: "#F3EEF1",
+    elevated: "#FFFFFF",
+    inverse: LACUNA_PALETTE.deepPlum,
+  },
+  text: {
+    primary: LACUNA_PALETTE.deepPlum,
+    secondary: LACUNA_PALETTE.cosmicBlue,
+    muted: "#8A7D96",
+    inverse: "#FFFFFF",
+  },
+  border: {
+    default: "rgba(184, 169, 201, 0.45)",
+    subtle: "rgba(184, 169, 201, 0.28)",
+    strong: "rgba(93, 78, 109, 0.22)",
+  },
+  chart: {
+    grid: "rgba(184, 169, 201, 0.35)",
+    accent: "#7C3AED",
+    barStart: LACUNA_PALETTE.transcendentPink,
+    barEnd: LACUNA_PALETTE.softLavender,
+  },
+} as const;
+
 export const LACUNA_SECTOR_COLORS: Record<string, string> = {
   Fertility: LACUNA_PALETTE.transcendentPink,
   "Mental Health": LACUNA_PALETTE.softLavender,

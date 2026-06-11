@@ -208,7 +208,7 @@ export default function FairnessLimitations({
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
-          className="bg-white border border-gray-200 rounded-lg p-6"
+          className="bg-white border border-lacuna-border rounded-lg p-6"
         >
           <h4
             className="font-medium mb-4"
@@ -216,7 +216,7 @@ export default function FairnessLimitations({
           >
             Statistical Power Analysis
           </h4>
-          <p className="text-sm text-gray-600 mb-4">
+          <p className="text-sm text-lacuna-text-secondary mb-4">
             With n={sampleSize}{" "}
             companies, what effect sizes can we reliably detect?
           </p>
@@ -224,7 +224,7 @@ export default function FairnessLimitations({
           <table className="w-full text-sm">
             <thead>
               <tr
-                className="text-xs text-gray-500 uppercase border-b border-gray-200"
+                className="text-xs text-lacuna-text-muted uppercase border-b border-lacuna-border"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 <th className="text-left py-2">Effect Size (Δ)</th>
@@ -241,11 +241,11 @@ export default function FairnessLimitations({
                 ) => {
                   const h = cohenH(baselineRate, baselineRate + effectSize);
                   return (
-                    <tr key={effectSize} className="border-b border-gray-100">
+                    <tr key={effectSize} className="border-b border-lacuna-border-subtle">
                       <td className="py-2">
                         +{(effectSize * 100).toFixed(0)}pp
                       </td>
-                      <td className="py-2 text-gray-500">
+                      <td className="py-2 text-lacuna-text-muted">
                         {h.h.toFixed(2)} ({h.magnitude})
                       </td>
                       <td className="py-2 text-right">
@@ -259,12 +259,12 @@ export default function FairnessLimitations({
                           {(power * 100).toFixed(0)}%
                         </span>
                       </td>
-                      <td className="py-2 text-right text-gray-500">
+                      <td className="py-2 text-right text-lacuna-text-muted">
                         {recommendedSampleSize < 10000
                           ? recommendedSampleSize
                           : "∞"}
                       </td>
-                      <td className="py-2 pl-4 text-xs text-gray-600">
+                      <td className="py-2 pl-4 text-xs text-lacuna-text-secondary">
                         {interpretation}
                       </td>
                     </tr>
@@ -291,7 +291,7 @@ export default function FairnessLimitations({
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
-          className="bg-white border border-gray-200 rounded-lg p-6"
+          className="bg-white border border-lacuna-border rounded-lg p-6"
         >
           <h4
             className="font-medium mb-4"
@@ -299,7 +299,7 @@ export default function FairnessLimitations({
           >
             Mathematical Incompatibility of Fairness Metrics
           </h4>
-          <p className="text-sm text-gray-600 mb-4">
+          <p className="text-sm text-lacuna-text-secondary mb-4">
             Kleinberg, Mullainathan, and Raghavan (2016) proved that three
             popular fairness definitions cannot simultaneously be satisfied when
             base rates differ between groups.
@@ -309,13 +309,13 @@ export default function FairnessLimitations({
             {FAIRNESS_METRIC_INCOMPATIBILITY.map((m) => (
               <div
                 key={m.metric}
-                className="border border-gray-200 rounded-lg p-3"
+                className="border border-lacuna-border rounded-lg p-3"
               >
                 <div className="font-medium text-sm mb-1">{m.metric}</div>
-                <div className="text-xs font-mono bg-gray-50 p-2 rounded mb-2">
+                <div className="text-xs font-mono bg-lacuna-surface-muted p-2 rounded mb-2">
                   {m.definition}
                 </div>
-                <div className="text-xs text-gray-600 mb-1">
+                <div className="text-xs text-lacuna-text-secondary mb-1">
                   <strong>Means:</strong> {m.interpretation}
                 </div>
                 <div className="text-xs text-amber-700">
@@ -344,7 +344,7 @@ export default function FairnessLimitations({
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
-          className="bg-white border border-gray-200 rounded-lg p-6"
+          className="bg-white border border-lacuna-border rounded-lg p-6"
         >
           <h4
             className="font-medium mb-4"
@@ -353,7 +353,7 @@ export default function FairnessLimitations({
             Selection Bias in Our Dataset
           </h4>
 
-          <div className="bg-gray-50 p-4 rounded-lg mb-4">
+          <div className="bg-lacuna-surface-muted p-4 rounded-lg mb-4">
             <h5 className="text-sm font-medium mb-2">The Hidden Population</h5>
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-3">
@@ -416,7 +416,7 @@ export default function FairnessLimitations({
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
-          className="bg-white border border-gray-200 rounded-lg p-6"
+          className="bg-white border border-lacuna-border rounded-lg p-6"
         >
           <h4
             className="font-medium mb-4"
@@ -461,7 +461,7 @@ export default function FairnessLimitations({
             </div>
           </div>
 
-          <div className="p-3 bg-gray-100 rounded text-sm text-gray-700">
+          <div className="p-3 bg-lacuna-surface-subtle rounded text-sm text-lacuna-text-primary">
             <strong>Why the distinction matters:</strong>{" "}
             Causal claims require either:
             <ul className="mt-1 ml-4 space-y-0.5">

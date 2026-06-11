@@ -64,10 +64,10 @@ export default function PitchBrief(
     ? "bg-lacuna-pink/10 text-lacuna-plum border-lacuna-lavender/40"
     : foregroundFitTone === "sector"
     ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-    : "bg-slate-50 text-slate-600 border-slate-200";
+    : "bg-lacuna-surface-muted text-lacuna-text-secondary border-lacuna-border";
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 p-4 print:block print:bg-transparent print:p-0">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-lacuna-plum/45 p-4 print:block print:bg-transparent print:p-0">
       <button
         type="button"
         aria-label="Close pitch brief"
@@ -96,14 +96,14 @@ export default function PitchBrief(
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-full border border-slate-200 px-3 py-1 text-lg leading-none text-slate-500 transition-colors hover:bg-slate-50 hover:text-slate-700"
+                className="rounded-full border border-lacuna-border px-3 py-1 text-lg leading-none text-lacuna-text-muted transition-colors hover:bg-lacuna-surface-muted hover:text-lacuna-text-primary"
               >
                 ×
               </button>
             </div>
           </div>
 
-          <div className="mb-6 border-b border-slate-100 pb-5">
+          <div className="mb-6 border-b border-lacuna-border-subtle pb-5">
             <div className="flex flex-wrap items-center gap-2">
               <h4 className="text-2xl font-semibold text-lacuna-plum print:block sm:hidden">
                 {company.name}
@@ -111,38 +111,38 @@ export default function PitchBrief(
               <span className="rounded-full bg-lacuna-pink/10 px-3 py-1 text-xs font-medium text-lacuna-plum">
                 {company.sector}
               </span>
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+              <span className="rounded-full bg-lacuna-surface-subtle px-3 py-1 text-xs font-medium text-lacuna-text-secondary">
                 {prediction.stage}
               </span>
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+              <span className="rounded-full bg-lacuna-surface-subtle px-3 py-1 text-xs font-medium text-lacuna-text-secondary">
                 {company.hq}
               </span>
             </div>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+            <p className="mt-3 text-sm leading-relaxed text-lacuna-text-secondary">
               {company.description}
             </p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <h5 className="text-sm font-semibold text-slate-800">
+            <div className="rounded-xl border border-lacuna-border bg-lacuna-surface-muted p-4">
+              <h5 className="text-sm font-semibold text-lacuna-text-primary">
                 Exit Outlook
               </h5>
-              <div className="mt-3 space-y-2 text-sm text-slate-600">
+              <div className="mt-3 space-y-2 text-sm text-lacuna-text-secondary">
                 <p>
-                  <span className="font-medium text-slate-800">
+                  <span className="font-medium text-lacuna-text-primary">
                     Exit probability:
                   </span>{" "}
                   {(prediction.exitProbability * 100).toFixed(1)}%
                 </p>
                 <p>
-                  <span className="font-medium text-slate-800">
+                  <span className="font-medium text-lacuna-text-primary">
                     Predicted acquirer:
                   </span>{" "}
                   {prediction.predictedAcquirer}
                 </p>
                 <p>
-                  <span className="font-medium text-slate-800">
+                  <span className="font-medium text-lacuna-text-primary">
                     Confidence level:
                   </span>{" "}
                   {getConfidenceLabel(prediction.confidence)}{" "}
@@ -151,18 +151,18 @@ export default function PitchBrief(
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <h5 className="text-sm font-semibold text-slate-800">
+            <div className="rounded-xl border border-lacuna-border bg-lacuna-surface-muted p-4">
+              <h5 className="text-sm font-semibold text-lacuna-text-primary">
                 Market Position
               </h5>
-              <div className="mt-3 space-y-2 text-sm text-slate-600">
+              <div className="mt-3 space-y-2 text-sm text-lacuna-text-secondary">
                 <p>
-                  <span className="font-medium text-slate-800">Cluster:</span>
+                  <span className="font-medium text-lacuna-text-primary">Cluster:</span>
                   {" "}
                   {marketPosition}
                 </p>
                 <p>
-                  <span className="font-medium text-slate-800">
+                  <span className="font-medium text-lacuna-text-primary">
                     Stage basis:
                   </span>{" "}
                   {prediction.stage}
@@ -171,9 +171,9 @@ export default function PitchBrief(
             </div>
           </div>
 
-          <div className="mt-4 rounded-xl border border-slate-200 bg-white p-4">
+          <div className="mt-4 rounded-xl border border-lacuna-border bg-white p-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <h5 className="text-sm font-semibold text-slate-800">
+              <h5 className="text-sm font-semibold text-lacuna-text-primary">
                 Foreground Fit
               </h5>
               <span
@@ -184,12 +184,12 @@ export default function PitchBrief(
             </div>
           </div>
 
-          <div className="mt-6 rounded-xl border border-slate-200 bg-white p-4">
+          <div className="mt-6 rounded-xl border border-lacuna-border bg-white p-4">
             <div className="mb-3 flex items-center justify-between gap-3">
-              <h5 className="text-sm font-semibold text-slate-800">
+              <h5 className="text-sm font-semibold text-lacuna-text-primary">
                 Comparable Exits
               </h5>
-              <span className="text-xs text-slate-500">
+              <span className="text-xs text-lacuna-text-muted">
                 Same sector, verified dataset
               </span>
             </div>
@@ -198,19 +198,19 @@ export default function PitchBrief(
                 ? comparableExits.map((deal) => (
                   <div
                     key={deal.id}
-                    className="rounded-lg border border-slate-100 bg-slate-50 p-3"
+                    className="rounded-lg border border-lacuna-border-subtle bg-lacuna-surface-muted p-3"
                   >
                     <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                       <div>
-                        <p className="font-medium text-slate-800">
+                        <p className="font-medium text-lacuna-text-primary">
                           {deal.targetName}
                         </p>
-                        <p className="text-sm text-slate-600">
+                        <p className="text-sm text-lacuna-text-secondary">
                           {deal.acquirerName}
                         </p>
                       </div>
-                      <div className="text-sm text-slate-600 sm:text-right">
-                        <p className="font-medium text-slate-800">
+                      <div className="text-sm text-lacuna-text-secondary sm:text-right">
+                        <p className="font-medium text-lacuna-text-primary">
                           {formatDealValue(deal.dealValue)}
                         </p>
                         <p>
@@ -223,7 +223,7 @@ export default function PitchBrief(
                   </div>
                 ))
                 : (
-                  <p className="text-sm text-slate-500">
+                  <p className="text-sm text-lacuna-text-muted">
                     No same-sector verified exits are available in the current
                     dataset.
                   </p>

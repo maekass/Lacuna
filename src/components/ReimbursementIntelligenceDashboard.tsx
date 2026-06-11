@@ -38,7 +38,7 @@ const BUSINESS_MODEL_COLORS: Record<BusinessModel, string> = {
   "insurance-driven": "bg-green-100 text-green-800 border-green-300",
   "hybrid": "bg-blue-100 text-blue-800 border-blue-300",
   "b2c-consumer": "bg-orange-100 text-orange-800 border-orange-300",
-  "unclear": "bg-gray-100 text-gray-800 border-gray-300",
+  "unclear": "bg-lacuna-surface-subtle text-lacuna-text-primary border-lacuna-border-strong",
 };
 
 export default function ReimbursementIntelligenceDashboard() {
@@ -270,7 +270,7 @@ export default function ReimbursementIntelligenceDashboard() {
                     <span
                       className={`px-2 py-1 rounded text-xs font-medium border ${
                         SECTOR_COLORS[analysis.company.sector] ||
-                        "bg-gray-100 text-gray-800"
+                        "bg-lacuna-surface-subtle text-lacuna-text-primary"
                       }`}
                     >
                       {analysis.company.sector.replace(/_/g, " ")}

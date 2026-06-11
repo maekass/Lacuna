@@ -28,10 +28,10 @@ export default function DiscreteSources({
 
   return (
     <p
-      className={`text-[10px] leading-snug text-gray-400 ${className}`}
+      className={`text-[10px] leading-snug text-lacuna-text-muted ${className}`}
       title={sources.length > max ? sources.join(" · ") : undefined}
     >
-      {prefix ? <span className="text-gray-500">{prefix}</span> : null}
+      {prefix ? <span className="text-lacuna-text-muted">{prefix}</span> : null}
       {line}
     </p>
   );
@@ -47,7 +47,7 @@ export function DiscreteSourceNote(
   { children, className = "" }: DiscreteSourceNoteProps,
 ) {
   return (
-    <p className={`text-[10px] italic leading-snug text-gray-400 ${className}`}>
+    <p className={`text-[10px] italic leading-snug text-lacuna-text-muted ${className}`}>
       {children}
     </p>
   );

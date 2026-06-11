@@ -98,7 +98,7 @@ export default function GenderInferenceQuality({
       case "ambiguous":
         return "bg-yellow-100 text-yellow-700";
       default:
-        return "bg-gray-100 text-gray-500";
+        return "bg-lacuna-surface-subtle text-lacuna-text-muted";
     }
   };
 
@@ -109,7 +109,7 @@ export default function GenderInferenceQuality({
       className="space-y-6"
     >
       {/* Header */}
-      <div className="border-b border-gray-200 pb-4">
+      <div className="border-b border-lacuna-border pb-4">
         <h3
           className="text-xl font-light tracking-tight"
           style={{
@@ -120,7 +120,7 @@ export default function GenderInferenceQuality({
           Gender Inference Quality Report
         </h3>
         <p
-          className="text-xs tracking-widest text-gray-500 mt-1"
+          className="text-xs tracking-widest text-lacuna-text-muted mt-1"
           style={{
             fontFamily: "'Arial Narrow', sans-serif",
             textTransform: "uppercase",
@@ -132,7 +132,7 @@ export default function GenderInferenceQuality({
 
       {/* Top-line Quality Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div className="bg-white border border-gray-200 p-4 rounded-lg text-center">
+        <div className="bg-white border border-lacuna-border p-4 rounded-lg text-center">
           <div
             className="text-3xl font-light"
             style={{
@@ -143,14 +143,14 @@ export default function GenderInferenceQuality({
             {(overallAccuracy * 100).toFixed(1)}%
           </div>
           <div
-            className="text-xs text-gray-500 uppercase mt-1"
+            className="text-xs text-lacuna-text-muted uppercase mt-1"
             style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
             Provider Accuracy
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 p-4 rounded-lg text-center">
+        <div className="bg-white border border-lacuna-border p-4 rounded-lg text-center">
           <div
             className="text-3xl font-light"
             style={{
@@ -161,14 +161,14 @@ export default function GenderInferenceQuality({
             {((1 - overallAccuracy) * 100).toFixed(1)}%
           </div>
           <div
-            className="text-xs text-gray-500 uppercase mt-1"
+            className="text-xs text-lacuna-text-muted uppercase mt-1"
             style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
             Error Rate
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 p-4 rounded-lg text-center">
+        <div className="bg-white border border-lacuna-border p-4 rounded-lg text-center">
           <div
             className="text-3xl font-light"
             style={{
@@ -179,14 +179,14 @@ export default function GenderInferenceQuality({
             {expectedMisclassifications}
           </div>
           <div
-            className="text-xs text-gray-500 uppercase mt-1"
+            className="text-xs text-lacuna-text-muted uppercase mt-1"
             style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
             Expected Errors
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 p-4 rounded-lg text-center">
+        <div className="bg-white border border-lacuna-border p-4 rounded-lg text-center">
           <div
             className="text-3xl font-light"
             style={{
@@ -197,7 +197,7 @@ export default function GenderInferenceQuality({
             {stats.ambiguous}
           </div>
           <div
-            className="text-xs text-gray-500 uppercase mt-1"
+            className="text-xs text-lacuna-text-muted uppercase mt-1"
             style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
             Ambiguous Names
@@ -220,7 +220,7 @@ export default function GenderInferenceQuality({
       </div>
 
       {/* Distribution Bar Chart */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
+      <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <h4
           className="font-medium mb-4"
           style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
@@ -233,12 +233,12 @@ export default function GenderInferenceQuality({
           <div>
             <div className="flex justify-between text-sm mb-1">
               <span className="font-medium">Female</span>
-              <span className="text-gray-500">
+              <span className="text-lacuna-text-muted">
                 {stats.female}{" "}
                 ({((stats.female / stats.total) * 100).toFixed(0)}%)
               </span>
             </div>
-            <div className="h-6 bg-gray-100 rounded-full overflow-hidden">
+            <div className="h-6 bg-lacuna-surface-subtle rounded-full overflow-hidden">
               <div
                 className="h-full bg-pink-400 transition-all duration-500"
                 style={{ width: `${(stats.female / stats.total) * 100}%` }}
@@ -250,11 +250,11 @@ export default function GenderInferenceQuality({
           <div>
             <div className="flex justify-between text-sm mb-1">
               <span className="font-medium">Male</span>
-              <span className="text-gray-500">
+              <span className="text-lacuna-text-muted">
                 {stats.male} ({((stats.male / stats.total) * 100).toFixed(0)}%)
               </span>
             </div>
-            <div className="h-6 bg-gray-100 rounded-full overflow-hidden">
+            <div className="h-6 bg-lacuna-surface-subtle rounded-full overflow-hidden">
               <div
                 className="h-full bg-blue-400 transition-all duration-500"
                 style={{ width: `${(stats.male / stats.total) * 100}%` }}
@@ -266,12 +266,12 @@ export default function GenderInferenceQuality({
           <div>
             <div className="flex justify-between text-sm mb-1">
               <span className="font-medium text-amber-700">Ambiguous ⚠</span>
-              <span className="text-gray-500">
+              <span className="text-lacuna-text-muted">
                 {stats.ambiguous}{" "}
                 ({((stats.ambiguous / stats.total) * 100).toFixed(0)}%)
               </span>
             </div>
-            <div className="h-6 bg-gray-100 rounded-full overflow-hidden">
+            <div className="h-6 bg-lacuna-surface-subtle rounded-full overflow-hidden">
               <div
                 className="h-full bg-yellow-400 transition-all duration-500"
                 style={{ width: `${(stats.ambiguous / stats.total) * 100}%` }}
@@ -282,7 +282,7 @@ export default function GenderInferenceQuality({
       </div>
 
       {/* Confidence Tiers */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
+      <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <h4
           className="font-medium mb-4"
           style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
@@ -307,7 +307,7 @@ export default function GenderInferenceQuality({
             >
               High Confidence
             </div>
-            <div className="text-xs text-gray-500 mt-1">≥85%</div>
+            <div className="text-xs text-lacuna-text-muted mt-1">≥85%</div>
           </div>
 
           <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200 text-center">
@@ -326,7 +326,7 @@ export default function GenderInferenceQuality({
             >
               Medium Confidence
             </div>
-            <div className="text-xs text-gray-500 mt-1">65-85%</div>
+            <div className="text-xs text-lacuna-text-muted mt-1">65-85%</div>
           </div>
 
           <div className="bg-red-50 p-4 rounded-lg border border-red-200 text-center">
@@ -345,13 +345,13 @@ export default function GenderInferenceQuality({
             >
               Low Confidence
             </div>
-            <div className="text-xs text-gray-500 mt-1">&lt;65%</div>
+            <div className="text-xs text-lacuna-text-muted mt-1">&lt;65%</div>
           </div>
         </div>
       </div>
 
       {/* Source Attribution Filter */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
+      <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <h4
           className="font-medium mb-4"
           style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
@@ -365,7 +365,7 @@ export default function GenderInferenceQuality({
             className={`px-3 py-1 rounded text-xs transition-colors ${
               selectedSource === null
                 ? "bg-[#5D4E6D] text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-subtle"
             }`}
             style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
@@ -378,7 +378,7 @@ export default function GenderInferenceQuality({
               className={`px-3 py-1 rounded text-xs transition-colors ${
                 selectedSource === source
                   ? "bg-[#5D4E6D] text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-subtle"
               }`}
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
@@ -391,7 +391,7 @@ export default function GenderInferenceQuality({
         <div className="max-h-64 overflow-y-auto">
           <table className="w-full text-xs">
             <thead
-              className="text-gray-500 uppercase border-b border-gray-200"
+              className="text-lacuna-text-muted uppercase border-b border-lacuna-border"
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               <tr>
@@ -403,7 +403,7 @@ export default function GenderInferenceQuality({
             </thead>
             <tbody>
               {filteredFounders.map((f, i) => (
-                <tr key={i} className="border-b border-gray-100">
+                <tr key={i} className="border-b border-lacuna-border-subtle">
                   <td className="py-2 font-medium">{f.name}</td>
                   <td className="py-2">
                     <span
@@ -416,7 +416,7 @@ export default function GenderInferenceQuality({
                   </td>
                   <td className="py-2">
                     <div className="flex items-center gap-2">
-                      <div className="w-16 h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div className="w-16 h-2 bg-lacuna-surface-subtle rounded-full overflow-hidden">
                         <div
                           className={`h-full ${
                             getConfidenceColor(f.confidence)
@@ -424,12 +424,12 @@ export default function GenderInferenceQuality({
                           style={{ width: `${f.confidence * 100}%` }}
                         />
                       </div>
-                      <span className="text-gray-500">
+                      <span className="text-lacuna-text-muted">
                         {(f.confidence * 100).toFixed(0)}%
                       </span>
                     </div>
                   </td>
-                  <td className="py-2 text-gray-500">
+                  <td className="py-2 text-lacuna-text-muted">
                     {f.source.replace("_", " ")}
                   </td>
                 </tr>
@@ -440,7 +440,7 @@ export default function GenderInferenceQuality({
       </div>
 
       {/* Calibration by Origin Toggle */}
-      <div className="bg-gray-50 rounded-lg">
+      <div className="bg-lacuna-surface-muted rounded-lg">
         <button
           onClick={() => setShowCalibration(!showCalibration)}
           className="w-full px-6 py-4 flex items-center justify-between text-left"
@@ -464,15 +464,15 @@ export default function GenderInferenceQuality({
             animate={{ height: "auto", opacity: 1 }}
             className="px-6 pb-6"
           >
-            <div className="bg-white p-4 rounded border border-gray-200">
-              <p className="text-sm text-gray-600 mb-4">
+            <div className="bg-white p-4 rounded border border-lacuna-border">
+              <p className="text-sm text-lacuna-text-secondary mb-4">
                 Gender inference accuracy varies by name origin. Non-Western
                 names have higher ambiguity rates and lower accuracy:
               </p>
               <table className="w-full text-sm">
                 <thead>
                   <tr
-                    className="text-xs text-gray-500 uppercase border-b border-gray-200"
+                    className="text-xs text-lacuna-text-muted uppercase border-b border-lacuna-border"
                     style={{ fontFamily: "'Arial Narrow', sans-serif" }}
                   >
                     <th className="text-left py-2">Origin</th>
@@ -485,7 +485,7 @@ export default function GenderInferenceQuality({
                   {Object.entries(INFERENCE_QUALITY_BY_ORIGIN).map((
                     [origin, data],
                   ) => (
-                    <tr key={origin} className="border-b border-gray-100">
+                    <tr key={origin} className="border-b border-lacuna-border-subtle">
                       <td className="py-2 font-medium capitalize">
                         {origin.replace("_", " ")}
                       </td>
@@ -500,17 +500,17 @@ export default function GenderInferenceQuality({
                           {(data.accuracy * 100).toFixed(0)}%
                         </span>
                       </td>
-                      <td className="py-2 text-right text-gray-600">
+                      <td className="py-2 text-right text-lacuna-text-secondary">
                         {(data.ambiguous * 100).toFixed(0)}%
                       </td>
-                      <td className="py-2 text-right text-gray-500 text-xs">
+                      <td className="py-2 text-right text-lacuna-text-muted text-xs">
                         n={data.sampleSize.toLocaleString()}
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <p className="text-xs text-gray-500 mt-3">
+              <p className="text-xs text-lacuna-text-muted mt-3">
                 <strong>Implication:</strong>{" "}
                 If our dataset has many non-Western names, actual error rate may
                 exceed the {((1 - overallAccuracy) * 100).toFixed(0)}% baseline.
@@ -521,7 +521,7 @@ export default function GenderInferenceQuality({
       </div>
 
       {/* Methodology Footer */}
-      <div className="bg-gray-900 text-white p-4 rounded-lg text-sm">
+      <div className="bg-lacuna-surface-inverse text-white p-4 rounded-lg text-sm">
         <h4
           className="font-medium mb-2"
           style={{
@@ -531,7 +531,7 @@ export default function GenderInferenceQuality({
         >
           Methodology
         </h4>
-        <ul className="space-y-1 text-gray-300">
+        <ul className="space-y-1 text-lacuna-text-muted/80">
           <li>
             • Provider: {apiProvider} with{" "}
             {(overallAccuracy * 100).toFixed(0)}% reported accuracy
