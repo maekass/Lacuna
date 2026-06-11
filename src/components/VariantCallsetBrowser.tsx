@@ -279,7 +279,7 @@ export default function VariantCallsetBrowser() {
             matching variants
           </p>
 
-          <div className="overflow-x-auto rounded-lg border border-slate-200">
+          <div className="overflow-x-auto rounded-lg border border-lacuna-border">
             <table className="min-w-full text-xs">
               <thead className="bg-lacuna-pink/10 text-lacuna-plum">
                 <tr>
@@ -295,7 +295,7 @@ export default function VariantCallsetBrowser() {
                 {state.variants.map((v) => (
                   <tr
                     key={`${v.chrom}-${v.pos}-${v.ref}-${v.alt}`}
-                    className="border-t border-slate-100"
+                    className="border-t border-lacuna-border-subtle"
                   >
                     <td className="px-2 py-1.5">{v.chrom}</td>
                     <td className="px-2 py-1.5">{v.pos.toLocaleString()}</td>

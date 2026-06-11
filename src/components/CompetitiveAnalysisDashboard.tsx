@@ -108,7 +108,7 @@ export default function CompetitiveAnalysisDashboard() {
       </div>
 
       {/* Header */}
-      <div className="border-b border-gray-200 pb-4">
+      <div className="border-b border-lacuna-border pb-4">
         <h3
           className="text-2xl font-light tracking-tight"
           style={{
@@ -119,7 +119,7 @@ export default function CompetitiveAnalysisDashboard() {
           Competitive Analysis Framework
         </h3>
         <p
-          className="text-sm tracking-widest text-gray-500 mt-1"
+          className="text-sm tracking-widest text-lacuna-text-muted mt-1"
           style={{
             fontFamily: "'Arial Narrow', sans-serif",
             textTransform: "uppercase",
@@ -131,7 +131,7 @@ export default function CompetitiveAnalysisDashboard() {
       </div>
 
       {/* Tab Navigation */}
-      <div className="border-b border-gray-200">
+      <div className="border-b border-lacuna-border">
         <div className="flex gap-1 overflow-x-auto">
           {[
             { id: "portfolio", label: "Portfolio Analysis" },
@@ -145,7 +145,7 @@ export default function CompetitiveAnalysisDashboard() {
               className={`px-4 py-3 text-sm border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === tab.id
                   ? "border-[#5D4E6D] text-[#5D4E6D] font-medium"
-                  : "border-transparent text-gray-500 hover:text-gray-700"
+                  : "border-transparent text-lacuna-text-muted hover:text-lacuna-text-primary"
               }`}
               style={{
                 fontFamily: "'Arial Narrow', sans-serif",
@@ -175,7 +175,7 @@ export default function CompetitiveAnalysisDashboard() {
                 className={`px-3 py-1 rounded text-sm transition-colors ${
                   selectedAcquirer === p.acquirerId
                     ? "bg-[#5D4E6D] text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-subtle"
                 }`}
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
@@ -187,7 +187,7 @@ export default function CompetitiveAnalysisDashboard() {
           {selectedPortfolio && (
             <>
               {/* Overview */}
-              <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <div className="bg-white border border-lacuna-border rounded-lg p-6">
                 <h4
                   className="font-medium mb-3"
                   style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
@@ -195,7 +195,7 @@ export default function CompetitiveAnalysisDashboard() {
                   {selectedPortfolio.acquirerName} Portfolio Overview
                 </h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                  <div className="bg-gray-50 p-3 rounded-lg text-center">
+                  <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
                     <div
                       className="text-2xl font-light"
                       style={{
@@ -206,13 +206,13 @@ export default function CompetitiveAnalysisDashboard() {
                       {selectedPortfolio.totalAcquisitions}
                     </div>
                     <div
-                      className="text-xs text-gray-500 uppercase mt-1"
+                      className="text-xs text-lacuna-text-muted uppercase mt-1"
                       style={{ fontFamily: "'Arial Narrow', sans-serif" }}
                     >
                       Acquisitions
                     </div>
                   </div>
-                  <div className="bg-gray-50 p-3 rounded-lg text-center">
+                  <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
                     <div
                       className="text-2xl font-light"
                       style={{
@@ -223,13 +223,13 @@ export default function CompetitiveAnalysisDashboard() {
                       ${selectedPortfolio.valueStats.median}M
                     </div>
                     <div
-                      className="text-xs text-gray-500 uppercase mt-1"
+                      className="text-xs text-lacuna-text-muted uppercase mt-1"
                       style={{ fontFamily: "'Arial Narrow', sans-serif" }}
                     >
                       Median Deal Value
                     </div>
                   </div>
-                  <div className="bg-gray-50 p-3 rounded-lg text-center">
+                  <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
                     <div
                       className="text-2xl font-light"
                       style={{
@@ -240,13 +240,13 @@ export default function CompetitiveAnalysisDashboard() {
                       {selectedPortfolio.ageAtAcquisitionStats.median}y
                     </div>
                     <div
-                      className="text-xs text-gray-500 uppercase mt-1"
+                      className="text-xs text-lacuna-text-muted uppercase mt-1"
                       style={{ fontFamily: "'Arial Narrow', sans-serif" }}
                     >
                       Median Target Age
                     </div>
                   </div>
-                  <div className="bg-gray-50 p-3 rounded-lg text-center">
+                  <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
                     <div
                       className="text-2xl font-light"
                       style={{
@@ -257,7 +257,7 @@ export default function CompetitiveAnalysisDashboard() {
                       {selectedPortfolio.sectorComposition.length}
                     </div>
                     <div
-                      className="text-xs text-gray-500 uppercase mt-1"
+                      className="text-xs text-lacuna-text-muted uppercase mt-1"
                       style={{ fontFamily: "'Arial Narrow', sans-serif" }}
                     >
                       Unique Sectors
@@ -277,7 +277,7 @@ export default function CompetitiveAnalysisDashboard() {
                     {selectedPortfolio.sectorComposition.map((s) => (
                       <div key={s.sector} className="flex items-center gap-3">
                         <div className="w-32 text-sm truncate">{s.sector}</div>
-                        <div className="flex-1 h-6 bg-gray-100 rounded overflow-hidden">
+                        <div className="flex-1 h-6 bg-lacuna-surface-subtle rounded overflow-hidden">
                           <div
                             className="h-full bg-gradient-to-r from-[#E8B4B8] to-[#5D4E6D] flex items-center justify-end pr-2 text-xs text-white"
                             style={{
@@ -307,7 +307,7 @@ export default function CompetitiveAnalysisDashboard() {
                         <div className="w-32 text-sm truncate capitalize">
                           {s.stage.replace(/_/g, " ")}
                         </div>
-                        <div className="flex-1 h-6 bg-gray-100 rounded overflow-hidden">
+                        <div className="flex-1 h-6 bg-lacuna-surface-subtle rounded overflow-hidden">
                           <div
                             className="h-full bg-gradient-to-r from-[#4A5D8A] to-[#B8A9C9] flex items-center justify-end pr-2 text-xs text-white"
                             style={{
@@ -350,7 +350,7 @@ export default function CompetitiveAnalysisDashboard() {
                 className={`px-3 py-1 rounded text-sm transition-colors ${
                   selectedAcquirer === v.acquirerId
                     ? "bg-[#5D4E6D] text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-subtle"
                 }`}
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
@@ -360,7 +360,7 @@ export default function CompetitiveAnalysisDashboard() {
           </div>
 
           {selectedVelocity && (
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <div className="bg-white border border-lacuna-border rounded-lg p-6">
               <h4
                 className="font-medium mb-3"
                 style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
@@ -374,10 +374,10 @@ export default function CompetitiveAnalysisDashboard() {
                   {selectedVelocity.periods.map((p) => (
                     <div
                       key={p.period}
-                      className="bg-gray-50 p-3 rounded-lg text-center"
+                      className="bg-lacuna-surface-muted p-3 rounded-lg text-center"
                     >
                       <div
-                        className="text-xs text-gray-500 uppercase"
+                        className="text-xs text-lacuna-text-muted uppercase"
                         style={{ fontFamily: "'Arial Narrow', sans-serif" }}
                       >
                         {p.period} ({p.yearRange[0]}-{p.yearRange[1]})
@@ -391,7 +391,7 @@ export default function CompetitiveAnalysisDashboard() {
                       >
                         {p.avgPerYear.toFixed(1)}/yr
                       </div>
-                      <div className="text-xs text-gray-600 mt-1">
+                      <div className="text-xs text-lacuna-text-secondary mt-1">
                         {p.totalDeals} deals
                       </div>
                     </div>
@@ -402,7 +402,7 @@ export default function CompetitiveAnalysisDashboard() {
               {/* Yearly Bar Chart */}
               <div className="mb-4">
                 <h5
-                  className="text-xs uppercase text-gray-500 mb-2"
+                  className="text-xs uppercase text-lacuna-text-muted mb-2"
                   style={{ fontFamily: "'Arial Narrow', sans-serif" }}
                 >
                   Acquisitions Per Year
@@ -418,7 +418,7 @@ export default function CompetitiveAnalysisDashboard() {
                         key={d.year}
                         className="flex-1 flex flex-col items-center"
                       >
-                        <div className="text-xs text-gray-600 mb-1">
+                        <div className="text-xs text-lacuna-text-secondary mb-1">
                           {d.count}
                         </div>
                         <div
@@ -429,7 +429,7 @@ export default function CompetitiveAnalysisDashboard() {
                           }}
                           title={`${d.year}: ${d.count} deals`}
                         />
-                        <div className="text-xs text-gray-500 mt-1 transform -rotate-45 origin-top-left whitespace-nowrap">
+                        <div className="text-xs text-lacuna-text-muted mt-1 transform -rotate-45 origin-top-left whitespace-nowrap">
                           {d.year}
                         </div>
                       </div>
@@ -451,9 +451,9 @@ export default function CompetitiveAnalysisDashboard() {
                     {selectedVelocity.events.map((e, i) => (
                       <div
                         key={i}
-                        className="text-sm text-gray-700 border-l-2 border-[#B8A9C9] pl-3 py-1"
+                        className="text-sm text-lacuna-text-primary border-l-2 border-[#B8A9C9] pl-3 py-1"
                       >
-                        <span className="text-xs text-gray-500">{e.year}</span>
+                        <span className="text-xs text-lacuna-text-muted">{e.year}</span>
                         {" "}
                         • {e.description}
                       </div>
@@ -463,22 +463,22 @@ export default function CompetitiveAnalysisDashboard() {
               )}
 
               {/* Trend */}
-              <div className="bg-gray-50 p-3 rounded-lg mb-3">
+              <div className="bg-lacuna-surface-muted p-3 rounded-lg mb-3">
                 <div className="grid grid-cols-3 gap-3 text-sm">
                   <div>
-                    <div className="text-xs text-gray-500 uppercase">Trend</div>
+                    <div className="text-xs text-lacuna-text-muted uppercase">Trend</div>
                     <div className="font-medium capitalize">
                       {selectedVelocity.trend.direction}
                     </div>
                   </div>
                   <div>
-                    <div className="text-xs text-gray-500 uppercase">Slope</div>
+                    <div className="text-xs text-lacuna-text-muted uppercase">Slope</div>
                     <div className="font-medium">
                       {selectedVelocity.trend.slope.toFixed(2)}/yr²
                     </div>
                   </div>
                   <div>
-                    <div className="text-xs text-gray-500 uppercase">R²</div>
+                    <div className="text-xs text-lacuna-text-muted uppercase">R²</div>
                     <div className="font-medium">
                       {selectedVelocity.trend.rSquared.toFixed(2)}
                     </div>
@@ -508,14 +508,14 @@ export default function CompetitiveAnalysisDashboard() {
           animate={{ opacity: 1 }}
           className="space-y-4"
         >
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-3"
               style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
             >
               Sector Contestability
             </h4>
-            <p className="text-sm text-gray-600 mb-4">
+            <p className="text-sm text-lacuna-text-secondary mb-4">
               Companies with 3+ plausible buyers (same sector match) are
               &quot;high contestability.&quot; Higher rate = more competitive
               sector.
@@ -525,7 +525,7 @@ export default function CompetitiveAnalysisDashboard() {
               {marketStructure.sectorContestability.map((s) => (
                 <div key={s.sector} className="flex items-center gap-3">
                   <div className="w-40 text-sm truncate">{s.sector}</div>
-                  <div className="flex-1 h-6 bg-gray-100 rounded overflow-hidden">
+                  <div className="flex-1 h-6 bg-lacuna-surface-subtle rounded overflow-hidden">
                     <div
                       className={`h-full flex items-center justify-end pr-2 text-xs text-white ${
                         s.rate > 0.6
@@ -553,7 +553,7 @@ export default function CompetitiveAnalysisDashboard() {
           </div>
 
           {/* Contestable Targets List */}
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-3"
               style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
@@ -567,14 +567,14 @@ export default function CompetitiveAnalysisDashboard() {
                 .map((t) => (
                   <div
                     key={t.companyId}
-                    className="border border-gray-200 p-3 rounded-lg"
+                    className="border border-lacuna-border p-3 rounded-lg"
                   >
                     <div className="flex items-start justify-between mb-1">
                       <div>
                         <div className="font-medium text-sm">
                           {t.companyName}
                         </div>
-                        <div className="text-xs text-gray-500">
+                        <div className="text-xs text-lacuna-text-muted">
                           {t.sector} • {t.stage.replace(/_/g, " ")}
                         </div>
                       </div>
@@ -582,7 +582,7 @@ export default function CompetitiveAnalysisDashboard() {
                         High Contestability
                       </span>
                     </div>
-                    <div className="text-xs text-gray-600 mt-2">
+                    <div className="text-xs text-lacuna-text-secondary mt-2">
                       <strong>
                         Plausible buyers ({t.potentialBuyers.length}):
                       </strong>{" "}
@@ -602,14 +602,14 @@ export default function CompetitiveAnalysisDashboard() {
           animate={{ opacity: 1 }}
           className="space-y-4"
         >
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-3"
               style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
             >
               Acquirer Type Comparison
             </h4>
-            <p className="text-sm text-gray-600 mb-4">
+            <p className="text-sm text-lacuna-text-secondary mb-4">
               Compares behavior across acquirer types: Strategic Healthcare,
               Strategic Tech, PE, Corporate Health
             </p>
@@ -617,7 +617,7 @@ export default function CompetitiveAnalysisDashboard() {
             <table className="w-full text-sm mb-4">
               <thead>
                 <tr
-                  className="text-xs text-gray-500 uppercase border-b border-gray-200"
+                  className="text-xs text-lacuna-text-muted uppercase border-b border-lacuna-border"
                   style={{ fontFamily: "'Arial Narrow', sans-serif" }}
                 >
                   <th className="text-left py-2">Type</th>
@@ -629,7 +629,7 @@ export default function CompetitiveAnalysisDashboard() {
               </thead>
               <tbody>
                 {typeComparison.byType.map((t) => (
-                  <tr key={t.type} className="border-b border-gray-100">
+                  <tr key={t.type} className="border-b border-lacuna-border-subtle">
                     <td className="py-2 font-medium capitalize">
                       {t.type.replace(/_/g, " ")}
                     </td>
@@ -649,28 +649,28 @@ export default function CompetitiveAnalysisDashboard() {
             {/* Stage by Type */}
             <div className="space-y-4">
               {typeComparison.byType.map((t) => (
-                <div key={t.type} className="bg-gray-50 p-3 rounded-lg">
+                <div key={t.type} className="bg-lacuna-surface-muted p-3 rounded-lg">
                   <div className="font-medium text-sm capitalize mb-2">
                     {t.type.replace(/_/g, " ")}
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <div className="text-xs text-gray-500 uppercase mb-1">
+                      <div className="text-xs text-lacuna-text-muted uppercase mb-1">
                         Top Stages
                       </div>
                       {t.stageDistribution.slice(0, 3).map((s) => (
-                        <div key={s.stage} className="text-xs text-gray-700">
+                        <div key={s.stage} className="text-xs text-lacuna-text-primary">
                           {s.stage.replace(/_/g, " ")}: {s.count}{" "}
                           ({s.percentage.toFixed(0)}%)
                         </div>
                       ))}
                     </div>
                     <div>
-                      <div className="text-xs text-gray-500 uppercase mb-1">
+                      <div className="text-xs text-lacuna-text-muted uppercase mb-1">
                         Top Sectors
                       </div>
                       {t.sectorDistribution.slice(0, 3).map((s) => (
-                        <div key={s.sector} className="text-xs text-gray-700">
+                        <div key={s.sector} className="text-xs text-lacuna-text-primary">
                           {s.sector}: {s.count} ({s.percentage.toFixed(0)}%)
                         </div>
                       ))}

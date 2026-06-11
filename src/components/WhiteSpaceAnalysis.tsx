@@ -134,15 +134,15 @@ export default function WhiteSpaceAnalysis() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-xl shadow-sm border border-slate-200 p-6"
+      className="bg-white rounded-xl shadow-sm border border-lacuna-border p-6"
     >
       <CuratedDatasetBanner className="mb-4" />
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-lg font-semibold text-slate-800">
+          <h3 className="text-lg font-semibold text-lacuna-text-primary">
             White Space Analysis
           </h3>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-lacuna-text-muted">
             Deal activity vs. company density across the verified women&apos;s
             health landscape
           </p>
@@ -208,7 +208,7 @@ export default function WhiteSpaceAnalysis() {
                 x={x}
                 y={CHART_HEIGHT - BOTTOM_MARGIN + 22}
                 textAnchor="middle"
-                className="text-xs fill-slate-500"
+                className="text-xs fill-lacuna-text-muted"
               >
                 {Math.round(maxDealCount * tick)}
               </text>
@@ -224,7 +224,7 @@ export default function WhiteSpaceAnalysis() {
                 x={LEFT_MARGIN - 10}
                 y={y + 4}
                 textAnchor="end"
-                className="text-xs fill-slate-500"
+                className="text-xs fill-lacuna-text-muted"
               >
                 {formatValuation(maxAvgValuation * tick)}
               </text>
@@ -235,7 +235,7 @@ export default function WhiteSpaceAnalysis() {
           x={(LEFT_MARGIN + CHART_WIDTH - RIGHT_MARGIN) / 2}
           y={CHART_HEIGHT - 20}
           textAnchor="middle"
-          className="text-xs fill-slate-500"
+          className="text-xs fill-lacuna-text-muted"
         >
           Deal Count
         </text>
@@ -246,7 +246,7 @@ export default function WhiteSpaceAnalysis() {
           transform={`rotate(-90 18 ${
             (TOP_MARGIN + CHART_HEIGHT - BOTTOM_MARGIN) / 2
           })`}
-          className="text-xs fill-slate-500"
+          className="text-xs fill-lacuna-text-muted"
         >
           Average Valuation
         </text>
@@ -264,7 +264,7 @@ export default function WhiteSpaceAnalysis() {
               x={point.x}
               y={point.y - (sectorLabelLines(point.sector).length - 1) * 6}
               textAnchor="middle"
-              className="fill-slate-700 text-[10px] font-semibold"
+              className="fill-lacuna-text-primary text-[10px] font-semibold"
             >
               {sectorLabelLines(point.sector).map((line, index) => (
                 <tspan
@@ -281,16 +281,16 @@ export default function WhiteSpaceAnalysis() {
       </svg>
 
       <div className="mt-6 space-y-3">
-        <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-700">
+        <h4 className="text-sm font-semibold uppercase tracking-wider text-lacuna-text-primary">
           White-space sectors
         </h4>
         {whiteSpaceSectors.length > 0
           ? whiteSpaceSectors.map((point) => (
             <div
               key={point.sector}
-              className="rounded-lg border border-slate-100 bg-slate-50 p-3 text-sm text-slate-600"
+              className="rounded-lg border border-lacuna-border-subtle bg-lacuna-surface-muted p-3 text-sm text-lacuna-text-secondary"
             >
-              <span className="font-semibold text-slate-800">
+              <span className="font-semibold text-lacuna-text-primary">
                 {point.sector}
               </span>
               {": "}
@@ -300,13 +300,13 @@ export default function WhiteSpaceAnalysis() {
             </div>
           ))
           : (
-            <div className="rounded-lg border border-slate-100 bg-slate-50 p-3 text-sm text-slate-500">
+            <div className="rounded-lg border border-lacuna-border-subtle bg-lacuna-surface-muted p-3 text-sm text-lacuna-text-muted">
               No sector currently screens as white space on the verified dataset
               mix.
             </div>
           )}
         {unplottedSectors.length > 0 && (
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-lacuna-text-muted">
             Not plotted (single tracked company, no recorded deals):{" "}
             {unplottedSectors.map((point) => point.sector).join(", ")}.
           </p>

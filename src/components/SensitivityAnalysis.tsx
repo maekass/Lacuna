@@ -76,7 +76,7 @@ export default function SensitivityAnalysis() {
     >
       <CuratedDatasetBanner />
       {/* Header */}
-      <div className="border-b border-gray-200 pb-4">
+      <div className="border-b border-lacuna-border pb-4">
         <h3
           className="text-2xl font-light tracking-tight"
           style={{
@@ -87,7 +87,7 @@ export default function SensitivityAnalysis() {
           Causal Sensitivity Analysis
         </h3>
         <p
-          className="text-sm tracking-widest text-gray-500 mt-1"
+          className="text-sm tracking-widest text-lacuna-text-muted mt-1"
           style={{
             fontFamily: "'Arial Narrow', sans-serif",
             textTransform: "uppercase",
@@ -98,7 +98,7 @@ export default function SensitivityAnalysis() {
       </div>
 
       {/* Input Controls */}
-      <div className="bg-gray-50 p-4 rounded-lg space-y-4">
+      <div className="bg-lacuna-surface-muted p-4 rounded-lg space-y-4">
         <h4
           className="text-sm font-medium tracking-wider uppercase"
           style={{ fontFamily: "'Arial Narrow', sans-serif" }}
@@ -132,7 +132,7 @@ export default function SensitivityAnalysis() {
           ].map((field) => (
             <div key={field.key} className="space-y-1">
               <label
-                className="text-xs text-gray-500 uppercase"
+                className="text-xs text-lacuna-text-muted uppercase"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 {field.label}
@@ -148,7 +148,7 @@ export default function SensitivityAnalysis() {
                     ...inputs,
                     [field.key]: parseFloat(e.target.value) || 0,
                   })}
-                className="w-full px-3 py-2 border border-gray-200 rounded text-sm"
+                className="w-full px-3 py-2 border border-lacuna-border rounded text-sm"
               />
             </div>
           ))}
@@ -156,7 +156,7 @@ export default function SensitivityAnalysis() {
       </div>
 
       {/* Oster's Delta Display */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
+      <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <div className="flex items-center justify-between mb-4">
           <h4
             className="font-medium"
@@ -186,7 +186,7 @@ export default function SensitivityAnalysis() {
               {report.oster.delta.toFixed(2)}
             </div>
             <div
-              className="text-xs text-gray-500 uppercase tracking-wider"
+              className="text-xs text-lacuna-text-muted uppercase tracking-wider"
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               Delta Value
@@ -204,10 +204,10 @@ export default function SensitivityAnalysis() {
             >
               {report.oster.interpretation}
             </p>
-            <p className="text-sm text-gray-600 leading-relaxed">
+            <p className="text-sm text-lacuna-text-secondary leading-relaxed">
               {report.oster.explanation}
             </p>
-            <div className="text-xs text-gray-500 mt-2 p-2 bg-gray-50 rounded">
+            <div className="text-xs text-lacuna-text-muted mt-2 p-2 bg-lacuna-surface-muted rounded">
               <strong>Threshold:</strong> δ &gt;{" "}
               {report.oster.robustnessThreshold} required for robustness
               <br />
@@ -219,7 +219,7 @@ export default function SensitivityAnalysis() {
 
         {/* Delta Visualization */}
         <div className="mt-6">
-          <div className="h-4 bg-gray-200 rounded-full overflow-hidden relative">
+          <div className="h-4 bg-lacuna-surface-subtle rounded-full overflow-hidden relative">
             {/* Threshold marker */}
             <div
               className="absolute top-0 bottom-0 w-0.5 bg-black z-10"
@@ -236,7 +236,7 @@ export default function SensitivityAnalysis() {
             />
           </div>
           <div
-            className="flex justify-between text-xs text-gray-500 mt-1"
+            className="flex justify-between text-xs text-lacuna-text-muted mt-1"
             style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
             <span>0</span>
@@ -248,7 +248,7 @@ export default function SensitivityAnalysis() {
       </div>
 
       {/* Rotnitzky Bounds */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
+      <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <h4
           className="font-medium mb-4"
           style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
@@ -258,9 +258,9 @@ export default function SensitivityAnalysis() {
 
         <div className="space-y-4">
           {/* Bounds Visualization */}
-          <div className="relative h-24 bg-gray-50 rounded-lg p-4">
+          <div className="relative h-24 bg-lacuna-surface-muted rounded-lg p-4">
             {/* Center line (zero) */}
-            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-300" />
+            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-lacuna-border-strong" />
 
             {/* Point estimate */}
             <motion.div
@@ -305,10 +305,10 @@ export default function SensitivityAnalysis() {
             />
 
             {/* Labels */}
-            <div className="absolute bottom-1 left-2 text-xs text-gray-500">
+            <div className="absolute bottom-1 left-2 text-xs text-lacuna-text-muted">
               Lower: {report.rotnitzky.lowerBound.toFixed(3)}
             </div>
-            <div className="absolute bottom-1 right-2 text-xs text-gray-500">
+            <div className="absolute bottom-1 right-2 text-xs text-lacuna-text-muted">
               Upper: {report.rotnitzky.upperBound.toFixed(3)}
             </div>
             <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 text-xs font-medium">
@@ -316,7 +316,7 @@ export default function SensitivityAnalysis() {
             </div>
           </div>
 
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-lacuna-text-secondary">
             {report.rotnitzky.interpretation}
           </p>
         </div>
@@ -332,7 +332,7 @@ export default function SensitivityAnalysis() {
           <table className="w-full text-sm">
             <thead>
               <tr
-                className="text-xs text-gray-500 uppercase"
+                className="text-xs text-lacuna-text-muted uppercase"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 <th className="text-left py-2">Scenario</th>
@@ -343,7 +343,7 @@ export default function SensitivityAnalysis() {
             </thead>
             <tbody>
               {scenarios.map((s) => (
-                <tr key={s.scenario} className="border-t border-gray-100">
+                <tr key={s.scenario} className="border-t border-lacuna-border-subtle">
                   <td className="py-2">{s.scenario}</td>
                   <td className="text-right font-mono">
                     {s.bounds.lowerBound.toFixed(3)}
@@ -362,7 +362,7 @@ export default function SensitivityAnalysis() {
       </div>
 
       {/* Transparency Toggle */}
-      <div className="bg-gray-50 rounded-lg">
+      <div className="bg-lacuna-surface-muted rounded-lg">
         <button
           onClick={() => setShowTransparency(!showTransparency)}
           className="w-full px-6 py-4 flex items-center justify-between text-left"
@@ -386,7 +386,7 @@ export default function SensitivityAnalysis() {
             animate={{ height: "auto", opacity: 1 }}
             className="px-6 pb-6"
           >
-            <pre className="bg-white p-4 rounded border border-gray-200 text-xs font-mono whitespace-pre-wrap leading-relaxed">
+            <pre className="bg-white p-4 rounded border border-lacuna-border text-xs font-mono whitespace-pre-wrap leading-relaxed">
               {report.transparencyStatement}
             </pre>
           </motion.div>
@@ -416,8 +416,8 @@ export default function SensitivityAnalysis() {
       </div>
 
       {/* Summary Box */}
-      <div className="bg-white border border-gray-200 rounded-lg p-4">
-        <pre className="text-xs font-mono text-gray-600 whitespace-pre-wrap">
+      <div className="bg-white border border-lacuna-border rounded-lg p-4">
+        <pre className="text-xs font-mono text-lacuna-text-secondary whitespace-pre-wrap">
           {report.summary}
         </pre>
       </div>

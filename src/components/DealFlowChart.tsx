@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import { LACUNA_SEMANTIC } from "@/lib/theme/palette";
 
 interface DealYear {
   year: number;
@@ -65,14 +66,14 @@ export default function DealFlowChart(
   const momentum = classifyMomentum(recentTotal, priorTotal);
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
+    <div className="bg-lacuna-surface rounded-xl shadow-sm border border-lacuna-border p-4 sm:p-6">
       <CuratedDatasetBanner className="mb-4" />
       <div className="flex items-start justify-between gap-3 mb-4 sm:mb-6">
         <div>
-          <h3 className="text-lg font-semibold text-slate-800 mb-2">
+          <h3 className="text-lg font-semibold text-lacuna-text-primary mb-2">
             Deal Activity Over Time
           </h3>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-lacuna-text-muted">
             M&amp;A and strategic investments in women&apos;s health
           </p>
         </div>
@@ -94,7 +95,7 @@ export default function DealFlowChart(
             y1={height - 50 - (tick * (height - 100))}
             x2={width - 40}
             y2={height - 50 - (tick * (height - 100))}
-            stroke="#e2e8f0"
+            stroke={LACUNA_SEMANTIC.chart.grid}
             strokeDasharray="4,4"
           />
         ))}
@@ -106,7 +107,7 @@ export default function DealFlowChart(
             x={30}
             y={height - 50 - (tick * (height - 100)) + 4}
             textAnchor="end"
-            className="text-xs fill-slate-400"
+            className="text-xs fill-lacuna-text-muted"
           >
             {Math.round(maxCount * tick)}
           </text>
@@ -141,7 +142,7 @@ export default function DealFlowChart(
                 x={x + barWidth / 2}
                 y={y - 8}
                 textAnchor="middle"
-                className="text-xs font-semibold fill-slate-700"
+                className="text-xs font-semibold fill-lacuna-text-primary"
               >
                 {d.count}
               </text>
@@ -151,7 +152,7 @@ export default function DealFlowChart(
                 x={x + barWidth / 2}
                 y={height - 30}
                 textAnchor="middle"
-                className="text-xs fill-slate-500"
+                className="text-xs fill-lacuna-text-muted"
               >
                 {d.year}
               </text>
@@ -162,7 +163,7 @@ export default function DealFlowChart(
         {trendLinePoints && (
           <polyline
             points={trendLinePoints}
-            stroke="#7C3AED"
+            stroke={LACUNA_SEMANTIC.chart.accent}
             strokeWidth={2}
             fill="none"
             strokeLinejoin="round"
@@ -173,8 +174,8 @@ export default function DealFlowChart(
         {/* Gradient definition */}
         <defs>
           <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#FF6B9D" />
-            <stop offset="100%" stopColor="#9D4EDD" />
+            <stop offset="0%" stopColor={LACUNA_SEMANTIC.chart.barStart} />
+            <stop offset="100%" stopColor={LACUNA_SEMANTIC.chart.barEnd} />
           </linearGradient>
         </defs>
       </svg>

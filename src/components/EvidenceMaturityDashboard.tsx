@@ -103,7 +103,7 @@ const TIER_STYLES: Record<string, string> = {
   sky: "bg-sky-50 text-sky-700 border-sky-200",
   amber: "bg-amber-50 text-amber-700 border-amber-200",
   orange: "bg-orange-50 text-orange-700 border-orange-200",
-  slate: "bg-slate-50 text-slate-600 border-slate-200",
+  slate: "bg-lacuna-surface-muted text-lacuna-text-secondary border-lacuna-border",
 };
 
 const SCORE_BAR_COLORS: Record<string, string> = {
@@ -111,7 +111,7 @@ const SCORE_BAR_COLORS: Record<string, string> = {
   sky: "bg-sky-500",
   amber: "bg-amber-500",
   orange: "bg-orange-500",
-  slate: "bg-slate-400",
+  slate: "bg-lacuna-text-muted",
 };
 
 /* ─── component ─── */
@@ -342,7 +342,7 @@ export default function EvidenceMaturityDashboard() {
               "Strong Evidence": "bg-sky-100 text-sky-800",
               "Growing Evidence": "bg-amber-100 text-amber-800",
               "Early Evidence": "bg-orange-100 text-orange-800",
-              "Pre-clinical": "bg-slate-100 text-slate-700",
+              "Pre-clinical": "bg-lacuna-surface-subtle text-lacuna-text-primary",
             };
             return (
               <span
@@ -359,7 +359,7 @@ export default function EvidenceMaturityDashboard() {
       </div>
 
       {/* Valuation correlation insight */}
-      <div className="rounded-lg bg-slate-50 border border-slate-100 px-4 py-3 mb-6">
+      <div className="rounded-lg bg-lacuna-surface-muted border border-lacuna-border-subtle px-4 py-3 mb-6">
         <h4 className="text-xs font-semibold text-lacuna-plum uppercase tracking-wide mb-1">
           Valuation &times; Evidence Correlation
         </h4>
@@ -419,7 +419,7 @@ export default function EvidenceMaturityDashboard() {
                 {/* Score pill */}
                 <div
                   className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold shrink-0 ${
-                    SCORE_BAR_COLORS[row.evidence.tierColor] || "bg-slate-400"
+                    SCORE_BAR_COLORS[row.evidence.tierColor] || "bg-lacuna-text-muted"
                   } text-white`}
                 >
                   {row.evidence.overall}
@@ -493,11 +493,11 @@ export default function EvidenceMaturityDashboard() {
                       ["Publications", row.evidence.publicationScore],
                     ] as const).map(([label, score]) => (
                       <div key={label} className="text-center">
-                        <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden mb-1">
+                        <div className="w-full h-1.5 bg-lacuna-surface-subtle rounded-full overflow-hidden mb-1">
                           <div
                             className={`h-full rounded-full ${
                               SCORE_BAR_COLORS[row.evidence.tierColor] ||
-                              "bg-slate-400"
+                              "bg-lacuna-text-muted"
                             }`}
                             style={{ width: `${score}%` }}
                           />
@@ -529,7 +529,7 @@ export default function EvidenceMaturityDashboard() {
       </div>
 
       {/* Methodology note */}
-      <div className="mt-4 pt-3 border-t border-slate-100">
+      <div className="mt-4 pt-3 border-t border-lacuna-border-subtle">
         <p className="text-[11px] text-lacuna-blue/50 leading-relaxed">
           Evidence Maturity Score (0&ndash;100) = Phase (30%) + FDA Status (30%)
           + Clinical Results (20%) + Publication Proxy (20%). Scores enriched

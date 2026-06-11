@@ -53,12 +53,12 @@ const INITIAL_STATE: FetchState = {
 const STATUS_COLORS: Record<string, string> = {
   RECRUITING: "bg-emerald-100 text-emerald-800",
   "ACTIVE_NOT_RECRUITING": "bg-sky-100 text-sky-800",
-  COMPLETED: "bg-slate-100 text-slate-700",
+  COMPLETED: "bg-lacuna-surface-subtle text-lacuna-text-primary",
   "NOT_YET_RECRUITING": "bg-amber-100 text-amber-800",
   TERMINATED: "bg-red-100 text-red-700",
   WITHDRAWN: "bg-red-50 text-red-600",
   SUSPENDED: "bg-orange-100 text-orange-700",
-  UNKNOWN: "bg-gray-100 text-gray-600",
+  UNKNOWN: "bg-lacuna-surface-subtle text-lacuna-text-secondary",
 };
 
 function statusLabel(s: string): string {
@@ -226,7 +226,7 @@ export default function ClinicalTrialTracker() {
           {/* Phase + Status + Sponsors row */}
           <div className="grid md:grid-cols-3 gap-4 mb-5">
             {/* Phase distribution */}
-            <div className="rounded-lg border border-slate-200 p-3">
+            <div className="rounded-lg border border-lacuna-border p-3">
               <p className="text-xs font-semibold text-lacuna-plum mb-2">
                 Phase distribution
               </p>
@@ -241,7 +241,7 @@ export default function ClinicalTrialTracker() {
                       {phase}
                     </span>
                     <div className="flex items-center gap-2">
-                      <div className="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                      <div className="w-16 h-1.5 bg-lacuna-surface-subtle rounded-full overflow-hidden">
                         <div
                           className="h-full bg-lacuna-plum rounded-full"
                           style={{
@@ -258,7 +258,7 @@ export default function ClinicalTrialTracker() {
             </div>
 
             {/* Status breakdown */}
-            <div className="rounded-lg border border-slate-200 p-3">
+            <div className="rounded-lg border border-lacuna-border p-3">
               <p className="text-xs font-semibold text-lacuna-plum mb-2">
                 Status breakdown
               </p>
@@ -281,7 +281,7 @@ export default function ClinicalTrialTracker() {
             </div>
 
             {/* Top sponsors */}
-            <div className="rounded-lg border border-slate-200 p-3">
+            <div className="rounded-lg border border-lacuna-border p-3">
               <p className="text-xs font-semibold text-lacuna-plum mb-2">
                 Top sponsors
               </p>
@@ -312,7 +312,7 @@ export default function ClinicalTrialTracker() {
             {trials.slice(0, 8).map((trial) => (
               <div
                 key={trial.nctId}
-                className="rounded-lg border border-slate-200 p-3 hover:border-lacuna-lavender/60 transition-colors"
+                className="rounded-lg border border-lacuna-border p-3 hover:border-lacuna-lavender/60 transition-colors"
               >
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1">
                   <div className="min-w-0 flex-1">
@@ -332,7 +332,7 @@ export default function ClinicalTrialTracker() {
                     >
                       {statusLabel(trial.status)}
                     </span>
-                    <span className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 text-slate-700">
+                    <span className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-lacuna-surface-subtle text-lacuna-text-primary">
                       {trial.phase}
                     </span>
                   </div>
@@ -367,7 +367,7 @@ export default function ClinicalTrialTracker() {
           )}
 
           {/* Disclaimer */}
-          <div className="mt-4 pt-3 border-t border-slate-100">
+          <div className="mt-4 pt-3 border-t border-lacuna-border-subtle">
             <p className="text-[11px] text-lacuna-blue/50">
               Data sourced from{" "}
               <a

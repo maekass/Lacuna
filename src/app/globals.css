@@ -2,12 +2,36 @@
 
 /* Lacuna — Pantone Spring/Summer 2026 (README Design System) */
 :root {
+  /* Brand */
   --lacuna-pink: #e8b4b8;
   --lacuna-lavender: #b8a9c9;
   --lacuna-blue: #4a5d8a;
   --lacuna-plum: #5d4e6d;
-  --background: #faf7f8;
-  --foreground: var(--lacuna-plum);
+
+  /* Semantic surfaces */
+  --lacuna-surface: #ffffff;
+  --lacuna-surface-muted: #faf7f8;
+  --lacuna-surface-subtle: #f3eef1;
+  --lacuna-surface-elevated: #ffffff;
+  --lacuna-surface-inverse: var(--lacuna-plum);
+
+  /* Semantic text */
+  --lacuna-text-primary: var(--lacuna-plum);
+  --lacuna-text-secondary: var(--lacuna-blue);
+  --lacuna-text-muted: #8a7d96;
+  --lacuna-text-inverse: #ffffff;
+
+  /* Semantic borders */
+  --lacuna-border: rgba(184, 169, 201, 0.45);
+  --lacuna-border-subtle: rgba(184, 169, 201, 0.28);
+  --lacuna-border-strong: rgba(93, 78, 109, 0.22);
+
+  /* Chart chrome */
+  --lacuna-chart-grid: rgba(184, 169, 201, 0.35);
+  --lacuna-chart-accent: #7c3aed;
+
+  --background: var(--lacuna-surface-muted);
+  --foreground: var(--lacuna-text-primary);
 }
 
 /* Cross-browser smooth scrolling */
@@ -108,6 +132,20 @@ textarea:focus-visible {
   --color-lacuna-lavender: var(--lacuna-lavender);
   --color-lacuna-blue: var(--lacuna-blue);
   --color-lacuna-plum: var(--lacuna-plum);
+  --color-lacuna-surface: var(--lacuna-surface);
+  --color-lacuna-surface-muted: var(--lacuna-surface-muted);
+  --color-lacuna-surface-subtle: var(--lacuna-surface-subtle);
+  --color-lacuna-surface-elevated: var(--lacuna-surface-elevated);
+  --color-lacuna-surface-inverse: var(--lacuna-surface-inverse);
+  --color-lacuna-text-primary: var(--lacuna-text-primary);
+  --color-lacuna-text-secondary: var(--lacuna-text-secondary);
+  --color-lacuna-text-muted: var(--lacuna-text-muted);
+  --color-lacuna-text-inverse: var(--lacuna-text-inverse);
+  --color-lacuna-border: var(--lacuna-border);
+  --color-lacuna-border-subtle: var(--lacuna-border-subtle);
+  --color-lacuna-border-strong: var(--lacuna-border-strong);
+  --color-lacuna-chart-grid: var(--lacuna-chart-grid);
+  --color-lacuna-chart-accent: var(--lacuna-chart-accent);
   --font-sans: var(--font-playfair);
   --font-mono: var(--font-playfair);
 }

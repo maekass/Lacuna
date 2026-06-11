@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as d3 from "d3";
 import { motion } from "framer-motion";
 import AcquirerProfile from "@/components/AcquirerProfile";
+import ChartTooltip from "@/components/ui/ChartTooltip";
 import { foregroundPortfolio } from "@/data/verifiedData";
 
 interface Node extends d3.SimulationNodeDatum {
@@ -31,7 +32,11 @@ interface ForceNetworkProps {
   highlightForeground?: boolean;
 }
 
-import { LACUNA_PALETTE, LACUNA_SECTOR_COLORS } from "@/lib/theme/palette";
+import {
+  LACUNA_PALETTE,
+  LACUNA_SECTOR_COLORS,
+  LACUNA_SEMANTIC,
+} from "@/lib/theme/palette";
 
 const sectorColors: Record<string, string> = {
   ...LACUNA_SECTOR_COLORS,
@@ -41,7 +46,7 @@ const sectorColors: Record<string, string> = {
   "Sexual Wellness": LACUNA_PALETTE.transcendentPink,
 };
 
-const FOREGROUND_COLOR = "#7C3AED";
+const FOREGROUND_COLOR = LACUNA_SEMANTIC.chart.accent;
 
 export default function ForceNetwork(
   {
@@ -377,7 +382,7 @@ export default function ForceNetwork(
             animate={{ opacity: 1, x: 0 }}
             className="absolute top-2 left-2 sm:top-4 sm:left-4 max-w-[10rem] rounded-lg bg-white/95 p-2 shadow-lg backdrop-blur-sm sm:max-w-xs sm:p-4"
           >
-            <h4 className="text-[10px] sm:text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2 sm:mb-3">
+            <h4 className="text-[10px] sm:text-xs font-semibold text-lacuna-text-secondary uppercase tracking-wider mb-2 sm:mb-3">
               Sectors
             </h4>
             <div className="space-y-1 sm:space-y-2">
@@ -390,14 +395,14 @@ export default function ForceNetwork(
                     className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full shrink-0"
                     style={{ backgroundColor: color }}
                   />
-                  <span className="text-[10px] sm:text-xs text-slate-600 truncate">
+                  <span className="text-[10px] sm:text-xs text-lacuna-text-secondary truncate">
                     {sector}
                   </span>
                 </div>
               ))}
-              <div className="flex items-center gap-1.5 sm:gap-2 mt-2 sm:mt-3 pt-1.5 sm:pt-2 border-t border-slate-100">
-                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-800 border-2 border-amber-400 shrink-0" />
-                <span className="text-[10px] sm:text-xs text-slate-600">
+              <div className="flex items-center gap-1.5 sm:gap-2 mt-2 sm:mt-3 pt-1.5 sm:pt-2 border-t border-lacuna-border-subtle">
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-lacuna-surface-inverse border-2 border-amber-400 shrink-0" />
+                <span className="text-[10px] sm:text-xs text-lacuna-text-secondary">
                   Acquirer
                 </span>
               </div>
@@ -412,39 +417,39 @@ export default function ForceNetwork(
               className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-3 sm:p-4 max-w-[14rem] sm:max-w-sm"
             >
               <div className="flex items-start justify-between mb-2">
-                <h3 className="font-semibold text-slate-800">
+                <h3 className="font-semibold text-lacuna-text-primary">
                   {selectedNode.name}
                 </h3>
                 <button
                   onClick={() => setSelectedNode(null)}
-                  className="text-slate-400 hover:text-slate-600"
+                  className="text-lacuna-text-muted hover:text-lacuna-text-secondary"
                 >
                   ×
                 </button>
               </div>
               <div className="space-y-1 text-sm">
                 <p>
-                  <span className="text-slate-500">Type:</span>{" "}
+                  <span className="text-lacuna-text-muted">Type:</span>{" "}
                   <span className="capitalize">{selectedNode.type}</span>
                 </p>
                 <p>
-                  <span className="text-slate-500">Sector:</span>{" "}
+                  <span className="text-lacuna-text-muted">Sector:</span>{" "}
                   {selectedNode.sector}
                 </p>
                 <p>
-                  <span className="text-slate-500">Stage:</span>{" "}
+                  <span className="text-lacuna-text-muted">Stage:</span>{" "}
                   {selectedNode.stage}
                 </p>
                 {selectedNode.valuation > 1000 && (
                   <p>
-                    <span className="text-slate-500">Valuation:</span>{" "}
+                    <span className="text-lacuna-text-muted">Valuation:</span>{" "}
                     ${(selectedNode.valuation / 1000).toFixed(1)}B
                   </p>
                 )}
                 {selectedNode.valuation <= 1000 && selectedNode.valuation > 0 &&
                   (
                     <p>
-                      <span className="text-slate-500">Valuation:</span>{" "}
+                      <span className="text-lacuna-text-muted">Valuation:</span>{" "}
                       ${selectedNode.valuation}M
                     </p>
                   )}
@@ -457,9 +462,18 @@ export default function ForceNetwork(
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="absolute top-4 right-4 rounded-md bg-lacuna-plum px-3 py-2 text-xs text-white"
+              className="absolute top-4 right-4"
             >
-              {hoveredNode.name}
+              <ChartTooltip title={hoveredNode.name}>
+                <p>
+                  <span className="text-lacuna-text-inverse/70">Type:</span>{" "}
+                  {hoveredNode.type}
+                </p>
+                <p>
+                  <span className="text-lacuna-text-inverse/70">Sector:</span>{" "}
+                  {hoveredNode.sector}
+                </p>
+              </ChartTooltip>
             </motion.div>
           )}
         </div>

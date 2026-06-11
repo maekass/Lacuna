@@ -137,7 +137,7 @@ export default function ImpactOpportunityCard() {
 
   if (exampleCompanies.length === 0) {
     return (
-      <div className="bg-white border border-gray-200 rounded-lg p-6 text-sm text-gray-600">
+      <div className="bg-white border border-lacuna-border rounded-lg p-6 text-sm text-lacuna-text-secondary">
         <CuratedDatasetBanner className="mb-4" />
         No verified companies available for OAIS illustration.
       </div>
@@ -151,7 +151,7 @@ export default function ImpactOpportunityCard() {
     return (
       <div className="space-y-4">
         <CuratedDatasetBanner />
-        <div className="border-b border-gray-200 pb-4">
+        <div className="border-b border-lacuna-border pb-4">
           <h3
             className="text-2xl font-light tracking-tight"
             style={{
@@ -209,7 +209,7 @@ export default function ImpactOpportunityCard() {
     >
       <CuratedDatasetBanner />
       {/* Header */}
-      <div className="border-b border-gray-200 pb-4">
+      <div className="border-b border-lacuna-border pb-4">
         <h3
           className="text-2xl font-light tracking-tight"
           style={{
@@ -220,7 +220,7 @@ export default function ImpactOpportunityCard() {
           Opportunity-Adjusted Impact Score (OAIS)
         </h3>
         <p
-          className="text-sm tracking-widest text-gray-500 mt-1"
+          className="text-sm tracking-widest text-lacuna-text-muted mt-1"
           style={{
             fontFamily: "'Arial Narrow', sans-serif",
             textTransform: "uppercase",
@@ -239,7 +239,7 @@ export default function ImpactOpportunityCard() {
             className={`px-4 py-2 rounded-lg text-sm transition-colors ${
               selectedCompany === i
                 ? "bg-[#5D4E6D] text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-subtle"
             }`}
             style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
@@ -249,7 +249,7 @@ export default function ImpactOpportunityCard() {
       </div>
 
       {/* Main Score Card */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
+      <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <div className="flex items-start justify-between mb-6">
           <div>
             <h4
@@ -258,7 +258,7 @@ export default function ImpactOpportunityCard() {
             >
               {company.name}
             </h4>
-            <p className="text-sm text-gray-500">Sector: {company.sector}</p>
+            <p className="text-sm text-lacuna-text-muted">Sector: {company.sector}</p>
           </div>
           <div className="text-right">
             <span
@@ -320,7 +320,7 @@ export default function ImpactOpportunityCard() {
             >
               {getScoreInterpretation(oais.score)}
             </p>
-            <p className="text-sm text-gray-600 mt-1 max-w-md">
+            <p className="text-sm text-lacuna-text-secondary mt-1 max-w-md">
               {oais.interpretation}
             </p>
           </div>
@@ -328,9 +328,9 @@ export default function ImpactOpportunityCard() {
 
         {/* Component Breakdown */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <div className="bg-gray-50 p-3 rounded-lg">
+          <div className="bg-lacuna-surface-muted p-3 rounded-lg">
             <div
-              className="text-xs text-gray-500 uppercase"
+              className="text-xs text-lacuna-text-muted uppercase"
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               Addressable Population
@@ -344,9 +344,9 @@ export default function ImpactOpportunityCard() {
             <span className="text-xs text-green-600">✓ Measured</span>
           </div>
 
-          <div className="bg-gray-50 p-3 rounded-lg">
+          <div className="bg-lacuna-surface-muted p-3 rounded-lg">
             <div
-              className="text-xs text-gray-500 uppercase"
+              className="text-xs text-lacuna-text-muted uppercase"
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               Penetration Gap
@@ -360,9 +360,9 @@ export default function ImpactOpportunityCard() {
             <span className="text-xs text-green-600">✓ Measured</span>
           </div>
 
-          <div className="bg-gray-50 p-3 rounded-lg">
+          <div className="bg-lacuna-surface-muted p-3 rounded-lg">
             <div
-              className="text-xs text-gray-500 uppercase"
+              className="text-xs text-lacuna-text-muted uppercase"
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               Stage Credibility
@@ -376,9 +376,9 @@ export default function ImpactOpportunityCard() {
             <span className="text-xs text-yellow-600">~ Proxy</span>
           </div>
 
-          <div className="bg-gray-50 p-3 rounded-lg">
+          <div className="bg-lacuna-surface-muted p-3 rounded-lg">
             <div
-              className="text-xs text-gray-500 uppercase"
+              className="text-xs text-lacuna-text-muted uppercase"
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               Founder Quality
@@ -392,9 +392,9 @@ export default function ImpactOpportunityCard() {
             <span className="text-xs text-yellow-600">~ Proxy</span>
           </div>
 
-          <div className="bg-gray-50 p-3 rounded-lg">
+          <div className="bg-lacuna-surface-muted p-3 rounded-lg">
             <div
-              className="text-xs text-gray-500 uppercase"
+              className="text-xs text-lacuna-text-muted uppercase"
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               Scaling Likely
@@ -408,9 +408,9 @@ export default function ImpactOpportunityCard() {
             <span className="text-xs text-yellow-600">~ Proxy</span>
           </div>
 
-          <div className="bg-gray-50 p-3 rounded-lg">
+          <div className="bg-lacuna-surface-muted p-3 rounded-lg">
             <div
-              className="text-xs text-gray-500 uppercase"
+              className="text-xs text-lacuna-text-muted uppercase"
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               Saturation Penalty
@@ -447,13 +447,13 @@ export default function ImpactOpportunityCard() {
                 MEASURED
               </span>
             </div>
-            <p className="text-xs text-gray-600 mt-1">
+            <p className="text-xs text-lacuna-text-secondary mt-1">
               {epiData.condition}:{" "}
               {epiData.addressablePopulation.pointEstimate}M women [95% CI:{" "}
               {epiData.addressablePopulation.lowerBound}-{epiData
                 .addressablePopulation.upperBound}M]
             </p>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-lacuna-text-muted mt-1">
               Source: {epiData.source}
             </p>
           </div>
@@ -467,12 +467,12 @@ export default function ImpactOpportunityCard() {
                 MEASURED PROXY
               </span>
             </div>
-            <p className="text-xs text-gray-600 mt-1">
+            <p className="text-xs text-lacuna-text-secondary mt-1">
               Current penetration: ~{(estimatedPenetration * 100).toFixed(0)}% |
               Gap: ~
               {((1 - estimatedPenetration) * 100).toFixed(0)}% unmet need
             </p>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-lacuna-text-muted mt-1">
               Source: {penetrationData.dataSource}
             </p>
             <p className="text-xs text-amber-600 mt-1">
@@ -503,11 +503,11 @@ export default function ImpactOpportunityCard() {
                 PROXY
               </span>
             </div>
-            <p className="text-xs text-gray-600 mt-1">
+            <p className="text-xs text-lacuna-text-secondary mt-1">
               Verified stage: {company.verifiedStage} | Proxy stage:{" "}
               {company.clinicalStage.replace("_", " ")}
             </p>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-lacuna-text-muted mt-1">
               Proxy for: Clinical efficacy (unknown for most pre-acquisition
               companies)
             </p>
@@ -522,7 +522,7 @@ export default function ImpactOpportunityCard() {
                 PROXY
               </span>
             </div>
-            <p className="text-xs text-gray-600 mt-1">
+            <p className="text-xs text-lacuna-text-secondary mt-1">
               Not in verified dataset — founder exits and FDA experience are
               unmeasured; OAIS uses neutral defaults (0 exits, no FDA flag).
             </p>
@@ -537,7 +537,7 @@ export default function ImpactOpportunityCard() {
                 PROXY
               </span>
             </div>
-            <p className="text-xs text-gray-600 mt-1">
+            <p className="text-xs text-lacuna-text-secondary mt-1">
               {company.likelyAcquirer
                 ? `Verified acquirer: ${company.likelyAcquirer}`
                 : "No verified acquirer on record — scaling multiplier held at neutral 1.0×"}
@@ -547,7 +547,7 @@ export default function ImpactOpportunityCard() {
       </div>
 
       {/* Transparency Toggle */}
-      <div className="bg-gray-50 rounded-lg">
+      <div className="bg-lacuna-surface-muted rounded-lg">
         <button
           onClick={() => setShowTransparency(!showTransparency)}
           className="w-full px-6 py-4 flex items-center justify-between text-left"
@@ -571,14 +571,14 @@ export default function ImpactOpportunityCard() {
             animate={{ height: "auto", opacity: 1 }}
             className="px-6 pb-6"
           >
-            <div className="bg-white p-4 rounded border border-gray-200">
+            <div className="bg-white p-4 rounded border border-lacuna-border">
               <h5
                 className="font-medium mb-3"
                 style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
               >
                 Critical Transparency Statements
               </h5>
-              <ol className="text-sm space-y-2 text-gray-700 list-decimal list-inside">
+              <ol className="text-sm space-y-2 text-lacuna-text-primary list-decimal list-inside">
                 <li>
                   <strong>Patient volume per company is unknown.</strong>{" "}
                   We proxy with addressable population × penetration gap. This
@@ -610,7 +610,7 @@ export default function ImpactOpportunityCard() {
               </ol>
 
               <h5
-                className="font-medium mt-5 mb-2 text-sm text-gray-600"
+                className="font-medium mt-5 mb-2 text-sm text-lacuna-text-secondary"
                 style={{
                   fontFamily: "'Arial Narrow', sans-serif",
                   textTransform: "uppercase",
@@ -619,13 +619,13 @@ export default function ImpactOpportunityCard() {
               >
                 What we cannot measure directly
               </h5>
-              <ul className="text-sm space-y-1.5 text-gray-600 list-disc list-inside">
+              <ul className="text-sm space-y-1.5 text-lacuna-text-secondary list-disc list-inside">
                 {UNMEASURABLE_FACTORS.slice(0, 3).map((factor, i) => (
                   <li key={i}>
-                    <strong className="text-gray-700">{factor.factor}</strong> —
+                    <strong className="text-lacuna-text-primary">{factor.factor}</strong> —
                     {" "}
                     {factor.why}.{" "}
-                    <span className="text-gray-500 italic">
+                    <span className="text-lacuna-text-muted italic">
                       Proxy: {factor.proxyUsed}
                     </span>
                   </li>

@@ -183,7 +183,7 @@ export default function FairnessAuditV2() {
       </div>
 
       {/* Tab Navigation */}
-      <div className="border-b border-gray-200">
+      <div className="border-b border-lacuna-border">
         <div className="flex gap-1 overflow-x-auto">
           {[
             { id: "overview", label: "Overview" },
@@ -198,7 +198,7 @@ export default function FairnessAuditV2() {
               className={`px-4 py-3 text-sm border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === tab.id
                   ? "border-[#5D4E6D] text-[#5D4E6D] font-medium"
-                  : "border-transparent text-gray-500 hover:text-gray-700"
+                  : "border-transparent text-lacuna-text-muted hover:text-lacuna-text-primary"
               }`}
               style={{
                 fontFamily: "'Arial Narrow', sans-serif",
@@ -221,9 +221,9 @@ export default function FairnessAuditV2() {
         >
           {/* Top-line Metrics */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white border border-gray-200 p-4 rounded-lg">
+            <div className="bg-white border border-lacuna-border p-4 rounded-lg">
               <div
-                className="text-xs text-gray-500 uppercase mb-1"
+                className="text-xs text-lacuna-text-muted uppercase mb-1"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 Sample Size
@@ -237,12 +237,12 @@ export default function FairnessAuditV2() {
               >
                 {sampleCompanies.length}
               </div>
-              <div className="text-xs text-gray-600 mt-1">companies</div>
+              <div className="text-xs text-lacuna-text-secondary mt-1">companies</div>
             </div>
 
-            <div className="bg-white border border-gray-200 p-4 rounded-lg">
+            <div className="bg-white border border-lacuna-border p-4 rounded-lg">
               <div
-                className="text-xs text-gray-500 uppercase mb-1"
+                className="text-xs text-lacuna-text-muted uppercase mb-1"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 Women-Founded
@@ -257,14 +257,14 @@ export default function FairnessAuditV2() {
                 {((parityAnalysis.womenLed / sampleCompanies.length) * 100)
                   .toFixed(0)}%
               </div>
-              <div className="text-xs text-gray-600 mt-1">
+              <div className="text-xs text-lacuna-text-secondary mt-1">
                 {parityAnalysis.womenLed} of {sampleCompanies.length}
               </div>
             </div>
 
-            <div className="bg-white border border-gray-200 p-4 rounded-lg">
+            <div className="bg-white border border-lacuna-border p-4 rounded-lg">
               <div
-                className="text-xs text-gray-500 uppercase mb-1"
+                className="text-xs text-lacuna-text-muted uppercase mb-1"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 Observed Power
@@ -281,12 +281,12 @@ export default function FairnessAuditV2() {
               >
                 {(parityAnalysis.power.power * 100).toFixed(0)}%
               </div>
-              <div className="text-xs text-gray-600 mt-1">to detect effect</div>
+              <div className="text-xs text-lacuna-text-secondary mt-1">to detect effect</div>
             </div>
 
-            <div className="bg-white border border-gray-200 p-4 rounded-lg">
+            <div className="bg-white border border-lacuna-border p-4 rounded-lg">
               <div
-                className="text-xs text-gray-500 uppercase mb-1"
+                className="text-xs text-lacuna-text-muted uppercase mb-1"
                 style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 Fisher P-value
@@ -300,7 +300,7 @@ export default function FairnessAuditV2() {
               >
                 {parityAnalysis.fisher.pValue.toFixed(3)}
               </div>
-              <div className="text-xs text-gray-600 mt-1">
+              <div className="text-xs text-lacuna-text-secondary mt-1">
                 {parityAnalysis.fisher.pValue < 0.05
                   ? "significant"
                   : "not significant"}
@@ -309,14 +309,14 @@ export default function FairnessAuditV2() {
           </div>
 
           {/* Quick Findings */}
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-3"
               style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
             >
               Headline Findings (with Statistical Rigor)
             </h4>
-            <ul className="space-y-2 text-sm text-gray-700">
+            <ul className="space-y-2 text-sm text-lacuna-text-primary">
               <li>
                 • <strong>Women-founded acquisition rate:</strong>{" "}
                 {(parityAnalysis.womenRate * 100).toFixed(0)}% [95% Wilson CI:
@@ -398,7 +398,7 @@ export default function FairnessAuditV2() {
           </div>
 
           {/* Navigation Hint */}
-          <div className="text-center text-sm text-gray-500">
+          <div className="text-center text-sm text-lacuna-text-muted">
             Use the tabs above to explore detailed analyses
           </div>
         </motion.div>
@@ -430,7 +430,7 @@ export default function FairnessAuditV2() {
           animate={{ opacity: 1 }}
           className="space-y-6"
         >
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-4"
               style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
@@ -440,31 +440,31 @@ export default function FairnessAuditV2() {
 
             <div className="space-y-4">
               {/* Wilson CIs */}
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="bg-lacuna-surface-muted p-4 rounded-lg">
                 <h5 className="font-medium text-sm mb-2">
                   Wilson Score Confidence Intervals (better than normal for
                   small n)
                 </h5>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <div className="text-gray-500">
+                    <div className="text-lacuna-text-muted">
                       Women-founded acquisition rate:
                     </div>
                     <div className="font-medium">
                       {(parityAnalysis.womenRate * 100).toFixed(1)}%
-                      <span className="text-gray-500 ml-2">
+                      <span className="text-lacuna-text-muted ml-2">
                         [{(parityAnalysis.womenCI[0] * 100).toFixed(1)}%,{" "}
                         {(parityAnalysis.womenCI[1] * 100).toFixed(1)}%]
                       </span>
                     </div>
                   </div>
                   <div>
-                    <div className="text-gray-500">
+                    <div className="text-lacuna-text-muted">
                       Men-founded acquisition rate:
                     </div>
                     <div className="font-medium">
                       {(parityAnalysis.menRate * 100).toFixed(1)}%
-                      <span className="text-gray-500 ml-2">
+                      <span className="text-lacuna-text-muted ml-2">
                         [{(parityAnalysis.menCI[0] * 100).toFixed(1)}%,{" "}
                         {(parityAnalysis.menCI[1] * 100).toFixed(1)}%]
                       </span>
@@ -474,7 +474,7 @@ export default function FairnessAuditV2() {
               </div>
 
               {/* Fisher's Exact */}
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="bg-lacuna-surface-muted p-4 rounded-lg">
                 <h5 className="font-medium text-sm mb-2">
                   Fisher&apos;s Exact Test (preferred for small samples)
                 </h5>
@@ -489,20 +489,20 @@ export default function FairnessAuditV2() {
                       {parityAnalysis.fisher.oddsRatio.toFixed(2)}
                     </strong>
                   </div>
-                  <div className="text-gray-600 mt-1">
+                  <div className="text-lacuna-text-secondary mt-1">
                     {parityAnalysis.fisher.interpretation}
                   </div>
                 </div>
               </div>
 
               {/* Multiple Testing */}
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="bg-lacuna-surface-muted p-4 rounded-lg">
                 <h5 className="font-medium text-sm mb-2">
                   Multiple Testing Corrections
                 </h5>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <div className="text-gray-500">
+                    <div className="text-lacuna-text-muted">
                       Bonferroni (conservative):
                     </div>
                     <div>
@@ -517,7 +517,7 @@ export default function FairnessAuditV2() {
                     </div>
                   </div>
                   <div>
-                    <div className="text-gray-500">Benjamini-Hochberg FDR:</div>
+                    <div className="text-lacuna-text-muted">Benjamini-Hochberg FDR:</div>
                     <div>
                       FDR target: <strong>0.05</strong>
                     </div>
@@ -530,7 +530,7 @@ export default function FairnessAuditV2() {
               </div>
 
               {/* Power */}
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="bg-lacuna-surface-muted p-4 rounded-lg">
                 <h5 className="font-medium text-sm mb-2">
                   Statistical Power Analysis
                 </h5>
@@ -554,7 +554,7 @@ export default function FairnessAuditV2() {
                       n={parityAnalysis.power.recommendedSampleSize}
                     </strong>
                   </div>
-                  <div className="text-gray-600 mt-1">
+                  <div className="text-lacuna-text-secondary mt-1">
                     {parityAnalysis.power.interpretation}
                   </div>
                 </div>

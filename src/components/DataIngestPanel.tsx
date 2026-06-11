@@ -33,7 +33,7 @@ interface FreeApiStatus {
 
 function CommandBlock({ command }: { command: string }) {
   return (
-    <pre className="mt-2 overflow-x-auto rounded-lg bg-slate-900 px-3 py-2 text-xs text-slate-100">
+    <pre className="mt-2 overflow-x-auto rounded-lg bg-lacuna-surface-inverse px-3 py-2 text-xs text-lacuna-text-inverse">
       {command}
     </pre>
   );

@@ -138,9 +138,9 @@ export default function AcquirerPredictionDashboard() {
       case "medium":
         return "bg-yellow-100 text-yellow-800 border-yellow-300";
       case "low":
-        return "bg-gray-100 text-gray-800 border-gray-300";
+        return "bg-lacuna-surface-subtle text-lacuna-text-primary border-lacuna-border-strong";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-lacuna-surface-subtle text-lacuna-text-primary";
     }
   };
 
@@ -202,14 +202,14 @@ export default function AcquirerPredictionDashboard() {
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-gray-100">
+            <div className="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-lacuna-border-subtle">
               <div className="text-center">
                 <div className="text-lg font-semibold text-green-600">
                   {selectedAnalysis.topMatches.filter((m) =>
                     m.likelihood === "high"
                   ).length}
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-lacuna-text-muted">
                   High Interest Acquirers
                 </div>
               </div>
@@ -217,7 +217,7 @@ export default function AcquirerPredictionDashboard() {
                 <div className="text-lg font-semibold text-lacuna-plum">
                   {formatCurrency(selectedAnalysis.fairValueEstimate.median)}
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-lacuna-text-muted">
                   Estimated Fair Value
                 </div>
               </div>
@@ -227,7 +227,7 @@ export default function AcquirerPredictionDashboard() {
                     ? `+${selectedAnalysis.estimatedBiddingWarPremium}%`
                     : "None"}
                 </div>
-                <div className="text-xs text-gray-500">Potential Premium</div>
+                <div className="text-xs text-lacuna-text-muted">Potential Premium</div>
               </div>
             </div>
 
@@ -247,7 +247,7 @@ export default function AcquirerPredictionDashboard() {
             )}
 
             {/* AI-Generated Insights */}
-            <div className="mt-6 pt-6 border-t border-gray-100">
+            <div className="mt-6 pt-6 border-t border-lacuna-border-subtle">
               <AIInsightsPanel
                 companyName={selectedAnalysis.company.name}
                 sector={selectedAnalysis.company.sector}
@@ -264,20 +264,20 @@ export default function AcquirerPredictionDashboard() {
 
           {/* Acquirer Rankings */}
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-100">
+            <div className="px-6 py-4 border-b border-lacuna-border-subtle">
               <h4 className="font-semibold text-lacuna-plum">
                 Acquirer Rankings
               </h4>
             </div>
-            <div className="divide-y divide-gray-100">
+            <div className="divide-y divide-lacuna-border-subtle">
               {selectedAnalysis.topMatches.map((match, idx) => (
                 <div
                   key={match.acquirer.id}
-                  className="px-6 py-4 hover:bg-gray-50"
+                  className="px-6 py-4 hover:bg-lacuna-surface-muted"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <div className="text-2xl font-bold text-gray-300 w-8">
+                      <div className="text-2xl font-bold text-lacuna-text-muted/80 w-8">
                         #{idx + 1}
                       </div>
                       <div>
@@ -300,7 +300,7 @@ export default function AcquirerPredictionDashboard() {
                         <div className="text-lg font-semibold text-lacuna-plum">
                           {match.matchScore}
                         </div>
-                        <div className="text-xs text-gray-500">Match Score</div>
+                        <div className="text-xs text-lacuna-text-muted">Match Score</div>
                       </div>
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-medium border ${
@@ -314,29 +314,29 @@ export default function AcquirerPredictionDashboard() {
 
                   {/* Match Details */}
                   <div className="mt-3 grid grid-cols-4 gap-4 text-center">
-                    <div className="p-2 bg-gray-50 rounded">
+                    <div className="p-2 bg-lacuna-surface-muted rounded">
                       <div className="text-sm font-semibold text-lacuna-plum">
                         {match.strategicFit}
                       </div>
-                      <div className="text-xs text-gray-500">Strategic Fit</div>
+                      <div className="text-xs text-lacuna-text-muted">Strategic Fit</div>
                     </div>
-                    <div className="p-2 bg-gray-50 rounded">
+                    <div className="p-2 bg-lacuna-surface-muted rounded">
                       <div className="text-sm font-semibold text-lacuna-plum">
                         {match.marketFit}
                       </div>
-                      <div className="text-xs text-gray-500">Market Fit</div>
+                      <div className="text-xs text-lacuna-text-muted">Market Fit</div>
                     </div>
-                    <div className="p-2 bg-gray-50 rounded">
+                    <div className="p-2 bg-lacuna-surface-muted rounded">
                       <div className="text-sm font-semibold text-lacuna-plum">
                         {match.financialFit}
                       </div>
-                      <div className="text-xs text-gray-500">Financial Fit</div>
+                      <div className="text-xs text-lacuna-text-muted">Financial Fit</div>
                     </div>
-                    <div className="p-2 bg-gray-50 rounded">
+                    <div className="p-2 bg-lacuna-surface-muted rounded">
                       <div className="text-sm font-semibold text-green-600">
                         {formatCurrency(match.estimatedValue.median)}
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-lacuna-text-muted">
                         Estimated Value
                       </div>
                     </div>
@@ -373,7 +373,7 @@ export default function AcquirerPredictionDashboard() {
             </div>
 
             <div className="mt-4">
-              <div className="text-sm font-medium text-gray-700 mb-2">
+              <div className="text-sm font-medium text-lacuna-text-primary mb-2">
                 Events that could accelerate:
               </div>
               <div className="flex flex-wrap gap-2">
@@ -401,13 +401,13 @@ export default function AcquirerPredictionDashboard() {
               {selectedAnalysis.sectorComparables.slice(0, 3).map((deal, i) => (
                 <div
                   key={i}
-                  className="flex items-center justify-between p-2 bg-gray-50 rounded"
+                  className="flex items-center justify-between p-2 bg-lacuna-surface-muted rounded"
                 >
                   <div>
                     <span className="font-medium text-sm">
                       {deal.targetName}
                     </span>
-                    <span className="text-gray-500 text-xs ml-2">
+                    <span className="text-lacuna-text-muted text-xs ml-2">
                       → {deal.acquirerName}
                     </span>
                   </div>
@@ -416,7 +416,7 @@ export default function AcquirerPredictionDashboard() {
                       {formatCurrency(deal.dealValue)}
                     </div>
                     {deal.revenueMultiple && (
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-lacuna-text-muted">
                         {deal.revenueMultiple}x revenue
                       </div>
                     )}
@@ -458,11 +458,11 @@ export default function AcquirerPredictionDashboard() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-lacuna-border-subtle">
                 {analyses.map(({ profile, analysis }) => (
                   <tr
                     key={profile.id}
-                    className="hover:bg-gray-50 cursor-pointer"
+                    className="hover:bg-lacuna-surface-muted cursor-pointer"
                     onClick={() => setSelectedCompany(profile.id)}
                   >
                     <td className="px-4 py-3 font-medium text-lacuna-plum">

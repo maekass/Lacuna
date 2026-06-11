@@ -179,7 +179,7 @@ export default function CausalDAG() {
     >
       <CuratedDatasetBanner />
       {/* Header */}
-      <div className="border-b border-gray-200 pb-4">
+      <div className="border-b border-lacuna-border pb-4">
         <h3
           className="text-2xl font-light tracking-tight"
           style={{
@@ -190,7 +190,7 @@ export default function CausalDAG() {
           Causal DAG & Identification Strategy
         </h3>
         <p
-          className="text-sm tracking-widest text-gray-500 mt-1"
+          className="text-sm tracking-widest text-lacuna-text-muted mt-1"
           style={{
             fontFamily: "'Arial Narrow', sans-serif",
             textTransform: "uppercase",
@@ -201,7 +201,7 @@ export default function CausalDAG() {
       </div>
 
       {/* DAG Visualization */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
+      <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <div className="flex items-center justify-between mb-4">
           <h4
             className="font-medium"
@@ -239,7 +239,7 @@ export default function CausalDAG() {
         {/* SVG DAG */}
         <svg
           viewBox="0 0 800 600"
-          className="w-full h-96 bg-gray-50 rounded border border-gray-200"
+          className="w-full h-96 bg-lacuna-surface-muted rounded border border-lacuna-border"
         >
           {/* Edges */}
           {DAG_EDGES.map((edge, index) => {
@@ -357,7 +357,7 @@ export default function CausalDAG() {
       </div>
 
       {/* Identification Strategy */}
-      <div className="bg-gray-50 rounded-lg">
+      <div className="bg-lacuna-surface-muted rounded-lg">
         <button
           onClick={() => setShowIdentification(!showIdentification)}
           className="w-full px-6 py-4 flex items-center justify-between text-left"
@@ -381,7 +381,7 @@ export default function CausalDAG() {
             animate={{ height: "auto", opacity: 1 }}
             className="px-6 pb-6"
           >
-            <div className="bg-white p-4 rounded border border-gray-200 space-y-4">
+            <div className="bg-white p-4 rounded border border-lacuna-border space-y-4">
               <div>
                 <h5
                   className="font-medium mb-2"
@@ -389,7 +389,7 @@ export default function CausalDAG() {
                 >
                   Backdoor Paths We Must Block
                 </h5>
-                <ul className="text-sm space-y-1 text-gray-700">
+                <ul className="text-sm space-y-1 text-lacuna-text-primary">
                   <li>
                     • Founding Year → Funding Stage AND Founding Year → (Sector
                     Momentum) → Acquisition
@@ -412,11 +412,11 @@ export default function CausalDAG() {
                 >
                   Adjustment Set (Measured Confounders)
                 </h5>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-lacuna-text-primary">
                   We condition on:{" "}
                   <strong>Founding Year, Sector Momentum, Network Size</strong>
                 </p>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-lacuna-text-muted mt-1">
                   This blocks all backdoor paths from Funding Stage to
                   Acquisition through measured variables.
                 </p>
@@ -448,7 +448,7 @@ export default function CausalDAG() {
       </div>
 
       {/* Measured Confounders Table */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
+      <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <h4
           className="font-medium mb-4"
           style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
@@ -458,7 +458,7 @@ export default function CausalDAG() {
         <table className="w-full text-sm">
           <thead>
             <tr
-              className="text-xs text-gray-500 uppercase"
+              className="text-xs text-lacuna-text-muted uppercase"
               style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               <th className="text-left py-2">Confounder</th>
@@ -468,9 +468,9 @@ export default function CausalDAG() {
           </thead>
           <tbody>
             {MEASURED_CONFOUNDERS.map((c) => (
-              <tr key={c.name} className="border-t border-gray-100">
+              <tr key={c.name} className="border-t border-lacuna-border-subtle">
                 <td className="py-2 font-medium">{c.name}</td>
-                <td className="py-2 text-gray-600">{c.proxy}</td>
+                <td className="py-2 text-lacuna-text-secondary">{c.proxy}</td>
                 <td className="py-2">
                   <span
                     className={`px-2 py-0.5 rounded text-xs ${
@@ -508,10 +508,10 @@ export default function CausalDAG() {
               >
                 {c.name}
               </h5>
-              <p className="text-sm text-gray-700 mt-1">
+              <p className="text-sm text-lacuna-text-primary mt-1">
                 <strong>Concern:</strong> {c.concern}
               </p>
-              <p className="text-sm text-gray-700 mt-1">
+              <p className="text-sm text-lacuna-text-primary mt-1">
                 <strong>Bias Direction:</strong> {c.bias_direction}
               </p>
               <p className="text-sm text-red-600 mt-1">

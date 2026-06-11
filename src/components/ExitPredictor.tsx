@@ -301,7 +301,7 @@ export default function ExitPredictor() {
   const getScoreColor = (score: number) => {
     if (score > 0.6) return "text-emerald-700 bg-emerald-50 border-emerald-200";
     if (score > 0.35) return "text-amber-700 bg-amber-50 border-amber-200";
-    return "text-slate-600 bg-slate-50 border-slate-200";
+    return "text-lacuna-text-secondary bg-lacuna-surface-muted border-lacuna-border";
   };
 
   const downloadLeaderboardCsv = () => {
@@ -342,15 +342,15 @@ export default function ExitPredictor() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-xl shadow-sm border border-slate-200 p-6"
+      className="bg-white rounded-xl shadow-sm border border-lacuna-border p-6"
     >
       <CuratedDatasetBanner className="mb-4" />
       <div className="flex flex-col gap-4 mb-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-slate-800">
+          <h3 className="text-lg font-semibold text-lacuna-text-primary">
             Acquisition Likelihood Indicators
           </h3>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-lacuna-text-muted">
             {mode === "single"
               ? "Descriptive factor scoring from verified dataset (not a predictive model)"
               : "Ranked descriptive baseline across all verified companies, including historical acquisitions"}
@@ -390,8 +390,8 @@ export default function ExitPredictor() {
               Export CSV
             </button>
           )}
-          <div className="flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full">
-            <span className="text-xs font-medium text-slate-700">
+          <div className="flex items-center gap-2 px-3 py-1 bg-lacuna-surface-subtle rounded-full">
+            <span className="text-xs font-medium text-lacuna-text-primary">
               Descriptive · n={verifiedCompanies.length}
             </span>
           </div>
@@ -431,7 +431,7 @@ export default function ExitPredictor() {
             <div>
               <label
                 htmlFor="exit-predictor-company"
-                className="mb-2 block text-sm font-medium text-slate-700"
+                className="mb-2 block text-sm font-medium text-lacuna-text-primary"
               >
                 Select company
               </label>
@@ -442,7 +442,7 @@ export default function ExitPredictor() {
                   setSelectedCompanyId(event.target.value);
                   setIsPitchBriefOpen(false);
                 }}
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-lacuna-lavender/60 focus:ring-2 focus:ring-lacuna-lavender/30"
+                className="w-full rounded-xl border border-lacuna-border bg-white px-4 py-3 text-sm text-lacuna-text-primary outline-none transition focus:border-lacuna-lavender/60 focus:ring-2 focus:ring-lacuna-lavender/30"
               >
                 {selectablePredictions.map((prediction) => (
                   <option
@@ -461,14 +461,14 @@ export default function ExitPredictor() {
                   key={selectedPrediction.companyId}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="rounded-lg border border-slate-100 p-4 transition-shadow hover:shadow-sm"
+                  className="rounded-lg border border-lacuna-border-subtle p-4 transition-shadow hover:shadow-sm"
                 >
                   <div className="mb-2 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div>
-                      <h4 className="font-semibold text-slate-800">
+                      <h4 className="font-semibold text-lacuna-text-primary">
                         {selectedPrediction.companyName}
                       </h4>
-                      <p className="text-xs text-slate-500">
+                      <p className="text-xs text-lacuna-text-muted">
                         {selectedPrediction.sector} · {selectedPrediction.stage}
                         {" "}
                         · {selectedCompany.hq}
@@ -485,20 +485,20 @@ export default function ExitPredictor() {
                     </div>
                   </div>
 
-                  <div className="grid gap-3 text-sm text-slate-600 sm:grid-cols-2">
-                    <div className="rounded-lg bg-slate-50 p-3">
-                      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                  <div className="grid gap-3 text-sm text-lacuna-text-secondary sm:grid-cols-2">
+                    <div className="rounded-lg bg-lacuna-surface-muted p-3">
+                      <p className="text-xs font-medium uppercase tracking-wide text-lacuna-text-muted">
                         Predicted acquirer
                       </p>
-                      <p className="mt-1 font-medium text-slate-800">
+                      <p className="mt-1 font-medium text-lacuna-text-primary">
                         {selectedPrediction.predictedAcquirer}
                       </p>
                     </div>
-                    <div className="rounded-lg bg-slate-50 p-3">
-                      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                    <div className="rounded-lg bg-lacuna-surface-muted p-3">
+                      <p className="text-xs font-medium uppercase tracking-wide text-lacuna-text-muted">
                         Confidence
                       </p>
-                      <p className="mt-1 font-medium text-slate-800">
+                      <p className="mt-1 font-medium text-lacuna-text-primary">
                         {getConfidenceLabel(selectedPrediction.confidence)}{" "}
                         ({(selectedPrediction.confidence * 100).toFixed(0)}%)
                       </p>
@@ -513,14 +513,14 @@ export default function ExitPredictor() {
                       >
                         <span
                           className={f.present
-                            ? "text-slate-700"
-                            : "text-slate-400"}
+                            ? "text-lacuna-text-primary"
+                            : "text-lacuna-text-muted"}
                         >
                           {f.present ? "●" : "○"} {f.label}
                         </span>
                         <span
                           className={`font-mono ${
-                            f.weight < 0 ? "text-rose-500" : "text-slate-400"
+                            f.weight < 0 ? "text-rose-500" : "text-lacuna-text-muted"
                           }`}
                         >
                           {f.weight > 0 ? "+" : ""}
@@ -540,7 +540,7 @@ export default function ExitPredictor() {
                 </motion.div>
               )
               : (
-                <div className="rounded-lg border border-slate-100 bg-slate-50 p-4 text-sm text-slate-500">
+                <div className="rounded-lg border border-lacuna-border-subtle bg-lacuna-surface-muted p-4 text-sm text-lacuna-text-muted">
                   No non-acquired companies are available for single-company
                   analysis.
                 </div>
@@ -636,8 +636,8 @@ export default function ExitPredictor() {
         />
       )}
 
-      <div className="mt-4 pt-4 border-t border-slate-100">
-        <p className="text-xs text-slate-400 leading-relaxed">
+      <div className="mt-4 pt-4 border-t border-lacuna-border-subtle">
+        <p className="text-xs text-lacuna-text-muted leading-relaxed">
           Scores are deterministic and reproducible. Factor weights derived from
           observed co-occurrence in {verifiedAcquisitions.length}{" "}
           verified acquisitions.{" "}

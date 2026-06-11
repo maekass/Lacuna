@@ -173,18 +173,18 @@ export default function ValuationMatrix() {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+    <div className="bg-white rounded-xl shadow-sm border border-lacuna-border p-6">
       <CuratedDatasetBanner className="mb-4" />
       <div className="flex items-start justify-between mb-2">
         <div>
-          <h3 className="text-lg font-semibold text-slate-800">
+          <h3 className="text-lg font-semibold text-lacuna-text-primary">
             Valuation Matrix
           </h3>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-lacuna-text-muted">
             Median disclosed valuation ($M) by sector × normalized stage
           </p>
         </div>
-        <span className="text-xs text-slate-500 px-2 py-1 bg-slate-50 rounded">
+        <span className="text-xs text-lacuna-text-muted px-2 py-1 bg-lacuna-surface-muted rounded">
           {totalDisclosed}/{totalCompanies} companies with public valuations
         </span>
       </div>
@@ -202,7 +202,7 @@ export default function ValuationMatrix() {
             {sectors.map((sector) => (
               <div
                 key={sector}
-                className="p-2 text-xs font-medium text-slate-600 text-center"
+                className="p-2 text-xs font-medium text-lacuna-text-secondary text-center"
                 title={sector}
               >
                 <div className="flex flex-col items-center gap-1">
@@ -228,7 +228,7 @@ export default function ValuationMatrix() {
                 gridTemplateColumns: `120px repeat(${sectors.length}, 1fr)`,
               }}
             >
-              <div className="p-2 text-xs font-medium text-slate-600 flex items-center">
+              <div className="p-2 text-xs font-medium text-lacuna-text-secondary flex items-center">
                 {STAGE_ORDER[rowIndex]}
               </div>
               {row.map((cell, colIndex) => (
@@ -248,13 +248,13 @@ export default function ValuationMatrix() {
                       : "No companies in this cell"}
                   >
                     {cell.medianValuation > 0 && (
-                      <span className="text-xs font-semibold text-slate-700">
+                      <span className="text-xs font-semibold text-lacuna-text-primary">
                         ${cell.medianValuation}M
                       </span>
                     )}
                     {cell.medianValuation === 0 && cell.totalCount > 0 && (
                       <span
-                        className="text-xs text-slate-400"
+                        className="text-xs text-lacuna-text-muted"
                         title="Companies present, no public valuations"
                       >
                         ·{cell.totalCount}
@@ -270,7 +270,7 @@ export default function ValuationMatrix() {
 
       {/* Legend */}
       <div className="mt-6 flex items-center gap-4">
-        <span className="text-xs text-slate-500">Lower median</span>
+        <span className="text-xs text-lacuna-text-muted">Lower median</span>
         <div className="flex gap-1">
           {["#fce7f3", "#fbcfe8", "#f9a8d4", "#ec4899"].map((color, i) => (
             <div
@@ -280,7 +280,7 @@ export default function ValuationMatrix() {
             />
           ))}
         </div>
-        <span className="text-xs text-slate-500">Higher median</span>
+        <span className="text-xs text-lacuna-text-muted">Higher median</span>
       </div>
 
       {/* Tooltip */}
@@ -288,34 +288,34 @@ export default function ValuationMatrix() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-200"
+          className="mt-4 p-4 bg-lacuna-surface-muted rounded-lg border border-lacuna-border"
         >
-          <h4 className="font-semibold text-slate-800">
+          <h4 className="font-semibold text-lacuna-text-primary">
             {hoveredCell.stage} · {hoveredCell.sector}
           </h4>
           {hoveredCell.medianValuation > 0
             ? (
-              <p className="text-sm text-slate-600 mt-1">
+              <p className="text-sm text-lacuna-text-secondary mt-1">
                 Median valuation:{" "}
                 <span className="font-semibold">
                   ${hoveredCell.medianValuation}M
                 </span>
-                <span className="text-xs text-slate-400 ml-1">
+                <span className="text-xs text-lacuna-text-muted ml-1">
                   (among {hoveredCell.disclosedCount} disclosed)
                 </span>
               </p>
             )
             : (
-              <p className="text-sm text-slate-500 mt-1 italic">
+              <p className="text-sm text-lacuna-text-muted mt-1 italic">
                 No public valuations in this cell
               </p>
             )}
-          <p className="text-sm text-slate-600">
+          <p className="text-sm text-lacuna-text-secondary">
             Companies:{" "}
             <span className="font-semibold">{hoveredCell.totalCount}</span>
           </p>
           {hoveredCell.dealCount > 0 && (
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-lacuna-text-secondary">
               Verified acquisitions:{" "}
               <span className="font-semibold text-pink-600">
                 {hoveredCell.dealCount}
@@ -325,7 +325,7 @@ export default function ValuationMatrix() {
         </motion.div>
       )}
 
-      <p className="mt-4 text-xs text-slate-400 leading-relaxed">
+      <p className="mt-4 text-xs text-lacuna-text-muted leading-relaxed">
         Empty cells reflect honest gaps in the verified dataset — not low
         activity. Medians shown only where ≥1 company has a disclosed valuation.
       </p>

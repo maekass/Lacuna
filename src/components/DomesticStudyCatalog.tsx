@@ -161,7 +161,7 @@ export default function DomesticStudyCatalog() {
             {studies.map((study) => (
               <article
                 key={study.studyId}
-                className="rounded-lg border border-slate-200 p-3 hover:border-lacuna-lavender/60"
+                className="rounded-lg border border-lacuna-border p-3 hover:border-lacuna-lavender/60"
               >
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div className="min-w-0 flex-1">
