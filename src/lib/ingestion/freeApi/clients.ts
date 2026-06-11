@@ -59,7 +59,7 @@ function errResult(
   };
 }
 
-async function secJsonFetch(url: string): Promise<Response> {
+function secJsonFetch(url: string): Promise<Response> {
   return fetch(url, {
     headers: {
       Accept: "application/json",

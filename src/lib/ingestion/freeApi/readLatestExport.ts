@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
+import process from "node:process";
 import type { FreeApiDownloadManifest } from "./types";
 
 const EXPORTS_ROOT = join(process.cwd(), "data/exports/free-apis");

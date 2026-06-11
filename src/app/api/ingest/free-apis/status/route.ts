@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { readLatestFreeApiExport } from "@/lib/ingestion/freeApi/readLatestExport";
 
 /** Latest on-disk free-API batch export (from `npm run download:free-apis`). */
-export async function GET() {
+export function GET() {
   const latest = readLatestFreeApiExport();
 
   if (!latest) {
