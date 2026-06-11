@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getDataMode } from "@/lib/data/datasetProvider";
+import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 import { isVariantStoreEnabled } from "@/lib/genomics/variantStoreConfig";
 import { pingClickHouse } from "@/lib/genomics/clickhouseClient";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
@@ -76,9 +77,8 @@ function loadStaticDatasetMeta(): Pick<
   VerifiedDataset,
   "provenance" | "companies" | "acquirers" | "acquisitions"
 > {
-  const path = join(repoRoot, "src/data/dataset.verified.json");
-  const dataset = JSON.parse(readFileSync(path, "utf8")) as VerifiedDataset;
-  return dataset;
+  // Bundled JSON import — readFileSync fails on Vercel serverless (file not on disk).
+  return getStaticVerifiedDataset();
 }
 
 async function pingDatabase(): Promise<DatabaseHealth> {
