@@ -484,6 +484,7 @@ export default function InvestmentGradeReimbursementIntel() {
                                 payer === "medicaid" ? "bg-amber-500" : "bg-slate-500"
                               }`}
                               style={{ width: `${pct}%` }}
+                              data-width={pct}
                             />
                           </div>
                           <div className="text-xs text-slate-600 capitalize">{payer}: {pct}%</div>
