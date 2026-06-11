@@ -1,8 +1,9 @@
 import { createHash } from "node:crypto";
-import { createClient, type ClickHouseClient } from "@clickhouse/client";
+import { type ClickHouseClient, createClient } from "@clickhouse/client";
+import { query } from "@/lib/data/dbClient";
 import type {
-  PatientDataAccessMode,
   PatientDataAccessLevel,
+  PatientDataAccessMode,
 } from "@/lib/compliance/patientDataGovernance";
 
 export interface AuditEventRow {
@@ -17,7 +18,9 @@ export interface AuditEventRow {
 let clickhouseClient: ClickHouseClient | null = null;
 
 /** @internal Test hook — inject or disable ClickHouse client. */
-export function setAuditClickHouseClient(client: ClickHouseClient | null): void {
+export function setAuditClickHouseClient(
+  client: ClickHouseClient | null,
+): void {
   if (client) {
     clickhouseClient = client;
     return;
@@ -38,6 +41,10 @@ function getAuditClient(): ClickHouseClient | null {
   const database = process.env.CLICKHOUSE_DATABASE?.trim() || "lacuna";
   clickhouseClient = createClient({ url, database });
   return clickhouseClient;
+}
+
+function isPostgresConfigured(): boolean {
+  return !!process.env.DATABASE_URL;
 }
 
 /** SHA-256 hash of client IP — never store raw IPs in audit rows. */
@@ -64,15 +71,13 @@ export function sanitizeAuditResource(resource: string): string {
 }
 
 /**
- * Persist audit row to ClickHouse when CLICKHOUSE_URL is configured.
- * Returns false when sink is unavailable (console-only deployments).
+ * Persist audit row to ClickHouse when CLICKHOUSE_URL is configured,
+ * falling back to Postgres when DATABASE_URL is set.
+ * Returns false when no sink is available (console-only deployments).
  */
 export async function writeAuditEvent(
   event: Omit<AuditEventRow, "actor_hash"> & { actor: string },
 ): Promise<boolean> {
-  const client = getAuditClient();
-  if (!client) return false;
-
   const row: AuditEventRow = {
     timestamp: event.timestamp,
     action: event.action,
@@ -82,10 +87,44 @@ export async function writeAuditEvent(
     mode: event.mode,
   };
 
-  await client.insert({
-    table: "audit_events",
-    values: [row],
-    format: "JSONEachRow",
-  });
-  return true;
+  // Try ClickHouse first (preferred for high-volume analytics)
+  const chClient = getAuditClient();
+  if (chClient) {
+    try {
+      await chClient.insert({
+        table: "audit_events",
+        values: [row],
+        format: "JSONEachRow",
+      });
+      return true;
+    } catch (err) {
+      console.warn("[AUDIT] ClickHouse write failed, trying Postgres:", err);
+    }
+  }
+
+  // Fall back to Postgres
+  if (isPostgresConfigured()) {
+    try {
+      await query(
+        `INSERT INTO audit_events (
+          timestamp, action, resource_type, resource_hash,
+          actor_ip_hash, allowed, mode
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [
+          row.timestamp,
+          row.action,
+          "audit_event",
+          row.resource,
+          row.actor_hash,
+          row.allowed === 1,
+          row.mode,
+        ],
+      );
+      return true;
+    } catch (err) {
+      console.error("[AUDIT] Postgres write failed:", err);
+    }
+  }
+
+  return false;
 }

@@ -112,7 +112,9 @@ export default function DomesticStudyCatalog() {
             <p className="text-2xl font-bold text-lacuna-plum">
               {formatSampleSize(stats.totalSampleSize)}
             </p>
-            <p className="text-xs text-lacuna-blue mt-1">Combined sample size</p>
+            <p className="text-xs text-lacuna-blue mt-1">
+              Combined sample size
+            </p>
           </div>
           <div className="rounded-lg bg-lacuna-pink/10 border border-lacuna-lavender/30 p-3">
             <p className="text-2xl font-bold text-lacuna-plum">
@@ -180,7 +182,9 @@ export default function DomesticStudyCatalog() {
                     <>
                       {" "}
                       · callset{" "}
-                      <code className="text-[10px]">{study.variantCallsetId}</code>
+                      <code className="text-[10px]">
+                        {study.variantCallsetId}
+                      </code>
                     </>
                   )}
                 </p>

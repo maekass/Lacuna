@@ -9,11 +9,11 @@ import {
   CausalDAG,
   CausalInferenceEngine,
   ClinicalTrialTracker,
-  DomesticStudyCatalog,
   ClusteringAnalysis,
   CompanySimilarity,
   CompetitiveAnalysisDashboard,
   DealFlowChart,
+  DomesticStudyCatalog,
   EvidenceMaturityDashboard,
   ExitPredictor,
   ForceNetwork,
@@ -51,7 +51,10 @@ export default function HomePage() {
   const dealsByYear = getVerifiedDealsByYear();
   const totalDealValue = getVerifiedTotalDealValue();
 
-  const valuationDisparity = useMemo(() => getValuationDisparity(), []);
+  const valuationDisparity = useMemo(
+    () => getValuationDisparity(verifiedCompanies),
+    [verifiedCompanies],
+  );
 
   const stats = [
     {
@@ -111,9 +114,10 @@ export default function HomePage() {
               analytics from public sources.
             </p>
             <p className="text-sm text-lacuna-blue/70 mt-3 leading-relaxed">
-              n={verifiedAcquisitions.length} verified deals · SEC EDGAR ingest ·
-              HIPAA/GDPR genomics layer · descriptive analytics only. Not
-              PitchBook, not live market feeds, and not investment advice.
+              n={verifiedAcquisitions.length}{" "}
+              verified deals · SEC EDGAR ingest · HIPAA/GDPR genomics layer ·
+              descriptive analytics only. Not PitchBook, not live market feeds,
+              and not investment advice.
             </p>
           </div>
         </motion.section>

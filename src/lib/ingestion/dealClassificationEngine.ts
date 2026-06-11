@@ -12,6 +12,10 @@ import {
   isServerInferenceConfigured,
   resolveInferenceModel,
 } from "@/lib/ai/inference";
+import {
+  CLASSIFICATION_SYSTEM_PROMPT,
+  buildClassificationPrompt,
+} from "@/lib/ai/prompts";
 import { generateText, type LanguageModel, Output } from "ai";
 import { z } from "zod";
 
@@ -218,27 +222,6 @@ function resolveClassificationModel(override?: LanguageModel) {
   });
 }
 
-function buildClassificationPrompt(input: DealClassificationInput): string {
-  const excerpt = input.filingText.slice(0, 6000);
-  return [
-    "You classify SEC Form 8-K Item 2.01 acquisition disclosures for women's health M&A relevance.",
-    "Be conservative: general healthcare or pharma without female-specific focus → womensHealthRelevant false.",
-    "Only cite terms present in the excerpt; do not invent deal details.",
-    "",
-    input.acquirerName ? `Acquirer: ${input.acquirerName}` : "",
-    input.targetName ? `Target (if known): ${input.targetName}` : "",
-    input.sicCode
-      ? `Acquirer SIC: ${input.sicCode}${
-        input.sicDescription ? ` (${input.sicDescription})` : ""
-      }`
-      : "",
-    "",
-    "Filing excerpt:",
-    excerpt,
-  ]
-    .filter(Boolean)
-    .join("\n");
-}
 
 /**
  * Classify with AI structured output when API keys are set; otherwise keyword-only.
@@ -269,13 +252,20 @@ export async function classifyDealAsync(
           },
         }
         : {}),
+      system: CLASSIFICATION_SYSTEM_PROMPT,
       output: Output.object({
         name: "WomensHealthDealClassification",
         description:
           "Women's health relevance of an SEC 8-K acquisition filing",
         schema: aiClassificationSchema,
       }),
-      prompt: buildClassificationPrompt(input),
+      prompt: buildClassificationPrompt({
+        filingText: input.filingText,
+        targetName: input.targetName,
+        acquirerName: input.acquirerName,
+        sicCode: input.sicCode,
+        sicDescription: input.sicDescription,
+      }),
     });
 
     if (!output) {

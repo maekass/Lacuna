@@ -78,10 +78,13 @@ export function auditPatientDataAccess(
     ...event,
     timestamp: new Date().toISOString(),
   };
-  console.info("[patient-data-audit]", JSON.stringify({
-    ...record,
-    actor: "[hashed-at-sink]",
-  }));
+  console.info(
+    "[patient-data-audit]",
+    JSON.stringify({
+      ...record,
+      actor: "[hashed-at-sink]",
+    }),
+  );
 
   void (async () => {
     try {
@@ -167,9 +170,7 @@ export function redactCallsetFields<T extends CallsetResponseFields>(
     ...callset,
     sampleId: pseudonymizeSampleId(callset.sampleId),
     objectUri: "",
-    notes: callset.notes
-      ? "[redacted — de-identified mode]"
-      : callset.notes,
+    notes: callset.notes ? "[redacted — de-identified mode]" : callset.notes,
   };
   return redacted;
 }

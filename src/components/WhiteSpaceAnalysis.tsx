@@ -5,14 +5,6 @@ import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 
-const SECTORS = [
-  "Fertility",
-  "Mental Health",
-  "General Wellness",
-  "Wearables",
-  "Pelvic Health",
-] as const;
-
 const CHART_WIDTH = 680;
 const CHART_HEIGHT = 420;
 const LEFT_MARGIN = 72;
@@ -21,7 +13,7 @@ const TOP_MARGIN = 36;
 const BOTTOM_MARGIN = 72;
 
 interface SectorPoint {
-  readonly sector: (typeof SECTORS)[number];
+  readonly sector: string;
   readonly dealCount: number;
   readonly avgValuation: number;
   readonly companyCount: number;
@@ -45,14 +37,23 @@ function sectorLabelLines(sector: string): string[] {
 export default function WhiteSpaceAnalysis() {
   const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
 
-  const { sectorPoints, maxDealCount, maxAvgValuation, whiteSpaceSectors } = useMemo(() => {
+  const {
+    sectorPoints,
+    maxDealCount,
+    maxAvgValuation,
+    whiteSpaceSectors,
+    unplottedSectors,
+  } = useMemo(() => {
     const companyById = new Map(
       verifiedCompanies.map((company) => [company.id, company]),
     );
     const totalCompanies = Math.max(1, verifiedCompanies.length);
     const totalDeals = Math.max(1, verifiedAcquisitions.length);
 
-    const rawPoints = SECTORS.map((sector) => {
+    // Derive sectors from the dataset so every tracked company is covered.
+    const sectors = [...new Set(verifiedCompanies.map((c) => c.sector))].sort();
+
+    const rawPoints = sectors.map((sector) => {
       const sectorCompanies = verifiedCompanies.filter((company) => company.sector === sector);
       const valuations = sectorCompanies
         .map((company) => company.lastKnownValuation)
@@ -76,12 +77,21 @@ export default function WhiteSpaceAnalysis() {
       };
     });
 
-    const maxDeals = Math.max(1, ...rawPoints.map((point) => point.dealCount));
-    const maxValuation = Math.max(1, ...rawPoints.map((point) => point.avgValuation));
+    // Singleton sectors with no deal history would all stack at the chart
+    // origin — list them separately instead of plotting an unreadable pile.
+    const plottable = rawPoints.filter(
+      (point) => point.companyCount >= 2 || point.dealCount >= 1,
+    );
+    const unplotted = rawPoints.filter(
+      (point) => point.companyCount < 2 && point.dealCount === 0,
+    );
+
+    const maxDeals = Math.max(1, ...plottable.map((point) => point.dealCount));
+    const maxValuation = Math.max(1, ...plottable.map((point) => point.avgValuation));
     const plotWidth = CHART_WIDTH - LEFT_MARGIN - RIGHT_MARGIN;
     const plotHeight = CHART_HEIGHT - TOP_MARGIN - BOTTOM_MARGIN;
 
-    const plotted = rawPoints.map((point) => {
+    const plotted = plottable.map((point) => {
       const radius = Math.max(18, Math.sqrt(point.companyCount) * 10);
       const xRatio = maxDeals === 0 ? 0 : point.dealCount / maxDeals;
       const yRatio = maxValuation === 0 ? 0 : point.avgValuation / maxValuation;
@@ -111,6 +121,7 @@ export default function WhiteSpaceAnalysis() {
       maxDealCount: maxDeals,
       maxAvgValuation: maxValuation,
       whiteSpaceSectors: plotted.filter((point) => point.isWhiteSpace),
+      unplottedSectors: unplotted,
     };
   }, [verifiedCompanies, verifiedAcquisitions]);
 
@@ -271,6 +282,12 @@ export default function WhiteSpaceAnalysis() {
               No sector currently screens as white space on the verified dataset mix.
             </div>
           )}
+        {unplottedSectors.length > 0 && (
+          <p className="text-xs text-slate-500">
+            Not plotted (single tracked company, no recorded deals):{" "}
+            {unplottedSectors.map((point) => point.sector).join(", ")}.
+          </p>
+        )}
       </div>
     </motion.div>
   );

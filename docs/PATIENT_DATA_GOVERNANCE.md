@@ -6,11 +6,11 @@ VCFs — this document defines the guardrails.
 
 ## Data classification
 
-| Class              | Examples                         | Default access        |
-| ------------------ | -------------------------------- | --------------------- |
+| Class              | Examples                         | Default access          |
+| ------------------ | -------------------------------- | ----------------------- |
 | Public demo        | `lacuna-infra-seed` callsets     | De-identified summaries |
-| De-identified      | Gene/chrom/pos variant summaries | `de_identified` mode  |
-| Identifiable (PHI) | `sample_id`, raw VCF blobs       | `authorized` + API key |
+| De-identified      | Gene/chrom/pos variant summaries | `de_identified` mode    |
+| Identifiable (PHI) | `sample_id`, raw VCF blobs       | `authorized` + API key  |
 
 ## Environment controls
 
@@ -26,17 +26,19 @@ LACUNA_PATIENT_DATA_API_KEY=<rotate-regularly>
 LACUNA_INGEST_CONSENT_REF=IRB-2024-001
 ```
 
-| Mode             | Variant API | Sample IDs | Raw VCF presign |
-| ---------------- | ----------- | ---------- | --------------- |
-| `blocked`        | Denied      | Denied     | Denied          |
-| `de_identified`  | Allowed     | Pseudonym  | Denied          |
-| `authorized`     | Allowed     | Full       | Allowed (Bearer) |
+| Mode            | Variant API | Sample IDs | Raw VCF presign  |
+| --------------- | ----------- | ---------- | ---------------- |
+| `blocked`       | Denied      | Denied     | Denied           |
+| `de_identified` | Allowed     | Pseudonym  | Denied           |
+| `authorized`    | Allowed     | Full       | Allowed (Bearer) |
 
 ## API behavior
 
 - `GET /api/genomics/variants` — minimum necessary variant summaries
-- `GET /api/genomics/callsets` — redacts `sampleId` and `objectUri` unless authorized
-- `GET /api/genomics/callsets/{id}/object` — **403** unless `authorized` + Bearer token
+- `GET /api/genomics/callsets` — redacts `sampleId` and `objectUri` unless
+  authorized
+- `GET /api/genomics/callsets/{id}/object` — **403** unless `authorized` +
+  Bearer token
 - `GET /api/genomics/markers` — static disease-marker catalog (no PHI)
 
 All genomics reads emit `[patient-data-audit]` JSON logs. When `CLICKHOUSE_URL`
@@ -46,28 +48,29 @@ paths in audit rows.
 
 ### Why ClickHouse (not Postgres)
 
-| Factor            | ClickHouse                         | Postgres                    |
-| ----------------- | ---------------------------------- | --------------------------- |
-| Co-location       | Same store as variant summaries    | Separate from genomics path |
-| Access pattern    | Append-only audit time series      | OLTP row inserts            |
-| Vercel demo       | Optional — console fallback        | Would need `DATABASE_URL`   |
+| Factor         | ClickHouse                      | Postgres                    |
+| -------------- | ------------------------------- | --------------------------- |
+| Co-location    | Same store as variant summaries | Separate from genomics path |
+| Access pattern | Append-only audit time series   | OLTP row inserts            |
+| Vercel demo    | Optional — console fallback     | Would need `DATABASE_URL`   |
 
 ClickHouse keeps compliance logs beside genomics data without mixing PHI into
 the M&A Postgres schema. Apply with `npm run clickhouse:migrate`.
 
-| Column       | Notes                                      |
-| ------------ | ------------------------------------------ |
-| `timestamp`  | ISO-8601 access time                       |
+| Column       | Notes                                                |
+| ------------ | ---------------------------------------------------- |
+| `timestamp`  | ISO-8601 access time                                 |
 | `action`     | `read_summary` / `read_identifiers` / `download_raw` |
-| `resource`   | Route key only (sanitized)                   |
-| `actor_hash` | SHA-256 of IP + `LACUNA_AUDIT_SALT`        |
-| `allowed`    | 0 or 1                                     |
-| `mode`       | `blocked` / `de_identified` / `authorized` |
+| `resource`   | Route key only (sanitized)                           |
+| `actor_hash` | SHA-256 of IP + `LACUNA_AUDIT_SALT`                  |
+| `allowed`    | 0 or 1                                               |
+| `mode`       | `blocked` / `de_identified` / `authorized`           |
 
 ## Ingest governance
 
 VCF ingest runs on the **standalone ingest worker** — not Vercel serverless.
-`POST /api/genomics/ingest` returns 501. See [INGEST_WORKER.md](./INGEST_WORKER.md).
+`POST /api/genomics/ingest` returns 501. See
+[INGEST_WORKER.md](./INGEST_WORKER.md).
 
 ```bash
 # Demo seed — no consent ref required
@@ -91,13 +94,15 @@ LACUNA_INGEST_CONSENT_REF=IRB-2024-001 npm run ingest:worker -- \
 
 - [ ] Lawful basis documented (`LACUNA_INGEST_CONSENT_REF`)
 - [ ] Data processing agreement with subprocessors
-- [ ] Right to erasure procedure (delete callset row + S3 object + variant partition)
+- [ ] Right to erasure procedure (delete callset row + S3 object + variant
+      partition)
 - [ ] Retention schedule per study
 - [ ] EU data residency if required (ClickHouse/S3 region pinning)
 
 ## Vercel demo
 
-`LACUNA_VARIANT_STORE=off` — variant APIs return 503; no patient data paths active.
+`LACUNA_VARIANT_STORE=off` — variant APIs return 503; no patient data paths
+active.
 
 ## Related
 

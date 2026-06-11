@@ -1,41 +1,31 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import PitchBrief, { getConfidenceLabel, getMarketPosition } from "@/components/PitchBrief";
 import { foregroundPortfolio } from "@/data/verifiedData";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { getVerifiedCompaniesForAnalysis } from "@/lib/data/verifiedDatasetAdapters";
 import type {
   VerifiedAcquisitionView,
-  VerifiedCompanyView,
   VerifiedDerivedData,
 } from "@/lib/data/verifiedDataHelpers";
 import type { Company, ExitPrediction } from "@/lib/types";
 
-interface PredictionFactor {
+export interface PredictionFactor {
   label: string;
   present: boolean;
   weight: number;
 }
 
-interface PredictionRow extends ExitPrediction {
+export interface PredictionRow extends ExitPrediction {
   sector: Company["sector"];
   stage: Company["stage"];
   isAcquired: boolean;
   indicatorScore: number;
   factorDetails: PredictionFactor[];
   similarPriorExits: number;
-}
-
-interface PitchBriefProps {
-  readonly company: VerifiedCompanyView;
-  readonly prediction: PredictionRow;
-  readonly comparableExits: readonly VerifiedAcquisitionView[];
-  readonly marketPosition: "Emerging" | "Growth" | "Late-stage";
-  readonly foregroundFitLabel: string;
-  readonly foregroundFitTone: "portfolio" | "sector" | "none";
-  readonly onClose: () => void;
 }
 
 type PredictorMode = "single" | "leaderboard";
@@ -50,188 +40,6 @@ function getMedian(values: number[], fallback: number) {
   if (values.length === 0) return fallback;
   const sorted = [...values].sort((a, b) => a - b);
   return sorted[Math.floor(sorted.length / 2)];
-}
-
-function formatDealValue(value?: number) {
-  if (typeof value !== "number") return "Undisclosed";
-  if (value >= 1000) return `$${(value / 1000).toFixed(1)}B`;
-  if (value >= 100) return `$${value.toFixed(0)}M`;
-  return `$${value.toFixed(1)}M`;
-}
-
-function formatDealDate(value: string) {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-  });
-}
-
-function getConfidenceLabel(confidence: number) {
-  if (confidence >= 0.75) return "High";
-  if (confidence >= 0.55) return "Medium";
-  return "Low";
-}
-
-function getMarketPosition(stage: Company["stage"]): "Emerging" | "Growth" | "Late-stage" {
-  if (stage === "Seed" || stage === "Series A") return "Emerging";
-  if (stage === "Series B" || stage === "Series C") return "Growth";
-  return "Late-stage";
-}
-
-function PitchBrief(
-  {
-    company,
-    prediction,
-    comparableExits,
-    marketPosition,
-    foregroundFitLabel,
-    foregroundFitTone,
-    onClose,
-  }: PitchBriefProps,
-) {
-  const foregroundFitClasses = foregroundFitTone === "portfolio"
-    ? "bg-lacuna-pink/10 text-lacuna-plum border-lacuna-lavender/40"
-    : foregroundFitTone === "sector"
-      ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-      : "bg-slate-50 text-slate-600 border-slate-200";
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 p-4 print:block print:bg-transparent print:p-0">
-      <button
-        type="button"
-        aria-label="Close pitch brief"
-        onClick={onClose}
-        className="absolute inset-0 cursor-default print:hidden"
-      />
-      <div className="print:shadow-none relative z-10 w-full max-w-2xl rounded-2xl bg-white shadow-2xl print:max-w-none print:rounded-none">
-        <div className="print:shadow-none p-6 sm:p-8">
-          <div className="mb-6 flex items-start justify-between gap-4 print:hidden">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-lacuna-blue/70">
-                Pitch Brief
-              </p>
-              <h4 className="mt-1 text-2xl font-semibold text-lacuna-plum">
-                {company.name}
-              </h4>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => window.print()}
-                className="rounded-xl border border-lacuna-lavender/40 px-3 py-2 text-sm font-medium text-lacuna-plum transition-colors hover:bg-lacuna-pink/10"
-              >
-                Print / Save PDF
-              </button>
-              <button
-                type="button"
-                onClick={onClose}
-                className="rounded-full border border-slate-200 px-3 py-1 text-lg leading-none text-slate-500 transition-colors hover:bg-slate-50 hover:text-slate-700"
-              >
-                ×
-              </button>
-            </div>
-          </div>
-
-          <div className="mb-6 border-b border-slate-100 pb-5">
-            <div className="flex flex-wrap items-center gap-2">
-              <h4 className="text-2xl font-semibold text-lacuna-plum print:block sm:hidden">
-                {company.name}
-              </h4>
-              <span className="rounded-full bg-lacuna-pink/10 px-3 py-1 text-xs font-medium text-lacuna-plum">
-                {company.sector}
-              </span>
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
-                {prediction.stage}
-              </span>
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
-                {company.hq}
-              </span>
-            </div>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600">
-              {company.description}
-            </p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <h5 className="text-sm font-semibold text-slate-800">Exit Outlook</h5>
-              <div className="mt-3 space-y-2 text-sm text-slate-600">
-                <p>
-                  <span className="font-medium text-slate-800">Exit probability:</span>{" "}
-                  {(prediction.exitProbability * 100).toFixed(1)}%
-                </p>
-                <p>
-                  <span className="font-medium text-slate-800">Predicted acquirer:</span>{" "}
-                  {prediction.predictedAcquirer}
-                </p>
-                <p>
-                  <span className="font-medium text-slate-800">Confidence level:</span>{" "}
-                  {getConfidenceLabel(prediction.confidence)} ({(prediction.confidence * 100).toFixed(0)}%)
-                </p>
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <h5 className="text-sm font-semibold text-slate-800">Market Position</h5>
-              <div className="mt-3 space-y-2 text-sm text-slate-600">
-                <p>
-                  <span className="font-medium text-slate-800">Cluster:</span>{" "}
-                  {marketPosition}
-                </p>
-                <p>
-                  <span className="font-medium text-slate-800">Stage basis:</span>{" "}
-                  {prediction.stage}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-4 rounded-xl border border-slate-200 bg-white p-4">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <h5 className="text-sm font-semibold text-slate-800">Foreground Fit</h5>
-              <span className={`rounded-full border px-3 py-1 text-xs font-medium ${foregroundFitClasses}`}>
-                {foregroundFitLabel}
-              </span>
-            </div>
-          </div>
-
-          <div className="mt-6 rounded-xl border border-slate-200 bg-white p-4">
-            <div className="mb-3 flex items-center justify-between gap-3">
-              <h5 className="text-sm font-semibold text-slate-800">Comparable Exits</h5>
-              <span className="text-xs text-slate-500">Same sector, verified dataset</span>
-            </div>
-            <div className="space-y-3">
-              {comparableExits.length > 0
-                ? comparableExits.map((deal) => (
-                  <div
-                    key={deal.id}
-                    className="rounded-lg border border-slate-100 bg-slate-50 p-3"
-                  >
-                    <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-                      <div>
-                        <p className="font-medium text-slate-800">{deal.targetName}</p>
-                        <p className="text-sm text-slate-600">{deal.acquirerName}</p>
-                      </div>
-                      <div className="text-sm text-slate-600 sm:text-right">
-                        <p className="font-medium text-slate-800">{formatDealValue(deal.dealValue)}</p>
-                        <p>{formatDealDate(deal.closedDate ?? deal.announcedDate)}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))
-                : (
-                  <p className="text-sm text-slate-500">
-                    No same-sector verified exits are available in the current dataset.
-                  </p>
-                )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 }
 
 function pickLikelyAcquirer(
@@ -409,19 +217,8 @@ export default function ExitPredictor() {
     [foregroundNameSet, verifiedCompanies],
   );
 
-  useEffect(() => {
-    if (
-      selectablePredictions.length > 0 &&
-      !selectablePredictions.some((prediction) => prediction.companyId === selectedCompanyId)
-    ) {
-      setSelectedCompanyId(selectablePredictions[0].companyId);
-    }
-  }, [selectablePredictions, selectedCompanyId]);
-
-  useEffect(() => {
-    setIsPitchBriefOpen(false);
-  }, [selectedCompanyId]);
-
+  // Selection falls back to the first prediction when the stored id is no
+  // longer selectable — derived here instead of synced via effects.
   const selectedPrediction = useMemo(
     () =>
       selectablePredictions.find((prediction) => prediction.companyId === selectedCompanyId) ??
@@ -595,8 +392,11 @@ export default function ExitPredictor() {
             </label>
             <select
               id="exit-predictor-company"
-              value={selectedCompanyId}
-              onChange={(event) => setSelectedCompanyId(event.target.value)}
+              value={selectedPrediction?.companyId ?? ""}
+              onChange={(event) => {
+                setSelectedCompanyId(event.target.value);
+                setIsPitchBriefOpen(false);
+              }}
               className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-lacuna-lavender/60 focus:ring-2 focus:ring-lacuna-lavender/30"
             >
               {selectablePredictions.map((prediction) => (

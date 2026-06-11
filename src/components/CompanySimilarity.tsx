@@ -300,7 +300,7 @@ export default function CompanySimilarity() {
         <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
           {foregroundMatches.portfolioCount === 0
             ? "No Foreground portfolio companies were found in the verified dataset, so a portfolio centroid could not be computed."
-            : `Only ${foregroundMatches.portfolioCount} Foreground portfolio compan${foregroundMatches.portfolioCount === 1 ? "y" : "ies"} were found in the verified dataset, so these matches are directional.`}
+            : `Only ${foregroundMatches.portfolioCount} of ${foregroundPortfolio.length} Foreground portfolio compan${foregroundMatches.portfolioCount === 1 ? "y is" : "ies are"} in the verified dataset — the "centroid" is effectively that compan${foregroundMatches.portfolioCount === 1 ? "y's profile" : "ies' average"}, so treat these matches as directional, not representative of the full portfolio.`}
         </div>
       )}
 

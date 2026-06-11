@@ -89,7 +89,9 @@ export async function loadResearchStudiesPage(
 /**
  * Aggregate sample-size stats from seeded Postgres rows.
  */
-export async function computeResearchStudyStatsFromDb(): Promise<StudySampleStats> {
+export async function computeResearchStudyStatsFromDb(): Promise<
+  StudySampleStats
+> {
   const rows = await query<{
     institution: DomesticInstitution;
     studies: string;

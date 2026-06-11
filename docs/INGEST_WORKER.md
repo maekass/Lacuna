@@ -22,12 +22,12 @@ flowchart LR
   app -->|presign| s3
 ```
 
-| Component        | Role                                              |
-| ---------------- | ------------------------------------------------- |
-| `ingest-worker`  | Long-running stream parse + batch insert          |
-| Object storage   | Raw VCF blobs (local `data/variants/` or S3)      |
-| ClickHouse       | Callset catalog + variant summaries                 |
-| Vercel app       | `GET /api/genomics/*` only                          |
+| Component       | Role                                         |
+| --------------- | -------------------------------------------- |
+| `ingest-worker` | Long-running stream parse + batch insert     |
+| Object storage  | Raw VCF blobs (local `data/variants/` or S3) |
+| ClickHouse      | Callset catalog + variant summaries          |
+| Vercel app      | `GET /api/genomics/*` only                   |
 
 ## Local (Docker Compose)
 
@@ -61,13 +61,13 @@ npm run ingest:worker -- \
 
 ## Environment
 
-| Variable                   | Required | Notes                                      |
-| -------------------------- | -------- | ------------------------------------------ |
-| `CLICKHOUSE_URL`           | Yes      | Same as variant store                      |
-| `LACUNA_VARIANT_STORE`     | Yes      | `clickhouse`                               |
-| `LACUNA_INGEST_CONSENT_REF`| Yes*     | *Waived for `lacuna-infra-seed` demo study |
-| `LACUNA_OBJECT_STORAGE`    | Yes      | `local` or `s3`                            |
-| `LACUNA_S3_BUCKET`         | If S3    | Unchanged from variant store docs          |
+| Variable                    | Required | Notes                                      |
+| --------------------------- | -------- | ------------------------------------------ |
+| `CLICKHOUSE_URL`            | Yes      | Same as variant store                      |
+| `LACUNA_VARIANT_STORE`      | Yes      | `clickhouse`                               |
+| `LACUNA_INGEST_CONSENT_REF` | Yes*     | *Waived for `lacuna-infra-seed` demo study |
+| `LACUNA_OBJECT_STORAGE`     | Yes      | `local` or `s3`                            |
+| `LACUNA_S3_BUCKET`          | If S3    | Unchanged from variant store docs          |
 
 Governance: [PATIENT_DATA_GOVERNANCE.md](./PATIENT_DATA_GOVERNANCE.md).
 
@@ -75,7 +75,8 @@ Governance: [PATIENT_DATA_GOVERNANCE.md](./PATIENT_DATA_GOVERNANCE.md).
 
 1. Create a **Background Worker** service linked to this repo.
 2. **Dockerfile path:** `Dockerfile.ingest`
-3. **Start command:** leave default (`ENTRYPOINT` runs worker; pass CLI args per job)
+3. **Start command:** leave default (`ENTRYPOINT` runs worker; pass CLI args per
+   job)
 4. Set env vars above plus AWS credentials if using S3.
 5. Run one-off jobs from the Render shell or trigger via your orchestrator — not
    from Vercel.

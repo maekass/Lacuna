@@ -39,9 +39,11 @@ describe("GET /api/research/studies", () => {
     const body = await response.json();
 
     expect(response.status).toBe(200);
-    expect(body.studies.every((s: { institution: string }) =>
-      s.institution === "harvard"
-    )).toBe(true);
+    expect(
+      body.studies.every((s: { institution: string }) =>
+        s.institution === "harvard"
+      ),
+    ).toBe(true);
   });
 
   it("loads from Postgres in db mode (success)", async () => {
@@ -73,7 +75,9 @@ describe("GET /api/research/studies", () => {
 
     const { GET } = await import("@/app/api/research/studies/route");
     const response = await GET(
-      new Request("http://localhost/api/research/studies?institution=nih&limit=10"),
+      new Request(
+        "http://localhost/api/research/studies?institution=nih&limit=10",
+      ),
     );
     const body = await response.json();
 

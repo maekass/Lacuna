@@ -58,16 +58,16 @@ export const DOMESTIC_TRIAL_PRESETS: readonly InstitutionTrialPreset[] = [
   {
     id: "maternal-health",
     label: "Maternal Health",
-    condition: "pregnancy postpartum preeclampsia gestational maternal",
+    condition: "maternal mortality morbidity preeclampsia gestational hypertension",
     description:
-      "Maternal health scan — pregnancy, postpartum care, hypertensive disorders, and gestational complications",
+      "Maternal health scan — maternal mortality and morbidity, hypertensive disorders, and gestational complications",
   },
   {
     id: "pregnancy-postpartum",
     label: "Pregnancy & Postpartum",
-    condition: "pregnancy postpartum preeclampsia gestational maternal",
+    condition: "pregnancy prenatal postpartum preterm birth delivery recovery",
     description:
-      "Pregnancy and postpartum trials — prenatal care, hypertensive disorders, delivery, and recovery",
+      "Pregnancy and postpartum trials — prenatal care, preterm birth, delivery, and postpartum recovery",
   },
   {
     id: "perinatal-mental-health",

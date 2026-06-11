@@ -14,94 +14,20 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import type { StrategicPositioningResult } from "@/lib/network/networkStatistics";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
-import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
+import type { CompanyPosition } from "@/lib/network/strategicPositioningHelpers";
+import {
+  clamp,
+  getStagePosition,
+  hashString,
+  pillarColors,
+  pillarMap,
+  sectorAxisPositions,
+  sectorNodeColors,
+  stageAxisPositions,
+} from "@/lib/network/strategicPositioningHelpers";
 
 interface StrategicPositioningMapProps {
   result: StrategicPositioningResult;
-}
-
-const QUADRANT_COLORS = {
-  specialist_high_velocity: "#E8B4B8",
-  specialist_low_velocity: "#B8A9C9",
-  generalist_high_velocity: "#4A5D8A",
-  generalist_low_velocity: "#5D4E6D",
-};
-
-const QUADRANT_LABELS = {
-  specialist_high_velocity: "Focused Aggressive",
-  specialist_low_velocity: "Selective Specialist",
-  generalist_high_velocity: "Aggressive Diversifier",
-  generalist_low_velocity: "Diversified Observer",
-};
-
-const pillarMap: Record<string, string> = {
-  Fertility: "Transformative Innovation",
-  "Mental Health": "Access",
-  "General Wellness": "Affordability",
-  "Pelvic Health": "Systemic Change",
-  Wearables: "Transformative Innovation",
-};
-
-const pillarColors: Record<string, string> = {
-  "Transformative Innovation": "#7C3AED",
-  Access: "#059669",
-  Affordability: "#D97706",
-  "Systemic Change": "#DC2626",
-};
-
-const sectorAxisPositions: Record<string, number> = {
-  Fertility: 0.14,
-  "Pelvic Health": 0.34,
-  "Mental Health": 0.54,
-  "General Wellness": 0.74,
-  Wearables: 0.9,
-};
-
-const stageAxisPositions = [
-  { label: "Public", value: 0.95 },
-  { label: "Pre-IPO", value: 0.86 },
-  { label: "Late Stage", value: 0.76 },
-  { label: "Series C+", value: 0.62 },
-  { label: "Series B", value: 0.48 },
-  { label: "Series A", value: 0.34 },
-  { label: "Seed", value: 0.18 },
-] as const;
-
-const sectorNodeColors: Record<string, string> = {
-  Fertility: "#B8A9C9",
-  "Mental Health": "#4A5D8A",
-  "General Wellness": "#E8B4B8",
-  "Pelvic Health": "#5D4E6D",
-  Wearables: "#94A3B8",
-};
-
-interface CompanyPosition extends VerifiedCompanyView {
-  xPosition: number;
-  yPosition: number;
-  pillar?: string;
-}
-
-function clamp(value: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, value));
-}
-
-function hashString(value: string) {
-  let hash = 0;
-  for (let i = 0; i < value.length; i++) {
-    hash = (hash * 31 + value.charCodeAt(i)) >>> 0;
-  }
-  return hash;
-}
-
-function getStagePosition(stage: string) {
-  if (/public/i.test(stage)) return 0.95;
-  if (/pre-ipo/i.test(stage)) return 0.86;
-  if (/series d|series e|series f|late stage/i.test(stage)) return 0.76;
-  if (/series c/i.test(stage)) return 0.62;
-  if (/series b/i.test(stage)) return 0.48;
-  if (/series a/i.test(stage)) return 0.34;
-  if (/seed|pre-seed/i.test(stage)) return 0.18;
-  return 0.52;
 }
 
 export default function StrategicPositioningMap(
@@ -123,9 +49,19 @@ export default function StrategicPositioningMap(
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
 
+  // Only sectors with a labeled x-axis position are plotted; unmapped sectors
+  // would otherwise pile into an unlabeled blob at the chart center.
+  const mappedCompanies = useMemo(
+    () =>
+      verifiedCompanies.filter((company) =>
+        company.sector in sectorAxisPositions
+      ),
+    [verifiedCompanies],
+  );
+
   const companyPositions = useMemo(
     () =>
-      verifiedCompanies.map((company, index) => {
+      mappedCompanies.map((company, index) => {
         const hash = hashString(`${company.id}-${company.name}-${index}`);
         const xJitter = (((hash % 11) - 5) / 100);
         const yJitter = ((((Math.floor(hash / 11)) % 9) - 4) / 120);
@@ -140,8 +76,12 @@ export default function StrategicPositioningMap(
           pillar: pillarMap[company.sector],
         };
       }),
-    [verifiedCompanies],
+    [mappedCompanies],
   );
+
+  const sectorCoverageNote =
+    `Showing ${mappedCompanies.length} of ${verifiedCompanies.length} companies ` +
+    `across the ${Object.keys(sectorAxisPositions).length} sectors labeled on the x-axis.`;
 
   const pillarPatterns = useMemo(() => {
     const counts = new Map<string, number>();
@@ -181,7 +121,8 @@ export default function StrategicPositioningMap(
       {/* Caveat Banner */}
       <div className="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-lg">
         <p className="text-sm text-amber-800">
-          <strong>Qualitative insight only:</strong> {result.caveat}
+          <strong>Qualitative insight only:</strong> {result.caveat}{" "}
+          {sectorCoverageNote}
         </p>
       </div>
 
