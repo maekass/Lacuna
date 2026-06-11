@@ -49,12 +49,21 @@ export const metadata: Metadata = {
     siteName: "Lacuna",
     type: "website",
     locale: "en_US",
+    images: [
+      {
+        url: "/api/og",
+        width: 1200,
+        height: 630,
+        alt: "Lacuna — Women's Health M&A Diligence Stack",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Lacuna — Women's Health M&A Diligence Stack",
     description:
       "Verified deals, clinical trial search, genomics governance, and cited analytics. BSL 1.1.",
+    images: ["/api/og"],
   },
   robots: {
     index: true,
