@@ -23,6 +23,21 @@ export interface HealthEquityFocusArea {
 
 export const HEALTH_EQUITY_FOCUS_AREAS: readonly HealthEquityFocusArea[] = [
   {
+    id: "maternal-mortality",
+    title: "Maternal mortality prevention",
+    summary:
+      "Severe maternal morbidity and mortality disproportionately affect Black women (3.4x higher death rate). Remote monitoring, culturally competent care models, and early-warning systems are priority investment areas.",
+    disparityLabel:
+      "Black women: 3.4x higher maternal mortality vs white women; 80% of deaths preventable (CDC 2024; NIHB 2023)",
+    dataTier: "cited_epidemiology",
+    source:
+      "CDC Pregnancy Mortality Surveillance System (2024); NIH IMPROVE Initiative; NIHB maternal health report (2023)",
+    sourceYear: 2024,
+    relatedSectors: ["Maternal Care", "Digital Health", "Diagnostics", "Remote Monitoring"],
+    markerGenes: [],
+    epidemiologyCondition: "Severe Maternal Morbidity",
+  },
+  {
     id: "pcos-genetics",
     title: "PCOS genetic markers",
     summary:

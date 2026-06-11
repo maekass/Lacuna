@@ -2,6 +2,7 @@
 
 import {
   ClinicalTrialTracker,
+  CommercializationReadiness,
   DomesticStudyCatalog,
   EvidenceMaturityDashboard,
   HealthEquityDashboard,
@@ -55,7 +56,7 @@ export default function ResearchPage() {
       <MotionSection id="health-equity" delay={0.15} className={SECTION}>
         <SectionHeader
           title="Genetic Markers & Health Equity"
-          description="PCOS, hereditary breast cancer, sickle cell, lupus, and Lynch syndrome markers — with disparities that disproportionately affect Black women in the verified portfolio."
+          description="Maternal mortality, PCOS, hereditary breast cancer, sickle cell, lupus, and Lynch syndrome — with disparities that disproportionately affect Black women in the verified portfolio."
         />
         <HealthEquityDashboard />
       </MotionSection>
@@ -66,6 +67,14 @@ export default function ResearchPage() {
           description="How much real-world health impact could these acquisitions have? We score each honestly — and tell you what we can't measure, too."
         />
         <ImpactOpportunityCard />
+      </MotionSection>
+
+      <MotionSection id="commercialization-readiness" delay={0.25} className={SECTION}>
+        <SectionHeader
+          title="From Lab to Venture"
+          description="For NIH researchers and academic founders evaluating commercialization pathways — evidence maturity, reimbursement readiness, and acquirer sector activity."
+        />
+        <CommercializationReadiness />
       </MotionSection>
     </div>
   );

@@ -38,6 +38,21 @@ export interface EpidemiologyData {
 // Peer-reviewed epidemiology estimates (US only, for consistency)
 export const EPIDEMIOLOGY_DATABASE: EpidemiologyData[] = [
   {
+    condition: "Severe Maternal Morbidity",
+    addressablePopulation: {
+      pointEstimate: 3.6,
+      lowerBound: 3.2,
+      upperBound: 4.0,
+      unit: "millions",
+    },
+    source:
+      "CDC Pregnancy Mortality Surveillance System (2024); NIH IMPROVE Initiative; NICHD Preeclampsia prevalence estimates",
+    year: 2024,
+    confidence: "high",
+    notes:
+      "~60,000 women experience severe maternal morbidity annually; 3.4x higher mortality for Black women; 80% of deaths preventable; includes preeclampsia, hemorrhage, sepsis complications",
+  },
+  {
     condition: "PCOS (Polycystic Ovary Syndrome)",
     addressablePopulation: {
       pointEstimate: 5.0,

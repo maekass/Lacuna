@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { TooltipProvider } from "@/components/ui/Tooltip";
+import { WatchlistProvider } from "@/lib/data/WatchlistContext";
 
 interface ProvidersProps {
   children: ReactNode;
@@ -10,7 +11,7 @@ interface ProvidersProps {
 export default function Providers({ children }: ProvidersProps) {
   return (
     <TooltipProvider delayDuration={300} skipDelayDuration={100}>
-      {children}
+      <WatchlistProvider>{children}</WatchlistProvider>
     </TooltipProvider>
   );
 }

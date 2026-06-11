@@ -160,3 +160,9 @@ export const AcquirerPredictionDashboard = dynamic(
     loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },
 );
+export const CommercializationReadiness = dynamic(
+  () => import("@/components/CommercializationReadiness"),
+  {
+    loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
+  },
+);
