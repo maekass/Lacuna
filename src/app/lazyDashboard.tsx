@@ -166,3 +166,27 @@ export const CommercializationReadiness = dynamic(
     loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },
 );
+export const SystemHealthDashboard = dynamic(
+  () => import("@/components/SystemHealthDashboard"),
+  {
+    loading: sectionFallback("h-80 animate-pulse rounded-xl bg-lacuna-pink/10"),
+  },
+);
+export const DataPipelineStatus = dynamic(
+  () => import("@/components/DataPipelineStatus"),
+  {
+    loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
+  },
+);
+export const DeveloperTools = dynamic(
+  () => import("@/components/DeveloperTools"),
+  {
+    loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
+  },
+);
+export const DataExport = dynamic(
+  () => import("@/components/DataExport"),
+  {
+    loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
+  },
+);
