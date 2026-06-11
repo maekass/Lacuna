@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as d3 from "d3";
 import { motion } from "framer-motion";
 import AcquirerProfile from "@/components/AcquirerProfile";
@@ -31,7 +31,6 @@ interface ForceNetworkProps {
   highlightForeground?: boolean;
 }
 
-import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { LACUNA_PALETTE, LACUNA_SECTOR_COLORS } from "@/lib/theme/palette";
 
 const sectorColors: Record<string, string> = {
@@ -95,6 +94,16 @@ export default function ForceNetwork(
 
   const width = widthProp ?? dims.w;
   const height = heightProp ?? dims.h;
+
+  const selectNode = useCallback((node: Node) => {
+    if (node.type === "acquirer") {
+      setSelectedAcquirerId(node.id);
+      setSelectedNode(null);
+    } else {
+      setSelectedAcquirerId(null);
+      setSelectedNode(node);
+    }
+  }, []);
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -283,13 +292,7 @@ export default function ForceNetwork(
     // Add interaction
     node
       .on("click", (event, d) => {
-        if (d.type === "acquirer") {
-          setSelectedAcquirerId(d.id);
-          setSelectedNode(null);
-        } else {
-          setSelectedAcquirerId(null);
-          setSelectedNode(d);
-        }
+        selectNode(d);
         event.stopPropagation();
       })
       .on("mouseenter", (event, d) => {
@@ -331,16 +334,19 @@ export default function ForceNetwork(
     height,
     isForegroundHighlightEnabled,
     foregroundPortfolioSet,
+    selectNode,
   ]);
+
+  const graphLabel =
+    `M&A network graph showing ${nodes.length} companies and ${links.length} verified deal relationships.`;
 
   return (
     <div ref={containerRef} className="relative w-full">
-      <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <CuratedDatasetBanner className="mb-0" />
+      <div className="mb-3 flex justify-end">
         <button
           type="button"
           onClick={() => setIsForegroundHighlightEnabled((value) => !value)}
-          className={`bg-white rounded-xl border border-lacuna-lavender/40 px-4 py-2 text-sm font-medium transition-colors ${
+          className={`rounded-xl border border-lacuna-lavender/40 bg-white px-4 py-2 text-sm font-medium transition-colors ${
             isForegroundHighlightEnabled
               ? "text-lacuna-plum shadow-sm"
               : "text-lacuna-blue hover:text-lacuna-plum"
@@ -349,19 +355,27 @@ export default function ForceNetwork(
           Foreground Portfolio
         </button>
       </div>
-      <svg
-        ref={svgRef}
-        width={width}
-        height={height}
-        className="w-full bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border border-slate-200"
-        style={{ maxHeight: "80vh" }}
-      />
+
+      <div
+        className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_240px]"
+        aria-live="polite"
+      >
+        <div className="relative">
+          <svg
+            ref={svgRef}
+            width={width}
+            height={height}
+            role="img"
+            aria-label={graphLabel}
+            className="w-full rounded-xl border border-lacuna-lavender/40 bg-gradient-to-br from-lacuna-pink/10 to-lacuna-lavender/15"
+            style={{ maxHeight: "80vh" }}
+          />
 
       {/* Legend — collapsible on small screens */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
-        className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-2 sm:p-4 max-w-[10rem] sm:max-w-xs"
+        className="absolute top-2 left-2 sm:top-4 sm:left-4 max-w-[10rem] rounded-lg bg-white/95 p-2 shadow-lg backdrop-blur-sm sm:max-w-xs sm:p-4"
       >
         <h4 className="text-[10px] sm:text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2 sm:mb-3">
           Sectors
@@ -439,11 +453,43 @@ export default function ForceNetwork(
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="absolute top-4 right-4 bg-slate-800 text-white text-xs px-3 py-2 rounded-md"
+          className="absolute top-4 right-4 rounded-md bg-lacuna-plum px-3 py-2 text-xs text-white"
         >
           {hoveredNode.name}
         </motion.div>
       )}
+        </div>
+
+        <aside
+          className="max-h-[480px] overflow-y-auto rounded-xl border border-lacuna-lavender/40 bg-white p-3 shadow-sm"
+          aria-label="Network nodes list"
+        >
+          <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-lacuna-blue/70">
+            Keyboard-friendly list
+          </p>
+          <ul className="space-y-1">
+            {nodes.map((node) => (
+              <li key={node.id}>
+                <button
+                  type="button"
+                  onClick={() => selectNode(node)}
+                  className={`w-full rounded-lg px-2 py-2 text-left text-xs transition-colors ${
+                    selectedNode?.id === node.id ||
+                      selectedAcquirerId === node.id
+                      ? "bg-lacuna-lavender/25 font-medium text-lacuna-plum"
+                      : "text-lacuna-blue hover:bg-lacuna-pink/10"
+                  }`}
+                >
+                  <span className="block truncate">{node.name}</span>
+                  <span className="text-[10px] capitalize text-lacuna-blue/70">
+                    {node.type} · {node.sector}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
 
       <AcquirerProfile
         acquirerId={selectedAcquirerId}
