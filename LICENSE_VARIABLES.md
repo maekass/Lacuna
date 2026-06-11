@@ -23,7 +23,7 @@ collide with license prose.
 ```bash
 # From repo root
 sed -i '' 's/{{COPYRIGHT_HOLDER}}/Your Legal Name/g' LICENSE
-sed -i '' 's/{{CONTACT_EMAIL}}/you@example.com/g' LICENSE
+sed -i '' 's/{{CONTACT_EMAIL}}/mps5cy@virginia.edu/g' LICENSE
 ```
 
 ---

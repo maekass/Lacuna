@@ -56,3 +56,15 @@ export type {
 
 /** Alias for MCP / external tooling — same module as secEdgarConnector. */
 export * as secEdgarMcpConnector from "@/lib/ingestion/secEdgarConnector";
+
+export {
+  ALL_FREE_API_SOURCES,
+  downloadFreeApiBundles,
+  readLatestFreeApiExport,
+} from "@/lib/ingestion/freeApi";
+export type {
+  FreeApiDownloadManifest,
+  FreeApiEntityRecord,
+  FreeApiExportSummary,
+  FreeApiSourceId,
+} from "@/lib/ingestion/freeApi";

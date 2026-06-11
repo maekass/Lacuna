@@ -7,7 +7,7 @@ async function main() {
       "Set SEC_EDGAR_USER_AGENT before ingest (SEC fair-access policy).",
     );
     console.error(
-      'Example: SEC_EDGAR_USER_AGENT="Lacuna Research you@example.com" npm run sec:ingest',
+      'Example: SEC_EDGAR_USER_AGENT="Lacuna Research mps5cy@virginia.edu" npm run sec:ingest',
     );
     process.exit(1);
   }

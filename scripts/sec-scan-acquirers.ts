@@ -28,7 +28,7 @@ async function main() {
       "Set SEC_EDGAR_USER_AGENT before scanning (SEC fair-access policy).",
     );
     console.error(
-      'Example: SEC_EDGAR_USER_AGENT="Lacuna Research you@example.com" npm run sec:scan',
+      'Example: SEC_EDGAR_USER_AGENT="Lacuna Research mps5cy@virginia.edu" npm run sec:scan',
     );
     process.exit(1);
   }

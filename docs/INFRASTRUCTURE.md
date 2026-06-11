@@ -80,7 +80,9 @@ Copy [`.env.example`](../.env.example) to `.env.local`. Production checklist:
 | `LACUNA_DATA_MODE`           | `static` (default) or `db`                                                                     |
 | `DATABASE_URL`               | db mode, SEC sync, `/api/cron/sec-ingest/status`                                               |
 | `CRON_SECRET`                | Production cron auth                                                                           |
-| `SEC_EDGAR_USER_AGENT`       | Required for SEC ingest                                                                        |
+| `SEC_EDGAR_USER_AGENT`       | Required for SEC ingest and `download:free-apis` (SEC sources)                                 |
+| `NCBI_TOOL_EMAIL`            | PubMed E-utilities (`download:free-apis`)                                                      |
+| `PATENTSVIEW_API_KEY`        | Optional — PatentsView in `download:free-apis`                                                 |
 | `LACUNA_INGEST_RUN_TRACKING` | Recommended — `lacuna_ingest_runs` audit                                                       |
 | `SEC_USE_DB_CURSOR`          | Recommended — incremental daily scans                                                          |
 | `LACUNA_VARIANT_STORE`       | `off` (default) or `clickhouse` — see [GENOMICS_VARIANT_STORE.md](./GENOMICS_VARIANT_STORE.md) |
@@ -100,6 +102,7 @@ AI and Sentry: [INFERENCE.md](./INFERENCE.md),
 | `npm run db:migrate`            | Apply SQL migrations                                   |
 | `npm run db:import`             | Load `dataset.verified.json` into Postgres             |
 | `npm run sec:ingest`            | SEC pipeline (CLI)                                     |
+| `npm run download:free-apis`    | Batch JSON export from free public APIs (see below)    |
 | `npm run clickhouse:migrate`    | Apply ClickHouse variant-store schema                  |
 | `npm run clickhouse:seed`       | Infrastructure demo callset (local dev)                |
 | `npm run clickhouse:ingest-vcf` | Stream VCF → object storage + ClickHouse summaries     |
@@ -112,6 +115,8 @@ AI and Sentry: [INFERENCE.md](./INFERENCE.md),
 | `GET /api/health/ready`           | Public               | **Readiness** — dataset validation + optional DB ping |
 | `GET /api/cron/sec-ingest`        | `Bearer CRON_SECRET` | Run SEC ingest (Vercel Cron)                          |
 | `GET /api/cron/sec-ingest/status` | Public               | Latest ingest run (needs `DATABASE_URL`)              |
+| `GET /api/ingest/sec/status`      | Public               | Same as cron status — app-facing alias                |
+| `GET /api/ingest/free-apis/status`| Public               | Latest `download:free-apis` export on disk            |
 | `GET /api/dataset/verified`       | Public               | Verified dataset JSON export                          |
 
 **Uptime monitors:** `GET /api/health` only — see
@@ -215,6 +220,7 @@ Full behavior: [SEC_INGESTION.md](./SEC_INGESTION.md). Candidates land in
 
 - [PRODUCTION_SETUP.md](./PRODUCTION_SETUP.md) — Vercel env checklist
 - [SEC_INGESTION.md](./SEC_INGESTION.md) — ingest pipeline
+- [FREE_API_DOWNLOADS.md](./FREE_API_DOWNLOADS.md) — free public API batch exports
 - [DATA_CURATION_CHECKLIST.md](./DATA_CURATION_CHECKLIST.md) — verified dataset
   workflow
 - [AGENTS.md](../AGENTS.md) — contributor conventions

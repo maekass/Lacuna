@@ -13,6 +13,7 @@ import {
   WhiteSpaceAnalysis,
 } from "@/app/lazyDashboard";
 import DataCoverageCard from "@/components/DataCoverageCard";
+import DataIngestPanel from "@/components/DataIngestPanel";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { useDashboardData } from "@/lib/data/useDashboardData";
@@ -40,6 +41,10 @@ export default function DealsPage() {
 
       <MotionSection id="data-coverage" className={SECTION}>
         <DataCoverageCard />
+      </MotionSection>
+
+      <MotionSection id="data-pipelines" delay={0.03} className={SECTION}>
+        <DataIngestPanel />
       </MotionSection>
 
       <MotionSection id="network" delay={0.05} className={SECTION}>
