@@ -32,6 +32,8 @@ SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified de
   <a href="https://lacuna-maekass.vercel.app"><img src="https://img.shields.io/badge/Demo-Vercel-C8A2C8?style=flat-square&logo=vercel&logoColor=white" alt="Live demo"></a>
 </p>
 
+<div style="font-family: Didot, 'Bodoni MT', Georgia, 'Playfair Display', 'Times New Roman', serif;">
+
 ## Table of Contents
 
 - [Overview](#overview)
@@ -43,6 +45,7 @@ SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified de
 - [Clinical Trials](#clinical-trials-integration)
 - [Genomics variant store](#genomics-variant-store-optional)
 - [Academic frameworks](#academic-frameworks)
+- [Typography](#typography)
 - [Technology Stack](#technology-stack)
 - [Quick Start](#quick-start)
 - [Data Curation](#data-curation)
@@ -250,10 +253,24 @@ claimed with n≈58 deals — see methodology files linked from the app.
 
 ---
 
+## Typography
+
+The live app loads **Playfair Display** (Didone serif) via `next/font/google`
+and applies it app-wide — body copy, headings, and `font-mono` utilities share
+the same family for a high-contrast editorial look.
+
+**GitHub does not load custom web fonts.** This README uses a Didone fallback
+stack (`Didot`, `Bodoni MT`, Georgia) so the page reads closer to the product on
+github.com. Only the [live demo](https://lacuna-maekass.vercel.app) renders true
+Playfair Display.
+
+---
+
 ## Technology Stack
 
 | Layer                                  | Used in production UI                                                        |
 | -------------------------------------- | ---------------------------------------------------------------------------- |
+| Playfair Display (`next/font/google`)  | App-wide Didone serif typography                                             |
 | Next.js 16, React 19, Tailwind v4      | App shell                                                                    |
 | D3.js v7, Framer Motion                | Visualization                                                                |
 | simple-statistics                      | Descriptive stats / similarity / quant engine                                |
@@ -339,3 +356,5 @@ separate agreement. Converts to Apache 2.0 May 2030.
 
 **[Mae Kass](https://github.com/maekass)** — open investment-research tools for
 women's health data literacy and honest analytics.
+
+</div>
