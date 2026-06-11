@@ -29,7 +29,7 @@ export default function IntelligencePage() {
           title="Reimbursement context (descriptive)"
           description="Illustrative CMS code mapping and business-model labels on verified companies — exploratory framing, not reimbursement advice or live claims data."
         />
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <ReimbursementIntelligenceDashboard />
           </div>

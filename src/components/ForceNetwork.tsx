@@ -362,7 +362,7 @@ export default function ForceNetwork(
       </div>
 
       <div
-        className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_240px]"
+        className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_240px]"
         aria-live="polite"
       >
         <div className="relative">

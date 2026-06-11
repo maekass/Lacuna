@@ -7,6 +7,15 @@ import StatTile from "@/components/ui/StatTile";
 import { useDashboardData } from "@/lib/data/useDashboardData";
 import { WORKSPACES } from "@/lib/navigation/workspaces";
 
+/** Render huge relative gaps as a multiplier ("76× higher") — "7503% above" is unreadable. */
+function formatValuationGap(percentDiff: number): string {
+  if (percentDiff >= 400) {
+    const multiple = 1 + percentDiff / 100;
+    return `${multiple >= 10 ? multiple.toFixed(0) : multiple.toFixed(1)}× higher than`;
+  }
+  return `${percentDiff.toFixed(0)}% above`;
+}
+
 export default function HubPage() {
   const { verifiedAcquisitions, valuationDisparity, headlineStats } =
     useDashboardData();
@@ -15,11 +24,11 @@ export default function HubPage() {
     <div id="top">
       <MotionSection className="mb-12">
         <div className="max-w-3xl">
-          <h1 className="mb-4 text-4xl font-bold leading-tight text-lacuna-plum md:text-5xl">
+          <h1 className="mb-4 text-3xl font-bold leading-tight text-lacuna-plum sm:text-4xl md:text-5xl">
             <span className="block">Women&apos;s Health M&amp;A</span>
             <span className="lacuna-gradient-text block">Diligence Stack</span>
           </h1>
-          <p className="text-lg leading-relaxed text-lacuna-blue">
+          <p className="text-base sm:text-lg leading-relaxed text-lacuna-blue">
             Prototype investment-research environment — verified deal
             provenance, clinical trial search, genomics governance, and cited
             analytics from public sources.
@@ -54,7 +63,7 @@ export default function HubPage() {
             </span>
             <span className="text-sm text-lacuna-blue">
               Among disclosed valuations, {valuationDisparity.highSector}{" "}
-              averages {valuationDisparity.percentDiff.toFixed(0)}% above{" "}
+              averages {formatValuationGap(valuationDisparity.percentDiff)}{" "}
               {valuationDisparity.lowSector}{" "}
               — the widest sector gap in the dataset (n={valuationDisparity
                 .highN} vs n={valuationDisparity.lowN} disclosed).
@@ -71,12 +80,12 @@ export default function HubPage() {
           Dashboards are grouped by diligence workflow. Each workspace loads
           only the panels you need — shareable URLs, less scroll fatigue.
         </p>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:gap-5 sm:grid-cols-2">
           {WORKSPACES.map((ws) => (
             <Link
               key={ws.slug}
               href={ws.href}
-              className="group rounded-xl border border-lacuna-lavender/40 bg-white p-6 shadow-sm transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lacuna-lavender"
+              className="group rounded-xl border border-lacuna-lavender/40 bg-white p-5 sm:p-6 shadow-sm transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lacuna-lavender"
             >
               <h3 className="text-lg font-semibold text-lacuna-plum group-hover:text-lacuna-blue">
                 {ws.label}

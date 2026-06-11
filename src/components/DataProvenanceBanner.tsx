@@ -113,7 +113,7 @@ export default function DataProvenanceBanner() {
       {/* Expanded detail */}
       {expanded && (
         <div className="border-t border-lacuna-lavender/20 px-4 py-4">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Data sources */}
             <div>
               <h4 className="text-xs font-semibold text-lacuna-plum uppercase tracking-wide mb-3">

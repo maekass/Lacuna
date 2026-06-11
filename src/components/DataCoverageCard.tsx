@@ -92,12 +92,12 @@ export default function DataCoverageCard() {
             What Our Data Covers
           </h3>
           <p className="text-sm text-lacuna-blue">
-            Here&apos;s an honest look at our dataset \u2014 how many deals
+            Here&apos;s an honest look at our dataset — how many deals
             we&apos;ve verified, what&apos;s disclosed, and where our analysis
             is strongest.
           </p>
         </div>
-        <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-lacuna-lavender/20 text-lacuna-plum">
+        <span className="shrink-0 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-lacuna-lavender/20 text-lacuna-plum">
           Updated {lastUpdated}
         </span>
       </div>
@@ -182,7 +182,7 @@ export default function DataCoverageCard() {
         </div>
       </div>
 
-      <div className="mt-6 grid md:grid-cols-2 gap-4">
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <p className="text-xs font-medium text-lacuna-text-secondary mb-2">
             Deals by sector (target)

@@ -62,7 +62,7 @@ export default function DealsPage() {
       <MotionSection
         id="analytics"
         delay={0.1}
-        className="mb-16 grid gap-8 md:grid-cols-2"
+        className="mb-16 grid grid-cols-1 gap-8 md:grid-cols-2"
       >
         <DealFlowChart data={dealsByYear} />
         <div className="rounded-xl border border-lacuna-lavender/40 bg-white p-6 shadow-sm">
@@ -147,7 +147,7 @@ export default function DealsPage() {
           title="Finding Companies Like Each Other"
           description="Which women's health companies share similar profiles? Explore natural groupings and see how they compare."
         />
-        <div className="mb-8 grid gap-8 md:grid-cols-2">
+        <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2">
           <ExitPredictor />
           <CompanySimilarity />
         </div>

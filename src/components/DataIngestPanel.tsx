@@ -87,7 +87,7 @@ export default function DataIngestPanel() {
           </p>
         )
         : (
-          <div className="mt-6 grid gap-6 lg:grid-cols-2">
+          <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
             <section className="rounded-lg border border-lacuna-lavender/30 p-4">
               <h4 className="text-sm font-semibold text-lacuna-plum">
                 SEC EDGAR ingest

@@ -31,7 +31,7 @@ export default function ResearchPage() {
           title="Clinical Trials Worth Watching"
           description="Live oncology, pelvic health, fibroids, fertility, contraception, maternal health, and sickle cell searches plus a cited domestic sample-size catalog."
         />
-        <div className="mb-6 grid gap-6 lg:grid-cols-2">
+        <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
           <ClinicalTrialTracker />
           <DomesticStudyCatalog />
         </div>

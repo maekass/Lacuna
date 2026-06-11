@@ -9,7 +9,7 @@ export default function WorkspaceNav() {
 
   return (
     <nav
-      className="flex flex-wrap items-center gap-2 sm:gap-3"
+      className="hide-scrollbar flex flex-nowrap items-center gap-2 overflow-x-auto sm:flex-wrap sm:gap-3 sm:overflow-x-visible"
       aria-label="Workspaces"
     >
       <Link
