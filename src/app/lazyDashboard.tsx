@@ -27,6 +27,12 @@ export const ValuationMatrix = dynamic(
     loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },
 );
+export const QuantValuationPanel = dynamic(
+  () => import("@/components/QuantValuationPanel"),
+  {
+    loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
+  },
+);
 export const ClinicalTrialTracker = dynamic(
   () => import("@/components/ClinicalTrialTracker"),
   {

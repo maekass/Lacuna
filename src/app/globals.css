@@ -58,6 +58,19 @@ body {
     var(--font-geist-sans), system-ui, sans-serif;
 }
 
+/* Single type family (Geist); hierarchy via weight/size/tracking only */
+.lacuna-eyebrow {
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.lacuna-eyebrow-wide {
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
 .lacuna-gradient {
   background: linear-gradient(
     135deg,
