@@ -33,7 +33,6 @@ SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified de
 </p>
 
 ## Table of Contents
-
 - [Overview](#overview)
 - [What is Lacuna?](#what-is-lacuna)
 - [Live Demo](#live-demo)
@@ -52,7 +51,6 @@ SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified de
 ---
 
 ## Overview
-
 **Lacuna** is an **investment research stack** — a diligence infrastructure
 prototype with a curated, source-linked snapshot of women's health M&A (58
 verified deals), rendered as D3 network views and **descriptive** analytics with
@@ -61,8 +59,8 @@ published methodology.
 | Claim                   | Reality                                                                                 |
 | ----------------------- | --------------------------------------------------------------------------------------- |
 | Deal data               | Static `dataset.verified.json` (manual verification from SEC, press, filings)           |
-| Scores & “predictors”   | Deterministic rules and small-_n_ statistics — [MODEL_CARD.md](docs/MODEL_CARD.md)      |
-| “ML” / TensorFlow       | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app               |
+| Scores & "predictors"   | Deterministic rules and small-_n_ statistics — [MODEL_CARD.md](docs/MODEL_CARD.md)      |
+| "ML" / TensorFlow       | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app               |
 | Server LLM              | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev) |
 | Clinical trials panel   | Live ClinicalTrials.gov search; **M&A panels** still use the curated dataset            |
 | Production intelligence | **No** — not PitchBook, not a data SLA, not investment advice                           |
@@ -81,7 +79,6 @@ live demo — see [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md) and the
 ---
 
 ## What is Lacuna?
-
 An open-source **diligence prototype** for corporate VC and healthcare investors
 exploring verified women's health / FemTech M&A:
 
@@ -98,7 +95,6 @@ Every analytical panel in the app shows the provenance line above.
 ---
 
 ## Live Demo
-
 **[lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app)**
 
 | Resource        | Link                                                           |
@@ -113,7 +109,6 @@ Every analytical panel in the app shows the provenance line above.
 ## Core Features
 
 ### Verified deal explorer
-
 - **58 verified acquisitions** (fertility, oncology, diagnostics, menopause,
   pelvic health, precision medicine)
 - Acquirers include Hologic, KKR, Pfizer, Gilead, Boston Scientific, and others
@@ -123,46 +118,49 @@ Every analytical panel in the app shows the provenance line above.
   [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md))
 
 ### Interactive network (`ForceNetwork.tsx`)
-
 D3 force-directed graph: sector colors, deal-type edges, valuation-scaled nodes.
 Methodology:
 [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md).
 
 ### Deal flow (`DealFlowChart.tsx`)
-
 Year-over-year counts from verified `announcedDate` — animated bars, no
 synthetic deal generator.
 
 ### Valuation matrix (`ValuationMatrix.tsx`)
-
 Sector × stage heatmap using disclosed values only; cells show company counts
 and averages.
 
+### Exit-likelihood leaderboard (`QuantValuationPanel.tsx`)
+**New:** Heuristic valuation and exit-likelihood section with:
+- **ValuationEngine** — bounded comparable multiples (EV/Revenue, EV/EBITDA) with uncertainty disclosures
+- **AcquisitionPredictor** — sector-stage acquisition probability estimates (15/75 coverage noted)
+- **HealthImpactModeler** — lives-saved modeling with Cohen's d bounds (not a rate)
+- **PortfolioOptimizer** — stage-varying risk-adjusted ROI optimizer
+- **Verified-fields-only adapter** — `adaptQuantCompany` uses only validated dataset fields; absent inputs remain undefined per provenance rules
+
+See [MODEL_CARD.md](docs/MODEL_CARD.md) for methodology and caveats.
+
 ---
 
-## Descriptive analytics (heuristics, not trained models)
+## Descriptive analytics (heuristics, not predictive ML)
 
 > Curated dataset · n=58 verified deals · Not live market data · Scores are
 > descriptive, not forecasts.
 
 ### Acquisition likelihood indicators (`ExitPredictor.tsx`)
-
 Transparent factor scoring for **non-acquired** companies in the verified set.
 Fixed weights, full disclosure in UI and [MODEL_CARD.md](docs/MODEL_CARD.md).
 **Not** a predictive model; no TensorFlow.
 
 ### Company similarity (`CompanySimilarity.tsx`)
-
-8-D feature vectors, inline cosine similarity — “companies like this” for
+8-D feature vectors, inline cosine similarity — "companies like this" for
 exploration.
 
 ### Clustering (`ClusteringAnalysis.tsx`)
-
 k-means on valuation × employees — descriptive segments (Emerging / Growth /
 Late-stage labels).
 
 ### Optional server narratives ([INFERENCE.md](docs/INFERENCE.md))
-
 - UI blurbs via `POST /api/ai/insights` → Vercel AI Gateway
   (`anthropic/claude-sonnet-4` slug).
 - Exploratory copy only — heuristic scores on the curated dataset remain
@@ -171,7 +169,6 @@ Late-stage labels).
 ---
 
 ## Health Equity & Black Women's Health
-
 Descriptive context on disease areas with documented disparities and public
 market-size estimates — for learning, not buy/sell recommendations:
 
@@ -188,7 +185,6 @@ See [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md) for scoring limits.
 ---
 
 ## Clinical Trials Integration
-
 - **Live**: `/api/clinical-trials` → ClinicalTrials.gov API v2 (search, batch
   lookup)
 - **Curated M&A**: unchanged — still `dataset.verified.json`
@@ -198,7 +194,6 @@ Do not conflate live trial search volume with verified deal coverage.
 ---
 
 ## Genomics variant store (optional)
-
 Large VCF/gVCF call sets use a **two-tier** layout (off by default on Vercel):
 
 | Tier            | Technology                   | Contents                                       |
@@ -227,7 +222,6 @@ provenance labels.
 ---
 
 ## Academic Frameworks
-
 Six frameworks with **explicit small-_n_ limits** documented in `docs/` (causal
 DAG, fairness audit, network concentration, etc.). We state what cannot be
 claimed with n≈58 deals — see methodology files linked from the app.
@@ -235,22 +229,23 @@ claimed with n≈58 deals — see methodology files linked from the app.
 ---
 
 ## Technology Stack
-
 | Layer                                  | Used in production UI                                                        |
 | -------------------------------------- | ---------------------------------------------------------------------------- |
 | Next.js 16, React 19, Tailwind v4      | App shell                                                                    |
 | D3.js v7, Framer Motion                | Visualization                                                                |
-| simple-statistics                      | Descriptive stats / similarity                                               |
-| Verified JSON (`getVerifiedDataset()`) | Default data path                                                            |
+| simple-statistics                      | Descriptive stats / similarity / quant engine                                |
+| Verified JSON (`getVerifiedDataset()`) | Default data path; static import for Vercel serverless                        |
 | PostgreSQL                             | Optional `LACUNA_DATA_MODE=db`                                               |
 | ClickHouse + S3/local object storage   | Optional variant call-set catalog (`LACUNA_VARIANT_STORE=clickhouse`)        |
 | Vercel AI Gateway + AI SDK             | Optional narratives + SEC classification ([INFERENCE.md](docs/INFERENCE.md)) |
 | TensorFlow.js                          | Quarantined — devDependency for Vitest only                                  |
+| Deno (CI)                              | `deno fmt` and `deno lint` in GitHub Actions                                 |
+
+**CI Status:** `deno fmt`, `deno lint`, `eslint`, `vitest` (297 tests), `next build` + `tsc` all green on main.
 
 ---
 
 ## Quick Start
-
 ```bash
 git clone https://github.com/maekass/Lacuna.git
 cd Lacuna
@@ -277,7 +272,6 @@ unless `LACUNA_DATA_MODE=db` is set **and** Postgres is provisioned.
 ---
 
 ## Data Curation
-
 Manual verification — no synthetic `maDeals`. Workflow:
 [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md),
 `npm run validate:dataset`, optional `npm run sec:scan`.
@@ -285,13 +279,12 @@ Manual verification — no synthetic `maDeals`. Workflow:
 ---
 
 ## Documentation
-
 | Doc                                                                     | Purpose                                                     |
 | ----------------------------------------------------------------------- | ----------------------------------------------------------- |
 | [MODEL_CARD.md](docs/MODEL_CARD.md)                                     | **Start here** — what each score is and is not              |
 | [INFERENCE.md](docs/INFERENCE.md)                                       | Server-side LLM (AI Gateway)                                |
 | [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md)           | Schema, validation, staging                                 |
-| [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md) | Graph metrics, small-_n_                                    |
+| [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md)  | Graph metrics, small-_n_                                    |
 | [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md)                         | Health impact scoring limits                                |
 | [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md)                             | CI, Vercel, Postgres, cron, `/api/health`                   |
 | [PERFORMANCE.md](docs/PERFORMANCE.md)                                   | Bundle, caching, probe split, fan-out limits                |
@@ -306,7 +299,6 @@ Manual verification — no synthetic `maDeals`. Workflow:
 ---
 
 ## License
-
 [BSL 1.1](LICENSE) — research/education production use allowed; **Competitive
 Offerings** (commercial women's-health M&A intelligence products) require a
 separate agreement. Converts to Apache 2.0 May 2030.
@@ -316,6 +308,5 @@ separate agreement. Converts to Apache 2.0 May 2030.
 ---
 
 ## Author
-
 **[Mae Kass](https://github.com/maekass)** — open investment-research tools for
 women's health data literacy and honest analytics.
