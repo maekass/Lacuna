@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import {
   AcquirerPredictionDashboard,
@@ -25,12 +26,14 @@ import {
   ValidationTracker,
   ValuationMatrix,
   VariantCallsetBrowser,
+  WhiteSpaceAnalysis,
 } from "@/app/lazyDashboard";
 import DataCoverageCard from "@/components/DataCoverageCard";
 import DataProvenanceBanner from "@/components/DataProvenanceBanner";
 import SiteSectionNav from "@/components/SiteSectionNav";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import { getValuationDisparity } from "@/lib/fairness/headlineStat";
 
 export default function HomePage() {
   const {
@@ -47,6 +50,11 @@ export default function HomePage() {
   const networkLinks = getVerifiedNetworkLinks();
   const dealsByYear = getVerifiedDealsByYear();
   const totalDealValue = getVerifiedTotalDealValue();
+
+  const valuationDisparity = useMemo(
+    () => getValuationDisparity(verifiedCompanies),
+    [verifiedCompanies],
+  );
 
   const stats = [
     {
@@ -143,6 +151,16 @@ export default function HomePage() {
             </div>
           ))}
         </motion.section>
+
+        {/* Fairness Audit Headline Banner */}
+        {valuationDisparity !== null && (
+          <div className="mb-8 p-4 bg-lacuna-lavender/20 border border-lacuna-lavender/40 rounded-xl flex items-start gap-3">
+            <span className="text-lacuna-plum text-sm font-medium shrink-0">⚡ Insight</span>
+            <span className="text-lacuna-blue text-sm">
+              Among disclosed valuations, {valuationDisparity.highSector} averages {valuationDisparity.percentDiff.toFixed(0)}% above {valuationDisparity.lowSector} — the widest sector gap in the dataset (n={valuationDisparity.highN} vs n={valuationDisparity.lowN} disclosed).
+            </span>
+          </div>
+        )}
 
         {/* Data Coverage */}
         <motion.section
@@ -269,8 +287,8 @@ export default function HomePage() {
               Clinical Trials Worth Watching
             </h3>
             <p className="text-lacuna-blue">
-              Live NIH, Harvard, and MIT/Broad trial searches plus a cited
-              domestic sample-size catalog — PCOS, BRCA, sickle cell, and lupus
+              Live oncology, pelvic health, fibroids, fertility, contraception,
+              maternal health, and sickle cell searches plus a cited domestic sample-size catalog
             </p>
           </div>
           <div className="grid lg:grid-cols-2 gap-6 mb-6">
@@ -544,6 +562,24 @@ export default function HomePage() {
             <CompanySimilarity />
           </div>
           <ClusteringAnalysis />
+        </motion.section>
+
+        <motion.section
+          id="white-space-analysis"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.605 }}
+          className="mb-16 scroll-mt-20"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-semibold text-lacuna-plum">
+              White Space Analysis
+            </h3>
+            <p className="text-lacuna-blue">
+              Sectors with high company density but low M&amp;A activity — where the next wave may form.
+            </p>
+          </div>
+          <WhiteSpaceAnalysis />
         </motion.section>
 
         {/* Reimbursement Intelligence */}

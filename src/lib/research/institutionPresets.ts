@@ -6,28 +6,76 @@
 export interface InstitutionTrialPreset {
   id: string;
   label: string;
-  sponsor: string;
+  sponsor?: string;
   condition: string;
   description: string;
 }
 
 export const DOMESTIC_TRIAL_PRESETS: readonly InstitutionTrialPreset[] = [
   {
-    id: "nih-womens-health",
-    label: "NIH Women's Health",
-    sponsor:
-      "Eunice Kennedy Shriver National Institute of Child Health and Human Development",
-    condition: "women reproductive PCOS fertility maternal",
-    description:
-      "NICHD-sponsored trials — PCOS, fertility, maternal health, reproductive endocrinology",
-  },
-  {
     id: "nih-cancer",
     label: "NIH Cancer (NCI)",
     sponsor: "National Cancer Institute",
-    condition: "breast ovarian cervical hereditary cancer BRCA",
+    condition: "breast ovarian cervical endometrial BRCA cancer",
     description:
-      "NCI trials — breast/ovarian cancer, hereditary cancer, genomic screening",
+      "NCI trials — breast and gynecologic oncology, hereditary cancer, genomic screening",
+  },
+  {
+    id: "breast-gyn-oncology",
+    label: "Breast & Gyn Oncology",
+    condition: "breast ovarian cervical endometrial BRCA cancer",
+    description:
+      "Broad oncology scan — breast, ovarian, cervical, and endometrial cancer plus hereditary risk",
+  },
+  {
+    id: "pelvic-pain-endometriosis",
+    label: "Pelvic Pain & Endometriosis",
+    condition: "endometriosis pelvic pain adenomyosis uterine fibroids",
+    description:
+      "Live pelvic health scan — endometriosis, adenomyosis, chronic pelvic pain, and fibroids",
+  },
+  {
+    id: "uterine-fibroids",
+    label: "Uterine Fibroids",
+    condition: "uterine fibroids leiomyoma heavy menstrual bleeding",
+    description:
+      "Fibroid care trials — uterine fibroids, leiomyoma, and heavy menstrual bleeding",
+  },
+  {
+    id: "infertility-ivf",
+    label: "Infertility & IVF",
+    condition: "infertility IVF assisted reproduction ovulation",
+    description:
+      "Fertility treatment trials — infertility, IVF, assisted reproduction, and ovulation support",
+  },
+  {
+    id: "contraception-family-planning",
+    label: "Contraception & Family Planning",
+    condition: "contraception contraceptive IUD family planning",
+    description:
+      "Family planning trials — contraception, contraceptive devices, IUDs, and reproductive planning",
+  },
+  {
+    id: "maternal-health",
+    label: "Maternal Health",
+    condition: "maternal mortality morbidity preeclampsia gestational hypertension",
+    description:
+      "Maternal health scan — maternal mortality and morbidity, hypertensive disorders, and gestational complications",
+  },
+  {
+    id: "pregnancy-postpartum",
+    label: "Pregnancy & Postpartum",
+    condition: "pregnancy prenatal postpartum preterm birth delivery recovery",
+    description:
+      "Pregnancy and postpartum trials — prenatal care, preterm birth, delivery, and postpartum recovery",
+  },
+  {
+    id: "perinatal-mental-health",
+    label: "Perinatal Mental Health",
+    condition:
+      "postpartum depression perinatal depression maternal mental health anxiety",
+    description:
+      "Perinatal mental health trials — postpartum depression, perinatal depression, anxiety, and maternal behavioral health",
   },
   {
     id: "nih-scd",
@@ -35,42 +83,5 @@ export const DOMESTIC_TRIAL_PRESETS: readonly InstitutionTrialPreset[] = [
     sponsor: "National Heart, Lung, and Blood Institute",
     condition: "sickle cell anemia hemoglobinopathy",
     description: "NHLBI sickle cell disease and gene therapy trials",
-  },
-  {
-    id: "harvard-affiliates",
-    label: "Harvard Affiliates",
-    sponsor: "Harvard",
-    condition: "women breast PCOS lupus genetics",
-    description:
-      "Harvard Medical School affiliates — BWH, MGH, Dana-Farber, Chan School cohorts",
-  },
-  {
-    id: "bwh",
-    label: "Brigham & Women's",
-    sponsor: "Brigham and Women's Hospital",
-    condition: "hereditary cancer BRCA breast ovarian",
-    description: "BWH hereditary cancer and women's health trials",
-  },
-  {
-    id: "mgh",
-    label: "Mass General",
-    sponsor: "Massachusetts General Hospital",
-    condition: "PCOS endometriosis fertility reproductive",
-    description: "MGH reproductive endocrine and fertility trials",
-  },
-  {
-    id: "dana-farber",
-    label: "Dana-Farber",
-    sponsor: "Dana-Farber Cancer Institute",
-    condition: "breast cancer triple negative hereditary",
-    description: "DFCI breast oncology and precision medicine trials",
-  },
-  {
-    id: "broad-mit-harvard",
-    label: "Broad (MIT/Harvard)",
-    sponsor: "Broad Institute",
-    condition: "genomics cancer precision medicine biomarker",
-    description:
-      "Broad Institute of MIT and Harvard — genomics, cancer dependencies, biomarkers",
   },
 ] as const;

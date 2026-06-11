@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useReducer } from "react";
+import { DOMESTIC_TRIAL_PRESETS } from "@/lib/research/institutionPresets";
 /* ─── types ─── */
 interface Trial {
   nctId: string;
@@ -49,57 +50,6 @@ const INITIAL_STATE: FetchState = {
   error: null,
 };
 
-interface CategoryConfig {
-  label: string;
-  query: string;
-  sponsor?: string;
-  description: string;
-}
-
-const CATEGORIES: CategoryConfig[] = [
-  {
-    label: "NIH Women's Health",
-    sponsor:
-      "Eunice Kennedy Shriver National Institute of Child Health and Human Development",
-    query: "women reproductive PCOS fertility maternal",
-    description:
-      "NICHD trials — PCOS, fertility, maternal health, reproductive endocrinology",
-  },
-  {
-    label: "NIH Cancer",
-    sponsor: "National Cancer Institute",
-    query: "breast ovarian hereditary BRCA cancer women",
-    description:
-      "NCI trials — breast/ovarian cancer, hereditary cancer screening",
-  },
-  {
-    label: "Harvard Affiliates",
-    sponsor: "Harvard",
-    query: "women breast PCOS lupus genetics",
-    description:
-      "Harvard Medical affiliates — BWH, MGH, Dana-Farber, Chan School",
-  },
-  {
-    label: "Broad (MIT/Harvard)",
-    sponsor: "Broad Institute",
-    query: "genomics cancer biomarker precision medicine",
-    description:
-      "Broad Institute — genomics, cancer dependencies, population references",
-  },
-  {
-    label: "Genetic Markers",
-    query: "BRCA HBB sickle cell PCOS genetic biomarker",
-    description:
-      "BRCA1/2, HBB/sickle cell, PCOS loci, carrier screening, hereditary cancer",
-  },
-  {
-    label: "NIH Sickle Cell",
-    sponsor: "National Heart, Lung, and Blood Institute",
-    query: "sickle cell hemoglobinopathy HBB",
-    description: "NHLBI sickle cell disease and gene therapy trials",
-  },
-];
-
 const STATUS_COLORS: Record<string, string> = {
   RECRUITING: "bg-emerald-100 text-emerald-800",
   "ACTIVE_NOT_RECRUITING": "bg-sky-100 text-sky-800",
@@ -123,18 +73,18 @@ export default function ClinicalTrialTracker() {
   );
   const [state, dispatch] = useReducer(fetchReducer, INITIAL_STATE);
   const { trials, total, loading, error } = state;
+  const activePreset = DOMESTIC_TRIAL_PRESETS[activeCategory];
 
   useEffect(() => {
     const controller = new AbortController();
 
     dispatch({ type: "FETCH_START" });
 
-    const cat = CATEGORIES[activeCategory];
     const params = new URLSearchParams({
-      condition: cat.query,
-      limit: "25",
+      condition: activePreset.condition,
+      limit: "40",
     });
-    if (cat.sponsor) params.set("sponsor", cat.sponsor);
+    if (activePreset.sponsor) params.set("sponsor", activePreset.sponsor);
 
     fetch(`/api/clinical-trials?${params}`, { signal: controller.signal })
       .then((res) => {
@@ -158,7 +108,7 @@ export default function ClinicalTrialTracker() {
       });
 
     return () => controller.abort();
-  }, [activeCategory]);
+  }, [activePreset]);
 
   /* ─── derived stats ─── */
   const phaseDistribution = trials.reduce<Record<string, number>>((acc, t) => {
@@ -203,7 +153,7 @@ export default function ClinicalTrialTracker() {
 
       {/* Category tabs */}
       <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2 -mb-2">
-        {CATEGORIES.map((cat, i) => (
+        {DOMESTIC_TRIAL_PRESETS.map((cat, i) => (
           <button
             key={cat.label}
             onClick={() => setActiveCategory(i)}
@@ -219,7 +169,7 @@ export default function ClinicalTrialTracker() {
       </div>
 
       <p className="text-xs text-lacuna-blue/70 mt-3 mb-4">
-        {CATEGORIES[activeCategory].description}
+        {activePreset.description}
       </p>
 
       {/* Loading / Error */}
@@ -412,7 +362,7 @@ export default function ClinicalTrialTracker() {
 
           {trials.length === 0 && !loading && (
             <p className="text-sm text-lacuna-blue/60 text-center py-6">
-              No trials found for this category.
+              No ClinicalTrials.gov matches were found for this current query.
             </p>
           )}
 
@@ -430,8 +380,10 @@ export default function ClinicalTrialTracker() {
               </a>{" "}
               API v2. Results reflect the most recent data available. This is
               not a substitute for IQVIA i3 or other institutional trial
-              intelligence platforms — trial counts may differ due to query
-              scope and classification methodology.
+              intelligence platforms — trial counts may differ due to sponsor
+              matching, condition indexing, and query scope. A zero result means
+              no matches for the current live filter, not proof that no trials
+              exist in the broader market.
             </p>
           </div>
         </>

@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 
+type MomentumLabel = "High" | "Stable" | "Cooling";
+
 type CanonicalStage =
   | "Seed"
   | "Series A"
@@ -22,6 +24,22 @@ const STAGE_ORDER: CanonicalStage[] = [
   "Public",
   "Acquired",
 ];
+
+const MOMENTUM_CHIP_CLASSES: Record<MomentumLabel, string> = {
+  High: "bg-emerald-50 text-emerald-700 border border-emerald-200",
+  Stable: "bg-amber-50 text-amber-700 border border-amber-200",
+  Cooling: "bg-red-50 text-red-700 border border-red-200",
+};
+
+function classifyMomentum(recentTotal: number, priorTotal: number): MomentumLabel {
+  if (recentTotal === 0 && priorTotal === 0) return "Stable";
+  if (priorTotal === 0) return recentTotal > 0 ? "High" : "Stable";
+
+  const ratio = recentTotal / priorTotal;
+  if (ratio > 1.2) return "High";
+  if (ratio < 0.8) return "Cooling";
+  return "Stable";
+}
 
 /**
  * Normalize the verified dataset's free-form stage string
@@ -54,11 +72,32 @@ export default function ValuationMatrix() {
   const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
   const [hoveredCell, setHoveredCell] = useState<MatrixCell | null>(null);
 
-  const { sectors, matrix, maxValuation, totalDisclosed, totalCompanies } =
+  const {
+    sectors,
+    matrix,
+    maxValuation,
+    totalDisclosed,
+    totalCompanies,
+    sectorMomentum,
+  } =
     useMemo(() => {
+      const companyById = new Map(
+        verifiedCompanies.map((company) => [company.id, company]),
+      );
       const sectorList = Array.from(
         new Set(verifiedCompanies.map((c) => c.sector)),
       ).sort();
+      const sectorDealCounts = verifiedAcquisitions.reduce<
+        Record<string, Record<number, number>>
+      >((acc, acquisition) => {
+        const target = companyById.get(acquisition.targetId);
+        if (!target) return acc;
+
+        const year = new Date(acquisition.announcedDate).getFullYear();
+        const sectorCounts = acc[target.sector] ?? (acc[target.sector] = {});
+        sectorCounts[year] = (sectorCounts[year] ?? 0) + 1;
+        return acc;
+      }, {});
 
       const grid: MatrixCell[][] = STAGE_ORDER.map((stage) =>
         sectorList.map((sector) => {
@@ -76,7 +115,7 @@ export default function ValuationMatrix() {
             : 0;
 
           const deals = verifiedAcquisitions.filter((a) => {
-            const target = verifiedCompanies.find((c) => c.id === a.targetId);
+            const target = companyById.get(a.targetId);
             if (!target) return false;
             return target.sector === sector &&
               canonicalStage(target.stage) === stage;
@@ -97,6 +136,20 @@ export default function ValuationMatrix() {
       const disclosed = verifiedCompanies.filter((c) =>
         typeof c.lastKnownValuation === "number"
       ).length;
+      const momentumBySector = Object.fromEntries(
+        sectorList.map((sector) => {
+          const counts = sectorDealCounts[sector] ?? {};
+          const priorTotal = [2019, 2020, 2021].reduce(
+            (sum, year) => sum + (counts[year] ?? 0),
+            0,
+          );
+          const recentTotal = [2022, 2023, 2024].reduce(
+            (sum, year) => sum + (counts[year] ?? 0),
+            0,
+          );
+          return [sector, classifyMomentum(recentTotal, priorTotal)];
+        }),
+      ) as Record<string, MomentumLabel>;
 
       return {
         sectors: sectorList,
@@ -104,6 +157,7 @@ export default function ValuationMatrix() {
         maxValuation: max,
         totalDisclosed: disclosed,
         totalCompanies: verifiedCompanies.length,
+        sectorMomentum: momentumBySector,
       };
     }, [verifiedCompanies, verifiedAcquisitions]);
 
@@ -146,10 +200,17 @@ export default function ValuationMatrix() {
             {sectors.map((sector) => (
               <div
                 key={sector}
-                className="p-2 text-xs font-medium text-slate-600 text-center truncate"
+                className="p-2 text-xs font-medium text-slate-600 text-center"
                 title={sector}
               >
-                {sector}
+                <div className="flex flex-col items-center gap-1">
+                  <span className="max-w-full truncate">{sector}</span>
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${MOMENTUM_CHIP_CLASSES[sectorMomentum[sector]]}`}
+                  >
+                    {sectorMomentum[sector]}
+                  </span>
+                </div>
               </div>
             ))}
           </div>
