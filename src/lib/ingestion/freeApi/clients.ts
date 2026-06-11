@@ -16,7 +16,8 @@ const SEC_DATA_BASE = "https://data.sec.gov";
 const CTG_API = "https://clinicaltrials.gov/api/v2";
 const OPENFDA_BASE = "https://api.fda.gov";
 const NIH_REPORTER = "https://api.reporter.nih.gov/v2/projects/search";
-const NCBI_ESEARCH = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi";
+const NCBI_ESEARCH =
+  "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi";
 const PATENTSVIEW_SEARCH = "https://search.patentsview.org/api/v1/patent/";
 const WIKIDATA_API = "https://www.wikidata.org/w/api.php";
 const EU_CTR_SPONSOR =
@@ -118,8 +119,9 @@ export async function fetchSecCompanyFacts(
       `No SEC CIK for ticker ${ticker}`,
     );
   }
-  const url =
-    `${SEC_DATA_BASE}/api/xbrl/companyfacts/CIK${padCik(entry.cik)}.json`;
+  const url = `${SEC_DATA_BASE}/api/xbrl/companyfacts/CIK${
+    padCik(entry.cik)
+  }.json`;
   try {
     const res = await secJsonFetch(url);
     if (!res.ok) {
@@ -137,8 +139,8 @@ export async function fetchSecCompanyFacts(
     const gaap = raw.facts?.["us-gaap"] ?? {};
     const pick = (key: string) =>
       gaap[key]?.units?.USD?.slice(-4) ??
-      gaap[key]?.units?.["USD/shares"]?.slice(-4) ??
-      [];
+        gaap[key]?.units?.["USD/shares"]?.slice(-4) ??
+        [];
     const summary = {
       entityName: raw.entityName,
       revenues: pick("Revenues"),
@@ -168,7 +170,9 @@ export async function fetchClinicalTrialsGov(
   const url = `${CTG_API}/studies?${params}`;
   try {
     const res = await fetch(url, { headers: { Accept: "application/json" } });
-    if (!res.ok) return errResult("clinical_trials_gov", url, `HTTP ${res.status}`);
+    if (!res.ok) {
+      return errResult("clinical_trials_gov", url, `HTTP ${res.status}`);
+    }
     const data = await res.json();
     await sleep(DELAY_MS.default);
     return okResult("clinical_trials_gov", url, data);
@@ -192,9 +196,7 @@ export async function fetchOpenFda(
       fetch(deviceUrl, { headers: { Accept: "application/json" } }),
       fetch(drugUrl, { headers: { Accept: "application/json" } }),
     ]);
-    const deviceJson = deviceRes.ok
-      ? await deviceRes.json()
-      : { results: [] };
+    const deviceJson = deviceRes.ok ? await deviceRes.json() : { results: [] };
     const drugJson = drugRes.ok ? await drugRes.json() : { results: [] };
     await sleep(DELAY_MS.openFda);
     return okResult("openfda", deviceUrl, {
@@ -324,7 +326,8 @@ export async function fetchWikidataSearch(
     const res = await fetch(url, {
       headers: {
         Accept: "application/json",
-        "User-Agent": "LacunaResearch/1.0 (educational; +https://github.com/maekass/Lacuna)",
+        "User-Agent":
+          "LacunaResearch/1.0 (educational; +https://github.com/maekass/Lacuna)",
       },
     });
     if (!res.ok) return errResult("wikidata", url, `HTTP ${res.status}`);

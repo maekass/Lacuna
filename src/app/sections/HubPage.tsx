@@ -25,9 +25,10 @@ export default function HubPage() {
             analytics from public sources.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-lacuna-blue/80">
-            n={verifiedAcquisitions.length} verified deals · SEC EDGAR ingest ·
-            HIPAA/GDPR genomics layer · descriptive analytics only. Not
-            PitchBook, not live market feeds, and not investment advice.
+            n={verifiedAcquisitions.length}{" "}
+            verified deals · SEC EDGAR ingest · HIPAA/GDPR genomics layer ·
+            descriptive analytics only. Not PitchBook, not live market feeds,
+            and not investment advice.
           </p>
         </div>
       </MotionSection>
@@ -45,28 +46,30 @@ export default function HubPage() {
         ))}
       </MotionSection>
 
-      {valuationDisparity !== null ? (
-        <div className="mb-10 flex items-start gap-3 rounded-xl border border-lacuna-lavender/40 bg-lacuna-lavender/20 p-4">
-          <span className="shrink-0 text-sm font-medium text-lacuna-plum">
-            Insight
-          </span>
-          <span className="text-sm text-lacuna-blue">
-            Among disclosed valuations, {valuationDisparity.highSector} averages{" "}
-            {valuationDisparity.percentDiff.toFixed(0)}% above{" "}
-            {valuationDisparity.lowSector} — the widest sector gap in the dataset
-            (n={valuationDisparity.highN} vs n={valuationDisparity.lowN}{" "}
-            disclosed).
-          </span>
-        </div>
-      ) : null}
+      {valuationDisparity !== null
+        ? (
+          <div className="mb-10 flex items-start gap-3 rounded-xl border border-lacuna-lavender/40 bg-lacuna-lavender/20 p-4">
+            <span className="shrink-0 text-sm font-medium text-lacuna-plum">
+              Insight
+            </span>
+            <span className="text-sm text-lacuna-blue">
+              Among disclosed valuations, {valuationDisparity.highSector}{" "}
+              averages {valuationDisparity.percentDiff.toFixed(0)}% above{" "}
+              {valuationDisparity.lowSector}{" "}
+              — the widest sector gap in the dataset (n={valuationDisparity
+                .highN} vs n={valuationDisparity.lowN} disclosed).
+            </span>
+          </div>
+        )
+        : null}
 
       <MotionSection delay={0.15}>
         <h2 className="mb-2 text-2xl font-semibold text-lacuna-plum">
           Choose a workspace
         </h2>
         <p className="mb-6 max-w-2xl text-lacuna-blue">
-          Dashboards are grouped by diligence workflow. Each workspace loads only
-          the panels you need — shareable URLs, less scroll fatigue.
+          Dashboards are grouped by diligence workflow. Each workspace loads
+          only the panels you need — shareable URLs, less scroll fatigue.
         </p>
         <div className="grid gap-4 sm:grid-cols-2">
           {WORKSPACES.map((ws) => (

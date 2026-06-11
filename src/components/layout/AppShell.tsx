@@ -52,14 +52,14 @@ export default function AppShell({ children }: AppShellProps) {
           id="main-content"
           className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12"
         >
-          {sections.length > 0 ? (
-            <div className="grid gap-8 lg:grid-cols-[220px_minmax(0,1fr)]">
-              <SectionNav sections={sections} />
-              <div>{children}</div>
-            </div>
-          ) : (
-            children
-          )}
+          {sections.length > 0
+            ? (
+              <div className="grid gap-8 lg:grid-cols-[220px_minmax(0,1fr)]">
+                <SectionNav sections={sections} />
+                <div>{children}</div>
+              </div>
+            )
+            : children}
           <SiteFooter />
         </main>
 

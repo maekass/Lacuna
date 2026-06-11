@@ -17,19 +17,20 @@ Output: `data/exports/free-apis/<timestamp>/` (gitignored).
 
 ## Sources
 
-| Source | Flag | Requires |
-|--------|------|----------|
-| SEC submissions | `sec_submissions` | Ticker + `SEC_EDGAR_USER_AGENT` |
-| SEC company facts (XBRL) | `sec_company_facts` | Ticker + `SEC_EDGAR_USER_AGENT` |
-| ClinicalTrials.gov | `clinical_trials_gov` | — |
-| openFDA | `openfda` | — |
-| NIH RePORTER | `nih_reporter` | — |
-| PubMed | `pubmed` | `NCBI_TOOL_EMAIL` (recommended) |
-| PatentsView | `patentsview` | `PATENTSVIEW_API_KEY` (optional) |
-| Wikidata | `wikidata` | — |
-| EU Clinical Trials Register | `eu_clinical_trials` | — |
+| Source                      | Flag                  | Requires                         |
+| --------------------------- | --------------------- | -------------------------------- |
+| SEC submissions             | `sec_submissions`     | Ticker + `SEC_EDGAR_USER_AGENT`  |
+| SEC company facts (XBRL)    | `sec_company_facts`   | Ticker + `SEC_EDGAR_USER_AGENT`  |
+| ClinicalTrials.gov          | `clinical_trials_gov` | —                                |
+| openFDA                     | `openfda`             | —                                |
+| NIH RePORTER                | `nih_reporter`        | —                                |
+| PubMed                      | `pubmed`              | `NCBI_TOOL_EMAIL` (recommended)  |
+| PatentsView                 | `patentsview`         | `PATENTSVIEW_API_KEY` (optional) |
+| Wikidata                    | `wikidata`            | —                                |
+| EU Clinical Trials Register | `eu_clinical_trials`  | —                                |
 
-CMS bulk files are **not** automated — download from [data.cms.gov](https://data.cms.gov).
+CMS bulk files are **not** automated — download from
+[data.cms.gov](https://data.cms.gov).
 
 ## In the app
 
@@ -40,10 +41,11 @@ CMS bulk files are **not** automated — download from [data.cms.gov](https://da
 
 ## Code layout
 
-| Path | Role |
-|------|------|
-| `scripts/download-free-apis.ts` | CLI entry |
-| `src/lib/ingestion/freeApi/` | Fetch clients + orchestrator |
-| `src/lib/ingestion/secIngestPipeline.ts` | SEC 8-K ingest (cron + CLI) |
+| Path                                     | Role                         |
+| ---------------------------------------- | ---------------------------- |
+| `scripts/download-free-apis.ts`          | CLI entry                    |
+| `src/lib/ingestion/freeApi/`             | Fetch clients + orchestrator |
+| `src/lib/ingestion/secIngestPipeline.ts` | SEC 8-K ingest (cron + CLI)  |
 
-See also [SEC_INGESTION.md](./SEC_INGESTION.md) and [INFRASTRUCTURE.md](./INFRASTRUCTURE.md).
+See also [SEC_INGESTION.md](./SEC_INGESTION.md) and
+[INFRASTRUCTURE.md](./INFRASTRUCTURE.md).

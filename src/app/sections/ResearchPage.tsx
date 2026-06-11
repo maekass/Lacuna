@@ -17,7 +17,9 @@ export default function ResearchPage() {
   return (
     <div>
       <header className="mb-10">
-        <h1 className="text-3xl font-bold text-lacuna-plum">Research workspace</h1>
+        <h1 className="text-3xl font-bold text-lacuna-plum">
+          Research workspace
+        </h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
           Clinical trials, evidence maturity, genomics governance, and health
           equity markers — with honest limits on live vs static data.

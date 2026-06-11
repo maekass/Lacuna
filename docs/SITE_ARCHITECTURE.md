@@ -46,13 +46,13 @@ Framer marketing site.
 
 ## Product routes (Vercel app)
 
-| Route | Workspace | Purpose |
-| ----- | --------- | ------- |
-| `/` | Hub | Hero, provenance, headline stats, workspace cards |
-| `/deals` | Deals | Network, deal flow, matrix, acquirer landscape |
-| `/research` | Research | Trials, evidence, genomics, health equity |
-| `/methods` | Methods | Causal framing, temporal, sensitivity, Bayesian |
-| `/intelligence` | Intelligence | Reimbursement, acquirer fit, Gamma export |
+| Route           | Workspace    | Purpose                                           |
+| --------------- | ------------ | ------------------------------------------------- |
+| `/`             | Hub          | Hero, provenance, headline stats, workspace cards |
+| `/deals`        | Deals        | Network, deal flow, matrix, acquirer landscape    |
+| `/research`     | Research     | Trials, evidence, genomics, health equity         |
+| `/methods`      | Methods      | Causal framing, temporal, sensitivity, Bayesian   |
+| `/intelligence` | Intelligence | Reimbursement, acquirer fit, Gamma export         |
 
 Legacy monolith hash bookmarks (`/#network`, etc.) redirect to the matching
 workspace route via `LegacyHashRedirect`.

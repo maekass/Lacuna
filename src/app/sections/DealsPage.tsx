@@ -34,8 +34,8 @@ export default function DealsPage() {
       <header className="mb-10">
         <h1 className="text-3xl font-bold text-lacuna-plum">Deals workspace</h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
-          Verified M&amp;A network, deal flow, valuations, and acquirer landscape
-          — descriptive analytics from public sources only.
+          Verified M&amp;A network, deal flow, valuations, and acquirer
+          landscape — descriptive analytics from public sources only.
         </p>
       </header>
 
@@ -72,8 +72,12 @@ export default function DealsPage() {
           />
           <div className="space-y-4">
             {verifiedAcquisitions.slice(0, 5).map((deal) => {
-              const target = verifiedCompanies.find((c) => c.id === deal.targetId);
-              const acquirer = networkNodes.find((n) => n.id === deal.acquirerId);
+              const target = verifiedCompanies.find((c) =>
+                c.id === deal.targetId
+              );
+              const acquirer = networkNodes.find((n) =>
+                n.id === deal.acquirerId
+              );
               return (
                 <div
                   key={deal.id}
@@ -88,15 +92,17 @@ export default function DealsPage() {
                     </p>
                   </div>
                   <div className="shrink-0 sm:text-right">
-                    {deal.dealValue ? (
-                      <p className="font-semibold text-lacuna-plum">
-                        ${deal.dealValue}M
-                      </p>
-                    ) : (
-                      <p className="text-xs text-lacuna-blue/70">
-                        Terms not disclosed
-                      </p>
-                    )}
+                    {deal.dealValue
+                      ? (
+                        <p className="font-semibold text-lacuna-plum">
+                          ${deal.dealValue}M
+                        </p>
+                      )
+                      : (
+                        <p className="text-xs text-lacuna-blue/70">
+                          Terms not disclosed
+                        </p>
+                      )}
                     <p className="text-xs text-lacuna-blue/70">
                       {deal.announcedDate}
                     </p>

@@ -19,7 +19,9 @@ export default function MethodsPage() {
   return (
     <div>
       <header className="mb-10">
-        <h1 className="text-3xl font-bold text-lacuna-plum">Methods workspace</h1>
+        <h1 className="text-3xl font-bold text-lacuna-plum">
+          Methods workspace
+        </h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
           Causal framing, temporal patterns, sensitivity checks, and Bayesian
           small-n analysis — descriptive only, not forecasts.
@@ -29,8 +31,8 @@ export default function MethodsPage() {
           role="note"
         >
           Scores and models here are exploratory heuristics on n=
-          {verifiedAcquisitions.length} verified deals. They are not validated
-          for investment decisions.
+          {verifiedAcquisitions.length}{" "}
+          verified deals. They are not validated for investment decisions.
         </p>
       </header>
 

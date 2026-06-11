@@ -39,8 +39,9 @@ export function readLatestFreeApiExport(): FreeApiExportSummary | null {
 
   let manifest: FreeApiDownloadManifest;
   try {
-    manifest = JSON.parse(readFileSync(manifestPath, "utf8")) as
-      FreeApiDownloadManifest;
+    manifest = JSON.parse(
+      readFileSync(manifestPath, "utf8"),
+    ) as FreeApiDownloadManifest;
   } catch {
     return null;
   }

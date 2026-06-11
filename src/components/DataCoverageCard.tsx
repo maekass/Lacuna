@@ -199,7 +199,10 @@ export default function DataCoverageCard() {
               </thead>
               <tbody>
                 {sectorCounts.map((row) => (
-                  <tr key={row.sector} className="border-t border-lacuna-lavender/30">
+                  <tr
+                    key={row.sector}
+                    className="border-t border-lacuna-lavender/30"
+                  >
                     <td className="p-2 text-lacuna-plum">{row.sector}</td>
                     <td className="p-2 text-right text-slate-600">
                       {row.companies}
@@ -232,7 +235,10 @@ export default function DataCoverageCard() {
               </thead>
               <tbody>
                 {yearCounts.map((row) => (
-                  <tr key={row.year} className="border-t border-lacuna-lavender/30">
+                  <tr
+                    key={row.year}
+                    className="border-t border-lacuna-lavender/30"
+                  >
                     <td className="p-2 text-lacuna-plum">{row.year}</td>
                     <td className="p-2 text-right text-slate-600">
                       {row.count}

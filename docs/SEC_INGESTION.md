@@ -22,7 +22,7 @@ Legacy keyword scan (no Item 2.01 parse): `secEdgarClient.ts` +
 
 | Variable                         | Required        | Description                                                                                   |
 | -------------------------------- | --------------- | --------------------------------------------------------------------------------------------- |
-| `SEC_EDGAR_USER_AGENT`           | **Yes**         | SEC fair-access User-Agent, e.g. `Lacuna Research mps5cy@virginia.edu`                            |
+| `SEC_EDGAR_USER_AGENT`           | **Yes**         | SEC fair-access User-Agent, e.g. `Lacuna Research mps5cy@virginia.edu`                        |
 | `DATABASE_URL`                   | For DB sync     | PostgreSQL connection string                                                                  |
 | `CRON_SECRET`                    | Production cron | Bearer token for `/api/cron/sec-ingest`                                                       |
 | `SEC_SCAN_SINCE`                 | No              | ISO date floor (default: Jan 1 prior year)                                                    |

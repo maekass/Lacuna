@@ -139,7 +139,9 @@ async function downloadEntity(
 export async function downloadFreeApiBundles(
   dataset: VerifiedDataset,
   options: DownloadEntitiesOptions,
-): Promise<{ manifest: FreeApiDownloadManifest; records: FreeApiEntityRecord[] }> {
+): Promise<
+  { manifest: FreeApiDownloadManifest; records: FreeApiEntityRecord[] }
+> {
   const sources = options.sources ?? ALL_FREE_API_SOURCES;
   const needsSec = sources.some((s) =>
     s === "sec_submissions" || s === "sec_company_facts"
