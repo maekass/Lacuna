@@ -6,6 +6,7 @@ import {
   DataExport,
   DataPipelineStatus,
   DeveloperTools,
+  InvestmentGradeReimbursementIntel,
   ReimbursementIntelligenceDashboard,
   SystemHealthDashboard,
 } from "@/app/lazyDashboard";
@@ -41,17 +42,10 @@ export default function IntelligencePage() {
 
       <MotionSection id="reimbursement-intelligence" delay={0.05} className={SECTION}>
         <SectionHeader
-          title="Reimbursement context (descriptive)"
-          description="Illustrative CMS code mapping and business-model labels on verified companies — exploratory framing, not reimbursement advice or live claims data."
+          title="Reimbursement & Commercial Due Diligence"
+          description="Investment-grade reimbursement risk scoring, TAM/SAM/SOM market sizing, and competitive intelligence for life sciences M&A."
         />
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <ReimbursementIntelligenceDashboard />
-          </div>
-          <div>
-            <BusinessModelClassifier />
-          </div>
-        </div>
+        <InvestmentGradeReimbursementIntel />
       </MotionSection>
 
       <MotionSection id="acquirer-prediction" delay={0.05} className={SECTION}>
