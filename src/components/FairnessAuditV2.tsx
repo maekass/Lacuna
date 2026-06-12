@@ -237,7 +237,9 @@ export default function FairnessAuditV2() {
               >
                 {sampleCompanies.length}
               </div>
-              <div className="text-xs text-lacuna-text-secondary mt-1">companies</div>
+              <div className="text-xs text-lacuna-text-secondary mt-1">
+                companies
+              </div>
             </div>
 
             <div className="bg-white border border-lacuna-border p-4 rounded-lg">
@@ -281,7 +283,9 @@ export default function FairnessAuditV2() {
               >
                 {(parityAnalysis.power.power * 100).toFixed(0)}%
               </div>
-              <div className="text-xs text-lacuna-text-secondary mt-1">to detect effect</div>
+              <div className="text-xs text-lacuna-text-secondary mt-1">
+                to detect effect
+              </div>
             </div>
 
             <div className="bg-white border border-lacuna-border p-4 rounded-lg">
@@ -517,7 +521,9 @@ export default function FairnessAuditV2() {
                     </div>
                   </div>
                   <div>
-                    <div className="text-lacuna-text-muted">Benjamini-Hochberg FDR:</div>
+                    <div className="text-lacuna-text-muted">
+                      Benjamini-Hochberg FDR:
+                    </div>
                     <div>
                       FDR target: <strong>0.05</strong>
                     </div>

@@ -157,9 +157,10 @@ export function deriveEmpiricalPriors(
 
   // Overall exit base rate: acquired targets / total companies.
   const acquiredTargetIds = new Set(acquisitions.map((d) => d.targetId));
-  const acquiredInDataset = companies.filter((c) =>
-    acquiredTargetIds.has(c.id) || c.stage.toLowerCase().includes("acquired")
-  ).length;
+  const acquiredInDataset =
+    companies.filter((c) =>
+      acquiredTargetIds.has(c.id) || c.stage.toLowerCase().includes("acquired")
+    ).length;
   const overallExitRate = companies.length > 0
     ? acquiredInDataset / companies.length
     : 0;

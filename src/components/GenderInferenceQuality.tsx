@@ -485,7 +485,10 @@ export default function GenderInferenceQuality({
                   {Object.entries(INFERENCE_QUALITY_BY_ORIGIN).map((
                     [origin, data],
                   ) => (
-                    <tr key={origin} className="border-b border-lacuna-border-subtle">
+                    <tr
+                      key={origin}
+                      className="border-b border-lacuna-border-subtle"
+                    >
                       <td className="py-2 font-medium capitalize">
                         {origin.replace("_", " ")}
                       </td>

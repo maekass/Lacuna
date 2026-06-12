@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import ForceNetwork from "@/components/ForceNetwork";
-import { getVerifiedNetworkLinks, getVerifiedNetworkNodes } from "@/data/verifiedData";
+import {
+  getVerifiedNetworkLinks,
+  getVerifiedNetworkNodes,
+} from "@/data/verifiedData";
 
 const fullNodes = getVerifiedNetworkNodes();
 const fullLinks = getVerifiedNetworkLinks();

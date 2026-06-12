@@ -24,9 +24,10 @@ function calculateReadiness(
 
   // Evidence score: late stage + high valuation = more evidence
   let evidenceScore = 0;
-  const isLateStage = /Series C|Series D|Series E|Series F|Late Stage|Pre-IPO|Public/i.test(
-    company.stage,
-  );
+  const isLateStage =
+    /Series C|Series D|Series E|Series F|Late Stage|Pre-IPO|Public/i.test(
+      company.stage,
+    );
   if (isLateStage) {
     evidenceScore += 40;
     rationale.push("Late-stage funding indicates clinical validation");
@@ -111,7 +112,9 @@ export default function CommercializationReadiness() {
   }, [scores]);
 
   const getScoreColor = (score: number) => {
-    if (score >= 70) return "bg-emerald-100 text-emerald-800 border-emerald-200";
+    if (score >= 70) {
+      return "bg-emerald-100 text-emerald-800 border-emerald-200";
+    }
     if (score >= 50) return "bg-amber-100 text-amber-800 border-amber-200";
     return "bg-slate-100 text-slate-600 border-slate-200";
   };
@@ -125,9 +128,9 @@ export default function CommercializationReadiness() {
             Commercialization Readiness (Researcher View)
           </h3>
           <p className="text-sm text-slate-500 mt-1">
-            Scored by evidence maturity, reimbursement pathway clarity, and acquirer
-            sector activity — for researchers evaluating spin-out or venture
-            opportunities. Not investment advice.
+            Scored by evidence maturity, reimbursement pathway clarity, and
+            acquirer sector activity — for researchers evaluating spin-out or
+            venture opportunities. Not investment advice.
           </p>
         </div>
         <div className="p-6 space-y-4">
@@ -137,8 +140,9 @@ export default function CommercializationReadiness() {
                 Maternal Health Candidates
               </p>
               <p className="text-xs text-lacuna-blue">
-                {maternalHealthCandidates.length} companies with maternal health
-                exposure — add to watchlist for tracking
+                {maternalHealthCandidates.length}{" "}
+                companies with maternal health exposure — add to watchlist for
+                tracking
               </p>
             </div>
           )}
@@ -148,7 +152,9 @@ export default function CommercializationReadiness() {
               const inWatchlist = isInWatchlist(score.company.id);
               const isMaternalHealth =
                 score.company.sector.includes("Maternal") ||
-                score.company.description?.match(/maternal|pregnancy|postpartum/i);
+                score.company.description?.match(
+                  /maternal|pregnancy|postpartum/i,
+                );
 
               return (
                 <div
@@ -165,7 +171,11 @@ export default function CommercializationReadiness() {
                           Maternal Health
                         </span>
                       )}
-                      <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs ${getScoreColor(score.overallScore)}`}>
+                      <span
+                        className={`inline-flex items-center px-2 py-0.5 rounded text-xs ${
+                          getScoreColor(score.overallScore)
+                        }`}
+                      >
                         {score.overallScore}/100
                       </span>
                     </div>
@@ -202,13 +212,13 @@ export default function CommercializationReadiness() {
                       }
                     }}
                     className="ml-2 shrink-0 p-2 rounded hover:bg-slate-100"
-                    aria-label={inWatchlist ? "Remove from watchlist" : "Add to watchlist"}
+                    aria-label={inWatchlist
+                      ? "Remove from watchlist"
+                      : "Add to watchlist"}
                   >
-                    {inWatchlist ? (
-                      <BookmarkCheck className="h-4 w-4 text-emerald-600" />
-                    ) : (
-                      <Bookmark className="h-4 w-4 text-slate-400" />
-                    )}
+                    {inWatchlist
+                      ? <BookmarkCheck className="h-4 w-4 text-emerald-600" />
+                      : <Bookmark className="h-4 w-4 text-slate-400" />}
                   </button>
                 </div>
               );
@@ -220,10 +230,11 @@ export default function CommercializationReadiness() {
               <p className="text-sm font-medium text-slate-700">
                 Your Watchlist: {items.length} companies
               </p>
-              {items.filter((i) => i.tags.includes("maternal-health")).length > 0 && (
+              {items.filter((i) => i.tags.includes("maternal-health")).length >
+                  0 && (
                 <p className="text-xs text-lacuna-plum mt-1">
-                  {items.filter((i) => i.tags.includes("maternal-health")).length} maternal health
-                  tracked
+                  {items.filter((i) => i.tags.includes("maternal-health"))
+                    .length} maternal health tracked
                 </p>
               )}
             </div>

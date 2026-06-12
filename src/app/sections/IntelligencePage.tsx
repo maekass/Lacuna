@@ -24,7 +24,7 @@ export default function IntelligencePage() {
           Intelligence workspace
         </h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
-          Reimbursement context, strategic acquirer fit, system health, and data 
+          Reimbursement context, strategic acquirer fit, system health, and data
           exports — engineering-grade tooling for production environments.
         </p>
       </header>
@@ -40,7 +40,11 @@ export default function IntelligencePage() {
         </div>
       </MotionSection>
 
-      <MotionSection id="reimbursement-intelligence" delay={0.05} className={SECTION}>
+      <MotionSection
+        id="reimbursement-intelligence"
+        delay={0.05}
+        className={SECTION}
+      >
         <SectionHeader
           title="Reimbursement & Commercial Due Diligence"
           description="Investment-grade reimbursement risk scoring, TAM/SAM/SOM market sizing, and competitive intelligence for life sciences M&A."

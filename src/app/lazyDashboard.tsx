@@ -147,7 +147,9 @@ export const ReimbursementIntelligenceDashboard = dynamic(
 export const InvestmentGradeReimbursementIntel = dynamic(
   () => import("@/components/InvestmentGradeReimbursementIntel"),
   {
-    loading: sectionFallback("h-[600px] animate-pulse rounded-xl bg-lacuna-pink/10"),
+    loading: sectionFallback(
+      "h-[600px] animate-pulse rounded-xl bg-lacuna-pink/10",
+    ),
   },
 );
 export const BusinessModelClassifier = dynamic(

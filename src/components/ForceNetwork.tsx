@@ -5,10 +5,7 @@ import * as d3 from "d3";
 import { motion } from "framer-motion";
 import AcquirerProfile from "@/components/AcquirerProfile";
 import ChartTooltip from "@/components/ui/ChartTooltip";
-import {
-  INVESTOR_PORTFOLIOS,
-  type PortfolioKey,
-} from "@/lib/data/portfolios";
+import { INVESTOR_PORTFOLIOS, type PortfolioKey } from "@/lib/data/portfolios";
 
 interface Node extends d3.SimulationNodeDatum {
   id: string;
@@ -504,14 +501,16 @@ export default function ForceNetwork(
                 </p>
                 {selectedNode.valuation > 1000 && (
                   <p>
-                    <span className="text-lacuna-text-muted">Valuation:</span>{" "}
+                    <span className="text-lacuna-text-muted">Valuation:</span>
+                    {" "}
                     ${(selectedNode.valuation / 1000).toFixed(1)}B
                   </p>
                 )}
                 {selectedNode.valuation <= 1000 && selectedNode.valuation > 0 &&
                   (
                     <p>
-                      <span className="text-lacuna-text-muted">Valuation:</span>{" "}
+                      <span className="text-lacuna-text-muted">Valuation:</span>
+                      {" "}
                       ${selectedNode.valuation}M
                     </p>
                   )}
@@ -528,11 +527,13 @@ export default function ForceNetwork(
             >
               <ChartTooltip title={hoveredNode.name}>
                 <p>
-                  <span className="text-lacuna-text-inverse/70">Type:</span>{" "}
+                  <span className="text-lacuna-text-inverse/70">Type:</span>
+                  {" "}
                   {hoveredNode.type}
                 </p>
                 <p>
-                  <span className="text-lacuna-text-inverse/70">Sector:</span>{" "}
+                  <span className="text-lacuna-text-inverse/70">Sector:</span>
+                  {" "}
                   {hoveredNode.sector}
                 </p>
               </ChartTooltip>

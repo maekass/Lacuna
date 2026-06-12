@@ -2,11 +2,11 @@
 
 import {
   createContext,
-  useContext,
-  useState,
-  useCallback,
-  useMemo,
   type ReactNode,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
 } from "react";
 import type { VerifiedCompanyView } from "./verifiedDataHelpers";
 
@@ -22,7 +22,11 @@ interface WatchlistItem {
 interface WatchlistContextValue {
   items: WatchlistItem[];
   isInWatchlist: (companyId: string) => boolean;
-  addToWatchlist: (company: VerifiedCompanyView, notes?: string, tags?: string[]) => void;
+  addToWatchlist: (
+    company: VerifiedCompanyView,
+    notes?: string,
+    tags?: string[],
+  ) => void;
   removeFromWatchlist: (companyId: string) => void;
   toggleWatchlist: (company: VerifiedCompanyView) => void;
   updateNotes: (companyId: string, notes: string) => void;
@@ -106,7 +110,7 @@ export function WatchlistProvider({ children }: { children: ReactNode }) {
   const updateNotes = useCallback((companyId: string, notes: string) => {
     setItems((prev) => {
       const updated = prev.map((i) =>
-        i.companyId === companyId ? { ...i, notes } : i,
+        i.companyId === companyId ? { ...i, notes } : i
       );
       saveToStorage(updated);
       return updated;
@@ -116,7 +120,7 @@ export function WatchlistProvider({ children }: { children: ReactNode }) {
   const updateTags = useCallback((companyId: string, tags: string[]) => {
     setItems((prev) => {
       const updated = prev.map((i) =>
-        i.companyId === companyId ? { ...i, tags } : i,
+        i.companyId === companyId ? { ...i, tags } : i
       );
       saveToStorage(updated);
       return updated;
@@ -139,7 +143,7 @@ export function WatchlistProvider({ children }: { children: ReactNode }) {
         i.addedAt,
         i.notes ? escapeCsv(i.notes) : "",
         i.tags.join(";"),
-      ].join(","),
+      ].join(",")
     );
     return [header, ...rows].join("\n");
   }, [items]);

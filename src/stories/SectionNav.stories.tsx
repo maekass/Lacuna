@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import SectionNav from "@/components/layout/SectionNav";
 import { WORKSPACES } from "@/lib/navigation/workspaces";
 
-const dealsSections = WORKSPACES.find((w) => w.slug === "deals")?.sections ?? [];
+const dealsSections = WORKSPACES.find((w) => w.slug === "deals")?.sections ??
+  [];
 
 const meta: Meta<typeof SectionNav> = {
   title: "Lacuna/Navigation/SectionNav",

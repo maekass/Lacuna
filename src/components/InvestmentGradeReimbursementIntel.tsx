@@ -1,10 +1,13 @@
 "use client";
 
-import { useMemo, useState, useCallback } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Card from "@/components/ui/Card";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
-import type { VerifiedAcquisitionView, VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
+import type {
+  VerifiedAcquisitionView,
+  VerifiedCompanyView,
+} from "@/lib/data/verifiedDataHelpers";
 
 // Investment-grade analysis types
 interface ReimbursementRiskScore {
@@ -63,20 +66,24 @@ const PAYER_BAR_STYLES: Record<string, string> = {
 };
 
 // Investment-grade scoring algorithm
-function calculateReimbursementRisk(company: VerifiedCompanyView): ReimbursementRiskScore {
+function calculateReimbursementRisk(
+  company: VerifiedCompanyView,
+): ReimbursementRiskScore {
   const riskFactors: string[] = [];
   const mitigationStrategies: string[] = [];
-  
+
   // CMS Pathway Clarity (0-100)
   let cmsPathwayClarity = 50;
-  const hasClearPath = /diagnostic|therapeutic|device|cpt|cms|fda/i.test(company.description);
+  const hasClearPath = /diagnostic|therapeutic|device|cpt|cms|fda/i.test(
+    company.description,
+  );
   if (hasClearPath) {
     cmsPathwayClarity = 80;
     mitigationStrategies.push("Established CMS pathway present");
   } else {
     riskFactors.push("No clear CMS reimbursement pathway identified");
   }
-  
+
   if (company.sector.includes("Diagnostics")) {
     cmsPathwayClarity += 15;
     mitigationStrategies.push("Diagnostic sector has well-defined coding");
@@ -86,7 +93,7 @@ function calculateReimbursementRisk(company: VerifiedCompanyView): Reimbursement
     riskFactors.push("Digital health reimbursement evolving/uncertain");
     mitigationStrategies.push("Consider Category III CPT pathway");
   }
-  
+
   // FDA Alignment (0-100)
   let fdaAlignment = 60;
   const hasFDA = /fda|510k|pma|cleared|approved/i.test(company.description);
@@ -97,7 +104,7 @@ function calculateReimbursementRisk(company: VerifiedCompanyView): Reimbursement
     riskFactors.push("Pre-FDA: Coverage contingent on regulatory approval");
     mitigationStrategies.push("Parallel-track FDA/CMS strategy recommended");
   }
-  
+
   // Coding Coverage (0-100)
   let codingCoverage = 45;
   if (hasClearPath) codingCoverage = 75;
@@ -106,28 +113,35 @@ function calculateReimbursementRisk(company: VerifiedCompanyView): Reimbursement
     codingCoverage -= 10;
     riskFactors.push("Molecular diagnostics may require LCD/NCD review");
   }
-  
+
   // Payer Mix Diversity (0-100)
   const payerMixDiversity = company.sector.includes("Consumer") ? 40 : 75;
   if (payerMixDiversity < 60) {
-    riskFactors.push("Concentrated payer exposure increases pricing pressure risk");
+    riskFactors.push(
+      "Concentrated payer exposure increases pricing pressure risk",
+    );
   }
-  
+
   // Overall Risk Classification
-  const avgScore = (cmsPathwayClarity + fdaAlignment + codingCoverage + payerMixDiversity) / 4;
+  const avgScore =
+    (cmsPathwayClarity + fdaAlignment + codingCoverage + payerMixDiversity) / 4;
   let overallRisk: ReimbursementRiskScore["overallRisk"];
   if (avgScore >= 75) overallRisk = "low";
   else if (avgScore >= 60) overallRisk = "moderate";
   else if (avgScore >= 40) overallRisk = "high";
   else overallRisk = "critical";
-  
+
   // Coverage Timeline Estimate
   let estimatedCoverageTimeline: string;
-  if (overallRisk === "low") estimatedCoverageTimeline = "6-12 months post-close";
-  else if (overallRisk === "moderate") estimatedCoverageTimeline = "12-18 months with active management";
-  else if (overallRisk === "high") estimatedCoverageTimeline = "18-24 months, significant uncertainty";
-  else estimatedCoverageTimeline = ">24 months, strategic pivot may be required";
-  
+  if (overallRisk === "low") {
+    estimatedCoverageTimeline = "6-12 months post-close";
+  } else if (overallRisk === "moderate") {
+    estimatedCoverageTimeline = "12-18 months with active management";
+  } else if (overallRisk === "high") {
+    estimatedCoverageTimeline = "18-24 months, significant uncertainty";
+  } else {estimatedCoverageTimeline =
+      ">24 months, strategic pivot may be required";}
+
   return {
     company,
     cmsPathwayClarity: Math.min(100, Math.max(0, cmsPathwayClarity)),
@@ -151,9 +165,9 @@ function generateMarketSizing(sector: string): MarketSizing {
     "Menopause": { tam: 16.5, growth: 11.2 },
     "Wearable": { tam: 61.0, growth: 14.5 },
   };
-  
+
   const base = sectorMultipliers[sector] || { tam: 25.0, growth: 6.0 };
-  
+
   return {
     sector,
     totalAddressableMarket: base.tam,
@@ -173,21 +187,21 @@ function generateCompetitiveIntel(
   sector: string,
   acquisitions: VerifiedAcquisitionView[],
 ): CompetitiveIntel {
-  const sectorDeals = acquisitions.filter(a => 
+  const sectorDeals = acquisitions.filter((a) =>
     a.targetName.toLowerCase().includes(sector.toLowerCase()) ||
     a.acquirerName.toLowerCase().includes(sector.toLowerCase())
   );
-  
+
   const dealValues = sectorDeals
-    .map(d => d.dealValue)
+    .map((d) => d.dealValue)
     .filter((v): v is number => v !== undefined);
-  
+
   const avgMultiple = dealValues.length > 0
     ? dealValues.reduce((a, b) => a + b, 0) / dealValues.length / 100 // Simplified
     : 8.5;
-  
-  const uniqueAcquirers = [...new Set(sectorDeals.map(d => d.acquirerName))];
-  
+
+  const uniqueAcquirers = [...new Set(sectorDeals.map((d) => d.acquirerName))];
+
   return {
     sector,
     recentDeals: sectorDeals.slice(0, 5),
@@ -205,50 +219,59 @@ function generateInvestmentSignals(
   competitive: CompetitiveIntel,
 ): InvestmentSignal[] {
   const signals: InvestmentSignal[] = [];
-  
+
   // Opportunity signals
   if (riskScore.overallRisk === "low" && market.growthRate > 8) {
     signals.push({
       type: "opportunity",
       priority: "high",
       headline: "Attractive Risk-Adjusted Growth Profile",
-      detail: `${company.name} operates in ${market.sector} (${market.growthRate}% CAGR) with clear reimbursement pathways. Low commercialization risk.`,
+      detail:
+        `${company.name} operates in ${market.sector} (${market.growthRate}% CAGR) with clear reimbursement pathways. Low commercialization risk.`,
       actionable: true,
     });
   }
-  
+
   if (competitive.dealVelocity === "accelerating") {
     signals.push({
       type: "timing",
       priority: "high",
       headline: "Sector M&A Momentum Building",
-      detail: `${competitive.recentDeals.length} deals in ${market.sector} sector. Strategic buyers: ${competitive.strategicBuyers.slice(0, 3).join(", ")}. Consider pre-emptive move.`,
+      detail:
+        `${competitive.recentDeals.length} deals in ${market.sector} sector. Strategic buyers: ${
+          competitive.strategicBuyers.slice(0, 3).join(", ")
+        }. Consider pre-emptive move.`,
       actionable: true,
     });
   }
-  
+
   // Risk signals
-  if (riskScore.overallRisk === "high" || riskScore.overallRisk === "critical") {
+  if (
+    riskScore.overallRisk === "high" || riskScore.overallRisk === "critical"
+  ) {
     signals.push({
       type: "risk",
       priority: "high",
       headline: "Reimbursement Uncertainty Requires Structuring",
-      detail: `Risk factors: ${riskScore.riskFactors.slice(0, 2).join("; ")}. Recommend milestone-based earnout tied to coverage determination.`,
+      detail: `Risk factors: ${
+        riskScore.riskFactors.slice(0, 2).join("; ")
+      }. Recommend milestone-based earnout tied to coverage determination.`,
       actionable: true,
     });
   }
-  
+
   // Trend signals
   if (market.payerMix.cash > 20) {
     signals.push({
       type: "trend",
       priority: "medium",
       headline: "Consumer-Driven Model Limits TAM Expansion",
-      detail: `${market.payerMix.cash}% cash-pay exposure limits scale. Value-based contracting opportunity with MA plans.`,
+      detail:
+        `${market.payerMix.cash}% cash-pay exposure limits scale. Value-based contracting opportunity with MA plans.`,
       actionable: false,
     });
   }
-  
+
   return signals.sort((a, b) => {
     const priorityOrder = { high: 0, medium: 1, low: 2 };
     return priorityOrder[a.priority] - priorityOrder[b.priority];
@@ -257,38 +280,58 @@ function generateInvestmentSignals(
 
 export default function InvestmentGradeReimbursementIntel() {
   const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
-  const [selectedCompany, setSelectedCompany] = useState<VerifiedCompanyView | null>(null);
-  const [activeTab, setActiveTab] = useState<"risk" | "market" | "competitive" | "signals">("risk");
-  
+  const [selectedCompany, setSelectedCompany] = useState<
+    VerifiedCompanyView | null
+  >(null);
+  const [activeTab, setActiveTab] = useState<
+    "risk" | "market" | "competitive" | "signals"
+  >("risk");
+
   // Generate investment-grade analysis
   const analysis = useMemo(() => {
     if (!selectedCompany) return null;
-    
+
     const riskScore = calculateReimbursementRisk(selectedCompany);
-    const marketSizing = generateMarketSizing(selectedCompany.sector.split("/")[0] || "Diagnostics");
-    const competitiveIntel = generateCompetitiveIntel(selectedCompany.sector, verifiedAcquisitions);
-    const signals = generateInvestmentSignals(selectedCompany, riskScore, marketSizing, competitiveIntel);
-    
+    const marketSizing = generateMarketSizing(
+      selectedCompany.sector.split("/")[0] || "Diagnostics",
+    );
+    const competitiveIntel = generateCompetitiveIntel(
+      selectedCompany.sector,
+      verifiedAcquisitions,
+    );
+    const signals = generateInvestmentSignals(
+      selectedCompany,
+      riskScore,
+      marketSizing,
+      competitiveIntel,
+    );
+
     return { riskScore, marketSizing, competitiveIntel, signals };
   }, [selectedCompany, verifiedAcquisitions]);
-  
+
   // Sector-level intelligence
   const sectorIntelligence = useMemo(() => {
-    const sectors = [...new Set(verifiedCompanies.map(c => c.sector.split("/")[0]))];
-    return sectors.map(sector => ({
+    const sectors = [
+      ...new Set(verifiedCompanies.map((c) => c.sector.split("/")[0])),
+    ];
+    return sectors.map((sector) => ({
       sector,
       marketSizing: generateMarketSizing(sector),
       competitiveIntel: generateCompetitiveIntel(sector, verifiedAcquisitions),
-      companyCount: verifiedCompanies.filter(c => c.sector.includes(sector)).length,
+      companyCount: verifiedCompanies.filter((c) =>
+        c.sector.includes(sector)
+      ).length,
     }));
   }, [verifiedCompanies, verifiedAcquisitions]);
-  
+
   const formatCurrency = (value: number): string => {
     if (value >= 1000) return `$${(value / 1000).toFixed(1)}T`;
     return `$${value.toFixed(1)}B`;
   };
-  
-  const RiskBadge = ({ risk }: { risk: ReimbursementRiskScore["overallRisk"] }) => {
+
+  const RiskBadge = (
+    { risk }: { risk: ReimbursementRiskScore["overallRisk"] },
+  ) => {
     const styles = {
       low: "bg-emerald-100 text-emerald-800 border-emerald-300",
       moderate: "bg-amber-100 text-amber-800 border-amber-300",
@@ -296,12 +339,16 @@ export default function InvestmentGradeReimbursementIntel() {
       critical: "bg-red-100 text-red-800 border-red-300",
     };
     return (
-      <span className={`px-3 py-1 rounded-full text-sm font-semibold border ${styles[risk]}`}>
+      <span
+        className={`px-3 py-1 rounded-full text-sm font-semibold border ${
+          styles[risk]
+        }`}
+      >
         {risk.toUpperCase()} RISK
       </span>
     );
   };
-  
+
   const SignalCard = ({ signal }: { signal: InvestmentSignal }) => {
     const typeStyles = {
       opportunity: "bg-emerald-50 border-emerald-200",
@@ -309,18 +356,22 @@ export default function InvestmentGradeReimbursementIntel() {
       trend: "bg-blue-50 border-blue-200",
       timing: "bg-purple-50 border-purple-200",
     };
-    
+
     const priorityBadge = {
       high: "bg-red-100 text-red-800",
       medium: "bg-amber-100 text-amber-800",
       low: "bg-slate-100 text-slate-600",
     };
-    
+
     return (
       <div className={`p-4 rounded-lg border ${typeStyles[signal.type]}`}>
         <div className="flex items-start justify-between mb-2">
           <h4 className="font-semibold text-slate-800">{signal.headline}</h4>
-          <span className={`px-2 py-0.5 rounded text-xs font-medium ${priorityBadge[signal.priority]}`}>
+          <span
+            className={`px-2 py-0.5 rounded text-xs font-medium ${
+              priorityBadge[signal.priority]
+            }`}
+          >
             {signal.priority.toUpperCase()}
           </span>
         </div>
@@ -333,7 +384,7 @@ export default function InvestmentGradeReimbursementIntel() {
       </div>
     );
   };
-  
+
   return (
     <div className="space-y-6">
       <Card>
@@ -343,15 +394,20 @@ export default function InvestmentGradeReimbursementIntel() {
               Investment-Grade Reimbursement Intelligence
             </h3>
             <p className="text-sm text-lacuna-blue">
-              Life sciences M&A due diligence: reimbursement risk, market sizing, competitive intelligence
+              Life sciences M&A due diligence: reimbursement risk, market
+              sizing, competitive intelligence
             </p>
           </div>
           <div className="text-right">
-            <div className="text-sm font-medium text-slate-700">Coverage: {verifiedCompanies.length} companies</div>
-            <div className="text-xs text-slate-500">{verifiedAcquisitions.length} verified deals</div>
+            <div className="text-sm font-medium text-slate-700">
+              Coverage: {verifiedCompanies.length} companies
+            </div>
+            <div className="text-xs text-slate-500">
+              {verifiedAcquisitions.length} verified deals
+            </div>
           </div>
         </div>
-        
+
         {/* Company Selector */}
         <div className="mb-6">
           <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -369,29 +425,39 @@ export default function InvestmentGradeReimbursementIntel() {
                 }`}
               >
                 {company.name}
-                <span className="ml-1.5 text-xs opacity-75">({company.sector.split("/")[0]})</span>
+                <span className="ml-1.5 text-xs opacity-75">
+                  ({company.sector.split("/")[0]})
+                </span>
               </button>
             ))}
           </div>
         </div>
-        
+
         {analysis && (
           <>
             {/* Risk Summary Header */}
             <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg mb-4">
               <div>
-                <h4 className="font-bold text-lg text-slate-800">{analysis.riskScore.company.name}</h4>
-                <p className="text-sm text-slate-600">{analysis.riskScore.company.sector}</p>
+                <h4 className="font-bold text-lg text-slate-800">
+                  {analysis.riskScore.company.name}
+                </h4>
+                <p className="text-sm text-slate-600">
+                  {analysis.riskScore.company.sector}
+                </p>
               </div>
               <div className="flex items-center gap-4">
                 <div className="text-right">
-                  <div className="text-sm text-slate-500">Coverage Timeline</div>
-                  <div className="font-semibold text-slate-800">{analysis.riskScore.estimatedCoverageTimeline}</div>
+                  <div className="text-sm text-slate-500">
+                    Coverage Timeline
+                  </div>
+                  <div className="font-semibold text-slate-800">
+                    {analysis.riskScore.estimatedCoverageTimeline}
+                  </div>
                 </div>
                 <RiskBadge risk={analysis.riskScore.overallRisk} />
               </div>
             </div>
-            
+
             {/* Tabs */}
             <div className="flex gap-2 mb-4 border-b border-slate-200">
               {[
@@ -413,45 +479,87 @@ export default function InvestmentGradeReimbursementIntel() {
                 </button>
               ))}
             </div>
-            
+
             {/* Tab Content */}
             <div className="min-h-[300px]">
               {activeTab === "risk" && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="space-y-4"
+                >
                   {/* Risk Score Breakdown */}
                   <div className="grid grid-cols-4 gap-3">
                     {[
-                      { label: "CMS Pathway", score: analysis.riskScore.cmsPathwayClarity },
-                      { label: "FDA Alignment", score: analysis.riskScore.fdaAlignment },
-                      { label: "Coding Coverage", score: analysis.riskScore.codingCoverage },
-                      { label: "Payer Mix", score: analysis.riskScore.payerMixDiversity },
+                      {
+                        label: "CMS Pathway",
+                        score: analysis.riskScore.cmsPathwayClarity,
+                      },
+                      {
+                        label: "FDA Alignment",
+                        score: analysis.riskScore.fdaAlignment,
+                      },
+                      {
+                        label: "Coding Coverage",
+                        score: analysis.riskScore.codingCoverage,
+                      },
+                      {
+                        label: "Payer Mix",
+                        score: analysis.riskScore.payerMixDiversity,
+                      },
                     ].map((item) => (
-                      <div key={item.label} className="bg-slate-50 rounded-lg p-3">
-                        <div className={`text-2xl font-bold ${item.score >= 70 ? "text-emerald-600" : item.score >= 50 ? "text-amber-600" : "text-red-600"}`}>
+                      <div
+                        key={item.label}
+                        className="bg-slate-50 rounded-lg p-3"
+                      >
+                        <div
+                          className={`text-2xl font-bold ${
+                            item.score >= 70
+                              ? "text-emerald-600"
+                              : item.score >= 50
+                              ? "text-amber-600"
+                              : "text-red-600"
+                          }`}
+                        >
                           {item.score}
                         </div>
-                        <div className="text-xs text-slate-600">{item.label}</div>
+                        <div className="text-xs text-slate-600">
+                          {item.label}
+                        </div>
                       </div>
                     ))}
                   </div>
-                  
+
                   {/* Risk Factors & Mitigations */}
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-red-50 rounded-lg p-4 border border-red-100">
-                      <h5 className="font-semibold text-red-800 mb-2">Risk Factors</h5>
+                      <h5 className="font-semibold text-red-800 mb-2">
+                        Risk Factors
+                      </h5>
                       <ul className="space-y-1">
                         {analysis.riskScore.riskFactors.map((factor, i) => (
-                          <li key={i} className="text-sm text-red-700 flex items-start gap-2">
+                          <li
+                            key={i}
+                            className="text-sm text-red-700 flex items-start gap-2"
+                          >
                             <span>•</span> {factor}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-100">
-                      <h5 className="font-semibold text-emerald-800 mb-2">Mitigation Strategies</h5>
+                      <h5 className="font-semibold text-emerald-800 mb-2">
+                        Mitigation Strategies
+                      </h5>
                       <ul className="space-y-1">
-                        {analysis.riskScore.mitigationStrategies.map((strategy, i) => (
-                          <li key={i} className="text-sm text-emerald-700 flex items-start gap-2">
+                        {analysis.riskScore.mitigationStrategies.map((
+                          strategy,
+                          i,
+                        ) => (
+                          <li
+                            key={i}
+                            className="text-sm text-emerald-700 flex items-start gap-2"
+                          >
                             <span>•</span> {strategy}
                           </li>
                         ))}
@@ -460,72 +568,140 @@ export default function InvestmentGradeReimbursementIntel() {
                   </div>
                 </motion.div>
               )}
-              
+
               {activeTab === "market" && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="space-y-4"
+                >
                   {/* TAM/SAM/SOM */}
                   <div className="grid grid-cols-3 gap-4">
                     <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-                      <div className="text-3xl font-bold text-blue-700">{formatCurrency(analysis.marketSizing.totalAddressableMarket)}</div>
-                      <div className="text-sm font-medium text-blue-800">Total Addressable Market</div>
-                      <div className="text-xs text-blue-600 mt-1">Global {analysis.marketSizing.sector} market</div>
+                      <div className="text-3xl font-bold text-blue-700">
+                        {formatCurrency(
+                          analysis.marketSizing.totalAddressableMarket,
+                        )}
+                      </div>
+                      <div className="text-sm font-medium text-blue-800">
+                        Total Addressable Market
+                      </div>
+                      <div className="text-xs text-blue-600 mt-1">
+                        Global {analysis.marketSizing.sector} market
+                      </div>
                     </div>
                     <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
-                      <div className="text-3xl font-bold text-indigo-700">{formatCurrency(analysis.marketSizing.serviceableAddressableMarket)}</div>
-                      <div className="text-sm font-medium text-indigo-800">Serviceable Addressable</div>
-                      <div className="text-xs text-indigo-600 mt-1">US addressable with reimbursement</div>
+                      <div className="text-3xl font-bold text-indigo-700">
+                        {formatCurrency(
+                          analysis.marketSizing.serviceableAddressableMarket,
+                        )}
+                      </div>
+                      <div className="text-sm font-medium text-indigo-800">
+                        Serviceable Addressable
+                      </div>
+                      <div className="text-xs text-indigo-600 mt-1">
+                        US addressable with reimbursement
+                      </div>
                     </div>
                     <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-                      <div className="text-3xl font-bold text-purple-700">{formatCurrency(analysis.marketSizing.serviceableObtainableMarket)}</div>
-                      <div className="text-sm font-medium text-purple-800">Serviceable Obtainable</div>
-                      <div className="text-xs text-purple-600 mt-1">Realistic 5-year capture</div>
+                      <div className="text-3xl font-bold text-purple-700">
+                        {formatCurrency(
+                          analysis.marketSizing.serviceableObtainableMarket,
+                        )}
+                      </div>
+                      <div className="text-sm font-medium text-purple-800">
+                        Serviceable Obtainable
+                      </div>
+                      <div className="text-xs text-purple-600 mt-1">
+                        Realistic 5-year capture
+                      </div>
                     </div>
                   </div>
-                  
+
                   {/* Payer Mix */}
                   <div className="bg-slate-50 rounded-lg p-4">
-                    <h5 className="font-semibold text-slate-800 mb-3">Payer Mix Breakdown</h5>
+                    <h5 className="font-semibold text-slate-800 mb-3">
+                      Payer Mix Breakdown
+                    </h5>
                     <div className="flex gap-2">
-                      {Object.entries(analysis.marketSizing.payerMix).map(([payer, pct]) => (
+                      {Object.entries(analysis.marketSizing.payerMix).map((
+                        [payer, pct],
+                      ) => (
                         <div key={payer} className="flex-1">
                           <div className="bg-slate-200 rounded-full h-4 mb-1 overflow-hidden">
                             <div
-                              className={`h-full rounded-full ${PAYER_BAR_STYLES[payer] ?? "bg-slate-500 w-1/6"}`}
+                              className={`h-full rounded-full ${
+                                PAYER_BAR_STYLES[payer] ?? "bg-slate-500 w-1/6"
+                              }`}
                             />
                           </div>
-                          <div className="text-xs text-slate-600 capitalize">{payer}: {pct}%</div>
+                          <div className="text-xs text-slate-600 capitalize">
+                            {payer}: {pct}%
+                          </div>
                         </div>
                       ))}
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center justify-between p-3 bg-emerald-50 rounded-lg border border-emerald-200">
-                    <span className="text-sm font-medium text-emerald-800">CAGR ({analysis.marketSizing.growthRate}%)</span>
-                    <span className="text-xs text-emerald-600">Above-average sector growth</span>
+                    <span className="text-sm font-medium text-emerald-800">
+                      CAGR ({analysis.marketSizing.growthRate}%)
+                    </span>
+                    <span className="text-xs text-emerald-600">
+                      Above-average sector growth
+                    </span>
                   </div>
                 </motion.div>
               )}
-              
+
               {activeTab === "competitive" && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="space-y-4"
+                >
                   {/* Deal Velocity & Premium */}
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-slate-50 rounded-lg p-4">
-                      <div className="text-sm text-slate-500">Deal Velocity</div>
-                      <div className={`text-xl font-bold ${analysis.competitiveIntel.dealVelocity === "accelerating" ? "text-emerald-600" : "text-slate-700"}`}>
+                      <div className="text-sm text-slate-500">
+                        Deal Velocity
+                      </div>
+                      <div
+                        className={`text-xl font-bold ${
+                          analysis.competitiveIntel.dealVelocity ===
+                              "accelerating"
+                            ? "text-emerald-600"
+                            : "text-slate-700"
+                        }`}
+                      >
                         {analysis.competitiveIntel.dealVelocity.toUpperCase()}
                       </div>
-                      <div className="text-xs text-slate-500">{analysis.competitiveIntel.recentDeals.length} recent transactions</div>
+                      <div className="text-xs text-slate-500">
+                        {analysis.competitiveIntel.recentDeals.length}{" "}
+                        recent transactions
+                      </div>
                     </div>
                     <div className="bg-slate-50 rounded-lg p-4">
-                      <div className="text-sm text-slate-500">Avg Valuation Multiple</div>
-                      <div className="text-xl font-bold text-slate-700">{analysis.competitiveIntel.avgValuationMultiple.toFixed(1)}x</div>
-                      <div className={`text-xs ${analysis.competitiveIntel.premiumTrend === "expanding" ? "text-emerald-600" : "text-slate-500"}`}>
+                      <div className="text-sm text-slate-500">
+                        Avg Valuation Multiple
+                      </div>
+                      <div className="text-xl font-bold text-slate-700">
+                        {analysis.competitiveIntel.avgValuationMultiple.toFixed(
+                          1,
+                        )}x
+                      </div>
+                      <div
+                        className={`text-xs ${
+                          analysis.competitiveIntel.premiumTrend === "expanding"
+                            ? "text-emerald-600"
+                            : "text-slate-500"
+                        }`}
+                      >
                         Premiums {analysis.competitiveIntel.premiumTrend}
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Recent Deals */}
                   <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
                     <div className="px-4 py-2 bg-slate-100 border-b border-slate-200 font-medium text-sm text-slate-700">
@@ -533,32 +709,52 @@ export default function InvestmentGradeReimbursementIntel() {
                     </div>
                     <div className="divide-y divide-slate-100">
                       {analysis.competitiveIntel.recentDeals.map((deal) => (
-                        <div key={deal.id} className="px-4 py-3 flex items-center justify-between">
+                        <div
+                          key={deal.id}
+                          className="px-4 py-3 flex items-center justify-between"
+                        >
                           <div>
-                            <span className="font-medium text-slate-800">{deal.targetName}</span>
+                            <span className="font-medium text-slate-800">
+                              {deal.targetName}
+                            </span>
                             <span className="text-slate-400 mx-2">→</span>
-                            <span className="text-slate-600">{deal.acquirerName}</span>
+                            <span className="text-slate-600">
+                              {deal.acquirerName}
+                            </span>
                           </div>
                           <div className="text-right">
                             {deal.dealValue && (
-                              <div className="font-medium text-slate-800">${(deal.dealValue / 1000).toFixed(1)}M</div>
+                              <div className="font-medium text-slate-800">
+                                ${(deal.dealValue / 1000).toFixed(1)}M
+                              </div>
                             )}
-                            <div className="text-xs text-slate-500">{deal.announcedDate}</div>
+                            <div className="text-xs text-slate-500">
+                              {deal.announcedDate}
+                            </div>
                           </div>
                         </div>
                       ))}
                       {analysis.competitiveIntel.recentDeals.length === 0 && (
-                        <div className="px-4 py-3 text-sm text-slate-500 italic">No recent deals in this sector</div>
+                        <div className="px-4 py-3 text-sm text-slate-500 italic">
+                          No recent deals in this sector
+                        </div>
                       )}
                     </div>
                   </div>
-                  
+
                   {/* Strategic Buyers */}
                   <div>
-                    <h5 className="font-semibold text-slate-800 mb-2">Active Strategic Buyers</h5>
+                    <h5 className="font-semibold text-slate-800 mb-2">
+                      Active Strategic Buyers
+                    </h5>
                     <div className="flex flex-wrap gap-2">
-                      {analysis.competitiveIntel.strategicBuyers.map((buyer) => (
-                        <span key={buyer} className="px-3 py-1 bg-slate-100 rounded-full text-sm text-slate-700">
+                      {analysis.competitiveIntel.strategicBuyers.map((
+                        buyer,
+                      ) => (
+                        <span
+                          key={buyer}
+                          className="px-3 py-1 bg-slate-100 rounded-full text-sm text-slate-700"
+                        >
                           {buyer}
                         </span>
                       ))}
@@ -566,9 +762,13 @@ export default function InvestmentGradeReimbursementIntel() {
                   </div>
                 </motion.div>
               )}
-              
+
               {activeTab === "signals" && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="space-y-3"
+                >
                   {analysis.signals.map((signal, idx) => (
                     <SignalCard key={idx} signal={signal} />
                   ))}
@@ -582,41 +782,74 @@ export default function InvestmentGradeReimbursementIntel() {
             </div>
           </>
         )}
-        
+
         {!selectedCompany && (
           <div className="text-center py-12 bg-slate-50 rounded-lg">
-            <p className="text-slate-500">Select a company above to view investment-grade reimbursement intelligence</p>
+            <p className="text-slate-500">
+              Select a company above to view investment-grade reimbursement
+              intelligence
+            </p>
           </div>
         )}
       </Card>
-      
+
       {/* Sector Overview */}
       <Card>
-        <h4 className="font-semibold text-slate-800 mb-4">Sector-Level Intelligence</h4>
+        <h4 className="font-semibold text-slate-800 mb-4">
+          Sector-Level Intelligence
+        </h4>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-slate-100">
               <tr>
-                <th className="px-4 py-2 text-left text-xs font-semibold text-slate-600 uppercase">Sector</th>
-                <th className="px-4 py-2 text-right text-xs font-semibold text-slate-600 uppercase">TAM</th>
-                <th className="px-4 py-2 text-right text-xs font-semibold text-slate-600 uppercase">Growth</th>
-                <th className="px-4 py-2 text-right text-xs font-semibold text-slate-600 uppercase">Companies</th>
-                <th className="px-4 py-2 text-right text-xs font-semibold text-slate-600 uppercase">Recent Deals</th>
+                <th className="px-4 py-2 text-left text-xs font-semibold text-slate-600 uppercase">
+                  Sector
+                </th>
+                <th className="px-4 py-2 text-right text-xs font-semibold text-slate-600 uppercase">
+                  TAM
+                </th>
+                <th className="px-4 py-2 text-right text-xs font-semibold text-slate-600 uppercase">
+                  Growth
+                </th>
+                <th className="px-4 py-2 text-right text-xs font-semibold text-slate-600 uppercase">
+                  Companies
+                </th>
+                <th className="px-4 py-2 text-right text-xs font-semibold text-slate-600 uppercase">
+                  Recent Deals
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
               {sectorIntelligence.map((sector) => (
                 <tr key={sector.sector} className="hover:bg-slate-50">
-                  <td className="px-4 py-3 font-medium text-slate-800">{sector.sector}</td>
-                  <td className="px-4 py-3 text-right text-slate-600">{formatCurrency(sector.marketSizing.totalAddressableMarket)}</td>
+                  <td className="px-4 py-3 font-medium text-slate-800">
+                    {sector.sector}
+                  </td>
+                  <td className="px-4 py-3 text-right text-slate-600">
+                    {formatCurrency(sector.marketSizing.totalAddressableMarket)}
+                  </td>
                   <td className="px-4 py-3 text-right">
-                    <span className={`font-medium ${sector.marketSizing.growthRate > 8 ? "text-emerald-600" : "text-slate-600"}`}>
+                    <span
+                      className={`font-medium ${
+                        sector.marketSizing.growthRate > 8
+                          ? "text-emerald-600"
+                          : "text-slate-600"
+                      }`}
+                    >
                       {sector.marketSizing.growthRate}%
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-right text-slate-600">{sector.companyCount}</td>
+                  <td className="px-4 py-3 text-right text-slate-600">
+                    {sector.companyCount}
+                  </td>
                   <td className="px-4 py-3 text-right">
-                    <span className={`${sector.competitiveIntel.recentDeals.length > 2 ? "text-emerald-600 font-medium" : "text-slate-600"}`}>
+                    <span
+                      className={`${
+                        sector.competitiveIntel.recentDeals.length > 2
+                          ? "text-emerald-600 font-medium"
+                          : "text-slate-600"
+                      }`}
+                    >
                       {sector.competitiveIntel.recentDeals.length}
                     </span>
                   </td>

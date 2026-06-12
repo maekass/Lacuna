@@ -7,10 +7,7 @@ import PitchBrief, {
   getConfidenceLabel,
   getMarketPosition,
 } from "@/components/PitchBrief";
-import {
-  INVESTOR_PORTFOLIOS,
-  type PortfolioFit,
-} from "@/lib/data/portfolios";
+import { INVESTOR_PORTFOLIOS, type PortfolioFit } from "@/lib/data/portfolios";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { getVerifiedCompaniesForAnalysis } from "@/lib/data/verifiedDatasetAdapters";
 import type {
@@ -517,7 +514,9 @@ export default function ExitPredictor() {
                         </span>
                         <span
                           className={`font-mono ${
-                            f.weight < 0 ? "text-rose-500" : "text-lacuna-text-muted"
+                            f.weight < 0
+                              ? "text-rose-500"
+                              : "text-lacuna-text-muted"
                           }`}
                         >
                           {f.weight > 0 ? "+" : ""}

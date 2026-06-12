@@ -14,7 +14,8 @@ interface ToolLink {
 const TOOLS: ToolLink[] = [
   {
     name: "API Reference",
-    description: "REST API documentation for dataset access and Gamma integration",
+    description:
+      "REST API documentation for dataset access and Gamma integration",
     href: "/api/docs",
     type: "api",
   },
@@ -108,7 +109,11 @@ function ToolCard({ tool }: { tool: ToolLink }) {
           <h4 className="font-medium text-lacuna-plum">{tool.name}</h4>
           <p className="text-sm text-lacuna-blue mt-1">{tool.description}</p>
         </div>
-        <span className={`px-2 py-1 rounded text-xs font-medium border ${typeColors[tool.type]}`}>
+        <span
+          className={`px-2 py-1 rounded text-xs font-medium border ${
+            typeColors[tool.type]
+          }`}
+        >
           {typeLabels[tool.type]}
         </span>
       </div>
@@ -130,7 +135,9 @@ export default function DeveloperTools() {
     <div className="space-y-4">
       <Card>
         <div className="mb-4">
-          <h3 className="text-lg font-semibold text-lacuna-plum">Developer Tools</h3>
+          <h3 className="text-lg font-semibold text-lacuna-plum">
+            Developer Tools
+          </h3>
           <p className="text-sm text-lacuna-blue">
             API documentation, SDK references, and code examples for engineers
           </p>
@@ -167,9 +174,7 @@ export default function DeveloperTools() {
             animate={{ opacity: 1, y: 0 }}
             className="grid grid-cols-1 md:grid-cols-2 gap-3"
           >
-            {TOOLS.map((tool) => (
-              <ToolCard key={tool.name} tool={tool} />
-            ))}
+            {TOOLS.map((tool) => <ToolCard key={tool.name} tool={tool} />)}
           </motion.div>
         )}
 
@@ -180,12 +185,19 @@ export default function DeveloperTools() {
             className="space-y-4"
           >
             {CODE_EXAMPLES.map((example, idx) => (
-              <div key={example.title} className="bg-slate-900 rounded-lg overflow-hidden">
+              <div
+                key={example.title}
+                className="bg-slate-900 rounded-lg overflow-hidden"
+              >
                 <div className="flex items-center justify-between px-4 py-2 bg-slate-800 border-b border-slate-700">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-medium text-slate-300">{example.language}</span>
+                    <span className="text-xs font-medium text-slate-300">
+                      {example.language}
+                    </span>
                     <span className="text-xs text-slate-500">·</span>
-                    <span className="text-xs text-slate-400">{example.title}</span>
+                    <span className="text-xs text-slate-400">
+                      {example.title}
+                    </span>
                   </div>
                   <button
                     onClick={() => copyCode(example.code, idx)}
@@ -204,9 +216,11 @@ export default function DeveloperTools() {
 
         <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
           <p className="text-xs text-blue-800">
-            <strong>Engineering Note:</strong> All API endpoints are versioned and follow REST conventions. 
-            The dataset is immutable between releases — check the <code className="bg-blue-100 px-1 rounded">provenance</code> field 
-            for version and last-updated timestamps.
+            <strong>Engineering Note:</strong>{" "}
+            All API endpoints are versioned and follow REST conventions. The
+            dataset is immutable between releases — check the{" "}
+            <code className="bg-blue-100 px-1 rounded">provenance</code>{" "}
+            field for version and last-updated timestamps.
           </p>
         </div>
       </Card>

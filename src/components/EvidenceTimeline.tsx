@@ -361,7 +361,9 @@ export default function EvidenceTimeline({
                 year: "numeric",
               })}
             </div>
-            <div className="text-lacuna-text-muted">{hoveredEvent.description}</div>
+            <div className="text-lacuna-text-muted">
+              {hoveredEvent.description}
+            </div>
           </motion.div>
         )}
       </div>

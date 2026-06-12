@@ -343,7 +343,10 @@ export default function SensitivityAnalysis() {
             </thead>
             <tbody>
               {scenarios.map((s) => (
-                <tr key={s.scenario} className="border-t border-lacuna-border-subtle">
+                <tr
+                  key={s.scenario}
+                  className="border-t border-lacuna-border-subtle"
+                >
                   <td className="py-2">{s.scenario}</td>
                   <td className="text-right font-mono">
                     {s.bounds.lowerBound.toFixed(3)}

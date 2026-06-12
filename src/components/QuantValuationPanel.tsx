@@ -130,8 +130,8 @@ export default function QuantValuationPanel() {
         <strong>Empirically anchored:</strong>{" "}
         valuations now include a comparable-deals method derived from{" "}
         {priors.dealCount} verified acquisitions ({priors.disclosedDealCount}
-        {" "}with disclosed values,{" "}
-        {priors.medianFundingMultipleAll !== undefined
+        {" "}
+        with disclosed values, {priors.medianFundingMultipleAll !== undefined
           ? `median exit/funding multiple ${
             priors.medianFundingMultipleAll.toFixed(1)
           }x`
@@ -186,7 +186,12 @@ export default function QuantValuationPanel() {
                       >
                         {formatM(row.modelEstimate)}
                         {row.hasComparableAnchor && (
-                          <span className="ml-1 text-emerald-600" aria-label="anchored on verified deals">●</span>
+                          <span
+                            className="ml-1 text-emerald-600"
+                            aria-label="anchored on verified deals"
+                          >
+                            ●
+                          </span>
                         )}
                       </span>
                     )
