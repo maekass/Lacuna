@@ -28,7 +28,7 @@ export const FullNetwork: Story = {
   args: {
     nodes: fullNodes,
     links: fullLinks,
-    highlightForeground: true,
+    highlightPortfolios: true,
   },
 };
 
@@ -36,7 +36,7 @@ export const EmptyGraph: Story = {
   args: {
     nodes: [],
     links: [],
-    highlightForeground: false,
+    highlightPortfolios: false,
   },
 };
 
@@ -44,7 +44,7 @@ export const SingleNode: Story = {
   args: {
     nodes: [fullNodes[0]],
     links: [],
-    highlightForeground: false,
+    highlightPortfolios: false,
   },
 };
 
@@ -53,6 +53,6 @@ export const SmallNetwork: Story = {
   args: {
     nodes: fullNodes.slice(0, 6),
     links: fullLinks.slice(0, 4),
-    highlightForeground: true,
+    highlightPortfolios: true,
   },
 };

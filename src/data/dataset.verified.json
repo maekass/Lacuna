@@ -1,7 +1,7 @@
 {
   "provenance": {
-    "lastUpdated": "2026-06-02",
-    "datasetVersion": "v5",
+    "lastUpdated": "2026-06-11",
+    "datasetVersion": "v6",
     "sources": [
       "SEC EDGAR filings (acquisitions, 8-K/10-K)",
       "Crunchbase (funding rounds, where cited)",
@@ -54,7 +54,8 @@
       "Dataset v4 expands to 50 acquisitions with major oncology (Pfizer/Seagen, Gilead/Immunomedics), radiation therapy (Siemens/Varian), diagnostics (Abbott/Alere, PerkinElmer/EUROIMMUN), and precision medicine deals",
       "Large-cap deals (Pfizer/Seagen $43B, Gilead/Immunomedics $21B, Siemens/Varian $16.4B) included for breast/cervical cancer treatment relevance even though acquirers operate across broader oncology/medtech",
       "Hologic acquisition history now spans 7 deals (Biotheranostics, Endomagnetics, Gynesonics, Acessa Health, Bolder Surgical, Focal Therapeutics, Faxitron Bioptics, SuperSonic Imagine) \u2014 largest disclosed women's health serial acquirer in dataset",
-      "Dataset v5 expands to 58 acquisitions with menopause therapeutics (Bayer/KaNDy, Astellas/Ogeda), large-cap diagnostics (Hologic/Gen-Probe $3.7B), global fertility clinic consolidation (KKR/IVI-RMA $3.25B, BPEA EQT/Indira IVF $657M, IVI-RMA/Eugin NA), and women's health-focused acquirer expansions (Organon/Dermavant $1.2B, Hims & Hers/Apostrophe)"
+      "Dataset v5 expands to 58 acquisitions with menopause therapeutics (Bayer/KaNDy, Astellas/Ogeda), large-cap diagnostics (Hologic/Gen-Probe $3.7B), global fertility clinic consolidation (KKR/IVI-RMA $3.25B, BPEA EQT/Indira IVF $657M, IVI-RMA/Eugin NA), and women's health-focused acquirer expansions (Organon/Dermavant $1.2B, Hims & Hers/Apostrophe)",
+      "2026-06-11: Added 14 Amboy Street Ventures portfolio companies with press-verified founding, stage, and funding data (totalFunding omitted where no source states a total), plus the Gennev / Unified Women's Healthcare acquisition (2022, terms not disclosed)."
     ],
     "purpose": "Educational demonstration dataset for portfolio project. Not for commercial investment decisions.",
     "disclaimer": "Data compiled from public sources for educational visualization. Verify independently before any commercial use."
@@ -1186,6 +1187,210 @@
         "PitchBook (November 2023) - deal reporting",
         "Fresenius SE press release (divestiture)"
       ]
+    },
+    {
+      "id": "c76",
+      "name": "Evvy",
+      "sector": "Diagnostics",
+      "stage": "Private (Series A)",
+      "founded": 2021,
+      "hq": "New York, NY",
+      "description": "At-home vaginal microbiome testing with metagenomic sequencing and precision treatment",
+      "totalFunding": 19,
+      "sources": [
+        "TechCrunch - $5M seed coverage (July 2021)",
+        "Business Wire - $14M Series A announcement (September 2023)",
+        "Fierce Healthcare - funding and STI care expansion coverage"
+      ]
+    },
+    {
+      "id": "c77",
+      "name": "Hey Jane",
+      "sector": "Reproductive Health",
+      "stage": "Private (Seed)",
+      "founded": 2021,
+      "hq": "New York, NY",
+      "description": "Telehealth medication abortion and reproductive care provider",
+      "totalFunding": 9.7,
+      "sources": [
+        "Fortune - $6.1M raise coverage (October 2022)",
+        "Hey Jane founder post, Medium - total equity raised $9.7M (October 2022)",
+        "Built In NYC - funding coverage (2022)"
+      ]
+    },
+    {
+      "id": "c78",
+      "name": "Contraline",
+      "sector": "Contraception",
+      "stage": "Private (Series B)",
+      "founded": 2015,
+      "hq": "Charlottesville, VA",
+      "description": "Developing ADAM, a long-acting non-hormonal reversible male contraceptive implant; $92.5M Series B (2026)",
+      "sources": [
+        "Business Wire - $92.5M Series B announcement (June 2026)",
+        "Fierce Pharma - Series B coverage (June 2026)",
+        "Company website - contraline.com"
+      ]
+    },
+    {
+      "id": "c79",
+      "name": "Gennev",
+      "sector": "Menopause",
+      "stage": "Acquired by Unified Women's Healthcare (2022)",
+      "founded": 2016,
+      "hq": "Seattle, WA",
+      "description": "Virtual menopause and perimenopause clinic with OB-GYN and dietitian network",
+      "totalFunding": 4.1,
+      "sources": [
+        "GeekWire - acquisition coverage (October 2022)",
+        "Business Wire - Unified Women's Healthcare acquisition announcement (October 2022)",
+        "Tracxn - funding history ($4.12M over 4 rounds)"
+      ]
+    },
+    {
+      "id": "c80",
+      "name": "Alloy",
+      "sector": "Menopause",
+      "stage": "Private (Series A)",
+      "founded": 2021,
+      "hq": "New York, NY",
+      "description": "Telehealth menopause care and hormone therapy platform for women over 40",
+      "totalFunding": 19.3,
+      "sources": [
+        "PR Newswire - $3.3M seed announcement (October 2021)",
+        "Fortune - $16M Series A coverage (November 2024)",
+        "Femtech Insider - Series A coverage (November 2024)"
+      ]
+    },
+    {
+      "id": "c81",
+      "name": "Millie",
+      "sector": "Maternal Health",
+      "stage": "Private (Series A)",
+      "founded": 2022,
+      "hq": "San Francisco, CA",
+      "description": "Midwife-led hybrid maternity clinics with continuous patient monitoring",
+      "totalFunding": 19,
+      "sources": [
+        "TechCrunch - $12M Series A coverage, ~$19M total to date (February 2025)",
+        "Business Wire - Series A announcement (February 2025)",
+        "Fierce Healthcare - expansion coverage"
+      ]
+    },
+    {
+      "id": "c82",
+      "name": "Origin",
+      "sector": "Pelvic Health",
+      "stage": "Private (Series B)",
+      "founded": 2020,
+      "hq": "Los Angeles, CA",
+      "description": "Pelvic floor physical therapy clinics, in-person and virtual; round sizes undisclosed",
+      "sources": [
+        "TechCrunch - launch coverage (May 2020)",
+        "PR Newswire - Series B announcement, amount undisclosed (January 2026)",
+        "Femtech Insider - nationwide expansion coverage"
+      ]
+    },
+    {
+      "id": "c83",
+      "name": "Dame",
+      "sector": "Sexual Wellness",
+      "stage": "Private (Series A)",
+      "founded": 2014,
+      "hq": "Brooklyn, NY",
+      "description": "Sexual wellness products and education brand",
+      "totalFunding": 13,
+      "sources": [
+        "TechCrunch - $7M Series A coverage (September 2022)",
+        "BeautyMatter - Series A coverage, $13M total raised (2022)",
+        "Wikipedia - Dame Products"
+      ]
+    },
+    {
+      "id": "c84",
+      "name": "B\u00e9a Fertility",
+      "sector": "Fertility",
+      "stage": "Private (Seed)",
+      "founded": 2020,
+      "hq": "London, UK",
+      "description": "At-home intracervical insemination (ICI) fertility treatment kits",
+      "totalFunding": 4.3,
+      "sources": [
+        "EU-Startups - \u20ac2.9M raise, \u20ac3.8M total coverage (July 2023)",
+        "UKTN - \u00a3800K pre-launch raise coverage (April 2021)",
+        "Startups Magazine - \u00a32.5M raise coverage (2023)"
+      ]
+    },
+    {
+      "id": "c85",
+      "name": "Granata Bio",
+      "sector": "Fertility",
+      "stage": "Private (Series A)",
+      "founded": 2018,
+      "hq": "Boston, MA",
+      "description": "In-licenses and commercializes fertility medications for North America",
+      "totalFunding": 30,
+      "sources": [
+        "PR Newswire - $14M Series A led by GV (January 2024)",
+        "PR Newswire - $15M Series A+, total funding over $30M (January 2025)"
+      ]
+    },
+    {
+      "id": "c86",
+      "name": "Gesynta Pharma",
+      "sector": "Reproductive Health",
+      "stage": "Private (Series B)",
+      "founded": 2017,
+      "hq": "Stockholm, Sweden",
+      "description": "Clinical-stage pharma developing vipoglanstat, a non-hormonal endometriosis treatment; SEK 347M Series B",
+      "sources": [
+        "ArcticStartup - \u20ac26.5M Series B coverage",
+        "Femtech Insider - Series B second closing, SEK 347M total round",
+        "Company website - gesynta.se history page (founded 2017, Karolinska spinout)"
+      ]
+    },
+    {
+      "id": "c87",
+      "name": "Testmate Health",
+      "sector": "Diagnostics",
+      "stage": "Private (Seed)",
+      "founded": 2021,
+      "hq": "Lausanne, Switzerland",
+      "description": "At-home rapid molecular STI test, starting with chlamydia and gonorrhea; $6M seed",
+      "sources": [
+        "Startupticker.ch - $6M seed coverage (May 2024)",
+        "FinSMEs - seed round coverage (May 2024)",
+        "GGBa - CHF 1.6M earlier financing coverage"
+      ]
+    },
+    {
+      "id": "c88",
+      "name": "Aunt Flow",
+      "sector": "Pelvic Health",
+      "stage": "Private (Series A)",
+      "founded": 2016,
+      "hq": "Columbus, OH",
+      "description": "Free-vend menstrual product dispensers and organic cotton products for businesses and schools; $8.5M Series A",
+      "sources": [
+        "Fortune - $8.5M Series A coverage (April 2022)",
+        "PR Newswire - JLL Spark-led Series A announcement (April 2022)",
+        "BeautyMatter - Series A coverage (2022)"
+      ]
+    },
+    {
+      "id": "c89",
+      "name": "Juniper Genomics",
+      "sector": "Diagnostics",
+      "stage": "Private (Seed)",
+      "founded": 2020,
+      "hq": "Toronto, Canada",
+      "description": "Whole-genome and transcriptome embryo screening for IVF",
+      "totalFunding": 4.6,
+      "sources": [
+        "GenomeWeb - $4.6M seed launch coverage (June 2025)",
+        "Femtech Insider - seed round coverage (2025)",
+        "Future FemHealth - seed funding coverage (2025)"
+      ]
     }
   ],
   "acquirers": [
@@ -1431,6 +1636,12 @@
       "hq": "San Francisco, CA",
       "type": "Public (NYSE: HIMS)",
       "description": "Multi-specialty telehealth platform for men's and women's health"
+    },
+    {
+      "id": "acquirer-unified-womens-healthcare",
+      "name": "Unified Women's Healthcare",
+      "sector": "Reproductive Health",
+      "hq": "Boca Raton, FL"
     }
   ],
   "acquisitions": [
@@ -2290,6 +2501,19 @@
       "dealStructure": "Cash",
       "source": "Business Wire (January 31, 2024); PitchBook (November 2023)",
       "strategicRationale": "Added Boston IVF (Harvard-affiliated, 13 labs) and TRIO (Toronto) to IVI-RMA network, consolidating North American fertility market leadership"
+    },
+    {
+      "id": "deal59",
+      "targetId": "c79",
+      "acquirerId": "acquirer-unified-womens-healthcare",
+      "targetName": "Gennev",
+      "acquirerName": "Unified Women's Healthcare",
+      "announcedDate": "2022-10-17",
+      "closedDate": "2022-10-17",
+      "dealValueNote": "Terms not disclosed",
+      "dealType": "Acquisition",
+      "source": "Business Wire press release (October 17, 2022); GeekWire coverage",
+      "strategicRationale": "Folded Gennev's virtual menopause clinic into Unified's national ob-gyn support platform to scale menopause care across its provider network"
     }
   ]
 }

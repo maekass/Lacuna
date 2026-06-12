@@ -3,12 +3,15 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
-import { foregroundPortfolio } from "@/data/verifiedData";
+import {
+  INVESTOR_PORTFOLIOS,
+  type PortfolioKey,
+} from "@/lib/data/portfolios";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
 
 const CURRENT_YEAR = 2026;
-type MatchMode = "single" | "foreground";
+type MatchMode = "single" | PortfolioKey;
 
 interface FeatureVector {
   readonly values: readonly number[];
@@ -106,9 +109,12 @@ export default function CompanySimilarity() {
   const [selectedCompany, setSelectedCompany] = useState<string>(
     verifiedCompanies[0]?.id || "",
   );
+  const activePortfolio = mode === "single"
+    ? null
+    : INVESTOR_PORTFOLIOS.find((portfolio) => portfolio.key === mode) ?? null;
   const portfolioNameSet = useMemo(
-    () => new Set<string>(foregroundPortfolio),
-    [],
+    () => new Set<string>(activePortfolio?.companies ?? []),
+    [activePortfolio],
   );
   const companyVectors = useMemo(
     () =>
@@ -169,7 +175,7 @@ export default function CompanySimilarity() {
       .slice(0, 5);
   }, [selectedCompany, companyVectorMap, companyVectors]);
 
-  const foregroundMatches = useMemo(() => {
+  const portfolioMatches = useMemo(() => {
     const portfolioEntries = companyVectors.filter(({ company }) =>
       portfolioNameSet.has(company.name)
     );
@@ -216,7 +222,7 @@ export default function CompanySimilarity() {
   const selected = companyVectorMap.get(selectedCompany)?.company;
   const activeResults = mode === "single"
     ? similarities
-    : foregroundMatches.matches;
+    : portfolioMatches.matches;
 
   return (
     <motion.div
@@ -254,17 +260,20 @@ export default function CompanySimilarity() {
         >
           Single Company
         </button>
-        <button
-          type="button"
-          onClick={() => setMode("foreground")}
-          className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
-            mode === "foreground"
-              ? "bg-lacuna-plum text-white"
-              : "bg-lacuna-surface-subtle text-lacuna-text-secondary hover:bg-lacuna-surface-subtle"
-          }`}
-        >
-          Foreground Match
-        </button>
+        {INVESTOR_PORTFOLIOS.map((portfolio) => (
+          <button
+            key={portfolio.key}
+            type="button"
+            onClick={() => setMode(portfolio.key)}
+            className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+              mode === portfolio.key
+                ? "bg-lacuna-plum text-white"
+                : "bg-lacuna-surface-subtle text-lacuna-text-secondary hover:bg-lacuna-surface-subtle"
+            }`}
+          >
+            {portfolio.shortName} Match
+          </button>
+        ))}
       </div>
 
       {mode === "single" && (
@@ -300,28 +309,29 @@ export default function CompanySimilarity() {
         </div>
       )}
 
-      {mode === "foreground" && (
+      {activePortfolio && (
         <div className="mb-4 rounded-lg bg-lacuna-surface-muted p-3">
           <p className="font-medium text-lacuna-text-primary">
-            Companies most similar to the Foreground Capital portfolio
+            Companies most similar to the {activePortfolio.investorName}{" "}
+            portfolio
           </p>
           <p className="text-sm text-lacuna-text-muted">
-            {foregroundMatches.portfolioCount}{" "}
-            portfolio compan{foregroundMatches.portfolioCount === 1
+            {portfolioMatches.portfolioCount}{" "}
+            portfolio compan{portfolioMatches.portfolioCount === 1
               ? "y"
               : "ies"} used to compute the centroid
           </p>
         </div>
       )}
 
-      {mode === "foreground" && foregroundMatches.portfolioCount < 3 && (
+      {activePortfolio && portfolioMatches.portfolioCount < 3 && (
         <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
-          {foregroundMatches.portfolioCount === 0
-            ? "No Foreground portfolio companies were found in the verified dataset, so a portfolio centroid could not be computed."
-            : `Only ${foregroundMatches.portfolioCount} of ${foregroundPortfolio.length} Foreground portfolio compan${
-              foregroundMatches.portfolioCount === 1 ? "y is" : "ies are"
+          {portfolioMatches.portfolioCount === 0
+            ? `No ${activePortfolio.shortName} portfolio companies were found in the verified dataset, so a portfolio centroid could not be computed.`
+            : `Only ${portfolioMatches.portfolioCount} of ${activePortfolio.companies.length} ${activePortfolio.shortName} portfolio compan${
+              portfolioMatches.portfolioCount === 1 ? "y is" : "ies are"
             } in the verified dataset — the "centroid" is effectively that compan${
-              foregroundMatches.portfolioCount === 1
+              portfolioMatches.portfolioCount === 1
                 ? "y's profile"
                 : "ies' average"
             }, so treat these matches as directional, not representative of the full portfolio.`}
@@ -330,9 +340,9 @@ export default function CompanySimilarity() {
 
       <div className="space-y-3">
         <h4 className="text-sm font-semibold text-lacuna-text-primary uppercase tracking-wider">
-          {mode === "single"
-            ? "Most Similar Companies"
-            : "Companies most similar to the Foreground Capital portfolio"}
+          {activePortfolio
+            ? `Companies most similar to the ${activePortfolio.investorName} portfolio`
+            : "Most Similar Companies"}
         </h4>
         {activeResults.map((result, i) => (
           <motion.div
@@ -385,9 +395,9 @@ export default function CompanySimilarity() {
         ))}
         {activeResults.length === 0 && (
           <div className="rounded-lg border border-lacuna-border-subtle p-4 text-sm text-lacuna-text-muted">
-            {mode === "single"
-              ? "No similarity results available for the selected company."
-              : "No Foreground portfolio matches are available yet."}
+            {activePortfolio
+              ? `No ${activePortfolio.shortName} portfolio matches are available yet.`
+              : "No similarity results available for the selected company."}
           </div>
         )}
       </div>

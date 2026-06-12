@@ -1,6 +1,10 @@
 "use client";
 
 import type {
+  PortfolioFit,
+  PortfolioFitTone,
+} from "@/lib/data/portfolios";
+import type {
   VerifiedAcquisitionView,
   VerifiedCompanyView,
 } from "@/lib/data/verifiedDataHelpers";
@@ -12,8 +16,7 @@ export interface PitchBriefProps {
   readonly prediction: PredictionRow;
   readonly comparableExits: readonly VerifiedAcquisitionView[];
   readonly marketPosition: "Emerging" | "Growth" | "Late-stage";
-  readonly foregroundFitLabel: string;
-  readonly foregroundFitTone: "portfolio" | "sector" | "none";
+  readonly portfolioFits: readonly PortfolioFit[];
   readonly onClose: () => void;
 }
 
@@ -49,22 +52,26 @@ export function getMarketPosition(
   return "Late-stage";
 }
 
+function getFitClasses(tone: PortfolioFitTone) {
+  if (tone === "portfolio") {
+    return "bg-lacuna-pink/10 text-lacuna-plum border-lacuna-lavender/40";
+  }
+  if (tone === "sector") {
+    return "bg-emerald-50 text-emerald-700 border-emerald-200";
+  }
+  return "bg-lacuna-surface-muted text-lacuna-text-secondary border-lacuna-border";
+}
+
 export default function PitchBrief(
   {
     company,
     prediction,
     comparableExits,
     marketPosition,
-    foregroundFitLabel,
-    foregroundFitTone,
+    portfolioFits,
     onClose,
   }: PitchBriefProps,
 ) {
-  const foregroundFitClasses = foregroundFitTone === "portfolio"
-    ? "bg-lacuna-pink/10 text-lacuna-plum border-lacuna-lavender/40"
-    : foregroundFitTone === "sector"
-    ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-    : "bg-lacuna-surface-muted text-lacuna-text-secondary border-lacuna-border";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-lacuna-plum/45 p-4 print:block print:bg-transparent print:p-0">
@@ -174,13 +181,21 @@ export default function PitchBrief(
           <div className="mt-4 rounded-xl border border-lacuna-border bg-white p-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h5 className="text-sm font-semibold text-lacuna-text-primary">
-                Foreground Fit
+                Investor Fit
               </h5>
-              <span
-                className={`rounded-full border px-3 py-1 text-xs font-medium ${foregroundFitClasses}`}
-              >
-                {foregroundFitLabel}
-              </span>
+              <div className="flex flex-wrap items-center justify-end gap-2">
+                {portfolioFits.map((fit) => (
+                  <span
+                    key={fit.investorName}
+                    title={fit.investorName}
+                    className={`rounded-full border px-3 py-1 text-xs font-medium ${
+                      getFitClasses(fit.tone)
+                    }`}
+                  >
+                    {fit.label}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
 
