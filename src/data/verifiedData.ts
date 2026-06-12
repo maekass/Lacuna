@@ -50,8 +50,29 @@ export const foregroundPortfolio = [
   "Vitra Labs",
   "Ovian",
   "Planera",
-  "Gesynta",
+  "Gesynta Pharma",
   "Nadia Care",
+] as const;
+
+/** Amboy Street Ventures portfolio, per amboystreet.vc/portfolio (June 2026). */
+export const amboyPortfolio = [
+  "Evvy",
+  "Contraline",
+  "Alloy",
+  "Béa Fertility",
+  "Hey Jane",
+  "Testmate Health",
+  "Granata Bio",
+  "Aunt Flow",
+  "Dame",
+  "Playground",
+  "Origin",
+  "Gennev",
+  "Gesynta Pharma",
+  "Millie",
+  "Juniper Genomics",
+  "Allswell",
+  "Defiant Health",
 ] as const;
 
 export const getVerifiedNetworkNodes = staticDerived.getVerifiedNetworkNodes;

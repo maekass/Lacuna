@@ -7,7 +7,10 @@ import PitchBrief, {
   getConfidenceLabel,
   getMarketPosition,
 } from "@/components/PitchBrief";
-import { foregroundPortfolio } from "@/data/verifiedData";
+import {
+  INVESTOR_PORTFOLIOS,
+  type PortfolioFit,
+} from "@/lib/data/portfolios";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { getVerifiedCompaniesForAnalysis } from "@/lib/data/verifiedDatasetAdapters";
 import type {
@@ -229,19 +232,6 @@ export default function ExitPredictor() {
     () => new Map(verifiedCompanies.map((company) => [company.id, company])),
     [verifiedCompanies],
   );
-  const foregroundNameSet = useMemo(
-    () => new Set<string>(foregroundPortfolio),
-    [],
-  );
-  const foregroundSectorSet = useMemo(
-    () =>
-      new Set(
-        verifiedCompanies
-          .filter((company) => foregroundNameSet.has(company.name))
-          .map((company) => company.sector),
-      ),
-    [foregroundNameSet, verifiedCompanies],
-  );
 
   // Selection falls back to the first prediction when the stored id is no
   // longer selectable — derived here instead of synced via effects.
@@ -270,33 +260,40 @@ export default function ExitPredictor() {
       })
       .slice(0, 3);
   }, [companyById, selectedCompany, verifiedAcquisitions]);
-  const foregroundFit = useMemo(() => {
-    if (!selectedCompany) {
-      return {
-        label: "No current Foreground signal",
-        tone: "none" as const,
-      };
-    }
+  const portfolioFits = useMemo<PortfolioFit[]>(
+    () =>
+      INVESTOR_PORTFOLIOS.map((portfolio) => {
+        const nameSet = new Set<string>(portfolio.companies);
 
-    if (foregroundNameSet.has(selectedCompany.name)) {
-      return {
-        label: "In Foreground Portfolio",
-        tone: "portfolio" as const,
-      };
-    }
+        if (selectedCompany && nameSet.has(selectedCompany.name)) {
+          return {
+            investorName: portfolio.investorName,
+            label: `In ${portfolio.shortName} Portfolio`,
+            tone: "portfolio" as const,
+          };
+        }
 
-    if (foregroundSectorSet.has(selectedCompany.sector)) {
-      return {
-        label: "Sector Fit ✓",
-        tone: "sector" as const,
-      };
-    }
+        const sectorSet = new Set(
+          verifiedCompanies
+            .filter((company) => nameSet.has(company.name))
+            .map((company) => company.sector),
+        );
+        if (selectedCompany && sectorSet.has(selectedCompany.sector)) {
+          return {
+            investorName: portfolio.investorName,
+            label: `${portfolio.shortName} Sector Fit ✓`,
+            tone: "sector" as const,
+          };
+        }
 
-    return {
-      label: "No current Foreground signal",
-      tone: "none" as const,
-    };
-  }, [foregroundNameSet, foregroundSectorSet, selectedCompany]);
+        return {
+          investorName: portfolio.investorName,
+          label: `No current ${portfolio.shortName} signal`,
+          tone: "none" as const,
+        };
+      }),
+    [selectedCompany, verifiedCompanies],
+  );
 
   const getScoreColor = (score: number) => {
     if (score > 0.6) return "text-emerald-700 bg-emerald-50 border-emerald-200";
@@ -630,8 +627,7 @@ export default function ExitPredictor() {
           prediction={selectedPrediction}
           comparableExits={comparableExits}
           marketPosition={getMarketPosition(selectedPrediction.stage)}
-          foregroundFitLabel={foregroundFit.label}
-          foregroundFitTone={foregroundFit.tone}
+          portfolioFits={portfolioFits}
           onClose={() => setIsPitchBriefOpen(false)}
         />
       )}

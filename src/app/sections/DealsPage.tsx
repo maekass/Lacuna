@@ -55,7 +55,7 @@ export default function DealsPage() {
         <ForceNetwork
           nodes={networkNodes}
           links={networkLinks}
-          highlightForeground={true}
+          highlightPortfolios={true}
         />
       </MotionSection>
 

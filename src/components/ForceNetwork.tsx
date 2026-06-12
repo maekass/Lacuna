@@ -5,7 +5,10 @@ import * as d3 from "d3";
 import { motion } from "framer-motion";
 import AcquirerProfile from "@/components/AcquirerProfile";
 import ChartTooltip from "@/components/ui/ChartTooltip";
-import { foregroundPortfolio } from "@/data/verifiedData";
+import {
+  INVESTOR_PORTFOLIOS,
+  type PortfolioKey,
+} from "@/lib/data/portfolios";
 
 interface Node extends d3.SimulationNodeDatum {
   id: string;
@@ -29,7 +32,7 @@ interface ForceNetworkProps {
   links: Link[];
   width?: number;
   height?: number;
-  highlightForeground?: boolean;
+  highlightPortfolios?: boolean;
 }
 
 import {
@@ -46,7 +49,11 @@ const sectorColors: Record<string, string> = {
   "Sexual Wellness": LACUNA_PALETTE.transcendentPink,
 };
 
-const FOREGROUND_COLOR = LACUNA_SEMANTIC.chart.accent;
+const PORTFOLIO_STYLES: Record<PortfolioKey, { color: string; badge: string }> =
+  {
+    foreground: { color: LACUNA_SEMANTIC.chart.accent, badge: "FG" },
+    amboy: { color: "#0D9488", badge: "AS" },
+  };
 
 export default function ForceNetwork(
   {
@@ -54,7 +61,7 @@ export default function ForceNetwork(
     links,
     width: widthProp,
     height: heightProp,
-    highlightForeground = true,
+    highlightPortfolios = true,
   }: ForceNetworkProps,
 ) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -68,10 +75,17 @@ export default function ForceNetwork(
     w: widthProp ?? 800,
     h: heightProp ?? 600,
   });
-  const [isForegroundHighlightEnabled, setIsForegroundHighlightEnabled] =
-    useState(highlightForeground);
-  const foregroundPortfolioSet = useMemo(
-    () => new Set<string>(foregroundPortfolio),
+  const [enabledPortfolios, setEnabledPortfolios] = useState<
+    Record<PortfolioKey, boolean>
+  >({
+    foreground: highlightPortfolios,
+    amboy: highlightPortfolios,
+  });
+  const portfolioNameSets = useMemo(
+    () =>
+      new Map<PortfolioKey, ReadonlySet<string>>(
+        INVESTOR_PORTFOLIOS.map((p) => [p.key, new Set<string>(p.companies)]),
+      ),
     [],
   );
 
@@ -117,7 +131,7 @@ export default function ForceNetwork(
     svg.selectAll("*").remove();
 
     svg.append("style").text(`
-      @keyframes lacuna-foreground-pulse {
+      @keyframes lacuna-portfolio-pulse {
         0% {
           opacity: 0.85;
           stroke-width: 2;
@@ -138,8 +152,8 @@ export default function ForceNetwork(
         }
       }
 
-      .lacuna-foreground-pulse-ring {
-        animation: lacuna-foreground-pulse 2s ease-out infinite;
+      .lacuna-portfolio-pulse-ring {
+        animation: lacuna-portfolio-pulse 2s ease-out infinite;
       }
     `);
 
@@ -226,15 +240,19 @@ export default function ForceNetwork(
       );
 
     const getNodeRadius = (d: Node) => Math.sqrt(d.valuation) / 2 + 5;
-    const isForegroundNode = (d: Node) =>
-      isForegroundHighlightEnabled && foregroundPortfolioSet.has(d.name);
+    const nodePortfolioKeys = (d: Node): PortfolioKey[] =>
+      INVESTOR_PORTFOLIOS
+        .filter((p) =>
+          enabledPortfolios[p.key] && portfolioNameSets.get(p.key)?.has(d.name)
+        )
+        .map((p) => p.key);
 
-    node.filter((d) => isForegroundNode(d))
+    node.filter((d) => nodePortfolioKeys(d).length > 0)
       .append("circle")
-      .attr("class", "lacuna-foreground-pulse-ring")
+      .attr("class", "lacuna-portfolio-pulse-ring")
       .attr("r", (d) => getNodeRadius(d) + 6)
       .attr("fill", "none")
-      .attr("stroke", FOREGROUND_COLOR)
+      .attr("stroke", (d) => PORTFOLIO_STYLES[nodePortfolioKeys(d)[0]].color)
       .attr("stroke-opacity", 0.7)
       .style("pointer-events", "none");
 
@@ -244,8 +262,9 @@ export default function ForceNetwork(
       .attr(
         "fill",
         (d) => {
-          if (isForegroundNode(d)) {
-            return FOREGROUND_COLOR;
+          const portfolioKeys = nodePortfolioKeys(d);
+          if (portfolioKeys.length > 0) {
+            return PORTFOLIO_STYLES[portfolioKeys[0]].color;
           }
 
           return d.type === "acquirer"
@@ -257,30 +276,40 @@ export default function ForceNetwork(
       .attr("stroke-width", (d) => d.type === "acquirer" ? 3 : 2)
       .attr("opacity", 0.9);
 
-    node.filter((d) => isForegroundNode(d))
-      .append("g")
-      .attr("transform", (d) => `translate(0, ${getNodeRadius(d) + 14})`)
-      .style("pointer-events", "none")
-      .call((group) => {
-        group.append("rect")
-          .attr("x", -12)
+    node.each(function (d) {
+      const portfolioKeys = nodePortfolioKeys(d);
+      if (portfolioKeys.length === 0) return;
+
+      const badgeGroup = d3.select<SVGGElement, Node>(this)
+        .append("g")
+        .attr("transform", `translate(0, ${getNodeRadius(d) + 14})`)
+        .style("pointer-events", "none");
+
+      portfolioKeys.forEach((key, index) => {
+        const x = (index - (portfolioKeys.length - 1) / 2) * 28;
+        const { color, badge } = PORTFOLIO_STYLES[key];
+
+        badgeGroup.append("rect")
+          .attr("x", x - 12)
           .attr("y", -7)
           .attr("width", 24)
           .attr("height", 14)
           .attr("rx", 7)
           .attr("fill", "#ffffff")
-          .attr("stroke", FOREGROUND_COLOR)
+          .attr("stroke", color)
           .attr("stroke-width", 1.5);
 
-        group.append("text")
-          .text("FG")
+        badgeGroup.append("text")
+          .text(badge)
+          .attr("x", x)
           .attr("text-anchor", "middle")
           .attr("dominant-baseline", "middle")
           .attr("y", 0.5)
           .attr("font-size", "9px")
           .attr("font-weight", "700")
-          .attr("fill", FOREGROUND_COLOR);
+          .attr("fill", color);
       });
+    });
 
     // Add labels
     node.append("text")
@@ -303,7 +332,7 @@ export default function ForceNetwork(
       .on("mouseenter", (event, d) => {
         setHoveredNode(d);
         d3.select(event.currentTarget)
-          .select("circle:not(.lacuna-foreground-pulse-ring)")
+          .select("circle:not(.lacuna-portfolio-pulse-ring)")
           .transition()
           .duration(200)
           .attr("r", getNodeRadius(d) + 5);
@@ -311,7 +340,7 @@ export default function ForceNetwork(
       .on("mouseleave", (event, d) => {
         setHoveredNode(null);
         d3.select(event.currentTarget)
-          .select("circle:not(.lacuna-foreground-pulse-ring)")
+          .select("circle:not(.lacuna-portfolio-pulse-ring)")
           .transition()
           .duration(200)
           .attr("r", getNodeRadius(d));
@@ -337,8 +366,8 @@ export default function ForceNetwork(
     links,
     width,
     height,
-    isForegroundHighlightEnabled,
-    foregroundPortfolioSet,
+    enabledPortfolios,
+    portfolioNameSets,
     selectNode,
   ]);
 
@@ -347,18 +376,33 @@ export default function ForceNetwork(
 
   return (
     <div ref={containerRef} className="relative w-full">
-      <div className="mb-3 flex justify-end">
-        <button
-          type="button"
-          onClick={() => setIsForegroundHighlightEnabled((value) => !value)}
-          className={`rounded-xl border border-lacuna-lavender/40 bg-white px-4 py-2 text-sm font-medium transition-colors ${
-            isForegroundHighlightEnabled
-              ? "text-lacuna-plum shadow-sm"
-              : "text-lacuna-blue hover:text-lacuna-plum"
-          }`}
-        >
-          Foreground Portfolio
-        </button>
+      <div className="mb-3 flex flex-wrap justify-end gap-2">
+        {INVESTOR_PORTFOLIOS.map((portfolio) => (
+          <button
+            key={portfolio.key}
+            type="button"
+            onClick={() =>
+              setEnabledPortfolios((value) => ({
+                ...value,
+                [portfolio.key]: !value[portfolio.key],
+              }))}
+            className={`inline-flex items-center gap-2 rounded-xl border border-lacuna-lavender/40 bg-white px-4 py-2 text-sm font-medium transition-colors ${
+              enabledPortfolios[portfolio.key]
+                ? "text-lacuna-plum shadow-sm"
+                : "text-lacuna-blue hover:text-lacuna-plum"
+            }`}
+          >
+            <span
+              className={`h-2.5 w-2.5 rounded-full ${
+                enabledPortfolios[portfolio.key] ? "" : "opacity-30"
+              }`}
+              style={{
+                backgroundColor: PORTFOLIO_STYLES[portfolio.key].color,
+              }}
+            />
+            {portfolio.shortName} Portfolio
+          </button>
+        ))}
       </div>
 
       <div
@@ -406,6 +450,24 @@ export default function ForceNetwork(
                   Acquirer
                 </span>
               </div>
+              {INVESTOR_PORTFOLIOS.filter((p) => enabledPortfolios[p.key]).map(
+                (portfolio) => (
+                  <div
+                    key={portfolio.key}
+                    className="flex items-center gap-1.5 sm:gap-2"
+                  >
+                    <div
+                      className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full shrink-0"
+                      style={{
+                        backgroundColor: PORTFOLIO_STYLES[portfolio.key].color,
+                      }}
+                    />
+                    <span className="text-[10px] sm:text-xs text-lacuna-text-secondary truncate">
+                      {portfolio.shortName} portfolio
+                    </span>
+                  </div>
+                ),
+              )}
             </div>
           </motion.div>
 
