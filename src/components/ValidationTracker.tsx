@@ -194,13 +194,17 @@ export default function ValidationTracker() {
               >
                 <td className="p-3 font-medium">{v.company}</td>
                 <td className="p-3 text-lacuna-text-secondary">{v.acquirer}</td>
-                <td className="p-3 text-lacuna-text-secondary">{v.acquisitionDate}</td>
+                <td className="p-3 text-lacuna-text-secondary">
+                  {v.acquisitionDate}
+                </td>
                 <td className="p-3 text-right">
                   {typeof v.dealValue === "number"
                     ? v.dealValue.toLocaleString()
                     : "Undisclosed"}
                 </td>
-                <td className="p-3 text-lacuna-text-secondary text-xs">{v.source}</td>
+                <td className="p-3 text-lacuna-text-secondary text-xs">
+                  {v.source}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -243,7 +247,9 @@ export default function ValidationTracker() {
                 <span>{v.source}</span>
               </div>
             </div>
-            <p className="mt-4 text-sm text-lacuna-text-primary">{v.strategicRationale}</p>
+            <p className="mt-4 text-sm text-lacuna-text-primary">
+              {v.strategicRationale}
+            </p>
           </div>
         ))}
       </div>

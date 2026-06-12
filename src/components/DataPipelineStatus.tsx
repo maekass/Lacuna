@@ -15,7 +15,8 @@ interface PipelineStage {
 }
 
 function usePipelineStatus() {
-  const { dataProvenance, verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
+  const { dataProvenance, verifiedCompanies, verifiedAcquisitions } =
+    useVerifiedDataset();
 
   const stages: PipelineStage[] = useMemo(() => {
     const lastUpdated = dataProvenance.lastUpdated;
@@ -69,8 +70,9 @@ function usePipelineStatus() {
   const stats = useMemo(() => {
     const totalProcessed = stages.reduce((sum, s) => sum + s.recordCount, 0);
     const totalErrors = stages.reduce((sum, s) => sum + s.errorCount, 0);
-    const avgDuration = stages.reduce((sum, s) => sum + s.durationMs, 0) / stages.length;
-    const successRate = totalProcessed > 0 
+    const avgDuration = stages.reduce((sum, s) => sum + s.durationMs, 0) /
+      stages.length;
+    const successRate = totalProcessed > 0
       ? ((totalProcessed - totalErrors) / totalProcessed * 100).toFixed(2)
       : "100.00";
 
@@ -96,7 +98,11 @@ function StatusBadge({ status }: { status: PipelineStage["status"] }) {
   };
 
   return (
-    <span className={`px-2 py-1 rounded text-xs font-medium border ${styles[status]}`}>
+    <span
+      className={`px-2 py-1 rounded text-xs font-medium border ${
+        styles[status]
+      }`}
+    >
       {labels[status]}
     </span>
   );
@@ -109,7 +115,9 @@ export default function DataPipelineStatus() {
     <div className="space-y-4">
       <Card>
         <div className="mb-4">
-          <h3 className="text-lg font-semibold text-lacuna-plum">Data Pipeline Status</h3>
+          <h3 className="text-lg font-semibold text-lacuna-plum">
+            Data Pipeline Status
+          </h3>
           <p className="text-sm text-lacuna-blue">
             Ingestion, validation, and enrichment pipeline metrics
           </p>
@@ -118,18 +126,38 @@ export default function DataPipelineStatus() {
         {/* Pipeline Stats */}
         <div className="grid grid-cols-4 gap-3 mb-4">
           <div className="bg-blue-50 rounded-lg p-3 border border-blue-100">
-            <div className="text-2xl font-bold text-blue-700">{stats.totalProcessed.toLocaleString()}</div>
+            <div className="text-2xl font-bold text-blue-700">
+              {stats.totalProcessed.toLocaleString()}
+            </div>
             <div className="text-xs text-blue-600">Records Processed</div>
           </div>
           <div className="bg-emerald-50 rounded-lg p-3 border border-emerald-100">
-            <div className="text-2xl font-bold text-emerald-700">{stats.successRate}%</div>
+            <div className="text-2xl font-bold text-emerald-700">
+              {stats.successRate}%
+            </div>
             <div className="text-xs text-emerald-600">Success Rate</div>
           </div>
-          <div className={`rounded-lg p-3 border ${stats.totalErrors > 0 ? 'bg-red-50 border-red-100' : 'bg-slate-50 border-slate-200'}`}>
-            <div className={`text-2xl font-bold ${stats.totalErrors > 0 ? 'text-red-700' : 'text-slate-700'}`}>
+          <div
+            className={`rounded-lg p-3 border ${
+              stats.totalErrors > 0
+                ? "bg-red-50 border-red-100"
+                : "bg-slate-50 border-slate-200"
+            }`}
+          >
+            <div
+              className={`text-2xl font-bold ${
+                stats.totalErrors > 0 ? "text-red-700" : "text-slate-700"
+              }`}
+            >
               {stats.totalErrors}
             </div>
-            <div className={`text-xs ${stats.totalErrors > 0 ? 'text-red-600' : 'text-slate-600'}`}>Errors</div>
+            <div
+              className={`text-xs ${
+                stats.totalErrors > 0 ? "text-red-600" : "text-slate-600"
+              }`}
+            >
+              Errors
+            </div>
           </div>
           <div className="bg-slate-50 rounded-lg p-3 border border-slate-200">
             <div className="text-2xl font-bold text-slate-700">
@@ -154,9 +182,12 @@ export default function DataPipelineStatus() {
                   {idx + 1}
                 </div>
                 <div>
-                  <div className="font-medium text-lacuna-plum">{stage.name}</div>
+                  <div className="font-medium text-lacuna-plum">
+                    {stage.name}
+                  </div>
                   <div className="text-xs text-lacuna-blue">
-                    {stage.recordCount.toLocaleString()} records · {stage.durationMs}ms
+                    {stage.recordCount.toLocaleString()} records ·{" "}
+                    {stage.durationMs}ms
                   </div>
                 </div>
               </div>
@@ -174,13 +205,15 @@ export default function DataPipelineStatus() {
 
         <div className="mt-4 p-3 bg-slate-50 rounded-lg border border-slate-200">
           <p className="text-xs text-slate-600">
-            <strong>Pipeline Details:</strong> Data sourced from SEC EDGAR filings, 
-            company press releases, and ClinicalTrials.gov. All records undergo validation 
-            against public filings before inclusion in the verified dataset.
+            <strong>Pipeline Details:</strong>{" "}
+            Data sourced from SEC EDGAR filings, company press releases, and
+            ClinicalTrials.gov. All records undergo validation against public
+            filings before inclusion in the verified dataset.
           </p>
           <p className="text-xs text-slate-500 mt-2">
-            Last full sync: {stages[0]?.lastRun || "Unknown"} · 
-            Dataset version: {useVerifiedDataset().dataProvenance.datasetVersion}
+            Last full sync: {stages[0]?.lastRun || "Unknown"} · Dataset version:
+            {" "}
+            {useVerifiedDataset().dataProvenance.datasetVersion}
           </p>
         </div>
       </Card>

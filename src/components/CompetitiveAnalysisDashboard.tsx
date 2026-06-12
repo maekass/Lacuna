@@ -453,8 +453,9 @@ export default function CompetitiveAnalysisDashboard() {
                         key={i}
                         className="text-sm text-lacuna-text-primary border-l-2 border-[#B8A9C9] pl-3 py-1"
                       >
-                        <span className="text-xs text-lacuna-text-muted">{e.year}</span>
-                        {" "}
+                        <span className="text-xs text-lacuna-text-muted">
+                          {e.year}
+                        </span>{" "}
                         • {e.description}
                       </div>
                     ))}
@@ -466,19 +467,25 @@ export default function CompetitiveAnalysisDashboard() {
               <div className="bg-lacuna-surface-muted p-3 rounded-lg mb-3">
                 <div className="grid grid-cols-3 gap-3 text-sm">
                   <div>
-                    <div className="text-xs text-lacuna-text-muted uppercase">Trend</div>
+                    <div className="text-xs text-lacuna-text-muted uppercase">
+                      Trend
+                    </div>
                     <div className="font-medium capitalize">
                       {selectedVelocity.trend.direction}
                     </div>
                   </div>
                   <div>
-                    <div className="text-xs text-lacuna-text-muted uppercase">Slope</div>
+                    <div className="text-xs text-lacuna-text-muted uppercase">
+                      Slope
+                    </div>
                     <div className="font-medium">
                       {selectedVelocity.trend.slope.toFixed(2)}/yr²
                     </div>
                   </div>
                   <div>
-                    <div className="text-xs text-lacuna-text-muted uppercase">R²</div>
+                    <div className="text-xs text-lacuna-text-muted uppercase">
+                      R²
+                    </div>
                     <div className="font-medium">
                       {selectedVelocity.trend.rSquared.toFixed(2)}
                     </div>
@@ -629,7 +636,10 @@ export default function CompetitiveAnalysisDashboard() {
               </thead>
               <tbody>
                 {typeComparison.byType.map((t) => (
-                  <tr key={t.type} className="border-b border-lacuna-border-subtle">
+                  <tr
+                    key={t.type}
+                    className="border-b border-lacuna-border-subtle"
+                  >
                     <td className="py-2 font-medium capitalize">
                       {t.type.replace(/_/g, " ")}
                     </td>
@@ -649,7 +659,10 @@ export default function CompetitiveAnalysisDashboard() {
             {/* Stage by Type */}
             <div className="space-y-4">
               {typeComparison.byType.map((t) => (
-                <div key={t.type} className="bg-lacuna-surface-muted p-3 rounded-lg">
+                <div
+                  key={t.type}
+                  className="bg-lacuna-surface-muted p-3 rounded-lg"
+                >
                   <div className="font-medium text-sm capitalize mb-2">
                     {t.type.replace(/_/g, " ")}
                   </div>
@@ -659,7 +672,10 @@ export default function CompetitiveAnalysisDashboard() {
                         Top Stages
                       </div>
                       {t.stageDistribution.slice(0, 3).map((s) => (
-                        <div key={s.stage} className="text-xs text-lacuna-text-primary">
+                        <div
+                          key={s.stage}
+                          className="text-xs text-lacuna-text-primary"
+                        >
                           {s.stage.replace(/_/g, " ")}: {s.count}{" "}
                           ({s.percentage.toFixed(0)}%)
                         </div>
@@ -670,7 +686,10 @@ export default function CompetitiveAnalysisDashboard() {
                         Top Sectors
                       </div>
                       {t.sectorDistribution.slice(0, 3).map((s) => (
-                        <div key={s.sector} className="text-xs text-lacuna-text-primary">
+                        <div
+                          key={s.sector}
+                          className="text-xs text-lacuna-text-primary"
+                        >
                           {s.sector}: {s.count} ({s.percentage.toFixed(0)}%)
                         </div>
                       ))}

@@ -414,7 +414,9 @@ export default function BayesianCausalAnalysis() {
                     </div>
                   )}
 
-                  <p className="text-xs text-lacuna-text-muted mt-2">{result.note}</p>
+                  <p className="text-xs text-lacuna-text-muted mt-2">
+                    {result.note}
+                  </p>
                 </div>
               ))}
             </div>

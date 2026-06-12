@@ -244,7 +244,9 @@ export default function AIInsightsPanel({
                   : <Sparkles className="w-4 h-4 text-lacuna-text-muted" />}
                 <span
                   className={`font-medium ${
-                    insight.content ? "text-lacuna-plum" : "text-lacuna-text-secondary"
+                    insight.content
+                      ? "text-lacuna-plum"
+                      : "text-lacuna-text-secondary"
                   }`}
                 >
                   {title}

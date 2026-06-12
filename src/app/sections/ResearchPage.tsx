@@ -69,7 +69,11 @@ export default function ResearchPage() {
         <ImpactOpportunityCard />
       </MotionSection>
 
-      <MotionSection id="commercialization-readiness" delay={0.25} className={SECTION}>
+      <MotionSection
+        id="commercialization-readiness"
+        delay={0.25}
+        className={SECTION}
+      >
         <SectionHeader
           title="From Lab to Venture"
           description="For NIH researchers and academic founders evaluating commercialization pathways — evidence maturity, reimbursement readiness, and acquirer sector activity."

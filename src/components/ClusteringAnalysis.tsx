@@ -64,7 +64,9 @@ export default function ClusteringAnalysis() {
 
             <div className="space-y-1 mb-4">
               {cluster.characteristics.map((char, i) => (
-                <p key={i} className="text-xs text-lacuna-text-secondary">• {char}</p>
+                <p key={i} className="text-xs text-lacuna-text-secondary">
+                  • {char}
+                </p>
               ))}
             </div>
 
@@ -74,7 +76,9 @@ export default function ClusteringAnalysis() {
                   key={company.id}
                   className="flex items-center justify-between text-xs"
                 >
-                  <span className="text-lacuna-text-primary">{company.name}</span>
+                  <span className="text-lacuna-text-primary">
+                    {company.name}
+                  </span>
                   <span
                     className="text-lacuna-text-muted truncate ml-2 max-w-[80px]"
                     title={company.stage}

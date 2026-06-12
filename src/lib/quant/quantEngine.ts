@@ -14,10 +14,7 @@
  */
 
 import { quantile } from "simple-statistics";
-import {
-  type EmpiricalPriors,
-  getSectorPrior,
-} from "./empiricalPriors";
+import { type EmpiricalPriors, getSectorPrior } from "./empiricalPriors";
 
 // ==================== TYPES ====================
 
@@ -327,10 +324,9 @@ export class ValuationEngine {
         lowBound: estimate * 0.6,
         highBound: estimate * 1.6,
         confidence,
-        reasoning:
-          `$${company.raisedToDate}M raised × ${
-            prior.medianFundingMultiple.toFixed(1)
-          }x median exit/funding multiple (n=${prior.fundingMultipleN} verified ${prior.sector} deals)`,
+        reasoning: `$${company.raisedToDate}M raised × ${
+          prior.medianFundingMultiple.toFixed(1)
+        }x median exit/funding multiple (n=${prior.fundingMultipleN} verified ${prior.sector} deals)`,
       };
     }
 

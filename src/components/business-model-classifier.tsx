@@ -312,7 +312,9 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
             <div className="text-2xl font-bold text-purple-600">
               {classification.estimatedReimbursementPct}%
             </div>
-            <div className="text-xs text-lacuna-text-secondary">Est. Insurance Revenue</div>
+            <div className="text-xs text-lacuna-text-secondary">
+              Est. Insurance Revenue
+            </div>
           </div>
 
           <div className="bg-white rounded-lg p-3 shadow-sm">
@@ -326,14 +328,18 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
             <div className="text-2xl font-bold text-purple-600">
               {formatMultiple(classification.valuationImpact.adjustedMultiple)}
             </div>
-            <div className="text-xs text-lacuna-text-secondary">Valuation Multiple</div>
+            <div className="text-xs text-lacuna-text-secondary">
+              Valuation Multiple
+            </div>
           </div>
 
           <div className="bg-white rounded-lg p-3 shadow-sm">
             <div className="text-2xl font-bold text-purple-600">
               {formatCurrency(classification.valuationImpact.impliedValuation)}
             </div>
-            <div className="text-xs text-lacuna-text-secondary">Implied Valuation</div>
+            <div className="text-xs text-lacuna-text-secondary">
+              Implied Valuation
+            </div>
           </div>
         </div>
       </div>
@@ -404,7 +410,9 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
 
       {/* Key Factors */}
       <div>
-        <h3 className="font-semibold text-lacuna-text-primary mb-3">Valuation Factors</h3>
+        <h3 className="font-semibold text-lacuna-text-primary mb-3">
+          Valuation Factors
+        </h3>
         <ul className="space-y-2">
           {classification.valuationImpact.keyFactors.map((factor, idx) => (
             <li

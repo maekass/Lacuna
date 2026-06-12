@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Card from "@/components/ui/Card";
 
@@ -22,69 +22,96 @@ interface RateLimitStatus {
 }
 
 const INITIAL_CHECKS: HealthCheck[] = [
-  { name: "Dataset API", endpoint: "/api/dataset/verified", status: "checking", latencyMs: null, lastChecked: null },
-  { name: "Gamma API", endpoint: "/api/gamma/generate", status: "checking", latencyMs: null, lastChecked: null },
-  { name: "ClinicalTrials.gov", endpoint: "https://clinicaltrials.gov/api/v2/version", status: "checking", latencyMs: null, lastChecked: null },
-  { name: "Build Status", endpoint: "__build_check__", status: "checking", latencyMs: null, lastChecked: null },
+  {
+    name: "Dataset API",
+    endpoint: "/api/dataset/verified",
+    status: "checking",
+    latencyMs: null,
+    lastChecked: null,
+  },
+  {
+    name: "Gamma API",
+    endpoint: "/api/gamma/generate",
+    status: "checking",
+    latencyMs: null,
+    lastChecked: null,
+  },
+  {
+    name: "ClinicalTrials.gov",
+    endpoint: "https://clinicaltrials.gov/api/v2/version",
+    status: "checking",
+    latencyMs: null,
+    lastChecked: null,
+  },
+  {
+    name: "Build Status",
+    endpoint: "__build_check__",
+    status: "checking",
+    latencyMs: null,
+    lastChecked: null,
+  },
 ];
 
 function useHealthChecks() {
   const [checks, setChecks] = useState<HealthCheck[]>(INITIAL_CHECKS);
   const [isRunning, setIsRunning] = useState(false);
 
-  const runCheck = useCallback(async (check: HealthCheck): Promise<HealthCheck> => {
-    const start = performance.now();
-    
-    try {
-      if (check.endpoint === "__build_check__") {
-        // Simulated build check - in production this would check deployment status
-        await new Promise(r => setTimeout(r, 100));
-        return {
-          ...check,
-          status: "healthy",
-          latencyMs: Math.round(performance.now() - start),
-          lastChecked: new Date(),
-        };
-      }
+  const runCheck = useCallback(
+    async (check: HealthCheck): Promise<HealthCheck> => {
+      const start = performance.now();
 
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 5000);
-      
-      const response = await fetch(check.endpoint, {
-        method: "HEAD",
-        signal: controller.signal,
-        cache: "no-store",
-      });
-      
-      clearTimeout(timeout);
-      const latency = Math.round(performance.now() - start);
-      
-      if (response.ok || response.status === 405) {
+      try {
+        if (check.endpoint === "__build_check__") {
+          // Simulated build check - in production this would check deployment status
+          await new Promise((r) => setTimeout(r, 100));
+          return {
+            ...check,
+            status: "healthy",
+            latencyMs: Math.round(performance.now() - start),
+            lastChecked: new Date(),
+          };
+        }
+
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 5000);
+
+        const response = await fetch(check.endpoint, {
+          method: "HEAD",
+          signal: controller.signal,
+          cache: "no-store",
+        });
+
+        clearTimeout(timeout);
+        const latency = Math.round(performance.now() - start);
+
+        if (response.ok || response.status === 405) {
+          return {
+            ...check,
+            status: latency > 1000 ? "degraded" : "healthy",
+            latencyMs: latency,
+            lastChecked: new Date(),
+          };
+        }
+
         return {
           ...check,
-          status: latency > 1000 ? "degraded" : "healthy",
+          status: response.status >= 500 ? "down" : "degraded",
           latencyMs: latency,
           lastChecked: new Date(),
+          error: `HTTP ${response.status}`,
+        };
+      } catch (err) {
+        return {
+          ...check,
+          status: "down",
+          latencyMs: null,
+          lastChecked: new Date(),
+          error: err instanceof Error ? err.message : "Network error",
         };
       }
-      
-      return {
-        ...check,
-        status: response.status >= 500 ? "down" : "degraded",
-        latencyMs: latency,
-        lastChecked: new Date(),
-        error: `HTTP ${response.status}`,
-      };
-    } catch (err) {
-      return {
-        ...check,
-        status: "down",
-        latencyMs: null,
-        lastChecked: new Date(),
-        error: err instanceof Error ? err.message : "Network error",
-      };
-    }
-  }, []);
+    },
+    [],
+  );
 
   const runAllChecks = useCallback(async () => {
     setIsRunning(true);
@@ -118,7 +145,11 @@ function StatusBadge({ status }: { status: HealthCheck["status"] }) {
   };
 
   return (
-    <span className={`px-2 py-1 rounded text-xs font-medium border ${styles[status]}`}>
+    <span
+      className={`px-2 py-1 rounded text-xs font-medium border ${
+        styles[status]
+      }`}
+    >
       {labels[status]}
     </span>
   );
@@ -129,14 +160,14 @@ export default function SystemHealthDashboard() {
 
   const stats = useMemo(() => {
     const total = checks.length;
-    const healthy = checks.filter(c => c.status === "healthy").length;
-    const degraded = checks.filter(c => c.status === "degraded").length;
-    const down = checks.filter(c => c.status === "down").length;
+    const healthy = checks.filter((c) => c.status === "healthy").length;
+    const degraded = checks.filter((c) => c.status === "degraded").length;
+    const down = checks.filter((c) => c.status === "down").length;
     const avgLatency = checks
-      .filter(c => c.latencyMs !== null)
-      .reduce((sum, c) => sum + (c.latencyMs || 0), 0) / 
-      checks.filter(c => c.latencyMs !== null).length || 0;
-    
+          .filter((c) => c.latencyMs !== null)
+          .reduce((sum, c) => sum + (c.latencyMs || 0), 0) /
+        checks.filter((c) => c.latencyMs !== null).length || 0;
+
     return { total, healthy, degraded, down, avgLatency };
   }, [checks]);
 
@@ -145,7 +176,9 @@ export default function SystemHealthDashboard() {
       <Card>
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-lg font-semibold text-lacuna-plum">System Health</h3>
+            <h3 className="text-lg font-semibold text-lacuna-plum">
+              System Health
+            </h3>
             <p className="text-sm text-lacuna-blue">
               API endpoint monitoring and latency tracking
             </p>
@@ -162,11 +195,15 @@ export default function SystemHealthDashboard() {
         {/* Stats Overview */}
         <div className="grid grid-cols-4 gap-3 mb-4">
           <div className="bg-emerald-50 rounded-lg p-3 border border-emerald-100">
-            <div className="text-2xl font-bold text-emerald-700">{stats.healthy}</div>
+            <div className="text-2xl font-bold text-emerald-700">
+              {stats.healthy}
+            </div>
             <div className="text-xs text-emerald-600">Healthy</div>
           </div>
           <div className="bg-amber-50 rounded-lg p-3 border border-amber-100">
-            <div className="text-2xl font-bold text-amber-700">{stats.degraded}</div>
+            <div className="text-2xl font-bold text-amber-700">
+              {stats.degraded}
+            </div>
             <div className="text-xs text-amber-600">Degraded</div>
           </div>
           <div className="bg-red-50 rounded-lg p-3 border border-red-100">
@@ -209,7 +246,9 @@ export default function SystemHealthDashboard() {
                   className="hover:bg-lacuna-lavender/5"
                 >
                   <td className="px-4 py-3">
-                    <div className="font-medium text-lacuna-plum">{check.name}</div>
+                    <div className="font-medium text-lacuna-plum">
+                      {check.name}
+                    </div>
                     {check.error && (
                       <div className="text-xs text-red-600">{check.error}</div>
                     )}
@@ -233,8 +272,10 @@ export default function SystemHealthDashboard() {
 
         <div className="mt-4 p-3 bg-slate-50 rounded-lg border border-slate-200">
           <p className="text-xs text-slate-600">
-            <strong>Developer Note:</strong> Health checks run automatically every 60 seconds. 
-            ClinicalTrials.gov has a rate limit of 10 requests/second. Gamma API requires valid API key.
+            <strong>Developer Note:</strong>{" "}
+            Health checks run automatically every 60 seconds. ClinicalTrials.gov
+            has a rate limit of 10 requests/second. Gamma API requires valid API
+            key.
           </p>
         </div>
       </Card>

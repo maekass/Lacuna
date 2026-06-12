@@ -258,7 +258,9 @@ export default function ImpactOpportunityCard() {
             >
               {company.name}
             </h4>
-            <p className="text-sm text-lacuna-text-muted">Sector: {company.sector}</p>
+            <p className="text-sm text-lacuna-text-muted">
+              Sector: {company.sector}
+            </p>
           </div>
           <div className="text-right">
             <span
@@ -622,9 +624,10 @@ export default function ImpactOpportunityCard() {
               <ul className="text-sm space-y-1.5 text-lacuna-text-secondary list-disc list-inside">
                 {UNMEASURABLE_FACTORS.slice(0, 3).map((factor, i) => (
                   <li key={i}>
-                    <strong className="text-lacuna-text-primary">{factor.factor}</strong> —
-                    {" "}
-                    {factor.why}.{" "}
+                    <strong className="text-lacuna-text-primary">
+                      {factor.factor}
+                    </strong>{" "}
+                    — {factor.why}.{" "}
                     <span className="text-lacuna-text-muted italic">
                       Proxy: {factor.proxyUsed}
                     </span>

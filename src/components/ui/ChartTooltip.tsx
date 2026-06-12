@@ -25,9 +25,7 @@ export default function ChartTooltip({
       style={style}
     >
       {title
-        ? (
-          <p className="mb-1 font-semibold text-lacuna-text-inverse">{title}</p>
-        )
+        ? <p className="mb-1 font-semibold text-lacuna-text-inverse">{title}</p>
         : null}
       <div className="space-y-0.5 text-lacuna-text-inverse/90">{children}</div>
     </div>

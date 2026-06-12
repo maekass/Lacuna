@@ -241,7 +241,10 @@ export default function FairnessLimitations({
                 ) => {
                   const h = cohenH(baselineRate, baselineRate + effectSize);
                   return (
-                    <tr key={effectSize} className="border-b border-lacuna-border-subtle">
+                    <tr
+                      key={effectSize}
+                      className="border-b border-lacuna-border-subtle"
+                    >
                       <td className="py-2">
                         +{(effectSize * 100).toFixed(0)}pp
                       </td>

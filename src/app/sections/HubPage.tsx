@@ -11,7 +11,9 @@ import { WORKSPACES } from "@/lib/navigation/workspaces";
 function formatValuationGap(percentDiff: number): string {
   if (percentDiff >= 400) {
     const multiple = 1 + percentDiff / 100;
-    return `${multiple >= 10 ? multiple.toFixed(0) : multiple.toFixed(1)}× higher than`;
+    return `${
+      multiple >= 10 ? multiple.toFixed(0) : multiple.toFixed(1)
+    }× higher than`;
   }
   return `${percentDiff.toFixed(0)}% above`;
 }
