@@ -1,0 +1,194 @@
+[
+  {
+    "code": "J7300",
+    "description": "Intrauterine copper contraceptive",
+    "shortDescription": "Copper IUD",
+    "category": "Contraception",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "J7302",
+    "description": "Levonorgestrel-releasing intrauterine contraceptive system",
+    "shortDescription": "Hormonal IUD",
+    "category": "Contraception",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "J7303",
+    "description": "Contraceptive supply, hormone-containing patch",
+    "shortDescription": "Contraceptive patch",
+    "category": "Contraception",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "J7304",
+    "description": "Contraceptive supply, hormone-containing vaginal ring",
+    "shortDescription": "Vaginal ring contraceptive",
+    "category": "Contraception",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "J7297",
+    "description": "Implantable contraceptive capsule",
+    "shortDescription": "Contraceptive implant",
+    "category": "Contraception",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "J7192",
+    "description": "Injection, menotropins",
+    "shortDescription": "Fertility medication",
+    "category": "Fertility",
+    "status": "active",
+    "coverageType": "B"
+  },
+  {
+    "code": "J3490",
+    "description": "Unclassified drugs",
+    "shortDescription": "Various fertility drugs",
+    "category": "Fertility",
+    "status": "active",
+    "coverageType": "C"
+  },
+  {
+    "code": "J2505",
+    "description": "Injection, paricalcitol",
+    "shortDescription": "Vitamin D analog",
+    "category": "Menopause",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "J1644",
+    "description": "Injection, heparin sodium",
+    "shortDescription": "Anticoagulant",
+    "category": "Maternal Health",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "J1645",
+    "description": "Injection, dalteparin sodium",
+    "shortDescription": "Low molecular weight heparin",
+    "category": "Maternal Health",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "A4565",
+    "description": "Slings",
+    "shortDescription": "Pelvic support device",
+    "category": "Pelvic Health",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "A4566",
+    "description": "Girdles",
+    "shortDescription": "Abdominal support garment",
+    "category": "Maternal Health",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "A4300",
+    "description": "Bedside drainage bag",
+    "shortDescription": "Urinary drainage device",
+    "category": "Pelvic Health",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "K0900",
+    "description": "Breast pump, manual",
+    "shortDescription": "Manual breast pump",
+    "category": "Maternal Health",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "K0901",
+    "description": "Breast pump, electric, any type",
+    "shortDescription": "Electric breast pump",
+    "category": "Maternal Health",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "K0902",
+    "description": "Breast pump accessory, kit",
+    "shortDescription": "Breast pump supplies",
+    "category": "Maternal Health",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "E0602",
+    "description": "Breast pump, non-hospital grade",
+    "shortDescription": "Home breast pump",
+    "category": "Maternal Health",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "L8000",
+    "description": "Breast prosthesis, mastectomy bra",
+    "shortDescription": "Mastectomy bra",
+    "category": "Breast Health",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "L8010",
+    "description": "Breast prosthesis, mastectomy form",
+    "shortDescription": "Breast form",
+    "category": "Breast Health",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "L8020",
+    "description": "Breast prosthesis, silicone or equal",
+    "shortDescription": "Silicone breast prosthesis",
+    "category": "Breast Health",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "A6530",
+    "description": "Gradient compression stocking, below knee",
+    "shortDescription": "Compression stocking",
+    "category": "Maternal Health",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "A6531",
+    "description": "Gradient compression stocking, thigh length",
+    "shortDescription": "Thigh compression stocking",
+    "category": "Maternal Health",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "A7025",
+    "description": "High frequency chest wall oscillation device",
+    "shortDescription": "Airway clearance device",
+    "category": "Respiratory",
+    "status": "active",
+    "coverageType": "A"
+  },
+  {
+    "code": "E0480",
+    "description": "Nebulizer with compressor",
+    "shortDescription": "Respiratory device",
+    "category": "Respiratory",
+    "status": "active",
+    "coverageType": "A"
+  }
+]

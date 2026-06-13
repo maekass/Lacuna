@@ -1,0 +1,292 @@
+"use client";
+
+import { useMemo } from "react";
+import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import {
+  computeDisclosureStats,
+  computeEffectiveNBadges,
+  computeSectorDealCounts,
+  computeYearDealCounts,
+  type EffectiveNBadges,
+} from "@/lib/data/datasetCoverageStats";
+
+function countDisclosedDealValues(acquisitions: { dealValue?: number }[]) {
+  let disclosed = 0;
+  let undisclosed = 0;
+  for (const d of acquisitions) {
+    if (typeof d.dealValue === "number") disclosed += 1;
+    else undisclosed += 1;
+  }
+  return { disclosed, undisclosed };
+}
+
+const tierStyles: Record<EffectiveNBadges["network"]["tier"], string> = {
+  insufficient: "bg-red-50 text-red-700 border-red-200",
+  low: "bg-amber-50 text-amber-800 border-amber-200",
+  medium: "bg-sky-50 text-sky-800 border-sky-200",
+  high: "bg-emerald-50 text-emerald-800 border-emerald-200",
+};
+
+function EffectiveNBadge({
+  title,
+  badge,
+}: {
+  title: string;
+  badge: EffectiveNBadges[keyof EffectiveNBadges];
+}) {
+  return (
+    <div className={`rounded-lg border p-3 ${tierStyles[badge.tier]}`}>
+      <p className="text-xs font-medium uppercase tracking-wide opacity-80">
+        {title}
+      </p>
+      <p className="text-sm font-semibold mt-1">{badge.label}</p>
+      <p className="text-[11px] mt-1 capitalize">
+        Power: {badge.tier.replace("_", " ")}
+      </p>
+    </div>
+  );
+}
+
+export default function DataCoverageCard() {
+  const {
+    dataProvenance,
+    verifiedCompanies,
+    verifiedAcquisitions,
+    verifiedAcquirers,
+  } = useVerifiedDataset();
+  const { disclosed, undisclosed } = countDisclosedDealValues(
+    verifiedAcquisitions,
+  );
+  const lastUpdated = dataProvenance.lastUpdated || "—";
+
+  const coverageInput = useMemo(
+    () => ({
+      companies: verifiedCompanies,
+      acquisitions: verifiedAcquisitions,
+      acquirers: verifiedAcquirers,
+    }),
+    [verifiedCompanies, verifiedAcquisitions, verifiedAcquirers],
+  );
+
+  const stats = useMemo(
+    () => computeDisclosureStats(coverageInput),
+    [coverageInput],
+  );
+  const sectorCounts = useMemo(() => computeSectorDealCounts(coverageInput), [
+    coverageInput,
+  ]);
+  const yearCounts = useMemo(() => computeYearDealCounts(coverageInput), [
+    coverageInput,
+  ]);
+  const effectiveN = useMemo(() => computeEffectiveNBadges(coverageInput), [
+    coverageInput,
+  ]);
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 p-6">
+      <CuratedDatasetBanner className="mb-4" />
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h3 className="text-lg font-semibold text-lacuna-plum">
+            What Our Data Covers
+          </h3>
+          <p className="text-sm text-lacuna-blue">
+            Here&apos;s an honest look at our dataset — how many deals
+            we&apos;ve verified, what&apos;s disclosed, and where our analysis
+            is strongest.
+          </p>
+        </div>
+        <span className="shrink-0 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-lacuna-lavender/20 text-lacuna-plum">
+          Updated {lastUpdated}
+        </span>
+      </div>
+
+      <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="rounded-lg bg-lacuna-pink/10 border border-lacuna-lavender/40 p-3">
+          <p className="text-2xl font-bold text-lacuna-plum">
+            {verifiedCompanies.length}
+          </p>
+          <p className="text-xs text-lacuna-blue mt-1">Companies</p>
+        </div>
+        <div className="rounded-lg bg-lacuna-pink/10 border border-lacuna-lavender/40 p-3">
+          <p className="text-2xl font-bold text-lacuna-plum">
+            {verifiedAcquisitions.length}
+          </p>
+          <p className="text-xs text-lacuna-blue mt-1">Deals</p>
+        </div>
+        <div className="rounded-lg bg-lacuna-pink/10 border border-lacuna-lavender/40 p-3">
+          <p className="text-2xl font-bold text-lacuna-plum">{disclosed}</p>
+          <p className="text-xs text-lacuna-blue mt-1">Disclosed price</p>
+        </div>
+        <div className="rounded-lg bg-lacuna-pink/10 border border-lacuna-lavender/40 p-3">
+          <p className="text-2xl font-bold text-lacuna-plum">{undisclosed}</p>
+          <p className="text-xs text-lacuna-blue mt-1">Undisclosed price</p>
+        </div>
+      </div>
+
+      <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+        <div className="rounded-md bg-lacuna-pink/10 border border-lacuna-lavender/30 px-3 py-2">
+          <span className="text-lacuna-blue">Valuation coverage</span>
+          <p className="font-semibold text-lacuna-plum mt-0.5">
+            {stats.companiesWithValuation}/{stats.companiesTotal} companies (
+            {(stats.valuationRate * 100).toFixed(0)}%)
+          </p>
+        </div>
+        <div className="rounded-md bg-lacuna-pink/10 border border-lacuna-lavender/30 px-3 py-2">
+          <span className="text-lacuna-blue">Price disclosure rate</span>
+          <p className="font-semibold text-lacuna-plum mt-0.5">
+            {(stats.disclosureRate * 100).toFixed(0)}% ({stats
+              .dealsWithValueNote} with notes)
+          </p>
+        </div>
+        <div className="rounded-md bg-lacuna-pink/10 border border-lacuna-lavender/30 px-3 py-2">
+          <span className="text-lacuna-blue">Deal years</span>
+          <p className="font-semibold text-lacuna-plum mt-0.5">
+            {yearCounts.length > 0
+              ? `${yearCounts[0].year}–${
+                yearCounts[yearCounts.length - 1].year
+              }`
+              : "—"}
+          </p>
+        </div>
+        <div className="rounded-md bg-lacuna-pink/10 border border-lacuna-lavender/30 px-3 py-2">
+          <span className="text-lacuna-blue">Sectors tracked</span>
+          <p className="font-semibold text-lacuna-plum mt-0.5">
+            {sectorCounts.length}
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <p className="text-xs font-medium text-lacuna-text-secondary mb-2">
+          Effective n by module
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+          <EffectiveNBadge
+            title="Network analysis"
+            badge={effectiveN.network}
+          />
+          <EffectiveNBadge
+            title="Competitive analysis"
+            badge={effectiveN.competitive}
+          />
+          <EffectiveNBadge
+            title="Price analytics"
+            badge={effectiveN.priceAnalytics}
+          />
+          <EffectiveNBadge
+            title="Deal velocity"
+            badge={effectiveN.dealVelocity}
+          />
+        </div>
+      </div>
+
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p className="text-xs font-medium text-lacuna-text-secondary mb-2">
+            Deals by sector (target)
+          </p>
+          <div className="overflow-x-auto rounded-lg border border-lacuna-lavender/40">
+            <table className="w-full text-xs">
+              <thead className="bg-lacuna-pink/10 text-lacuna-blue">
+                <tr>
+                  <th className="text-left p-2 font-medium">Sector</th>
+                  <th className="text-right p-2 font-medium">Cos.</th>
+                  <th className="text-right p-2 font-medium">Deals</th>
+                  <th className="text-right p-2 font-medium">$ discl.</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sectorCounts.map((row) => (
+                  <tr
+                    key={row.sector}
+                    className="border-t border-lacuna-lavender/30"
+                  >
+                    <td className="p-2 text-lacuna-plum">{row.sector}</td>
+                    <td className="p-2 text-right text-lacuna-text-secondary">
+                      {row.companies}
+                    </td>
+                    <td className="p-2 text-right text-lacuna-text-secondary">
+                      {row.deals}
+                    </td>
+                    <td className="p-2 text-right text-lacuna-text-secondary">
+                      {row.disclosedPrices}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <p className="text-xs font-medium text-lacuna-text-secondary mb-2">
+            Deals by announcement year
+          </p>
+          <div className="overflow-x-auto rounded-lg border border-lacuna-lavender/40">
+            <table className="w-full text-xs">
+              <thead className="bg-lacuna-pink/10 text-lacuna-blue">
+                <tr>
+                  <th className="text-left p-2 font-medium">Year</th>
+                  <th className="text-right p-2 font-medium">Deals</th>
+                  <th className="text-right p-2 font-medium">$ discl.</th>
+                </tr>
+              </thead>
+              <tbody>
+                {yearCounts.map((row) => (
+                  <tr
+                    key={row.year}
+                    className="border-t border-lacuna-lavender/30"
+                  >
+                    <td className="p-2 text-lacuna-plum">{row.year}</td>
+                    <td className="p-2 text-right text-lacuna-text-secondary">
+                      {row.count}
+                    </td>
+                    <td className="p-2 text-right text-lacuna-text-secondary">
+                      {row.disclosedPrices}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-5">
+        <p className="text-xs font-medium text-lacuna-text-secondary mb-2">
+          Global source categories
+        </p>
+        <ul className="text-xs text-lacuna-blue space-y-1 list-disc pl-5">
+          {dataProvenance.sources.slice(0, 5).map((s) => <li key={s}>{s}</li>)}
+        </ul>
+        {dataProvenance.sources.length > 5
+          ? (
+            <p className="text-[11px] text-lacuna-text-muted mt-2">
+              +{dataProvenance.sources.length - 5} more in dataset provenance.
+            </p>
+          )
+          : null}
+      </div>
+
+      <div className="mt-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <p className="text-xs text-lacuna-blue">{dataProvenance.disclaimer}</p>
+        <div className="flex flex-wrap gap-2">
+          <a
+            href="/api/export/deals.csv"
+            className="inline-flex items-center justify-center rounded-lg border border-lacuna-lavender/40 bg-white px-3 py-2 text-xs font-medium text-lacuna-plum hover:bg-lacuna-pink/10"
+          >
+            Download deals CSV
+          </a>
+          <a
+            href="/api/dataset/verified"
+            className="inline-flex items-center justify-center rounded-lg border border-lacuna-lavender/40 bg-white px-3 py-2 text-xs font-medium text-lacuna-plum hover:bg-lacuna-pink/10"
+          >
+            Dataset JSON
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}

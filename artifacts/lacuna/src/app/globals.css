@@ -1,0 +1,199 @@
+@import "tailwindcss";
+
+/* Lacuna — Pantone Spring/Summer 2026 (README Design System) */
+:root {
+  --font-playfair: "Playfair Display", Georgia, serif;
+  /* Brand */
+  --lacuna-pink: #e8b4b8;
+  --lacuna-lavender: #b8a9c9;
+  --lacuna-blue: #4a5d8a;
+  --lacuna-plum: #5d4e6d;
+
+  /* Semantic surfaces */
+  --lacuna-surface: #ffffff;
+  --lacuna-surface-muted: #faf7f8;
+  --lacuna-surface-subtle: #f3eef1;
+  --lacuna-surface-elevated: #ffffff;
+  --lacuna-surface-inverse: var(--lacuna-plum);
+
+  /* Semantic text */
+  --lacuna-text-primary: var(--lacuna-plum);
+  --lacuna-text-secondary: var(--lacuna-blue);
+  --lacuna-text-muted: #8a7d96;
+  --lacuna-text-inverse: #ffffff;
+
+  /* Semantic borders */
+  --lacuna-border: rgba(184, 169, 201, 0.45);
+  --lacuna-border-subtle: rgba(184, 169, 201, 0.28);
+  --lacuna-border-strong: rgba(93, 78, 109, 0.22);
+
+  /* Chart chrome */
+  --lacuna-chart-grid: rgba(184, 169, 201, 0.35);
+  --lacuna-chart-axis: #8a7d96;
+  --lacuna-chart-accent: #7c3aed;
+  --lacuna-chart-secondary: var(--lacuna-pink);
+
+  --background: var(--lacuna-surface-muted);
+  --foreground: var(--lacuna-text-primary);
+}
+
+/* Cross-browser smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Prevent horizontal overflow on mobile */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Touch-friendly tap targets — scoped, not every inline text link */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.touch-target-inline {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 0.25rem;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--lacuna-plum);
+  color: white;
+  font-weight: 600;
+  border-radius: 0 0 0.5rem 0;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* Keyboard focus */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--lacuna-lavender);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Hide scrollbars on horizontal scroll containers (all browsers) */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-lacuna-pink: var(--lacuna-pink);
+  --color-lacuna-lavender: var(--lacuna-lavender);
+  --color-lacuna-blue: var(--lacuna-blue);
+  --color-lacuna-plum: var(--lacuna-plum);
+  --color-lacuna-surface: var(--lacuna-surface);
+  --color-lacuna-surface-muted: var(--lacuna-surface-muted);
+  --color-lacuna-surface-subtle: var(--lacuna-surface-subtle);
+  --color-lacuna-surface-elevated: var(--lacuna-surface-elevated);
+  --color-lacuna-surface-inverse: var(--lacuna-surface-inverse);
+  --color-lacuna-text-primary: var(--lacuna-text-primary);
+  --color-lacuna-text-secondary: var(--lacuna-text-secondary);
+  --color-lacuna-text-muted: var(--lacuna-text-muted);
+  --color-lacuna-text-inverse: var(--lacuna-text-inverse);
+  --color-lacuna-border: var(--lacuna-border);
+  --color-lacuna-border-subtle: var(--lacuna-border-subtle);
+  --color-lacuna-border-strong: var(--lacuna-border-strong);
+  --color-lacuna-chart-grid: var(--lacuna-chart-grid);
+  --color-lacuna-chart-axis: var(--lacuna-chart-axis);
+  --color-lacuna-chart-accent: var(--lacuna-chart-accent);
+  --color-lacuna-chart-secondary: var(--lacuna-chart-secondary);
+  --font-sans: var(--font-playfair);
+  --font-mono: var(--font-playfair);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family:
+    var(--font-playfair), "Didot", "Bodoni MT", "Playfair Display", Georgia,
+    "Times New Roman", serif;
+}
+
+/* Didone serif hierarchy — weight/size/tracking only */
+.lacuna-eyebrow {
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.lacuna-eyebrow-wide {
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.lacuna-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--lacuna-pink) 0%,
+    var(--lacuna-lavender) 35%,
+    var(--lacuna-blue) 70%,
+    var(--lacuna-plum) 100%
+  );
+}
+
+.lacuna-gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--lacuna-plum) 0%,
+    var(--lacuna-blue) 50%,
+    var(--lacuna-lavender) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
