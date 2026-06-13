@@ -80,7 +80,6 @@ export default function ConfidenceLevelIndicator({
         className={`${config.bgColor} ${config.textColor} ${
           sizeClasses[size]
         } rounded font-medium uppercase tracking-wider`}
-        style={{ fontFamily: "'Arial Narrow', sans-serif" }}
       >
         {showIcon && <span className="mr-1">{config.icon}</span>}
         {label || config.label}
@@ -110,7 +109,6 @@ export function ConfidenceLegend() {
   return (
     <div
       className="flex flex-wrap gap-3 text-xs"
-      style={{ fontFamily: "'Arial Narrow', sans-serif" }}
     >
       <div className="flex items-center gap-2">
         <ConfidenceLevelIndicator level="measured" showTooltip={false} />
@@ -156,13 +154,11 @@ export function DataPointWithConfidence({
         <div className="flex-1">
           <div
             className="text-xs text-lacuna-text-muted uppercase tracking-wider mb-1"
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
             {label}
           </div>
           <div
             className="text-lg font-light"
-            style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
           >
             {value}
             {unit && (

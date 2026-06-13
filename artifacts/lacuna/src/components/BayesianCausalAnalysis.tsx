@@ -68,10 +68,7 @@ export default function BayesianCausalAnalysis() {
           <div>
             <h4
               className="font-medium text-amber-800"
-              style={{
-                fontFamily: "'Arial Narrow', sans-serif",
-                textTransform: "uppercase",
-              }}
+              
             >
               Small Sample Limitation Acknowledged
             </h4>
@@ -88,19 +85,13 @@ export default function BayesianCausalAnalysis() {
       <div className="border-b border-lacuna-border pb-4">
         <h3
           className="text-2xl font-light tracking-tight"
-          style={{
-            fontFamily: "'Bodoni MT', Didot, serif",
-            textTransform: "uppercase",
-          }}
+          
         >
           Bayesian Causal Inference
         </h3>
         <p
           className="text-sm tracking-widest text-lacuna-text-muted mt-1"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
+          
         >
           Small Sample Analysis | Main Effects Only | Pre-Registered Hypotheses
         </p>
@@ -110,7 +101,6 @@ export default function BayesianCausalAnalysis() {
       <div className="bg-lacuna-surface-muted p-4 rounded-lg space-y-4">
         <h4
           className="text-sm font-medium tracking-wider uppercase"
-          style={{ fontFamily: "'Arial Narrow', sans-serif" }}
         >
           Model Parameters
         </h4>
@@ -130,7 +120,6 @@ export default function BayesianCausalAnalysis() {
             <div key={field.key} className="space-y-1">
               <label
                 className="text-xs text-lacuna-text-muted uppercase"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 {field.label}
               </label>
@@ -156,7 +145,6 @@ export default function BayesianCausalAnalysis() {
         <div className="flex items-center justify-between mb-4">
           <h4
             className="font-medium"
-            style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
           >
             Bayesian Main Effect Estimate
           </h4>
@@ -172,7 +160,6 @@ export default function BayesianCausalAnalysis() {
             <div
               className="text-3xl font-light mb-1"
               style={{
-                fontFamily: "'Bodoni MT', Didot, serif",
                 color: "#5D4E6D",
               }}
             >
@@ -180,7 +167,6 @@ export default function BayesianCausalAnalysis() {
             </div>
             <div
               className="text-xs text-lacuna-text-muted uppercase tracking-wider"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               Posterior Mean
             </div>
@@ -191,7 +177,6 @@ export default function BayesianCausalAnalysis() {
             <div
               className="text-lg font-light mb-1"
               style={{
-                fontFamily: "'Bodoni MT', Didot, serif",
                 color: "#4A5D8A",
               }}
             >
@@ -200,7 +185,6 @@ export default function BayesianCausalAnalysis() {
             </div>
             <div
               className="text-xs text-lacuna-text-muted uppercase tracking-wider"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               95% Credible Interval
             </div>
@@ -215,13 +199,11 @@ export default function BayesianCausalAnalysis() {
                   "positive",
                 )
               }`}
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
             >
               {(analysis.mainEffects.probabilityPositive * 100).toFixed(1)}%
             </div>
             <div
               className="text-xs text-lacuna-text-muted uppercase tracking-wider"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               P(Effect &gt; 0)
             </div>
@@ -232,7 +214,6 @@ export default function BayesianCausalAnalysis() {
             <div
               className="text-2xl font-light mb-1"
               style={{
-                fontFamily: "'Bodoni MT', Didot, serif",
                 color: analysis.mainEffects.bayesFactor > 3
                   ? "#2d6a4f"
                   : analysis.mainEffects.bayesFactor > 1
@@ -244,7 +225,6 @@ export default function BayesianCausalAnalysis() {
             </div>
             <div
               className="text-xs text-lacuna-text-muted uppercase tracking-wider"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               Bayes Factor
             </div>
@@ -294,11 +274,7 @@ export default function BayesianCausalAnalysis() {
           <div>
             <span
               className="font-medium"
-              style={{
-                fontFamily: "'Arial Narrow', sans-serif",
-                textTransform: "uppercase",
-                letterSpacing: "0.1em",
-              }}
+              
             >
               Pre-Registered Hypotheses
             </span>
@@ -366,7 +342,6 @@ export default function BayesianCausalAnalysis() {
                       <div>
                         <div
                           className="text-lg font-light"
-                          style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
                         >
                           {result.result.posteriorMean.toFixed(3)}
                         </div>
@@ -401,7 +376,6 @@ export default function BayesianCausalAnalysis() {
                         <div
                           className="text-lg font-light"
                           style={{
-                            fontFamily: "'Bodoni MT', Didot, serif",
                             color: "#5D4E6D",
                           }}
                         >
@@ -428,10 +402,7 @@ export default function BayesianCausalAnalysis() {
       <div className="bg-red-50 border border-red-200 rounded-lg p-4">
         <h4
           className="font-medium text-red-800 mb-2"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
+          
         >
           Limitations & Warnings
         </h4>
@@ -453,11 +424,7 @@ export default function BayesianCausalAnalysis() {
         >
           <span
             className="font-medium"
-            style={{
-              fontFamily: "'Arial Narrow', sans-serif",
-              textTransform: "uppercase",
-              letterSpacing: "0.1em",
-            }}
+            
           >
             Transparency: What We Cannot Claim
           </span>
@@ -481,11 +448,7 @@ export default function BayesianCausalAnalysis() {
       <div className="bg-gradient-to-r from-[#E8B4B8] via-[#B8A9C9] to-[#4A5D8A] p-6 rounded-lg text-white">
         <h4
           className="font-medium mb-3"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-            letterSpacing: "0.1em",
-          }}
+          
         >
           Recommendations
         </h4>
@@ -503,10 +466,7 @@ export default function BayesianCausalAnalysis() {
       <div className="bg-lacuna-surface-inverse text-white p-4 rounded-lg">
         <h4
           className="font-medium mb-2"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
+          
         >
           Why We&apos;re NOT Using Causal Forests
         </h4>

@@ -79,19 +79,13 @@ export default function SensitivityAnalysis() {
       <div className="border-b border-lacuna-border pb-4">
         <h3
           className="text-2xl font-light tracking-tight"
-          style={{
-            fontFamily: "'Bodoni MT', Didot, serif",
-            textTransform: "uppercase",
-          }}
+          
         >
           Causal Sensitivity Analysis
         </h3>
         <p
           className="text-sm tracking-widest text-lacuna-text-muted mt-1"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
+          
         >
           Oster&apos;s δ & Rotnitzky Bounds | Unobserved Confounding Assessment
         </p>
@@ -101,7 +95,6 @@ export default function SensitivityAnalysis() {
       <div className="bg-lacuna-surface-muted p-4 rounded-lg space-y-4">
         <h4
           className="text-sm font-medium tracking-wider uppercase"
-          style={{ fontFamily: "'Arial Narrow', sans-serif" }}
         >
           Model Parameters
         </h4>
@@ -133,7 +126,6 @@ export default function SensitivityAnalysis() {
             <div key={field.key} className="space-y-1">
               <label
                 className="text-xs text-lacuna-text-muted uppercase"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 {field.label}
               </label>
@@ -160,7 +152,6 @@ export default function SensitivityAnalysis() {
         <div className="flex items-center justify-between mb-4">
           <h4
             className="font-medium"
-            style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
           >
             Oster&apos;s Delta (δ)
           </h4>
@@ -179,7 +170,6 @@ export default function SensitivityAnalysis() {
             <div
               className="text-4xl font-light mb-2"
               style={{
-                fontFamily: "'Bodoni MT', Didot, serif",
                 color: "#5D4E6D",
               }}
             >
@@ -187,7 +177,6 @@ export default function SensitivityAnalysis() {
             </div>
             <div
               className="text-xs text-lacuna-text-muted uppercase tracking-wider"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               Delta Value
             </div>
@@ -197,10 +186,7 @@ export default function SensitivityAnalysis() {
           <div className="md:col-span-2 space-y-2">
             <p
               className="text-sm font-medium"
-              style={{
-                fontFamily: "'Arial Narrow', sans-serif",
-                textTransform: "uppercase",
-              }}
+              
             >
               {report.oster.interpretation}
             </p>
@@ -237,7 +223,6 @@ export default function SensitivityAnalysis() {
           </div>
           <div
             className="flex justify-between text-xs text-lacuna-text-muted mt-1"
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
             <span>0</span>
             <span>δ = 1 (threshold)</span>
@@ -251,7 +236,6 @@ export default function SensitivityAnalysis() {
       <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <h4
           className="font-medium mb-4"
-          style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
         >
           Rotnitzky Bounds
         </h4>
@@ -325,7 +309,6 @@ export default function SensitivityAnalysis() {
         <div className="mt-4">
           <h5
             className="text-xs font-medium uppercase mb-2"
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
             Bounds Under Different Confounding Scenarios
           </h5>
@@ -333,7 +316,6 @@ export default function SensitivityAnalysis() {
             <thead>
               <tr
                 className="text-xs text-lacuna-text-muted uppercase"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 <th className="text-left py-2">Scenario</th>
                 <th className="text-right py-2">Lower Bound</th>
@@ -372,11 +354,7 @@ export default function SensitivityAnalysis() {
         >
           <span
             className="font-medium"
-            style={{
-              fontFamily: "'Arial Narrow', sans-serif",
-              textTransform: "uppercase",
-              letterSpacing: "0.1em",
-            }}
+            
           >
             Transparency: What Assumptions Would Need to Be True?
           </span>
@@ -400,11 +378,7 @@ export default function SensitivityAnalysis() {
       <div className="bg-gradient-to-r from-[#E8B4B8] via-[#B8A9C9] to-[#4A5D8A] p-6 rounded-lg text-white">
         <h4
           className="font-medium mb-3"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-            letterSpacing: "0.1em",
-          }}
+          
         >
           Recommendations
         </h4>

@@ -182,19 +182,13 @@ export default function CausalDAG() {
       <div className="border-b border-lacuna-border pb-4">
         <h3
           className="text-2xl font-light tracking-tight"
-          style={{
-            fontFamily: "'Bodoni MT', Didot, serif",
-            textTransform: "uppercase",
-          }}
+          
         >
           Causal DAG & Identification Strategy
         </h3>
         <p
           className="text-sm tracking-widest text-lacuna-text-muted mt-1"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
+          
         >
           Pearl Backdoor Criterion | Measured & Unmeasured Confounders
         </p>
@@ -205,7 +199,6 @@ export default function CausalDAG() {
         <div className="flex items-center justify-between mb-4">
           <h4
             className="font-medium"
-            style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
           >
             Causal Directed Acyclic Graph (DAG)
           </h4>
@@ -216,7 +209,7 @@ export default function CausalDAG() {
                 checked={showMeasured}
                 onChange={(e) => setShowMeasured(e.target.checked)}
               />
-              <span style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+              <span>
                 Measured
               </span>
             </label>
@@ -227,7 +220,6 @@ export default function CausalDAG() {
                 onChange={(e) => setShowUnmeasured(e.target.checked)}
               />
               <span
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
                 className="text-red-600"
               >
                 Unmeasured
@@ -273,7 +265,6 @@ export default function CausalDAG() {
                     fontSize="10"
                     fill="#7f8c8d"
                     textAnchor="middle"
-                    style={{ fontFamily: "'Arial Narrow', sans-serif" }}
                   >
                     {edge.label}
                   </text>
@@ -320,7 +311,6 @@ export default function CausalDAG() {
                   fill="white"
                   fontSize="11"
                   fontWeight="500"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
                 >
                   {node.label.split("\n").map((line, i) => (
                     <tspan key={i} x={node.x} dy={i === 0 ? -5 : 14}>
@@ -336,7 +326,6 @@ export default function CausalDAG() {
         {/* Legend */}
         <div
           className="flex flex-wrap gap-4 mt-4 text-xs"
-          style={{ fontFamily: "'Arial Narrow', sans-serif" }}
         >
           {[
             { color: "#4A5D8A", label: "Exposure (Funding Stage)" },
@@ -364,11 +353,7 @@ export default function CausalDAG() {
         >
           <span
             className="font-medium"
-            style={{
-              fontFamily: "'Arial Narrow', sans-serif",
-              textTransform: "uppercase",
-              letterSpacing: "0.1em",
-            }}
+            
           >
             Identification Strategy: Pearl Backdoor Criterion
           </span>
@@ -385,7 +370,6 @@ export default function CausalDAG() {
               <div>
                 <h5
                   className="font-medium mb-2"
-                  style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
                 >
                   Backdoor Paths We Must Block
                 </h5>
@@ -408,7 +392,6 @@ export default function CausalDAG() {
               <div>
                 <h5
                   className="font-medium mb-2"
-                  style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
                 >
                   Adjustment Set (Measured Confounders)
                 </h5>
@@ -425,7 +408,6 @@ export default function CausalDAG() {
               <div className="bg-red-50 border-l-4 border-red-500 p-3 rounded-r">
                 <h5
                   className="font-medium text-red-800 mb-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
                 >
                   ⚠️ UNBLOCKABLE BACKDOOR PATHS (Unmeasured)
                 </h5>
@@ -451,7 +433,6 @@ export default function CausalDAG() {
       <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <h4
           className="font-medium mb-4"
-          style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
         >
           Measured Confounders (Included in All Models)
         </h4>
@@ -459,7 +440,6 @@ export default function CausalDAG() {
           <thead>
             <tr
               className="text-xs text-lacuna-text-muted uppercase"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               <th className="text-left py-2">Confounder</th>
               <th className="text-left py-2">Proxy/Measurement</th>
@@ -492,7 +472,6 @@ export default function CausalDAG() {
       <div className="bg-red-50 border border-red-200 rounded-lg p-6">
         <h4
           className="font-medium text-red-800 mb-4"
-          style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
         >
           Unmeasured Confounders: What Could Invalidate Our Claims?
         </h4>
@@ -504,7 +483,6 @@ export default function CausalDAG() {
             >
               <h5
                 className="font-medium text-red-700"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
               >
                 {c.name}
               </h5>
@@ -532,11 +510,7 @@ export default function CausalDAG() {
       <div className="bg-gradient-to-r from-[#E8B4B8] via-[#B8A9C9] to-[#4A5D8A] p-6 rounded-lg text-white">
         <h4
           className="font-medium mb-3"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-            letterSpacing: "0.1em",
-          }}
+          
         >
           Identification Assumptions Summary
         </h4>

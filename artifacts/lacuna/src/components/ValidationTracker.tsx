@@ -76,19 +76,13 @@ export default function ValidationTracker() {
       <div className="border-b border-lacuna-border pb-4">
         <h3
           className="text-2xl font-light tracking-tight"
-          style={{
-            fontFamily: "'Bodoni MT', Didot, serif",
-            textTransform: "uppercase",
-          }}
+          
         >
           Verified Acquisition Tracker
         </h3>
         <p
           className="text-sm tracking-widest text-lacuna-text-muted mt-1"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
+          
         >
           Public deal records only — no synthetic post-acquisition outcomes
         </p>
@@ -106,7 +100,6 @@ export default function ValidationTracker() {
           <div
             className="text-2xl font-light"
             style={{
-              fontFamily: "'Bodoni MT', Didot, serif",
               color: "#5D4E6D",
             }}
           >
@@ -114,7 +107,6 @@ export default function ValidationTracker() {
           </div>
           <div
             className="text-xs text-lacuna-text-muted uppercase"
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
             Verified acquisitions
           </div>
@@ -123,7 +115,6 @@ export default function ValidationTracker() {
           <div
             className="text-2xl font-light"
             style={{
-              fontFamily: "'Bodoni MT', Didot, serif",
               color: "#4A5D8A",
             }}
           >
@@ -131,7 +122,6 @@ export default function ValidationTracker() {
           </div>
           <div
             className="text-xs text-lacuna-text-muted uppercase"
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
             Deal value disclosed
           </div>
@@ -140,7 +130,6 @@ export default function ValidationTracker() {
           <div
             className="text-2xl font-light"
             style={{
-              fontFamily: "'Bodoni MT', Didot, serif",
               color: "#E8B4B8",
             }}
           >
@@ -148,7 +137,6 @@ export default function ValidationTracker() {
           </div>
           <div
             className="text-xs text-lacuna-text-muted uppercase"
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
             Post-close outcome panel
           </div>
@@ -165,7 +153,6 @@ export default function ValidationTracker() {
                 ? "bg-[#5D4E6D] text-white"
                 : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-subtle"
             }`}
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
             {year === "all" ? "All Years" : year}
           </button>
@@ -177,7 +164,6 @@ export default function ValidationTracker() {
           <thead className="bg-lacuna-surface-muted">
             <tr
               className="text-xs text-lacuna-text-muted uppercase"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
             >
               <th className="text-left p-3">Target</th>
               <th className="text-left p-3">Acquirer</th>
@@ -219,7 +205,6 @@ export default function ValidationTracker() {
           >
             <h4
               className="font-medium text-lg"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
             >
               {v.company} → {v.acquirer}
             </h4>
