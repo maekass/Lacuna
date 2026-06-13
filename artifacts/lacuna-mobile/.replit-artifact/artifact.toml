@@ -1,0 +1,27 @@
+kind = "mobile"
+previewPath = "/lacuna-mobile/"
+title = "Lacuna Mobile"
+version = "1.0.0"
+id = "artifacts/lacuna-mobile"
+router = "expo-domain"
+
+[[integratedSkills]]
+name = "expo"
+version = "1.0.0"
+
+[[services]]
+ensurePreviewReachable = "/status"
+name = "expo"
+paths = [ "/lacuna-mobile/" ]
+localPort = 22103
+
+[services.development]
+run = "pnpm --filter @workspace/lacuna-mobile run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/lacuna-mobile", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/lacuna-mobile", "run", "serve" ]
+
+[services.env]
+PORT = "22103"
+BASE_PATH = "/lacuna-mobile/"

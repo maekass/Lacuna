@@ -1,0 +1,2519 @@
+{
+  "provenance": {
+    "lastUpdated": "2026-06-11",
+    "datasetVersion": "v6",
+    "sources": [
+      "SEC EDGAR filings (acquisitions, 8-K/10-K)",
+      "Crunchbase (funding rounds, where cited)",
+      "Company press releases and investor relations pages",
+      "Verified press coverage (TechCrunch, Fierce Healthcare, Business Wire, etc.)",
+      "Company websites (descriptions, founding dates)",
+      "Oslo Stock Exchange filings (ORIGIO tender offer)",
+      "Cision / PR Newswire (Vitrolife-Igenomix)",
+      "Budapest Stock Exchange filings (Gedeon Richter)",
+      "Medtronic and Smith & Nephew press releases (GYN divestiture)",
+      "Boston Scientific press releases and MassDevice (nVision Medical)",
+      "Hologic investor relations and SEC filings (Acessa Health, Bolder Surgical, Focal Therapeutics)",
+      "Illumina and GRAIL press releases (multi-cancer detection acquisition)",
+      "Astorg and Hamilton Thorne press releases (TSX take-private)",
+      "Laborie Medical press releases (Cogentix Medical acquisition)",
+      "Coloplast press releases (Nine Continents Medical acquisition)",
+      "Sumitovant Biopharma / Sumitomo Pharma press releases (Myovant Sciences take-private)",
+      "Myriad Genetics press releases and Globe Newswire (Counsyl, Gateway Genomics)",
+      "Natera press releases and Business Wire (Invitae reproductive health assets)",
+      "CooperCompanies SEC 10-K FY2024 (obp Surgical acquisition)",
+      "Pfizer SEC filings and press releases (Seagen acquisition, 2023)",
+      "Siemens Healthineers press releases (Varian Medical acquisition, 2021)",
+      "Gilead Sciences press releases (Immunomedics/Trodelvy acquisition, 2020)",
+      "Exact Sciences press releases and SEC filings (Thrive, PreventionGenetics acquisitions)",
+      "PerkinElmer/Revvity press releases and SEC filings (EUROIMMUN acquisition, 2017)",
+      "Abbott Laboratories SEC filings and Mediaroom (Alere acquisition, 2017)",
+      "Caldera Medical press releases (Ethicon TVT acquisition, 2025)",
+      "Hologic SEC DEFM14A and 8-K (Gen-Probe acquisition, 2012)",
+      "Bayer AG press releases and Business Wire (KaNDy Therapeutics acquisition, 2020)",
+      "Astellas Pharma press releases and PR Newswire (Ogeda SA acquisition, 2017)",
+      "Organon press release and Fierce Pharma (Dermavant Sciences acquisition, 2024)",
+      "Axios Pro, Fertility Bridge, CNMC filings (KKR/IVI-RMA Global acquisition, 2022-2023)",
+      "EQT Group press release and Times of India (BPEA EQT/Indira IVF acquisition, 2023)",
+      "Hims & Hers investor relations and Business Wire (Apostrophe acquisition, 2021)",
+      "Business Wire and PitchBook (KKR IVI-RMA/Eugin Group North America acquisition, 2024)"
+    ],
+    "notes": [
+      "Private company valuations are from last disclosed funding rounds and may not reflect current market value",
+      "Acquisition values are disclosed estimates where official terms were not public",
+      "Strategic investments without disclosed values are noted as such",
+      "Employee counts intentionally omitted - not reliably verifiable across private companies",
+      "Public company valuations (e.g., Talkspace) reflect market cap at time of data collection and fluctuate daily",
+      "Livongo Health (c23) included because it appears as target of deal1 (Teladoc merger); its primary product is not women's-health-specific but the user base is majority female and the deal is a frequently-cited digital-health M&A reference",
+      "Scope expanded beyond FemTech to include broader women's health (breast health, maternal care, gynecological surgery, reproductive diagnostics, precision medicine) and European market",
+      "Precision medicine entries (Foundation Medicine, Genomic Health, Flatiron Health) included for breast/ovarian cancer relevance \u2014 genomic profiling and real-world evidence directly inform women's oncology treatment decisions",
+      "EUR-denominated deal values converted to USD at approximate rate at time of deal close",
+      "Dataset expanded to include medtech acquirers (Medtronic, Boston Scientific, Coloplast), genomics (Illumina, Myriad, Natera), pharma (Sumitovant/Sumitomo, Organon), and PE (Astorg) \u2014 all verified against SEC filings, press releases, and investor relations pages",
+      "Hamilton Thorne take-private valued at C$10.50/share (~$282M equity); Astorg simultaneously acquired Cook Medical RH (already tracked as CooperSurgical deal12 target)",
+      "Myovant Sciences total company value $2.9B fully diluted; $1.7B for outstanding minority shares acquired by Sumitovant",
+      "Dataset v4 expands to 50 acquisitions with major oncology (Pfizer/Seagen, Gilead/Immunomedics), radiation therapy (Siemens/Varian), diagnostics (Abbott/Alere, PerkinElmer/EUROIMMUN), and precision medicine deals",
+      "Large-cap deals (Pfizer/Seagen $43B, Gilead/Immunomedics $21B, Siemens/Varian $16.4B) included for breast/cervical cancer treatment relevance even though acquirers operate across broader oncology/medtech",
+      "Hologic acquisition history now spans 7 deals (Biotheranostics, Endomagnetics, Gynesonics, Acessa Health, Bolder Surgical, Focal Therapeutics, Faxitron Bioptics, SuperSonic Imagine) \u2014 largest disclosed women's health serial acquirer in dataset",
+      "Dataset v5 expands to 58 acquisitions with menopause therapeutics (Bayer/KaNDy, Astellas/Ogeda), large-cap diagnostics (Hologic/Gen-Probe $3.7B), global fertility clinic consolidation (KKR/IVI-RMA $3.25B, BPEA EQT/Indira IVF $657M, IVI-RMA/Eugin NA), and women's health-focused acquirer expansions (Organon/Dermavant $1.2B, Hims & Hers/Apostrophe)",
+      "2026-06-11: Added 14 Amboy Street Ventures portfolio companies with press-verified founding, stage, and funding data (totalFunding omitted where no source states a total), plus the Gennev / Unified Women's Healthcare acquisition (2022, terms not disclosed)."
+    ],
+    "purpose": "Educational demonstration dataset for portfolio project. Not for commercial investment decisions.",
+    "disclaimer": "Data compiled from public sources for educational visualization. Verify independently before any commercial use."
+  },
+  "companies": [
+    {
+      "id": "c1",
+      "name": "Modern Fertility",
+      "sector": "Fertility",
+      "stage": "Acquired by Ro (2021)",
+      "founded": 2017,
+      "hq": "San Francisco, CA",
+      "description": "At-home fertility testing and telehealth",
+      "lastKnownValuation": 225,
+      "valuationSource": "Acquisition value reported in press (est. $150-225M)",
+      "totalFunding": 155,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/modern-fertility",
+        "TechCrunch - acquisition coverage (May 2021)",
+        "Company website - modernfertility.com"
+      ]
+    },
+    {
+      "id": "c2",
+      "name": "Ro",
+      "sector": "General Wellness",
+      "stage": "Private (Late Stage)",
+      "founded": 2017,
+      "hq": "New York, NY",
+      "description": "Men's and women's health telemedicine platform",
+      "lastKnownValuation": 7000,
+      "valuationSource": "Last funding round valuation (2021), may not reflect current value",
+      "totalFunding": 976,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/ro",
+        "Ro.co - press releases",
+        "TechCrunch - funding coverage"
+      ]
+    },
+    {
+      "id": "c3",
+      "name": "Elvie",
+      "sector": "Pelvic Health",
+      "stage": "Private (Series B)",
+      "founded": 2013,
+      "hq": "London, UK",
+      "description": "Connected pelvic floor trainer and breast pump",
+      "lastKnownValuation": 150,
+      "valuationSource": "Press reports from Series B (2019)",
+      "totalFunding": 65,
+      "sources": [
+        "Elvie.com - company website",
+        "TechCrunch - Series B (2019)",
+        "Crunchbase - crunchbase.com/organization/elvie"
+      ]
+    },
+    {
+      "id": "c4",
+      "name": "Maven Clinic",
+      "sector": "Fertility",
+      "stage": "Private (Series D+)",
+      "founded": 2014,
+      "hq": "New York, NY",
+      "description": "Virtual clinic for women's and family health",
+      "lastKnownValuation": 1300,
+      "valuationSource": "Series D valuation (2021)",
+      "totalFunding": 292,
+      "sources": [
+        "Mavenclinic.com - company website",
+        "TechCrunch - Series D (2021)",
+        "Crunchbase - crunchbase.com/organization/maven"
+      ]
+    },
+    {
+      "id": "c5",
+      "name": "Tia",
+      "sector": "General Wellness",
+      "stage": "Private (Series A)",
+      "founded": 2017,
+      "hq": "New York, NY",
+      "description": "Women's health clinic combining physical and virtual care",
+      "valuationSource": "Not publicly disclosed"
+    },
+    {
+      "id": "c6",
+      "name": "Carrot Fertility",
+      "sector": "Fertility",
+      "stage": "Private (Series C)",
+      "founded": 2016,
+      "hq": "San Francisco, CA",
+      "description": "Global fertility benefits platform for employers",
+      "lastKnownValuation": 400,
+      "valuationSource": "Series C valuation (2021)",
+      "totalFunding": 99,
+      "sources": [
+        "Get-carrot.com - company website",
+        "TechCrunch - Series C (2021)",
+        "Crunchbase - crunchbase.com/organization/carrot-fertility"
+      ]
+    },
+    {
+      "id": "c7",
+      "name": "Kindbody",
+      "sector": "Fertility",
+      "stage": "Private (Series D)",
+      "founded": 2018,
+      "hq": "New York, NY",
+      "description": "Fertility and family-building benefit solution",
+      "lastKnownValuation": 600,
+      "valuationSource": "Series D valuation (2022)",
+      "totalFunding": 190,
+      "sources": [
+        "Kindbody.com - company website",
+        "TechCrunch - Series D (2022)",
+        "Crunchbase - crunchbase.com/organization/kindbody"
+      ]
+    },
+    {
+      "id": "c8",
+      "name": "Parsley Health",
+      "sector": "General Wellness",
+      "stage": "Private (Series C)",
+      "founded": 2016,
+      "hq": "New York, NY",
+      "description": "Functional medicine for women's health",
+      "valuationSource": "Not publicly disclosed"
+    },
+    {
+      "id": "c9",
+      "name": "Everlywell",
+      "sector": "General Wellness",
+      "stage": "Private (Late Stage)",
+      "founded": 2015,
+      "hq": "Austin, TX",
+      "description": "At-home health testing including women's health panels",
+      "lastKnownValuation": 325,
+      "valuationSource": "Last funding round (2021)",
+      "totalFunding": 256,
+      "sources": [
+        "Everlywell.com - company website",
+        "TechCrunch - funding announcement (2021)",
+        "Crunchbase - crunchbase.com/organization/everlywell"
+      ]
+    },
+    {
+      "id": "c10",
+      "name": "Ava",
+      "sector": "Fertility",
+      "stage": "Private (Series A)",
+      "founded": 2014,
+      "hq": "Zurich, Switzerland",
+      "description": "Fertility tracking wearable bracelet",
+      "valuationSource": "Not publicly disclosed",
+      "sources": [
+        "Avawomen.com - company website",
+        "TechCrunch - funding coverage",
+        "LinkedIn - company page"
+      ]
+    },
+    {
+      "id": "c11",
+      "name": "Proov",
+      "sector": "Fertility",
+      "stage": "Private (Seed)",
+      "founded": 2016,
+      "hq": "Boulder, CO",
+      "description": "At-home progesterone test strips",
+      "valuationSource": "Not publicly disclosed",
+      "sources": [
+        "Proovtest.com - company website",
+        "Crunchbase - crunchbase.com/organization/proov",
+        "LinkedIn - company page"
+      ]
+    },
+    {
+      "id": "c12",
+      "name": "Nurx",
+      "sector": "General Wellness",
+      "stage": "Acquired by Ro (2021)",
+      "founded": 2015,
+      "hq": "San Francisco, CA",
+      "description": "Telehealth for birth control and women's health",
+      "lastKnownValuation": 300,
+      "valuationSource": "Acquisition value (Ro purchase, 2021) - estimated $300M",
+      "totalFunding": 118,
+      "sources": [
+        "Nurx.com - company website (now Ro)",
+        "TechCrunch - Ro acquisition (Dec 2021)",
+        "Crunchbase - crunchbase.com/organization/nurx"
+      ]
+    },
+    {
+      "id": "c13",
+      "name": "Lemonaid Health",
+      "sector": "Mental Health",
+      "stage": "Acquired (2021)",
+      "founded": 2013,
+      "hq": "San Francisco, CA",
+      "description": "Telehealth platform with women's health focus",
+      "valuationSource": "Acquisition terms not publicly disclosed (Amazon purchase)"
+    },
+    {
+      "id": "c14",
+      "name": "Talkspace",
+      "sector": "Mental Health",
+      "stage": "Public (SPAC 2021)",
+      "founded": 2012,
+      "hq": "New York, NY",
+      "description": "Online therapy platform, 70% women users",
+      "lastKnownValuation": 1400,
+      "valuationSource": "Public company (NASDAQ: TALK) - valuation at time of data collection",
+      "totalFunding": 195,
+      "sources": [
+        "Talkspace.com - company website",
+        "SEC EDGAR - SPAC filing (2021)",
+        "NASDAQ: TALK - public filings"
+      ]
+    },
+    {
+      "id": "c15",
+      "name": "Calm",
+      "sector": "Mental Health",
+      "stage": "Private (Late Stage)",
+      "founded": 2012,
+      "hq": "San Francisco, CA",
+      "description": "Meditation and sleep app, 70%+ female user base",
+      "lastKnownValuation": 2000,
+      "valuationSource": "Last funding round (2021)",
+      "totalFunding": 218,
+      "sources": [
+        "Calm.com - company website",
+        "TechCrunch - funding (2021)",
+        "Crunchbase - crunchbase.com/organization/calm"
+      ]
+    },
+    {
+      "id": "c16",
+      "name": "Oura",
+      "sector": "Wearables",
+      "stage": "Private (Series C)",
+      "founded": 2013,
+      "hq": "Oulu, Finland",
+      "description": "Smart ring with women's health tracking features",
+      "lastKnownValuation": 2500,
+      "valuationSource": "Series C valuation (2022)",
+      "totalFunding": 148,
+      "sources": [
+        "Ouraring.com - company website",
+        "TechCrunch - Series C (2022)",
+        "Crunchbase - crunchbase.com/organization/oura"
+      ]
+    },
+    {
+      "id": "c17",
+      "name": "Whoop",
+      "sector": "Wearables",
+      "stage": "Private (Series F)",
+      "founded": 2012,
+      "hq": "Boston, MA",
+      "description": "Fitness wearable with menstrual cycle integration",
+      "lastKnownValuation": 3600,
+      "valuationSource": "Series F valuation (2021)",
+      "totalFunding": 405,
+      "sources": [
+        "Whoop.com - company website",
+        "TechCrunch - Series F (2021)",
+        "Crunchbase - crunchbase.com/organization/whoop"
+      ]
+    },
+    {
+      "id": "c18",
+      "name": "Natural Cycles",
+      "sector": "Fertility",
+      "stage": "Private (Series B)",
+      "founded": 2013,
+      "hq": "Stockholm, Sweden",
+      "description": "FDA-cleared birth control app",
+      "valuationSource": "Not publicly disclosed"
+    },
+    {
+      "id": "c19",
+      "name": "Clue",
+      "sector": "Fertility",
+      "stage": "Private (Series B)",
+      "founded": 2012,
+      "hq": "Berlin, Germany",
+      "description": "Period and fertility tracking app",
+      "valuationSource": "Not publicly disclosed"
+    },
+    {
+      "id": "c20",
+      "name": "Bloomi",
+      "sector": "Pelvic Health",
+      "stage": "Private (Seed)",
+      "founded": 2018,
+      "hq": "Los Angeles, CA",
+      "description": "Clean intimate care products",
+      "valuationSource": "Not publicly disclosed"
+    },
+    {
+      "id": "c21",
+      "name": "NovvaCup",
+      "sector": "Pelvic Health",
+      "stage": "Student Startup (JHU)",
+      "founded": 2022,
+      "hq": "Baltimore, MD",
+      "description": "Multiphasic menstrual cup - Johns Hopkins School of Medicine",
+      "valuationSource": "Student startup - FastForward U Fuel Accelerator, $10K Pitch It On! winner (2022)",
+      "totalFunding": 10
+    },
+    {
+      "id": "c22",
+      "name": "Ovubrush",
+      "sector": "Fertility",
+      "stage": "Student Startup (JHU)",
+      "founded": 2022,
+      "hq": "Baltimore, MD",
+      "description": "Saliva-based ovulation tracker via high-tech toothbrush - CBID",
+      "valuationSource": "Student startup - Johns Hopkins Center for Bioengineering Innovation and Design"
+    },
+    {
+      "id": "c23",
+      "name": "Livongo Health",
+      "sector": "General Wellness",
+      "stage": "Acquired by Teladoc (2020)",
+      "founded": 2008,
+      "hq": "Mountain View, CA",
+      "description": "Chronic condition management (diabetes, hypertension); large female user base; included for the Teladoc merger reference",
+      "lastKnownValuation": 13900,
+      "valuationSource": "Teladoc/Livongo merger close value (Oct 2020) \u2014 SEC 8-K",
+      "totalFunding": 240,
+      "sources": [
+        "SEC 8-K filing (Teladoc, Oct 2020)",
+        "Livongo.com / Teladoc press release",
+        "Crunchbase - crunchbase.com/organization/livongo-health"
+      ]
+    },
+    {
+      "id": "c24",
+      "name": "Biotheranostics",
+      "sector": "Breast Health",
+      "stage": "Acquired by Hologic (2021)",
+      "founded": 2006,
+      "hq": "San Diego, CA",
+      "description": "Molecular diagnostic tests for breast and metastatic cancers (Breast Cancer Index, CancerTYPE ID)",
+      "lastKnownValuation": 230,
+      "valuationSource": "Acquisition price ~$230M (Hologic press release, Jan 2021)",
+      "sources": [
+        "Hologic investor relations - press release (Jan 5, 2021)",
+        "Business Wire - acquisition completion (Feb 22, 2021)"
+      ]
+    },
+    {
+      "id": "c25",
+      "name": "Endomagnetics",
+      "sector": "Breast Health",
+      "stage": "Acquired by Hologic (2024)",
+      "founded": 2007,
+      "hq": "Cambridge, UK",
+      "description": "Magnetic marker and localization technology for breast cancer surgery (Magseed, Sentimag)",
+      "lastKnownValuation": 310,
+      "valuationSource": "Acquisition price ~$310M (Hologic/Nasdaq press release, Jul 2024)",
+      "sources": [
+        "Nasdaq press release - Hologic acquisition (Jul 25, 2024)",
+        "Endomagnetics company website - endomagnetics.com"
+      ]
+    },
+    {
+      "id": "c26",
+      "name": "Gynesonics",
+      "sector": "Gynecological Surgery",
+      "stage": "Acquired by Hologic (2024)",
+      "founded": 2005,
+      "hq": "Redwood City, CA",
+      "description": "Minimally invasive treatment for uterine fibroids (Sonata System for transcervical fibroid ablation)",
+      "lastKnownValuation": 350,
+      "valuationSource": "Acquisition price ~$350M (Hologic press release, Oct 2024)",
+      "sources": [
+        "Tracxn - Hologic acquisition list (Oct 14, 2024)",
+        "Gynesonics company website - gynesonics.com"
+      ]
+    },
+    {
+      "id": "c27",
+      "name": "ORIGIO a/s",
+      "sector": "Fertility",
+      "stage": "Acquired by CooperSurgical (2012)",
+      "founded": 2005,
+      "hq": "M\u00e5l\u00f8v, Denmark",
+      "description": "Global IVF medical device company \u2014 culture media, micro-tools, and labware for fertility treatment",
+      "lastKnownValuation": 147,
+      "valuationSource": "Acquisition price ~$147M net of cash (SEC 10-K, CooperCompanies FY2012)",
+      "sources": [
+        "SEC EDGAR - CooperCompanies 10-K (FY2012, acquisition details)",
+        "Oslo Stock Exchange - ORIGIO tender offer (Jun 2012)"
+      ]
+    },
+    {
+      "id": "c28",
+      "name": "Generate Life Sciences",
+      "sector": "Reproductive Health",
+      "stage": "Acquired by CooperSurgical (2022)",
+      "founded": 2020,
+      "hq": "Los Angeles, CA",
+      "description": "Donor egg and sperm for fertility, cryopreservation services, and newborn stem cell storage (cord blood and tissue)",
+      "lastKnownValuation": 1600,
+      "valuationSource": "Acquisition price ~$1.6B (CooperCompanies press release, Nov 2021)",
+      "totalFunding": 250,
+      "sources": [
+        "CooperCompanies investor relations - press release (Nov 10, 2021)",
+        "Globe Newswire - acquisition announcement"
+      ]
+    },
+    {
+      "id": "c29",
+      "name": "Cook Medical Reproductive Health",
+      "sector": "Fertility",
+      "stage": "Acquired by CooperSurgical (2022)",
+      "founded": 1963,
+      "hq": "Bloomington, IN",
+      "description": "Reproductive health business unit of Cook Medical \u2014 IVF catheters, embryo transfer devices, and assisted reproduction products",
+      "valuationSource": "Acquisition terms not publicly disclosed",
+      "sources": [
+        "CooperCompanies investor relations - press release (Feb 7, 2022)",
+        "Cook Medical company website"
+      ]
+    },
+    {
+      "id": "c30",
+      "name": "ZyM\u014dt Fertility",
+      "sector": "Fertility",
+      "stage": "Acquired by CooperSurgical (2024)",
+      "founded": 2017,
+      "hq": "Gaithersburg, MD",
+      "description": "First-of-its-kind sperm separation device using microfluidic technology for IVF",
+      "valuationSource": "Acquisition terms not publicly disclosed",
+      "sources": [
+        "CooperSurgical press release (Jun 10, 2024)",
+        "DxNow/ZyM\u014dt company information"
+      ]
+    },
+    {
+      "id": "c31",
+      "name": "Alydia Health",
+      "sector": "Maternal Health",
+      "stage": "Acquired by Organon (2021)",
+      "founded": 2011,
+      "hq": "Menlo Park, CA",
+      "description": "Medical device company focused on preventing maternal morbidity from postpartum hemorrhage (Jada System)",
+      "valuationSource": "Acquisition terms structured with milestones (Merck/Organon press release, Mar 2021)",
+      "sources": [
+        "Organon.com - press release (Mar 30, 2021)",
+        "Business Wire - Merck acquisition on behalf of Organon spinoff"
+      ]
+    },
+    {
+      "id": "c32",
+      "name": "Forendo Pharma",
+      "sector": "Reproductive Health",
+      "stage": "Acquired by Organon (2021)",
+      "founded": 2016,
+      "hq": "Turku, Finland",
+      "description": "Clinical-stage drug development for endometriosis and PCOS \u2014 first-in-class HSD17B1 inhibitor (FOR-6219)",
+      "lastKnownValuation": 75,
+      "valuationSource": "$75M upfront + up to $879M in milestones (Organon press release, Dec 2021)",
+      "sources": [
+        "Organon.com - press release (Nov 11, 2021)",
+        "Business Wire - acquisition completion (Dec 13, 2021)"
+      ]
+    },
+    {
+      "id": "c33",
+      "name": "Igenomix",
+      "sector": "Diagnostics",
+      "stage": "Acquired by Vitrolife (2021)",
+      "founded": 2011,
+      "hq": "Valencia, Spain",
+      "description": "Global leader in reproductive genetic testing services for IVF clinics \u2014 preimplantation genetic testing across 26 countries",
+      "lastKnownValuation": 1450,
+      "valuationSource": "Enterprise value ~\u20ac1.25B / ~$1.45B (Vitrolife/Cision press release, Jul 2021)",
+      "sources": [
+        "Cision/Vitrolife press release (Jul 8, 2021)",
+        "PR Newswire - acquisition completion (Nov 30, 2021)",
+        "EQT Group - sale announcement"
+      ]
+    },
+    {
+      "id": "c34",
+      "name": "Estetra (Mithra assets)",
+      "sector": "Contraception",
+      "stage": "Acquired by Gedeon Richter (2024)",
+      "founded": 2012,
+      "hq": "Li\u00e8ge, Belgium",
+      "description": "Estetrol (E4) platform \u2014 native estrogen for contraception (ESTELLE) and menopause (DONESTA), acquired from Mithra Pharmaceuticals",
+      "lastKnownValuation": 195,
+      "valuationSource": "Enterprise value ~\u20ac175M / ~$195M including assumed net debt (Gedeon Richter press release, Jun 2024)",
+      "sources": [
+        "Gedeon Richter press release (Jun 12, 2024)",
+        "Budapest Stock Exchange filing"
+      ]
+    },
+    {
+      "id": "c35",
+      "name": "Celmatix",
+      "sector": "Fertility",
+      "stage": "Acquired by Gedeon Richter (2026)",
+      "founded": 2009,
+      "hq": "New York, NY",
+      "description": "Women's health biotech \u2014 oral FSH receptor agonist for fertility, JNK inhibitor for endometriosis, and AMH antibodies for ovarian aging",
+      "valuationSource": "Upfront payment + development milestones (Gedeon Richter press release, Mar 2026)",
+      "sources": [
+        "Gedeon Richter press release (Mar 3, 2026)",
+        "Budapest Stock Exchange filing"
+      ]
+    },
+    {
+      "id": "c36",
+      "name": "Sequenom",
+      "sector": "Diagnostics",
+      "stage": "Acquired by LabCorp (2016)",
+      "founded": 2000,
+      "hq": "San Diego, CA",
+      "description": "Pioneer in non-invasive prenatal testing (NIPT) \u2014 MaterniT21 test for fetal chromosomal abnormalities, over 500K tests performed",
+      "lastKnownValuation": 371,
+      "valuationSource": "Total enterprise value ~$371M including net debt (SEC/LabCorp press release, Jul 2016)",
+      "sources": [
+        "SEC EDGAR - LabCorp/Sequenom merger filing (Jul 27, 2016)",
+        "Business Wire - acquisition announcement"
+      ]
+    },
+    {
+      "id": "c37",
+      "name": "Genomic Health",
+      "sector": "Precision Medicine",
+      "stage": "Acquired by Exact Sciences (2019)",
+      "founded": 2000,
+      "hq": "Redwood City, CA",
+      "description": "Oncotype DX genomic tests for breast, colon, and prostate cancer \u2014 used to guide chemotherapy decisions for early-stage breast cancer",
+      "lastKnownValuation": 2800,
+      "valuationSource": "Acquisition value ~$2.8B (Exact Sciences press release, Jul 2019)",
+      "sources": [
+        "Exact Sciences newsroom - press release (Jul 29, 2019)",
+        "SEC EDGAR - merger proxy filing"
+      ]
+    },
+    {
+      "id": "c38",
+      "name": "Foundation Medicine",
+      "sector": "Precision Medicine",
+      "stage": "Acquired by Roche (2018)",
+      "founded": 2010,
+      "hq": "Cambridge, MA",
+      "description": "Comprehensive genomic profiling (CGP) for cancer \u2014 FoundationOne tests guide precision treatment including breast and ovarian cancer",
+      "lastKnownValuation": 5300,
+      "valuationSource": "Total company value ~$5.3B fully diluted; Roche paid ~$2.4B for remaining shares (Roche press release, Jun 2018)",
+      "sources": [
+        "Roche media release (Jun 19, 2018)",
+        "Fierce Biotech - deal coverage"
+      ]
+    },
+    {
+      "id": "c39",
+      "name": "Flatiron Health",
+      "sector": "Precision Medicine",
+      "stage": "Acquired by Roche (2018)",
+      "founded": 2012,
+      "hq": "New York, NY",
+      "description": "Oncology-specific EHR and real-world evidence platform \u2014 265+ community cancer clinics, data includes breast and ovarian cancer outcomes",
+      "lastKnownValuation": 1900,
+      "valuationSource": "Transaction value ~$1.9B fully diluted (Roche press release, Apr 2018)",
+      "sources": [
+        "Roche media release (Apr 6, 2018)",
+        "Flatiron Health company website"
+      ]
+    },
+    {
+      "id": "c40",
+      "name": "Acessa Health",
+      "sector": "Gynecological Surgery",
+      "stage": "Acquired by Hologic (2020)",
+      "founded": 2005,
+      "hq": "Redwood City, CA",
+      "description": "Minimally invasive radiofrequency ablation system (Acessa ProVu) for treatment of symptomatic uterine fibroids \u2014 alternative to hysterectomy",
+      "lastKnownValuation": 80,
+      "valuationSource": "Acquisition value ~$80M cash + contingent payments (Hologic press release, Aug 2020)",
+      "sources": [
+        "Business Wire \u2014 Hologic press release (Aug 25, 2020)",
+        "Hologic investor relations"
+      ]
+    },
+    {
+      "id": "c41",
+      "name": "Bolder Surgical",
+      "sector": "Gynecological Surgery",
+      "stage": "Acquired by Hologic (2021)",
+      "founded": 2012,
+      "hq": "Louisville, CO",
+      "description": "Advanced energy vessel sealing surgical devices (CoolSeal, JustRight) for laparoscopic and open procedures \u2014 used in OB/GYN, pediatric surgery",
+      "lastKnownValuation": 160,
+      "valuationSource": "Acquisition value ~$160M (Hologic press release, Oct 2021; SEC 10-K FY2022)",
+      "sources": [
+        "Nasdaq \u2014 Hologic press release (Oct 14, 2021)",
+        "SEC EDGAR \u2014 Hologic 10-K FY2022 (purchase price allocation)"
+      ]
+    },
+    {
+      "id": "c42",
+      "name": "Focal Therapeutics",
+      "sector": "Breast Health",
+      "stage": "Acquired by Hologic (2018)",
+      "founded": 2004,
+      "hq": "Aliso Viejo, CA",
+      "description": "BioZorb implantable 3D marker for breast conserving surgery (lumpectomy) \u2014 marks tumor excision site for monitoring and treatment planning",
+      "lastKnownValuation": 125,
+      "valuationSource": "Acquisition value ~$125M cash (Hologic press release, Sep 2018; SEC 10-K)",
+      "sources": [
+        "Hologic investor relations press release (Sep 26, 2018)",
+        "SEC EDGAR \u2014 Hologic 10-K FY2019 (purchase price $120.1M)"
+      ]
+    },
+    {
+      "id": "c43",
+      "name": "obp Surgical",
+      "sector": "Gynecological Surgery",
+      "stage": "Acquired by CooperSurgical (2024)",
+      "founded": 2018,
+      "hq": "San Ramon, CA",
+      "description": "Single-use cordless surgical retractors (ONETRAC) with integrated LED light and smoke evacuation \u2014 used in gynecological and general surgery",
+      "lastKnownValuation": 100,
+      "valuationSource": "Acquisition value ~$100M (CooperCompanies press release, Aug 2024; SEC 10-K FY2024)",
+      "sources": [
+        "CooperCompanies investor relations \u2014 Globe Newswire (Aug 1, 2024)",
+        "SEC EDGAR \u2014 CooperCompanies 10-K FY2024"
+      ]
+    },
+    {
+      "id": "c44",
+      "name": "Smith & Nephew Gynecology (Truclear)",
+      "sector": "Gynecological Surgery",
+      "stage": "Acquired by Medtronic (2016)",
+      "hq": "London, UK",
+      "description": "TRUCLEAR hysteroscopic tissue resection system for minimally invasive treatment of abnormal uterine bleeding \u2014 polyps and fibroids; $56M annual revenue at divestiture",
+      "lastKnownValuation": 350,
+      "valuationSource": "Divestiture price $350M (Smith & Nephew / Medtronic press releases, May 2016)",
+      "sources": [
+        "Smith & Nephew press release (May 18, 2016)",
+        "Medtronic press release (May 18, 2016)",
+        "MassDevice deal coverage (Aug 8, 2016 \u2014 close confirmed)"
+      ]
+    },
+    {
+      "id": "c45",
+      "name": "nVision Medical",
+      "sector": "Diagnostics",
+      "stage": "Acquired by Boston Scientific (2018)",
+      "founded": 2013,
+      "hq": "San Carlos, CA",
+      "description": "First FDA-cleared device for collecting cells from fallopian tubes \u2014 platform for earlier diagnosis of ovarian cancer; $500M near-term market opportunity estimated",
+      "lastKnownValuation": 275,
+      "valuationSource": "Acquisition value up to $275M ($150M upfront + $125M milestones; Boston Scientific press release, Apr 2018)",
+      "sources": [
+        "PR Newswire \u2014 Boston Scientific press release (Apr 16, 2018)",
+        "MassDevice deal coverage ($275M total)"
+      ]
+    },
+    {
+      "id": "c46",
+      "name": "GRAIL",
+      "sector": "Precision Medicine",
+      "stage": "Acquired by Illumina (2021)",
+      "founded": 2016,
+      "hq": "Menlo Park, CA",
+      "description": "Multi-cancer early detection via blood-based screening (Galleri test) \u2014 uses cfDNA and machine learning to detect 50+ cancer types including breast and ovarian; spun out of Illumina",
+      "lastKnownValuation": 8000,
+      "valuationSource": "Acquisition value $8B cash + stock (Illumina press release, Sep 2020; completed Aug 2021)",
+      "sources": [
+        "Illumina press release (Sep 21, 2020)",
+        "SEC EDGAR \u2014 Illumina merger filing",
+        "GRAIL press release (Aug 18, 2021 \u2014 completion)"
+      ]
+    },
+    {
+      "id": "c47",
+      "name": "Hamilton Thorne",
+      "sector": "Fertility",
+      "stage": "Acquired by Astorg (2024)",
+      "founded": 1988,
+      "hq": "Beverly, MA",
+      "description": "Precision laser devices, advanced imaging systems, consumables and software for assisted reproductive technology (ART) and IVF labs \u2014 products used in 115+ countries",
+      "lastKnownValuation": 282,
+      "valuationSource": "Take-private value C$10.50/share, ~$282M equity (Astorg/Weil press release, Jul 2024; closed Dec 2024)",
+      "sources": [
+        "Business Wire \u2014 Astorg press release (Dec 2, 2024)",
+        "Mergr M&A summary ($388M total)",
+        "Weil Gotshal advisory announcement ($282M)"
+      ]
+    },
+    {
+      "id": "c48",
+      "name": "eFertility (STB Zorg)",
+      "sector": "Fertility",
+      "stage": "Acquired by Vitrolife (2024)",
+      "founded": 2015,
+      "hq": "Breda, Netherlands",
+      "description": "IVF clinic management software \u2014 eWitness (step-by-step tracking/tracing) and eBase (specialized EMR compatible with hospital systems); leading presence in Netherlands, expanding across Europe",
+      "valuationSource": "Terms not publicly disclosed (Vitrolife/Cision press release, May 2024)",
+      "sources": [
+        "Cision \u2014 Vitrolife press release (May 22, 2024)",
+        "Vitrolife investor relations"
+      ]
+    },
+    {
+      "id": "c49",
+      "name": "Cogentix Medical",
+      "sector": "Pelvic Health",
+      "stage": "Acquired by Laborie Medical (2019)",
+      "founded": 1997,
+      "hq": "Minnetonka, MN",
+      "description": "Urogynecology devices \u2014 Urgent PC neuromodulation (percutaneous tibial nerve stimulation for overactive bladder) and PrimeSight cystoscopy with EndoSheath protective barrier",
+      "lastKnownValuation": 214,
+      "valuationSource": "Acquisition value ~$214M enterprise value ($3.85/share; Laborie/Cogentix press release, Mar 2018; closed Apr 2019)",
+      "sources": [
+        "SEC EDGAR \u2014 Cogentix Medical merger filing (Mar 12, 2018)",
+        "Laborie Medical press release (Apr 23, 2019 \u2014 completion)"
+      ]
+    },
+    {
+      "id": "c50",
+      "name": "Nine Continents Medical",
+      "sector": "Pelvic Health",
+      "stage": "Acquired by Coloplast (2020)",
+      "founded": 2014,
+      "hq": "Dayton, OH",
+      "description": "Implantable tibial nerve stimulator (ITNS) for overactive bladder \u2014 miniaturized, self-powered device placed under local anesthesia; no patient activation or recharging required",
+      "lastKnownValuation": 145,
+      "valuationSource": "Acquisition value $145M upfront + contingent milestones (Coloplast press release, Nov 2020)",
+      "sources": [
+        "Globe Newswire \u2014 Coloplast press release (Nov 3, 2020)"
+      ]
+    },
+    {
+      "id": "c51",
+      "name": "Myovant Sciences",
+      "sector": "Reproductive Health",
+      "stage": "Acquired by Sumitovant Biopharma (2023)",
+      "founded": 2016,
+      "hq": "Basel, Switzerland",
+      "description": "Women's health and oncology pharma \u2014 Myfembree (relugolix combo for uterine fibroids and endometriosis pain) and Orgovyx (prostate cancer); first oral GnRH antagonist combination approved for women's health",
+      "lastKnownValuation": 2900,
+      "valuationSource": "Total company value ~$2.9B fully diluted; $27/share for outstanding minority shares, $1.7B equity (Sumitomo Pharma press release, Oct 2022)",
+      "sources": [
+        "Sumitomo Pharma press release (Oct 24, 2022)",
+        "PR Newswire \u2014 Sumitovant announcement (Oct 2, 2022)",
+        "Business Wire \u2014 completion announcement (Mar 10, 2023)"
+      ]
+    },
+    {
+      "id": "c52",
+      "name": "Counsyl",
+      "sector": "Diagnostics",
+      "stage": "Acquired by Myriad Genetics (2018)",
+      "founded": 2007,
+      "hq": "South San Francisco, CA",
+      "description": "Prenatal and carrier genetic screening \u2014 Foresight carrier screen and Prequel NIPT (non-invasive prenatal testing); one of largest reproductive genetics labs in US",
+      "lastKnownValuation": 375,
+      "valuationSource": "Acquisition value ~$375M ($225M cash + $150M equity; Myriad Genetics press release, May 2018)",
+      "sources": [
+        "Globe Newswire \u2014 Myriad Genetics press release (May 28, 2018)",
+        "Myriad Genetics investor relations"
+      ]
+    },
+    {
+      "id": "c53",
+      "name": "Gateway Genomics",
+      "sector": "Diagnostics",
+      "stage": "Acquired by Myriad Genetics (2022)",
+      "founded": 2016,
+      "hq": "San Diego, CA",
+      "description": "Consumer genetic testing \u2014 SneakPeek early gender DNA test (detects baby gender at 6 weeks with 99% accuracy); 750K+ parents served, 20%+ CAGR",
+      "lastKnownValuation": 67.5,
+      "valuationSource": "Acquisition value $67.5M (Myriad Genetics press release, Nov 2022)",
+      "sources": [
+        "Globe Newswire \u2014 Myriad Genetics press release (Nov 1, 2022)",
+        "Myriad Genetics investor relations"
+      ]
+    },
+    {
+      "id": "c54",
+      "name": "Invitae Reproductive Health",
+      "sector": "Diagnostics",
+      "stage": "Assets acquired by Natera (2024)",
+      "founded": 2012,
+      "hq": "San Francisco, CA",
+      "description": "Non-invasive prenatal screening (NIPS) and carrier screening business \u2014 divested reproductive health assets from Invitae's broader genetic testing portfolio",
+      "lastKnownValuation": 52.5,
+      "valuationSource": "Asset acquisition: $10M upfront + up to $42.5M milestones (Natera press release, Jan 2024)",
+      "sources": [
+        "Business Wire \u2014 Natera press release (Jan 22, 2024)",
+        "Natera investor relations"
+      ]
+    },
+    {
+      "id": "c55",
+      "name": "TherapeuticsMD",
+      "sector": "Reproductive Health",
+      "stage": "Products licensed to Mayne Pharma (2023)",
+      "founded": 2008,
+      "hq": "Boca Raton, FL",
+      "description": "Women's health hormone therapy \u2014 BIJUVA (bio-identical estradiol/progesterone for menopause), ANNOVERA (contraceptive vaginal ring), IMVEXXY (estradiol vaginal inserts); $153M total consideration",
+      "lastKnownValuation": 153,
+      "valuationSource": "License/asset deal ~$153.1M at closing + up to $30M milestones + royalties (TherapeuticsMD 8-K, Jan 2023)",
+      "sources": [
+        "Business Wire \u2014 TherapeuticsMD press release (Jan 3, 2023)",
+        "SEC EDGAR \u2014 TherapeuticsMD 8-K (Dec 30, 2022)"
+      ]
+    },
+    {
+      "id": "c56",
+      "name": "Seagen",
+      "sector": "Precision Medicine",
+      "stage": "Acquired by Pfizer (2023)",
+      "founded": 1998,
+      "hq": "Bothell, WA",
+      "description": "Antibody-drug conjugate (ADC) oncology platform \u2014 Adcetris, Padcev, Tukysa (HER2+ breast cancer), and Tivdak (cervical cancer)",
+      "lastKnownValuation": 43000,
+      "valuationSource": "Acquisition price $229/share, ~$43B enterprise value (Pfizer SEC filing, Mar 2023)",
+      "sources": [
+        "SEC EDGAR \u2014 Pfizer 8-K (Mar 13, 2023)",
+        "Business Wire \u2014 Pfizer/Seagen merger announcement (Mar 13, 2023)",
+        "SEC EDGAR \u2014 Pfizer 8-K completion (Dec 14, 2023)"
+      ]
+    },
+    {
+      "id": "c57",
+      "name": "Varian Medical Systems",
+      "sector": "Precision Medicine",
+      "stage": "Acquired by Siemens Healthineers (2021)",
+      "founded": 1948,
+      "hq": "Palo Alto, CA",
+      "description": "Radiation oncology and cancer treatment systems \u2014 linear accelerators, brachytherapy, and treatment planning software for breast, cervical, and other cancers",
+      "lastKnownValuation": 16400,
+      "valuationSource": "Acquisition price $177.50/share, ~$16.4B (Siemens Healthineers press release, Aug 2020)",
+      "sources": [
+        "Siemens Healthineers press release (Aug 2, 2020)",
+        "PR Newswire \u2014 Varian merger announcement (Aug 2, 2020)",
+        "SEC EDGAR \u2014 Varian DFAN14A (Aug 2020)"
+      ]
+    },
+    {
+      "id": "c58",
+      "name": "Immunomedics",
+      "sector": "Breast Health",
+      "stage": "Acquired by Gilead Sciences (2020)",
+      "founded": 1982,
+      "hq": "Morris Plains, NJ",
+      "description": "Developer of Trodelvy (sacituzumab govitecan), first-in-class Trop-2 ADC for metastatic triple-negative breast cancer (mTNBC)",
+      "lastKnownValuation": 21000,
+      "valuationSource": "Acquisition price $88/share, ~$21B (Gilead Sciences press release, Sep 2020)",
+      "sources": [
+        "Business Wire \u2014 Gilead/Immunomedics announcement (Sep 13, 2020)",
+        "Gilead Sciences press release (Sep 13, 2020)",
+        "SEC EDGAR \u2014 Immunomedics merger filing"
+      ]
+    },
+    {
+      "id": "c59",
+      "name": "Thrive Earlier Detection",
+      "sector": "Diagnostics",
+      "stage": "Acquired by Exact Sciences (2021)",
+      "founded": 2019,
+      "hq": "Cambridge, MA",
+      "description": "Multi-cancer blood test (CancerSEEK) using cfDNA and protein biomarkers to detect multiple cancer types including breast and ovarian",
+      "lastKnownValuation": 2150,
+      "valuationSource": "Acquisition value ~$2.15B cash + stock (Exact Sciences press release, Oct 2020)",
+      "sources": [
+        "PR Newswire \u2014 Exact Sciences/Thrive announcement (Oct 27, 2020)",
+        "PR Newswire \u2014 Exact Sciences completion (Jan 5, 2021)",
+        "Milwaukee Business Journal (Jan 5, 2021)"
+      ]
+    },
+    {
+      "id": "c60",
+      "name": "PreventionGenetics",
+      "sector": "Diagnostics",
+      "stage": "Acquired by Exact Sciences (2022)",
+      "founded": 2004,
+      "hq": "Marshfield, WI",
+      "description": "CLIA-certified genetic testing laboratory \u2014 5,000+ predefined tests for hereditary cancer (BRCA1/2, Lynch syndrome), carrier screening, and whole exome/genome sequencing",
+      "lastKnownValuation": 190,
+      "valuationSource": "Acquisition price ~$190M (Laboratory Economics, Jan 2022)",
+      "sources": [
+        "PR Newswire \u2014 Exact Sciences press release (Jan 9, 2022)",
+        "SEC EDGAR \u2014 Exact Sciences 8-K (Jan 10, 2022)",
+        "Laboratory Economics \u2014 deal reporting (Jan 15, 2022)"
+      ]
+    },
+    {
+      "id": "c61",
+      "name": "EUROIMMUN",
+      "sector": "Diagnostics",
+      "stage": "Acquired by PerkinElmer (2017)",
+      "founded": 1987,
+      "hq": "L\u00fcbeck, Germany",
+      "description": "Global leader in autoimmune diagnostics \u2014 extensive immunology, cell biology, and molecular biology capabilities; reproductive health channel drives into US market",
+      "lastKnownValuation": 1300,
+      "valuationSource": "Acquisition price ~$1.3B cash (PerkinElmer press release, Jun 2017)",
+      "sources": [
+        "SEC EDGAR \u2014 PerkinElmer 8-K (Jun 16, 2017)",
+        "GenomeWeb \u2014 deal coverage (Jun 19, 2017)",
+        "Revvity (PerkinElmer) investor relations \u2014 completion (Dec 19, 2017)"
+      ]
+    },
+    {
+      "id": "c62",
+      "name": "Faxitron Bioptics",
+      "sector": "Breast Health",
+      "stage": "Acquired by Hologic (2018)",
+      "founded": 1992,
+      "hq": "Tucson, AZ",
+      "description": "Digital specimen radiography, breast lesion localization (LOCalizer), and sentinel lymph node biopsy solutions \u2014 VisionCT first 3D breast specimen CT system",
+      "lastKnownValuation": 85,
+      "valuationSource": "Acquisition price ~$85M (Hologic/PR Newswire, Jul 2018)",
+      "sources": [
+        "PR Newswire \u2014 Hologic press release (Jul 31, 2018)",
+        "BioSpace \u2014 deal coverage (Jul 31, 2018)",
+        "Hologic investor relations \u2014 SEC 10-K FY2019"
+      ]
+    },
+    {
+      "id": "c63",
+      "name": "SuperSonic Imagine",
+      "sector": "Breast Health",
+      "stage": "Acquired by Hologic (2019)",
+      "founded": 2005,
+      "hq": "Aix-en-Provence, France",
+      "description": "ShearWave elastography and Aixplorer ultrasound platform for breast cancer diagnosis \u2014 non-invasive tissue stiffness measurement for breast lesion characterization",
+      "lastKnownValuation": 85,
+      "valuationSource": "Binding offer ~$85M total (\u20ac1.50/share equity + debt payoff; Hologic press release, Jun 2019)",
+      "sources": [
+        "MassDevice \u2014 Hologic/SSI announcement (Jun 21, 2019)",
+        "AuntMinnie \u2014 Hologic acquires 46% stake (Aug 4, 2019)",
+        "Euronext Paris \u2014 SuperSonic Imagine (EPA: SSI) tender offer"
+      ]
+    },
+    {
+      "id": "c64",
+      "name": "Ovia Health",
+      "sector": "Maternal Health",
+      "stage": "Acquired by LabCorp (2021)",
+      "founded": 2012,
+      "hq": "Boston, MA",
+      "description": "Digital health platform for family planning, pregnancy, and parenting \u2014 used by millions of women for fertility tracking, prenatal care, and employer health benefits",
+      "valuationSource": "Acquisition terms not publicly disclosed by LabCorp",
+      "sources": [
+        "Business Wire \u2014 LabCorp press release (Aug 12, 2021)",
+        "LabCorp investor relations \u2014 Ovia Health announcement",
+        "Boston Globe \u2014 deal coverage (Aug 16, 2021)"
+      ]
+    },
+    {
+      "id": "c65",
+      "name": "Sividon Diagnostics",
+      "sector": "Breast Health",
+      "stage": "Acquired by Myriad Genetics (2016)",
+      "founded": 2010,
+      "hq": "Cologne, Germany",
+      "description": "EndoPredict breast cancer prognostic test \u2014 12-gene RNA expression assay evaluating breast cancer aggressiveness; spun out of Siemens Healthcare Diagnostics",
+      "lastKnownValuation": 56,
+      "valuationSource": "\u20ac35M upfront + \u20ac15M milestones (~$56M total potential; Myriad Genetics press release, May 2016)",
+      "sources": [
+        "Globe Newswire \u2014 Myriad Genetics press release (May 31, 2016)",
+        "SEC EDGAR \u2014 Myriad Genetics 8-K (May 31, 2016)",
+        "GEN News \u2014 deal coverage (May 31, 2016)"
+      ]
+    },
+    {
+      "id": "c66",
+      "name": "Alere",
+      "sector": "Diagnostics",
+      "stage": "Acquired by Abbott (2017)",
+      "founded": 2001,
+      "hq": "Waltham, MA",
+      "description": "Global leader in point-of-care diagnostics \u2014 rapid tests for cardiometabolic, infectious disease, and toxicology; includes pregnancy and fertility testing portfolio",
+      "lastKnownValuation": 5300,
+      "valuationSource": "Amended acquisition price $51/share, ~$5.3B equity value (Abbott press release, Apr 2017)",
+      "sources": [
+        "SEC EDGAR \u2014 Abbott/Alere amended merger filing (Apr 14, 2017)",
+        "Abbott Mediaroom \u2014 merger amendment (Apr 14, 2017)",
+        "Abbott Mediaroom \u2014 closing confirmation (Sep 29, 2017)"
+      ]
+    },
+    {
+      "id": "c67",
+      "name": "Ethicon GYNECARE TVT Products",
+      "sector": "Pelvic Health",
+      "stage": "Acquired by Caldera Medical (2025)",
+      "founded": 1998,
+      "hq": "Raritan, NJ",
+      "description": "GYNECARE TVT family of minimally invasive mesh slings for stress urinary incontinence \u2014 TVT, TVT Exact, TVT-O, TVT Abbrevo; gold standard with 20+ years of clinical data",
+      "valuationSource": "Terms not publicly disclosed",
+      "sources": [
+        "Business Wire \u2014 Caldera Medical press release (Mar 20, 2025)",
+        "Ethicon/J&J product portfolio documentation"
+      ]
+    },
+    {
+      "id": "c68",
+      "name": "Gen-Probe",
+      "sector": "Diagnostics",
+      "stage": "Acquired by Hologic (2012)",
+      "founded": 1988,
+      "hq": "San Diego, CA",
+      "description": "Leader in molecular diagnostics including HPV/cervical cancer testing and STI screening",
+      "lastKnownValuation": 3700,
+      "valuationSource": "Acquisition price $82.75/share, total ~$3.7B (SEC DEFM14A filing)",
+      "sources": [
+        "SEC EDGAR - Hologic 8-K/DEFM14A (2012)",
+        "Hologic press release (August 1, 2012)",
+        "Gen-Probe Incorporated SEC filings"
+      ]
+    },
+    {
+      "id": "c69",
+      "name": "KaNDy Therapeutics",
+      "sector": "Menopause",
+      "stage": "Acquired by Bayer (2020)",
+      "founded": 2017,
+      "hq": "Stevenage, UK",
+      "description": "Clinical-stage biotech developing NT-814 (elinzanetant) for menopausal vasomotor symptoms",
+      "lastKnownValuation": 425,
+      "valuationSource": "Upfront consideration $425M; up to $450M milestones (Bayer press release)",
+      "sources": [
+        "Business Wire - Bayer acquisition announcement (August 11, 2020)",
+        "Business Wire - Bayer completion announcement (September 9, 2020)",
+        "Bayer.com media release"
+      ]
+    },
+    {
+      "id": "c70",
+      "name": "Ogeda SA",
+      "sector": "Menopause",
+      "stage": "Acquired by Astellas (2017)",
+      "founded": 1999,
+      "hq": "Gosselies, Belgium",
+      "description": "Drug discovery company developing fezolinetant for menopausal vasomotor symptoms; formerly Euroscreen SA",
+      "lastKnownValuation": 560,
+      "valuationSource": "EUR 500M upfront + up to EUR 300M milestones (Astellas press release); ~$560M USD at 2017 rates",
+      "sources": [
+        "Astellas Pharma press release (May 17, 2017)",
+        "PR Newswire - Astellas completes acquisition (May 2017)",
+        "Astellas newsroom - newsroom.astellas.com"
+      ]
+    },
+    {
+      "id": "c71",
+      "name": "Dermavant Sciences",
+      "sector": "Dermatology",
+      "stage": "Acquired by Organon (2024)",
+      "founded": 2016,
+      "hq": "Basel, Switzerland",
+      "description": "Immuno-dermatology subsidiary of Roivant; VTAMA cream for plaque psoriasis and atopic dermatitis \u2014 women disproportionately affected",
+      "lastKnownValuation": 1200,
+      "valuationSource": "$175M upfront + $75M milestone + $950M commercial milestones; total up to $1.2B (Organon press release)",
+      "sources": [
+        "Organon press release (September 18, 2024)",
+        "Fierce Pharma coverage (September 18, 2024)",
+        "Roivant/Dermavant investor presentation (September 2024)"
+      ]
+    },
+    {
+      "id": "c72",
+      "name": "IVI-RMA Global",
+      "sector": "Fertility",
+      "stage": "Acquired by KKR (2023)",
+      "founded": 1990,
+      "hq": "Valencia, Spain",
+      "description": "World's largest fertility clinic network; 75+ clinics and 28 labs in 9 countries; formed from 2017 merger of Spain's IVI and US-based RMANJ",
+      "lastKnownValuation": 3250,
+      "valuationSource": "~\u20ac3B ($3.25B) for 80% stake (Axios, Fertility Bridge, Cinco Dias)",
+      "sources": [
+        "Axios Pro (April 13, 2022) - deal announcement",
+        "Fertility Bridge (January 26, 2023) - deal close confirmation",
+        "Spanish CNMC regulatory approval (December 21, 2022)"
+      ]
+    },
+    {
+      "id": "c73",
+      "name": "Indira IVF",
+      "sector": "Fertility",
+      "stage": "Majority stake acquired by BPEA EQT (2023)",
+      "founded": 1988,
+      "hq": "Udaipur, India",
+      "description": "India's largest chain of fertility clinics; 115+ centers; 125,000+ successful pregnancies; top 5 globally by annual IVF cycles",
+      "lastKnownValuation": 1100,
+      "valuationSource": "Valued at Rs 9,000 crore (~$1.1B) enterprise value; BPEA EQT paid ~$657M for 60% stake (Times of India, Economic Times)",
+      "sources": [
+        "EQT Group press release (July 28, 2023)",
+        "Times of India (July 29, 2023)",
+        "Economic Times (July 29, 2023)"
+      ]
+    },
+    {
+      "id": "c74",
+      "name": "Apostrophe",
+      "sector": "General Wellness",
+      "stage": "Acquired by Hims & Hers (2021)",
+      "founded": 2014,
+      "hq": "San Francisco, CA",
+      "description": "Teledermatology platform with personalized treatment plans and compounding pharmacy; majority female user base",
+      "valuationSource": "Financial terms not disclosed (HIMS investor relations press release)",
+      "sources": [
+        "Hims & Hers investor relations press release (June 24, 2021)",
+        "Business Wire - acquisition completion (July 7, 2021)",
+        "MobiHealthNews coverage (June 2021)"
+      ]
+    },
+    {
+      "id": "c75",
+      "name": "Eugin Group (North American operations)",
+      "sector": "Fertility",
+      "stage": "Acquired by IVI-RMA/KKR (2024)",
+      "founded": 1999,
+      "hq": "Barcelona, Spain",
+      "description": "Global fertility network including Boston IVF and TRIO (Toronto); 13 labs and 32 satellite offices in North America",
+      "lastKnownValuation": 534,
+      "valuationSource": "KKR/IVI-RMA and GED Capital acquired Eugin from Fresenius for \u20ac494M (~$534M) (PitchBook, Business Wire)",
+      "sources": [
+        "Business Wire - IVI RMA completion announcement (January 31, 2024)",
+        "PitchBook (November 2023) - deal reporting",
+        "Fresenius SE press release (divestiture)"
+      ]
+    },
+    {
+      "id": "c76",
+      "name": "Evvy",
+      "sector": "Diagnostics",
+      "stage": "Private (Series A)",
+      "founded": 2021,
+      "hq": "New York, NY",
+      "description": "At-home vaginal microbiome testing with metagenomic sequencing and precision treatment",
+      "totalFunding": 19,
+      "sources": [
+        "TechCrunch - $5M seed coverage (July 2021)",
+        "Business Wire - $14M Series A announcement (September 2023)",
+        "Fierce Healthcare - funding and STI care expansion coverage"
+      ]
+    },
+    {
+      "id": "c77",
+      "name": "Hey Jane",
+      "sector": "Reproductive Health",
+      "stage": "Private (Seed)",
+      "founded": 2021,
+      "hq": "New York, NY",
+      "description": "Telehealth medication abortion and reproductive care provider",
+      "totalFunding": 9.7,
+      "sources": [
+        "Fortune - $6.1M raise coverage (October 2022)",
+        "Hey Jane founder post, Medium - total equity raised $9.7M (October 2022)",
+        "Built In NYC - funding coverage (2022)"
+      ]
+    },
+    {
+      "id": "c78",
+      "name": "Contraline",
+      "sector": "Contraception",
+      "stage": "Private (Series B)",
+      "founded": 2015,
+      "hq": "Charlottesville, VA",
+      "description": "Developing ADAM, a long-acting non-hormonal reversible male contraceptive implant; $92.5M Series B (2026)",
+      "sources": [
+        "Business Wire - $92.5M Series B announcement (June 2026)",
+        "Fierce Pharma - Series B coverage (June 2026)",
+        "Company website - contraline.com"
+      ]
+    },
+    {
+      "id": "c79",
+      "name": "Gennev",
+      "sector": "Menopause",
+      "stage": "Acquired by Unified Women's Healthcare (2022)",
+      "founded": 2016,
+      "hq": "Seattle, WA",
+      "description": "Virtual menopause and perimenopause clinic with OB-GYN and dietitian network",
+      "totalFunding": 4.1,
+      "sources": [
+        "GeekWire - acquisition coverage (October 2022)",
+        "Business Wire - Unified Women's Healthcare acquisition announcement (October 2022)",
+        "Tracxn - funding history ($4.12M over 4 rounds)"
+      ]
+    },
+    {
+      "id": "c80",
+      "name": "Alloy",
+      "sector": "Menopause",
+      "stage": "Private (Series A)",
+      "founded": 2021,
+      "hq": "New York, NY",
+      "description": "Telehealth menopause care and hormone therapy platform for women over 40",
+      "totalFunding": 19.3,
+      "sources": [
+        "PR Newswire - $3.3M seed announcement (October 2021)",
+        "Fortune - $16M Series A coverage (November 2024)",
+        "Femtech Insider - Series A coverage (November 2024)"
+      ]
+    },
+    {
+      "id": "c81",
+      "name": "Millie",
+      "sector": "Maternal Health",
+      "stage": "Private (Series A)",
+      "founded": 2022,
+      "hq": "San Francisco, CA",
+      "description": "Midwife-led hybrid maternity clinics with continuous patient monitoring",
+      "totalFunding": 19,
+      "sources": [
+        "TechCrunch - $12M Series A coverage, ~$19M total to date (February 2025)",
+        "Business Wire - Series A announcement (February 2025)",
+        "Fierce Healthcare - expansion coverage"
+      ]
+    },
+    {
+      "id": "c82",
+      "name": "Origin",
+      "sector": "Pelvic Health",
+      "stage": "Private (Series B)",
+      "founded": 2020,
+      "hq": "Los Angeles, CA",
+      "description": "Pelvic floor physical therapy clinics, in-person and virtual; round sizes undisclosed",
+      "sources": [
+        "TechCrunch - launch coverage (May 2020)",
+        "PR Newswire - Series B announcement, amount undisclosed (January 2026)",
+        "Femtech Insider - nationwide expansion coverage"
+      ]
+    },
+    {
+      "id": "c83",
+      "name": "Dame",
+      "sector": "Sexual Wellness",
+      "stage": "Private (Series A)",
+      "founded": 2014,
+      "hq": "Brooklyn, NY",
+      "description": "Sexual wellness products and education brand",
+      "totalFunding": 13,
+      "sources": [
+        "TechCrunch - $7M Series A coverage (September 2022)",
+        "BeautyMatter - Series A coverage, $13M total raised (2022)",
+        "Wikipedia - Dame Products"
+      ]
+    },
+    {
+      "id": "c84",
+      "name": "B\u00e9a Fertility",
+      "sector": "Fertility",
+      "stage": "Private (Seed)",
+      "founded": 2020,
+      "hq": "London, UK",
+      "description": "At-home intracervical insemination (ICI) fertility treatment kits",
+      "totalFunding": 4.3,
+      "sources": [
+        "EU-Startups - \u20ac2.9M raise, \u20ac3.8M total coverage (July 2023)",
+        "UKTN - \u00a3800K pre-launch raise coverage (April 2021)",
+        "Startups Magazine - \u00a32.5M raise coverage (2023)"
+      ]
+    },
+    {
+      "id": "c85",
+      "name": "Granata Bio",
+      "sector": "Fertility",
+      "stage": "Private (Series A)",
+      "founded": 2018,
+      "hq": "Boston, MA",
+      "description": "In-licenses and commercializes fertility medications for North America",
+      "totalFunding": 30,
+      "sources": [
+        "PR Newswire - $14M Series A led by GV (January 2024)",
+        "PR Newswire - $15M Series A+, total funding over $30M (January 2025)"
+      ]
+    },
+    {
+      "id": "c86",
+      "name": "Gesynta Pharma",
+      "sector": "Reproductive Health",
+      "stage": "Private (Series B)",
+      "founded": 2017,
+      "hq": "Stockholm, Sweden",
+      "description": "Clinical-stage pharma developing vipoglanstat, a non-hormonal endometriosis treatment; SEK 347M Series B",
+      "sources": [
+        "ArcticStartup - \u20ac26.5M Series B coverage",
+        "Femtech Insider - Series B second closing, SEK 347M total round",
+        "Company website - gesynta.se history page (founded 2017, Karolinska spinout)"
+      ]
+    },
+    {
+      "id": "c87",
+      "name": "Testmate Health",
+      "sector": "Diagnostics",
+      "stage": "Private (Seed)",
+      "founded": 2021,
+      "hq": "Lausanne, Switzerland",
+      "description": "At-home rapid molecular STI test, starting with chlamydia and gonorrhea; $6M seed",
+      "sources": [
+        "Startupticker.ch - $6M seed coverage (May 2024)",
+        "FinSMEs - seed round coverage (May 2024)",
+        "GGBa - CHF 1.6M earlier financing coverage"
+      ]
+    },
+    {
+      "id": "c88",
+      "name": "Aunt Flow",
+      "sector": "Pelvic Health",
+      "stage": "Private (Series A)",
+      "founded": 2016,
+      "hq": "Columbus, OH",
+      "description": "Free-vend menstrual product dispensers and organic cotton products for businesses and schools; $8.5M Series A",
+      "sources": [
+        "Fortune - $8.5M Series A coverage (April 2022)",
+        "PR Newswire - JLL Spark-led Series A announcement (April 2022)",
+        "BeautyMatter - Series A coverage (2022)"
+      ]
+    },
+    {
+      "id": "c89",
+      "name": "Juniper Genomics",
+      "sector": "Diagnostics",
+      "stage": "Private (Seed)",
+      "founded": 2020,
+      "hq": "Toronto, Canada",
+      "description": "Whole-genome and transcriptome embryo screening for IVF",
+      "totalFunding": 4.6,
+      "sources": [
+        "GenomeWeb - $4.6M seed launch coverage (June 2025)",
+        "Femtech Insider - seed round coverage (2025)",
+        "Future FemHealth - seed funding coverage (2025)"
+      ]
+    }
+  ],
+  "acquirers": [
+    {
+      "id": "acquirer-teladoc",
+      "name": "Teladoc Health",
+      "ticker": "TDOC",
+      "sector": "General Wellness",
+      "hq": "Purchase, NY"
+    },
+    {
+      "id": "acquirer-amazon",
+      "name": "Amazon",
+      "ticker": "AMZN",
+      "sector": "General Wellness",
+      "hq": "Seattle, WA"
+    },
+    {
+      "id": "acquirer-unitedhealth",
+      "name": "UnitedHealth Group",
+      "ticker": "UNH",
+      "sector": "General Wellness",
+      "hq": "Minnetonka, MN"
+    },
+    {
+      "id": "acquirer-apple",
+      "name": "Apple",
+      "ticker": "AAPL",
+      "sector": "Wearables",
+      "hq": "Cupertino, CA"
+    },
+    {
+      "id": "acquirer-jnj",
+      "name": "Johnson & Johnson",
+      "ticker": "JNJ",
+      "sector": "General Wellness",
+      "hq": "New Brunswick, NJ"
+    },
+    {
+      "id": "acquirer-google",
+      "name": "Google/Alphabet",
+      "ticker": "GOOGL",
+      "sector": "General Wellness",
+      "hq": "Mountain View, CA"
+    },
+    {
+      "id": "acquirer-hologic",
+      "name": "Hologic",
+      "ticker": "HOLX",
+      "sector": "Breast Health",
+      "hq": "Marlborough, MA"
+    },
+    {
+      "id": "acquirer-coopersurgical",
+      "name": "CooperSurgical (CooperCompanies)",
+      "ticker": "COO",
+      "sector": "Fertility",
+      "hq": "Trumbull, CT"
+    },
+    {
+      "id": "acquirer-organon",
+      "name": "Organon",
+      "ticker": "OGN",
+      "sector": "Reproductive Health",
+      "hq": "Jersey City, NJ"
+    },
+    {
+      "id": "acquirer-vitrolife",
+      "name": "Vitrolife",
+      "ticker": "VITR",
+      "sector": "Fertility",
+      "hq": "Gothenburg, Sweden"
+    },
+    {
+      "id": "acquirer-gedeonrichter",
+      "name": "Gedeon Richter",
+      "ticker": "RICHTER",
+      "sector": "Reproductive Health",
+      "hq": "Budapest, Hungary"
+    },
+    {
+      "id": "acquirer-labcorp",
+      "name": "LabCorp",
+      "ticker": "LH",
+      "sector": "Diagnostics",
+      "hq": "Burlington, NC"
+    },
+    {
+      "id": "acquirer-exactsciences",
+      "name": "Exact Sciences",
+      "ticker": "EXAS",
+      "sector": "Precision Medicine",
+      "hq": "Madison, WI"
+    },
+    {
+      "id": "acquirer-roche",
+      "name": "Roche",
+      "ticker": "ROG",
+      "sector": "Precision Medicine",
+      "hq": "Basel, Switzerland"
+    },
+    {
+      "id": "acquirer-medtronic",
+      "name": "Medtronic",
+      "ticker": "MDT",
+      "sector": "Gynecological Surgery",
+      "hq": "Dublin, Ireland"
+    },
+    {
+      "id": "acquirer-bostonsci",
+      "name": "Boston Scientific",
+      "ticker": "BSX",
+      "sector": "Diagnostics",
+      "hq": "Marlborough, MA"
+    },
+    {
+      "id": "acquirer-illumina",
+      "name": "Illumina",
+      "ticker": "ILMN",
+      "sector": "Precision Medicine",
+      "hq": "San Diego, CA"
+    },
+    {
+      "id": "acquirer-astorg",
+      "name": "Astorg",
+      "sector": "Fertility",
+      "hq": "Luxembourg"
+    },
+    {
+      "id": "acquirer-laborie",
+      "name": "Laborie Medical Technologies",
+      "sector": "Pelvic Health",
+      "hq": "Mississauga, Canada"
+    },
+    {
+      "id": "acquirer-coloplast",
+      "name": "Coloplast",
+      "ticker": "COLO-B",
+      "sector": "Pelvic Health",
+      "hq": "Humleb\u00e6k, Denmark"
+    },
+    {
+      "id": "acquirer-sumitovant",
+      "name": "Sumitovant Biopharma (Sumitomo Pharma)",
+      "ticker": "SMTOY",
+      "sector": "Reproductive Health",
+      "hq": "New York, NY"
+    },
+    {
+      "id": "acquirer-myriad",
+      "name": "Myriad Genetics",
+      "ticker": "MYGN",
+      "sector": "Diagnostics",
+      "hq": "Salt Lake City, UT"
+    },
+    {
+      "id": "acquirer-natera",
+      "name": "Natera",
+      "ticker": "NTRA",
+      "sector": "Diagnostics",
+      "hq": "Austin, TX"
+    },
+    {
+      "id": "acquirer-maynepharma",
+      "name": "Mayne Pharma",
+      "ticker": "MYX",
+      "sector": "Reproductive Health",
+      "hq": "Melbourne, Australia"
+    },
+    {
+      "id": "acquirer-pfizer",
+      "name": "Pfizer",
+      "type": "Public (NYSE: PFE)",
+      "hq": "New York, NY",
+      "description": "Global pharmaceutical and biotechnology company \u2014 oncology portfolio includes breast cancer therapies via Seagen ADC platform"
+    },
+    {
+      "id": "acquirer-siemenshealthineers",
+      "name": "Siemens Healthineers",
+      "type": "Public (FRA: SHL)",
+      "hq": "Erlangen, Germany",
+      "description": "Global medical technology company \u2014 imaging, diagnostics, and advanced therapies; radiation oncology via Varian acquisition"
+    },
+    {
+      "id": "acquirer-gilead",
+      "name": "Gilead Sciences",
+      "type": "Public (NASDAQ: GILD)",
+      "hq": "Foster City, CA",
+      "description": "Biopharmaceutical company expanding into oncology \u2014 Trodelvy ADC for triple-negative breast cancer via Immunomedics acquisition"
+    },
+    {
+      "id": "acquirer-perkinelmer",
+      "name": "PerkinElmer (Revvity)",
+      "type": "Public (NYSE: RVTY)",
+      "hq": "Waltham, MA",
+      "description": "Life sciences and diagnostics company \u2014 reproductive health, newborn screening, autoimmune diagnostics; rebranded diagnostics business as Revvity (2023)"
+    },
+    {
+      "id": "acquirer-abbott",
+      "name": "Abbott Laboratories",
+      "type": "Public (NYSE: ABT)",
+      "hq": "Abbott Park, IL",
+      "description": "Global healthcare company \u2014 diagnostics, medical devices, nutrition, pharmaceuticals; point-of-care testing leader via Alere acquisition"
+    },
+    {
+      "id": "acquirer-caldera",
+      "name": "Caldera Medical",
+      "type": "Private",
+      "hq": "Los Angeles, CA",
+      "description": "Women's health medical device company \u2014 pelvic floor and stress urinary incontinence solutions; 23-year focus on women's health"
+    },
+    {
+      "id": "acquirer-bayer",
+      "name": "Bayer",
+      "hq": "Leverkusen, Germany",
+      "type": "Public (FRA: BAYN)",
+      "description": "Global pharma and life sciences company; leader in women's healthcare and contraception"
+    },
+    {
+      "id": "acquirer-astellas",
+      "name": "Astellas Pharma",
+      "hq": "Tokyo, Japan",
+      "type": "Public (TSE: 4503)",
+      "description": "Japanese pharmaceutical company focused on urology, oncology, and women's health"
+    },
+    {
+      "id": "acquirer-kkr",
+      "name": "KKR",
+      "hq": "New York, NY",
+      "type": "Public (NYSE: KKR)",
+      "description": "Global investment firm; major investor in fertility clinic consolidation"
+    },
+    {
+      "id": "acquirer-bpeaeqt",
+      "name": "BPEA EQT (EQT)",
+      "hq": "Stockholm, Sweden",
+      "type": "Public (STO: EQT)",
+      "description": "Global private equity firm active in healthcare and fertility services across Asia"
+    },
+    {
+      "id": "acquirer-himshers",
+      "name": "Hims & Hers Health",
+      "hq": "San Francisco, CA",
+      "type": "Public (NYSE: HIMS)",
+      "description": "Multi-specialty telehealth platform for men's and women's health"
+    },
+    {
+      "id": "acquirer-unified-womens-healthcare",
+      "name": "Unified Women's Healthcare",
+      "sector": "Reproductive Health",
+      "hq": "Boca Raton, FL"
+    }
+  ],
+  "acquisitions": [
+    {
+      "id": "deal1",
+      "targetId": "c23",
+      "acquirerId": "acquirer-teladoc",
+      "targetName": "Livongo Health",
+      "acquirerName": "Teladoc",
+      "announcedDate": "2020-07-01",
+      "closedDate": "2020-10-30",
+      "dealValue": 13900,
+      "dealValueNote": "Stock-for-stock merger, SEC filing verified",
+      "dealType": "Acquisition",
+      "source": "SEC 8-K filing, July 2020",
+      "strategicRationale": "Combined chronic care management with virtual primary care to create comprehensive digital health platform",
+      "dealStructure": "Stock-for-stock merger"
+    },
+    {
+      "id": "deal2",
+      "targetId": "c1",
+      "acquirerId": "c2",
+      "targetName": "Modern Fertility",
+      "acquirerName": "Ro",
+      "announcedDate": "2021-05-19",
+      "closedDate": "2021-07-15",
+      "dealValue": 225,
+      "dealValueNote": "Estimated acquisition price ~$150-225M (not officially disclosed)",
+      "dealType": "Acquisition",
+      "source": "Press reports (Fierce Healthcare, May 2021)",
+      "strategicRationale": "Added at-home fertility testing to Ro's telehealth platform, expanding women's health services",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal3",
+      "targetId": "c12",
+      "acquirerId": "c2",
+      "targetName": "Nurx",
+      "acquirerName": "Ro",
+      "announcedDate": "2021-12-15",
+      "closedDate": "2022-02-28",
+      "dealValue": 300,
+      "dealValueNote": "Estimated acquisition price ~$300M (not officially disclosed)",
+      "dealType": "Acquisition",
+      "source": "Press reports (TechCrunch, December 2021)",
+      "strategicRationale": "Expanded women's health services with birth control delivery, creating comprehensive female health offering",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal4",
+      "targetId": "c13",
+      "acquirerId": "acquirer-amazon",
+      "targetName": "Lemonaid Health",
+      "acquirerName": "Amazon (via Amazon Pharmacy)",
+      "announcedDate": "2021-10-14",
+      "closedDate": "2021-12-20",
+      "dealValueNote": "Acquisition terms not publicly disclosed by Amazon",
+      "dealType": "Acquisition",
+      "source": "Press release (Amazon, October 2021)",
+      "strategicRationale": "Added prescription telehealth capabilities to Amazon's healthcare services expansion",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal5",
+      "targetId": "c4",
+      "acquirerId": "acquirer-teladoc",
+      "targetName": "Maven Clinic",
+      "acquirerName": "Teladoc",
+      "announcedDate": "2022-08-10",
+      "dealValueNote": "Strategic investment - value not disclosed",
+      "dealType": "Strategic Investment",
+      "source": "Press reports (Teladoc partnership announcement)",
+      "strategicRationale": "Partnership for maternity and fertility care integration into Teladoc's virtual care platform",
+      "dealStructure": "Strategic Investment"
+    },
+    {
+      "id": "deal6",
+      "targetId": "c7",
+      "acquirerId": "acquirer-teladoc",
+      "targetName": "Kindbody",
+      "acquirerName": "Teladoc",
+      "announcedDate": "2023-03-15",
+      "dealValueNote": "Strategic investment - value not disclosed",
+      "dealType": "Strategic Investment",
+      "source": "Partnership press release",
+      "strategicRationale": "Fertility benefits platform integration for employer clients",
+      "dealStructure": "Strategic Investment"
+    },
+    {
+      "id": "deal7",
+      "targetId": "c24",
+      "acquirerId": "acquirer-hologic",
+      "targetName": "Biotheranostics",
+      "acquirerName": "Hologic",
+      "announcedDate": "2021-01-05",
+      "closedDate": "2021-02-22",
+      "dealValue": 230,
+      "dealValueNote": "~$230M subject to working capital adjustments",
+      "dealType": "Acquisition",
+      "source": "Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)",
+      "strategicRationale": "Entry into oncology growth market \u2014 Breast Cancer Index guides post-surgery treatment decisions for breast cancer patients",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal8",
+      "targetId": "c25",
+      "acquirerId": "acquirer-hologic",
+      "targetName": "Endomagnetics",
+      "acquirerName": "Hologic",
+      "announcedDate": "2024-05-20",
+      "closedDate": "2024-07-25",
+      "dealValue": 310,
+      "dealValueNote": "~$310M (Nasdaq/Hologic press release)",
+      "dealType": "Acquisition",
+      "source": "Nasdaq press release (Jul 25, 2024)",
+      "strategicRationale": "Added magnetic seed and sentinel lymph node biopsy technology to breast health portfolio \u2014 expands international presence (UK-based)",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal9",
+      "targetId": "c26",
+      "acquirerId": "acquirer-hologic",
+      "targetName": "Gynesonics",
+      "acquirerName": "Hologic",
+      "announcedDate": "2024-09-15",
+      "closedDate": "2024-10-14",
+      "dealValue": 350,
+      "dealValueNote": "~$350M (Hologic acquisition announcement)",
+      "dealType": "Acquisition",
+      "source": "Tracxn acquisition records; Hologic investor relations (Oct 2024)",
+      "strategicRationale": "Minimally invasive uterine fibroid treatment \u2014 Sonata System complements Hologic's gynecological surgery portfolio",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal10",
+      "targetId": "c27",
+      "acquirerId": "acquirer-coopersurgical",
+      "targetName": "ORIGIO a/s",
+      "acquirerName": "CooperSurgical (CooperCompanies)",
+      "announcedDate": "2012-06-04",
+      "closedDate": "2012-07-11",
+      "dealValue": 147,
+      "dealValueNote": "~NOK 1,159M enterprise value (~$147M net of cash acquired)",
+      "dealType": "Acquisition",
+      "source": "SEC EDGAR \u2014 CooperCompanies 10-K (FY2012); Oslo Stock Exchange tender offer (Jun 2012)",
+      "strategicRationale": "Established CooperSurgical as global IVF device leader \u2014 ORIGIO's culture media and labware complemented existing fertility portfolio",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal11",
+      "targetId": "c28",
+      "acquirerId": "acquirer-coopersurgical",
+      "targetName": "Generate Life Sciences",
+      "acquirerName": "CooperSurgical (CooperCompanies)",
+      "announcedDate": "2021-11-10",
+      "closedDate": "2022-01-31",
+      "dealValue": 1600,
+      "dealValueNote": "~$1.6B (CooperCompanies press release)",
+      "dealType": "Acquisition",
+      "source": "CooperCompanies investor relations \u2014 Globe Newswire (Nov 10, 2021)",
+      "strategicRationale": "Expanded fertility and L&D offerings with donor egg/sperm, cryopreservation, and cord blood storage \u2014 ~$250M trailing revenue",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal12",
+      "targetId": "c29",
+      "acquirerId": "acquirer-coopersurgical",
+      "targetName": "Cook Medical Reproductive Health",
+      "acquirerName": "CooperSurgical (CooperCompanies)",
+      "announcedDate": "2022-02-07",
+      "closedDate": "2022-06-01",
+      "dealValueNote": "Terms not publicly disclosed",
+      "dealType": "Acquisition",
+      "source": "CooperCompanies investor relations press release (Feb 7, 2022)",
+      "strategicRationale": "Added IVF catheters, embryo transfer devices and assisted reproduction products to strengthen global fertility device market position",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal13",
+      "targetId": "c30",
+      "acquirerId": "acquirer-coopersurgical",
+      "targetName": "ZyM\u014dt Fertility",
+      "acquirerName": "CooperSurgical",
+      "announcedDate": "2024-06-10",
+      "dealValueNote": "Terms not publicly disclosed",
+      "dealType": "Acquisition",
+      "source": "CooperSurgical press release (Jun 10, 2024)",
+      "strategicRationale": "Microfluidic sperm separation technology adds to ART product portfolio \u2014 first-of-its-kind device for selecting motile sperm",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal14",
+      "targetId": "c31",
+      "acquirerId": "acquirer-organon",
+      "targetName": "Alydia Health",
+      "acquirerName": "Organon (via Merck spinoff)",
+      "announcedDate": "2021-03-30",
+      "closedDate": "2021-07-01",
+      "dealValueNote": "Acquisition structured with milestones; closed after Organon spun off from Merck",
+      "dealType": "Acquisition",
+      "source": "Organon.com press release (Mar 30, 2021); Business Wire",
+      "strategicRationale": "Jada System addresses postpartum hemorrhage \u2014 aligns with Organon's mission as global women's health leader; potential EU/global expansion",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal15",
+      "targetId": "c32",
+      "acquirerId": "acquirer-organon",
+      "targetName": "Forendo Pharma",
+      "acquirerName": "Organon",
+      "announcedDate": "2021-11-11",
+      "closedDate": "2021-12-13",
+      "dealValue": 75,
+      "dealValueNote": "$75M upfront + up to $270M development milestones + $600M commercial milestones (total potential ~$954M)",
+      "dealType": "Acquisition",
+      "source": "Business Wire (Dec 13, 2021); Organon.com press release",
+      "strategicRationale": "Novel endometriosis treatment (HSD17B1 inhibitor) \u2014 first-in-class tissue-specific approach without impacting systemic hormone levels; pipeline includes PCOS program",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal16",
+      "targetId": "c33",
+      "acquirerId": "acquirer-vitrolife",
+      "targetName": "Igenomix",
+      "acquirerName": "Vitrolife",
+      "announcedDate": "2021-07-08",
+      "closedDate": "2021-11-30",
+      "dealValue": 1450,
+      "dealValueNote": "Enterprise value ~\u20ac1.25B (~$1.45B); part cash, part share consideration",
+      "dealType": "Acquisition",
+      "source": "Cision/Vitrolife press release (Jul 8, 2021); PR Newswire (Nov 30, 2021)",
+      "strategicRationale": "Combined IVF medical devices with reproductive genetic testing to create global reproductive health leader \u2014 Igenomix operated 26 labs across 26 countries",
+      "dealStructure": "Cash + Stock"
+    },
+    {
+      "id": "deal17",
+      "targetId": "c34",
+      "acquirerId": "acquirer-gedeonrichter",
+      "targetName": "Estetra (Mithra assets)",
+      "acquirerName": "Gedeon Richter",
+      "announcedDate": "2024-06-12",
+      "closedDate": "2024-06-12",
+      "dealValue": 195,
+      "dealValueNote": "Enterprise value ~\u20ac175M (~$195M) including assumed net debt",
+      "dealType": "Acquisition",
+      "source": "Gedeon Richter press release (Jun 12, 2024); Budapest Stock Exchange filing",
+      "strategicRationale": "Acquired estetrol (E4) native estrogen platform \u2014 ESTELLE (contraception, marketed) and DONESTA (menopause, in development); enables US/Japan expansion of women's healthcare business",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal18",
+      "targetId": "c35",
+      "acquirerId": "acquirer-gedeonrichter",
+      "targetName": "Celmatix",
+      "acquirerName": "Gedeon Richter",
+      "announcedDate": "2026-03-03",
+      "dealValueNote": "Upfront payment + development milestones (terms not fully disclosed)",
+      "dealType": "Acquisition",
+      "source": "Gedeon Richter press release (Mar 3, 2026); Budapest Stock Exchange filing",
+      "strategicRationale": "Women's health drug discovery \u2014 oral FSH agonist for fertility, JNK inhibitor for endometriosis, AMH antibodies for ovarian aging; development led by Belgian R&D hub",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal19",
+      "targetId": "c36",
+      "acquirerId": "acquirer-labcorp",
+      "targetName": "Sequenom",
+      "acquirerName": "LabCorp",
+      "announcedDate": "2016-07-27",
+      "closedDate": "2016-09-06",
+      "dealValue": 371,
+      "dealValueNote": "Enterprise value ~$371M including net debt ($302M equity value at $2.40/share)",
+      "dealType": "Acquisition",
+      "source": "SEC EDGAR \u2014 LabCorp/Sequenom merger filing (Jul 27, 2016)",
+      "strategicRationale": "Created market leader in NIPT \u2014 MaterniT21 test complemented LabCorp's women's health and reproductive genetics offering; over 500K tests performed at time of deal",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal20",
+      "targetId": "c37",
+      "acquirerId": "acquirer-exactsciences",
+      "targetName": "Genomic Health",
+      "acquirerName": "Exact Sciences",
+      "announcedDate": "2019-07-29",
+      "closedDate": "2019-11-08",
+      "dealValue": 2800,
+      "dealValueNote": "~$2.8B total consideration",
+      "dealType": "Acquisition",
+      "source": "Exact Sciences newsroom (Jul 29, 2019); SEC merger proxy",
+      "strategicRationale": "Combined Cologuard (colorectal) with Oncotype DX (breast cancer) to create leading global cancer diagnostics company \u2014 Oncotype DX guides chemotherapy decisions for ~50% of early-stage breast cancer patients",
+      "dealStructure": "Cash + Stock"
+    },
+    {
+      "id": "deal21",
+      "targetId": "c38",
+      "acquirerId": "acquirer-roche",
+      "targetName": "Foundation Medicine",
+      "acquirerName": "Roche",
+      "announcedDate": "2018-06-19",
+      "closedDate": "2018-07-18",
+      "dealValue": 2400,
+      "dealValueNote": "$137/share for remaining shares (~$2.4B); total company value ~$5.3B fully diluted",
+      "dealType": "Acquisition",
+      "source": "Roche media release (Jun 19, 2018); Fierce Biotech",
+      "strategicRationale": "Comprehensive genomic profiling (CGP) \u2014 FoundationOne tests identify actionable mutations in breast, ovarian, and other cancers to guide precision treatment selection",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal22",
+      "targetId": "c39",
+      "acquirerId": "acquirer-roche",
+      "targetName": "Flatiron Health",
+      "acquirerName": "Roche",
+      "announcedDate": "2018-01-08",
+      "closedDate": "2018-04-06",
+      "dealValue": 1900,
+      "dealValueNote": "~$1.9B fully diluted, subject to adjustments",
+      "dealType": "Acquisition",
+      "source": "Roche media release (Apr 6, 2018)",
+      "strategicRationale": "Oncology-specific EHR and real-world evidence \u2014 data from 265+ clinics enables precision medicine research including breast and ovarian cancer treatment outcomes",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal23",
+      "targetId": "c40",
+      "acquirerId": "acquirer-hologic",
+      "targetName": "Acessa Health",
+      "acquirerName": "Hologic",
+      "announcedDate": "2020-08-25",
+      "closedDate": "2020-08-25",
+      "dealValue": 80,
+      "dealValueNote": "~$80M cash + contingent revenue milestone payments",
+      "dealType": "Acquisition",
+      "source": "Business Wire \u2014 Hologic press release (Aug 25, 2020)",
+      "strategicRationale": "Acessa ProVu radiofrequency ablation system broadens fibroid treatment portfolio \u2014 minimally invasive alternative to hysterectomy with less blood loss and faster recovery",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal24",
+      "targetId": "c41",
+      "acquirerId": "acquirer-hologic",
+      "targetName": "Bolder Surgical",
+      "acquirerName": "Hologic",
+      "announcedDate": "2021-10-14",
+      "closedDate": "2021-11-29",
+      "dealValue": 160,
+      "dealValueNote": "~$160M subject to working capital adjustments",
+      "dealType": "Acquisition",
+      "source": "Nasdaq \u2014 Hologic press release (Oct 14, 2021); SEC 10-K FY2022",
+      "strategicRationale": "CoolSeal vessel sealing devices expand laparoscopic GYN surgery portfolio \u2014 Hologic estimates 5\u00d7 more laparoscopic procedures in OB/GYN vs. pediatrics (Bolder's prior focus)",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal25",
+      "targetId": "c42",
+      "acquirerId": "acquirer-hologic",
+      "targetName": "Focal Therapeutics",
+      "acquirerName": "Hologic",
+      "announcedDate": "2018-09-26",
+      "closedDate": "2018-10-01",
+      "dealValue": 125,
+      "dealValueNote": "~$125M cash (SEC filing shows $120.1M final purchase price)",
+      "dealType": "Acquisition",
+      "source": "Hologic investor relations press release (Sep 26, 2018); SEC 10-K FY2019",
+      "strategicRationale": "BioZorb 3D marker strengthens breast conserving surgery franchise \u2014 complements Faxitron biopsy imaging in rapidly growing lumpectomy market",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal26",
+      "targetId": "c43",
+      "acquirerId": "acquirer-coopersurgical",
+      "targetName": "obp Surgical",
+      "acquirerName": "CooperSurgical (CooperCompanies)",
+      "announcedDate": "2024-08-01",
+      "closedDate": "2024-08-01",
+      "dealValue": 100,
+      "dealValueNote": "~$100M (CooperCompanies press release; SEC 10-K FY2024 confirms $100.0M)",
+      "dealType": "Acquisition",
+      "source": "CooperCompanies investor relations \u2014 Globe Newswire (Aug 1, 2024); SEC 10-K FY2024",
+      "strategicRationale": "ONETRAC cordless illuminated retractors complement CooperSurgical's INSORB, Lone Star, and Doppler surgical device portfolio",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal27",
+      "targetId": "c44",
+      "acquirerId": "acquirer-medtronic",
+      "targetName": "Smith & Nephew Gynecology (Truclear)",
+      "acquirerName": "Medtronic",
+      "announcedDate": "2016-05-18",
+      "closedDate": "2016-08-08",
+      "dealValue": 350,
+      "dealValueNote": "$350M divestiture price (Smith & Nephew press release)",
+      "dealType": "Acquisition",
+      "source": "Medtronic press release (May 18, 2016); Smith & Nephew press release (Aug 8, 2016 \u2014 close confirmation)",
+      "strategicRationale": "TRUCLEAR hysteroscopic system expands minimally invasive GYN portfolio \u2014 targets abnormal uterine bleeding (polyps/fibroids) with $56M trailing revenue",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal28",
+      "targetId": "c45",
+      "acquirerId": "acquirer-bostonsci",
+      "targetName": "nVision Medical",
+      "acquirerName": "Boston Scientific",
+      "announcedDate": "2018-04-16",
+      "closedDate": "2018-04-16",
+      "dealValue": 275,
+      "dealValueNote": "$150M upfront + up to $125M in milestones over 4 years",
+      "dealType": "Acquisition",
+      "source": "PR Newswire \u2014 Boston Scientific press release (Apr 16, 2018); MassDevice deal coverage",
+      "strategicRationale": "First FDA-cleared fallopian tube cell collection device \u2014 platform for ovarian cancer early diagnosis; estimated $500M near-term market expanding to $2B",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal29",
+      "targetId": "c46",
+      "acquirerId": "acquirer-illumina",
+      "targetName": "GRAIL",
+      "acquirerName": "Illumina",
+      "announcedDate": "2020-09-21",
+      "closedDate": "2021-08-18",
+      "dealValue": 8000,
+      "dealValueNote": "$8B cash + stock; GRAIL stockholders also receive tiered revenue-based payments",
+      "dealType": "Acquisition",
+      "source": "Illumina press release (Sep 21, 2020); SEC merger filing; GRAIL completion announcement (Aug 18, 2021)",
+      "strategicRationale": "Galleri multi-cancer early detection test uses cfDNA to screen for 50+ cancer types including breast and ovarian \u2014 TAM estimated at $75B by 2035",
+      "dealStructure": "Cash + Stock"
+    },
+    {
+      "id": "deal30",
+      "targetId": "c47",
+      "acquirerId": "acquirer-astorg",
+      "targetName": "Hamilton Thorne",
+      "acquirerName": "Astorg",
+      "announcedDate": "2024-07-22",
+      "closedDate": "2024-12-02",
+      "dealValue": 282,
+      "dealValueNote": "C$10.50/share take-private; ~$282M equity value (Weil/Astorg announcement)",
+      "dealType": "Acquisition",
+      "source": "Business Wire \u2014 Astorg press release (Dec 2, 2024); Weil Gotshal advisory announcement (Jul 24, 2024)",
+      "strategicRationale": "Combined with Cook Medical RH to create global ART/IVF leader \u2014 precision laser instruments and advanced imaging serving 115+ countries",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal31",
+      "targetId": "c48",
+      "acquirerId": "acquirer-vitrolife",
+      "targetName": "eFertility (STB Zorg)",
+      "acquirerName": "Vitrolife",
+      "announcedDate": "2024-05-02",
+      "closedDate": "2024-05-22",
+      "dealValueNote": "Terms not publicly disclosed",
+      "dealType": "Acquisition",
+      "source": "Cision \u2014 Vitrolife press release (May 22, 2024)",
+      "strategicRationale": "eWitness tracking and eBase EMR add IVF clinic management software to Vitrolife's Technologies business area \u2014 expands European digital IVF presence from Netherlands base",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal32",
+      "targetId": "c49",
+      "acquirerId": "acquirer-laborie",
+      "targetName": "Cogentix Medical",
+      "acquirerName": "Laborie Medical Technologies",
+      "announcedDate": "2018-03-12",
+      "closedDate": "2019-04-23",
+      "dealValue": 214,
+      "dealValueNote": "$3.85/share, ~$214M enterprise value",
+      "dealType": "Acquisition",
+      "source": "SEC EDGAR \u2014 Cogentix Medical merger filing (Mar 12, 2018); Laborie press release (Apr 23, 2019 \u2014 completion)",
+      "strategicRationale": "Urgent PC neuromodulation and PrimeSight cystoscopy expand Laborie's urology/urogynecology portfolio \u2014 addresses overactive bladder and stress urinary incontinence",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal33",
+      "targetId": "c50",
+      "acquirerId": "acquirer-coloplast",
+      "targetName": "Nine Continents Medical",
+      "acquirerName": "Coloplast",
+      "announcedDate": "2020-11-03",
+      "closedDate": "2020-11-03",
+      "dealValue": 145,
+      "dealValueNote": "$145M upfront + contingent milestone payment",
+      "dealType": "Acquisition",
+      "source": "Globe Newswire \u2014 Coloplast press release (Nov 3, 2020)",
+      "strategicRationale": "Implantable tibial nerve stimulator enters Coloplast into OAB 3rd-line therapy market \u2014 80M+ people globally with OAB symptoms, ~3M candidates for device therapy",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal34",
+      "targetId": "c51",
+      "acquirerId": "acquirer-sumitovant",
+      "targetName": "Myovant Sciences",
+      "acquirerName": "Sumitovant Biopharma (Sumitomo Pharma)",
+      "announcedDate": "2022-10-24",
+      "closedDate": "2023-03-10",
+      "dealValue": 2900,
+      "dealValueNote": "$27/share for outstanding minority (~$1.7B); total company value ~$2.9B fully diluted; Sumitovant already owned ~52%",
+      "dealType": "Acquisition",
+      "source": "Sumitomo Pharma press release (Oct 24, 2022); Business Wire \u2014 completion announcement (Mar 10, 2023)",
+      "strategicRationale": "Myfembree (relugolix combo) is first oral GnRH antagonist approved for uterine fibroids and endometriosis pain \u2014 combines with Orgovyx prostate cancer franchise under Sumitomo umbrella",
+      "dealStructure": "Cash + Stock"
+    },
+    {
+      "id": "deal35",
+      "targetId": "c52",
+      "acquirerId": "acquirer-myriad",
+      "targetName": "Counsyl",
+      "acquirerName": "Myriad Genetics",
+      "announcedDate": "2018-05-28",
+      "closedDate": "2018-08-01",
+      "dealValue": 375,
+      "dealValueNote": "~$375M ($225M cash + $150M equity consideration)",
+      "dealType": "Acquisition",
+      "source": "Globe Newswire \u2014 Myriad Genetics press release (May 28, 2018)",
+      "strategicRationale": "Foresight carrier screen and Prequel NIPT add prenatal/reproductive genetics to Myriad's women's health portfolio \u2014 one of largest US reproductive genetics labs",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal36",
+      "targetId": "c53",
+      "acquirerId": "acquirer-myriad",
+      "targetName": "Gateway Genomics",
+      "acquirerName": "Myriad Genetics",
+      "announcedDate": "2022-11-01",
+      "closedDate": "2022-11-01",
+      "dealValue": 67.5,
+      "dealValueNote": "$67.5M tuck-in acquisition (Myriad Genetics press release)",
+      "dealType": "Acquisition",
+      "source": "Globe Newswire \u2014 Myriad Genetics press release (Nov 1, 2022)",
+      "strategicRationale": "SneakPeek early gender test (99% accuracy at 6 weeks) expands consumer prenatal access \u2014 750K+ parents served, 20%+ CAGR, 4M+ annual website visitors create funnel to clinical screening",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal37",
+      "targetId": "c54",
+      "acquirerId": "acquirer-natera",
+      "targetName": "Invitae Reproductive Health",
+      "acquirerName": "Natera",
+      "announcedDate": "2024-01-22",
+      "closedDate": "2024-01-22",
+      "dealValue": 52.5,
+      "dealValueNote": "$10M upfront + up to $42.5M milestones (cash + litigation credits)",
+      "dealType": "Asset Acquisition",
+      "source": "Business Wire \u2014 Natera press release (Jan 22, 2024)",
+      "strategicRationale": "Acquired Invitae's NIPS and carrier screening customers \u2014 consolidates prenatal/reproductive cfDNA testing market under Natera's platform",
+      "dealStructure": "Cash (asset acquisition)"
+    },
+    {
+      "id": "deal38",
+      "targetId": "c55",
+      "acquirerId": "acquirer-maynepharma",
+      "targetName": "TherapeuticsMD",
+      "acquirerName": "Mayne Pharma",
+      "announcedDate": "2022-12-30",
+      "closedDate": "2023-01-03",
+      "dealValue": 153,
+      "dealValueNote": "$140M upfront license + $13.1M working capital + up to $30M milestones + 20-year royalties",
+      "dealType": "License/Asset Acquisition",
+      "source": "Business Wire \u2014 TherapeuticsMD press release (Jan 3, 2023); SEC EDGAR 8-K (Dec 30, 2022)",
+      "strategicRationale": "Exclusive US rights to BIJUVA (menopause), ANNOVERA (contraception), and IMVEXXY (vaginal atrophy) \u2014 establishes Mayne Pharma in women's health hormone therapy",
+      "dealStructure": "Cash (license/asset)"
+    },
+    {
+      "id": "deal39",
+      "targetId": "c56",
+      "acquirerId": "acquirer-pfizer",
+      "targetName": "Seagen",
+      "acquirerName": "Pfizer",
+      "announcedDate": "2023-03-13",
+      "closedDate": "2023-12-14",
+      "dealValue": 43000,
+      "dealValueNote": "$229/share, ~$43B enterprise value",
+      "dealType": "Acquisition",
+      "source": "SEC EDGAR \u2014 Pfizer 8-K (Mar 13, 2023); Business Wire completion announcement (Dec 14, 2023)",
+      "strategicRationale": "Largest oncology M&A in history \u2014 Seagen's ADC platform (Adcetris, Padcev, Tukysa, Tivdak) transforms Pfizer into top-tier oncology company; Tukysa targets HER2+ breast cancer, Tivdak targets cervical cancer",
+      "dealStructure": "Cash + Stock"
+    },
+    {
+      "id": "deal40",
+      "targetId": "c57",
+      "acquirerId": "acquirer-siemenshealthineers",
+      "targetName": "Varian Medical Systems",
+      "acquirerName": "Siemens Healthineers",
+      "announcedDate": "2020-08-02",
+      "closedDate": "2021-04-15",
+      "dealValue": 16400,
+      "dealValueNote": "$177.50/share, ~$16.4B all-cash",
+      "dealType": "Acquisition",
+      "source": "Siemens Healthineers press release (Aug 2, 2020); PR Newswire \u2014 Varian merger announcement",
+      "strategicRationale": "Creates global leader in cancer treatment \u2014 Varian's linear accelerators and brachytherapy systems treat breast, cervical, and ovarian cancers; estimated \u20ac300M+ annual synergies by FY2025",
+      "dealStructure": "Cash + Stock"
+    },
+    {
+      "id": "deal41",
+      "targetId": "c58",
+      "acquirerId": "acquirer-gilead",
+      "targetName": "Immunomedics",
+      "acquirerName": "Gilead Sciences",
+      "announcedDate": "2020-09-13",
+      "closedDate": "2020-10-22",
+      "dealValue": 21000,
+      "dealValueNote": "$88/share, ~$21B",
+      "dealType": "Acquisition",
+      "source": "Business Wire \u2014 Gilead/Immunomedics announcement (Sep 13, 2020); Gilead Sciences press release",
+      "strategicRationale": "Trodelvy (sacituzumab govitecan) is first-in-class Trop-2 ADC approved for metastatic triple-negative breast cancer \u2014 transforms Gilead's oncology portfolio; >$10B risk-adjusted revenue potential by 2030",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal42",
+      "targetId": "c59",
+      "acquirerId": "acquirer-exactsciences",
+      "targetName": "Thrive Earlier Detection",
+      "acquirerName": "Exact Sciences",
+      "announcedDate": "2020-10-27",
+      "closedDate": "2021-01-05",
+      "dealValue": 2150,
+      "dealValueNote": "~$2.15B cash + stock",
+      "dealType": "Acquisition",
+      "source": "PR Newswire \u2014 Exact Sciences announcement (Oct 27, 2020); completion (Jan 5, 2021)",
+      "strategicRationale": "CancerSEEK multi-cancer blood test detects 10+ cancer types including breast and ovarian via cfDNA and protein biomarkers \u2014 combined with Cologuard and Oncotype DX to create most comprehensive cancer screening portfolio",
+      "dealStructure": "Cash + Stock"
+    },
+    {
+      "id": "deal43",
+      "targetId": "c60",
+      "acquirerId": "acquirer-exactsciences",
+      "targetName": "PreventionGenetics",
+      "acquirerName": "Exact Sciences",
+      "announcedDate": "2022-01-09",
+      "closedDate": "2022-01-09",
+      "dealValue": 190,
+      "dealValueNote": "~$190M (Laboratory Economics reporting)",
+      "dealType": "Acquisition",
+      "source": "PR Newswire \u2014 Exact Sciences press release (Jan 9, 2022); SEC EDGAR 8-K (Jan 10, 2022)",
+      "strategicRationale": "5,000+ genetic tests for hereditary cancer (BRCA1/2, Lynch syndrome) + carrier screening \u2014 enters hereditary cancer testing market; leverages Exact Sciences' 300K+ provider relationships in primary care and women's health",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal44",
+      "targetId": "c61",
+      "acquirerId": "acquirer-perkinelmer",
+      "targetName": "EUROIMMUN",
+      "acquirerName": "PerkinElmer (Revvity)",
+      "announcedDate": "2017-06-16",
+      "closedDate": "2017-12-19",
+      "dealValue": 1300,
+      "dealValueNote": "~$1.3B cash",
+      "dealType": "Acquisition",
+      "source": "SEC EDGAR \u2014 PerkinElmer 8-K (Jun 16, 2017); Revvity investor relations \u2014 completion (Dec 19, 2017)",
+      "strategicRationale": "Global autoimmune diagnostics leader \u2014 drives EUROIMMUN's capabilities into PerkinElmer's US reproductive health channel; 19% revenue CAGR; operations in 130+ countries with 45% revenue from China",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal45",
+      "targetId": "c62",
+      "acquirerId": "acquirer-hologic",
+      "targetName": "Faxitron Bioptics",
+      "acquirerName": "Hologic",
+      "announcedDate": "2018-07-31",
+      "closedDate": "2018-07-31",
+      "dealValue": 85,
+      "dealValueNote": "~$85M (Hologic press release)",
+      "dealType": "Acquisition",
+      "source": "PR Newswire \u2014 Hologic press release (Jul 31, 2018); BioSpace deal coverage",
+      "strategicRationale": "Digital specimen radiography and LOCalizer breast lesion localization expand Hologic's role in breast conserving surgery \u2014 complements mammography with interventional solutions",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal46",
+      "targetId": "c63",
+      "acquirerId": "acquirer-hologic",
+      "targetName": "SuperSonic Imagine",
+      "acquirerName": "Hologic",
+      "announcedDate": "2019-06-21",
+      "closedDate": "2019-12-19",
+      "dealValue": 85,
+      "dealValueNote": "~$85M total (\u20ac1.50/share equity + up to $43M debt payoff)",
+      "dealType": "Acquisition",
+      "source": "MassDevice \u2014 Hologic/SSI announcement (Jun 21, 2019); AuntMinnie \u2014 46% stake acquisition (Aug 4, 2019)",
+      "strategicRationale": "ShearWave elastography provides non-invasive breast tissue stiffness measurement \u2014 Aixplorer platform complements Hologic's screening and intervention continuum for breast cancer diagnosis",
+      "dealStructure": "Cash + Stock"
+    },
+    {
+      "id": "deal47",
+      "targetId": "c64",
+      "acquirerId": "acquirer-labcorp",
+      "targetName": "Ovia Health",
+      "acquirerName": "LabCorp",
+      "announcedDate": "2021-08-12",
+      "closedDate": "2021-08-12",
+      "dealValueNote": "Acquisition terms not publicly disclosed by LabCorp",
+      "dealType": "Acquisition",
+      "source": "Business Wire \u2014 LabCorp press release (Aug 12, 2021); LabCorp investor relations",
+      "strategicRationale": "Digital platform for family planning, pregnancy, and parenting \u2014 extends LabCorp's women's health leadership by combining diagnostic testing with personalized digital health experiences for millions of users",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal48",
+      "targetId": "c65",
+      "acquirerId": "acquirer-myriad",
+      "targetName": "Sividon Diagnostics",
+      "acquirerName": "Myriad Genetics",
+      "announcedDate": "2016-05-31",
+      "closedDate": "2016-05-31",
+      "dealValue": 56,
+      "dealValueNote": "\u20ac35M upfront + up to \u20ac15M performance milestones (~$56M total potential)",
+      "dealType": "Acquisition",
+      "source": "Globe Newswire \u2014 Myriad Genetics press release (May 31, 2016); SEC EDGAR \u2014 Myriad 8-K",
+      "strategicRationale": "EndoPredict 12-gene breast cancer prognostic test \u2014 foundational product for Myriad's international kit-based strategy; CE Marked in Europe, enables global oncology distribution expansion",
+      "dealStructure": "Cash"
+    },
+    {
+      "id": "deal49",
+      "targetId": "c66",
+      "acquirerId": "acquirer-abbott",
+      "targetName": "Alere",
+      "acquirerName": "Abbott Laboratories",
+      "announcedDate": "2016-02-01",
+      "closedDate": "2017-10-03",
+      "dealValue": 5300,
+      "dealValueNote": "$51/share amended price, ~$5.3B equity value (reduced from original $5.8B)",
+      "dealType": "Acquisition",
+      "source": "SEC EDGAR \u2014 Abbott/Alere amended merger (Apr 14, 2017); Abbott Mediaroom \u2014 closing (Sep 29, 2017)",
+      "strategicRationale": "Global leader in point-of-care diagnostics \u2014 $5.5B POC market includes rapid pregnancy, fertility, and women's health testing; expands Abbott's diagnostics presence in 100+ countries",
+      "dealStructure": "Cash + Stock"
+    },
+    {
+      "id": "deal50",
+      "targetId": "c67",
+      "acquirerId": "acquirer-caldera",
+      "targetName": "Ethicon GYNECARE TVT Products",
+      "acquirerName": "Caldera Medical",
+      "announcedDate": "2025-03-20",
+      "closedDate": "2025-03-20",
+      "dealValueNote": "Terms not publicly disclosed",
+      "dealType": "Asset Acquisition",
+      "source": "Business Wire \u2014 Caldera Medical press release (Mar 20, 2025)",
+      "strategicRationale": "TVT family (TVT, TVT Exact, TVT-O, TVT Abbrevo) is gold standard for minimally invasive stress urinary incontinence treatment \u2014 20+ years clinical data; Caldera maintains same manufacturing and team",
+      "dealStructure": "Cash (asset acquisition)"
+    },
+    {
+      "id": "deal51",
+      "targetId": "c68",
+      "acquirerId": "acquirer-hologic",
+      "targetName": "Gen-Probe",
+      "acquirerName": "Hologic",
+      "announcedDate": "2012-04-30",
+      "closedDate": "2012-08-01",
+      "dealValue": 3700,
+      "dealValueNote": "Aggregate ~$3.7B including assumption of debt; $82.75/share cash tender",
+      "dealType": "Acquisition",
+      "dealStructure": "Cash",
+      "source": "SEC EDGAR DEFM14A filing; Hologic press release (August 1, 2012)",
+      "strategicRationale": "Added molecular diagnostics leadership including Aptima HPV test and cervical cancer screening to Hologic's women's health portfolio"
+    },
+    {
+      "id": "deal52",
+      "targetId": "c69",
+      "acquirerId": "acquirer-bayer",
+      "targetName": "KaNDy Therapeutics",
+      "acquirerName": "Bayer",
+      "announcedDate": "2020-08-11",
+      "closedDate": "2020-09-09",
+      "dealValue": 425,
+      "dealValueNote": "$425M upfront; up to $450M in development milestones + triple-digit-million sales milestones",
+      "dealType": "Acquisition",
+      "dealStructure": "Cash + milestone payments",
+      "earnoutComponent": "Up to $450M development milestones + additional sales milestones",
+      "source": "Business Wire press release (August 11, 2020); Bayer.com media (September 9, 2020)",
+      "strategicRationale": "Reinforced Bayer's women's healthcare pipeline with NT-814/elinzanetant, a non-hormonal Phase IIb compound for moderate-to-severe menopausal vasomotor symptoms"
+    },
+    {
+      "id": "deal53",
+      "targetId": "c70",
+      "acquirerId": "acquirer-astellas",
+      "targetName": "Ogeda SA",
+      "acquirerName": "Astellas Pharma",
+      "announcedDate": "2017-04-03",
+      "closedDate": "2017-05-17",
+      "dealValue": 560,
+      "dealValueNote": "EUR 500M upfront + up to EUR 300M development milestones; ~$560M USD at 2017 exchange rates",
+      "dealType": "Acquisition",
+      "dealStructure": "Cash + milestone payments",
+      "earnoutComponent": "Up to EUR 300M contingent on fezolinetant development progress",
+      "source": "Astellas Pharma press release (May 17, 2017); PR Newswire",
+      "strategicRationale": "Added fezolinetant (NK3 receptor antagonist) for menopausal vasomotor symptoms \u2014 later FDA-approved as VEOZAH in 2023"
+    },
+    {
+      "id": "deal54",
+      "targetId": "c71",
+      "acquirerId": "acquirer-organon",
+      "targetName": "Dermavant Sciences",
+      "acquirerName": "Organon",
+      "announcedDate": "2024-09-18",
+      "closedDate": "2024-12-31",
+      "dealValue": 1200,
+      "dealValueNote": "$175M upfront + $75M near-term milestone + $950M commercial milestones = up to $1.2B total",
+      "dealType": "Acquisition",
+      "dealStructure": "Cash + milestone payments",
+      "earnoutComponent": "$1.025B in combined milestones; tiered royalties on net sales",
+      "source": "Organon press release (September 18, 2024); Fierce Pharma",
+      "strategicRationale": "Extended Organon's women's health portfolio to US dermatology with VTAMA cream; psoriasis and atopic dermatitis disproportionately affect women"
+    },
+    {
+      "id": "deal55",
+      "targetId": "c72",
+      "acquirerId": "acquirer-kkr",
+      "targetName": "IVI-RMA Global",
+      "acquirerName": "KKR",
+      "announcedDate": "2022-03-01",
+      "closedDate": "2023-01-18",
+      "dealValue": 3250,
+      "dealValueNote": "~\u20ac3B ($3.25B) for 80% stake; world's largest fertility clinic acquisition; founders retained 20%",
+      "dealType": "Acquisition",
+      "dealStructure": "Cash (leveraged buyout)",
+      "source": "Axios Pro (April 13, 2022); Fertility Bridge (January 26, 2023); CNMC approval (December 21, 2022)",
+      "strategicRationale": "Created world's largest fertility services group by combining IVI-RMA with KKR's prior GeneraLife acquisition; 75+ clinics in 9 countries"
+    },
+    {
+      "id": "deal56",
+      "targetId": "c73",
+      "acquirerId": "acquirer-bpeaeqt",
+      "targetName": "Indira IVF",
+      "acquirerName": "BPEA EQT",
+      "announcedDate": "2023-07-28",
+      "closedDate": "2023-12-31",
+      "dealValue": 657,
+      "dealValueNote": "Rs 5,400 crore (~$657M) for 60% majority stake; enterprise valued at ~$1.1B (Times of India)",
+      "dealType": "Acquisition",
+      "dealStructure": "Cash",
+      "source": "EQT Group press release (July 28, 2023); Times of India (July 29, 2023)",
+      "strategicRationale": "Acquired India's largest fertility chain (115+ clinics, top-5 globally by IVF cycles) to capitalize on India's fast-growing ART market"
+    },
+    {
+      "id": "deal57",
+      "targetId": "c74",
+      "acquirerId": "acquirer-himshers",
+      "targetName": "Apostrophe",
+      "acquirerName": "Hims & Hers Health",
+      "announcedDate": "2021-06-24",
+      "closedDate": "2021-07-07",
+      "dealType": "Acquisition",
+      "dealStructure": "Cash",
+      "source": "Hims & Hers investor relations (June 24, 2021); Business Wire (July 7, 2021)",
+      "strategicRationale": "Added teledermatology and compounding pharmacy capability to expand personalized women's skin health offerings"
+    },
+    {
+      "id": "deal58",
+      "targetId": "c75",
+      "acquirerId": "acquirer-kkr",
+      "targetName": "Eugin Group (North American operations)",
+      "acquirerName": "KKR (via IVI-RMA)",
+      "announcedDate": "2023-11-01",
+      "closedDate": "2024-01-31",
+      "dealValue": 534,
+      "dealValueNote": "Part of KKR/GED Capital \u20ac494M (~$534M) acquisition of Eugin from Fresenius; this covers Boston IVF and TRIO",
+      "dealType": "Acquisition",
+      "dealStructure": "Cash",
+      "source": "Business Wire (January 31, 2024); PitchBook (November 2023)",
+      "strategicRationale": "Added Boston IVF (Harvard-affiliated, 13 labs) and TRIO (Toronto) to IVI-RMA network, consolidating North American fertility market leadership"
+    },
+    {
+      "id": "deal59",
+      "targetId": "c79",
+      "acquirerId": "acquirer-unified-womens-healthcare",
+      "targetName": "Gennev",
+      "acquirerName": "Unified Women's Healthcare",
+      "announcedDate": "2022-10-17",
+      "closedDate": "2022-10-17",
+      "dealValueNote": "Terms not disclosed",
+      "dealType": "Acquisition",
+      "source": "Business Wire press release (October 17, 2022); GeekWire coverage",
+      "strategicRationale": "Folded Gennev's virtual menopause clinic into Unified's national ob-gyn support platform to scale menopause care across its provider network"
+    }
+  ]
+}
