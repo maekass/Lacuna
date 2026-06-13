@@ -21,7 +21,7 @@ export default function IntelligencePage() {
     <div>
       <header className="mb-10">
         <h1 className="text-3xl font-bold text-lacuna-plum">
-          Intelligence workspace
+          Diligence Intelligence
         </h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
           Reimbursement context, strategic acquirer fit, system health, and data

@@ -21,32 +21,32 @@ export default function HubPage() {
   return (
     <div id="top">
       <MotionSection className="mb-10">
-        <h1 className="mb-4 text-3xl font-bold leading-tight text-lacuna-plum sm:text-4xl md:text-5xl">
-          <span className="block">Women&apos;s Health M&amp;A</span>
-          <span className="lacuna-gradient-text block">Diligence Stack</span>
-        </h1>
-        <p className="max-w-2xl text-base sm:text-lg leading-relaxed text-lacuna-blue/85">
-          Prototype investment-research environment — verified deal provenance,
-          clinical trial search, genomics governance, and cited analytics from
-          public sources.
-        </p>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-lacuna-blue/55">
-          SEC EDGAR ingest · HIPAA/GDPR genomics layer · descriptive analytics only.
-          Not PitchBook, not live market feeds, and not investment advice.
-        </p>
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-16">
+          <div>
+            <h1 className="mb-4 text-3xl font-bold leading-tight text-lacuna-plum sm:text-4xl md:text-5xl">
+              <span className="block">Women&apos;s Health M&amp;A</span>
+              <span className="block">Diligence Stack</span>
+            </h1>
+            <p className="max-w-xl text-base sm:text-lg leading-relaxed text-lacuna-blue/85">
+              Prototype investment-research environment — verified deal provenance,
+              clinical trial search, genomics governance, and cited analytics from
+              public sources.
+            </p>
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-lacuna-blue/55">
+              SEC EDGAR ingest · HIPAA/GDPR genomics layer · descriptive analytics only.
+              Not PitchBook, not live market feeds, and not investment advice.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            {headlineStats.map((stat) => (
+              <StatTile key={stat.label} value={stat.value} label={stat.label} />
+            ))}
+          </div>
+        </div>
       </MotionSection>
 
       <MotionSection delay={0.05} className="mb-8">
         <DataProvenanceBanner />
-      </MotionSection>
-
-      <MotionSection
-        delay={0.1}
-        className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-4"
-      >
-        {headlineStats.map((stat) => (
-          <StatTile key={stat.label} value={stat.value} label={stat.label} />
-        ))}
       </MotionSection>
 
       {valuationDisparity !== null && (

@@ -146,7 +146,7 @@ export default function ClinicalTrialTracker() {
             Live data from ClinicalTrials.gov · i3-style pipeline intelligence
           </p>
         </div>
-        <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0 self-start">
+        <span className="px-2.5 py-1 rounded text-xs font-medium bg-lacuna-plum/[0.07] text-lacuna-plum border border-lacuna-plum/20 shrink-0 self-start">
           Live API
         </span>
       </div>

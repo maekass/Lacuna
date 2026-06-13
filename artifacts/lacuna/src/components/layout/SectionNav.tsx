@@ -22,8 +22,8 @@ function NavLink(
       onClick={onNavigate}
       className={`block rounded-r-lg border-l-2 px-3 py-2 text-sm transition-all duration-150 touch-target-inline ${
         active
-          ? "border-l-lacuna-plum bg-lacuna-plum/8 font-semibold text-lacuna-plum"
-          : "border-l-transparent text-lacuna-blue/70 hover:border-l-lacuna-lavender hover:bg-lacuna-pink/8 hover:text-lacuna-plum"
+          ? "border-l-lacuna-plum font-semibold text-lacuna-plum"
+          : "border-l-transparent text-lacuna-blue/60 hover:border-l-lacuna-lavender/60 hover:text-lacuna-plum"
       }`}
       aria-current={active ? "location" : undefined}
     >

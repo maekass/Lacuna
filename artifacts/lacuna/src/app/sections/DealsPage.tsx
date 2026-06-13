@@ -32,7 +32,7 @@ export default function DealsPage() {
   return (
     <div>
       <header className="mb-10">
-        <h1 className="text-3xl font-bold text-lacuna-plum">Deals workspace</h1>
+        <h1 className="text-3xl font-bold text-lacuna-plum">Deal Coverage &amp; Network</h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
           Verified M&amp;A network, deal flow, valuations, and acquirer
           landscape — descriptive analytics from public sources only.

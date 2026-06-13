@@ -25,7 +25,7 @@ const tierStyles: Record<EffectiveNBadges["network"]["tier"], string> = {
   insufficient: "bg-red-50 text-red-700 border-red-200",
   low: "bg-amber-50 text-amber-800 border-amber-200",
   medium: "bg-sky-50 text-sky-800 border-sky-200",
-  high: "bg-emerald-50 text-emerald-800 border-emerald-200",
+  high: "bg-lacuna-plum/[0.06] text-lacuna-plum border-lacuna-plum/20",
 };
 
 function EffectiveNBadge({
