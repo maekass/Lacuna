@@ -1,0 +1,2 @@
+- [Tailwind v4 font theme trap](tailwind-v4-font-theme.md) — app-wide "wrong font" bugs usually come from `@theme inline` `--font-sans`/`--font-mono` mappings, not inline overrides.
+- [Lacuna spatial depth system](spatial-depth-system.md) — "Stratified Depth": elevation tokens, glass layers, ambient parallax; perf constraints for the data-dense app.

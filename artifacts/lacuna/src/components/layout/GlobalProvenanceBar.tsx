@@ -14,7 +14,7 @@ export default function GlobalProvenanceBar() {
     <div
       role="note"
       aria-label={line}
-      className="border-b border-lacuna-plum/12 bg-[#f0ebf4] px-4 py-1.5 text-center text-[11px] font-medium tracking-wide text-lacuna-plum/70"
+      className="glass-layer-tint border-b border-lacuna-plum/12 px-4 py-1.5 text-center text-[11px] font-medium tracking-wide text-lacuna-plum/80"
     >
       {line}
     </div>

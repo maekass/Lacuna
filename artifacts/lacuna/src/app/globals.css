@@ -204,3 +204,81 @@ h1, h2, h3, h4, .font-display {
   background-clip: text;
   color: transparent;
 }
+
+/* ============================================================
+   Spatial depth system — "Stratified Depth"
+   Layered elevation, glass surfaces, Z-axis lift, parallax field.
+   The diligence stack rendered as physical strata in Z-space.
+   ============================================================ */
+:root {
+  /* Layered elevation — soft plum-tinted ambient + crisp contact shadow */
+  --elev-1:
+    0 1px 2px -1px rgba(93, 78, 109, 0.08),
+    0 2px 6px -2px rgba(93, 78, 109, 0.10);
+  --elev-2:
+    0 2px 4px -2px rgba(93, 78, 109, 0.10),
+    0 10px 24px -8px rgba(93, 78, 109, 0.15);
+  --elev-3:
+    0 4px 8px -3px rgba(93, 78, 109, 0.12),
+    0 20px 44px -12px rgba(93, 78, 109, 0.20);
+  --elev-float:
+    0 8px 16px -6px rgba(93, 78, 109, 0.18),
+    0 32px 64px -18px rgba(93, 78, 109, 0.28);
+}
+
+.elev-1 { box-shadow: var(--elev-1); }
+.elev-2 { box-shadow: var(--elev-2); }
+.elev-3 { box-shadow: var(--elev-3); }
+
+/* Depth card — rests on a layer, rises toward the viewer on hover */
+.depth-card {
+  box-shadow: var(--elev-1);
+  transition:
+    box-shadow 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.36s ease;
+}
+.depth-card:hover {
+  box-shadow: var(--elev-3);
+  transform: translateY(-4px);
+}
+
+/* Glass surface — translucent stratum floating above scrolling content */
+.glass-layer {
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+.glass-layer-tint {
+  background: rgba(240, 235, 244, 0.88);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  backdrop-filter: saturate(160%) blur(14px);
+}
+
+/* Ambient parallax field — fixed depth plane behind all content */
+.ambient-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.ambient-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.42;
+}
+
+/* Drop the GPU-heavy ambient field on small screens — keep mobile light */
+@media (max-width: 767px) {
+  .ambient-field {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .depth-card:hover {
+    transform: none;
+  }
+}

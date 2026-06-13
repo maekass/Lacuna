@@ -20,10 +20,10 @@ function NavLink(
     <a
       href={href}
       onClick={onNavigate}
-      className={`block rounded-r-lg border-l-2 px-3 py-2 text-sm transition-all duration-150 touch-target-inline ${
+      className={`block rounded-lg border-l-2 px-3 py-2 text-sm transition-all duration-200 touch-target-inline ${
         active
-          ? "border-l-lacuna-plum font-semibold text-lacuna-plum"
-          : "border-l-transparent text-lacuna-blue/60 hover:border-l-lacuna-lavender/60 hover:text-lacuna-plum"
+          ? "border-l-lacuna-plum bg-white font-semibold text-lacuna-plum shadow-[var(--elev-1)] translate-x-0.5"
+          : "border-l-transparent text-lacuna-blue/60 hover:border-l-lacuna-lavender/60 hover:bg-white/50 hover:text-lacuna-plum"
       }`}
       aria-current={active ? "location" : undefined}
     >
@@ -88,7 +88,7 @@ export default function SectionNav({ sections }: SectionNavProps) {
       <aside className="hidden lg:block">
         <nav
           aria-label="Page sections"
-          className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto rounded-xl border border-lacuna-lavender/25 bg-white/70 py-3 pl-2 pr-3 backdrop-blur-sm shadow-sm"
+          className="glass-layer elev-2 sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto rounded-xl border border-lacuna-lavender/25 py-3 pl-2 pr-3"
         >
           <p className="mb-2.5 pl-3 text-[10px] font-semibold uppercase tracking-widest text-lacuna-plum/50">
             On this page
