@@ -20,10 +20,10 @@ function NavLink(
     <a
       href={href}
       onClick={onNavigate}
-      className={`block rounded-lg px-3 py-2 text-sm transition-colors touch-target-inline ${
+      className={`block rounded-r-lg border-l-2 px-3 py-2 text-sm transition-all duration-150 touch-target-inline ${
         active
-          ? "bg-lacuna-lavender/25 font-medium text-lacuna-plum"
-          : "text-lacuna-blue hover:bg-lacuna-pink/10 hover:text-lacuna-plum"
+          ? "border-l-lacuna-plum bg-lacuna-plum/8 font-semibold text-lacuna-plum"
+          : "border-l-transparent text-lacuna-blue/70 hover:border-l-lacuna-lavender hover:bg-lacuna-pink/8 hover:text-lacuna-plum"
       }`}
       aria-current={active ? "location" : undefined}
     >
@@ -60,7 +60,7 @@ export default function SectionNav({ sections }: SectionNavProps) {
   }, [sections]);
 
   const list = (onNavigate?: () => void) => (
-    <ul className="space-y-1">
+    <ul className="space-y-0.5">
       {sections.map((section) => (
         <li key={section.id}>
           <NavLink
@@ -88,9 +88,9 @@ export default function SectionNav({ sections }: SectionNavProps) {
       <aside className="hidden lg:block">
         <nav
           aria-label="Page sections"
-          className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto rounded-xl border border-lacuna-lavender/30 bg-lacuna-surface/80 p-3 backdrop-blur-sm"
+          className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto rounded-xl border border-lacuna-lavender/25 bg-white/70 py-3 pl-2 pr-3 backdrop-blur-sm shadow-sm"
         >
-          <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-wider text-lacuna-blue/70">
+          <p className="mb-2.5 pl-3 text-[10px] font-semibold uppercase tracking-widest text-lacuna-plum/50">
             On this page
           </p>
           {list()}

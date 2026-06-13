@@ -3,11 +3,14 @@
 /* Lacuna — Pantone Spring/Summer 2026 (README Design System) */
 :root {
   --font-playfair: "Playfair Display", Georgia, serif;
+  --font-inter: "Inter", system-ui, -apple-system, sans-serif;
   /* Brand */
   --lacuna-pink: #e8b4b8;
   --lacuna-lavender: #b8a9c9;
   --lacuna-blue: #4a5d8a;
   --lacuna-plum: #5d4e6d;
+  --lacuna-teal: #3a7d7a;
+  --lacuna-rose: #c4687a;
 
   /* Semantic surfaces */
   --lacuna-surface: #ffffff;
@@ -158,9 +161,11 @@ textarea:focus-visible {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family:
-    var(--font-playfair), "Didot", "Bodoni MT", "Playfair Display", Georgia,
-    "Times New Roman", serif;
+  font-family: "Inter", "system-ui", "-apple-system", sans-serif;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-playfair), "Didot", "Bodoni MT", Georgia, serif;
 }
 
 /* Didone serif hierarchy — weight/size/tracking only */

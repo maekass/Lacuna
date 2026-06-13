@@ -8,15 +8,15 @@ export default function WorkspaceNav() {
 
   return (
     <nav
-      className="hide-scrollbar flex flex-nowrap items-center gap-2 overflow-x-auto sm:flex-wrap sm:gap-3 sm:overflow-x-visible"
+      className="hide-scrollbar flex flex-nowrap items-center gap-1 overflow-x-auto sm:flex-wrap sm:gap-1.5 sm:overflow-x-visible"
       aria-label="Workspaces"
     >
       <Link
         href="/"
-        className={`touch-target-inline rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+        className={`touch-target-inline rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-150 ${
           pathname === "/"
-            ? "bg-lacuna-lavender/30 text-lacuna-plum"
-            : "text-lacuna-blue hover:bg-lacuna-pink/15 hover:text-lacuna-plum"
+            ? "bg-lacuna-plum text-white shadow-sm"
+            : "text-lacuna-blue/80 hover:bg-lacuna-pink/20 hover:text-lacuna-plum"
         }`}
         aria-current={pathname === "/" ? "page" : undefined}
       >
@@ -29,10 +29,10 @@ export default function WorkspaceNav() {
           <Link
             key={ws.slug}
             href={ws.href}
-            className={`touch-target-inline rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+            className={`touch-target-inline rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-150 ${
               active
-                ? "bg-lacuna-lavender/30 text-lacuna-plum"
-                : "text-lacuna-blue hover:bg-lacuna-pink/15 hover:text-lacuna-plum"
+                ? "bg-lacuna-plum text-white shadow-sm"
+                : "text-lacuna-blue/80 hover:bg-lacuna-pink/20 hover:text-lacuna-plum"
             }`}
             aria-current={active ? "page" : undefined}
           >
@@ -44,7 +44,7 @@ export default function WorkspaceNav() {
         href="https://github.com/maekass/Lacuna"
         target="_blank"
         rel="noopener noreferrer"
-        className="touch-target-inline ml-auto rounded-full bg-lacuna-lavender/25 px-3 py-1.5 text-xs font-medium text-lacuna-plum transition-colors hover:bg-lacuna-lavender/40"
+        className="touch-target-inline ml-2 rounded-full border border-lacuna-lavender/50 px-3 py-1.5 text-xs font-medium text-lacuna-plum/70 transition-all hover:border-lacuna-plum/40 hover:bg-lacuna-pink/10 hover:text-lacuna-plum"
       >
         GitHub
       </a>

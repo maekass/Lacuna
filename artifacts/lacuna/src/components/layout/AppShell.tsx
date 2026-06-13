@@ -21,38 +21,36 @@ export default function AppShell({ children }: AppShellProps) {
 
   return (
     <ProvenanceProvider globalBarActive>
-      <div className="min-h-screen bg-gradient-to-br from-lacuna-pink/15 via-background to-lacuna-lavender/20">
+      <div className="min-h-screen" style={{ background: "linear-gradient(160deg, #fdf6f8 0%, #faf7fb 40%, #f4f0f8 100%)" }}>
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
 
         <GlobalProvenanceBar />
 
-        <header className="sticky top-0 z-50 border-b border-lacuna-lavender/40 bg-white/80 backdrop-blur-md">
-          <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-2.5 sm:gap-3 sm:px-6 sm:py-4">
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-              <Link
-                href="/"
-                className="group flex shrink-0 items-center gap-2 sm:gap-3"
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg lacuna-gradient transition-transform group-hover:scale-105">
-                  <span className="text-lg font-bold text-white">L</span>
-                </div>
-                <div>
-                  <p className="text-xl font-bold text-lacuna-plum">Lacuna</p>
-                  <p className="text-xs text-lacuna-blue">
-                    Women&apos;s Health M&amp;A · Diligence Stack
-                  </p>
-                </div>
-              </Link>
-              <WorkspaceNav />
-            </div>
+        <header className="sticky top-0 z-50 border-b border-lacuna-lavender/25 bg-white/90 backdrop-blur-md shadow-[0_1px_12px_rgba(93,78,109,0.07)]">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 sm:py-3.5">
+            <Link
+              href="/"
+              className="group flex shrink-0 items-center gap-2.5"
+            >
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg lacuna-gradient shadow-sm transition-transform group-hover:scale-105">
+                <span className="text-sm font-bold text-white tracking-tight">L</span>
+              </div>
+              <div>
+                <p className="text-[15px] font-semibold leading-tight text-lacuna-plum tracking-tight">Lacuna</p>
+                <p className="text-[10px] leading-tight text-lacuna-blue/70 font-medium">
+                  Women&apos;s Health M&amp;A · Diligence Stack
+                </p>
+              </div>
+            </Link>
+            <WorkspaceNav />
           </div>
         </header>
 
         <main
           id="main-content"
-          className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-12"
+          className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-10"
         >
           {sections.length > 0
             ? (
