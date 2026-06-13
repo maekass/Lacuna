@@ -1,10 +1,11 @@
 /**
  * Stub routes for endpoints that require external services not yet configured:
- * - /api/ingest/sec/status
- * - /api/ingest/free-apis/status
- * - /api/ai/insights
- * - /api/gamma/*
- * - /api/genomics/*
+ * - /api/ingest/sec/status — requires DATABASE_URL
+ * - /api/ingest/free-apis/status — requires CLI download step
+ * - /api/genomics/* — requires LACUNA_VARIANT_STORE=clickhouse + CLICKHOUSE_URL
+ *
+ * Note: /api/ai/insights and /api/gamma/* are now handled by ai.ts and gamma.ts
+ * with proper configuration gating (not stubs).
  */
 import { Router, type IRouter } from "express";
 
@@ -26,22 +27,6 @@ router.get("/ingest/free-apis/status", (_req, res) => {
     cli: "npm run download:free-apis",
     docs: "/docs/FREE_API_DOWNLOADS.md",
   });
-});
-
-router.get("/ai/insights", (_req, res) => {
-  res.json({ configured: false });
-});
-
-router.post("/ai/insights", (_req, res) => {
-  res.status(503).json({ error: "AI inference not configured." });
-});
-
-router.get("/gamma/status/:id", (_req, res) => {
-  res.status(404).json({ error: "Gamma export not configured." });
-});
-
-router.post("/gamma/generate", (_req, res) => {
-  res.status(503).json({ error: "Gamma export not configured." });
 });
 
 router.get("/genomics/callsets", (_req, res) => {
