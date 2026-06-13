@@ -8,15 +8,15 @@ export default function WorkspaceNav() {
 
   return (
     <nav
-      className="hide-scrollbar flex flex-nowrap items-center gap-1 overflow-x-auto sm:flex-wrap sm:gap-1 sm:overflow-x-visible"
+      className="hide-scrollbar flex flex-nowrap items-center gap-5 overflow-x-auto sm:overflow-x-visible"
       aria-label="Workspaces"
     >
       <Link
         href="/"
-        className={`touch-target-inline rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors duration-150 ${
+        className={`touch-target-inline pb-0.5 text-sm transition-colors duration-150 ${
           pathname === "/"
-            ? "bg-lacuna-plum text-white"
-            : "text-lacuna-blue/70 hover:text-lacuna-plum"
+            ? "border-b-2 border-lacuna-plum font-semibold text-lacuna-plum"
+            : "text-lacuna-blue/60 hover:text-lacuna-plum"
         }`}
         aria-current={pathname === "/" ? "page" : undefined}
       >
@@ -28,10 +28,10 @@ export default function WorkspaceNav() {
           <Link
             key={ws.slug}
             href={ws.href}
-            className={`touch-target-inline rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors duration-150 ${
+            className={`touch-target-inline pb-0.5 text-sm transition-colors duration-150 ${
               active
-                ? "bg-lacuna-plum text-white"
-                : "text-lacuna-blue/70 hover:text-lacuna-plum"
+                ? "border-b-2 border-lacuna-plum font-semibold text-lacuna-plum"
+                : "text-lacuna-blue/60 hover:text-lacuna-plum"
             }`}
             aria-current={active ? "page" : undefined}
           >
