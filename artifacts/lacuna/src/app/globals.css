@@ -154,8 +154,9 @@ textarea:focus-visible {
   --color-lacuna-chart-axis: var(--lacuna-chart-axis);
   --color-lacuna-chart-accent: var(--lacuna-chart-accent);
   --color-lacuna-chart-secondary: var(--lacuna-chart-secondary);
-  --font-sans: var(--font-playfair);
-  --font-mono: var(--font-playfair);
+  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  --font-display: var(--font-playfair);
 }
 
 body {
