@@ -21,28 +21,20 @@ export default function AppShell({ children }: AppShellProps) {
 
   return (
     <ProvenanceProvider globalBarActive>
-      <div className="min-h-screen" style={{ background: "linear-gradient(160deg, #fdf6f8 0%, #faf7fb 40%, #f4f0f8 100%)" }}>
+      <div className="min-h-screen bg-[#faf8fb]">
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
 
         <GlobalProvenanceBar />
 
-        <header className="sticky top-0 z-50 border-b border-lacuna-lavender/25 bg-white/90 backdrop-blur-md shadow-[0_1px_12px_rgba(93,78,109,0.07)]">
-          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 sm:py-3.5">
-            <Link
-              href="/"
-              className="group flex shrink-0 items-center gap-2.5"
-            >
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg lacuna-gradient shadow-sm transition-transform group-hover:scale-105">
-                <span className="text-sm font-bold text-white tracking-tight">L</span>
+        <header className="sticky top-0 z-50 border-b border-lacuna-lavender/20 bg-white/95 backdrop-blur-sm">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+            <Link href="/" className="flex shrink-0 items-center gap-2">
+              <div className="flex h-7 w-7 items-center justify-center rounded lacuna-gradient">
+                <span className="text-xs font-bold text-white">L</span>
               </div>
-              <div>
-                <p className="text-[15px] font-semibold leading-tight text-lacuna-plum tracking-tight">Lacuna</p>
-                <p className="text-[10px] leading-tight text-lacuna-blue/70 font-medium">
-                  Women&apos;s Health M&amp;A · Diligence Stack
-                </p>
-              </div>
+              <span className="text-[15px] font-semibold text-lacuna-plum tracking-tight">Lacuna</span>
             </Link>
             <WorkspaceNav />
           </div>

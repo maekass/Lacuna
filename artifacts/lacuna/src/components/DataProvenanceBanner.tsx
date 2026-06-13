@@ -64,31 +64,14 @@ export default function DataProvenanceBanner() {
         onClick={() => setExpanded(!expanded)}
         className="w-full flex items-center justify-between gap-3 px-4 py-2.5 text-left hover:bg-lacuna-lavender/10 transition-colors"
       >
-        <div className="flex items-center gap-3 min-w-0">
-          <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
-            <svg
-              width="10"
-              height="10"
-              viewBox="0 0 16 16"
-              fill="none"
-              className="shrink-0"
-            >
-              <path
-                d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM7 4.5h2v5H7v-5zm0 6h2v2H7v-2z"
-                fill="currentColor"
-              />
-            </svg>
-            Open data
-          </span>
-          <span className="text-xs text-lacuna-blue truncate">
-            Thoughtfully sourced from SEC EDGAR, ClinicalTrials.gov, and public
-            filings
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-xs text-lacuna-blue/60 truncate">
+            Sourced from SEC EDGAR, ClinicalTrials.gov, and public filings
             {" · "}
             {verifiedAcquisitions.length} verified acquisitions
             {" · "}
-            {dataProvenance.datasetVersion} · updated{" "}
-            {dataProvenance.lastUpdated}
-            {" · "}Open-source · BUSL 1.1
+            updated {dataProvenance.lastUpdated}
+            {" · "}BUSL 1.1
           </span>
         </div>
         <svg
