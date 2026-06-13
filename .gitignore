@@ -1,79 +1,49 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# compiled output
+dist
+tmp
+out-tsc
+*.tsbuildinfo
+.expo
+.expo-shared
 
 # dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+node_modules
 
-# testing
-/coverage
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# local Deno toolchain (CI uses denoland/setup-deno)
-.deno/
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-!.env.example
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# cursor (keep rules tracked)
-.cursor/*
-!.cursor/rules/
-!.cursor/rules/**
-
-# vscode / cursor (keep shared settings tracked)
+# IDE - VSCode
 .vscode/*
 !.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
 !.vscode/extensions.json
 
-# staging outputs (templates in staging/*.template.csv are tracked)
-staging/deals_candidates.csv
-staging/sec_candidates.csv
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
 
-# free-API batch exports (see data/exports/free-apis/README.md)
-/data/exports/free-apis/**
-!/data/exports/free-apis/README.md
+# System Files
+.DS_Store
+Thumbs.db
 
-# framer brand site (separate concern from the analytics app — see AGENTS.md)
-/framer/
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md
 
-# playwright
-/test-results/
-/playwright-report/
-
-# large genomic blobs (metadata lives in ClickHouse)
-/data/variants/**
-!/data/variants/.gitkeep
-!/data/variants/README.md
-*.vcf
-*.vcf.gz
-*.gvcf
-*.bam
+# Replit
+.cache/
+.local/

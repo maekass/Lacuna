@@ -1,0 +1,79 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# local Deno toolchain (CI uses denoland/setup-deno)
+.deno/
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# cursor (keep rules tracked)
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
+
+# vscode / cursor (keep shared settings tracked)
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# staging outputs (templates in staging/*.template.csv are tracked)
+staging/deals_candidates.csv
+staging/sec_candidates.csv
+
+# free-API batch exports (see data/exports/free-apis/README.md)
+/data/exports/free-apis/**
+!/data/exports/free-apis/README.md
+
+# framer brand site (separate concern from the analytics app — see AGENTS.md)
+/framer/
+
+# playwright
+/test-results/
+/playwright-report/
+
+# large genomic blobs (metadata lives in ClickHouse)
+/data/variants/**
+!/data/variants/.gitkeep
+!/data/variants/README.md
+*.vcf
+*.vcf.gz
+*.gvcf
+*.bam
