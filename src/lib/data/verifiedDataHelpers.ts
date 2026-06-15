@@ -1,5 +1,9 @@
 import type { VerifiedDataset } from "./datasetTypes";
-import { classifyEvidence, type EvidenceClass, isEvidenceClass } from "../evidence";
+import {
+  classifyEvidence,
+  type EvidenceClass,
+  isEvidenceClass,
+} from "../evidence";
 
 export interface VerifiedCompanyView {
   readonly id: string;

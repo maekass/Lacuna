@@ -311,8 +311,9 @@ export default function EvidenceMaturityDashboard() {
             <span className="font-medium text-lacuna-plum">
               No evidence scores yet.
             </span>{" "}
-            The static dataset carries no clinical-trial or FDA metadata, so
-            all {baseRows.length}{" "}
+            The static dataset carries no clinical-trial or FDA metadata, so all
+            {" "}
+            {baseRows.length}{" "}
             deals currently score 0 (Pre-clinical) and a valuation correlation
             would be meaningless. Use{" "}
             <span className="font-medium text-lacuna-plum">
