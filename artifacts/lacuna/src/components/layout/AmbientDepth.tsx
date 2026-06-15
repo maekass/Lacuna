@@ -11,19 +11,19 @@ export default function AmbientDepth() {
   const reduce = useReducedMotion();
   const { scrollY } = useScroll();
 
-  const yLavender = useTransform(scrollY, [0, 2000], [0, -160]);
-  const yBlue = useTransform(scrollY, [0, 2000], [0, 220]);
-  const yPink = useTransform(scrollY, [0, 2000], [0, -110]);
+  const yLavender = useTransform(scrollY, [0, 2000], [0, -320]);
+  const yBlue = useTransform(scrollY, [0, 2000], [0, 420]);
+  const yPink = useTransform(scrollY, [0, 2000], [0, -230]);
 
   const orbs = [
     {
       key: "lavender",
       y: yLavender,
       style: {
-        top: "-10%",
+        top: "-12%",
         left: "-8%",
-        width: 640,
-        height: 640,
+        width: 760,
+        height: 760,
         background: "linear-gradient(135deg, #b8a9c9, #e8b4b8)",
       },
     },
@@ -31,22 +31,22 @@ export default function AmbientDepth() {
       key: "blue",
       y: yBlue,
       style: {
-        top: "12%",
-        right: "-10%",
-        width: 560,
-        height: 560,
+        top: "10%",
+        right: "-12%",
+        width: 680,
+        height: 680,
         background: "linear-gradient(135deg, #4a5d8a, #5d4e6d)",
-        opacity: 0.3,
+        opacity: 0.46,
       },
     },
     {
       key: "pink",
       y: yPink,
       style: {
-        bottom: "-12%",
-        left: "30%",
-        width: 520,
-        height: 520,
+        bottom: "-14%",
+        left: "28%",
+        width: 620,
+        height: 620,
         background: "linear-gradient(135deg, #e8b4b8, #b8a9c9)",
       },
     },
