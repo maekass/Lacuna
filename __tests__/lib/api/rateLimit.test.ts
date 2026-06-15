@@ -12,27 +12,27 @@ function createMockRedis(): RateLimitRedisClient & {
   const store = new Map<string, { count: number; expiresAt: number }>();
   return {
     store,
-    async incr(key: string) {
+    incr(key: string) {
       const now = Date.now();
       const entry = store.get(key);
       if (!entry || entry.expiresAt <= now) {
         store.set(key, { count: 1, expiresAt: now + 60_000 });
-        return 1;
+        return Promise.resolve(1);
       }
       entry.count += 1;
-      return entry.count;
+      return Promise.resolve(entry.count);
     },
-    async pexpire(key: string, milliseconds: number) {
+    pexpire(key: string, milliseconds: number) {
       const entry = store.get(key);
       if (entry) {
         entry.expiresAt = Date.now() + milliseconds;
       }
-      return 1;
+      return Promise.resolve(1);
     },
-    async pttl(key: string) {
+    pttl(key: string) {
       const entry = store.get(key);
-      if (!entry) return -1;
-      return Math.max(0, entry.expiresAt - Date.now());
+      if (!entry) return Promise.resolve(-1);
+      return Promise.resolve(Math.max(0, entry.expiresAt - Date.now()));
     },
   };
 }

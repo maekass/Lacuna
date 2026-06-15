@@ -63,6 +63,7 @@
   "companies": [
     {
       "id": "c1",
+      "evidenceClass": "care_delivery",
       "name": "Modern Fertility",
       "sector": "Fertility",
       "stage": "Acquired by Ro (2021)",
@@ -80,6 +81,7 @@
     },
     {
       "id": "c2",
+      "evidenceClass": "care_delivery",
       "name": "Ro",
       "sector": "General Wellness",
       "stage": "Private (Late Stage)",
@@ -97,6 +99,7 @@
     },
     {
       "id": "c3",
+      "evidenceClass": "consumer_wellness",
       "name": "Elvie",
       "sector": "Pelvic Health",
       "stage": "Private (Series B)",
@@ -114,6 +117,7 @@
     },
     {
       "id": "c4",
+      "evidenceClass": "care_delivery",
       "name": "Maven Clinic",
       "sector": "Fertility",
       "stage": "Private (Series D+)",
@@ -131,6 +135,7 @@
     },
     {
       "id": "c5",
+      "evidenceClass": "care_delivery",
       "name": "Tia",
       "sector": "General Wellness",
       "stage": "Private (Series A)",
@@ -141,6 +146,7 @@
     },
     {
       "id": "c6",
+      "evidenceClass": "care_delivery",
       "name": "Carrot Fertility",
       "sector": "Fertility",
       "stage": "Private (Series C)",
@@ -158,6 +164,7 @@
     },
     {
       "id": "c7",
+      "evidenceClass": "care_delivery",
       "name": "Kindbody",
       "sector": "Fertility",
       "stage": "Private (Series D)",
@@ -175,6 +182,7 @@
     },
     {
       "id": "c8",
+      "evidenceClass": "care_delivery",
       "name": "Parsley Health",
       "sector": "General Wellness",
       "stage": "Private (Series C)",
@@ -185,6 +193,7 @@
     },
     {
       "id": "c9",
+      "evidenceClass": "consumer_wellness",
       "name": "Everlywell",
       "sector": "General Wellness",
       "stage": "Private (Late Stage)",
@@ -202,6 +211,7 @@
     },
     {
       "id": "c10",
+      "evidenceClass": "consumer_wellness",
       "name": "Ava",
       "sector": "Fertility",
       "stage": "Private (Series A)",
@@ -217,6 +227,7 @@
     },
     {
       "id": "c11",
+      "evidenceClass": "consumer_wellness",
       "name": "Proov",
       "sector": "Fertility",
       "stage": "Private (Seed)",
@@ -232,6 +243,7 @@
     },
     {
       "id": "c12",
+      "evidenceClass": "consumer_wellness",
       "name": "Nurx",
       "sector": "General Wellness",
       "stage": "Acquired by Ro (2021)",
@@ -249,6 +261,7 @@
     },
     {
       "id": "c13",
+      "evidenceClass": "consumer_wellness",
       "name": "Lemonaid Health",
       "sector": "Mental Health",
       "stage": "Acquired (2021)",
@@ -259,6 +272,7 @@
     },
     {
       "id": "c14",
+      "evidenceClass": "care_delivery",
       "name": "Talkspace",
       "sector": "Mental Health",
       "stage": "Public (SPAC 2021)",
@@ -276,6 +290,7 @@
     },
     {
       "id": "c15",
+      "evidenceClass": "consumer_wellness",
       "name": "Calm",
       "sector": "Mental Health",
       "stage": "Private (Late Stage)",
@@ -293,6 +308,7 @@
     },
     {
       "id": "c16",
+      "evidenceClass": "consumer_wellness",
       "name": "Oura",
       "sector": "Wearables",
       "stage": "Private (Series C)",
@@ -310,6 +326,7 @@
     },
     {
       "id": "c17",
+      "evidenceClass": "consumer_wellness",
       "name": "Whoop",
       "sector": "Wearables",
       "stage": "Private (Series F)",
@@ -327,6 +344,7 @@
     },
     {
       "id": "c18",
+      "evidenceClass": "consumer_wellness",
       "name": "Natural Cycles",
       "sector": "Fertility",
       "stage": "Private (Series B)",
@@ -337,6 +355,7 @@
     },
     {
       "id": "c19",
+      "evidenceClass": "consumer_wellness",
       "name": "Clue",
       "sector": "Fertility",
       "stage": "Private (Series B)",
@@ -347,6 +366,7 @@
     },
     {
       "id": "c20",
+      "evidenceClass": "consumer_wellness",
       "name": "Bloomi",
       "sector": "Pelvic Health",
       "stage": "Private (Seed)",
@@ -357,6 +377,7 @@
     },
     {
       "id": "c21",
+      "evidenceClass": "consumer_wellness",
       "name": "NovvaCup",
       "sector": "Pelvic Health",
       "stage": "Student Startup (JHU)",
@@ -368,6 +389,7 @@
     },
     {
       "id": "c22",
+      "evidenceClass": "consumer_wellness",
       "name": "Ovubrush",
       "sector": "Fertility",
       "stage": "Student Startup (JHU)",
@@ -378,6 +400,7 @@
     },
     {
       "id": "c23",
+      "evidenceClass": "consumer_wellness",
       "name": "Livongo Health",
       "sector": "General Wellness",
       "stage": "Acquired by Teladoc (2020)",
@@ -395,6 +418,7 @@
     },
     {
       "id": "c24",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Biotheranostics",
       "sector": "Breast Health",
       "stage": "Acquired by Hologic (2021)",
@@ -410,6 +434,7 @@
     },
     {
       "id": "c25",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Endomagnetics",
       "sector": "Breast Health",
       "stage": "Acquired by Hologic (2024)",
@@ -425,6 +450,7 @@
     },
     {
       "id": "c26",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Gynesonics",
       "sector": "Gynecological Surgery",
       "stage": "Acquired by Hologic (2024)",
@@ -440,6 +466,7 @@
     },
     {
       "id": "c27",
+      "evidenceClass": "fertility_science",
       "name": "ORIGIO a/s",
       "sector": "Fertility",
       "stage": "Acquired by CooperSurgical (2012)",
@@ -455,6 +482,7 @@
     },
     {
       "id": "c28",
+      "evidenceClass": "fertility_science",
       "name": "Generate Life Sciences",
       "sector": "Reproductive Health",
       "stage": "Acquired by CooperSurgical (2022)",
@@ -471,6 +499,7 @@
     },
     {
       "id": "c29",
+      "evidenceClass": "fertility_science",
       "name": "Cook Medical Reproductive Health",
       "sector": "Fertility",
       "stage": "Acquired by CooperSurgical (2022)",
@@ -485,6 +514,7 @@
     },
     {
       "id": "c30",
+      "evidenceClass": "fertility_science",
       "name": "ZyM\u014dt Fertility",
       "sector": "Fertility",
       "stage": "Acquired by CooperSurgical (2024)",
@@ -499,6 +529,7 @@
     },
     {
       "id": "c31",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Alydia Health",
       "sector": "Maternal Health",
       "stage": "Acquired by Organon (2021)",
@@ -513,6 +544,7 @@
     },
     {
       "id": "c32",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Forendo Pharma",
       "sector": "Reproductive Health",
       "stage": "Acquired by Organon (2021)",
@@ -528,6 +560,7 @@
     },
     {
       "id": "c33",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Igenomix",
       "sector": "Diagnostics",
       "stage": "Acquired by Vitrolife (2021)",
@@ -544,6 +577,7 @@
     },
     {
       "id": "c34",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Estetra (Mithra assets)",
       "sector": "Contraception",
       "stage": "Acquired by Gedeon Richter (2024)",
@@ -559,6 +593,7 @@
     },
     {
       "id": "c35",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Celmatix",
       "sector": "Fertility",
       "stage": "Acquired by Gedeon Richter (2026)",
@@ -573,6 +608,7 @@
     },
     {
       "id": "c36",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Sequenom",
       "sector": "Diagnostics",
       "stage": "Acquired by LabCorp (2016)",
@@ -588,6 +624,7 @@
     },
     {
       "id": "c37",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Genomic Health",
       "sector": "Precision Medicine",
       "stage": "Acquired by Exact Sciences (2019)",
@@ -603,6 +640,7 @@
     },
     {
       "id": "c38",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Foundation Medicine",
       "sector": "Precision Medicine",
       "stage": "Acquired by Roche (2018)",
@@ -618,6 +656,7 @@
     },
     {
       "id": "c39",
+      "evidenceClass": "care_delivery",
       "name": "Flatiron Health",
       "sector": "Precision Medicine",
       "stage": "Acquired by Roche (2018)",
@@ -633,6 +672,7 @@
     },
     {
       "id": "c40",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Acessa Health",
       "sector": "Gynecological Surgery",
       "stage": "Acquired by Hologic (2020)",
@@ -648,6 +688,7 @@
     },
     {
       "id": "c41",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Bolder Surgical",
       "sector": "Gynecological Surgery",
       "stage": "Acquired by Hologic (2021)",
@@ -663,6 +704,7 @@
     },
     {
       "id": "c42",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Focal Therapeutics",
       "sector": "Breast Health",
       "stage": "Acquired by Hologic (2018)",
@@ -678,6 +720,7 @@
     },
     {
       "id": "c43",
+      "evidenceClass": "clinical_therapeutic",
       "name": "obp Surgical",
       "sector": "Gynecological Surgery",
       "stage": "Acquired by CooperSurgical (2024)",
@@ -693,6 +736,7 @@
     },
     {
       "id": "c44",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Smith & Nephew Gynecology (Truclear)",
       "sector": "Gynecological Surgery",
       "stage": "Acquired by Medtronic (2016)",
@@ -708,6 +752,7 @@
     },
     {
       "id": "c45",
+      "evidenceClass": "diagnostic_genomic",
       "name": "nVision Medical",
       "sector": "Diagnostics",
       "stage": "Acquired by Boston Scientific (2018)",
@@ -723,6 +768,7 @@
     },
     {
       "id": "c46",
+      "evidenceClass": "diagnostic_genomic",
       "name": "GRAIL",
       "sector": "Precision Medicine",
       "stage": "Acquired by Illumina (2021)",
@@ -739,6 +785,7 @@
     },
     {
       "id": "c47",
+      "evidenceClass": "fertility_science",
       "name": "Hamilton Thorne",
       "sector": "Fertility",
       "stage": "Acquired by Astorg (2024)",
@@ -755,6 +802,7 @@
     },
     {
       "id": "c48",
+      "evidenceClass": "fertility_science",
       "name": "eFertility (STB Zorg)",
       "sector": "Fertility",
       "stage": "Acquired by Vitrolife (2024)",
@@ -769,6 +817,7 @@
     },
     {
       "id": "c49",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Cogentix Medical",
       "sector": "Pelvic Health",
       "stage": "Acquired by Laborie Medical (2019)",
@@ -784,6 +833,7 @@
     },
     {
       "id": "c50",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Nine Continents Medical",
       "sector": "Pelvic Health",
       "stage": "Acquired by Coloplast (2020)",
@@ -798,6 +848,7 @@
     },
     {
       "id": "c51",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Myovant Sciences",
       "sector": "Reproductive Health",
       "stage": "Acquired by Sumitovant Biopharma (2023)",
@@ -814,6 +865,7 @@
     },
     {
       "id": "c52",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Counsyl",
       "sector": "Diagnostics",
       "stage": "Acquired by Myriad Genetics (2018)",
@@ -829,6 +881,7 @@
     },
     {
       "id": "c53",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Gateway Genomics",
       "sector": "Diagnostics",
       "stage": "Acquired by Myriad Genetics (2022)",
@@ -844,6 +897,7 @@
     },
     {
       "id": "c54",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Invitae Reproductive Health",
       "sector": "Diagnostics",
       "stage": "Assets acquired by Natera (2024)",
@@ -859,6 +913,7 @@
     },
     {
       "id": "c55",
+      "evidenceClass": "clinical_therapeutic",
       "name": "TherapeuticsMD",
       "sector": "Reproductive Health",
       "stage": "Products licensed to Mayne Pharma (2023)",
@@ -874,6 +929,7 @@
     },
     {
       "id": "c56",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Seagen",
       "sector": "Precision Medicine",
       "stage": "Acquired by Pfizer (2023)",
@@ -890,6 +946,7 @@
     },
     {
       "id": "c57",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Varian Medical Systems",
       "sector": "Precision Medicine",
       "stage": "Acquired by Siemens Healthineers (2021)",
@@ -906,6 +963,7 @@
     },
     {
       "id": "c58",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Immunomedics",
       "sector": "Breast Health",
       "stage": "Acquired by Gilead Sciences (2020)",
@@ -922,6 +980,7 @@
     },
     {
       "id": "c59",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Thrive Earlier Detection",
       "sector": "Diagnostics",
       "stage": "Acquired by Exact Sciences (2021)",
@@ -938,6 +997,7 @@
     },
     {
       "id": "c60",
+      "evidenceClass": "diagnostic_genomic",
       "name": "PreventionGenetics",
       "sector": "Diagnostics",
       "stage": "Acquired by Exact Sciences (2022)",
@@ -954,6 +1014,7 @@
     },
     {
       "id": "c61",
+      "evidenceClass": "diagnostic_genomic",
       "name": "EUROIMMUN",
       "sector": "Diagnostics",
       "stage": "Acquired by PerkinElmer (2017)",
@@ -970,6 +1031,7 @@
     },
     {
       "id": "c62",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Faxitron Bioptics",
       "sector": "Breast Health",
       "stage": "Acquired by Hologic (2018)",
@@ -986,6 +1048,7 @@
     },
     {
       "id": "c63",
+      "evidenceClass": "diagnostic_genomic",
       "name": "SuperSonic Imagine",
       "sector": "Breast Health",
       "stage": "Acquired by Hologic (2019)",
@@ -1002,6 +1065,7 @@
     },
     {
       "id": "c64",
+      "evidenceClass": "care_delivery",
       "name": "Ovia Health",
       "sector": "Maternal Health",
       "stage": "Acquired by LabCorp (2021)",
@@ -1017,6 +1081,7 @@
     },
     {
       "id": "c65",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Sividon Diagnostics",
       "sector": "Breast Health",
       "stage": "Acquired by Myriad Genetics (2016)",
@@ -1033,6 +1098,7 @@
     },
     {
       "id": "c66",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Alere",
       "sector": "Diagnostics",
       "stage": "Acquired by Abbott (2017)",
@@ -1049,6 +1115,7 @@
     },
     {
       "id": "c67",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Ethicon GYNECARE TVT Products",
       "sector": "Pelvic Health",
       "stage": "Acquired by Caldera Medical (2025)",
@@ -1063,6 +1130,7 @@
     },
     {
       "id": "c68",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Gen-Probe",
       "sector": "Diagnostics",
       "stage": "Acquired by Hologic (2012)",
@@ -1079,6 +1147,7 @@
     },
     {
       "id": "c69",
+      "evidenceClass": "clinical_therapeutic",
       "name": "KaNDy Therapeutics",
       "sector": "Menopause",
       "stage": "Acquired by Bayer (2020)",
@@ -1095,6 +1164,7 @@
     },
     {
       "id": "c70",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Ogeda SA",
       "sector": "Menopause",
       "stage": "Acquired by Astellas (2017)",
@@ -1111,6 +1181,7 @@
     },
     {
       "id": "c71",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Dermavant Sciences",
       "sector": "Dermatology",
       "stage": "Acquired by Organon (2024)",
@@ -1127,6 +1198,7 @@
     },
     {
       "id": "c72",
+      "evidenceClass": "fertility_science",
       "name": "IVI-RMA Global",
       "sector": "Fertility",
       "stage": "Acquired by KKR (2023)",
@@ -1143,6 +1215,7 @@
     },
     {
       "id": "c73",
+      "evidenceClass": "fertility_science",
       "name": "Indira IVF",
       "sector": "Fertility",
       "stage": "Majority stake acquired by BPEA EQT (2023)",
@@ -1159,6 +1232,7 @@
     },
     {
       "id": "c74",
+      "evidenceClass": "consumer_wellness",
       "name": "Apostrophe",
       "sector": "General Wellness",
       "stage": "Acquired by Hims & Hers (2021)",
@@ -1174,6 +1248,7 @@
     },
     {
       "id": "c75",
+      "evidenceClass": "fertility_science",
       "name": "Eugin Group (North American operations)",
       "sector": "Fertility",
       "stage": "Acquired by IVI-RMA/KKR (2024)",
@@ -1190,6 +1265,7 @@
     },
     {
       "id": "c76",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Evvy",
       "sector": "Diagnostics",
       "stage": "Private (Series A)",
@@ -1205,6 +1281,7 @@
     },
     {
       "id": "c77",
+      "evidenceClass": "care_delivery",
       "name": "Hey Jane",
       "sector": "Reproductive Health",
       "stage": "Private (Seed)",
@@ -1220,6 +1297,7 @@
     },
     {
       "id": "c78",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Contraline",
       "sector": "Contraception",
       "stage": "Private (Series B)",
@@ -1234,6 +1312,7 @@
     },
     {
       "id": "c79",
+      "evidenceClass": "care_delivery",
       "name": "Gennev",
       "sector": "Menopause",
       "stage": "Acquired by Unified Women's Healthcare (2022)",
@@ -1249,6 +1328,7 @@
     },
     {
       "id": "c80",
+      "evidenceClass": "care_delivery",
       "name": "Alloy",
       "sector": "Menopause",
       "stage": "Private (Series A)",
@@ -1264,6 +1344,7 @@
     },
     {
       "id": "c81",
+      "evidenceClass": "care_delivery",
       "name": "Millie",
       "sector": "Maternal Health",
       "stage": "Private (Series A)",
@@ -1279,6 +1360,7 @@
     },
     {
       "id": "c82",
+      "evidenceClass": "care_delivery",
       "name": "Origin",
       "sector": "Pelvic Health",
       "stage": "Private (Series B)",
@@ -1293,6 +1375,7 @@
     },
     {
       "id": "c83",
+      "evidenceClass": "consumer_wellness",
       "name": "Dame",
       "sector": "Sexual Wellness",
       "stage": "Private (Series A)",
@@ -1308,6 +1391,7 @@
     },
     {
       "id": "c84",
+      "evidenceClass": "fertility_science",
       "name": "B\u00e9a Fertility",
       "sector": "Fertility",
       "stage": "Private (Seed)",
@@ -1323,6 +1407,7 @@
     },
     {
       "id": "c85",
+      "evidenceClass": "fertility_science",
       "name": "Granata Bio",
       "sector": "Fertility",
       "stage": "Private (Series A)",
@@ -1337,6 +1422,7 @@
     },
     {
       "id": "c86",
+      "evidenceClass": "clinical_therapeutic",
       "name": "Gesynta Pharma",
       "sector": "Reproductive Health",
       "stage": "Private (Series B)",
@@ -1351,6 +1437,7 @@
     },
     {
       "id": "c87",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Testmate Health",
       "sector": "Diagnostics",
       "stage": "Private (Seed)",
@@ -1365,6 +1452,7 @@
     },
     {
       "id": "c88",
+      "evidenceClass": "consumer_wellness",
       "name": "Aunt Flow",
       "sector": "Pelvic Health",
       "stage": "Private (Series A)",
@@ -1379,6 +1467,7 @@
     },
     {
       "id": "c89",
+      "evidenceClass": "diagnostic_genomic",
       "name": "Juniper Genomics",
       "sector": "Diagnostics",
       "stage": "Private (Seed)",

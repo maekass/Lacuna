@@ -1,3 +1,5 @@
+import type { EvidenceClass } from "../evidence";
+
 export type DataMode = "static" | "db";
 
 export interface VerifiedDataset {
@@ -21,6 +23,13 @@ export interface VerifiedDataset {
     valuationSource?: string;
     totalFunding?: number;
     sources?: string[];
+    /**
+     * Research-x-transactions evidence taxonomy. Optional at the raw-data layer:
+     * the static JSON carries it for every company, and the DB path is backfilled
+     * by `classifyEvidence` in `buildVerifiedDerivedData`, so the derived
+     * `VerifiedCompanyView.evidenceClass` is always present.
+     */
+    evidenceClass?: EvidenceClass;
   }>;
   acquirers: Array<{
     id: string;

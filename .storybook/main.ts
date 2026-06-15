@@ -5,7 +5,7 @@ const config: StorybookConfig = {
   stories: ["../src/**/*.stories.@(ts|tsx)"],
   framework: "@storybook/nextjs",
   staticDirs: ["../public"],
-  webpackFinal: async (config) => {
+  webpackFinal: (config) => {
     if (config.resolve) {
       config.resolve.alias = {
         ...config.resolve.alias,
