@@ -33,11 +33,18 @@ function main(): void {
     counts[cls] += 1;
 
     // Match the company's id line, capturing its exact indentation.
-    const idLine = new RegExp(`(^([ \\t]*)"id": ${JSON.stringify(c.id)},\\n)`, "m");
-    const matches = text.match(new RegExp(`"id": ${JSON.stringify(c.id)},`, "g"));
+    const idLine = new RegExp(
+      `(^([ \\t]*)"id": ${JSON.stringify(c.id)},\\n)`,
+      "m",
+    );
+    const matches = text.match(
+      new RegExp(`"id": ${JSON.stringify(c.id)},`, "g"),
+    );
     if (!matches || matches.length !== 1) {
       throw new Error(
-        `Expected exactly one "id": "${c.id}" line, found ${matches?.length ?? 0}`,
+        `Expected exactly one "id": "${c.id}" line, found ${
+          matches?.length ?? 0
+        }`,
       );
     }
     text = text.replace(
@@ -49,7 +56,11 @@ function main(): void {
 
   writeFileSync(datasetPath, text, "utf8");
 
-  console.log("Applied evidenceClass to", dataset.companies.length, "companies");
+  console.log(
+    "Applied evidenceClass to",
+    dataset.companies.length,
+    "companies",
+  );
   console.log("");
   console.log("--- Companies per evidenceClass ---");
   for (const cls of EVIDENCE_CLASSES) {
