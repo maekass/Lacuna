@@ -1,9 +1,6 @@
 "use client";
 
-import type {
-  PortfolioFit,
-  PortfolioFitTone,
-} from "@/lib/data/portfolios";
+import type { PortfolioFit, PortfolioFitTone } from "@/lib/data/portfolios";
 import type {
   VerifiedAcquisitionView,
   VerifiedCompanyView,
@@ -72,7 +69,6 @@ export default function PitchBrief(
     onClose,
   }: PitchBriefProps,
 ) {
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-lacuna-plum/45 p-4 print:block print:bg-transparent print:p-0">
       <button
@@ -164,8 +160,9 @@ export default function PitchBrief(
               </h5>
               <div className="mt-3 space-y-2 text-sm text-lacuna-text-secondary">
                 <p>
-                  <span className="font-medium text-lacuna-text-primary">Cluster:</span>
-                  {" "}
+                  <span className="font-medium text-lacuna-text-primary">
+                    Cluster:
+                  </span>{" "}
                   {marketPosition}
                 </p>
                 <p>

@@ -227,7 +227,9 @@ export default function AcquirerPredictionDashboard() {
                     ? `+${selectedAnalysis.estimatedBiddingWarPremium}%`
                     : "None"}
                 </div>
-                <div className="text-xs text-lacuna-text-muted">Potential Premium</div>
+                <div className="text-xs text-lacuna-text-muted">
+                  Potential Premium
+                </div>
               </div>
             </div>
 
@@ -300,7 +302,9 @@ export default function AcquirerPredictionDashboard() {
                         <div className="text-lg font-semibold text-lacuna-plum">
                           {match.matchScore}
                         </div>
-                        <div className="text-xs text-lacuna-text-muted">Match Score</div>
+                        <div className="text-xs text-lacuna-text-muted">
+                          Match Score
+                        </div>
                       </div>
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-medium border ${
@@ -318,19 +322,25 @@ export default function AcquirerPredictionDashboard() {
                       <div className="text-sm font-semibold text-lacuna-plum">
                         {match.strategicFit}
                       </div>
-                      <div className="text-xs text-lacuna-text-muted">Strategic Fit</div>
+                      <div className="text-xs text-lacuna-text-muted">
+                        Strategic Fit
+                      </div>
                     </div>
                     <div className="p-2 bg-lacuna-surface-muted rounded">
                       <div className="text-sm font-semibold text-lacuna-plum">
                         {match.marketFit}
                       </div>
-                      <div className="text-xs text-lacuna-text-muted">Market Fit</div>
+                      <div className="text-xs text-lacuna-text-muted">
+                        Market Fit
+                      </div>
                     </div>
                     <div className="p-2 bg-lacuna-surface-muted rounded">
                       <div className="text-sm font-semibold text-lacuna-plum">
                         {match.financialFit}
                       </div>
-                      <div className="text-xs text-lacuna-text-muted">Financial Fit</div>
+                      <div className="text-xs text-lacuna-text-muted">
+                        Financial Fit
+                      </div>
                     </div>
                     <div className="p-2 bg-lacuna-surface-muted rounded">
                       <div className="text-sm font-semibold text-green-600">

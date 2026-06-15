@@ -103,7 +103,8 @@ const TIER_STYLES: Record<string, string> = {
   sky: "bg-sky-50 text-sky-700 border-sky-200",
   amber: "bg-amber-50 text-amber-700 border-amber-200",
   orange: "bg-orange-50 text-orange-700 border-orange-200",
-  slate: "bg-lacuna-surface-muted text-lacuna-text-secondary border-lacuna-border",
+  slate:
+    "bg-lacuna-surface-muted text-lacuna-text-secondary border-lacuna-border",
 };
 
 const SCORE_BAR_COLORS: Record<string, string> = {
@@ -452,7 +453,8 @@ export default function EvidenceMaturityDashboard() {
                 {/* Score pill */}
                 <div
                   className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold shrink-0 ${
-                    SCORE_BAR_COLORS[row.evidence.tierColor] || "bg-lacuna-text-muted"
+                    SCORE_BAR_COLORS[row.evidence.tierColor] ||
+                    "bg-lacuna-text-muted"
                   } text-white`}
                 >
                   {row.evidence.overall}

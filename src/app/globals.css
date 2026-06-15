@@ -28,7 +28,9 @@
 
   /* Chart chrome */
   --lacuna-chart-grid: rgba(184, 169, 201, 0.35);
+  --lacuna-chart-axis: #8a7d96;
   --lacuna-chart-accent: #7c3aed;
+  --lacuna-chart-secondary: var(--lacuna-pink);
 
   --background: var(--lacuna-surface-muted);
   --foreground: var(--lacuna-text-primary);
@@ -145,7 +147,9 @@ textarea:focus-visible {
   --color-lacuna-border-subtle: var(--lacuna-border-subtle);
   --color-lacuna-border-strong: var(--lacuna-border-strong);
   --color-lacuna-chart-grid: var(--lacuna-chart-grid);
+  --color-lacuna-chart-axis: var(--lacuna-chart-axis);
   --color-lacuna-chart-accent: var(--lacuna-chart-accent);
+  --color-lacuna-chart-secondary: var(--lacuna-chart-secondary);
   --font-sans: var(--font-playfair);
   --font-mono: var(--font-playfair);
 }

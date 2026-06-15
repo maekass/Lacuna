@@ -144,6 +144,14 @@ export const ReimbursementIntelligenceDashboard = dynamic(
     loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },
 );
+export const InvestmentGradeReimbursementIntel = dynamic(
+  () => import("@/components/InvestmentGradeReimbursementIntel"),
+  {
+    loading: sectionFallback(
+      "h-[600px] animate-pulse rounded-xl bg-lacuna-pink/10",
+    ),
+  },
+);
 export const BusinessModelClassifier = dynamic(
   () => import("@/components/business-model-classifier"),
   { loading: sectionFallback() },
@@ -156,6 +164,36 @@ export const VariantCallsetBrowser = dynamic(
 );
 export const AcquirerPredictionDashboard = dynamic(
   () => import("@/components/AcquirerPredictionDashboard"),
+  {
+    loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
+  },
+);
+export const CommercializationReadiness = dynamic(
+  () => import("@/components/CommercializationReadiness"),
+  {
+    loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
+  },
+);
+export const SystemHealthDashboard = dynamic(
+  () => import("@/components/SystemHealthDashboard"),
+  {
+    loading: sectionFallback("h-80 animate-pulse rounded-xl bg-lacuna-pink/10"),
+  },
+);
+export const DataPipelineStatus = dynamic(
+  () => import("@/components/DataPipelineStatus"),
+  {
+    loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
+  },
+);
+export const DeveloperTools = dynamic(
+  () => import("@/components/DeveloperTools"),
+  {
+    loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
+  },
+);
+export const DataExport = dynamic(
+  () => import("@/components/DataExport"),
   {
     loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },

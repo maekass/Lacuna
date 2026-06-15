@@ -47,7 +47,9 @@ export function DiscreteSourceNote(
   { children, className = "" }: DiscreteSourceNoteProps,
 ) {
   return (
-    <p className={`text-[10px] italic leading-snug text-lacuna-text-muted ${className}`}>
+    <p
+      className={`text-[10px] italic leading-snug text-lacuna-text-muted ${className}`}
+    >
       {children}
     </p>
   );

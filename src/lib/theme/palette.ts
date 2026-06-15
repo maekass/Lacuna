@@ -30,7 +30,9 @@ export const LACUNA_SEMANTIC = {
   },
   chart: {
     grid: "rgba(184, 169, 201, 0.35)",
+    axis: "#8A7D96",
     accent: "#7C3AED",
+    secondary: LACUNA_PALETTE.transcendentPink,
     barStart: LACUNA_PALETTE.transcendentPink,
     barEnd: LACUNA_PALETTE.softLavender,
   },

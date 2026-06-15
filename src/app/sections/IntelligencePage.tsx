@@ -3,7 +3,12 @@
 import {
   AcquirerPredictionDashboard,
   BusinessModelClassifier,
+  DataExport,
+  DataPipelineStatus,
+  DeveloperTools,
+  InvestmentGradeReimbursementIntel,
   ReimbursementIntelligenceDashboard,
+  SystemHealthDashboard,
 } from "@/app/lazyDashboard";
 import ExportToGamma from "@/components/ExportToGamma";
 import MotionSection from "@/components/ui/MotionSection";
@@ -19,24 +24,32 @@ export default function IntelligencePage() {
           Intelligence workspace
         </h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
-          Reimbursement context, strategic acquirer fit (descriptive), and deck
-          export — exploratory framing, not advice or live claims data.
+          Reimbursement context, strategic acquirer fit, system health, and data
+          exports — engineering-grade tooling for production environments.
         </p>
       </header>
 
-      <MotionSection id="reimbursement-intelligence" className={SECTION}>
+      <MotionSection id="system-health" className={SECTION}>
         <SectionHeader
-          title="Reimbursement context (descriptive)"
-          description="Illustrative CMS code mapping and business-model labels on verified companies — exploratory framing, not reimbursement advice or live claims data."
+          title="System Health & Monitoring"
+          description="Real-time API health checks, latency tracking, and service availability monitoring for production deployments."
         />
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <ReimbursementIntelligenceDashboard />
-          </div>
-          <div>
-            <BusinessModelClassifier />
-          </div>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <SystemHealthDashboard />
+          <DataPipelineStatus />
         </div>
+      </MotionSection>
+
+      <MotionSection
+        id="reimbursement-intelligence"
+        delay={0.05}
+        className={SECTION}
+      >
+        <SectionHeader
+          title="Reimbursement & Commercial Due Diligence"
+          description="Investment-grade reimbursement risk scoring, TAM/SAM/SOM market sizing, and competitive intelligence for life sciences M&A."
+        />
+        <InvestmentGradeReimbursementIntel />
       </MotionSection>
 
       <MotionSection id="acquirer-prediction" delay={0.05} className={SECTION}>
@@ -50,9 +63,20 @@ export default function IntelligencePage() {
       <MotionSection id="export" delay={0.1} className={SECTION}>
         <SectionHeader
           title="Export & share"
-          description="Generate a Gamma deck from verified dataset slices — for portfolio walkthroughs and methodology demos."
+          description="Generate presentations and download dataset exports in multiple formats for analysis and integration."
         />
-        <ExportToGamma />
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <ExportToGamma />
+          <DataExport />
+        </div>
+      </MotionSection>
+
+      <MotionSection id="developer-tools" delay={0.15} className={SECTION}>
+        <SectionHeader
+          title="Developer Tools"
+          description="API documentation, SDK references, code examples, and integration guides for engineers building on the Lacuna platform."
+        />
+        <DeveloperTools />
       </MotionSection>
     </div>
   );

@@ -3,10 +3,7 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
-import {
-  INVESTOR_PORTFOLIOS,
-  type PortfolioKey,
-} from "@/lib/data/portfolios";
+import { INVESTOR_PORTFOLIOS, type PortfolioKey } from "@/lib/data/portfolios";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
 
@@ -299,7 +296,9 @@ export default function CompanySimilarity() {
 
       {mode === "single" && selected && (
         <div className="mb-4 p-3 bg-lacuna-surface-muted rounded-lg">
-          <p className="font-medium text-lacuna-text-primary">{selected.name}</p>
+          <p className="font-medium text-lacuna-text-primary">
+            {selected.name}
+          </p>
           <p className="text-sm text-lacuna-text-muted">
             {selected.sector} · {selected.stage}
             {selected.lastKnownValuation &&

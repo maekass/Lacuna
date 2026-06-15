@@ -4,6 +4,16 @@ import { useMemo } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import { LACUNA_SEMANTIC } from "@/lib/theme/palette";
+
+const CHART = LACUNA_SEMANTIC.chart;
+const ACCENT_FILL = `${CHART.accent}33`;
+const SECONDARY_FILL = `${CHART.secondary}33`;
+
+interface WhiteSpaceAnalysisProps {
+  /** When false (default), omit title — parent SectionHeader supplies it. */
+  showHeader?: boolean;
+}
 
 const CHART_WIDTH = 680;
 const CHART_HEIGHT = 420;
@@ -34,7 +44,9 @@ function sectorLabelLines(sector: string): string[] {
   return sector.split(" ");
 }
 
-export default function WhiteSpaceAnalysis() {
+export default function WhiteSpaceAnalysis(
+  { showHeader = false }: WhiteSpaceAnalysisProps,
+) {
   const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
 
   const {
@@ -137,16 +149,22 @@ export default function WhiteSpaceAnalysis() {
       className="bg-white rounded-xl shadow-sm border border-lacuna-border p-6"
     >
       <CuratedDatasetBanner className="mb-4" />
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <h3 className="text-lg font-semibold text-lacuna-text-primary">
-            White Space Analysis
-          </h3>
-          <p className="text-sm text-lacuna-text-muted">
-            Deal activity vs. company density across the verified women&apos;s
-            health landscape
-          </p>
-        </div>
+      <div
+        className={`mb-4 flex items-center ${
+          showHeader ? "justify-between" : "justify-end"
+        }`}
+      >
+        {showHeader && (
+          <div>
+            <h3 className="text-lg font-semibold text-lacuna-text-primary">
+              White Space Analysis
+            </h3>
+            <p className="text-sm text-lacuna-text-muted">
+              Deal activity vs. company density across the verified women&apos;s
+              health landscape
+            </p>
+          </div>
+        )}
         <span className="rounded-full bg-lacuna-pink/10 px-3 py-1 text-xs font-medium text-lacuna-plum">
           {whiteSpaceSectors.length}{" "}
           white-space sector{whiteSpaceSectors.length === 1 ? "" : "s"}
@@ -162,7 +180,7 @@ export default function WhiteSpaceAnalysis() {
           y1={CHART_HEIGHT - BOTTOM_MARGIN}
           x2={CHART_WIDTH - RIGHT_MARGIN}
           y2={CHART_HEIGHT - BOTTOM_MARGIN}
-          stroke="#cbd5e1"
+          stroke={CHART.grid}
           strokeWidth={1.5}
         />
         <line
@@ -170,7 +188,7 @@ export default function WhiteSpaceAnalysis() {
           y1={TOP_MARGIN}
           x2={LEFT_MARGIN}
           y2={CHART_HEIGHT - BOTTOM_MARGIN}
-          stroke="#cbd5e1"
+          stroke={CHART.grid}
           strokeWidth={1.5}
         />
         <line
@@ -178,14 +196,15 @@ export default function WhiteSpaceAnalysis() {
           y1={CHART_HEIGHT - BOTTOM_MARGIN}
           x2={CHART_WIDTH - RIGHT_MARGIN}
           y2={TOP_MARGIN}
-          stroke="#94a3b8"
+          stroke={CHART.axis}
           strokeWidth={1.5}
           strokeDasharray="6,6"
         />
         <text
           x={LEFT_MARGIN + 24}
           y={TOP_MARGIN + 18}
-          className="text-xs fill-[#7C3AED] font-semibold"
+          fill={CHART.accent}
+          className="text-xs font-semibold"
         >
           ⬦ White Space
         </text>
@@ -201,7 +220,7 @@ export default function WhiteSpaceAnalysis() {
                 y1={CHART_HEIGHT - BOTTOM_MARGIN}
                 x2={x}
                 y2={CHART_HEIGHT - BOTTOM_MARGIN + 6}
-                stroke="#94a3b8"
+                stroke={CHART.axis}
                 strokeWidth={1}
               />
               <text
@@ -217,7 +236,7 @@ export default function WhiteSpaceAnalysis() {
                 y1={y}
                 x2={LEFT_MARGIN}
                 y2={y}
-                stroke="#94a3b8"
+                stroke={CHART.axis}
                 strokeWidth={1}
               />
               <text
@@ -256,8 +275,8 @@ export default function WhiteSpaceAnalysis() {
               cx={point.x}
               cy={point.y}
               r={point.radius}
-              fill={point.isWhiteSpace ? "#7C3AED20" : "#F472B620"}
-              stroke={point.isWhiteSpace ? "#7C3AED" : "#EC4899"}
+              fill={point.isWhiteSpace ? ACCENT_FILL : SECONDARY_FILL}
+              stroke={point.isWhiteSpace ? CHART.accent : CHART.secondary}
               strokeWidth={2}
             />
             <text

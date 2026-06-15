@@ -205,10 +205,14 @@ function FocusAreaCard({
         </div>
       </button>
 
-      <p className="text-sm text-lacuna-text-secondary leading-relaxed">{area.summary}</p>
+      <p className="text-sm text-lacuna-text-secondary leading-relaxed">
+        {area.summary}
+      </p>
 
       <div className="rounded-md bg-lacuna-surface-muted border border-lacuna-border-subtle px-3 py-2 text-xs">
-        <p className="text-lacuna-text-muted">Disparity / prevalence (static)</p>
+        <p className="text-lacuna-text-muted">
+          Disparity / prevalence (static)
+        </p>
         <p className="font-medium text-lacuna-text-primary mt-0.5">
           {area.disparityLabel}
         </p>
@@ -404,7 +408,9 @@ export default function HealthEquityDashboard() {
       </div>
 
       <div className="mt-5 rounded-lg border border-sky-100 bg-sky-50/80 px-4 py-3 text-sm text-lacuna-text-primary">
-        <p className="font-medium text-lacuna-text-primary">What you can do here</p>
+        <p className="font-medium text-lacuna-text-primary">
+          What you can do here
+        </p>
         <ul className="mt-2 space-y-1 text-xs text-lacuna-text-secondary list-disc pl-5">
           <li>
             Filter by focus area, sector, or company; expand a row for sources
@@ -618,7 +624,9 @@ export default function HealthEquityDashboard() {
       </div>
 
       <div className="mt-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <p className="text-xs text-lacuna-text-muted">{dataProvenance.disclaimer}</p>
+        <p className="text-xs text-lacuna-text-muted">
+          {dataProvenance.disclaimer}
+        </p>
         <div className="flex flex-wrap gap-2">
           <a
             href="#impact-assessment"

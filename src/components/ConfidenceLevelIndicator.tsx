@@ -165,7 +165,11 @@ export function DataPointWithConfidence({
             style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
           >
             {value}
-            {unit && <span className="text-sm text-lacuna-text-muted ml-1">{unit}</span>}
+            {unit && (
+              <span className="text-sm text-lacuna-text-muted ml-1">
+                {unit}
+              </span>
+            )}
           </div>
         </div>
         <ConfidenceLevelIndicator

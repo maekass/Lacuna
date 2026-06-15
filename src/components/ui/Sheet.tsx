@@ -3,7 +3,11 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Menu, X } from "lucide-react";
-import type { ComponentPropsWithoutRef, HTMLAttributes, ReactNode } from "react";
+import type {
+  ComponentPropsWithoutRef,
+  HTMLAttributes,
+  ReactNode,
+} from "react";
 import { cn } from "@/lib/utils/cn";
 
 const Sheet = DialogPrimitive.Root;
@@ -16,7 +20,8 @@ const sheetVariants = cva(
   {
     variants: {
       side: {
-        left: "inset-y-0 left-0 h-full w-[min(20rem,85vw)] border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left",
+        left:
+          "inset-y-0 left-0 h-full w-[min(20rem,85vw)] border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left",
         right:
           "inset-y-0 right-0 h-full w-[min(20rem,85vw)] border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right",
       },
@@ -43,7 +48,8 @@ function SheetOverlay({
 }
 
 interface SheetContentProps
-  extends ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
+  extends
+    ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
     VariantProps<typeof sheetVariants> {}
 
 function SheetContent({
@@ -86,7 +92,10 @@ function SheetTitle({
 }: ComponentPropsWithoutRef<typeof DialogPrimitive.Title>) {
   return (
     <DialogPrimitive.Title
-      className={cn("text-sm font-semibold text-lacuna-text-primary", className)}
+      className={cn(
+        "text-sm font-semibold text-lacuna-text-primary",
+        className,
+      )}
       {...props}
     />
   );
@@ -96,7 +105,9 @@ function SheetBody({
   className,
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("flex-1 overflow-y-auto p-4", className)} {...props} />;
+  return (
+    <div className={cn("flex-1 overflow-y-auto p-4", className)} {...props} />
+  );
 }
 
 interface SheetHamburgerProps {
@@ -104,7 +115,9 @@ interface SheetHamburgerProps {
   className?: string;
 }
 
-function SheetHamburger({ label = "Open menu", className }: SheetHamburgerProps) {
+function SheetHamburger(
+  { label = "Open menu", className }: SheetHamburgerProps,
+) {
   return (
     <SheetTrigger
       className={cn(

@@ -265,7 +265,9 @@ export default function NetworkAnalysisHonest() {
               >
                 {stats.paths.diameter}
               </div>
-              <div className="text-xs text-lacuna-text-secondary mt-1">longest path</div>
+              <div className="text-xs text-lacuna-text-secondary mt-1">
+                longest path
+              </div>
             </div>
           </div>
 
@@ -819,13 +821,17 @@ export default function NetworkAnalysisHonest() {
                   </div>
                 </div>
                 <div>
-                  <div className="text-xs text-lacuna-text-muted uppercase">Slope</div>
+                  <div className="text-xs text-lacuna-text-muted uppercase">
+                    Slope
+                  </div>
                   <div className="font-medium">
                     {stats.temporal.trend.slope.toFixed(2)}/year
                   </div>
                 </div>
                 <div>
-                  <div className="text-xs text-lacuna-text-muted uppercase">R²</div>
+                  <div className="text-xs text-lacuna-text-muted uppercase">
+                    R²
+                  </div>
                   <div className="font-medium">
                     {stats.temporal.trend.rSquared.toFixed(2)}
                   </div>
@@ -1200,7 +1206,10 @@ export default function NetworkAnalysisHonest() {
                 {Object.entries(stats.stability.metricStability).map((
                   [metric, s],
                 ) => (
-                  <tr key={metric} className="border-b border-lacuna-border-subtle">
+                  <tr
+                    key={metric}
+                    className="border-b border-lacuna-border-subtle"
+                  >
                     <td className="py-2 font-medium capitalize">
                       {metric.replace(/_/g, " ")}
                     </td>
@@ -1365,7 +1374,9 @@ export default function NetworkAnalysisHonest() {
                     </div>
                   </div>
                   <div>
-                    <div className="text-lacuna-text-muted">Random baseline:</div>
+                    <div className="text-lacuna-text-muted">
+                      Random baseline:
+                    </div>
                     <div className="font-medium">
                       {stats.nullModel.randomBaseline.gini.mean.toFixed(3)}
                       <span className="text-lacuna-text-muted ml-1">
@@ -1400,7 +1411,9 @@ export default function NetworkAnalysisHonest() {
                     </div>
                   </div>
                   <div>
-                    <div className="text-lacuna-text-muted">Random baseline:</div>
+                    <div className="text-lacuna-text-muted">
+                      Random baseline:
+                    </div>
                     <div className="font-medium">
                       {stats.nullModel.randomBaseline.hhi.mean.toFixed(0)}
                       <span className="text-lacuna-text-muted ml-1">
@@ -1435,7 +1448,9 @@ export default function NetworkAnalysisHonest() {
                     </div>
                   </div>
                   <div>
-                    <div className="text-lacuna-text-muted">Random baseline:</div>
+                    <div className="text-lacuna-text-muted">
+                      Random baseline:
+                    </div>
                     <div className="font-medium">
                       {(stats.nullModel.randomBaseline.top3.mean * 100).toFixed(
                         0,

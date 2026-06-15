@@ -2,7 +2,11 @@
 
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
-import type { ComponentPropsWithoutRef, HTMLAttributes, ReactNode } from "react";
+import type {
+  ComponentPropsWithoutRef,
+  HTMLAttributes,
+  ReactNode,
+} from "react";
 import { cn } from "@/lib/utils/cn";
 
 const Dialog = DialogPrimitive.Root;
@@ -70,7 +74,10 @@ function DialogTitle({
 }: ComponentPropsWithoutRef<typeof DialogPrimitive.Title>) {
   return (
     <DialogPrimitive.Title
-      className={cn("text-lg font-semibold text-lacuna-text-primary", className)}
+      className={cn(
+        "text-lg font-semibold text-lacuna-text-primary",
+        className,
+      )}
       {...props}
     />
   );
@@ -94,7 +101,11 @@ interface DialogBodyProps {
 }
 
 function DialogBody({ children, className }: DialogBodyProps) {
-  return <div className={cn("text-sm text-lacuna-text-primary", className)}>{children}</div>;
+  return (
+    <div className={cn("text-sm text-lacuna-text-primary", className)}>
+      {children}
+    </div>
+  );
 }
 
 export {
