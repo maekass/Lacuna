@@ -254,6 +254,11 @@ export default function EvidenceMaturityDashboard() {
     )
     : 0;
 
+  // Static dataset metadata carries no trial/FDA inputs, so every deal scores
+  // 0 until live enrichment runs — summary stats would read as broken.
+  const allScoresZero = baseRows.length > 0 &&
+    baseRows.every((r) => r.evidence.overall === 0);
+
   return (
     <div className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 p-4 sm:p-6">
       <CuratedDatasetBanner className="mb-4" />
@@ -298,90 +303,118 @@ export default function EvidenceMaturityDashboard() {
         </div>
       </div>
 
+      {/* Honest zero-state: static metadata yields no differentiating scores */}
+      {allScoresZero && (
+        <div className="rounded-lg border border-lacuna-lavender/40 bg-lacuna-lavender/15 px-4 py-3 mb-6">
+          <p className="text-sm text-lacuna-blue leading-relaxed">
+            <span className="font-medium text-lacuna-plum">
+              No evidence scores yet.
+            </span>{" "}
+            The static dataset carries no clinical-trial or FDA metadata, so
+            all {baseRows.length}{" "}
+            deals currently score 0 (Pre-clinical) and a valuation correlation
+            would be meaningless. Use{" "}
+            <span className="font-medium text-lacuna-plum">
+              Enrich with Live Data
+            </span>{" "}
+            to pull trial phases and clearances from ClinicalTrials.gov and
+            openFDA for a prioritized subset of companies.
+          </p>
+        </div>
+      )}
+
       {/* Summary stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-        <div className="rounded-lg bg-lacuna-pink/10 p-3 text-center">
-          <p className="text-2xl font-bold text-lacuna-plum">{avgScore}</p>
-          <p className="text-xs text-lacuna-blue">Avg Score</p>
+      {!allScoresZero && (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+          <div className="rounded-lg bg-lacuna-pink/10 p-3 text-center">
+            <p className="text-2xl font-bold text-lacuna-plum">{avgScore}</p>
+            <p className="text-xs text-lacuna-blue">Avg Score</p>
+          </div>
+          <div className="rounded-lg bg-lacuna-pink/10 p-3 text-center">
+            <p className="text-2xl font-bold text-lacuna-plum">
+              {baseRows.length}
+            </p>
+            <p className="text-xs text-lacuna-blue">Deals Scored</p>
+          </div>
+          <div className="rounded-lg bg-lacuna-pink/10 p-3 text-center">
+            <p className="text-2xl font-bold text-lacuna-plum">
+              {correlation.n}
+            </p>
+            <p className="text-xs text-lacuna-blue">With Values</p>
+          </div>
+          <div className="rounded-lg bg-lacuna-pink/10 p-3 text-center">
+            <p className="text-2xl font-bold text-lacuna-plum">
+              {correlation.pearsonR}
+            </p>
+            <p className="text-xs text-lacuna-blue">Correlation (r)</p>
+          </div>
         </div>
-        <div className="rounded-lg bg-lacuna-pink/10 p-3 text-center">
-          <p className="text-2xl font-bold text-lacuna-plum">
-            {baseRows.length}
-          </p>
-          <p className="text-xs text-lacuna-blue">Deals Scored</p>
-        </div>
-        <div className="rounded-lg bg-lacuna-pink/10 p-3 text-center">
-          <p className="text-2xl font-bold text-lacuna-plum">{correlation.n}</p>
-          <p className="text-xs text-lacuna-blue">With Values</p>
-        </div>
-        <div className="rounded-lg bg-lacuna-pink/10 p-3 text-center">
-          <p className="text-2xl font-bold text-lacuna-plum">
-            {correlation.pearsonR}
-          </p>
-          <p className="text-xs text-lacuna-blue">Correlation (r)</p>
-        </div>
-      </div>
+      )}
 
       {/* Tier distribution */}
-      <div className="mb-6">
-        <h4 className="text-xs font-semibold text-lacuna-plum uppercase tracking-wide mb-2">
-          Evidence Tier Distribution
-        </h4>
-        <div className="flex gap-2 flex-wrap">
-          {([
-            "Regulatory Validated",
-            "Strong Evidence",
-            "Growing Evidence",
-            "Early Evidence",
-            "Pre-clinical",
-          ] as const).map((t) => {
-            const count = tierDist[t] || 0;
-            if (count === 0) return null;
-            const colors: Record<string, string> = {
-              "Regulatory Validated": "bg-emerald-100 text-emerald-800",
-              "Strong Evidence": "bg-sky-100 text-sky-800",
-              "Growing Evidence": "bg-amber-100 text-amber-800",
-              "Early Evidence": "bg-orange-100 text-orange-800",
-              "Pre-clinical": "bg-lacuna-surface-subtle text-lacuna-text-primary",
-            };
-            return (
-              <span
-                key={t}
-                className={`px-2.5 py-1 rounded-full text-xs font-medium ${
-                  colors[t]
-                }`}
-              >
-                {t}: {count}
-              </span>
-            );
-          })}
+      {!allScoresZero && (
+        <div className="mb-6">
+          <h4 className="text-xs font-semibold text-lacuna-plum uppercase tracking-wide mb-2">
+            Evidence Tier Distribution
+          </h4>
+          <div className="flex gap-2 flex-wrap">
+            {([
+              "Regulatory Validated",
+              "Strong Evidence",
+              "Growing Evidence",
+              "Early Evidence",
+              "Pre-clinical",
+            ] as const).map((t) => {
+              const count = tierDist[t] || 0;
+              if (count === 0) return null;
+              const colors: Record<string, string> = {
+                "Regulatory Validated": "bg-emerald-100 text-emerald-800",
+                "Strong Evidence": "bg-sky-100 text-sky-800",
+                "Growing Evidence": "bg-amber-100 text-amber-800",
+                "Early Evidence": "bg-orange-100 text-orange-800",
+                "Pre-clinical":
+                  "bg-lacuna-surface-subtle text-lacuna-text-primary",
+              };
+              return (
+                <span
+                  key={t}
+                  className={`px-2.5 py-1 rounded-full text-xs font-medium ${
+                    colors[t]
+                  }`}
+                >
+                  {t}: {count}
+                </span>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Valuation correlation insight */}
-      <div className="rounded-lg bg-lacuna-surface-muted border border-lacuna-border-subtle px-4 py-3 mb-6">
-        <h4 className="text-xs font-semibold text-lacuna-plum uppercase tracking-wide mb-1">
-          Valuation &times; Evidence Correlation
-        </h4>
-        <p className="text-sm text-lacuna-blue leading-relaxed">
-          {correlation.insight}
-        </p>
-        {correlation.n >= 5 && (
-          <div className="flex gap-6 mt-2 text-xs text-lacuna-blue/70">
-            <span>
-              High evidence avg: ${(correlation.avgHighEvidence / 1000).toFixed(
-                1,
-              )}B
-            </span>
-            <span>
-              Low evidence avg: ${(correlation.avgLowEvidence / 1000).toFixed(
-                1,
-              )}B
-            </span>
-            <span>Premium: {correlation.premiumMultiple}x</span>
-          </div>
-        )}
-      </div>
+      {!allScoresZero && (
+        <div className="rounded-lg bg-lacuna-surface-muted border border-lacuna-border-subtle px-4 py-3 mb-6">
+          <h4 className="text-xs font-semibold text-lacuna-plum uppercase tracking-wide mb-1">
+            Valuation &times; Evidence Correlation
+          </h4>
+          <p className="text-sm text-lacuna-blue leading-relaxed">
+            {correlation.insight}
+          </p>
+          {correlation.n >= 5 && (
+            <div className="flex gap-6 mt-2 text-xs text-lacuna-blue/70">
+              <span>
+                High evidence avg: ${(correlation.avgHighEvidence / 1000)
+                  .toFixed(1)}B
+              </span>
+              <span>
+                Low evidence avg: ${(correlation.avgLowEvidence / 1000).toFixed(
+                  1,
+                )}B
+              </span>
+              <span>Premium: {correlation.premiumMultiple}x</span>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Sort controls */}
       <div className="flex items-center gap-2 mb-4">

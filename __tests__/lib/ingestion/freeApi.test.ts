@@ -51,9 +51,10 @@ describe("freeApi clients", () => {
       "fetch",
       vi.fn().mockResolvedValue({
         ok: true,
-        json: async () => ({
-          search: [{ id: "Q123", label: "Test Femtech Co" }],
-        }),
+        json: () =>
+          Promise.resolve({
+            search: [{ id: "Q123", label: "Test Femtech Co" }],
+          }),
       }),
     );
 
@@ -80,7 +81,7 @@ describe("downloadFreeApiBundles", () => {
       "fetch",
       vi.fn().mockResolvedValue({
         ok: true,
-        json: async () => ({ search: [] }),
+        json: () => Promise.resolve({ search: [] }),
       }),
     );
 
