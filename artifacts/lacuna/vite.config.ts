@@ -26,8 +26,22 @@ if (!basePath) {
   );
 }
 
+// URL of the companion mobile (Expo) app. Prefer an explicit override. Only in
+// non-production (Replit dev) do we fall back to the live Expo web domain so the
+// footer link/QR resolve to the running app — production must set an explicit
+// URL rather than baking an ephemeral dev domain into the build. Empty string
+// => the footer block hides itself.
+const mobileAppUrl =
+  process.env.VITE_MOBILE_APP_URL ||
+  (process.env.NODE_ENV !== "production" && process.env.REPLIT_EXPO_DEV_DOMAIN
+    ? `https://${process.env.REPLIT_EXPO_DEV_DOMAIN}`
+    : "");
+
 export default defineConfig({
   base: basePath,
+  define: {
+    "import.meta.env.VITE_MOBILE_APP_URL": JSON.stringify(mobileAppUrl),
+  },
   plugins: [
     react(),
     tailwindcss(),

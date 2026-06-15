@@ -1,2 +1,4 @@
 - [Tailwind v4 font theme trap](tailwind-v4-font-theme.md) — app-wide "wrong font" bugs usually come from `@theme inline` `--font-sans`/`--font-mono` mappings, not inline overrides.
 - [Lacuna spatial depth system](spatial-depth-system.md) — "Stratified Depth": elevation tokens, glass layers, ambient parallax; perf constraints for the data-dense app.
+- [Web & mobile share data by copy](web-mobile-data-sync.md) — web and Expo mobile are independent with separate bundled dataset copies; edit BOTH or they drift.
+- [Vite dep re-optimize hook error](vite-dep-reoptimize-hook-error.md) — "Invalid hook call/duplicate React" right after adding a dep is usually a transient re-optimize reload; restart before chasing it.

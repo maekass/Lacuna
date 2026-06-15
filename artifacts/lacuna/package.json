@@ -77,6 +77,7 @@
   "dependencies": {
     "@types/d3": "^7.4.3",
     "d3": "^7.9.0",
+    "qrcode.react": "^4.2.0",
     "simple-statistics": "^7.9.0"
   }
 }
