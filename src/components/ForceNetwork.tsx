@@ -477,7 +477,6 @@ export default function ForceNetwork(
               backgroundColor: enabledPortfolios[portfolio.key] 
                 ? PORTFOLIO_STYLES[portfolio.key].color 
                 : undefined,
-              focusRingColor: PORTFOLIO_STYLES[portfolio.key].color,
             }}
             disabled={isLoading}
             aria-label={`Toggle ${portfolio.shortName} portfolio ${enabledPortfolios[portfolio.key] ? 'off' : 'on'}. Press Enter or Space to toggle, arrow keys to navigate.`}
