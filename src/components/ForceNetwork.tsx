@@ -39,16 +39,28 @@ import {
 } from "@/lib/theme/palette";
 
 const sectorColors: Record<string, string> = {
-  ...LACUNA_SECTOR_COLORS,
-  Cardiovascular: LACUNA_PALETTE.cosmicBlue,
-  Oncology: LACUNA_PALETTE.deepPlum,
-  Menopause: LACUNA_PALETTE.softLavender,
-  "Sexual Wellness": LACUNA_PALETTE.transcendentPink,
+  Fertility: "#EC4899",           // Hot pink (distinct from portfolio pink)
+  "Mental Health": "#8B5CF6",    // Violet
+  "General Wellness": "#0EA5E9", // Sky blue
+  Wearables: "#10B981",          // Emerald green
+  "Pelvic Health": "#7C3AED",    // Purple
+  Cardiovascular: "#EF4444",     // Red
+  Oncology: "#F59E0B",           // Amber
+  Menopause: "#6366F1",          // Indigo
+  "Sexual Wellness": "#14B8A6",  // Teal-green
+  Diagnostics: "#84CC16",        // Lime
+  "Digital Health": "#06B6D4",   // Cyan
+  Therapeutics: "#A855F7",       // Purple
+  "Reproductive": "#F43F5E",     // Rose
+  "Medical Device": "#0EA5E9",   // Blue
+  "Consumer": "#EA580C",         // Dark orange (different from portfolio orange)
+  Biotech: "#059669",            // Green
+  Maternal Health: "#DB2777",    // Pink
 };
 
 const PORTFOLIO_STYLES: Record<PortfolioKey, { color: string; badge: string }> =
   {
-    foreground: { color: LACUNA_PALETTE.transcendentPink, badge: "FG" },
+    foreground: { color: "#DC2626", badge: "FG" },
     amboy: { color: "#0D9488", badge: "AS" },
     fund: { color: "#F97316", badge: "PT" },
   };
