@@ -13,6 +13,16 @@ const nextConfig: NextConfig = {
   // Don't let pre-existing type or lint errors fail the production prototype build.
   typescript: { ignoreBuildErrors: true },
   eslint: { ignoreDuringBuilds: true },
+  async headers() {
+    return [
+      {
+        source: "/l-icon.png",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },
+        ],
+      },
+    ];
+  },
   ...(apiOrigin
     ? {
         async rewrites() {
