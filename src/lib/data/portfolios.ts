@@ -37,8 +37,8 @@ export const INVESTOR_PORTFOLIOS: readonly InvestorPortfolio[] = [
   },
   {
     key: "fund",
-    investorName: "Fund Portfolio",
-    shortName: "Fund",
+    investorName: "Portfolia",
+    shortName: "Portfolia",
     companies: fundPortfolio,
   },
 ];
