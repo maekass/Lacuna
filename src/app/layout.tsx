@@ -17,8 +17,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title:
-    "Lacuna — Women's Health M&A Diligence Stack | Verified Deals & Genomics",
+  title: "Lacunamae",
   description:
     "Prototype investment-research environment for women's health M&A: verified deal provenance, clinical trial search, genomics governance, and cited analytics.",
   keywords: [
@@ -39,7 +38,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Lacuna — Women's Health M&A Diligence Stack",
+    title: "Lacunamae",
     description:
       "Verified deal provenance, clinical trial search, genomics governance, and cited analytics for women's health M&A.",
     url: "https://lacuna-maekass.vercel.app",
@@ -49,7 +48,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lacuna — Women's Health M&A Diligence Stack",
+    title: "Lacunamae",
     description:
       "Verified deals, clinical trial search, genomics governance, and cited analytics. BSL 1.1.",
   },
