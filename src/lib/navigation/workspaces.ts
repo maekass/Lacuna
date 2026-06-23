@@ -24,6 +24,7 @@ export const WORKSPACES: Workspace[] = [
       { id: "network", label: "Network" },
       { id: "analytics", label: "Activity" },
       { id: "matrix", label: "Matrix" },
+      { id: "quant-valuation", label: "Quant val." },
       { id: "network-analysis", label: "Analysis" },
       { id: "competitive-analysis", label: "Acquirers" },
       { id: "validation-tracker", label: "Outcomes" },
@@ -38,6 +39,7 @@ export const WORKSPACES: Workspace[] = [
     description:
       "Clinical trials, evidence maturity, genomics, and health equity.",
     sections: [
+      { id: "burden-capital-gap", label: "Gap" },
       { id: "clinical-trials", label: "Trials" },
       { id: "evidence-maturity", label: "Evidence" },
       { id: "variant-callsets", label: "Genetics" },

@@ -8,6 +8,7 @@ import {
   ExitPredictor,
   ForceNetwork,
   NetworkAnalysisHonest,
+  QuantValuationPanel,
   ValidationTracker,
   ValuationMatrix,
   WhiteSpaceAnalysis,
@@ -63,6 +64,14 @@ export default function DealsPage() {
 
       <MotionSection id="matrix" delay={0.15} className={SECTION}>
         <ValuationMatrix />
+      </MotionSection>
+
+      <MotionSection id="quant-valuation" delay={0.17} className={SECTION}>
+        <SectionHeader
+          title="Quant valuation & exit-likelihood (heuristic)"
+          description="Rule-based valuation anchored on verified comparable deals, with burden-capital gap signal per sector. Not a trained model — not investment advice."
+        />
+        <QuantValuationPanel />
       </MotionSection>
 
       <MotionSection id="network-analysis" delay={0.2} className={SECTION}>

@@ -552,8 +552,10 @@ export class AcquisitionPredictor {
     ) / 10;
 
     // Base rate: dataset's observed exit rate when priors supplied; the
-    // heuristic 0.35 proxy otherwise. Sector deal activity nudges it ±20%.
-    let baseRate = this.priors?.overallExitRate ?? 0.35;
+    // heuristic fallback otherwise. Sector deal activity nudges it ±20%.
+    // UNCALIBRATED_BASE_RATE is an industry-wide VC exit proxy, not from data.
+    const UNCALIBRATED_BASE_RATE = 0.35;
+    let baseRate = this.priors?.overallExitRate ?? UNCALIBRATED_BASE_RATE;
     if (this.priors) {
       const sectorPrior = getSectorPrior(this.priors, company.sector);
       if (sectorPrior && this.priors.dealCount > 0) {

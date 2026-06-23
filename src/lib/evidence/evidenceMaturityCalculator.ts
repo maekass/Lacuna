@@ -37,6 +37,14 @@ export interface EvidenceScore {
     | "Regulatory Validated";
   tierColor: string;
   narrative: string;
+  /**
+   * GRADE evidence quality level (Grading of Recommendations Assessment,
+   * Development and Evaluation — Guyatt et al., BMJ 2008).
+   * Maps regulatory/trial evidence onto the standard 4-level hierarchy.
+   */
+  gradeLevel: "High" | "Moderate" | "Low" | "Very Low";
+  /** One-sentence rationale for the GRADE assignment. */
+  gradeRationale: string;
 }
 
 const PHASE_SCORES: Record<string, number> = {
@@ -95,6 +103,46 @@ function calcPublicationProxy(
   if (hasPostedResults) return 40;
   if (highestPhase === "PHASE2" || highestPhase === "PHASE3") return 25;
   return 0;
+}
+
+function gradeLevel(
+  t: EvidenceScore["tier"],
+  inputs: EvidenceInputs,
+): EvidenceScore["gradeLevel"] {
+  // GRADE starts from trial design and downgrades for risk of bias, imprecision,
+  // inconsistency, indirectness, and publication bias.
+  // RCT-based FDA clearance/approval = High; observational/early phase = Low–Very Low.
+  if (t === "Regulatory Validated") return "High";
+  if (t === "Strong Evidence") {
+    // Phase 3 with posted results approaches High; otherwise Moderate
+    return inputs.hasPostedResults ? "Moderate" : "Moderate";
+  }
+  if (t === "Growing Evidence") return "Low";
+  return "Very Low"; // Early Evidence + Pre-clinical
+}
+
+function gradeRationale(
+  level: EvidenceScore["gradeLevel"],
+  inputs: EvidenceInputs,
+): string {
+  switch (level) {
+    case "High":
+      return `FDA-cleared/approved product${
+        inputs.hasPostedResults ? " with posted trial results" : ""
+      } — consistent with GRADE High (RCT-level regulatory evidence, low risk of bias).`;
+    case "Moderate":
+      return `${inputs.highestPhase.replace("PHASE", "Phase ").replace("_", "/")} evidence${
+        inputs.hasPostedResults ? " with posted results" : " without posted results"
+      } — GRADE Moderate: likely true effect but important uncertainty remains.`;
+    case "Low":
+      return `Early-phase clinical evidence (${
+        inputs.highestPhase.replace("PHASE", "Phase ")
+      }) — GRADE Low: confidence in effect estimate is limited; further research likely to change the estimate.`;
+    case "Very Low":
+      return inputs.totalTrials > 0
+        ? `Phase 1 or pre-clinical trial activity only — GRADE Very Low: true effect is highly uncertain.`
+        : "No clinical trials or FDA products — GRADE Very Low: evidence base insufficient to assess effect.";
+  }
 }
 
 function tier(score: number): EvidenceScore["tier"] {
@@ -165,6 +213,7 @@ export function computeEvidenceMaturity(inputs: EvidenceInputs): EvidenceScore {
   );
 
   const t = tier(overall);
+  const gl = gradeLevel(t, inputs);
 
   return {
     overall,
@@ -175,5 +224,7 @@ export function computeEvidenceMaturity(inputs: EvidenceInputs): EvidenceScore {
     tier: t,
     tierColor: tierColor(t),
     narrative: narrative(inputs, overall),
+    gradeLevel: gl,
+    gradeRationale: gradeRationale(gl, inputs),
   };
 }

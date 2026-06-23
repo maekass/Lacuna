@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import { gapScoreForSector } from "@/lib/valuation/burdenCapitalGap";
 
 type MomentumLabel = "High" | "Stable" | "Cooling";
 
@@ -214,6 +215,16 @@ export default function ValuationMatrix() {
                   >
                     {sectorMomentum[sector]}
                   </span>
+                  {(() => {
+                    const gap = gapScoreForSector(sector);
+                    if (gap === null) return null;
+                    const color = gap >= 65 ? "bg-emerald-100 text-emerald-700" : gap >= 35 ? "bg-amber-100 text-amber-700" : "bg-slate-100 text-slate-600";
+                    return (
+                      <span className={`rounded-full px-1.5 py-0.5 text-[9px] font-medium ${color}`} title="Burden-capital gap score (higher = more underfunded vs. disease burden)">
+                        gap {gap.toFixed(0)}
+                      </span>
+                    );
+                  })()}
                 </div>
               </div>
             ))}

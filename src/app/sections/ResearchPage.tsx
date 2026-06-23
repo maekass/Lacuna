@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  BurdenCapitalGapValuation,
   ClinicalTrialTracker,
   CommercializationReadiness,
   DomesticStudyCatalog,
@@ -27,7 +28,15 @@ export default function ResearchPage() {
         </p>
       </header>
 
-      <MotionSection id="clinical-trials" className={SECTION}>
+      <MotionSection id="burden-capital-gap" className={SECTION}>
+        <SectionHeader
+          title="Burden-Capital Gap Valuation"
+          description="Estimate investment value using the gap between a disease area's societal burden (DALYs, prevalence, mortality) and VC deployed. High-gap areas historically command premium exits for early movers. Heuristic model — not financial advice."
+        />
+        <BurdenCapitalGapValuation />
+      </MotionSection>
+
+      <MotionSection id="clinical-trials" delay={0.05} className={SECTION}>
         <SectionHeader
           title="Clinical Trials Worth Watching"
           description="Live oncology, pelvic health, fibroids, fertility, contraception, maternal health, and sickle cell searches plus a cited domestic sample-size catalog."

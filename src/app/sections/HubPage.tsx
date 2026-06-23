@@ -87,7 +87,7 @@ export default function HubPage() {
             <Link
               key={ws.slug}
               href={ws.href}
-              className="group rounded-xl border border-lacuna-lavender/40 bg-white p-5 sm:p-6 shadow-sm transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lacuna-lavender"
+              className="group rounded-xl border border-lacuna-lavender/40 bg-white/85 backdrop-blur-sm p-5 sm:p-6 shadow-sm transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lacuna-lavender"
             >
               <h3 className="text-lg font-semibold text-lacuna-plum group-hover:text-lacuna-blue">
                 {ws.label}

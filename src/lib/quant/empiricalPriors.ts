@@ -132,7 +132,7 @@ export function deriveEmpiricalPriors(
         multiples.push(deal.dealValue / target.totalFunding);
       }
       if (target && target.founded !== undefined) {
-        const yrs = yearsBetween(target.founded, deal.announcedDate);
+        const yrs = yearsBetween(target.founded!, deal.announcedDate);
         if (yrs !== null) yearsToExit.push(yrs);
       }
     }
@@ -181,6 +181,69 @@ export function deriveEmpiricalPriors(
       `Derived from ${acquisitions.length} verified deals (${allDisclosedValues.length} with disclosed values, ` +
       `${allFundingMultiples.length} with funding-to-exit multiples) across ${companies.length} companies. ` +
       `Disclosed-only values carry disclosure bias; per-sector n is small.`,
+  };
+}
+
+// ==================== STAGE MEDIAN DERIVATION ====================
+
+export type FundingStageKey =
+  | "Pre-Seed"
+  | "Seed"
+  | "Series A"
+  | "Series B"
+  | "Series C"
+  | "Series D+";
+
+export interface DatasetStageMedians {
+  medians: Partial<Record<FundingStageKey, number>>;
+  sampleSizes: Partial<Record<FundingStageKey, number>>;
+  derivationNote: string;
+}
+
+function normalizeFundingStage(stage: string): FundingStageKey | null {
+  const s = stage.toLowerCase();
+  if (s.includes("pre-seed") || s.includes("pre seed")) return "Pre-Seed";
+  if (
+    s.includes("series d") || s.includes("series e") || s.includes("series f") ||
+    s.includes("late stage") || s.includes("pre-ipo")
+  ) return "Series D+";
+  if (s.includes("series c")) return "Series C";
+  if (s.includes("series b")) return "Series B";
+  if (s.includes("series a")) return "Series A";
+  if (s.includes("seed")) return "Seed";
+  return null;
+}
+
+/**
+ * Derive stage-level funding medians from the verified dataset.
+ * Proxy: median total-funding-raised by funding stage (not pre-money valuation).
+ */
+export function deriveStageMedians(
+  companies: readonly VerifiedCompanyView[],
+): DatasetStageMedians {
+  const byStage = new Map<FundingStageKey, number[]>();
+  for (const company of companies) {
+    const key = normalizeFundingStage(company.stage);
+    if (!key || typeof company.totalFunding !== "number" || company.totalFunding <= 0) {
+      continue;
+    }
+    const list = byStage.get(key) ?? [];
+    list.push(company.totalFunding);
+    byStage.set(key, list);
+  }
+  const medians: Partial<Record<FundingStageKey, number>> = {};
+  const sampleSizes: Partial<Record<FundingStageKey, number>> = {};
+  for (const [key, values] of byStage) {
+    medians[key] = median(values);
+    sampleSizes[key] = values.length;
+  }
+  const totalN = (Object.values(sampleSizes) as number[]).reduce((s, n) => s + n, 0);
+  return {
+    medians,
+    sampleSizes,
+    derivationNote:
+      `Stage medians derived from ${totalN} verified companies with disclosed funding ` +
+      `(proxy: median total-funding-raised by stage — not a pre-money valuation).`,
   };
 }
 

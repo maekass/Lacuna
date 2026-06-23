@@ -155,7 +155,9 @@ textarea:focus-visible {
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
+  background-image: linear-gradient(135deg, #e8b4b8 0%, #b8a9c9 50%, #f3eef1 100%);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family:
     var(--font-playfair), "Didot", "Bodoni MT", "Playfair Display", Georgia,

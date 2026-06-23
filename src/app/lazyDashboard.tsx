@@ -198,3 +198,11 @@ export const DataExport = dynamic(
     loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },
 );
+export const BurdenCapitalGapValuation = dynamic(
+  () => import("@/components/BurdenCapitalGapValuation"),
+  {
+    loading: sectionFallback(
+      "h-[600px] animate-pulse rounded-xl bg-lacuna-pink/10",
+    ),
+  },
+);

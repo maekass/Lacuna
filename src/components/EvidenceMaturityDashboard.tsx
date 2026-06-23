@@ -463,7 +463,7 @@ export default function EvidenceMaturityDashboard() {
 
                 {/* Company info */}
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-sm font-medium text-lacuna-plum truncate">
                       {row.name}
                     </span>
@@ -473,6 +473,20 @@ export default function EvidenceMaturityDashboard() {
                       }`}
                     >
                       {row.evidence.tier}
+                    </span>
+                    <span
+                      className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
+                        row.evidence.gradeLevel === "High"
+                          ? "bg-emerald-100 text-emerald-700"
+                          : row.evidence.gradeLevel === "Moderate"
+                            ? "bg-sky-100 text-sky-700"
+                            : row.evidence.gradeLevel === "Low"
+                              ? "bg-amber-100 text-amber-700"
+                              : "bg-slate-100 text-slate-500"
+                      }`}
+                      title={row.evidence.gradeRationale}
+                    >
+                      GRADE: {row.evidence.gradeLevel}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-lacuna-blue/60 mt-0.5">

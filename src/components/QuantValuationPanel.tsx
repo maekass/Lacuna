@@ -7,6 +7,7 @@ import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { adaptQuantCompanies } from "@/lib/quant/adaptQuantCompany";
 import { deriveEmpiricalPriors } from "@/lib/quant/empiricalPriors";
 import { AcquisitionPredictor, ValuationEngine } from "@/lib/quant/quantEngine";
+import { gapScoreForSector } from "@/lib/valuation/burdenCapitalGap";
 
 type DriverKey = keyof ReturnType<
   AcquisitionPredictor["predictAcquisition"]
@@ -31,6 +32,8 @@ interface Row {
   hasComparableAnchor: boolean;
   acquisitionProbability: number;
   topDriver: string;
+  /** Burden-capital gap score (0-100) for this company's sector, or null if unmapped. */
+  gapScore: number | null;
 }
 
 function formatM(value: number): string {
@@ -84,6 +87,7 @@ export default function QuantValuationPanel() {
           hasComparableAnchor,
           acquisitionProbability: prediction.probabilityOfAcquisition,
           topDriver: DRIVER_LABELS[topDriver],
+          gapScore: gapScoreForSector(company.sector),
         };
       },
     );
@@ -142,7 +146,7 @@ export default function QuantValuationPanel() {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-sm min-w-[680px]">
+        <table className="w-full text-sm min-w-[780px]">
           <thead>
             <tr className="text-left text-xs text-lacuna-blue/70 border-b border-lacuna-lavender/40">
               <th className="py-2 pr-3 font-medium">Company</th>
@@ -153,6 +157,7 @@ export default function QuantValuationPanel() {
               <th className="py-2 px-3 font-medium text-right">
                 P(exit&nbsp;5y)
               </th>
+              <th className="py-2 px-3 font-medium text-right">Gap</th>
               <th className="py-2 pl-3 font-medium">Top driver</th>
             </tr>
           </thead>
@@ -207,6 +212,24 @@ export default function QuantValuationPanel() {
                 <td className="py-2 px-3 text-right text-lacuna-plum">
                   {(row.acquisitionProbability * 100).toFixed(0)}%
                 </td>
+                <td className="py-2 px-3 text-right">
+                  {row.gapScore !== null ? (
+                    <span
+                      className={`rounded-full px-1.5 py-0.5 text-[10px] font-medium ${
+                        row.gapScore >= 65
+                          ? "bg-emerald-100 text-emerald-700"
+                          : row.gapScore >= 35
+                            ? "bg-amber-100 text-amber-700"
+                            : "bg-slate-100 text-slate-600"
+                      }`}
+                      title="Burden-capital gap score — how underfunded this sector is vs. disease burden"
+                    >
+                      {row.gapScore.toFixed(0)}
+                    </span>
+                  ) : (
+                    <span className="text-lacuna-blue/30">—</span>
+                  )}
+                </td>
                 <td className="py-2 pl-3 text-lacuna-blue/80">
                   {row.topDriver}
                 </td>
@@ -234,7 +257,11 @@ export default function QuantValuationPanel() {
         (median exit/funding multiples or median disclosed deal values).
         Exit-likelihood base rate is the dataset&apos;s observed exit share.
         Driver weights remain heuristic; disclosed valuations are point-in-time
-        public figures. Exploratory framing only.
+        public figures.{" "}
+        <span className="text-emerald-700 font-medium">Gap</span> = burden-capital
+        gap score (0-100) — how underfunded the sector is relative to disease
+        burden (DALYs × prevalence × mortality vs. VC deployed 2019-2024).
+        Exploratory framing only.
       </p>
     </div>
   );
