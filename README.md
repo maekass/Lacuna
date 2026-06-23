@@ -9,7 +9,7 @@ SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified de
 </p>
 
 <blockquote align="center">
-  <p><strong>Curated dataset · n=58 verified deals · Not live market data · Scores are descriptive, not forecasts.</strong></p>
+  <p><strong>Curated dataset · n=59 verified deals · 135 companies (inc. 46 fund portfolio investments) · Not live market data · Scores are descriptive, not forecasts.</strong></p>
 </blockquote>
 
 <p align="center">
@@ -63,7 +63,7 @@ published methodology.
 
 | Claim                   | Reality                                                                                 |
 | ----------------------- | --------------------------------------------------------------------------------------- |
-| Deal data               | Static `dataset.verified.json` (manual verification from SEC, press, filings)           |
+| Deal data               | Static `dataset.verified.json` v7 (manual verification from SEC, press, filings; 135 companies, 59 deals) |
 | Scores & "predictors"   | Deterministic rules and small-_n_ statistics — [MODEL_CARD.md](docs/MODEL_CARD.md)      |
 | "ML" / TensorFlow       | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app               |
 | Server LLM              | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev) |
@@ -117,17 +117,23 @@ Every analytical panel in the app shows the provenance line above.
 
 ### Verified deal explorer
 
-- **58 verified acquisitions** (fertility, oncology, diagnostics, menopause,
+- **59 verified acquisitions** (fertility, oncology, diagnostics, menopause,
   pelvic health, precision medicine)
+- **46 active fund portfolio investments** (c90–c135) — wearables, therapeutics,
+  consumer health, medtech, biotech; fund metadata includes `portfolioFunds` and
+  `portfolioInitialInvestment` per company
 - Acquirers include Hologic, KKR, Pfizer, Gilead, Boston Scientific, and others
   named in sources
-- Dataset v5 · updated per `provenance.lastUpdated` in JSON
-- Sources: SEC EDGAR, press releases, investor relations (see
-  [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md))
+- Dataset **v7** · `provenance.lastUpdated: 2026-06-23`
+- Sources: SEC EDGAR, press releases, investor relations, fund portfolio listing
+  (see [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md))
 
 ### Interactive network (`ForceNetwork.tsx`)
 
 D3 force-directed graph: sector colors, deal-type edges, valuation-scaled nodes.
+Three portfolio overlays are toggleable — **Foreground Capital (FG)**, **Amboy
+Street Ventures (AS)**, and the **Fund Portfolio (FD)** — each with a distinct
+color and pulse-ring badge on matching nodes.
 Methodology:
 [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md).
 
@@ -161,8 +167,8 @@ See [MODEL_CARD.md](docs/MODEL_CARD.md) for methodology and caveats.
 
 ## Descriptive analytics (heuristics, not predictive ML)
 
-> Curated dataset · n=58 verified deals · Not live market data · Scores are
-> descriptive, not forecasts.
+> Curated dataset · n=59 verified deals · 135 companies · Not live market data
+> · Scores are descriptive, not forecasts.
 
 ### Acquisition likelihood indicators (`ExitPredictor.tsx`)
 
@@ -282,7 +288,7 @@ Playfair Display.
 | Deno (CI)                              | `deno fmt` and `deno lint` in GitHub Actions                                 |
 
 **CI Status:** `deno fmt`, `deno lint`, `eslint`, `vitest` (297 tests),
-`next build` + `tsc` all green on main.
+`next build` + `tsc` all green on main (`c8f2361`).
 
 ---
 
