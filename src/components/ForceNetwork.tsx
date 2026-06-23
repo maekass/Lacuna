@@ -39,23 +39,23 @@ import {
 } from "@/lib/theme/palette";
 
 const sectorColors: Record<string, string> = {
-  Fertility: "#EC4899",           // Hot pink (distinct from portfolio pink)
-  "Mental Health": "#8B5CF6",    // Violet
-  "General Wellness": "#0EA5E9", // Sky blue
-  Wearables: "#10B981",          // Emerald green
-  "Pelvic Health": "#7C3AED",    // Purple
-  Cardiovascular: "#EF4444",     // Red
-  Oncology: "#F59E0B",           // Amber
-  Menopause: "#6366F1",          // Indigo
-  "Sexual Wellness": "#14B8A6",  // Teal-green
-  Diagnostics: "#84CC16",        // Lime
-  "Digital Health": "#06B6D4",   // Cyan
-  Therapeutics: "#A855F7",       // Purple
-  "Reproductive": "#F43F5E",     // Rose
-  "Medical Device": "#0EA5E9",   // Blue
-  "Consumer": "#EA580C",         // Dark orange (different from portfolio orange)
-  Biotech: "#059669",            // Green
-  Maternal Health: "#DB2777",    // Pink
+  Fertility: "#EC4899",
+  "Mental Health": "#8B5CF6",
+  "General Wellness": "#0EA5E9",
+  Wearables: "#10B981",
+  "Pelvic Health": "#7C3AED",
+  Cardiovascular: "#EF4444",
+  Oncology: "#F59E0B",
+  Menopause: "#6366F1",
+  "Sexual Wellness": "#14B8A6",
+  Diagnostics: "#84CC16",
+  "Digital Health": "#06B6D4",
+  Therapeutics: "#A855F7",
+  "Reproductive": "#F43F5E",
+  "Medical Device": "#0EA5E9",
+  "Consumer": "#EA580C",
+  Biotech: "#059669",
+  "Maternal Health": "#DB2777"
 };
 
 const PORTFOLIO_STYLES: Record<PortfolioKey, { color: string; badge: string }> =
