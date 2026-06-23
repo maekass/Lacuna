@@ -10,9 +10,9 @@ export interface VerifiedCompanyView {
   readonly name: string;
   readonly sector: string;
   readonly stage: string;
-  readonly founded: number;
-  readonly hq: string;
-  readonly description: string;
+  readonly founded?: number;
+  readonly hq?: string;
+  readonly description?: string;
   readonly lastKnownValuation?: number;
   readonly valuationSource?: string;
   readonly totalFunding?: number;

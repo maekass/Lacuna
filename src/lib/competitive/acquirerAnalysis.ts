@@ -42,7 +42,7 @@ export interface AcquiredCompany {
     | "series_c"
     | "series_d_plus"
     | "public";
-  yearFounded: number;
+  yearFounded?: number;
   yearAcquired: number;
   acquisitionValue?: number; // millions
   geography: "us" | "eu" | "asia" | "global";
@@ -181,7 +181,9 @@ export function analyzePortfolio(
   };
 
   // Age at acquisition stats
-  const ages = acquiredCompanies.map((c) => c.yearAcquired - c.yearFounded)
+  const ages = acquiredCompanies
+    .filter((c) => c.yearFounded !== undefined)
+    .map((c) => c.yearAcquired - c.yearFounded!)
     .filter((a) => a >= 0);
   const ageAtAcquisitionStats = {
     mean: ages.length > 0 ? ages.reduce((s, v) => s + v, 0) / ages.length : 0,
@@ -405,7 +407,7 @@ export interface ContestableTarget {
   companyName: string;
   sector: string;
   stage: string;
-  yearFounded: number;
+  yearFounded?: number;
   potentialBuyers: {
     acquirerId: string;
     acquirerName: string;
@@ -452,8 +454,8 @@ export function analyzeMarketStructure(
 
       // Criterion: Same sector AND age compatible
       if (acquirerSectors.has(company.sector)) {
-        const age = company.yearAcquired - company.yearFounded;
-        if (age <= 8) { // Reasonable age for acquisition
+        const age = company.yearFounded !== undefined ? company.yearAcquired - company.yearFounded : null;
+        if (age === null || age <= 8) { // Reasonable age for acquisition
           potentialBuyers.push({
             acquirerId: acquirer.id,
             acquirerName: acquirer.name,
@@ -598,7 +600,9 @@ export function compareAcquirerTypes(
     const values = typeCompanies.map((c) => c.acquisitionValue).filter((
       v,
     ): v is number => v !== undefined && v > 0);
-    const ages = typeCompanies.map((c) => c.yearAcquired - c.yearFounded)
+    const ages = typeCompanies
+      .filter((c) => c.yearFounded !== undefined)
+      .map((c) => c.yearAcquired - c.yearFounded!)
       .filter((a) => a >= 0);
 
     byType.push({

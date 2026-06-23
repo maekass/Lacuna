@@ -148,7 +148,7 @@ export function getVerifiedCompetitiveAnalysisData(data: VerifiedDerivedData): {
       const deal = verifiedAcquisitions.find((d) => d.targetId === c.id);
       const yearAcquired = deal
         ? new Date(deal.announcedDate).getFullYear()
-        : c.founded;
+        : (c.founded ?? new Date().getFullYear());
       return {
         id: c.id,
         name: c.name,
