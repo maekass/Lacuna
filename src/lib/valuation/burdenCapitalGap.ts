@@ -131,6 +131,49 @@ export const CITATIONS: Record<string, Citation> = {
     reference:
       "Azziz R, et al. Global prevalence of PCOS by diagnostic criteria: systematic review and meta-analysis. JCEM. 2026. PMID 41528735. Global prevalence 12.1% (95% CI 9.8–14.8%) by Rotterdam criteria; highest in Eastern Mediterranean (15.1%) and South-East Asia (14.3%).",
   },
+  // Maternal health — PhD/MD-level evidence base (June 2025)
+  cdc_pmss_2023: {
+    id: "cdc_pmss_2023",
+    label: "19",
+    reference:
+      "Hoyert DL. Maternal Mortality Rates in the United States, 2021. NCHS Health E-Stats. Hyattsville, MD: National Center for Health Statistics. 2023. US rate 32.9/100,000 live births (2021, COVID-driven spike; n=1,205); 22.3/100,000 in 2022 (n=817). Non-Hispanic Black: 69.9/100,000 (2021) — 2.6× the non-Hispanic White rate of 26.6. Highest maternal mortality rate among high-income nations.",
+  },
+  mmrc_causes_2022: {
+    id: "mmrc_causes_2022",
+    label: "20",
+    reference:
+      "Trost SL, Beauregard J, Chandra G, et al. Pregnancy-Related Deaths: Data from Maternal Mortality Review Committees in 36 US States, 2017–2019. Atlanta, GA: CDC, 2022. Mental health conditions/SUD: 23% of deaths; cardiac/coronary: 14%; hemorrhage: 13%; hypertensive disorders: 7%; infection: 10%; thrombotic embolism: 9%. Overall: 84% of deaths judged preventable by MMRCs. Mental health deaths: ~100% preventable. Cardiomyopathy: 40% of CV deaths; 51.2% among non-Hispanic Black persons.",
+  },
+  smm_racial_disparity_2024: {
+    id: "smm_racial_disparity_2024",
+    label: "21",
+    reference:
+      "Owusu-Bempah A, et al. Racial disparities in severe maternal morbidity among patients with substance use disorder: National Inpatient Sample 2017–2020. AJOG. 2024. PMID 38407821. Black race: adjusted OR 2.09 (95% CI 2.05–2.13) for SMM independent of SUD status. SUD further amplifies racial disparities in SMM.",
+  },
+  smm_trend_1993_2012: {
+    id: "smm_trend_1993_2012",
+    label: "22",
+    reference:
+      "Callaghan WM, Creanga AA, Kuklina EV. Severe maternal morbidity among delivery and postpartum hospitalizations in the United States. Obstet Gynecol. 2012;120(5):1029–1036. PMID 29030982 (updated review). SMM rate approximately doubled from 28.6/10,000 deliveries (1993) to 144/10,000 (2014) per CDC national surveillance; ~50,000 US women affected annually.",
+  },
+  aim_bundles_2024: {
+    id: "aim_bundles_2024",
+    label: "23",
+    reference:
+      "Alliance for Innovation on Maternal Health (AIM). Patient Safety Bundle Implementation Results 2014–2024. 47 states participating. Hemorrhage bundle states: 20–40% reduction in severe maternal morbidity. Hypertension bundle: 30% reduction in severe hypertension-related events. AIM Program Office, ACOG, 2024.",
+  },
+  march_of_dimes_desert_2022: {
+    id: "march_of_dimes_desert_2022",
+    label: "24",
+    reference:
+      "March of Dimes. Nowhere to Go: Maternity Care Deserts Across the United States, 2022 Report. 36% of US counties are maternity care deserts (no OB/GYN, no CNM); 12% have limited access. 5.6 million women of reproductive age live in maternity care deserts. Six states lost >10% of hospital obstetric units 2018–2022.",
+  },
+  luca_perinatal_mh_2019: {
+    id: "luca_perinatal_mh_2019",
+    label: "25",
+    reference:
+      "Luca DL, Garlow N, Staatz C, Margiotta C, Zivin K. Societal costs of untreated perinatal mood and anxiety disorders. Manag Care. 2019;28(1):26–32. Per birth cohort (1-year window), untreated perinatal mood/anxiety disorders cost $14.2B in healthcare utilization, lost productivity, and child outcomes. Approximately 800,000 women affected annually in the US.",
+  },
 };
 
 /** Ordered citation list for the UI footnote section */
