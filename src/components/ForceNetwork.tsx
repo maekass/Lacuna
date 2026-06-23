@@ -53,6 +53,7 @@ const PORTFOLIO_STYLES: Record<PortfolioKey, { color: string; badge: string }> =
     fund: { color: "#7C3AED", badge: "FD" },
   };
 
+// Portfolio toggle buttons updated - should show FG, AS, Fund
 export default function ForceNetwork(
   {
     nodes,
