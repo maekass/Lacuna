@@ -72,7 +72,9 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
   );
   const acquiredSectors = new Set(acquiredCompanies.map((c) => c.sector));
   const acquiredAgeMedian = getMedian(
-    acquiredCompanies.map((c) => CURRENT_YEAR - c.founded),
+    acquiredCompanies
+      .filter((c) => c.founded !== undefined)
+      .map((c) => CURRENT_YEAR - c.founded!),
     7,
   );
   const acquiredValuationMedian = getMedian(
@@ -110,7 +112,7 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
 
   return analysisCompanies
     .map((company) => {
-      const age = CURRENT_YEAR - company.founded;
+      const age = company.founded !== undefined ? CURRENT_YEAR - company.founded : 0;
       const isLateStage = [
         "Series C",
         "Series D",

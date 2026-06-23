@@ -31,11 +31,11 @@ export interface Company {
     | "Late Stage"
     | "Pre-IPO"
     | "Public";
-  founded: number;
+  founded?: number;
   valuation?: number;
   employees: number;
-  hq: string;
-  description: string;
+  hq?: string;
+  description?: string;
 }
 
 export interface Acquisition {
