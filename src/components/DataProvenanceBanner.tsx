@@ -80,7 +80,7 @@ export default function DataProvenanceBanner() {
             </svg>
             Open data
           </span>
-          <span className="text-xs text-lacuna-blue truncate">
+          <span className="text-xs text-lacuna-blue leading-snug">
             Thoughtfully sourced from SEC EDGAR, ClinicalTrials.gov, and public
             filings
             {" · "}
