@@ -50,7 +50,7 @@ const PORTFOLIO_STYLES: Record<PortfolioKey, { color: string; badge: string }> =
   {
     foreground: { color: LACUNA_PALETTE.transcendentPink, badge: "FG" },
     amboy: { color: "#0D9488", badge: "AS" },
-    fund: { color: "#7C3AED", badge: "PT" },
+    fund: { color: LACUNA_PALETTE.cosmicBlue, badge: "PT" },
   };
 
 export default function ForceNetwork(
