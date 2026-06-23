@@ -21,13 +21,7 @@ import { useDashboardData } from "@/lib/data/useDashboardData";
 const SECTION = "mb-16 scroll-mt-28";
 
 export default function DealsPage() {
-  const {
-    verifiedCompanies,
-    verifiedAcquisitions,
-    networkNodes,
-    networkLinks,
-    dealsByYear,
-  } = useDashboardData();
+  const { networkNodes, networkLinks, dealsByYear } = useDashboardData();
 
   return (
     <div>
@@ -59,59 +53,12 @@ export default function DealsPage() {
         />
       </MotionSection>
 
-      <MotionSection
-        id="analytics"
-        delay={0.1}
-        className="mb-16 grid grid-cols-1 gap-8 md:grid-cols-2"
-      >
+      <MotionSection id="analytics" delay={0.1} className={SECTION}>
+        <SectionHeader
+          title="Deal Flow"
+          description="Announced women's health M&A deals by year from verified public sources."
+        />
         <DealFlowChart data={dealsByYear} />
-        <div className="rounded-xl border border-lacuna-lavender/40 bg-white p-6 shadow-sm">
-          <SectionHeader
-            title="What's Happening Now"
-            description="The latest deals shaping the women's health landscape."
-          />
-          <div className="space-y-4">
-            {verifiedAcquisitions.slice(0, 5).map((deal) => {
-              const target = verifiedCompanies.find((c) =>
-                c.id === deal.targetId
-              );
-              const acquirer = networkNodes.find((n) =>
-                n.id === deal.acquirerId
-              );
-              return (
-                <div
-                  key={deal.id}
-                  className="flex flex-col justify-between gap-1 rounded-lg bg-lacuna-pink/10 p-3 sm:flex-row sm:items-center sm:gap-0"
-                >
-                  <div className="min-w-0">
-                    <p className="truncate font-medium text-lacuna-plum">
-                      {target?.name}
-                    </p>
-                    <p className="truncate text-xs text-lacuna-blue">
-                      {deal.dealType} by {acquirer?.name || deal.acquirerName}
-                    </p>
-                  </div>
-                  <div className="shrink-0 sm:text-right">
-                    {deal.dealValue
-                      ? (
-                        <p className="font-semibold text-lacuna-plum">
-                          ${deal.dealValue}M
-                        </p>
-                      )
-                      : (
-                        <p className="text-xs text-lacuna-blue/70">
-                          Terms not disclosed
-                        </p>
-                      )}
-                    <p className="text-xs text-lacuna-blue/70">
-                      {deal.announcedDate}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
       </MotionSection>
 
       <MotionSection id="matrix" delay={0.15} className={SECTION}>
