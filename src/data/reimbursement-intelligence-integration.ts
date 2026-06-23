@@ -19,7 +19,7 @@ import { ValuationPremiumCalculator } from "./valuation-premium-calculator";
 interface LacunaCompany {
   id: string;
   name: string;
-  productDescription: string;
+  productDescription?: string;
   sector: string;
   subSector?: string;
   funding?: number;
@@ -78,7 +78,7 @@ export class ReimbursementIntelligenceIntegration {
     // Match company product to CPT codes
     const matchedCodes = this.connector.matchProductToCodes(
       company.name,
-      company.productDescription,
+      company.productDescription ?? "",
       company.sector,
     );
 

@@ -59,7 +59,7 @@ export default function FairnessAuditV2() {
           name: c.name,
           sector: c.sector,
           stage: c.stage,
-          yearFounded: c.founded,
+          yearFounded: c.founded ?? 0,
           yearAcquired: deal
             ? new Date(deal.announcedDate).getFullYear()
             : undefined,

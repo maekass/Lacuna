@@ -101,7 +101,7 @@ export function adaptQuantCompany(
     clinicalStage: proxyClinicalStage(view.stage),
     raisedToDate,
     customerCount: 0, // not in verified data — not fabricated
-    geographicFocus: inferGeographicFocus(view.hq),
+    geographicFocus: inferGeographicFocus(view.hq ?? ""),
     condition: proxyCondition(view.sector),
     // annualRevenue, ebitda, targetMarketSize, clinicalEfficacy, teamMetrics:
     // intentionally undefined — absent from the verified dataset.

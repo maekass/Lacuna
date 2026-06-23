@@ -6,7 +6,7 @@ const GENOMICS_KEYWORD =
 export interface GenomicsCompanyRef {
   sector: string;
   name: string;
-  description: string;
+  description?: string;
 }
 
 /** Diagnostics sector and genomics-related portfolio companies. */

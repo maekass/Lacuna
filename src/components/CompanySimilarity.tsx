@@ -37,7 +37,9 @@ function buildFeatureVector(
   const logFund = hasFunding
     ? Math.log10((company.totalFunding as number) + 1) / 3
     : 0;
-  const ageNorm = Math.min(1, (CURRENT_YEAR - company.founded) / 15);
+  const ageNorm = company.founded !== undefined
+    ? Math.min(1, (CURRENT_YEAR - company.founded) / 15)
+    : 0;
   const isLateStage =
     /Series C|Series D|Series E|Series F|Late Stage|Pre-IPO/i.test(
         company.stage,
@@ -156,7 +158,11 @@ export default function CompanySimilarity() {
             );
           if (ratio < 2) shared.push("Valuation within 2×");
         }
-        if (Math.abs(company.founded - targetEntry.company.founded) <= 2) {
+        if (
+          company.founded !== undefined &&
+          targetEntry.company.founded !== undefined &&
+          Math.abs(company.founded - targetEntry.company.founded) <= 2
+        ) {
           shared.push("Founded within 2 yrs");
         }
 

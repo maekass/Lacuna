@@ -25,7 +25,7 @@ interface VerifiedCompanyOverlap {
   name: string;
   sector: string;
   stage: string;
-  description: string;
+  description?: string;
   sources: readonly string[];
   deal?: {
     id: string;

@@ -131,7 +131,7 @@ export function deriveEmpiricalPriors(
       ) {
         multiples.push(deal.dealValue / target.totalFunding);
       }
-      if (target) {
+      if (target && target.founded !== undefined) {
         const yrs = yearsBetween(target.founded, deal.announcedDate);
         if (yrs !== null) yearsToExit.push(yrs);
       }

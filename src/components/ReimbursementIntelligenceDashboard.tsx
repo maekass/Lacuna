@@ -57,7 +57,7 @@ export default function ReimbursementIntelligenceDashboard() {
       const companiesToAnalyze = verifiedCompanies.map((company) => ({
         id: company.id,
         name: company.name,
-        productDescription: company.description,
+        productDescription: company.description ?? "",
         sector: mapToStandardSector(company.sector),
         revenue: company.totalFunding ?? 5_000_000,
       }));

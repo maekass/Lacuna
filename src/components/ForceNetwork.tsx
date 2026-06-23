@@ -50,6 +50,7 @@ const PORTFOLIO_STYLES: Record<PortfolioKey, { color: string; badge: string }> =
   {
     foreground: { color: LACUNA_SEMANTIC.chart.accent, badge: "FG" },
     amboy: { color: "#0D9488", badge: "AS" },
+    fund: { color: "#7C3AED", badge: "FD" },
   };
 
 export default function ForceNetwork(
@@ -77,6 +78,7 @@ export default function ForceNetwork(
   >({
     foreground: highlightPortfolios,
     amboy: highlightPortfolios,
+    fund: highlightPortfolios,
   });
   const portfolioNameSets = useMemo(
     () =>

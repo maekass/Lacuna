@@ -22,7 +22,7 @@ export interface CompanyProfile {
   name: string;
   sector: string;
   stage: string;
-  yearFounded: number;
+  yearFounded?: number;
   yearAcquired?: number;
   acquisitionValue?: number;
   hasWomenFounder: boolean;
@@ -108,11 +108,11 @@ export default function FounderCharacteristics(
   // Time to acquisition
   const timeToAcq = useMemo(() => {
     const womenAcq = womenLed
-      .filter((c) => c.yearAcquired)
-      .map((c) => c.yearAcquired! - c.yearFounded);
+      .filter((c) => c.yearAcquired && c.yearFounded !== undefined)
+      .map((c) => c.yearAcquired! - c.yearFounded!);
     const menAcq = menLed
-      .filter((c) => c.yearAcquired)
-      .map((c) => c.yearAcquired! - c.yearFounded);
+      .filter((c) => c.yearAcquired && c.yearFounded !== undefined)
+      .map((c) => c.yearAcquired! - c.yearFounded!);
 
     return {
       women: {

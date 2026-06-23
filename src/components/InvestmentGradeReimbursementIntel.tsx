@@ -75,7 +75,7 @@ function calculateReimbursementRisk(
   // CMS Pathway Clarity (0-100)
   let cmsPathwayClarity = 50;
   const hasClearPath = /diagnostic|therapeutic|device|cpt|cms|fda/i.test(
-    company.description,
+    company.description ?? "",
   );
   if (hasClearPath) {
     cmsPathwayClarity = 80;
@@ -96,7 +96,7 @@ function calculateReimbursementRisk(
 
   // FDA Alignment (0-100)
   let fdaAlignment = 60;
-  const hasFDA = /fda|510k|pma|cleared|approved/i.test(company.description);
+  const hasFDA = /fda|510k|pma|cleared|approved/i.test(company.description ?? "");
   if (hasFDA) {
     fdaAlignment = 90;
     mitigationStrategies.push("FDA clearance accelerates coverage decisions");

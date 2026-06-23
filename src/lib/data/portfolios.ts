@@ -1,6 +1,10 @@
-import { amboyPortfolio, foregroundPortfolio } from "@/data/verifiedData";
+import {
+  amboyPortfolio,
+  foregroundPortfolio,
+  fundPortfolio,
+} from "@/data/verifiedData";
 
-export type PortfolioKey = "foreground" | "amboy";
+export type PortfolioKey = "foreground" | "amboy" | "fund";
 
 export interface InvestorPortfolio {
   readonly key: PortfolioKey;
@@ -30,5 +34,11 @@ export const INVESTOR_PORTFOLIOS: readonly InvestorPortfolio[] = [
     investorName: "Amboy Street Ventures",
     shortName: "Amboy Street",
     companies: amboyPortfolio,
+  },
+  {
+    key: "fund",
+    investorName: "Fund Portfolio",
+    shortName: "Fund",
+    companies: fundPortfolio,
   },
 ];

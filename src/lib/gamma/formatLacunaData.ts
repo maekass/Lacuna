@@ -8,14 +8,14 @@ interface CompanyView {
   id: string;
   name: string;
   sector: string;
-  hq: string;
+  hq?: string;
 }
 
 interface AcquirerView {
   id: string;
   name: string;
   sector: string;
-  hq: string;
+  hq?: string;
 }
 
 interface AcquisitionView {
