@@ -226,15 +226,30 @@ export const BURDEN_AREAS: Record<string, BurdenArea> = {
     datasetSectors: ["Maternal Health"],
     dalyThousandsPerYear: 1_420,
     prevalenceMillion: 3.7,
-    annualDeathsThousands: 1.2, // CDC 2021: 1,205 maternal deaths; 2022: 817 (rate 22.3/100k)
+    // 2021: n=1,205, rate 32.9/100k (COVID spike); 2022: n=817, rate 22.3/100k (CDC PMSS)
+    annualDeathsThousands: 1.2,
     nihFundingMillionPerYear: 320,
     vcDeployedMillion: 850,
     neglectScore: 5,
-    regulatoryNote: "FDA Breakthrough Device; CMS maternal care bundles (2023)",
+    economicBurdenBillion: 14,
+    regulatoryNote:
+      "CMS Birthing-Friendly hospital designation (2023); ARP 2022 Medicaid 12-month postpartum extension (47 states active 2024); AIM safety bundles in 47 states — hemorrhage bundle associated with 20–40% SMM reduction, hypertension bundle with 30% reduction in severe events; Joint Commission ORYX perinatal care (PC) measure set mandating maternal outcomes surveillance; Black Maternal Health Momnibus pending Senate passage.",
     payerCoveragePercent: 65,
     providerGapNote:
-      "Severe provider shortage: 1 in 3 US counties is a maternity care desert with no OB/GYN or midwife (March of Dimes 2022). Black women face 3–4× higher mortality risk (42.8 vs. 13.0 per 100,000 live births, 2011–2015 CDC data). Rural-urban disparity acute.",
-    citationIds: ["gbd2021", "acog_maternal_2022", "nih_reporter_2023", "rock_health_2024"],
+      "Severe maternal morbidity (SMM) affects >50,000 US women/year — a rate that doubled from 28.6 to >144/10,000 deliveries between 1993 and 2014 per CDC national surveillance. 84% of pregnancy-related deaths are preventable per 36-state MMRC analysis (Trost et al. 2022, CDC): mental health/SUD account for 23% of causes, cardiac/coronary 14%, hemorrhage 13%, infection 10%; mental health deaths are effectively 100% preventable. Suicide accounts for 63% of MH-related maternal deaths; cardiomyopathy for 40% of cardiac deaths (51.2% among non-Hispanic Black women). Mortality rate: 32.9/100,000 live births (2021, n=1,205; COVID-associated spike) declining to 22.3/100,000 (2022, n=817) — still the highest rate among high-income nations. Racial disparity persists: non-Hispanic Black women: 69.9/100,000 (2021) — 2.6× the non-Hispanic White rate of 26.6; Black race carries adjusted OR 2.09 (95% CI 2.05–2.13) for SMM independent of comorbidity burden (Owusu-Bempah 2024, PMID 38407821). Access crisis: 36% of US counties are maternity care deserts (no OB/GYN or CNM), encompassing 5.6M reproductive-age women; 6 states lost >10% of hospital obstetric units 2018–2022 (March of Dimes 2022). ~13,000 CNMs nationally attend ~10% of US births; ACOG projects net OB/GYN workforce deficit through 2030. Medicaid finances 43% of US births; 1 in 5 perinatal women experience mood/anxiety disorders — untreated burden estimated at $14.2B per birth cohort in healthcare utilization and lost productivity (Luca 2019).",
+    citationIds: [
+      "gbd2021",
+      "acog_maternal_2022",
+      "nih_reporter_2023",
+      "rock_health_2024",
+      "cdc_pmss_2023",
+      "mmrc_causes_2022",
+      "smm_racial_disparity_2024",
+      "smm_trend_1993_2012",
+      "aim_bundles_2024",
+      "march_of_dimes_desert_2022",
+      "luca_perinatal_mh_2019",
+    ],
   },
   pcos: {
     name: "PCOS & Metabolic Reproductive",
