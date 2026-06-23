@@ -336,9 +336,11 @@ export class ValuationPremiumCalculator {
   }
 
   /**
-   * Get comparable transactions for a sector
+   * Previously contained fabricated comparables (Maven Clinic IPO never
+   * occurred; Lyra Health figure was a private round, not an acquisition).
+   * Returns empty — callers should source comparables from getVerifiedDataset().
    */
-  getComparableTransactions(sector: string): {
+  getComparableTransactions(_sector: string): {
     company: string;
     acquirer: string;
     valuation: number;
@@ -346,96 +348,7 @@ export class ValuationPremiumCalculator {
     reimbursementStatus: string;
     date: string;
   }[] {
-    const normalizedSector = sector.toLowerCase().replace(/\s+/g, "_");
-
-    // Sample transaction data
-    const transactions: Record<
-      string,
-      Array<{
-        company: string;
-        acquirer: string;
-        valuation: number;
-        multiple: number;
-        reimbursementStatus: string;
-        date: string;
-      }>
-    > = {
-      "fertility": [
-        {
-          company: "Modern Fertility",
-          acquirer: "Ro",
-          valuation: 225000000,
-          multiple: 2.5,
-          reimbursementStatus: "limited",
-          date: "2021-05",
-        },
-        {
-          company: "Ava Science",
-          acquirer: "Ovia Health",
-          valuation: 80000000,
-          multiple: 1.8,
-          reimbursementStatus: "consumer-only",
-          date: "2020-03",
-        },
-      ],
-      "maternal_health": [
-        {
-          company: "Maven Clinic",
-          acquirer: "N/A (IPO)",
-          valuation: 1300000000,
-          multiple: 8.5,
-          reimbursementStatus: "rich",
-          date: "2022-06",
-        },
-        {
-          company: "Lucina Health",
-          acquirer: "GuideWell",
-          valuation: 150000000,
-          multiple: 3.2,
-          reimbursementStatus: "moderate",
-          date: "2019-08",
-        },
-      ],
-      "mental_health": [
-        {
-          company: "Lyra Health",
-          acquirer: "N/A (Private)",
-          valuation: 5800000000,
-          multiple: 12.0,
-          reimbursementStatus: "rich",
-          date: "2022-01",
-        },
-        {
-          company: "Ginger",
-          acquirer: "Headspace",
-          valuation: 310000000,
-          multiple: 4.5,
-          reimbursementStatus: "moderate",
-          date: "2021-08",
-        },
-      ],
-      "digital_therapeutics": [
-        {
-          company: "Livongo",
-          acquirer: "Teladoc",
-          valuation: 18500000000,
-          multiple: 13.8,
-          reimbursementStatus: "rich",
-          date: "2020-08",
-        },
-        {
-          company: "Pear Therapeutics",
-          acquirer: "N/A (Bankrupt)",
-          valuation: 1600000000,
-          multiple: 8.2,
-          reimbursementStatus: "moderate",
-          date: "2021-12",
-        },
-      ],
-    };
-
-    return transactions[normalizedSector] ||
-      transactions["digital_therapeutics"];
+    return [];
   }
 
   /**

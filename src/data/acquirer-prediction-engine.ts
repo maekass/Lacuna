@@ -8,7 +8,6 @@
  * - Financial capacity
  */
 
-import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 
 // Types
 export interface CompanyProfile {
@@ -519,6 +518,7 @@ function generateRationale(
 export function analyzeCompetitiveDynamics(
   company: CompanyProfile,
   acquirers: AcquirerProfile[] = STRATEGIC_ACQUIRERS,
+  verifiedComparables: ComparableDeal[] = [],
 ): CompetitiveAnalysis {
   // Calculate matches for all acquirers
   const allMatches = acquirers.map((a) => calculateMatchScore(company, a));
@@ -559,8 +559,10 @@ export function analyzeCompetitiveDynamics(
   // Timeline estimate
   const timelineEstimate = estimateTimeline(company, topMatches[0]);
 
-  // Get sector comparables
-  const sectorComparables = getSectorComparables(company.sector);
+  // Filter verified comparables to this sector — no fabricated deals
+  const sectorComparables = verifiedComparables.filter((d) =>
+    areSectorsRelated(d.sector, company.sector),
+  );
 
   return {
     company,
@@ -605,49 +607,6 @@ function estimateTimeline(
   return { months: baseMonths, triggers };
 }
 
-function getSectorComparables(sector: string): ComparableDeal[] {
-  // Mock comparable deals
-  const mockDeals: ComparableDeal[] = [
-    {
-      targetName: "Modern Fertility",
-      acquirerName: "Ro Health",
-      dealValue: 150,
-      dealDate: "2021-05",
-      sector: "fertility",
-      stage: "series_a",
-      revenueMultiple: 3.2,
-    },
-    {
-      targetName: "Livongo",
-      acquirerName: "Teladoc",
-      dealValue: 18500,
-      dealDate: "2020-08",
-      sector: "digital_therapeutics",
-      stage: "public",
-      revenueMultiple: 4.1,
-    },
-    {
-      targetName: "Maven Clinic",
-      acquirerName: "Unknown",
-      dealValue: 0,
-      dealDate: "2023-01",
-      sector: "maternal_health",
-      stage: "series_d",
-      revenueMultiple: 3.8,
-    },
-    {
-      targetName: "Tia",
-      acquirerName: "CVS Health",
-      dealValue: 0,
-      dealDate: "2023-06",
-      sector: "womens_health",
-      stage: "series_b",
-      revenueMultiple: 3.5,
-    },
-  ];
-
-  return mockDeals.filter((d) => areSectorsRelated(d.sector, sector));
-}
 
 // Helper functions
 function areSectorsRelated(sector1: string, sector2: string): boolean {

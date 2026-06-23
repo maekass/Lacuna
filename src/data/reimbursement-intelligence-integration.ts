@@ -120,7 +120,7 @@ export class ReimbursementIntelligenceIntegration {
 
     // Calculate valuation
     const valuation = this.calculator.calculateValuation({
-      annualRevenue: company.revenue || 5000000,
+      annualRevenue: company.revenue ?? 0,
       reimbursementStatus,
       sector: company.sector,
       growthRate: 35,

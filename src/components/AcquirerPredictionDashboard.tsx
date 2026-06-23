@@ -12,6 +12,7 @@ import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import {
   type AcquirerMatch,
   analyzeCompetitiveDynamics,
+  type ComparableDeal,
   type CompanyProfile,
   type CompetitiveAnalysis,
   STRATEGIC_ACQUIRERS,
@@ -44,9 +45,9 @@ function generateCompanyProfiles(
       company.description ?? company.business ?? "",
     ),
     technology: extractTechnologies(company.description ?? ""),
-    fundingTotal: company.fundingTotal ?? 5000000,
+    fundingTotal: company.fundingTotal ?? 0,
     foundingDate: company.foundedDate ?? "2018-01-01",
-    fdaStatus: idx % 3 === 0 ? "cleared" : idx % 3 === 1 ? "pending" : "none",
+    // FDA status not in the verified dataset — omit rather than fabricate
   }));
 }
 
@@ -107,7 +108,7 @@ function extractTechnologies(description: string): string[] {
 }
 
 export default function AcquirerPredictionDashboard() {
-  const { verifiedCompanies } = useVerifiedDataset();
+  const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
 
   const companyProfiles = useMemo(
@@ -115,12 +116,31 @@ export default function AcquirerPredictionDashboard() {
     [verifiedCompanies],
   );
 
+  // Build ComparableDeal[] from the verified dataset — no fabricated deals.
+  // Only include acquisitions with a disclosed deal value.
+  const verifiedComparables = useMemo((): ComparableDeal[] => {
+    const sectorById = new Map(
+      verifiedCompanies.map((c) => [c.id, c.sector ?? ""]),
+    );
+    return verifiedAcquisitions
+      .filter((a) => (a.dealValue ?? 0) > 0)
+      .map((a) => ({
+        targetName: a.targetName,
+        acquirerName: a.acquirerName,
+        dealValue: a.dealValue ?? 0,
+        dealDate: a.announcedDate.slice(0, 7),
+        sector: mapToSector(sectorById.get(a.targetId) ?? ""),
+        stage: "acquired" as const,
+        // revenueMultiple omitted — not in verified dataset
+      }));
+  }, [verifiedAcquisitions, verifiedCompanies]);
+
   const analyses = useMemo(() => {
     return companyProfiles.map((profile) => ({
       profile,
-      analysis: analyzeCompetitiveDynamics(profile),
+      analysis: analyzeCompetitiveDynamics(profile, undefined, verifiedComparables),
     }));
-  }, [companyProfiles]);
+  }, [companyProfiles, verifiedComparables]);
 
   const selectedAnalysis = selectedCompany
     ? analyses.find((a) => a.profile.id === selectedCompany)?.analysis

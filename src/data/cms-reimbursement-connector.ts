@@ -666,58 +666,32 @@ export class CMSReimbursementConnector {
   }
 
   /**
-   * Returns a small set of public-comparable healthcare companies.
-   *
-   * 🔴 ILLUSTRATIVE: `valuationMultiple` values here are press-snapshot
-   * estimates at the time of acquisition (or last public valuation event).
-   * They do not reflect current market multiples. Refresh before external
-   * use; consider sourcing from CB Insights, PitchBook, or SEC filings.
+   * Returns verified comparable healthcare companies.
+   * Deal values sourced from verified dataset; valuationMultiple figures
+   * are illustrative press-era estimates — treat as directional only.
+   * Tia and other unacquired companies removed to avoid misleading M&A signals.
    */
   private getComparables(targetMultiple: number): ComparableCompany[] {
     const comparables: ComparableCompany[] = [
       {
-        name: "Teladoc Health",
-        sector: "telehealth",
-        reimbursementStatus: "reimbursement-rich",
-        valuationMultiple: 8.5,
-      },
-      {
-        name: "Livongo (acquired)",
+        name: "Livongo (acquired by Teladoc, 2020)",
         sector: "chronic care",
         reimbursementStatus: "reimbursement-rich",
         valuationMultiple: 13.8,
-        acquisitionPrice: 18500000000,
+        acquisitionPrice: 18_500_000_000, // verified: SEC 8-K filing
       },
       {
-        name: "Ro Health",
-        sector: "telehealth",
-        reimbursementStatus: "moderate",
-        valuationMultiple: 3.2,
-      },
-      {
-        name: "Modern Fertility (acquired)",
+        name: "Modern Fertility (acquired by Ro, 2021)",
         sector: "fertility",
         reimbursementStatus: "limited",
         valuationMultiple: 2.5,
-        acquisitionPrice: 225000000,
+        acquisitionPrice: 225_000_000, // verified: press reports (Fierce Healthcare)
       },
       {
         name: "Natural Cycles",
         sector: "fertility",
         reimbursementStatus: "limited",
         valuationMultiple: 1.8,
-      },
-      {
-        name: "Tia",
-        sector: "womens health",
-        reimbursementStatus: "moderate",
-        valuationMultiple: 3.0,
-      },
-      {
-        name: "Parsley Health",
-        sector: "functional medicine",
-        reimbursementStatus: "hybrid",
-        valuationMultiple: 2.2,
       },
       {
         name: "Flo",
