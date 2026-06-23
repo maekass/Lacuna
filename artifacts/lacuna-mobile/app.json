@@ -21,7 +21,9 @@
       "package": "com.replit.lacunamobile"
     },
     "web": {
-      "favicon": "./assets/images/icon.png"
+      "favicon": "./assets/images/icon.png",
+      "output": "single",
+      "bundler": "metro"
     },
     "plugins": [
       [
@@ -34,8 +36,7 @@
       "expo-web-browser"
     ],
     "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
+      "typedRoutes": true
     }
   }
 }
