@@ -48,12 +48,11 @@ const sectorColors: Record<string, string> = {
 
 const PORTFOLIO_STYLES: Record<PortfolioKey, { color: string; badge: string }> =
   {
-    foreground: { color: LACUNA_SEMANTIC.chart.accent, badge: "FG" },
+    foreground: { color: LACUNA_PALETTE.transcendentPink, badge: "FG" },
     amboy: { color: "#0D9488", badge: "AS" },
-    fund: { color: "#7C3AED", badge: "FD" },
+    fund: { color: "#7C3AED", badge: "PT" },
   };
 
-// Portfolio toggle buttons updated - should show FG, AS, Fund
 export default function ForceNetwork(
   {
     nodes,
