@@ -37,6 +37,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/l-icon.png",
+  },
   openGraph: {
     title: "Lacuna",
     description:
