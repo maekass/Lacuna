@@ -53,6 +53,7 @@ const PORTFOLIO_STYLES: Record<PortfolioKey, { color: string; badge: string }> =
     fund: { color: LACUNA_PALETTE.cosmicBlue, badge: "PT" },
   };
 
+// Updated: Three distinct portfolio colors - FG (pink), AS (teal), PT (blue)
 export default function ForceNetwork(
   {
     nodes,
