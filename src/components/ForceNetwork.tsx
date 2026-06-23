@@ -399,7 +399,7 @@ export default function ForceNetwork(
                 backgroundColor: PORTFOLIO_STYLES[portfolio.key].color,
               }}
             />
-            {portfolio.shortName}
+            {portfolio.shortName} Portfolio
           </button>
         ))}
       </div>
@@ -462,7 +462,7 @@ export default function ForceNetwork(
                       }}
                     />
                     <span className="text-[10px] sm:text-xs text-lacuna-text-secondary truncate">
-                      {portfolio.shortName}
+                      {portfolio.shortName} Portfolio
                     </span>
                   </div>
                 ),
