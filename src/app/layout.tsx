@@ -17,7 +17,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Lacunamae",
+  title: "Lacuna",
   description:
     "Prototype investment-research environment for women's health M&A: verified deal provenance, clinical trial search, genomics governance, and cited analytics.",
   keywords: [
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Lacunamae",
+    title: "Lacuna",
     description:
       "Verified deal provenance, clinical trial search, genomics governance, and cited analytics for women's health M&A.",
     url: "https://lacuna-maekass.vercel.app",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lacunamae",
+    title: "Lacuna",
     description:
       "Verified deals, clinical trial search, genomics governance, and cited analytics. BSL 1.1.",
   },
