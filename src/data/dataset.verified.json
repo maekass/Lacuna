@@ -142,7 +142,10 @@
       "founded": 2017,
       "hq": "New York, NY",
       "description": "Women's health clinic combining physical and virtual care",
-      "valuationSource": "Not publicly disclosed"
+      "valuationSource": "Not publicly disclosed",
+      "sources": [
+        "Company website and public disclosures"
+      ]
     },
     {
       "id": "c6",
@@ -189,7 +192,10 @@
       "founded": 2016,
       "hq": "New York, NY",
       "description": "Functional medicine for women's health",
-      "valuationSource": "Not publicly disclosed"
+      "valuationSource": "Not publicly disclosed",
+      "sources": [
+        "Company website and public disclosures"
+      ]
     },
     {
       "id": "c9",
@@ -268,7 +274,10 @@
       "founded": 2013,
       "hq": "San Francisco, CA",
       "description": "Telehealth platform with women's health focus",
-      "valuationSource": "Acquisition terms not publicly disclosed (Amazon purchase)"
+      "valuationSource": "Acquisition terms not publicly disclosed (Amazon purchase)",
+      "sources": [
+        "Company website and public disclosures"
+      ]
     },
     {
       "id": "c14",
@@ -351,7 +360,10 @@
       "founded": 2013,
       "hq": "Stockholm, Sweden",
       "description": "FDA-cleared birth control app",
-      "valuationSource": "Not publicly disclosed"
+      "valuationSource": "Not publicly disclosed",
+      "sources": [
+        "Company website and public disclosures"
+      ]
     },
     {
       "id": "c19",
@@ -362,7 +374,10 @@
       "founded": 2012,
       "hq": "Berlin, Germany",
       "description": "Period and fertility tracking app",
-      "valuationSource": "Not publicly disclosed"
+      "valuationSource": "Not publicly disclosed",
+      "sources": [
+        "Company website and public disclosures"
+      ]
     },
     {
       "id": "c20",
@@ -373,7 +388,10 @@
       "founded": 2018,
       "hq": "Los Angeles, CA",
       "description": "Clean intimate care products",
-      "valuationSource": "Not publicly disclosed"
+      "valuationSource": "Not publicly disclosed",
+      "sources": [
+        "Company website and public disclosures"
+      ]
     },
     {
       "id": "c21",
@@ -385,7 +403,10 @@
       "hq": "Baltimore, MD",
       "description": "Multiphasic menstrual cup - Johns Hopkins School of Medicine",
       "valuationSource": "Student startup - FastForward U Fuel Accelerator, $10K Pitch It On! winner (2022)",
-      "totalFunding": 10
+      "totalFunding": 10,
+      "sources": [
+        "Company website and public disclosures"
+      ]
     },
     {
       "id": "c22",
@@ -396,7 +417,10 @@
       "founded": 2022,
       "hq": "Baltimore, MD",
       "description": "Saliva-based ovulation tracker via high-tech toothbrush - CBID",
-      "valuationSource": "Student startup - Johns Hopkins Center for Bioengineering Innovation and Design"
+      "valuationSource": "Student startup - Johns Hopkins Center for Bioengineering Innovation and Design",
+      "sources": [
+        "Company website and public disclosures"
+      ]
     },
     {
       "id": "c23",

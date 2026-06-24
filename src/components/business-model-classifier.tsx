@@ -37,7 +37,7 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
   {
     companyProfile,
     sector = "digital_therapeutics",
-    annualRevenue = 10000000,
+    annualRevenue = 0,
     className = "",
   },
 ) => {
