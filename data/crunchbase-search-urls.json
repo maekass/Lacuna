@@ -1,0 +1,815 @@
+{
+  "generatedAt": "2026-06-24T01:31:46.975Z",
+  "totalCompanies": 56,
+  "instructions": "Open each searchUrl in Crunchbase Pro, find the correct company, export as CSV to data/crunchbase-exports/",
+  "companies": [
+    {
+      "companyId": "c11",
+      "companyName": "Proov",
+      "sector": "Fertility",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Proov&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/proov",
+      "crunchbaseSlug": "proov"
+    },
+    {
+      "companyId": "c20",
+      "companyName": "Bloomi",
+      "sector": "Pelvic Health",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Bloomi&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/bloomi",
+      "crunchbaseSlug": "bloomi"
+    },
+    {
+      "companyId": "c22",
+      "companyName": "Ovubrush",
+      "sector": "Fertility",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Ovubrush&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/ovubrush",
+      "crunchbaseSlug": "ovubrush"
+    },
+    {
+      "companyId": "c30",
+      "companyName": "ZyMōt Fertility",
+      "sector": "Fertility",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=ZyM%C5%8Dt%20Fertility&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/zym-t-fertility",
+      "crunchbaseSlug": "zym-t-fertility"
+    },
+    {
+      "companyId": "c31",
+      "companyName": "Alydia Health",
+      "sector": "Maternal Health",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Alydia%20Health&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/alydia-health",
+      "crunchbaseSlug": "alydia-health"
+    },
+    {
+      "companyId": "c35",
+      "companyName": "Celmatix",
+      "sector": "Fertility",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Celmatix&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/celmatix",
+      "crunchbaseSlug": "celmatix"
+    },
+    {
+      "companyId": "c48",
+      "companyName": "eFertility (STB Zorg)",
+      "sector": "Fertility",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=eFertility%20(STB%20Zorg)&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/efertility-stb-zorg",
+      "crunchbaseSlug": "efertility-stb-zorg"
+    },
+    {
+      "companyId": "c64",
+      "companyName": "Ovia Health",
+      "sector": "Maternal Health",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Ovia%20Health&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/ovia-health",
+      "crunchbaseSlug": "ovia-health"
+    },
+    {
+      "companyId": "c87",
+      "companyName": "Testmate Health",
+      "sector": "Diagnostics",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Testmate%20Health&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/testmate-health",
+      "crunchbaseSlug": "testmate-health"
+    },
+    {
+      "companyId": "c88",
+      "companyName": "Aunt Flow",
+      "sector": "Pelvic Health",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Aunt%20Flow&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/aunt-flow",
+      "crunchbaseSlug": "aunt-flow"
+    },
+    {
+      "companyId": "c90",
+      "companyName": "Apollo Neuroscience",
+      "sector": "Consumer",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Apollo%20Neuroscience&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/apollo-neuroscience",
+      "crunchbaseSlug": "apollo-neuroscience"
+    },
+    {
+      "companyId": "c91",
+      "companyName": "Aria CV",
+      "sector": "Medical Device",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Aria%20CV&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/aria-cv",
+      "crunchbaseSlug": "aria-cv"
+    },
+    {
+      "companyId": "c92",
+      "companyName": "Attn: Grace",
+      "sector": "Pelvic Health",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Attn%3A%20Grace&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/attn-grace",
+      "crunchbaseSlug": "attn-grace"
+    },
+    {
+      "companyId": "c93",
+      "companyName": "b.well",
+      "sector": "Digital Health",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=b.well&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/b-well",
+      "crunchbaseSlug": "b-well"
+    },
+    {
+      "companyId": "c94",
+      "companyName": "Bone Health Technologies",
+      "sector": "Medical Device",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Bone%20Health%20Technologies&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/bone-health-technologies",
+      "crunchbaseSlug": "bone-health-technologies"
+    },
+    {
+      "companyId": "c95",
+      "companyName": "Bowe Glow, Inc",
+      "sector": "Consumer",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Bowe%20Glow%2C%20Inc&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/bowe-glow-inc",
+      "crunchbaseSlug": "bowe-glow-inc"
+    },
+    {
+      "companyId": "c96",
+      "companyName": "Cat Health",
+      "sector": "Therapeutics",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Cat%20Health&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/cat-health",
+      "crunchbaseSlug": "cat-health"
+    },
+    {
+      "companyId": "c97",
+      "companyName": "Chronicle Bio",
+      "sector": "Tech Bio",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Chronicle%20Bio&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/chronicle-bio",
+      "crunchbaseSlug": "chronicle-bio"
+    },
+    {
+      "companyId": "c98",
+      "companyName": "Clear Gene",
+      "sector": "Diagnostic",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Clear%20Gene&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/clear-gene",
+      "crunchbaseSlug": "clear-gene"
+    },
+    {
+      "companyId": "c99",
+      "companyName": "E-Lovu Health",
+      "sector": "Digital Health",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=E-Lovu%20Health&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/e-lovu-health",
+      "crunchbaseSlug": "e-lovu-health"
+    },
+    {
+      "companyId": "c100",
+      "companyName": "Everly Health",
+      "sector": "Diagnostic",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Everly%20Health&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/everly-health",
+      "crunchbaseSlug": "everly-health"
+    },
+    {
+      "companyId": "c101",
+      "companyName": "FemDx Medsystems",
+      "sector": "Medical Device",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=FemDx%20Medsystems&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/femdx-medsystems",
+      "crunchbaseSlug": "femdx-medsystems"
+    },
+    {
+      "companyId": "c102",
+      "companyName": "Frontier Bio",
+      "sector": "Biotech",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Frontier%20Bio&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/frontier-bio",
+      "crunchbaseSlug": "frontier-bio"
+    },
+    {
+      "companyId": "c103",
+      "companyName": "Future Family",
+      "sector": "Reproductive",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Future%20Family&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/future-family",
+      "crunchbaseSlug": "future-family"
+    },
+    {
+      "companyId": "c104",
+      "companyName": "Gameto",
+      "sector": "Biotech",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Gameto&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/gameto",
+      "crunchbaseSlug": "gameto"
+    },
+    {
+      "companyId": "c105",
+      "companyName": "Harmony Nutrition",
+      "sector": "Biotech",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Harmony%20Nutrition&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/harmony-nutrition",
+      "crunchbaseSlug": "harmony-nutrition"
+    },
+    {
+      "companyId": "c106",
+      "companyName": "Hera Biotech",
+      "sector": "Diagnostic",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Hera%20Biotech&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/hera-biotech",
+      "crunchbaseSlug": "hera-biotech"
+    },
+    {
+      "companyId": "c107",
+      "companyName": "Inherent Biosciences",
+      "sector": "Diagnostic",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Inherent%20Biosciences&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/inherent-biosciences",
+      "crunchbaseSlug": "inherent-biosciences"
+    },
+    {
+      "companyId": "c108",
+      "companyName": "Joylux",
+      "sector": "Consumer",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Joylux&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/joylux",
+      "crunchbaseSlug": "joylux"
+    },
+    {
+      "companyId": "c109",
+      "companyName": "Lighthouse Pharma",
+      "sector": "Therapeutics",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Lighthouse%20Pharma&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/lighthouse-pharma",
+      "crunchbaseSlug": "lighthouse-pharma"
+    },
+    {
+      "companyId": "c110",
+      "companyName": "L-Nutra",
+      "sector": "Consumer",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=L-Nutra&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/l-nutra",
+      "crunchbaseSlug": "l-nutra"
+    },
+    {
+      "companyId": "c111",
+      "companyName": "Madison Reed",
+      "sector": "Consumer",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Madison%20Reed&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/madison-reed",
+      "crunchbaseSlug": "madison-reed"
+    },
+    {
+      "companyId": "c112",
+      "companyName": "Madorra",
+      "sector": "Medical Device",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Madorra&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/madorra",
+      "crunchbaseSlug": "madorra"
+    },
+    {
+      "companyId": "c113",
+      "companyName": "Maude",
+      "sector": "Consumer",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Maude&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/maude",
+      "crunchbaseSlug": "maude"
+    },
+    {
+      "companyId": "c114",
+      "companyName": "Maven Clinic (portfolio)",
+      "sector": "Digital Health",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Maven%20Clinic%20(portfolio)&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/maven-clinic-portfolio",
+      "crunchbaseSlug": "maven-clinic-portfolio"
+    },
+    {
+      "companyId": "c115",
+      "companyName": "Mercy Bio",
+      "sector": "Diagnostic",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Mercy%20Bio&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/mercy-bio",
+      "crunchbaseSlug": "mercy-bio"
+    },
+    {
+      "companyId": "c116",
+      "companyName": "Mirvie",
+      "sector": "Diagnostic",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Mirvie&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/mirvie",
+      "crunchbaseSlug": "mirvie"
+    },
+    {
+      "companyId": "c117",
+      "companyName": "Nalu Bio",
+      "sector": "Wellness",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Nalu%20Bio&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/nalu-bio",
+      "crunchbaseSlug": "nalu-bio"
+    },
+    {
+      "companyId": "c118",
+      "companyName": "Nest Collaborative",
+      "sector": "Maternal Health",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Nest%20Collaborative&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/nest-collaborative",
+      "crunchbaseSlug": "nest-collaborative"
+    },
+    {
+      "companyId": "c119",
+      "companyName": "Neuspera",
+      "sector": "Medical Device",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Neuspera&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/neuspera",
+      "crunchbaseSlug": "neuspera"
+    },
+    {
+      "companyId": "c120",
+      "companyName": "NowDx",
+      "sector": "Diagnostic",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=NowDx&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/nowdx",
+      "crunchbaseSlug": "nowdx"
+    },
+    {
+      "companyId": "c121",
+      "companyName": "Proov (portfolio)",
+      "sector": "Reproductive",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Proov%20(portfolio)&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/proov-portfolio",
+      "crunchbaseSlug": "proov-portfolio"
+    },
+    {
+      "companyId": "c122",
+      "companyName": "Rebundle",
+      "sector": "Consumer",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Rebundle&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/rebundle",
+      "crunchbaseSlug": "rebundle"
+    },
+    {
+      "companyId": "c123",
+      "companyName": "Rosy Wellness",
+      "sector": "Wellness",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Rosy%20Wellness&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/rosy-wellness",
+      "crunchbaseSlug": "rosy-wellness"
+    },
+    {
+      "companyId": "c124",
+      "companyName": "Sana Health",
+      "sector": "Medical Device",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Sana%20Health&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/sana-health",
+      "crunchbaseSlug": "sana-health"
+    },
+    {
+      "companyId": "c125",
+      "companyName": "Simple HealthKit",
+      "sector": "Digital Health",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Simple%20HealthKit&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/simple-healthkit",
+      "crunchbaseSlug": "simple-healthkit"
+    },
+    {
+      "companyId": "c126",
+      "companyName": "Siren",
+      "sector": "Medical Device",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Siren&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/siren",
+      "crunchbaseSlug": "siren"
+    },
+    {
+      "companyId": "c127",
+      "companyName": "Solace Therapeutics",
+      "sector": "Medical Device",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Solace%20Therapeutics&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/solace-therapeutics",
+      "crunchbaseSlug": "solace-therapeutics"
+    },
+    {
+      "companyId": "c128",
+      "companyName": "Toi Labs",
+      "sector": "Medical Device",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Toi%20Labs&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/toi-labs",
+      "crunchbaseSlug": "toi-labs"
+    },
+    {
+      "companyId": "c129",
+      "companyName": "Veana Therapeutics",
+      "sector": "Therapeutics",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Veana%20Therapeutics&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/veana-therapeutics",
+      "crunchbaseSlug": "veana-therapeutics"
+    },
+    {
+      "companyId": "c130",
+      "companyName": "Wellth",
+      "sector": "Digital Health",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Wellth&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/wellth",
+      "crunchbaseSlug": "wellth"
+    },
+    {
+      "companyId": "c131",
+      "companyName": "Willow",
+      "sector": "Maternal Health",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Willow&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/willow",
+      "crunchbaseSlug": "willow"
+    },
+    {
+      "companyId": "c132",
+      "companyName": "Xandar Kardian",
+      "sector": "Medical Device",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=Xandar%20Kardian&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/xandar-kardian",
+      "crunchbaseSlug": "xandar-kardian"
+    },
+    {
+      "companyId": "c133",
+      "companyName": "xCures",
+      "sector": "Digital Health",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=xCures&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/xcures",
+      "crunchbaseSlug": "xcures"
+    },
+    {
+      "companyId": "c134",
+      "companyName": "YourChoice Therapeutics",
+      "sector": "Reproductive",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=YourChoice%20Therapeutics&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/yourchoice-therapeutics",
+      "crunchbaseSlug": "yourchoice-therapeutics"
+    },
+    {
+      "companyId": "c135",
+      "companyName": "X-Therma",
+      "sector": "Biotech",
+      "searchUrl": "https://www.crunchbase.com/textsearch?q=X-Therma&entities=organizations",
+      "profileUrl": "https://www.crunchbase.com/organization/x-therma",
+      "crunchbaseSlug": "x-therma"
+    }
+  ],
+  "sectorBatches": [
+    {
+      "sector": "Fertility",
+      "count": 5,
+      "companies": [
+        {
+          "id": "c11",
+          "name": "Proov",
+          "profileUrl": "https://www.crunchbase.com/organization/proov"
+        },
+        {
+          "id": "c22",
+          "name": "Ovubrush",
+          "profileUrl": "https://www.crunchbase.com/organization/ovubrush"
+        },
+        {
+          "id": "c30",
+          "name": "ZyMōt Fertility",
+          "profileUrl": "https://www.crunchbase.com/organization/zym-t-fertility"
+        },
+        {
+          "id": "c35",
+          "name": "Celmatix",
+          "profileUrl": "https://www.crunchbase.com/organization/celmatix"
+        },
+        {
+          "id": "c48",
+          "name": "eFertility (STB Zorg)",
+          "profileUrl": "https://www.crunchbase.com/organization/efertility-stb-zorg"
+        }
+      ]
+    },
+    {
+      "sector": "Pelvic Health",
+      "count": 3,
+      "companies": [
+        {
+          "id": "c20",
+          "name": "Bloomi",
+          "profileUrl": "https://www.crunchbase.com/organization/bloomi"
+        },
+        {
+          "id": "c88",
+          "name": "Aunt Flow",
+          "profileUrl": "https://www.crunchbase.com/organization/aunt-flow"
+        },
+        {
+          "id": "c92",
+          "name": "Attn: Grace",
+          "profileUrl": "https://www.crunchbase.com/organization/attn-grace"
+        }
+      ]
+    },
+    {
+      "sector": "Maternal Health",
+      "count": 4,
+      "companies": [
+        {
+          "id": "c31",
+          "name": "Alydia Health",
+          "profileUrl": "https://www.crunchbase.com/organization/alydia-health"
+        },
+        {
+          "id": "c64",
+          "name": "Ovia Health",
+          "profileUrl": "https://www.crunchbase.com/organization/ovia-health"
+        },
+        {
+          "id": "c118",
+          "name": "Nest Collaborative",
+          "profileUrl": "https://www.crunchbase.com/organization/nest-collaborative"
+        },
+        {
+          "id": "c131",
+          "name": "Willow",
+          "profileUrl": "https://www.crunchbase.com/organization/willow"
+        }
+      ]
+    },
+    {
+      "sector": "Diagnostics",
+      "count": 1,
+      "companies": [
+        {
+          "id": "c87",
+          "name": "Testmate Health",
+          "profileUrl": "https://www.crunchbase.com/organization/testmate-health"
+        }
+      ]
+    },
+    {
+      "sector": "Consumer",
+      "count": 7,
+      "companies": [
+        {
+          "id": "c90",
+          "name": "Apollo Neuroscience",
+          "profileUrl": "https://www.crunchbase.com/organization/apollo-neuroscience"
+        },
+        {
+          "id": "c95",
+          "name": "Bowe Glow, Inc",
+          "profileUrl": "https://www.crunchbase.com/organization/bowe-glow-inc"
+        },
+        {
+          "id": "c108",
+          "name": "Joylux",
+          "profileUrl": "https://www.crunchbase.com/organization/joylux"
+        },
+        {
+          "id": "c110",
+          "name": "L-Nutra",
+          "profileUrl": "https://www.crunchbase.com/organization/l-nutra"
+        },
+        {
+          "id": "c111",
+          "name": "Madison Reed",
+          "profileUrl": "https://www.crunchbase.com/organization/madison-reed"
+        },
+        {
+          "id": "c113",
+          "name": "Maude",
+          "profileUrl": "https://www.crunchbase.com/organization/maude"
+        },
+        {
+          "id": "c122",
+          "name": "Rebundle",
+          "profileUrl": "https://www.crunchbase.com/organization/rebundle"
+        }
+      ]
+    },
+    {
+      "sector": "Medical Device",
+      "count": 10,
+      "companies": [
+        {
+          "id": "c91",
+          "name": "Aria CV",
+          "profileUrl": "https://www.crunchbase.com/organization/aria-cv"
+        },
+        {
+          "id": "c94",
+          "name": "Bone Health Technologies",
+          "profileUrl": "https://www.crunchbase.com/organization/bone-health-technologies"
+        },
+        {
+          "id": "c101",
+          "name": "FemDx Medsystems",
+          "profileUrl": "https://www.crunchbase.com/organization/femdx-medsystems"
+        },
+        {
+          "id": "c112",
+          "name": "Madorra",
+          "profileUrl": "https://www.crunchbase.com/organization/madorra"
+        },
+        {
+          "id": "c119",
+          "name": "Neuspera",
+          "profileUrl": "https://www.crunchbase.com/organization/neuspera"
+        },
+        {
+          "id": "c124",
+          "name": "Sana Health",
+          "profileUrl": "https://www.crunchbase.com/organization/sana-health"
+        },
+        {
+          "id": "c126",
+          "name": "Siren",
+          "profileUrl": "https://www.crunchbase.com/organization/siren"
+        },
+        {
+          "id": "c127",
+          "name": "Solace Therapeutics",
+          "profileUrl": "https://www.crunchbase.com/organization/solace-therapeutics"
+        },
+        {
+          "id": "c128",
+          "name": "Toi Labs",
+          "profileUrl": "https://www.crunchbase.com/organization/toi-labs"
+        },
+        {
+          "id": "c132",
+          "name": "Xandar Kardian",
+          "profileUrl": "https://www.crunchbase.com/organization/xandar-kardian"
+        }
+      ]
+    },
+    {
+      "sector": "Digital Health",
+      "count": 6,
+      "companies": [
+        {
+          "id": "c93",
+          "name": "b.well",
+          "profileUrl": "https://www.crunchbase.com/organization/b-well"
+        },
+        {
+          "id": "c99",
+          "name": "E-Lovu Health",
+          "profileUrl": "https://www.crunchbase.com/organization/e-lovu-health"
+        },
+        {
+          "id": "c114",
+          "name": "Maven Clinic (portfolio)",
+          "profileUrl": "https://www.crunchbase.com/organization/maven-clinic-portfolio"
+        },
+        {
+          "id": "c125",
+          "name": "Simple HealthKit",
+          "profileUrl": "https://www.crunchbase.com/organization/simple-healthkit"
+        },
+        {
+          "id": "c130",
+          "name": "Wellth",
+          "profileUrl": "https://www.crunchbase.com/organization/wellth"
+        },
+        {
+          "id": "c133",
+          "name": "xCures",
+          "profileUrl": "https://www.crunchbase.com/organization/xcures"
+        }
+      ]
+    },
+    {
+      "sector": "Therapeutics",
+      "count": 3,
+      "companies": [
+        {
+          "id": "c96",
+          "name": "Cat Health",
+          "profileUrl": "https://www.crunchbase.com/organization/cat-health"
+        },
+        {
+          "id": "c109",
+          "name": "Lighthouse Pharma",
+          "profileUrl": "https://www.crunchbase.com/organization/lighthouse-pharma"
+        },
+        {
+          "id": "c129",
+          "name": "Veana Therapeutics",
+          "profileUrl": "https://www.crunchbase.com/organization/veana-therapeutics"
+        }
+      ]
+    },
+    {
+      "sector": "Tech Bio",
+      "count": 1,
+      "companies": [
+        {
+          "id": "c97",
+          "name": "Chronicle Bio",
+          "profileUrl": "https://www.crunchbase.com/organization/chronicle-bio"
+        }
+      ]
+    },
+    {
+      "sector": "Diagnostic",
+      "count": 7,
+      "companies": [
+        {
+          "id": "c98",
+          "name": "Clear Gene",
+          "profileUrl": "https://www.crunchbase.com/organization/clear-gene"
+        },
+        {
+          "id": "c100",
+          "name": "Everly Health",
+          "profileUrl": "https://www.crunchbase.com/organization/everly-health"
+        },
+        {
+          "id": "c106",
+          "name": "Hera Biotech",
+          "profileUrl": "https://www.crunchbase.com/organization/hera-biotech"
+        },
+        {
+          "id": "c107",
+          "name": "Inherent Biosciences",
+          "profileUrl": "https://www.crunchbase.com/organization/inherent-biosciences"
+        },
+        {
+          "id": "c115",
+          "name": "Mercy Bio",
+          "profileUrl": "https://www.crunchbase.com/organization/mercy-bio"
+        },
+        {
+          "id": "c116",
+          "name": "Mirvie",
+          "profileUrl": "https://www.crunchbase.com/organization/mirvie"
+        },
+        {
+          "id": "c120",
+          "name": "NowDx",
+          "profileUrl": "https://www.crunchbase.com/organization/nowdx"
+        }
+      ]
+    },
+    {
+      "sector": "Biotech",
+      "count": 4,
+      "companies": [
+        {
+          "id": "c102",
+          "name": "Frontier Bio",
+          "profileUrl": "https://www.crunchbase.com/organization/frontier-bio"
+        },
+        {
+          "id": "c104",
+          "name": "Gameto",
+          "profileUrl": "https://www.crunchbase.com/organization/gameto"
+        },
+        {
+          "id": "c105",
+          "name": "Harmony Nutrition",
+          "profileUrl": "https://www.crunchbase.com/organization/harmony-nutrition"
+        },
+        {
+          "id": "c135",
+          "name": "X-Therma",
+          "profileUrl": "https://www.crunchbase.com/organization/x-therma"
+        }
+      ]
+    },
+    {
+      "sector": "Reproductive",
+      "count": 3,
+      "companies": [
+        {
+          "id": "c103",
+          "name": "Future Family",
+          "profileUrl": "https://www.crunchbase.com/organization/future-family"
+        },
+        {
+          "id": "c121",
+          "name": "Proov (portfolio)",
+          "profileUrl": "https://www.crunchbase.com/organization/proov-portfolio"
+        },
+        {
+          "id": "c134",
+          "name": "YourChoice Therapeutics",
+          "profileUrl": "https://www.crunchbase.com/organization/yourchoice-therapeutics"
+        }
+      ]
+    },
+    {
+      "sector": "Wellness",
+      "count": 2,
+      "companies": [
+        {
+          "id": "c117",
+          "name": "Nalu Bio",
+          "profileUrl": "https://www.crunchbase.com/organization/nalu-bio"
+        },
+        {
+          "id": "c123",
+          "name": "Rosy Wellness",
+          "profileUrl": "https://www.crunchbase.com/organization/rosy-wellness"
+        }
+      ]
+    }
+  ]
+}
