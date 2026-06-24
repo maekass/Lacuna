@@ -123,8 +123,8 @@ export class ReimbursementIntelligenceIntegration {
       annualRevenue: company.revenue ?? 0,
       reimbursementStatus,
       sector: company.sector,
-      growthRate: 35,
-      profitability: "break-even",
+      growthRate: 35, // 🔴 ILLUSTRATIVE default — replace with company-specific CAGR when available
+      profitability: "break-even", // 🔴 ILLUSTRATIVE default — replace with company-specific financials
       acquirerType: "healthcare",
     });
 

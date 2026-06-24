@@ -48,7 +48,10 @@ export interface AcquirerProfile {
   typicalPremium: number;
 }
 
-// Industry benchmark data based on actual M&A transactions
+// 🔴 ILLUSTRATIVE — curated sector heuristics, NOT sourced from a single citable dataset.
+// These multiples, sample sizes, and correlations are editorial estimates based on
+// general industry observation. They are NOT verified M&A transaction data.
+// Replace with sourced benchmark data (e.g. from verified dataset deals) before external use.
 const SECTOR_BENCHMARKS: Record<string, SectorBenchmark> = {
   "fertility": {
     medianMultiple: 2.1,
@@ -299,8 +302,8 @@ export class ValuationPremiumCalculator {
         estimatedAnnualReimbursement: annualRevenue * 0.7,
       },
       sector,
-      growthRate: 35,
-      profitability: "break-even",
+      growthRate: 35, // 🔴 ILLUSTRATIVE default — replace with company-specific CAGR when available
+      profitability: "break-even", // 🔴 ILLUSTRATIVE default
       acquirerType: "healthcare",
     };
 
@@ -315,8 +318,8 @@ export class ValuationPremiumCalculator {
         estimatedAnnualReimbursement: 0,
       },
       sector,
-      growthRate: 35,
-      profitability: "break-even",
+      growthRate: 35, // 🔴 ILLUSTRATIVE default — replace with company-specific CAGR when available
+      profitability: "break-even", // 🔴 ILLUSTRATIVE default
       acquirerType: "healthcare",
     };
 

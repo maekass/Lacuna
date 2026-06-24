@@ -94,7 +94,7 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
       annualRevenue: revenue,
       reimbursementStatus,
       sector: selectedSector,
-      growthRate: 35,
+      growthRate: 35, // 🔴 ILLUSTRATIVE default — replace with company-specific CAGR when available
       profitability: "break-even",
       acquirerType,
     });
