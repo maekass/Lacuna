@@ -1,0 +1,58 @@
+{
+  "generatedAt": "2026-06-24T00:18:44.141Z",
+  "source": "Lacuna verified dataset (src/data/dataset.verified.json)",
+  "datasetStats": {
+    "totalCompanies": 135,
+    "totalAcquisitions": 59,
+    "acquisitionsWithDealValue": 47,
+    "companiesWithFunding": 24
+  },
+  "method": "Multiple = dealValue / totalFunding. This is a proxy for revenue multiples when company revenue is not publicly available. Replace with dealValue / annualRevenue when revenue data is sourced.",
+  "benchmarks": [
+    {
+      "sector": "General Wellness",
+      "medianMultiple": 30.23,
+      "p25Multiple": 16.39,
+      "p75Multiple": 44.07,
+      "sampleSize": 2,
+      "dealsUsed": [
+        "Livongo Health",
+        "Nurx"
+      ],
+      "sources": [
+        "SEC 8-K filing, July 2020",
+        "Press reports (TechCrunch, December 2021)"
+      ],
+      "computationMethod": "dealValue / totalFunding (proxy multiple — revenue data not available in verified dataset)"
+    },
+    {
+      "sector": "Fertility",
+      "medianMultiple": 1.45,
+      "p25Multiple": 1.45,
+      "p75Multiple": 1.45,
+      "sampleSize": 1,
+      "dealsUsed": [
+        "Modern Fertility"
+      ],
+      "sources": [
+        "Press reports (Fierce Healthcare, May 2021)"
+      ],
+      "computationMethod": "dealValue / totalFunding (proxy multiple — revenue data not available in verified dataset)"
+    },
+    {
+      "sector": "Reproductive Health",
+      "medianMultiple": 6.4,
+      "p25Multiple": 6.4,
+      "p75Multiple": 6.4,
+      "sampleSize": 1,
+      "dealsUsed": [
+        "Generate Life Sciences"
+      ],
+      "sources": [
+        "CooperCompanies investor relations — Globe Newswire (Nov 10, 2021)"
+      ],
+      "computationMethod": "dealValue / totalFunding (proxy multiple — revenue data not available in verified dataset)"
+    }
+  ],
+  "warning": "Small sample sizes (n<5) produce unreliable statistics. Treat n<5 sectors as directional only."
+}

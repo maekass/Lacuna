@@ -1,0 +1,501 @@
+{
+  "generatedAt": "2026-06-24T00:22:16.450Z",
+  "source": "Lacuna verified dataset (n=59 acquisitions)",
+  "acquirerPremiums": [
+    {
+      "acquirerName": "Teladoc",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "General Wellness"
+      ],
+      "sources": [
+        "SEC 8-K filing, July 2020"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Ro",
+      "deals": 2,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Fertility",
+        "General Wellness"
+      ],
+      "sources": [
+        "Press reports (Fierce Healthcare, May 2021)",
+        "Press reports (TechCrunch, December 2021)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Hologic",
+      "deals": 9,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Breast Health",
+        "Gynecological Surgery",
+        "Diagnostics"
+      ],
+      "sources": [
+        "Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)",
+        "Nasdaq press release (Jul 25, 2024)",
+        "Tracxn acquisition records; Hologic investor relations (Oct 2024)",
+        "Business Wire — Hologic press release (Aug 25, 2020)",
+        "Nasdaq — Hologic press release (Oct 14, 2021); SEC 10-K FY2022",
+        "Hologic investor relations press release (Sep 26, 2018); SEC 10-K FY2019",
+        "PR Newswire — Hologic press release (Jul 31, 2018); BioSpace deal coverage",
+        "MassDevice — Hologic/SSI announcement (Jun 21, 2019); AuntMinnie — 46% stake acquisition (Aug 4, 2019)",
+        "SEC EDGAR DEFM14A filing; Hologic press release (August 1, 2012)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "CooperSurgical (CooperCompanies)",
+      "deals": 3,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Fertility",
+        "Reproductive Health",
+        "Gynecological Surgery"
+      ],
+      "sources": [
+        "SEC EDGAR — CooperCompanies 10-K (FY2012); Oslo Stock Exchange tender offer (Jun 2012)",
+        "CooperCompanies investor relations — Globe Newswire (Nov 10, 2021)",
+        "CooperCompanies investor relations — Globe Newswire (Aug 1, 2024); SEC 10-K FY2024"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Organon",
+      "deals": 2,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Reproductive Health",
+        "Dermatology"
+      ],
+      "sources": [
+        "Business Wire (Dec 13, 2021); Organon.com press release",
+        "Organon press release (September 18, 2024); Fierce Pharma"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Vitrolife",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Diagnostics"
+      ],
+      "sources": [
+        "Cision/Vitrolife press release (Jul 8, 2021); PR Newswire (Nov 30, 2021)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Gedeon Richter",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Contraception"
+      ],
+      "sources": [
+        "Gedeon Richter press release (Jun 12, 2024); Budapest Stock Exchange filing"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "LabCorp",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Diagnostics"
+      ],
+      "sources": [
+        "SEC EDGAR — LabCorp/Sequenom merger filing (Jul 27, 2016)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Exact Sciences",
+      "deals": 3,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Precision Medicine",
+        "Diagnostics"
+      ],
+      "sources": [
+        "Exact Sciences newsroom (Jul 29, 2019); SEC merger proxy",
+        "PR Newswire — Exact Sciences announcement (Oct 27, 2020); completion (Jan 5, 2021)",
+        "PR Newswire — Exact Sciences press release (Jan 9, 2022); SEC EDGAR 8-K (Jan 10, 2022)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Roche",
+      "deals": 2,
+      "avgPremium": 0.73,
+      "medianPremium": 0.73,
+      "minPremium": 0.45,
+      "maxPremium": 1,
+      "sectors": [
+        "Precision Medicine"
+      ],
+      "sources": [
+        "Roche media release (Jun 19, 2018); Fierce Biotech",
+        "Roche media release (Apr 6, 2018)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Medtronic",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Gynecological Surgery"
+      ],
+      "sources": [
+        "Medtronic press release (May 18, 2016); Smith & Nephew press release (Aug 8, 2016 — close confirmation)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Boston Scientific",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Diagnostics"
+      ],
+      "sources": [
+        "PR Newswire — Boston Scientific press release (Apr 16, 2018); MassDevice deal coverage"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Illumina",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Precision Medicine"
+      ],
+      "sources": [
+        "Illumina press release (Sep 21, 2020); SEC merger filing; GRAIL completion announcement (Aug 18, 2021)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Astorg",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Fertility"
+      ],
+      "sources": [
+        "Business Wire — Astorg press release (Dec 2, 2024); Weil Gotshal advisory announcement (Jul 24, 2024)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Laborie Medical Technologies",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Pelvic Health"
+      ],
+      "sources": [
+        "SEC EDGAR — Cogentix Medical merger filing (Mar 12, 2018); Laborie press release (Apr 23, 2019 — completion)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Coloplast",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Pelvic Health"
+      ],
+      "sources": [
+        "Globe Newswire — Coloplast press release (Nov 3, 2020)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Sumitovant Biopharma (Sumitomo Pharma)",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Reproductive Health"
+      ],
+      "sources": [
+        "Sumitomo Pharma press release (Oct 24, 2022); Business Wire — completion announcement (Mar 10, 2023)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Myriad Genetics",
+      "deals": 3,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Diagnostics",
+        "Breast Health"
+      ],
+      "sources": [
+        "Globe Newswire — Myriad Genetics press release (May 28, 2018)",
+        "Globe Newswire — Myriad Genetics press release (Nov 1, 2022)",
+        "Globe Newswire — Myriad Genetics press release (May 31, 2016); SEC EDGAR — Myriad 8-K"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Natera",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Diagnostics"
+      ],
+      "sources": [
+        "Business Wire — Natera press release (Jan 22, 2024)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Mayne Pharma",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Reproductive Health"
+      ],
+      "sources": [
+        "Business Wire — TherapeuticsMD press release (Jan 3, 2023); SEC EDGAR 8-K (Dec 30, 2022)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Pfizer",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Precision Medicine"
+      ],
+      "sources": [
+        "SEC EDGAR — Pfizer 8-K (Mar 13, 2023); Business Wire completion announcement (Dec 14, 2023)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Siemens Healthineers",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Precision Medicine"
+      ],
+      "sources": [
+        "Siemens Healthineers press release (Aug 2, 2020); PR Newswire — Varian merger announcement"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Gilead Sciences",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Breast Health"
+      ],
+      "sources": [
+        "Business Wire — Gilead/Immunomedics announcement (Sep 13, 2020); Gilead Sciences press release"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "PerkinElmer (Revvity)",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Diagnostics"
+      ],
+      "sources": [
+        "SEC EDGAR — PerkinElmer 8-K (Jun 16, 2017); Revvity investor relations — completion (Dec 19, 2017)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Abbott Laboratories",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Diagnostics"
+      ],
+      "sources": [
+        "SEC EDGAR — Abbott/Alere amended merger (Apr 14, 2017); Abbott Mediaroom — closing (Sep 29, 2017)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Bayer",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Menopause"
+      ],
+      "sources": [
+        "Business Wire press release (August 11, 2020); Bayer.com media (September 9, 2020)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "Astellas Pharma",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Menopause"
+      ],
+      "sources": [
+        "Astellas Pharma press release (May 17, 2017); PR Newswire"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "KKR",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Fertility"
+      ],
+      "sources": [
+        "Axios Pro (April 13, 2022); Fertility Bridge (January 26, 2023); CNMC approval (December 21, 2022)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "BPEA EQT",
+      "deals": 1,
+      "avgPremium": 0.6,
+      "medianPremium": 0.6,
+      "minPremium": 0.6,
+      "maxPremium": 0.6,
+      "sectors": [
+        "Fertility"
+      ],
+      "sources": [
+        "EQT Group press release (July 28, 2023); Times of India (July 29, 2023)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    },
+    {
+      "acquirerName": "KKR (via IVI-RMA)",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Fertility"
+      ],
+      "sources": [
+        "Business Wire (January 31, 2024); PitchBook (November 2023)"
+      ],
+      "method": "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included."
+    }
+  ],
+  "acquirerTypePremiums": {
+    "other": {
+      "avgPremium": 0.98,
+      "sampleSize": 23
+    },
+    "pharma": {
+      "avgPremium": 0.95,
+      "sampleSize": 5
+    },
+    "tech": {
+      "avgPremium": 1,
+      "sampleSize": 1
+    },
+    "healthcare": {
+      "avgPremium": 1,
+      "sampleSize": 1
+    }
+  },
+  "method": "Premium = dealValue / lastKnownValuation (preferred) or dealValue / totalFunding (fallback). lastKnownValuation is the most recent pre-acquisition valuation from verified sources.",
+  "warning": "Premiums computed from totalFunding baseline are overestimates (funding ≠ valuation). Replace with pre-deal valuation when available. Small-n acquirers (n=1) have no statistical significance."
+}

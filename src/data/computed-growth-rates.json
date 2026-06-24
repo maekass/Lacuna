@@ -1,0 +1,1480 @@
+{
+  "generatedAt": "2026-06-24T00:22:03.978Z",
+  "source": "Lacuna verified dataset + Rock Health 2024 Digital Health Funding Report",
+  "companies": [
+    {
+      "companyId": "c1",
+      "companyName": "Modern Fertility",
+      "sector": "Fertility",
+      "cagr": 9.8,
+      "method": "CAGR(totalFunding → dealValue, 2017–2021)",
+      "yearsOfData": 4,
+      "source": "Verified dataset: Crunchbase - crunchbase.com/organization/modern-fertility + acquisition record",
+      "confidence": "high"
+    },
+    {
+      "companyId": "c2",
+      "companyName": "Ro",
+      "sector": "General Wellness",
+      "cagr": 24.5,
+      "method": "CAGR(totalFunding → lastKnownValuation, 2017–2026)",
+      "yearsOfData": 9,
+      "source": "Verified dataset: Last funding round valuation (2021), may not reflect current value",
+      "confidence": "medium"
+    },
+    {
+      "companyId": "c3",
+      "companyName": "Elvie",
+      "sector": "Pelvic Health",
+      "cagr": 6.6,
+      "method": "CAGR(totalFunding → lastKnownValuation, 2013–2026)",
+      "yearsOfData": 13,
+      "source": "Verified dataset: Press reports from Series B (2019)",
+      "confidence": "medium"
+    },
+    {
+      "companyId": "c4",
+      "companyName": "Maven Clinic",
+      "sector": "Fertility",
+      "cagr": 13.3,
+      "method": "CAGR(totalFunding → lastKnownValuation, 2014–2026)",
+      "yearsOfData": 12,
+      "source": "Verified dataset: Series D valuation (2021)",
+      "confidence": "medium"
+    },
+    {
+      "companyId": "c5",
+      "companyName": "Tia",
+      "sector": "General Wellness",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c6",
+      "companyName": "Carrot Fertility",
+      "sector": "Fertility",
+      "cagr": 15,
+      "method": "CAGR(totalFunding → lastKnownValuation, 2016–2026)",
+      "yearsOfData": 10,
+      "source": "Verified dataset: Series C valuation (2021)",
+      "confidence": "medium"
+    },
+    {
+      "companyId": "c7",
+      "companyName": "Kindbody",
+      "sector": "Fertility",
+      "cagr": 15.5,
+      "method": "CAGR(totalFunding → lastKnownValuation, 2018–2026)",
+      "yearsOfData": 8,
+      "source": "Verified dataset: Series D valuation (2022)",
+      "confidence": "medium"
+    },
+    {
+      "companyId": "c8",
+      "companyName": "Parsley Health",
+      "sector": "General Wellness",
+      "cagr": 30,
+      "method": "Stage-based benchmark (Series C)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c9",
+      "companyName": "Everlywell",
+      "sector": "General Wellness",
+      "cagr": 2.2,
+      "method": "CAGR(totalFunding → lastKnownValuation, 2015–2026)",
+      "yearsOfData": 11,
+      "source": "Verified dataset: Last funding round (2021)",
+      "confidence": "medium"
+    },
+    {
+      "companyId": "c10",
+      "companyName": "Ava",
+      "sector": "Fertility",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c11",
+      "companyName": "Proov",
+      "sector": "Fertility",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c12",
+      "companyName": "Nurx",
+      "sector": "General Wellness",
+      "cagr": 16.8,
+      "method": "CAGR(totalFunding → dealValue, 2015–2021)",
+      "yearsOfData": 6,
+      "source": "Verified dataset: Nurx.com - company website (now Ro) + acquisition record",
+      "confidence": "high"
+    },
+    {
+      "companyId": "c13",
+      "companyName": "Lemonaid Health",
+      "sector": "Mental Health",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c14",
+      "companyName": "Talkspace",
+      "sector": "Mental Health",
+      "cagr": 15.1,
+      "method": "CAGR(totalFunding → lastKnownValuation, 2012–2026)",
+      "yearsOfData": 14,
+      "source": "Verified dataset: Public company (NASDAQ: TALK) - valuation at time of data collection",
+      "confidence": "medium"
+    },
+    {
+      "companyId": "c15",
+      "companyName": "Calm",
+      "sector": "Mental Health",
+      "cagr": 17.2,
+      "method": "CAGR(totalFunding → lastKnownValuation, 2012–2026)",
+      "yearsOfData": 14,
+      "source": "Verified dataset: Last funding round (2021)",
+      "confidence": "medium"
+    },
+    {
+      "companyId": "c16",
+      "companyName": "Oura",
+      "sector": "Wearables",
+      "cagr": 24.3,
+      "method": "CAGR(totalFunding → lastKnownValuation, 2013–2026)",
+      "yearsOfData": 13,
+      "source": "Verified dataset: Series C valuation (2022)",
+      "confidence": "medium"
+    },
+    {
+      "companyId": "c17",
+      "companyName": "Whoop",
+      "sector": "Wearables",
+      "cagr": 16.9,
+      "method": "CAGR(totalFunding → lastKnownValuation, 2012–2026)",
+      "yearsOfData": 14,
+      "source": "Verified dataset: Series F valuation (2021)",
+      "confidence": "medium"
+    },
+    {
+      "companyId": "c18",
+      "companyName": "Natural Cycles",
+      "sector": "Fertility",
+      "cagr": 45,
+      "method": "Stage-based benchmark (Series B)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c19",
+      "companyName": "Clue",
+      "sector": "Fertility",
+      "cagr": 45,
+      "method": "Stage-based benchmark (Series B)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c20",
+      "companyName": "Bloomi",
+      "sector": "Pelvic Health",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c21",
+      "companyName": "NovvaCup",
+      "sector": "Pelvic Health",
+      "cagr": null,
+      "method": "none",
+      "yearsOfData": null,
+      "source": "No data available",
+      "confidence": "none"
+    },
+    {
+      "companyId": "c22",
+      "companyName": "Ovubrush",
+      "sector": "Fertility",
+      "cagr": null,
+      "method": "none",
+      "yearsOfData": null,
+      "source": "No data available",
+      "confidence": "none"
+    },
+    {
+      "companyId": "c23",
+      "companyName": "Livongo Health",
+      "sector": "General Wellness",
+      "cagr": 40.2,
+      "method": "CAGR(totalFunding → dealValue, 2008–2020)",
+      "yearsOfData": 12,
+      "source": "Verified dataset: SEC 8-K filing (Teladoc, Oct 2020) + acquisition record",
+      "confidence": "high"
+    },
+    {
+      "companyId": "c24",
+      "companyName": "Biotheranostics",
+      "sector": "Breast Health",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c25",
+      "companyName": "Endomagnetics",
+      "sector": "Breast Health",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c26",
+      "companyName": "Gynesonics",
+      "sector": "Gynecological Surgery",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c27",
+      "companyName": "ORIGIO a/s",
+      "sector": "Fertility",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c28",
+      "companyName": "Generate Life Sciences",
+      "sector": "Reproductive Health",
+      "cagr": 540,
+      "method": "CAGR(totalFunding → dealValue, 2020–2021)",
+      "yearsOfData": 1,
+      "source": "Verified dataset: CooperCompanies investor relations - press release (Nov 10, 2021) + acquisition record",
+      "confidence": "high"
+    },
+    {
+      "companyId": "c29",
+      "companyName": "Cook Medical Reproductive Health",
+      "sector": "Fertility",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c30",
+      "companyName": "ZyMōt Fertility",
+      "sector": "Fertility",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c31",
+      "companyName": "Alydia Health",
+      "sector": "Maternal Health",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c32",
+      "companyName": "Forendo Pharma",
+      "sector": "Reproductive Health",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c33",
+      "companyName": "Igenomix",
+      "sector": "Diagnostics",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c34",
+      "companyName": "Estetra (Mithra assets)",
+      "sector": "Contraception",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c35",
+      "companyName": "Celmatix",
+      "sector": "Fertility",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c36",
+      "companyName": "Sequenom",
+      "sector": "Diagnostics",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c37",
+      "companyName": "Genomic Health",
+      "sector": "Precision Medicine",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c38",
+      "companyName": "Foundation Medicine",
+      "sector": "Precision Medicine",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c39",
+      "companyName": "Flatiron Health",
+      "sector": "Precision Medicine",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c40",
+      "companyName": "Acessa Health",
+      "sector": "Gynecological Surgery",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c41",
+      "companyName": "Bolder Surgical",
+      "sector": "Gynecological Surgery",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c42",
+      "companyName": "Focal Therapeutics",
+      "sector": "Breast Health",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c43",
+      "companyName": "obp Surgical",
+      "sector": "Gynecological Surgery",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c44",
+      "companyName": "Smith & Nephew Gynecology (Truclear)",
+      "sector": "Gynecological Surgery",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c45",
+      "companyName": "nVision Medical",
+      "sector": "Diagnostics",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c46",
+      "companyName": "GRAIL",
+      "sector": "Precision Medicine",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c47",
+      "companyName": "Hamilton Thorne",
+      "sector": "Fertility",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c48",
+      "companyName": "eFertility (STB Zorg)",
+      "sector": "Fertility",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c49",
+      "companyName": "Cogentix Medical",
+      "sector": "Pelvic Health",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c50",
+      "companyName": "Nine Continents Medical",
+      "sector": "Pelvic Health",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c51",
+      "companyName": "Myovant Sciences",
+      "sector": "Reproductive Health",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c52",
+      "companyName": "Counsyl",
+      "sector": "Diagnostics",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c53",
+      "companyName": "Gateway Genomics",
+      "sector": "Diagnostics",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c54",
+      "companyName": "Invitae Reproductive Health",
+      "sector": "Diagnostics",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c55",
+      "companyName": "TherapeuticsMD",
+      "sector": "Reproductive Health",
+      "cagr": null,
+      "method": "none",
+      "yearsOfData": null,
+      "source": "No data available",
+      "confidence": "none"
+    },
+    {
+      "companyId": "c56",
+      "companyName": "Seagen",
+      "sector": "Precision Medicine",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c57",
+      "companyName": "Varian Medical Systems",
+      "sector": "Precision Medicine",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c58",
+      "companyName": "Immunomedics",
+      "sector": "Breast Health",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c59",
+      "companyName": "Thrive Earlier Detection",
+      "sector": "Diagnostics",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c60",
+      "companyName": "PreventionGenetics",
+      "sector": "Diagnostics",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c61",
+      "companyName": "EUROIMMUN",
+      "sector": "Diagnostics",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c62",
+      "companyName": "Faxitron Bioptics",
+      "sector": "Breast Health",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c63",
+      "companyName": "SuperSonic Imagine",
+      "sector": "Breast Health",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c64",
+      "companyName": "Ovia Health",
+      "sector": "Maternal Health",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c65",
+      "companyName": "Sividon Diagnostics",
+      "sector": "Breast Health",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c66",
+      "companyName": "Alere",
+      "sector": "Diagnostics",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c67",
+      "companyName": "Ethicon GYNECARE TVT Products",
+      "sector": "Pelvic Health",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c68",
+      "companyName": "Gen-Probe",
+      "sector": "Diagnostics",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c69",
+      "companyName": "KaNDy Therapeutics",
+      "sector": "Menopause",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c70",
+      "companyName": "Ogeda SA",
+      "sector": "Menopause",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c71",
+      "companyName": "Dermavant Sciences",
+      "sector": "Dermatology",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c72",
+      "companyName": "IVI-RMA Global",
+      "sector": "Fertility",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c73",
+      "companyName": "Indira IVF",
+      "sector": "Fertility",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c74",
+      "companyName": "Apostrophe",
+      "sector": "General Wellness",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c75",
+      "companyName": "Eugin Group (North American operations)",
+      "sector": "Fertility",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c76",
+      "companyName": "Evvy",
+      "sector": "Diagnostics",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c77",
+      "companyName": "Hey Jane",
+      "sector": "Reproductive Health",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c78",
+      "companyName": "Contraline",
+      "sector": "Contraception",
+      "cagr": 45,
+      "method": "Stage-based benchmark (Series B)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c79",
+      "companyName": "Gennev",
+      "sector": "Menopause",
+      "cagr": 0,
+      "method": "Stage-based benchmark (Acquired)",
+      "yearsOfData": null,
+      "source": "N/A — company acquired, growth rate not applicable",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c80",
+      "companyName": "Alloy",
+      "sector": "Menopause",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c81",
+      "companyName": "Millie",
+      "sector": "Maternal Health",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c82",
+      "companyName": "Origin",
+      "sector": "Pelvic Health",
+      "cagr": 45,
+      "method": "Stage-based benchmark (Series B)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c83",
+      "companyName": "Dame",
+      "sector": "Sexual Wellness",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c84",
+      "companyName": "Béa Fertility",
+      "sector": "Fertility",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c85",
+      "companyName": "Granata Bio",
+      "sector": "Fertility",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c86",
+      "companyName": "Gesynta Pharma",
+      "sector": "Reproductive Health",
+      "cagr": 45,
+      "method": "Stage-based benchmark (Series B)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c87",
+      "companyName": "Testmate Health",
+      "sector": "Diagnostics",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c88",
+      "companyName": "Aunt Flow",
+      "sector": "Pelvic Health",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c89",
+      "companyName": "Juniper Genomics",
+      "sector": "Diagnostics",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c90",
+      "companyName": "Apollo Neuroscience",
+      "sector": "Consumer",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c91",
+      "companyName": "Aria CV",
+      "sector": "Medical Device",
+      "cagr": 45,
+      "method": "Stage-based benchmark (Series B)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c92",
+      "companyName": "Attn: Grace",
+      "sector": "Pelvic Health",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c93",
+      "companyName": "b.well",
+      "sector": "Digital Health",
+      "cagr": 30,
+      "method": "Stage-based benchmark (Series C)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c94",
+      "companyName": "Bone Health Technologies",
+      "sector": "Medical Device",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c95",
+      "companyName": "Bowe Glow, Inc",
+      "sector": "Consumer",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c96",
+      "companyName": "Cat Health",
+      "sector": "Therapeutics",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c97",
+      "companyName": "Chronicle Bio",
+      "sector": "Tech Bio",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c98",
+      "companyName": "Clear Gene",
+      "sector": "Diagnostic",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c99",
+      "companyName": "E-Lovu Health",
+      "sector": "Digital Health",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c100",
+      "companyName": "Everly Health",
+      "sector": "Diagnostic",
+      "cagr": 25,
+      "method": "Stage-based benchmark (Series D)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c101",
+      "companyName": "FemDx Medsystems",
+      "sector": "Medical Device",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c102",
+      "companyName": "Frontier Bio",
+      "sector": "Biotech",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c103",
+      "companyName": "Future Family",
+      "sector": "Reproductive",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c104",
+      "companyName": "Gameto",
+      "sector": "Biotech",
+      "cagr": 30,
+      "method": "Stage-based benchmark (Series C)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c105",
+      "companyName": "Harmony Nutrition",
+      "sector": "Biotech",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c106",
+      "companyName": "Hera Biotech",
+      "sector": "Diagnostic",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c107",
+      "companyName": "Inherent Biosciences",
+      "sector": "Diagnostic",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c108",
+      "companyName": "Joylux",
+      "sector": "Consumer",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c109",
+      "companyName": "Lighthouse Pharma",
+      "sector": "Therapeutics",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c110",
+      "companyName": "L-Nutra",
+      "sector": "Consumer",
+      "cagr": 30,
+      "method": "Stage-based benchmark (Series C)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c111",
+      "companyName": "Madison Reed",
+      "sector": "Consumer",
+      "cagr": null,
+      "method": "none",
+      "yearsOfData": null,
+      "source": "No data available",
+      "confidence": "none"
+    },
+    {
+      "companyId": "c112",
+      "companyName": "Madorra",
+      "sector": "Medical Device",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c113",
+      "companyName": "Maude",
+      "sector": "Consumer",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c114",
+      "companyName": "Maven Clinic (portfolio)",
+      "sector": "Digital Health",
+      "cagr": 30,
+      "method": "Stage-based benchmark (Series C)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c115",
+      "companyName": "Mercy Bio",
+      "sector": "Diagnostic",
+      "cagr": 45,
+      "method": "Stage-based benchmark (Series B)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c116",
+      "companyName": "Mirvie",
+      "sector": "Diagnostic",
+      "cagr": 30,
+      "method": "Stage-based benchmark (Series C)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c117",
+      "companyName": "Nalu Bio",
+      "sector": "Wellness",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c118",
+      "companyName": "Nest Collaborative",
+      "sector": "Maternal Health",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c119",
+      "companyName": "Neuspera",
+      "sector": "Medical Device",
+      "cagr": 25,
+      "method": "Stage-based benchmark (Series D)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c120",
+      "companyName": "NowDx",
+      "sector": "Diagnostic",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c121",
+      "companyName": "Proov (portfolio)",
+      "sector": "Reproductive",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c122",
+      "companyName": "Rebundle",
+      "sector": "Consumer",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c123",
+      "companyName": "Rosy Wellness",
+      "sector": "Wellness",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c124",
+      "companyName": "Sana Health",
+      "sector": "Medical Device",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c125",
+      "companyName": "Simple HealthKit",
+      "sector": "Digital Health",
+      "cagr": 45,
+      "method": "Stage-based benchmark (Series B)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c126",
+      "companyName": "Siren",
+      "sector": "Medical Device",
+      "cagr": 45,
+      "method": "Stage-based benchmark (Series B)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c127",
+      "companyName": "Solace Therapeutics",
+      "sector": "Medical Device",
+      "cagr": 45,
+      "method": "Stage-based benchmark (Series B)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c128",
+      "companyName": "Toi Labs",
+      "sector": "Medical Device",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c129",
+      "companyName": "Veana Therapeutics",
+      "sector": "Therapeutics",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c130",
+      "companyName": "Wellth",
+      "sector": "Digital Health",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c131",
+      "companyName": "Willow",
+      "sector": "Maternal Health",
+      "cagr": 30,
+      "method": "Stage-based benchmark (Series C)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c132",
+      "companyName": "Xandar Kardian",
+      "sector": "Medical Device",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c133",
+      "companyName": "xCures",
+      "sector": "Digital Health",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c134",
+      "companyName": "YourChoice Therapeutics",
+      "sector": "Reproductive",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c135",
+      "companyName": "X-Therma",
+      "sector": "Biotech",
+      "cagr": 45,
+      "method": "Stage-based benchmark (Series B)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    }
+  ],
+  "sectorMedians": {
+    "Fertility": {
+      "medianCAGR": 9.8,
+      "sampleSize": 19,
+      "confidence": "medium"
+    },
+    "General Wellness": {
+      "medianCAGR": 24.5,
+      "sampleSize": 7,
+      "confidence": "medium"
+    },
+    "Pelvic Health": {
+      "medianCAGR": 25.8,
+      "sampleSize": 8,
+      "confidence": "low"
+    },
+    "Mental Health": {
+      "medianCAGR": 15.1,
+      "sampleSize": 3,
+      "confidence": "low"
+    },
+    "Wearables": {
+      "medianCAGR": 20.6,
+      "sampleSize": 2,
+      "confidence": "low"
+    },
+    "Breast Health": {
+      "medianCAGR": 0,
+      "sampleSize": 7,
+      "confidence": "low"
+    },
+    "Gynecological Surgery": {
+      "medianCAGR": 0,
+      "sampleSize": 5,
+      "confidence": "low"
+    },
+    "Reproductive Health": {
+      "medianCAGR": 45,
+      "sampleSize": 5,
+      "confidence": "medium"
+    },
+    "Maternal Health": {
+      "medianCAGR": 30,
+      "sampleSize": 5,
+      "confidence": "low"
+    },
+    "Diagnostics": {
+      "medianCAGR": 0,
+      "sampleSize": 14,
+      "confidence": "low"
+    },
+    "Contraception": {
+      "medianCAGR": 22.5,
+      "sampleSize": 2,
+      "confidence": "low"
+    },
+    "Precision Medicine": {
+      "medianCAGR": 0,
+      "sampleSize": 6,
+      "confidence": "low"
+    },
+    "Menopause": {
+      "medianCAGR": 0,
+      "sampleSize": 4,
+      "confidence": "low"
+    },
+    "Dermatology": {
+      "medianCAGR": 0,
+      "sampleSize": 1,
+      "confidence": "low"
+    },
+    "Sexual Wellness": {
+      "medianCAGR": 60,
+      "sampleSize": 1,
+      "confidence": "low"
+    },
+    "Consumer": {
+      "medianCAGR": 60,
+      "sampleSize": 6,
+      "confidence": "low"
+    },
+    "Medical Device": {
+      "medianCAGR": 60,
+      "sampleSize": 10,
+      "confidence": "low"
+    },
+    "Digital Health": {
+      "medianCAGR": 52.5,
+      "sampleSize": 6,
+      "confidence": "low"
+    },
+    "Therapeutics": {
+      "medianCAGR": 80,
+      "sampleSize": 3,
+      "confidence": "low"
+    },
+    "Tech Bio": {
+      "medianCAGR": 80,
+      "sampleSize": 1,
+      "confidence": "low"
+    },
+    "Diagnostic": {
+      "medianCAGR": 60,
+      "sampleSize": 7,
+      "confidence": "low"
+    },
+    "Biotech": {
+      "medianCAGR": 62.5,
+      "sampleSize": 4,
+      "confidence": "low"
+    },
+    "Reproductive": {
+      "medianCAGR": 60,
+      "sampleSize": 3,
+      "confidence": "low"
+    },
+    "Wellness": {
+      "medianCAGR": 80,
+      "sampleSize": 2,
+      "confidence": "low"
+    }
+  },
+  "method": "CAGR computed from totalFunding → dealValue (Method 1, high confidence), totalFunding → lastKnownValuation (Method 2, medium confidence), or stage-based benchmarks (Method 3, low confidence).",
+  "warning": "CAGR from funding→valuation is a proxy for company growth, not revenue growth. Replace with actual revenue CAGR from 10-K filings when available."
+}

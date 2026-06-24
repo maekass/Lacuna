@@ -1,0 +1,479 @@
+{
+  "generatedAt": "2026-06-24T00:22:21.849Z",
+  "source": "Computed from Lacuna verified dataset via bootstrap resampling",
+  "results": [
+    {
+      "metric": "sector_benchmark_multiple",
+      "sector": "General Wellness",
+      "sampleSize": 2,
+      "pointEstimate": 30.23,
+      "ci95": {
+        "lower": 2.542372881355932,
+        "upper": 57.916666666666664
+      },
+      "method": "Bootstrap (10,000 iterations, 95% CI)",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "sector_benchmark_multiple",
+      "sector": "Fertility",
+      "sampleSize": 1,
+      "pointEstimate": 1.45,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "Bootstrap (10,000 iterations, 95% CI)",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "sector_benchmark_multiple",
+      "sector": "Reproductive Health",
+      "sampleSize": 1,
+      "pointEstimate": 6.4,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "Bootstrap (10,000 iterations, 95% CI)",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "sector_growth_rate",
+      "sector": "Fertility",
+      "sampleSize": 4,
+      "pointEstimate": 14.2,
+      "ci95": {
+        "lower": 9.8,
+        "upper": 15.5
+      },
+      "method": "Bootstrap (10,000 iterations, 95% CI)",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "sector_growth_rate",
+      "sector": "General Wellness",
+      "sampleSize": 4,
+      "pointEstimate": 20.6,
+      "ci95": {
+        "lower": 2.2,
+        "upper": 40.2
+      },
+      "method": "Bootstrap (10,000 iterations, 95% CI)",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "sector_growth_rate",
+      "sector": "Pelvic Health",
+      "sampleSize": 1,
+      "pointEstimate": 6.6,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "Bootstrap (10,000 iterations, 95% CI)",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "sector_growth_rate",
+      "sector": "Mental Health",
+      "sampleSize": 2,
+      "pointEstimate": 16.1,
+      "ci95": {
+        "lower": 15.1,
+        "upper": 17.2
+      },
+      "method": "Bootstrap (10,000 iterations, 95% CI)",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "sector_growth_rate",
+      "sector": "Wearables",
+      "sampleSize": 2,
+      "pointEstimate": 20.6,
+      "ci95": {
+        "lower": 16.9,
+        "upper": 24.3
+      },
+      "method": "Bootstrap (10,000 iterations, 95% CI)",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "sector_growth_rate",
+      "sector": "Reproductive Health",
+      "sampleSize": 1,
+      "pointEstimate": 540,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "Bootstrap (10,000 iterations, 95% CI)",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Teladoc",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Ro",
+      "sampleSize": 2,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "directional"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Hologic",
+      "sampleSize": 9,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "reliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "CooperSurgical (CooperCompanies)",
+      "sampleSize": 3,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "directional"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Organon",
+      "sampleSize": 2,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "directional"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Vitrolife",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Gedeon Richter",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "LabCorp",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Exact Sciences",
+      "sampleSize": 3,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "directional"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Roche",
+      "sampleSize": 2,
+      "pointEstimate": 0.73,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "directional"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Medtronic",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Boston Scientific",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Illumina",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Astorg",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Laborie Medical Technologies",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Coloplast",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Sumitovant Biopharma (Sumitomo Pharma)",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Myriad Genetics",
+      "sampleSize": 3,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "directional"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Natera",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Mayne Pharma",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Pfizer",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Siemens Healthineers",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Gilead Sciences",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "PerkinElmer (Revvity)",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Abbott Laboratories",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Bayer",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Astellas Pharma",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "KKR",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "BPEA EQT",
+      "sampleSize": 1,
+      "pointEstimate": 0.6,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "KKR (via IVI-RMA)",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    }
+  ],
+  "legend": {
+    "reliable": "n≥10 — 95% CI is meaningful",
+    "directional": "n=5-9 — CI is wide, treat as directional only",
+    "unreliable": "n<5 — CI is not meaningful, do not cite"
+  }
+}
