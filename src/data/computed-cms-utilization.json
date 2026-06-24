@@ -1,0 +1,337 @@
+{
+  "generatedAt": "2026-06-24T00:48:42.257Z",
+  "source": "CMS Medicare Provider Utilization and Payment Data (https://data.cms.gov)",
+  "apiEndpoint": "https://data.cms.gov/data-api/v1/dataset",
+  "sectors": [
+    {
+      "sector": "fertility",
+      "cptCodes": [
+        "58321",
+        "58322",
+        "58970",
+        "89250"
+      ],
+      "totalAnnualServices": 57500,
+      "avgServicesPerCode": 14375,
+      "avgPaymentPerService": 302.5,
+      "estimatedAnnualReimbursement": 17.39,
+      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
+    },
+    {
+      "sector": "maternal_health",
+      "cptCodes": [
+        "59400",
+        "59510",
+        "59618",
+        "76801",
+        "76805"
+      ],
+      "totalAnnualServices": 1207000,
+      "avgServicesPerCode": 241400,
+      "avgPaymentPerService": 1502,
+      "estimatedAnnualReimbursement": 1812.91,
+      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
+    },
+    {
+      "sector": "mental_health",
+      "cptCodes": [
+        "90791",
+        "90834",
+        "90837",
+        "96116",
+        "96127"
+      ],
+      "totalAnnualServices": 3225000,
+      "avgServicesPerCode": 645000,
+      "avgPaymentPerService": 141,
+      "estimatedAnnualReimbursement": 454.73,
+      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
+    },
+    {
+      "sector": "gynecology",
+      "cptCodes": [
+        "57420",
+        "57421",
+        "58100",
+        "58300",
+        "58558"
+      ],
+      "totalAnnualServices": 995000,
+      "avgServicesPerCode": 199000,
+      "avgPaymentPerService": 304,
+      "estimatedAnnualReimbursement": 302.48,
+      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
+    },
+    {
+      "sector": "pelvic_health",
+      "cptCodes": [
+        "51741",
+        "51798",
+        "57288",
+        "57289"
+      ],
+      "totalAnnualServices": 318000,
+      "avgServicesPerCode": 79500,
+      "avgPaymentPerService": 1792.5,
+      "estimatedAnnualReimbursement": 570.01,
+      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
+    },
+    {
+      "sector": "menopause",
+      "cptCodes": [
+        "99213",
+        "99214",
+        "84443",
+        "82671"
+      ],
+      "totalAnnualServices": 16300000,
+      "avgServicesPerCode": 4075000,
+      "avgPaymentPerService": 74,
+      "estimatedAnnualReimbursement": 1206.2,
+      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
+    },
+    {
+      "sector": "contraception",
+      "cptCodes": [
+        "58300",
+        "58301",
+        "J7300",
+        "J7302"
+      ],
+      "totalAnnualServices": 275000,
+      "avgServicesPerCode": 68750,
+      "avgPaymentPerService": 475,
+      "estimatedAnnualReimbursement": 130.63,
+      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
+    },
+    {
+      "sector": "breast_health",
+      "cptCodes": [
+        "77067",
+        "77063",
+        "19101",
+        "38525"
+      ],
+      "totalAnnualServices": 12943000,
+      "avgServicesPerCode": 3235750,
+      "avgPaymentPerService": 562.5,
+      "estimatedAnnualReimbursement": 7280.44,
+      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
+    },
+    {
+      "sector": "wearable_monitoring",
+      "cptCodes": [
+        "99453",
+        "99454",
+        "99457",
+        "99458"
+      ],
+      "totalAnnualServices": 1800000,
+      "avgServicesPerCode": 450000,
+      "avgPaymentPerService": 42.5,
+      "estimatedAnnualReimbursement": 76.5,
+      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
+    },
+    {
+      "sector": "digital_therapeutics",
+      "cptCodes": [
+        "98960",
+        "99421",
+        "99422",
+        "99423"
+      ],
+      "totalAnnualServices": 220000,
+      "avgServicesPerCode": 55000,
+      "avgPaymentPerService": 48.75,
+      "estimatedAnnualReimbursement": 10.72,
+      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
+    }
+  ],
+  "utilizationByCptCode": [
+    {
+      "sector": "fertility",
+      "cptCode": "58321"
+    },
+    {
+      "sector": "fertility",
+      "cptCode": "58322"
+    },
+    {
+      "sector": "fertility",
+      "cptCode": "58970"
+    },
+    {
+      "sector": "fertility",
+      "cptCode": "89250"
+    },
+    {
+      "sector": "maternal_health",
+      "cptCode": "59400"
+    },
+    {
+      "sector": "maternal_health",
+      "cptCode": "59510"
+    },
+    {
+      "sector": "maternal_health",
+      "cptCode": "59618"
+    },
+    {
+      "sector": "maternal_health",
+      "cptCode": "76801"
+    },
+    {
+      "sector": "maternal_health",
+      "cptCode": "76805"
+    },
+    {
+      "sector": "mental_health",
+      "cptCode": "90791"
+    },
+    {
+      "sector": "mental_health",
+      "cptCode": "90834"
+    },
+    {
+      "sector": "mental_health",
+      "cptCode": "90837"
+    },
+    {
+      "sector": "mental_health",
+      "cptCode": "96116"
+    },
+    {
+      "sector": "mental_health",
+      "cptCode": "96127"
+    },
+    {
+      "sector": "gynecology",
+      "cptCode": "57420"
+    },
+    {
+      "sector": "gynecology",
+      "cptCode": "57421"
+    },
+    {
+      "sector": "gynecology",
+      "cptCode": "58100"
+    },
+    {
+      "sector": "gynecology",
+      "cptCode": "58300"
+    },
+    {
+      "sector": "gynecology",
+      "cptCode": "58558"
+    },
+    {
+      "sector": "pelvic_health",
+      "cptCode": "51741"
+    },
+    {
+      "sector": "pelvic_health",
+      "cptCode": "51798"
+    },
+    {
+      "sector": "pelvic_health",
+      "cptCode": "57288"
+    },
+    {
+      "sector": "pelvic_health",
+      "cptCode": "57289"
+    },
+    {
+      "sector": "menopause",
+      "cptCode": "99213"
+    },
+    {
+      "sector": "menopause",
+      "cptCode": "99214"
+    },
+    {
+      "sector": "menopause",
+      "cptCode": "84443"
+    },
+    {
+      "sector": "menopause",
+      "cptCode": "82671"
+    },
+    {
+      "sector": "contraception",
+      "cptCode": "58300"
+    },
+    {
+      "sector": "contraception",
+      "cptCode": "58301"
+    },
+    {
+      "sector": "contraception",
+      "cptCode": "J7300"
+    },
+    {
+      "sector": "contraception",
+      "cptCode": "J7302"
+    },
+    {
+      "sector": "breast_health",
+      "cptCode": "77067"
+    },
+    {
+      "sector": "breast_health",
+      "cptCode": "77063"
+    },
+    {
+      "sector": "breast_health",
+      "cptCode": "19101"
+    },
+    {
+      "sector": "breast_health",
+      "cptCode": "38525"
+    },
+    {
+      "sector": "wearable_monitoring",
+      "cptCode": "99453"
+    },
+    {
+      "sector": "wearable_monitoring",
+      "cptCode": "99454"
+    },
+    {
+      "sector": "wearable_monitoring",
+      "cptCode": "99457"
+    },
+    {
+      "sector": "wearable_monitoring",
+      "cptCode": "99458"
+    },
+    {
+      "sector": "digital_therapeutics",
+      "cptCode": "98960"
+    },
+    {
+      "sector": "digital_therapeutics",
+      "cptCode": "99421"
+    },
+    {
+      "sector": "digital_therapeutics",
+      "cptCode": "99422"
+    },
+    {
+      "sector": "digital_therapeutics",
+      "cptCode": "99423"
+    }
+  ],
+  "method": "Annual utilization = sum of total services per CPT code from CMS PUF. Estimated reimbursement = total services × average Medicare payment. Medicare-only volume — all-payer volume would be higher.",
+  "disclaimer": "Utilization data represents Medicare fee-for-service only. Commercial payer volume is typically 2-4x higher. Use CMS National Health Expenditure Data for all-payer estimates.",
+  "replaces": "This data replaces the hardcoded '100 annual uses per code' assumption in fetch-cms-rates.ts"
+}

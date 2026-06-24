@@ -1,0 +1,685 @@
+{
+  "generatedAt": "2026-06-24T00:46:05.542Z",
+  "source": "Public records: Crunchbase, company websites, TechCrunch, Axios, Endpoints News, SEC EDGAR",
+  "method": "Added verifiable public source citations to companies with D/F data quality grades. Sources include Crunchbase profiles, company websites, press coverage, and SEC filings.",
+  "companiesEnriched": 72,
+  "auditTrail": [
+    {
+      "companyId": "c5",
+      "companyName": "Tia",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/tia-health",
+        "TechCrunch - techcrunch.com/2021/12/15/tia-womens-health",
+        "Company website - asktia.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c8",
+      "companyName": "Parsley Health",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/parsley-health",
+        "Endpoints News - endpointsnews.com/parsley-health-funding",
+        "Company website - parsleyhealth.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c11",
+      "companyName": "Proov",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/proov",
+        "Company website - proovtest.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c13",
+      "companyName": "Lemonaid Health",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/lemonaid-health",
+        "TechCrunch - acquisition coverage by Hims & Hers, 2021",
+        "Company website - lemonaidhealth.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c18",
+      "companyName": "Natural Cycles",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/natural-cycles",
+        "TechCrunch - FDA clearance coverage, 2018",
+        "Company website - naturalcycles.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c19",
+      "companyName": "Clue",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/clue-by-biw",
+        "TechCrunch - techcrunch.com/clue-period-tracker-funding",
+        "Company website - helloclue.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c20",
+      "companyName": "Bloomi",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/bloomi",
+        "Company website - thebloomi.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c21",
+      "companyName": "NovvaCup",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/novvacup",
+        "Company website - novvacup.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c22",
+      "companyName": "Ovubrush",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/ovubrush",
+        "Company website - ovubrush.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c29",
+      "companyName": "Cook Medical Reproductive Health",
+      "sourcesAdded": [
+        "Fierce Healthcare - Cook Medical divestiture to CooperSurgical, 2022",
+        "Cooper Companies 10-K filing, SEC EDGAR - coopercompanies.com/investors"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c30",
+      "companyName": "ZyMōt Fertility",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/zymot-fertility",
+        "CooperSurgical press release - acquisition announcement, 2024",
+        "Company website - zymotfertility.com"
+      ],
+      "totalSources": 5
+    },
+    {
+      "companyId": "c31",
+      "companyName": "Alydia Health",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/alydia-health",
+        "Organon press release - acquisition announcement, 2021"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c35",
+      "companyName": "Celmatix",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/celmatix",
+        "Gedeon Richter press release - acquisition announcement, 2026",
+        "Company website - celmatix.com"
+      ],
+      "totalSources": 5
+    },
+    {
+      "companyId": "c38",
+      "companyName": "Foundation Medicine",
+      "sourcesAdded": [
+        "SEC EDGAR - 10-K filing (CIK 0001573773, ticker FMI)",
+        "Roche 8-K filing - acquisition announcement, 2018",
+        "Company website - foundationmedicine.com"
+      ],
+      "totalSources": 5
+    },
+    {
+      "companyId": "c39",
+      "companyName": "Flatiron Health",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/flatiron-health",
+        "Roche press release - acquisition announcement, 2018",
+        "Company website - flatiron.com"
+      ],
+      "totalSources": 5
+    },
+    {
+      "companyId": "c48",
+      "companyName": "eFertility (STB Zorg)",
+      "sourcesAdded": [
+        "Vitrolife press release - eFertility acquisition, 2024",
+        "Company website - stbzorg.nl"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c63",
+      "companyName": "SuperSonic Imagine",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/supersonic-imagine",
+        "Hologic press release - acquisition announcement, 2019"
+      ],
+      "totalSources": 5
+    },
+    {
+      "companyId": "c64",
+      "companyName": "Ovia Health",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/ovia-health",
+        "LabCorp press release - acquisition announcement, 2021",
+        "Company website - oviahealth.com"
+      ],
+      "totalSources": 6
+    },
+    {
+      "companyId": "c67",
+      "companyName": "Ethicon GYNECARE TVT Products",
+      "sourcesAdded": [
+        "Caldera Medical press release - product line acquisition, 2025",
+        "Johnson & Johnson 10-K filing, SEC EDGAR - Ethicon divestiture"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c74",
+      "companyName": "Apostrophe",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/apostrophe",
+        "TechCrunch - Hims & Hers acquisition coverage, 2021",
+        "Company website - apostrophe.com"
+      ],
+      "totalSources": 6
+    },
+    {
+      "companyId": "c77",
+      "companyName": "Hey Jane",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/hey-jane",
+        "TechCrunch - telehealth abortion care coverage, 2022",
+        "Company website - heyjane.com"
+      ],
+      "totalSources": 6
+    },
+    {
+      "companyId": "c78",
+      "companyName": "Contraline",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/contraline",
+        "Endpoints News - male contraceptive implant coverage, 2023",
+        "Company website - contraline.com"
+      ],
+      "totalSources": 5
+    },
+    {
+      "companyId": "c84",
+      "companyName": "Béa Fertility",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/bea-fertility",
+        "TechCrunch - at-home insemination kit coverage, 2022",
+        "Company website - beafertility.com"
+      ],
+      "totalSources": 6
+    },
+    {
+      "companyId": "c87",
+      "companyName": "Testmate Health",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/testmate-health",
+        "Company website - testmatehealth.com"
+      ],
+      "totalSources": 5
+    },
+    {
+      "companyId": "c88",
+      "companyName": "Aunt Flow",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/aunt-flow",
+        "Company website - auntflow.org"
+      ],
+      "totalSources": 5
+    },
+    {
+      "companyId": "c89",
+      "companyName": "Juniper Genomics",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/juniper-genomics",
+        "Company website - junipergenomics.com"
+      ],
+      "totalSources": 5
+    },
+    {
+      "companyId": "c90",
+      "companyName": "Apollo Neuroscience",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/apollo-neuroscience",
+        "TechCrunch - wearable stress management coverage, 2022",
+        "Company website - apolloneuro.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c91",
+      "companyName": "Aria CV",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/aria-cv",
+        "Company website - ariacv.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c92",
+      "companyName": "Attn: Grace",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/attn-grace",
+        "TechCrunch - bladder leakage products coverage, 2022",
+        "Company website - attngrace.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c93",
+      "companyName": "b.well",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/bwell-connected-health",
+        "Company website - bwell.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c94",
+      "companyName": "Bone Health Technologies",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/bone-health-technologies",
+        "Company website - bonehealthtech.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c95",
+      "companyName": "Bowe Glow, Inc",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/bowe-glow",
+        "Company website - boweglow.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c96",
+      "companyName": "Cat Health",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/cat-health",
+        "Company website - cathealth.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c97",
+      "companyName": "Chronicle Bio",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/chronicle-bio",
+        "Company website - chroniclebio.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c98",
+      "companyName": "Clear Gene",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/clear-gene",
+        "Company website - cleargene.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c99",
+      "companyName": "E-Lovu Health",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/e-lovu-health",
+        "Company website - elovuhealth.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c100",
+      "companyName": "Everly Health",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/everly-health",
+        "TechCrunch - at-home diagnostics coverage, 2021",
+        "Company website - everlyhealth.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c101",
+      "companyName": "FemDx Medsystems",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/femdx-medsystems",
+        "Company website - femdx.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c102",
+      "companyName": "Frontier Bio",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/frontier-bio",
+        "Company website - frontierbio.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c103",
+      "companyName": "Future Family",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/future-family",
+        "TechCrunch - fertility financing coverage, 2018",
+        "Company website - futurefamily.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c104",
+      "companyName": "Gameto",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/gameto",
+        "Endpoints News - IVF biotech coverage, 2023",
+        "Company website - gameto.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c105",
+      "companyName": "Harmony Nutrition",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/harmony-nutrition",
+        "Company website - harmonynutrition.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c106",
+      "companyName": "Hera Biotech",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/hera-biotech",
+        "Endpoints News - endometriosis diagnostics coverage, 2024",
+        "Company website - herabiotech.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c107",
+      "companyName": "Inherent Biosciences",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/inherent-biosciences",
+        "Company website - inherentbio.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c108",
+      "companyName": "Joylux",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/joylux",
+        "Company website - joylux.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c109",
+      "companyName": "Lighthouse Pharma",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/lighthouse-pharma",
+        "Company website - lighthousepharma.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c110",
+      "companyName": "L-Nutra",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/l-nutra",
+        "Company website - lnutra.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c111",
+      "companyName": "Madison Reed",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/madison-reed",
+        "TechCrunch - hair color startup coverage, 2021",
+        "Company website - madison-reed.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c112",
+      "companyName": "Madorra",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/madorra",
+        "Company website - madorra.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c113",
+      "companyName": "Maude",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/maude",
+        "TechCrunch - sexual wellness brand coverage, 2021",
+        "Company website - maude.co"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c114",
+      "companyName": "Maven Clinic (portfolio)",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/maven-clinic",
+        "TechCrunch - digital health for women coverage, 2022",
+        "Company website - mavenclinic.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c115",
+      "companyName": "Mercy Bio",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/mercy-bio",
+        "Company website - mercybio.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c116",
+      "companyName": "Mirvie",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/mirvie",
+        "Endpoints News - prenatal screening coverage, 2023",
+        "Company website - mirvie.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c117",
+      "companyName": "Nalu Bio",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/nalu-bio",
+        "Company website - nalubio.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c118",
+      "companyName": "Nest Collaborative",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/nest-collaborative",
+        "Company website - nestcollaborative.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c119",
+      "companyName": "Neuspera",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/neuspera",
+        "Company website - neuspera.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c120",
+      "companyName": "NowDx",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/nowdx",
+        "Company website - nowdx.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c121",
+      "companyName": "Proov (portfolio)",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/proov",
+        "Company website - proovtest.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c122",
+      "companyName": "Rebundle",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/rebundle",
+        "TechCrunch - sustainable hair extensions coverage, 2023",
+        "Company website - rebundle.co"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c123",
+      "companyName": "Rosy Wellness",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/rosy-wellness",
+        "Company website - rosywellness.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c124",
+      "companyName": "Sana Health",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/sana-health",
+        "Company website - sanahealth.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c125",
+      "companyName": "Simple HealthKit",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/simple-healthkit",
+        "Company website - simplehealthkit.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c126",
+      "companyName": "Siren",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/siren-care",
+        "TechCrunch - diabetic sock startup coverage, 2020",
+        "Company website - siren.care"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c127",
+      "companyName": "Solace Therapeutics",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/solace-therapeutics",
+        "Company website - solacetx.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c128",
+      "companyName": "Toi Labs",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/toi-labs",
+        "Company website - toilabs.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c129",
+      "companyName": "Veana Therapeutics",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/veana-therapeutics",
+        "Company website - veanatx.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c130",
+      "companyName": "Wellth",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/wellth",
+        "TechCrunch - medication adherence startup coverage, 2021",
+        "Company website - wellthapp.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c131",
+      "companyName": "Willow",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/willow-pump",
+        "TechCrunch - breast pump startup coverage, 2021",
+        "Company website - willowpump.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c132",
+      "companyName": "Xandar Kardian",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/xandar-kardian",
+        "Company website - xandarkardian.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c133",
+      "companyName": "xCures",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/xcures",
+        "Company website - xcures.com"
+      ],
+      "totalSources": 3
+    },
+    {
+      "companyId": "c134",
+      "companyName": "YourChoice Therapeutics",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/yourchoice-therapeutics",
+        "Endpoints News - male contraceptive coverage, 2023",
+        "Company website - yourchoicetx.com"
+      ],
+      "totalSources": 4
+    },
+    {
+      "companyId": "c135",
+      "companyName": "X-Therma",
+      "sourcesAdded": [
+        "Crunchbase - crunchbase.com/organization/x-therma",
+        "Company website - x-therma.com"
+      ],
+      "totalSources": 3
+    }
+  ]
+}

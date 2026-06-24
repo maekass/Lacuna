@@ -86,8 +86,8 @@ for (const [acquirerName, deals] of acquirerDeals) {
     const target = companyMap.get(deal.targetId);
     if (!target) continue;
 
-    // Premium = dealValue / lastKnownValuation (preferred) or dealValue / totalFunding (fallback)
-    const baseline = target.lastKnownValuation ?? target.totalFunding;
+    // Premium = dealValue / preDealValuation (preferred) or dealValue / lastKnownValuation or dealValue / totalFunding (fallback)
+    const baseline = (deal as any).preDealValuation ?? target.lastKnownValuation ?? target.totalFunding;
     if (!baseline || baseline <= 0) continue;
 
     const premium = deal.dealValue! / baseline;
@@ -106,7 +106,7 @@ for (const [acquirerName, deals] of acquirerDeals) {
     maxPremium: premiums.length > 0 ? Number(Math.max(...premiums).toFixed(2)) : null,
     sectors,
     sources,
-    method: "Premium = dealValue / lastKnownValuation (or totalFunding as fallback). Only acquirers with ≥1 deal with both dealValue and baseline valuation are included.",
+    method: "Premium = dealValue / preDealValuation (preferred, from SEC filings & press), or dealValue / lastKnownValuation, or dealValue / totalFunding as last resort.",
   });
 }
 
