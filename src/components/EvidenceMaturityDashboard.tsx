@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useReducer, useState } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import {
@@ -198,7 +198,7 @@ export default function EvidenceMaturityDashboard() {
 
   /* ─── live enrichment ─── */
   async function enrichFromAPIs() {
-    const MAX_ENRICH_COMPANIES = 20;
+    const MAX_ENRICH_COMPANIES = 60;
     const prioritized = [
       ...verifiedCompanies.filter(isGenomicsRelevantCompany),
       ...verifiedCompanies.filter((c) => !isGenomicsRelevantCompany(c)),
@@ -248,6 +248,14 @@ export default function EvidenceMaturityDashboard() {
     dispatch({ type: "DONE" });
     setEnriched(true);
   }
+
+  /* ─── auto-enrich on mount ─── */
+  useEffect(() => {
+    if (!enriched && !apiState.loading && verifiedCompanies.length > 0) {
+      enrichFromAPIs();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [verifiedCompanies.length]);
 
   const avgScore = baseRows.length > 0
     ? Math.round(
@@ -308,19 +316,27 @@ export default function EvidenceMaturityDashboard() {
       {allScoresZero && (
         <div className="rounded-lg border border-lacuna-lavender/40 bg-lacuna-lavender/15 px-4 py-3 mb-6">
           <p className="text-sm text-lacuna-blue leading-relaxed">
-            <span className="font-medium text-lacuna-plum">
-              No evidence scores yet.
-            </span>{" "}
-            The static dataset carries no clinical-trial or FDA metadata, so all
-            {" "}
-            {baseRows.length}{" "}
-            deals currently score 0 (Pre-clinical) and a valuation correlation
-            would be meaningless. Use{" "}
-            <span className="font-medium text-lacuna-plum">
-              Enrich with Live Data
-            </span>{" "}
-            to pull trial phases and clearances from ClinicalTrials.gov and
-            openFDA for a prioritized subset of companies.
+            {apiState.loading ? (
+              <>
+                <span className="font-medium text-lacuna-plum">Pulling live evidence data&hellip;</span>{" "}
+                Fetching trial phases and FDA clearances from ClinicalTrials.gov and openFDA
+                {" "}({apiState.progress}/{apiState.total} companies). Scores will appear shortly.
+              </>
+            ) : (
+              <>
+                <span className="font-medium text-lacuna-plum">
+                  No evidence scores yet.
+                </span>{" "}
+                The static dataset carries no clinical-trial or FDA metadata, so all
+                {" "}{baseRows.length}{" "}
+                deals currently score 0 (Pre-clinical) and a valuation correlation
+                would be meaningless. Use{" "}
+                <span className="font-medium text-lacuna-plum">
+                  Enrich with Live Data
+                </span>{" "}
+                to pull trial phases and clearances from ClinicalTrials.gov and openFDA.
+              </>
+            )}
           </p>
         </div>
       )}

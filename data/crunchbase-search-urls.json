@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T01:31:46.975Z",
+  "generatedAt": "2026-06-25T02:14:16.697Z",
   "totalCompanies": 56,
   "instructions": "Open each searchUrl in Crunchbase Pro, find the correct company, export as CSV to data/crunchbase-exports/",
   "companies": [

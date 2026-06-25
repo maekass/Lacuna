@@ -30,7 +30,12 @@
  * Usage: npx tsx scripts/ingest-crunchbase-csv.ts
  */
 
-import { readFileSync, writeFileSync, readdirSync, existsSync } from "fs";
+import { readFileSync, writeFileSync, readdirSync, mkdirSync } from "fs";
+import { resolve } from "path";
+
+const ROOT = resolve(__dirname, "..");
+const EXPORT_DIR = resolve(ROOT, "data", "crunchbase-exports");
+const SRC_DATA_DIR = resolve(ROOT, "src", "data");
 
 interface Company {
   id: string;
@@ -168,26 +173,19 @@ function levenshtein(a: string, b: string): number {
 }
 
 function main() {
-  const exportDir = "data/crunchbase-exports";
+  mkdirSync(EXPORT_DIR, { recursive: true });
 
-  if (!existsSync(exportDir)) {
-    console.error(`❌ Directory not found: ${exportDir}/`);
-    console.error("   Run: npx tsx scripts/generate-crunchbase-urls.ts first");
-    console.error("   Then export CSVs from Crunchbase Pro to that directory");
-    return;
-  }
-
-  const files = readdirSync(exportDir).filter((f) => f.endsWith(".csv"));
+  const files = readdirSync(EXPORT_DIR).filter((f) => f.endsWith(".csv"));
   if (files.length === 0) {
-    console.error(`❌ No CSV files found in ${exportDir}/`);
+    console.error(`❌ No CSV files found in ${EXPORT_DIR}`);
     console.error("   Export CSVs from Crunchbase Pro first, then re-run this script");
     return;
   }
 
-  console.log(`📁 Found ${files.length} CSV files in ${exportDir}/\n`);
+  console.log(`📁 Found ${files.length} CSV files in ${EXPORT_DIR}\n`);
 
   const dataset = JSON.parse(
-    readFileSync("src/data/dataset.verified.json", "utf-8")
+    readFileSync(resolve(SRC_DATA_DIR, "dataset.verified.json"), "utf-8")
   );
   const companies: Company[] = dataset.companies || [];
 
@@ -202,7 +200,7 @@ function main() {
 
   // Process each CSV file
   for (const file of files) {
-    const filePath = `${exportDir}/${file}`;
+    const filePath = resolve(EXPORT_DIR, file);
     console.log(`  📄 Processing ${file}...`);
 
     const content = readFileSync(filePath, "utf-8");
@@ -409,7 +407,7 @@ function main() {
   }
 
   // Write updated dataset
-  writeFileSync("src/data/dataset.verified.json", JSON.stringify(dataset, null, 2));
+  writeFileSync(resolve(SRC_DATA_DIR, "dataset.verified.json"), JSON.stringify(dataset, null, 2));
 
   // Write audit trail
   const auditOutput = {
@@ -423,7 +421,7 @@ function main() {
     auditTrail,
   };
   writeFileSync(
-    "src/data/computed-crunchbase-enrichment.json",
+    resolve(SRC_DATA_DIR, "computed-crunchbase-enrichment.json"),
     JSON.stringify(auditOutput, null, 2)
   );
 
