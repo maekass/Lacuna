@@ -72,6 +72,21 @@ export const WORKSPACES: Workspace[] = [
       { id: "export", label: "Export" },
     ],
   },
+  {
+    slug: "payer-ops",
+    href: "/payer-ops",
+    label: "Payer Ops",
+    description:
+      "Portfolio project for healthcare payer administration, claims operations, and responsible workflow automation.",
+    sections: [
+      { id: "problem", label: "Problem" },
+      { id: "simulator", label: "Simulator" },
+      { id: "triage", label: "Queues" },
+      { id: "solution", label: "Solution" },
+      { id: "governance", label: "Governance" },
+      { id: "roadmap", label: "Roadmap" },
+    ],
+  },
 ];
 
 /** Legacy monolith hash → workspace route (for bookmarks). */
