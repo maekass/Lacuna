@@ -13,6 +13,9 @@
  */
 
 import { readFileSync, writeFileSync, existsSync } from "fs";
+import { resolve } from "path";
+
+const ROOT = resolve(__dirname, "..");
 
 interface Company {
   id: string;
@@ -84,7 +87,7 @@ function pearson(x: number[], y: number[]): number {
 
 // --- Main computation ---
 
-const dataset = JSON.parse(readFileSync("src/data/dataset.verified.json", "utf-8"));
+const dataset = JSON.parse(readFileSync(resolve(ROOT, "src/data/dataset.verified.json"), "utf-8"));
 const companies: Company[] = dataset.companies || [];
 const acquisitions: Acquisition[] = dataset.acquisitions || [];
 
@@ -152,7 +155,7 @@ const output = {
   warning: "Small sample sizes (n<5) produce unreliable statistics. Treat n<5 sectors as directional only.",
 };
 
-writeFileSync("src/data/computed-benchmarks.json", JSON.stringify(output, null, 2));
+writeFileSync(resolve(ROOT, "src/data/computed-benchmarks.json"), JSON.stringify(output, null, 2));
 
 console.log("✅ Computed benchmarks written to src/data/computed-benchmarks.json\n");
 console.log(`Dataset: ${companies.length} companies, ${acquisitions.length} acquisitions`);
