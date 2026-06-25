@@ -9,12 +9,12 @@ import { LACUNA_SEMANTIC } from "@/lib/theme/palette";
 const CHART = LACUNA_SEMANTIC.chart;
 
 /* ── chart geometry ───────────────────────────────────── */
-const W = 720;
-const H = 500;
-const ML = 78;
-const MR = 40;
-const MT = 44;
-const MB = 76;
+const W = 740;
+const H = 480;
+const ML = 72;
+const MR = 32;
+const MT = 40;
+const MB = 64;
 const PW = W - ML - MR;
 const PH = H - MT - MB;
 const GRID_TICKS = 5;
@@ -36,6 +36,8 @@ interface SectorPoint {
 interface WhiteSpaceAnalysisProps {
   showHeader?: boolean;
 }
+
+type ViewFilter = "all" | "whitespace";
 
 /* ── helpers ──────────────────────────────────────────── */
 function fmtVal(v: number): string {
@@ -80,7 +82,7 @@ function labelPosition(p: SectorPoint): {
   outside: boolean;
 } {
   if (p.radius >= 26) return { lx: p.x, ly: p.y, outside: false };
-  const offset = p.radius + 16;
+  const offset = p.radius + 14;
   let ly = p.y - offset;
   if (ly < MT + 14) ly = p.y + offset + 8;
   return { lx: p.x, ly, outside: true };
@@ -100,6 +102,7 @@ export default function WhiteSpaceAnalysis({
 }: WhiteSpaceAnalysisProps) {
   const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
   const [hovered, setHovered] = useState<string | null>(null);
+  const [viewFilter, setViewFilter] = useState<ViewFilter>("all");
 
   const handleEnter = useCallback((s: string) => setHovered(s), []);
   const handleLeave = useCallback(() => setHovered(null), []);
@@ -182,66 +185,128 @@ export default function WhiteSpaceAnalysis({
     (_, i) => i / GRID_TICKS,
   );
 
+  const visiblePoints = viewFilter === "whitespace"
+    ? sectorPoints.filter((p) => p.isWhiteSpace)
+    : sectorPoints;
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-xl shadow-sm border border-lacuna-border p-6"
+      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="rounded-2xl border border-lacuna-border bg-white/80 backdrop-blur-sm shadow-[0_1px_3px_rgba(93,78,109,0.06),0_8px_24px_rgba(93,78,109,0.04)]"
     >
-      <CuratedDatasetBanner className="mb-4" />
-      <div
-        className={`mb-4 flex items-center ${
-          showHeader ? "justify-between" : "justify-end"
-        }`}
-      >
-        {showHeader && (
-          <div>
-            <h3 className="text-lg font-semibold text-lacuna-text-primary">
-              White Space Analysis
-            </h3>
-            <p className="text-sm text-lacuna-text-muted">
-              Sectors with high company density but low M&amp;A activity &mdash;
-              where the next wave may form.
-            </p>
+      <div className="px-6 pt-5 pb-4">
+        <CuratedDatasetBanner className="mb-4" />
+
+        {/* header row */}
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            {showHeader && (
+              <div>
+                <h3 className="text-base font-semibold text-lacuna-text-primary tracking-tight">
+                  White Space Analysis
+                </h3>
+                <p className="text-xs text-lacuna-text-muted mt-0.5">
+                  High company density, low M&amp;A activity
+                </p>
+              </div>
+            )}
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-lacuna-pink/8 px-2.5 py-1 text-[11px] font-medium text-lacuna-plum tabular-nums">
+              <span className="h-1.5 w-1.5 rounded-full bg-lacuna-plum/60" />
+              {whiteSpaceSectors.length} white-space
+            </span>
           </div>
-        )}
-        <span className="rounded-full bg-lacuna-pink/10 px-3 py-1 text-xs font-medium text-lacuna-plum">
-          {whiteSpaceSectors.length} white-space sector
-          {whiteSpaceSectors.length === 1 ? "" : "s"}
-        </span>
+
+          {/* segmented control */}
+          <div className="flex rounded-lg bg-lacuna-surface-subtle p-0.5 text-[11px] font-medium">
+            {(["all", "whitespace"] as const).map((v) => (
+              <button
+                key={v}
+                type="button"
+                onClick={() => setViewFilter(v)}
+                className={`rounded-md px-3 py-1 transition-all duration-200 ${
+                  viewFilter === v
+                    ? "bg-white text-lacuna-text-primary shadow-sm"
+                    : "text-lacuna-text-muted hover:text-lacuna-text-secondary"
+                }`}
+              >
+                {v === "all" ? "All sectors" : "White space"}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* ── chart ──────────────────────────────────────── */}
-      <div className="relative">
-        <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto">
+      <div className="relative px-4 pb-2">
+        <svg
+          viewBox={`0 0 ${W} ${H}`}
+          className="w-full h-auto"
+          style={{ fontFeatureSettings: "'tnum'" }}
+        >
           <defs>
-            <filter id="ws-shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <filter
+              id="ws-glow"
+              x="-50%"
+              y="-50%"
+              width="200%"
+              height="200%"
+            >
+              <feGaussianBlur stdDeviation="4" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+            <filter
+              id="ws-shadow"
+              x="-20%"
+              y="-20%"
+              width="140%"
+              height="140%"
+            >
               <feDropShadow
                 dx="0"
                 dy="1"
-                stdDeviation="2"
-                floodOpacity="0.10"
+                stdDeviation="2.5"
+                floodColor="#5D4E6D"
+                floodOpacity="0.08"
               />
             </filter>
-            <radialGradient id="ws-grad-accent" cx="40%" cy="35%">
-              <stop offset="0%" stopColor={CHART.accent} stopOpacity="0.28" />
-              <stop offset="100%" stopColor={CHART.accent} stopOpacity="0.12" />
+            <radialGradient id="ws-grad-accent" cx="35%" cy="30%">
+              <stop offset="0%" stopColor={CHART.accent} stopOpacity="0.35" />
+              <stop offset="100%" stopColor={CHART.accent} stopOpacity="0.10" />
             </radialGradient>
-            <radialGradient id="ws-grad-secondary" cx="40%" cy="35%">
+            <radialGradient id="ws-grad-secondary" cx="35%" cy="30%">
               <stop
                 offset="0%"
                 stopColor={CHART.secondary}
-                stopOpacity="0.32"
+                stopOpacity="0.38"
               />
               <stop
                 offset="100%"
                 stopColor={CHART.secondary}
-                stopOpacity="0.14"
+                stopOpacity="0.12"
               />
             </radialGradient>
+            <linearGradient id="ws-zone-bg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor={CHART.accent} stopOpacity="0.03" />
+              <stop offset="100%" stopColor={CHART.accent} stopOpacity="0.00" />
+            </linearGradient>
           </defs>
 
-          {/* gridlines */}
+          {/* white-space zone hint */}
+          <rect
+            x={ML}
+            y={H - MB - PH * 0.45}
+            width={PW * 0.35}
+            height={PH * 0.45}
+            rx={6}
+            fill="url(#ws-zone-bg)"
+          />
+
+          {/* gridlines — subtle dots */}
           {ticks.map((t) => {
             const gx = ML + t * PW;
             const gy = H - MB - t * PH;
@@ -254,8 +319,8 @@ export default function WhiteSpaceAnalysis({
                     x2={W - MR}
                     y2={gy}
                     stroke={CHART.grid}
-                    strokeWidth={0.6}
-                    strokeDasharray="3,4"
+                    strokeWidth={0.5}
+                    strokeDasharray="2,5"
                   />
                 )}
                 {t > 0 && (
@@ -265,22 +330,23 @@ export default function WhiteSpaceAnalysis({
                     x2={gx}
                     y2={H - MB}
                     stroke={CHART.grid}
-                    strokeWidth={0.6}
-                    strokeDasharray="3,4"
+                    strokeWidth={0.5}
+                    strokeDasharray="2,5"
                   />
                 )}
               </g>
             );
           })}
 
-          {/* axes */}
+          {/* axes — thin and refined */}
           <line
             x1={ML}
             y1={H - MB}
             x2={W - MR}
             y2={H - MB}
             stroke={CHART.axis}
-            strokeWidth={1.5}
+            strokeWidth={1}
+            opacity={0.5}
           />
           <line
             x1={ML}
@@ -288,7 +354,8 @@ export default function WhiteSpaceAnalysis({
             x2={ML}
             y2={H - MB}
             stroke={CHART.axis}
-            strokeWidth={1.5}
+            strokeWidth={1}
+            opacity={0.5}
           />
 
           {/* trend line */}
@@ -298,9 +365,9 @@ export default function WhiteSpaceAnalysis({
             x2={W - MR}
             y2={MT}
             stroke={CHART.axis}
-            strokeWidth={1.2}
-            strokeDasharray="6,6"
-            opacity={0.5}
+            strokeWidth={0.8}
+            strokeDasharray="4,8"
+            opacity={0.25}
           />
 
           {/* axis ticks & labels */}
@@ -309,35 +376,21 @@ export default function WhiteSpaceAnalysis({
             const gy = H - MB - t * PH;
             return (
               <g key={`tick-${t}`}>
-                <line
-                  x1={gx}
-                  y1={H - MB}
-                  x2={gx}
-                  y2={H - MB + 5}
-                  stroke={CHART.axis}
-                  strokeWidth={1}
-                />
                 <text
                   x={gx}
-                  y={H - MB + 20}
+                  y={H - MB + 18}
                   textAnchor="middle"
-                  className="text-[10px] fill-lacuna-text-muted"
+                  className="text-[9px] fill-lacuna-text-muted"
+                  opacity={0.7}
                 >
                   {Math.round(maxDealCount * t)}
                 </text>
-                <line
-                  x1={ML - 5}
-                  y1={gy}
-                  x2={ML}
-                  y2={gy}
-                  stroke={CHART.axis}
-                  strokeWidth={1}
-                />
                 <text
-                  x={ML - 9}
-                  y={gy + 4}
+                  x={ML - 8}
+                  y={gy + 3}
                   textAnchor="end"
-                  className="text-[10px] fill-lacuna-text-muted"
+                  className="text-[9px] fill-lacuna-text-muted"
+                  opacity={0.7}
                 >
                   {fmtVal(maxAvgVal * t)}
                 </text>
@@ -348,204 +401,272 @@ export default function WhiteSpaceAnalysis({
           {/* axis titles */}
           <text
             x={(ML + W - MR) / 2}
-            y={H - 18}
+            y={H - 14}
             textAnchor="middle"
-            className="text-xs fill-lacuna-text-muted"
+            className="text-[10px] fill-lacuna-text-muted font-medium"
+            opacity={0.6}
           >
             Deal Count
           </text>
           <text
-            x={16}
+            x={14}
             y={(MT + H - MB) / 2}
             textAnchor="middle"
-            transform={`rotate(-90 16 ${(MT + H - MB) / 2})`}
-            className="text-xs fill-lacuna-text-muted"
+            transform={`rotate(-90 14 ${(MT + H - MB) / 2})`}
+            className="text-[10px] fill-lacuna-text-muted font-medium"
+            opacity={0.6}
           >
             Average Valuation
           </text>
 
-          {/* legend */}
-          <g transform={`translate(${ML + 8}, ${MT + 8})`}>
+          {/* legend — minimal */}
+          <g transform={`translate(${ML + 4}, ${MT + 6})`}>
             <circle
-              cx={7}
+              cx={5}
               cy={0}
-              r={5}
+              r={4}
               fill="url(#ws-grad-accent)"
               stroke={CHART.accent}
-              strokeWidth={1.5}
+              strokeWidth={1.2}
             />
             <text
-              x={18}
-              y={4}
-              className="text-[10px] font-semibold"
+              x={14}
+              y={3}
+              className="text-[9px] font-medium"
               fill={CHART.accent}
+              opacity={0.8}
             >
               White Space
             </text>
             <circle
-              cx={107}
+              cx={95}
               cy={0}
-              r={5}
+              r={4}
               fill="url(#ws-grad-secondary)"
               stroke={CHART.secondary}
-              strokeWidth={1.5}
+              strokeWidth={1.2}
             />
             <text
-              x={118}
-              y={4}
-              className="text-[10px] font-semibold"
+              x={104}
+              y={3}
+              className="text-[9px] font-medium"
               fill={CHART.axis}
+              opacity={0.8}
             >
               Active M&amp;A
             </text>
           </g>
 
-          {/* bubbles */}
+          {/* bubble size legend */}
+          <g transform={`translate(${W - MR - 90}, ${MT + 2})`}>
+            <text
+              x={0}
+              y={0}
+              className="text-[8px] fill-lacuna-text-muted font-medium"
+              opacity={0.5}
+            >
+              Size = companies
+            </text>
+          </g>
+
+          {/* bubbles with CSS transitions */}
           {sectorPoints.map((p) => {
             const isH = hovered === p.sector;
             const { lx, ly, outside } = labelPosition(p);
             const lines = splitLabel(p.sector);
+            const filtered = viewFilter === "whitespace" && !p.isWhiteSpace;
+            const dimmed = (hovered !== null && !isH) || filtered;
             return (
               <g
                 key={p.sector}
-                onMouseEnter={() => handleEnter(p.sector)}
+                onMouseEnter={() => !filtered && handleEnter(p.sector)}
                 onMouseLeave={handleLeave}
-                style={{ cursor: "pointer" }}
+                style={{
+                  cursor: filtered ? "default" : "pointer",
+                  transition: "opacity 200ms ease",
+                  opacity: filtered ? 0.12 : dimmed ? 0.35 : 1,
+                }}
               >
-                {/* outer glow on hover */}
+                {/* ambient glow on hover */}
                 {isH && (
                   <circle
                     cx={p.x}
                     cy={p.y}
-                    r={p.radius + 6}
-                    fill="none"
-                    stroke={p.isWhiteSpace ? CHART.accent : CHART.secondary}
-                    strokeWidth={2}
-                    opacity={0.35}
+                    r={p.radius + 8}
+                    fill={p.isWhiteSpace ? CHART.accent : CHART.secondary}
+                    opacity={0.12}
+                    filter="url(#ws-glow)"
                   />
                 )}
                 <circle
                   cx={p.x}
                   cy={p.y}
-                  r={p.radius}
+                  r={isH ? p.radius + 2 : p.radius}
                   fill={p.isWhiteSpace
                     ? "url(#ws-grad-accent)"
                     : "url(#ws-grad-secondary)"}
                   stroke={p.isWhiteSpace ? CHART.accent : CHART.secondary}
-                  strokeWidth={isH ? 2.5 : 1.8}
+                  strokeWidth={isH ? 2 : 1.2}
                   filter="url(#ws-shadow)"
-                  opacity={hovered && !isH ? 0.45 : 1}
+                  style={{
+                    transition: "r 200ms ease, stroke-width 200ms ease",
+                  }}
                 />
                 {/* leader line */}
-                {outside && (
+                {outside && !filtered && (
                   <line
                     x1={p.x}
                     y1={ly > p.y ? p.y + p.radius + 1 : p.y - p.radius - 1}
                     x2={lx}
                     y2={ly > p.y ? ly - 10 : ly + 4}
                     stroke={CHART.axis}
-                    strokeWidth={0.8}
-                    opacity={hovered && !isH ? 0.3 : 0.55}
+                    strokeWidth={0.6}
+                    opacity={dimmed ? 0.15 : 0.4}
+                    style={{ transition: "opacity 200ms ease" }}
                   />
                 )}
                 {/* label */}
-                <text
-                  x={lx}
-                  y={ly - (lines.length - 1) * 5}
-                  textAnchor="middle"
-                  className="fill-lacuna-text-primary text-[9px] font-semibold pointer-events-none"
-                  opacity={hovered && !isH ? 0.4 : 1}
-                >
-                  {lines.map((line, i) => (
-                    <tspan key={line} x={lx} dy={i === 0 ? 0 : 11}>
-                      {line}
-                    </tspan>
-                  ))}
-                </text>
+                {!filtered && (
+                  <text
+                    x={lx}
+                    y={ly - (lines.length - 1) * 5}
+                    textAnchor="middle"
+                    className="fill-lacuna-text-primary text-[8.5px] font-medium pointer-events-none"
+                    style={{
+                      transition: "opacity 200ms ease",
+                      opacity: dimmed ? 0.3 : 0.9,
+                    }}
+                  >
+                    {lines.map((line, i) => (
+                      <tspan key={line} x={lx} dy={i === 0 ? 0 : 10}>
+                        {line}
+                      </tspan>
+                    ))}
+                  </text>
+                )}
               </g>
             );
           })}
         </svg>
 
-        {/* tooltip */}
+        {/* tooltip — frosted glass */}
         <AnimatePresence>
           {hoveredPoint && (
             <motion.div
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 4 }}
-              transition={{ duration: 0.15 }}
-              className="absolute top-2 right-2 rounded-lg border border-lacuna-border bg-white/95 backdrop-blur-sm shadow-md px-4 py-3 text-xs pointer-events-none z-10"
+              initial={{ opacity: 0, scale: 0.96, y: 6 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 6 }}
+              transition={{ type: "spring", stiffness: 400, damping: 28 }}
+              className="absolute top-3 right-3 w-52 rounded-xl border border-white/40 bg-white/90 backdrop-blur-md shadow-[0_4px_24px_rgba(93,78,109,0.12),0_1px_4px_rgba(93,78,109,0.06)] pointer-events-none z-10 overflow-hidden"
             >
-              <p className="font-semibold text-lacuna-text-primary text-sm mb-1.5">
-                {hoveredPoint.sector}
-              </p>
-              <div className="space-y-0.5 text-lacuna-text-secondary">
-                <p>
-                  <span className="text-lacuna-text-muted">Companies:</span>
-                  {" "}
-                  {hoveredPoint.companyCount}
+              {/* accent bar */}
+              <div
+                className="h-0.5"
+                style={{
+                  background: hoveredPoint.isWhiteSpace
+                    ? CHART.accent
+                    : CHART.secondary,
+                }}
+              />
+              <div className="px-3.5 py-3">
+                <p className="text-[13px] font-semibold text-lacuna-text-primary tracking-tight leading-tight">
+                  {hoveredPoint.sector}
                 </p>
-                <p>
-                  <span className="text-lacuna-text-muted">Deals:</span>{" "}
-                  {hoveredPoint.dealCount}
-                </p>
-                <p>
-                  <span className="text-lacuna-text-muted">Avg valuation:</span>
-                  {" "}
-                  {fmtVal(hoveredPoint.avgValuation)}
-                </p>
-                <p>
-                  <span className="text-lacuna-text-muted">Market share:</span>
-                  {" "}
-                  {(hoveredPoint.companyShare * 100).toFixed(1)}%
-                </p>
+                {hoveredPoint.isWhiteSpace && (
+                  <span className="mt-1 inline-block rounded-full bg-lacuna-pink/10 px-2 py-0.5 text-[9px] font-medium text-lacuna-plum">
+                    White space
+                  </span>
+                )}
+                <div className="mt-2.5 grid grid-cols-2 gap-x-3 gap-y-2">
+                  <MetricCell
+                    label="Companies"
+                    value={String(hoveredPoint.companyCount)}
+                  />
+                  <MetricCell
+                    label="Deals"
+                    value={String(hoveredPoint.dealCount)}
+                  />
+                  <MetricCell
+                    label="Avg valuation"
+                    value={fmtVal(hoveredPoint.avgValuation)}
+                  />
+                  <MetricCell
+                    label="Market share"
+                    value={`${(hoveredPoint.companyShare * 100).toFixed(1)}%`}
+                  />
+                </div>
               </div>
-              {hoveredPoint.isWhiteSpace && (
-                <p className="mt-1.5 text-[10px] text-lacuna-plum font-medium">
-                  High density, low M&amp;A — potential white space
-                </p>
-              )}
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      {/* ── sector list ────────────────────────────────── */}
-      <div className="mt-6 space-y-3">
-        <h4 className="text-sm font-semibold uppercase tracking-wider text-lacuna-text-primary">
-          White-space sectors
-        </h4>
+      {/* ── sector cards ───────────────────────────────── */}
+      <div className="border-t border-lacuna-border/50 px-6 py-5">
+        <div className="mb-3 flex items-center justify-between">
+          <h4 className="text-xs font-semibold uppercase tracking-widest text-lacuna-text-muted">
+            White-space sectors
+          </h4>
+          <span className="text-[10px] text-lacuna-text-muted tabular-nums">
+            {whiteSpaceSectors.length} of {visiblePoints.length} plotted
+          </span>
+        </div>
         {whiteSpaceSectors.length > 0
           ? (
-            whiteSpaceSectors.map((p) => (
-              <div
-                key={p.sector}
-                className="rounded-lg border border-lacuna-border-subtle bg-lacuna-surface-muted p-3 text-sm text-lacuna-text-secondary"
-              >
-                <span className="font-semibold text-lacuna-text-primary">
-                  {p.sector}
-                </span>
-                {": "}
-                {p.companyCount} companies tracked, {p.dealCount}{" "}
-                acquisitions &mdash; underrepresented in M&amp;A relative to
-                market presence.
-              </div>
-            ))
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              {whiteSpaceSectors.map((p) => (
+                <motion.div
+                  key={p.sector}
+                  onHoverStart={() => handleEnter(p.sector)}
+                  onHoverEnd={handleLeave}
+                  whileHover={{ y: -1 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  className="group rounded-lg border border-lacuna-border/40 bg-lacuna-surface-muted/50 px-3 py-2.5 cursor-default hover:border-lacuna-border hover:shadow-sm transition-[border-color,box-shadow] duration-200"
+                >
+                  <p className="text-[13px] font-medium text-lacuna-text-primary leading-tight">
+                    {p.sector}
+                  </p>
+                  <div className="mt-1.5 flex flex-wrap gap-1.5">
+                    <Chip label={`${p.companyCount} cos`} />
+                    <Chip label={`${p.dealCount} deals`} />
+                    <Chip label={fmtVal(p.avgValuation)} />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           )
           : (
-            <div className="rounded-lg border border-lacuna-border-subtle bg-lacuna-surface-muted p-3 text-sm text-lacuna-text-muted">
-              No sector currently screens as white space on the verified dataset
-              mix.
+            <div className="rounded-lg border border-lacuna-border/30 bg-lacuna-surface-muted/50 p-3 text-xs text-lacuna-text-muted">
+              No sector currently screens as white space.
             </div>
           )}
         {unplottedSectors.length > 0 && (
-          <p className="text-xs text-lacuna-text-muted">
-            Not plotted (single tracked company, no recorded deals):{" "}
+          <p className="mt-3 text-[10px] text-lacuna-text-muted leading-relaxed">
+            Not plotted (single tracked company, no deals):{" "}
             {unplottedSectors.map((p) => p.sector).join(", ")}.
           </p>
         )}
       </div>
     </motion.div>
+  );
+}
+
+/* ── sub-components ────────────────────────────────────── */
+function MetricCell({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="text-[9px] text-lacuna-text-muted leading-none">{label}</p>
+      <p className="mt-0.5 text-sm font-semibold text-lacuna-text-primary tabular-nums leading-tight">
+        {value}
+      </p>
+    </div>
+  );
+}
+
+function Chip({ label }: { label: string }) {
+  return (
+    <span className="inline-flex items-center rounded-md bg-lacuna-surface-subtle px-1.5 py-0.5 text-[10px] font-medium text-lacuna-text-secondary tabular-nums">
+      {label}
+    </span>
   );
 }
