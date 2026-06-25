@@ -22,6 +22,12 @@
  */
 
 import { writeFileSync, mkdirSync } from "fs";
+import { resolve } from "path";
+
+const ROOT = resolve(__dirname, "..");
+const EXPORT_DIR = resolve(ROOT, "data", "crunchbase-exports");
+const DATA_DIR = resolve(ROOT, "data");
+const SRC_DATA_DIR = resolve(ROOT, "src", "data");
 
 interface Company {
   id: string;
@@ -32,16 +38,17 @@ interface Company {
 }
 
 function main() {
-  mkdirSync("data/crunchbase-exports", { recursive: true });
+  mkdirSync(EXPORT_DIR, { recursive: true });
+  mkdirSync(DATA_DIR, { recursive: true });
 
   const dataset = JSON.parse(
-    require("fs").readFileSync("src/data/dataset.verified.json", "utf-8")
+    require("fs").readFileSync(resolve(SRC_DATA_DIR, "dataset.verified.json"), "utf-8")
   );
   const companies: Company[] = dataset.companies || [];
 
   // Get D-grade companies from the data quality scores
   const scores = JSON.parse(
-    require("fs").readFileSync("src/data/computed-data-quality-scores.json", "utf-8")
+    require("fs").readFileSync(resolve(SRC_DATA_DIR, "computed-data-quality-scores.json"), "utf-8")
   );
   const dGradeIds = new Set(
     scores.companies
@@ -114,7 +121,7 @@ function main() {
     })),
   };
   writeFileSync(
-    "data/crunchbase-search-urls.json",
+    resolve(DATA_DIR, "crunchbase-search-urls.json"),
     JSON.stringify(jsonOutput, null, 2)
   );
 
@@ -197,7 +204,7 @@ Founded Date, Acquisition Status, Last Known Valuation, Number of Funding Rounds
 Save files to: \`data/crunchbase-exports/\`
 `;
 
-  writeFileSync("data/crunchbase-search-urls.md", md);
+  writeFileSync(resolve(DATA_DIR, "crunchbase-search-urls.md"), md);
 
   console.log(`✅ Generated Crunchbase search URLs for ${companyUrls.length} companies`);
   console.log("   📄 data/crunchbase-search-urls.md (human-readable guide)");
