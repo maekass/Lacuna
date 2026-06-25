@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useCallback, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { LACUNA_SEMANTIC } from "@/lib/theme/palette";
@@ -104,75 +104,83 @@ export default function WhiteSpaceAnalysis({
   const handleEnter = useCallback((s: string) => setHovered(s), []);
   const handleLeave = useCallback(() => setHovered(null), []);
 
-  const { sectorPoints, maxDealCount, maxAvgVal, whiteSpaceSectors, unplottedSectors } =
-    useMemo(() => {
-      const companyById = new Map(
-        verifiedCompanies.map((c) => [c.id, c]),
-      );
-      const totalCo = Math.max(1, verifiedCompanies.length);
-      const totalDeals = Math.max(1, verifiedAcquisitions.length);
-      const sectors = [...new Set(verifiedCompanies.map((c) => c.sector))].sort();
+  const {
+    sectorPoints,
+    maxDealCount,
+    maxAvgVal,
+    whiteSpaceSectors,
+    unplottedSectors,
+  } = useMemo(() => {
+    const companyById = new Map(
+      verifiedCompanies.map((c) => [c.id, c]),
+    );
+    const totalCo = Math.max(1, verifiedCompanies.length);
+    const totalDeals = Math.max(1, verifiedAcquisitions.length);
+    const sectors = [...new Set(verifiedCompanies.map((c) => c.sector))].sort();
 
-      const raw = sectors.map((sector) => {
-        const cos = verifiedCompanies.filter((c) => c.sector === sector);
-        const vals = cos
-          .map((c) => c.lastKnownValuation)
-          .filter((v): v is number => typeof v === "number");
-        const avgV = vals.length > 0
-          ? vals.reduce((s, v) => s + v, 0) / vals.length
-          : 0;
-        const deals = verifiedAcquisitions.filter((a) => {
-          const t = companyById.get(a.targetId);
-          return t?.sector === sector;
-        }).length;
-        return {
-          sector,
-          dealCount: deals,
-          avgValuation: avgV,
-          companyCount: cos.length,
-          companyShare: cos.length / totalCo,
-          dealShare: deals / totalDeals,
-        };
-      });
-
-      const plottable = raw.filter(
-        (p) => p.companyCount >= 2 || p.dealCount >= 1,
-      );
-      const unplotted = raw.filter(
-        (p) => p.companyCount < 2 && p.dealCount === 0,
-      );
-
-      const maxD = Math.max(1, ...plottable.map((p) => p.dealCount));
-      const maxV = Math.max(1, ...plottable.map((p) => p.avgValuation));
-
-      const points: SectorPoint[] = plottable.map((p) => {
-        const radius = Math.max(16, Math.min(40, Math.sqrt(p.companyCount) * 10));
-        const xRatio = maxD === 0 ? 0 : p.dealCount / maxD;
-        const yRatio = maxV === 0 ? 0 : p.avgValuation / maxV;
-        const isWS = p.companyShare > p.dealShare;
-        return {
-          ...p,
-          radius,
-          x: ML + xRatio * PW,
-          y: H - MB - yRatio * PH,
-          isWhiteSpace: isWS,
-        };
-      });
-
-      resolveCollisions(points);
-
+    const raw = sectors.map((sector) => {
+      const cos = verifiedCompanies.filter((c) => c.sector === sector);
+      const vals = cos
+        .map((c) => c.lastKnownValuation)
+        .filter((v): v is number => typeof v === "number");
+      const avgV = vals.length > 0
+        ? vals.reduce((s, v) => s + v, 0) / vals.length
+        : 0;
+      const deals = verifiedAcquisitions.filter((a) => {
+        const t = companyById.get(a.targetId);
+        return t?.sector === sector;
+      }).length;
       return {
-        sectorPoints: points,
-        maxDealCount: maxD,
-        maxAvgVal: maxV,
-        whiteSpaceSectors: points.filter((p) => p.isWhiteSpace),
-        unplottedSectors: unplotted,
+        sector,
+        dealCount: deals,
+        avgValuation: avgV,
+        companyCount: cos.length,
+        companyShare: cos.length / totalCo,
+        dealShare: deals / totalDeals,
       };
-    }, [verifiedCompanies, verifiedAcquisitions]);
+    });
+
+    const plottable = raw.filter(
+      (p) => p.companyCount >= 2 || p.dealCount >= 1,
+    );
+    const unplotted = raw.filter(
+      (p) => p.companyCount < 2 && p.dealCount === 0,
+    );
+
+    const maxD = Math.max(1, ...plottable.map((p) => p.dealCount));
+    const maxV = Math.max(1, ...plottable.map((p) => p.avgValuation));
+
+    const points: SectorPoint[] = plottable.map((p) => {
+      const radius = Math.max(16, Math.min(40, Math.sqrt(p.companyCount) * 10));
+      const xRatio = maxD === 0 ? 0 : p.dealCount / maxD;
+      const yRatio = maxV === 0 ? 0 : p.avgValuation / maxV;
+      const isWS = p.companyShare > p.dealShare;
+      return {
+        ...p,
+        radius,
+        x: ML + xRatio * PW,
+        y: H - MB - yRatio * PH,
+        isWhiteSpace: isWS,
+      };
+    });
+
+    resolveCollisions(points);
+
+    return {
+      sectorPoints: points,
+      maxDealCount: maxD,
+      maxAvgVal: maxV,
+      whiteSpaceSectors: points.filter((p) => p.isWhiteSpace),
+      unplottedSectors: unplotted,
+    };
+  }, [verifiedCompanies, verifiedAcquisitions]);
 
   const hoveredPoint = sectorPoints.find((p) => p.sector === hovered) ?? null;
 
-  const ticks = Array.from({ length: GRID_TICKS + 1 }, (_, i) => i / GRID_TICKS);
+  const ticks = Array.from(
+    { length: GRID_TICKS + 1 },
+    (_, i) => i / GRID_TICKS,
+  );
 
   return (
     <motion.div
@@ -192,8 +200,8 @@ export default function WhiteSpaceAnalysis({
               White Space Analysis
             </h3>
             <p className="text-sm text-lacuna-text-muted">
-              Sectors with high company density but low M&amp;A activity
-              &mdash; where the next wave may form.
+              Sectors with high company density but low M&amp;A activity &mdash;
+              where the next wave may form.
             </p>
           </div>
         )}
@@ -208,15 +216,28 @@ export default function WhiteSpaceAnalysis({
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto">
           <defs>
             <filter id="ws-shadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="1" stdDeviation="2" floodOpacity="0.10" />
+              <feDropShadow
+                dx="0"
+                dy="1"
+                stdDeviation="2"
+                floodOpacity="0.10"
+              />
             </filter>
             <radialGradient id="ws-grad-accent" cx="40%" cy="35%">
               <stop offset="0%" stopColor={CHART.accent} stopOpacity="0.28" />
               <stop offset="100%" stopColor={CHART.accent} stopOpacity="0.12" />
             </radialGradient>
             <radialGradient id="ws-grad-secondary" cx="40%" cy="35%">
-              <stop offset="0%" stopColor={CHART.secondary} stopOpacity="0.32" />
-              <stop offset="100%" stopColor={CHART.secondary} stopOpacity="0.14" />
+              <stop
+                offset="0%"
+                stopColor={CHART.secondary}
+                stopOpacity="0.32"
+              />
+              <stop
+                offset="100%"
+                stopColor={CHART.secondary}
+                stopOpacity="0.14"
+              />
             </radialGradient>
           </defs>
 
@@ -407,11 +428,9 @@ export default function WhiteSpaceAnalysis({
                   cx={p.x}
                   cy={p.y}
                   r={p.radius}
-                  fill={
-                    p.isWhiteSpace
-                      ? "url(#ws-grad-accent)"
-                      : "url(#ws-grad-secondary)"
-                  }
+                  fill={p.isWhiteSpace
+                    ? "url(#ws-grad-accent)"
+                    : "url(#ws-grad-secondary)"}
                   stroke={p.isWhiteSpace ? CHART.accent : CHART.secondary}
                   strokeWidth={isH ? 2.5 : 1.8}
                   filter="url(#ws-shadow)"
@@ -463,7 +482,8 @@ export default function WhiteSpaceAnalysis({
               </p>
               <div className="space-y-0.5 text-lacuna-text-secondary">
                 <p>
-                  <span className="text-lacuna-text-muted">Companies:</span>{" "}
+                  <span className="text-lacuna-text-muted">Companies:</span>
+                  {" "}
                   {hoveredPoint.companyCount}
                 </p>
                 <p>
@@ -471,11 +491,13 @@ export default function WhiteSpaceAnalysis({
                   {hoveredPoint.dealCount}
                 </p>
                 <p>
-                  <span className="text-lacuna-text-muted">Avg valuation:</span>{" "}
+                  <span className="text-lacuna-text-muted">Avg valuation:</span>
+                  {" "}
                   {fmtVal(hoveredPoint.avgValuation)}
                 </p>
                 <p>
-                  <span className="text-lacuna-text-muted">Market share:</span>{" "}
+                  <span className="text-lacuna-text-muted">Market share:</span>
+                  {" "}
                   {(hoveredPoint.companyShare * 100).toFixed(1)}%
                 </p>
               </div>
@@ -494,26 +516,29 @@ export default function WhiteSpaceAnalysis({
         <h4 className="text-sm font-semibold uppercase tracking-wider text-lacuna-text-primary">
           White-space sectors
         </h4>
-        {whiteSpaceSectors.length > 0 ? (
-          whiteSpaceSectors.map((p) => (
-            <div
-              key={p.sector}
-              className="rounded-lg border border-lacuna-border-subtle bg-lacuna-surface-muted p-3 text-sm text-lacuna-text-secondary"
-            >
-              <span className="font-semibold text-lacuna-text-primary">
-                {p.sector}
-              </span>
-              {": "}
-              {p.companyCount} companies tracked, {p.dealCount} acquisitions
-              &mdash; underrepresented in M&amp;A relative to market presence.
+        {whiteSpaceSectors.length > 0
+          ? (
+            whiteSpaceSectors.map((p) => (
+              <div
+                key={p.sector}
+                className="rounded-lg border border-lacuna-border-subtle bg-lacuna-surface-muted p-3 text-sm text-lacuna-text-secondary"
+              >
+                <span className="font-semibold text-lacuna-text-primary">
+                  {p.sector}
+                </span>
+                {": "}
+                {p.companyCount} companies tracked, {p.dealCount}{" "}
+                acquisitions &mdash; underrepresented in M&amp;A relative to
+                market presence.
+              </div>
+            ))
+          )
+          : (
+            <div className="rounded-lg border border-lacuna-border-subtle bg-lacuna-surface-muted p-3 text-sm text-lacuna-text-muted">
+              No sector currently screens as white space on the verified dataset
+              mix.
             </div>
-          ))
-        ) : (
-          <div className="rounded-lg border border-lacuna-border-subtle bg-lacuna-surface-muted p-3 text-sm text-lacuna-text-muted">
-            No sector currently screens as white space on the verified dataset
-            mix.
-          </div>
-        )}
+          )}
         {unplottedSectors.length > 0 && (
           <p className="text-xs text-lacuna-text-muted">
             Not plotted (single tracked company, no recorded deals):{" "}
