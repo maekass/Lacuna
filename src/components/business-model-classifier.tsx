@@ -18,6 +18,7 @@ import {
   ValuationOutput,
   ValuationPremiumCalculator,
 } from "@/data/valuation-premium-calculator";
+import { resolveGrowthRate } from "@/lib/data/growthRateProvider";
 
 interface BusinessModelClassifierProps {
   companyProfile?: CompanyReimbursementProfile;
@@ -90,11 +91,13 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
       estimatedReimbursementPct = 5;
     }
 
+    const growthRate = resolveGrowthRate({ sector: selectedSector }).growthRate;
+
     const valuationImpact = calculator.calculateValuation({
       annualRevenue: revenue,
       reimbursementStatus,
       sector: selectedSector,
-      growthRate: 35, // 🔴 ILLUSTRATIVE default — replace with company-specific CAGR when available
+      growthRate,
       profitability: "break-even",
       acquirerType,
     });

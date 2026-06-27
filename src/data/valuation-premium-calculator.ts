@@ -10,6 +10,7 @@ import {
   ReimbursementStatus,
   ValuationImpact,
 } from "./cms-reimbursement-connector";
+import { resolveGrowthRate } from "@/lib/data/growthRateProvider";
 
 export interface ValuationInput {
   annualRevenue: number;
@@ -300,12 +301,14 @@ export class ValuationPremiumCalculator {
   /**
    * Compare reimbursement-rich vs consumer-only valuations
    */
-  compareBusinessModels(annualRevenue: number, sector: string): {
+  compareBusinessModels(annualRevenue: number, sector: string, companyId?: string): {
     insuranceDriven: ValuationOutput;
     consumerOnly: ValuationOutput;
     premium: number;
     premiumPercent: number;
   } {
+    const growthRate = resolveGrowthRate({ sector, companyId }).growthRate;
+
     const insuranceInput: ValuationInput = {
       annualRevenue,
       reimbursementStatus: {
@@ -317,7 +320,7 @@ export class ValuationPremiumCalculator {
         estimatedAnnualReimbursement: annualRevenue * 0.7,
       },
       sector,
-      growthRate: 35, // 🔴 ILLUSTRATIVE default — replace with company-specific CAGR when available
+      growthRate,
       profitability: "break-even", // 🔴 ILLUSTRATIVE default
       acquirerType: "healthcare",
     };
@@ -333,7 +336,7 @@ export class ValuationPremiumCalculator {
         estimatedAnnualReimbursement: 0,
       },
       sector,
-      growthRate: 35, // 🔴 ILLUSTRATIVE default — replace with company-specific CAGR when available
+      growthRate,
       profitability: "break-even", // 🔴 ILLUSTRATIVE default
       acquirerType: "healthcare",
     };

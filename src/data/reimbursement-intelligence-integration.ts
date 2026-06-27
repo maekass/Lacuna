@@ -14,6 +14,7 @@ import {
 } from "./cms-reimbursement-connector";
 import { CPTCodeMatcher } from "./cpt-code-matcher";
 import { ValuationPremiumCalculator } from "./valuation-premium-calculator";
+import { resolveGrowthRate } from "@/lib/data/growthRateProvider";
 
 // Lacuna company type (from existing dataset)
 interface LacunaCompany {
@@ -118,12 +119,17 @@ export class ReimbursementIntelligenceIntegration {
       ),
     };
 
+    const growthRate = resolveGrowthRate({
+      companyId: company.id,
+      sector: company.sector,
+    }).growthRate;
+
     // Calculate valuation
     const valuation = this.calculator.calculateValuation({
       annualRevenue: company.revenue ?? 0,
       reimbursementStatus,
       sector: company.sector,
-      growthRate: 35, // 🔴 ILLUSTRATIVE default — replace with company-specific CAGR when available
+      growthRate,
       profitability: "break-even", // 🔴 ILLUSTRATIVE default — replace with company-specific financials
       acquirerType: "healthcare",
     });
