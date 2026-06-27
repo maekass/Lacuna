@@ -20,7 +20,7 @@ describe("buildVerifiedDerivedData", () => {
 
     expect(nodes.some((n) => n.id === "c1" && n.type === "target")).toBe(true);
     expect(
-      nodes.some((n) => n.id === "acquirer-teladoc" && n.type === "acquirer"),
+      nodes.some((n) => n.id === "acquirer-ro" && n.type === "acquirer"),
     ).toBe(true);
   });
 

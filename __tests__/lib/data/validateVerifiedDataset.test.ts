@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
+import verifiedJson from "@/data/dataset.verified.json";
+import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import { minimalVerifiedDataset } from "../../helpers/fixtures";
 import { validateVerifiedDataset } from "@/lib/data/validateVerifiedDataset";
+
+const full = verifiedJson as VerifiedDataset;
 
 describe("validateVerifiedDataset", () => {
   it("passes for minimal verified JSON slice (success)", () => {
@@ -73,7 +77,14 @@ describe("validateVerifiedDataset", () => {
   });
 
   it("warns on corporate acquirer id (warning)", () => {
-    const report = validateVerifiedDataset(minimalVerifiedDataset);
+    const corporate = structuredClone(minimalVerifiedDataset);
+    const corporateAcquirer = full.companies.find((c) => c.id === "c2");
+    if (!corporateAcquirer) {
+      throw new Error("fixture c2 missing from verified dataset");
+    }
+    corporate.companies.push(corporateAcquirer);
+    corporate.acquisitions[0].acquirerId = "c2";
+    const report = validateVerifiedDataset(corporate);
     expect(report.warnings.some((w) => w.code === "deal.corporateAcquirer"))
       .toBe(true);
   });

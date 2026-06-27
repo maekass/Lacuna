@@ -26,7 +26,7 @@ describe("verifiedDatasetAdapters", () => {
   it("getVerifiedCompetitiveAnalysisData builds acquirer graph inputs (success)", () => {
     const { acquirers, companies, acquisitions } =
       getVerifiedCompetitiveAnalysisData(derived);
-    expect(acquirers.some((a) => a.id === "c2")).toBe(true);
+    expect(acquirers.some((a) => a.id === "acquirer-ro")).toBe(true);
     expect(companies.some((c) => c.id === "c1")).toBe(true);
     expect(acquisitions).toHaveLength(1);
   });
@@ -34,7 +34,7 @@ describe("verifiedDatasetAdapters", () => {
   it("getVerifiedNetworkGraph returns nodes and edges (success)", () => {
     const { nodes, edges } = getVerifiedNetworkGraph(derived);
     expect(nodes.length).toBeGreaterThan(0);
-    expect(edges[0].source).toBe("c2");
+    expect(edges[0].source).toBe("acquirer-ro");
     expect(edges[0].target).toBe("c1");
   });
 
