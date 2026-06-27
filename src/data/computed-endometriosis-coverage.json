@@ -3,11 +3,11 @@
   "therapeuticAreaId": "endometriosis",
   "generatedAt": "2026-06-27",
   "crunchbaseSearchTotal": 409,
-  "parsedFromPaste": 48,
-  "excludedNonForProfit": 3,
-  "excludedClinicalServices": 2,
-  "excludedNoFundingStatus": 5,
-  "includedCount": 38,
+  "parsedFromPaste": 188,
+  "excludedNonForProfit": 5,
+  "excludedClinicalServices": 88,
+  "excludedNoFundingStatus": 55,
+  "includedCount": 40,
   "verifiedDatasetOverlap": 1,
   "companies": [
     {
@@ -566,6 +566,40 @@
         "BioSpace - $4.4M initial funding (2007)",
         "Crunchbase - crunchbase.com/organization/meditrina-pharmaceuticals-inc",
         "Crunchbase Pro search paste (rank 1306906)"
+      ]
+    },
+    {
+      "id": "femxx-health",
+      "name": "FemXX Health",
+      "description": "FemXX Health helps women with endometriosis find insights into treatments via a technology platform.",
+      "category": "digital_health",
+      "crunchbaseRank": 1947229,
+      "fundingStatus": "Closed",
+      "totalFundingM": 0.1,
+      "lastFundingType": "Seed",
+      "operatingStatus": "Closed",
+      "inVerifiedDataset": false,
+      "sources": [
+        "CB Insights - $100K seed from Entrepreneur First",
+        "LinkedIn - FemXX Health closure announcement, 2023",
+        "Crunchbase Pro search paste (rank 1947229)"
+      ]
+    },
+    {
+      "id": "endodiagnosis-inc",
+      "name": "ENDODIAGNOSIS INC.",
+      "description": "EndoDiagnosis provides non-invasive ENDOSURE diagnostic testing for endometriosis.",
+      "category": "diagnostics",
+      "crunchbaseRank": 2797679,
+      "fundingStatus": "Early Stage Venture",
+      "totalFundingM": 0.15,
+      "lastFundingType": "Debt Financing",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "EndoDiagnosis / ENDOSURE - endodiagnosis.com",
+        "LinkedIn EndoSure Inc. - $150K debt financing, 2025",
+        "Crunchbase Pro search paste (rank 2797679)"
       ]
     }
   ],
