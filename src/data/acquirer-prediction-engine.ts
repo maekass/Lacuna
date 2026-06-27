@@ -8,7 +8,6 @@
  * - Financial capacity
  */
 
-
 // Types
 export interface CompanyProfile {
   id: string;
@@ -561,7 +560,7 @@ export function analyzeCompetitiveDynamics(
 
   // Filter verified comparables to this sector — no fabricated deals
   const sectorComparables = verifiedComparables.filter((d) =>
-    areSectorsRelated(d.sector, company.sector),
+    areSectorsRelated(d.sector, company.sector)
   );
 
   return {
@@ -606,7 +605,6 @@ function estimateTimeline(
 
   return { months: baseMonths, triggers };
 }
-
 
 // Helper functions
 function areSectorsRelated(sector1: string, sector2: string): boolean {

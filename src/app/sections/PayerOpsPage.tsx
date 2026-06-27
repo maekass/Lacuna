@@ -107,7 +107,8 @@ const workQueues = [
     automation: 43,
     risk: "Medium",
     impact: "$680K",
-    action: "Detect missing referrals and attach benefit-aware next-best action",
+    action:
+      "Detect missing referrals and attach benefit-aware next-best action",
   },
   {
     name: "Specialty pharmacy exceptions",
@@ -127,9 +128,24 @@ const operatingModel = [
 ];
 
 const roadmap = [
-  { phase: "0-30 days", title: "Discovery", detail: "Map denial reason codes, pended auth categories, appeal overturns, and SLA hotspots." },
-  { phase: "31-60 days", title: "Pilot", detail: "Launch two queues with human review, audit sampling, and provider office feedback loops." },
-  { phase: "61-90 days", title: "Scale", detail: "Expand rules library, automate low-risk approvals, and report savings by line of business." },
+  {
+    phase: "0-30 days",
+    title: "Discovery",
+    detail:
+      "Map denial reason codes, pended auth categories, appeal overturns, and SLA hotspots.",
+  },
+  {
+    phase: "31-60 days",
+    title: "Pilot",
+    detail:
+      "Launch two queues with human review, audit sampling, and provider office feedback loops.",
+  },
+  {
+    phase: "61-90 days",
+    title: "Scale",
+    detail:
+      "Expand rules library, automate low-risk approvals, and report savings by line of business.",
+  },
 ];
 
 const progressWidths: Record<number, string> = {
@@ -148,7 +164,8 @@ export default function PayerOpsPage() {
   const selected = segments[segment];
   const modeled = useMemo(() => {
     const avoidableDenials = Math.round(
-      selected.claims * (selected.denialRate / 100) * (selected.avoidableRate / 100),
+      selected.claims * (selected.denialRate / 100) *
+        (selected.avoidableRate / 100),
     );
     const monthlySavings = Math.round(
       avoidableDenials * selected.adminCost * 100,
@@ -169,11 +186,24 @@ export default function PayerOpsPage() {
               PayerOps Navigator for reducing avoidable administrative waste
             </h1>
             <p className="mt-4 max-w-3xl text-lg leading-relaxed text-lacuna-blue">
-              A portfolio case study designed for payer operations roles. This concept shows how a health plan could combine workflow design, operational analytics, and governance controls to reduce prior-authorization and claims-administration friction without weakening oversight.
+              A portfolio case study designed for payer operations roles. This
+              concept shows how a health plan could combine workflow design,
+              operational analytics, and governance controls to reduce
+              prior-authorization and claims-administration friction without
+              weakening oversight.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              {["Prior auth", "Claims ops", "Provider abrasion", "Appeals", "Rules governance"].map((item) => (
-                <span key={item} className="rounded-full border border-lacuna-lavender/40 bg-lacuna-lavender/15 px-3 py-1 text-sm font-medium text-lacuna-plum">
+              {[
+                "Prior auth",
+                "Claims ops",
+                "Provider abrasion",
+                "Appeals",
+                "Rules governance",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-lacuna-lavender/40 bg-lacuna-lavender/15 px-3 py-1 text-sm font-medium text-lacuna-plum"
+                >
                   {item}
                 </span>
               ))}
@@ -183,15 +213,22 @@ export default function PayerOpsPage() {
             <div className="flex items-center gap-2 text-sm font-semibold text-lacuna-pink">
               <Sparkles className="h-4 w-4" /> Role-fit signal
             </div>
-            <p className="mt-3 text-2xl font-bold">Built to demonstrate payer operations fluency, product thinking, analytics, and implementation judgment.</p>
+            <p className="mt-3 text-2xl font-bold">
+              Built to demonstrate payer operations fluency, product thinking,
+              analytics, and implementation judgment.
+            </p>
             <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
               <div className="rounded-xl bg-white/10 p-3">
                 <div className="text-2xl font-bold">18%</div>
-                <div className="text-white/75">modeled cycle-time reduction</div>
+                <div className="text-white/75">
+                  modeled cycle-time reduction
+                </div>
               </div>
               <div className="rounded-xl bg-white/10 p-3">
                 <div className="text-2xl font-bold">$5.1M</div>
-                <div className="text-white/75">illustrative annual admin opportunity</div>
+                <div className="text-white/75">
+                  illustrative annual admin opportunity
+                </div>
               </div>
             </div>
           </div>
@@ -199,40 +236,74 @@ export default function PayerOpsPage() {
       </header>
 
       <MotionSection id="problem" className={SECTION}>
-        <SectionHeader title="The operational problem" description="A meaningful share of payer administrative cost is created by preventable defects: incomplete documentation, benefit ambiguity, coding mismatches, manual routing, and inconsistent policy interpretation." />
+        <SectionHeader
+          title="The operational problem"
+          description="A meaningful share of payer administrative cost is created by preventable defects: incomplete documentation, benefit ambiguity, coding mismatches, manual routing, and inconsistent policy interpretation."
+        />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
           {painPoints.map(({ title, value, detail, icon: Icon }) => (
-            <div key={title} className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm">
+            <div
+              key={title}
+              className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
+            >
               <Icon className="h-6 w-6 text-lacuna-blue" />
-              <div className="mt-4 text-3xl font-bold text-lacuna-plum">{value}</div>
+              <div className="mt-4 text-3xl font-bold text-lacuna-plum">
+                {value}
+              </div>
               <h3 className="mt-2 font-semibold text-lacuna-plum">{title}</h3>
-              <p className="mt-1 text-sm leading-relaxed text-lacuna-blue">{detail}</p>
+              <p className="mt-1 text-sm leading-relaxed text-lacuna-blue">
+                {detail}
+              </p>
             </div>
           ))}
         </div>
       </MotionSection>
 
       <MotionSection id="simulator" delay={0.05} className={SECTION}>
-        <SectionHeader title="Opportunity simulator" description="A lightweight business-case model estimating avoidable denials, administrative savings, and review hours that could be redirected to higher-value work." />
+        <SectionHeader
+          title="Opportunity simulator"
+          description="A lightweight business-case model estimating avoidable denials, administrative savings, and review hours that could be redirected to higher-value work."
+        />
         <div className="rounded-3xl border border-lacuna-lavender/40 bg-white p-6 shadow-sm">
           <div className="flex flex-wrap gap-2">
             {(Object.keys(segments) as SegmentKey[]).map((key) => (
-              <button key={key} type="button" onClick={() => setSegment(key)} className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${segment === key ? "bg-lacuna-plum text-white" : "bg-lacuna-lavender/15 text-lacuna-plum hover:bg-lacuna-lavender/25"}`}>
+              <button
+                key={key}
+                type="button"
+                onClick={() => setSegment(key)}
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+                  segment === key
+                    ? "bg-lacuna-plum text-white"
+                    : "bg-lacuna-lavender/15 text-lacuna-plum hover:bg-lacuna-lavender/25"
+                }`}
+              >
                 {segments[key].label}
               </button>
             ))}
           </div>
           <div className="mt-6 grid gap-4 lg:grid-cols-4">
             <Metric label="Covered lives" value={selected.lives} />
-            <Metric label="Monthly avoidable denials" value={formatNumber(modeled.avoidableDenials)} />
-            <Metric label="Monthly admin savings" value={`$${formatNumber(modeled.monthlySavings)}`} />
-            <Metric label="Auth review hours freed" value={formatNumber(modeled.authHours)} />
+            <Metric
+              label="Monthly avoidable denials"
+              value={formatNumber(modeled.avoidableDenials)}
+            />
+            <Metric
+              label="Monthly admin savings"
+              value={`$${formatNumber(modeled.monthlySavings)}`}
+            />
+            <Metric
+              label="Auth review hours freed"
+              value={formatNumber(modeled.authHours)}
+            />
           </div>
         </div>
       </MotionSection>
 
       <MotionSection id="triage" delay={0.1} className={SECTION}>
-        <SectionHeader title="Operational triage design" description="The project demonstrates how a payer operations team could prioritize work by preventability, risk, automation readiness, and financial impact." />
+        <SectionHeader
+          title="Operational triage design"
+          description="The project demonstrates how a payer operations team could prioritize work by preventability, risk, automation readiness, and financial impact."
+        />
         <div className="overflow-hidden rounded-3xl border border-lacuna-lavender/40 bg-white shadow-sm">
           <div className="grid grid-cols-12 gap-3 border-b border-lacuna-lavender/30 bg-lacuna-lavender/10 p-4 text-xs font-semibold uppercase tracking-wide text-lacuna-blue">
             <span className="col-span-4">Queue</span>
@@ -242,31 +313,58 @@ export default function PayerOpsPage() {
             <span className="col-span-2">Impact</span>
           </div>
           {workQueues.map((queue) => (
-            <div key={queue.name} className="grid grid-cols-12 gap-3 border-b border-lacuna-lavender/20 p-4 last:border-b-0">
+            <div
+              key={queue.name}
+              className="grid grid-cols-12 gap-3 border-b border-lacuna-lavender/20 p-4 last:border-b-0"
+            >
               <div className="col-span-12 lg:col-span-4">
-                <div className="font-semibold text-lacuna-plum">{queue.name}</div>
-                <div className="mt-1 text-sm text-lacuna-blue">{queue.action}</div>
+                <div className="font-semibold text-lacuna-plum">
+                  {queue.name}
+                </div>
+                <div className="mt-1 text-sm text-lacuna-blue">
+                  {queue.action}
+                </div>
               </div>
-              <div className="col-span-3 lg:col-span-2 text-lacuna-plum">{formatNumber(queue.volume)}</div>
+              <div className="col-span-3 lg:col-span-2 text-lacuna-plum">
+                {formatNumber(queue.volume)}
+              </div>
               <div className="col-span-3 lg:col-span-2">
                 <div className="h-2 rounded-full bg-lacuna-lavender/20">
-                  <div className={`h-2 rounded-full bg-lacuna-blue ${progressWidths[queue.automation]}`} />
+                  <div
+                    className={`h-2 rounded-full bg-lacuna-blue ${
+                      progressWidths[queue.automation]
+                    }`}
+                  />
                 </div>
-                <div className="mt-1 text-xs text-lacuna-blue">{queue.automation}% ready</div>
+                <div className="mt-1 text-xs text-lacuna-blue">
+                  {queue.automation}% ready
+                </div>
               </div>
-              <div className="col-span-3 lg:col-span-2 text-lacuna-plum">{queue.risk}</div>
-              <div className="col-span-3 lg:col-span-2 font-semibold text-lacuna-plum">{queue.impact}</div>
+              <div className="col-span-3 lg:col-span-2 text-lacuna-plum">
+                {queue.risk}
+              </div>
+              <div className="col-span-3 lg:col-span-2 font-semibold text-lacuna-plum">
+                {queue.impact}
+              </div>
             </div>
           ))}
         </div>
       </MotionSection>
 
       <MotionSection id="solution" delay={0.15} className={SECTION}>
-        <SectionHeader title="Solution architecture" description="The concept is intentionally framed as a responsible workflow layer, not a black-box denial engine." />
+        <SectionHeader
+          title="Solution architecture"
+          description="The concept is intentionally framed as a responsible workflow layer, not a black-box denial engine."
+        />
         <div className="grid gap-4 lg:grid-cols-2">
           {operatingModel.map((item, index) => (
-            <div key={item} className="flex gap-4 rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-lacuna-pink/30 font-bold text-lacuna-plum">{index + 1}</div>
+            <div
+              key={item}
+              className="flex gap-4 rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
+            >
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-lacuna-pink/30 font-bold text-lacuna-plum">
+                {index + 1}
+              </div>
               <p className="leading-relaxed text-lacuna-blue">{item}</p>
             </div>
           ))}
@@ -274,22 +372,49 @@ export default function PayerOpsPage() {
       </MotionSection>
 
       <MotionSection id="governance" delay={0.2} className={SECTION}>
-        <SectionHeader title="Governance and safeguards" description="The strongest portfolio signal is showing where automation should stop." />
+        <SectionHeader
+          title="Governance and safeguards"
+          description="The strongest portfolio signal is showing where automation should stop."
+        />
         <div className="grid gap-4 md:grid-cols-3">
-          <Capability icon={ShieldCheck} title="Audit trail" text="Every recommendation stores policy version, source fields, confidence, reviewer action, and override reason." />
-          <Capability icon={Stethoscope} title="Clinician-in-loop" text="High-risk medical necessity, specialty pharmacy, and vulnerable-population cases stay in expert review." />
-          <Capability icon={AlertTriangle} title="Bias monitoring" text="Dashboards compare overturn rates, processing time, and missing-doc burden across geography and provider type." />
+          <Capability
+            icon={ShieldCheck}
+            title="Audit trail"
+            text="Every recommendation stores policy version, source fields, confidence, reviewer action, and override reason."
+          />
+          <Capability
+            icon={Stethoscope}
+            title="Clinician-in-loop"
+            text="High-risk medical necessity, specialty pharmacy, and vulnerable-population cases stay in expert review."
+          />
+          <Capability
+            icon={AlertTriangle}
+            title="Bias monitoring"
+            text="Dashboards compare overturn rates, processing time, and missing-doc burden across geography and provider type."
+          />
         </div>
       </MotionSection>
 
       <MotionSection id="roadmap" delay={0.25} className={SECTION}>
-        <SectionHeader title="90-day implementation roadmap" description="A realistic rollout sequence for a payer administration or operations team." />
+        <SectionHeader
+          title="90-day implementation roadmap"
+          description="A realistic rollout sequence for a payer administration or operations team."
+        />
         <div className="grid gap-4 md:grid-cols-3">
           {roadmap.map((item) => (
-            <div key={item.phase} className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm">
-              <div className="text-sm font-semibold text-lacuna-blue">{item.phase}</div>
-              <h3 className="mt-2 text-xl font-bold text-lacuna-plum">{item.title}</h3>
-              <p className="mt-2 leading-relaxed text-lacuna-blue">{item.detail}</p>
+            <div
+              key={item.phase}
+              className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
+            >
+              <div className="text-sm font-semibold text-lacuna-blue">
+                {item.phase}
+              </div>
+              <h3 className="mt-2 text-xl font-bold text-lacuna-plum">
+                {item.title}
+              </h3>
+              <p className="mt-2 leading-relaxed text-lacuna-blue">
+                {item.detail}
+              </p>
             </div>
           ))}
         </div>
@@ -307,7 +432,13 @@ function Metric({ label, value }: { label: string; value: string }) {
   );
 }
 
-function Capability({ icon: Icon, title, text }: { icon: typeof CheckCircle2; title: string; text: string }) {
+function Capability(
+  { icon: Icon, title, text }: {
+    icon: typeof CheckCircle2;
+    title: string;
+    text: string;
+  },
+) {
   return (
     <div className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm">
       <Icon className="h-6 w-6 text-lacuna-blue" />

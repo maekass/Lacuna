@@ -20,7 +20,7 @@
  * Usage: npx tsx scripts/ingest-crunchbase-text.ts
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from "fs";
+import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 
 const ROOT = resolve(__dirname, "..");
@@ -88,7 +88,7 @@ function levenshtein(a: string, b: string): number {
         matrix[i][j] = Math.min(
           matrix[i - 1][j - 1] + 1,
           matrix[i][j - 1] + 1,
-          matrix[i - 1][j] + 1
+          matrix[i - 1][j] + 1,
         );
       }
     }
@@ -111,7 +111,7 @@ function levenshtein(a: string, b: string): number {
  * Entries are separated by a blank line before the next "X Logo" line.
  */
 function parseCrunchbaseText(text: string): CrunchbaseEntry[] {
-  const lines = text.split("\n").map(l => l.trim());
+  const lines = text.split("\n").map((l) => l.trim());
   const entries: CrunchbaseEntry[] = [];
 
   // Split into blocks by "X Logo" lines
@@ -129,23 +129,66 @@ function parseCrunchbaseText(text: string): CrunchbaseEntry[] {
   if (currentBlock.length > 0) blocks.push(currentBlock);
 
   const INDUSTRY_KEYWORDS = [
-    "Health Care", "Biotechnology", "Medical", "Pharmaceutical", "Wellness",
-    "Fertility", "Women's", "Artificial Intelligence", "Software", "SaaS",
-    "Diagnostics", "Medical Device", "Telehealth", "mHealth", "Genetics",
-    "Nutrition", "Fitness", "E-Commerce", "Retail", "Life Science",
-    "Financial Services", "Venture Capital", "Clinical Trials", "Oncology",
-    "Biopharma", "Analytics", "Hardware", "Internet of Things", "Wearables",
-    "Consumer Electronics", "Consumer Goods", "Family", "Lifestyle",
-    "Personal Health", "Information Technology", "Manufacturing",
-    "Electronic Health Record", "Enterprise Software", "Property Management",
-    "PropTech", "Real Estate", "Machine Learning", "Generative AI",
-    "Business Intelligence", "Mobile", "Apps", "Internet", "Social Network",
-    "Online Portals", "Information Services", "Hospital", "Dietary Supplements",
-    "Beauty", "Technical Support", "Therapeutics", "Health Diagnostics",
+    "Health Care",
+    "Biotechnology",
+    "Medical",
+    "Pharmaceutical",
+    "Wellness",
+    "Fertility",
+    "Women's",
+    "Artificial Intelligence",
+    "Software",
+    "SaaS",
+    "Diagnostics",
+    "Medical Device",
+    "Telehealth",
+    "mHealth",
+    "Genetics",
+    "Nutrition",
+    "Fitness",
+    "E-Commerce",
+    "Retail",
+    "Life Science",
+    "Financial Services",
+    "Venture Capital",
+    "Clinical Trials",
+    "Oncology",
+    "Biopharma",
+    "Analytics",
+    "Hardware",
+    "Internet of Things",
+    "Wearables",
+    "Consumer Electronics",
+    "Consumer Goods",
+    "Family",
+    "Lifestyle",
+    "Personal Health",
+    "Information Technology",
+    "Manufacturing",
+    "Electronic Health Record",
+    "Enterprise Software",
+    "Property Management",
+    "PropTech",
+    "Real Estate",
+    "Machine Learning",
+    "Generative AI",
+    "Business Intelligence",
+    "Mobile",
+    "Apps",
+    "Internet",
+    "Social Network",
+    "Online Portals",
+    "Information Services",
+    "Hospital",
+    "Dietary Supplements",
+    "Beauty",
+    "Technical Support",
+    "Therapeutics",
+    "Health Diagnostics",
   ];
 
   for (const block of blocks) {
-    const nonEmpty = block.filter(l => l.length > 0);
+    const nonEmpty = block.filter((l) => l.length > 0);
     if (nonEmpty.length < 3) continue;
 
     // First line: "CompanyName Logo" — extract name
@@ -159,11 +202,16 @@ function parseCrunchbaseText(text: string): CrunchbaseEntry[] {
     let industries: string[] = [];
     let industriesIdx = -1;
     for (let i = idx; i < nonEmpty.length; i++) {
-      const parts = nonEmpty[i].split(",").map(p => p.trim());
-      const matchCount = parts.filter(p =>
-        INDUSTRY_KEYWORDS.some(k => p.toLowerCase().includes(k.toLowerCase()))
+      const parts = nonEmpty[i].split(",").map((p) => p.trim());
+      const matchCount = parts.filter((p) =>
+        INDUSTRY_KEYWORDS.some((k) =>
+          p.toLowerCase().includes(k.toLowerCase())
+        )
       ).length;
-      if (matchCount >= 2 || (parts.length >= 2 && matchCount >= 1 && parts.length <= 8)) {
+      if (
+        matchCount >= 2 ||
+        (parts.length >= 2 && matchCount >= 1 && parts.length <= 8)
+      ) {
         industries = parts;
         industriesIdx = i;
         break;
@@ -192,7 +240,14 @@ function parseCrunchbaseText(text: string): CrunchbaseEntry[] {
     }
 
     if (name) {
-      entries.push({ name, description, industries, headquarters, tagline, rank });
+      entries.push({
+        name,
+        description,
+        industries,
+        headquarters,
+        tagline,
+        rank,
+      });
     }
   }
 
@@ -213,7 +268,9 @@ function main() {
   const entries = parseCrunchbaseText(text);
   console.log(`📋 Parsed ${entries.length} Crunchbase entries from text\n`);
 
-  const dataset = JSON.parse(readFileSync(resolve(SRC_DATA_DIR, "dataset.verified.json"), "utf-8"));
+  const dataset = JSON.parse(
+    readFileSync(resolve(SRC_DATA_DIR, "dataset.verified.json"), "utf-8"),
+  );
   const companies: Company[] = dataset.companies || [];
 
   const auditTrail: CrunchbaseTextAuditEntry[] = [];
@@ -226,22 +283,28 @@ function main() {
     let matchMethod = "none";
 
     const exactNorm = normalizeName(entry.name);
-    matched = companies.find(c => normalizeName(c.name) === exactNorm);
+    matched = companies.find((c) => normalizeName(c.name) === exactNorm);
     if (matched) matchMethod = "exact-normalized";
 
     if (!matched) {
-      matched = companies.find(c => fuzzyMatch(entry.name, c.name));
+      matched = companies.find((c) => fuzzyMatch(entry.name, c.name));
       if (matched) matchMethod = "fuzzy";
     }
 
     if (!matched) {
       unmatched.push(entry.name);
-      auditTrail.push({ name: entry.name, matched: false, matchMethod: "no-match" });
+      auditTrail.push({
+        name: entry.name,
+        matched: false,
+        matchMethod: "no-match",
+      });
       continue;
     }
 
     const updated: string[] = [];
-    const source = `Crunchbase Pro (crunchbase.com/organization/${normalizeName(entry.name)}, accessed ${new Date().toISOString().split("T")[0]})`;
+    const source = `Crunchbase Pro (crunchbase.com/organization/${
+      normalizeName(entry.name)
+    }, accessed ${new Date().toISOString().split("T")[0]})`;
 
     if (entry.description && !matched.description) {
       matched.description = entry.description;
@@ -270,14 +333,16 @@ function main() {
 
     // Add Crunchbase source citation
     const existingSources: string[] = matched.sources || [];
-    if (!existingSources.some(s => s.toLowerCase().includes("crunchbase"))) {
+    if (!existingSources.some((s) => s.toLowerCase().includes("crunchbase"))) {
       matched.sources = [...existingSources, source];
       updated.push("sources");
     }
 
     if (updated.length > 0) {
       enriched++;
-      console.log(`  ✅ ${matched.name} (${matched.id}): +${updated.join(", ")}`);
+      console.log(
+        `  ✅ ${matched.name} (${matched.id}): +${updated.join(", ")}`,
+      );
     }
 
     auditTrail.push({
@@ -290,7 +355,10 @@ function main() {
     });
   }
 
-  writeFileSync(resolve(SRC_DATA_DIR, "dataset.verified.json"), JSON.stringify(dataset, null, 2));
+  writeFileSync(
+    resolve(SRC_DATA_DIR, "dataset.verified.json"),
+    JSON.stringify(dataset, null, 2),
+  );
 
   const auditOutput = {
     generatedAt: new Date().toISOString(),
@@ -303,14 +371,20 @@ function main() {
   };
   writeFileSync(
     resolve(SRC_DATA_DIR, "computed-crunchbase-enrichment.json"),
-    JSON.stringify(auditOutput, null, 2)
+    JSON.stringify(auditOutput, null, 2),
   );
 
-  console.log(`\n✅ Enriched ${enriched}/${entries.length} companies from Crunchbase paste`);
+  console.log(
+    `\n✅ Enriched ${enriched}/${entries.length} companies from Crunchbase paste`,
+  );
   if (unmatched.length > 0) {
-    console.log(`\n⚠️  ${unmatched.length} entries not matched to dataset companies:`);
-    unmatched.forEach(n => console.log(`   - ${n}`));
-    console.log("\n   These may be companies not in our dataset (expected for broad Crunchbase searches)");
+    console.log(
+      `\n⚠️  ${unmatched.length} entries not matched to dataset companies:`,
+    );
+    unmatched.forEach((n) => console.log(`   - ${n}`));
+    console.log(
+      "\n   These may be companies not in our dataset (expected for broad Crunchbase searches)",
+    );
   }
   console.log("\n   Updated src/data/dataset.verified.json");
   console.log("   Audit: src/data/computed-crunchbase-enrichment.json");

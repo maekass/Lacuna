@@ -21,7 +21,7 @@
  * Usage: npx tsx scripts/generate-crunchbase-urls.ts
  */
 
-import { writeFileSync, mkdirSync, readFileSync } from "fs";
+import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 
 const ROOT = resolve(__dirname, "..");
@@ -52,7 +52,10 @@ function main() {
 
   // Get D-grade companies from the data quality scores
   const scores = JSON.parse(
-    readFileSync(resolve(SRC_DATA_DIR, "computed-data-quality-scores.json"), "utf-8"),
+    readFileSync(
+      resolve(SRC_DATA_DIR, "computed-data-quality-scores.json"),
+      "utf-8",
+    ),
   ) as { companies: DataQualityScore[] };
   const dGradeIds = new Set(
     scores.companies
@@ -67,9 +70,11 @@ function main() {
   // Generate individual company profile URLs
   const companyUrls = dCompanies.map((c) => {
     // Crunchbase search URL for company name
-    const searchUrl = `https://www.crunchbase.com/textsearch?q=${encodeURIComponent(
-      c.name
-    )}&entities=organizations`;
+    const searchUrl = `https://www.crunchbase.com/textsearch?q=${
+      encodeURIComponent(
+        c.name,
+      )
+    }&entities=organizations`;
 
     // Direct organization URL (best guess slug)
     const slug = c.name
@@ -104,7 +109,7 @@ function main() {
   const advancedSearchUrl =
     "https://www.crunchbase.com/discover/principal.investors?q=" +
     encodeURIComponent(
-      '["women\'s health","maternal health","fertility","pelvic health","menopause"]'
+      '["women\'s health","maternal health","fertility","pelvic health","menopause"]',
     );
 
   // Write machine-readable JSON
@@ -126,7 +131,7 @@ function main() {
   };
   writeFileSync(
     resolve(DATA_DIR, "crunchbase-search-urls.json"),
-    JSON.stringify(jsonOutput, null, 2)
+    JSON.stringify(jsonOutput, null, 2),
   );
 
   // Write human-readable markdown guide
@@ -169,29 +174,37 @@ Generated: ${new Date().toISOString()}
 
 | # | ID | Company | Sector | Crunchbase Search |
 |---|-----|---------|--------|-------------------|
-${companyUrls
-  .map(
-    (c, i) =>
-      `| ${i + 1} | ${c.companyId} | ${c.companyName} | ${c.sector} | [Search](${c.searchUrl}) |`
-  )
-  .join("\n")}
+${
+    companyUrls
+      .map(
+        (c, i) =>
+          `| ${
+            i + 1
+          } | ${c.companyId} | ${c.companyName} | ${c.sector} | [Search](${c.searchUrl}) |`,
+      )
+      .join("\n")
+  }
 
 ---
 
 ## By Sector (for batch export)
 
-${Array.from(bySector.entries())
-  .map(([sector, entries]) => {
-    return `### ${sector} (${entries.length} companies)
+${
+    Array.from(bySector.entries())
+      .map(([sector, entries]) => {
+        return `### ${sector} (${entries.length} companies)
 
-${entries
-  .map(
-    (e) =>
-      `- **${e.companyName}** (${e.companyId}): [Search](${e.searchUrl}) | [Profile](${e.profileUrl})`
-  )
-  .join("\n")}`;
-  })
-  .join("\n\n")}
+${
+          entries
+            .map(
+              (e) =>
+                `- **${e.companyName}** (${e.companyId}): [Search](${e.searchUrl}) | [Profile](${e.profileUrl})`,
+            )
+            .join("\n")
+        }`;
+      })
+      .join("\n\n")
+  }
 
 ---
 
@@ -210,7 +223,9 @@ Save files to: \`data/crunchbase-exports/\`
 
   writeFileSync(resolve(DATA_DIR, "crunchbase-search-urls.md"), md);
 
-  console.log(`✅ Generated Crunchbase search URLs for ${companyUrls.length} companies`);
+  console.log(
+    `✅ Generated Crunchbase search URLs for ${companyUrls.length} companies`,
+  );
   console.log("   📄 data/crunchbase-search-urls.md (human-readable guide)");
   console.log("   📄 data/crunchbase-search-urls.json (machine-readable)");
   console.log("\n   Next steps:");

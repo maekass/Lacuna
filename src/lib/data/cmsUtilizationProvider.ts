@@ -56,8 +56,14 @@ function loadCmsUtilizationIndex(): CmsUtilizationIndex {
 
   const bySectorKey = new Map<string, number>();
   for (const sector of raw.sectors ?? []) {
-    if (sector.avgServicesPerCode !== null && sector.avgServicesPerCode !== undefined) {
-      bySectorKey.set(normalizeSectorKey(sector.sector), sector.avgServicesPerCode);
+    if (
+      sector.avgServicesPerCode !== null &&
+      sector.avgServicesPerCode !== undefined
+    ) {
+      bySectorKey.set(
+        normalizeSectorKey(sector.sector),
+        sector.avgServicesPerCode,
+      );
     }
   }
 
@@ -93,18 +99,22 @@ export function getPortfolioMedianAnnualUsesPerCode(): number {
 }
 
 /** @deprecated Use resolveAnnualUsesPerCode — kept for importers expecting a scalar default. */
-export const DEFAULT_ANNUAL_USES_PER_CODE = getPortfolioMedianAnnualUsesPerCode();
+export const DEFAULT_ANNUAL_USES_PER_CODE =
+  getPortfolioMedianAnnualUsesPerCode();
 
 /**
  * Resolve annual Medicare service volume for a CPT code.
  */
-export function resolveAnnualUsesPerCode(cptCode: string): AnnualUsesResolution {
+export function resolveAnnualUsesPerCode(
+  cptCode: string,
+): AnnualUsesResolution {
   const cptUses = utilizationIndex.byCptCode.get(cptCode);
   if (cptUses !== undefined) {
     const row = (computedCmsUtilization as ComputedCmsUtilizationFile)
       .utilizationByCptCode
       .find((r) => r.cptCode === cptCode);
-    const hasDirect = row?.totalServices !== null && row?.totalServices !== undefined;
+    const hasDirect = row?.totalServices !== null &&
+      row?.totalServices !== undefined;
     return {
       annualUses: cptUses,
       source: hasDirect ? "cpt" : "sector",

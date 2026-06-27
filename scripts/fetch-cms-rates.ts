@@ -14,7 +14,7 @@
  * Usage: npx tsx scripts/fetch-cms-rates.ts
  */
 
-import { writeFileSync, readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 
 interface ComputedCmsUtilizationFile {
   sectors: Array<{
@@ -31,7 +31,10 @@ function loadSectorAnnualUses(): Map<string, number> {
 
   const map = new Map<string, number>();
   for (const sector of raw.sectors ?? []) {
-    if (sector.avgServicesPerCode !== null && sector.avgServicesPerCode !== undefined) {
+    if (
+      sector.avgServicesPerCode !== null &&
+      sector.avgServicesPerCode !== undefined
+    ) {
       map.set(sector.sector, sector.avgServicesPerCode);
     }
   }
@@ -88,11 +91,14 @@ const CMS_PFS_DATASET_ID = "78py-wnyg"; // CMS Physician Fee Schedule
 async function fetchCptRate(cptCode: string): Promise<CptCodeRate | null> {
   try {
     // CMS Data API — query PFS by HCPCS/CPT code
-    const url = `${CMS_API_BASE}/${CMS_PFS_DATASET_ID}/data?filter[HCPCS_CODE]=${cptCode}&limit=1`;
+    const url =
+      `${CMS_API_BASE}/${CMS_PFS_DATASET_ID}/data?filter[HCPCS_CODE]=${cptCode}&limit=1`;
     const response = await fetch(url);
 
     if (!response.ok) {
-      console.warn(`  ⚠️  CMS API returned ${response.status} for CPT ${cptCode}`);
+      console.warn(
+        `  ⚠️  CMS API returned ${response.status} for CPT ${cptCode}`,
+      );
       return null;
     }
 
@@ -106,7 +112,8 @@ async function fetchCptRate(cptCode: string): Promise<CptCodeRate | null> {
       rvuWork: parseFloat(row.RVU_WORK) || null,
       rvuPractice: parseFloat(row.RVU_PRAC) || null,
       rvuMalpractice: parseFloat(row.RVU_MAL) || null,
-      paymentRate: parseFloat(row.PAYMENT_RATE) || parseFloat(row.NATIONAL_PAYMENT) || null,
+      paymentRate: parseFloat(row.PAYMENT_RATE) ||
+        parseFloat(row.NATIONAL_PAYMENT) || null,
       source: "CMS Physician Fee Schedule API (data.cms.gov)",
       fetchedAt: new Date().toISOString(),
     };
@@ -132,20 +139,25 @@ async function main() {
       const rate = await fetchCptRate(code);
       if (rate) {
         rates.push(rate);
-        console.log(`    CPT ${code}: $${rate.paymentRate ?? "N/A"} (RVU: ${rate.rvuWork})`);
+        console.log(
+          `    CPT ${code}: $${
+            rate.paymentRate ?? "N/A"
+          } (RVU: ${rate.rvuWork})`,
+        );
       } else {
         console.log(`    CPT ${code}: Not found in CMS API`);
       }
     }
 
-    const validRates = rates.filter(r => r.paymentRate !== null);
+    const validRates = rates.filter((r) => r.paymentRate !== null);
     const avgPayment = validRates.length > 0
-      ? validRates.reduce((sum, r) => sum + (r.paymentRate || 0), 0) / validRates.length
+      ? validRates.reduce((sum, r) => sum + (r.paymentRate || 0), 0) /
+        validRates.length
       : null;
 
     // Estimate annual reimbursement using sector utilization from computed CMS PUF data
-    const annualUsesPerCode =
-      sectorAnnualUses.get(sector) ?? portfolioMedianUses;
+    const annualUsesPerCode = sectorAnnualUses.get(sector) ??
+      portfolioMedianUses;
     const totalEstimate = avgPayment !== null
       ? avgPayment * annualUsesPerCode * codes.length
       : null;
@@ -153,10 +165,15 @@ async function main() {
     results.push({
       sector,
       cptCodes: codes,
-      avgPaymentPerCode: avgPayment !== null ? Number(avgPayment.toFixed(2)) : null,
-      totalAnnualReimbursementEstimate: totalEstimate !== null ? Number(totalEstimate.toFixed(2)) : null,
+      avgPaymentPerCode: avgPayment !== null
+        ? Number(avgPayment.toFixed(2))
+        : null,
+      totalAnnualReimbursementEstimate: totalEstimate !== null
+        ? Number(totalEstimate.toFixed(2))
+        : null,
       source: "CMS Physician Fee Schedule API (data.cms.gov)",
-      method: `avg(paymentRate) × ${annualUsesPerCode} annual uses/code (from computed-cms-utilization.json) × ${codes.length} codes.`,
+      method:
+        `avg(paymentRate) × ${annualUsesPerCode} annual uses/code (from computed-cms-utilization.json) × ${codes.length} codes.`,
     });
   }
 
@@ -165,14 +182,24 @@ async function main() {
     source: "CMS Physician Fee Schedule API (https://data.cms.gov)",
     apiEndpoint: CMS_API_BASE,
     sectors: results,
-    disclaimer: "Payment rates are national averages from CMS PFS. Actual reimbursement varies by geography, payer, and modifier. Annual utilization volumes sourced from computed-cms-utilization.json (CMS PUF).",
+    disclaimer:
+      "Payment rates are national averages from CMS PFS. Actual reimbursement varies by geography, payer, and modifier. Annual utilization volumes sourced from computed-cms-utilization.json (CMS PUF).",
   };
 
-  writeFileSync("src/data/computed-reimbursement-rates.json", JSON.stringify(output, null, 2));
+  writeFileSync(
+    "src/data/computed-reimbursement-rates.json",
+    JSON.stringify(output, null, 2),
+  );
 
-  console.log("\n✅ Reimbursement rates written to src/data/computed-reimbursement-rates.json");
+  console.log(
+    "\n✅ Reimbursement rates written to src/data/computed-reimbursement-rates.json",
+  );
   console.log(`   ${results.length} sectors processed`);
-  console.log(`   ${results.filter(r => r.avgPaymentPerCode !== null).length} sectors with sourced rates`);
+  console.log(
+    `   ${
+      results.filter((r) => r.avgPaymentPerCode !== null).length
+    } sectors with sourced rates`,
+  );
 }
 
 main().catch(console.error);

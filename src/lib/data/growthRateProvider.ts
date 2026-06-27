@@ -132,7 +132,9 @@ export function resolveGrowthRate(input: {
     }
   }
 
-  const sectorStat = growthIndex.bySectorKey.get(resolveSectorKey(input.sector));
+  const sectorStat = growthIndex.bySectorKey.get(
+    resolveSectorKey(input.sector),
+  );
   if (sectorStat) {
     return {
       growthRate: sectorStat.medianCAGR,

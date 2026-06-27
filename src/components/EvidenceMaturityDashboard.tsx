@@ -318,27 +318,34 @@ export default function EvidenceMaturityDashboard() {
       {allScoresZero && (
         <div className="rounded-lg border border-lacuna-lavender/40 bg-lacuna-lavender/15 px-4 py-3 mb-6">
           <p className="text-sm text-lacuna-blue leading-relaxed">
-            {apiState.loading ? (
-              <>
-                <span className="font-medium text-lacuna-plum">Pulling live evidence data&hellip;</span>{" "}
-                Fetching trial phases and FDA clearances from ClinicalTrials.gov and openFDA
-                {" "}({apiState.progress}/{apiState.total} companies). Scores will appear shortly.
-              </>
-            ) : (
-              <>
-                <span className="font-medium text-lacuna-plum">
-                  No evidence scores yet.
-                </span>{" "}
-                The static dataset carries no clinical-trial or FDA metadata, so all
-                {" "}{baseRows.length}{" "}
-                deals currently score 0 (Pre-clinical) and a valuation correlation
-                would be meaningless. Use{" "}
-                <span className="font-medium text-lacuna-plum">
-                  Enrich with Live Data
-                </span>{" "}
-                to pull trial phases and clearances from ClinicalTrials.gov and openFDA.
-              </>
-            )}
+            {apiState.loading
+              ? (
+                <>
+                  <span className="font-medium text-lacuna-plum">
+                    Pulling live evidence data&hellip;
+                  </span>{" "}
+                  Fetching trial phases and FDA clearances from
+                  ClinicalTrials.gov and openFDA{" "}
+                  ({apiState.progress}/{apiState.total}{" "}
+                  companies). Scores will appear shortly.
+                </>
+              )
+              : (
+                <>
+                  <span className="font-medium text-lacuna-plum">
+                    No evidence scores yet.
+                  </span>{" "}
+                  The static dataset carries no clinical-trial or FDA metadata,
+                  so all {baseRows.length}{" "}
+                  deals currently score 0 (Pre-clinical) and a valuation
+                  correlation would be meaningless. Use{" "}
+                  <span className="font-medium text-lacuna-plum">
+                    Enrich with Live Data
+                  </span>{" "}
+                  to pull trial phases and clearances from ClinicalTrials.gov
+                  and openFDA.
+                </>
+              )}
           </p>
         </div>
       )}
@@ -497,10 +504,10 @@ export default function EvidenceMaturityDashboard() {
                         row.evidence.gradeLevel === "High"
                           ? "bg-emerald-100 text-emerald-700"
                           : row.evidence.gradeLevel === "Moderate"
-                            ? "bg-sky-100 text-sky-700"
-                            : row.evidence.gradeLevel === "Low"
-                              ? "bg-amber-100 text-amber-700"
-                              : "bg-slate-100 text-slate-500"
+                          ? "bg-sky-100 text-sky-700"
+                          : row.evidence.gradeLevel === "Low"
+                          ? "bg-amber-100 text-amber-700"
+                          : "bg-slate-100 text-slate-500"
                       }`}
                       title={row.evidence.gradeRationale}
                     >

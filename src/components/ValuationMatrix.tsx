@@ -218,9 +218,16 @@ export default function ValuationMatrix() {
                   {(() => {
                     const gap = gapScoreForSector(sector);
                     if (gap === null) return null;
-                    const color = gap >= 65 ? "bg-emerald-100 text-emerald-700" : gap >= 35 ? "bg-amber-100 text-amber-700" : "bg-slate-100 text-slate-600";
+                    const color = gap >= 65
+                      ? "bg-emerald-100 text-emerald-700"
+                      : gap >= 35
+                      ? "bg-amber-100 text-amber-700"
+                      : "bg-slate-100 text-slate-600";
                     return (
-                      <span className={`rounded-full px-1.5 py-0.5 text-[9px] font-medium ${color}`} title="Burden-capital gap score (higher = more underfunded vs. disease burden)">
+                      <span
+                        className={`rounded-full px-1.5 py-0.5 text-[9px] font-medium ${color}`}
+                        title="Burden-capital gap score (higher = more underfunded vs. disease burden)"
+                      >
                         gap {gap.toFixed(0)}
                       </span>
                     );

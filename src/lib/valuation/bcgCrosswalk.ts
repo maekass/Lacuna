@@ -10,8 +10,15 @@
  *    deal-level heuristics.
  */
 
-import { BURDEN_CAPITAL_GAP_DATA, type BurdenCapitalGapRow } from "@/data/burdenCapitalGap";
-import { BURDEN_AREAS, computeGapMetrics, type GapMetrics } from "@/lib/valuation/burdenCapitalGap";
+import {
+  BURDEN_CAPITAL_GAP_DATA,
+  type BurdenCapitalGapRow,
+} from "@/data/burdenCapitalGap";
+import {
+  BURDEN_AREAS,
+  computeGapMetrics,
+  type GapMetrics,
+} from "@/lib/valuation/burdenCapitalGap";
 
 export type CrosswalkStatus = "aligned" | "partial" | "unmapped";
 
@@ -60,7 +67,8 @@ export const BCG_VALUATION_CROSSWALK: BcgValuationCrosswalkEntry[] = [
     valuationAreaKey: null,
     valuationAreaName: null,
     status: "unmapped",
-    note: "Horizontal / multi-vertical WH companies — no single valuation area.",
+    note:
+      "Horizontal / multi-vertical WH companies — no single valuation area.",
   },
   {
     bcgId: "mental-health",
@@ -68,7 +76,8 @@ export const BCG_VALUATION_CROSSWALK: BcgValuationCrosswalkEntry[] = [
     valuationAreaKey: "mental_health",
     valuationAreaName: "Women's Mental Health",
     status: "aligned",
-    note: "Closest capital alignment in the crosswalk ($1.4B WEF vs $920M valuation).",
+    note:
+      "Closest capital alignment in the crosswalk ($1.4B WEF vs $920M valuation).",
   },
   {
     bcgId: "endometriosis",
@@ -144,7 +153,8 @@ export const BCG_VALUATION_CROSSWALK: BcgValuationCrosswalkEntry[] = [
     valuationAreaKey: "menopause",
     valuationAreaName: "Menopause & Midlife Health",
     status: "aligned",
-    note: "Same area. WEF ($1B) vs valuation ($280M) — scope/timing difference.",
+    note:
+      "Same area. WEF ($1B) vs valuation ($280M) — scope/timing difference.",
   },
   {
     bcgId: "neurological",
@@ -152,7 +162,8 @@ export const BCG_VALUATION_CROSSWALK: BcgValuationCrosswalkEntry[] = [
     valuationAreaKey: null,
     valuationAreaName: null,
     status: "unmapped",
-    note: "Includes Alzheimer's (WEF $100B opportunity cite) — no valuation area yet.",
+    note:
+      "Includes Alzheimer's (WEF $100B opportunity cite) — no valuation area yet.",
   },
   {
     bcgId: "msk-pain",
@@ -160,7 +171,8 @@ export const BCG_VALUATION_CROSSWALK: BcgValuationCrosswalkEntry[] = [
     valuationAreaKey: null,
     valuationAreaName: null,
     status: "unmapped",
-    note: "Includes osteoporosis (WEF $100B opportunity cite) — no valuation area yet.",
+    note:
+      "Includes osteoporosis (WEF $100B opportunity cite) — no valuation area yet.",
   },
 ];
 
@@ -178,8 +190,8 @@ export function buildCapitalComparison(): CapitalComparisonRow[] {
   const metricsByKey = new Map(metrics.map((m) => [m.areaKey, m]));
 
   return BURDEN_CAPITAL_GAP_DATA.map((bcg) => {
-    const crosswalk =
-      BCG_VALUATION_CROSSWALK.find((c) => c.bcgId === bcg.id) ?? {
+    const crosswalk = BCG_VALUATION_CROSSWALK.find((c) => c.bcgId === bcg.id) ??
+      {
         bcgId: bcg.id,
         bcgLabel: bcg.therapeuticArea,
         valuationAreaKey: null,
@@ -200,10 +212,9 @@ export function buildCapitalComparison(): CapitalComparisonRow[] {
       bcg,
       crosswalk,
       valuationVcM,
-      capitalRatio:
-        valuationVcM && valuationVcM > 0
-          ? bcg.capitalRaisedM / valuationVcM
-          : null,
+      capitalRatio: valuationVcM && valuationVcM > 0
+        ? bcg.capitalRaisedM / valuationVcM
+        : null,
       valuationGapScore: gap?.gapScore ?? null,
     };
   });
@@ -232,7 +243,9 @@ export function crosswalkSummary(): {
     partial: entries.filter((e) => e.status === "partial").length,
     unmapped: entries.filter((e) => e.status === "unmapped").length,
     headlineUnmapped: entries
-      .filter((e) => e.status === "unmapped" && e.bcgId !== "generic-womens-health")
+      .filter((e) =>
+        e.status === "unmapped" && e.bcgId !== "generic-womens-health"
+      )
       .map((e) => e.bcgLabel),
   };
 }

@@ -61,14 +61,14 @@ prototype with a curated, source-linked snapshot of women's health M&A (58
 verified deals), rendered as D3 network views and **descriptive** analytics with
 published methodology.
 
-| Claim                   | Reality                                                                                 |
-| ----------------------- | --------------------------------------------------------------------------------------- |
+| Claim                   | Reality                                                                                                   |
+| ----------------------- | --------------------------------------------------------------------------------------------------------- |
 | Deal data               | Static `dataset.verified.json` v7 (manual verification from SEC, press, filings; 135 companies, 59 deals) |
-| Scores & "predictors"   | Deterministic rules and small-_n_ statistics — [MODEL_CARD.md](docs/MODEL_CARD.md)      |
-| "ML" / TensorFlow       | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app               |
-| Server LLM              | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev) |
-| Clinical trials panel   | Live ClinicalTrials.gov search; **M&A panels** still use the curated dataset            |
-| Production intelligence | **No** — not PitchBook, not a data SLA, not investment advice                           |
+| Scores & "predictors"   | Deterministic rules and small-_n_ statistics — [MODEL_CARD.md](docs/MODEL_CARD.md)                        |
+| "ML" / TensorFlow       | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app                                 |
+| Server LLM              | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev)                   |
+| Clinical trials panel   | Live ClinicalTrials.gov search; **M&A panels** still use the curated dataset                              |
+| Production intelligence | **No** — not PitchBook, not a data SLA, not investment advice                                             |
 
 Open source under [BSL 1.1](LICENSE) for corp VC diligence workflows, portfolio
 review, and self-hosted exploration. Commercial competitive products need a
@@ -133,8 +133,7 @@ Every analytical panel in the app shows the provenance line above.
 D3 force-directed graph: sector colors, deal-type edges, valuation-scaled nodes.
 Three portfolio overlays are toggleable — **Foreground Capital (FG)**, **Amboy
 Street Ventures (AS)**, and the **Fund Portfolio (FD)** — each with a distinct
-color and pulse-ring badge on matching nodes.
-Methodology:
+color and pulse-ring badge on matching nodes. Methodology:
 [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md).
 
 ### Deal flow (`DealFlowChart.tsx`)
@@ -167,8 +166,8 @@ See [MODEL_CARD.md](docs/MODEL_CARD.md) for methodology and caveats.
 
 ## Descriptive analytics (heuristics, not predictive ML)
 
-> Curated dataset · n=59 verified deals · 135 companies · Not live market data
-> · Scores are descriptive, not forecasts.
+> Curated dataset · n=59 verified deals · 135 companies · Not live market data ·
+> Scores are descriptive, not forecasts.
 
 ### Acquisition likelihood indicators (`ExitPredictor.tsx`)
 

@@ -213,22 +213,22 @@ export default function QuantValuationPanel() {
                   {(row.acquisitionProbability * 100).toFixed(0)}%
                 </td>
                 <td className="py-2 px-3 text-right">
-                  {row.gapScore !== null ? (
-                    <span
-                      className={`rounded-full px-1.5 py-0.5 text-[10px] font-medium ${
-                        row.gapScore >= 65
-                          ? "bg-emerald-100 text-emerald-700"
-                          : row.gapScore >= 35
+                  {row.gapScore !== null
+                    ? (
+                      <span
+                        className={`rounded-full px-1.5 py-0.5 text-[10px] font-medium ${
+                          row.gapScore >= 65
+                            ? "bg-emerald-100 text-emerald-700"
+                            : row.gapScore >= 35
                             ? "bg-amber-100 text-amber-700"
                             : "bg-slate-100 text-slate-600"
-                      }`}
-                      title="Burden-capital gap score — how underfunded this sector is vs. disease burden"
-                    >
-                      {row.gapScore.toFixed(0)}
-                    </span>
-                  ) : (
-                    <span className="text-lacuna-blue/30">—</span>
-                  )}
+                        }`}
+                        title="Burden-capital gap score — how underfunded this sector is vs. disease burden"
+                      >
+                        {row.gapScore.toFixed(0)}
+                      </span>
+                    )
+                    : <span className="text-lacuna-blue/30">—</span>}
                 </td>
                 <td className="py-2 pl-3 text-lacuna-blue/80">
                   {row.topDriver}
@@ -258,10 +258,10 @@ export default function QuantValuationPanel() {
         Exit-likelihood base rate is the dataset&apos;s observed exit share.
         Driver weights remain heuristic; disclosed valuations are point-in-time
         public figures.{" "}
-        <span className="text-emerald-700 font-medium">Gap</span> = burden-capital
-        gap score (0-100) — how underfunded the sector is relative to disease
-        burden (DALYs × prevalence × mortality vs. VC deployed 2019-2024).
-        Exploratory framing only.
+        <span className="text-emerald-700 font-medium">Gap</span>{" "}
+        = burden-capital gap score (0-100) — how underfunded the sector is
+        relative to disease burden (DALYs × prevalence × mortality vs. VC
+        deployed 2019-2024). Exploratory framing only.
       </p>
     </div>
   );

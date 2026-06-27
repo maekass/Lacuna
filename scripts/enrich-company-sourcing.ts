@@ -367,7 +367,9 @@ const COMPANY_SOURCES: Record<string, string[]> = {
 function main() {
   console.log("📝 Enriching D/F graded companies with source citations...\n");
 
-  const dataset = JSON.parse(readFileSync("src/data/dataset.verified.json", "utf-8"));
+  const dataset = JSON.parse(
+    readFileSync("src/data/dataset.verified.json", "utf-8"),
+  );
   const companies: Company[] = dataset.companies || [];
 
   let enriched = 0;
@@ -384,7 +386,9 @@ function main() {
       if (added > 0) {
         company.sources = merged;
         enriched++;
-        console.log(`  ${company.name} (${company.id}): +${added} sources (${merged.length} total)`);
+        console.log(
+          `  ${company.name} (${company.id}): +${added} sources (${merged.length} total)`,
+        );
 
         auditTrail.push({
           companyId: company.id,
@@ -397,21 +401,31 @@ function main() {
   }
 
   // Write updated dataset
-  writeFileSync("src/data/dataset.verified.json", JSON.stringify(dataset, null, 2));
+  writeFileSync(
+    "src/data/dataset.verified.json",
+    JSON.stringify(dataset, null, 2),
+  );
 
   // Write audit trail
   const auditOutput = {
     generatedAt: new Date().toISOString(),
-    source: "Public records: Crunchbase, company websites, TechCrunch, Axios, Endpoints News, SEC EDGAR",
-    method: "Added verifiable public source citations to companies with D/F data quality grades. Sources include Crunchbase profiles, company websites, press coverage, and SEC filings.",
+    source:
+      "Public records: Crunchbase, company websites, TechCrunch, Axios, Endpoints News, SEC EDGAR",
+    method:
+      "Added verifiable public source citations to companies with D/F data quality grades. Sources include Crunchbase profiles, company websites, press coverage, and SEC filings.",
     companiesEnriched: enriched,
     auditTrail,
   };
-  writeFileSync("src/data/computed-sourcing-audit.json", JSON.stringify(auditOutput, null, 2));
+  writeFileSync(
+    "src/data/computed-sourcing-audit.json",
+    JSON.stringify(auditOutput, null, 2),
+  );
 
   console.log(`\n✅ Enriched ${enriched} companies with new source citations`);
   console.log("   Updated src/data/dataset.verified.json");
-  console.log("   Audit trail written to src/data/computed-sourcing-audit.json");
+  console.log(
+    "   Audit trail written to src/data/computed-sourcing-audit.json",
+  );
 }
 
 main();

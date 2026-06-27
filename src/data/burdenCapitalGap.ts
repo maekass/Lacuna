@@ -227,7 +227,8 @@ export const BURDEN_CAPITAL_GAP_SOURCES = [
     label: "WEF/BCG 2026",
     reference:
       "World Economic Forum & Boston Consulting Group. Women's Health Investment Outlook 2026. Figure 3 — funding events and capital raised by therapeutic area, 2020–2025. PitchBook, CapIQ, Crunchbase.",
-    url: "https://reports.weforum.org/docs/WEF_Womens_Health_Investment_Outlook_2026.pdf",
+    url:
+      "https://reports.weforum.org/docs/WEF_Womens_Health_Investment_Outlook_2026.pdf",
   },
   {
     label: "IHME GBD 2023",

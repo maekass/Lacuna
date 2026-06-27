@@ -77,7 +77,9 @@ function pearson(x: number[], y: number[]): number {
 }
 
 // Main
-const dataset = JSON.parse(readFileSync("src/data/dataset.verified.json", "utf-8"));
+const dataset = JSON.parse(
+  readFileSync("src/data/dataset.verified.json", "utf-8"),
+);
 const companies: Company[] = dataset.companies || [];
 const acquisitions: Acquisition[] = dataset.acquisitions || [];
 
@@ -96,11 +98,11 @@ interface SectorCorrelationResult {
 
 const sectorResults: SectorCorrelationResult[] = [];
 
-const allSectors = [...new Set(companies.map(c => c.sector))];
+const allSectors = [...new Set(companies.map((c) => c.sector))];
 
 for (const sector of allSectors) {
-  const sectorCompanies = companies.filter(c => c.sector === sector);
-  const sectorAcquisitions = acquisitions.filter(a => {
+  const sectorCompanies = companies.filter((c) => c.sector === sector);
+  const sectorAcquisitions = acquisitions.filter((a) => {
     const target = companyMap.get(a.targetId);
     return target?.sector === sector && a.dealValue && target.totalFunding;
   });
@@ -130,16 +132,22 @@ for (const sector of allSectors) {
   }
 
   // If all same CPT status, correlation is undefined
-  const allSame = cptValues.every(v => v === cptValues[0]);
-  const correlation = allSame ? null : Number(pearson(cptValues, multiples).toFixed(3));
+  const allSame = cptValues.every((v) => v === cptValues[0]);
+  const correlation = allSame
+    ? null
+    : Number(pearson(cptValues, multiples).toFixed(3));
 
   sectorResults.push({
     sector,
     correlation,
     sampleSize: sectorAcquisitions.length,
-    method: "Pearson(hasCPTCode, dealValue/totalFunding) from verified acquisitions",
-    source: "Lacuna verified dataset + CMS CPT code mapping (cms-reimbursement-connector.ts)",
-    warning: sectorAcquisitions.length < 5 ? "Small sample (n<5) — treat as directional only" : undefined,
+    method:
+      "Pearson(hasCPTCode, dealValue/totalFunding) from verified acquisitions",
+    source:
+      "Lacuna verified dataset + CMS CPT code mapping (cms-reimbursement-connector.ts)",
+    warning: sectorAcquisitions.length < 5
+      ? "Small sample (n<5) — treat as directional only"
+      : undefined,
   });
 }
 
@@ -155,27 +163,38 @@ for (const deal of acquisitions) {
   allMultiples.push(deal.dealValue / target.totalFunding);
 }
 
-const overallCorrelation = allCpt.length >= 2 && !allCpt.every(v => v === allCpt[0])
-  ? Number(pearson(allCpt, allMultiples).toFixed(3))
-  : null;
+const overallCorrelation =
+  allCpt.length >= 2 && !allCpt.every((v) => v === allCpt[0])
+    ? Number(pearson(allCpt, allMultiples).toFixed(3))
+    : null;
 
 const output = {
   generatedAt: new Date().toISOString(),
-  source: "Lacuna verified dataset (n=59 acquisitions) + CMS CPT code sector mapping",
+  source:
+    "Lacuna verified dataset (n=59 acquisitions) + CMS CPT code sector mapping",
   overallCorrelation: {
     correlation: overallCorrelation,
     sampleSize: allCpt.length,
     method: "Pearson(hasCPTCode, dealValue/totalFunding) across all sectors",
   },
   sectors: sectorResults,
-  method: "Binary CPT code presence (1=has CPT codes, 0=no CPT codes) correlated with deal multiple (dealValue/totalFunding). CPT presence derived from cms-reimbursement-connector.ts sector mapping.",
-  warning: "Binary CPT presence is a coarse proxy. For precise correlation, use per-company CPT code status when available. Small-n sectors (n<5) produce unreliable correlations.",
+  method:
+    "Binary CPT code presence (1=has CPT codes, 0=no CPT codes) correlated with deal multiple (dealValue/totalFunding). CPT presence derived from cms-reimbursement-connector.ts sector mapping.",
+  warning:
+    "Binary CPT presence is a coarse proxy. For precise correlation, use per-company CPT code status when available. Small-n sectors (n<5) produce unreliable correlations.",
 };
 
-writeFileSync("src/data/computed-sector-correlations.json", JSON.stringify(output, null, 2));
+writeFileSync(
+  "src/data/computed-sector-correlations.json",
+  JSON.stringify(output, null, 2),
+);
 
-console.log("✅ Sector correlations written to src/data/computed-sector-correlations.json\n");
-console.log(`Overall correlation (hasCPT ↔ multiple): ${overallCorrelation} (n=${allCpt.length})\n`);
+console.log(
+  "✅ Sector correlations written to src/data/computed-sector-correlations.json\n",
+);
+console.log(
+  `Overall correlation (hasCPT ↔ multiple): ${overallCorrelation} (n=${allCpt.length})\n`,
+);
 for (const s of sectorResults) {
   console.log(`  ${s.sector}: r=${s.correlation ?? "N/A"}, n=${s.sampleSize}`);
 }

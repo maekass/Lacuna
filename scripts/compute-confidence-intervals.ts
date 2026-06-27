@@ -67,7 +67,9 @@ function median(values: number[]): number {
   if (values.length === 0) return NaN;
   const sorted = [...values].sort((a, b) => a - b);
   const mid = Math.floor(sorted.length / 2);
-  return sorted.length % 2 === 0 ? (sorted[mid - 1] + sorted[mid]) / 2 : sorted[mid];
+  return sorted.length % 2 === 0
+    ? (sorted[mid - 1] + sorted[mid]) / 2
+    : sorted[mid];
 }
 
 function mean(values: number[]): number {
@@ -77,11 +79,16 @@ function mean(values: number[]): number {
 function stdDev(values: number[]): number {
   if (values.length < 2) return 0;
   const m = mean(values);
-  return Math.sqrt(values.reduce((sum, v) => sum + (v - m) ** 2, 0) / (values.length - 1));
+  return Math.sqrt(
+    values.reduce((sum, v) => sum + (v - m) ** 2, 0) / (values.length - 1),
+  );
 }
 
 // Bootstrap 95% confidence interval
-function bootstrapCI(values: number[], iterations = 10000): { lower: number; upper: number } {
+function bootstrapCI(
+  values: number[],
+  iterations = 10000,
+): { lower: number; upper: number } {
   if (values.length < 2) return { lower: NaN, upper: NaN };
   const bootstrapped: number[] = [];
   for (let i = 0; i < iterations; i++) {
@@ -107,17 +114,27 @@ function normalCI(values: number[]): { lower: number; upper: number } {
 }
 
 // Main — load all computed data
-const benchmarks = JSON.parse(readFileSync("src/data/computed-benchmarks.json", "utf-8")) as BenchmarksFile;
-const growthRates = JSON.parse(readFileSync("src/data/computed-growth-rates.json", "utf-8")) as GrowthRatesFile;
-const correlations = JSON.parse(readFileSync("src/data/computed-sector-correlations.json", "utf-8"));
-const premiums = JSON.parse(readFileSync("src/data/computed-acquirer-premiums.json", "utf-8"));
+const benchmarks = JSON.parse(
+  readFileSync("src/data/computed-benchmarks.json", "utf-8"),
+) as BenchmarksFile;
+const growthRates = JSON.parse(
+  readFileSync("src/data/computed-growth-rates.json", "utf-8"),
+) as GrowthRatesFile;
+const correlations = JSON.parse(
+  readFileSync("src/data/computed-sector-correlations.json", "utf-8"),
+);
+const premiums = JSON.parse(
+  readFileSync("src/data/computed-acquirer-premiums.json", "utf-8"),
+);
 
 const results: ConfidenceResult[] = [];
 
 // Benchmark CIs
 for (const b of benchmarks.benchmarks) {
   // We need the raw multiples — recompute from dataset
-  const dataset = JSON.parse(readFileSync("src/data/dataset.verified.json", "utf-8")) as VerifiedDatasetJson;
+  const dataset = JSON.parse(
+    readFileSync("src/data/dataset.verified.json", "utf-8"),
+  ) as VerifiedDatasetJson;
   const companies = dataset.companies || [];
   const acquisitions = dataset.acquisitions || [];
   const companyMap = new Map(companies.map((c) => [c.id, c]));
@@ -139,8 +156,14 @@ for (const b of benchmarks.benchmarks) {
     sampleSize: multiples.length,
     pointEstimate: b.medianMultiple,
     ci95: ci,
-    method: useBootstrap ? "Bootstrap (10,000 iterations, 95% CI)" : "Normal approximation (95% CI)",
-    reliability: multiples.length >= 10 ? "reliable" : multiples.length >= 5 ? "directional" : "unreliable",
+    method: useBootstrap
+      ? "Bootstrap (10,000 iterations, 95% CI)"
+      : "Normal approximation (95% CI)",
+    reliability: multiples.length >= 10
+      ? "reliable"
+      : multiples.length >= 5
+      ? "directional"
+      : "unreliable",
   });
 }
 
@@ -163,8 +186,14 @@ for (const [sector, rates] of sectorGrowthMap) {
     sampleSize: rates.length,
     pointEstimate: Number(median(rates).toFixed(1)),
     ci95: ci,
-    method: useBootstrap ? "Bootstrap (10,000 iterations, 95% CI)" : "Normal approximation (95% CI)",
-    reliability: rates.length >= 10 ? "reliable" : rates.length >= 5 ? "directional" : "unreliable",
+    method: useBootstrap
+      ? "Bootstrap (10,000 iterations, 95% CI)"
+      : "Normal approximation (95% CI)",
+    reliability: rates.length >= 10
+      ? "reliable"
+      : rates.length >= 5
+      ? "directional"
+      : "unreliable",
   });
 }
 
@@ -178,8 +207,13 @@ for (const ap of premiums.acquirerPremiums) {
     sampleSize: ap.deals,
     pointEstimate: ap.avgPremium,
     ci95: { lower: NaN, upper: NaN },
-    method: "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-    reliability: ap.deals >= 5 ? "reliable" : ap.deals >= 2 ? "directional" : "unreliable",
+    method:
+      "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+    reliability: ap.deals >= 5
+      ? "reliable"
+      : ap.deals >= 2
+      ? "directional"
+      : "unreliable",
   });
 }
 
@@ -194,11 +228,18 @@ const output = {
   },
 };
 
-writeFileSync("src/data/computed-confidence-intervals.json", JSON.stringify(output, null, 2));
+writeFileSync(
+  "src/data/computed-confidence-intervals.json",
+  JSON.stringify(output, null, 2),
+);
 
-console.log("✅ Confidence intervals written to src/data/computed-confidence-intervals.json\n");
+console.log(
+  "✅ Confidence intervals written to src/data/computed-confidence-intervals.json\n",
+);
 
 for (const r of results) {
   const label = r.sector || r.acquirer || "";
-  console.log(`  ${r.metric} [${label}]: n=${r.sampleSize}, estimate=${r.pointEstimate}, reliability=${r.reliability}`);
+  console.log(
+    `  ${r.metric} [${label}]: n=${r.sampleSize}, estimate=${r.pointEstimate}, reliability=${r.reliability}`,
+  );
 }

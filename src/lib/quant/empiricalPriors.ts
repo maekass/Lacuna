@@ -204,7 +204,8 @@ function normalizeFundingStage(stage: string): FundingStageKey | null {
   const s = stage.toLowerCase();
   if (s.includes("pre-seed") || s.includes("pre seed")) return "Pre-Seed";
   if (
-    s.includes("series d") || s.includes("series e") || s.includes("series f") ||
+    s.includes("series d") || s.includes("series e") ||
+    s.includes("series f") ||
     s.includes("late stage") || s.includes("pre-ipo")
   ) return "Series D+";
   if (s.includes("series c")) return "Series C";
@@ -224,7 +225,10 @@ export function deriveStageMedians(
   const byStage = new Map<FundingStageKey, number[]>();
   for (const company of companies) {
     const key = normalizeFundingStage(company.stage);
-    if (!key || typeof company.totalFunding !== "number" || company.totalFunding <= 0) {
+    if (
+      !key || typeof company.totalFunding !== "number" ||
+      company.totalFunding <= 0
+    ) {
       continue;
     }
     const list = byStage.get(key) ?? [];
@@ -237,7 +241,10 @@ export function deriveStageMedians(
     medians[key] = median(values);
     sampleSizes[key] = values.length;
   }
-  const totalN = (Object.values(sampleSizes) as number[]).reduce((s, n) => s + n, 0);
+  const totalN = (Object.values(sampleSizes) as number[]).reduce(
+    (s, n) => s + n,
+    0,
+  );
   return {
     medians,
     sampleSizes,

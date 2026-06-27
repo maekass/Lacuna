@@ -68,11 +68,14 @@ const CMS_DATASET_IDS = [
   "9s2y-y7ki", // Medicare Provider Utilization and Payment Data
 ];
 
-async function fetchCptUtilization(cptCode: string): Promise<CptUtilization | null> {
+async function fetchCptUtilization(
+  cptCode: string,
+): Promise<CptUtilization | null> {
   for (const datasetId of CMS_DATASET_IDS) {
     try {
       // Try CMS Data API — query by HCPCS code
-      const url = `${CMS_API_BASE}/${datasetId}/data?filter[HCPCS_CODE]=${cptCode}&limit=1`;
+      const url =
+        `${CMS_API_BASE}/${datasetId}/data?filter[HCPCS_CODE]=${cptCode}&limit=1`;
       const response = await fetch(url, {
         headers: { "User-Agent": "Lacuna-Research/1.0" },
       });
@@ -86,12 +89,26 @@ async function fetchCptUtilization(cptCode: string): Promise<CptUtilization | nu
       const row = data[0];
       return {
         cptCode,
-        description: row.HCPCS_DESCRIPTION || row.DESCRIPTION || row.Hcpcs_Description || null,
-        totalServices: parseInt(row.TOTAL_SERVICES || row.SRVC_CNT || row.BENE_DAY_CNT || row.Total_Services || "0") || null,
-        uniqueBeneficiaries: parseInt(row.BENE_UNIQ_CNT || row.UNIQUE_BENES || row.Bene_Uniq_Cnt || "0") || null,
-        avgSubmittedCharge: parseFloat(row.AVERAGE_SUBMITTED_CHRG_AMT || row.Average_Submitted_Chrg_Amt || "0") || null,
-        avgMedicarePayment: parseFloat(row.AVERAGE_MEDICARE_PAYMENT_AMT || row.AVERAGE_MEDICARE_ALLOWED_AMT || row.Average_Medicare_Payment_Amt || "0") || null,
-        source: `CMS Medicare Provider Utilization PUF (data.cms.gov, dataset: ${datasetId})`,
+        description: row.HCPCS_DESCRIPTION || row.DESCRIPTION ||
+          row.Hcpcs_Description || null,
+        totalServices: parseInt(
+          row.TOTAL_SERVICES || row.SRVC_CNT || row.BENE_DAY_CNT ||
+            row.Total_Services || "0",
+        ) || null,
+        uniqueBeneficiaries: parseInt(
+          row.BENE_UNIQ_CNT || row.UNIQUE_BENES || row.Bene_Uniq_Cnt || "0",
+        ) || null,
+        avgSubmittedCharge: parseFloat(
+          row.AVERAGE_SUBMITTED_CHRG_AMT || row.Average_Submitted_Chrg_Amt ||
+            "0",
+        ) || null,
+        avgMedicarePayment: parseFloat(
+          row.AVERAGE_MEDICARE_PAYMENT_AMT ||
+            row.AVERAGE_MEDICARE_ALLOWED_AMT ||
+            row.Average_Medicare_Payment_Amt || "0",
+        ) || null,
+        source:
+          `CMS Medicare Provider Utilization PUF (data.cms.gov, dataset: ${datasetId})`,
         fetchedAt: new Date().toISOString(),
       };
     } catch (err) {
@@ -102,7 +119,8 @@ async function fetchCptUtilization(cptCode: string): Promise<CptUtilization | nu
 
   // If all CMS API attempts fail, try the CMS search API
   try {
-    const searchUrl = `https://data.cms.gov/data-api/v1/search?q=${cptCode}&limit=1`;
+    const searchUrl =
+      `https://data.cms.gov/data-api/v1/search?q=${cptCode}&limit=1`;
     const searchResponse = await fetch(searchUrl, {
       headers: { "User-Agent": "Lacuna-Research/1.0" },
     });
@@ -114,10 +132,13 @@ async function fetchCptUtilization(cptCode: string): Promise<CptUtilization | nu
         return {
           cptCode,
           description: row.HCPCS_DESCRIPTION || row.DESCRIPTION || null,
-          totalServices: parseInt(row.TOTAL_SERVICES || row.SRVC_CNT || "0") || null,
+          totalServices: parseInt(row.TOTAL_SERVICES || row.SRVC_CNT || "0") ||
+            null,
           uniqueBeneficiaries: parseInt(row.BENE_UNIQ_CNT || "0") || null,
-          avgSubmittedCharge: parseFloat(row.AVERAGE_SUBMITTED_CHRG_AMT || "0") || null,
-          avgMedicarePayment: parseFloat(row.AVERAGE_MEDICARE_PAYMENT_AMT || "0") || null,
+          avgSubmittedCharge:
+            parseFloat(row.AVERAGE_SUBMITTED_CHRG_AMT || "0") || null,
+          avgMedicarePayment:
+            parseFloat(row.AVERAGE_MEDICARE_PAYMENT_AMT || "0") || null,
           source: "CMS Data Catalog Search (data.cms.gov)",
           fetchedAt: new Date().toISOString(),
         };
@@ -127,7 +148,9 @@ async function fetchCptUtilization(cptCode: string): Promise<CptUtilization | nu
     // Fall through
   }
 
-  console.warn(`  ⚠️  No CMS utilization data found for CPT ${cptCode} (all endpoints returned 404/empty)`);
+  console.warn(
+    `  ⚠️  No CMS utilization data found for CPT ${cptCode} (all endpoints returned 404/empty)`,
+  );
   return null;
 }
 
@@ -141,59 +164,230 @@ async function fetchCptUtilization(cptCode: string): Promise<CptUtilization | nu
  *
  * Data accessed: 2026-06-23
  */
-const CMS_PUF_FALLBACK: Record<string, { services: number; avgPayment: number; description: string }> = {
+const CMS_PUF_FALLBACK: Record<
+  string,
+  { services: number; avgPayment: number; description: string }
+> = {
   // Fertility
-  "58321": { services: 15000, avgPayment: 185, description: "Intrauterine insemination (IUI), including sperm washing" },
-  "58322": { services: 12000, avgPayment: 200, description: "IUI, thawed sperm" },
-  "58970": { services: 8500, avgPayment: 650, description: "Oocyte retrieval, transvaginal" },
-  "89250": { services: 22000, avgPayment: 175, description: "Semen analysis, complete" },
+  "58321": {
+    services: 15000,
+    avgPayment: 185,
+    description: "Intrauterine insemination (IUI), including sperm washing",
+  },
+  "58322": {
+    services: 12000,
+    avgPayment: 200,
+    description: "IUI, thawed sperm",
+  },
+  "58970": {
+    services: 8500,
+    avgPayment: 650,
+    description: "Oocyte retrieval, transvaginal",
+  },
+  "89250": {
+    services: 22000,
+    avgPayment: 175,
+    description: "Semen analysis, complete",
+  },
   // Maternal Health
-  "59400": { services: 180000, avgPayment: 2100, description: "Routine obstetric care, vaginal delivery" },
-  "59510": { services: 45000, avgPayment: 2400, description: "Routine obstetric care, cesarean delivery" },
-  "59618": { services: 12000, avgPayment: 2600, description: "Routine obstetric care, repeat cesarean" },
-  "76801": { services: 320000, avgPayment: 220, description: "Ultrasound, pregnant uterus, first trimester" },
-  "76805": { services: 650000, avgPayment: 190, description: "Ultrasound, pregnant uterus, second/third trimester" },
+  "59400": {
+    services: 180000,
+    avgPayment: 2100,
+    description: "Routine obstetric care, vaginal delivery",
+  },
+  "59510": {
+    services: 45000,
+    avgPayment: 2400,
+    description: "Routine obstetric care, cesarean delivery",
+  },
+  "59618": {
+    services: 12000,
+    avgPayment: 2600,
+    description: "Routine obstetric care, repeat cesarean",
+  },
+  "76801": {
+    services: 320000,
+    avgPayment: 220,
+    description: "Ultrasound, pregnant uterus, first trimester",
+  },
+  "76805": {
+    services: 650000,
+    avgPayment: 190,
+    description: "Ultrasound, pregnant uterus, second/third trimester",
+  },
   // Mental Health
-  "90791": { services: 850000, avgPayment: 175, description: "Psychiatric diagnostic evaluation" },
-  "90834": { services: 1200000, avgPayment: 95, description: "Psychotherapy, 45 min" },
-  "90837": { services: 950000, avgPayment: 140, description: "Psychotherapy, 60 min" },
-  "96116": { services: 45000, avgPayment: 280, description: "Neurobehavioral status exam" },
-  "96127": { services: 180000, avgPayment: 15, description: "Brief emotional/behavioral assessment" },
+  "90791": {
+    services: 850000,
+    avgPayment: 175,
+    description: "Psychiatric diagnostic evaluation",
+  },
+  "90834": {
+    services: 1200000,
+    avgPayment: 95,
+    description: "Psychotherapy, 45 min",
+  },
+  "90837": {
+    services: 950000,
+    avgPayment: 140,
+    description: "Psychotherapy, 60 min",
+  },
+  "96116": {
+    services: 45000,
+    avgPayment: 280,
+    description: "Neurobehavioral status exam",
+  },
+  "96127": {
+    services: 180000,
+    avgPayment: 15,
+    description: "Brief emotional/behavioral assessment",
+  },
   // Gynecology
-  "57420": { services: 85000, avgPayment: 120, description: "Pelvic examination under anesthesia" },
-  "57421": { services: 65000, avgPayment: 180, description: "Colposcopy with biopsy" },
-  "58100": { services: 450000, avgPayment: 150, description: "Endometrial biopsy" },
-  "58300": { services: 75000, avgPayment: 220, description: "Insertion of intrauterine device (IUD)" },
-  "58558": { services: 320000, avgPayment: 850, description: "Hysteroscopy with sampling" },
+  "57420": {
+    services: 85000,
+    avgPayment: 120,
+    description: "Pelvic examination under anesthesia",
+  },
+  "57421": {
+    services: 65000,
+    avgPayment: 180,
+    description: "Colposcopy with biopsy",
+  },
+  "58100": {
+    services: 450000,
+    avgPayment: 150,
+    description: "Endometrial biopsy",
+  },
+  "58300": {
+    services: 75000,
+    avgPayment: 220,
+    description: "Insertion of intrauterine device (IUD)",
+  },
+  "58558": {
+    services: 320000,
+    avgPayment: 850,
+    description: "Hysteroscopy with sampling",
+  },
   // Pelvic Health
-  "51741": { services: 95000, avgPayment: 95, description: "Simple cystometrogram" },
-  "51798": { services: 180000, avgPayment: 75, description: "Measurement of post-voiding residual urine" },
-  "57288": { services: 28000, avgPayment: 3200, description: "Sling operation for urinary incontinence" },
-  "57289": { services: 15000, avgPayment: 3800, description: "Sling operation, autologous tissue" },
+  "51741": {
+    services: 95000,
+    avgPayment: 95,
+    description: "Simple cystometrogram",
+  },
+  "51798": {
+    services: 180000,
+    avgPayment: 75,
+    description: "Measurement of post-voiding residual urine",
+  },
+  "57288": {
+    services: 28000,
+    avgPayment: 3200,
+    description: "Sling operation for urinary incontinence",
+  },
+  "57289": {
+    services: 15000,
+    avgPayment: 3800,
+    description: "Sling operation, autologous tissue",
+  },
   // Menopause
-  "99213": { services: 8500000, avgPayment: 92, description: "Office visit, established patient, 15-29 min" },
-  "99214": { services: 6500000, avgPayment: 131, description: "Office visit, established patient, 30-39 min" },
-  "84443": { services: 850000, avgPayment: 28, description: "Thyroid stimulating hormone (TSH)" },
-  "82671": { services: 450000, avgPayment: 45, description: "Estradiol, serum" },
+  "99213": {
+    services: 8500000,
+    avgPayment: 92,
+    description: "Office visit, established patient, 15-29 min",
+  },
+  "99214": {
+    services: 6500000,
+    avgPayment: 131,
+    description: "Office visit, established patient, 30-39 min",
+  },
+  "84443": {
+    services: 850000,
+    avgPayment: 28,
+    description: "Thyroid stimulating hormone (TSH)",
+  },
+  "82671": {
+    services: 450000,
+    avgPayment: 45,
+    description: "Estradiol, serum",
+  },
   // Contraception
-  "58301": { services: 35000, avgPayment: 180, description: "Removal of intrauterine device (IUD)" },
-  "J7300": { services: 120000, avgPayment: 850, description: "Levonorgestrel-releasing IUD, 52 mg" },
-  "J7302": { services: 45000, avgPayment: 650, description: "Etonogestrel implant, 68 mg" },
+  "58301": {
+    services: 35000,
+    avgPayment: 180,
+    description: "Removal of intrauterine device (IUD)",
+  },
+  "J7300": {
+    services: 120000,
+    avgPayment: 850,
+    description: "Levonorgestrel-releasing IUD, 52 mg",
+  },
+  "J7302": {
+    services: 45000,
+    avgPayment: 650,
+    description: "Etonogestrel implant, 68 mg",
+  },
   // Breast Health
-  "77067": { services: 12000000, avgPayment: 140, description: "Screening mammography, bilateral" },
-  "77063": { services: 850000, avgPayment: 60, description: "Screening mammography, 3D (tomosynthesis)" },
-  "19101": { services: 65000, avgPayment: 850, description: "Core needle biopsy of breast" },
-  "38525": { services: 28000, avgPayment: 1200, description: "Biopsy of sentinel lymph node" },
+  "77067": {
+    services: 12000000,
+    avgPayment: 140,
+    description: "Screening mammography, bilateral",
+  },
+  "77063": {
+    services: 850000,
+    avgPayment: 60,
+    description: "Screening mammography, 3D (tomosynthesis)",
+  },
+  "19101": {
+    services: 65000,
+    avgPayment: 850,
+    description: "Core needle biopsy of breast",
+  },
+  "38525": {
+    services: 28000,
+    avgPayment: 1200,
+    description: "Biopsy of sentinel lymph node",
+  },
   // Wearable Monitoring
-  "99453": { services: 450000, avgPayment: 20, description: "Initial setup of remote monitoring" },
-  "99454": { services: 850000, avgPayment: 55, description: "Remote monitoring device supply" },
-  "99457": { services: 320000, avgPayment: 50, description: "Remote monitoring, 20 min/month" },
-  "99458": { services: 180000, avgPayment: 45, description: "Remote monitoring, additional 20 min" },
+  "99453": {
+    services: 450000,
+    avgPayment: 20,
+    description: "Initial setup of remote monitoring",
+  },
+  "99454": {
+    services: 850000,
+    avgPayment: 55,
+    description: "Remote monitoring device supply",
+  },
+  "99457": {
+    services: 320000,
+    avgPayment: 50,
+    description: "Remote monitoring, 20 min/month",
+  },
+  "99458": {
+    services: 180000,
+    avgPayment: 45,
+    description: "Remote monitoring, additional 20 min",
+  },
   // Digital Therapeutics
-  "98960": { services: 25000, avgPayment: 75, description: "Education and training for patient self-management" },
-  "99421": { services: 85000, avgPayment: 25, description: "Online digital assessment, 5-10 min" },
-  "99422": { services: 65000, avgPayment: 40, description: "Online digital assessment, 11-20 min" },
-  "99423": { services: 45000, avgPayment: 55, description: "Online digital assessment, 21+ min" },
+  "98960": {
+    services: 25000,
+    avgPayment: 75,
+    description: "Education and training for patient self-management",
+  },
+  "99421": {
+    services: 85000,
+    avgPayment: 25,
+    description: "Online digital assessment, 5-10 min",
+  },
+  "99422": {
+    services: 65000,
+    avgPayment: 40,
+    description: "Online digital assessment, 11-20 min",
+  },
+  "99423": {
+    services: 45000,
+    avgPayment: 55,
+    description: "Online digital assessment, 21+ min",
+  },
 };
 
 function getCmsPufFallback(cptCode: string): CptUtilization | null {
@@ -207,7 +401,8 @@ function getCmsPufFallback(cptCode: string): CptUtilization | null {
     uniqueBeneficiaries: null,
     avgSubmittedCharge: null,
     avgMedicarePayment: fallback.avgPayment,
-    source: "CMS Medicare Physician & Other Practitioners PUF (published statistics, cms.gov)",
+    source:
+      "CMS Medicare Physician & Other Practitioners PUF (published statistics, cms.gov)",
     fetchedAt: new Date().toISOString(),
   };
 }
@@ -229,7 +424,7 @@ async function main() {
     const utilizationRecords: CptUtilization[] = [];
     for (const code of codes) {
       // Rate limit: be respectful to CMS API
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await new Promise((resolve) => setTimeout(resolve, 200));
 
       const util = await fetchCptUtilization(code);
       if (util) {
@@ -240,7 +435,9 @@ async function main() {
           totalServices: util.totalServices,
           avgMedicarePayment: util.avgMedicarePayment,
         });
-        console.log(`    CPT ${code}: ${util.totalServices} services/yr, $${util.avgMedicarePayment}/service (API)`);
+        console.log(
+          `    CPT ${code}: ${util.totalServices} services/yr, $${util.avgMedicarePayment}/service (API)`,
+        );
       } else {
         // Fall back to published CMS PUF statistics
         const fallback = getCmsPufFallback(code);
@@ -252,14 +449,18 @@ async function main() {
             totalServices: fallback.totalServices,
             avgMedicarePayment: fallback.avgMedicarePayment,
           });
-          console.log(`    CPT ${code}: ${fallback.totalServices} services/yr, $${fallback.avgMedicarePayment}/service (PUF fallback)`);
+          console.log(
+            `    CPT ${code}: ${fallback.totalServices} services/yr, $${fallback.avgMedicarePayment}/service (PUF fallback)`,
+          );
         } else {
           console.log(`    CPT ${code}: No utilization data found`);
         }
       }
     }
 
-    const validRecords = utilizationRecords.filter(r => r.totalServices !== null && r.avgMedicarePayment !== null);
+    const validRecords = utilizationRecords.filter((r) =>
+      r.totalServices !== null && r.avgMedicarePayment !== null
+    );
     const totalServices = validRecords.length > 0
       ? validRecords.reduce((sum, r) => sum + (r.totalServices || 0), 0)
       : null;
@@ -267,7 +468,8 @@ async function main() {
       ? Math.round(totalServices / validRecords.length)
       : null;
     const avgPayment = validRecords.length > 0
-      ? validRecords.reduce((sum, r) => sum + (r.avgMedicarePayment || 0), 0) / validRecords.length
+      ? validRecords.reduce((sum, r) => sum + (r.avgMedicarePayment || 0), 0) /
+        validRecords.length
       : null;
     const totalReimbursement = totalServices !== null && avgPayment !== null
       ? Number((totalServices * avgPayment / 1_000_000).toFixed(2)) // in millions
@@ -278,30 +480,47 @@ async function main() {
       cptCodes: codes,
       totalAnnualServices: totalServices,
       avgServicesPerCode,
-      avgPaymentPerService: avgPayment !== null ? Number(avgPayment.toFixed(2)) : null,
+      avgPaymentPerService: avgPayment !== null
+        ? Number(avgPayment.toFixed(2))
+        : null,
       estimatedAnnualReimbursement: totalReimbursement,
-      source: "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
-      method: "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume.",
+      source:
+        "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      method:
+        "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume.",
     });
   }
 
   const output = {
     generatedAt: new Date().toISOString(),
-    source: "CMS Medicare Provider Utilization and Payment Data (https://data.cms.gov)",
+    source:
+      "CMS Medicare Provider Utilization and Payment Data (https://data.cms.gov)",
     apiEndpoint: CMS_API_BASE,
     sectors: sectorResults,
     utilizationByCptCode,
-    method: "Annual utilization = sum of total services per CPT code from CMS PUF. Estimated reimbursement = total services × average Medicare payment. Medicare-only volume — all-payer volume would be higher.",
-    disclaimer: "Utilization data represents Medicare fee-for-service only. Commercial payer volume is typically 2-4x higher. Use CMS National Health Expenditure Data for all-payer estimates.",
-    replaces: "This data replaces the hardcoded '100 annual uses per code' assumption in fetch-cms-rates.ts",
+    method:
+      "Annual utilization = sum of total services per CPT code from CMS PUF. Estimated reimbursement = total services × average Medicare payment. Medicare-only volume — all-payer volume would be higher.",
+    disclaimer:
+      "Utilization data represents Medicare fee-for-service only. Commercial payer volume is typically 2-4x higher. Use CMS National Health Expenditure Data for all-payer estimates.",
+    replaces:
+      "This data replaces the hardcoded '100 annual uses per code' assumption in fetch-cms-rates.ts",
   };
 
-  writeFileSync("src/data/computed-cms-utilization.json", JSON.stringify(output, null, 2));
+  writeFileSync(
+    "src/data/computed-cms-utilization.json",
+    JSON.stringify(output, null, 2),
+  );
 
-  console.log("\n✅ CMS utilization data written to src/data/computed-cms-utilization.json\n");
+  console.log(
+    "\n✅ CMS utilization data written to src/data/computed-cms-utilization.json\n",
+  );
   console.log("Sector utilization summary:");
   for (const s of sectorResults) {
-    console.log(`  ${s.sector}: ${s.totalAnnualServices ?? "N/A"} services/yr, est. $${s.estimatedAnnualReimbursement ?? "N/A"}M/yr`);
+    console.log(
+      `  ${s.sector}: ${s.totalAnnualServices ?? "N/A"} services/yr, est. $${
+        s.estimatedAnnualReimbursement ?? "N/A"
+      }M/yr`,
+    );
   }
 }
 

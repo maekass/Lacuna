@@ -19,11 +19,16 @@
  * Usage: npx tsx scripts/compliance-lint.ts
  */
 
-import { readdirSync, readFileSync, statSync, existsSync } from "fs";
-import { join, extname } from "path";
+import { existsSync, readdirSync, readFileSync, statSync } from "fs";
+import { extname, join } from "path";
 
 const SRC_DIR = "src";
-const violations: { file: string; line: number; rule: string; message: string }[] = [];
+const violations: {
+  file: string;
+  line: number;
+  rule: string;
+  message: string;
+}[] = [];
 
 const RULES = {
   // SEC violations
@@ -31,8 +36,7 @@ const RULES = {
     /(?:revenue|valuation|price|dealValue)\s*[=:]\s*(?:5_?000_?000|10_?000_?000|50_?000_?000|100_?000_?000|5000000|10000000|50000000|100000000)/gi,
   PREDICTIVE_CLAIMS:
     /(?:will\s+(?:acquire|merge|buy|sell)|guaranteed\s+return|risk[- ]free|certain\s+to|definitely\s+will|forecast\s+accuracy)/gi,
-  PII_PATTERNS:
-    /(?:\b\d{3}-\d{2}-\d{4}\b|\b\d{16}\b)/g,
+  PII_PATTERNS: /(?:\b\d{3}-\d{2}-\d{4}\b|\b\d{16}\b)/g,
   HARDCODED_MNPI:
     /(?:insider|confidential\s+source|non[- ]?public\s+info|undisclosed\s+source|leaked|whisper\s+number)/gi,
   CAUSAL_CLAIMS:
@@ -69,7 +73,10 @@ function walkDir(dir: string, exts: string[]): string[] {
     const fullPath = join(dir, entry);
     const stat = statSync(fullPath);
     if (stat.isDirectory()) {
-      if (entry === "node_modules" || entry === "__tests__" || entry === "_quarantine") continue;
+      if (
+        entry === "node_modules" || entry === "__tests__" ||
+        entry === "_quarantine"
+      ) continue;
       results.push(...walkDir(fullPath, exts));
     } else if (exts.includes(extname(entry))) {
       if (entry.includes(".test.")) continue;
@@ -91,7 +98,8 @@ function lintFile(path: string, content: string) {
         file: path,
         line: lineNum,
         rule: "R1: No synthetic financials",
-        message: "Hardcoded revenue/valuation default — may be mistaken for real data. Use 0 or null.",
+        message:
+          "Hardcoded revenue/valuation default — may be mistaken for real data. Use 0 or null.",
       });
     }
     RULES.SYNTHETIC_REVENUE.lastIndex = 0;
@@ -101,7 +109,8 @@ function lintFile(path: string, content: string) {
         file: path,
         line: lineNum,
         rule: "R2: No predictive claims",
-        message: "Predictive language — Lacuna is descriptive only. Rephrase as historical observation.",
+        message:
+          "Predictive language — Lacuna is descriptive only. Rephrase as historical observation.",
       });
     }
     RULES.PREDICTIVE_CLAIMS.lastIndex = 0;
@@ -111,7 +120,8 @@ function lintFile(path: string, content: string) {
         file: path,
         line: lineNum,
         rule: "R3: No MNPI",
-        message: "Reference to non-public/confidential info — violates SEC Reg FD.",
+        message:
+          "Reference to non-public/confidential info — violates SEC Reg FD.",
       });
     }
     RULES.HARDCODED_MNPI.lastIndex = 0;
@@ -121,7 +131,8 @@ function lintFile(path: string, content: string) {
         file: path,
         line: lineNum,
         rule: "R4: No unsupported causation",
-        message: "Causal claim without evidence qualifier — use 'associated with' or 'correlated with'.",
+        message:
+          "Causal claim without evidence qualifier — use 'associated with' or 'correlated with'.",
       });
     }
     RULES.CAUSAL_CLAIMS.lastIndex = 0;
@@ -131,7 +142,8 @@ function lintFile(path: string, content: string) {
         file: path,
         line: lineNum,
         rule: "R5: No PII",
-        message: "Possible PII (SSN or card number) detected — remove immediately.",
+        message:
+          "Possible PII (SSN or card number) detected — remove immediately.",
       });
     }
     RULES.PII_PATTERNS.lastIndex = 0;
@@ -142,7 +154,8 @@ function lintFile(path: string, content: string) {
         file: path,
         line: lineNum,
         rule: "R8: No fraud language (18 USC)",
-        message: "Fraud-related language detected — potential securities/wire fraud indicator. Remove or rephrase.",
+        message:
+          "Fraud-related language detected — potential securities/wire fraud indicator. Remove or rephrase.",
       });
     }
     RULES.FRAUD_INDICATORS.lastIndex = 0;
@@ -153,7 +166,8 @@ function lintFile(path: string, content: string) {
         file: path,
         line: lineNum,
         rule: "R9: No data theft (18 USC §1030)",
-        message: "Unauthorized data scraping/theft indicator — violates CFAA and EEA. Remove.",
+        message:
+          "Unauthorized data scraping/theft indicator — violates CFAA and EEA. Remove.",
       });
     }
     RULES.DATA_THEFT.lastIndex = 0;
@@ -164,7 +178,8 @@ function lintFile(path: string, content: string) {
         file: path,
         line: lineNum,
         rule: "R10: No copyright infringement (17 USC)",
-        message: "Copyright infringement indicator — content reproduced without permission. Remove or properly license.",
+        message:
+          "Copyright infringement indicator — content reproduced without permission. Remove or properly license.",
       });
     }
     RULES.COPYRIGHT_INFRINGEMENT.lastIndex = 0;
@@ -175,7 +190,8 @@ function lintFile(path: string, content: string) {
         file: path,
         line: lineNum,
         rule: "R11: No trademark violation (15 USC)",
-        message: "Trademark violation indicator — unauthorized use of brand/trademark. Remove.",
+        message:
+          "Trademark violation indicator — unauthorized use of brand/trademark. Remove.",
       });
     }
     RULES.TRADEMARK_VIOLATION.lastIndex = 0;
@@ -186,7 +202,8 @@ function lintFile(path: string, content: string) {
         file: path,
         line: lineNum,
         rule: "R12: No patent infringement (35 USC)",
-        message: "Patent infringement indicator — willful infringement carries treble damages. Remove.",
+        message:
+          "Patent infringement indicator — willful infringement carries treble damages. Remove.",
       });
     }
     RULES.PATENT_INFRINGEMENT.lastIndex = 0;
@@ -197,7 +214,8 @@ function lintFile(path: string, content: string) {
         file: path,
         line: lineNum,
         rule: "R13: No trade secret theft (DTSA)",
-        message: "Trade secret misappropriation indicator — violates DTSA and EEA. Remove immediately.",
+        message:
+          "Trade secret misappropriation indicator — violates DTSA and EEA. Remove immediately.",
       });
     }
     RULES.TRADE_SECRET_THEFT.lastIndex = 0;
@@ -208,7 +226,8 @@ function lintFile(path: string, content: string) {
         file: path,
         line: lineNum,
         rule: "R14: No PHI (HIPAA)",
-        message: "Possible Protected Health Information detected — violates HIPAA. Remove or de-identify.",
+        message:
+          "Possible Protected Health Information detected — violates HIPAA. Remove or de-identify.",
       });
     }
     RULES.PHI_PATTERNS.lastIndex = 0;
@@ -220,13 +239,15 @@ function checkDisclaimers() {
     if (!existsSync(file)) continue;
     const content = readFileSync(file, "utf-8");
     const hasDisclaimer =
-      /not\s+investment\s+advice|descriptive\s+analytics\s+only|not\s+a\s+substitute\s+for/i.test(content);
+      /not\s+investment\s+advice|descriptive\s+analytics\s+only|not\s+a\s+substitute\s+for/i
+        .test(content);
     if (!hasDisclaimer) {
       violations.push({
         file,
         line: 0,
         rule: "R6: Disclaimer required",
-        message: "Missing 'not investment advice' / 'descriptive analytics only' disclaimer.",
+        message:
+          "Missing 'not investment advice' / 'descriptive analytics only' disclaimer.",
       });
     }
   }
@@ -242,7 +263,9 @@ function checkCitations() {
     let uncitedCount = 0;
 
     for (const entry of companies) {
-      if (!entry.sources && !entry.source && !entry.citation && !entry.provenance) {
+      if (
+        !entry.sources && !entry.source && !entry.citation && !entry.provenance
+      ) {
         uncitedCount++;
       }
     }
@@ -252,7 +275,8 @@ function checkCitations() {
         file: datasetPath,
         line: 0,
         rule: "R7: Data provenance",
-        message: `${uncitedCount} entries missing source/citation — every record must have traceable provenance.`,
+        message:
+          `${uncitedCount} entries missing source/citation — every record must have traceable provenance.`,
       });
     }
   } catch {
