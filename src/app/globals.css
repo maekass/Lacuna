@@ -32,6 +32,13 @@
   --lacuna-chart-accent: #7c3aed;
   --lacuna-chart-secondary: var(--lacuna-pink);
 
+  /* Burden–Capital Gap (BCG view) */
+  --lac-capital: #10b981;
+  --lac-burden: #ef4444;
+  --lac-category-unique: #db2777;
+  --lac-category-different: #2563eb;
+  --lac-category-disprop: #9333ea;
+
   --background: var(--lacuna-surface-muted);
   --foreground: var(--lacuna-text-primary);
 }
