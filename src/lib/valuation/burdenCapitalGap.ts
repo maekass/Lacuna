@@ -88,6 +88,12 @@ export const CITATIONS: Record<string, Citation> = {
     reference:
       "The Menopause Society (formerly NAMS). Menopause Practice: A Clinician's Guide. 6th ed. Pepper Pike, OH: The Menopause Society, 2023. ~55M US women currently in perimenopause or postmenopause.",
   },
+  aha_cvd_women_2024: {
+    id: "aha_cvd_women_2024",
+    label: "10a",
+    reference:
+      "American Heart Association. Heart Disease and Stroke Statistics 2024 Update. Circulation. 2024. Cardiovascular disease is the leading cause of death among US women; clinical standards historically calibrated to male physiology contribute to underdiagnosis.",
+  },
   // PubMed-sourced additions (via NCBI E-utilities, retrieved June 2025)
   yadav_pcos_2023: {
     id: "yadav_pcos_2023",
@@ -453,6 +459,51 @@ export const BURDEN_AREAS: Record<string, BurdenArea> = {
       "nih_reporter_2023",
       "rock_health_2024",
     ],
+  },
+  cardiovascular_women: {
+    name: "Women's Cardiovascular Disease",
+    datasetSectors: ["Cardiovascular"],
+    // GBD 2021 US female aggregate (IHD, stroke, hypertensive heart disease) — editorial sum
+    dalyThousandsPerYear: 13_500,
+    // ~44M US women 20+ with CVD (AHA 2024); prevalence figure rounded for model
+    prevalenceMillion: 44.0,
+    // ~300k US female CVD deaths/yr (CDC WONDER underlying cause, heart disease)
+    annualDeathsThousands: 300,
+    nihFundingMillionPerYear: 1_200,
+    // WEF/BCG Figure 3: 11 WH funding events, ~$10M raised, 2020–2025
+    vcDeployedMillion: 10,
+    neglectScore: 5,
+    regulatoryNote:
+      "FDA sex-specific trial guidance; AHA Go Red for Women; CMS quality measures expanding sex-stratified reporting — yet WH-specific CVD capital remains <0.01% of total cardiovascular funding per WEF/BCG 2026.",
+    payerCoveragePercent: 85,
+    providerGapNote:
+      "Leading cause of death in US women, yet often misclassified outside women's health. WEF/BCG: 11 funding transactions and ~$10M WH-specific capital raised (2020–2025) vs. $4.2B total cardiovascular flows — sharpest burden–capital misalignment in the WH Investment Index. Symptoms present differently in women; male-normative clinical pathways delay diagnosis. Cardiologists with women's heart programs concentrated at academic centers.",
+    citationIds: [
+      "gbd2021",
+      "cdc_wonder_2022",
+      "aha_cvd_women_2024",
+      "nih_reporter_2023",
+      "wef_bcg_2026",
+    ],
+  },
+  metabolic_women: {
+    name: "Women's Metabolic Disorders",
+    datasetSectors: ["General Wellness", "Wearables", "Digital Health"],
+    // GBD 2021 US female diabetes + obesity-related metabolic burden — editorial aggregate
+    dalyThousandsPerYear: 4_800,
+    // CDC: ~15M US women with diabetes; broader metabolic syndrome prevalence higher
+    prevalenceMillion: 15.0,
+    annualDeathsThousands: 42,
+    nihFundingMillionPerYear: 680,
+    // WEF/BCG Figure 3: 8 WH funding events, ~$4M raised, 2020–2025
+    vcDeployedMillion: 4,
+    neglectScore: 5,
+    regulatoryNote:
+      "GLP-1 wave expanding metabolic market, but women's-specific indications (PCOS, gestational diabetes transition, menopause metabolic shift) remain under-tagged in WH funding databases.",
+    payerCoveragePercent: 55,
+    providerGapNote:
+      "WEF/BCG: 8 WH funding transactions and ~$4M capital raised (2020–2025) — less than 0.01% of total metabolic funding. Diabetes and metabolic syndrome affect women differently across life stages (PCOS, GDM, menopause); fragmented between endocrinology, OB/GYN, and primary care. CGM and metabolic FemTech often categorized as general wellness, not WH-specific.",
+    citationIds: ["gbd2021", "cdc_wonder_2022", "nwhn_pcos", "nih_reporter_2023", "wef_bcg_2026"],
   },
 };
 

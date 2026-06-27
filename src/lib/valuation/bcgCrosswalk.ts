@@ -132,20 +132,20 @@ export const BCG_VALUATION_CROSSWALK: BcgValuationCrosswalkEntry[] = [
   {
     bcgId: "cardiovascular",
     bcgLabel: "Cardiovascular disorders",
-    valuationAreaKey: null,
-    valuationAreaName: null,
-    status: "unmapped",
+    valuationAreaKey: "cardiovascular_women",
+    valuationAreaName: "Women's Cardiovascular Disease",
+    status: "aligned",
     note:
-      "HEADLINE GAP: 11 events / ~$10M (WEF). Not in valuation BURDEN_AREAS — misclassification thesis lives here but gap scoring cannot reach it yet.",
+      "Headline misclassification gap. WEF capital ($10M) now drives valuation VC; expect top-tier gap score vs. US GBD 2021 burden.",
   },
   {
     bcgId: "metabolic",
     bcgLabel: "Metabolic disorders",
-    valuationAreaKey: "pcos",
-    valuationAreaName: "PCOS & Metabolic Reproductive",
-    status: "partial",
+    valuationAreaKey: "metabolic_women",
+    valuationAreaName: "Women's Metabolic Disorders",
+    status: "aligned",
     note:
-      "WEF splits metabolic ($4M) from PCOS ($100M). Valuation merges metabolic reproductive under PCOS. Neither captures diabetes/CVD-adjacent WH gap cleanly.",
+      "Split from PCOS in WEF taxonomy. WEF capital ($4M) mapped directly; PCOS valuation area covers reproductive-metabolic overlap separately.",
   },
   {
     bcgId: "menopause",
