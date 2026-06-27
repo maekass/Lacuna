@@ -303,13 +303,10 @@ export default function BurdenCapitalGap() {
         </summary>
         <p className="mt-2 text-xs leading-relaxed text-lacuna-blue/80">
           This chart uses WEF/BCG macro funding (2020–2025, all WH-tagged flows).
-          The valuation model below uses US GBD 2021 burden + Rock Health / PitchBook
-          FemTech VC estimates (2019–2024). Capital figures are expected to differ —
-          they answer different questions. The critical gap:{" "}
-          <span className="font-medium text-lacuna-plum">
-            cardiovascular and metabolic disorders have no valuation area
-          </span>
-          , so gap scoring cannot yet express the headline misclassification thesis.
+          The valuation model below uses US GBD 2021 burden + WEF-aligned VC for
+          cardiovascular ($10M) and metabolic ($4M) areas, plus Rock Health /
+          PitchBook FemTech estimates elsewhere (2019–2024). Capital figures differ
+          by design — they answer different questions.
         </p>
         <div className="mt-3 overflow-x-auto">
           <table className="w-full min-w-[640px] text-left text-[11px] text-lacuna-blue/80">
