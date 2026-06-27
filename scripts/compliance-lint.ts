@@ -20,6 +20,7 @@
  */
 
 import { existsSync, readdirSync, readFileSync, statSync } from "fs";
+import process from "node:process";
 import { extname, join } from "path";
 
 const SRC_DIR = "src";

@@ -21,6 +21,7 @@
  */
 
 import { mkdirSync, readFileSync, writeFileSync } from "fs";
+import process from "node:process";
 import { resolve } from "path";
 
 const ROOT = resolve(__dirname, "..");

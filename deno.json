@@ -4,5 +4,8 @@
       "tags": [],
       "include": ["require-await", "no-node-globals"]
     }
+  },
+  "fmt": {
+    "exclude": ["node_modules", ".next"]
   }
 }
