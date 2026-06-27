@@ -35,6 +35,7 @@
 import {
   estimateAnnualReimbursementFromCodes,
 } from "@/lib/data/cmsUtilizationProvider";
+import { selectVerifiedComparables } from "@/lib/data/verifiedComparables";
 
 export {
   DEFAULT_ANNUAL_USES_PER_CODE,
@@ -668,46 +669,17 @@ export class CMSReimbursementConnector {
   }
 
   /**
-   * Returns verified comparable healthcare companies.
-   * Deal values sourced from verified dataset; valuationMultiple figures
-   * are illustrative press-era estimates — treat as directional only.
-   * Tia and other unacquired companies removed to avoid misleading M&A signals.
+   * Returns verified comparable deals from the curated dataset.
+   * Multiples are funding-to-exit where both figures are public; otherwise 1.0x.
    */
   private getComparables(targetMultiple: number): ComparableCompany[] {
-    const comparables: ComparableCompany[] = [
-      {
-        name: "Livongo (acquired by Teladoc, 2020)",
-        sector: "chronic care",
-        reimbursementStatus: "reimbursement-rich",
-        valuationMultiple: 13.8,
-        acquisitionPrice: 18_500_000_000, // verified: SEC 8-K filing
-      },
-      {
-        name: "Modern Fertility (acquired by Ro, 2021)",
-        sector: "fertility",
-        reimbursementStatus: "limited",
-        valuationMultiple: 2.5,
-        acquisitionPrice: 225_000_000, // verified: press reports (Fierce Healthcare)
-      },
-      {
-        name: "Natural Cycles",
-        sector: "fertility",
-        reimbursementStatus: "limited",
-        valuationMultiple: 1.8,
-      },
-      {
-        name: "Flo",
-        sector: "fertility",
-        reimbursementStatus: "consumer-only",
-        valuationMultiple: 1.4,
-      },
-    ];
-
-    // Sort by closest multiple
-    return comparables.sort((a, b) =>
-      Math.abs(a.valuationMultiple - targetMultiple) -
-      Math.abs(b.valuationMultiple - targetMultiple)
-    ).slice(0, 4);
+    return selectVerifiedComparables(targetMultiple, 4).map((deal) => ({
+      name: deal.name,
+      sector: deal.sector,
+      reimbursementStatus: deal.reimbursementStatus,
+      valuationMultiple: deal.valuationMultiple,
+      acquisitionPrice: deal.acquisitionPrice,
+    }));
   }
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { CURATED_DATASET_PROVENANCE_LINE } from "@/lib/constants/provenance";
+import { formatCuratedDatasetProvenanceLine } from "@/lib/constants/provenance";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { useProvenanceContext } from "@/lib/provenance/ProvenanceContext";
 
@@ -23,10 +23,7 @@ export default function CuratedDatasetBanner(
     return null;
   }
   const dealCount = verifiedAcquisitions.length;
-  const line = CURATED_DATASET_PROVENANCE_LINE.replace(
-    "n=58",
-    `n=${dealCount}`,
-  );
+  const line = formatCuratedDatasetProvenanceLine(dealCount);
 
   return (
     <p

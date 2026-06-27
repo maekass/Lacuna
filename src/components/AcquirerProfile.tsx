@@ -1,11 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  verifiedAcquirers,
-  verifiedAcquisitions,
-  verifiedCompanies,
-} from "@/data/verifiedData";
+import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 
 interface AcquirerProfileProps {
   acquirerId: string | null;
@@ -15,6 +11,12 @@ interface AcquirerProfileProps {
 export default function AcquirerProfile(
   { acquirerId, onClose }: AcquirerProfileProps,
 ) {
+  const {
+    verifiedAcquirers,
+    verifiedAcquisitions,
+    verifiedCompanies,
+  } = useVerifiedDataset();
+
   if (!acquirerId) {
     return null;
   }

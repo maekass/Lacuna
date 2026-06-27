@@ -1,14 +1,11 @@
 "use client";
 
-import { CURATED_DATASET_PROVENANCE_LINE } from "@/lib/constants/provenance";
+import { formatCuratedDatasetProvenanceLine } from "@/lib/constants/provenance";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 
 export default function GlobalProvenanceBar() {
   const { verifiedAcquisitions } = useVerifiedDataset();
-  const line = CURATED_DATASET_PROVENANCE_LINE.replace(
-    "n=58",
-    `n=${verifiedAcquisitions.length}`,
-  );
+  const line = formatCuratedDatasetProvenanceLine(verifiedAcquisitions.length);
 
   return (
     <div

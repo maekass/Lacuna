@@ -1,12 +1,12 @@
 /**
  * Acquirer Prediction Engine
  *
- * Predicts most likely acquirers for each Lacuna company based on:
- * - Strategic fit (capability gaps)
- * - Historical acquisition patterns
- * - Sector focus and stage preferences
- * - Financial capacity
+ * Descriptive acquirer fit scoring from verified deal history and company
+ * records. Value estimates use empirical priors from disclosed deal values
+ * when supplied by the caller — not fabricated market-cap panels.
  */
+import type { EmpiricalPriors } from "@/lib/quant/empiricalPriors";
+import { normalizeSectorBucket } from "@/lib/quant/empiricalPriors";
 
 // Types
 export interface CompanyProfile {
@@ -86,7 +86,10 @@ export interface ComparableDeal {
   revenueMultiple?: number;
 }
 
-// Known strategic acquirers in women's health
+/**
+ * @deprecated Legacy illustrative panel — use `buildAcquirerProfilesFromVerified`
+ * with verified acquirers and acquisitions instead.
+ */
 export const STRATEGIC_ACQUIRERS: AcquirerProfile[] = [
   {
     id: "cvs-health",
@@ -294,6 +297,7 @@ const SECTOR_MULTIPLES: Record<string, number> = {
 export function calculateMatchScore(
   company: CompanyProfile,
   acquirer: AcquirerProfile,
+  empiricalPriors?: EmpiricalPriors,
 ): AcquirerMatch {
   // Strategic fit: Do capabilities align with acquirer priorities?
   const strategicFit = calculateStrategicFit(company, acquirer);
@@ -302,7 +306,7 @@ export function calculateMatchScore(
   const culturalFit = calculateCulturalFit(company, acquirer);
 
   // Financial fit: Can acquirer afford it?
-  const financialFit = calculateFinancialFit(company, acquirer);
+  const financialFit = calculateFinancialFit(company, acquirer, empiricalPriors);
 
   // Market fit: Sector and stage alignment
   const marketFit = calculateMarketFit(company, acquirer);
@@ -316,7 +320,12 @@ export function calculateMatchScore(
   );
 
   // Estimate value
-  const estimatedValue = estimateValue(company, acquirer, matchScore);
+  const estimatedValue = estimateValue(
+    company,
+    acquirer,
+    matchScore,
+    empiricalPriors,
+  );
 
   // Determine likelihood
   let likelihood: "high" | "medium" | "low";
@@ -397,9 +406,12 @@ function calculateCulturalFit(
 function calculateFinancialFit(
   company: CompanyProfile,
   acquirer: AcquirerProfile,
+  empiricalPriors?: EmpiricalPriors,
 ): number {
-  // Estimate company value
-  const estimatedValue = (company.fundingTotal * 2.5) / 1000000; // $M
+  const estimatedValue = deriveCompanyValueEstimate(
+    company,
+    empiricalPriors,
+  ).medianM;
 
   // Check if in typical deal range
   if (estimatedValue < acquirer.typicalDealSize.min) return 40; // Too small
@@ -436,38 +448,78 @@ function calculateMarketFit(
   return Math.min(100, score);
 }
 
+interface CompanyValueEstimate {
+  medianM: number;
+  rationale: string;
+}
+
+/** Derive a company value ($M) from empirical priors, then heuristic fallback. */
+function deriveCompanyValueEstimate(
+  company: CompanyProfile,
+  empiricalPriors?: EmpiricalPriors,
+): CompanyValueEstimate {
+  const bucket = normalizeSectorBucket(company.sector);
+  const sectorPrior = empiricalPriors?.sectorPriors.get(bucket);
+  const fundingM = company.fundingTotal / 1_000_000;
+
+  if (
+    fundingM > 0 &&
+    sectorPrior?.medianFundingMultiple &&
+    sectorPrior.fundingMultipleN > 0
+  ) {
+    const medianM = fundingM * sectorPrior.medianFundingMultiple;
+    return {
+      medianM,
+      rationale:
+        `Median ${sectorPrior.medianFundingMultiple.toFixed(1)}x funding-to-exit multiple from ${sectorPrior.fundingMultipleN} verified ${bucket} deals`,
+    };
+  }
+
+  if (sectorPrior?.medianDealValue) {
+    return {
+      medianM: sectorPrior.medianDealValue,
+      rationale:
+        `Median disclosed deal value ($${sectorPrior.medianDealValue}M) from ${sectorPrior.dealCount} verified ${bucket} deals`,
+    };
+  }
+
+  if (empiricalPriors?.medianDealValueAll) {
+    return {
+      medianM: empiricalPriors.medianDealValueAll,
+      rationale:
+        `Dataset median disclosed deal value ($${empiricalPriors.medianDealValueAll}M, n=${empiricalPriors.disclosedDealCount})`,
+    };
+  }
+
+  const fallbackMultiple = SECTOR_MULTIPLES[company.sector] ?? 3.0;
+  return {
+    medianM: fundingM > 0 ? fundingM * fallbackMultiple : fallbackMultiple * 10,
+    rationale:
+      `Heuristic ${fallbackMultiple}x funding multiple — insufficient disclosed comparables in verified dataset`,
+  };
+}
+
 function estimateValue(
   company: CompanyProfile,
   acquirer: AcquirerProfile,
   matchScore: number,
+  empiricalPriors?: EmpiricalPriors,
 ): { min: number; max: number; median: number; rationale?: string } {
-  // Base multiple for sector
-  const baseMultiple = SECTOR_MULTIPLES[company.sector] || 3.0;
+  const base = deriveCompanyValueEstimate(company, empiricalPriors);
 
-  // Adjust for match quality
-  const qualityAdjustment = (matchScore - 50) / 100; // -0.5 to +0.5
-  const adjustedMultiple = baseMultiple * (1 + qualityAdjustment);
+  const qualityAdjustment = (matchScore - 50) / 100;
+  const adjustedValue = base.medianM * (1 + qualityAdjustment * 0.25);
+  const strategicPremium = matchScore > 75 ? 1.15 : matchScore > 60 ? 1.08 : 1.0;
 
-  // Calculate value based on funding
-  const fundingM = company.fundingTotal / 1000000;
-  const baseValue = fundingM * adjustedMultiple;
-
-  // Premium for strategic fit
-  const strategicPremium = matchScore > 75 ? 1.3 : matchScore > 60 ? 1.15 : 1.0;
-
-  const median = baseValue * strategicPremium;
+  const median = adjustedValue * strategicPremium;
   const min = median * 0.7;
   const max = median * 1.4;
-
-  const rationale = `Based on ${
-    adjustedMultiple.toFixed(1)
-  }x funding multiple (${company.sector} sector), adjusted for ${matchScore}% strategic fit`;
 
   return {
     min: Math.round(min),
     max: Math.round(max),
     median: Math.round(median),
-    rationale,
+    rationale: `${base.rationale}; adjusted for ${matchScore}% strategic fit`,
   };
 }
 
@@ -516,11 +568,19 @@ function generateRationale(
  */
 export function analyzeCompetitiveDynamics(
   company: CompanyProfile,
-  acquirers: AcquirerProfile[] = STRATEGIC_ACQUIRERS,
+  acquirers: AcquirerProfile[],
   verifiedComparables: ComparableDeal[] = [],
+  empiricalPriors?: EmpiricalPriors,
 ): CompetitiveAnalysis {
-  // Calculate matches for all acquirers
-  const allMatches = acquirers.map((a) => calculateMatchScore(company, a));
+  if (acquirers.length === 0) {
+    throw new Error(
+      "analyzeCompetitiveDynamics requires acquirer profiles from the verified dataset",
+    );
+  }
+
+  const allMatches = acquirers.map((a) =>
+    calculateMatchScore(company, a, empiricalPriors)
+  );
 
   // Sort by match score
   const sortedMatches = allMatches.sort((a, b) => b.matchScore - a.matchScore);
