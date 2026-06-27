@@ -32,6 +32,12 @@
  * - AMA CPT: https://www.ama-assn.org/practice-management/cpt
  */
 
+import {
+  estimateAnnualReimbursementFromCodes,
+} from "@/lib/data/cmsUtilizationProvider";
+
+export { DEFAULT_ANNUAL_USES_PER_CODE } from "@/lib/data/cmsUtilizationProvider";
+
 // Types
 export interface CPTCode {
   code: string;
@@ -133,16 +139,6 @@ export type BusinessModel =
   | "b2c-consumer" // Limited reimbursement, cash pay
   | "hybrid" // Some insurance, some direct pay
   | "unclear";
-
-/**
- * Default assumed annual usage per CPT code, used when no real frequency
- * data is available (🔴 ILLUSTRATIVE).
- *
- * Replace with actual claim-volume data (e.g. from CMS Public Use Files)
- * when available. Current value is a flat heuristic and will systematically
- * over- or under-estimate depending on the procedure.
- */
-export const DEFAULT_ANNUAL_USES_PER_CODE = 100;
 
 /**
  * Sector-level reimbursement benchmarks (🔴 ILLUSTRATIVE).
@@ -611,12 +607,13 @@ export class CMSReimbursementConnector {
       ? "established"
       : "new";
 
-    // Calculate estimated annual reimbursement
-    const totalRate = activeCodes.reduce((sum, c) => sum + c.medicareRate, 0);
-    // 🔴 ILLUSTRATIVE: flat per-code usage assumption (see DEFAULT_ANNUAL_USES_PER_CODE)
-    const estimatedAnnual = totalRate * DEFAULT_ANNUAL_USES_PER_CODE;
+    // Estimated annual Medicare reimbursement from CMS PUF utilization × rates
+    const estimatedAnnual = estimateAnnualReimbursementFromCodes(
+      activeCodes.map((c) => ({ code: c.code, medicareRate: c.medicareRate })),
+    );
 
     // Determine rate category
+    const totalRate = activeCodes.reduce((sum, c) => sum + c.medicareRate, 0);
     const avgRate = totalRate / activeCodes.length;
     const rateCategory: ReimbursementStatus["rateCategory"] = avgRate > 1000
       ? "high"

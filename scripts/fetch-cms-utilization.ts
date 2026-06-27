@@ -216,6 +216,12 @@ async function main() {
   console.log("🔍 Fetching CMS PUF utilization data for CPT codes...\n");
 
   const sectorResults: SectorUtilization[] = [];
+  const utilizationByCptCode: Array<{
+    sector: string;
+    cptCode: string;
+    totalServices: number | null;
+    avgMedicarePayment: number | null;
+  }> = [];
 
   for (const [sector, codes] of Object.entries(SECTOR_CPT_CODES)) {
     console.log(`  ${sector} (${codes.length} CPT codes)...`);
@@ -228,12 +234,24 @@ async function main() {
       const util = await fetchCptUtilization(code);
       if (util) {
         utilizationRecords.push(util);
+        utilizationByCptCode.push({
+          sector,
+          cptCode: code,
+          totalServices: util.totalServices,
+          avgMedicarePayment: util.avgMedicarePayment,
+        });
         console.log(`    CPT ${code}: ${util.totalServices} services/yr, $${util.avgMedicarePayment}/service (API)`);
       } else {
         // Fall back to published CMS PUF statistics
         const fallback = getCmsPufFallback(code);
         if (fallback) {
           utilizationRecords.push(fallback);
+          utilizationByCptCode.push({
+            sector,
+            cptCode: code,
+            totalServices: fallback.totalServices,
+            avgMedicarePayment: fallback.avgMedicarePayment,
+          });
           console.log(`    CPT ${code}: ${fallback.totalServices} services/yr, $${fallback.avgMedicarePayment}/service (PUF fallback)`);
         } else {
           console.log(`    CPT ${code}: No utilization data found`);
@@ -272,9 +290,7 @@ async function main() {
     source: "CMS Medicare Provider Utilization and Payment Data (https://data.cms.gov)",
     apiEndpoint: CMS_API_BASE,
     sectors: sectorResults,
-    utilizationByCptCode: sectorResults.flatMap(s =>
-      s.cptCodes.map(code => ({ sector: s.sector, cptCode: code }))
-    ),
+    utilizationByCptCode,
     method: "Annual utilization = sum of total services per CPT code from CMS PUF. Estimated reimbursement = total services × average Medicare payment. Medicare-only volume — all-payer volume would be higher.",
     disclaimer: "Utilization data represents Medicare fee-for-service only. Commercial payer volume is typically 2-4x higher. Use CMS National Health Expenditure Data for all-payer estimates.",
     replaces: "This data replaces the hardcoded '100 annual uses per code' assumption in fetch-cms-rates.ts",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T00:48:42.257Z",
+  "generatedAt": "2026-06-27T18:13:23.054Z",
   "source": "CMS Medicare Provider Utilization and Payment Data (https://data.cms.gov)",
   "apiEndpoint": "https://data.cms.gov/data-api/v1/dataset",
   "sectors": [
@@ -160,175 +160,261 @@
   "utilizationByCptCode": [
     {
       "sector": "fertility",
-      "cptCode": "58321"
+      "cptCode": "58321",
+      "totalServices": 15000,
+      "avgMedicarePayment": 185
     },
     {
       "sector": "fertility",
-      "cptCode": "58322"
+      "cptCode": "58322",
+      "totalServices": 12000,
+      "avgMedicarePayment": 200
     },
     {
       "sector": "fertility",
-      "cptCode": "58970"
+      "cptCode": "58970",
+      "totalServices": 8500,
+      "avgMedicarePayment": 650
     },
     {
       "sector": "fertility",
-      "cptCode": "89250"
+      "cptCode": "89250",
+      "totalServices": 22000,
+      "avgMedicarePayment": 175
     },
     {
       "sector": "maternal_health",
-      "cptCode": "59400"
+      "cptCode": "59400",
+      "totalServices": 180000,
+      "avgMedicarePayment": 2100
     },
     {
       "sector": "maternal_health",
-      "cptCode": "59510"
+      "cptCode": "59510",
+      "totalServices": 45000,
+      "avgMedicarePayment": 2400
     },
     {
       "sector": "maternal_health",
-      "cptCode": "59618"
+      "cptCode": "59618",
+      "totalServices": 12000,
+      "avgMedicarePayment": 2600
     },
     {
       "sector": "maternal_health",
-      "cptCode": "76801"
+      "cptCode": "76801",
+      "totalServices": 320000,
+      "avgMedicarePayment": 220
     },
     {
       "sector": "maternal_health",
-      "cptCode": "76805"
+      "cptCode": "76805",
+      "totalServices": 650000,
+      "avgMedicarePayment": 190
     },
     {
       "sector": "mental_health",
-      "cptCode": "90791"
+      "cptCode": "90791",
+      "totalServices": 850000,
+      "avgMedicarePayment": 175
     },
     {
       "sector": "mental_health",
-      "cptCode": "90834"
+      "cptCode": "90834",
+      "totalServices": 1200000,
+      "avgMedicarePayment": 95
     },
     {
       "sector": "mental_health",
-      "cptCode": "90837"
+      "cptCode": "90837",
+      "totalServices": 950000,
+      "avgMedicarePayment": 140
     },
     {
       "sector": "mental_health",
-      "cptCode": "96116"
+      "cptCode": "96116",
+      "totalServices": 45000,
+      "avgMedicarePayment": 280
     },
     {
       "sector": "mental_health",
-      "cptCode": "96127"
+      "cptCode": "96127",
+      "totalServices": 180000,
+      "avgMedicarePayment": 15
     },
     {
       "sector": "gynecology",
-      "cptCode": "57420"
+      "cptCode": "57420",
+      "totalServices": 85000,
+      "avgMedicarePayment": 120
     },
     {
       "sector": "gynecology",
-      "cptCode": "57421"
+      "cptCode": "57421",
+      "totalServices": 65000,
+      "avgMedicarePayment": 180
     },
     {
       "sector": "gynecology",
-      "cptCode": "58100"
+      "cptCode": "58100",
+      "totalServices": 450000,
+      "avgMedicarePayment": 150
     },
     {
       "sector": "gynecology",
-      "cptCode": "58300"
+      "cptCode": "58300",
+      "totalServices": 75000,
+      "avgMedicarePayment": 220
     },
     {
       "sector": "gynecology",
-      "cptCode": "58558"
+      "cptCode": "58558",
+      "totalServices": 320000,
+      "avgMedicarePayment": 850
     },
     {
       "sector": "pelvic_health",
-      "cptCode": "51741"
+      "cptCode": "51741",
+      "totalServices": 95000,
+      "avgMedicarePayment": 95
     },
     {
       "sector": "pelvic_health",
-      "cptCode": "51798"
+      "cptCode": "51798",
+      "totalServices": 180000,
+      "avgMedicarePayment": 75
     },
     {
       "sector": "pelvic_health",
-      "cptCode": "57288"
+      "cptCode": "57288",
+      "totalServices": 28000,
+      "avgMedicarePayment": 3200
     },
     {
       "sector": "pelvic_health",
-      "cptCode": "57289"
+      "cptCode": "57289",
+      "totalServices": 15000,
+      "avgMedicarePayment": 3800
     },
     {
       "sector": "menopause",
-      "cptCode": "99213"
+      "cptCode": "99213",
+      "totalServices": 8500000,
+      "avgMedicarePayment": 92
     },
     {
       "sector": "menopause",
-      "cptCode": "99214"
+      "cptCode": "99214",
+      "totalServices": 6500000,
+      "avgMedicarePayment": 131
     },
     {
       "sector": "menopause",
-      "cptCode": "84443"
+      "cptCode": "84443",
+      "totalServices": 850000,
+      "avgMedicarePayment": 28
     },
     {
       "sector": "menopause",
-      "cptCode": "82671"
+      "cptCode": "82671",
+      "totalServices": 450000,
+      "avgMedicarePayment": 45
     },
     {
       "sector": "contraception",
-      "cptCode": "58300"
+      "cptCode": "58300",
+      "totalServices": 75000,
+      "avgMedicarePayment": 220
     },
     {
       "sector": "contraception",
-      "cptCode": "58301"
+      "cptCode": "58301",
+      "totalServices": 35000,
+      "avgMedicarePayment": 180
     },
     {
       "sector": "contraception",
-      "cptCode": "J7300"
+      "cptCode": "J7300",
+      "totalServices": 120000,
+      "avgMedicarePayment": 850
     },
     {
       "sector": "contraception",
-      "cptCode": "J7302"
+      "cptCode": "J7302",
+      "totalServices": 45000,
+      "avgMedicarePayment": 650
     },
     {
       "sector": "breast_health",
-      "cptCode": "77067"
+      "cptCode": "77067",
+      "totalServices": 12000000,
+      "avgMedicarePayment": 140
     },
     {
       "sector": "breast_health",
-      "cptCode": "77063"
+      "cptCode": "77063",
+      "totalServices": 850000,
+      "avgMedicarePayment": 60
     },
     {
       "sector": "breast_health",
-      "cptCode": "19101"
+      "cptCode": "19101",
+      "totalServices": 65000,
+      "avgMedicarePayment": 850
     },
     {
       "sector": "breast_health",
-      "cptCode": "38525"
+      "cptCode": "38525",
+      "totalServices": 28000,
+      "avgMedicarePayment": 1200
     },
     {
       "sector": "wearable_monitoring",
-      "cptCode": "99453"
+      "cptCode": "99453",
+      "totalServices": 450000,
+      "avgMedicarePayment": 20
     },
     {
       "sector": "wearable_monitoring",
-      "cptCode": "99454"
+      "cptCode": "99454",
+      "totalServices": 850000,
+      "avgMedicarePayment": 55
     },
     {
       "sector": "wearable_monitoring",
-      "cptCode": "99457"
+      "cptCode": "99457",
+      "totalServices": 320000,
+      "avgMedicarePayment": 50
     },
     {
       "sector": "wearable_monitoring",
-      "cptCode": "99458"
+      "cptCode": "99458",
+      "totalServices": 180000,
+      "avgMedicarePayment": 45
     },
     {
       "sector": "digital_therapeutics",
-      "cptCode": "98960"
+      "cptCode": "98960",
+      "totalServices": 25000,
+      "avgMedicarePayment": 75
     },
     {
       "sector": "digital_therapeutics",
-      "cptCode": "99421"
+      "cptCode": "99421",
+      "totalServices": 85000,
+      "avgMedicarePayment": 25
     },
     {
       "sector": "digital_therapeutics",
-      "cptCode": "99422"
+      "cptCode": "99422",
+      "totalServices": 65000,
+      "avgMedicarePayment": 40
     },
     {
       "sector": "digital_therapeutics",
-      "cptCode": "99423"
+      "cptCode": "99423",
+      "totalServices": 45000,
+      "avgMedicarePayment": 55
     }
   ],
   "method": "Annual utilization = sum of total services per CPT code from CMS PUF. Estimated reimbursement = total services × average Medicare payment. Medicare-only volume — all-payer volume would be higher.",

@@ -16,6 +16,37 @@
 
 import { writeFileSync, readFileSync } from "fs";
 
+interface ComputedCmsUtilizationFile {
+  sectors: Array<{
+    sector: string;
+    avgServicesPerCode: number | null;
+  }>;
+}
+
+/** Sector-level annual services per CPT from computed CMS PUF artifact. */
+function loadSectorAnnualUses(): Map<string, number> {
+  const raw = JSON.parse(
+    readFileSync("src/data/computed-cms-utilization.json", "utf8"),
+  ) as ComputedCmsUtilizationFile;
+
+  const map = new Map<string, number>();
+  for (const sector of raw.sectors ?? []) {
+    if (sector.avgServicesPerCode !== null && sector.avgServicesPerCode !== undefined) {
+      map.set(sector.sector, sector.avgServicesPerCode);
+    }
+  }
+  return map;
+}
+
+function portfolioMedianAnnualUses(sectorUses: Map<string, number>): number {
+  const values = [...sectorUses.values()].sort((a, b) => a - b);
+  if (values.length === 0) return 100;
+  const mid = Math.floor(values.length / 2);
+  return values.length % 2 === 0
+    ? Math.round((values[mid - 1] + values[mid]) / 2)
+    : values[mid];
+}
+
 interface CptCodeRate {
   cptCode: string;
   description: string;
@@ -88,6 +119,9 @@ async function fetchCptRate(cptCode: string): Promise<CptCodeRate | null> {
 async function main() {
   console.log("🔍 Fetching CMS Physician Fee Schedule rates...\n");
 
+  const sectorAnnualUses = loadSectorAnnualUses();
+  const portfolioMedianUses = portfolioMedianAnnualUses(sectorAnnualUses);
+
   const results: SectorReimbursement[] = [];
 
   for (const [sector, codes] of Object.entries(SECTOR_CPT_CODES)) {
@@ -109,11 +143,11 @@ async function main() {
       ? validRates.reduce((sum, r) => sum + (r.paymentRate || 0), 0) / validRates.length
       : null;
 
-    // Estimate annual reimbursement: avg payment × assumed annual utilization per code
-    // NOTE: Utilization data should come from CMS Public Use Files when available
-    const ASSUMED_ANNUAL_USES = 100; // ILLUSTRATIVE — replace with CMS PUF data
+    // Estimate annual reimbursement using sector utilization from computed CMS PUF data
+    const annualUsesPerCode =
+      sectorAnnualUses.get(sector) ?? portfolioMedianUses;
     const totalEstimate = avgPayment !== null
-      ? avgPayment * ASSUMED_ANNUAL_USES * codes.length
+      ? avgPayment * annualUsesPerCode * codes.length
       : null;
 
     results.push({
@@ -122,7 +156,7 @@ async function main() {
       avgPaymentPerCode: avgPayment !== null ? Number(avgPayment.toFixed(2)) : null,
       totalAnnualReimbursementEstimate: totalEstimate !== null ? Number(totalEstimate.toFixed(2)) : null,
       source: "CMS Physician Fee Schedule API (data.cms.gov)",
-      method: `avg(paymentRate) × ${ASSUMED_ANNUAL_USES} assumed annual uses × ${codes.length} codes. Annual uses is an ILLUSTRATIVE assumption — replace with CMS Public Use File utilization data.`,
+      method: `avg(paymentRate) × ${annualUsesPerCode} annual uses/code (from computed-cms-utilization.json) × ${codes.length} codes.`,
     });
   }
 
@@ -131,7 +165,7 @@ async function main() {
     source: "CMS Physician Fee Schedule API (https://data.cms.gov)",
     apiEndpoint: CMS_API_BASE,
     sectors: results,
-    disclaimer: "Payment rates are national averages from CMS PFS. Actual reimbursement varies by geography, payer, and modifier. Annual utilization is an ILLUSTRATIVE assumption.",
+    disclaimer: "Payment rates are national averages from CMS PFS. Actual reimbursement varies by geography, payer, and modifier. Annual utilization volumes sourced from computed-cms-utilization.json (CMS PUF).",
   };
 
   writeFileSync("src/data/computed-reimbursement-rates.json", JSON.stringify(output, null, 2));
