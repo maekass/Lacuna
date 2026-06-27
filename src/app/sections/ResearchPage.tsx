@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  BurdenCapitalGap,
   BurdenCapitalGapValuation,
   ClinicalTrialTracker,
   CommercializationReadiness,
@@ -30,7 +31,14 @@ export default function ResearchPage() {
 
       <MotionSection id="burden-capital-gap" className={SECTION}>
         <SectionHeader
-          title="Burden-Capital Gap Valuation"
+          title="Burden–Capital Gap"
+          description="WEF/BCG Figure 3: capital raised vs. disease burden across women's-health therapeutic areas. Women's health is underfunded relative to burden — widest in conditions outside the traditional bucket (CVD, metabolic). Burden columns pending IHME GBD 2023."
+        />
+        <div className="mb-8">
+          <BurdenCapitalGap />
+        </div>
+        <SectionHeader
+          title="Gap valuation model"
           description="Estimate investment value using the gap between a disease area's societal burden (DALYs, prevalence, mortality) and VC deployed. High-gap areas historically command premium exits for early movers. Heuristic model — not financial advice."
         />
         <BurdenCapitalGapValuation />
