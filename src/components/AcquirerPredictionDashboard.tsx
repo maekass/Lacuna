@@ -2,125 +2,59 @@
 
 /**
  * Strategic acquirer fit (descriptive) — rule-based matches from verified deals and
- * static acquirer profiles. Not a trained model; see CuratedDatasetBanner and MODEL_CARD.md.
+ * acquirer profiles derived from the verified dataset. Not a trained model.
  */
 
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
-import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import {
-  type AcquirerMatch,
   analyzeCompetitiveDynamics,
-  type CompanyProfile,
   type ComparableDeal,
-  type CompetitiveAnalysis,
-  STRATEGIC_ACQUIRERS,
 } from "@/data/acquirer-prediction-engine";
+import { buildAcquirerProfilesFromVerified } from "@/lib/data/buildAcquirerProfilesFromVerified";
+import {
+  filterActiveVerifiedCompanies,
+  mapVerifiedCompanyToProfile,
+  mapVerifiedSectorToEngineSector,
+} from "@/lib/data/companyProfileMapper";
+import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import { deriveEmpiricalPriors } from "@/lib/quant/empiricalPriors";
 import AIInsightsPanel from "./AIInsightsPanel";
 
-// Generate company profiles from verified dataset
-type VerifiedCompanyLike = {
-  id?: string;
-  name: string;
-  sector?: string;
-  industry?: string;
-  stage?: string;
-  fundingStage?: string;
-  description?: string;
-  business?: string;
-  fundingTotal?: number;
-  foundedDate?: string;
-};
-
-function generateCompanyProfiles(
-  verifiedCompanies: VerifiedCompanyLike[],
-): CompanyProfile[] {
-  return verifiedCompanies.slice(0, 8).map((company, idx) => ({
-    id: company.id ?? `comp-${idx}`,
-    name: company.name,
-    sector: mapToSector(company.sector ?? company.industry ?? "digital_health"),
-    stage: mapToStage(company.stage ?? company.fundingStage ?? "series_a"),
-    capabilities: extractCapabilities(
-      company.description ?? company.business ?? "",
-    ),
-    technology: extractTechnologies(company.description ?? ""),
-    fundingTotal: company.fundingTotal ?? 0,
-    foundingDate: company.foundedDate ?? "2018-01-01",
-    // FDA status not in the verified dataset — omit rather than fabricate
-  }));
-}
-
-function mapToSector(sector: string): string {
-  const map: Record<string, string> = {
-    "fertility": "fertility",
-    "maternal": "maternal_health",
-    "mental": "mental_health",
-    "gynecology": "womens_health",
-    "telehealth": "telehealth",
-    "digital": "digital_therapeutics",
-    "app": "digital_health",
-    "wearable": "diagnostics",
-  };
-
-  const normalized = sector.toLowerCase();
-  for (const [key, value] of Object.entries(map)) {
-    if (normalized.includes(key)) return value;
-  }
-  return "digital_health";
-}
-
-function mapToStage(stage: string): CompanyProfile["stage"] {
-  const normalized = stage.toLowerCase();
-  if (normalized.includes("seed")) return "seed";
-  if (normalized.includes("a")) return "series_a";
-  if (normalized.includes("b")) return "series_b";
-  if (normalized.includes("c") || normalized.includes("d")) return "growth";
-  return "series_a";
-}
-
-function extractCapabilities(description: string): string[] {
-  const caps: string[] = [];
-  if (description.includes("AI") || description.includes("machine learning")) {
-    caps.push("Software & analytics");
-  }
-  if (description.includes("telehealth") || description.includes("virtual")) {
-    caps.push("telehealth");
-  }
-  if (description.includes("diagnostic")) caps.push("diagnostics");
-  if (description.includes("fertility")) caps.push("fertility services");
-  if (description.includes("mental") || description.includes("therapy")) {
-    caps.push("mental health");
-  }
-  if (description.includes("coaching") || description.includes("care")) {
-    caps.push("care coordination");
-  }
-  return caps.length > 0 ? caps : ["digital health platform"];
-}
-
-function extractTechnologies(description: string): string[] {
-  const techs: string[] = [];
-  if (description.includes("app")) techs.push("mobile app");
-  if (description.includes("platform")) techs.push("platform technology");
-  if (description.includes("data")) techs.push("data analytics");
-  if (description.includes("AI")) techs.push("artificial intelligence");
-  return techs.length > 0 ? techs : ["healthcare technology"];
-}
-
 export default function AcquirerPredictionDashboard() {
-  const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
+  const {
+    verifiedCompanies,
+    verifiedAcquisitions,
+    verifiedAcquirers,
+  } = useVerifiedDataset();
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
 
-  const companyProfiles = useMemo(
-    () => generateCompanyProfiles(verifiedCompanies),
-    [verifiedCompanies],
+  const empiricalPriors = useMemo(
+    () => deriveEmpiricalPriors(verifiedCompanies, verifiedAcquisitions),
+    [verifiedCompanies, verifiedAcquisitions],
   );
 
-  // Build ComparableDeal[] from the verified dataset — no fabricated deals.
-  // Only include acquisitions with a disclosed deal value.
+  const verifiedAcquirerProfiles = useMemo(
+    () =>
+      buildAcquirerProfilesFromVerified(
+        verifiedAcquirers,
+        verifiedAcquisitions,
+        verifiedCompanies,
+      ),
+    [verifiedAcquirers, verifiedAcquisitions, verifiedCompanies],
+  );
+
+  const companyProfiles = useMemo(
+    () =>
+      filterActiveVerifiedCompanies(verifiedCompanies, verifiedAcquisitions)
+        .map(mapVerifiedCompanyToProfile),
+    [verifiedCompanies, verifiedAcquisitions],
+  );
+
   const verifiedComparables = useMemo((): ComparableDeal[] => {
     const sectorById = new Map(
-      verifiedCompanies.map((c) => [c.id, c.sector ?? ""]),
+      verifiedCompanies.map((c) => [c.id, c.sector]),
     );
     return verifiedAcquisitions
       .filter((a) => (a.dealValue ?? 0) > 0)
@@ -129,9 +63,8 @@ export default function AcquirerPredictionDashboard() {
         acquirerName: a.acquirerName,
         dealValue: a.dealValue ?? 0,
         dealDate: a.announcedDate.slice(0, 7),
-        sector: mapToSector(sectorById.get(a.targetId) ?? ""),
+        sector: mapVerifiedSectorToEngineSector(sectorById.get(a.targetId) ?? ""),
         stage: "acquired" as const,
-        // revenueMultiple omitted — not in verified dataset
       }));
   }, [verifiedAcquisitions, verifiedCompanies]);
 
@@ -140,11 +73,17 @@ export default function AcquirerPredictionDashboard() {
       profile,
       analysis: analyzeCompetitiveDynamics(
         profile,
-        undefined,
+        verifiedAcquirerProfiles,
         verifiedComparables,
+        empiricalPriors,
       ),
     }));
-  }, [companyProfiles, verifiedComparables]);
+  }, [
+    companyProfiles,
+    verifiedAcquirerProfiles,
+    verifiedComparables,
+    empiricalPriors,
+  ]);
 
   const selectedAnalysis = selectedCompany
     ? analyses.find((a) => a.profile.id === selectedCompany)?.analysis
@@ -171,6 +110,12 @@ export default function AcquirerPredictionDashboard() {
   return (
     <div className="space-y-6">
       <CuratedDatasetBanner />
+      <p className="text-xs text-lacuna-text-muted">
+        {empiricalPriors.derivationNote} Acquirer profiles built from{" "}
+        {verifiedAcquirers.length} verified acquirers and{" "}
+        {verifiedAcquisitions.length} deals.
+      </p>
+
       {/* Company Selector */}
       <div className="bg-white rounded-lg shadow p-4">
         <h4 className="text-sm font-semibold text-lacuna-plum mb-3">
@@ -272,7 +217,6 @@ export default function AcquirerPredictionDashboard() {
               </div>
             )}
 
-            {/* AI-Generated Insights */}
             <div className="mt-6 pt-6 border-t border-lacuna-border-subtle">
               <AIInsightsPanel
                 companyName={selectedAnalysis.company.name}
@@ -340,7 +284,6 @@ export default function AcquirerPredictionDashboard() {
                     </div>
                   </div>
 
-                  {/* Match Details */}
                   <div className="mt-3 grid grid-cols-4 gap-4 text-center">
                     <div className="p-2 bg-lacuna-surface-muted rounded">
                       <div className="text-sm font-semibold text-lacuna-plum">
@@ -376,7 +319,6 @@ export default function AcquirerPredictionDashboard() {
                     </div>
                   </div>
 
-                  {/* Rationale */}
                   <div className="mt-3 flex flex-wrap gap-2">
                     {match.keyRationale.map((reason, i) => (
                       <span
@@ -392,7 +334,6 @@ export default function AcquirerPredictionDashboard() {
             </div>
           </div>
 
-          {/* Timeline & Triggers */}
           <div className="bg-white rounded-lg shadow p-6">
             <h4 className="font-semibold text-lacuna-plum mb-3">
               Exit Timeline Estimate
@@ -426,7 +367,6 @@ export default function AcquirerPredictionDashboard() {
             </div>
           </div>
 
-          {/* Sector Comparables */}
           <div className="bg-white rounded-lg shadow p-6">
             <h4 className="font-semibold text-lacuna-plum mb-3">
               Recent Sector Comparables
@@ -449,11 +389,6 @@ export default function AcquirerPredictionDashboard() {
                     <div className="text-sm font-medium">
                       {formatCurrency(deal.dealValue)}
                     </div>
-                    {deal.revenueMultiple && (
-                      <div className="text-xs text-lacuna-text-muted">
-                        {deal.revenueMultiple}x revenue
-                      </div>
-                    )}
                   </div>
                 </div>
               ))}
@@ -462,11 +397,10 @@ export default function AcquirerPredictionDashboard() {
         </motion.div>
       )}
 
-      {/* All Companies Overview */}
       {!selectedCompany && (
         <div className="bg-white rounded-lg shadow-lg p-6">
           <h4 className="font-semibold text-lacuna-plum mb-4">
-            All Companies - Acquirer Interest Overview
+            Active Companies — Acquirer Interest Overview
           </h4>
           <div className="overflow-x-auto">
             <table className="w-full">

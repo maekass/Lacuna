@@ -1,19 +1,19 @@
 /**
  * Bayesian Causal Analysis Dashboard
  *
- * For small samples (n=22 companies, n=10 acquisitions)
- * Addresses Problem 2: Acknowledging underpowered HTE estimation
+ * Small-sample causal inference with defaults derived from the verified dataset.
  */
-
 "use client";
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import {
   PRE_REGISTERED_HYPOTHESES,
   smallSampleCausalAnalysis,
 } from "@/lib/causal/bayesianCausal";
+import { deriveEmpiricalPriors } from "@/lib/quant/empiricalPriors";
 
 interface AnalysisInputs {
   mleEstimate: number;
@@ -24,13 +24,24 @@ interface AnalysisInputs {
 }
 
 export default function BayesianCausalAnalysis() {
-  const [inputs, setInputs] = useState<AnalysisInputs>({
-    mleEstimate: 0.25, // 25% premium
-    standardError: 0.12, // High uncertainty
-    sampleSize: 22, // Our actual sample
-    priorMean: 0, // Neutral prior
-    priorVariance: 0.5, // Moderately informative
-  });
+  const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
+  const empiricalPriors = useMemo(
+    () => deriveEmpiricalPriors(verifiedCompanies, verifiedAcquisitions),
+    [verifiedCompanies, verifiedAcquisitions],
+  );
+
+  const [overrides, setOverrides] = useState<Partial<AnalysisInputs>>({});
+
+  const inputs = useMemo<AnalysisInputs>(
+    () => ({
+      mleEstimate: overrides.mleEstimate ?? 0.25,
+      standardError: overrides.standardError ?? 0.12,
+      sampleSize: overrides.sampleSize ?? empiricalPriors.disclosedDealCount,
+      priorMean: overrides.priorMean ?? 0,
+      priorVariance: overrides.priorVariance ?? 0.5,
+    }),
+    [overrides, empiricalPriors.disclosedDealCount],
+  );
 
   const [showPreRegistration, setShowPreRegistration] = useState(false);
   const [showTransparency, setShowTransparency] = useState(false);
@@ -140,8 +151,8 @@ export default function BayesianCausalAnalysis() {
                 min={field.min}
                 value={inputs[field.key as keyof AnalysisInputs]}
                 onChange={(e) =>
-                  setInputs({
-                    ...inputs,
+                  setOverrides({
+                    ...overrides,
                     [field.key]: parseFloat(e.target.value) || 0,
                   })}
                 className="w-full px-3 py-2 border border-lacuna-border rounded text-sm"

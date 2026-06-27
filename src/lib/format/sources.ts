@@ -1,5 +1,4 @@
-import type { VerifiedCompany } from "@/data/verifiedData";
-import { verifiedCompanies } from "@/data/verifiedData";
+import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
 
 /** Compact provenance line for UI footnotes (max items, middle-dot separated). */
 export function formatSourceLine(
@@ -17,16 +16,20 @@ export function formatSourceLine(
 }
 
 export function getVerifiedCompanyRecord(
+  companies: readonly VerifiedCompanyView[],
   name: string,
-): VerifiedCompany | undefined {
-  return verifiedCompanies.find((c) => c.name === name);
+): VerifiedCompanyView | undefined {
+  return companies.find((c) => c.name === name);
 }
 
-export function sourcesForCompany(name: string): {
+export function sourcesForCompany(
+  companies: readonly VerifiedCompanyView[],
+  name: string,
+): {
   sources: string[];
   valuationSource?: string;
 } {
-  const record = getVerifiedCompanyRecord(name);
+  const record = getVerifiedCompanyRecord(companies, name);
   if (!record) return { sources: [] };
   return {
     sources: [...record.sources],
