@@ -3,11 +3,11 @@
   "therapeuticAreaId": "endometriosis",
   "generatedAt": "2026-06-27",
   "crunchbaseSearchTotal": 409,
-  "parsedFromPaste": 288,
-  "excludedNonForProfit": 11,
-  "excludedClinicalServices": 139,
-  "excludedNoFundingStatus": 95,
-  "includedCount": 42,
+  "parsedFromPaste": 347,
+  "excludedNonForProfit": 18,
+  "excludedClinicalServices": 154,
+  "excludedNoFundingStatus": 129,
+  "includedCount": 45,
   "verifiedDatasetOverlap": 1,
   "companies": [
     {
@@ -634,6 +634,55 @@
         "Funding Spotter - £101K early-stage allotment, Apr 2026",
         "Companies House - AEVA HEALTH LTD (15462448)",
         "Crunchbase Pro search paste (rank 4119615)"
+      ]
+    },
+    {
+      "id": "3cpm-ltd",
+      "name": "3CPM LTD",
+      "description": "3CPM develops diagnostic healthcare technologies focused on non-invasive evaluation of gastrointestinal and pelvic disorders including electroviscerography-based solutions for endometriosis diagnostics.",
+      "category": "diagnostics",
+      "crunchbaseRank": 4429533,
+      "fundingStatus": "Grant",
+      "lastFundingType": "Grant",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "NIH RADx Tech ACT ENDO Challenge midterm award",
+        "3CPM / ENDOSURE ENDOSURE TEST development partnership",
+        "Crunchbase Pro search paste (rank 4429533)"
+      ]
+    },
+    {
+      "id": "theramex-deutschland",
+      "name": "Theramex Deutschland",
+      "description": "Theramex Deutschland is a pharmaceutical company that focuses on medicines for women's health including treatments for endometriosis and uterine fibroids.",
+      "category": "pharma",
+      "crunchbaseRank": 4445171,
+      "fundingStatus": "Private Equity",
+      "lastFundingType": "M&A",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Carlyle & PAI Partners acquisition from CVC, 2022",
+        "CB Insights - Theramex Acq - Fin - II",
+        "Crunchbase Pro search paste (rank 4445171)"
+      ]
+    },
+    {
+      "id": "mabpro-a-s",
+      "name": "Mabpro, A.s.",
+      "description": "Mabpro develops cancer immunotherapies and companion diagnostics and conducts research into CA IX-related mechanisms in endometriosis.",
+      "category": "therapeutics",
+      "crunchbaseRank": 4590084,
+      "fundingStatus": "Early Stage Venture",
+      "totalFundingM": 2.7,
+      "lastFundingType": "Grant",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase / LinkedIn - Mabpro Therapeutics ~$2.7M (seed, angel, grants)",
+        "EuroQuity - MABPRO, a.s. immunotherapy platform",
+        "Crunchbase Pro search paste (rank 4590084)"
       ]
     }
   ],

@@ -408,6 +408,37 @@ const KNOWN_FUNDING: Record<string, KnownFunding> = {
       "Companies House - AEVA HEALTH LTD (15462448)",
     ],
   },
+  theramex: {
+    fundingStatus: "Private Equity",
+    lastFundingType: "M&A",
+    operatingStatus: "Active",
+    category: "pharma",
+    sources: [
+      "Carlyle & PAI Partners acquisition from CVC, 2022",
+      "CB Insights - Theramex Acq - Fin - II",
+    ],
+  },
+  mabpro: {
+    fundingStatus: "Early Stage Venture",
+    lastFundingType: "Grant",
+    totalFundingM: 2.7,
+    operatingStatus: "Active",
+    category: "therapeutics",
+    sources: [
+      "Crunchbase / LinkedIn - Mabpro Therapeutics ~$2.7M (seed, angel, grants)",
+      "EuroQuity - MABPRO, a.s. immunotherapy platform",
+    ],
+  },
+  "3cpm ltd": {
+    fundingStatus: "Grant",
+    lastFundingType: "Grant",
+    operatingStatus: "Active",
+    category: "diagnostics",
+    sources: [
+      "NIH RADx Tech ACT ENDO Challenge midterm award",
+      "3CPM / ENDOSURE ENDOSURE TEST development partnership",
+    ],
+  },
 };
 
 const NONPROFIT_PATTERNS = [
@@ -423,6 +454,9 @@ const NONPROFIT_PATTERNS = [
   /\bnonprofit coalition\b/i,
   /\bnonprofit association\b/i,
   /\bresearch center is a 501/i,
+  /\bworldwide endomarch\b/i,
+  /\bcommunity interest company\b/i,
+  /\bcharitable arm of\b/i,
 ];
 
 const CLINICAL_SERVICE_PATTERNS = [
@@ -483,6 +517,10 @@ const CLINICAL_SERVICE_PATTERNS = [
   /\bhealing sanctuary\b/i,
   /\bovulation induction\b/i,
   /\bmedical associates is a health care center\b/i,
+  /\bprovides specialist diagnostic services focused on identifying endometriosis using pelvic ultrasound\b/i,
+  /\boperates fertility clinics\b/i,
+  /\bmedical aesthetics and wellness services\b/i,
+  /\bholistic nutrition and wellness coaching services\b/i,
 ];
 
 const PRODUCT_SIGNAL_PATTERNS = [
@@ -713,6 +751,12 @@ function lookupKnownFunding(norm: string): KnownFunding | undefined {
     "milestone gynomics": "milestone gynomics",
     "aeva health ltd": "aeva health ltd",
     "aeva health": "aeva health ltd",
+    "theramex deutschland": "theramex",
+    theramex: "theramex",
+    "mabpro a s": "mabpro",
+    mabpro: "mabpro",
+    "3cpm ltd": "3cpm ltd",
+    "3cpm company": "3cpm ltd",
   };
   const alias = aliases[norm];
   if (alias && KNOWN_FUNDING[alias]) return KNOWN_FUNDING[alias];
