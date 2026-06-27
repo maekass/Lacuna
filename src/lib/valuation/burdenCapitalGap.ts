@@ -58,6 +58,12 @@ export const CITATIONS: Record<string, Citation> = {
     reference:
       "PitchBook Data. Women's Health & FemTech VC Deal Flow Report 2019–2024. Seattle, WA: PitchBook, 2024. Deal counts and disclosed round values.",
   },
+  wef_bcg_2026: {
+    id: "wef_bcg_2026",
+    label: "6a",
+    reference:
+      "World Economic Forum & Boston Consulting Group. Women's Health Investment Outlook 2026. Figure 3 — funding events and capital raised by therapeutic area, 2020–2025. PitchBook, CapIQ, Crunchbase. Used in BCG View chart; valuation VC estimates remain on Rock Health / PitchBook FemTech 2019–2024.",
+  },
   ihme_endo_2023: {
     id: "ihme_endo_2023",
     label: "7",

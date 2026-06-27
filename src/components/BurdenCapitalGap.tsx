@@ -13,6 +13,11 @@ import {
   type BurdenCapitalGapRow,
   type WefCategory,
 } from "@/data/burdenCapitalGap";
+import {
+  buildCapitalComparison,
+  crosswalkSummary,
+  valuationAreasWithoutBcgRow,
+} from "@/lib/valuation/bcgCrosswalk";
 
 const MARGIN = { top: 28, right: 108, bottom: 52, left: 196 };
 const ROW_HEIGHT = 30;
@@ -43,6 +48,9 @@ export default function BurdenCapitalGap() {
 
   const rows = useMemo(() => sortBurdenCapitalRows(BURDEN_CAPITAL_GAP_DATA), []);
   const burdenMode = useMemo(() => hasBurdenData(BURDEN_CAPITAL_GAP_DATA), []);
+  const comparison = useMemo(() => buildCapitalComparison(), []);
+  const summary = useMemo(() => crosswalkSummary(), []);
+  const orphanValuationAreas = useMemo(() => valuationAreasWithoutBcgRow(), []);
 
   const chartHeight = rows.length * ROW_HEIGHT + MARGIN.top + MARGIN.bottom;
   const innerWidth = Math.max(280, width - MARGIN.left - MARGIN.right);
@@ -287,6 +295,65 @@ export default function BurdenCapitalGap() {
           ? "Sorted by burden–capital distance (IHME GBD 2023)."
           : "Burden: pending IHME GBD 2023 — chart sorted by funding events until DALY data lands."}
       </p>
+
+      <details className="mt-4 rounded-lg border border-lacuna-lavender/30 bg-lacuna-lavender/10 px-4 py-3">
+        <summary className="cursor-pointer text-xs font-semibold text-lacuna-plum">
+          Vet vs. gap valuation model ({summary.mapped} aligned · {summary.partial}{" "}
+          partial · {summary.unmapped} unmapped)
+        </summary>
+        <p className="mt-2 text-xs leading-relaxed text-lacuna-blue/80">
+          This chart uses WEF/BCG macro funding (2020–2025, all WH-tagged flows).
+          The valuation model below uses US GBD 2021 burden + Rock Health / PitchBook
+          FemTech VC estimates (2019–2024). Capital figures are expected to differ —
+          they answer different questions. The critical gap:{" "}
+          <span className="font-medium text-lacuna-plum">
+            cardiovascular and metabolic disorders have no valuation area
+          </span>
+          , so gap scoring cannot yet express the headline misclassification thesis.
+        </p>
+        <div className="mt-3 overflow-x-auto">
+          <table className="w-full min-w-[640px] text-left text-[11px] text-lacuna-blue/80">
+            <thead>
+              <tr className="border-b border-lacuna-lavender/30 text-lacuna-plum">
+                <th className="py-1.5 pr-3 font-medium">WEF area</th>
+                <th className="py-1.5 pr-3 font-medium">Valuation area</th>
+                <th className="py-1.5 pr-3 font-medium">WEF capital</th>
+                <th className="py-1.5 pr-3 font-medium">Valuation VC</th>
+                <th className="py-1.5 font-medium">Gap score</th>
+              </tr>
+            </thead>
+            <tbody>
+              {comparison.map((row) => (
+                <tr
+                  key={row.bcg.id}
+                  className="border-b border-lacuna-lavender/15 last:border-0"
+                >
+                  <td className="py-1.5 pr-3">{row.bcg.therapeuticArea}</td>
+                  <td className="py-1.5 pr-3">
+                    {row.crosswalk.valuationAreaName ?? (
+                      <span className="text-amber-700">Unmapped</span>
+                    )}
+                  </td>
+                  <td className="py-1.5 pr-3">{formatCapitalM(row.bcg.capitalRaisedM)}</td>
+                  <td className="py-1.5 pr-3">
+                    {row.valuationVcM !== null
+                      ? formatCapitalM(row.valuationVcM)
+                      : "—"}
+                  </td>
+                  <td className="py-1.5">
+                    {row.valuationGapScore !== null ? `${row.valuationGapScore}/100` : "—"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {orphanValuationAreas.length > 0 && (
+          <p className="mt-2 text-[11px] text-lacuna-blue/65">
+            Valuation-only areas (no WEF row): {orphanValuationAreas.join(", ")}.
+          </p>
+        )}
+      </details>
 
       <div className="mt-4 border-t border-lacuna-pink/20 pt-3 space-y-1.5">
         <p className="text-xs font-semibold text-lacuna-plum">Sources</p>

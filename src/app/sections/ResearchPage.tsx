@@ -39,7 +39,7 @@ export default function ResearchPage() {
         </div>
         <SectionHeader
           title="Gap valuation model"
-          description="Estimate investment value using the gap between a disease area's societal burden (DALYs, prevalence, mortality) and VC deployed. High-gap areas historically command premium exits for early movers. Heuristic model — not financial advice."
+          description="US GBD 2021 burden × Rock Health / PitchBook FemTech VC (2019–2024) — deal-level heuristic scoring. Complements the WEF chart above; capital figures differ by design. Cardiovascular and metabolic areas not yet in scoring model."
         />
         <BurdenCapitalGapValuation />
       </MotionSection>
