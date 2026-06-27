@@ -85,7 +85,16 @@ const companyMap = new Map<string, Company>();
 for (const c of companies) companyMap.set(c.id, c);
 
 // For each sector, compute correlation between hasCPTCode and dealValue/totalFunding
-const sectorResults: any[] = [];
+interface SectorCorrelationResult {
+  sector: string;
+  correlation: number | null;
+  sampleSize: number;
+  method: string;
+  source: string;
+  warning?: string;
+}
+
+const sectorResults: SectorCorrelationResult[] = [];
 
 const allSectors = [...new Set(companies.map(c => c.sector))];
 

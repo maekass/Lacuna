@@ -115,16 +115,21 @@ function useHealthChecks() {
 
   const runAllChecks = useCallback(async () => {
     setIsRunning(true);
-    const results = await Promise.all(checks.map(runCheck));
+    const results = await Promise.all(INITIAL_CHECKS.map(runCheck));
     setChecks(results);
     setIsRunning(false);
-  }, [checks, runCheck]);
+  }, [runCheck]);
 
   useEffect(() => {
-    runAllChecks();
-    const interval = setInterval(runAllChecks, 60000); // Auto-refresh every minute
-    return () => clearInterval(interval);
-  }, []);
+    const timer = window.setTimeout(() => {
+      void runAllChecks();
+    }, 0);
+    const interval = setInterval(() => void runAllChecks(), 60000);
+    return () => {
+      clearTimeout(timer);
+      clearInterval(interval);
+    };
+  }, [runAllChecks]);
 
   return { checks, isRunning, runAllChecks };
 }

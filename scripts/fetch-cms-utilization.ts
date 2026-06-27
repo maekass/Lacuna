@@ -55,7 +55,8 @@ const SECTOR_CPT_CODES: Record<string, string[]> = {
   digital_therapeutics: ["98960", "99421", "99422", "99423"],
 };
 
-// CMS Data API — Medicare Physician & Other Practitioner Services
+// CMS API rows use inconsistent column names across datasets
+type CmsApiRow = Record<string, string | number | null | undefined>;
 // Using the CMS Data Catalog API to search for CPT utilization
 // Dataset: Medicare Physician & Other Practitioners by Provider and Service (2023)
 // https://data.cms.gov/provider-summary-by-type-of-service/medicare-physician-other-practitioners-by-provider-and-service
@@ -78,7 +79,7 @@ async function fetchCptUtilization(cptCode: string): Promise<CptUtilization | nu
 
       if (!response.ok) continue;
 
-      const data = await response.json() as any[];
+      const data = await response.json() as CmsApiRow[];
 
       if (!data || data.length === 0) continue;
 
@@ -107,7 +108,7 @@ async function fetchCptUtilization(cptCode: string): Promise<CptUtilization | nu
     });
 
     if (searchResponse.ok) {
-      const searchData = await searchResponse.json() as any[];
+      const searchData = await searchResponse.json() as CmsApiRow[];
       if (searchData && searchData.length > 0) {
         const row = searchData[0];
         return {

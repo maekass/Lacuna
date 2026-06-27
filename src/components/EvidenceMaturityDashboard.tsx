@@ -252,10 +252,12 @@ export default function EvidenceMaturityDashboard() {
   /* ─── auto-enrich on mount ─── */
   useEffect(() => {
     if (!enriched && !apiState.loading && verifiedCompanies.length > 0) {
-      enrichFromAPIs();
+      const timer = window.setTimeout(() => {
+        void enrichFromAPIs();
+      }, 0);
+      return () => clearTimeout(timer);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [verifiedCompanies.length]);
+  }, [verifiedCompanies.length, enriched, apiState.loading]);
 
   const avgScore = baseRows.length > 0
     ? Math.round(

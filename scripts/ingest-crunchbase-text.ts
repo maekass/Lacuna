@@ -41,8 +41,22 @@ interface Company {
   id: string;
   name: string;
   sector: string;
+  description?: string;
   sources?: string[];
-  [key: string]: any;
+  crunchbaseIndustries?: string[];
+  headquarters?: string;
+  tagline?: string;
+  crunchbaseRank?: number;
+}
+
+interface CrunchbaseTextAuditEntry {
+  name?: string;
+  matched: boolean;
+  matchMethod: string;
+  crunchbaseName?: string;
+  companyId?: string;
+  companyName?: string;
+  fieldsUpdated?: string[];
 }
 
 function normalizeName(name: string): string {
@@ -139,7 +153,7 @@ function parseCrunchbaseText(text: string): CrunchbaseEntry[] {
     const name = logoLine.replace(/ Logo$/, "").trim();
 
     // Second line should be the company name again (skip it)
-    let idx = 2;
+    const idx = 2;
 
     // Find industries line — it contains multiple comma-separated industry keywords
     let industries: string[] = [];
@@ -202,9 +216,9 @@ function main() {
   const dataset = JSON.parse(readFileSync(resolve(SRC_DATA_DIR, "dataset.verified.json"), "utf-8"));
   const companies: Company[] = dataset.companies || [];
 
-  const auditTrail: any[] = [];
+  const auditTrail: CrunchbaseTextAuditEntry[] = [];
   let enriched = 0;
-  let unmatched: string[] = [];
+  const unmatched: string[] = [];
 
   for (const entry of entries) {
     // Try to match to a dataset company

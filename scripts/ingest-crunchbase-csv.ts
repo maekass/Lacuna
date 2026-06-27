@@ -44,8 +44,16 @@ interface Company {
   totalFunding?: number;
   lastKnownValuation?: number;
   valuationSource?: string;
+  fundingSource?: string;
+  foundedDate?: string;
+  employees?: string;
+  operatingStatus?: string;
+  lastFundingType?: string;
+  lastFundingDate?: string;
+  fundingRounds?: number;
+  industries?: string[];
+  headquarters?: string;
   sources?: string[];
-  [key: string]: any;
 }
 
 interface EnrichmentRecord {

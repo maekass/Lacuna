@@ -36,6 +36,7 @@ interface Acquisition {
   announcedDate?: string;
   dealType?: string;
   dealStructure?: string;
+  preDealValuation?: number;
 }
 
 interface AcquirerPremium {
@@ -61,7 +62,6 @@ function median(values: number[]): number {
 const dataset = JSON.parse(readFileSync("src/data/dataset.verified.json", "utf-8"));
 const companies: Company[] = dataset.companies || [];
 const acquisitions: Acquisition[] = dataset.acquisitions || [];
-const acquirers: any[] = dataset.acquirers || [];
 
 const companyMap = new Map<string, Company>();
 for (const c of companies) companyMap.set(c.id, c);
@@ -87,7 +87,7 @@ for (const [acquirerName, deals] of acquirerDeals) {
     if (!target) continue;
 
     // Premium = dealValue / preDealValuation (preferred) or dealValue / lastKnownValuation or dealValue / totalFunding (fallback)
-    const baseline = (deal as any).preDealValuation ?? target.lastKnownValuation ?? target.totalFunding;
+    const baseline = deal.preDealValuation ?? target.lastKnownValuation ?? target.totalFunding;
     if (!baseline || baseline <= 0) continue;
 
     const premium = deal.dealValue! / baseline;

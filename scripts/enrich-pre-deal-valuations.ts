@@ -31,7 +31,10 @@ interface Acquisition {
   announcedDate?: string;
   closedDate?: string;
   source?: string;
-  [key: string]: any;
+  preDealValuation?: number;
+  preDealValuationSource?: string;
+  preDealValuationDate?: string;
+  computedPremium?: number;
 }
 
 interface Company {

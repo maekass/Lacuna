@@ -50,7 +50,7 @@ const SECTOR_CPT_CODES: Record<string, string[]> = {
   digital_therapeutics: ["98960", "99421", "99422", "99423"],
 };
 
-// CMS PFS API endpoint
+type CmsApiRow = Record<string, string | number | null | undefined>;
 const CMS_API_BASE = "https://data.cms.gov/data-api/v1/dataset";
 const CMS_PFS_DATASET_ID = "78py-wnyg"; // CMS Physician Fee Schedule
 
@@ -65,7 +65,7 @@ async function fetchCptRate(cptCode: string): Promise<CptCodeRate | null> {
       return null;
     }
 
-    const data = await response.json() as any[];
+    const data = await response.json() as CmsApiRow[];
     if (!data || data.length === 0) return null;
 
     const row = data[0];

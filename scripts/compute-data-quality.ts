@@ -51,17 +51,60 @@ function scoreSource(source?: string): SourceQuality {
   return { level: "F", description: "Unverified or unknown source", score: 20 };
 }
 
-function scoreCompleteness(fields: Record<string, any>, requiredFields: string[]): number {
+function scoreCompleteness(fields: Record<string, unknown>, requiredFields: string[]): number {
   const populated = requiredFields.filter(f => fields[f] !== undefined && fields[f] !== null && fields[f] !== "").length;
   return (populated / requiredFields.length) * 100;
 }
 
+interface CompanyRecord {
+  id: string;
+  name: string;
+  sector: string;
+  stage?: string;
+  founded?: number;
+  hq?: string;
+  description?: string;
+  lastKnownValuation?: number;
+  valuationSource?: string;
+  totalFunding?: number;
+  sources?: string[];
+}
+
+interface AcquisitionRecord {
+  id: string;
+  targetId: string;
+  targetName: string;
+  acquirerName: string;
+  dealValue?: number;
+  announcedDate?: string;
+  closedDate?: string;
+  source?: string;
+  dealType?: string;
+}
+
+interface EntityScore {
+  id: string;
+  name?: string;
+  sector?: string;
+  target?: string;
+  acquirer?: string;
+  sourceQuality: string;
+  sourceDescription: string;
+  completeness: number;
+  hasValuation?: boolean;
+  hasFunding?: boolean;
+  hasSource: boolean;
+  hasDealValue?: boolean;
+  overallScore: number;
+  grade: string;
+}
+
 // Main
 const dataset = JSON.parse(readFileSync("src/data/dataset.verified.json", "utf-8"));
-const companies: any[] = dataset.companies || [];
-const acquisitions: any[] = dataset.acquisitions || [];
+const companies: CompanyRecord[] = dataset.companies || [];
+const acquisitions: AcquisitionRecord[] = dataset.acquisitions || [];
 
-const companyScores: any[] = [];
+const companyScores: EntityScore[] = [];
 const companyFields = ["id", "name", "sector", "stage", "founded", "hq", "description", "lastKnownValuation", "valuationSource", "totalFunding", "sources"];
 
 for (const company of companies) {
@@ -91,7 +134,7 @@ for (const company of companies) {
   });
 }
 
-const acquisitionScores: any[] = [];
+const acquisitionScores: EntityScore[] = [];
 const acquisitionFields = ["id", "targetId", "acquirerName", "targetName", "dealValue", "announcedDate", "closedDate", "source", "dealType"];
 
 for (const deal of acquisitions) {

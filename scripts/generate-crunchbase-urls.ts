@@ -21,7 +21,7 @@
  * Usage: npx tsx scripts/generate-crunchbase-urls.ts
  */
 
-import { writeFileSync, mkdirSync } from "fs";
+import { writeFileSync, mkdirSync, readFileSync } from "fs";
 import { resolve } from "path";
 
 const ROOT = resolve(__dirname, "..");
@@ -34,7 +34,11 @@ interface Company {
   name: string;
   sector: string;
   sources?: string[];
-  [key: string]: any;
+}
+
+interface DataQualityScore {
+  id: string;
+  grade: string;
 }
 
 function main() {
@@ -42,18 +46,18 @@ function main() {
   mkdirSync(DATA_DIR, { recursive: true });
 
   const dataset = JSON.parse(
-    require("fs").readFileSync(resolve(SRC_DATA_DIR, "dataset.verified.json"), "utf-8")
+    readFileSync(resolve(SRC_DATA_DIR, "dataset.verified.json"), "utf-8"),
   );
   const companies: Company[] = dataset.companies || [];
 
   // Get D-grade companies from the data quality scores
   const scores = JSON.parse(
-    require("fs").readFileSync(resolve(SRC_DATA_DIR, "computed-data-quality-scores.json"), "utf-8")
-  );
+    readFileSync(resolve(SRC_DATA_DIR, "computed-data-quality-scores.json"), "utf-8"),
+  ) as { companies: DataQualityScore[] };
   const dGradeIds = new Set(
     scores.companies
-      .filter((c: any) => c.grade === "D")
-      .map((c: any) => c.id)
+      .filter((c) => c.grade === "D")
+      .map((c) => c.id),
   );
 
   const dCompanies = companies.filter((c) => dGradeIds.has(c.id));

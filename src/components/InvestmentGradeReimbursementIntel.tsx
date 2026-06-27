@@ -65,6 +65,62 @@ const PAYER_BAR_STYLES: Record<string, string> = {
   cash: "bg-slate-500 w-[15%]",
 };
 
+function RiskBadge(
+  { risk }: { risk: ReimbursementRiskScore["overallRisk"] },
+) {
+  const styles = {
+    low: "bg-emerald-100 text-emerald-800 border-emerald-300",
+    moderate: "bg-amber-100 text-amber-800 border-amber-300",
+    high: "bg-orange-100 text-orange-800 border-orange-300",
+    critical: "bg-red-100 text-red-800 border-red-300",
+  };
+  return (
+    <span
+      className={`px-3 py-1 rounded-full text-sm font-semibold border ${
+        styles[risk]
+      }`}
+    >
+      {risk.toUpperCase()} RISK
+    </span>
+  );
+}
+
+function SignalCard({ signal }: { signal: InvestmentSignal }) {
+  const typeStyles = {
+    opportunity: "bg-emerald-50 border-emerald-200",
+    risk: "bg-red-50 border-red-200",
+    trend: "bg-blue-50 border-blue-200",
+    timing: "bg-purple-50 border-purple-200",
+  };
+
+  const priorityBadge = {
+    high: "bg-red-100 text-red-800",
+    medium: "bg-amber-100 text-amber-800",
+    low: "bg-slate-100 text-slate-600",
+  };
+
+  return (
+    <div className={`p-4 rounded-lg border ${typeStyles[signal.type]}`}>
+      <div className="flex items-start justify-between mb-2">
+        <h4 className="font-semibold text-slate-800">{signal.headline}</h4>
+        <span
+          className={`px-2 py-0.5 rounded text-xs font-medium ${
+            priorityBadge[signal.priority]
+          }`}
+        >
+          {signal.priority.toUpperCase()}
+        </span>
+      </div>
+      <p className="text-sm text-slate-600 mb-2">{signal.detail}</p>
+      {signal.actionable && (
+        <span className="inline-flex items-center px-2 py-1 bg-white/70 rounded text-xs font-medium text-slate-700">
+          Action Required
+        </span>
+      )}
+    </div>
+  );
+}
+
 // Investment-grade scoring algorithm
 function calculateReimbursementRisk(
   company: VerifiedCompanyView,
@@ -327,62 +383,6 @@ export default function InvestmentGradeReimbursementIntel() {
   const formatCurrency = (value: number): string => {
     if (value >= 1000) return `$${(value / 1000).toFixed(1)}T`;
     return `$${value.toFixed(1)}B`;
-  };
-
-  const RiskBadge = (
-    { risk }: { risk: ReimbursementRiskScore["overallRisk"] },
-  ) => {
-    const styles = {
-      low: "bg-emerald-100 text-emerald-800 border-emerald-300",
-      moderate: "bg-amber-100 text-amber-800 border-amber-300",
-      high: "bg-orange-100 text-orange-800 border-orange-300",
-      critical: "bg-red-100 text-red-800 border-red-300",
-    };
-    return (
-      <span
-        className={`px-3 py-1 rounded-full text-sm font-semibold border ${
-          styles[risk]
-        }`}
-      >
-        {risk.toUpperCase()} RISK
-      </span>
-    );
-  };
-
-  const SignalCard = ({ signal }: { signal: InvestmentSignal }) => {
-    const typeStyles = {
-      opportunity: "bg-emerald-50 border-emerald-200",
-      risk: "bg-red-50 border-red-200",
-      trend: "bg-blue-50 border-blue-200",
-      timing: "bg-purple-50 border-purple-200",
-    };
-
-    const priorityBadge = {
-      high: "bg-red-100 text-red-800",
-      medium: "bg-amber-100 text-amber-800",
-      low: "bg-slate-100 text-slate-600",
-    };
-
-    return (
-      <div className={`p-4 rounded-lg border ${typeStyles[signal.type]}`}>
-        <div className="flex items-start justify-between mb-2">
-          <h4 className="font-semibold text-slate-800">{signal.headline}</h4>
-          <span
-            className={`px-2 py-0.5 rounded text-xs font-medium ${
-              priorityBadge[signal.priority]
-            }`}
-          >
-            {signal.priority.toUpperCase()}
-          </span>
-        </div>
-        <p className="text-sm text-slate-600 mb-2">{signal.detail}</p>
-        {signal.actionable && (
-          <span className="inline-flex items-center px-2 py-1 bg-white/70 rounded text-xs font-medium text-slate-700">
-            Action Required
-          </span>
-        )}
-      </div>
-    );
   };
 
   return (

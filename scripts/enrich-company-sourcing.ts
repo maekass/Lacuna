@@ -25,7 +25,13 @@ interface Company {
   name: string;
   sector: string;
   sources?: string[];
-  [key: string]: any;
+}
+
+interface SourcingAuditEntry {
+  companyId: string;
+  companyName: string;
+  sourcesAdded: string[];
+  totalSources: number;
 }
 
 /**
@@ -365,7 +371,7 @@ function main() {
   const companies: Company[] = dataset.companies || [];
 
   let enriched = 0;
-  const auditTrail: any[] = [];
+  const auditTrail: SourcingAuditEntry[] = [];
 
   for (const company of companies) {
     const newSources = COMPANY_SOURCES[company.id];

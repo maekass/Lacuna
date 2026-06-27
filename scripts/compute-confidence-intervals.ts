@@ -17,6 +17,52 @@
 
 import { readFileSync, writeFileSync } from "fs";
 
+interface Company {
+  id: string;
+  sector: string;
+  totalFunding?: number;
+}
+
+interface Acquisition {
+  targetId: string;
+  dealValue?: number;
+}
+
+interface BenchmarkSector {
+  sector: string;
+  medianMultiple: number;
+}
+
+interface BenchmarksFile {
+  benchmarks: BenchmarkSector[];
+}
+
+interface GrowthCompany {
+  sector: string;
+  cagr: number | null;
+  confidence: string;
+}
+
+interface GrowthRatesFile {
+  companies: GrowthCompany[];
+}
+
+interface ConfidenceResult {
+  metric: string;
+  sector?: string;
+  acquirer?: string;
+  sampleSize: number;
+  pointEstimate: number;
+  ci95: { lower: number; upper: number };
+  method: string;
+  reliability: string;
+}
+
+interface VerifiedDatasetJson {
+  companies: Company[];
+  acquisitions: Acquisition[];
+}
+
 function median(values: number[]): number {
   if (values.length === 0) return NaN;
   const sorted = [...values].sort((a, b) => a - b);
@@ -61,20 +107,20 @@ function normalCI(values: number[]): { lower: number; upper: number } {
 }
 
 // Main — load all computed data
-const benchmarks = JSON.parse(readFileSync("src/data/computed-benchmarks.json", "utf-8"));
-const growthRates = JSON.parse(readFileSync("src/data/computed-growth-rates.json", "utf-8"));
+const benchmarks = JSON.parse(readFileSync("src/data/computed-benchmarks.json", "utf-8")) as BenchmarksFile;
+const growthRates = JSON.parse(readFileSync("src/data/computed-growth-rates.json", "utf-8")) as GrowthRatesFile;
 const correlations = JSON.parse(readFileSync("src/data/computed-sector-correlations.json", "utf-8"));
 const premiums = JSON.parse(readFileSync("src/data/computed-acquirer-premiums.json", "utf-8"));
 
-const results: any[] = [];
+const results: ConfidenceResult[] = [];
 
 // Benchmark CIs
 for (const b of benchmarks.benchmarks) {
   // We need the raw multiples — recompute from dataset
-  const dataset: any = JSON.parse(readFileSync("src/data/dataset.verified.json", "utf-8"));
-  const companies: any[] = dataset.companies || [];
-  const acquisitions: any[] = dataset.acquisitions || [];
-  const companyMap = new Map(companies.map((c: any) => [c.id, c]));
+  const dataset = JSON.parse(readFileSync("src/data/dataset.verified.json", "utf-8")) as VerifiedDatasetJson;
+  const companies = dataset.companies || [];
+  const acquisitions = dataset.acquisitions || [];
+  const companyMap = new Map(companies.map((c) => [c.id, c]));
 
   const multiples: number[] = [];
   for (const deal of acquisitions) {

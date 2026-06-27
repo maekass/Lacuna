@@ -28,6 +28,18 @@ interface Company {
   sources?: string[];
 }
 
+interface SecRevenueEntry {
+  fp: string;
+  form: string;
+  fy: string;
+  end: string;
+  val: number;
+}
+
+interface SecRevenueFactsResponse {
+  units?: Record<string, SecRevenueEntry[]>;
+}
+
 interface SecRevenueRecord {
   companyId: string;
   companyName: string;
@@ -39,8 +51,6 @@ interface SecRevenueRecord {
   filingUrl: string;
   filingType: string;
 }
-
-// Map of company names to SEC CIK numbers for companies that are/were public
 // Source: SEC EDGAR company search (https://www.sec.gov/cgi-bin/browse-edgar)
 const COMPANY_CIK_MAP: Record<string, { cik: string; ticker?: string }> = {
   "Talkspace": { cik: "0001835825", ticker: "TALK" },
@@ -100,11 +110,11 @@ async function fetchRevenueForCompany(cik: string): Promise<SecRevenueRecord[]> 
         return [];
       }
 
-      const data = await altResponse.json() as any;
+      const data = await altResponse.json() as SecRevenueFactsResponse;
       return parseRevenueData(data, cik);
     }
 
-    const data = await response.json() as any;
+    const data = await response.json() as SecRevenueFactsResponse;
     return parseRevenueData(data, cik);
   } catch (err) {
     console.warn(`  ⚠️  Error fetching CIK ${cik}: ${err}`);
@@ -112,7 +122,7 @@ async function fetchRevenueForCompany(cik: string): Promise<SecRevenueRecord[]> 
   }
 }
 
-function parseRevenueData(data: any, cik: string): SecRevenueRecord[] {
+function parseRevenueData(data: SecRevenueFactsResponse, cik: string): SecRevenueRecord[] {
   const results: SecRevenueRecord[] = [];
   const units = data.units;
 
@@ -123,12 +133,13 @@ function parseRevenueData(data: any, cik: string): SecRevenueRecord[] {
   if (!usdData || !Array.isArray(usdData)) return results;
 
   // Filter to annual (FY or 10-K) filings, deduplicate by fiscal year
-  const byYear = new Map<number, any>();
+  const byYear = new Map<number, SecRevenueEntry>();
 
   for (const entry of usdData) {
     if (entry.fp === "FY" && entry.form === "10-K") {
       const year = parseInt(entry.fy);
-      if (!byYear.has(year) || entry.end > byYear.get(year).end) {
+      const existing = byYear.get(year);
+      if (!existing || entry.end > existing.end) {
         byYear.set(year, entry);
       }
     }
@@ -183,7 +194,7 @@ async function main() {
   }
 
   // Also fetch for acquirers that are public
-  const acquirers: any[] = dataset.acquirers || [];
+  const acquirers: Array<{ id: string; name: string }> = dataset.acquirers || [];
   for (const acquirer of acquirers) {
     const cikEntry = COMPANY_CIK_MAP[acquirer.name];
     if (!cikEntry) continue;
