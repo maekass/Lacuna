@@ -10,7 +10,7 @@ describe("endometriosis coverage manifest", () => {
     expect(ENDOMETRIOSIS_COVERAGE.therapeuticAreaId).toBe("endometriosis");
     expect(stats.crunchbaseSearchTotal).toBe(409);
     expect(stats.includedCount).toBeGreaterThan(0);
-    expect(stats.includedCount).toBeGreaterThanOrEqual(38);
+    expect(stats.includedCount).toBeGreaterThanOrEqual(40);
   });
 
   it("includes only companies with funding or fundraising status", () => {

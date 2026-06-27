@@ -3,11 +3,11 @@
   "therapeuticAreaId": "endometriosis",
   "generatedAt": "2026-06-27",
   "crunchbaseSearchTotal": 409,
-  "parsedFromPaste": 188,
-  "excludedNonForProfit": 5,
-  "excludedClinicalServices": 88,
-  "excludedNoFundingStatus": 55,
-  "includedCount": 40,
+  "parsedFromPaste": 288,
+  "excludedNonForProfit": 11,
+  "excludedClinicalServices": 139,
+  "excludedNoFundingStatus": 95,
+  "includedCount": 42,
   "verifiedDatasetOverlap": 1,
   "companies": [
     {
@@ -600,6 +600,40 @@
         "EndoDiagnosis / ENDOSURE - endodiagnosis.com",
         "LinkedIn EndoSure Inc. - $150K debt financing, 2025",
         "Crunchbase Pro search paste (rank 2797679)"
+      ]
+    },
+    {
+      "id": "milestone-gynomics",
+      "name": "Milestone Gynomics",
+      "description": "Milestone Gynomics is an early stage startup developing a non-invasive AI-driven blood test for accurately diagnosing endometriosis.",
+      "category": "diagnostics",
+      "crunchbaseRank": 3202128,
+      "fundingStatus": "Seed",
+      "totalFundingM": 0.034,
+      "lastFundingType": "Seed",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Tracxn - Milestone Gynomics seed round, Nov 2025",
+        "Company website - milestonegx.com",
+        "Crunchbase Pro search paste (rank 3202128)"
+      ]
+    },
+    {
+      "id": "aeva-health-ltd",
+      "name": "AEVA HEALTH LTD",
+      "description": "Aeva Health offers a women's health platform that combines digital tools with access to specialist practitioners for conditions such as PCOS, thyroid disorders, endometriosis, IBS and other hormone and gut-related issues.",
+      "category": "digital_health",
+      "crunchbaseRank": 4119615,
+      "fundingStatus": "Early Stage Venture",
+      "totalFundingM": 0.13,
+      "lastFundingType": "Seed",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Funding Spotter - £101K early-stage allotment, Apr 2026",
+        "Companies House - AEVA HEALTH LTD (15462448)",
+        "Crunchbase Pro search paste (rank 4119615)"
       ]
     }
   ],

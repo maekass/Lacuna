@@ -386,6 +386,28 @@ const KNOWN_FUNDING: Record<string, KnownFunding> = {
       "LinkedIn EndoSure Inc. - $150K debt financing, 2025",
     ],
   },
+  "milestone gynomics": {
+    fundingStatus: "Seed",
+    lastFundingType: "Seed",
+    totalFundingM: 0.034,
+    operatingStatus: "Active",
+    category: "diagnostics",
+    sources: [
+      "Tracxn - Milestone Gynomics seed round, Nov 2025",
+      "Company website - milestonegx.com",
+    ],
+  },
+  "aeva health ltd": {
+    fundingStatus: "Early Stage Venture",
+    lastFundingType: "Seed",
+    totalFundingM: 0.13,
+    operatingStatus: "Active",
+    category: "digital_health",
+    sources: [
+      "Funding Spotter - £101K early-stage allotment, Apr 2026",
+      "Companies House - AEVA HEALTH LTD (15462448)",
+    ],
+  },
 };
 
 const NONPROFIT_PATTERNS = [
@@ -395,6 +417,12 @@ const NONPROFIT_PATTERNS = [
   /\bnonprofit\b/i,
   /\bnon-profit\b/i,
   /\bcharity\b/i,
+  /\bstichting\b/i,
+  /\b501\(c\)\(3\)/i,
+  /\bprofessional society\b/i,
+  /\bnonprofit coalition\b/i,
+  /\bnonprofit association\b/i,
+  /\bresearch center is a 501/i,
 ];
 
 const CLINICAL_SERVICE_PATTERNS = [
@@ -439,6 +467,22 @@ const CLINICAL_SERVICE_PATTERNS = [
   /\binstitute provides treatment for women/i,
   /\bqendo\b/i,
   /\bassociation for women/i,
+  /\bpain clinic\b/i,
+  /\breproductive institute\b/i,
+  /\bsurgery center\b/i,
+  /\bultrasound (practice|melbourne)\b/i,
+  /\bintegrative health clinic\b/i,
+  /\bnaturopathic care\b/i,
+  /\bphysical therapy\b/i,
+  /\bpelvic health and wellness therapy\b/i,
+  /\bendometriosis (research center|and complex surgery)\b/i,
+  /\bexcision specialist surgeon\b/i,
+  /\bfertility foundation\b/i,
+  /\bconducts industry-sponsored clinical research trials\b/i,
+  /\bhomeopathic clinic\b/i,
+  /\bhealing sanctuary\b/i,
+  /\bovulation induction\b/i,
+  /\bmedical associates is a health care center\b/i,
 ];
 
 const PRODUCT_SIGNAL_PATTERNS = [
@@ -666,6 +710,9 @@ function lookupKnownFunding(norm: string): KnownFunding | undefined {
     "endodiagnosis inc": "endodiagnosis inc",
     endodiagnosis: "endodiagnosis inc",
     "femxx health": "femxx health",
+    "milestone gynomics": "milestone gynomics",
+    "aeva health ltd": "aeva health ltd",
+    "aeva health": "aeva health ltd",
   };
   const alias = aliases[norm];
   if (alias && KNOWN_FUNDING[alias]) return KNOWN_FUNDING[alias];
