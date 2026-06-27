@@ -55,11 +55,15 @@ function median(values: number[]): number {
   if (values.length === 0) return NaN;
   const sorted = [...values].sort((a, b) => a - b);
   const mid = Math.floor(sorted.length / 2);
-  return sorted.length % 2 === 0 ? (sorted[mid - 1] + sorted[mid]) / 2 : sorted[mid];
+  return sorted.length % 2 === 0
+    ? (sorted[mid - 1] + sorted[mid]) / 2
+    : sorted[mid];
 }
 
 // Main
-const dataset = JSON.parse(readFileSync("src/data/dataset.verified.json", "utf-8"));
+const dataset = JSON.parse(
+  readFileSync("src/data/dataset.verified.json", "utf-8"),
+);
 const companies: Company[] = dataset.companies || [];
 const acquisitions: Acquisition[] = dataset.acquisitions || [];
 
@@ -87,26 +91,42 @@ for (const [acquirerName, deals] of acquirerDeals) {
     if (!target) continue;
 
     // Premium = dealValue / preDealValuation (preferred) or dealValue / lastKnownValuation or dealValue / totalFunding (fallback)
-    const baseline = deal.preDealValuation ?? target.lastKnownValuation ?? target.totalFunding;
+    const baseline = deal.preDealValuation ?? target.lastKnownValuation ??
+      target.totalFunding;
     if (!baseline || baseline <= 0) continue;
 
     const premium = deal.dealValue! / baseline;
     premiums.push(premium);
 
-    if (target.sector && !sectors.includes(target.sector)) sectors.push(target.sector);
-    if (deal.source && !sources.includes(deal.source)) sources.push(deal.source);
+    if (target.sector && !sectors.includes(target.sector)) {
+      sectors.push(target.sector);
+    }
+    if (deal.source && !sources.includes(deal.source)) {
+      sources.push(deal.source);
+    }
   }
 
   results.push({
     acquirerName,
     deals: deals.length,
-    avgPremium: premiums.length > 0 ? Number((premiums.reduce((a, b) => a + b, 0) / premiums.length).toFixed(2)) : null,
-    medianPremium: premiums.length > 0 ? Number(median(premiums).toFixed(2)) : null,
-    minPremium: premiums.length > 0 ? Number(Math.min(...premiums).toFixed(2)) : null,
-    maxPremium: premiums.length > 0 ? Number(Math.max(...premiums).toFixed(2)) : null,
+    avgPremium: premiums.length > 0
+      ? Number(
+        (premiums.reduce((a, b) => a + b, 0) / premiums.length).toFixed(2),
+      )
+      : null,
+    medianPremium: premiums.length > 0
+      ? Number(median(premiums).toFixed(2))
+      : null,
+    minPremium: premiums.length > 0
+      ? Number(Math.min(...premiums).toFixed(2))
+      : null,
+    maxPremium: premiums.length > 0
+      ? Number(Math.max(...premiums).toFixed(2))
+      : null,
     sectors,
     sources,
-    method: "Premium = dealValue / preDealValuation (preferred, from SEC filings & press), or dealValue / lastKnownValuation, or dealValue / totalFunding as last resort.",
+    method:
+      "Premium = dealValue / preDealValuation (preferred, from SEC filings & press), or dealValue / lastKnownValuation, or dealValue / totalFunding as last resort.",
   });
 }
 
@@ -114,10 +134,25 @@ for (const [acquirerName, deals] of acquirerDeals) {
 // Classify acquirers based on name patterns
 function classifyAcquirer(name: string): string {
   const lower = name.toLowerCase();
-  if (lower.includes("pharma") || lower.includes("pfizer") || lower.includes("novartis") || lower.includes("roche") || lower.includes("johnson") || lower.includes("merck")) return "pharma";
-  if (lower.includes("tech") || lower.includes("google") || lower.includes("apple") || lower.includes("microsoft") || lower.includes("amazon") || lower.includes("meta")) return "tech";
-  if (lower.includes("health") || lower.includes("medical") || lower.includes("clinic") || lower.includes("hospital") || lower.includes("care")) return "healthcare";
-  if (lower.includes("retail") || lower.includes("walmart") || lower.includes("target") || lower.includes("cvs")) return "retail";
+  if (
+    lower.includes("pharma") || lower.includes("pfizer") ||
+    lower.includes("novartis") || lower.includes("roche") ||
+    lower.includes("johnson") || lower.includes("merck")
+  ) return "pharma";
+  if (
+    lower.includes("tech") || lower.includes("google") ||
+    lower.includes("apple") || lower.includes("microsoft") ||
+    lower.includes("amazon") || lower.includes("meta")
+  ) return "tech";
+  if (
+    lower.includes("health") || lower.includes("medical") ||
+    lower.includes("clinic") || lower.includes("hospital") ||
+    lower.includes("care")
+  ) return "healthcare";
+  if (
+    lower.includes("retail") || lower.includes("walmart") ||
+    lower.includes("target") || lower.includes("cvs")
+  ) return "retail";
   return "other";
 }
 
@@ -129,10 +164,15 @@ for (const r of results) {
   typeGroups.get(type)!.push(r.avgPremium);
 }
 
-const acquirerTypePremiums: Record<string, { avgPremium: number; sampleSize: number }> = {};
+const acquirerTypePremiums: Record<
+  string,
+  { avgPremium: number; sampleSize: number }
+> = {};
 for (const [type, premiums] of typeGroups) {
   acquirerTypePremiums[type] = {
-    avgPremium: Number((premiums.reduce((a, b) => a + b, 0) / premiums.length).toFixed(2)),
+    avgPremium: Number(
+      (premiums.reduce((a, b) => a + b, 0) / premiums.length).toFixed(2),
+    ),
     sampleSize: premiums.length,
   };
 }
@@ -142,17 +182,30 @@ const output = {
   source: "Lacuna verified dataset (n=59 acquisitions)",
   acquirerPremiums: results,
   acquirerTypePremiums,
-  method: "Premium = dealValue / lastKnownValuation (preferred) or dealValue / totalFunding (fallback). lastKnownValuation is the most recent pre-acquisition valuation from verified sources.",
-  warning: "Premiums computed from totalFunding baseline are overestimates (funding ≠ valuation). Replace with pre-deal valuation when available. Small-n acquirers (n=1) have no statistical significance.",
+  method:
+    "Premium = dealValue / lastKnownValuation (preferred) or dealValue / totalFunding (fallback). lastKnownValuation is the most recent pre-acquisition valuation from verified sources.",
+  warning:
+    "Premiums computed from totalFunding baseline are overestimates (funding ≠ valuation). Replace with pre-deal valuation when available. Small-n acquirers (n=1) have no statistical significance.",
 };
 
-writeFileSync("src/data/computed-acquirer-premiums.json", JSON.stringify(output, null, 2));
+writeFileSync(
+  "src/data/computed-acquirer-premiums.json",
+  JSON.stringify(output, null, 2),
+);
 
-console.log("✅ Acquirer premiums written to src/data/computed-acquirer-premiums.json\n");
-console.log(`Acquirers with computed premiums: ${results.filter(r => r.avgPremium !== null).length}/${results.length}\n`);
+console.log(
+  "✅ Acquirer premiums written to src/data/computed-acquirer-premiums.json\n",
+);
+console.log(
+  `Acquirers with computed premiums: ${
+    results.filter((r) => r.avgPremium !== null).length
+  }/${results.length}\n`,
+);
 
-for (const r of results.filter(r => r.avgPremium !== null)) {
-  console.log(`  ${r.acquirerName}: avg=${r.avgPremium}x, median=${r.medianPremium}x, n=${r.deals}`);
+for (const r of results.filter((r) => r.avgPremium !== null)) {
+  console.log(
+    `  ${r.acquirerName}: avg=${r.avgPremium}x, median=${r.medianPremium}x, n=${r.deals}`,
+  );
 }
 
 console.log("\nBy acquirer type:");

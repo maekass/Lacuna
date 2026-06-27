@@ -12,8 +12,8 @@ import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import {
   type AcquirerMatch,
   analyzeCompetitiveDynamics,
-  type ComparableDeal,
   type CompanyProfile,
+  type ComparableDeal,
   type CompetitiveAnalysis,
   STRATEGIC_ACQUIRERS,
 } from "@/data/acquirer-prediction-engine";
@@ -138,7 +138,11 @@ export default function AcquirerPredictionDashboard() {
   const analyses = useMemo(() => {
     return companyProfiles.map((profile) => ({
       profile,
-      analysis: analyzeCompetitiveDynamics(profile, undefined, verifiedComparables),
+      analysis: analyzeCompetitiveDynamics(
+        profile,
+        undefined,
+        verifiedComparables,
+      ),
     }));
   }, [companyProfiles, verifiedComparables]);
 

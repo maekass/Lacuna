@@ -25,12 +25,12 @@ const nextConfig: NextConfig = {
   },
   ...(apiOrigin
     ? {
-        async rewrites() {
-          return [
-            { source: "/api/:path*", destination: `${apiOrigin}/api/:path*` },
-          ];
-        },
-      }
+      async rewrites() {
+        return [
+          { source: "/api/:path*", destination: `${apiOrigin}/api/:path*` },
+        ];
+      },
+    }
     : {}),
 };
 

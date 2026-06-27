@@ -6,11 +6,11 @@ import ChartTooltip from "@/components/ui/ChartTooltip";
 import {
   BURDEN_CAPITAL_GAP_DATA,
   BURDEN_CAPITAL_GAP_SOURCES,
-  WEF_CATEGORY_LABELS,
+  type BurdenCapitalGapRow,
   formatCapitalM,
   hasBurdenData,
   sortBurdenCapitalRows,
-  type BurdenCapitalGapRow,
+  WEF_CATEGORY_LABELS,
   type WefCategory,
 } from "@/data/burdenCapitalGap";
 import {
@@ -36,7 +36,8 @@ interface TooltipState {
 
 function readCssVar(name: string, fallback: string): string {
   if (typeof window === "undefined") return fallback;
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim() ||
+  return getComputedStyle(document.documentElement).getPropertyValue(name)
+    .trim() ||
     fallback;
 }
 
@@ -46,7 +47,10 @@ export default function BurdenCapitalGap() {
   const [width, setWidth] = useState(720);
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
 
-  const rows = useMemo(() => sortBurdenCapitalRows(BURDEN_CAPITAL_GAP_DATA), []);
+  const rows = useMemo(
+    () => sortBurdenCapitalRows(BURDEN_CAPITAL_GAP_DATA),
+    [],
+  );
   const burdenMode = useMemo(() => hasBurdenData(BURDEN_CAPITAL_GAP_DATA), []);
   const comparison = useMemo(() => buildCapitalComparison(), []);
   const summary = useMemo(() => crosswalkSummary(), []);
@@ -75,7 +79,10 @@ export default function BurdenCapitalGap() {
     const capitalColor = readCssVar("--lac-capital", "#10b981");
     const burdenColor = readCssVar("--lac-burden", "#ef4444");
     const axisColor = readCssVar("--lacuna-chart-axis", "#8a7d96");
-    const gridColor = readCssVar("--lacuna-chart-grid", "rgba(184,169,201,0.35)");
+    const gridColor = readCssVar(
+      "--lacuna-chart-grid",
+      "rgba(184,169,201,0.35)",
+    );
 
     const g = svg
       .append("g")
@@ -90,7 +97,10 @@ export default function BurdenCapitalGap() {
     const maxCapital = d3.max(rows, (r) => r.capitalRaisedM) ?? 1;
     const xCapital = d3
       .scaleLog()
-      .domain([Math.max(1, d3.min(rows, (r) => r.capitalRaisedM) ?? 1), maxCapital * 1.4])
+      .domain([
+        Math.max(1, d3.min(rows, (r) => r.capitalRaisedM) ?? 1),
+        maxCapital * 1.4,
+      ])
       .range([0, innerWidth])
       .nice();
 
@@ -117,9 +127,14 @@ export default function BurdenCapitalGap() {
     g.append("g")
       .attr("transform", `translate(0,${innerHeight})`)
       .call(
-        d3.axisBottom(xCapital).ticks(5, (d: d3.NumberValue) => formatCapitalM(Number(d))),
+        d3.axisBottom(xCapital).ticks(
+          5,
+          (d: d3.NumberValue) => formatCapitalM(Number(d)),
+        ),
       )
-      .call((axis) => axis.selectAll("text").attr("fill", axisColor).attr("font-size", 10))
+      .call((axis) =>
+        axis.selectAll("text").attr("fill", axisColor).attr("font-size", 10)
+      )
       .call((axis) => axis.selectAll("line, path").attr("stroke", axisColor));
 
     g.append("text")
@@ -226,12 +241,13 @@ export default function BurdenCapitalGap() {
           Burden–Capital Gap (BCG View)
         </h3>
         <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/80">
-          Capital raised vs. disease burden across women&apos;s-health therapeutic
-          areas (WEF/BCG Figure 3, 2020–2025). The sharpest gap: cardiovascular
-          disease — {BURDEN_CAPITAL_GAP_DATA.find((r) => r.id === "cardiovascular")
-            ?.fundingEvents}{" "}
-          funding events and ~{formatCapitalM(10)} raised, against the leading cause
-          of death in women — a misclassification Lacuna exists to correct.
+          Capital raised vs. disease burden across women&apos;s-health
+          therapeutic areas (WEF/BCG Figure 3, 2020–2025). The sharpest gap:
+          cardiovascular disease —{" "}
+          {BURDEN_CAPITAL_GAP_DATA.find((r) => r.id === "cardiovascular")
+            ?.fundingEvents} funding events and ~{formatCapitalM(10)}{" "}
+          raised, against the leading cause of death in women — a
+          misclassification Lacuna exists to correct.
         </p>
       </div>
 
@@ -298,15 +314,15 @@ export default function BurdenCapitalGap() {
 
       <details className="mt-4 rounded-lg border border-lacuna-lavender/30 bg-lacuna-lavender/10 px-4 py-3">
         <summary className="cursor-pointer text-xs font-semibold text-lacuna-plum">
-          Vet vs. gap valuation model ({summary.mapped} aligned · {summary.partial}{" "}
-          partial · {summary.unmapped} unmapped)
+          Vet vs. gap valuation model ({summary.mapped} aligned ·{" "}
+          {summary.partial} partial · {summary.unmapped} unmapped)
         </summary>
         <p className="mt-2 text-xs leading-relaxed text-lacuna-blue/80">
-          This chart uses WEF/BCG macro funding (2020–2025, all WH-tagged flows).
-          The valuation model below uses US GBD 2021 burden + WEF-aligned VC for
-          cardiovascular ($10M) and metabolic ($4M) areas, plus Rock Health /
-          PitchBook FemTech estimates elsewhere (2019–2024). Capital figures differ
-          by design — they answer different questions.
+          This chart uses WEF/BCG macro funding (2020–2025, all WH-tagged
+          flows). The valuation model below uses US GBD 2021 burden +
+          WEF-aligned VC for cardiovascular ($10M) and metabolic ($4M) areas,
+          plus Rock Health / PitchBook FemTech estimates elsewhere (2019–2024).
+          Capital figures differ by design — they answer different questions.
         </p>
         <div className="mt-3 overflow-x-auto">
           <table className="w-full min-w-[640px] text-left text-[11px] text-lacuna-blue/80">
@@ -331,14 +347,18 @@ export default function BurdenCapitalGap() {
                       <span className="text-amber-700">Unmapped</span>
                     )}
                   </td>
-                  <td className="py-1.5 pr-3">{formatCapitalM(row.bcg.capitalRaisedM)}</td>
+                  <td className="py-1.5 pr-3">
+                    {formatCapitalM(row.bcg.capitalRaisedM)}
+                  </td>
                   <td className="py-1.5 pr-3">
                     {row.valuationVcM !== null
                       ? formatCapitalM(row.valuationVcM)
                       : "—"}
                   </td>
                   <td className="py-1.5">
-                    {row.valuationGapScore !== null ? `${row.valuationGapScore}/100` : "—"}
+                    {row.valuationGapScore !== null
+                      ? `${row.valuationGapScore}/100`
+                      : "—"}
                   </td>
                 </tr>
               ))}
@@ -347,7 +367,8 @@ export default function BurdenCapitalGap() {
         </div>
         {orphanValuationAreas.length > 0 && (
           <p className="mt-2 text-[11px] text-lacuna-blue/65">
-            Valuation-only areas (no WEF row): {orphanValuationAreas.join(", ")}.
+            Valuation-only areas (no WEF row):{" "}
+            {orphanValuationAreas.join(", ")}.
           </p>
         )}
       </details>
@@ -355,8 +376,12 @@ export default function BurdenCapitalGap() {
       <div className="mt-4 border-t border-lacuna-pink/20 pt-3 space-y-1.5">
         <p className="text-xs font-semibold text-lacuna-plum">Sources</p>
         {BURDEN_CAPITAL_GAP_SOURCES.map((s) => (
-          <p key={s.label} className="text-xs text-lacuna-blue/60 leading-relaxed">
-            <span className="font-medium text-lacuna-blue/80">[{s.label}]</span>{" "}
+          <p
+            key={s.label}
+            className="text-xs text-lacuna-blue/60 leading-relaxed"
+          >
+            <span className="font-medium text-lacuna-blue/80">[{s.label}]</span>
+            {" "}
             {s.reference}{" "}
             <a
               href={s.url}

@@ -454,7 +454,9 @@ export function analyzeMarketStructure(
 
       // Criterion: Same sector AND age compatible
       if (acquirerSectors.has(company.sector)) {
-        const age = company.yearFounded !== undefined ? company.yearAcquired - company.yearFounded : null;
+        const age = company.yearFounded !== undefined
+          ? company.yearAcquired - company.yearFounded
+          : null;
         if (age === null || age <= 8) { // Reasonable age for acquisition
           potentialBuyers.push({
             acquirerId: acquirer.id,

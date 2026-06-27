@@ -152,7 +152,9 @@ function calculateReimbursementRisk(
 
   // FDA Alignment (0-100)
   let fdaAlignment = 60;
-  const hasFDA = /fda|510k|pma|cleared|approved/i.test(company.description ?? "");
+  const hasFDA = /fda|510k|pma|cleared|approved/i.test(
+    company.description ?? "",
+  );
   if (hasFDA) {
     fdaAlignment = 90;
     mitigationStrategies.push("FDA clearance accelerates coverage decisions");

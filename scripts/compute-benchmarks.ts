@@ -12,7 +12,7 @@
  * Usage: npx tsx scripts/compute-benchmarks.ts
  */
 
-import { readFileSync, writeFileSync, existsSync } from "fs";
+import { existsSync, readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 
 const ROOT = resolve(__dirname, "..");
@@ -87,7 +87,9 @@ function pearson(x: number[], y: number[]): number {
 
 // --- Main computation ---
 
-const dataset = JSON.parse(readFileSync(resolve(ROOT, "src/data/dataset.verified.json"), "utf-8"));
+const dataset = JSON.parse(
+  readFileSync(resolve(ROOT, "src/data/dataset.verified.json"), "utf-8"),
+);
 const companies: Company[] = dataset.companies || [];
 const acquisitions: Acquisition[] = dataset.acquisitions || [];
 
@@ -97,7 +99,10 @@ for (const c of companies) companyMap.set(c.id, c);
 
 // Compute valuation-to-funding multiple for each deal
 // Multiple = dealValue / totalFunding (proxy for revenue multiple when revenue unavailable)
-const sectorData = new Map<string, { multiples: number[]; dealNames: string[]; sources: string[] }>();
+const sectorData = new Map<
+  string,
+  { multiples: number[]; dealNames: string[]; sources: string[] }
+>();
 
 for (const deal of acquisitions) {
   if (!deal.dealValue || deal.dealValue <= 0) continue;
@@ -128,13 +133,20 @@ const benchmarks: SectorBenchmark[] = [];
 for (const [sector, data] of sectorData) {
   benchmarks.push({
     sector,
-    medianMultiple: data.multiples.length > 0 ? Number(median(data.multiples).toFixed(2)) : null,
-    p25Multiple: data.multiples.length > 0 ? Number(percentile(data.multiples, 0.25).toFixed(2)) : null,
-    p75Multiple: data.multiples.length > 0 ? Number(percentile(data.multiples, 0.75).toFixed(2)) : null,
+    medianMultiple: data.multiples.length > 0
+      ? Number(median(data.multiples).toFixed(2))
+      : null,
+    p25Multiple: data.multiples.length > 0
+      ? Number(percentile(data.multiples, 0.25).toFixed(2))
+      : null,
+    p75Multiple: data.multiples.length > 0
+      ? Number(percentile(data.multiples, 0.75).toFixed(2))
+      : null,
     sampleSize: data.multiples.length,
     dealsUsed: data.dealNames,
     sources: [...new Set(data.sources)],
-    computationMethod: "dealValue / totalFunding (proxy multiple — revenue data not available in verified dataset)",
+    computationMethod:
+      "dealValue / totalFunding (proxy multiple — revenue data not available in verified dataset)",
   });
 }
 
@@ -147,23 +159,38 @@ const output = {
   datasetStats: {
     totalCompanies: companies.length,
     totalAcquisitions: acquisitions.length,
-    acquisitionsWithDealValue: acquisitions.filter(a => a.dealValue).length,
-    companiesWithFunding: companies.filter(c => c.totalFunding).length,
+    acquisitionsWithDealValue: acquisitions.filter((a) => a.dealValue).length,
+    companiesWithFunding: companies.filter((c) => c.totalFunding).length,
   },
-  method: "Multiple = dealValue / totalFunding. This is a proxy for revenue multiples when company revenue is not publicly available. Replace with dealValue / annualRevenue when revenue data is sourced.",
+  method:
+    "Multiple = dealValue / totalFunding. This is a proxy for revenue multiples when company revenue is not publicly available. Replace with dealValue / annualRevenue when revenue data is sourced.",
   benchmarks,
-  warning: "Small sample sizes (n<5) produce unreliable statistics. Treat n<5 sectors as directional only.",
+  warning:
+    "Small sample sizes (n<5) produce unreliable statistics. Treat n<5 sectors as directional only.",
 };
 
-writeFileSync(resolve(ROOT, "src/data/computed-benchmarks.json"), JSON.stringify(output, null, 2));
+writeFileSync(
+  resolve(ROOT, "src/data/computed-benchmarks.json"),
+  JSON.stringify(output, null, 2),
+);
 
-console.log("✅ Computed benchmarks written to src/data/computed-benchmarks.json\n");
-console.log(`Dataset: ${companies.length} companies, ${acquisitions.length} acquisitions`);
+console.log(
+  "✅ Computed benchmarks written to src/data/computed-benchmarks.json\n",
+);
+console.log(
+  `Dataset: ${companies.length} companies, ${acquisitions.length} acquisitions`,
+);
 console.log(`Sectors with computed multiples: ${benchmarks.length}\n`);
 
 for (const b of benchmarks) {
-  console.log(`  ${b.sector}: n=${b.sampleSize}, median=${b.medianMultiple}x, p25=${b.p25Multiple}x, p75=${b.p75Multiple}x`);
+  console.log(
+    `  ${b.sector}: n=${b.sampleSize}, median=${b.medianMultiple}x, p25=${b.p25Multiple}x, p75=${b.p75Multiple}x`,
+  );
 }
 
-console.log(`\n⚠️  Sectors with n<5: ${benchmarks.filter(b => b.sampleSize < 5).map(b => b.sector).join(", ")}`);
+console.log(
+  `\n⚠️  Sectors with n<5: ${
+    benchmarks.filter((b) => b.sampleSize < 5).map((b) => b.sector).join(", ")
+  }`,
+);
 console.log("   These should be treated as directional estimates only.");

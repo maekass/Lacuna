@@ -1,21 +1,21 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { deriveStageMedians } from "@/lib/quant/empiricalPriors";
 import {
   BURDEN_AREAS,
-  CITATIONS,
   CITATION_LIST,
+  CITATIONS,
+  type ClinicalEvidence,
   computeGapMetrics,
-  valuateInvestment,
   formatValuation,
   type FundingStage,
-  type ClinicalEvidence,
-  type ValuationInputs,
   type GapMetrics,
+  valuateInvestment,
+  type ValuationInputs,
 } from "@/lib/valuation/burdenCapitalGap";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -85,7 +85,8 @@ function CitationFootnotes({ ids }: { ids: string[] }) {
       <p className="text-xs font-semibold text-lacuna-plum mb-1">Sources</p>
       {cites.map((c) => (
         <p key={c.id} className="text-xs text-lacuna-blue/60 leading-relaxed">
-          <span className="font-medium text-lacuna-blue/80">[{c.label}]</span>{" "}
+          <span className="font-medium text-lacuna-blue/80">[{c.label}]</span>
+          {" "}
           {c.reference}
         </p>
       ))}
@@ -98,12 +99,11 @@ function CitationFootnotes({ ids }: { ids: string[] }) {
 function FactorBar({ score }: { score: number }) {
   // score is -2 to +2, map to 0-100%
   const pct = ((score + 2) / 4) * 100;
-  const color =
-    score >= 1
-      ? "bg-emerald-400"
-      : score >= 0
-        ? "bg-amber-400"
-        : "bg-red-400";
+  const color = score >= 1
+    ? "bg-emerald-400"
+    : score >= 0
+    ? "bg-amber-400"
+    : "bg-red-400";
   return (
     <div className="relative h-1.5 w-full rounded-full bg-lacuna-pink/20">
       <div
@@ -123,12 +123,11 @@ function GapLandscape({ metrics }: { metrics: GapMetrics[] }) {
   return (
     <div className="space-y-2">
       {sorted.map((m) => {
-        const signal =
-          m.gapScore >= 65
-            ? "Significant"
-            : m.gapScore >= 35
-              ? "Moderate"
-              : "Limited";
+        const signal = m.gapScore >= 65
+          ? "Significant"
+          : m.gapScore >= 35
+          ? "Moderate"
+          : "Limited";
         const styles = GAP_SIGNAL_STYLES[signal];
         return (
           <div key={m.areaKey} className="flex items-center gap-3">
@@ -151,7 +150,9 @@ function GapLandscape({ metrics }: { metrics: GapMetrics[] }) {
       })}
       <p className="pt-1 text-right text-xs text-lacuna-blue/60">
         Gap score 1–100 (higher = more underfunded relative to burden)
-        <CitationMarkers ids={["gbd2021", "rock_health_2024", "pitchbook_2024"]} />
+        <CitationMarkers
+          ids={["gbd2021", "rock_health_2024", "pitchbook_2024"]}
+        />
         . Minimum score is 1 (lowest in dataset), not zero.
       </p>
     </div>
@@ -191,7 +192,17 @@ export default function BurdenCapitalGapValuation() {
     } catch {
       return null;
     }
-  }, [areaKey, stage, fundingM, evidence, hasReimbursement, hasEquityAngle, isPlatform, allMetrics, stageMedians]);
+  }, [
+    areaKey,
+    stage,
+    fundingM,
+    evidence,
+    hasReimbursement,
+    hasEquityAngle,
+    isPlatform,
+    allMetrics,
+    stageMedians,
+  ]);
 
   const selectedMetrics = allMetrics.find((m) => m.areaKey === areaKey);
   const selectedArea = BURDEN_AREAS[areaKey];
@@ -214,8 +225,8 @@ export default function BurdenCapitalGapValuation() {
           societal burden (DALYs<CitationMarkers ids={["gbd2021"]} />,
           prevalence<CitationMarkers ids={["acog_2023"]} />, mortality
           <CitationMarkers ids={["cdc_wonder_2022"]} />). VC deployment from
-          Rock Health<CitationMarkers ids={["rock_health_2024"]} /> &amp;
-          PitchBook<CitationMarkers ids={["pitchbook_2024"]} /> 2019-2024.
+          Rock Health<CitationMarkers ids={["rock_health_2024"]} />{" "}
+          &amp; PitchBook<CitationMarkers ids={["pitchbook_2024"]} /> 2019-2024.
         </p>
         <GapLandscape metrics={allMetrics} />
       </div>
@@ -266,7 +277,8 @@ export default function BurdenCapitalGapValuation() {
 
           {/* Funding raised */}
           <label className="mb-1 block text-xs font-medium text-lacuna-blue">
-            Total funding raised: <span className="text-lacuna-plum font-semibold">${fundingM}M</span>
+            Total funding raised:{" "}
+            <span className="text-lacuna-plum font-semibold">${fundingM}M</span>
           </label>
           <input
             type="range"
@@ -297,9 +309,21 @@ export default function BurdenCapitalGapValuation() {
           <div className="space-y-2">
             {(
               [
-                [hasReimbursement, setHasReimbursement, "Has reimbursement pathway (CPT / payer coverage)"],
-                [hasEquityAngle, setHasEquityAngle, "Addresses health disparities / equity angle"],
-                [isPlatform, setIsPlatform, "Platform play (multiple indications)"],
+                [
+                  hasReimbursement,
+                  setHasReimbursement,
+                  "Has reimbursement pathway (CPT / payer coverage)",
+                ],
+                [
+                  hasEquityAngle,
+                  setHasEquityAngle,
+                  "Addresses health disparities / equity angle",
+                ],
+                [
+                  isPlatform,
+                  setIsPlatform,
+                  "Platform play (multiple indications)",
+                ],
               ] as [boolean, (v: boolean) => void, string][]
             ).map(([val, setter, label]) => (
               <button
@@ -319,8 +343,18 @@ export default function BurdenCapitalGapValuation() {
                   }`}
                 >
                   {val && (
-                    <svg className="h-2.5 w-2.5" viewBox="0 0 10 10" fill="none">
-                      <path d="M2 5l2.5 2.5L8 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg
+                      className="h-2.5 w-2.5"
+                      viewBox="0 0 10 10"
+                      fill="none"
+                    >
+                      <path
+                        d="M2 5l2.5 2.5L8 3"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   )}
                 </span>
@@ -350,7 +384,9 @@ export default function BurdenCapitalGapValuation() {
               <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
                 <Stat
                   label="US DALYs / yr"
-                  value={`${(selectedArea.dalyThousandsPerYear / 1000).toFixed(1)}M`}
+                  value={`${
+                    (selectedArea.dalyThousandsPerYear / 1000).toFixed(1)
+                  }M`}
                   citationIds={["gbd2021"]}
                 />
                 <Stat
@@ -411,8 +447,9 @@ export default function BurdenCapitalGapValuation() {
                   Estimated valuation range
                 </h3>
                 <p className="mb-4 text-xs text-lacuna-blue/70">
-                  Stage comparable × {result.gapMultiplier.toFixed(2)}× gap
-                  multiplier × factor adjustments
+                  Stage comparable ×{" "}
+                  {result.gapMultiplier.toFixed(2)}× gap multiplier × factor
+                  adjustments
                 </p>
 
                 {/* Range display */}
@@ -449,7 +486,8 @@ export default function BurdenCapitalGapValuation() {
 
                 {/* Stage anchor */}
                 <div className="mb-4 rounded-lg bg-lacuna-pink/8 px-3 py-2 text-xs text-lacuna-blue">
-                  Stage comparable (median): {formatValuation(result.stageComparableM)} →{" "}
+                  Stage comparable (median):{" "}
+                  {formatValuation(result.stageComparableM)} →{" "}
                   <span className="font-medium text-lacuna-plum">
                     {result.gapMultiplier.toFixed(2)}× gap premium
                   </span>{" "}
@@ -466,13 +504,11 @@ export default function BurdenCapitalGapValuation() {
                       <div className="mb-0.5 flex justify-between text-xs">
                         <span className="text-lacuna-blue">{f.name}</span>
                         <span
-                          className={
-                            f.score > 0
-                              ? "text-emerald-600"
-                              : f.score < 0
-                                ? "text-red-500"
-                                : "text-lacuna-blue/60"
-                          }
+                          className={f.score > 0
+                            ? "text-emerald-600"
+                            : f.score < 0
+                            ? "text-red-500"
+                            : "text-lacuna-blue/60"}
                         >
                           {f.score > 0 ? "+" : ""}
                           {f.score.toFixed(1)}
@@ -498,14 +534,15 @@ export default function BurdenCapitalGapValuation() {
                           result.whocea.category === "Very cost-effective"
                             ? "bg-emerald-100 text-emerald-700"
                             : result.whocea.category === "Cost-effective"
-                              ? "bg-sky-100 text-sky-700"
-                              : "bg-rose-100 text-rose-700"
+                            ? "bg-sky-100 text-sky-700"
+                            : "bg-rose-100 text-rose-700"
                         }`}
                       >
                         {result.whocea.category}
                       </span>
                       <span className="text-xs text-lacuna-blue/70">
-                        ${result.whocea.illustrativeCostPerDALY?.toLocaleString()}/DALY averted
+                        ${result.whocea.illustrativeCostPerDALY
+                          ?.toLocaleString()}/DALY averted
                       </span>
                     </div>
                     <p className="text-[10px] text-lacuna-blue/60 leading-relaxed">
@@ -521,24 +558,32 @@ export default function BurdenCapitalGapValuation() {
                       <span className="text-[10px] text-lacuna-blue/40">
                         Effective penetration:{" "}
                         {(result.whocea.effectivePenetration * 100).toFixed(2)}%
-                        (stage base × {result.whocea.payerCoverageFactor.toFixed(2)}× payer factor)
+                        (stage base ×{" "}
+                        {result.whocea.payerCoverageFactor.toFixed(2)}× payer
+                        factor)
                       </span>
                       <span className="text-[10px] text-lacuna-blue/40">
                         Program cost: ${result.whocea.programCostM.toFixed(1)}M
                       </span>
                       <span className="text-[10px] text-lacuna-blue/40">
-                        DALYs averted: {result.whocea.dalysAvertedEstimate?.toLocaleString()} over 10 yr
+                        DALYs averted:{" "}
+                        {result.whocea.dalysAvertedEstimate?.toLocaleString()}
+                        {" "}
+                        over 10 yr
                       </span>
                     </div>
                     <p className="text-[10px] text-lacuna-blue/35 mt-1 leading-relaxed">
-                      Reference: WHO-CHOICE (Tan-Torres Edejer et al. 2003); US GDP/capita $76,330
-                      (World Bank 2023). Not a formal ICER — illustrative framing only.
+                      Reference: WHO-CHOICE (Tan-Torres Edejer et al. 2003); US
+                      GDP/capita $76,330 (World Bank 2023). Not a formal ICER —
+                      illustrative framing only.
                     </p>
                   </div>
                 )}
 
                 <div className="mt-2 border-t border-lacuna-pink/20 pt-3">
-                  <p className="text-xs text-lacuna-blue/50">{result.methodology}</p>
+                  <p className="text-xs text-lacuna-blue/50">
+                    {result.methodology}
+                  </p>
                   <CitationFootnotes ids={result.citationIds} />
                 </div>
               </motion.div>
@@ -561,7 +606,7 @@ function Stat({
 }) {
   return (
     <div>
-      <span className="text-lacuna-blue/60">{label}: </span>
+      <span className="text-lacuna-blue/60">{label}:</span>
       <span className="font-medium text-lacuna-plum">{value}</span>
       {citationIds && <CitationMarkers ids={citationIds} />}
     </div>

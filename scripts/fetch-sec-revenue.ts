@@ -16,7 +16,7 @@
  * Usage: npx tsx scripts/fetch-sec-revenue.ts
  */
 
-import { writeFileSync, readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 
 interface Company {
   id: string;
@@ -88,7 +88,9 @@ const COMPANY_CIK_MAP: Record<string, { cik: string; ticker?: string }> = {
 const SEC_USER_AGENT = "Lacuna-Research research@lacuna.health";
 const SEC_FACTS_BASE = "https://data.sec.gov/api/xbrl/companyconcept";
 
-async function fetchRevenueForCompany(cik: string): Promise<SecRevenueRecord[]> {
+async function fetchRevenueForCompany(
+  cik: string,
+): Promise<SecRevenueRecord[]> {
   const results: SecRevenueRecord[] = [];
 
   try {
@@ -100,13 +102,16 @@ async function fetchRevenueForCompany(cik: string): Promise<SecRevenueRecord[]> 
 
     if (!response.ok) {
       // Fallback to RevenueFromContractWithCustomer
-      const altUrl = `${SEC_FACTS_BASE}/CIK${cik}/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json`;
+      const altUrl =
+        `${SEC_FACTS_BASE}/CIK${cik}/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json`;
       const altResponse = await fetch(altUrl, {
         headers: { "User-Agent": SEC_USER_AGENT },
       });
 
       if (!altResponse.ok) {
-        console.warn(`  ⚠️  No revenue data for CIK ${cik} (${response.status})`);
+        console.warn(
+          `  ⚠️  No revenue data for CIK ${cik} (${response.status})`,
+        );
         return [];
       }
 
@@ -122,7 +127,10 @@ async function fetchRevenueForCompany(cik: string): Promise<SecRevenueRecord[]> 
   }
 }
 
-function parseRevenueData(data: SecRevenueFactsResponse, cik: string): SecRevenueRecord[] {
+function parseRevenueData(
+  data: SecRevenueFactsResponse,
+  cik: string,
+): SecRevenueRecord[] {
   const results: SecRevenueRecord[] = [];
   const units = data.units;
 
@@ -153,7 +161,8 @@ function parseRevenueData(data: SecRevenueFactsResponse, cik: string): SecRevenu
       fiscalYear: year,
       revenue: Number((entry.val / 1_000_000).toFixed(1)), // Convert to millions
       source: `SEC EDGAR 10-K filing (CIK ${cik}, FY${year})`,
-      filingUrl: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${cik}&type=10-K&dateb=&owner=include&count=10`,
+      filingUrl:
+        `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${cik}&type=10-K&dateb=&owner=include&count=10`,
       filingType: "10-K",
     });
   }
@@ -164,7 +173,9 @@ function parseRevenueData(data: SecRevenueFactsResponse, cik: string): SecRevenu
 async function main() {
   console.log("🔍 Fetching SEC 10-K revenue data for public companies...\n");
 
-  const dataset = JSON.parse(readFileSync("src/data/dataset.verified.json", "utf-8"));
+  const dataset = JSON.parse(
+    readFileSync("src/data/dataset.verified.json", "utf-8"),
+  );
   const companies: Company[] = dataset.companies || [];
 
   const allResults: SecRevenueRecord[] = [];
@@ -176,7 +187,7 @@ async function main() {
     console.log(`  ${company.name} (CIK: ${cikEntry.cik})...`);
 
     // Rate limit: SEC requires max 10 requests/second
-    await new Promise(resolve => setTimeout(resolve, 150));
+    await new Promise((resolve) => setTimeout(resolve, 150));
 
     const records = await fetchRevenueForCompany(cikEntry.cik);
 
@@ -194,13 +205,14 @@ async function main() {
   }
 
   // Also fetch for acquirers that are public
-  const acquirers: Array<{ id: string; name: string }> = dataset.acquirers || [];
+  const acquirers: Array<{ id: string; name: string }> = dataset.acquirers ||
+    [];
   for (const acquirer of acquirers) {
     const cikEntry = COMPANY_CIK_MAP[acquirer.name];
     if (!cikEntry) continue;
 
     console.log(`  Acquirer: ${acquirer.name} (CIK: ${cikEntry.cik})...`);
-    await new Promise(resolve => setTimeout(resolve, 150));
+    await new Promise((resolve) => setTimeout(resolve, 150));
 
     const records = await fetchRevenueForCompany(cikEntry.cik);
     for (const record of records) {
@@ -216,16 +228,24 @@ async function main() {
     generatedAt: new Date().toISOString(),
     source: "SEC EDGAR XBRL API (https://data.sec.gov/api/xbrl)",
     userAgent: SEC_USER_AGENT,
-    method: "Revenue fetched from SEC 10-K filings via XBRL CompanyConcept API. Values converted from USD to millions. Only annual (FY) filings included.",
+    method:
+      "Revenue fetched from SEC 10-K filings via XBRL CompanyConcept API. Values converted from USD to millions. Only annual (FY) filings included.",
     totalRecords: allResults.length,
-    companies: [...new Set(allResults.map(r => r.companyName))],
+    companies: [...new Set(allResults.map((r) => r.companyName))],
     records: allResults,
   };
 
-  writeFileSync("src/data/computed-sec-revenue.json", JSON.stringify(output, null, 2));
+  writeFileSync(
+    "src/data/computed-sec-revenue.json",
+    JSON.stringify(output, null, 2),
+  );
 
-  console.log(`\n✅ SEC revenue data written to src/data/computed-sec-revenue.json`);
-  console.log(`   ${allResults.length} revenue records for ${output.companies.length} companies`);
+  console.log(
+    `\n✅ SEC revenue data written to src/data/computed-sec-revenue.json`,
+  );
+  console.log(
+    `   ${allResults.length} revenue records for ${output.companies.length} companies`,
+  );
 }
 
 main().catch(console.error);

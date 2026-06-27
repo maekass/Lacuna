@@ -279,7 +279,15 @@ export const BURDEN_AREAS: Record<string, BurdenArea> = {
     payerCoveragePercent: 35,
     providerGapNote:
       "Fragmented care across endocrinology, OB/GYN, and PCP — no specialty owns PCOS. Cumulative US economic burden >$15B/yr (Yadav 2023, PMID 37534878): mental health alone $4.26B (anxiety $1.94B, depression $1.68B), PCOS-related diabetes $1.77B (Azziz 2005). No FDA-approved disease-modifying treatment; all prescribing is off-label.",
-    citationIds: ["gbd2021", "nwhn_pcos", "yadav_pcos_2023", "azziz_pcos_2005", "nih_reporter_2023", "rock_health_2024", "nasri_pcos_global_2026"],
+    citationIds: [
+      "gbd2021",
+      "nwhn_pcos",
+      "yadav_pcos_2023",
+      "azziz_pcos_2005",
+      "nih_reporter_2023",
+      "rock_health_2024",
+      "nasri_pcos_global_2026",
+    ],
   },
   endometriosis: {
     name: "Endometriosis & Pelvic Pain",
@@ -290,11 +298,18 @@ export const BURDEN_AREAS: Record<string, BurdenArea> = {
     nihFundingMillionPerYear: 60,
     vcDeployedMillion: 310,
     neglectScore: 5,
-    regulatoryNote: "FDA Priority Review eligible; diagnosis delay 1–5 years depending on pathway",
+    regulatoryNote:
+      "FDA Priority Review eligible; diagnosis delay 1–5 years depending on pathway",
     payerCoveragePercent: 50,
     providerGapNote:
       "Requires MIS-trained gynecologist; surgical expertise concentrated in academic centers. Pre-diagnosis healthcare costs $21,489–$34,460 per patient over 60 months (Bonafede et al. 2020, PMID 31960340); 35.3% of patients wait 3–5 years for diagnosis, 12.5% of all their healthcare costs are endometriosis-related during that period. Depression SMD 0.71, anxiety SMD 0.60 vs. healthy controls (PMID 34077695).",
-    citationIds: ["gbd2021", "ihme_endo_2023", "bonafede_endo_2020", "nih_reporter_2023", "rock_health_2024"],
+    citationIds: [
+      "gbd2021",
+      "ihme_endo_2023",
+      "bonafede_endo_2020",
+      "nih_reporter_2023",
+      "rock_health_2024",
+    ],
   },
   menopause: {
     name: "Menopause & Midlife Health",
@@ -309,7 +324,13 @@ export const BURDEN_AREAS: Record<string, BurdenArea> = {
     payerCoveragePercent: 45,
     providerGapNote:
       "Untreated vasomotor symptoms cost $2,116/patient/yr ($1,346 direct + $770 indirect productivity loss; 57% higher lost-work-day rate vs. controls; Liu et al. 2015, PMID 25714236). NAMS-certified menopause practitioners rare outside metro areas; most PCPs undertreated. HRT coverage uneven across commercial payers; wellness services largely excluded.",
-    citationIds: ["gbd2021", "whpa_menopause", "liu_menopause_2015", "nih_reporter_2023", "rock_health_2024"],
+    citationIds: [
+      "gbd2021",
+      "whpa_menopause",
+      "liu_menopause_2015",
+      "nih_reporter_2023",
+      "rock_health_2024",
+    ],
   },
   fertility: {
     name: "Fertility & IVF",
@@ -324,7 +345,13 @@ export const BURDEN_AREAS: Record<string, BurdenArea> = {
     payerCoveragePercent: 15,
     providerGapNote:
       "Predominantly cash-pay: only 19 states mandate fertility coverage. Of 91,324 patients whose first ART cycle failed, 26.4% discontinued within 12 months; state mandates reduced discontinuation risk by 26–46% (Toth et al. 2022, PMID 36368429). Male-factor coverage varies: 72.9% of clinics report 0–25% payer coverage for sperm extraction. RE clinics concentrated in urban centers; rural access minimal.",
-    citationIds: ["gbd2021", "acog_2023", "toth_ivf_2022", "nih_reporter_2023", "pitchbook_2024"],
+    citationIds: [
+      "gbd2021",
+      "acog_2023",
+      "toth_ivf_2022",
+      "nih_reporter_2023",
+      "pitchbook_2024",
+    ],
   },
   breast_health: {
     name: "Breast Health & Oncology",
@@ -339,7 +366,13 @@ export const BURDEN_AREAS: Record<string, BurdenArea> = {
     payerCoveragePercent: 80,
     providerGapNote:
       "Well-integrated: mammography is a mandated preventive benefit (ACA). Dense-breast notification laws (38 states) drive supplemental imaging. Black women face age-adjusted breast cancer mortality HR 1.82 vs. White women (95% CI 1.51–2.20) for early-stage HR+ disease (Desai et al. 2023, PMID 36795405) — driven by social determinants and treatment access gaps, not tumor biology alone.",
-    citationIds: ["gbd2021", "cdc_wonder_2022", "desai_breast_2023", "nih_reporter_2023", "pitchbook_2024"],
+    citationIds: [
+      "gbd2021",
+      "cdc_wonder_2022",
+      "desai_breast_2023",
+      "nih_reporter_2023",
+      "pitchbook_2024",
+    ],
   },
   contraception: {
     name: "Contraception & Family Planning",
@@ -354,7 +387,12 @@ export const BURDEN_AREAS: Record<string, BurdenArea> = {
     payerCoveragePercent: 85,
     providerGapNote:
       "ACA mandates no-cost contraception coverage at 85%+ of commercial plans, but post-Dobbs state restrictions and Title X clinic closures create geographic provider gaps for low-income women. Digital contraception (FDA-cleared apps) opens access pathways but reimbursement lags clinical validation.",
-    citationIds: ["gbd2021", "acog_2023", "nih_reporter_2023", "rock_health_2024"],
+    citationIds: [
+      "gbd2021",
+      "acog_2023",
+      "nih_reporter_2023",
+      "rock_health_2024",
+    ],
   },
   mental_health: {
     name: "Women's Mental Health",
@@ -365,11 +403,17 @@ export const BURDEN_AREAS: Record<string, BurdenArea> = {
     nihFundingMillionPerYear: 340,
     vcDeployedMillion: 920,
     neglectScore: 3,
-    regulatoryNote: "MHPAEA parity enforcement; postpartum depression FDA approvals (brexanolone 2019, zuranolone 2023)",
+    regulatoryNote:
+      "MHPAEA parity enforcement; postpartum depression FDA approvals (brexanolone 2019, zuranolone 2023)",
     payerCoveragePercent: 75,
     providerGapNote:
       "55% of US counties have no psychiatrist; therapist shortage severe (SAMHSA 2022). MHPAEA parity enforcement gaps: behavioral health reimbursement 20–30% below medical/surgical parity. Sex-specific risk: women 1.5–2× more likely than men to develop depression or anxiety (GBD 2021); postpartum psychiatric conditions are leading cause of maternal mortality in the US.",
-    citationIds: ["gbd2021", "cdc_wonder_2022", "nih_reporter_2023", "rock_health_2024"],
+    citationIds: [
+      "gbd2021",
+      "cdc_wonder_2022",
+      "nih_reporter_2023",
+      "rock_health_2024",
+    ],
   },
   precision_medicine: {
     name: "Precision Medicine & Genomics",
@@ -380,11 +424,17 @@ export const BURDEN_AREAS: Record<string, BurdenArea> = {
     nihFundingMillionPerYear: 550,
     vcDeployedMillion: 760,
     neglectScore: 3,
-    regulatoryNote: "FDA CLIA LDT rule (2024); NIH All of Us mandate for 50% diverse cohort",
+    regulatoryNote:
+      "FDA CLIA LDT rule (2024); NIH All of Us mandate for 50% diverse cohort",
     payerCoveragePercent: 30,
     providerGapNote:
       "<7,000 ABGC-certified genetic counselors in US (2023) for a population with millions of hereditary risk variants. Women historically underrepresented in pharmacogenomic trials — sex-based dosing differences lead to 2× higher adverse drug reaction rates in women. LDT reimbursement uncertain post-FDA rule; payer prior-auth for germline testing high.",
-    citationIds: ["gbd2021", "cdc_wonder_2022", "nih_reporter_2023", "pitchbook_2024"],
+    citationIds: [
+      "gbd2021",
+      "cdc_wonder_2022",
+      "nih_reporter_2023",
+      "pitchbook_2024",
+    ],
   },
   sexual_wellness: {
     name: "Sexual Health & Wellness",
@@ -397,11 +447,18 @@ export const BURDEN_AREAS: Record<string, BurdenArea> = {
     nihFundingMillionPerYear: 18,
     vcDeployedMillion: 190,
     neglectScore: 4,
-    regulatoryNote: "D2C / non-regulated pathways dominant; FDA OTC reclassification creating new category",
+    regulatoryNote:
+      "D2C / non-regulated pathways dominant; FDA OTC reclassification creating new category",
     payerCoveragePercent: 15,
     providerGapNote:
       "FSD affects 47.81% of reproductive-aged women globally (Nasri et al. 2025, PMID 41024089), yet remains largely unaddressed clinically. Most CPT codes for female sexual dysfunction map to urology rather than gynecology; D2C / cash-pay dominates. Cultural stigma and provider training gaps mean only a fraction of affected women receive any treatment.",
-    citationIds: ["gbd2021", "nasri_fsd_2025", "acog_2023", "nih_reporter_2023", "rock_health_2024"],
+    citationIds: [
+      "gbd2021",
+      "nasri_fsd_2025",
+      "acog_2023",
+      "nih_reporter_2023",
+      "rock_health_2024",
+    ],
   },
   cardiovascular_women: {
     name: "Women's Cardiovascular Disease",
@@ -446,7 +503,13 @@ export const BURDEN_AREAS: Record<string, BurdenArea> = {
     payerCoveragePercent: 55,
     providerGapNote:
       "WEF/BCG: 8 WH funding transactions and ~$4M capital raised (2020–2025) — less than 0.01% of total metabolic funding. Diabetes and metabolic syndrome affect women differently across life stages (PCOS, GDM, menopause); fragmented between endocrinology, OB/GYN, and primary care. CGM and metabolic FemTech often categorized as general wellness, not WH-specific.",
-    citationIds: ["gbd2021", "cdc_wonder_2022", "nwhn_pcos", "nih_reporter_2023", "wef_bcg_2026"],
+    citationIds: [
+      "gbd2021",
+      "cdc_wonder_2022",
+      "nwhn_pcos",
+      "nih_reporter_2023",
+      "wef_bcg_2026",
+    ],
   },
 };
 
@@ -483,8 +546,8 @@ export function computeGapMetrics(): GapMetrics[] {
   const raw = keys.map((key) => {
     const area = BURDEN_AREAS[key];
     const burdenScore = computeBurdenScore(area);
-    const capitalPerKDaly =
-      area.vcDeployedMillion / (area.dalyThousandsPerYear || 1);
+    const capitalPerKDaly = area.vcDeployedMillion /
+      (area.dalyThousandsPerYear || 1);
     // Gap = high burden, low capital
     const rawGap = burdenScore / Math.log10(capitalPerKDaly * 100 + 2);
     return { key, area, burdenScore, capitalPerKDaly, rawGap };
@@ -498,10 +561,9 @@ export function computeGapMetrics(): GapMetrics[] {
   return raw.map((r) => {
     // Scale 1-100: floor at 1 so the lowest-ranked area doesn't display as "0"
     // (which implies no gap, rather than "lowest gap in this comparison set").
-    const rawNorm =
-      maxGap === minGap
-        ? 50
-        : ((r.rawGap - minGap) / (maxGap - minGap)) * 99 + 1;
+    const rawNorm = maxGap === minGap
+      ? 50
+      : ((r.rawGap - minGap) / (maxGap - minGap)) * 99 + 1;
     const gapScore = Math.round(Math.max(1, rawNorm));
 
     const rank = sorted.findIndex((s) => s.key === r.key);
@@ -700,19 +762,20 @@ export function valuateInvestment(
   // gapScore 1-100 → multiplier 0.80–1.60
   const gapMultiplier = 0.8 + (metrics.gapScore / 100) * 0.8;
 
-  const gapSignal: ValuationOutput["gapSignal"] =
-    metrics.gapScore >= 65
-      ? "Significant"
-      : metrics.gapScore >= 35
-        ? "Moderate"
-        : "Limited";
+  const gapSignal: ValuationOutput["gapSignal"] = metrics.gapScore >= 65
+    ? "Significant"
+    : metrics.gapScore >= 35
+    ? "Moderate"
+    : "Limited";
 
   // ── Factor scoring ────────────────────────────────────────────────────────
   const factors: ValuationFactor[] = [
     {
       name: "Burden-Capital Gap",
       score: (metrics.gapScore / 100) * 4 - 2,
-      note: `Gap score ${metrics.gapScore}/100 — $${metrics.capitalPerKDaly.toFixed(2)}M VC per 1k DALYs`,
+      note: `Gap score ${metrics.gapScore}/100 — $${
+        metrics.capitalPerKDaly.toFixed(2)
+      }M VC per 1k DALYs`,
     },
     {
       name: "Clinical Evidence",
@@ -747,8 +810,8 @@ export function valuateInvestment(
         metrics.area.neglectScore >= 4
           ? "highly underserved"
           : metrics.area.neglectScore === 3
-            ? "moderately served"
-            : "competitive sector"
+          ? "moderately served"
+          : "competitive sector"
       }`,
     },
     {
@@ -759,28 +822,30 @@ export function valuateInvestment(
       name: "Payer Coverage",
       score: inputs.hasReimbursement
         ? 1.0
-        : metrics.area.payerCoveragePercent > 70 ? 0.0
-          : metrics.area.payerCoveragePercent > 40 ? -0.5
-          : -1.0,
+        : metrics.area.payerCoveragePercent > 70
+        ? 0.0
+        : metrics.area.payerCoveragePercent > 40
+        ? -0.5
+        : -1.0,
       note: inputs.hasReimbursement
         ? `Reimbursement pathway secured — payer gap de-risked (sector avg ${metrics.area.payerCoveragePercent}% covered)`
         : `No reimbursement yet; sector avg ${metrics.area.payerCoveragePercent}% payer coverage — ${
-            metrics.area.payerCoveragePercent > 70
-              ? "tailwind, but company-specific codes still needed"
-              : metrics.area.payerCoveragePercent > 40
-                ? "partial coverage; prior-auth risk"
-                : "predominantly cash-pay — major adoption barrier"
-          }`,
+          metrics.area.payerCoveragePercent > 70
+            ? "tailwind, but company-specific codes still needed"
+            : metrics.area.payerCoveragePercent > 40
+            ? "partial coverage; prior-auth risk"
+            : "predominantly cash-pay — major adoption barrier"
+        }`,
     },
     {
       // Provider access gap: fragmented care delivery or specialist dependency
       // constrains scalable adoption even when payer coverage exists.
       name: "Provider Access",
       score: metrics.area.payerCoveragePercent > 70
-        ? 0.5   // Well-integrated into clinical workflows (e.g., breast, mental health)
+        ? 0.5 // Well-integrated into clinical workflows (e.g., breast, mental health)
         : metrics.area.payerCoveragePercent > 45
-          ? 0.0  // Mixed integration (e.g., maternal, pelvic)
-          : -0.5, // Fragmented care or specialist-dependent (e.g., fertility, PCOS, precision)
+        ? 0.0 // Mixed integration (e.g., maternal, pelvic)
+        : -0.5, // Fragmented care or specialist-dependent (e.g., fertility, PCOS, precision)
       note: metrics.area.providerGapNote,
     },
   ];
@@ -843,7 +908,7 @@ const GDP_PER_CAPITA_US_2023 = 76_330; // World Bank 2023
  */
 const STAGE_BASE_PENETRATION: Record<FundingStage, number> = {
   "Pre-Seed": 0.003, // 0.3% — concept stage, no market presence
-  "Seed":     0.008, // 0.8% — early pilots / limited geography
+  "Seed": 0.008, // 0.8% — early pilots / limited geography
   "Series A": 0.020, // 2.0% — early commercial launch
   "Series B": 0.045, // 4.5% — scaling commercial operations
   "Series C": 0.080, // 8.0% — established market presence
@@ -859,7 +924,7 @@ const STAGE_BASE_PENETRATION: Record<FundingStage, number> = {
  */
 const PROGRAM_COST_MULTIPLIER: Record<FundingStage, number> = {
   "Pre-Seed": 1.2,
-  "Seed":     1.5,
+  "Seed": 1.5,
   "Series A": 1.8,
   "Series B": 2.3,
   "Series C": 2.8,
@@ -899,7 +964,9 @@ export function computeWHOCEA(
     providerGapNote: area.providerGapNote,
   };
 
-  if (investmentM <= 0 || area.dalyThousandsPerYear <= 0) return insufficientData;
+  if (investmentM <= 0 || area.dalyThousandsPerYear <= 0) {
+    return insufficientData;
+  }
 
   // Payer coverage factor:
   //   With reimbursement: boost penetration up to 1.5× (payer covers cost,
@@ -916,7 +983,8 @@ export function computeWHOCEA(
 
   // DALYs averted over 10-year horizon
   const YEARS = 10;
-  const dalysAverted = area.dalyThousandsPerYear * 1_000 * effectivePenetration * YEARS;
+  const dalysAverted = area.dalyThousandsPerYear * 1_000 *
+    effectivePenetration * YEARS;
 
   // Program cost: R&D investment × stage-specific scale-up multiplier
   const programCostM = investmentM * PROGRAM_COST_MULTIPLIER[stage];
@@ -928,16 +996,21 @@ export function computeWHOCEA(
     costPerDALY < GDP_PER_CAPITA_US_2023
       ? "Very cost-effective"
       : costPerDALY < GDP_PER_CAPITA_US_2023 * 3
-        ? "Cost-effective"
-        : "Not cost-effective";
+      ? "Cost-effective"
+      : "Not cost-effective";
 
   const fmt = (n: number) => `$${Math.round(n).toLocaleString()}`;
-  const thresholdContext =
-    category === "Very cost-effective"
-      ? `${fmt(costPerDALY)}/DALY averted — below 1× US GDP/capita (${fmt(GDP_PER_CAPITA_US_2023)}). WHO-CHOICE: Very cost-effective.`
-      : category === "Cost-effective"
-        ? `${fmt(costPerDALY)}/DALY averted — 1–3× US GDP/capita (${fmt(GDP_PER_CAPITA_US_2023)}–${fmt(GDP_PER_CAPITA_US_2023 * 3)}). WHO-CHOICE: Cost-effective.`
-        : `${fmt(costPerDALY)}/DALY averted — above 3× US GDP/capita (${fmt(GDP_PER_CAPITA_US_2023 * 3)}). WHO-CHOICE: Not cost-effective at this threshold.`;
+  const thresholdContext = category === "Very cost-effective"
+    ? `${fmt(costPerDALY)}/DALY averted — below 1× US GDP/capita (${
+      fmt(GDP_PER_CAPITA_US_2023)
+    }). WHO-CHOICE: Very cost-effective.`
+    : category === "Cost-effective"
+    ? `${fmt(costPerDALY)}/DALY averted — 1–3× US GDP/capita (${
+      fmt(GDP_PER_CAPITA_US_2023)
+    }–${fmt(GDP_PER_CAPITA_US_2023 * 3)}). WHO-CHOICE: Cost-effective.`
+    : `${fmt(costPerDALY)}/DALY averted — above 3× US GDP/capita (${
+      fmt(GDP_PER_CAPITA_US_2023 * 3)
+    }). WHO-CHOICE: Not cost-effective at this threshold.`;
 
   return {
     gdpPerCapita: GDP_PER_CAPITA_US_2023,

@@ -112,7 +112,9 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
 
   return analysisCompanies
     .map((company) => {
-      const age = company.founded !== undefined ? CURRENT_YEAR - company.founded : 0;
+      const age = company.founded !== undefined
+        ? CURRENT_YEAR - company.founded
+        : 0;
       const isLateStage = [
         "Series C",
         "Series D",

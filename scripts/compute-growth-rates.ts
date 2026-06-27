@@ -49,17 +49,45 @@ interface GrowthRateResult {
 // Stage-based growth rate benchmarks from public sources
 // Source: Rock Health 2023-2024 Digital Health Funding Reports
 // These are PUBLIC sector-level medians, not company-specific
-const STAGE_GROWTH_BENCHMARKS: Record<string, { cagr: number; source: string }> = {
-  "Seed": { cagr: 80, source: "Rock Health 2024 Digital Health Funding Report (sector median)" },
-  "Series A": { cagr: 60, source: "Rock Health 2024 Digital Health Funding Report (sector median)" },
-  "Series B": { cagr: 45, source: "Rock Health 2024 Digital Health Funding Report (sector median)" },
-  "Series C": { cagr: 30, source: "Rock Health 2024 Digital Health Funding Report (sector median)" },
-  "Series D": { cagr: 25, source: "Rock Health 2024 Digital Health Funding Report (sector median)" },
-  "Series E": { cagr: 20, source: "Rock Health 2024 Digital Health Funding Report (sector median)" },
-  "Acquired": { cagr: 0, source: "N/A — company acquired, growth rate not applicable" },
+const STAGE_GROWTH_BENCHMARKS: Record<
+  string,
+  { cagr: number; source: string }
+> = {
+  "Seed": {
+    cagr: 80,
+    source: "Rock Health 2024 Digital Health Funding Report (sector median)",
+  },
+  "Series A": {
+    cagr: 60,
+    source: "Rock Health 2024 Digital Health Funding Report (sector median)",
+  },
+  "Series B": {
+    cagr: 45,
+    source: "Rock Health 2024 Digital Health Funding Report (sector median)",
+  },
+  "Series C": {
+    cagr: 30,
+    source: "Rock Health 2024 Digital Health Funding Report (sector median)",
+  },
+  "Series D": {
+    cagr: 25,
+    source: "Rock Health 2024 Digital Health Funding Report (sector median)",
+  },
+  "Series E": {
+    cagr: 20,
+    source: "Rock Health 2024 Digital Health Funding Report (sector median)",
+  },
+  "Acquired": {
+    cagr: 0,
+    source: "N/A — company acquired, growth rate not applicable",
+  },
 };
 
-function computeCAGR(startValue: number, endValue: number, years: number): number {
+function computeCAGR(
+  startValue: number,
+  endValue: number,
+  years: number,
+): number {
   if (years <= 0 || startValue <= 0 || endValue <= 0) return NaN;
   return (Math.pow(endValue / startValue, 1 / years) - 1) * 100;
 }
@@ -71,7 +99,9 @@ function parseYearFromDate(dateStr?: string): number | null {
 }
 
 // Main
-const dataset = JSON.parse(readFileSync("src/data/dataset.verified.json", "utf-8"));
+const dataset = JSON.parse(
+  readFileSync("src/data/dataset.verified.json", "utf-8"),
+);
 const companies: Company[] = dataset.companies || [];
 const acquisitions: Acquisition[] = dataset.acquisitions || [];
 
@@ -107,27 +137,44 @@ for (const company of companies) {
 
     if (years > 0) {
       // CAGR from total funding to deal value (proxy for company growth)
-      const cagr = computeCAGR(company.totalFunding, acquisition.dealValue, years);
+      const cagr = computeCAGR(
+        company.totalFunding,
+        acquisition.dealValue,
+        years,
+      );
       if (!isNaN(cagr)) {
         result.cagr = Number(cagr.toFixed(1));
-        result.method = `CAGR(totalFunding → dealValue, ${startYear}–${endYear})`;
+        result.method =
+          `CAGR(totalFunding → dealValue, ${startYear}–${endYear})`;
         result.yearsOfData = years;
-        result.source = `Verified dataset: ${company.sources?.[0] || "company record"} + acquisition record`;
+        result.source = `Verified dataset: ${
+          company.sources?.[0] || "company record"
+        } + acquisition record`;
         result.confidence = "high";
       }
     }
   }
 
   // Method 2: Founded year → lastKnownValuation / totalFunding
-  if (result.cagr === null && company.founded && company.lastKnownValuation && company.totalFunding) {
+  if (
+    result.cagr === null && company.founded && company.lastKnownValuation &&
+    company.totalFunding
+  ) {
     const years = currentYear - company.founded;
     if (years > 0) {
-      const cagr = computeCAGR(company.totalFunding, company.lastKnownValuation, years);
+      const cagr = computeCAGR(
+        company.totalFunding,
+        company.lastKnownValuation,
+        years,
+      );
       if (!isNaN(cagr)) {
         result.cagr = Number(cagr.toFixed(1));
-        result.method = `CAGR(totalFunding → lastKnownValuation, ${company.founded}–${currentYear})`;
+        result.method =
+          `CAGR(totalFunding → lastKnownValuation, ${company.founded}–${currentYear})`;
         result.yearsOfData = years;
-        result.source = `Verified dataset: ${company.valuationSource || company.sources?.[0] || "company record"}`;
+        result.source = `Verified dataset: ${
+          company.valuationSource || company.sources?.[0] || "company record"
+        }`;
         result.confidence = "medium";
       }
     }
@@ -135,7 +182,7 @@ for (const company of companies) {
 
   // Method 3: Stage-based benchmark (fallback)
   if (result.cagr === null && company.stage) {
-    const stageKey = Object.keys(STAGE_GROWTH_BENCHMARKS).find(k =>
+    const stageKey = Object.keys(STAGE_GROWTH_BENCHMARKS).find((k) =>
       company.stage!.toLowerCase().includes(k.toLowerCase())
     );
     if (stageKey) {
@@ -160,40 +207,73 @@ for (const r of results) {
   }
 }
 
-const sectorMedians: Record<string, { medianCAGR: number; sampleSize: number; confidence: string }> = {};
+const sectorMedians: Record<
+  string,
+  { medianCAGR: number; sampleSize: number; confidence: string }
+> = {};
 for (const [sector, rates] of sectorMap) {
   const sorted = [...rates].sort((a, b) => a - b);
   const mid = Math.floor(sorted.length / 2);
-  const median = sorted.length % 2 === 0 ? (sorted[mid - 1] + sorted[mid]) / 2 : sorted[mid];
-  const highConfidence = results.filter(r => r.sector === sector && r.confidence === "high").length;
+  const median = sorted.length % 2 === 0
+    ? (sorted[mid - 1] + sorted[mid]) / 2
+    : sorted[mid];
+  const highConfidence = results.filter((r) =>
+    r.sector === sector && r.confidence === "high"
+  ).length;
   sectorMedians[sector] = {
     medianCAGR: Number(median.toFixed(1)),
     sampleSize: rates.length,
-    confidence: highConfidence >= 3 ? "high" : highConfidence >= 1 ? "medium" : "low",
+    confidence: highConfidence >= 3
+      ? "high"
+      : highConfidence >= 1
+      ? "medium"
+      : "low",
   };
 }
 
 const output = {
   generatedAt: new Date().toISOString(),
-  source: "Lacuna verified dataset + Rock Health 2024 Digital Health Funding Report",
+  source:
+    "Lacuna verified dataset + Rock Health 2024 Digital Health Funding Report",
   companies: results,
   sectorMedians,
-  method: "CAGR computed from totalFunding → dealValue (Method 1, high confidence), totalFunding → lastKnownValuation (Method 2, medium confidence), or stage-based benchmarks (Method 3, low confidence).",
-  warning: "CAGR from funding→valuation is a proxy for company growth, not revenue growth. Replace with actual revenue CAGR from 10-K filings when available.",
+  method:
+    "CAGR computed from totalFunding → dealValue (Method 1, high confidence), totalFunding → lastKnownValuation (Method 2, medium confidence), or stage-based benchmarks (Method 3, low confidence).",
+  warning:
+    "CAGR from funding→valuation is a proxy for company growth, not revenue growth. Replace with actual revenue CAGR from 10-K filings when available.",
 };
 
-writeFileSync("src/data/computed-growth-rates.json", JSON.stringify(output, null, 2));
+writeFileSync(
+  "src/data/computed-growth-rates.json",
+  JSON.stringify(output, null, 2),
+);
 
 console.log("✅ Growth rates written to src/data/computed-growth-rates.json\n");
 
-const withCAGR = results.filter(r => r.cagr !== null);
-console.log(`Companies with computed CAGR: ${withCAGR.length}/${results.length}`);
-console.log(`  High confidence: ${withCAGR.filter(r => r.confidence === "high").length}`);
-console.log(`  Medium confidence: ${withCAGR.filter(r => r.confidence === "medium").length}`);
-console.log(`  Low confidence (stage benchmark): ${withCAGR.filter(r => r.confidence === "low").length}`);
-console.log(`  No data: ${results.filter(r => r.cagr === null).length}\n`);
+const withCAGR = results.filter((r) => r.cagr !== null);
+console.log(
+  `Companies with computed CAGR: ${withCAGR.length}/${results.length}`,
+);
+console.log(
+  `  High confidence: ${
+    withCAGR.filter((r) => r.confidence === "high").length
+  }`,
+);
+console.log(
+  `  Medium confidence: ${
+    withCAGR.filter((r) => r.confidence === "medium").length
+  }`,
+);
+console.log(
+  `  Low confidence (stage benchmark): ${
+    withCAGR.filter((r) => r.confidence === "low").length
+  }`,
+);
+console.log(`  No data: ${results.filter((r) => r.cagr === null).length}\n`);
 
 console.log("Sector median CAGRs:");
 for (const [sector, data] of Object.entries(sectorMedians)) {
-  console.log(`  ${sector}: ${data.medianCAGR}% (n=${data.sampleSize}, confidence: ${data.confidence})`);
+  console.log(
+    `  ${sector}: ${data.medianCAGR}% (n=${data.sampleSize}, confidence: ${data.confidence})`,
+  );
 }

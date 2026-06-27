@@ -100,16 +100,76 @@ function loadSectorBenchmarks(): Record<string, SectorBenchmark> {
   // Source: Rock Health 2024 Digital Health Funding Report + PitchBook 2024 FemTech.
   // sampleSize: 0 flags these as external reference points, not verified deals.
   const FALLBACKS: Record<string, SectorBenchmark> = {
-    digital_therapeutics: { medianMultiple: 3.0, p25Multiple: 1.9, p75Multiple: 4.8, sampleSize: 0, reimbursementCorrelation: 0 },
-    wearables: { medianMultiple: 2.2, p25Multiple: 1.4, p75Multiple: 3.5, sampleSize: 0, reimbursementCorrelation: 0 },
-    mental_health: { medianMultiple: 4.2, p25Multiple: 2.8, p75Multiple: 6.1, sampleSize: 0, reimbursementCorrelation: 0 },
-    maternal_health: { medianMultiple: 3.8, p25Multiple: 2.5, p75Multiple: 5.5, sampleSize: 0, reimbursementCorrelation: 0 },
-    menopause: { medianMultiple: 2.4, p25Multiple: 1.6, p75Multiple: 3.5, sampleSize: 0, reimbursementCorrelation: 0 },
-    contraception: { medianMultiple: 3.5, p25Multiple: 2.2, p75Multiple: 5.0, sampleSize: 0, reimbursementCorrelation: 0 },
-    pelvic_health: { medianMultiple: 2.8, p25Multiple: 1.8, p75Multiple: 4.2, sampleSize: 0, reimbursementCorrelation: 0 },
-    gynecology: { medianMultiple: 4.5, p25Multiple: 3.0, p75Multiple: 6.5, sampleSize: 0, reimbursementCorrelation: 0 },
-    breast_health: { medianMultiple: 4.8, p25Multiple: 3.2, p75Multiple: 7.0, sampleSize: 0, reimbursementCorrelation: 0 },
-    fertility: { medianMultiple: 2.1, p25Multiple: 1.4, p75Multiple: 3.2, sampleSize: 0, reimbursementCorrelation: 0 },
+    digital_therapeutics: {
+      medianMultiple: 3.0,
+      p25Multiple: 1.9,
+      p75Multiple: 4.8,
+      sampleSize: 0,
+      reimbursementCorrelation: 0,
+    },
+    wearables: {
+      medianMultiple: 2.2,
+      p25Multiple: 1.4,
+      p75Multiple: 3.5,
+      sampleSize: 0,
+      reimbursementCorrelation: 0,
+    },
+    mental_health: {
+      medianMultiple: 4.2,
+      p25Multiple: 2.8,
+      p75Multiple: 6.1,
+      sampleSize: 0,
+      reimbursementCorrelation: 0,
+    },
+    maternal_health: {
+      medianMultiple: 3.8,
+      p25Multiple: 2.5,
+      p75Multiple: 5.5,
+      sampleSize: 0,
+      reimbursementCorrelation: 0,
+    },
+    menopause: {
+      medianMultiple: 2.4,
+      p25Multiple: 1.6,
+      p75Multiple: 3.5,
+      sampleSize: 0,
+      reimbursementCorrelation: 0,
+    },
+    contraception: {
+      medianMultiple: 3.5,
+      p25Multiple: 2.2,
+      p75Multiple: 5.0,
+      sampleSize: 0,
+      reimbursementCorrelation: 0,
+    },
+    pelvic_health: {
+      medianMultiple: 2.8,
+      p25Multiple: 1.8,
+      p75Multiple: 4.2,
+      sampleSize: 0,
+      reimbursementCorrelation: 0,
+    },
+    gynecology: {
+      medianMultiple: 4.5,
+      p25Multiple: 3.0,
+      p75Multiple: 6.5,
+      sampleSize: 0,
+      reimbursementCorrelation: 0,
+    },
+    breast_health: {
+      medianMultiple: 4.8,
+      p25Multiple: 3.2,
+      p75Multiple: 7.0,
+      sampleSize: 0,
+      reimbursementCorrelation: 0,
+    },
+    fertility: {
+      medianMultiple: 2.1,
+      p25Multiple: 1.4,
+      p75Multiple: 3.2,
+      sampleSize: 0,
+      reimbursementCorrelation: 0,
+    },
   };
 
   for (const [k, v] of Object.entries(FALLBACKS)) {
@@ -119,7 +179,8 @@ function loadSectorBenchmarks(): Record<string, SectorBenchmark> {
   return result;
 }
 
-const SECTOR_BENCHMARKS: Record<string, SectorBenchmark> = loadSectorBenchmarks();
+const SECTOR_BENCHMARKS: Record<string, SectorBenchmark> =
+  loadSectorBenchmarks();
 
 // Valuation multiples by reimbursement profile
 const REIMBURSEMENT_MULTIPLIERS = {
@@ -146,27 +207,46 @@ const REIMBURSEMENT_MULTIPLIERS = {
  *
  * Primary source: scripts/compute-acquirer-premiums.ts → src/data/computed-acquirer-premiums.json
  */
-function loadAcquirerPremiums(): Record<string, { premium: number; capability: string }> {
+function loadAcquirerPremiums(): Record<
+  string,
+  { premium: number; capability: string }
+> {
   try {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const raw = require("./computed-acquirer-premiums.json") as {
-      acquirerTypePremiums?: Record<string, { avgPremium: number; sampleSize: number }>;
+      acquirerTypePremiums?: Record<
+        string,
+        { avgPremium: number; sampleSize: number }
+      >;
     };
     const typePremiums = raw.acquirerTypePremiums;
     if (typePremiums && Object.keys(typePremiums).length > 0) {
-      const result: Record<string, { premium: number; capability: string }> = {};
+      const result: Record<string, { premium: number; capability: string }> =
+        {};
       for (const [type, stat] of Object.entries(typePremiums)) {
-        const capability =
-          type === "pharma" || type === "healthcare" ? "strong" :
-          type === "tech" ? "weak" : "moderate";
+        const capability = type === "pharma" || type === "healthcare"
+          ? "strong"
+          : type === "tech"
+          ? "weak"
+          : "moderate";
         result[type] = { premium: stat.avgPremium, capability };
       }
       // Ensure all keys exist with computed or fallback values
-      if (!result["healthcare"]) result["healthcare"] = { premium: 1.35, capability: "strong" };
-      if (!result["pharma"]) result["pharma"] = { premium: 1.25, capability: "strong" };
-      if (!result["tech"]) result["tech"] = { premium: 0.95, capability: "weak" };
-      if (!result["retail"]) result["retail"] = { premium: 1.15, capability: "moderate" };
-      if (!result["other"]) result["other"] = { premium: 1.0, capability: "moderate" };
+      if (!result["healthcare"]) {
+        result["healthcare"] = { premium: 1.35, capability: "strong" };
+      }
+      if (!result["pharma"]) {
+        result["pharma"] = { premium: 1.25, capability: "strong" };
+      }
+      if (!result["tech"]) {
+        result["tech"] = { premium: 0.95, capability: "weak" };
+      }
+      if (!result["retail"]) {
+        result["retail"] = { premium: 1.15, capability: "moderate" };
+      }
+      if (!result["other"]) {
+        result["other"] = { premium: 1.0, capability: "moderate" };
+      }
       return result;
     }
   } catch {
@@ -185,7 +265,10 @@ function loadAcquirerPremiums(): Record<string, { premium: number; capability: s
   };
 }
 
-const ACQUIRER_PREMIUMS: Record<string, { premium: number; capability: string }> = loadAcquirerPremiums();
+const ACQUIRER_PREMIUMS: Record<
+  string,
+  { premium: number; capability: string }
+> = loadAcquirerPremiums();
 
 export class ValuationPremiumCalculator {
   /**
@@ -301,7 +384,11 @@ export class ValuationPremiumCalculator {
   /**
    * Compare reimbursement-rich vs consumer-only valuations
    */
-  compareBusinessModels(annualRevenue: number, sector: string, companyId?: string): {
+  compareBusinessModels(
+    annualRevenue: number,
+    sector: string,
+    companyId?: string,
+  ): {
     insuranceDriven: ValuationOutput;
     consumerOnly: ValuationOutput;
     premium: number;

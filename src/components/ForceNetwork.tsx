@@ -55,7 +55,7 @@ const sectorColors: Record<string, string> = {
   "Medical Device": "#0EA5E9",
   "Consumer": "#EA580C",
   Biotech: "#059669",
-  "Maternal Health": "#DB2777"
+  "Maternal Health": "#DB2777",
 };
 
 const PORTFOLIO_STYLES: Record<PortfolioKey, { color: string; badge: string }> =
@@ -93,9 +93,13 @@ export default function ForceNetwork(
     amboy: highlightPortfolios,
     fund: highlightPortfolios,
   });
-  const [isTransitioning, setIsTransitioning] = useState<PortfolioKey | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState<PortfolioKey | null>(
+    null,
+  );
   const [isLoading, setIsLoading] = useState(false);
-  const [focusedPortfolio, setFocusedPortfolio] = useState<PortfolioKey | null>(null);
+  const [focusedPortfolio, setFocusedPortfolio] = useState<PortfolioKey | null>(
+    null,
+  );
   const portfolioNameSets = useMemo(
     () =>
       new Map<PortfolioKey, ReadonlySet<string>>(
@@ -426,11 +430,13 @@ export default function ForceNetwork(
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/80 backdrop-blur-sm">
           <div className="flex flex-col items-center gap-4">
             <div className="animate-spin rounded-full h-8 w-8 border-2 border-lacuna-plum border-t-transparent" />
-            <p className="text-sm text-lacuna-text-secondary">Loading network visualization...</p>
+            <p className="text-sm text-lacuna-text-secondary">
+              Loading network visualization...
+            </p>
           </div>
         </div>
       )}
-      
+
       <div className="mb-4 flex flex-wrap justify-end gap-2 sm:gap-3">
         {INVESTOR_PORTFOLIOS.map((portfolio) => (
           <motion.button
@@ -445,7 +451,7 @@ export default function ForceNetwork(
               }));
             }}
             onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
+              if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
                 setIsTransitioning(portfolio.key);
                 setTimeout(() => setIsTransitioning(null), 300);
@@ -453,13 +459,20 @@ export default function ForceNetwork(
                   ...value,
                   [portfolio.key]: !value[portfolio.key],
                 }));
-              } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+              } else if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
                 e.preventDefault();
-                const currentIndex = INVESTOR_PORTFOLIOS.findIndex(p => p.key === portfolio.key);
-                const nextIndex = e.key === 'ArrowRight' 
+                const currentIndex = INVESTOR_PORTFOLIOS.findIndex((p) =>
+                  p.key === portfolio.key
+                );
+                const nextIndex = e.key === "ArrowRight"
                   ? (currentIndex + 1) % INVESTOR_PORTFOLIOS.length
-                  : (currentIndex - 1 + INVESTOR_PORTFOLIOS.length) % INVESTOR_PORTFOLIOS.length;
-                const nextButton = document.querySelector(`[data-portfolio-key="${INVESTOR_PORTFOLIOS[nextIndex].key}"]`) as HTMLElement;
+                  : (currentIndex - 1 + INVESTOR_PORTFOLIOS.length) %
+                    INVESTOR_PORTFOLIOS.length;
+                const nextButton = document.querySelector(
+                  `[data-portfolio-key="${
+                    INVESTOR_PORTFOLIOS[nextIndex].key
+                  }"]`,
+                ) as HTMLElement;
                 nextButton?.focus();
               }
             }}
@@ -472,20 +485,22 @@ export default function ForceNetwork(
               enabledPortfolios[portfolio.key]
                 ? `border-transparent shadow-lg text-white`
                 : `border-lacuna-lavender/40 bg-white text-lacuna-blue hover:border-lacuna-lavender/60 hover:shadow-md`
-            } ${isTransitioning === portfolio.key ? 'animate-pulse' : ''}`}
+            } ${isTransitioning === portfolio.key ? "animate-pulse" : ""}`}
             style={{
-              backgroundColor: enabledPortfolios[portfolio.key] 
-                ? PORTFOLIO_STYLES[portfolio.key].color 
+              backgroundColor: enabledPortfolios[portfolio.key]
+                ? PORTFOLIO_STYLES[portfolio.key].color
                 : undefined,
             }}
             disabled={isLoading}
-            aria-label={`Toggle ${portfolio.shortName} portfolio ${enabledPortfolios[portfolio.key] ? 'off' : 'on'}. Press Enter or Space to toggle, arrow keys to navigate.`}
+            aria-label={`Toggle ${portfolio.shortName} portfolio ${
+              enabledPortfolios[portfolio.key] ? "off" : "on"
+            }. Press Enter or Space to toggle, arrow keys to navigate.`}
             aria-pressed={enabledPortfolios[portfolio.key]}
             tabIndex={0}
           >
             <motion.span
               className={`h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full ${
-                enabledPortfolios[portfolio.key] ? 'bg-white/90' : ''
+                enabledPortfolios[portfolio.key] ? "bg-white/90" : ""
               }`}
               animate={{
                 scale: enabledPortfolios[portfolio.key] ? [1, 1.2, 1] : 1,
@@ -493,13 +508,17 @@ export default function ForceNetwork(
               }}
               transition={{ duration: 0.3 }}
               style={{
-                backgroundColor: enabledPortfolios[portfolio.key] 
-                  ? undefined 
+                backgroundColor: enabledPortfolios[portfolio.key]
+                  ? undefined
                   : PORTFOLIO_STYLES[portfolio.key].color,
               }}
             />
-            <span className="font-medium hidden sm:inline">{portfolio.shortName}</span>
-            <span className="font-medium sm:hidden">{portfolio.shortName.slice(0, 2)}</span>
+            <span className="font-medium hidden sm:inline">
+              {portfolio.shortName}
+            </span>
+            <span className="font-medium sm:hidden">
+              {portfolio.shortName.slice(0, 2)}
+            </span>
             {isTransitioning === portfolio.key && (
               <motion.div
                 className="absolute -top-1 -right-1 h-3 w-3"
@@ -518,29 +537,35 @@ export default function ForceNetwork(
         aria-live="polite"
       >
         <div className="relative">
-          {nodes.length === 0 ? (
-            <div className="flex h-64 sm:h-96 items-center justify-center rounded-lg sm:rounded-xl border-2 border-dashed border-lacuna-lavender/40 bg-gradient-to-br from-lacuna-pink/10 to-lacuna-lavender/15">
-              <div className="text-center">
-                <div className="mb-4 flex justify-center">
-                  <div className="h-12 w-12 rounded-full bg-lacuna-lavender/20 flex items-center justify-center">
-                    <div className="h-6 w-6 rounded-full bg-lacuna-lavender/40" />
+          {nodes.length === 0
+            ? (
+              <div className="flex h-64 sm:h-96 items-center justify-center rounded-lg sm:rounded-xl border-2 border-dashed border-lacuna-lavender/40 bg-gradient-to-br from-lacuna-pink/10 to-lacuna-lavender/15">
+                <div className="text-center">
+                  <div className="mb-4 flex justify-center">
+                    <div className="h-12 w-12 rounded-full bg-lacuna-lavender/20 flex items-center justify-center">
+                      <div className="h-6 w-6 rounded-full bg-lacuna-lavender/40" />
+                    </div>
                   </div>
+                  <h3 className="text-lg font-medium text-lacuna-text-primary mb-2">
+                    No network data available
+                  </h3>
+                  <p className="text-sm text-lacuna-text-secondary">
+                    Try adjusting your filters or check back later.
+                  </p>
                 </div>
-                <h3 className="text-lg font-medium text-lacuna-text-primary mb-2">No network data available</h3>
-                <p className="text-sm text-lacuna-text-secondary">Try adjusting your filters or check back later.</p>
               </div>
-            </div>
-          ) : (
-            <svg
-              ref={svgRef}
-              width={width}
-              height={height}
-              role="img"
-              aria-label={graphLabel}
-              className="w-full rounded-lg sm:rounded-xl border border-lacuna-lavender/40 bg-gradient-to-br from-lacuna-pink/10 to-lacuna-lavender/15"
-              style={{ maxHeight: "80vh" }}
-            />
-          )}
+            )
+            : (
+              <svg
+                ref={svgRef}
+                width={width}
+                height={height}
+                role="img"
+                aria-label={graphLabel}
+                className="w-full rounded-lg sm:rounded-xl border border-lacuna-lavender/40 bg-gradient-to-br from-lacuna-pink/10 to-lacuna-lavender/15"
+                style={{ maxHeight: "80vh" }}
+              />
+            )}
 
           {/* Legend — collapsible on small screens */}
           <motion.div

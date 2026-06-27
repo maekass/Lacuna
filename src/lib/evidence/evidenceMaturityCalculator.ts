@@ -131,8 +131,12 @@ function gradeRationale(
         inputs.hasPostedResults ? " with posted trial results" : ""
       } — consistent with GRADE High (RCT-level regulatory evidence, low risk of bias).`;
     case "Moderate":
-      return `${inputs.highestPhase.replace("PHASE", "Phase ").replace("_", "/")} evidence${
-        inputs.hasPostedResults ? " with posted results" : " without posted results"
+      return `${
+        inputs.highestPhase.replace("PHASE", "Phase ").replace("_", "/")
+      } evidence${
+        inputs.hasPostedResults
+          ? " with posted results"
+          : " without posted results"
       } — GRADE Moderate: likely true effect but important uncertainty remains.`;
     case "Low":
       return `Early-phase clinical evidence (${

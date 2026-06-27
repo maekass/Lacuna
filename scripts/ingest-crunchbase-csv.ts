@@ -30,7 +30,7 @@
  * Usage: npx tsx scripts/ingest-crunchbase-csv.ts
  */
 
-import { readFileSync, writeFileSync, readdirSync, mkdirSync } from "fs";
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 
 const ROOT = resolve(__dirname, "..");
@@ -172,7 +172,7 @@ function levenshtein(a: string, b: string): number {
         matrix[i][j] = Math.min(
           matrix[i - 1][j - 1] + 1,
           matrix[i][j - 1] + 1,
-          matrix[i - 1][j] + 1
+          matrix[i - 1][j] + 1,
         );
       }
     }
@@ -186,14 +186,16 @@ function main() {
   const files = readdirSync(EXPORT_DIR).filter((f) => f.endsWith(".csv"));
   if (files.length === 0) {
     console.error(`❌ No CSV files found in ${EXPORT_DIR}`);
-    console.error("   Export CSVs from Crunchbase Pro first, then re-run this script");
+    console.error(
+      "   Export CSVs from Crunchbase Pro first, then re-run this script",
+    );
     return;
   }
 
   console.log(`📁 Found ${files.length} CSV files in ${EXPORT_DIR}\n`);
 
   const dataset = JSON.parse(
-    readFileSync(resolve(SRC_DATA_DIR, "dataset.verified.json"), "utf-8")
+    readFileSync(resolve(SRC_DATA_DIR, "dataset.verified.json"), "utf-8"),
   );
   const companies: Company[] = dataset.companies || [];
 
@@ -219,14 +221,21 @@ function main() {
       continue;
     }
 
-    console.log(`    ${rows.length} rows, columns: ${Object.keys(rows[0]).join(", ")}`);
+    console.log(
+      `    ${rows.length} rows, columns: ${Object.keys(rows[0]).join(", ")}`,
+    );
 
     for (const row of rows) {
       // Find the company name column (Crunchbase uses various header names)
-      const nameKey =
-        Object.keys(row).find((k) => k.toLowerCase().includes("organization name")) ||
-        Object.keys(row).find((k) => k.toLowerCase().includes("company name")) ||
-        Object.keys(row).find((k) => k.toLowerCase() === "name");
+      const nameKey = Object.keys(row).find((k) =>
+        k.toLowerCase().includes("organization name")
+      ) ||
+        Object.keys(row).find((k) =>
+          k.toLowerCase().includes("company name")
+        ) ||
+        Object.keys(row).find((k) =>
+          k.toLowerCase() === "name"
+        );
 
       if (!nameKey) continue;
 
@@ -277,7 +286,9 @@ function main() {
 
       // Enrich the company
       const fieldsUpdated: string[] = [];
-      const crunchbaseSource = `Crunchbase Pro export (${file}, accessed ${new Date().toISOString().split("T")[0]})`;
+      const crunchbaseSource = `Crunchbase Pro export (${file}, accessed ${
+        new Date().toISOString().split("T")[0]
+      })`;
 
       // Total Funding
       const fundingKey = Object.keys(row).find((k) =>
@@ -391,7 +402,12 @@ function main() {
       if (!existingSources.some((s) => s.includes("Crunchbase"))) {
         matched.sources = [
           ...existingSources,
-          `Crunchbase Pro - crunchbase.com/organization/${matched.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`,
+          `Crunchbase Pro - crunchbase.com/organization/${
+            matched.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(
+              /^-|-$/g,
+              "",
+            )
+          }`,
         ];
         fieldsUpdated.push("sources");
       }
@@ -399,7 +415,7 @@ function main() {
       if (fieldsUpdated.length > 0) {
         totalEnriched++;
         console.log(
-          `    ✅ ${matched.name} (${matched.id}): ${fieldsUpdated.join(", ")}`
+          `    ✅ ${matched.name} (${matched.id}): ${fieldsUpdated.join(", ")}`,
         );
       }
 
@@ -415,7 +431,10 @@ function main() {
   }
 
   // Write updated dataset
-  writeFileSync(resolve(SRC_DATA_DIR, "dataset.verified.json"), JSON.stringify(dataset, null, 2));
+  writeFileSync(
+    resolve(SRC_DATA_DIR, "dataset.verified.json"),
+    JSON.stringify(dataset, null, 2),
+  );
 
   // Write audit trail
   const auditOutput = {
@@ -430,7 +449,7 @@ function main() {
   };
   writeFileSync(
     resolve(SRC_DATA_DIR, "computed-crunchbase-enrichment.json"),
-    JSON.stringify(auditOutput, null, 2)
+    JSON.stringify(auditOutput, null, 2),
   );
 
   console.log(`\n✅ Enriched ${totalEnriched} companies from Crunchbase CSVs`);
@@ -439,7 +458,9 @@ function main() {
 
   if (auditTrail.filter((a) => !a.matched).length > 0) {
     console.log(
-      `\n⚠️  ${auditTrail.filter((a) => !a.matched).length} rows could not be matched to a company:`
+      `\n⚠️  ${
+        auditTrail.filter((a) => !a.matched).length
+      } rows could not be matched to a company:`,
     );
     auditTrail
       .filter((a) => !a.matched)

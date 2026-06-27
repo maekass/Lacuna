@@ -23,7 +23,10 @@ describe("growthRateProvider", () => {
   });
 
   it("prefers company CAGR over sector when both available (success)", () => {
-    const resolved = resolveGrowthRate({ companyId: "c1", sector: "Fertility" });
+    const resolved = resolveGrowthRate({
+      companyId: "c1",
+      sector: "Fertility",
+    });
     expect(resolved.source).toBe("company");
     expect(resolved.growthRate).toBe(9.8);
     expect(resolved.confidence).toBe("high");

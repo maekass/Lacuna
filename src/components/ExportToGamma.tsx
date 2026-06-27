@@ -162,8 +162,14 @@ export default function ExportToGamma() {
     }
 
     const rawDataset = {
-      companies: dataset.verifiedCompanies.map((c) => ({ ...c, hq: c.hq ?? "" })),
-      acquirers: dataset.verifiedAcquirers.map((a) => ({ ...a, hq: a.hq ?? "" })),
+      companies: dataset.verifiedCompanies.map((c) => ({
+        ...c,
+        hq: c.hq ?? "",
+      })),
+      acquirers: dataset.verifiedAcquirers.map((a) => ({
+        ...a,
+        hq: a.hq ?? "",
+      })),
       acquisitions: dataset.verifiedAcquisitions,
     };
 

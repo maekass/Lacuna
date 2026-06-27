@@ -36,7 +36,12 @@ import {
   estimateAnnualReimbursementFromCodes,
 } from "@/lib/data/cmsUtilizationProvider";
 
-export { DEFAULT_ANNUAL_USES_PER_CODE } from "@/lib/data/cmsUtilizationProvider";
+export {
+  DEFAULT_ANNUAL_USES_PER_CODE,
+  estimateAnnualReimbursementFromCodes,
+  getPortfolioMedianAnnualUsesPerCode,
+  resolveAnnualUsesPerCode,
+} from "@/lib/data/cmsUtilizationProvider";
 
 // Types
 export interface CPTCode {
