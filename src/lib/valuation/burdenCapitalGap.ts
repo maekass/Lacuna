@@ -503,7 +503,13 @@ export const BURDEN_AREAS: Record<string, BurdenArea> = {
     payerCoveragePercent: 55,
     providerGapNote:
       "WEF/BCG: 8 WH funding transactions and ~$4M capital raised (2020–2025) — less than 0.01% of total metabolic funding. Diabetes and metabolic syndrome affect women differently across life stages (PCOS, GDM, menopause); fragmented between endocrinology, OB/GYN, and primary care. CGM and metabolic FemTech often categorized as general wellness, not WH-specific.",
-    citationIds: ["gbd2021", "cdc_wonder_2022", "nwhn_pcos", "nih_reporter_2023", "wef_bcg_2026"],
+    citationIds: [
+      "gbd2021",
+      "cdc_wonder_2022",
+      "nwhn_pcos",
+      "nih_reporter_2023",
+      "wef_bcg_2026",
+    ],
   },
 };
 
