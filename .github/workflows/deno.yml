@@ -38,6 +38,7 @@ jobs:
           cache: true
 
       - name: Verify formatting
+        # Required by CI — run `deno fmt` locally before pushing.
         run: deno fmt --check
 
       - name: Install deps
