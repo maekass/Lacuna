@@ -13,6 +13,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "validate:dataset": "tsx scripts/validate-dataset.ts",
+    "build:endometriosis-coverage": "tsx scripts/build-endometriosis-coverage.ts",
     "sec:scan": "tsx scripts/sec-scan-acquirers.ts",
     "sec:ingest": "tsx scripts/sec-ingest-deals.ts",
     "download:free-apis": "tsx scripts/download-free-apis.ts",

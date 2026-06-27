@@ -1,0 +1,577 @@
+{
+  "therapeuticArea": "Endometriosis",
+  "therapeuticAreaId": "endometriosis",
+  "generatedAt": "2026-06-27",
+  "crunchbaseSearchTotal": 409,
+  "parsedFromPaste": 48,
+  "excludedNonForProfit": 3,
+  "excludedClinicalServices": 2,
+  "excludedNoFundingStatus": 5,
+  "includedCount": 38,
+  "verifiedDatasetOverlap": 1,
+  "companies": [
+    {
+      "id": "context-therapeutics",
+      "name": "Context Therapeutics",
+      "description": "Context Therapeutics is a clinical-stage biopharmaceutical company dedicated to creating new medicines to treat hormone-responsive cancers. Context's lead program is Apristor (Onapristone XR), an investigational Phase 2 drug that is being developed for progesterone receptor positive (PR+) metastatic breast and ovarian cancers. In addition, Context is advancing CTX-030916, a potential best-in-class oral antiprogestin for the treatment of uterine fibroids and endometriosis, and a discovery-stage program targeting Sigma1.",
+      "category": "pharma",
+      "crunchbaseRank": 5749,
+      "fundingStatus": "IPO",
+      "lastFundingType": "Post-IPO Equity",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/context-therapeutics",
+        "Company website - contexttx.com",
+        "Crunchbase Pro search paste (rank 5749)"
+      ]
+    },
+    {
+      "id": "organon",
+      "name": "Organon",
+      "description": "Organon develops and provides medicines and health solutions focused on women's health, biosimilars, and established brands. The company offers treatments for contraception, fertility, menopause, and conditions such as endometriosis, along with therapies addressing cardiovascular and respiratory diseases through its established portfolio.",
+      "category": "pharma",
+      "crunchbaseRank": 5808,
+      "fundingStatus": "IPO",
+      "lastFundingType": "Post-IPO Equity",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/organon",
+        "Organon investor relations",
+        "Crunchbase Pro search paste (rank 5808)"
+      ]
+    },
+    {
+      "id": "xella-health",
+      "name": "Xella Health",
+      "description": "Crunchbase - crunchbase.com/organization/xella-health",
+      "category": "digital_health",
+      "crunchbaseRank": 7024,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/xella-health",
+        "Crunchbase Pro search paste (rank 7024)"
+      ]
+    },
+    {
+      "id": "endogene-bio",
+      "name": "EndoGene.Bio",
+      "description": "Endogene.bio was founded to solve the lack of molecular data that keeps endometriosis a clinical black box. By analyzing key cells in menstrual blood, the company delivers tissue-level insights with the convenience of a liquid biopsy.",
+      "category": "diagnostics",
+      "crunchbaseRank": 9650,
+      "fundingStatus": "Seed",
+      "totalFundingM": 3.1,
+      "lastFundingType": "Seed",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/endogene-bio",
+        "LinkedIn company profile - total funding USD 3.1M",
+        "Crunchbase Pro search paste (rank 9650)"
+      ]
+    },
+    {
+      "id": "visana-health",
+      "name": "Visana Health",
+      "description": "Visana Health offers a digital health program focused on improving the quality of life for women who suffer from severe menstrual pain.",
+      "category": "digital_health",
+      "crunchbaseRank": 10688,
+      "fundingStatus": "Early Stage Venture",
+      "lastFundingType": "Seed",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/visana-health",
+        "Crunchbase Pro search paste (rank 10688)"
+      ]
+    },
+    {
+      "id": "gesynta-pharma",
+      "name": "Gesynta Pharma",
+      "description": "Gesynta Pharma is a clinical stage pharmaceutical company, developing a portfolio of compounds which inhibit the pro-inflammatory enzyme mPGES-1. Gesynta Pharma's most advanced drug candidate is vipoglanstat (GS-248), in clinical Phase 2 development as a non-hormonal treatment for endometriosis.",
+      "category": "therapeutics",
+      "crunchbaseRank": 13803,
+      "fundingStatus": "Early Stage Venture",
+      "lastFundingType": "Series B",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": true,
+      "verifiedDatasetId": "c86",
+      "sources": [
+        "Femtech Insider - SEK 347M Series B",
+        "Company website - gesynta.se",
+        "Crunchbase Pro search paste (rank 13803)"
+      ]
+    },
+    {
+      "id": "calla-lily-clinical-care",
+      "name": "Calla Lily Clinical Care",
+      "description": "Calla Lily Clinical Care is a women's health focused B-Corp that has developed the proprietary Callavid platform for intravaginal drug delivery.",
+      "category": "medical_device",
+      "crunchbaseRank": 19801,
+      "fundingStatus": "Early Stage Venture",
+      "lastFundingType": "Grant",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/calla-lily-clinical-care",
+        "Crunchbase Pro search paste (rank 19801)"
+      ]
+    },
+    {
+      "id": "opal-therapeutics",
+      "name": "Opal Therapeutics",
+      "description": "Opal Therapeutics is building a uterine organoid-based discovery platform to address critical gaps in reproductive health R&D. Conditions like endometriosis and fibroids affect over 100 million women worldwide.",
+      "category": "platform",
+      "crunchbaseRank": 24549,
+      "fundingStatus": "Grant",
+      "totalFundingM": 0.275,
+      "lastFundingType": "Grant",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "NSF SBIR Phase I award 2024 - sbir.gov",
+        "Company website - opaltherapeutics.com",
+        "Crunchbase Pro search paste (rank 24549)"
+      ]
+    },
+    {
+      "id": "dotlab",
+      "name": "DotLab",
+      "description": "DotLab provides biomarkers and the power of machine learning to deliver the first non-invasive tool to diagnose endometriosis.",
+      "category": "diagnostics",
+      "crunchbaseRank": 25451,
+      "fundingStatus": "Early Stage Venture",
+      "totalFundingM": 12.65,
+      "lastFundingType": "Series A",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "DotLab press release - $10M Series A (2019)",
+        "TechCrunch - DotLab Series A coverage",
+        "Crunchbase Pro search paste (rank 25451)"
+      ]
+    },
+    {
+      "id": "fimmcyte",
+      "name": "FimmCyte",
+      "description": "FimmCyte develops a novel disease modifying treatments for fibro-inflammatory diseases, starting with Endometriosis.",
+      "category": "therapeutics",
+      "crunchbaseRank": 42844,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/fimmcyte",
+        "Crunchbase Pro search paste (rank 42844)"
+      ]
+    },
+    {
+      "id": "elanza-wellness",
+      "name": "ELANZA Wellness",
+      "description": "ELANZA Wellness is a virtual chronic care platform built for people with endometriosis.",
+      "category": "digital_health",
+      "crunchbaseRank": 43349,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/elanza-wellness",
+        "Crunchbase Pro search paste (rank 43349)"
+      ]
+    },
+    {
+      "id": "endometriosis",
+      "name": "Endometriosis",
+      "description": "Endometrics is a creator of a genetic biomarker for the early identification of endometriosis.",
+      "category": "diagnostics",
+      "crunchbaseRank": 44490,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/endometrics",
+        "Crunchbase Pro search paste (rank 44490)"
+      ]
+    },
+    {
+      "id": "scanvio",
+      "name": "Scanvio",
+      "description": "Scanvio offers AI-augmented ultrasound software for faster endometriosis diagnosis.",
+      "category": "diagnostics",
+      "crunchbaseRank": 44597,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/scanvio",
+        "Crunchbase Pro search paste (rank 44597)"
+      ]
+    },
+    {
+      "id": "afynia-laboratories",
+      "name": "Afynia Laboratories",
+      "description": "Aima Laboratories is a women's health healthcare company working on the first non-invasive endometriosis diagnostic tool for the market.",
+      "category": "diagnostics",
+      "crunchbaseRank": 46246,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/afynia-laboratories",
+        "Crunchbase Pro search paste (rank 46246)"
+      ]
+    },
+    {
+      "id": "femmepharma-global-healthcare",
+      "name": "FemmePharma Global Healthcare",
+      "description": "FemmePharma Global Healthcare, Inc., a pharmaceutical company, engages in developing drugs for diseases and disorders affecting women internationally including endometriosis.",
+      "category": "pharma",
+      "crunchbaseRank": 69786,
+      "fundingStatus": "M&A",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/femmepharma",
+        "Crunchbase Pro search paste (rank 69786)"
+      ]
+    },
+    {
+      "id": "nura-health",
+      "name": "Nura Health",
+      "description": "Nura Health is a molecular diagnostics firm that is improving women's health by creating and distributing innovative non-invasive tests.",
+      "category": "diagnostics",
+      "crunchbaseRank": 70929,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/nura-health",
+        "Crunchbase Pro search paste (rank 70929)"
+      ]
+    },
+    {
+      "id": "syrona-health",
+      "name": "Syrona Health",
+      "description": "Syrona Health is a digital health solution for personalised gynaecology across life-stages starting from Menstrual health to Menopause. We cover Endometriosis, PCOS, Fertility, Parenthood and Menopause.",
+      "category": "digital_health",
+      "crunchbaseRank": 74369,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/syrona-health",
+        "Crunchbase Pro search paste (rank 74369)"
+      ]
+    },
+    {
+      "id": "maipl-therapeutics-inc",
+      "name": "Maipl Therapeutics, Inc.",
+      "description": "Maipl Therapeutics is developing radically different, first-in-class medicines to treat endometriosis and other diseases.",
+      "category": "therapeutics",
+      "crunchbaseRank": 93456,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/maipl-therapeutics",
+        "Crunchbase Pro search paste (rank 93456)"
+      ]
+    },
+    {
+      "id": "endocure",
+      "name": "EndoCure",
+      "description": "EndoCure is a endometriosis diagnostic, and a novel robotic AI-powered ultrasound is revolutionizing the field.",
+      "category": "diagnostics",
+      "crunchbaseRank": 93795,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/endocure",
+        "Crunchbase Pro search paste (rank 93795)"
+      ]
+    },
+    {
+      "id": "kranus-health",
+      "name": "Kranus Health",
+      "description": "Kranus Health is building the world's first AI-enabled gender medicine platform with a pipeline extending into endometriosis.",
+      "category": "digital_health",
+      "crunchbaseRank": 98573,
+      "fundingStatus": "Early Stage Venture",
+      "lastFundingType": "Series A",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/kranus-health",
+        "NEJM Evidence / Lancet Digital Health - DiGA trials",
+        "Crunchbase Pro search paste (rank 98573)"
+      ]
+    },
+    {
+      "id": "sur180-therapeutics",
+      "name": "Sur180 Therapeutics",
+      "description": "We are a women's owned startup focusing on new therapeutic approaches to gynecological conditions. Our primary focus is endometriosis.",
+      "category": "therapeutics",
+      "crunchbaseRank": 99791,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/sur180-therapeutics",
+        "Crunchbase Pro search paste (rank 99791)"
+      ]
+    },
+    {
+      "id": "endo-app",
+      "name": "Endo app",
+      "description": "Endo App is a CE-certified interactive, smartphone-based medical gadget for multimodal pain management and endometriosis therapy.",
+      "category": "digital_health",
+      "crunchbaseRank": 101481,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/endo-app",
+        "Crunchbase Pro search paste (rank 101481)"
+      ]
+    },
+    {
+      "id": "temple-therapeutics",
+      "name": "Temple Therapeutics",
+      "description": "Temple Therapeutics creates and develops therapies for orthopedics, oncology, and endometriosis patients.",
+      "category": "therapeutics",
+      "crunchbaseRank": 101713,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/temple-therapeutics",
+        "Crunchbase Pro search paste (rank 101713)"
+      ]
+    },
+    {
+      "id": "endodiag",
+      "name": "Endodiag",
+      "description": "Endodiag specializes in the development of products and services that improves the diagnosis of endometriosis.",
+      "category": "diagnostics",
+      "crunchbaseRank": 106834,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/endodiag",
+        "Crunchbase Pro search paste (rank 106834)"
+      ]
+    },
+    {
+      "id": "medai",
+      "name": "MEDAI",
+      "description": "MEDAI is a technology company with OVARIANA, a digital health platform focused on endometriosis awareness and gynecological symptom tracking.",
+      "category": "platform",
+      "crunchbaseRank": 107448,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/medai",
+        "Crunchbase Pro search paste (rank 107448)"
+      ]
+    },
+    {
+      "id": "belle-health",
+      "name": "Belle Health",
+      "description": "Belle Health AI Technologies is a pioneering femtech startup addressing endometriosis and hormonal health needs with the Belle Ring.",
+      "category": "medical_device",
+      "crunchbaseRank": 118352,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/belle-health",
+        "Crunchbase Pro search paste (rank 118352)"
+      ]
+    },
+    {
+      "id": "neurocrine-biosciences",
+      "name": "Neurocrine Biosciences",
+      "description": "Neurocrine Biosciences engages in the discovery and development of drugs for the treatment of endocrine-related diseases including endometriosis.",
+      "category": "pharma",
+      "crunchbaseRank": 127038,
+      "fundingStatus": "IPO",
+      "lastFundingType": "Post-IPO Equity",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/neurocrine-biosciences",
+        "SEC EDGAR filings",
+        "Crunchbase Pro search paste (rank 127038)"
+      ]
+    },
+    {
+      "id": "memmzy-health",
+      "name": "Memmzy Health",
+      "description": "Memmzy Health is a Fem-HealthTech company with AI-driven predictions for conditions like endometriosis.",
+      "category": "digital_health",
+      "crunchbaseRank": 129387,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/memmzy-health",
+        "Crunchbase Pro search paste (rank 129387)"
+      ]
+    },
+    {
+      "id": "evestra-onkologia",
+      "name": "Evestra Onkologia",
+      "description": "Evestra Onkologia engages in Research and Development pertaining to oncology and endometriosis assets.",
+      "category": "pharma",
+      "crunchbaseRank": 164539,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/evestra-onkologia",
+        "Crunchbase Pro search paste (rank 164539)"
+      ]
+    },
+    {
+      "id": "pyrefin",
+      "name": "Pyrefin",
+      "description": "Pyrefin is a development-stage pharmaceutical company focused on producing EP2 receptor antagonists with efficacy in endometriosis.",
+      "category": "therapeutics",
+      "crunchbaseRank": 166568,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/pyrefin",
+        "Crunchbase Pro search paste (rank 166568)"
+      ]
+    },
+    {
+      "id": "cicero-diagnostics",
+      "name": "Cicero Diagnostics",
+      "description": "Cicero Diagnostics is dedicated to clinical assays for understudied women's diseases including endometriosis under ReceptivaDx.",
+      "category": "diagnostics",
+      "crunchbaseRank": 169519,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/cicero-diagnostics",
+        "Crunchbase Pro search paste (rank 169519)"
+      ]
+    },
+    {
+      "id": "nalu",
+      "name": "NALU",
+      "description": "NALU offers personalized digital therapies for menstrual disorders including endometriosis.",
+      "category": "digital_health",
+      "crunchbaseRank": 186759,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/nalu",
+        "Crunchbase Pro search paste (rank 186759)"
+      ]
+    },
+    {
+      "id": "meliodays-medical",
+      "name": "Meliodays Medical",
+      "description": "Meliodays Medical develops targeted, non-hormonal drug delivery systems for chronic menstrual pain including endometriosis.",
+      "category": "medical_device",
+      "crunchbaseRank": 195928,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/meliodays-medical",
+        "Crunchbase Pro search paste (rank 195928)"
+      ]
+    },
+    {
+      "id": "diamens",
+      "name": "Diamens",
+      "description": "Diamens is a company focused on femtech that develops a non-invasive menstrual blood-based molecular diagnostic to detect women-specific diseases like endometriosis.",
+      "category": "diagnostics",
+      "crunchbaseRank": 317051,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/diamens",
+        "Crunchbase Pro search paste (rank 317051)"
+      ]
+    },
+    {
+      "id": "valeo-medical",
+      "name": "Valeo Medical",
+      "description": "Valeo Medical, Inc., a life sciences company, develops a non-invasive diagnostic blood test for endometriosis.",
+      "category": "diagnostics",
+      "crunchbaseRank": 321584,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/valeo-medical",
+        "Discovery Life Sciences fund coverage",
+        "Crunchbase Pro search paste (rank 321584)"
+      ]
+    },
+    {
+      "id": "viramal",
+      "name": "Viramal",
+      "description": "Viramal is an emerging specialty pharmaceutical company with a women's health clinical development pipeline including treatments for endometriosis.",
+      "category": "pharma",
+      "crunchbaseRank": 328420,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/viramal",
+        "Crunchbase Pro search paste (rank 328420)"
+      ]
+    },
+    {
+      "id": "july-health",
+      "name": "July Health",
+      "description": "July Health is a digital health platform delivering proactive end-to-end care including endometriosis management across Canada.",
+      "category": "digital_health",
+      "crunchbaseRank": 356321,
+      "fundingStatus": "Early Stage Venture",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/july-health",
+        "Crunchbase Pro search paste (rank 356321)"
+      ]
+    },
+    {
+      "id": "meditrina-pharmaceuticals",
+      "name": "Meditrina Pharmaceuticals",
+      "description": "Meditrina Pharmaceuticals, Inc. identifies and repurposes already marketed therapies for gynecologic conditions such as endometriosis and uterine fibroids.",
+      "category": "pharma",
+      "crunchbaseRank": 1306906,
+      "fundingStatus": "Closed",
+      "totalFundingM": 4.5,
+      "lastFundingType": "Series A",
+      "operatingStatus": "Closed",
+      "inVerifiedDataset": false,
+      "sources": [
+        "BioSpace - $4.4M initial funding (2007)",
+        "Crunchbase - crunchbase.com/organization/meditrina-pharmaceuticals-inc",
+        "Crunchbase Pro search paste (rank 1306906)"
+      ]
+    }
+  ],
+  "methodology": "Crunchbase Pro text search paste parsed with ingest-crunchbase-text format. Included only for-profit product companies with Crunchbase fundingStatus, fundraisingStatus, totalFunding, or lastFundingType (CSV or verified registry). Clinical service providers, hospitals, and nonprofits excluded.",
+  "sources": [
+    "Crunchbase Pro endometriosis search export (409 results)",
+    "src/data/dataset.verified.json overlap check"
+  ]
+}
