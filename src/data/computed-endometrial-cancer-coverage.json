@@ -1,0 +1,223 @@
+{
+  "therapeuticArea": "Endometrial cancer",
+  "therapeuticAreaId": "endometrial-cancer",
+  "generatedAt": "2026-06-28",
+  "crunchbaseSearchTotal": 13,
+  "parsedFromPaste": 13,
+  "excludedNonForProfit": 1,
+  "excludedClinicalServices": 3,
+  "excludedNoFundingStatus": 3,
+  "includedCount": 13,
+  "verifiedDatasetOverlap": 3,
+  "companies": [
+    {
+      "id": "mimark",
+      "name": "MiMARK",
+      "description": "MiMARK specializes in developing in vitro diagnostic solutions to improve the management of gynecological malignancies. The company envisions the gynecological fluid as the next step in liquid biopsy in gynecology. MiMARK's first objective is to improve endometrial cancer diagnosis.",
+      "category": "diagnostics",
+      "crunchbaseRank": 12168,
+      "fundingStatus": "Early Stage Venture",
+      "totalFundingM": 4.5,
+      "lastFundingType": "Seed",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Vall d'Hebron / PCB — €4.22M seed round (Nov 2023)",
+        "LinkedIn — MiMARK Diagnostics total funding ~$7.6M",
+        "Crunchbase Pro search paste (rank 12168)"
+      ]
+    },
+    {
+      "id": "sola-diagnostics",
+      "name": "Sola Diagnostics",
+      "description": "Sola Diagnostics' WID-easy test is a non-invasive epigenetic solution for detecting endometrial cancer in women with abnormal uterine bleeding. Private equity investments totaling €3.4M and NIHR GBP 2.2M grant support market access.",
+      "category": "diagnostics",
+      "crunchbaseRank": 36304,
+      "fundingStatus": "Private Equity",
+      "totalFundingM": 3.7,
+      "lastFundingType": "Private Equity",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Company profile — €3.4M private equity investments",
+        "NIHR — £2.2M market access study grant",
+        "Crunchbase Pro search paste (rank 36304)"
+      ]
+    },
+    {
+      "id": "madera-therapeutics",
+      "name": "Madera Therapeutics",
+      "description": "Madera Therapeutics is advancing TR compounds that activate mitochondrial protease ClpP with activity across endometrial cancer and other drug-resistant solid tumors.",
+      "category": "therapeutics",
+      "crunchbaseRank": 474183,
+      "fundingStatus": "Early Stage Venture",
+      "lastFundingType": "Grant",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "NCI / CancerX — Madera Therapeutics platform (public listings)",
+        "Company website — maderatherapeutics.com",
+        "Crunchbase Pro search paste (rank 474183)"
+      ]
+    },
+    {
+      "id": "xoft",
+      "name": "Xoft",
+      "description": "Xoft, Inc. develops electronic brachytherapy systems for radiation oncology including vaginal applicators used to treat endometrial cancer.",
+      "category": "medical_device",
+      "crunchbaseRank": 548264,
+      "fundingStatus": "M&A",
+      "lastFundingType": "M&A",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "iCAD acquisition of Xoft (2017)",
+        "Crunchbase — crunchbase.com/organization/xoft",
+        "Crunchbase Pro search paste (rank 548264)"
+      ]
+    },
+    {
+      "id": "mirflow-ltd",
+      "name": "MIRFLOW LTD",
+      "description": "MIRFLOW develops a rapid blood-based genomic testing platform for early detection and recurrence monitoring of endometrial cancer. Funding from the EQT Foundation Women's Health Grant supports prototype validation.",
+      "category": "diagnostics",
+      "crunchbaseRank": 3544284,
+      "fundingStatus": "Grant",
+      "lastFundingType": "Grant",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "EQT Foundation Women's Health Grant — prototype validation",
+        "Crunchbase Pro search paste (rank 3544284)"
+      ]
+    },
+    {
+      "id": "theoreo",
+      "name": "Theoreo",
+      "description": "Theoreo develops metabolomics-based diagnostics including the Medea Test for early detection of endometrial cancer using blood-based metabolic signatures.",
+      "category": "diagnostics",
+      "crunchbaseRank": 4528974,
+      "fundingStatus": "Grant",
+      "lastFundingType": "Grant",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "LILT research grant — JAMA Network Open validation study",
+        "Campania Region — Campania Oncoterapie / tech transfer support",
+        "Crunchbase Pro search paste (rank 4528974)"
+      ]
+    },
+    {
+      "id": "foundation-medicine",
+      "name": "Foundation Medicine",
+      "description": "Foundation Medicine provides comprehensive genomic profiling guiding precision oncology including endometrial and gynecologic cancers.",
+      "category": "diagnostics",
+      "fundingStatus": "M&A",
+      "lastFundingType": "M&A",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": true,
+      "verifiedDatasetId": "c38",
+      "sources": [
+        "Roche acquisition of Foundation Medicine (2018)",
+        "src/data/dataset.verified.json",
+        "Verified funding registry (no Crunchbase paste row)"
+      ]
+    },
+    {
+      "id": "context-therapeutics",
+      "name": "Context Therapeutics",
+      "description": "Context Therapeutics develops progesterone receptor antagonists for hormone-responsive cancers including endometrial and ovarian cancer.",
+      "category": "pharma",
+      "fundingStatus": "IPO",
+      "lastFundingType": "Post-IPO Equity",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/context-therapeutics",
+        "Company website - contexttx.com",
+        "Verified funding registry (no Crunchbase paste row)"
+      ]
+    },
+    {
+      "id": "immunomedics",
+      "name": "Immunomedics",
+      "description": "Immunomedics (Gilead) ADC oncology platform — Trodelvy and broader precision oncology portfolio.",
+      "category": "pharma",
+      "fundingStatus": "M&A",
+      "totalFundingM": 21000,
+      "lastFundingType": "M&A",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": true,
+      "verifiedDatasetId": "c58",
+      "sources": [
+        "Gilead Sciences — Immunomedics acquisition (2020)",
+        "src/data/dataset.verified.json",
+        "Verified funding registry (no Crunchbase paste row)"
+      ]
+    },
+    {
+      "id": "seagen",
+      "name": "Seagen",
+      "description": "Seagen ADC oncology platform including Tukysa and Tivdak for women's cancers.",
+      "category": "pharma",
+      "fundingStatus": "M&A",
+      "lastFundingType": "M&A",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": true,
+      "verifiedDatasetId": "c56",
+      "sources": [
+        "Pfizer — Seagen acquisition (2023)",
+        "src/data/dataset.verified.json",
+        "Verified funding registry (no Crunchbase paste row)"
+      ]
+    },
+    {
+      "id": "corcept-therapeutics",
+      "name": "Corcept Therapeutics",
+      "description": "Corcept develops relacorilant, a selective glucocorticoid receptor modulator in Phase 3 for endometrial cancer.",
+      "category": "pharma",
+      "fundingStatus": "IPO",
+      "lastFundingType": "Post-IPO Equity",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Corcept investor relations — relacorilant endometrial cancer program",
+        "Crunchbase - crunchbase.com/organization/corcept-therapeutics",
+        "Verified funding registry (no Crunchbase paste row)"
+      ]
+    },
+    {
+      "id": "natera",
+      "name": "Natera",
+      "description": "Natera provides cfDNA diagnostics including Signatera MRD and women's health oncology applications.",
+      "category": "diagnostics",
+      "fundingStatus": "IPO",
+      "lastFundingType": "Post-IPO Equity",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/natera",
+        "Verified funding registry (no Crunchbase paste row)"
+      ]
+    },
+    {
+      "id": "guardant-health",
+      "name": "Guardant Health",
+      "description": "Guardant Health liquid biopsy platform for oncology treatment selection and monitoring.",
+      "category": "diagnostics",
+      "fundingStatus": "IPO",
+      "lastFundingType": "Post-IPO Equity",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase - crunchbase.com/organization/guardant-health",
+        "Verified funding registry (no Crunchbase paste row)"
+      ]
+    }
+  ],
+  "methodology": "Crunchbase Pro text search paste plus verified funding registry. Included only for-profit product companies (diagnostics, therapeutics, devices, digital health) with Crunchbase fundingStatus, fundraisingStatus, totalFunding, or lastFundingType. Gynecologic oncology clinics, hospitals, and nonprofits excluded.",
+  "sources": [
+    "Crunchbase Pro endometrial cancer search paste (initial batch)",
+    "src/data/dataset.verified.json overlap check"
+  ]
+}

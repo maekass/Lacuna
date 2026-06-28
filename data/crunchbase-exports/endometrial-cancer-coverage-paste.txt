@@ -1,0 +1,62 @@
+# Crunchbase Pro text search paste — endometrial cancer
+# Format: CompanyName Logo / CompanyName / rank / description
+
+MiMARK Logo
+MiMARK
+12168
+MiMARK specializes in developing in vitro diagnostic solutions to improve the management of gynecological malignancies. The company envisions the gynecological fluid as the next step in liquid biopsy in gynecology. MiMARK's first objective is to improve endometrial cancer diagnosis.
+
+Sola Diagnostics Logo
+Sola Diagnostics
+36304
+Sola Diagnostics' WID-easy test is a non-invasive epigenetic solution for detecting endometrial cancer in women with abnormal uterine bleeding. Private equity investments totaling €3.4M and NIHR GBP 2.2M grant support market access.
+
+BIDEA Logo
+BIDEA
+201877
+BIDEA offers screening technology to help gynaecologists provide complete diagnosis in less time, reducing endometrial cancer incidence through early detection, especially in women over the age of 50.
+
+Madera Therapeutics Logo
+Madera Therapeutics
+474183
+Madera Therapeutics is advancing TR compounds that activate mitochondrial protease ClpP with activity across endometrial cancer and other drug-resistant solid tumors.
+
+Xoft Logo
+Xoft
+548264
+Xoft, Inc. develops electronic brachytherapy systems for radiation oncology including vaginal applicators used to treat endometrial cancer.
+
+Guzip Biomarkers Corporation Logo
+Guzip Biomarkers Corporation
+1725838
+Guzip Biomarkers Corporation develops the MPap DNA Methylation Detection Kit for endometrial cancer screening.
+
+Southwest Gyn Oncology Southwest Gyn O Logo
+Southwest Gyn Oncology Southwest Gyn O
+1822515
+Southwest Women's Oncology offers oncology diagnoses, gynecologic cancer FAQs, cervical cancer, endometrial cancer, ovarian cancer, uterine cancer, and vulvar cancer services.
+
+Mid Atlantic Gynecologic Oncology and Pelvic Surgery Associates Logo
+Mid Atlantic Gynecologic Oncology and Pelvic Surgery Associates
+2914681
+Mid Atlantic Gynecologic Oncology and Pelvic Surgery Associates offer gynecologic oncology, ovarian cancer, cervical cancer, uterine, endometrial cancer, fallopian tube cancer, vulvar cancer, and chemotherapy.
+
+MIRFLOW LTD Logo
+MIRFLOW LTD
+3544284
+MIRFLOW develops a rapid blood-based genomic testing platform for early detection and recurrence monitoring of endometrial cancer. Funding from the EQT Foundation Women's Health Grant supports prototype validation.
+
+Taylor & Karoly Logo
+Taylor & Karoly
+3638450
+Taylor & Karoly provides medical care for women including endometrial cancer, menopause, and surgical services.
+
+Theoreo Logo
+Theoreo
+4528974
+Theoreo develops metabolomics-based diagnostics including the Medea Test for early detection of endometrial cancer using blood-based metabolic signatures.
+
+Endometrial Cancer Action Network for African-Americans Logo
+Endometrial Cancer Action Network for African-Americans
+
+—

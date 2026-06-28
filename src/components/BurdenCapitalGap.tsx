@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import * as d3 from "d3";
 import ChartTooltip from "@/components/ui/ChartTooltip";
 import EndometriosisCoveragePanel from "@/components/EndometriosisCoveragePanel";
+import EndometrialCancerCoveragePanel from "@/components/EndometrialCancerCoveragePanel";
 import {
   BURDEN_CAPITAL_GAP_DATA,
   BURDEN_CAPITAL_GAP_SOURCES,
@@ -375,6 +376,7 @@ export default function BurdenCapitalGap() {
       </details>
 
       <EndometriosisCoveragePanel />
+      <EndometrialCancerCoveragePanel />
 
       <div className="mt-4 border-t border-lacuna-pink/20 pt-3 space-y-1.5">
         <p className="text-xs font-semibold text-lacuna-plum">Sources</p>
