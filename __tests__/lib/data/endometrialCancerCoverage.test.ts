@@ -25,11 +25,14 @@ describe("endometrial cancer coverage manifest", () => {
     }
   });
 
-  it("includes core diagnostics from paste and registry", () => {
+  it("includes core diagnostics and devices from batch 2", () => {
     const names = ENDOMETRIAL_CANCER_COVERAGE.companies.map((c) => c.name);
     expect(names).toContain("MiMARK");
     expect(names).toContain("Sola Diagnostics");
     expect(names).toContain("MIRFLOW LTD");
+    expect(names).toContain("Swift Biotechnology");
+    expect(names).toContain("Utepreva");
+    expect(names).toContain("Normedi");
   });
 
   it("excludes gynecologic oncology clinics from included list", () => {
@@ -44,10 +47,14 @@ describe("endometrial cancer coverage manifest", () => {
     ).toBe(false);
   });
 
-  it("flags verified dataset overlap for Foundation Medicine", () => {
+  it("flags verified dataset overlap for Foundation Medicine and Igenomix", () => {
     const fmi = ENDOMETRIAL_CANCER_COVERAGE.companies.find(
       (c) => c.name === "Foundation Medicine",
     );
     expect(fmi?.inVerifiedDataset).toBe(true);
+    const igenomix = ENDOMETRIAL_CANCER_COVERAGE.companies.find(
+      (c) => c.name === "Igenomix",
+    );
+    expect(igenomix?.inVerifiedDataset).toBe(true);
   });
 });

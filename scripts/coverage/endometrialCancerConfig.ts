@@ -179,6 +179,133 @@ export const ENDOMETRIAL_CANCER_KNOWN_FUNDING: Record<string, KnownFundingEntry>
       category: "diagnostics",
       sources: ["Crunchbase - crunchbase.com/organization/guardant-health"],
     },
+    swisssurgical: {
+      displayName: "Swisssurgical",
+      description:
+        "Swisssurgical develops a medical device for guided endometrial biopsy for detection of uterine cancers.",
+      crunchbaseRank: 3163906,
+      fundingStatus: "Early Stage Venture",
+      lastFundingType: "Seed",
+      operatingStatus: "Active",
+      category: "medical_device",
+      sources: [
+        "Crunchbase Pro endometrial cancer search paste (rank 3163906)",
+      ],
+    },
+    "swift biotechnology": {
+      displayName: "Swift Biotechnology",
+      description:
+        "Swift Biotechnology develops proteomic screening modalities for early detection of endometrial and ovarian cancer, in partnership with the University of South Alabama Mitchell Cancer Institute.",
+      crunchbaseRank: 3579346,
+      fundingStatus: "Early Stage Venture",
+      lastFundingType: "Grant",
+      totalFundingM: 1.1,
+      operatingStatus: "Active",
+      category: "diagnostics",
+      sources: [
+        "NIH grant — $1.1M early-detection research (Mitchell Cancer Institute)",
+        "Alabama Launchpad business plan competition winner",
+      ],
+    },
+    utepreva: {
+      displayName: "Utepreva",
+      description:
+        "Utepreva commercializes the FDA 510(k)-cleared Utepreva Endometrial Sampler for in-office uterine tissue collection and early endometrial cancer evaluation.",
+      crunchbaseRank: 3897773,
+      fundingStatus: "Early Stage Venture",
+      lastFundingType: "Seed",
+      operatingStatus: "Active",
+      category: "medical_device",
+      sources: [
+        "FDA 510(k) K240595 clearance (Aug 2024)",
+        "PR Newswire — Utepreva Endometrial Sampler launch",
+      ],
+    },
+    idoman: {
+      displayName: "Idoman",
+      description:
+        "Idoman manufactures and distributes the Thermablate Endometrial Ablation System and Wing Needle for hysteroscopic procedures.",
+      crunchbaseRank: 3376185,
+      fundingStatus: "Private Equity",
+      lastFundingType: "Private Equity",
+      operatingStatus: "Active",
+      category: "medical_device",
+      sources: [
+        "Idoman Teoranta — idoman-med.com product portfolio",
+        "Crunchbase Pro search paste (rank 3376185)",
+      ],
+    },
+    thermablate: {
+      displayName: "Thermablate",
+      description:
+        "Thermablate is a fully-automated portable medical device for global endometrial ablation to treat heavy menstrual bleeding, manufactured by Idoman.",
+      crunchbaseRank: 3753344,
+      fundingStatus: "Private Equity",
+      lastFundingType: "Private Equity",
+      operatingStatus: "Active",
+      category: "medical_device",
+      sources: [
+        "Idoman Teoranta — Thermablate Endometrial Ablation System",
+        "JUNE Medical distributor listing",
+      ],
+    },
+    normedi: {
+      displayName: "Normedi",
+      description:
+        "Normedi develops and distributes gynecologic surgical devices including NovaSure endometrial ablation and MyoSure tissue removal systems.",
+      crunchbaseRank: 4506686,
+      fundingStatus: "M&A",
+      lastFundingType: "M&A",
+      operatingStatus: "Active",
+      category: "medical_device",
+      sources: [
+        "Hologic acquisition of Normedi Nordic (2023)",
+        "Normedi product portfolio — NovaSure V5, MyoSure",
+      ],
+    },
+    "celvia cc as": {
+      displayName: "Celvia CC AS",
+      description:
+        "Celvia develops genetic tests including beREADY endometrial receptivity assessment, NIPTIFY prenatal screening, and PGT-A for IVF support.",
+      crunchbaseRank: 4159380,
+      fundingStatus: "Grant",
+      lastFundingType: "Grant",
+      operatingStatus: "Active",
+      category: "diagnostics",
+      sources: [
+        "Enterprise Estonia grant EU48695",
+        "Horizon 2020 ERIN grant EU952516",
+        "Estonian Research Council PRG1076",
+      ],
+    },
+    igenomix: {
+      displayName: "Igenomix",
+      description:
+        "Igenomix provides reproductive genetic testing including ERA endometrial receptivity analysis, EMMA/ALICE microbiome tests, and PGT for IVF.",
+      crunchbaseRank: 4214095,
+      fundingStatus: "M&A",
+      lastFundingType: "M&A",
+      operatingStatus: "Active",
+      category: "diagnostics",
+      sources: [
+        "Vitrolife acquisition of Igenomix (2021)",
+        "src/data/dataset.verified.json",
+      ],
+    },
+    keytruda: {
+      displayName: "Keytruda",
+      description:
+        "Keytruda (pembrolizumab) is a PD-1 immunotherapy indicated for endometrial carcinoma and other solid tumors, developed and marketed by Merck.",
+      crunchbaseRank: 3480656,
+      fundingStatus: "IPO",
+      lastFundingType: "Post-IPO Equity",
+      operatingStatus: "Active",
+      category: "pharma",
+      sources: [
+        "Merck — pembrolizumab FDA indications including endometrial carcinoma",
+        "Crunchbase Pro search paste (rank 3480656)",
+      ],
+    },
   };
 
 export const ENDOMETRIAL_CANCER_COVERAGE_CONFIG: CoverageAreaConfig = {
@@ -187,12 +314,14 @@ export const ENDOMETRIAL_CANCER_COVERAGE_CONFIG: CoverageAreaConfig = {
   pasteFileName: "endometrial-cancer-coverage-paste.txt",
   csvPrefix: "endometrial-cancer-coverage",
   outFileName: "computed-endometrial-cancer-coverage.json",
-  crunchbaseSearchTotal: 13,
+  crunchbaseSearchTotal: 57,
   knownFunding: ENDOMETRIAL_CANCER_KNOWN_FUNDING,
   knownFundingAliases: {
     "mimark diagnostics": "mimark",
     "guzip biomarkers corporation": "guzip biomarkers corporation",
     "mirflow": "mirflow ltd",
+    "igenomix part of vitrolife group": "igenomix",
+    "idoman teoranta": "idoman",
   },
   nonprofitPatterns: BASE_NONPROFIT_PATTERNS,
   clinicalServicePatterns: [
@@ -205,7 +334,7 @@ export const ENDOMETRIAL_CANCER_COVERAGE_CONFIG: CoverageAreaConfig = {
   methodology:
     "Crunchbase Pro text search paste plus verified funding registry. Included only for-profit product companies (diagnostics, therapeutics, devices, digital health) with Crunchbase fundingStatus, fundraisingStatus, totalFunding, or lastFundingType. Gynecologic oncology clinics, hospitals, and nonprofits excluded.",
   sources: [
-    "Crunchbase Pro endometrial cancer search paste (initial batch)",
+    "Crunchbase Pro endometrial cancer search paste (batches 1–2, ranks ~12K–4.7M)",
     "src/data/dataset.verified.json overlap check",
   ],
 };

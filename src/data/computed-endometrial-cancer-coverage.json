@@ -2,13 +2,13 @@
   "therapeuticArea": "Endometrial cancer",
   "therapeuticAreaId": "endometrial-cancer",
   "generatedAt": "2026-06-28",
-  "crunchbaseSearchTotal": 13,
-  "parsedFromPaste": 13,
+  "crunchbaseSearchTotal": 57,
+  "parsedFromPaste": 57,
   "excludedNonForProfit": 1,
-  "excludedClinicalServices": 3,
-  "excludedNoFundingStatus": 3,
-  "includedCount": 13,
-  "verifiedDatasetOverlap": 3,
+  "excludedClinicalServices": 14,
+  "excludedNoFundingStatus": 27,
+  "includedCount": 22,
+  "verifiedDatasetOverlap": 4,
   "companies": [
     {
       "id": "mimark",
@@ -77,6 +77,53 @@
       ]
     },
     {
+      "id": "swisssurgical",
+      "name": "Swisssurgical",
+      "description": "Swisssurgical develops a medical device for guided endometrial biopsy for the detection of uterine cancers.",
+      "category": "medical_device",
+      "crunchbaseRank": 3163906,
+      "fundingStatus": "Early Stage Venture",
+      "lastFundingType": "Seed",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Crunchbase Pro endometrial cancer search paste (rank 3163906)",
+        "Crunchbase Pro search paste (rank 3163906)"
+      ]
+    },
+    {
+      "id": "idoman",
+      "name": "Idoman",
+      "description": "Idoman operates in the wholesale industry, focusing on medical devices. The company manufactures and distributes the Thermablate Endometrial Ablation System, designed to adapt to various uterine cavity shapes and sizes. It also offers the Wing Needle for hysteroscopic procedures. Idoman serves as a distributor for these products, collaborating with authorized resellers to ensure their availability in different regions.",
+      "category": "medical_device",
+      "crunchbaseRank": 3376185,
+      "fundingStatus": "Private Equity",
+      "lastFundingType": "Private Equity",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Idoman Teoranta — idoman-med.com product portfolio",
+        "Crunchbase Pro search paste (rank 3376185)",
+        "Crunchbase Pro search paste (rank 3376185)"
+      ]
+    },
+    {
+      "id": "keytruda",
+      "name": "Keytruda",
+      "description": "Keytruda develops and markets pembrolizumab, a monoclonal antibody immunotherapy used to treat a range of cancers. The drug targets the PD‑1 pathway to help T cells detect and attack tumor cells. It is indicated for non–small cell lung cancer, melanoma, head and neck squamous cell carcinoma, urothelial carcinoma, gastric and esophageal cancers, cervical cancer, renal cell carcinoma, endometrial carcinoma, cutaneous squamous cell carcinoma, triple‑negative breast cancer, and MSI‑H/dMMR solid tumors. Keytruda also provides patient education, treatment guides, and access support resources for people receiving the therapy.",
+      "category": "pharma",
+      "crunchbaseRank": 3480656,
+      "fundingStatus": "IPO",
+      "lastFundingType": "Post-IPO Equity",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Merck — pembrolizumab FDA indications including endometrial carcinoma",
+        "Crunchbase Pro search paste (rank 3480656)",
+        "Crunchbase Pro search paste (rank 3480656)"
+      ]
+    },
+    {
       "id": "mirflow-ltd",
       "name": "MIRFLOW LTD",
       "description": "MIRFLOW develops a rapid blood-based genomic testing platform for early detection and recurrence monitoring of endometrial cancer. Funding from the EQT Foundation Women's Health Grant supports prototype validation.",
@@ -89,6 +136,105 @@
       "sources": [
         "EQT Foundation Women's Health Grant — prototype validation",
         "Crunchbase Pro search paste (rank 3544284)"
+      ]
+    },
+    {
+      "id": "swift-biotechnology",
+      "name": "Swift Biotechnology",
+      "description": "Swift is developing state of the art technologies that will save lives and save their health care system billions of dollars in unnecessary treatments made necessary due to late diagnosis. Swift is initially targeting development of screening modalities for endometrial and ovarian cancer. Their company is also pursuing plans for development of screens for other cancers and delivery systems which can transport treatment regimens by novel means in a site-specific manner. Swift Biotechnology is partnering with the University of South Alabama's Mitchell Cancer Institute, the premier cancer research facility on the Gulf Coast, and their offices are located on the premises.",
+      "category": "diagnostics",
+      "crunchbaseRank": 3579346,
+      "fundingStatus": "Early Stage Venture",
+      "totalFundingM": 1.1,
+      "lastFundingType": "Grant",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "NIH grant — $1.1M early-detection research (Mitchell Cancer Institute)",
+        "Alabama Launchpad business plan competition winner",
+        "Crunchbase Pro search paste (rank 3579346)"
+      ]
+    },
+    {
+      "id": "thermablate",
+      "name": "Thermablate",
+      "description": "Thermablate is a fully-automated, portable medical device used to carry out global endometrial ablation (GEA). It helps treat pre-menopausal women suffering from heavy menstrual bleeding.",
+      "category": "medical_device",
+      "crunchbaseRank": 3753344,
+      "fundingStatus": "Private Equity",
+      "lastFundingType": "Private Equity",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Idoman Teoranta — Thermablate Endometrial Ablation System",
+        "JUNE Medical distributor listing",
+        "Crunchbase Pro search paste (rank 3753344)"
+      ]
+    },
+    {
+      "id": "utepreva",
+      "name": "Utepreva",
+      "description": "Utepreva develops and commercializes single-use endometrial sampling devices for uterine cancer evaluation and early detection. The company focuses on the Utepreva Endometrial Sampler, a patented, FDA 510(k)-cleared device designed for rapid, in-office uterine tissue collection. The sampler combines suction, disruption, and absorption to retrieve both cellular and fluid-based samples suitable for diagnostic analysis. Utepreva targets clinicians and healthcare providers looking to integrate uterine sampling into routine clinical workflows without specialized equipment or operating room access. The company manufactures the device and works with distribution partners that manage national sales and deployment across clinical and healthcare networks. Its offerings are positioned for use in women's health and oncology diagnostics settings to address the lack of standardized screening approaches.",
+      "category": "medical_device",
+      "crunchbaseRank": 3897773,
+      "fundingStatus": "Early Stage Venture",
+      "lastFundingType": "Seed",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "FDA 510(k) K240595 clearance (Aug 2024)",
+        "PR Newswire — Utepreva Endometrial Sampler launch",
+        "Crunchbase Pro search paste (rank 3897773)"
+      ]
+    },
+    {
+      "id": "celvia-cc-as",
+      "name": "Celvia CC AS",
+      "description": "Celvia develops genetic tests and laboratory services focused on reproductive medicine, prenatal screening and food safety. The company offers assays such as NIPTIFY for non-invasive prenatal screening, beREADY for endometrial receptivity assessment and PGT-A testing to support in vitro fertilization decisions. Its portfolio also includes InvisibleMi tests for genital tract microbiome profiling and CLARITY testing for chromosomal causes of pregnancy loss. Celvia extends its molecular diagnostics expertise to food safety through honey metagenomic DNA analysis to characterize honey composition and detect adulteration. The organization conducts research and development projects that integrate genomics, bioinformatics and clinical collaboration to create science-based diagnostic solutions for patients, clinicians and businesses.",
+      "category": "diagnostics",
+      "crunchbaseRank": 4159380,
+      "fundingStatus": "Grant",
+      "lastFundingType": "Grant",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Enterprise Estonia grant EU48695",
+        "Horizon 2020 ERIN grant EU952516",
+        "Estonian Research Council PRG1076",
+        "Crunchbase Pro search paste (rank 4159380)"
+      ]
+    },
+    {
+      "id": "igenomix",
+      "name": "Igenomix",
+      "description": "Igenomix provides reproductive genetic testing services focused on fertility, IVF, and prenatal care. The company operates as a research‑driven laboratory group that collaborates with IVF clinics and fertility doctors to develop genetics‑based tests that support all stages of the reproductive journey. Its portfolio includes preimplantation genetic testing such as PGT‑A, PGT‑M, PGT‑SR and related embryo assessment tools, endometrial receptivity and microbiome tests like ERA, EMMA, ALICE and EndomeTRIO, and non‑invasive embryo evaluation such as EMBRACE. Igenomix also offers carrier screening (CGT), sperm analysis tests (SAT), miscarriage analysis (POC), and non‑invasive prenatal screening tests like NACE. These services are designed for healthcare professionals and patients seeking to understand infertility causes, reduce genetic disease risk, and support healthy pregnancy outcomes.",
+      "category": "diagnostics",
+      "crunchbaseRank": 4214095,
+      "fundingStatus": "M&A",
+      "lastFundingType": "M&A",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": true,
+      "verifiedDatasetId": "c33",
+      "sources": [
+        "Vitrolife acquisition of Igenomix (2021)",
+        "src/data/dataset.verified.json",
+        "Crunchbase Pro search paste (rank 4214095)"
+      ]
+    },
+    {
+      "id": "normedi",
+      "name": "Normedi",
+      "description": "Normedi develops and distributes medical devices and consumables for gynecological surgery. The company focuses on minimally invasive solutions for hysteroscopy, endometrial ablation, laparoscopy, and colposcopy, including tissue removal systems, adhesion barriers, scopes, and fluid management equipment. Normedi supplies products such as NovaSure V5 endometrial ablation, the MyoSure tissue removal suite, Oxiplex adhesion barrier gels, and a range of instruments, optics, and accessories. It serves gynecologists, hospitals, and clinics by offering devices for office and operating-room procedures that address abnormal uterine bleeding, intrauterine pathologies, and adhesion prevention. Through Normedi Education, it also delivers training, clinical information, and procedure-focused resources for healthcare professionals in gynecology.",
+      "category": "medical_device",
+      "crunchbaseRank": 4506686,
+      "fundingStatus": "M&A",
+      "lastFundingType": "M&A",
+      "operatingStatus": "Active",
+      "inVerifiedDataset": false,
+      "sources": [
+        "Hologic acquisition of Normedi Nordic (2023)",
+        "Normedi product portfolio — NovaSure V5, MyoSure",
+        "Crunchbase Pro search paste (rank 4506686)"
       ]
     },
     {
@@ -217,7 +363,7 @@
   ],
   "methodology": "Crunchbase Pro text search paste plus verified funding registry. Included only for-profit product companies (diagnostics, therapeutics, devices, digital health) with Crunchbase fundingStatus, fundraisingStatus, totalFunding, or lastFundingType. Gynecologic oncology clinics, hospitals, and nonprofits excluded.",
   "sources": [
-    "Crunchbase Pro endometrial cancer search paste (initial batch)",
+    "Crunchbase Pro endometrial cancer search paste (batches 1–2, ranks ~12K–4.7M)",
     "src/data/dataset.verified.json overlap check"
   ]
 }
