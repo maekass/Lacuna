@@ -1,5 +1,6 @@
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
+import process from "node:process";
 import type {
   CoverageCompanyCategory,
   TherapeuticAreaCoverageCompany,

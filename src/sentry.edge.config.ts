@@ -1,6 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
-
-// Edge runtime: avoid node:process — webpack cannot resolve it in edge bundles.
+import process from "node:process";
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   environment: process.env.NODE_ENV,
