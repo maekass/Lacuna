@@ -7,8 +7,8 @@ import {
   mapVerifiedStageToEngineStage,
 } from "@/lib/data/companyProfileMapper";
 import type {
-  VerifiedAcquisitionView,
   VerifiedAcquirerView,
+  VerifiedAcquisitionView,
   VerifiedCompanyView,
 } from "@/lib/data/verifiedDataHelpers";
 import { normalizeSectorBucket } from "@/lib/quant/empiricalPriors";
@@ -20,7 +20,9 @@ function inferAcquirerType(
   if (sector.includes("pharma") || sector.includes("therapeutic")) {
     return "pharma";
   }
-  if (sector.includes("insur") || acquirer.name.toLowerCase().includes("health")) {
+  if (
+    sector.includes("insur") || acquirer.name.toLowerCase().includes("health")
+  ) {
     return "insurer";
   }
   if (acquirer.ticker) return "strategic_healthcare";
@@ -95,9 +97,7 @@ export function buildAcquirerProfilesFromVerified(
       ...new Set(
         deals.flatMap((deal) => {
           const target = companyById.get(deal.targetId);
-          return target
-            ? [mapVerifiedSectorToEngineSector(target.sector)]
-            : [];
+          return target ? [mapVerifiedSectorToEngineSector(target.sector)] : [];
         }),
       ),
     ];
@@ -111,9 +111,7 @@ export function buildAcquirerProfilesFromVerified(
       ...new Set(
         deals.flatMap((deal) => {
           const target = companyById.get(deal.targetId);
-          return target
-            ? [mapVerifiedStageToEngineStage(target.stage)]
-            : [];
+          return target ? [mapVerifiedStageToEngineStage(target.stage)] : [];
         }),
       ),
     ];
@@ -124,16 +122,18 @@ export function buildAcquirerProfilesFromVerified(
     const mostRecentDate = deals.length > 0
       ? [...deals].sort((a, b) =>
         new Date(b.announcedDate).getTime() -
-          new Date(a.announcedDate).getTime()
+        new Date(a.announcedDate).getTime()
       )[0].announcedDate
       : undefined;
 
     const strategicPriorities = [
       ...new Set(
         deals
-          .map((d) => normalizeSectorBucket(
-            companyById.get(d.targetId)?.sector ?? acquirer.sector ?? "other",
-          ))
+          .map((d) =>
+            normalizeSectorBucket(
+              companyById.get(d.targetId)?.sector ?? acquirer.sector ?? "other",
+            )
+          )
           .filter(Boolean),
       ),
     ].map((bucket) => bucket.replace(/_/g, " "));

@@ -133,8 +133,8 @@ export default function KeyboardShortcuts() {
               </ul>
 
               <p className="mt-4 text-[11px] text-lacuna-blue/50">
-                Press <kbd className="font-mono">?</kbd> anywhere to open this
-                panel.
+                Press <kbd className="font-mono">?</kbd>{" "}
+                anywhere to open this panel.
               </p>
             </motion.div>
           </motion.div>

@@ -55,12 +55,22 @@ export default function Image() {
             Workspace
           </div>
           <div
-            style={{ fontSize: 72, fontWeight: 800, color: "#3b1f6e", lineHeight: 1 }}
+            style={{
+              fontSize: 72,
+              fontWeight: 800,
+              color: "#3b1f6e",
+              lineHeight: 1,
+            }}
           >
             Research
           </div>
           <div
-            style={{ fontSize: 24, color: "#5b6a8a", marginTop: 20, maxWidth: 600 }}
+            style={{
+              fontSize: 24,
+              color: "#5b6a8a",
+              marginTop: 20,
+              maxWidth: 600,
+            }}
           >
             Clinical trials · Evidence maturity · Genomics · Health equity
           </div>

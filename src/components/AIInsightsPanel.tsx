@@ -7,7 +7,14 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { AlertCircle, Check, ClipboardCopy, Loader2, RefreshCw, Sparkles } from "lucide-react";
+import {
+  AlertCircle,
+  Check,
+  ClipboardCopy,
+  Loader2,
+  RefreshCw,
+  Sparkles,
+} from "lucide-react";
 
 interface AIInsightsPanelProps {
   companyName: string;
@@ -125,8 +132,13 @@ export default function AIInsightsPanel({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-        const data = (await fallback.json()) as { content?: string; error?: string };
-        if (!fallback.ok) throw new Error(data.error ?? `Request failed (${fallback.status})`);
+        const data = (await fallback.json()) as {
+          content?: string;
+          error?: string;
+        };
+        if (!fallback.ok) {
+          throw new Error(data.error ?? `Request failed (${fallback.status})`);
+        }
         setInsights((prev) => ({
           ...prev,
           [type]: { type, content: data.content ?? "", loading: false },
@@ -174,7 +186,8 @@ export default function AIInsightsPanel({
     const content = insights[type].content;
     if (!content) return;
     const date = new Date().toISOString().split("T")[0];
-    const citation = `Lacuna AI · ${companyName} ${type} insight · ${date} · https://lacuna-maekass.vercel.app`;
+    const citation =
+      `Lacuna AI · ${companyName} ${type} insight · ${date} · https://lacuna-maekass.vercel.app`;
     await navigator.clipboard.writeText(citation);
     setCopiedType(type);
     setTimeout(() => setCopiedType(null), 2000);
@@ -219,9 +232,17 @@ export default function AIInsightsPanel({
     title: string;
     available: boolean;
   }[] = [
-    { type: "acquisition", title: "Acquisition Strategy", available: !!analysis },
+    {
+      type: "acquisition",
+      title: "Acquisition Strategy",
+      available: !!analysis,
+    },
     { type: "evidence", title: "Evidence Assessment", available: !!evidence },
-    { type: "reimbursement", title: "Reimbursement Impact", available: !!reimbursement },
+    {
+      type: "reimbursement",
+      title: "Reimbursement Impact",
+      available: !!reimbursement,
+    },
   ];
 
   return (

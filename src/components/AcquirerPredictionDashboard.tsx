@@ -63,7 +63,9 @@ export default function AcquirerPredictionDashboard() {
         acquirerName: a.acquirerName,
         dealValue: a.dealValue ?? 0,
         dealDate: a.announcedDate.slice(0, 7),
-        sector: mapVerifiedSectorToEngineSector(sectorById.get(a.targetId) ?? ""),
+        sector: mapVerifiedSectorToEngineSector(
+          sectorById.get(a.targetId) ?? "",
+        ),
         stage: "acquired" as const,
       }));
   }, [verifiedAcquisitions, verifiedCompanies]);

@@ -306,7 +306,11 @@ export function calculateMatchScore(
   const culturalFit = calculateCulturalFit(company, acquirer);
 
   // Financial fit: Can acquirer afford it?
-  const financialFit = calculateFinancialFit(company, acquirer, empiricalPriors);
+  const financialFit = calculateFinancialFit(
+    company,
+    acquirer,
+    empiricalPriors,
+  );
 
   // Market fit: Sector and stage alignment
   const marketFit = calculateMarketFit(company, acquirer);
@@ -470,8 +474,9 @@ function deriveCompanyValueEstimate(
     const medianM = fundingM * sectorPrior.medianFundingMultiple;
     return {
       medianM,
-      rationale:
-        `Median ${sectorPrior.medianFundingMultiple.toFixed(1)}x funding-to-exit multiple from ${sectorPrior.fundingMultipleN} verified ${bucket} deals`,
+      rationale: `Median ${
+        sectorPrior.medianFundingMultiple.toFixed(1)
+      }x funding-to-exit multiple from ${sectorPrior.fundingMultipleN} verified ${bucket} deals`,
     };
   }
 
@@ -509,7 +514,11 @@ function estimateValue(
 
   const qualityAdjustment = (matchScore - 50) / 100;
   const adjustedValue = base.medianM * (1 + qualityAdjustment * 0.25);
-  const strategicPremium = matchScore > 75 ? 1.15 : matchScore > 60 ? 1.08 : 1.0;
+  const strategicPremium = matchScore > 75
+    ? 1.15
+    : matchScore > 60
+    ? 1.08
+    : 1.0;
 
   const median = adjustedValue * strategicPremium;
   const min = median * 0.7;

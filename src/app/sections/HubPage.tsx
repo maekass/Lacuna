@@ -68,7 +68,8 @@ export default function HubPage() {
               </span>
               <span className="text-sm text-lacuna-blue">
                 Among disclosed valuations, {valuationDisparity.highSector}{" "}
-                averages {formatValuationGap(valuationDisparity.percentDiff)}{" "}
+                averages {formatValuationGap(valuationDisparity.percentDiff)}
+                {" "}
                 {valuationDisparity.lowSector}{" "}
                 — the widest sector gap in the dataset (n={valuationDisparity
                   .highN} vs n={valuationDisparity.lowN} disclosed).

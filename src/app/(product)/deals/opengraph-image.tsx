@@ -63,12 +63,22 @@ export default function Image() {
             Workspace
           </div>
           <div
-            style={{ fontSize: 72, fontWeight: 800, color: "#3b1f6e", lineHeight: 1 }}
+            style={{
+              fontSize: 72,
+              fontWeight: 800,
+              color: "#3b1f6e",
+              lineHeight: 1,
+            }}
           >
             Deals
           </div>
           <div
-            style={{ fontSize: 24, color: "#5b6a8a", marginTop: 20, maxWidth: 600 }}
+            style={{
+              fontSize: 24,
+              color: "#5b6a8a",
+              marginTop: 20,
+              maxWidth: 600,
+            }}
           >
             M&A network · Deal flow · Valuation matrix · Acquirer landscape
           </div>

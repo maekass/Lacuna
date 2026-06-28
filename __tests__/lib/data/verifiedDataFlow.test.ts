@@ -65,6 +65,8 @@ describe("verifiedComparables", () => {
 
 describe("formatCuratedDatasetProvenanceLine", () => {
   it("substitutes live deal count", () => {
-    expect(formatCuratedDatasetProvenanceLine(59)).toContain("n=59 verified deals");
+    expect(formatCuratedDatasetProvenanceLine(59)).toContain(
+      "n=59 verified deals",
+    );
   });
 });

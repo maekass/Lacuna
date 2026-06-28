@@ -12,11 +12,11 @@
  * Log-rank test p-value reported with BH correction noted.
  */
 
-import { useMemo, useRef, useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as d3 from "d3";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
-import { stratifiedKM, type KMResult } from "@/lib/stats/survival";
+import { type KMResult, stratifiedKM } from "@/lib/stats/survival";
 import { benjaminiHochberg } from "@/lib/stats/fdr";
 
 const REFERENCE_YEAR = 2026;
@@ -54,7 +54,8 @@ export default function SurvivalCurve() {
     for (const [targetId, _] of acqYearByTarget) {
       const company = verifiedCompanies.find((c) => c.id === targetId);
       if (!company) continue;
-      sectorAcqCount[company.sector] = (sectorAcqCount[company.sector] ?? 0) + 1;
+      sectorAcqCount[company.sector] = (sectorAcqCount[company.sector] ?? 0) +
+        1;
     }
 
     const topSectors = Object.entries(sectorAcqCount)
@@ -64,7 +65,10 @@ export default function SurvivalCurve() {
 
     // Build observations — only companies with known founding year
     const obs = verifiedCompanies
-      .filter((c) => typeof c.founded === "number" && c.founded > 1990 && topSectors.includes(c.sector))
+      .filter((c) =>
+        typeof c.founded === "number" && c.founded > 1990 &&
+        topSectors.includes(c.sector)
+      )
       .map((c) => {
         const founded = c.founded as number;
         const acqYear = acqYearByTarget.get(c.id);
@@ -75,7 +79,8 @@ export default function SurvivalCurve() {
 
     const { groups, logRank } = stratifiedKM(obs);
     // Sort groups to match topSectors order
-    const sorted = topSectors.map((s) => groups.find((g) => g.group === s)).filter((g): g is KMResult => !!g);
+    const sorted = topSectors.map((s) => groups.find((g) => g.group === s))
+      .filter((g): g is KMResult => !!g);
 
     return { kmResults: sorted, logRank, topGroups: topSectors };
   }, [verifiedCompanies, verifiedAcquisitions]);
@@ -95,10 +100,15 @@ export default function SurvivalCurve() {
       .attr("viewBox", `0 0 ${width} ${height}`)
       .attr("preserveAspectRatio", "xMidYMid meet");
 
-    const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+    const g = svg.append("g").attr(
+      "transform",
+      `translate(${margin.left},${margin.top})`,
+    );
 
     // Scales
-    const maxTime = d3.max(kmResults.flatMap((r) => r.steps.map((s) => s.time))) ?? 20;
+    const maxTime = d3.max(kmResults.flatMap((r) =>
+      r.steps.map((s) => s.time)
+    )) ?? 20;
     const xScale = d3.scaleLinear().domain([0, maxTime]).range([0, innerW]);
     const yScale = d3.scaleLinear().domain([0, 1]).range([innerH, 0]);
 
@@ -127,11 +137,14 @@ export default function SurvivalCurve() {
         .datum(areaData)
         .attr("fill", color)
         .attr("fill-opacity", active ? 0.08 : 0.02)
-        .attr("d", d3.area<[number, number, number]>()
-          .x((d) => xScale(d[0]))
-          .y0((d) => yScale(d[1]))
-          .y1((d) => yScale(d[2]))
-          .curve(d3.curveStepAfter));
+        .attr(
+          "d",
+          d3.area<[number, number, number]>()
+            .x((d) => xScale(d[0]))
+            .y0((d) => yScale(d[1]))
+            .y1((d) => yScale(d[2]))
+            .curve(d3.curveStepAfter),
+        );
     });
 
     // KM step lines
@@ -140,7 +153,12 @@ export default function SurvivalCurve() {
       const active = !hoveredGroup || hoveredGroup === km.group;
       const opacity = active ? 1 : 0.2;
 
-      const lineData: [number, number][] = [[0, 1], ...km.steps.filter((s) => s.nEvents > 0).map((s): [number, number] => [s.time, s.survival])];
+      const lineData: [number, number][] = [
+        [0, 1],
+        ...km.steps.filter((s) => s.nEvents > 0).map((
+          s,
+        ): [number, number] => [s.time, s.survival]),
+      ];
 
       g.append("path")
         .datum(lineData)
@@ -148,25 +166,39 @@ export default function SurvivalCurve() {
         .attr("stroke", color)
         .attr("stroke-width", active ? 2.5 : 1)
         .attr("stroke-opacity", opacity)
-        .attr("d", d3.line<[number, number]>()
-          .x((d) => xScale(d[0]))
-          .y((d) => yScale(d[1]))
-          .curve(d3.curveStepAfter));
+        .attr(
+          "d",
+          d3.line<[number, number]>()
+            .x((d) => xScale(d[0]))
+            .y((d) => yScale(d[1]))
+            .curve(d3.curveStepAfter),
+        );
 
       // Censoring tick-marks
-      km.steps.filter((s) => s.nCensored > 0 && s.nEvents === 0).forEach((s) => {
-        g.append("line")
-          .attr("x1", xScale(s.time)).attr("x2", xScale(s.time))
-          .attr("y1", yScale(s.survival) - 5).attr("y2", yScale(s.survival) + 5)
-          .attr("stroke", color).attr("stroke-width", 2).attr("stroke-opacity", opacity * 0.6);
-      });
+      km.steps.filter((s) => s.nCensored > 0 && s.nEvents === 0).forEach(
+        (s) => {
+          g.append("line")
+            .attr("x1", xScale(s.time)).attr("x2", xScale(s.time))
+            .attr("y1", yScale(s.survival) - 5).attr(
+              "y2",
+              yScale(s.survival) + 5,
+            )
+            .attr("stroke", color).attr("stroke-width", 2).attr(
+              "stroke-opacity",
+              opacity * 0.6,
+            );
+        },
+      );
     });
 
     // Median line at S=0.5
     g.append("line")
       .attr("x1", 0).attr("x2", innerW)
       .attr("y1", yScale(0.5)).attr("y2", yScale(0.5))
-      .attr("stroke", "#9aa3b5").attr("stroke-dasharray", "4,3").attr("stroke-width", 1);
+      .attr("stroke", "#9aa3b5").attr("stroke-dasharray", "4,3").attr(
+        "stroke-width",
+        1,
+      );
 
     g.append("text")
       .attr("x", innerW + 4).attr("y", yScale(0.5) + 4)
@@ -176,26 +208,35 @@ export default function SurvivalCurve() {
     g.append("g").attr("transform", `translate(0,${innerH})`)
       .call(d3.axisBottom(xScale).ticks(6).tickFormat((d) => `${d}y`))
       .call((ax) => ax.select(".domain").attr("stroke", "#c4b5d4"))
-      .call((ax) => ax.selectAll("text").attr("fill", "#5b6a8a").attr("font-size", 11));
+      .call((ax) =>
+        ax.selectAll("text").attr("fill", "#5b6a8a").attr("font-size", 11)
+      );
 
     g.append("g")
       .call(d3.axisLeft(yScale).ticks(5).tickFormat(d3.format(".0%")))
       .call((ax) => ax.select(".domain").attr("stroke", "#c4b5d4"))
-      .call((ax) => ax.selectAll("text").attr("fill", "#5b6a8a").attr("font-size", 11));
+      .call((ax) =>
+        ax.selectAll("text").attr("fill", "#5b6a8a").attr("font-size", 11)
+      );
 
     // Y-axis label
     g.append("text")
       .attr("transform", "rotate(-90)")
       .attr("x", -innerH / 2).attr("y", -44)
-      .attr("text-anchor", "middle").attr("font-size", 11).attr("fill", "#5b6a8a")
+      .attr("text-anchor", "middle").attr("font-size", 11).attr(
+        "fill",
+        "#5b6a8a",
+      )
       .text("Proportion unacquired");
 
     // X-axis label
     g.append("text")
       .attr("x", innerW / 2).attr("y", innerH + 44)
-      .attr("text-anchor", "middle").attr("font-size", 11).attr("fill", "#5b6a8a")
+      .attr("text-anchor", "middle").attr("font-size", 11).attr(
+        "fill",
+        "#5b6a8a",
+      )
       .text("Years from founding");
-
   }, [kmResults, hoveredGroup]);
 
   const totalN = kmResults.reduce((s, r) => s + r.n, 0);
@@ -216,8 +257,9 @@ export default function SurvivalCurve() {
         </h3>
         <p className="mt-1 text-sm text-lacuna-blue">
           Kaplan-Meier estimator · origin = founding year · event = acquisition
-          announcement · right-censored at {REFERENCE_YEAR} for unacquired
-          companies · Greenwood 95% CI bands · tick-marks = censoring times
+          announcement · right-censored at {REFERENCE_YEAR}{" "}
+          for unacquired companies · Greenwood 95% CI bands · tick-marks =
+          censoring times
         </p>
       </div>
 
@@ -248,7 +290,13 @@ export default function SurvivalCurve() {
         ))}
       </div>
 
-      <svg ref={svgRef} className="w-full" style={{ height: 300 }} role="img" aria-label="Kaplan-Meier time-to-acquisition survival curves" />
+      <svg
+        ref={svgRef}
+        className="w-full"
+        style={{ height: 300 }}
+        role="img"
+        aria-label="Kaplan-Meier time-to-acquisition survival curves"
+      />
 
       {/* At-risk table */}
       <div className="mt-4 overflow-x-auto">
@@ -259,7 +307,10 @@ export default function SurvivalCurve() {
                 At risk at year
               </th>
               {[0, 2, 5, 10, 15].map((t) => (
-                <th key={t} className="px-2 text-center font-medium text-lacuna-plum/70">
+                <th
+                  key={t}
+                  className="px-2 text-center font-medium text-lacuna-plum/70"
+                >
                   {t}y
                 </th>
               ))}
@@ -293,10 +344,14 @@ export default function SurvivalCurve() {
       <div className="mt-4 flex flex-wrap gap-4 border-t border-lacuna-lavender/20 pt-4 text-xs">
         <div>
           <span className="font-medium text-lacuna-plum">n = {totalN}</span>
-          <span className="text-lacuna-blue/60 ml-1">companies with known founding year</span>
+          <span className="text-lacuna-blue/60 ml-1">
+            companies with known founding year
+          </span>
         </div>
         <div>
-          <span className="font-medium text-lacuna-plum">{totalEvents} acquisitions</span>
+          <span className="font-medium text-lacuna-plum">
+            {totalEvents} acquisitions
+          </span>
           <span className="text-lacuna-blue/60 ml-1">observed events</span>
         </div>
 
@@ -324,20 +379,26 @@ export default function SurvivalCurve() {
         {logRank && (
           <div className="text-lacuna-blue/60">
             Log-rank χ²({logRank.df}) = {logRank.chiSquared.toFixed(2)},{" "}
-            <span className={logRankCorrected?.[0].significant ? "text-lacuna-plum font-medium" : ""}>
+            <span
+              className={logRankCorrected?.[0].significant
+                ? "text-lacuna-plum font-medium"
+                : ""}
+            >
               {pLabel(logRank.pValue)}
             </span>
             {logRankCorrected && (
-              <span className="ml-1">(BH adj. p = {logRankCorrected[0].pAdjusted})</span>
+              <span className="ml-1">
+                (BH adj. p = {logRankCorrected[0].pAdjusted})
+              </span>
             )}
           </div>
         )}
       </div>
 
       <p className="mt-3 text-[11px] text-lacuna-blue/40 leading-relaxed">
-        Interpretation caveat: n is small and sector stratification reduces power
-        further. Log-rank test has low power for early crossings. Greenwood CIs
-        assume independent censoring. Treat as exploratory.
+        Interpretation caveat: n is small and sector stratification reduces
+        power further. Log-rank test has low power for early crossings.
+        Greenwood CIs assume independent censoring. Treat as exploratory.
       </p>
     </div>
   );

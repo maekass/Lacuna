@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "fs";
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import type {
   CoverageCompanyCategory,
@@ -164,9 +164,7 @@ function loadCsvRows(csvPrefix: string): Map<string, CsvFundingRow> {
     const lastFundingTypeKey = headers.find((h) =>
       /last funding type/i.test(h)
     );
-    const operatingStatusKey = headers.find((h) =>
-      /operating status/i.test(h)
-    );
+    const operatingStatusKey = headers.find((h) => /operating status/i.test(h));
 
     if (!nameKey) continue;
 

@@ -81,22 +81,38 @@ function robustnessLabel(ev: number): EValueResult["robustness"] {
   return "negligible";
 }
 
-function interpretationText(ev: number, evCI: number | null, rr: number): string {
+function interpretationText(
+  ev: number,
+  evCI: number | null,
+  rr: number,
+): string {
   const tier = robustnessLabel(ev);
   const ciLine = evCI !== null
-    ? ` The CI lower bound E-value is ${evCI.toFixed(2)}, meaning even the conservative estimate requires unmeasured confounding of this magnitude.`
+    ? ` The CI lower bound E-value is ${
+      evCI.toFixed(2)
+    }, meaning even the conservative estimate requires unmeasured confounding of this magnitude.`
     : "";
 
   if (tier === "strong") {
-    return `To explain away RR=${rr.toFixed(2)}, an unmeasured confounder would need ≥${ev.toFixed(1)}× association with both exposure and outcome simultaneously — a very high bar suggesting this finding is robust.${ciLine}`;
+    return `To explain away RR=${
+      rr.toFixed(2)
+    }, an unmeasured confounder would need ≥${
+      ev.toFixed(1)
+    }× association with both exposure and outcome simultaneously — a very high bar suggesting this finding is robust.${ciLine}`;
   }
   if (tier === "moderate") {
-    return `To nullify RR=${rr.toFixed(2)}, unmeasured confounding of E-value=${ev.toFixed(2)} is required on both the exposure and outcome paths. Moderate robustness; common confounders (e.g. sector maturity) with RR ≈ 2–3 could plausibly explain this.${ciLine}`;
+    return `To nullify RR=${rr.toFixed(2)}, unmeasured confounding of E-value=${
+      ev.toFixed(2)
+    } is required on both the exposure and outcome paths. Moderate robustness; common confounders (e.g. sector maturity) with RR ≈ 2–3 could plausibly explain this.${ciLine}`;
   }
   if (tier === "weak") {
-    return `E-value=${ev.toFixed(2)} indicates weak robustness. A modest unmeasured confounder could explain away this association. Causal interpretation requires strong substantive justification.${ciLine}`;
+    return `E-value=${
+      ev.toFixed(2)
+    } indicates weak robustness. A modest unmeasured confounder could explain away this association. Causal interpretation requires strong substantive justification.${ciLine}`;
   }
-  return `E-value=${ev.toFixed(2)} ≈ 1 — the observed association is highly sensitive to even minimal unmeasured confounding. No causal claim is warranted.${ciLine}`;
+  return `E-value=${
+    ev.toFixed(2)
+  } ≈ 1 — the observed association is highly sensitive to even minimal unmeasured confounding. No causal claim is warranted.${ciLine}`;
 }
 
 /**

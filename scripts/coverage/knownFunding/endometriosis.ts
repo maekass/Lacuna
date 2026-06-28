@@ -68,7 +68,9 @@ export const ENDOMETRIOSIS_KNOWN_FUNDING: Record<string, KnownFundingEntry> = {
     lastFundingType: "Grant",
     operatingStatus: "Active",
     category: "medical_device",
-    sources: ["Crunchbase - crunchbase.com/organization/calla-lily-clinical-care"],
+    sources: [
+      "Crunchbase - crunchbase.com/organization/calla-lily-clinical-care",
+    ],
   },
   "opal therapeutics": {
     fundingStatus: "Grant",

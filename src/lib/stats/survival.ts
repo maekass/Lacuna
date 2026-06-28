@@ -57,7 +57,16 @@ export interface KMResult {
  */
 export function kaplanMeier(obs: SurvivalObs[], group = "Overall"): KMResult {
   const n = obs.length;
-  if (n === 0) return { group, steps: [], medianSurvival: null, medianCI: null, n: 0, nEvents: 0 };
+  if (n === 0) {
+    return {
+      group,
+      steps: [],
+      medianSurvival: null,
+      medianCI: null,
+      n: 0,
+      nEvents: 0,
+    };
+  }
 
   // Sort: ascending time; events before censoring at same time
   const sorted = [...obs].sort((a, b) => a.time - b.time || b.event - a.event);
@@ -90,8 +99,12 @@ export function kaplanMeier(obs: SurvivalObs[], group = "Overall"): KMResult {
       // Plain log CI: S(t)^exp(±1.96×SE/log(S))
       const logS = Math.log(S) || -1e-10;
       const seLogS = Math.sqrt(greenwoodSum);
-      const lower95 = S > 0 ? Math.exp(logS * Math.exp(-1.96 * seLogS / Math.abs(logS))) : 0;
-      const upper95 = S > 0 ? Math.exp(logS * Math.exp(1.96 * seLogS / Math.abs(logS))) : 0;
+      const lower95 = S > 0
+        ? Math.exp(logS * Math.exp(-1.96 * seLogS / Math.abs(logS)))
+        : 0;
+      const upper95 = S > 0
+        ? Math.exp(logS * Math.exp(1.96 * seLogS / Math.abs(logS)))
+        : 0;
 
       steps.push({
         time: t,
@@ -118,7 +131,7 @@ export function kaplanMeier(obs: SurvivalObs[], group = "Overall"): KMResult {
       });
     }
 
-    atRisk -= (events + censored);
+    atRisk -= events + censored;
     i = j;
   }
 
@@ -172,9 +185,15 @@ export function logRankTest(
   }
   const times = Array.from(allEventTimes).sort((a, b) => a - b);
 
-  const O: Record<string, number> = Object.fromEntries(groups.map((g) => [g, 0]));
-  const E: Record<string, number> = Object.fromEntries(groups.map((g) => [g, 0]));
-  const U: Record<string, number> = Object.fromEntries(groups.map((g) => [g, 0])); // O - E
+  const O: Record<string, number> = Object.fromEntries(
+    groups.map((g) => [g, 0]),
+  );
+  const E: Record<string, number> = Object.fromEntries(
+    groups.map((g) => [g, 0]),
+  );
+  const U: Record<string, number> = Object.fromEntries(
+    groups.map((g) => [g, 0]),
+  ); // O - E
 
   for (const t of times) {
     const atRiskByGroup: Record<string, number> = {};
@@ -184,7 +203,9 @@ export function logRankTest(
 
     for (const g of groups) {
       const nRisk = obsByGroup[g].filter((o) => o.time >= t).length;
-      const nEvents = obsByGroup[g].filter((o) => o.time === t && o.event === 1).length;
+      const nEvents = obsByGroup[g].filter((o) =>
+        o.time === t && o.event === 1
+      ).length;
       atRiskByGroup[g] = nRisk;
       eventsByGroup[g] = nEvents;
       totalAtRisk += nRisk;
@@ -233,7 +254,9 @@ function regularisedGammaP(a: number, x: number): number {
 function gammaSeries(a: number, x: number): number {
   let ap = a, del = 1 / a, sum = del;
   for (let n = 1; n <= 200; n++) {
-    ap++; del *= x / ap; sum += del;
+    ap++;
+    del *= x / ap;
+    sum += del;
     if (Math.abs(del) < Math.abs(sum) * 3e-7) break;
   }
   return sum * Math.exp(-x + a * Math.log(x) - logGamma(a));
@@ -243,21 +266,35 @@ function gammaContinuedFraction(a: number, x: number): number {
   let b = x + 1 - a, c = 1e30, d = 1 / b, h = d;
   for (let i = 1; i <= 200; i++) {
     const an = -i * (i - a);
-    b += 2; d = an * d + b; if (Math.abs(d) < 1e-30) d = 1e-30;
-    c = b + an / c; if (Math.abs(c) < 1e-30) c = 1e-30;
-    d = 1 / d; const del = d * c; h *= del;
+    b += 2;
+    d = an * d + b;
+    if (Math.abs(d) < 1e-30) d = 1e-30;
+    c = b + an / c;
+    if (Math.abs(c) < 1e-30) c = 1e-30;
+    d = 1 / d;
+    const del = d * c;
+    h *= del;
     if (Math.abs(del - 1) < 3e-7) break;
   }
   return Math.exp(-x + a * Math.log(x) - logGamma(a)) * h;
 }
 
 function logGamma(z: number): number {
-  const c = [76.18009172947146, -86.50532032941677, 24.01409824083091,
-    -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5];
+  const c = [
+    76.18009172947146,
+    -86.50532032941677,
+    24.01409824083091,
+    -1.231739572450155,
+    0.1208650973866179e-2,
+    -0.5395239384953e-5,
+  ];
   let y = z, x = z, tmp = x + 5.5;
   tmp -= (x + 0.5) * Math.log(tmp);
   let ser = 1.000000000190015;
-  for (const ci of c) { y++; ser += ci / y; }
+  for (const ci of c) {
+    y++;
+    ser += ci / y;
+  }
   return -tmp + Math.log(2.5066282746310005 * ser / x);
 }
 
@@ -275,7 +312,9 @@ export function stratifiedKM(obs: SurvivalObs[]): {
     (byGroup[g] ??= []).push(o);
   }
 
-  const groups = Object.entries(byGroup).map(([g, data]) => kaplanMeier(data, g));
+  const groups = Object.entries(byGroup).map(([g, data]) =>
+    kaplanMeier(data, g)
+  );
   const logRank = Object.keys(byGroup).length > 1 ? logRankTest(byGroup) : null;
 
   return { groups, logRank };

@@ -24,14 +24,17 @@ function HoveredCellTooltip({
         const cs = (() => {
           if (/Acquired/i.test(c.stage)) return "Acquired";
           if (/Public/i.test(c.stage)) return "Public";
-          if (/Series D|Series E|Series F|Late Stage|Pre-IPO/i.test(c.stage)) return "Series D+";
+          if (/Series D|Series E|Series F|Late Stage|Pre-IPO/i.test(c.stage)) {
+            return "Series D+";
+          }
           if (/Series C/i.test(c.stage)) return "Series C";
           if (/Series B/i.test(c.stage)) return "Series B";
           if (/Series A/i.test(c.stage)) return "Series A";
           if (/Seed/i.test(c.stage)) return "Seed";
           return null;
         })();
-        return c.sector === cell.sector && cs === cell.stage && typeof c.lastKnownValuation === "number";
+        return c.sector === cell.sector && cs === cell.stage &&
+          typeof c.lastKnownValuation === "number";
       })
       .map((c) => c.lastKnownValuation as number);
   }, [allCompanies, cell]);
@@ -45,7 +48,10 @@ function HoveredCellTooltip({
   const mde = valuations.length >= 2
     ? (() => {
       const m = valuations.reduce((s, v) => s + v, 0) / valuations.length;
-      const sd = Math.sqrt(valuations.reduce((s, v) => s + (v - m) ** 2, 0) / (valuations.length - 1));
+      const sd = Math.sqrt(
+        valuations.reduce((s, v) => s + (v - m) ** 2, 0) /
+          (valuations.length - 1),
+      );
       return 2.80 * sd * Math.sqrt(2 / valuations.length);
     })()
     : null;
@@ -71,8 +77,12 @@ function HoveredCellTooltip({
             </p>
             {bca && (
               <p className="text-xs text-lacuna-blue/70">
-                95% BCa CI: ${Math.round(bca.lower)}M – ${Math.round(bca.upper)}M
-                <span className="ml-1 text-lacuna-text-muted">({bca.method}, B={bca.B})</span>
+                95% BCa CI: ${Math.round(bca.lower)}M – ${Math.round(
+                  bca.upper,
+                )}M
+                <span className="ml-1 text-lacuna-text-muted">
+                  ({bca.method}, B={bca.B})
+                </span>
               </p>
             )}
             {bca === null && valuations.length < 3 && (
@@ -94,13 +104,21 @@ function HoveredCellTooltip({
         {cell.dealCount > 0 && (
           <span>
             Acquisitions:{" "}
-            <span className="font-semibold text-pink-600">{cell.dealCount}</span>
+            <span className="font-semibold text-pink-600">
+              {cell.dealCount}
+            </span>
           </span>
         )}
       </div>
       {/* Power warning */}
       {valuations.length > 0 && (
-        <div className={`mt-2 rounded px-2 py-1 text-xs ${isPowered ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>
+        <div
+          className={`mt-2 rounded px-2 py-1 text-xs ${
+            isPowered
+              ? "bg-emerald-50 text-emerald-700"
+              : "bg-amber-50 text-amber-700"
+          }`}
+        >
           {isPowered
             ? `Adequately powered (n=${valuations.length} ≥ ${POWER_80_N}) to detect d=0.5 effect at 80% power.`
             : `Underpowered: n=${valuations.length} disclosed. Need n≥${POWER_80_N} for 80% power (d=0.5, α=0.05).${
@@ -409,7 +427,10 @@ export default function ValuationMatrix() {
 
       {/* Tooltip */}
       {hoveredCell && hoveredCell.totalCount > 0 && (
-        <HoveredCellTooltip cell={hoveredCell} allCompanies={verifiedCompanies} />
+        <HoveredCellTooltip
+          cell={hoveredCell}
+          allCompanies={verifiedCompanies}
+        />
       )}
 
       <p className="mt-4 text-xs text-lacuna-text-muted leading-relaxed">

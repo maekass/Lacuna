@@ -101,7 +101,9 @@ export interface TTestResult {
   mde80: number;
 }
 
-function mean(arr: number[]) { return arr.reduce((s, v) => s + v, 0) / arr.length; }
+function mean(arr: number[]) {
+  return arr.reduce((s, v) => s + v, 0) / arr.length;
+}
 function variance(arr: number[]) {
   const m = mean(arr);
   return arr.reduce((s, v) => s + (v - m) ** 2, 0) / (arr.length - 1);
@@ -130,30 +132,49 @@ function betaCF(a: number, b: number, x: number): number {
   const qab = a + b, qap = a + 1, qam = a - 1;
   let c = 1, d = 1 - qab * x / qap;
   if (Math.abs(d) < 1e-30) d = 1e-30;
-  d = 1 / d; let h = d;
+  d = 1 / d;
+  let h = d;
   for (let m = 1; m <= maxIt; m++) {
     const m2 = 2 * m;
     let aa = m * (b - m) * x / ((qam + m2) * (a + m2));
-    d = 1 + aa * d; if (Math.abs(d) < 1e-30) d = 1e-30;
-    c = 1 + aa / c; if (Math.abs(c) < 1e-30) c = 1e-30;
-    d = 1 / d; h *= d * c;
+    d = 1 + aa * d;
+    if (Math.abs(d) < 1e-30) d = 1e-30;
+    c = 1 + aa / c;
+    if (Math.abs(c) < 1e-30) c = 1e-30;
+    d = 1 / d;
+    h *= d * c;
     aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2));
-    d = 1 + aa * d; if (Math.abs(d) < 1e-30) d = 1e-30;
-    c = 1 + aa / c; if (Math.abs(c) < 1e-30) c = 1e-30;
-    d = 1 / d; const del = d * c; h *= del;
+    d = 1 + aa * d;
+    if (Math.abs(d) < 1e-30) d = 1e-30;
+    c = 1 + aa / c;
+    if (Math.abs(c) < 1e-30) c = 1e-30;
+    d = 1 / d;
+    const del = d * c;
+    h *= del;
     if (Math.abs(del - 1) < eps) break;
   }
   return h;
 }
 
-function logBeta(a: number, b: number) { return logGamma(a) + logGamma(b) - logGamma(a + b); }
+function logBeta(a: number, b: number) {
+  return logGamma(a) + logGamma(b) - logGamma(a + b);
+}
 function logGamma(z: number): number {
-  const c = [76.18009172947146, -86.50532032941677, 24.01409824083091,
-    -1.231739572450155, 1.208650973866179e-3, -5.395239384953e-6];
+  const c = [
+    76.18009172947146,
+    -86.50532032941677,
+    24.01409824083091,
+    -1.231739572450155,
+    1.208650973866179e-3,
+    -5.395239384953e-6,
+  ];
   let y = z, x = z, tmp = x + 5.5;
   tmp -= (x + 0.5) * Math.log(tmp);
   let ser = 1.000000000190015;
-  for (const ci of c) { y++; ser += ci / y; }
+  for (const ci of c) {
+    y++;
+    ser += ci / y;
+  }
   return -tmp + Math.log(2.5066282746310005 * ser / x);
 }
 
@@ -165,7 +186,9 @@ function logGamma(z: number): number {
  * For equal n: MDE = 2.80 × σ_pooled / √n
  */
 function mde80(nA: number, nB: number, sdA: number, sdB: number): number {
-  const sdPooled = Math.sqrt(((nA - 1) * sdA ** 2 + (nB - 1) * sdB ** 2) / (nA + nB - 2));
+  const sdPooled = Math.sqrt(
+    ((nA - 1) * sdA ** 2 + (nB - 1) * sdB ** 2) / (nA + nB - 2),
+  );
   return 2.80 * sdPooled * Math.sqrt(1 / nA + 1 / nB); // 1.96 + 0.842 ≈ 2.80
 }
 
@@ -189,9 +212,11 @@ export function welchTTest(groupA: number[], groupB: number[]): TTestResult {
   const cohenD = (mA - mB) / (sdPooled || 1);
 
   return {
-    meanA: mA, meanB: mB,
+    meanA: mA,
+    meanB: mB,
     diffMeans: mA - mB,
-    t, df: Math.round(df * 10) / 10,
+    t,
+    df: Math.round(df * 10) / 10,
     pValue: Math.round(pValue * 10000) / 10000,
     cohenD: Math.round(cohenD * 100) / 100,
     mde80: mde80(nA, nB, Math.sqrt(vA), Math.sqrt(vB)),

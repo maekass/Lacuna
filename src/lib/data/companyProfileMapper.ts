@@ -88,9 +88,7 @@ export function mapVerifiedCompanyToProfile(
     capabilities: capabilities.length > 0 ? capabilities : [],
     technology: technology.length > 0 ? technology : [],
     fundingTotal: company.totalFunding ?? 0,
-    foundingDate: company.founded
-      ? `${company.founded}-01-01`
-      : "2018-01-01",
+    foundingDate: company.founded ? `${company.founded}-01-01` : "2018-01-01",
     revenue: company.lastKnownValuation,
   };
 }

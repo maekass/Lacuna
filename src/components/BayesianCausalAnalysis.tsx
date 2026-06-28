@@ -330,15 +330,19 @@ export default function BayesianCausalAnalysis() {
             <p className="text-xs text-lacuna-text-muted mb-4">
               Van der Weele &amp; Ding (2017). The E-value is the minimum
               strength of association that an unmeasured confounder would need
-              with <em>both</em> the exposure and outcome to fully explain away
-              the observed posterior mean. Effect scale: Cohen&apos;s{" "}
-              <em>d</em> → approximate RR.
+              with <em>both</em>{" "}
+              the exposure and outcome to fully explain away the observed
+              posterior mean. Effect scale: Cohen&apos;s <em>d</em>{" "}
+              → approximate RR.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
                 <div
                   className="text-3xl font-light mb-1"
-                  style={{ fontFamily: "'Bodoni MT', Didot, serif", color: colour }}
+                  style={{
+                    fontFamily: "'Bodoni MT', Didot, serif",
+                    color: colour,
+                  }}
                 >
                   {ev.evalue.toFixed(2)}
                 </div>
@@ -349,7 +353,10 @@ export default function BayesianCausalAnalysis() {
               <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
                 <div
                   className="text-3xl font-light mb-1"
-                  style={{ fontFamily: "'Bodoni MT', Didot, serif", color: "#4A5D8A" }}
+                  style={{
+                    fontFamily: "'Bodoni MT', Didot, serif",
+                    color: "#4A5D8A",
+                  }}
                 >
                   {ev.evalueCI?.toFixed(2) ?? "—"}
                 </div>
@@ -360,7 +367,10 @@ export default function BayesianCausalAnalysis() {
               <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
                 <div
                   className="text-3xl font-light mb-1"
-                  style={{ fontFamily: "'Bodoni MT', Didot, serif", color: "#5D4E6D" }}
+                  style={{
+                    fontFamily: "'Bodoni MT', Didot, serif",
+                    color: "#5D4E6D",
+                  }}
                 >
                   {ev.rr.toFixed(2)}
                 </div>
@@ -371,9 +381,13 @@ export default function BayesianCausalAnalysis() {
               <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
                 <div
                   className="text-lg font-light mb-1 leading-snug"
-                  style={{ fontFamily: "'Bodoni MT', Didot, serif", color: colour }}
+                  style={{
+                    fontFamily: "'Bodoni MT', Didot, serif",
+                    color: colour,
+                  }}
                 >
-                  {ev.robustness.charAt(0).toUpperCase() + ev.robustness.slice(1)}
+                  {ev.robustness.charAt(0).toUpperCase() +
+                    ev.robustness.slice(1)}
                 </div>
                 <div className="text-xs text-lacuna-text-muted uppercase tracking-wider">
                   Robustness tier

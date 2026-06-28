@@ -5,6 +5,8 @@ import TherapeuticAreaCoveragePanel from "@/components/TherapeuticAreaCoveragePa
 
 export default function EndometrialCancerCoveragePanel() {
   return (
-    <TherapeuticAreaCoveragePanel manifest={ENDOMETRIAL_CANCER_COVERAGE} />
+    <TherapeuticAreaCoveragePanel
+      manifest={ENDOMETRIAL_CANCER_COVERAGE}
+    />
   );
 }

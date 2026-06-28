@@ -16,14 +16,14 @@ const CATEGORY_LABELS: Record<
   pharma: "Pharma",
 };
 
-function FundingBadge({ company }: { company: TherapeuticAreaCoverageCompany }) {
+function FundingBadge(
+  { company }: { company: TherapeuticAreaCoverageCompany },
+) {
   const label = company.fundingStatus ?? company.lastFundingType ?? "Funded";
   return (
     <span className="inline-flex rounded-full bg-lacuna-lavender/20 px-2 py-0.5 text-[10px] font-medium text-lacuna-plum">
       {label}
-      {company.totalFundingM != null
-        ? ` · $${company.totalFundingM}M`
-        : ""}
+      {company.totalFundingM != null ? ` · $${company.totalFundingM}M` : ""}
     </span>
   );
 }
@@ -41,19 +41,20 @@ export default function TherapeuticAreaCoveragePanel({
   return (
     <details className="mt-4 rounded-lg border border-lacuna-lavender/30 bg-lacuna-lavender/10 px-4 py-3">
       <summary className="cursor-pointer text-xs font-semibold text-lacuna-plum">
-        {therapeuticArea} ecosystem coverage ({stats.includedCount} for-profit
-        cos. w/ funding status · {stats.verifiedOverlap} in verified dataset)
+        {therapeuticArea} ecosystem coverage ({stats.includedCount}{" "}
+        for-profit cos. w/ funding status · {stats.verifiedOverlap}{" "}
+        in verified dataset)
       </summary>
 
       <p className="mt-2 text-xs leading-relaxed text-lacuna-blue/80">
         Crunchbase Pro search returned {stats.crunchbaseSearchTotal} results.
         {" "}
-        Included {stats.includedCount} for-profit product companies with
-        Crunchbase funding or fundraising status. Excluded{" "}
-        {stats.excludedNonForProfit} nonprofits,{" "}
+        Included {stats.includedCount}{" "}
+        for-profit product companies with Crunchbase funding or fundraising
+        status. Excluded {stats.excludedNonForProfit} nonprofits,{" "}
         {stats.excludedClinicalServices} clinical service providers, and{" "}
-        {stats.excludedNoFundingStatus} entries without verifiable funding
-        fields.
+        {stats.excludedNoFundingStatus}{" "}
+        entries without verifiable funding fields.
       </p>
 
       <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4 text-[11px]">
@@ -128,9 +129,7 @@ export default function TherapeuticAreaCoveragePanel({
                         {company.verifiedDatasetId}
                       </span>
                     )
-                    : (
-                      <span className="text-lacuna-blue/45">—</span>
-                    )}
+                    : <span className="text-lacuna-blue/45">—</span>}
                 </td>
               </tr>
             ))}
