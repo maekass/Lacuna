@@ -168,7 +168,9 @@ function logGamma(z: number): number {
     1.208650973866179e-3,
     -5.395239384953e-6,
   ];
-  let y = z, x = z, tmp = x + 5.5;
+  const x = z;
+  let y = z;
+  let tmp = x + 5.5;
   tmp -= (x + 0.5) * Math.log(tmp);
   let ser = 1.000000000190015;
   for (const ci of c) {
