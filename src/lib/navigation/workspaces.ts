@@ -84,6 +84,7 @@ export const WORKSPACES: Workspace[] = [
     label: "Payer Ops",
     description:
       "Portfolio project for healthcare payer administration, claims operations, and responsible workflow automation.",
+    tags: ["payer ops", "claims", "governance"],
     sections: [
       { id: "problem", label: "Problem" },
       { id: "simulator", label: "Simulator" },

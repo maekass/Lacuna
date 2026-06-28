@@ -1,6 +1,6 @@
 import * as Sentry from "@sentry/nextjs";
-import process from "node:process";
 
+// Client bundle: webpack inlines process.env — node:process breaks the client build.
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN ?? process.env.SENTRY_DSN,
   environment: process.env.NODE_ENV,
