@@ -77,6 +77,11 @@ export default function ClinicalTrialTracker() {
 
   useEffect(() => {
     const controller = new AbortController();
+    let timedOut = false;
+    const timer = setTimeout(() => {
+      timedOut = true;
+      controller.abort();
+    }, 10_000);
 
     dispatch({ type: "FETCH_START" });
 
@@ -88,6 +93,7 @@ export default function ClinicalTrialTracker() {
 
     fetch(`/api/clinical-trials?${params}`, { signal: controller.signal })
       .then((res) => {
+        clearTimeout(timer);
         if (!res.ok) throw new Error(`API returned ${res.status}`);
         return res.json();
       })
@@ -99,7 +105,17 @@ export default function ClinicalTrialTracker() {
         });
       })
       .catch((err) => {
-        if (err instanceof DOMException && err.name === "AbortError") return;
+        clearTimeout(timer);
+        if (err instanceof DOMException && err.name === "AbortError") {
+          if (timedOut) {
+            dispatch({
+              type: "FETCH_ERR",
+              error:
+                "ClinicalTrials.gov data source is taking too long. Try again later.",
+            });
+          }
+          return;
+        }
         dispatch({
           type: "FETCH_ERR",
           error:
@@ -107,7 +123,10 @@ export default function ClinicalTrialTracker() {
         });
       });
 
-    return () => controller.abort();
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
   }, [activePreset]);
 
   /* ─── derived stats ─── */

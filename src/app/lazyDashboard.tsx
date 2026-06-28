@@ -33,6 +33,12 @@ export const ValuationMatrix = dynamic(
     loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },
 );
+export const SurvivalCurve = dynamic(
+  () => import("@/components/SurvivalCurve"),
+  {
+    loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
+  },
+);
 export const QuantValuationPanel = dynamic(
   () => import("@/components/QuantValuationPanel"),
   {

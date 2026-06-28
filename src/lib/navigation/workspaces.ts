@@ -8,6 +8,7 @@ export interface Workspace {
   href: `/${string}`;
   label: string;
   description: string;
+  tags: string[];
   sections: SectionLink[];
 }
 
@@ -18,6 +19,7 @@ export const WORKSPACES: Workspace[] = [
     label: "Deals",
     description:
       "Network graph, deal flow, valuation matrix, and acquirer landscape.",
+    tags: ["network", "valuation", "acquirers"],
     sections: [
       { id: "data-coverage", label: "Coverage" },
       { id: "data-pipelines", label: "Pipelines" },
@@ -30,6 +32,7 @@ export const WORKSPACES: Workspace[] = [
       { id: "validation-tracker", label: "Outcomes" },
       { id: "white-space-analysis", label: "White space" },
       { id: "descriptive-scoring", label: "Similarity" },
+      { id: "survival-analysis", label: "Survival" },
     ],
   },
   {
@@ -38,6 +41,7 @@ export const WORKSPACES: Workspace[] = [
     label: "Research",
     description:
       "Clinical trials, evidence maturity, genomics, and health equity.",
+    tags: ["clinical trials", "evidence", "genomics"],
     sections: [
       { id: "burden-capital-gap", label: "Gap" },
       { id: "clinical-trials", label: "Trials" },
@@ -53,6 +57,7 @@ export const WORKSPACES: Workspace[] = [
     label: "Methods",
     description:
       "Causal framing, temporal patterns, sensitivity, and Bayesian small-n.",
+    tags: ["causal", "bayesian", "temporal"],
     sections: [
       { id: "causal-dag", label: "DAG" },
       { id: "causal-engine", label: "Causal" },
@@ -66,6 +71,7 @@ export const WORKSPACES: Workspace[] = [
     href: "/intelligence",
     label: "Intelligence",
     description: "Reimbursement context, acquirer fit scores, and deck export.",
+    tags: ["reimbursement", "fit scores", "export"],
     sections: [
       { id: "reimbursement-intelligence", label: "Reimbursement" },
       { id: "acquirer-prediction", label: "Fit scores" },

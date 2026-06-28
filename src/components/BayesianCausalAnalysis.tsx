@@ -14,6 +14,7 @@ import {
   smallSampleCausalAnalysis,
 } from "@/lib/causal/bayesianCausal";
 import { deriveEmpiricalPriors } from "@/lib/quant/empiricalPriors";
+import { computeEValue } from "@/lib/stats/evalue";
 
 interface AnalysisInputs {
   mleEstimate: number;
@@ -295,6 +296,101 @@ export default function BayesianCausalAnalysis() {
           </p>
         </div>
       </div>
+
+      {/* E-Value Sensitivity to Unmeasured Confounding */}
+      {(() => {
+        const ev = computeEValue({
+          estimate: analysis.mainEffects.posteriorMean,
+          ciLower: analysis.mainEffects.credibleInterval[0],
+          scale: "d",
+        });
+        const colourMap: Record<string, string> = {
+          strong: "#2d6a4f",
+          moderate: "#e9c46a",
+          weak: "#e76f51",
+          negligible: "#c0392b",
+        };
+        const colour = colourMap[ev.robustness] ?? "#9aa3b5";
+        return (
+          <div className="bg-white border border-lacuna-border rounded-lg p-6">
+            <div className="flex items-center justify-between mb-3">
+              <h4
+                className="font-medium"
+                style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              >
+                E-Value: Sensitivity to Unmeasured Confounding
+              </h4>
+              <span
+                className="px-3 py-1 rounded text-white text-xs font-medium uppercase tracking-wide"
+                style={{ background: colour }}
+              >
+                {ev.robustness}
+              </span>
+            </div>
+            <p className="text-xs text-lacuna-text-muted mb-4">
+              Van der Weele &amp; Ding (2017). The E-value is the minimum
+              strength of association that an unmeasured confounder would need
+              with <em>both</em> the exposure and outcome to fully explain away
+              the observed posterior mean. Effect scale: Cohen&apos;s{" "}
+              <em>d</em> → approximate RR.
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
+                <div
+                  className="text-3xl font-light mb-1"
+                  style={{ fontFamily: "'Bodoni MT', Didot, serif", color: colour }}
+                >
+                  {ev.evalue.toFixed(2)}
+                </div>
+                <div className="text-xs text-lacuna-text-muted uppercase tracking-wider">
+                  E-Value (point)
+                </div>
+              </div>
+              <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
+                <div
+                  className="text-3xl font-light mb-1"
+                  style={{ fontFamily: "'Bodoni MT', Didot, serif", color: "#4A5D8A" }}
+                >
+                  {ev.evalueCI?.toFixed(2) ?? "—"}
+                </div>
+                <div className="text-xs text-lacuna-text-muted uppercase tracking-wider">
+                  E-Value (CI bound)
+                </div>
+              </div>
+              <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
+                <div
+                  className="text-3xl font-light mb-1"
+                  style={{ fontFamily: "'Bodoni MT', Didot, serif", color: "#5D4E6D" }}
+                >
+                  {ev.rr.toFixed(2)}
+                </div>
+                <div className="text-xs text-lacuna-text-muted uppercase tracking-wider">
+                  Approx. RR used
+                </div>
+              </div>
+              <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
+                <div
+                  className="text-lg font-light mb-1 leading-snug"
+                  style={{ fontFamily: "'Bodoni MT', Didot, serif", color: colour }}
+                >
+                  {ev.robustness.charAt(0).toUpperCase() + ev.robustness.slice(1)}
+                </div>
+                <div className="text-xs text-lacuna-text-muted uppercase tracking-wider">
+                  Robustness tier
+                </div>
+              </div>
+            </div>
+            <div className="mt-4 p-3 bg-lacuna-surface-muted rounded-lg">
+              <p className="text-xs text-lacuna-text-primary leading-relaxed">
+                {ev.interpretation}
+              </p>
+              <p className="text-[11px] text-lacuna-text-muted mt-2 italic">
+                {ev.methodNote}
+              </p>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Pre-Registered Hypotheses */}
       <div className="bg-white border border-lacuna-border rounded-lg">

@@ -8,6 +8,7 @@ import GlobalProvenanceBar from "@/components/layout/GlobalProvenanceBar";
 import SectionNav from "@/components/layout/SectionNav";
 import SiteFooter from "@/components/layout/SiteFooter";
 import WorkspaceNav from "@/components/layout/WorkspaceNav";
+import KeyboardShortcuts from "@/components/KeyboardShortcuts";
 import { ProvenanceProvider } from "@/lib/provenance/ProvenanceContext";
 import { workspaceForPath } from "@/lib/navigation/workspaces";
 
@@ -70,6 +71,7 @@ export default function AppShell({ children }: AppShellProps) {
         </footer>
 
         <BackToTop />
+        <KeyboardShortcuts />
       </div>
     </ProvenanceProvider>
   );

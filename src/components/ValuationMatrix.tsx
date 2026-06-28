@@ -5,6 +5,112 @@ import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { gapScoreForSector } from "@/lib/valuation/burdenCapitalGap";
+import { medianBCaCI } from "@/lib/stats/bootstrap";
+import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
+
+/** Minimum n for 80% power to detect d=0.5 at α=0.05 two-tailed ≈ 34 per group. */
+const POWER_80_N = 34;
+
+function HoveredCellTooltip({
+  cell,
+  allCompanies,
+}: {
+  cell: MatrixCell;
+  allCompanies: VerifiedCompanyView[];
+}) {
+  const valuations = useMemo(() => {
+    return allCompanies
+      .filter((c) => {
+        const cs = (() => {
+          if (/Acquired/i.test(c.stage)) return "Acquired";
+          if (/Public/i.test(c.stage)) return "Public";
+          if (/Series D|Series E|Series F|Late Stage|Pre-IPO/i.test(c.stage)) return "Series D+";
+          if (/Series C/i.test(c.stage)) return "Series C";
+          if (/Series B/i.test(c.stage)) return "Series B";
+          if (/Series A/i.test(c.stage)) return "Series A";
+          if (/Seed/i.test(c.stage)) return "Seed";
+          return null;
+        })();
+        return c.sector === cell.sector && cs === cell.stage && typeof c.lastKnownValuation === "number";
+      })
+      .map((c) => c.lastKnownValuation as number);
+  }, [allCompanies, cell]);
+
+  const bca = useMemo(() => {
+    if (valuations.length < 3) return null;
+    return medianBCaCI(valuations, 0.95, 42);
+  }, [valuations]);
+
+  const isPowered = valuations.length >= POWER_80_N;
+  const mde = valuations.length >= 2
+    ? (() => {
+      const m = valuations.reduce((s, v) => s + v, 0) / valuations.length;
+      const sd = Math.sqrt(valuations.reduce((s, v) => s + (v - m) ** 2, 0) / (valuations.length - 1));
+      return 2.80 * sd * Math.sqrt(2 / valuations.length);
+    })()
+    : null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="mt-4 p-4 bg-lacuna-surface-muted rounded-lg border border-lacuna-border"
+    >
+      <h4 className="font-semibold text-lacuna-text-primary">
+        {cell.stage} · {cell.sector}
+      </h4>
+      {cell.medianValuation > 0
+        ? (
+          <div className="mt-2 space-y-1">
+            <p className="text-sm text-lacuna-text-secondary">
+              Median valuation:{" "}
+              <span className="font-semibold">${cell.medianValuation}M</span>
+              <span className="text-xs text-lacuna-text-muted ml-1">
+                ({cell.disclosedCount} disclosed / {cell.totalCount} total)
+              </span>
+            </p>
+            {bca && (
+              <p className="text-xs text-lacuna-blue/70">
+                95% BCa CI: ${Math.round(bca.lower)}M – ${Math.round(bca.upper)}M
+                <span className="ml-1 text-lacuna-text-muted">({bca.method}, B={bca.B})</span>
+              </p>
+            )}
+            {bca === null && valuations.length < 3 && (
+              <p className="text-xs text-lacuna-text-muted italic">
+                n={valuations.length} — too few observations for BCa CI
+              </p>
+            )}
+          </div>
+        )
+        : (
+          <p className="text-sm text-lacuna-text-muted mt-1 italic">
+            No public valuations in this cell
+          </p>
+        )}
+      <div className="mt-2 flex flex-wrap gap-3 text-sm text-lacuna-text-secondary">
+        <span>
+          Companies: <span className="font-semibold">{cell.totalCount}</span>
+        </span>
+        {cell.dealCount > 0 && (
+          <span>
+            Acquisitions:{" "}
+            <span className="font-semibold text-pink-600">{cell.dealCount}</span>
+          </span>
+        )}
+      </div>
+      {/* Power warning */}
+      {valuations.length > 0 && (
+        <div className={`mt-2 rounded px-2 py-1 text-xs ${isPowered ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>
+          {isPowered
+            ? `Adequately powered (n=${valuations.length} ≥ ${POWER_80_N}) to detect d=0.5 effect at 80% power.`
+            : `Underpowered: n=${valuations.length} disclosed. Need n≥${POWER_80_N} for 80% power (d=0.5, α=0.05).${
+              mde !== null ? ` MDE at current n: $${Math.round(mde)}M.` : ""
+            }`}
+        </div>
+      )}
+    </motion.div>
+  );
+}
 
 type MomentumLabel = "High" | "Stable" | "Cooling";
 
@@ -303,44 +409,7 @@ export default function ValuationMatrix() {
 
       {/* Tooltip */}
       {hoveredCell && hoveredCell.totalCount > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-4 p-4 bg-lacuna-surface-muted rounded-lg border border-lacuna-border"
-        >
-          <h4 className="font-semibold text-lacuna-text-primary">
-            {hoveredCell.stage} · {hoveredCell.sector}
-          </h4>
-          {hoveredCell.medianValuation > 0
-            ? (
-              <p className="text-sm text-lacuna-text-secondary mt-1">
-                Median valuation:{" "}
-                <span className="font-semibold">
-                  ${hoveredCell.medianValuation}M
-                </span>
-                <span className="text-xs text-lacuna-text-muted ml-1">
-                  (among {hoveredCell.disclosedCount} disclosed)
-                </span>
-              </p>
-            )
-            : (
-              <p className="text-sm text-lacuna-text-muted mt-1 italic">
-                No public valuations in this cell
-              </p>
-            )}
-          <p className="text-sm text-lacuna-text-secondary">
-            Companies:{" "}
-            <span className="font-semibold">{hoveredCell.totalCount}</span>
-          </p>
-          {hoveredCell.dealCount > 0 && (
-            <p className="text-sm text-lacuna-text-secondary">
-              Verified acquisitions:{" "}
-              <span className="font-semibold text-pink-600">
-                {hoveredCell.dealCount}
-              </span>
-            </p>
-          )}
-        </motion.div>
+        <HoveredCellTooltip cell={hoveredCell} allCompanies={verifiedCompanies} />
       )}
 
       <p className="mt-4 text-xs text-lacuna-text-muted leading-relaxed">

@@ -5,9 +5,9 @@
  * not validated analysis; parent panels use the curated verified dataset.
  */
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { AlertCircle, Loader2, RefreshCw, Sparkles } from "lucide-react";
+import { AlertCircle, Check, ClipboardCopy, Loader2, RefreshCw, Sparkles } from "lucide-react";
 
 interface AIInsightsPanelProps {
   companyName: string;
@@ -58,6 +58,8 @@ export default function AIInsightsPanel({
 
   const [expanded, setExpanded] = useState<InsightType | null>(null);
   const [configured, setConfigured] = useState<boolean | null>(null);
+  const [copiedType, setCopiedType] = useState<InsightType | null>(null);
+  const abortRefs = useRef<Partial<Record<InsightType, AbortController>>>({});
 
   useEffect(() => {
     let cancelled = false;
@@ -77,62 +79,83 @@ export default function AIInsightsPanel({
   const generateInsight = useCallback(async (type: InsightType) => {
     if (insights[type].loading) return;
 
-    // Update loading state
+    // Cancel any in-flight request for this type
+    abortRefs.current[type]?.abort();
+    const controller = new AbortController();
+    abortRefs.current[type] = controller;
+
     setInsights((prev) => ({
       ...prev,
-      [type]: { ...prev[type], loading: true, error: undefined },
+      [type]: { ...prev[type], content: "", loading: true, error: undefined },
     }));
+    setExpanded(type);
 
     try {
       const payload: Record<string, unknown> = { type, companyName, sector };
 
       switch (type) {
         case "acquisition":
-          if (!analysis) {
-            throw new Error("Acquisition analysis data required");
-          }
+          if (!analysis) throw new Error("Acquisition analysis data required");
           payload.analysis = analysis;
           if (evidence?.overallScore !== undefined) {
             payload.evidenceScore = evidence.overallScore;
           }
           break;
-
         case "evidence":
-          if (!evidence) {
-            throw new Error("Evidence data required");
-          }
+          if (!evidence) throw new Error("Evidence data required");
           payload.evidence = evidence;
           break;
-
         case "reimbursement":
-          if (!reimbursement) {
-            throw new Error("Reimbursement data required");
-          }
+          if (!reimbursement) throw new Error("Reimbursement data required");
           payload.reimbursement = reimbursement;
           break;
       }
 
-      const response = await fetch("/api/ai/insights", {
+      const response = await fetch("/api/ai/stream", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
+        signal: controller.signal,
       });
 
-      const data = (await response.json()) as {
-        content?: string;
-        error?: string;
-      };
-      if (!response.ok) {
-        throw new Error(data.error ?? `Request failed (${response.status})`);
+      if (!response.ok || !response.body) {
+        // Fall back to non-streaming endpoint
+        const fallback = await fetch("/api/ai/insights", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = (await fallback.json()) as { content?: string; error?: string };
+        if (!fallback.ok) throw new Error(data.error ?? `Request failed (${fallback.status})`);
+        setInsights((prev) => ({
+          ...prev,
+          [type]: { type, content: data.content ?? "", loading: false },
+        }));
+        return;
       }
-      const content = data.content ?? "";
+
+      // Stream text chunks into state
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let accumulated = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        accumulated += decoder.decode(value, { stream: true });
+        const snapshot = accumulated;
+        setInsights((prev) => ({
+          ...prev,
+          [type]: { ...prev[type], content: snapshot, loading: true },
+        }));
+      }
 
       setInsights((prev) => ({
         ...prev,
-        [type]: { type, content, loading: false },
+        [type]: { type, content: accumulated, loading: false },
       }));
-      setExpanded(type);
     } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return;
       setInsights((prev) => ({
         ...prev,
         [type]: {
@@ -146,6 +169,16 @@ export default function AIInsightsPanel({
       }));
     }
   }, [companyName, sector, analysis, evidence, reimbursement, insights]);
+
+  const citeInsight = useCallback(async (type: InsightType) => {
+    const content = insights[type].content;
+    if (!content) return;
+    const date = new Date().toISOString().split("T")[0];
+    const citation = `Lacuna AI · ${companyName} ${type} insight · ${date} · https://lacuna-maekass.vercel.app`;
+    await navigator.clipboard.writeText(citation);
+    setCopiedType(type);
+    setTimeout(() => setCopiedType(null), 2000);
+  }, [insights, companyName]);
 
   if (configured === null) {
     return (
@@ -186,21 +219,9 @@ export default function AIInsightsPanel({
     title: string;
     available: boolean;
   }[] = [
-    {
-      type: "acquisition",
-      title: "Acquisition Strategy",
-      available: !!analysis,
-    },
-    {
-      type: "evidence",
-      title: "Evidence Assessment",
-      available: !!evidence,
-    },
-    {
-      type: "reimbursement",
-      title: "Reimbursement Impact",
-      available: !!reimbursement,
-    },
+    { type: "acquisition", title: "Acquisition Strategy", available: !!analysis },
+    { type: "evidence", title: "Evidence Assessment", available: !!evidence },
+    { type: "reimbursement", title: "Reimbursement Impact", available: !!reimbursement },
   ];
 
   return (
@@ -213,6 +234,7 @@ export default function AIInsightsPanel({
       {insightCards.filter((c) => c.available).map(({ type, title }) => {
         const insight = insights[type];
         const isExpanded = expanded === type;
+        const isCopied = copiedType === type;
 
         return (
           <div
@@ -231,7 +253,7 @@ export default function AIInsightsPanel({
                   setExpanded(isExpanded ? null : type);
                 }
               }}
-              disabled={insight.loading}
+              disabled={insight.loading && !insight.content}
               className="w-full px-4 py-3 flex items-center justify-between text-left"
             >
               <div className="flex items-center gap-3">
@@ -255,16 +277,30 @@ export default function AIInsightsPanel({
 
               <div className="flex items-center gap-2">
                 {insight.content && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      generateInsight(type);
-                    }}
-                    className="p-1 hover:bg-lacuna-surface-subtle rounded text-lacuna-text-muted hover:text-lacuna-plum"
-                    title="Regenerate insight"
-                  >
-                    <RefreshCw className="w-4 h-4" />
-                  </button>
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        citeInsight(type);
+                      }}
+                      className="p-1 hover:bg-lacuna-surface-subtle rounded text-lacuna-text-muted hover:text-lacuna-plum transition-colors"
+                      title="Copy citation"
+                    >
+                      {isCopied
+                        ? <Check className="w-4 h-4 text-green-600" />
+                        : <ClipboardCopy className="w-4 h-4" />}
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        generateInsight(type);
+                      }}
+                      className="p-1 hover:bg-lacuna-surface-subtle rounded text-lacuna-text-muted hover:text-lacuna-plum transition-colors"
+                      title="Regenerate insight"
+                    >
+                      <RefreshCw className="w-4 h-4" />
+                    </button>
+                  </>
                 )}
                 <svg
                   className={`w-4 h-4 text-lacuna-text-muted transition-transform ${
@@ -293,14 +329,7 @@ export default function AIInsightsPanel({
                   className="border-t border-lacuna-border-subtle"
                 >
                   <div className="p-4 bg-lacuna-surface-muted/50">
-                    {insight.loading
-                      ? (
-                        <div className="flex items-center gap-2 text-sm text-lacuna-text-muted">
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                          <span>Generating insight...</span>
-                        </div>
-                      )
-                      : insight.error
+                    {insight.error
                       ? (
                         <div className="flex items-start gap-2 text-sm text-red-600">
                           <AlertCircle className="w-4 h-4 mt-0.5" />
@@ -312,11 +341,23 @@ export default function AIInsightsPanel({
                         <div className="space-y-2">
                           <p className="text-sm text-lacuna-text-primary leading-relaxed whitespace-pre-wrap">
                             {insight.content}
+                            {insight.loading && (
+                              <span className="inline-block w-1 h-4 ml-0.5 bg-lacuna-plum/60 animate-pulse align-middle" />
+                            )}
                           </p>
-                          <p className="text-xs text-lacuna-text-muted mt-2">
-                            Generated by Claude 3 • May contain inaccuracies •
-                            Verify with primary data
-                          </p>
+                          {!insight.loading && (
+                            <p className="text-xs text-lacuna-text-muted mt-2">
+                              Generated by Claude · May contain inaccuracies ·
+                              Verify with primary data
+                            </p>
+                          )}
+                        </div>
+                      )
+                      : insight.loading
+                      ? (
+                        <div className="flex items-center gap-2 text-sm text-lacuna-text-muted">
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span>Generating insight…</span>
                         </div>
                       )
                       : null}

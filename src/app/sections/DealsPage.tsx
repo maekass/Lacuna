@@ -9,6 +9,7 @@ import {
   ForceNetwork,
   NetworkAnalysisHonest,
   QuantValuationPanel,
+  SurvivalCurve,
   ValidationTracker,
   ValuationMatrix,
   WhiteSpaceAnalysis,
@@ -116,6 +117,14 @@ export default function DealsPage() {
           description="Sectors with high company density but low M&A activity — where the next wave may form."
         />
         <WhiteSpaceAnalysis />
+      </MotionSection>
+
+      <MotionSection id="survival-analysis" delay={0.30} className={SECTION}>
+        <SectionHeader
+          title="Time-to-Acquisition Survival Analysis"
+          description="Kaplan-Meier estimates of how long companies in each sector remain independent — with log-rank test and Greenwood confidence bands."
+        />
+        <SurvivalCurve />
       </MotionSection>
     </div>
   );
