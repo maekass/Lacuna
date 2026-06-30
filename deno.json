@@ -3,7 +3,11 @@
     "rules": {
       "tags": [],
       "include": ["require-await", "no-node-globals"]
-    }
+    },
+    "exclude": [
+      "src/sentry.client.config.ts",
+      "src/sentry.edge.config.ts"
+    ]
   },
   "fmt": {
     "exclude": ["node_modules", ".next"]
