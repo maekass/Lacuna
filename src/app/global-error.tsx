@@ -1,7 +1,6 @@
 "use client";
 
 import * as Sentry from "@sentry/nextjs";
-import Link from "next/link";
 import { useEffect } from "react";
 
 export default function GlobalError(
@@ -128,7 +127,8 @@ export default function GlobalError(
             >
               Try again
             </button>
-            <Link
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- global-error replaces the root layout; Link needs router context which may be broken here */}
+            <a
               href="/"
               style={{
                 padding: "10px 18px",
@@ -142,7 +142,7 @@ export default function GlobalError(
               }}
             >
               Back to Hub
-            </Link>
+            </a>
           </div>
         </div>
       </body>
