@@ -1,5 +1,4 @@
 import * as Sentry from "@sentry/nextjs";
-import process from "node:process";
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
