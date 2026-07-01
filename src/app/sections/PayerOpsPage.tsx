@@ -183,6 +183,25 @@ function formatNumber(value: number) {
   return new Intl.NumberFormat("en-US").format(value);
 }
 
+function parseLives(lives: string) {
+  if (lives.endsWith("M")) return parseFloat(lives) * 1_000_000;
+  if (lives.endsWith("K")) return parseFloat(lives) * 1_000;
+  return parseFloat(lives);
+}
+
+function computeModeled(
+  segmentData: (typeof segments)[SegmentKey],
+  denialRate: number,
+  avoidableRate: number,
+) {
+  const avoidableDenials = Math.round(
+    segmentData.claims * (denialRate / 100) * (avoidableRate / 100),
+  );
+  const monthlySavings = Math.round(avoidableDenials * segmentData.adminCost);
+  const authHours = Math.round(segmentData.auths * 0.22);
+  return { avoidableDenials, monthlySavings, authHours };
+}
+
 function useAnimatedNumber(target: number, duration: number): number {
   const [value, setValue] = useState(target);
   const valueRef = useRef(target);
@@ -218,6 +237,7 @@ function useAnimatedNumber(target: number, duration: number): number {
 export default function PayerOpsPage() {
   const t = useTranslations("pages.payerOps");
   const [segment, setSegment] = useState<SegmentKey>("commercial");
+  const [compareAll, setCompareAll] = useState(false);
   const selected = segments[segment];
   const [denialRate, setDenialRate] = useState(selected.denialRate);
   const [avoidableRate, setAvoidableRate] = useState(selected.avoidableRate);
@@ -229,15 +249,27 @@ export default function PayerOpsPage() {
   }
 
   const modeled = useMemo(() => {
-    const avoidableDenials = Math.round(
-      selected.claims * (denialRate / 100) *
-        (avoidableRate / 100),
-    );
-    // adminCost is cost per avoidable denial in dollars (CAQH admin index)
-    const monthlySavings = Math.round(avoidableDenials * selected.adminCost);
-    const authHours = Math.round(selected.auths * 0.22);
-    return { avoidableDenials, monthlySavings, authHours };
+    return computeModeled(selected, denialRate, avoidableRate);
   }, [selected, denialRate, avoidableRate]);
+
+  const allSegmentsModeled = useMemo(() => {
+    if (!compareAll) return [];
+
+    return (Object.keys(segments) as SegmentKey[]).map((key) => {
+      const segmentData = segments[key];
+      return {
+        key,
+        label: segmentData.label,
+        lives: segmentData.lives,
+        livesValue: parseLives(segmentData.lives),
+        ...computeModeled(
+          segmentData,
+          segmentData.denialRate,
+          segmentData.avoidableRate,
+        ),
+      };
+    });
+  }, [compareAll]);
 
   const animatedAvoidableDenials = useAnimatedNumber(
     modeled.avoidableDenials,
@@ -378,7 +410,7 @@ export default function PayerOpsPage() {
           description="A lightweight business-case model using hypothetical plan inputs. Swap in real enrollment, denial, and cost-per-touch data to generate a grounded estimate."
         />
         <div className="rounded-3xl border border-lacuna-lavender/40 bg-white p-6 shadow-sm">
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {(Object.keys(segments) as SegmentKey[]).map((key) => (
               <button
                 key={key}
@@ -393,6 +425,17 @@ export default function PayerOpsPage() {
                 {segments[key].label}
               </button>
             ))}
+            <button
+              type="button"
+              onClick={() => setCompareAll((active) => !active)}
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+                compareAll
+                  ? "bg-lacuna-plum text-white"
+                  : "bg-lacuna-lavender/15 text-lacuna-plum hover:bg-lacuna-lavender/25"
+              }`}
+            >
+              Compare all segments
+            </button>
           </div>
           <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
@@ -446,24 +489,28 @@ export default function PayerOpsPage() {
               </div>
             </div>
           </div>
-          <div className="mt-6 grid gap-4 lg:grid-cols-4">
-            <Metric
-              label="Covered lives (hypothetical)"
-              value={selected.lives}
-            />
-            <Metric
-              label="Monthly avoidable denials"
-              value={formatNumber(animatedAvoidableDenials)}
-            />
-            <Metric
-              label="Monthly admin savings"
-              value={`$${formatNumber(animatedMonthlySavings)}`}
-            />
-            <Metric
-              label="Auth review hours freed"
-              value={formatNumber(animatedAuthHours)}
-            />
-          </div>
+          {compareAll ? (
+            <SegmentComparisonTable rows={allSegmentsModeled} />
+          ) : (
+            <div className="mt-6 grid gap-4 lg:grid-cols-4">
+              <Metric
+                label="Covered lives (hypothetical)"
+                value={selected.lives}
+              />
+              <Metric
+                label="Monthly avoidable denials"
+                value={formatNumber(animatedAvoidableDenials)}
+              />
+              <Metric
+                label="Monthly admin savings"
+                value={`$${formatNumber(animatedMonthlySavings)}`}
+              />
+              <Metric
+                label="Auth review hours freed"
+                value={formatNumber(animatedAuthHours)}
+              />
+            </div>
+          )}
           <p className="mt-4 text-xs text-lacuna-blue/60 leading-relaxed">
             Model: avoidable denials = monthly claims × denial rate × avoidable
             fraction. Admin savings = avoidable denials × cost per manual touch
@@ -597,6 +644,63 @@ export default function PayerOpsPage() {
           />
         </div>
       </MotionSection>
+    </div>
+  );
+}
+
+function SegmentComparisonTable({
+  rows,
+}: {
+  rows: Array<{
+    key: SegmentKey;
+    label: string;
+    lives: string;
+    livesValue: number;
+    avoidableDenials: number;
+    monthlySavings: number;
+    authHours: number;
+  }>;
+}) {
+  const maxLives = Math.max(...rows.map((row) => row.livesValue));
+  const maxAvoidableDenials = Math.max(
+    ...rows.map((row) => row.avoidableDenials),
+  );
+  const maxMonthlySavings = Math.max(...rows.map((row) => row.monthlySavings));
+  const maxAuthHours = Math.max(...rows.map((row) => row.authHours));
+
+  function cellClass(isHighest: boolean) {
+    return isHighest
+      ? "bg-lacuna-lavender/20 font-semibold text-lacuna-plum"
+      : "text-lacuna-plum";
+  }
+
+  return (
+    <div className="mt-6 overflow-hidden rounded-2xl border border-lacuna-lavender/35">
+      <div className="grid grid-cols-5 gap-3 border-b border-lacuna-lavender/30 bg-lacuna-lavender/10 p-4 text-xs font-semibold uppercase tracking-wide text-lacuna-blue">
+        <span>Segment</span>
+        <span>Covered lives</span>
+        <span>Avoidable denials</span>
+        <span>Admin savings</span>
+        <span>Auth hours</span>
+      </div>
+      {rows.map((row) => (
+        <div
+          key={row.key}
+          className="grid grid-cols-5 gap-3 border-b border-lacuna-lavender/20 p-4 text-sm last:border-b-0"
+        >
+          <div className="font-semibold text-lacuna-plum">{row.label}</div>
+          <div className={cellClass(row.livesValue === maxLives)}>{row.lives}</div>
+          <div className={cellClass(row.avoidableDenials === maxAvoidableDenials)}>
+            {formatNumber(row.avoidableDenials)}
+          </div>
+          <div className={cellClass(row.monthlySavings === maxMonthlySavings)}>
+            ${formatNumber(row.monthlySavings)}
+          </div>
+          <div className={cellClass(row.authHours === maxAuthHours)}>
+            {formatNumber(row.authHours)}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
