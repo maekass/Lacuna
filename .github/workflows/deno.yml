@@ -60,5 +60,10 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Python API tests
+        run: |
+          python -m pip install -r services/python-api/requirements.txt
+          npm run python-api:test
+
       - name: Deno lint (require-await + no-node-globals)
         run: deno lint src scripts

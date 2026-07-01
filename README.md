@@ -40,7 +40,8 @@ SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified de
 - [What is Lacuna?](#what-is-lacuna)
 - [Live Demo](#live-demo)
 - [Core Features](#core-features)
-- [Descriptive analytics](#descriptive-analytics-not-predictive-ml)
+- [Descriptive analytics](#descriptive-analytics-heuristics-not-predictive-ml)
+- [AI & biotech diligence best practices](#ai--biotech-diligence-best-practices)
 - [Health Equity context](#health-equity--black-womens-health)
 - [Clinical Trials](#clinical-trials-integration)
 - [Genomics variant store](#genomics-variant-store-optional)
@@ -191,6 +192,54 @@ Late-stage labels).
   (`anthropic/claude-sonnet-4` slug).
 - Exploratory copy only — heuristic scores on the curated dataset remain
   authoritative.
+
+---
+
+## AI & biotech diligence best practices
+
+Python and AI in biotech investing emphasize **modular pipelines**, **source
+tracing**, and **rigorous testing** — not black-box financial outputs. Lacuna
+implements these principles for women's health M&A diligence (TypeScript/Next.js,
+not Python, but the architecture mirrors the same discipline).
+
+### Architectural and data best practices
+
+| Practice | Guidance | Lacuna implementation |
+| -------- | -------- | --------------------- |
+| **Modular agentic pipelines** | Separate agents for trials, filings, news — not one black-box model | SEC ingestion + deal classification (`dealClassificationEngine.ts`), optional UI narratives (`/api/ai/insights`), deterministic analytics (exit predictor, quant engine) — each with its own module and fallback path |
+| **Data verification & permissions** | Document-level tracing; never trust AI summaries without sources | `dataset.verified.json` with A–E evidence grades, dual-attestation in [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md), `DataProvenanceBanner`, source citations on every deal |
+| **Alternative data integration** | Patents, conference abstracts, physician sentiment for early signals | SEC EDGAR + press + fund portfolio listings today; patents and abstracts as **discovery-only** (grade D) per curation rules — never sole merge sources |
+
+### Analytical best practices
+
+| Practice | Guidance | Lacuna implementation |
+| -------- | -------- | --------------------- |
+| **Domain AI + general LLMs** | LLMs for synthesis; domain ML for sequences/structure | LLMs for exploratory copy and SEC women's-health classification only; scoring uses `simple-statistics` heuristics on verified fields — see [MODEL_CARD.md](docs/MODEL_CARD.md) |
+| **Clinical trial modeling** | Historical trial data for recruitment, approval timelines | Live ClinicalTrials.gov search (`/api/clinical-trials`) — **separate** from curated M&A JSON; no outcome-prediction claims |
+| **Cash runway & valuation** | Deterministic pandas/numpy models for capital efficiency | `ValuationEngine`, `QuantValuationPanel`, `adaptQuantCompany` — bounded multiples and disclosed values only; absent inputs stay undefined |
+
+### Investment risk management
+
+| Practice | Guidance | Lacuna scope |
+| -------- | -------- | ------------ |
+| **The "30% rule"** | AI handles ~70% of gathering/hypothesis; humans retain oversight | Staging CSV + manual merge; no auto-merge from SEC scans; heuristic scores are descriptive, not buy/sell signals |
+| **Platform vs. pipeline focus** | Beware broad "AI for drug discovery" without underlying biology | Deal-centric women's health M&A — fertility, pelvic health, diagnostics, digital health — not general biotech equity research |
+| **Options & volatility** | Straddles/strangles around FDA/trial catalysts | **Out of scope** — Lacuna is diligence infrastructure, not a trading or portfolio-risk tool |
+
+### How Lacuna maps to common investor questions
+
+| Question | Lacuna answer |
+| -------- | ------------- |
+| Early-stage startups or large-cap clinical biopharma? | **Deal-centric**, not equity-stage-focused — verified M&A and strategic investments across women's health (digital health, medtech, therapeutics-adjacent) |
+| What data sources? | Curated JSON (SEC, press, IR, fund portfolios); live ClinicalTrials.gov search; optional SEC 8-K ingestion with AI-assisted classification |
+| Financial fundamentals or genomic/clinical datasets? | **M&A fundamentals** — disclosed deal values, acquirer patterns, sector clustering, evidence maturity — not genomic sequence analysis or trial-outcome ML |
+
+### On-brand extensions (roadmap, not built)
+
+1. **Clinical trial enrichment** — Link portfolio companies to ClinicalTrials.gov NCT IDs (metadata only).
+2. **Cash runway / milestone tracker** — For public acquirers or disclosed funding rounds already in the dataset.
+3. **Modular ingestion agents** — Extend the SEC classifier pattern: filings, press, trial registry — each with provenance tags.
+4. **Alternative data (careful)** — Conference abstracts or patents as discovery (grade D), never sole merge sources.
 
 ---
 

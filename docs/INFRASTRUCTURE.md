@@ -106,6 +106,29 @@ AI and Sentry: [INFERENCE.md](./INFERENCE.md),
 | `npm run clickhouse:migrate`    | Apply ClickHouse variant-store schema                  |
 | `npm run clickhouse:seed`       | Infrastructure demo callset (local dev)                |
 | `npm run clickhouse:ingest-vcf` | Stream VCF → object storage + ClickHouse summaries     |
+| `npm run python-api:dev`        | FastAPI sidecar on :8000 (REST + GraphQL)              |
+| `npm run python-api:test`       | Pytest for Python API                                  |
+
+## Python API sidecar (optional)
+
+FastAPI + Strawberry GraphQL service under `services/python-api/`. See
+[PYTHON_API.md](./PYTHON_API.md).
+
+```bash
+npm run python-api:dev
+# or
+docker compose --profile api up -d
+```
+
+| Route (port 8000)              | Purpose                                      |
+| ------------------------------ | -------------------------------------------- |
+| `GET /docs`                    | OpenAPI (FastAPI)                            |
+| `POST /graphql`                | GraphQL queries                              |
+| `GET /api/v1/dataset/verified` | Verified JSON (parity with Next.js route)    |
+| `GET /api/v1/clinical-trials`  | ClinicalTrials.gov proxy                     |
+| `GET /api/v1/research/studies` | Postgres research catalog when DB configured |
+
+Not deployed on Vercel — local / self-hosted only.
 
 ## HTTP endpoints (ops)
 

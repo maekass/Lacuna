@@ -26,6 +26,13 @@ const TOOLS: ToolLink[] = [
     type: "api",
   },
   {
+    name: "Python API (FastAPI + GraphQL)",
+    description:
+      "Local sidecar — REST, OpenAPI, and GraphQL for dataset + trials (port 8000)",
+    href: "http://localhost:8000/docs",
+    type: "api",
+  },
+  {
     name: "GitHub Repository",
     description: "Source code, issues, and contribution guidelines",
     href: "https://github.com/maekass/Lacuna",
@@ -63,16 +70,15 @@ console.log(\`\${data.acquisitions.length} verified deals\`);`,
   },
   {
     language: "Python",
-    title: "Load Dataset with Pandas",
-    code: `import pandas as pd
-import requests
+    title: "GraphQL Dataset Summary",
+    code: `import httpx
 
-url = "https://lacuna-maekass.vercel.app/api/dataset/verified"
-data = requests.get(url).json()
-
-df = pd.DataFrame(data['acquisitions'])
-print(f"Total deals: {len(df)}")
-print(f"Total value: $" + f"{df['value'].sum():.1f}B")`,
+# Local FastAPI sidecar (npm run python-api:dev)
+response = httpx.post(
+    "http://localhost:8000/graphql",
+    json={"query": "{ datasetSummary { acquisitionCount } }"},
+)
+print(response.json())`,
   },
   {
     language: "curl",
