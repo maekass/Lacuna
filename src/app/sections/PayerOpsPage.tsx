@@ -483,7 +483,31 @@ export default function PayerOpsPage() {
           Example queue structure — volumes, automation readiness, and impact
           figures are illustrative, not measured operational data.
         </p>
-        <div className="overflow-hidden rounded-3xl border border-lacuna-lavender/40 bg-white shadow-sm">
+        <div className="grid gap-4 lg:hidden">
+          {workQueues.map((queue) => (
+            <div
+              key={queue.name}
+              className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
+            >
+              <div className="font-semibold text-lacuna-plum">{queue.name}</div>
+              <p className="mt-1 text-sm leading-relaxed text-lacuna-blue">
+                {queue.action}
+              </p>
+              <div className="mt-4 grid grid-cols-3 gap-2">
+                <StatChip
+                  label="Volume"
+                  value={formatNumber(queue.volume)}
+                />
+                <StatChip
+                  label="Automation"
+                  value={`${queue.automation}%`}
+                />
+                <StatChip label="Risk" value={queue.risk} />
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="hidden overflow-hidden rounded-3xl border border-lacuna-lavender/40 bg-white shadow-sm lg:block">
           <div className="grid grid-cols-12 gap-3 border-b border-lacuna-lavender/30 bg-lacuna-lavender/10 p-4 text-xs font-semibold uppercase tracking-wide text-lacuna-blue">
             <span className="col-span-4">Queue</span>
             <span className="col-span-2">Volume</span>
@@ -573,6 +597,19 @@ export default function PayerOpsPage() {
           />
         </div>
       </MotionSection>
+    </div>
+  );
+}
+
+function StatChip({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl bg-lacuna-surface-subtle px-2 py-2 text-center">
+      <div className="text-[10px] font-semibold uppercase tracking-wide text-lacuna-blue">
+        {label}
+      </div>
+      <div className="mt-0.5 text-sm font-semibold text-lacuna-plum">
+        {value}
+      </div>
     </div>
   );
 }
