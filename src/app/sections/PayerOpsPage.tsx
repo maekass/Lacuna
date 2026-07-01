@@ -443,7 +443,7 @@ export default function PayerOpsPage() {
           title="Opportunity simulator"
           description="A lightweight business-case model using hypothetical plan inputs. Swap in real enrollment, denial, and cost-per-touch data to generate a grounded estimate."
         />
-        <div className="rounded-3xl border border-lacuna-lavender/40 bg-white p-6 shadow-sm">
+        <div className="rounded-3xl border border-white/10 bg-lacuna-plum p-6 shadow-sm">
           <div className="flex flex-wrap items-center gap-2">
             {(Object.keys(segments) as SegmentKey[]).map((key) => (
               <button
@@ -452,8 +452,8 @@ export default function PayerOpsPage() {
                 onClick={() => handleSegmentChange(key)}
                 className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
                   segment === key
-                    ? "bg-lacuna-plum text-white"
-                    : "bg-lacuna-lavender/15 text-lacuna-plum hover:bg-lacuna-lavender/25"
+                    ? "bg-white text-lacuna-plum"
+                    : "bg-white/10 text-white hover:bg-white/20"
                 }`}
               >
                 {segments[key].label}
@@ -464,8 +464,8 @@ export default function PayerOpsPage() {
               onClick={() => setCompareAll((active) => !active)}
               className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
                 compareAll
-                  ? "bg-lacuna-plum text-white"
-                  : "bg-lacuna-lavender/15 text-lacuna-plum hover:bg-lacuna-lavender/25"
+                  ? "bg-white text-lacuna-plum"
+                  : "bg-white/10 text-white hover:bg-white/20"
               }`}
             >
               Compare all segments
@@ -475,10 +475,10 @@ export default function PayerOpsPage() {
             <div>
               <label
                 htmlFor="denial-rate"
-                className="mb-1 flex items-baseline justify-between text-sm text-lacuna-blue"
+                className="mb-1 flex items-baseline justify-between text-sm text-white/70"
               >
                 <span>Denial rate</span>
-                <span className="font-semibold text-lacuna-plum">
+                <span className="font-semibold text-white">
                   {denialRate.toFixed(1)}%
                 </span>
               </label>
@@ -490,9 +490,9 @@ export default function PayerOpsPage() {
                 step={0.5}
                 value={denialRate}
                 onChange={(e) => setDenialRate(Number(e.target.value))}
-                className="w-full accent-lacuna-plum"
+                className="w-full accent-white"
               />
-              <div className="mt-0.5 flex justify-between text-[10px] text-lacuna-blue/50">
+              <div className="mt-0.5 flex justify-between text-[10px] text-white/50">
                 <span>5%</span>
                 <span>25%</span>
               </div>
@@ -500,10 +500,10 @@ export default function PayerOpsPage() {
             <div>
               <label
                 htmlFor="avoidable-rate"
-                className="mb-1 flex items-baseline justify-between text-sm text-lacuna-blue"
+                className="mb-1 flex items-baseline justify-between text-sm text-white/70"
               >
                 <span>Avoidable fraction</span>
-                <span className="font-semibold text-lacuna-plum">
+                <span className="font-semibold text-white">
                   {avoidableRate}%
                 </span>
               </label>
@@ -515,9 +515,9 @@ export default function PayerOpsPage() {
                 step={1}
                 value={avoidableRate}
                 onChange={(e) => setAvoidableRate(Number(e.target.value))}
-                className="w-full accent-lacuna-plum"
+                className="w-full accent-white"
               />
-              <div className="mt-0.5 flex justify-between text-[10px] text-lacuna-blue/50">
+              <div className="mt-0.5 flex justify-between text-[10px] text-white/50">
                 <span>10%</span>
                 <span>60%</span>
               </div>
@@ -530,22 +530,26 @@ export default function PayerOpsPage() {
               <Metric
                 label="Covered lives (hypothetical)"
                 value={selected.lives}
+                theme="dark"
               />
               <Metric
                 label="Monthly avoidable denials"
                 value={formatNumber(animatedAvoidableDenials)}
+                theme="dark"
               />
               <Metric
                 label="Monthly admin savings"
                 value={`$${formatNumber(animatedMonthlySavings)}`}
+                theme="dark"
               />
               <Metric
                 label="Auth review hours freed"
                 value={formatNumber(animatedAuthHours)}
+                theme="dark"
               />
             </div>
           )}
-          <p className="mt-4 text-xs text-lacuna-blue/60 leading-relaxed">
+          <p className="mt-4 text-xs text-white/50 leading-relaxed">
             Model: avoidable denials = monthly claims × denial rate × avoidable
             fraction. Admin savings = avoidable denials × cost per manual touch
             (CAQH index). Auth hours = monthly auths × 0.22 hrs/touch. All
@@ -707,13 +711,13 @@ function SegmentComparisonTable({
 
   function cellClass(isHighest: boolean) {
     return isHighest
-      ? "bg-lacuna-lavender/20 font-semibold text-lacuna-plum"
-      : "text-lacuna-plum";
+      ? "bg-white/20 font-semibold text-white"
+      : "text-white/90";
   }
 
   return (
-    <div className="mt-6 overflow-hidden rounded-2xl border border-lacuna-lavender/35">
-      <div className="grid grid-cols-5 gap-3 border-b border-lacuna-lavender/30 bg-lacuna-lavender/10 p-4 text-xs font-semibold uppercase tracking-wide text-lacuna-blue">
+    <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
+      <div className="grid grid-cols-5 gap-3 border-b border-white/10 bg-white/10 p-4 text-xs font-semibold uppercase tracking-wide text-white/70">
         <span>Segment</span>
         <span>Covered lives</span>
         <span>Avoidable denials</span>
@@ -723,9 +727,9 @@ function SegmentComparisonTable({
       {rows.map((row) => (
         <div
           key={row.key}
-          className="grid grid-cols-5 gap-3 border-b border-lacuna-lavender/20 p-4 text-sm last:border-b-0"
+          className="grid grid-cols-5 gap-3 border-b border-white/10 p-4 text-sm last:border-b-0"
         >
-          <div className="font-semibold text-lacuna-plum">{row.label}</div>
+          <div className="font-semibold text-white">{row.label}</div>
           <div className={cellClass(row.livesValue === maxLives)}>{row.lives}</div>
           <div className={cellClass(row.avoidableDenials === maxAvoidableDenials)}>
             {formatNumber(row.avoidableDenials)}
@@ -755,7 +759,24 @@ function StatChip({ label, value }: { label: string; value: string }) {
   );
 }
 
-function Metric({ label, value }: { label: string; value: string }) {
+function Metric({
+  label,
+  value,
+  theme = "light",
+}: {
+  label: string;
+  value: string;
+  theme?: "light" | "dark";
+}) {
+  if (theme === "dark") {
+    return (
+      <div className="rounded-2xl bg-white/10 p-5">
+        <div className="text-sm font-semibold text-white/70">{label}</div>
+        <div className="mt-2 text-3xl font-bold text-white">{value}</div>
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-2xl bg-lacuna-surface-subtle p-5">
       <div className="text-sm font-semibold text-lacuna-blue">{label}</div>
