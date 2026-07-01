@@ -130,27 +130,6 @@ const operatingModel = [
   "Escalate clinically sensitive cases with evidence packets and auditable rationale",
 ];
 
-const roadmap = [
-  {
-    phase: "0-30 days",
-    title: "Discovery",
-    detail:
-      "Map denial reason codes, pended auth categories, appeal overturns, and SLA hotspots.",
-  },
-  {
-    phase: "31-60 days",
-    title: "Pilot",
-    detail:
-      "Launch two queues with human review, audit sampling, and provider office feedback loops.",
-  },
-  {
-    phase: "61-90 days",
-    title: "Scale",
-    detail:
-      "Expand rules library, automate low-risk approvals, and report savings by line of business.",
-  },
-];
-
 const vcSignals = [
   {
     painPoint: "Prior-auth digitization",
@@ -480,31 +459,6 @@ export default function PayerOpsPage() {
             title="Bias monitoring"
             text="Dashboards compare overturn rates, processing time, and missing-doc burden across geography and provider type."
           />
-        </div>
-      </MotionSection>
-
-      <MotionSection id="roadmap" delay={0.25} className={SECTION}>
-        <SectionHeader
-          title="90-day implementation roadmap"
-          description="A realistic rollout sequence for a payer administration or operations team."
-        />
-        <div className="grid gap-4 md:grid-cols-3">
-          {roadmap.map((item) => (
-            <div
-              key={item.phase}
-              className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
-            >
-              <div className="text-sm font-semibold text-lacuna-blue">
-                {item.phase}
-              </div>
-              <h3 className="mt-2 text-xl font-bold text-lacuna-plum">
-                {item.title}
-              </h3>
-              <p className="mt-2 leading-relaxed text-lacuna-blue">
-                {item.detail}
-              </p>
-            </div>
-          ))}
         </div>
       </MotionSection>
     </div>

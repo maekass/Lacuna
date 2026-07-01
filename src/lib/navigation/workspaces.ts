@@ -49,7 +49,6 @@ export const WORKSPACES: Workspace[] = [
       { id: "triage", label: "Queues" },
       { id: "solution", label: "Solution" },
       { id: "governance", label: "Governance" },
-      { id: "roadmap", label: "Roadmap" },
     ],
   },
   {
