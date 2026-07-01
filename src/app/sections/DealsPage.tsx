@@ -14,7 +14,6 @@ import {
   ValuationMatrix,
   WhiteSpaceAnalysis,
 } from "@/app/lazyDashboard";
-import { useTranslations } from "next-intl";
 import DataCoverageCard from "@/components/DataCoverageCard";
 import DataIngestPanel from "@/components/DataIngestPanel";
 import MotionSection from "@/components/ui/MotionSection";
@@ -24,14 +23,13 @@ import { useDashboardData } from "@/lib/data/useDashboardData";
 const SECTION = "mb-16 scroll-mt-28";
 
 export default function DealsPage() {
-  const t = useTranslations("pages.deals");
   const { networkNodes, networkLinks, dealsByYear } = useDashboardData();
 
   return (
     <div>
       <header className="mb-10">
-        <h1 className="text-3xl font-bold text-lacuna-plum">{t("title")}</h1>
-        <p className="mt-2 max-w-2xl text-lacuna-blue">{t("description")}</p>
+        <h1 className="text-3xl font-bold text-lacuna-plum">Deals workspace</h1>
+        <p className="mt-2 max-w-2xl text-lacuna-blue">Verified M&A network, deal flow, valuations, and acquirer landscape — descriptive analytics from public sources only.</p>
       </header>
 
       <MotionSection id="data-coverage" className={SECTION}>
