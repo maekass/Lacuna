@@ -14,7 +14,6 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef, useState } from "react";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -236,7 +235,6 @@ function useAnimatedNumber(target: number, duration: number): number {
 }
 
 export default function PayerOpsPage() {
-  const t = useTranslations("pages.payerOps");
   const [segment, setSegment] = useState<SegmentKey>("commercial");
   const [compareAll, setCompareAll] = useState(false);
   const [expandedDealSignal, setExpandedDealSignal] = useState<string | null>(

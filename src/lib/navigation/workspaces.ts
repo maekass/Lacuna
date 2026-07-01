@@ -103,14 +103,8 @@ export const LEGACY_HASH_REDIRECTS: Record<string, string> = Object.fromEntries(
   ),
 );
 
-const LOCALE_PREFIXES = ["en", "fr"];
-
 export function workspaceForPath(pathname: string): Workspace | undefined {
-  const parts = pathname.replace(/^\//, "").split("/");
-  // Strip locale prefix if present (e.g. /en/deals → ["en","deals"])
-  const slug = LOCALE_PREFIXES.includes(parts[0])
-    ? (parts[1] ?? "")
-    : (parts[0] ?? "");
+  const slug = pathname.replace(/^\//, "").split("/")[0];
   if (!slug) return undefined;
   return WORKSPACES.find((w) => w.slug === slug);
 }
