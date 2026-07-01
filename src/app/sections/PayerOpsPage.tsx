@@ -14,7 +14,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 
@@ -180,6 +180,38 @@ function formatNumber(value: number) {
   return new Intl.NumberFormat("en-US").format(value);
 }
 
+function useAnimatedNumber(target: number, duration: number): number {
+  const [value, setValue] = useState(target);
+  const valueRef = useRef(target);
+
+  useEffect(() => {
+    const from = valueRef.current;
+    if (from === target) return;
+
+    let frameId: number;
+    const start = performance.now();
+
+    const tick = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const next = Math.round(from + (target - from) * progress);
+      valueRef.current = next;
+      setValue(next);
+
+      if (progress < 1) {
+        frameId = requestAnimationFrame(tick);
+      } else {
+        valueRef.current = target;
+        setValue(target);
+      }
+    };
+
+    frameId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frameId);
+  }, [target, duration]);
+
+  return value;
+}
+
 export default function PayerOpsPage() {
   const t = useTranslations("pages.payerOps");
   const [segment, setSegment] = useState<SegmentKey>("commercial");
@@ -194,6 +226,13 @@ export default function PayerOpsPage() {
     const authHours = Math.round(selected.auths * 0.22);
     return { avoidableDenials, monthlySavings, authHours };
   }, [selected]);
+
+  const animatedAvoidableDenials = useAnimatedNumber(
+    modeled.avoidableDenials,
+    400,
+  );
+  const animatedMonthlySavings = useAnimatedNumber(modeled.monthlySavings, 400);
+  const animatedAuthHours = useAnimatedNumber(modeled.authHours, 400);
 
   return (
     <div>
@@ -345,15 +384,15 @@ export default function PayerOpsPage() {
             />
             <Metric
               label="Monthly avoidable denials"
-              value={formatNumber(modeled.avoidableDenials)}
+              value={formatNumber(animatedAvoidableDenials)}
             />
             <Metric
               label="Monthly admin savings"
-              value={`$${formatNumber(modeled.monthlySavings)}`}
+              value={`$${formatNumber(animatedMonthlySavings)}`}
             />
             <Metric
               label="Auth review hours freed"
-              value={formatNumber(modeled.authHours)}
+              value={formatNumber(animatedAuthHours)}
             />
           </div>
           <p className="mt-4 text-xs text-lacuna-blue/60 leading-relaxed">
