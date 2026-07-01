@@ -1,17 +1,17 @@
 # Lacuna Python API (FastAPI + GraphQL)
 
-Optional **FastAPI sidecar** for Lacuna — complements the Next.js REST routes with
-Python, OpenAPI docs, and a **GraphQL** read API. Runs locally or in Docker; it is
-**not** part of the Vercel production deployment.
+Optional **FastAPI sidecar** for Lacuna — complements the Next.js REST routes
+with Python, OpenAPI docs, and a **GraphQL** read API. Runs locally or in Docker;
+it is **not** part of the Vercel production deployment.
 
 ## Stack
 
-| Layer | Technology |
-| ----- | ---------- |
-| REST | FastAPI + Uvicorn |
-| GraphQL | Strawberry |
-| SQL | PostgreSQL via `psycopg` (optional `research_studies`) |
-| External API | ClinicalTrials.gov v2 proxy |
+| Layer        | Technology                                            |
+| ------------ | ----------------------------------------------------- |
+| REST         | FastAPI + Uvicorn                                     |
+| GraphQL      | Strawberry                                            |
+| SQL          | PostgreSQL via `psycopg` (optional `research_studies`) |
+| External API | ClinicalTrials.gov v2 proxy                           |
 
 ## Quick start
 
@@ -43,28 +43,29 @@ docker compose --profile api up -d
 curl -s http://localhost:8000/health | jq
 ```
 
-Requires Postgres for `/api/v1/research/studies` (seed with `npm run db:seed-research`).
+Requires Postgres for `/api/v1/research/studies` (seed with
+`npm run db:seed-research`).
 
 ## Environment
 
-| Variable | Default | Purpose |
-| -------- | ------- | ------- |
-| `LACUNA_DATASET_PATH` | `src/data/dataset.verified.json` | Verified deal network JSON |
-| `DATABASE_URL` | unset | Postgres for research studies |
-| `CORS_ORIGINS` | `http://localhost:3000` | Allowed browser origins |
+| Variable              | Default                          | Purpose                       |
+| --------------------- | -------------------------------- | ----------------------------- |
+| `LACUNA_DATASET_PATH` | `src/data/dataset.verified.json` | Verified deal network JSON    |
+| `DATABASE_URL`        | unset                            | Postgres for research studies |
+| `CORS_ORIGINS`        | `http://localhost:3000`          | Allowed browser origins       |
 
 ## REST endpoints
 
-| Method | Path | Notes |
-| ------ | ---- | ----- |
-| `GET` | `/health` | Liveness |
-| `GET` | `/health/ready` | Dataset file + optional DB probe |
-| `GET` | `/api/v1/dataset/verified` | Mirrors Next.js dataset route |
-| `GET` | `/api/v1/research/studies` | SQL-backed when `DATABASE_URL` set |
-| `GET` | `/api/v1/clinical-trials` | ClinicalTrials.gov proxy |
+| Method | Path                       | Notes                              |
+| ------ | -------------------------- | ---------------------------------- |
+| `GET`  | `/health`                  | Liveness                           |
+| `GET`  | `/health/ready`            | Dataset file + optional DB probe   |
+| `GET`  | `/api/v1/dataset/verified` | Mirrors Next.js dataset route      |
+| `GET`  | `/api/v1/research/studies` | SQL-backed when `DATABASE_URL` set |
+| `GET`  | `/api/v1/clinical-trials`  | ClinicalTrials.gov proxy           |
 
-Pagination mirrors the TypeScript API: pass `resource`, `limit`, `offset`, `sector`,
-`genomics`, or `paginate=true`.
+Pagination mirrors the TypeScript API: pass `resource`, `limit`, `offset`,
+`sector`, `genomics`, or `paginate=true`.
 
 ## GraphQL
 
@@ -94,7 +95,7 @@ Fields:
 
 ## Relationship to Next.js
 
-The Vercel app at https://lacuna-maekass.vercel.app keeps serving the primary UI and
-`/api/*` routes. The Python service is a **portfolio / self-hosted** layer for teams
-that want FastAPI, GraphQL, or pandas-friendly JSON without changing the production
-deployment.
+The Vercel app at https://lacuna-maekass.vercel.app keeps serving the primary UI
+and `/api/*` routes. The Python service is a **portfolio / self-hosted** layer
+for teams that want FastAPI, GraphQL, or pandas-friendly JSON without changing
+the production deployment.
