@@ -7,6 +7,7 @@ import {
   SensitivityAnalysis,
   TemporalValidation,
 } from "@/app/lazyDashboard";
+import { useTranslations } from "next-intl";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { useDashboardData } from "@/lib/data/useDashboardData";
@@ -14,18 +15,14 @@ import { useDashboardData } from "@/lib/data/useDashboardData";
 const SECTION = "mb-16 scroll-mt-28";
 
 export default function MethodsPage() {
+  const t = useTranslations("pages.methods");
   const { verifiedAcquisitions } = useDashboardData();
 
   return (
     <div>
       <header className="mb-10">
-        <h1 className="text-3xl font-bold text-lacuna-plum">
-          Methods workspace
-        </h1>
-        <p className="mt-2 max-w-2xl text-lacuna-blue">
-          Causal framing, temporal patterns, sensitivity checks, and Bayesian
-          small-n analysis — descriptive only, not forecasts.
-        </p>
+        <h1 className="text-3xl font-bold text-lacuna-plum">{t("title")}</h1>
+        <p className="mt-2 max-w-2xl text-lacuna-blue">{t("description")}</p>
         <p
           className="mt-3 rounded-lg border border-lacuna-lavender/40 bg-lacuna-lavender/15 px-3 py-2 text-xs text-lacuna-blue"
           role="note"

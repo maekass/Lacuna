@@ -84,7 +84,6 @@ export const WORKSPACES: Workspace[] = [
     label: "Payer Ops",
     description:
       "Portfolio project for healthcare payer administration, claims operations, and responsible workflow automation.",
-    tags: ["payer ops", "claims", "governance"],
     sections: [
       { id: "problem", label: "Problem" },
       { id: "simulator", label: "Simulator" },
@@ -103,8 +102,14 @@ export const LEGACY_HASH_REDIRECTS: Record<string, string> = Object.fromEntries(
   ),
 );
 
+const LOCALE_PREFIXES = ["en", "fr"];
+
 export function workspaceForPath(pathname: string): Workspace | undefined {
-  const slug = pathname.replace(/^\//, "").split("/")[0];
+  const parts = pathname.replace(/^\//, "").split("/");
+  // Strip locale prefix if present (e.g. /en/deals → ["en","deals"])
+  const slug = LOCALE_PREFIXES.includes(parts[0])
+    ? (parts[1] ?? "")
+    : (parts[0] ?? "");
   if (!slug) return undefined;
   return WORKSPACES.find((w) => w.slug === slug);
 }
