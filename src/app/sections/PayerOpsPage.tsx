@@ -379,7 +379,7 @@ export default function PayerOpsPage() {
                 type="button"
                 onClick={() =>
                   setExpandedDealSignal(isExpanded ? null : s.painPoint)}
-                className="mt-2 text-xs font-medium text-lacuna-plum underline-offset-2 hover:underline"
+                className="mt-2 cursor-pointer text-xs font-medium text-lacuna-plum underline-offset-2 hover:underline"
               >
                 {isExpanded ? "Hide ↑" : "Show deal signal ↓"}
               </button>
@@ -473,7 +473,7 @@ export default function PayerOpsPage() {
             <div>
               <label
                 htmlFor="denial-rate"
-                className="mb-1 flex items-baseline justify-between text-sm text-white/70"
+                className="mb-1 flex items-baseline justify-between text-sm text-white/60"
               >
                 <span>Denial rate</span>
                 <span className="font-semibold text-white">
@@ -490,7 +490,7 @@ export default function PayerOpsPage() {
                 onChange={(e) => setDenialRate(Number(e.target.value))}
                 className="w-full accent-white"
               />
-              <div className="mt-0.5 flex justify-between text-[10px] text-white/50">
+              <div className="mt-0.5 flex justify-between text-[10px] text-white/45">
                 <span>5%</span>
                 <span>25%</span>
               </div>
@@ -498,7 +498,7 @@ export default function PayerOpsPage() {
             <div>
               <label
                 htmlFor="avoidable-rate"
-                className="mb-1 flex items-baseline justify-between text-sm text-white/70"
+                className="mb-1 flex items-baseline justify-between text-sm text-white/60"
               >
                 <span>Avoidable fraction</span>
                 <span className="font-semibold text-white">
@@ -515,7 +515,7 @@ export default function PayerOpsPage() {
                 onChange={(e) => setAvoidableRate(Number(e.target.value))}
                 className="w-full accent-white"
               />
-              <div className="mt-0.5 flex justify-between text-[10px] text-white/50">
+              <div className="mt-0.5 flex justify-between text-[10px] text-white/45">
                 <span>10%</span>
                 <span>60%</span>
               </div>
@@ -547,7 +547,7 @@ export default function PayerOpsPage() {
               />
             </div>
           )}
-          <p className="mt-4 text-xs text-white/50 leading-relaxed">
+          <p className="mt-4 text-xs text-white/45 leading-relaxed">
             Model: avoidable denials = monthly claims × denial rate × avoidable
             fraction. Admin savings = avoidable denials × cost per manual touch
             (CAQH index). Auth hours = monthly auths × 0.22 hrs/touch. All
@@ -566,77 +566,76 @@ export default function PayerOpsPage() {
           Example queue structure — volumes, automation readiness, and impact
           figures are illustrative, not measured operational data.
         </p>
-        <div className="grid gap-4 lg:hidden">
-          {workQueues.map((queue) => (
-            <div
-              key={queue.name}
-              className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
-            >
-              <div className="font-semibold text-lacuna-plum">{queue.name}</div>
-              <p className="mt-1 text-sm leading-relaxed text-lacuna-blue">
-                {queue.action}
-              </p>
-              <div className="mt-4 grid grid-cols-3 gap-2">
-                <StatChip
-                  label="Volume"
-                  value={formatNumber(queue.volume)}
-                />
-                <StatChip
-                  label="Automation"
-                  value={`${queue.automation}%`}
-                />
-                <StatChip label="Risk" value={queue.risk} />
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="hidden rounded-3xl border border-lacuna-lavender/40 bg-white shadow-sm lg:block">
-          <div className="grid grid-cols-12 gap-3 border-b border-lacuna-lavender/30 bg-lacuna-lavender/10 p-4 text-xs font-semibold uppercase tracking-wide text-lacuna-blue">
-            <span className="col-span-4">Queue</span>
-            <span className="col-span-2">Volume</span>
-            <span className="col-span-2">Automation</span>
-            <span className="col-span-2">Risk</span>
-            <span className="col-span-2">Impact</span>
-          </div>
-          {workQueues.map((queue) => (
-            <div
-              key={queue.name}
-              className="grid grid-cols-12 gap-3 border-b border-lacuna-lavender/20 p-4 last:border-b-0"
-            >
-              <div className="col-span-12 lg:col-span-4">
-                <div className="font-semibold text-lacuna-plum">
-                  {queue.name}
-                </div>
-                <div className="mt-1 text-sm text-lacuna-blue">
-                  {queue.action}
-                </div>
-              </div>
-              <div className="col-span-3 lg:col-span-2 text-lacuna-plum">
-                {formatNumber(queue.volume)}
-              </div>
-              <div className="group relative col-span-3 lg:col-span-2">
-                <div className="h-2 rounded-full bg-lacuna-lavender/20">
-                  <div
-                    className={`h-2 rounded-full bg-lacuna-blue ${
-                      progressWidths[queue.automation]
-                    }`}
+        <div>
+          <div className="grid gap-4 lg:hidden">
+            {workQueues.map((queue) => (
+              <div
+                key={queue.name}
+                className="rounded-2xl border border-lacuna-lavender/35 bg-white p-4 shadow-sm"
+              >
+                <div className="font-semibold text-lacuna-plum">{queue.name}</div>
+                <p className="mt-1 text-sm text-lacuna-blue">{queue.action}</p>
+                <div className="mt-4 grid grid-cols-3 gap-2">
+                  <StatChip
+                    label="Volume"
+                    value={formatNumber(queue.volume)}
                   />
-                </div>
-                <div className="mt-1 text-xs text-lacuna-blue">
-                  {queue.automation}% ready
-                </div>
-                <div className="pointer-events-none absolute bottom-full left-0 z-10 mb-1 w-48 rounded-lg bg-lacuna-plum px-3 py-2 text-xs text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
-                  {queue.action}
+                  <StatChip
+                    label="Automation"
+                    value={`${queue.automation}%`}
+                    progress={queue.automation}
+                  />
+                  <StatChip label="Risk" value={queue.risk} />
                 </div>
               </div>
-              <div className="col-span-3 lg:col-span-2 text-lacuna-plum">
-                {queue.risk}
-              </div>
-              <div className="col-span-3 lg:col-span-2 font-semibold text-lacuna-plum">
-                {queue.impact}
-              </div>
+            ))}
+          </div>
+          <div className="hidden rounded-3xl border border-lacuna-lavender/40 bg-white shadow-sm lg:block">
+            <div className="grid grid-cols-12 gap-3 border-b border-lacuna-lavender/30 bg-lacuna-lavender/10 p-4 text-xs font-semibold uppercase tracking-wide text-lacuna-blue">
+              <span className="col-span-4">Queue</span>
+              <span className="col-span-2">Volume</span>
+              <span className="col-span-2">Automation</span>
+              <span className="col-span-2">Risk</span>
+              <span className="col-span-2">Impact</span>
             </div>
-          ))}
+            {workQueues.map((queue) => (
+              <div
+                key={queue.name}
+                className="grid grid-cols-12 gap-3 border-b border-lacuna-lavender/20 p-4 last:border-b-0"
+              >
+                <div className="col-span-4">
+                  <div className="font-semibold text-lacuna-plum">
+                    {queue.name}
+                  </div>
+                  <div className="mt-1 text-sm text-lacuna-blue">
+                    {queue.action}
+                  </div>
+                </div>
+                <div className="col-span-2 text-lacuna-plum">
+                  {formatNumber(queue.volume)}
+                </div>
+                <div className="group relative col-span-2">
+                  <div className="h-2 rounded-full bg-lacuna-lavender/20">
+                    <div
+                      className={`h-2 rounded-full bg-lacuna-blue ${
+                        progressWidths[queue.automation]
+                      }`}
+                    />
+                  </div>
+                  <div className="mt-1 text-xs text-lacuna-blue">
+                    {queue.automation}% ready
+                  </div>
+                  <div className="pointer-events-none absolute bottom-full left-0 z-10 mb-1 w-48 rounded-lg bg-lacuna-plum px-3 py-2 text-xs text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
+                    {queue.action}
+                  </div>
+                </div>
+                <div className="col-span-2 text-lacuna-plum">{queue.risk}</div>
+                <div className="col-span-2 font-semibold text-lacuna-plum">
+                  {queue.impact}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </MotionSection>
 
@@ -744,7 +743,15 @@ function SegmentComparisonTable({
   );
 }
 
-function StatChip({ label, value }: { label: string; value: string }) {
+function StatChip({
+  label,
+  value,
+  progress,
+}: {
+  label: string;
+  value: string;
+  progress?: number;
+}) {
   return (
     <div className="rounded-xl bg-lacuna-surface-subtle px-2 py-2 text-center">
       <div className="text-[10px] font-semibold uppercase tracking-wide text-lacuna-blue">
@@ -753,6 +760,15 @@ function StatChip({ label, value }: { label: string; value: string }) {
       <div className="mt-0.5 text-sm font-semibold text-lacuna-plum">
         {value}
       </div>
+      {progress !== undefined ? (
+        <div className="mt-1.5 h-1 rounded-full bg-lacuna-lavender/20">
+          <div
+            className={`h-1 rounded-full bg-lacuna-blue ${
+              progressWidths[progress]
+            }`}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -769,7 +785,7 @@ function Metric({
   if (theme === "dark") {
     return (
       <div className="rounded-2xl bg-white/10 p-5">
-        <div className="text-sm font-semibold text-white/70">{label}</div>
+        <div className="text-sm font-semibold text-white/60">{label}</div>
         <div className="mt-2 text-3xl font-bold text-white">{value}</div>
       </div>
     );
