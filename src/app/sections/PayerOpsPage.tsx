@@ -63,26 +63,30 @@ const segments: Record<SegmentKey, {
 const painPoints = [
   {
     title: "Prior authorization rework",
-    value: "42%",
-    detail: "of pended requests need missing clinical documentation follow-up",
+    value: "~40%",
+    detail:
+      "of pended requests require additional clinical documentation (AMA survey range: 35–50%)",
     icon: ClipboardCheck,
   },
   {
     title: "Claim denial reversals",
-    value: "28%",
-    detail: "of appealed denials are overturned after manual review",
+    value: "40–75%",
+    detail:
+      "of appealed denials are overturned on review — wide range by plan and service type (KFF/AHA)",
     icon: FileSearch,
   },
   {
     title: "Provider abrasion",
-    value: "19 days",
-    detail: "median cycle time from first submission to final determination",
+    value: "3–17 days",
+    detail:
+      "typical prior-auth cycle time; non-urgent requests can exceed 30 days (CMS 2023 data)",
     icon: Hospital,
   },
   {
     title: "Fragmented rules",
-    value: "6 systems",
-    detail: "hold policy, benefit, network, medical-necessity, and claim edits",
+    value: "Many systems",
+    detail:
+      "policy, benefit, network, medical-necessity, and claim-edit rules held in separate platforms",
     icon: Network,
   },
 ];
@@ -134,38 +138,34 @@ const vcSignals = [
   {
     painPoint: "Prior-auth digitization",
     thesis:
-      "Payers spend $6–9 per manual auth. Companies that auto-adjudicate ≥60% of routine requests shrink medical loss ratio and reduce provider abrasion.",
+      "Payers spend an estimated $6–9 per manual auth transaction (CAQH index). Companies that auto-adjudicate routine requests reduce medical loss ratio and provider abrasion simultaneously.",
     dealSignal:
-      "Prior-auth AI acquired at 6–9× revenue; buyers include payers and PBMs seeking cost offsets.",
-    dealCount: 8,
+      "Payers and PBMs are active acquirers; strategic rationale is direct cost offset, commanding premiums above pure-financial comps.",
     momentum: "accelerating" as const,
   },
   {
     painPoint: "Maternal episode coordination",
     thesis:
-      "Unmanaged maternal episodes cost commercial payers $12K–$27K. Point solutions that reduce avoidable readmissions and track high-risk pregnancies convert admin spend into member retention.",
+      "Unmanaged maternal episodes cost commercial payers $12K–$27K per birth (HRSA/Milliman range). Point solutions reducing avoidable readmissions convert admin spend into member retention.",
     dealSignal:
-      "Maternal digital health M&A at 3.8× revenue median; hospital systems and payers both acquiring.",
-    dealCount: 11,
+      "Hospital systems and payers both acquiring; dual-buyer dynamic supports valuation. Lacuna dataset shows meaningful maternal-category deal flow.",
     momentum: "accelerating" as const,
   },
   {
     painPoint: "Behavioral health parity",
     thesis:
-      "Mental health claim denial rates run 2–3× higher than medical/surgical — a regulatory and PR liability. BH navigation platforms that reduce out-of-network leakage are strategic for any large commercial plan.",
+      "Mental health claim denial rates run higher than medical/surgical equivalents — a documented regulatory and PR liability. BH navigation platforms reducing out-of-network leakage are strategic for large commercial plans.",
     dealSignal:
-      "BH navigation acquisitions up 4× since 2020; median deal size $180M.",
-    dealCount: 14,
+      "Rapid consolidation since 2021 driven by parity mandates and post-pandemic demand. One of the highest-velocity M&A categories in women's and general health.",
     momentum: "accelerating" as const,
   },
   {
     painPoint: "Specialty pharmacy exceptions",
     thesis:
-      "Step-therapy and quantity-limit exceptions for specialty drugs generate the highest admin cost per case ($40–80) and the most clinical risk if mis-routed. AI-assisted exception management is a greenfield VC category.",
+      "Step-therapy and quantity-limit exceptions generate the highest admin cost per case and greatest clinical risk if mis-routed. AI-assisted exception management is early-stage with limited M&A comparables.",
     dealSignal:
-      "Sparse M&A — mostly early-stage; first-mover advantage for investors willing to lead Series A.",
-    dealCount: 3,
-    momentum: "stable" as const,
+      "Sparse deal history — mostly pre-Series B. Limited comparables means first-mover investors set valuation norms rather than follow them.",
+    momentum: "early" as const,
   },
 ];
 
@@ -189,9 +189,8 @@ export default function PayerOpsPage() {
       selected.claims * (selected.denialRate / 100) *
         (selected.avoidableRate / 100),
     );
-    const monthlySavings = Math.round(
-      avoidableDenials * selected.adminCost * 100,
-    );
+    // adminCost is cost per avoidable denial in dollars (CAQH admin index)
+    const monthlySavings = Math.round(avoidableDenials * selected.adminCost);
     const authHours = Math.round(selected.auths * 0.22);
     return { avoidableDenials, monthlySavings, authHours };
   }, [selected]);
@@ -239,20 +238,12 @@ export default function PayerOpsPage() {
               Built to demonstrate payer operations fluency, product thinking,
               analytics, and implementation judgment.
             </p>
-            <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
-              <div className="rounded-xl bg-white/10 p-3">
-                <div className="text-2xl font-bold">18%</div>
-                <div className="text-white/75">
-                  modeled cycle-time reduction
-                </div>
-              </div>
-              <div className="rounded-xl bg-white/10 p-3">
-                <div className="text-2xl font-bold">$5.1M</div>
-                <div className="text-white/75">
-                  illustrative annual admin opportunity
-                </div>
-              </div>
-            </div>
+            <p className="mt-4 text-sm leading-relaxed text-white/75">
+              Use the opportunity simulator below to model avoidable denial
+              volume and admin savings by line of business. All segment inputs
+              are hypothetical — swap in real plan data to generate a grounded
+              business case.
+            </p>
           </div>
         </div>
       </header>
@@ -279,10 +270,12 @@ export default function PayerOpsPage() {
                   className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
                     s.momentum === "accelerating"
                       ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                      : s.momentum === "early"
+                      ? "bg-amber-50 text-amber-700 border border-amber-200"
                       : "bg-lacuna-lavender/20 text-lacuna-plum/70 border border-lacuna-lavender/30"
                   }`}
                 >
-                  {s.momentum}
+                  {s.momentum === "early" ? "early stage" : s.momentum}
                 </span>
               </div>
               <p className="mt-3 text-sm leading-relaxed text-lacuna-blue">
@@ -291,10 +284,7 @@ export default function PayerOpsPage() {
               <div className="mt-4 flex items-start gap-2 rounded-xl bg-lacuna-lavender/10 p-3">
                 <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lacuna-plum" />
                 <p className="text-xs leading-relaxed text-lacuna-plum">
-                  {s.dealSignal}{" "}
-                  <span className="font-semibold">
-                    ({s.dealCount} deals in dataset)
-                  </span>
+                  {s.dealSignal}
                 </p>
               </div>
             </div>
@@ -329,7 +319,7 @@ export default function PayerOpsPage() {
       <MotionSection id="simulator" delay={0.05} className={SECTION}>
         <SectionHeader
           title="Opportunity simulator"
-          description="A lightweight business-case model estimating avoidable denials, administrative savings, and review hours that could be redirected to higher-value work."
+          description="A lightweight business-case model using hypothetical plan inputs. Swap in real enrollment, denial, and cost-per-touch data to generate a grounded estimate."
         />
         <div className="rounded-3xl border border-lacuna-lavender/40 bg-white p-6 shadow-sm">
           <div className="flex flex-wrap gap-2">
@@ -349,7 +339,10 @@ export default function PayerOpsPage() {
             ))}
           </div>
           <div className="mt-6 grid gap-4 lg:grid-cols-4">
-            <Metric label="Covered lives" value={selected.lives} />
+            <Metric
+              label="Covered lives (hypothetical)"
+              value={selected.lives}
+            />
             <Metric
               label="Monthly avoidable denials"
               value={formatNumber(modeled.avoidableDenials)}
@@ -363,6 +356,13 @@ export default function PayerOpsPage() {
               value={formatNumber(modeled.authHours)}
             />
           </div>
+          <p className="mt-4 text-xs text-lacuna-blue/60 leading-relaxed">
+            Model: avoidable denials = monthly claims × denial rate × avoidable
+            fraction. Admin savings = avoidable denials × cost per manual touch
+            (CAQH index). Auth hours = monthly auths × 0.22 hrs/touch. All
+            inputs are hypothetical; denial and avoidable-rate assumptions drawn
+            from published industry benchmarks.
+          </p>
         </div>
       </MotionSection>
 
@@ -371,6 +371,10 @@ export default function PayerOpsPage() {
           title="Operational triage design"
           description="The project demonstrates how a payer operations team could prioritize work by preventability, risk, automation readiness, and financial impact."
         />
+        <p className="mb-4 text-sm text-lacuna-blue/70">
+          Example queue structure — volumes, automation readiness, and impact
+          figures are illustrative, not measured operational data.
+        </p>
         <div className="overflow-hidden rounded-3xl border border-lacuna-lavender/40 bg-white shadow-sm">
           <div className="grid grid-cols-12 gap-3 border-b border-lacuna-lavender/30 bg-lacuna-lavender/10 p-4 text-xs font-semibold uppercase tracking-wide text-lacuna-blue">
             <span className="col-span-4">Queue</span>
