@@ -65,21 +65,24 @@ const painPoints = [
     title: "Prior authorization rework",
     value: "~40%",
     detail:
-      "of pended requests require additional clinical documentation (AMA survey range: 35–50%)",
+      "of pended requests require additional clinical documentation",
+    source: "AMA 2023 Prior Auth Survey",
     icon: ClipboardCheck,
   },
   {
     title: "Claim denial reversals",
     value: "40–75%",
     detail:
-      "of appealed denials are overturned on review — wide range by plan and service type (KFF/AHA)",
+      "of appealed denials are overturned on review — wide range by plan and service type",
+    source: "KFF / AHA denial appeals data",
     icon: FileSearch,
   },
   {
     title: "Provider abrasion",
     value: "3–17 days",
     detail:
-      "typical prior-auth cycle time; non-urgent requests can exceed 30 days (CMS 2023 data)",
+      "typical prior-auth cycle time; non-urgent requests can exceed 30 days",
+    source: "CMS 2023 prior authorization data",
     icon: Hospital,
   },
   {
@@ -346,7 +349,7 @@ export default function PayerOpsPage() {
           description="A meaningful share of payer administrative cost is created by preventable defects: incomplete documentation, benefit ambiguity, coding mismatches, manual routing, and inconsistent policy interpretation."
         />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {painPoints.map(({ title, value, detail, icon: Icon }) => (
+          {painPoints.map(({ title, value, detail, source, icon: Icon }) => (
             <div
               key={title}
               className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
@@ -359,6 +362,11 @@ export default function PayerOpsPage() {
               <p className="mt-1 text-sm leading-relaxed text-lacuna-blue">
                 {detail}
               </p>
+              {source ? (
+                <span className="mt-2 inline-block rounded-full bg-lacuna-lavender/20 px-2 py-0.5 text-[10px] font-medium text-lacuna-blue/70">
+                  {source}
+                </span>
+              ) : null}
             </div>
           ))}
         </div>
