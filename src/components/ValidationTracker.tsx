@@ -135,9 +135,7 @@ export default function ValidationTracker() {
       <div className="bg-white border border-lacuna-border rounded-lg overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-lacuna-surface-muted">
-            <tr
-              className="text-xs text-lacuna-text-muted uppercase"
-            >
+            <tr className="text-xs text-lacuna-text-muted uppercase">
               <th className="text-left p-3">Target</th>
               <th className="text-left p-3">Acquirer</th>
               <th className="text-left p-3">Announced</th>
