@@ -606,7 +606,7 @@ function Stat({
 }) {
   return (
     <div>
-      <span className="text-lacuna-blue/60">{label}:</span>
+      <span className="text-lacuna-blue/60">{label}:</span>{" "}
       <span className="font-medium text-lacuna-plum">{value}</span>
       {citationIds && <CitationMarkers ids={citationIds} />}
     </div>
