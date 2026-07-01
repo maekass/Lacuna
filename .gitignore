@@ -62,7 +62,9 @@ staging/sec_candidates.csv
 /data/exports/free-apis/**
 !/data/exports/free-apis/README.md
 
-# framer brand site (separate concern from the analytics app — see AGENTS.md)
+# python sidecar
+services/python-api/.venv/
+
 /framer/
 
 # playwright

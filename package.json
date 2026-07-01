@@ -25,6 +25,8 @@
     "clickhouse:seed": "tsx scripts/seed-variant-callsets.ts",
     "clickhouse:ingest-vcf": "tsx scripts/ingest-vcf-stream.ts",
     "ingest:worker": "tsx services/ingest-worker/index.ts",
+    "python-api:dev": "cd services/python-api && uvicorn app.main:app --reload --port 8000",
+    "python-api:test": "cd services/python-api && python -m pytest",
     "infra:check": "tsx scripts/infra-check.ts",
     "monitor:liveness": "sh scripts/monitor-liveness.sh",
     "storybook": "storybook dev -p 6006",
