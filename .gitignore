@@ -64,6 +64,8 @@ staging/sec_candidates.csv
 
 # python sidecar
 services/python-api/.venv/
+__pycache__/
+*.py[cod]
 
 /framer/
 

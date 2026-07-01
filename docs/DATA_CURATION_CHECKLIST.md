@@ -103,16 +103,16 @@ Curated VC portfolio company names live in `src/data/verifiedData.ts` as
 brief fit signals. They are **not** M&A acquirers and do not belong in
 `dataset.verified.json` unless the firm itself is a verified deal party.
 
-| Overlay | Source URL | Constant |
-| ------- | ---------- | -------- |
-| Foreground Capital | https://www.foreground.com/companies | `foregroundPortfolio` |
-| Amboy Street VC | https://www.amboystreet.vc/portfolio | `amboyStreetPortfolio` |
+| Overlay            | Source URL                           | Constant               |
+| ------------------ | ------------------------------------ | ---------------------- |
+| Foreground Capital | https://www.foreground.com/companies | `foregroundPortfolio`  |
+| Amboy Street VC    | https://www.amboystreet.vc/portfolio | `amboyStreetPortfolio` |
 
 Rules:
 
 - Company names are copied from the VC's public portfolio page with
   `portfolioUrl` on the integration object (`VcPortfolioOverlay`).
-- Most portfolio names will **not** appear in the verified M&A dataset — UI
-  must warn when centroid overlap is thin (see `CompanySimilarity`).
+- Most portfolio names will **not** appear in the verified M&A dataset — UI must
+  warn when centroid overlap is thin (see `CompanySimilarity`).
 - Do not add portfolio companies to `companies[]` without the standard
   dual-source evidence checklist above.
