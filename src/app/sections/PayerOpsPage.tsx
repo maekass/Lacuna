@@ -184,16 +184,25 @@ export default function PayerOpsPage() {
   const t = useTranslations("pages.payerOps");
   const [segment, setSegment] = useState<SegmentKey>("commercial");
   const selected = segments[segment];
+  const [denialRate, setDenialRate] = useState(selected.denialRate);
+  const [avoidableRate, setAvoidableRate] = useState(selected.avoidableRate);
+
+  function handleSegmentChange(key: SegmentKey) {
+    setSegment(key);
+    setDenialRate(segments[key].denialRate);
+    setAvoidableRate(segments[key].avoidableRate);
+  }
+
   const modeled = useMemo(() => {
     const avoidableDenials = Math.round(
-      selected.claims * (selected.denialRate / 100) *
-        (selected.avoidableRate / 100),
+      selected.claims * (denialRate / 100) *
+        (avoidableRate / 100),
     );
     // adminCost is cost per avoidable denial in dollars (CAQH admin index)
     const monthlySavings = Math.round(avoidableDenials * selected.adminCost);
     const authHours = Math.round(selected.auths * 0.22);
     return { avoidableDenials, monthlySavings, authHours };
-  }, [selected]);
+  }, [selected, denialRate, avoidableRate]);
 
   return (
     <div>
@@ -327,7 +336,7 @@ export default function PayerOpsPage() {
               <button
                 key={key}
                 type="button"
-                onClick={() => setSegment(key)}
+                onClick={() => handleSegmentChange(key)}
                 className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
                   segment === key
                     ? "bg-lacuna-plum text-white"
@@ -337,6 +346,58 @@ export default function PayerOpsPage() {
                 {segments[key].label}
               </button>
             ))}
+          </div>
+          <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label
+                htmlFor="denial-rate"
+                className="mb-1 flex items-baseline justify-between text-sm text-lacuna-blue"
+              >
+                <span>Denial rate</span>
+                <span className="font-semibold text-lacuna-plum">
+                  {denialRate.toFixed(1)}%
+                </span>
+              </label>
+              <input
+                id="denial-rate"
+                type="range"
+                min={5}
+                max={25}
+                step={0.5}
+                value={denialRate}
+                onChange={(e) => setDenialRate(Number(e.target.value))}
+                className="w-full accent-lacuna-plum"
+              />
+              <div className="mt-0.5 flex justify-between text-[10px] text-lacuna-blue/50">
+                <span>5%</span>
+                <span>25%</span>
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="avoidable-rate"
+                className="mb-1 flex items-baseline justify-between text-sm text-lacuna-blue"
+              >
+                <span>Avoidable fraction</span>
+                <span className="font-semibold text-lacuna-plum">
+                  {avoidableRate}%
+                </span>
+              </label>
+              <input
+                id="avoidable-rate"
+                type="range"
+                min={10}
+                max={60}
+                step={1}
+                value={avoidableRate}
+                onChange={(e) => setAvoidableRate(Number(e.target.value))}
+                className="w-full accent-lacuna-plum"
+              />
+              <div className="mt-0.5 flex justify-between text-[10px] text-lacuna-blue/50">
+                <span>10%</span>
+                <span>60%</span>
+              </div>
+            </div>
           </div>
           <div className="mt-6 grid gap-4 lg:grid-cols-4">
             <Metric

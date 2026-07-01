@@ -74,22 +74,10 @@ export default function ValidationTracker() {
     >
       <CuratedDatasetBanner />
       <div className="border-b border-lacuna-border pb-4">
-        <h3
-          className="text-2xl font-light tracking-tight"
-          style={{
-            fontFamily: "'Bodoni MT', Didot, serif",
-            textTransform: "uppercase",
-          }}
-        >
+        <h3 className="text-2xl font-light tracking-tight uppercase">
           Verified Acquisition Tracker
         </h3>
-        <p
-          className="text-sm tracking-widest text-lacuna-text-muted mt-1"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
-        >
+        <p className="text-sm tracking-widest text-lacuna-text-muted mt-1 uppercase">
           Public deal records only — no synthetic post-acquisition outcomes
         </p>
       </div>
@@ -103,53 +91,26 @@ export default function ValidationTracker() {
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <div className="bg-lacuna-surface-muted p-4 rounded-lg text-center">
-          <div
-            className="text-2xl font-light"
-            style={{
-              fontFamily: "'Bodoni MT', Didot, serif",
-              color: "#5D4E6D",
-            }}
-          >
+          <div className="text-2xl font-light text-lacuna-plum">
             {filteredData.length}
           </div>
-          <div
-            className="text-xs text-lacuna-text-muted uppercase"
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
-          >
+          <div className="text-xs text-lacuna-text-muted uppercase">
             Verified acquisitions
           </div>
         </div>
         <div className="bg-lacuna-surface-muted p-4 rounded-lg text-center">
-          <div
-            className="text-2xl font-light"
-            style={{
-              fontFamily: "'Bodoni MT', Didot, serif",
-              color: "#4A5D8A",
-            }}
-          >
+          <div className="text-2xl font-light text-lacuna-blue">
             {disclosureRate.toFixed(0)}%
           </div>
-          <div
-            className="text-xs text-lacuna-text-muted uppercase"
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
-          >
+          <div className="text-xs text-lacuna-text-muted uppercase">
             Deal value disclosed
           </div>
         </div>
         <div className="bg-lacuna-surface-muted p-4 rounded-lg text-center">
-          <div
-            className="text-2xl font-light"
-            style={{
-              fontFamily: "'Bodoni MT', Didot, serif",
-              color: "#E8B4B8",
-            }}
-          >
+          <div className="text-2xl font-light text-lacuna-pink">
             0
           </div>
-          <div
-            className="text-xs text-lacuna-text-muted uppercase"
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
-          >
+          <div className="text-xs text-lacuna-text-muted uppercase">
             Post-close outcome panel
           </div>
         </div>
@@ -162,10 +123,9 @@ export default function ValidationTracker() {
             onClick={() => setSelectedYear(year)}
             className={`px-4 py-2 rounded-lg text-sm transition-colors ${
               selectedYear === year
-                ? "bg-[#5D4E6D] text-white"
-                : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-subtle"
+                ? "bg-lacuna-plum text-white"
+                : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-lavender/20"
             }`}
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
           >
             {year === "all" ? "All Years" : year}
           </button>
@@ -175,10 +135,7 @@ export default function ValidationTracker() {
       <div className="bg-white border border-lacuna-border rounded-lg overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-lacuna-surface-muted">
-            <tr
-              className="text-xs text-lacuna-text-muted uppercase"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
-            >
+            <tr className="text-xs text-lacuna-text-muted uppercase">
               <th className="text-left p-3">Target</th>
               <th className="text-left p-3">Acquirer</th>
               <th className="text-left p-3">Announced</th>
@@ -217,10 +174,7 @@ export default function ValidationTracker() {
             key={`detail-${v.company}-${v.acquisitionDate}`}
             className="bg-white border border-lacuna-border rounded-lg p-6"
           >
-            <h4
-              className="font-medium text-lg"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
-            >
+            <h4 className="font-medium text-lg">
               {v.company} → {v.acquirer}
             </h4>
             <p className="text-sm text-lacuna-text-muted mt-1">
@@ -228,7 +182,7 @@ export default function ValidationTracker() {
             </p>
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="text-lacuna-text-muted">Deal value:</span>
+                <span className="text-lacuna-text-muted">Deal value:</span>{" "}
                 <span className="font-medium">
                   {typeof v.dealValue === "number"
                     ? `$${v.dealValue.toLocaleString()}M`
@@ -243,7 +197,7 @@ export default function ValidationTracker() {
                   : null}
               </div>
               <div>
-                <span className="text-lacuna-text-muted">Source:</span>
+                <span className="text-lacuna-text-muted">Source:</span>{" "}
                 <span>{v.source}</span>
               </div>
             </div>
