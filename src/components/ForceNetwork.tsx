@@ -100,6 +100,10 @@ export default function ForceNetwork(
   const [focusedPortfolio, setFocusedPortfolio] = useState<PortfolioKey | null>(
     null,
   );
+  const [searchQuery, setSearchQuery] = useState("");
+  const [matchingNodeIds, setMatchingNodeIds] = useState<Set<string>>(
+    () => new Set(),
+  );
   const portfolioNameSets = useMemo(
     () =>
       new Map<PortfolioKey, ReadonlySet<string>>(
@@ -107,6 +111,22 @@ export default function ForceNetwork(
       ),
     [],
   );
+
+  useEffect(() => {
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) {
+      setMatchingNodeIds(new Set());
+      return;
+    }
+
+    setMatchingNodeIds(
+      new Set(
+        nodes
+          .filter((node) => node.name.toLowerCase().includes(query))
+          .map((node) => node.id),
+      ),
+    );
+  }, [searchQuery, nodes]);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -421,6 +441,37 @@ export default function ForceNetwork(
     selectNode,
   ]);
 
+  const isSearchActive = searchQuery.trim().length > 0;
+
+  useEffect(() => {
+    if (!svgRef.current) return;
+
+    const svg = d3.select(svgRef.current);
+
+    svg.selectAll<SVGGElement, Node>(".nodes > g").style("opacity", (node) => {
+      if (!isSearchActive) return 0.9;
+      return matchingNodeIds.has(node.id) ? 0.9 : 0.15;
+    });
+
+    svg.selectAll<SVGLineElement, Link>(".links > line").attr(
+      "stroke-opacity",
+      (link) => {
+        if (!isSearchActive) return 0.4;
+
+        const sourceId = typeof link.source === "string"
+          ? link.source
+          : link.source.id;
+        const targetId = typeof link.target === "string"
+          ? link.target
+          : link.target.id;
+
+        return matchingNodeIds.has(sourceId) || matchingNodeIds.has(targetId)
+          ? 0.4
+          : 0.05;
+      },
+    );
+  }, [isSearchActive, matchingNodeIds]);
+
   const graphLabel =
     `M&A network graph showing ${nodes.length} companies and ${links.length} verified deal relationships.`;
 
@@ -537,6 +588,14 @@ export default function ForceNetwork(
         aria-live="polite"
       >
         <div className="relative">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="Search companies…"
+            aria-label="Search companies"
+            className="mb-3 w-full rounded-lg border border-lacuna-lavender/40 bg-white px-3 py-2 text-sm text-lacuna-plum placeholder:text-lacuna-blue/50 focus:outline-none focus:ring-2 focus:ring-lacuna-lavender/40"
+          />
           {nodes.length === 0
             ? (
               <div className="flex h-64 sm:h-96 items-center justify-center rounded-lg sm:rounded-xl border-2 border-dashed border-lacuna-lavender/40 bg-gradient-to-br from-lacuna-pink/10 to-lacuna-lavender/15">
