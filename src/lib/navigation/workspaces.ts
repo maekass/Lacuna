@@ -36,6 +36,23 @@ export const WORKSPACES: Workspace[] = [
     ],
   },
   {
+    slug: "payer-ops",
+    href: "/payer-ops",
+    label: "Payer Ops",
+    description:
+      "Prior-auth friction, claims ops waste, and VC investment signals for payer-aligned women's health deals.",
+    tags: ["prior auth", "claims ops", "payer VC"],
+    sections: [
+      { id: "vc-signals", label: "VC signals" },
+      { id: "problem", label: "Problem" },
+      { id: "simulator", label: "Simulator" },
+      { id: "triage", label: "Queues" },
+      { id: "solution", label: "Solution" },
+      { id: "governance", label: "Governance" },
+      { id: "roadmap", label: "Roadmap" },
+    ],
+  },
+  {
     slug: "research",
     href: "/research",
     label: "Research",
@@ -76,21 +93,6 @@ export const WORKSPACES: Workspace[] = [
       { id: "reimbursement-intelligence", label: "Reimbursement" },
       { id: "acquirer-prediction", label: "Fit scores" },
       { id: "export", label: "Export" },
-    ],
-  },
-  {
-    slug: "payer-ops",
-    href: "/payer-ops",
-    label: "Payer Ops",
-    description:
-      "Portfolio project for healthcare payer administration, claims operations, and responsible workflow automation.",
-    sections: [
-      { id: "problem", label: "Problem" },
-      { id: "simulator", label: "Simulator" },
-      { id: "triage", label: "Queues" },
-      { id: "solution", label: "Solution" },
-      { id: "governance", label: "Governance" },
-      { id: "roadmap", label: "Roadmap" },
     ],
   },
 ];

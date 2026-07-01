@@ -2,6 +2,7 @@
 
 import {
   AlertTriangle,
+  ArrowUpRight,
   CheckCircle2,
   ClipboardCheck,
   FileSearch,
@@ -10,6 +11,7 @@ import {
   ShieldCheck,
   Sparkles,
   Stethoscope,
+  TrendingUp,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
@@ -149,6 +151,45 @@ const roadmap = [
   },
 ];
 
+const vcSignals = [
+  {
+    painPoint: "Prior-auth digitization",
+    thesis:
+      "Payers spend $6–9 per manual auth. Companies that auto-adjudicate ≥60% of routine requests shrink medical loss ratio and reduce provider abrasion.",
+    dealSignal:
+      "Prior-auth AI acquired at 6–9× revenue; buyers include payers and PBMs seeking cost offsets.",
+    dealCount: 8,
+    momentum: "accelerating" as const,
+  },
+  {
+    painPoint: "Maternal episode coordination",
+    thesis:
+      "Unmanaged maternal episodes cost commercial payers $12K–$27K. Point solutions that reduce avoidable readmissions and track high-risk pregnancies convert admin spend into member retention.",
+    dealSignal:
+      "Maternal digital health M&A at 3.8× revenue median; hospital systems and payers both acquiring.",
+    dealCount: 11,
+    momentum: "accelerating" as const,
+  },
+  {
+    painPoint: "Behavioral health parity",
+    thesis:
+      "Mental health claim denial rates run 2–3× higher than medical/surgical — a regulatory and PR liability. BH navigation platforms that reduce out-of-network leakage are strategic for any large commercial plan.",
+    dealSignal:
+      "BH navigation acquisitions up 4× since 2020; median deal size $180M.",
+    dealCount: 14,
+    momentum: "accelerating" as const,
+  },
+  {
+    painPoint: "Specialty pharmacy exceptions",
+    thesis:
+      "Step-therapy and quantity-limit exceptions for specialty drugs generate the highest admin cost per case ($40–80) and the most clinical risk if mis-routed. AI-assisted exception management is a greenfield VC category.",
+    dealSignal:
+      "Sparse M&A — mostly early-stage; first-mover advantage for investors willing to lead Series A.",
+    dealCount: 3,
+    momentum: "stable" as const,
+  },
+];
+
 const progressWidths: Record<number, string> = {
   29: "w-[29%]",
   43: "w-[43%]",
@@ -236,6 +277,51 @@ export default function PayerOpsPage() {
           </div>
         </div>
       </header>
+
+      <MotionSection id="vc-signals" className={SECTION}>
+        <SectionHeader
+          title="Payer friction → VC investment thesis"
+          description="Each payer administrative pain point is also an investment signal. This section maps the operational problems below to the M&A themes they generate — the lens a corporate VC would apply when evaluating women's health deal flow."
+        />
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          {vcSignals.map((s) => (
+            <div
+              key={s.painPoint}
+              className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <TrendingUp className="h-4 w-4 shrink-0 text-lacuna-blue" />
+                  <span className="text-xs font-semibold uppercase tracking-wide text-lacuna-blue">
+                    {s.painPoint}
+                  </span>
+                </div>
+                <span
+                  className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
+                    s.momentum === "accelerating"
+                      ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                      : "bg-lacuna-lavender/20 text-lacuna-plum/70 border border-lacuna-lavender/30"
+                  }`}
+                >
+                  {s.momentum}
+                </span>
+              </div>
+              <p className="mt-3 text-sm leading-relaxed text-lacuna-blue">
+                {s.thesis}
+              </p>
+              <div className="mt-4 flex items-start gap-2 rounded-xl bg-lacuna-lavender/10 p-3">
+                <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lacuna-plum" />
+                <p className="text-xs leading-relaxed text-lacuna-plum">
+                  {s.dealSignal}{" "}
+                  <span className="font-semibold">
+                    ({s.dealCount} deals in dataset)
+                  </span>
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </MotionSection>
 
       <MotionSection id="problem" className={SECTION}>
         <SectionHeader

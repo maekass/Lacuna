@@ -11,7 +11,11 @@
     "deals": {
       "label": "Deals",
       "description": "Network graph, deal flow, valuation matrix, and acquirer landscape.",
-      "tags": ["network", "valuation", "acquirers"],
+      "tags": [
+        "network",
+        "valuation",
+        "acquirers"
+      ],
       "sections": {
         "data-coverage": "Coverage",
         "data-pipelines": "Pipelines",
@@ -27,10 +31,32 @@
         "survival-analysis": "Survival"
       }
     },
+    "payer-ops": {
+      "label": "Payer Ops",
+      "description": "Prior-auth friction, claims ops waste, and VC investment signals for payer-aligned women's health deals.",
+      "tags": [
+        "prior auth",
+        "claims ops",
+        "payer VC"
+      ],
+      "sections": {
+        "problem": "Problem",
+        "simulator": "Simulator",
+        "triage": "Queues",
+        "solution": "Solution",
+        "governance": "Governance",
+        "roadmap": "Roadmap",
+        "vc-signals": "VC signals"
+      }
+    },
     "research": {
       "label": "Research",
       "description": "Clinical trials, evidence maturity, genomics, and health equity.",
-      "tags": ["clinical trials", "evidence", "genomics"],
+      "tags": [
+        "clinical trials",
+        "evidence",
+        "genomics"
+      ],
       "sections": {
         "burden-capital-gap": "Gap",
         "clinical-trials": "Trials",
@@ -43,7 +69,11 @@
     "methods": {
       "label": "Methods",
       "description": "Causal framing, temporal patterns, sensitivity, and Bayesian small-n.",
-      "tags": ["causal", "bayesian", "temporal"],
+      "tags": [
+        "causal",
+        "bayesian",
+        "temporal"
+      ],
       "sections": {
         "causal-dag": "DAG",
         "causal-engine": "Causal",
@@ -55,24 +85,15 @@
     "intelligence": {
       "label": "Intelligence",
       "description": "Reimbursement context, acquirer fit scores, and deck export.",
-      "tags": ["reimbursement", "fit scores", "export"],
+      "tags": [
+        "reimbursement",
+        "fit scores",
+        "export"
+      ],
       "sections": {
         "reimbursement-intelligence": "Reimbursement",
         "acquirer-prediction": "Fit scores",
         "export": "Export"
-      }
-    },
-    "payer-ops": {
-      "label": "Payer Ops",
-      "description": "Portfolio project for healthcare payer administration, claims operations, and responsible workflow automation.",
-      "tags": ["payer ops", "claims", "governance"],
-      "sections": {
-        "problem": "Problem",
-        "simulator": "Simulator",
-        "triage": "Queues",
-        "solution": "Solution",
-        "governance": "Governance",
-        "roadmap": "Roadmap"
       }
     }
   },

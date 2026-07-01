@@ -101,6 +101,35 @@ export default function HubPage() {
         )
         : null}
 
+      <MotionSection delay={0.13} className="mb-10">
+        <Link
+          href="/payer-ops"
+          className="group flex flex-col gap-3 rounded-xl border border-lacuna-plum/25 bg-gradient-to-r from-lacuna-plum/5 to-lacuna-lavender/20 p-5 shadow-sm transition-shadow hover:shadow-md sm:flex-row sm:items-center sm:gap-5"
+        >
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-lacuna-plum text-white text-sm font-bold">
+            P
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center gap-2">
+              <span className="text-base font-semibold text-lacuna-plum group-hover:text-lacuna-blue">
+                Payer Intel
+              </span>
+              <span className="rounded-full bg-lacuna-pink/40 border border-lacuna-pink/60 px-2 py-0.5 text-[10px] font-semibold text-lacuna-plum uppercase tracking-wide">
+                Featured
+              </span>
+            </div>
+            <p className="mt-0.5 text-sm text-lacuna-blue">
+              Prior-auth friction, avoidable admin waste, and VC investment
+              signals for payer-aligned women&apos;s health deals — built for
+              payer corporate venture context.
+            </p>
+          </div>
+          <span className="shrink-0 text-sm font-medium text-lacuna-plum/60 group-hover:text-lacuna-blue">
+            View →
+          </span>
+        </Link>
+      </MotionSection>
+
       <MotionSection delay={0.15}>
         <h2 className="mb-2 text-2xl font-semibold text-lacuna-plum">
           {t("chooseWorkspace")}

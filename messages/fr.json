@@ -11,7 +11,11 @@
     "deals": {
       "label": "Transactions",
       "description": "Graphe de réseau, flux de transactions, matrice de valorisation et paysage des acquéreurs.",
-      "tags": ["réseau", "valorisation", "acquéreurs"],
+      "tags": [
+        "réseau",
+        "valorisation",
+        "acquéreurs"
+      ],
       "sections": {
         "data-coverage": "Couverture",
         "data-pipelines": "Pipelines",
@@ -30,7 +34,11 @@
     "research": {
       "label": "Recherche",
       "description": "Essais cliniques, maturité des preuves, génomique et équité en santé.",
-      "tags": ["essais cliniques", "preuves", "génomique"],
+      "tags": [
+        "essais cliniques",
+        "preuves",
+        "génomique"
+      ],
       "sections": {
         "burden-capital-gap": "Écart",
         "clinical-trials": "Essais",
@@ -43,7 +51,11 @@
     "methods": {
       "label": "Méthodes",
       "description": "Cadrage causal, tendances temporelles, sensibilité et petit-n bayésien.",
-      "tags": ["causal", "bayésien", "temporel"],
+      "tags": [
+        "causal",
+        "bayésien",
+        "temporel"
+      ],
       "sections": {
         "causal-dag": "DAG",
         "causal-engine": "Causal",
@@ -55,7 +67,11 @@
     "intelligence": {
       "label": "Intelligence",
       "description": "Contexte de remboursement, scores d'adéquation acquéreur et export de présentation.",
-      "tags": ["remboursement", "scores d'adéquation", "export"],
+      "tags": [
+        "remboursement",
+        "scores d'adéquation",
+        "export"
+      ],
       "sections": {
         "reimbursement-intelligence": "Remboursement",
         "acquirer-prediction": "Scores d'adéquation",
@@ -64,15 +80,20 @@
     },
     "payer-ops": {
       "label": "Ops payeur",
-      "description": "Projet portfolio pour l'administration des payeurs de soins, les opérations de sinistres et l'automatisation responsable des flux de travail.",
-      "tags": ["ops payeur", "sinistres", "gouvernance"],
+      "description": "Friction des autorisations préalables, gaspillage des opérations de sinistres et signaux d'investissement VC pour les transactions en santé féminine.",
+      "tags": [
+        "auth préalable",
+        "ops sinistres",
+        "VC assureurs"
+      ],
       "sections": {
         "problem": "Problème",
         "simulator": "Simulateur",
         "triage": "Files d'attente",
         "solution": "Solution",
         "governance": "Gouvernance",
-        "roadmap": "Feuille de route"
+        "roadmap": "Feuille de route",
+        "vc-signals": "Signaux VC"
       }
     }
   },
