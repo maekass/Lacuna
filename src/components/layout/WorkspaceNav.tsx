@@ -42,6 +42,12 @@ export default function WorkspaceNav() {
             aria-current={active ? "page" : undefined}
           >
             {tw(`${ws.slug}.label`)}
+            {ws.slug === "payer-ops" ? (
+              <span
+                className="ml-1.5 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"
+                aria-hidden="true"
+              />
+            ) : null}
           </Link>
         );
       })}
