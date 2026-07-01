@@ -1,27 +1,31 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
 import { WORKSPACES } from "@/lib/navigation/workspaces";
 
 export default function WorkspaceNav() {
+  const t = useTranslations("nav");
+  const tw = useTranslations("workspaces");
   const pathname = usePathname();
+  // pathname from next-intl usePathname is locale-stripped (e.g. "/deals")
+  const isHub = pathname === "/";
 
   return (
     <nav
       className="hide-scrollbar flex flex-nowrap items-center gap-2 overflow-x-auto sm:flex-wrap sm:gap-3 sm:overflow-x-visible"
-      aria-label="Workspaces"
+      aria-label={t("workspaces")}
     >
       <Link
         href="/"
         className={`touch-target-inline rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
-          pathname === "/"
+          isHub
             ? "bg-lacuna-lavender/30 text-lacuna-plum"
             : "text-lacuna-blue hover:bg-lacuna-pink/15 hover:text-lacuna-plum"
         }`}
-        aria-current={pathname === "/" ? "page" : undefined}
+        aria-current={isHub ? "page" : undefined}
       >
-        Hub
+        {t("hub")}
       </Link>
       {WORKSPACES.map((ws) => {
         const active = pathname === ws.href ||
@@ -37,7 +41,7 @@ export default function WorkspaceNav() {
             }`}
             aria-current={active ? "page" : undefined}
           >
-            {ws.label}
+            {tw(`${ws.slug}.label`)}
           </Link>
         );
       })}
@@ -47,7 +51,7 @@ export default function WorkspaceNav() {
         rel="noopener noreferrer"
         className="touch-target-inline ml-auto rounded-full bg-lacuna-lavender/25 px-3 py-1.5 text-xs font-medium text-lacuna-plum transition-colors hover:bg-lacuna-lavender/40"
       >
-        GitHub
+        {t("github")}
       </a>
     </nav>
   );

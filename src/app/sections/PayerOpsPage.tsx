@@ -11,6 +11,7 @@ import {
   Sparkles,
   Stethoscope,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -160,6 +161,7 @@ function formatNumber(value: number) {
 }
 
 export default function PayerOpsPage() {
+  const t = useTranslations("pages.payerOps");
   const [segment, setSegment] = useState<SegmentKey>("commercial");
   const selected = segments[segment];
   const modeled = useMemo(() => {

@@ -10,6 +10,7 @@ import {
   ReimbursementIntelligenceDashboard,
   SystemHealthDashboard,
 } from "@/app/lazyDashboard";
+import { useTranslations } from "next-intl";
 import ExportToGamma from "@/components/ExportToGamma";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -17,16 +18,12 @@ import SectionHeader from "@/components/ui/SectionHeader";
 const SECTION = "mb-16 scroll-mt-28";
 
 export default function IntelligencePage() {
+  const t = useTranslations("pages.intelligence");
   return (
     <div>
       <header className="mb-10">
-        <h1 className="text-3xl font-bold text-lacuna-plum">
-          Intelligence workspace
-        </h1>
-        <p className="mt-2 max-w-2xl text-lacuna-blue">
-          Reimbursement context, strategic acquirer fit, system health, and data
-          exports — engineering-grade tooling for production environments.
-        </p>
+        <h1 className="text-3xl font-bold text-lacuna-plum">{t("title")}</h1>
+        <p className="mt-2 max-w-2xl text-lacuna-blue">{t("description")}</p>
       </header>
 
       <MotionSection id="system-health" className={SECTION}>

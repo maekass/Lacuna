@@ -11,22 +11,19 @@ import {
   ImpactOpportunityCard,
   VariantCallsetBrowser,
 } from "@/app/lazyDashboard";
+import { useTranslations } from "next-intl";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 
 const SECTION = "mb-16 scroll-mt-28";
 
 export default function ResearchPage() {
+  const t = useTranslations("pages.research");
   return (
     <div>
       <header className="mb-10">
-        <h1 className="text-3xl font-bold text-lacuna-plum">
-          Research workspace
-        </h1>
-        <p className="mt-2 max-w-2xl text-lacuna-blue">
-          Clinical trials, evidence maturity, genomics governance, and health
-          equity markers — with honest limits on live vs static data.
-        </p>
+        <h1 className="text-3xl font-bold text-lacuna-plum">{t("title")}</h1>
+        <p className="mt-2 max-w-2xl text-lacuna-blue">{t("description")}</p>
       </header>
 
       <MotionSection id="burden-capital-gap" className={SECTION}>

@@ -1,14 +1,15 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import BackToTop from "@/components/layout/BackToTop";
 import GlobalProvenanceBar from "@/components/layout/GlobalProvenanceBar";
+import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import SectionNav from "@/components/layout/SectionNav";
 import SiteFooter from "@/components/layout/SiteFooter";
 import WorkspaceNav from "@/components/layout/WorkspaceNav";
 import KeyboardShortcuts from "@/components/KeyboardShortcuts";
+import { Link, usePathname } from "@/i18n/navigation";
 import { ProvenanceProvider } from "@/lib/provenance/ProvenanceContext";
 import { workspaceForPath } from "@/lib/navigation/workspaces";
 
@@ -17,15 +18,26 @@ interface AppShellProps {
 }
 
 export default function AppShell({ children }: AppShellProps) {
+  const t = useTranslations("nav");
+  const tw = useTranslations("workspaces");
   const pathname = usePathname();
   const workspace = workspaceForPath(pathname);
-  const sections = workspace?.sections ?? [];
+  const rawSections = workspace?.sections ?? [];
+  // Translate section labels; fall back to the English label if key is missing
+  const sections = rawSections.map((s) => {
+    try {
+      const label = tw(`${workspace!.slug}.sections.${s.id}`);
+      return { ...s, label };
+    } catch {
+      return s;
+    }
+  });
 
   return (
     <ProvenanceProvider globalBarActive>
       <div className="min-h-screen bg-gradient-to-br from-lacuna-pink/15 via-background to-lacuna-lavender/20">
         <a href="#main-content" className="skip-link">
-          Skip to main content
+          {t("skipToMain")}
         </a>
 
         <GlobalProvenanceBar />
@@ -42,12 +54,13 @@ export default function AppShell({ children }: AppShellProps) {
                 </div>
                 <div>
                   <p className="text-xl font-bold text-lacuna-plum">Lacuna</p>
-                  <p className="text-xs text-lacuna-blue">
-                    Women&apos;s Health M&amp;A · Diligence Stack
-                  </p>
+                  <p className="text-xs text-lacuna-blue">{t("tagline")}</p>
                 </div>
               </Link>
-              <WorkspaceNav />
+              <div className="flex items-center gap-3">
+                <WorkspaceNav />
+                <LanguageSwitcher />
+              </div>
             </div>
           </div>
         </header>
