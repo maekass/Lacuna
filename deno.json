@@ -6,8 +6,7 @@
     },
     "exclude": [
       "src/sentry.client.config.ts",
-      "src/sentry.edge.config.ts",
-      "src/instrumentation.ts"
+      "src/sentry.edge.config.ts"
     ]
   },
   "fmt": {
