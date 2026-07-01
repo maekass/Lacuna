@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
@@ -196,9 +196,55 @@ interface MatrixCell {
   dealCount: number;
 }
 
+const SECTOR_CHIP_ACTIVE =
+  "rounded-full px-3 py-1 text-xs font-medium bg-lacuna-plum text-white";
+const SECTOR_CHIP_INACTIVE =
+  "rounded-full px-3 py-1 text-xs font-medium bg-lacuna-lavender/20 text-lacuna-plum";
+
 export default function ValuationMatrix() {
   const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
   const [hoveredCell, setHoveredCell] = useState<MatrixCell | null>(null);
+
+  const allSectors = useMemo(
+    () =>
+      Array.from(new Set(verifiedCompanies.map((c) => c.sector))).sort(),
+    [verifiedCompanies],
+  );
+
+  const [activeSectors, setActiveSectors] = useState<Set<string>>(
+    () => new Set(),
+  );
+
+  useEffect(() => {
+    if (allSectors.length > 0 && activeSectors.size === 0) {
+      setActiveSectors(new Set(allSectors));
+    }
+  }, [allSectors, activeSectors.size]);
+
+  const allSectorsActive = allSectors.length > 0 &&
+    allSectors.every((sector) => activeSectors.has(sector));
+
+  function selectAll() {
+    setActiveSectors(new Set(allSectors));
+  }
+
+  function toggleSector(sector: string) {
+    let removed = false;
+    setActiveSectors((prev) => {
+      const next = new Set(prev);
+      if (next.has(sector)) {
+        if (next.size <= 1) return prev;
+        next.delete(sector);
+        removed = true;
+      } else {
+        next.add(sector);
+      }
+      return next;
+    });
+    if (removed) {
+      setHoveredCell((cell) => (cell?.sector === sector ? null : cell));
+    }
+  }
 
   const {
     sectors,
@@ -211,9 +257,9 @@ export default function ValuationMatrix() {
     const companyById = new Map(
       verifiedCompanies.map((company) => [company.id, company]),
     );
-    const sectorList = Array.from(
-      new Set(verifiedCompanies.map((c) => c.sector)),
-    ).sort();
+    const visibleSectors = allSectors.filter((sector) =>
+      activeSectors.has(sector)
+    );
     const sectorDealCounts = verifiedAcquisitions.reduce<
       Record<string, Record<number, number>>
     >((acc, acquisition) => {
@@ -227,7 +273,7 @@ export default function ValuationMatrix() {
     }, {});
 
     const grid: MatrixCell[][] = STAGE_ORDER.map((stage) =>
-      sectorList.map((sector) => {
+      visibleSectors.map((sector) => {
         const inCell = verifiedCompanies.filter((c) => {
           const cs = canonicalStage(c.stage);
           return c.sector === sector && cs === stage;
@@ -259,12 +305,12 @@ export default function ValuationMatrix() {
       })
     );
 
-    const max = Math.max(...grid.flat().map((c) => c.medianValuation));
+    const max = Math.max(1, ...grid.flat().map((c) => c.medianValuation));
     const disclosed = verifiedCompanies.filter((c) =>
       typeof c.lastKnownValuation === "number"
     ).length;
     const momentumBySector = Object.fromEntries(
-      sectorList.map((sector) => {
+      visibleSectors.map((sector) => {
         const counts = sectorDealCounts[sector] ?? {};
         const priorTotal = [2019, 2020, 2021].reduce(
           (sum, year) => sum + (counts[year] ?? 0),
@@ -279,14 +325,14 @@ export default function ValuationMatrix() {
     ) as Record<string, MomentumLabel>;
 
     return {
-      sectors: sectorList,
+      sectors: visibleSectors,
       matrix: grid,
       maxValuation: max,
       totalDisclosed: disclosed,
       totalCompanies: verifiedCompanies.length,
       sectorMomentum: momentumBySector,
     };
-  }, [verifiedCompanies, verifiedAcquisitions]);
+  }, [verifiedCompanies, verifiedAcquisitions, allSectors, activeSectors]);
 
   const getColor = (value: number) => {
     if (value === 0) return "#f8fafc";
@@ -312,6 +358,28 @@ export default function ValuationMatrix() {
         <span className="text-xs text-lacuna-text-muted px-2 py-1 bg-lacuna-surface-muted rounded">
           {totalDisclosed}/{totalCompanies} companies with public valuations
         </span>
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        <button
+          type="button"
+          onClick={selectAll}
+          className={allSectorsActive ? SECTOR_CHIP_ACTIVE : SECTOR_CHIP_INACTIVE}
+        >
+          All
+        </button>
+        {allSectors.map((sector) => (
+          <button
+            key={sector}
+            type="button"
+            onClick={() => toggleSector(sector)}
+            className={activeSectors.has(sector)
+              ? SECTOR_CHIP_ACTIVE
+              : SECTOR_CHIP_INACTIVE}
+          >
+            {sector}
+          </button>
+        ))}
       </div>
 
       <div className="overflow-x-auto mt-4">
