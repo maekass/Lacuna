@@ -13,6 +13,7 @@ import {
   Stethoscope,
   TrendingUp,
 } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef, useState } from "react";
 import MotionSection from "@/components/ui/MotionSection";
@@ -238,6 +239,9 @@ export default function PayerOpsPage() {
   const t = useTranslations("pages.payerOps");
   const [segment, setSegment] = useState<SegmentKey>("commercial");
   const [compareAll, setCompareAll] = useState(false);
+  const [expandedDealSignal, setExpandedDealSignal] = useState<string | null>(
+    null,
+  );
   const selected = segments[segment];
   const [denialRate, setDenialRate] = useState(selected.denialRate);
   const [avoidableRate, setAvoidableRate] = useState(selected.avoidableRate);
@@ -337,7 +341,10 @@ export default function PayerOpsPage() {
           description="Each payer administrative pain point is also an investment signal. This section maps the operational problems below to the M&A themes they generate — the lens a corporate VC would apply when evaluating women's health deal flow."
         />
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          {vcSignals.map((s) => (
+          {vcSignals.map((s) => {
+            const isExpanded = expandedDealSignal === s.painPoint;
+
+            return (
             <div
               key={s.painPoint}
               className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
@@ -350,7 +357,7 @@ export default function PayerOpsPage() {
                   </span>
                 </div>
                 <span
-                  className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
+                  className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
                     s.momentum === "accelerating"
                       ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                       : s.momentum === "early"
@@ -358,20 +365,47 @@ export default function PayerOpsPage() {
                       : "bg-lacuna-lavender/20 text-lacuna-plum/70 border border-lacuna-lavender/30"
                   }`}
                 >
+                  {s.momentum === "accelerating" ? (
+                    <span
+                      className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500 animate-pulse"
+                      aria-hidden="true"
+                    />
+                  ) : null}
                   {s.momentum === "early" ? "early stage" : s.momentum}
                 </span>
               </div>
               <p className="mt-3 text-sm leading-relaxed text-lacuna-blue">
                 {s.thesis}
               </p>
-              <div className="mt-4 flex items-start gap-2 rounded-xl bg-lacuna-lavender/10 p-3">
-                <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lacuna-plum" />
-                <p className="text-xs leading-relaxed text-lacuna-plum">
-                  {s.dealSignal}
-                </p>
-              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  setExpandedDealSignal(isExpanded ? null : s.painPoint)}
+                className="mt-2 text-xs font-medium text-lacuna-plum underline-offset-2 hover:underline"
+              >
+                {isExpanded ? "Hide ↑" : "Show deal signal ↓"}
+              </button>
+              <AnimatePresence initial={false}>
+                {isExpanded ? (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="mt-4 flex items-start gap-2 rounded-xl bg-lacuna-lavender/10 p-3">
+                      <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lacuna-plum" />
+                      <p className="text-xs leading-relaxed text-lacuna-plum">
+                        {s.dealSignal}
+                      </p>
+                    </div>
+                  </motion.div>
+                ) : null}
+              </AnimatePresence>
             </div>
-          ))}
+            );
+          })}
         </div>
       </MotionSection>
 
@@ -554,7 +588,7 @@ export default function PayerOpsPage() {
             </div>
           ))}
         </div>
-        <div className="hidden overflow-hidden rounded-3xl border border-lacuna-lavender/40 bg-white shadow-sm lg:block">
+        <div className="hidden rounded-3xl border border-lacuna-lavender/40 bg-white shadow-sm lg:block">
           <div className="grid grid-cols-12 gap-3 border-b border-lacuna-lavender/30 bg-lacuna-lavender/10 p-4 text-xs font-semibold uppercase tracking-wide text-lacuna-blue">
             <span className="col-span-4">Queue</span>
             <span className="col-span-2">Volume</span>
@@ -578,7 +612,7 @@ export default function PayerOpsPage() {
               <div className="col-span-3 lg:col-span-2 text-lacuna-plum">
                 {formatNumber(queue.volume)}
               </div>
-              <div className="col-span-3 lg:col-span-2">
+              <div className="group relative col-span-3 lg:col-span-2">
                 <div className="h-2 rounded-full bg-lacuna-lavender/20">
                   <div
                     className={`h-2 rounded-full bg-lacuna-blue ${
@@ -588,6 +622,9 @@ export default function PayerOpsPage() {
                 </div>
                 <div className="mt-1 text-xs text-lacuna-blue">
                   {queue.automation}% ready
+                </div>
+                <div className="pointer-events-none absolute bottom-full left-0 z-10 mb-1 w-48 rounded-lg bg-lacuna-plum px-3 py-2 text-xs text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
+                  {queue.action}
                 </div>
               </div>
               <div className="col-span-3 lg:col-span-2 text-lacuna-plum">

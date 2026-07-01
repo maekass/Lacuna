@@ -104,7 +104,7 @@ export default function HubPage() {
       <MotionSection delay={0.13} className="mb-10">
         <Link
           href="/payer-ops"
-          className="group flex flex-col gap-3 rounded-xl border border-lacuna-plum/25 bg-gradient-to-r from-lacuna-plum/5 to-lacuna-lavender/20 p-5 shadow-sm transition-shadow hover:shadow-md sm:flex-row sm:items-center sm:gap-5"
+          className="group flex flex-col gap-3 rounded-xl border-l-2 border-lacuna-plum bg-gradient-to-r from-lacuna-plum/5 to-lacuna-lavender/20 p-5 shadow-sm transition-shadow hover:shadow-md sm:flex-row sm:items-center sm:gap-5"
         >
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-lacuna-plum text-white text-sm font-bold">
             P
@@ -123,9 +123,17 @@ export default function HubPage() {
               signals for payer-aligned women&apos;s health deals — built for
               payer corporate venture context.
             </p>
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <span className="rounded-full bg-lacuna-lavender/20 border border-lacuna-lavender/30 px-2 py-0.5 text-[11px] font-medium text-lacuna-plum/80">
+                Payer VC lens
+              </span>
+            </div>
           </div>
-          <span className="shrink-0 text-sm font-medium text-lacuna-plum/60 group-hover:text-lacuna-blue">
-            View →
+          <span className="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-lacuna-plum/60 group-hover:text-lacuna-blue">
+            View
+            <span className="inline-block transition-transform group-hover:translate-x-1">
+              →
+            </span>
           </span>
         </Link>
       </MotionSection>
