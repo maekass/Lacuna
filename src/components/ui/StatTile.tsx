@@ -38,14 +38,9 @@ export default function StatTile({ value, label }: StatTileProps) {
   const displayRef = useRef(displayValue);
 
   useEffect(() => {
-    const parsed = parseAnimatableValue(value);
-    if (!parsed) {
-      displayRef.current = value;
-      setDisplayValue(value);
-      return;
-    }
+    if (!animatable) return;
 
-    const { target, suffix } = parsed;
+    const { target, suffix } = animatable;
     let frameId: number;
     const start = performance.now();
     const duration = 800;
@@ -70,12 +65,14 @@ export default function StatTile({ value, label }: StatTileProps) {
     setDisplayValue(formatAnimatedValue(0, suffix));
     frameId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frameId);
-  }, [value]);
+  }, [animatable, value]);
+
+  const shown = animatable ? displayValue : value;
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 px-4 py-4 sm:p-6 hover:shadow-md transition-shadow">
       <p className="text-2xl sm:text-3xl font-bold text-lacuna-plum">
-        {displayValue}
+        {shown}
       </p>
       <p className="text-xs sm:text-sm text-lacuna-blue mt-1">{label}</p>
     </div>

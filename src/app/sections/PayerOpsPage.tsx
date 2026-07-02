@@ -14,14 +14,14 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import {
+  computeWorkQueueVolumes,
   operatingModel,
   painPoints,
   progressWidths,
-  segments,
   type SegmentData,
   type SegmentKey,
+  segments,
   vcSignals,
-  workQueues,
 } from "@/data/payerOpsData";
 
 const SECTION = "mb-16 scroll-mt-28";
@@ -128,6 +128,11 @@ export default function PayerOpsPage() {
   const animatedMonthlySavings = useAnimatedNumber(modeled.monthlySavings, 400);
   const animatedAuthHours = useAnimatedNumber(modeled.authHours, 400);
 
+  const triageQueues = useMemo(
+    () => computeWorkQueueVolumes(modeled.avoidableDenials),
+    [modeled.avoidableDenials],
+  );
+
   return (
     <div>
       <header className="mb-10 overflow-hidden rounded-3xl border border-lacuna-lavender/40 bg-white/80 p-6 shadow-sm sm:p-8">
@@ -192,65 +197,69 @@ export default function PayerOpsPage() {
             const isExpanded = expandedDealSignal === s.painPoint;
 
             return (
-            <div
-              key={s.painPoint}
-              className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4 shrink-0 text-lacuna-blue" />
-                  <span className="text-[11px] font-semibold uppercase tracking-wide text-lacuna-blue sm:text-xs">
-                    {s.painPoint}
+              <div
+                key={s.painPoint}
+                className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4 shrink-0 text-lacuna-blue" />
+                    <span className="text-[11px] font-semibold uppercase tracking-wide text-lacuna-blue sm:text-xs">
+                      {s.painPoint}
+                    </span>
+                  </div>
+                  <span
+                    className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
+                      s.momentum === "accelerating"
+                        ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                        : s.momentum === "early"
+                        ? "bg-amber-50 text-amber-700 border border-amber-200"
+                        : "bg-lacuna-lavender/20 text-lacuna-plum/70 border border-lacuna-lavender/30"
+                    }`}
+                  >
+                    {s.momentum === "accelerating"
+                      ? (
+                        <span
+                          className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500 animate-pulse"
+                          aria-hidden="true"
+                        />
+                      )
+                      : null}
+                    {s.momentum === "early" ? "early stage" : s.momentum}
                   </span>
                 </div>
-                <span
-                  className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
-                    s.momentum === "accelerating"
-                      ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                      : s.momentum === "early"
-                      ? "bg-amber-50 text-amber-700 border border-amber-200"
-                      : "bg-lacuna-lavender/20 text-lacuna-plum/70 border border-lacuna-lavender/30"
-                  }`}
+                <p className="mt-3 text-sm leading-relaxed text-lacuna-blue">
+                  {s.thesis}
+                </p>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setExpandedDealSignal(isExpanded ? null : s.painPoint)}
+                  className="mt-2 cursor-pointer text-xs font-medium text-lacuna-plum underline-offset-2 hover:underline"
                 >
-                  {s.momentum === "accelerating" ? (
-                    <span
-                      className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500 animate-pulse"
-                      aria-hidden="true"
-                    />
-                  ) : null}
-                  {s.momentum === "early" ? "early stage" : s.momentum}
-                </span>
+                  {isExpanded ? "Hide ↑" : "Show deal signal ↓"}
+                </button>
+                <AnimatePresence initial={false}>
+                  {isExpanded
+                    ? (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="mt-4 flex items-start gap-2 rounded-xl bg-lacuna-lavender/10 p-3">
+                          <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lacuna-plum" />
+                          <p className="text-xs leading-relaxed text-lacuna-plum">
+                            {s.dealSignal}
+                          </p>
+                        </div>
+                      </motion.div>
+                    )
+                    : null}
+                </AnimatePresence>
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-lacuna-blue">
-                {s.thesis}
-              </p>
-              <button
-                type="button"
-                onClick={() =>
-                  setExpandedDealSignal(isExpanded ? null : s.painPoint)}
-                className="mt-2 cursor-pointer text-xs font-medium text-lacuna-plum underline-offset-2 hover:underline"
-              >
-                {isExpanded ? "Hide ↑" : "Show deal signal ↓"}
-              </button>
-              <AnimatePresence initial={false}>
-                {isExpanded ? (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="mt-4 flex items-start gap-2 rounded-xl bg-lacuna-lavender/10 p-3">
-                      <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lacuna-plum" />
-                      <p className="text-xs leading-relaxed text-lacuna-plum">
-                        {s.dealSignal}
-                      </p>
-                    </div>
-                  </motion.div>
-                ) : null}
-              </AnimatePresence>
-            </div>
             );
           })}
         </div>
@@ -276,11 +285,13 @@ export default function PayerOpsPage() {
               <p className="mt-1 text-sm leading-relaxed text-lacuna-blue">
                 {detail}
               </p>
-              {source ? (
-                <span className="mt-2 inline-block rounded-full bg-lacuna-lavender/20 px-2 py-0.5 text-[10px] font-medium text-lacuna-blue/70">
-                  {source}
-                </span>
-              ) : null}
+              {source
+                ? (
+                  <span className="mt-2 inline-block rounded-full bg-lacuna-lavender/20 px-2 py-0.5 text-[10px] font-medium text-lacuna-blue/70">
+                    {source}
+                  </span>
+                )
+                : null}
             </div>
           ))}
         </div>
@@ -372,32 +383,32 @@ export default function PayerOpsPage() {
               </div>
             </div>
           </div>
-          {compareAll ? (
-            <SegmentComparisonTable rows={allSegmentsModeled} />
-          ) : (
-            <div className="mt-6 grid gap-4 lg:grid-cols-4">
-              <Metric
-                label="Covered lives (hypothetical)"
-                value={selected.lives}
-                theme="dark"
-              />
-              <Metric
-                label="Monthly avoidable denials"
-                value={formatNumber(animatedAvoidableDenials)}
-                theme="dark"
-              />
-              <Metric
-                label="Monthly admin savings"
-                value={`$${formatNumber(animatedMonthlySavings)}`}
-                theme="dark"
-              />
-              <Metric
-                label="Auth review hours freed"
-                value={formatNumber(animatedAuthHours)}
-                theme="dark"
-              />
-            </div>
-          )}
+          {compareAll
+            ? <SegmentComparisonTable rows={allSegmentsModeled} />
+            : (
+              <div className="mt-6 grid gap-4 lg:grid-cols-4">
+                <Metric
+                  label="Covered lives (hypothetical)"
+                  value={selected.lives}
+                  theme="dark"
+                />
+                <Metric
+                  label="Monthly avoidable denials"
+                  value={formatNumber(animatedAvoidableDenials)}
+                  theme="dark"
+                />
+                <Metric
+                  label="Monthly admin savings"
+                  value={`$${formatNumber(animatedMonthlySavings)}`}
+                  theme="dark"
+                />
+                <Metric
+                  label="Auth review hours freed"
+                  value={formatNumber(animatedAuthHours)}
+                  theme="dark"
+                />
+              </div>
+            )}
           <p className="mt-4 text-xs text-white/45 leading-relaxed">
             Model: avoidable denials = monthly claims × denial rate × avoidable
             fraction. Admin savings = avoidable denials × cost per manual touch
@@ -420,12 +431,14 @@ export default function PayerOpsPage() {
         </p>
         <div>
           <div className="grid gap-4 lg:hidden">
-            {workQueues.map((queue) => (
+            {triageQueues.map((queue) => (
               <div
                 key={queue.name}
                 className="rounded-2xl border border-lacuna-lavender/35 bg-white p-4 shadow-sm"
               >
-                <div className="font-semibold text-lacuna-plum">{queue.name}</div>
+                <div className="font-semibold text-lacuna-plum">
+                  {queue.name}
+                </div>
                 <p className="mt-1 text-sm text-lacuna-blue">{queue.action}</p>
                 <div className="mt-4 grid grid-cols-3 gap-2">
                   <StatChip
@@ -450,7 +463,7 @@ export default function PayerOpsPage() {
               <span className="col-span-2">Risk</span>
               <span className="col-span-2">Impact</span>
             </div>
-            {workQueues.map((queue) => (
+            {triageQueues.map((queue) => (
               <div
                 key={queue.name}
                 className="grid grid-cols-12 gap-3 border-b border-lacuna-lavender/20 p-4 last:border-b-0"
@@ -561,9 +574,7 @@ function SegmentComparisonTable({
   const maxAuthHours = Math.max(...rows.map((row) => row.authHours));
 
   function cellClass(isHighest: boolean) {
-    return isHighest
-      ? "bg-white/20 font-semibold text-white"
-      : "text-white/90";
+    return isHighest ? "bg-white/20 font-semibold text-white" : "text-white/90";
   }
 
   return (
@@ -583,11 +594,19 @@ function SegmentComparisonTable({
               className="grid grid-cols-5 gap-3 border-b border-white/10 p-4 text-sm last:border-b-0"
             >
               <div className="font-semibold text-white">{row.label}</div>
-              <div className={cellClass(row.livesValue === maxLives)}>{row.lives}</div>
-              <div className={cellClass(row.avoidableDenials === maxAvoidableDenials)}>
+              <div className={cellClass(row.livesValue === maxLives)}>
+                {row.lives}
+              </div>
+              <div
+                className={cellClass(
+                  row.avoidableDenials === maxAvoidableDenials,
+                )}
+              >
                 {formatNumber(row.avoidableDenials)}
               </div>
-              <div className={cellClass(row.monthlySavings === maxMonthlySavings)}>
+              <div
+                className={cellClass(row.monthlySavings === maxMonthlySavings)}
+              >
                 ${formatNumber(row.monthlySavings)}
               </div>
               <div className={cellClass(row.authHours === maxAuthHours)}>
@@ -622,15 +641,17 @@ function StatChip({
       <div className="mt-0.5 text-sm font-semibold text-lacuna-plum">
         {value}
       </div>
-      {progress !== undefined ? (
-        <div className="mt-1.5 h-1 rounded-full bg-lacuna-lavender/20">
-          <div
-            className={`h-1 rounded-full bg-lacuna-blue ${
-              progressWidths[progress]
-            }`}
-          />
-        </div>
-      ) : null}
+      {progress !== undefined
+        ? (
+          <div className="mt-1.5 h-1 rounded-full bg-lacuna-lavender/20">
+            <div
+              className={`h-1 rounded-full bg-lacuna-blue ${
+                progressWidths[progress]
+              }`}
+            />
+          </div>
+        )
+        : null}
     </div>
   );
 }

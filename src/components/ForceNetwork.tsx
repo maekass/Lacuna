@@ -101,9 +101,16 @@ export default function ForceNetwork(
     null,
   );
   const [searchQuery, setSearchQuery] = useState("");
-  const [matchingNodeIds, setMatchingNodeIds] = useState<Set<string>>(
-    () => new Set(),
-  );
+  const matchingNodeIds = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return new Set<string>();
+
+    return new Set(
+      nodes
+        .filter((node) => node.name.toLowerCase().includes(query))
+        .map((node) => node.id),
+    );
+  }, [searchQuery, nodes]);
   const portfolioNameSets = useMemo(
     () =>
       new Map<PortfolioKey, ReadonlySet<string>>(
@@ -111,22 +118,6 @@ export default function ForceNetwork(
       ),
     [],
   );
-
-  useEffect(() => {
-    const query = searchQuery.trim().toLowerCase();
-    if (!query) {
-      setMatchingNodeIds(new Set());
-      return;
-    }
-
-    setMatchingNodeIds(
-      new Set(
-        nodes
-          .filter((node) => node.name.toLowerCase().includes(query))
-          .map((node) => node.id),
-      ),
-    );
-  }, [searchQuery, nodes]);
 
   useEffect(() => {
     const el = containerRef.current;

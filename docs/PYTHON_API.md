@@ -1,17 +1,17 @@
 # Lacuna Python API (FastAPI + GraphQL)
 
 Optional **FastAPI sidecar** for Lacuna — complements the Next.js REST routes
-with Python, OpenAPI docs, and a **GraphQL** read API. Runs locally or in Docker;
-it is **not** part of the Vercel production deployment.
+with Python, OpenAPI docs, and a **GraphQL** read API. Runs locally or in
+Docker; it is **not** part of the Vercel production deployment.
 
 ## Stack
 
-| Layer        | Technology                                            |
-| ------------ | ----------------------------------------------------- |
-| REST         | FastAPI + Uvicorn                                     |
-| GraphQL      | Strawberry                                            |
+| Layer        | Technology                                             |
+| ------------ | ------------------------------------------------------ |
+| REST         | FastAPI + Uvicorn                                      |
+| GraphQL      | Strawberry                                             |
 | SQL          | PostgreSQL via `psycopg` (optional `research_studies`) |
-| External API | ClinicalTrials.gov v2 proxy                           |
+| External API | ClinicalTrials.gov v2 proxy                            |
 
 ## Quick start
 
