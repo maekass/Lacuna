@@ -20,8 +20,12 @@ export default function IntelligencePage() {
   return (
     <div>
       <header className="mb-10">
-        <h1 className="text-3xl font-bold text-lacuna-plum">Intelligence workspace</h1>
-        <p className="mt-2 max-w-2xl text-lacuna-blue">Reimbursement context, acquirer fit scores, and export tools.</p>
+        <h1 className="text-3xl font-bold text-lacuna-plum">
+          Intelligence workspace
+        </h1>
+        <p className="mt-2 max-w-2xl text-lacuna-blue">
+          Reimbursement context, acquirer fit scores, and export tools.
+        </p>
       </header>
 
       <MotionSection id="system-health" className={SECTION}>

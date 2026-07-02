@@ -19,8 +19,13 @@ export default function MethodsPage() {
   return (
     <div>
       <header className="mb-10">
-        <h1 className="text-3xl font-bold text-lacuna-plum">Methods workspace</h1>
-        <p className="mt-2 max-w-2xl text-lacuna-blue">Causal framing, Bayesian small-n, temporal patterns, and sensitivity analysis.</p>
+        <h1 className="text-3xl font-bold text-lacuna-plum">
+          Methods workspace
+        </h1>
+        <p className="mt-2 max-w-2xl text-lacuna-blue">
+          Causal framing, Bayesian small-n, temporal patterns, and sensitivity
+          analysis.
+        </p>
         <p
           className="mt-3 rounded-lg border border-lacuna-lavender/40 bg-lacuna-lavender/15 px-3 py-2 text-xs text-lacuna-blue"
           role="note"

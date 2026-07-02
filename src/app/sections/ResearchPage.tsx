@@ -20,8 +20,13 @@ export default function ResearchPage() {
   return (
     <div>
       <header className="mb-10">
-        <h1 className="text-3xl font-bold text-lacuna-plum">Research workspace</h1>
-        <p className="mt-2 max-w-2xl text-lacuna-blue">Clinical trials, evidence maturity, genomics, and health equity markers — public data, cited.</p>
+        <h1 className="text-3xl font-bold text-lacuna-plum">
+          Research workspace
+        </h1>
+        <p className="mt-2 max-w-2xl text-lacuna-blue">
+          Clinical trials, evidence maturity, genomics, and health equity
+          markers — public data, cited.
+        </p>
       </header>
 
       <MotionSection id="burden-capital-gap" className={SECTION}>

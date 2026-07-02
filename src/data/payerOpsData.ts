@@ -2,8 +2,8 @@ import {
   ClipboardCheck,
   FileSearch,
   Hospital,
-  Network,
   type LucideIcon,
+  Network,
 } from "lucide-react";
 
 export type SegmentKey = "commercial" | "medicaid" | "medicare";
@@ -98,8 +98,7 @@ export const painPoints: PainPoint[] = [
   {
     title: "Prior authorization rework",
     value: "~40%",
-    detail:
-      "of pended requests require additional clinical documentation",
+    detail: "of pended requests require additional clinical documentation",
     source: "AMA 2023 Prior Auth Survey",
     icon: ClipboardCheck,
   },

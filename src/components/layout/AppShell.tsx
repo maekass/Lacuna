@@ -52,15 +52,17 @@ export default function AppShell({ children }: AppShellProps) {
           </div>
         </header>
 
-        {workspace ? (
-          <div className="border-b border-lacuna-lavender/20 bg-white/60 backdrop-blur-sm">
-            <div className="mx-auto max-w-7xl px-4 py-1.5 sm:px-6">
-              <p className="text-xs text-lacuna-blue/70 truncate">
-                {workspace.description}
-              </p>
+        {workspace
+          ? (
+            <div className="border-b border-lacuna-lavender/20 bg-white/60 backdrop-blur-sm">
+              <div className="mx-auto max-w-7xl px-4 py-1.5 sm:px-6">
+                <p className="text-xs text-lacuna-blue/70 truncate">
+                  {workspace.description}
+                </p>
+              </div>
             </div>
-          </div>
-        ) : null}
+          )
+          : null}
 
         <main
           id="main-content"

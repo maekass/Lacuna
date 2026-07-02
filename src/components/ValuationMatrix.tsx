@@ -206,8 +206,7 @@ export default function ValuationMatrix() {
   const [hoveredCell, setHoveredCell] = useState<MatrixCell | null>(null);
 
   const allSectors = useMemo(
-    () =>
-      Array.from(new Set(verifiedCompanies.map((c) => c.sector))).sort(),
+    () => Array.from(new Set(verifiedCompanies.map((c) => c.sector))).sort(),
     [verifiedCompanies],
   );
 
@@ -364,7 +363,9 @@ export default function ValuationMatrix() {
         <button
           type="button"
           onClick={selectAll}
-          className={allSectorsActive ? SECTOR_CHIP_ACTIVE : SECTOR_CHIP_INACTIVE}
+          className={allSectorsActive
+            ? SECTOR_CHIP_ACTIVE
+            : SECTOR_CHIP_INACTIVE}
         >
           All
         </button>
