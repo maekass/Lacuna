@@ -13,6 +13,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { DiscreteSourceNote } from "@/components/DiscreteSources";
+import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import {
@@ -26,16 +27,19 @@ import {
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import {
   computeModeled,
+  OPPORTUNITY_METRIC_MODELS,
   OPPORTUNITY_MODEL_FOOTNOTE,
 } from "@/lib/payerOps/opportunityModel";
 import {
   computeVcSignalDealFlow,
+  VC_SIGNAL_DEAL_COUNT_MODEL,
   VC_SIGNAL_MODEL_FOOTNOTE,
 } from "@/lib/payerOps/vcSignalModel";
 import {
   computeWorkQueueVolumes,
   WORK_QUEUE_MODEL_FOOTNOTE,
 } from "@/lib/payerOps/workQueueModel";
+import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
 
 const SECTION = "mb-16 scroll-mt-28";
 const SECTION_DESC = "text-sm sm:text-base";
@@ -287,10 +291,12 @@ export default function PayerOpsPage() {
                     </span>
                     {flow.count > 0
                       ? (
-                        <span className="rounded-full bg-lacuna-lavender/20 px-2 py-0.5 text-[10px] font-medium text-lacuna-plum/80">
-                          {flow.count}{" "}
-                          verified deal{flow.count === 1 ? "" : "s"}
-                        </span>
+                        <ModelProvenanceHint model={VC_SIGNAL_DEAL_COUNT_MODEL}>
+                          <span className="cursor-help rounded-full bg-lacuna-lavender/20 px-2 py-0.5 text-[10px] font-medium text-lacuna-plum/80">
+                            {flow.count}{" "}
+                            verified deal{flow.count === 1 ? "" : "s"}
+                          </span>
+                        </ModelProvenanceHint>
                       )
                       : null}
                   </div>
@@ -620,21 +626,25 @@ export default function PayerOpsPage() {
                   label="Covered lives (hypothetical)"
                   value={activeSegment.lives}
                   theme="dark"
+                  model={OPPORTUNITY_METRIC_MODELS.coveredLives}
                 />
                 <Metric
                   label="Monthly avoidable denials"
                   value={formatNumber(animatedAvoidableDenials)}
                   theme="dark"
+                  model={OPPORTUNITY_METRIC_MODELS.avoidableDenials}
                 />
                 <Metric
                   label="Monthly admin savings"
                   value={`$${formatNumber(animatedMonthlySavings)}`}
                   theme="dark"
+                  model={OPPORTUNITY_METRIC_MODELS.monthlySavings}
                 />
                 <Metric
                   label="Auth review hours freed"
                   value={formatNumber(animatedAuthHours)}
                   theme="dark"
+                  model={OPPORTUNITY_METRIC_MODELS.authHours}
                 />
               </div>
             )}
@@ -893,26 +903,36 @@ function Metric({
   label,
   value,
   theme = "light",
+  model,
 }: {
   label: string;
   value: string;
   theme?: "light" | "dark";
+  model?: ModelProvenance;
 }) {
-  if (theme === "dark") {
-    return (
-      <div className="rounded-2xl bg-white/10 p-5">
+  const inner = theme === "dark"
+    ? (
+      <div
+        className={`rounded-2xl bg-white/10 p-5 ${model ? "cursor-help" : ""}`}
+      >
         <div className="text-sm font-semibold text-white/60">{label}</div>
         <div className="mt-2 text-3xl font-bold text-white">{value}</div>
       </div>
+    )
+    : (
+      <div
+        className={`rounded-2xl bg-lacuna-surface-subtle p-5 ${
+          model ? "cursor-help" : ""
+        }`}
+      >
+        <div className="text-sm font-semibold text-lacuna-blue">{label}</div>
+        <div className="mt-2 text-3xl font-bold text-lacuna-plum">{value}</div>
+      </div>
     );
-  }
 
-  return (
-    <div className="rounded-2xl bg-lacuna-surface-subtle p-5">
-      <div className="text-sm font-semibold text-lacuna-blue">{label}</div>
-      <div className="mt-2 text-3xl font-bold text-lacuna-plum">{value}</div>
-    </div>
-  );
+  if (!model) return inner;
+
+  return <ModelProvenanceHint model={model}>{inner}</ModelProvenanceHint>;
 }
 
 function Capability(

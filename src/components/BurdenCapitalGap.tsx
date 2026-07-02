@@ -3,11 +3,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as d3 from "d3";
 import ChartTooltip from "@/components/ui/ChartTooltip";
+import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
 import EndometriosisCoveragePanel from "@/components/EndometriosisCoveragePanel";
 import EndometrialCancerCoveragePanel from "@/components/EndometrialCancerCoveragePanel";
 import {
   BURDEN_CAPITAL_GAP_DATA,
+  BURDEN_CAPITAL_GAP_MODEL,
   BURDEN_CAPITAL_GAP_SOURCES,
+  BURDEN_CROSSWALK_MODEL,
   type BurdenCapitalGapRow,
   formatCapitalM,
   hasBurdenData,
@@ -20,6 +23,10 @@ import {
   crosswalkSummary,
   valuationAreasWithoutBcgRow,
 } from "@/lib/valuation/bcgCrosswalk";
+import {
+  formatModelProvenanceLine,
+  modelSourceHref,
+} from "@/lib/provenance/modelProvenance";
 
 const MARGIN = { top: 28, right: 108, bottom: 52, left: 196 };
 const ROW_HEIGHT = 30;
@@ -238,20 +245,22 @@ export default function BurdenCapitalGap() {
       ref={containerRef}
       className="rounded-xl border border-lacuna-pink/30 bg-white p-5 shadow-sm"
     >
-      <div className="mb-4 max-w-3xl">
-        <h3 className="text-sm font-semibold text-lacuna-plum">
-          Burden–Capital Gap (BCG View)
-        </h3>
-        <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/80">
-          Capital raised vs. disease burden across women&apos;s-health
-          therapeutic areas (WEF/BCG Figure 3, 2020–2025). The sharpest gap:
-          cardiovascular disease —{" "}
-          {BURDEN_CAPITAL_GAP_DATA.find((r) => r.id === "cardiovascular")
-            ?.fundingEvents} funding events and ~{formatCapitalM(10)}{" "}
-          raised, against the leading cause of death in women — a
-          misclassification Lacuna exists to correct.
-        </p>
-      </div>
+      <ModelProvenanceHint model={BURDEN_CAPITAL_GAP_MODEL}>
+        <div className="mb-4 max-w-3xl cursor-help">
+          <h3 className="text-sm font-semibold text-lacuna-plum">
+            Burden–Capital Gap (BCG View)
+          </h3>
+          <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/80">
+            Capital raised vs. disease burden across women&apos;s-health
+            therapeutic areas (WEF/BCG Figure 3, 2020–2025). The sharpest gap:
+            cardiovascular disease —{" "}
+            {BURDEN_CAPITAL_GAP_DATA.find((r) => r.id === "cardiovascular")
+              ?.fundingEvents} funding events and ~{formatCapitalM(10)}{" "}
+            raised, against the leading cause of death in women — a
+            misclassification Lacuna exists to correct.
+          </p>
+        </div>
+      </ModelProvenanceHint>
 
       <div className="relative w-full overflow-x-auto">
         <svg
@@ -273,6 +282,17 @@ export default function BurdenCapitalGap() {
             {tooltip.row.burdenDALYsM !== null && (
               <p>Burden: {tooltip.row.burdenDALYsM}M DALYs</p>
             )}
+            <p className="mt-1 border-t border-white/20 pt-1 text-[10px] opacity-90">
+              {formatModelProvenanceLine(BURDEN_CAPITAL_GAP_MODEL)}
+            </p>
+            <a
+              href={modelSourceHref(BURDEN_CAPITAL_GAP_MODEL.module)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[10px] underline underline-offset-2"
+            >
+              View source →
+            </a>
           </ChartTooltip>
         )}
       </div>
@@ -314,66 +334,69 @@ export default function BurdenCapitalGap() {
           : "Burden: pending IHME GBD 2023 — chart sorted by funding events until DALY data lands."}
       </p>
 
-      <details className="mt-4 rounded-lg border border-lacuna-lavender/30 bg-lacuna-lavender/10 px-4 py-3">
-        <summary className="cursor-pointer text-xs font-semibold text-lacuna-plum">
-          Vet vs. gap valuation model ({summary.mapped} aligned ·{" "}
-          {summary.partial} partial · {summary.unmapped} unmapped)
-        </summary>
-        <p className="mt-2 text-xs leading-relaxed text-lacuna-blue/80">
-          This chart uses WEF/BCG macro funding (2020–2025, all WH-tagged
-          flows). The valuation model below uses US GBD 2021 burden +
-          WEF-aligned VC for cardiovascular ($10M) and metabolic ($4M) areas,
-          plus Rock Health / PitchBook FemTech estimates elsewhere (2019–2024).
-          Capital figures differ by design — they answer different questions.
-        </p>
-        <div className="mt-3 overflow-x-auto">
-          <table className="w-full min-w-[640px] text-left text-[11px] text-lacuna-blue/80">
-            <thead>
-              <tr className="border-b border-lacuna-lavender/30 text-lacuna-plum">
-                <th className="py-1.5 pr-3 font-medium">WEF area</th>
-                <th className="py-1.5 pr-3 font-medium">Valuation area</th>
-                <th className="py-1.5 pr-3 font-medium">WEF capital</th>
-                <th className="py-1.5 pr-3 font-medium">Valuation VC</th>
-                <th className="py-1.5 font-medium">Gap score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {comparison.map((row) => (
-                <tr
-                  key={row.bcg.id}
-                  className="border-b border-lacuna-lavender/15 last:border-0"
-                >
-                  <td className="py-1.5 pr-3">{row.bcg.therapeuticArea}</td>
-                  <td className="py-1.5 pr-3">
-                    {row.crosswalk.valuationAreaName ?? (
-                      <span className="text-amber-700">Unmapped</span>
-                    )}
-                  </td>
-                  <td className="py-1.5 pr-3">
-                    {formatCapitalM(row.bcg.capitalRaisedM)}
-                  </td>
-                  <td className="py-1.5 pr-3">
-                    {row.valuationVcM !== null
-                      ? formatCapitalM(row.valuationVcM)
-                      : "—"}
-                  </td>
-                  <td className="py-1.5">
-                    {row.valuationGapScore !== null
-                      ? `${row.valuationGapScore}/100`
-                      : "—"}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        {orphanValuationAreas.length > 0 && (
-          <p className="mt-2 text-[11px] text-lacuna-blue/65">
-            Valuation-only areas (no WEF row):{" "}
-            {orphanValuationAreas.join(", ")}.
+      <ModelProvenanceHint model={BURDEN_CROSSWALK_MODEL}>
+        <details className="mt-4 cursor-help rounded-lg border border-lacuna-lavender/30 bg-lacuna-lavender/10 px-4 py-3">
+          <summary className="cursor-pointer text-xs font-semibold text-lacuna-plum">
+            Vet vs. gap valuation model ({summary.mapped} aligned ·{" "}
+            {summary.partial} partial · {summary.unmapped} unmapped)
+          </summary>
+          <p className="mt-2 text-xs leading-relaxed text-lacuna-blue/80">
+            This chart uses WEF/BCG macro funding (2020–2025, all WH-tagged
+            flows). The valuation model below uses US GBD 2021 burden +
+            WEF-aligned VC for cardiovascular ($10M) and metabolic ($4M) areas,
+            plus Rock Health / PitchBook FemTech estimates elsewhere
+            (2019–2024). Capital figures differ by design — they answer
+            different questions.
           </p>
-        )}
-      </details>
+          <div className="mt-3 overflow-x-auto">
+            <table className="w-full min-w-[640px] text-left text-[11px] text-lacuna-blue/80">
+              <thead>
+                <tr className="border-b border-lacuna-lavender/30 text-lacuna-plum">
+                  <th className="py-1.5 pr-3 font-medium">WEF area</th>
+                  <th className="py-1.5 pr-3 font-medium">Valuation area</th>
+                  <th className="py-1.5 pr-3 font-medium">WEF capital</th>
+                  <th className="py-1.5 pr-3 font-medium">Valuation VC</th>
+                  <th className="py-1.5 font-medium">Gap score</th>
+                </tr>
+              </thead>
+              <tbody>
+                {comparison.map((row) => (
+                  <tr
+                    key={row.bcg.id}
+                    className="border-b border-lacuna-lavender/15 last:border-0"
+                  >
+                    <td className="py-1.5 pr-3">{row.bcg.therapeuticArea}</td>
+                    <td className="py-1.5 pr-3">
+                      {row.crosswalk.valuationAreaName ?? (
+                        <span className="text-amber-700">Unmapped</span>
+                      )}
+                    </td>
+                    <td className="py-1.5 pr-3">
+                      {formatCapitalM(row.bcg.capitalRaisedM)}
+                    </td>
+                    <td className="py-1.5 pr-3">
+                      {row.valuationVcM !== null
+                        ? formatCapitalM(row.valuationVcM)
+                        : "—"}
+                    </td>
+                    <td className="py-1.5">
+                      {row.valuationGapScore !== null
+                        ? `${row.valuationGapScore}/100`
+                        : "—"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {orphanValuationAreas.length > 0 && (
+            <p className="mt-2 text-[11px] text-lacuna-blue/65">
+              Valuation-only areas (no WEF row):{" "}
+              {orphanValuationAreas.join(", ")}.
+            </p>
+          )}
+        </details>
+      </ModelProvenanceHint>
 
       <EndometriosisCoveragePanel />
       <EndometrialCancerCoveragePanel />

@@ -1,4 +1,6 @@
 /** Minimal shape for coverage stats — works with raw JSON or derived views. */
+import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
+
 export interface CoverageDatasetInput {
   companies: ReadonlyArray<{
     id: string;
@@ -169,3 +171,46 @@ export function computeEffectiveNBadges(
     },
   };
 }
+
+const COVERAGE_MODULE = "src/lib/data/datasetCoverageStats.ts";
+
+/** Hover provenance for DataCoverageCard stat tiles. */
+export const COVERAGE_STAT_MODELS = {
+  companies: {
+    module: COVERAGE_MODULE,
+    exportName: "computeDisclosureStats",
+    definition: "companiesTotal = companies.length in dataset.verified.json.",
+  },
+  deals: {
+    module: COVERAGE_MODULE,
+    exportName: "computeDisclosureStats",
+    definition: "dealsTotal = acquisitions.length in dataset.verified.json.",
+  },
+  disclosedPrice: {
+    module: COVERAGE_MODULE,
+    exportName: "computeDisclosureStats",
+    definition: "Deals with numeric dealValue on verified acquisitions.",
+  },
+  undisclosedPrice: {
+    module: COVERAGE_MODULE,
+    exportName: "computeDisclosureStats",
+    definition: "Deals without numeric dealValue on verified acquisitions.",
+  },
+  valuationCoverage: {
+    module: COVERAGE_MODULE,
+    exportName: "computeDisclosureStats",
+    definition:
+      "companiesWithValuation / companiesTotal where lastKnownValuation is set.",
+  },
+  disclosureRate: {
+    module: COVERAGE_MODULE,
+    exportName: "computeDisclosureStats",
+    definition: "dealsDisclosed / dealsTotal (numeric dealValue required).",
+  },
+  effectiveN: {
+    module: COVERAGE_MODULE,
+    exportName: "computeEffectiveNBadges",
+    definition:
+      "Tiered sample-size badges from deal/node/disclosed-price counts (methodology thresholds).",
+  },
+} as const satisfies Record<string, ModelProvenance>;

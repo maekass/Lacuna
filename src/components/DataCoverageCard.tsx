@@ -2,14 +2,17 @@
 
 import { useMemo } from "react";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import {
   computeDisclosureStats,
   computeEffectiveNBadges,
   computeSectorDealCounts,
   computeYearDealCounts,
+  COVERAGE_STAT_MODELS,
   type EffectiveNBadges,
 } from "@/lib/data/datasetCoverageStats";
+import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
 
 function countDisclosedDealValues(acquisitions: { dealValue?: number }[]) {
   let disclosed = 0;
@@ -36,15 +39,40 @@ function EffectiveNBadge({
   badge: EffectiveNBadges[keyof EffectiveNBadges];
 }) {
   return (
-    <div className={`rounded-lg border p-3 ${tierStyles[badge.tier]}`}>
-      <p className="text-xs font-medium uppercase tracking-wide opacity-80">
-        {title}
-      </p>
-      <p className="text-sm font-semibold mt-1">{badge.label}</p>
-      <p className="text-[11px] mt-1 capitalize">
-        Power: {badge.tier.replace("_", " ")}
-      </p>
-    </div>
+    <ModelProvenanceHint model={COVERAGE_STAT_MODELS.effectiveN}>
+      <div
+        className={`cursor-help rounded-lg border p-3 ${
+          tierStyles[badge.tier]
+        }`}
+      >
+        <p className="text-xs font-medium uppercase tracking-wide opacity-80">
+          {title}
+        </p>
+        <p className="text-sm font-semibold mt-1">{badge.label}</p>
+        <p className="text-[11px] mt-1 capitalize">
+          Power: {badge.tier.replace("_", " ")}
+        </p>
+      </div>
+    </ModelProvenanceHint>
+  );
+}
+
+function CoverageStatBox({
+  value,
+  label,
+  model,
+}: {
+  value: string | number;
+  label: string;
+  model: ModelProvenance;
+}) {
+  return (
+    <ModelProvenanceHint model={model}>
+      <div className="cursor-help rounded-lg bg-lacuna-pink/10 border border-lacuna-lavender/40 p-3">
+        <p className="text-2xl font-bold text-lacuna-plum">{value}</p>
+        <p className="text-xs text-lacuna-blue mt-1">{label}</p>
+      </div>
+    </ModelProvenanceHint>
   );
 }
 
@@ -103,43 +131,47 @@ export default function DataCoverageCard() {
       </div>
 
       <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div className="rounded-lg bg-lacuna-pink/10 border border-lacuna-lavender/40 p-3">
-          <p className="text-2xl font-bold text-lacuna-plum">
-            {verifiedCompanies.length}
-          </p>
-          <p className="text-xs text-lacuna-blue mt-1">Companies</p>
-        </div>
-        <div className="rounded-lg bg-lacuna-pink/10 border border-lacuna-lavender/40 p-3">
-          <p className="text-2xl font-bold text-lacuna-plum">
-            {verifiedAcquisitions.length}
-          </p>
-          <p className="text-xs text-lacuna-blue mt-1">Deals</p>
-        </div>
-        <div className="rounded-lg bg-lacuna-pink/10 border border-lacuna-lavender/40 p-3">
-          <p className="text-2xl font-bold text-lacuna-plum">{disclosed}</p>
-          <p className="text-xs text-lacuna-blue mt-1">Disclosed price</p>
-        </div>
-        <div className="rounded-lg bg-lacuna-pink/10 border border-lacuna-lavender/40 p-3">
-          <p className="text-2xl font-bold text-lacuna-plum">{undisclosed}</p>
-          <p className="text-xs text-lacuna-blue mt-1">Undisclosed price</p>
-        </div>
+        <CoverageStatBox
+          value={verifiedCompanies.length}
+          label="Companies"
+          model={COVERAGE_STAT_MODELS.companies}
+        />
+        <CoverageStatBox
+          value={verifiedAcquisitions.length}
+          label="Deals"
+          model={COVERAGE_STAT_MODELS.deals}
+        />
+        <CoverageStatBox
+          value={disclosed}
+          label="Disclosed price"
+          model={COVERAGE_STAT_MODELS.disclosedPrice}
+        />
+        <CoverageStatBox
+          value={undisclosed}
+          label="Undisclosed price"
+          model={COVERAGE_STAT_MODELS.undisclosedPrice}
+        />
       </div>
 
       <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
-        <div className="rounded-md bg-lacuna-pink/10 border border-lacuna-lavender/30 px-3 py-2">
-          <span className="text-lacuna-blue">Valuation coverage</span>
-          <p className="font-semibold text-lacuna-plum mt-0.5">
-            {stats.companiesWithValuation}/{stats.companiesTotal} companies (
-            {(stats.valuationRate * 100).toFixed(0)}%)
-          </p>
-        </div>
-        <div className="rounded-md bg-lacuna-pink/10 border border-lacuna-lavender/30 px-3 py-2">
-          <span className="text-lacuna-blue">Price disclosure rate</span>
-          <p className="font-semibold text-lacuna-plum mt-0.5">
-            {(stats.disclosureRate * 100).toFixed(0)}% ({stats
-              .dealsWithValueNote} with notes)
-          </p>
-        </div>
+        <ModelProvenanceHint model={COVERAGE_STAT_MODELS.valuationCoverage}>
+          <div className="cursor-help rounded-md bg-lacuna-pink/10 border border-lacuna-lavender/30 px-3 py-2">
+            <span className="text-lacuna-blue">Valuation coverage</span>
+            <p className="font-semibold text-lacuna-plum mt-0.5">
+              {stats.companiesWithValuation}/{stats.companiesTotal} companies (
+              {(stats.valuationRate * 100).toFixed(0)}%)
+            </p>
+          </div>
+        </ModelProvenanceHint>
+        <ModelProvenanceHint model={COVERAGE_STAT_MODELS.disclosureRate}>
+          <div className="cursor-help rounded-md bg-lacuna-pink/10 border border-lacuna-lavender/30 px-3 py-2">
+            <span className="text-lacuna-blue">Price disclosure rate</span>
+            <p className="font-semibold text-lacuna-plum mt-0.5">
+              {(stats.disclosureRate * 100).toFixed(0)}% ({stats
+                .dealsWithValueNote} with notes)
+            </p>
+          </div>
+        </ModelProvenanceHint>
         <div className="rounded-md bg-lacuna-pink/10 border border-lacuna-lavender/30 px-3 py-2">
           <span className="text-lacuna-blue">Deal years</span>
           <p className="font-semibold text-lacuna-plum mt-0.5">

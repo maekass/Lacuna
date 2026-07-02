@@ -12,6 +12,8 @@
  * Do not backfill with estimates.
  */
 
+import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
+
 /** WEF taxonomy — three categories from the report. */
 export type WefCategory = "uniquely" | "differently" | "disproportionately";
 
@@ -237,6 +239,20 @@ export const BURDEN_CAPITAL_GAP_SOURCES = [
     url: "https://www.healthdata.org/",
   },
 ] as const;
+
+export const BURDEN_CAPITAL_GAP_MODEL: ModelProvenance = {
+  module: "src/data/burdenCapitalGap.ts",
+  exportName: "BURDEN_CAPITAL_GAP_DATA",
+  definition:
+    "WEF/BCG Figure 3 — funding events and capital raised ($M) by therapeutic area, 2020–2025. Burden columns pending IHME GBD 2023.",
+};
+
+export const BURDEN_CROSSWALK_MODEL: ModelProvenance = {
+  module: "src/lib/valuation/bcgCrosswalk.ts",
+  exportName: "buildCapitalComparison",
+  definition:
+    "Maps WEF therapeutic areas to Lacuna valuation areas; compares WEF capital vs FemTech VC estimates.",
+};
 
 /** Whether any row has IHME burden data populated. */
 export function hasBurdenData(rows: BurdenCapitalGapRow[]): boolean {
