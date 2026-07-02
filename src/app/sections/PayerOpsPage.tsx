@@ -473,10 +473,10 @@ export default function PayerOpsPage() {
             <div>
               <label
                 htmlFor="denial-rate"
-                className="mb-1 flex items-baseline justify-between text-sm text-white/60"
+                className="mb-1 flex flex-col gap-1 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between"
               >
                 <span>Denial rate</span>
-                <span className="font-semibold text-white">
+                <span className="font-semibold text-lacuna-plum sm:text-right">
                   {denialRate.toFixed(1)}%
                 </span>
               </label>
@@ -488,7 +488,7 @@ export default function PayerOpsPage() {
                 step={0.5}
                 value={denialRate}
                 onChange={(e) => setDenialRate(Number(e.target.value))}
-                className="w-full accent-white"
+                className="h-2 w-full touch-pan-x accent-lacuna-plum"
               />
               <div className="mt-0.5 flex justify-between text-[10px] text-white/45">
                 <span>5%</span>
@@ -498,10 +498,10 @@ export default function PayerOpsPage() {
             <div>
               <label
                 htmlFor="avoidable-rate"
-                className="mb-1 flex items-baseline justify-between text-sm text-white/60"
+                className="mb-1 flex flex-col gap-1 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between"
               >
                 <span>Avoidable fraction</span>
-                <span className="font-semibold text-white">
+                <span className="font-semibold text-lacuna-plum sm:text-right">
                   {avoidableRate}%
                 </span>
               </label>
@@ -513,7 +513,7 @@ export default function PayerOpsPage() {
                 step={1}
                 value={avoidableRate}
                 onChange={(e) => setAvoidableRate(Number(e.target.value))}
-                className="w-full accent-white"
+                className="h-2 w-full touch-pan-x accent-lacuna-plum"
               />
               <div className="mt-0.5 flex justify-between text-[10px] text-white/45">
                 <span>10%</span>
