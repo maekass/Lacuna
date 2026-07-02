@@ -16,6 +16,7 @@
  */
 
 import { readFileSync, writeFileSync } from "fs";
+import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 
 interface Company {
   id: string;
@@ -232,7 +233,7 @@ for (const [sector, rates] of sectorMap) {
 }
 
 const output = {
-  generatedAt: new Date().toISOString(),
+  generatedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
   source:
     "Lacuna verified dataset + Rock Health 2024 Digital Health Funding Report",
   companies: results,
@@ -245,7 +246,7 @@ const output = {
 
 writeFileSync(
   "src/data/computed-growth-rates.json",
-  JSON.stringify(output, null, 2),
+  JSON.stringify(output, null, 2) + "\n",
 );
 
 console.log("✅ Growth rates written to src/data/computed-growth-rates.json\n");

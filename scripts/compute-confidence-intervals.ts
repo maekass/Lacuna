@@ -16,6 +16,7 @@
  */
 
 import { readFileSync, writeFileSync } from "fs";
+import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 
 interface Company {
   id: string;
@@ -123,6 +124,9 @@ function normalCI(values: number[]): { lower: number; upper: number } {
 }
 
 // Main — load all computed data
+const verifiedDataset = JSON.parse(
+  readFileSync("src/data/dataset.verified.json", "utf-8"),
+) as { provenance: { lastUpdated: string } };
 const benchmarks = JSON.parse(
   readFileSync("src/data/computed-benchmarks.json", "utf-8"),
 ) as BenchmarksFile;
@@ -227,7 +231,7 @@ for (const ap of premiums.acquirerPremiums) {
 }
 
 const output = {
-  generatedAt: new Date().toISOString(),
+  generatedAt: generatedAtFromProvenance(verifiedDataset.provenance.lastUpdated),
   source: "Computed from Lacuna verified dataset via bootstrap resampling",
   results,
   legend: {
@@ -239,7 +243,7 @@ const output = {
 
 writeFileSync(
   "src/data/computed-confidence-intervals.json",
-  JSON.stringify(output, null, 2),
+  JSON.stringify(output, null, 2) + "\n",
 );
 
 console.log(

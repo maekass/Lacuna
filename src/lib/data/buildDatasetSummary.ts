@@ -8,6 +8,7 @@ import {
   computeHeadlineStats,
   type HeadlineStats,
 } from "./computeHeadlineStats";
+import { generatedAtFromProvenance } from "./computedArtifactMeta";
 
 export const DATASET_SUMMARY_MODEL = "computeHeadlineStats/v1" as const;
 
@@ -40,7 +41,7 @@ export function buildDatasetSummary(
   },
 ): DatasetSummary {
   return {
-    generatedAt: new Date().toISOString(),
+    generatedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
     model: DATASET_SUMMARY_MODEL,
     provenance: {
       lastUpdated: dataset.provenance.lastUpdated,
