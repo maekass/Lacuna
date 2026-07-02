@@ -713,32 +713,40 @@ function SegmentComparisonTable({
   }
 
   return (
-    <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
-      <div className="grid grid-cols-5 gap-3 border-b border-white/10 bg-white/10 p-4 text-xs font-semibold uppercase tracking-wide text-white/70">
-        <span>Segment</span>
-        <span>Covered lives</span>
-        <span>Avoidable denials</span>
-        <span>Admin savings</span>
-        <span>Auth hours</span>
-      </div>
-      {rows.map((row) => (
-        <div
-          key={row.key}
-          className="grid grid-cols-5 gap-3 border-b border-white/10 p-4 text-sm last:border-b-0"
-        >
-          <div className="font-semibold text-white">{row.label}</div>
-          <div className={cellClass(row.livesValue === maxLives)}>{row.lives}</div>
-          <div className={cellClass(row.avoidableDenials === maxAvoidableDenials)}>
-            {formatNumber(row.avoidableDenials)}
+    <div className="relative mt-6">
+      <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div className="min-w-[560px] overflow-hidden rounded-2xl border border-white/10">
+          <div className="grid grid-cols-5 gap-3 border-b border-white/10 bg-white/10 p-4 text-xs font-semibold uppercase tracking-wide text-white/70">
+            <span>Segment</span>
+            <span>Covered lives</span>
+            <span>Avoidable denials</span>
+            <span>Admin savings</span>
+            <span>Auth hours</span>
           </div>
-          <div className={cellClass(row.monthlySavings === maxMonthlySavings)}>
-            ${formatNumber(row.monthlySavings)}
-          </div>
-          <div className={cellClass(row.authHours === maxAuthHours)}>
-            {formatNumber(row.authHours)}
-          </div>
+          {rows.map((row) => (
+            <div
+              key={row.key}
+              className="grid grid-cols-5 gap-3 border-b border-white/10 p-4 text-sm last:border-b-0"
+            >
+              <div className="font-semibold text-white">{row.label}</div>
+              <div className={cellClass(row.livesValue === maxLives)}>{row.lives}</div>
+              <div className={cellClass(row.avoidableDenials === maxAvoidableDenials)}>
+                {formatNumber(row.avoidableDenials)}
+              </div>
+              <div className={cellClass(row.monthlySavings === maxMonthlySavings)}>
+                ${formatNumber(row.monthlySavings)}
+              </div>
+              <div className={cellClass(row.authHours === maxAuthHours)}>
+                {formatNumber(row.authHours)}
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-lacuna-plum to-transparent sm:hidden"
+      />
     </div>
   );
 }
