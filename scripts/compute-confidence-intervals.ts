@@ -231,7 +231,9 @@ for (const ap of premiums.acquirerPremiums) {
 }
 
 const output = {
-  generatedAt: generatedAtFromProvenance(verifiedDataset.provenance.lastUpdated),
+  generatedAt: generatedAtFromProvenance(
+    verifiedDataset.provenance.lastUpdated,
+  ),
   source: "Computed from Lacuna verified dataset via bootstrap resampling",
   results,
   legend: {
