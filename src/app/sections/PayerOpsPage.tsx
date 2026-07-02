@@ -14,6 +14,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import {
+  computeWorkQueueVolumes,
   operatingModel,
   painPoints,
   progressWidths,
@@ -21,7 +22,6 @@ import {
   type SegmentData,
   type SegmentKey,
   vcSignals,
-  workQueues,
 } from "@/data/payerOpsData";
 
 const SECTION = "mb-16 scroll-mt-28";
@@ -127,6 +127,11 @@ export default function PayerOpsPage() {
   );
   const animatedMonthlySavings = useAnimatedNumber(modeled.monthlySavings, 400);
   const animatedAuthHours = useAnimatedNumber(modeled.authHours, 400);
+
+  const triageQueues = useMemo(
+    () => computeWorkQueueVolumes(modeled.avoidableDenials),
+    [modeled.avoidableDenials],
+  );
 
   return (
     <div>
@@ -420,7 +425,7 @@ export default function PayerOpsPage() {
         </p>
         <div>
           <div className="grid gap-4 lg:hidden">
-            {workQueues.map((queue) => (
+            {triageQueues.map((queue) => (
               <div
                 key={queue.name}
                 className="rounded-2xl border border-lacuna-lavender/35 bg-white p-4 shadow-sm"
@@ -450,7 +455,7 @@ export default function PayerOpsPage() {
               <span className="col-span-2">Risk</span>
               <span className="col-span-2">Impact</span>
             </div>
-            {workQueues.map((queue) => (
+            {triageQueues.map((queue) => (
               <div
                 key={queue.name}
                 className="grid grid-cols-12 gap-3 border-b border-lacuna-lavender/20 p-4 last:border-b-0"

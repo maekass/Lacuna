@@ -26,13 +26,31 @@ export interface PainPoint {
   icon: LucideIcon;
 }
 
-export interface WorkQueue {
+export type WorkQueueKey =
+  | "musculoskeletal"
+  | "behavioralHealth"
+  | "maternal"
+  | "specialtyPharmacy";
+
+/** Share of total avoidable denials allocated to each modeled queue (sums to 81%). */
+export const WORK_QUEUE_VOLUME_WEIGHTS: Record<WorkQueueKey, number> = {
+  musculoskeletal: 0.34,
+  behavioralHealth: 0.23,
+  maternal: 0.14,
+  specialtyPharmacy: 0.10,
+};
+
+export interface WorkQueueTemplate {
+  key: WorkQueueKey;
   name: string;
-  volume: number;
   automation: number;
   risk: string;
   impact: string;
   action: string;
+}
+
+export interface WorkQueue extends WorkQueueTemplate {
+  volume: number;
 }
 
 export type VcMomentum = "accelerating" | "early" | "stable";
@@ -110,26 +128,26 @@ export const painPoints: PainPoint[] = [
   },
 ];
 
-export const workQueues: WorkQueue[] = [
+export const workQueues: WorkQueueTemplate[] = [
   {
+    key: "musculoskeletal",
     name: "Musculoskeletal imaging prior auth",
-    volume: 1842,
     automation: 64,
     risk: "Low",
     impact: "$1.4M",
     action: "Auto-approve guideline-concordant requests with complete notes",
   },
   {
+    key: "behavioralHealth",
     name: "Behavioral health professional claims",
-    volume: 1268,
     automation: 51,
     risk: "Medium",
     impact: "$920K",
     action: "Route coding mismatches to provider self-correction before denial",
   },
   {
+    key: "maternal",
     name: "Maternal episode coordination",
-    volume: 732,
     automation: 43,
     risk: "Medium",
     impact: "$680K",
@@ -137,14 +155,21 @@ export const workQueues: WorkQueue[] = [
       "Detect missing referrals and attach benefit-aware next-best action",
   },
   {
+    key: "specialtyPharmacy",
     name: "Specialty pharmacy exceptions",
-    volume: 516,
     automation: 29,
     risk: "High",
     impact: "$2.1M",
     action: "Keep clinician-in-loop, summarize evidence, and audit decisions",
   },
 ];
+
+export function computeWorkQueueVolumes(avoidableDenials: number): WorkQueue[] {
+  return workQueues.map((queue) => ({
+    ...queue,
+    volume: Math.round(avoidableDenials * WORK_QUEUE_VOLUME_WEIGHTS[queue.key]),
+  }));
+}
 
 export const operatingModel: string[] = [
   "Ingest X12 278/837 status, policy rules, benefits, network files, and notes metadata",
