@@ -9,7 +9,6 @@ import {
   computeHeadlineStats,
   type HeadlineStats,
 } from "./computeHeadlineStats";
-import { generatedAtFromProvenance } from "./computedArtifactMeta";
 
 export const DATASET_SUMMARY_MODEL = "computeHeadlineStats/v1" as const;
 
