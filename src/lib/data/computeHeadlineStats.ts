@@ -1,3 +1,4 @@
+import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
 import type { VerifiedDataset } from "./datasetTypes";
 import { computeDisclosureStats } from "./datasetCoverageStats";
 
@@ -26,7 +27,38 @@ export interface HeadlineStats {
 export interface HeadlineStatTile {
   label: string;
   value: string;
+  model: ModelProvenance;
 }
+
+const HEADLINE_STATS_MODULE = "src/lib/data/computeHeadlineStats.ts";
+
+/** Per-tile provenance for hub StatTiles (hover → source module). */
+export const HEADLINE_STAT_MODELS = {
+  companiesInNetwork: {
+    module: HEADLINE_STATS_MODULE,
+    exportName: "computeHeadlineStats",
+    definition:
+      "companiesInNetwork = companies.length in dataset.verified.json (via computeDisclosureStats).",
+  },
+  verifiedDeals: {
+    module: HEADLINE_STATS_MODULE,
+    exportName: "computeHeadlineStats",
+    definition:
+      "verifiedDeals = acquisitions.length in dataset.verified.json (via computeDisclosureStats).",
+  },
+  disclosedValue: {
+    module: HEADLINE_STATS_MODULE,
+    exportName: "formatDisclosedValueBillions",
+    definition:
+      "Sum of dealValue (USD millions) on verified acquisitions with disclosed price, formatted as $B.",
+  },
+  uniqueSourceCitations: {
+    module: HEADLINE_STATS_MODULE,
+    exportName: "countUniqueSourceCitations",
+    definition:
+      "Distinct citation strings on company.sources[] and acquisition.source in dataset.verified.json.",
+  },
+} as const satisfies Record<string, ModelProvenance>;
 
 /** Count distinct citation strings on companies and deals (not provenance category list). */
 export function countUniqueSourceCitations(
@@ -97,18 +129,22 @@ export function headlineStatsToTiles(
     {
       label: "Companies in our network",
       value: stats.companiesInNetwork.toString(),
+      model: HEADLINE_STAT_MODELS.companiesInNetwork,
     },
     {
       label: "Verified deals",
       value: stats.verifiedDeals.toString(),
+      model: HEADLINE_STAT_MODELS.verifiedDeals,
     },
     {
       label: "In disclosed value",
       value: stats.disclosedValueBillionsLabel,
+      model: HEADLINE_STAT_MODELS.disclosedValue,
     },
     {
       label: "Public sources cited",
       value: stats.uniqueSourceCitations.toString(),
+      model: HEADLINE_STAT_MODELS.uniqueSourceCitations,
     },
   ];
 }
