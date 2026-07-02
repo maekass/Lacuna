@@ -37,6 +37,17 @@ function parseLives(lives: string) {
   return parseFloat(lives);
 }
 
+function formatLivesCount(count: number) {
+  if (count >= 1_000_000) {
+    const millions = count / 1_000_000;
+    return `${millions % 1 === 0 ? millions.toFixed(0) : millions.toFixed(1)}M`;
+  }
+  if (count >= 1_000) {
+    return `${Math.round(count / 1_000)}K`;
+  }
+  return String(count);
+}
+
 function computeModeled(
   segmentData: SegmentData,
   denialRate: number,
@@ -85,22 +96,45 @@ function useAnimatedNumber(target: number, duration: number): number {
 export default function PayerOpsPage() {
   const [segment, setSegment] = useState<SegmentKey>("commercial");
   const [compareAll, setCompareAll] = useState(false);
+  const [customizeInputs, setCustomizeInputs] = useState(false);
+  const [customSegment, setCustomSegment] = useState<
+    (typeof segments)[SegmentKey] | null
+  >(null);
   const [expandedDealSignal, setExpandedDealSignal] = useState<string | null>(
     null,
   );
   const selected = segments[segment];
   const [denialRate, setDenialRate] = useState(selected.denialRate);
   const [avoidableRate, setAvoidableRate] = useState(selected.avoidableRate);
+  const activeSegment = customSegment ?? selected;
+  const editingSegment = customSegment ?? segments[segment];
 
   function handleSegmentChange(key: SegmentKey) {
     setSegment(key);
     setDenialRate(segments[key].denialRate);
     setAvoidableRate(segments[key].avoidableRate);
+    setCustomSegment(null);
+  }
+
+  function updateCustomSegment(
+    patch: Partial<(typeof segments)[SegmentKey]>,
+  ) {
+    setCustomSegment((current) => ({
+      ...(current ?? segments[segment]),
+      ...patch,
+    }));
   }
 
   const modeled = useMemo(() => {
-    return computeModeled(selected, denialRate, avoidableRate);
-  }, [selected, denialRate, avoidableRate]);
+    const effectiveDenialRate = customSegment?.denialRate ?? denialRate;
+    const effectiveAvoidableRate = customSegment?.avoidableRate ??
+      avoidableRate;
+    return computeModeled(
+      activeSegment,
+      effectiveDenialRate,
+      effectiveAvoidableRate,
+    );
+  }, [activeSegment, customSegment, denialRate, avoidableRate]);
 
   const allSegmentsModeled = useMemo(() => {
     if (!compareAll) return [];
@@ -331,6 +365,117 @@ export default function PayerOpsPage() {
               Compare all segments
             </button>
           </div>
+          <div className="mt-2">
+            <button
+              type="button"
+              onClick={() => setCustomizeInputs((active) => !active)}
+              className="text-xs font-medium text-lacuna-blue underline-offset-2 hover:underline"
+            >
+              {customizeInputs ? "Hide custom inputs" : "Customize inputs"}
+            </button>
+          </div>
+          {customizeInputs
+            ? (
+              <div className="mt-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  <label className="flex flex-col gap-1 text-xs text-white/60">
+                    <span>Lives count</span>
+                    <input
+                      type="number"
+                      min={0}
+                      value={parseLives(editingSegment.lives)}
+                      onChange={(e) =>
+                        updateCustomSegment({
+                          lives: formatLivesCount(Number(e.target.value)),
+                        })}
+                      className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white"
+                    />
+                  </label>
+                  <label className="flex flex-col gap-1 text-xs text-white/60">
+                    <span>Monthly auths</span>
+                    <input
+                      type="number"
+                      min={0}
+                      value={editingSegment.auths}
+                      onChange={(e) =>
+                        updateCustomSegment({
+                          auths: Number(e.target.value),
+                        })}
+                      className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white"
+                    />
+                  </label>
+                  <label className="flex flex-col gap-1 text-xs text-white/60">
+                    <span>Monthly claims</span>
+                    <input
+                      type="number"
+                      min={0}
+                      value={editingSegment.claims}
+                      onChange={(e) =>
+                        updateCustomSegment({
+                          claims: Number(e.target.value),
+                        })}
+                      className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white"
+                    />
+                  </label>
+                  <label className="flex flex-col gap-1 text-xs text-white/60">
+                    <span>Denial rate %</span>
+                    <input
+                      type="number"
+                      min={0}
+                      max={100}
+                      step={0.1}
+                      value={editingSegment.denialRate}
+                      onChange={(e) =>
+                        updateCustomSegment({
+                          denialRate: Number(e.target.value),
+                        })}
+                      className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white"
+                    />
+                  </label>
+                  <label className="flex flex-col gap-1 text-xs text-white/60">
+                    <span>Avoidable fraction %</span>
+                    <input
+                      type="number"
+                      min={0}
+                      max={100}
+                      step={1}
+                      value={editingSegment.avoidableRate}
+                      onChange={(e) =>
+                        updateCustomSegment({
+                          avoidableRate: Number(e.target.value),
+                        })}
+                      className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white"
+                    />
+                  </label>
+                  <label className="flex flex-col gap-1 text-xs text-white/60">
+                    <span>Admin cost $</span>
+                    <input
+                      type="number"
+                      min={0}
+                      step={0.1}
+                      value={editingSegment.adminCost}
+                      onChange={(e) =>
+                        updateCustomSegment({
+                          adminCost: Number(e.target.value),
+                        })}
+                      className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white"
+                    />
+                  </label>
+                </div>
+                {customSegment
+                  ? (
+                    <button
+                      type="button"
+                      onClick={() => setCustomSegment(null)}
+                      className="mt-3 text-xs font-medium text-lacuna-blue underline-offset-2 hover:underline"
+                    >
+                      Reset to defaults
+                    </button>
+                  )
+                  : null}
+              </div>
+            )
+            : null}
           <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label
@@ -389,7 +534,7 @@ export default function PayerOpsPage() {
               <div className="mt-6 grid gap-4 lg:grid-cols-4">
                 <Metric
                   label="Covered lives (hypothetical)"
-                  value={selected.lives}
+                  value={activeSegment.lives}
                   theme="dark"
                 />
                 <Metric
