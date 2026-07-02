@@ -1,6 +1,6 @@
 {
   "provenance": {
-    "lastUpdated": "2026-07-02",
+    "lastUpdated": "2026-06-23",
     "datasetVersion": "v7",
     "sources": [
       "SEC EDGAR filings (acquisitions, 8-K/10-K)",
@@ -36,7 +36,6 @@
       "Axios Pro, Fertility Bridge, CNMC filings (KKR/IVI-RMA Global acquisition, 2022-2023)",
       "EQT Group press release and Times of India (BPEA EQT/Indira IVF acquisition, 2023)",
       "Hims & Hers investor relations and Business Wire (Apostrophe acquisition, 2021)",
-      "SEC EDGAR EX-99.1 and Globe Newswire (23andMe/Lemonaid Health acquisition, 2021)",
       "Business Wire and PitchBook (KKR IVI-RMA/Eugin Group North America acquisition, 2024)"
     ],
     "notes": [
@@ -56,8 +55,7 @@
       "Large-cap deals (Pfizer/Seagen $43B, Gilead/Immunomedics $21B, Siemens/Varian $16.4B) included for breast/cervical cancer treatment relevance even though acquirers operate across broader oncology/medtech",
       "Hologic acquisition history now spans 7 deals (Biotheranostics, Endomagnetics, Gynesonics, Acessa Health, Bolder Surgical, Focal Therapeutics, Faxitron Bioptics, SuperSonic Imagine) — largest disclosed women's health serial acquirer in dataset",
       "Dataset v5 expands to 58 acquisitions with menopause therapeutics (Bayer/KaNDy, Astellas/Ogeda), large-cap diagnostics (Hologic/Gen-Probe $3.7B), global fertility clinic consolidation (KKR/IVI-RMA $3.25B, BPEA EQT/Indira IVF $657M, IVI-RMA/Eugin NA), and women's health-focused acquirer expansions (Organon/Dermavant $1.2B, Hims & Hers/Apostrophe)",
-      "2026-06-11: Added 14 Amboy Street Ventures portfolio companies with press-verified founding, stage, and funding data (totalFunding omitted where no source states a total), plus the Gennev / Unified Women's Healthcare acquisition (2022, terms not disclosed).",
-      "2026-07-02: Corrected deal4 (Lemonaid Health acquired by 23andMe for $400M per SEC filing, not Amazon). Added disclosed deal values for Alydia Health ($240M), Apostrophe (~$190M), and cited pre-deal valuations for Maven/Kindbody strategic investments."
+      "2026-06-11: Added 14 Amboy Street Ventures portfolio companies with press-verified founding, stage, and funding data (totalFunding omitted where no source states a total), plus the Gennev / Unified Women's Healthcare acquisition (2022, terms not disclosed)."
     ],
     "purpose": "Educational demonstration dataset for portfolio project. Not for commercial investment decisions.",
     "disclaimer": "Data compiled from public sources for educational visualization. Verify independently before any commercial use."
@@ -126,9 +124,9 @@
       "founded": 2014,
       "hq": "New York, NY",
       "description": "Virtual clinic for women's and family health",
-      "lastKnownValuation": 1000,
-      "valuationSource": "Series D at $1B+ valuation (Aug 2021)",
-      "totalFunding": 200,
+      "lastKnownValuation": 1300,
+      "valuationSource": "Series D valuation (2021)",
+      "totalFunding": 292,
       "sources": [
         "Mavenclinic.com - company website",
         "TechCrunch - Series D (2021)",
@@ -179,9 +177,9 @@
       "founded": 2018,
       "hq": "New York, NY",
       "description": "Fertility and family-building benefit solution",
-      "lastKnownValuation": 1800,
-      "valuationSource": "$1.8B valuation on Perceptive Advisors financing (Mar 2023)",
-      "totalFunding": 290,
+      "lastKnownValuation": 600,
+      "valuationSource": "Series D valuation (2022)",
+      "totalFunding": 190,
       "sources": [
         "Kindbody.com - company website",
         "TechCrunch - Series D (2022)",
@@ -279,17 +277,15 @@
       "evidenceClass": "consumer_wellness",
       "name": "Lemonaid Health",
       "sector": "Mental Health",
-      "stage": "Acquired by 23andMe (2021)",
+      "stage": "Acquired (2021)",
       "founded": 2013,
       "hq": "San Francisco, CA",
       "description": "Telehealth platform with women's health focus",
-      "lastKnownValuation": 400,
-      "valuationSource": "23andMe acquisition price (SEC EX-99.1, Oct 2021)",
-      "totalFunding": 55,
+      "valuationSource": "Acquisition terms not publicly disclosed (Amazon purchase)",
       "sources": [
-        "SEC EDGAR EX-99.1 — 23andMe/Lemonaid merger agreement (Oct 22, 2021)",
-        "Globe Newswire — acquisition closing (Nov 1, 2021)",
+        "Company website and public disclosures",
         "Crunchbase - crunchbase.com/organization/lemonaid-health",
+        "TechCrunch - acquisition coverage by Hims & Hers, 2021",
         "Company website - lemonaidhealth.com"
       ]
     },
@@ -591,8 +587,7 @@
       "founded": 2011,
       "hq": "Menlo Park, CA",
       "description": "Medical device company focused on preventing maternal morbidity from postpartum hemorrhage (Jada System)",
-      "totalFunding": 25,
-      "valuationSource": "Organon acquisition up to $240M (press release, Mar 2021)",
+      "valuationSource": "Acquisition terms structured with milestones (Merck/Organon press release, Mar 2021)",
       "sources": [
         "Organon.com - press release (Mar 30, 2021)",
         "Business Wire - Merck acquisition on behalf of Organon spinoff",
@@ -658,7 +653,6 @@
       "founded": 2009,
       "hq": "New York, NY",
       "description": "Women's health biotech — oral FSH receptor agonist for fertility, JNK inhibitor for endometriosis, and AMH antibodies for ovarian aging",
-      "totalFunding": 43,
       "valuationSource": "Upfront payment + development milestones (Gedeon Richter press release, Mar 2026)",
       "sources": [
         "Gedeon Richter press release (Mar 3, 2026)",
@@ -1144,7 +1138,6 @@
       "founded": 2012,
       "hq": "Boston, MA",
       "description": "Digital health platform for family planning, pregnancy, and parenting — used by millions of women for fertility tracking, prenatal care, and employer health benefits",
-      "totalFunding": 23.4,
       "valuationSource": "Acquisition terms not publicly disclosed by LabCorp",
       "sources": [
         "Business Wire — LabCorp press release (Aug 12, 2021)",
@@ -1317,8 +1310,7 @@
       "founded": 2014,
       "hq": "San Francisco, CA",
       "description": "Teledermatology platform with personalized treatment plans and compounding pharmacy; majority female user base",
-      "valuationSource": "Hims & Hers acquisition up to ~$190M (investor relations, July 2021)",
-      "totalFunding": 7,
+      "valuationSource": "Financial terms not disclosed (HIMS investor relations press release)",
       "sources": [
         "Hims & Hers investor relations press release (June 24, 2021)",
         "Business Wire - acquisition completion (July 7, 2021)",
@@ -1406,8 +1398,7 @@
       "founded": 2016,
       "hq": "Seattle, WA",
       "description": "Virtual menopause and perimenopause clinic with OB-GYN and dietitian network",
-      "valuationSource": "Acquisition terms not disclosed (Unified Women's Healthcare press release, Oct 2022)",
-      "totalFunding": 4.5,
+      "totalFunding": 4.1,
       "sources": [
         "GeekWire - acquisition coverage (October 2022)",
         "Business Wire - Unified Women's Healthcare acquisition announcement (October 2022)",
@@ -2441,13 +2432,6 @@
       "hq": "Seattle, WA"
     },
     {
-      "id": "acquirer-23andme",
-      "name": "23andMe",
-      "ticker": "ME",
-      "sector": "General Wellness",
-      "hq": "Sunnyvale, CA"
-    },
-    {
       "id": "acquirer-unitedhealth",
       "name": "UnitedHealth Group",
       "ticker": "UNH",
@@ -2750,17 +2734,16 @@
     {
       "id": "deal4",
       "targetId": "c13",
-      "acquirerId": "acquirer-23andme",
+      "acquirerId": "acquirer-amazon",
       "targetName": "Lemonaid Health",
-      "acquirerName": "23andMe",
-      "announcedDate": "2021-10-22",
-      "closedDate": "2021-11-01",
-      "dealValue": 400,
-      "dealValueNote": "$400M purchase price (25% cash, 75% 23andMe Class A stock), subject to customary adjustments per SEC EX-99.1 (Oct 22, 2021)",
+      "acquirerName": "Amazon (via Amazon Pharmacy)",
+      "announcedDate": "2021-10-14",
+      "closedDate": "2021-12-20",
+      "dealValueNote": "Acquisition terms not publicly disclosed by Amazon",
       "dealType": "Acquisition",
-      "source": "SEC EDGAR EX-99.1 (23andMe–Lemonaid merger agreement, Oct 22, 2021); Globe Newswire closing release (Nov 1, 2021)",
-      "strategicRationale": "Combined consumer genetics with telehealth and mail-order pharmacy to expand into personalized virtual care",
-      "dealStructure": "Cash and stock"
+      "source": "Press release (Amazon, October 2021)",
+      "strategicRationale": "Added prescription telehealth capabilities to Amazon's healthcare services expansion",
+      "dealStructure": "Cash"
     },
     {
       "id": "deal5",
@@ -2773,10 +2756,7 @@
       "dealType": "Strategic Investment",
       "source": "Press reports (Teladoc partnership announcement)",
       "strategicRationale": "Partnership for maternity and fertility care integration into Teladoc's virtual care platform",
-      "dealStructure": "Strategic Investment",
-      "preDealValuation": 1000,
-      "preDealValuationSource": "TechCrunch / Maven Clinic press release — Series D at $1B+ valuation, Aug 2021",
-      "preDealValuationDate": "2021-08-17"
+      "dealStructure": "Strategic Investment"
     },
     {
       "id": "deal6",
@@ -2789,10 +2769,7 @@
       "dealType": "Strategic Investment",
       "source": "Partnership press release",
       "strategicRationale": "Fertility benefits platform integration for employer clients",
-      "dealStructure": "Strategic Investment",
-      "preDealValuation": 1800,
-      "preDealValuationSource": "Kindbody press release — $100M financing at $1.8B valuation, Mar 2023",
-      "preDealValuationDate": "2023-03-02"
+      "dealStructure": "Strategic Investment"
     },
     {
       "id": "deal7",
@@ -2924,8 +2901,7 @@
       "acquirerName": "Organon (via Merck spinoff)",
       "announcedDate": "2021-03-30",
       "closedDate": "2021-07-01",
-      "dealValue": 240,
-      "dealValueNote": "Up to $240M total ($215M upfront cash + $25M contingent milestone); Organon press release Mar 30, 2021",
+      "dealValueNote": "Acquisition structured with milestones; closed after Organon spun off from Merck",
       "dealType": "Acquisition",
       "source": "Organon.com press release (Mar 30, 2021); Business Wire",
       "strategicRationale": "Jada System addresses postpartum hemorrhage — aligns with Organon's mission as global women's health leader; potential EU/global expansion",
@@ -3719,8 +3695,6 @@
       "acquirerName": "Hims & Hers Health",
       "announcedDate": "2021-06-24",
       "closedDate": "2021-07-07",
-      "dealValue": 190,
-      "dealValueNote": "Up to ~$190M total: ~$150M upfront (~$50M cash plus 8.07M HIMS shares) plus up to $50M earnout on revenue targets (Hims & Hers investor relations, June–July 2021)",
       "dealType": "Acquisition",
       "dealStructure": "Cash",
       "source": "Hims & Hers investor relations (June 24, 2021); Business Wire (July 7, 2021)",

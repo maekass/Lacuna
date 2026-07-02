@@ -24,7 +24,7 @@ describe("buildVerifiedDerivedData", () => {
     ).toBe(true);
   });
 
-  it("getVerifiedNetworkLinks marks undisclosed deal value with -1 sentinel (edge)", () => {
+  it("getVerifiedNetworkLinks uses disclosed deal value or zero when missing (edge)", () => {
     const dataset = structuredClone(minimalVerifiedDataset);
     dataset.acquisitions.push({
       ...dataset.acquisitions[0],
@@ -35,7 +35,7 @@ describe("buildVerifiedDerivedData", () => {
     const links = getVerifiedNetworkLinks();
 
     expect(links.find((l) => l.value === 225)).toBeDefined();
-    expect(links.find((l) => l.value === -1)).toBeDefined();
+    expect(links.find((l) => l.value === 0)).toBeDefined();
   });
 
   it("getVerifiedTotalDealValue sums disclosed values only (edge)", () => {

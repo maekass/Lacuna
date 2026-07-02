@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-02T00:00:00.000Z",
+  "generatedAt": "2026-06-23T00:00:00.000Z",
   "source": "Lacuna verified dataset (src/data/dataset.verified.json)",
   "grading": {
     "A": "90-100: SEC filing or equivalent primary source, all fields populated",
@@ -12,22 +12,22 @@
     "companies": {
       "total": 135,
       "grades": {
-        "A": 14,
-        "C": 39,
-        "D": 53,
-        "B": 29
+        "A": 13,
+        "C": 38,
+        "D": 56,
+        "B": 28
       },
-      "avgScore": 65.5
+      "avgScore": 64.8
     },
     "acquisitions": {
       "total": 59,
       "grades": {
-        "A": 20,
+        "A": 19,
+        "C": 15,
         "F": 1,
-        "C": 12,
-        "B": 26
+        "B": 24
       },
-      "avgScore": 83.1
+      "avgScore": 81.8
     }
   },
   "companies": [
@@ -191,14 +191,14 @@
       "id": "c13",
       "name": "Lemonaid Health",
       "sector": "Mental Health",
-      "sourceQuality": "A",
-      "sourceDescription": "SEC filing (primary government source)",
-      "completeness": 100,
-      "hasValuation": true,
-      "hasFunding": true,
+      "sourceQuality": "B",
+      "sourceDescription": "Reputable press/trade publication",
+      "completeness": 82,
+      "hasValuation": false,
+      "hasFunding": false,
       "hasSource": true,
-      "overallScore": 100,
-      "grade": "A"
+      "overallScore": 65,
+      "grade": "C"
     },
     {
       "id": "c14",
@@ -427,12 +427,12 @@
       "sector": "Maternal Health",
       "sourceQuality": "C",
       "sourceDescription": "Company press release",
-      "completeness": 91,
+      "completeness": 82,
       "hasValuation": false,
-      "hasFunding": true,
+      "hasFunding": false,
       "hasSource": true,
-      "overallScore": 70,
-      "grade": "C"
+      "overallScore": 57,
+      "grade": "D"
     },
     {
       "id": "c32",
@@ -479,12 +479,12 @@
       "sector": "Fertility",
       "sourceQuality": "C",
       "sourceDescription": "Company press release",
-      "completeness": 91,
+      "completeness": 82,
       "hasValuation": false,
-      "hasFunding": true,
+      "hasFunding": false,
       "hasSource": true,
-      "overallScore": 70,
-      "grade": "C"
+      "overallScore": 57,
+      "grade": "D"
     },
     {
       "id": "c36",
@@ -856,12 +856,12 @@
       "sector": "Maternal Health",
       "sourceQuality": "C",
       "sourceDescription": "Company press release",
-      "completeness": 91,
+      "completeness": 82,
       "hasValuation": false,
-      "hasFunding": true,
+      "hasFunding": false,
       "hasSource": true,
-      "overallScore": 70,
-      "grade": "C"
+      "overallScore": 57,
+      "grade": "D"
     },
     {
       "id": "c65",
@@ -986,12 +986,12 @@
       "sector": "General Wellness",
       "sourceQuality": "B",
       "sourceDescription": "Reputable press/trade publication",
-      "completeness": 91,
+      "completeness": 82,
       "hasValuation": false,
-      "hasFunding": true,
+      "hasFunding": false,
       "hasSource": true,
-      "overallScore": 77,
-      "grade": "B"
+      "overallScore": 65,
+      "grade": "C"
     },
     {
       "id": "c75",
@@ -1051,11 +1051,11 @@
       "sector": "Menopause",
       "sourceQuality": "C",
       "sourceDescription": "Company press release",
-      "completeness": 91,
+      "completeness": 82,
       "hasValuation": false,
       "hasFunding": true,
       "hasSource": true,
-      "overallScore": 70,
+      "overallScore": 67,
       "grade": "C"
     },
     {
@@ -1827,14 +1827,14 @@
     {
       "id": "deal4",
       "target": "Lemonaid Health",
-      "acquirer": "23andMe",
-      "sourceQuality": "A",
-      "sourceDescription": "SEC filing (primary government source)",
-      "completeness": 100,
-      "hasDealValue": true,
+      "acquirer": "Amazon (via Amazon Pharmacy)",
+      "sourceQuality": "C",
+      "sourceDescription": "Company press release",
+      "completeness": 89,
+      "hasDealValue": false,
       "hasSource": true,
-      "overallScore": 100,
-      "grade": "A"
+      "overallScore": 64,
+      "grade": "C"
     },
     {
       "id": "deal5",
@@ -1950,11 +1950,11 @@
       "acquirer": "Organon (via Merck spinoff)",
       "sourceQuality": "C",
       "sourceDescription": "Company press release",
-      "completeness": 100,
-      "hasDealValue": true,
+      "completeness": 89,
+      "hasDealValue": false,
       "hasSource": true,
-      "overallScore": 83,
-      "grade": "B"
+      "overallScore": 64,
+      "grade": "C"
     },
     {
       "id": "deal15",
@@ -2466,11 +2466,11 @@
       "acquirer": "Hims & Hers Health",
       "sourceQuality": "C",
       "sourceDescription": "Company press release",
-      "completeness": 100,
-      "hasDealValue": true,
+      "completeness": 89,
+      "hasDealValue": false,
       "hasSource": true,
-      "overallScore": 83,
-      "grade": "B"
+      "overallScore": 64,
+      "grade": "C"
     },
     {
       "id": "deal58",

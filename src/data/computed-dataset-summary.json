@@ -1,30 +1,30 @@
 {
-  "generatedAt": "2026-07-02T00:00:00.000Z",
+  "generatedAt": "2026-06-23T00:00:00.000Z",
   "model": "computeHeadlineStats/v1",
   "provenance": {
-    "lastUpdated": "2026-07-02",
+    "lastUpdated": "2026-06-23",
     "datasetVersion": "v7"
   },
   "headline": {
     "companiesInNetwork": 135,
-    "acquirerCount": 38,
-    "networkNodeCount": 173,
+    "acquirerCount": 37,
+    "networkNodeCount": 172,
     "verifiedDeals": 59,
-    "disclosedValueMillions": 140254,
-    "disclosedValueBillionsLabel": "$140.3B",
-    "uniqueSourceCitations": 431,
-    "lastUpdated": "2026-07-02",
+    "disclosedValueMillions": 139424,
+    "disclosedValueBillionsLabel": "$139.4B",
+    "uniqueSourceCitations": 430,
+    "lastUpdated": "2026-06-23",
     "datasetVersion": "v7"
   },
   "disclosure": {
     "dealsTotal": 59,
-    "dealsDisclosed": 50,
-    "dealsUndisclosed": 9,
-    "dealsWithValueNote": 59,
-    "disclosureRate": 0.847457627118644,
-    "companiesWithValuation": 58,
+    "dealsDisclosed": 47,
+    "dealsUndisclosed": 12,
+    "dealsWithValueNote": 58,
+    "disclosureRate": 0.7966101694915254,
+    "companiesWithValuation": 57,
     "companiesTotal": 135,
-    "valuationRate": 0.42962962962962964
+    "valuationRate": 0.4222222222222222
   },
   "pipelines": {
     "secIngestLastRunAt": null,

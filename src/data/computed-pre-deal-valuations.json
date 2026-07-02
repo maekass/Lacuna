@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-07-02T17:54:44.792Z",
+  "generatedAt": "2026-06-24T00:46:01.434Z",
   "source": "Public records: SEC EDGAR 8-K/10-K filings, company press releases, TechCrunch, Axios, Fierce Healthcare",
   "method": "Pre-deal valuation = last known valuation before acquisition announcement. Premium = dealValue / preDealValuation.",
-  "enrichedDeals": 49,
+  "enrichedDeals": 47,
   "totalDeals": 59,
   "auditTrail": [
     {
@@ -44,20 +44,20 @@
     {
       "acquisitionId": "deal5",
       "targetName": "Maven Clinic",
-      "preDealValuation": 1000,
-      "preDealValuationSource": "TechCrunch / Maven Clinic press release — Series D at $1B+ valuation, Aug 2021",
-      "preDealValuationDate": "2021-08-17",
+      "preDealValuation": null,
+      "preDealValuationSource": "No pre-deal valuation data available",
+      "preDealValuationDate": null,
       "premiumComputed": null,
-      "method": "Pre-deal valuation sourced ($1000M); no disclosed deal value for premium"
+      "method": "No data — pre-deal valuation not sourced"
     },
     {
       "acquisitionId": "deal6",
       "targetName": "Kindbody",
-      "preDealValuation": 1800,
-      "preDealValuationSource": "Kindbody press release — $100M financing at $1.8B valuation, Mar 2023",
-      "preDealValuationDate": "2023-03-02",
+      "preDealValuation": null,
+      "preDealValuationSource": "No pre-deal valuation data available",
+      "preDealValuationDate": null,
       "premiumComputed": null,
-      "method": "Pre-deal valuation sourced ($1800M); no disclosed deal value for premium"
+      "method": "No data — pre-deal valuation not sourced"
     },
     {
       "acquisitionId": "deal7",

@@ -38,22 +38,6 @@ import {
   LACUNA_SEMANTIC,
 } from "@/lib/theme/palette";
 
-/** Undisclosed valuations/deal values use -1 in the dataset adapter. */
-function layoutValuation(valuation: number): number {
-  return valuation < 0 ? 40 : valuation;
-}
-
-function layoutDealValue(value: number): number {
-  return value < 0 ? 30 : value;
-}
-
-function formatNodeValuation(valuation: number): string | null {
-  if (valuation < 0) return null;
-  if (valuation > 1000) return `$${(valuation / 1000).toFixed(1)}B`;
-  if (valuation > 0) return `$${valuation}M`;
-  return null;
-}
-
 const sectorColors: Record<string, string> = {
   Fertility: "#EC4899",
   "Mental Health": "#8B5CF6",
@@ -250,7 +234,7 @@ export default function ForceNetwork(
         "link",
         d3.forceLink<Node, Link>(simulationLinks)
           .id((d) => d.id)
-          .distance((d) => 150 - layoutDealValue(d.value) / 10)
+          .distance((d) => 150 - (d.value / 10))
           .strength(0.5),
       )
       .force(
@@ -263,7 +247,7 @@ export default function ForceNetwork(
       .force(
         "collision",
         d3.forceCollide().radius((d: d3.SimulationNodeDatum) =>
-          Math.sqrt(layoutValuation((d as Node).valuation)) / 2 + 20
+          Math.sqrt((d as Node).valuation) / 2 + 20
         ),
       )
       .force("x", d3.forceX(width / 2).strength(0.05))
@@ -278,7 +262,7 @@ export default function ForceNetwork(
       .append("line")
       .attr("stroke", "#94a3b8")
       .attr("stroke-opacity", 0.4)
-      .attr("stroke-width", (d) => Math.sqrt(layoutDealValue(d.value) / 10))
+      .attr("stroke-width", (d) => Math.sqrt(d.value / 10))
       .attr(
         "stroke-dasharray",
         (d) => d.dealType === "Strategic Investment" ? "5,5" : "none",
@@ -310,8 +294,7 @@ export default function ForceNetwork(
           }),
       );
 
-    const getNodeRadius = (d: Node) =>
-      Math.sqrt(layoutValuation(d.valuation)) / 2 + 5;
+    const getNodeRadius = (d: Node) => Math.sqrt(d.valuation) / 2 + 5;
     const nodePortfolioKeys = (d: Node): PortfolioKey[] =>
       INVESTOR_PORTFOLIOS
         .filter((p) =>
@@ -716,23 +699,21 @@ export default function ForceNetwork(
                   <span className="text-lacuna-text-muted">Stage:</span>{" "}
                   {selectedNode.stage}
                 </p>
-                {selectedNode.valuation < 0 && selectedNode.type === "target"
-                  ? (
+                {selectedNode.valuation > 1000 && (
+                  <p>
+                    <span className="text-lacuna-text-muted">Valuation:</span>
+                    {" "}
+                    ${(selectedNode.valuation / 1000).toFixed(1)}B
+                  </p>
+                )}
+                {selectedNode.valuation <= 1000 && selectedNode.valuation > 0 &&
+                  (
                     <p>
                       <span className="text-lacuna-text-muted">Valuation:</span>
                       {" "}
-                      Undisclosed
+                      ${selectedNode.valuation}M
                     </p>
-                  )
-                  : formatNodeValuation(selectedNode.valuation)
-                  ? (
-                    <p>
-                      <span className="text-lacuna-text-muted">Valuation:</span>
-                      {" "}
-                      {formatNodeValuation(selectedNode.valuation)}
-                    </p>
-                  )
-                  : null}
+                  )}
               </div>
             </motion.div>
           )}

@@ -16,8 +16,6 @@ interface AnimatableValue {
 }
 
 function parseAnimatableValue(value: string): AnimatableValue | null {
-  if (value.startsWith("$")) return null;
-
   const match = value.match(/^[\d,]+/);
   if (!match) return null;
 
@@ -38,34 +36,21 @@ function formatAnimatedValue(current: number, suffix: string): string {
 export default function StatTile({ value, label, model }: StatTileProps) {
   const animatable = useMemo(() => parseAnimatableValue(value), [value]);
   const [displayValue, setDisplayValue] = useState(() =>
-    animatable
-      ? formatAnimatedValue(animatable.target, animatable.suffix)
-      : value
+    animatable ? formatAnimatedValue(0, animatable.suffix) : value
   );
   const displayRef = useRef(displayValue);
-  const prevValueRef = useRef(value);
-
-  useEffect(() => {
-    displayRef.current = displayValue;
-  }, [displayValue]);
 
   useEffect(() => {
     if (!animatable) return;
 
-    if (prevValueRef.current === value) return;
-    prevValueRef.current = value;
-
     const { target, suffix } = animatable;
-    const fromMatch = displayRef.current.match(/^[\d,]+/);
-    const from = fromMatch ? parseInt(fromMatch[0].replace(/,/g, ""), 10) : 0;
-
     let frameId: number;
     const start = performance.now();
     const duration = 800;
 
     const tick = (now: number) => {
       const progress = Math.min((now - start) / duration, 1);
-      const current = Math.round(from + (target - from) * progress);
+      const current = Math.round(target * progress);
       const next = formatAnimatedValue(current, suffix);
       displayRef.current = next;
       setDisplayValue(next);
@@ -79,6 +64,8 @@ export default function StatTile({ value, label, model }: StatTileProps) {
       }
     };
 
+    displayRef.current = formatAnimatedValue(0, suffix);
+    setDisplayValue(formatAnimatedValue(0, suffix));
     frameId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frameId);
   }, [animatable, value]);

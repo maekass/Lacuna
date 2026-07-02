@@ -38,6 +38,6 @@ describe("growthRateProvider", () => {
       sector: "Mental Health",
     });
     expect(resolved.source).toBe("sector");
-    expect(resolved.growthRate).toBe(17.2);
+    expect(resolved.growthRate).toBe(15.1);
   });
 });

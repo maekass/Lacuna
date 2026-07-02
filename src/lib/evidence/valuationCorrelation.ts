@@ -66,10 +66,7 @@ export function computeValuationCorrelation(
   const scores = disclosed.map((d) => d.evidenceScore);
   const values = disclosed.map((d) => d.dealValue as number);
 
-  const scoreSpread = scores.length > 0
-    ? Math.max(...scores) - Math.min(...scores)
-    : 0;
-  const r = scoreSpread === 0 ? 0 : pearson(scores, values);
+  const r = pearson(scores, values);
 
   const highEv = disclosed.filter((d) => d.evidenceScore >= 50);
   const lowEv = disclosed.filter((d) => d.evidenceScore < 50);
@@ -82,10 +79,7 @@ export function computeValuationCorrelation(
   const premiumMultiple = avgLow > 0 ? avgHigh / avgLow : 0;
 
   let insight: string;
-  if (scoreSpread === 0) {
-    insight =
-      "Evidence scores have no variance in this view — correlation is undefined until live enrichment or taxonomy differentiation produces distinct scores.";
-  } else if (disclosed.length < 5) {
+  if (disclosed.length < 5) {
     insight =
       `Only ${disclosed.length} deals with disclosed values — too few for meaningful correlation analysis. As the dataset grows, this will reveal whether clinical evidence maturity predicts acquisition premiums.`;
   } else if (Math.abs(r) > 0.5) {

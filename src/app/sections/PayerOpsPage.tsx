@@ -220,7 +220,7 @@ export default function PayerOpsPage() {
             <h1 className="mt-3 max-w-4xl text-3xl font-bold leading-tight text-lacuna-plum sm:text-5xl">
               PayerOps Navigator for reducing avoidable administrative waste
             </h1>
-            <p className="mt-4 max-w-3xl text-base leading-relaxed text-lacuna-blue sm:text-lg">
+            <p className="mt-4 max-w-3xl text-lg leading-relaxed text-lacuna-blue">
               A portfolio case study designed for payer operations roles. This
               concept shows how a health plan could combine workflow design,
               operational analytics, and governance controls to reduce
