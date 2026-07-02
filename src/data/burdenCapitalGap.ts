@@ -13,6 +13,7 @@
  */
 
 import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
+import { applyAoaExitCrosswalk } from "@/data/womensHealthExitsResearch";
 
 /** WEF taxonomy — three categories from the report. */
 export type WefCategory = "uniquely" | "differently" | "disproportionately";
@@ -34,12 +35,12 @@ export interface BurdenCapitalGapRow {
   burdenDALYsM: number | null;
   /** Global prevalence (millions) — pending IHME GBD 2023 */
   prevalenceM: number | null;
-  /** Exit-side complement — pending AOA Dx "Follow the Exits" ingest */
+  /** Exit-side complement from AOA Dx Follow the Exits (sector totals, 2000–2025) */
   exitValueM: number | null;
 }
 
 /** WEF/BCG Figure 3 — women's health investment by therapeutic area (2020–2025). */
-export const BURDEN_CAPITAL_GAP_DATA: BurdenCapitalGapRow[] = [
+const BURDEN_CAPITAL_GAP_ROWS_BASE: BurdenCapitalGapRow[] = [
   {
     id: "womens-cancers",
     therapeuticArea: "Women's cancers",
@@ -218,6 +219,11 @@ export const BURDEN_CAPITAL_GAP_DATA: BurdenCapitalGapRow[] = [
   },
 ];
 
+/** Rows with AOA Dx exit crosswalk applied where sector mapping exists. */
+export const BURDEN_CAPITAL_GAP_DATA: BurdenCapitalGapRow[] = applyAoaExitCrosswalk(
+  BURDEN_CAPITAL_GAP_ROWS_BASE,
+);
+
 export const WEF_CATEGORY_LABELS: Record<WefCategory, string> = {
   uniquely: "Affects women uniquely",
   differently: "Affects women differently",
@@ -237,6 +243,13 @@ export const BURDEN_CAPITAL_GAP_SOURCES = [
     reference:
       "Institute for Health Metrics and Evaluation. Global Burden of Disease Study 2023. Burden columns pending ingestion.",
     url: "https://www.healthdata.org/",
+  },
+  {
+    label: "AOA Dx — Follow the Exits (2026)",
+    reference:
+      'AOA Dx. "Follow the Exits: Why Women\'s Health Is a Smart Bet in Healthcare." Jan 13, 2026; exit totals via Forbes (Geri Stengel).',
+    url:
+      "https://www.forbes.com/sites/geristengel/2026/01/13/womens-health-exits-surpassed-100-billion/",
   },
 ] as const;
 

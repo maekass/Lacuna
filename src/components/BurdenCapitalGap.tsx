@@ -278,6 +278,12 @@ export default function BurdenCapitalGap() {
           >
             <p>{WEF_CATEGORY_LABELS[tooltip.row.wefCategory]}</p>
             <p>Capital: {formatCapitalM(tooltip.row.capitalRaisedM)}</p>
+            {tooltip.row.exitValueM !== null && (
+              <p>
+                AOA exits (sector): {formatCapitalM(tooltip.row.exitValueM)}{" "}
+                <span className="opacity-80">(2000–2025)</span>
+              </p>
+            )}
             <p>Funding events: {tooltip.row.fundingEvents.toLocaleString()}</p>
             {tooltip.row.burdenDALYsM !== null && (
               <p>Burden: {tooltip.row.burdenDALYsM}M DALYs</p>
