@@ -5,6 +5,9 @@ candidates live in `staging/deals_candidates.csv` (copy from
 `staging/deals_candidates.template.csv`). **Never auto-merge** from SEC scans or
 CSV imports.
 
+**Step-by-step workflow:** [NEW_DEAL_WORKFLOW.md](./NEW_DEAL_WORKFLOW.md)
+(discover → review → JSON merge → `compute:all` → commit).
+
 ## JSON schema — required fields
 
 ### `provenance`
@@ -83,6 +86,7 @@ staging CSV.
 - [ ] `sources[]` on new company rows have ≥2 entries
 - [ ] Inclusion boundary documented (women's health or noted exception)
 - [ ] Run `npm run validate:dataset` (0 errors)
+- [ ] Run `npm run compute:all` and commit updated `computed-*.json`
 - [ ] Run `npm test`
 - [ ] Bump `provenance.lastUpdated`
 
@@ -90,6 +94,8 @@ staging CSV.
 
 ```bash
 npm run validate:dataset          # FK checks, dual-source warnings, disclosure stats
+npm run compute:all               # refresh all quantitative artifacts after merge
+npm run verify:computed           # CI check — artifacts match dataset
 npm run sec:scan                  # SEC 8-K candidates → staging/sec_candidates.csv
 cp staging/deals_candidates.template.csv staging/deals_candidates.csv
 ```

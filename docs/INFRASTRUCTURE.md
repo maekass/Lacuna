@@ -98,6 +98,8 @@ AI and Sentry: [INFERENCE.md](./INFERENCE.md),
 | Command                         | Purpose                                                |
 | ------------------------------- | ------------------------------------------------------ |
 | `npm run validate:dataset`      | Schema + provenance validation on JSON                 |
+| `npm run compute:all`           | Regenerate all dataset-derived `computed-*.json` models |
+| `npm run verify:computed`       | CI guard — fail if computed artifacts are stale        |
 | `npm run infra:check`           | Env checklist + health aggregate (exit 1 if unhealthy) |
 | `npm run db:migrate`            | Apply SQL migrations                                   |
 | `npm run db:import`             | Load `dataset.verified.json` into Postgres             |

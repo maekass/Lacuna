@@ -27,8 +27,8 @@ jobs:
       - name: Validate verified dataset
         run: npm run validate:dataset
 
-      - name: Recompute dataset summary
-        run: npm run compute:dataset-summary
+      - name: Recompute quantitative artifacts
+        run: npm run compute:all
 
-      - name: Verify summary artifact matches model
-        run: git diff --exit-code src/data/computed-dataset-summary.json
+      - name: Verify computed artifacts match model
+        run: npm run verify:computed

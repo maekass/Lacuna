@@ -84,17 +84,26 @@ function stdDev(values: number[]): number {
   );
 }
 
-// Bootstrap 95% confidence interval
+function createSeededRandom(seed: number): () => number {
+  let state = seed >>> 0;
+  return () => {
+    state = (state * 1_664_525 + 1_013_904_223) >>> 0;
+    return state / 4_294_967_296;
+  };
+}
+
+// Bootstrap 95% confidence interval (seeded for reproducible CI artifacts)
 function bootstrapCI(
   values: number[],
   iterations = 10000,
 ): { lower: number; upper: number } {
   if (values.length < 2) return { lower: NaN, upper: NaN };
+  const random = createSeededRandom(42);
   const bootstrapped: number[] = [];
   for (let i = 0; i < iterations; i++) {
     const sample: number[] = [];
     for (let j = 0; j < values.length; j++) {
-      sample.push(values[Math.floor(Math.random() * values.length)]);
+      sample.push(values[Math.floor(random() * values.length)]);
     }
     bootstrapped.push(median(sample));
   }
