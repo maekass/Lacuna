@@ -1,4 +1,5 @@
 import type { IngestRunStatus } from "@/lib/ingestion/ingestRunState";
+import { generatedAtFromProvenance } from "./computedArtifactMeta";
 import type { VerifiedDataset } from "./datasetTypes";
 import {
   computeDisclosureStats,
