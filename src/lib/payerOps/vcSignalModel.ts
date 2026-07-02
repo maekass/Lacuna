@@ -1,4 +1,6 @@
 import {
+  acquisitionsForVcSignalPainPoint,
+  toVcSignalDealExamples,
   type VcMomentum,
   type VcSignalDealExample,
   vcSignals,
@@ -7,7 +9,6 @@ import {
 import type { VerifiedAcquisitionView } from "@/lib/data/verifiedDataHelpers";
 
 const RECENT_DEAL_YEARS = 3;
-const MAX_EXAMPLES = 2;
 
 function isRecentDeal(announcedDate: string, asOfYear: number): boolean {
   const year = Number(announcedDate.slice(0, 4));
@@ -65,20 +66,13 @@ export function computeVcSignalDealFlow(
 
   for (const signal of vcSignals) {
     const sectors = vcSignalSectorMap[signal.painPoint] ?? [];
-    const sectorSet = new Set(sectors);
-    const matches = verifiedAcquisitions.filter((acquisition) => {
-      const sector = companySectorById.get(acquisition.targetId);
-      return sector !== undefined && sectorSet.has(sector);
-    });
+    const matches = acquisitionsForVcSignalPainPoint(
+      verifiedAcquisitions,
+      companySectorById,
+      signal.painPoint,
+    );
 
-    const dealExamples = matches
-      .sort((a, b) => b.announcedDate.localeCompare(a.announcedDate))
-      .slice(0, MAX_EXAMPLES)
-      .map((acquisition) => ({
-        targetName: acquisition.targetName,
-        acquirerName: acquisition.acquirerName,
-        year: Number(acquisition.announcedDate.slice(0, 4)),
-      }));
+    const dealExamples = toVcSignalDealExamples(matches);
 
     const flow: VcSignalDealFlow = {
       count: matches.length,

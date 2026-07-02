@@ -226,6 +226,43 @@ export const progressWidths: ProgressWidths = {
   64: "w-[64%]",
 };
 
+/** Max verified deal examples shown per VC signal pain point. */
+export const VC_SIGNAL_MAX_EXAMPLES = 2;
+
+function buildCompanySectorById(
+  companies: VerifiedCompanyView[],
+): Map<string, string> {
+  return new Map(companies.map((c) => [c.id, c.sector]));
+}
+
+/** Verified acquisitions whose target sector matches a VC signal pain point. */
+export function acquisitionsForVcSignalPainPoint(
+  acquisitions: VerifiedAcquisitionView[],
+  sectorById: Map<string, string>,
+  painPoint: string,
+): VerifiedAcquisitionView[] {
+  const sectors = vcSignalSectorMap[painPoint] ?? [];
+  const sectorSet = new Set(sectors);
+  return acquisitions.filter((acquisition) => {
+    const sector = sectorById.get(acquisition.targetId);
+    return sector !== undefined && sectorSet.has(sector);
+  });
+}
+
+/** Map matched acquisitions to display examples (newest first, capped). */
+export function toVcSignalDealExamples(
+  matches: VerifiedAcquisitionView[],
+): VcSignalDealExample[] {
+  return [...matches]
+    .sort((a, b) => b.announcedDate.localeCompare(a.announcedDate))
+    .slice(0, VC_SIGNAL_MAX_EXAMPLES)
+    .map((acquisition) => ({
+      targetName: acquisition.targetName,
+      acquirerName: acquisition.acquirerName,
+      year: Number(acquisition.announcedDate.slice(0, 4)),
+    }));
+}
+
 /**
  * Count verified acquisitions whose target sector matches each VC signal
  * pain point via {@link vcSignalSectorMap}.
@@ -234,19 +271,42 @@ export function computeVCSignalCounts(
   acquisitions: VerifiedAcquisitionView[],
   companies: VerifiedCompanyView[],
 ): Record<string, number> {
-  const sectorById = new Map(companies.map((c) => [c.id, c.sector]));
+  const sectorById = buildCompanySectorById(companies);
   const counts: Record<string, number> = {};
 
   for (const signal of vcSignals) {
-    const sectors = vcSignalSectorMap[signal.painPoint] ?? [];
-    const sectorSet = new Set(sectors);
-    counts[signal.painPoint] = acquisitions.filter((acquisition) => {
-      const sector = sectorById.get(acquisition.targetId);
-      return sector !== undefined && sectorSet.has(sector);
-    }).length;
+    counts[signal.painPoint] = acquisitionsForVcSignalPainPoint(
+      acquisitions,
+      sectorById,
+      signal.painPoint,
+    ).length;
   }
 
   return counts;
+}
+
+/**
+ * Up to {@link VC_SIGNAL_MAX_EXAMPLES} recent verified acquisitions per VC
+ * signal pain point (same sector mapping as {@link computeVCSignalCounts}).
+ */
+export function computeVCSignalExamples(
+  acquisitions: VerifiedAcquisitionView[],
+  companies: VerifiedCompanyView[],
+): Record<string, VcSignalDealExample[]> {
+  const sectorById = buildCompanySectorById(companies);
+  const examples: Record<string, VcSignalDealExample[]> = {};
+
+  for (const signal of vcSignals) {
+    examples[signal.painPoint] = toVcSignalDealExamples(
+      acquisitionsForVcSignalPainPoint(
+        acquisitions,
+        sectorById,
+        signal.painPoint,
+      ),
+    );
+  }
+
+  return examples;
 }
 
 export const VC_SIGNAL_DEAL_COUNT_MODEL: ModelProvenance = {
