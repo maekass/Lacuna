@@ -829,8 +829,8 @@ function SegmentComparisonTable({
   }
 
   return (
-    <div className="relative mt-6">
-      <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+    <div className="relative mt-6 after:pointer-events-none after:absolute after:inset-y-0 after:right-0 after:z-10 after:w-10 after:bg-gradient-to-l after:from-lacuna-plum after:to-transparent after:content-[''] sm:after:hidden">
+      <div className="hide-scrollbar overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
         <div className="min-w-[560px] overflow-hidden rounded-2xl border border-white/10">
           <div className="grid grid-cols-5 gap-3 border-b border-white/10 bg-white/10 p-4 text-xs font-semibold uppercase tracking-wide text-white/70">
             <span>Segment</span>
@@ -867,10 +867,6 @@ function SegmentComparisonTable({
           ))}
         </div>
       </div>
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-lacuna-plum to-transparent sm:hidden"
-      />
     </div>
   );
 }
