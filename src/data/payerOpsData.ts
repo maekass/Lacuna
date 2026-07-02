@@ -45,12 +45,13 @@ export interface WorkQueueTemplate {
   name: string;
   automation: number;
   risk: string;
-  impact: string;
   action: string;
 }
 
 export interface WorkQueue extends WorkQueueTemplate {
   volume: number;
+  /** Monthly admin savings — computed by workQueueModel from simulator output. */
+  impact: string;
 }
 
 export type VcMomentum = "accelerating" | "early" | "stable";
@@ -59,8 +60,25 @@ export interface VcSignal {
   painPoint: string;
   thesis: string;
   dealSignal: string;
-  momentum: VcMomentum;
 }
+
+export interface VcSignalDealExample {
+  targetName: string;
+  acquirerName: string;
+  year: number;
+}
+
+/** Maps VC signal pain points to verified-dataset target company sectors (Prompt 28). */
+export const vcSignalSectorMap: Record<string, readonly string[]> = {
+  "Prior-auth digitization": ["General Wellness", "Digital Health"],
+  "Maternal episode coordination": ["Maternal Health"],
+  "Behavioral health parity": ["Mental Health"],
+  "Specialty pharmacy exceptions": [
+    "Reproductive Health",
+    "Contraception",
+    "Dermatology",
+  ],
+};
 
 export type ProgressWidths = Record<number, string>;
 
@@ -133,7 +151,6 @@ export const workQueues: WorkQueueTemplate[] = [
     name: "Musculoskeletal imaging prior auth",
     automation: 64,
     risk: "Low",
-    impact: "$1.4M",
     action: "Auto-approve guideline-concordant requests with complete notes",
   },
   {
@@ -141,7 +158,6 @@ export const workQueues: WorkQueueTemplate[] = [
     name: "Behavioral health professional claims",
     automation: 51,
     risk: "Medium",
-    impact: "$920K",
     action: "Route coding mismatches to provider self-correction before denial",
   },
   {
@@ -149,7 +165,6 @@ export const workQueues: WorkQueueTemplate[] = [
     name: "Maternal episode coordination",
     automation: 43,
     risk: "Medium",
-    impact: "$680K",
     action:
       "Detect missing referrals and attach benefit-aware next-best action",
   },
@@ -158,17 +173,9 @@ export const workQueues: WorkQueueTemplate[] = [
     name: "Specialty pharmacy exceptions",
     automation: 29,
     risk: "High",
-    impact: "$2.1M",
     action: "Keep clinician-in-loop, summarize evidence, and audit decisions",
   },
 ];
-
-export function computeWorkQueueVolumes(avoidableDenials: number): WorkQueue[] {
-  return workQueues.map((queue) => ({
-    ...queue,
-    volume: Math.round(avoidableDenials * WORK_QUEUE_VOLUME_WEIGHTS[queue.key]),
-  }));
-}
 
 export const operatingModel: string[] = [
   "Ingest X12 278/837 status, policy rules, benefits, network files, and notes metadata",
@@ -184,7 +191,6 @@ export const vcSignals: VcSignal[] = [
       "Payers spend an estimated $6–9 per manual auth transaction (CAQH index). Companies that auto-adjudicate routine requests reduce medical loss ratio and provider abrasion simultaneously.",
     dealSignal:
       "Payers and PBMs are active acquirers; strategic rationale is direct cost offset, commanding premiums above pure-financial comps.",
-    momentum: "accelerating",
   },
   {
     painPoint: "Maternal episode coordination",
@@ -192,7 +198,6 @@ export const vcSignals: VcSignal[] = [
       "Unmanaged maternal episodes cost commercial payers $12K–$27K per birth (HRSA/Milliman range). Point solutions reducing avoidable readmissions convert admin spend into member retention.",
     dealSignal:
       "Hospital systems and payers both acquiring; dual-buyer dynamic supports valuation. Lacuna dataset shows meaningful maternal-category deal flow.",
-    momentum: "accelerating",
   },
   {
     painPoint: "Behavioral health parity",
@@ -200,7 +205,6 @@ export const vcSignals: VcSignal[] = [
       "Mental health claim denial rates run higher than medical/surgical equivalents — a documented regulatory and PR liability. BH navigation platforms reducing out-of-network leakage are strategic for large commercial plans.",
     dealSignal:
       "Rapid consolidation since 2021 driven by parity mandates and post-pandemic demand. One of the highest-velocity M&A categories in women's and general health.",
-    momentum: "accelerating",
   },
   {
     painPoint: "Specialty pharmacy exceptions",
@@ -208,7 +212,6 @@ export const vcSignals: VcSignal[] = [
       "Step-therapy and quantity-limit exceptions generate the highest admin cost per case and greatest clinical risk if mis-routed. AI-assisted exception management is early-stage with limited M&A comparables.",
     dealSignal:
       "Sparse deal history — mostly pre-Series B. Limited comparables means first-mover investors set valuation norms rather than follow them.",
-    momentum: "early",
   },
 ];
 

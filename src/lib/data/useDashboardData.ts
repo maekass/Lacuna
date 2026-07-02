@@ -1,6 +1,10 @@
 "use client";
 
 import { useMemo } from "react";
+import {
+  computeHeadlineStats,
+  headlineStatsToTiles,
+} from "@/lib/data/computeHeadlineStats";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { getValuationDisparity } from "@/lib/fairness/headlineStat";
 
@@ -11,6 +15,7 @@ export function useDashboardData() {
   const ctx = useVerifiedDataset();
   const {
     verifiedCompanies,
+    verifiedAcquirers,
     verifiedAcquisitions,
     dataProvenance,
     getVerifiedNetworkNodes,
@@ -29,32 +34,20 @@ export function useDashboardData() {
     [verifiedCompanies],
   );
 
-  const headlineStats = useMemo(
-    () => [
-      {
-        label: "Companies in our network",
-        value: verifiedCompanies.length.toString(),
-      },
-      {
-        label: "Verified deals",
-        value: verifiedAcquisitions.length.toString(),
-      },
-      {
-        label: "In disclosed value",
-        value: `$${(totalDealValue / 1000).toFixed(1)}B`,
-      },
-      {
-        label: "Public sources cited",
-        value: dataProvenance.sources.length.toString(),
-      },
-    ],
-    [
-      verifiedCompanies.length,
-      verifiedAcquisitions.length,
-      totalDealValue,
-      dataProvenance.sources.length,
-    ],
-  );
+  const headlineStats = useMemo(() => {
+    const stats = computeHeadlineStats({
+      companies: verifiedCompanies,
+      acquirers: verifiedAcquirers,
+      acquisitions: verifiedAcquisitions,
+      provenance: dataProvenance,
+    });
+    return headlineStatsToTiles(stats);
+  }, [
+    verifiedCompanies,
+    verifiedAcquirers,
+    verifiedAcquisitions,
+    dataProvenance,
+  ]);
 
   return {
     ...ctx,

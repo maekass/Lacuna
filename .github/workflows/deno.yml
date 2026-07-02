@@ -51,6 +51,12 @@ jobs:
       - name: Validate verified dataset
         run: npm run validate:dataset
 
+      - name: Compute dataset summary
+        run: npm run compute:dataset-summary
+
+      - name: Verify summary artifact is current
+        run: git diff --exit-code src/data/computed-dataset-summary.json
+
       - name: Infrastructure check
         run: npm run infra:check
 
