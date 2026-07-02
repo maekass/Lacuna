@@ -4,10 +4,6 @@ import {
   AlertTriangle,
   ArrowUpRight,
   CheckCircle2,
-  ClipboardCheck,
-  FileSearch,
-  Hospital,
-  Network,
   ShieldCheck,
   Sparkles,
   Stethoscope,
@@ -17,167 +13,19 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
+import {
+  operatingModel,
+  painPoints,
+  progressWidths,
+  segments,
+  type SegmentData,
+  type SegmentKey,
+  vcSignals,
+  workQueues,
+} from "@/data/payerOpsData";
 
 const SECTION = "mb-16 scroll-mt-28";
-
-type SegmentKey = "commercial" | "medicaid" | "medicare";
-
-const segments: Record<SegmentKey, {
-  label: string;
-  lives: string;
-  auths: number;
-  claims: number;
-  denialRate: number;
-  avoidableRate: number;
-  adminCost: number;
-}> = {
-  commercial: {
-    label: "Commercial ASO + fully insured",
-    lives: "1.8M",
-    auths: 18400,
-    claims: 920000,
-    denialRate: 10.8,
-    avoidableRate: 31,
-    adminCost: 5.8,
-  },
-  medicaid: {
-    label: "Medicaid managed care",
-    lives: "910K",
-    auths: 12200,
-    claims: 610000,
-    denialRate: 13.6,
-    avoidableRate: 38,
-    adminCost: 6.9,
-  },
-  medicare: {
-    label: "Medicare Advantage",
-    lives: "420K",
-    auths: 8100,
-    claims: 380000,
-    denialRate: 15.1,
-    avoidableRate: 34,
-    adminCost: 7.4,
-  },
-};
-
-const painPoints = [
-  {
-    title: "Prior authorization rework",
-    value: "~40%",
-    detail:
-      "of pended requests require additional clinical documentation",
-    source: "AMA 2023 Prior Auth Survey",
-    icon: ClipboardCheck,
-  },
-  {
-    title: "Claim denial reversals",
-    value: "40–75%",
-    detail:
-      "of appealed denials are overturned on review — wide range by plan and service type",
-    source: "KFF / AHA denial appeals data",
-    icon: FileSearch,
-  },
-  {
-    title: "Provider abrasion",
-    value: "3–17 days",
-    detail:
-      "typical prior-auth cycle time; non-urgent requests can exceed 30 days",
-    source: "CMS 2023 prior authorization data",
-    icon: Hospital,
-  },
-  {
-    title: "Fragmented rules",
-    value: "Many systems",
-    detail:
-      "policy, benefit, network, medical-necessity, and claim-edit rules held in separate platforms",
-    icon: Network,
-  },
-];
-
-const workQueues = [
-  {
-    name: "Musculoskeletal imaging prior auth",
-    volume: 1842,
-    automation: 64,
-    risk: "Low",
-    impact: "$1.4M",
-    action: "Auto-approve guideline-concordant requests with complete notes",
-  },
-  {
-    name: "Behavioral health professional claims",
-    volume: 1268,
-    automation: 51,
-    risk: "Medium",
-    impact: "$920K",
-    action: "Route coding mismatches to provider self-correction before denial",
-  },
-  {
-    name: "Maternal episode coordination",
-    volume: 732,
-    automation: 43,
-    risk: "Medium",
-    impact: "$680K",
-    action:
-      "Detect missing referrals and attach benefit-aware next-best action",
-  },
-  {
-    name: "Specialty pharmacy exceptions",
-    volume: 516,
-    automation: 29,
-    risk: "High",
-    impact: "$2.1M",
-    action: "Keep clinician-in-loop, summarize evidence, and audit decisions",
-  },
-];
-
-const operatingModel = [
-  "Ingest X12 278/837 status, policy rules, benefits, network files, and notes metadata",
-  "Score each case for administrative preventability, clinical risk, SLA urgency, and provider friction",
-  "Resolve low-risk administrative defects before denial with provider-facing next-best actions",
-  "Escalate clinically sensitive cases with evidence packets and auditable rationale",
-];
-
-const vcSignals = [
-  {
-    painPoint: "Prior-auth digitization",
-    thesis:
-      "Payers spend an estimated $6–9 per manual auth transaction (CAQH index). Companies that auto-adjudicate routine requests reduce medical loss ratio and provider abrasion simultaneously.",
-    dealSignal:
-      "Payers and PBMs are active acquirers; strategic rationale is direct cost offset, commanding premiums above pure-financial comps.",
-    momentum: "accelerating" as const,
-  },
-  {
-    painPoint: "Maternal episode coordination",
-    thesis:
-      "Unmanaged maternal episodes cost commercial payers $12K–$27K per birth (HRSA/Milliman range). Point solutions reducing avoidable readmissions convert admin spend into member retention.",
-    dealSignal:
-      "Hospital systems and payers both acquiring; dual-buyer dynamic supports valuation. Lacuna dataset shows meaningful maternal-category deal flow.",
-    momentum: "accelerating" as const,
-  },
-  {
-    painPoint: "Behavioral health parity",
-    thesis:
-      "Mental health claim denial rates run higher than medical/surgical equivalents — a documented regulatory and PR liability. BH navigation platforms reducing out-of-network leakage are strategic for large commercial plans.",
-    dealSignal:
-      "Rapid consolidation since 2021 driven by parity mandates and post-pandemic demand. One of the highest-velocity M&A categories in women's and general health.",
-    momentum: "accelerating" as const,
-  },
-  {
-    painPoint: "Specialty pharmacy exceptions",
-    thesis:
-      "Step-therapy and quantity-limit exceptions generate the highest admin cost per case and greatest clinical risk if mis-routed. AI-assisted exception management is early-stage with limited M&A comparables.",
-    dealSignal:
-      "Sparse deal history — mostly pre-Series B. Limited comparables means first-mover investors set valuation norms rather than follow them.",
-    momentum: "early" as const,
-  },
-];
-
-const progressWidths: Record<number, string> = {
-  29: "w-[29%]",
-  43: "w-[43%]",
-  51: "w-[51%]",
-  64: "w-[64%]",
-};
+const SECTION_DESC = "text-sm sm:text-base";
 
 function formatNumber(value: number) {
   return new Intl.NumberFormat("en-US").format(value);
@@ -190,7 +38,7 @@ function parseLives(lives: string) {
 }
 
 function computeModeled(
-  segmentData: (typeof segments)[SegmentKey],
+  segmentData: SegmentData,
   denialRate: number,
   avoidableRate: number,
 ) {
@@ -288,7 +136,7 @@ export default function PayerOpsPage() {
             <p className="lacuna-eyebrow text-xs font-semibold text-lacuna-blue">
               Portfolio project · healthcare payer administration
             </p>
-            <h1 className="mt-3 max-w-4xl text-4xl font-bold leading-tight text-lacuna-plum sm:text-5xl">
+            <h1 className="mt-3 max-w-4xl text-3xl font-bold leading-tight text-lacuna-plum sm:text-5xl">
               PayerOps Navigator for reducing avoidable administrative waste
             </h1>
             <p className="mt-4 max-w-3xl text-lg leading-relaxed text-lacuna-blue">
@@ -337,6 +185,7 @@ export default function PayerOpsPage() {
         <SectionHeader
           title="Payer friction → VC investment thesis"
           description="Each payer administrative pain point is also an investment signal. This section maps the operational problems below to the M&A themes they generate — the lens a corporate VC would apply when evaluating women's health deal flow."
+          descriptionClassName={SECTION_DESC}
         />
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {vcSignals.map((s) => {
@@ -350,7 +199,7 @@ export default function PayerOpsPage() {
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <TrendingUp className="h-4 w-4 shrink-0 text-lacuna-blue" />
-                  <span className="text-xs font-semibold uppercase tracking-wide text-lacuna-blue">
+                  <span className="text-[11px] font-semibold uppercase tracking-wide text-lacuna-blue sm:text-xs">
                     {s.painPoint}
                   </span>
                 </div>
@@ -411,8 +260,9 @@ export default function PayerOpsPage() {
         <SectionHeader
           title="The operational problem"
           description="A meaningful share of payer administrative cost is created by preventable defects: incomplete documentation, benefit ambiguity, coding mismatches, manual routing, and inconsistent policy interpretation."
+          descriptionClassName={SECTION_DESC}
         />
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-4">
           {painPoints.map(({ title, value, detail, source, icon: Icon }) => (
             <div
               key={title}
@@ -440,6 +290,7 @@ export default function PayerOpsPage() {
         <SectionHeader
           title="Opportunity simulator"
           description="A lightweight business-case model using hypothetical plan inputs. Swap in real enrollment, denial, and cost-per-touch data to generate a grounded estimate."
+          descriptionClassName={SECTION_DESC}
         />
         <div className="rounded-3xl border border-white/10 bg-lacuna-plum p-6 shadow-sm">
           <div className="flex flex-wrap items-center gap-2">
@@ -561,6 +412,7 @@ export default function PayerOpsPage() {
         <SectionHeader
           title="Operational triage design"
           description="The project demonstrates how a payer operations team could prioritize work by preventability, risk, automation readiness, and financial impact."
+          descriptionClassName={SECTION_DESC}
         />
         <p className="mb-4 text-sm text-lacuna-blue/70">
           Example queue structure — volumes, automation readiness, and impact
@@ -643,8 +495,9 @@ export default function PayerOpsPage() {
         <SectionHeader
           title="Solution architecture"
           description="The concept is intentionally framed as a responsible workflow layer, not a black-box denial engine."
+          descriptionClassName={SECTION_DESC}
         />
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {operatingModel.map((item, index) => (
             <div
               key={item}
@@ -663,8 +516,9 @@ export default function PayerOpsPage() {
         <SectionHeader
           title="Governance and safeguards"
           description="The strongest portfolio signal is showing where automation should stop."
+          descriptionClassName={SECTION_DESC}
         />
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <Capability
             icon={ShieldCheck}
             title="Audit trail"
