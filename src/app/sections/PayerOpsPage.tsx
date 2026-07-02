@@ -123,6 +123,14 @@ export default function PayerOpsPage() {
       ...(current ?? segments[segment]),
       ...patch,
     }));
+    if (patch.denialRate !== undefined) setDenialRate(patch.denialRate);
+    if (patch.avoidableRate !== undefined) setAvoidableRate(patch.avoidableRate);
+  }
+
+  function resetCustomSegment() {
+    setCustomSegment(null);
+    setDenialRate(segments[segment].denialRate);
+    setAvoidableRate(segments[segment].avoidableRate);
   }
 
   const modeled = useMemo(() => {
@@ -466,7 +474,7 @@ export default function PayerOpsPage() {
                   ? (
                     <button
                       type="button"
-                      onClick={() => setCustomSegment(null)}
+                      onClick={resetCustomSegment}
                       className="mt-3 text-xs font-medium text-lacuna-blue underline-offset-2 hover:underline"
                     >
                       Reset to defaults
@@ -494,7 +502,11 @@ export default function PayerOpsPage() {
                 max={25}
                 step={0.5}
                 value={denialRate}
-                onChange={(e) => setDenialRate(Number(e.target.value))}
+                onChange={(e) => {
+                  const next = Number(e.target.value);
+                  setDenialRate(next);
+                  if (customSegment) updateCustomSegment({ denialRate: next });
+                }}
                 className="h-2 w-full touch-pan-x accent-lacuna-plum"
               />
               <div className="mt-0.5 flex justify-between text-[10px] text-white/45">
@@ -519,7 +531,11 @@ export default function PayerOpsPage() {
                 max={60}
                 step={1}
                 value={avoidableRate}
-                onChange={(e) => setAvoidableRate(Number(e.target.value))}
+                onChange={(e) => {
+                  const next = Number(e.target.value);
+                  setAvoidableRate(next);
+                  if (customSegment) updateCustomSegment({ avoidableRate: next });
+                }}
                 className="h-2 w-full touch-pan-x accent-lacuna-plum"
               />
               <div className="mt-0.5 flex justify-between text-[10px] text-white/45">
