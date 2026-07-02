@@ -5,6 +5,11 @@ import {
   type LucideIcon,
   Network,
 } from "lucide-react";
+import type {
+  VerifiedAcquisitionView,
+  VerifiedCompanyView,
+} from "@/lib/data/verifiedDataHelpers";
+import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
 
 export type SegmentKey = "commercial" | "medicaid" | "medicare";
 
@@ -46,12 +51,11 @@ export interface WorkQueueTemplate {
   automation: number;
   risk: string;
   action: string;
+  impact: string;
 }
 
 export interface WorkQueue extends WorkQueueTemplate {
   volume: number;
-  /** Monthly admin savings — computed by workQueueModel from simulator output. */
-  impact: string;
 }
 
 export type VcMomentum = "accelerating" | "early" | "stable";
@@ -68,16 +72,12 @@ export interface VcSignalDealExample {
   year: number;
 }
 
-/** Maps VC signal pain points to verified-dataset target company sectors (Prompt 28). */
+/** Maps VC signal pain points to verified-dataset target company sectors. */
 export const vcSignalSectorMap: Record<string, readonly string[]> = {
-  "Prior-auth digitization": ["General Wellness", "Digital Health"],
+  "Prior-auth digitization": ["Mental Health", "General Wellness"],
   "Maternal episode coordination": ["Maternal Health"],
   "Behavioral health parity": ["Mental Health"],
-  "Specialty pharmacy exceptions": [
-    "Reproductive Health",
-    "Contraception",
-    "Dermatology",
-  ],
+  "Specialty pharmacy exceptions": ["Precision Medicine"],
 };
 
 export type ProgressWidths = Record<number, string>;
@@ -151,6 +151,7 @@ export const workQueues: WorkQueueTemplate[] = [
     name: "Musculoskeletal imaging prior auth",
     automation: 64,
     risk: "Low",
+    impact: "$1.4M",
     action: "Auto-approve guideline-concordant requests with complete notes",
   },
   {
@@ -158,6 +159,7 @@ export const workQueues: WorkQueueTemplate[] = [
     name: "Behavioral health professional claims",
     automation: 51,
     risk: "Medium",
+    impact: "$920K",
     action: "Route coding mismatches to provider self-correction before denial",
   },
   {
@@ -165,6 +167,7 @@ export const workQueues: WorkQueueTemplate[] = [
     name: "Maternal episode coordination",
     automation: 43,
     risk: "Medium",
+    impact: "$680K",
     action:
       "Detect missing referrals and attach benefit-aware next-best action",
   },
@@ -173,6 +176,7 @@ export const workQueues: WorkQueueTemplate[] = [
     name: "Specialty pharmacy exceptions",
     automation: 29,
     risk: "High",
+    impact: "$2.1M",
     action: "Keep clinician-in-loop, summarize evidence, and audit decisions",
   },
 ];
@@ -221,3 +225,51 @@ export const progressWidths: ProgressWidths = {
   51: "w-[51%]",
   64: "w-[64%]",
 };
+
+/**
+ * Count verified acquisitions whose target sector matches each VC signal
+ * pain point via {@link vcSignalSectorMap}.
+ */
+export function computeVCSignalCounts(
+  acquisitions: VerifiedAcquisitionView[],
+  companies: VerifiedCompanyView[],
+): Record<string, number> {
+  const sectorById = new Map(companies.map((c) => [c.id, c.sector]));
+  const counts: Record<string, number> = {};
+
+  for (const signal of vcSignals) {
+    const sectors = vcSignalSectorMap[signal.painPoint] ?? [];
+    const sectorSet = new Set(sectors);
+    counts[signal.painPoint] = acquisitions.filter((acquisition) => {
+      const sector = sectorById.get(acquisition.targetId);
+      return sector !== undefined && sectorSet.has(sector);
+    }).length;
+  }
+
+  return counts;
+}
+
+export const VC_SIGNAL_DEAL_COUNT_MODEL: ModelProvenance = {
+  module: "src/data/payerOpsData.ts",
+  exportName: "computeVCSignalCounts",
+  definition:
+    "Verified acquisitions whose target sector matches vcSignalSectorMap[painPoint]; count = matches.length.",
+};
+
+/**
+ * Allocates modeled avoidable denials across triage queues using
+ * {@link WORK_QUEUE_VOLUME_WEIGHTS} (≈81% of total in modeled queues).
+ */
+export function computeWorkQueueVolumes(
+  avoidableDenials: number,
+): WorkQueue[] {
+  return workQueues.map((queue) => ({
+    ...queue,
+    volume: Math.round(
+      avoidableDenials * WORK_QUEUE_VOLUME_WEIGHTS[queue.key],
+    ),
+  }));
+}
+
+export const WORK_QUEUE_MODEL_FOOTNOTE =
+  "Derived · src/data/payerOpsData.ts · queue volumes follow WORK_QUEUE_VOLUME_WEIGHTS applied to simulator avoidable denials; automation, risk, impact, and action are static workflow design.";

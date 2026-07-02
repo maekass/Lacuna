@@ -4,7 +4,6 @@ import {
   vcSignals,
   vcSignalSectorMap,
 } from "@/data/payerOpsData";
-import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
 import type { VerifiedAcquisitionView } from "@/lib/data/verifiedDataHelpers";
 
 const RECENT_DEAL_YEARS = 3;
@@ -98,11 +97,4 @@ export function computeVcSignalDealFlow(
 }
 
 export const VC_SIGNAL_MODEL_FOOTNOTE =
-  "Derived · src/lib/payerOps/vcSignalModel.ts · deal counts and examples from dataset.verified.json via sector map; momentum from verified deal dates.";
-
-export const VC_SIGNAL_DEAL_COUNT_MODEL: ModelProvenance = {
-  module: "src/lib/payerOps/vcSignalModel.ts",
-  exportName: "computeVcSignalDealFlow",
-  definition:
-    "Verified acquisitions whose target sector matches vcSignalSectorMap[painPoint]; count = matches.length.",
-};
+  "Derived · src/data/payerOpsData.ts · deal counts from computeVCSignalCounts via sector map; momentum from verified deal dates in vcSignalModel.";

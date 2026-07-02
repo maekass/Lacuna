@@ -17,12 +17,16 @@ import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import {
+  computeVCSignalCounts,
+  computeWorkQueueVolumes,
   operatingModel,
   painPoints,
   progressWidths,
   type SegmentKey,
   segments,
   vcSignals,
+  VC_SIGNAL_DEAL_COUNT_MODEL,
+  WORK_QUEUE_MODEL_FOOTNOTE,
 } from "@/data/payerOpsData";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import {
@@ -32,13 +36,8 @@ import {
 } from "@/lib/payerOps/opportunityModel";
 import {
   computeVcSignalDealFlow,
-  VC_SIGNAL_DEAL_COUNT_MODEL,
   VC_SIGNAL_MODEL_FOOTNOTE,
 } from "@/lib/payerOps/vcSignalModel";
-import {
-  computeWorkQueueVolumes,
-  WORK_QUEUE_MODEL_FOOTNOTE,
-} from "@/lib/payerOps/workQueueModel";
 import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
 
 const SECTION = "mb-16 scroll-mt-28";
@@ -186,12 +185,8 @@ export default function PayerOpsPage() {
   const animatedAuthHours = useAnimatedNumber(modeled.authHours, 400);
 
   const triageQueues = useMemo(
-    () =>
-      computeWorkQueueVolumes(
-        modeled.avoidableDenials,
-        activeSegment.adminCost,
-      ),
-    [modeled.avoidableDenials, activeSegment.adminCost],
+    () => computeWorkQueueVolumes(modeled.avoidableDenials),
+    [modeled.avoidableDenials],
   );
 
   const { verifiedAcquisitions, verifiedCompanies } = useVerifiedDataset();
@@ -207,6 +202,11 @@ export default function PayerOpsPage() {
   const vcSignalDealFlow = useMemo(
     () => computeVcSignalDealFlow(verifiedAcquisitions, companySectorById),
     [verifiedAcquisitions, companySectorById],
+  );
+
+  const dealCounts = useMemo(
+    () => computeVCSignalCounts(verifiedAcquisitions, verifiedCompanies),
+    [verifiedAcquisitions, verifiedCompanies],
   );
 
   return (
@@ -277,6 +277,7 @@ export default function PayerOpsPage() {
             const isExpanded = expandedDealSignal === s.painPoint;
             const flow = vcSignalDealFlow.byPainPoint[s.painPoint];
             const momentum = flow.momentum;
+            const matchingDeals = dealCounts[s.painPoint] ?? 0;
 
             return (
               <div
@@ -289,16 +290,6 @@ export default function PayerOpsPage() {
                     <span className="text-[11px] font-semibold uppercase tracking-wide text-lacuna-blue sm:text-xs">
                       {s.painPoint}
                     </span>
-                    {flow.count > 0
-                      ? (
-                        <ModelProvenanceHint model={VC_SIGNAL_DEAL_COUNT_MODEL}>
-                          <span className="cursor-help rounded-full bg-lacuna-lavender/20 px-2 py-0.5 text-[10px] font-medium text-lacuna-plum/80">
-                            {flow.count}{" "}
-                            verified deal{flow.count === 1 ? "" : "s"}
-                          </span>
-                        </ModelProvenanceHint>
-                      )
-                      : null}
                   </div>
                   <span
                     className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
@@ -347,6 +338,20 @@ export default function PayerOpsPage() {
                             <p className="text-xs leading-relaxed text-lacuna-plum">
                               {s.dealSignal}
                             </p>
+                            {matchingDeals > 0
+                              ? (
+                                <ModelProvenanceHint
+                                  model={VC_SIGNAL_DEAL_COUNT_MODEL}
+                                >
+                                  <p className="mt-2 cursor-help text-[11px] text-lacuna-plum/70">
+                                    {matchingDeals} matching deal{matchingDeals ===
+                                        1
+                                      ? ""
+                                      : "s"} in dataset
+                                  </p>
+                                </ModelProvenanceHint>
+                              )
+                              : null}
                             {flow.count > 0
                               ? flow.examples.map((example) => (
                                 <p
@@ -672,8 +677,8 @@ export default function PayerOpsPage() {
           {WORK_QUEUE_MODEL_FOOTNOTE}
         </DiscreteSourceNote>
         <p className="mb-4 text-sm text-lacuna-blue/70">
-          Queue structure and automation readiness are illustrative workflow
-          design. Volumes and monthly impact update from the opportunity
+          Queue structure, automation readiness, and impact labels are
+          illustrative workflow design. Volumes update from the opportunity
           simulator model above.
         </p>
         <div>
