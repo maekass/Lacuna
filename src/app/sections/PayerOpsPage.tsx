@@ -18,6 +18,7 @@ import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import {
   computeVCSignalCounts,
+  computeVCSignalExamples,
   computeWorkQueueVolumes,
   operatingModel,
   painPoints,
@@ -209,6 +210,11 @@ export default function PayerOpsPage() {
     [verifiedAcquisitions, verifiedCompanies],
   );
 
+  const vcSignalExamples = useMemo(
+    () => computeVCSignalExamples(verifiedAcquisitions, verifiedCompanies),
+    [verifiedAcquisitions, verifiedCompanies],
+  );
+
   return (
     <div>
       <header className="mb-10 overflow-hidden rounded-3xl border border-lacuna-lavender/40 bg-white/80 p-6 shadow-sm sm:p-8">
@@ -278,6 +284,7 @@ export default function PayerOpsPage() {
             const flow = vcSignalDealFlow.byPainPoint[s.painPoint];
             const momentum = flow.momentum;
             const matchingDeals = dealCounts[s.painPoint] ?? 0;
+            const examples = vcSignalExamples[s.painPoint] ?? [];
 
             return (
               <div
@@ -338,6 +345,16 @@ export default function PayerOpsPage() {
                             <p className="text-xs leading-relaxed text-lacuna-plum">
                               {s.dealSignal}
                             </p>
+                            {examples.map((example) => (
+                              <p
+                                key={`${example.targetName}-${example.year}`}
+                                className="mt-2 text-[11px] text-lacuna-plum/70"
+                              >
+                                {example.targetName} → {example.acquirerName}
+                                {" "}
+                                ({example.year})
+                              </p>
+                            ))}
                             {matchingDeals > 0
                               ? (
                                 <ModelProvenanceHint
@@ -351,18 +368,6 @@ export default function PayerOpsPage() {
                                   </p>
                                 </ModelProvenanceHint>
                               )
-                              : null}
-                            {flow.count > 0
-                              ? flow.examples.map((example) => (
-                                <p
-                                  key={`${example.targetName}-${example.year}`}
-                                  className="mt-2 text-[11px] text-lacuna-plum/70"
-                                >
-                                  {example.targetName} → {example.acquirerName}
-                                  {" "}
-                                  ({example.year})
-                                </p>
-                              ))
                               : null}
                           </div>
                         </div>
