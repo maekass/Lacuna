@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
@@ -210,18 +210,12 @@ export default function ValuationMatrix() {
     [verifiedCompanies],
   );
 
-  const [activeSectors, setActiveSectors] = useState<Set<string>>(
-    () => new Set(),
-  );
+  const [activeSectors, setActiveSectors] = useState<Set<string> | null>(null);
 
-  useEffect(() => {
-    if (allSectors.length > 0 && activeSectors.size === 0) {
-      setActiveSectors(new Set(allSectors));
-    }
-  }, [allSectors, activeSectors.size]);
+  const resolvedActiveSectors = activeSectors ?? new Set(allSectors);
 
   const allSectorsActive = allSectors.length > 0 &&
-    allSectors.every((sector) => activeSectors.has(sector));
+    allSectors.every((sector) => resolvedActiveSectors.has(sector));
 
   function selectAll() {
     setActiveSectors(new Set(allSectors));
@@ -230,7 +224,7 @@ export default function ValuationMatrix() {
   function toggleSector(sector: string) {
     let removed = false;
     setActiveSectors((prev) => {
-      const next = new Set(prev);
+      const next = new Set(prev ?? allSectors);
       if (next.has(sector)) {
         if (next.size <= 1) return prev;
         next.delete(sector);
@@ -257,7 +251,7 @@ export default function ValuationMatrix() {
       verifiedCompanies.map((company) => [company.id, company]),
     );
     const visibleSectors = allSectors.filter((sector) =>
-      activeSectors.has(sector)
+      resolvedActiveSectors.has(sector)
     );
     const sectorDealCounts = verifiedAcquisitions.reduce<
       Record<string, Record<number, number>>
@@ -331,7 +325,12 @@ export default function ValuationMatrix() {
       totalCompanies: verifiedCompanies.length,
       sectorMomentum: momentumBySector,
     };
-  }, [verifiedCompanies, verifiedAcquisitions, allSectors, activeSectors]);
+  }, [
+    verifiedCompanies,
+    verifiedAcquisitions,
+    allSectors,
+    resolvedActiveSectors,
+  ]);
 
   const getColor = (value: number) => {
     if (value === 0) return "#f8fafc";
@@ -374,7 +373,7 @@ export default function ValuationMatrix() {
             key={sector}
             type="button"
             onClick={() => toggleSector(sector)}
-            className={activeSectors.has(sector)
+            className={resolvedActiveSectors.has(sector)
               ? SECTOR_CHIP_ACTIVE
               : SECTOR_CHIP_INACTIVE}
           >
