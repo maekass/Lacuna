@@ -15,6 +15,7 @@
  */
 
 import { readFileSync, writeFileSync } from "fs";
+import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 
 interface Company {
   id: string;
@@ -178,7 +179,7 @@ for (const [type, premiums] of typeGroups) {
 }
 
 const output = {
-  generatedAt: new Date().toISOString(),
+  generatedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
   source: "Lacuna verified dataset (n=59 acquisitions)",
   acquirerPremiums: results,
   acquirerTypePremiums,
@@ -190,7 +191,7 @@ const output = {
 
 writeFileSync(
   "src/data/computed-acquirer-premiums.json",
-  JSON.stringify(output, null, 2),
+  JSON.stringify(output, null, 2) + "\n",
 );
 
 console.log(

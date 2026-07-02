@@ -36,7 +36,6 @@ jobs:
         uses: denoland/setup-deno@v1.2.0
         with:
           deno-version: v1.x
-          cache: true
 
       - name: Verify formatting
         # Required by CI — run `deno fmt` locally before pushing.
@@ -50,6 +49,12 @@ jobs:
 
       - name: Validate verified dataset
         run: npm run validate:dataset
+
+      - name: Recompute quantitative artifacts
+        run: npm run compute:all
+
+      - name: Verify computed artifacts are current
+        run: npm run verify:computed
 
       - name: Infrastructure check
         run: npm run infra:check

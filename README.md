@@ -416,4 +416,8 @@ separate agreement. Converts to Apache 2.0 May 2030.
 **[Mae Kass](https://github.com/maekass)** — open investment-research tools for
 women's health data literacy and honest analytics.
 
+<p align="center">
+  <sup>†</sup> <small>Deal counts and acquisition examples shown in-app — including Payer Ops VC signals — are computed from <code>src/data/dataset.verified.json</code> via <code>src/lib/payerOps/vcSignalModel.ts</code> and related model scripts; not synthetic deal data.</small>
+</p>
+
 </div>

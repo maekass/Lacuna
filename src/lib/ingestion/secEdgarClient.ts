@@ -105,6 +105,11 @@ function matchesAcquisition(text: string): string[] {
 /** Load SEC company tickers map (ticker → CIK). Cached per process. */
 let tickerCache: Map<string, SecTickerEntry> | undefined;
 
+/** Clears the in-memory ticker cache (Vitest isolation only). */
+export function resetSecEdgarTickerCacheForTests(): void {
+  tickerCache = undefined;
+}
+
 export async function loadSecTickerMap(): Promise<Map<string, SecTickerEntry>> {
   if (tickerCache) return tickerCache;
 

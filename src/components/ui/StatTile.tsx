@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 interface StatTileProps {
   value: string;
@@ -31,7 +31,7 @@ function formatAnimatedValue(current: number, suffix: string): string {
 }
 
 export default function StatTile({ value, label }: StatTileProps) {
-  const animatable = parseAnimatableValue(value);
+  const animatable = useMemo(() => parseAnimatableValue(value), [value]);
   const [displayValue, setDisplayValue] = useState(() =>
     animatable ? formatAnimatedValue(0, animatable.suffix) : value
   );

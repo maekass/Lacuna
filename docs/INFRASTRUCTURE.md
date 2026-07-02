@@ -95,19 +95,21 @@ AI and Sentry: [INFERENCE.md](./INFERENCE.md),
 
 ## Scripts
 
-| Command                         | Purpose                                                |
-| ------------------------------- | ------------------------------------------------------ |
-| `npm run validate:dataset`      | Schema + provenance validation on JSON                 |
-| `npm run infra:check`           | Env checklist + health aggregate (exit 1 if unhealthy) |
-| `npm run db:migrate`            | Apply SQL migrations                                   |
-| `npm run db:import`             | Load `dataset.verified.json` into Postgres             |
-| `npm run sec:ingest`            | SEC pipeline (CLI)                                     |
-| `npm run download:free-apis`    | Batch JSON export from free public APIs (see below)    |
-| `npm run clickhouse:migrate`    | Apply ClickHouse variant-store schema                  |
-| `npm run clickhouse:seed`       | Infrastructure demo callset (local dev)                |
-| `npm run clickhouse:ingest-vcf` | Stream VCF → object storage + ClickHouse summaries     |
-| `npm run python-api:dev`        | FastAPI sidecar on :8000 (REST + GraphQL)              |
-| `npm run python-api:test`       | Pytest for Python API                                  |
+| Command                         | Purpose                                                 |
+| ------------------------------- | ------------------------------------------------------- |
+| `npm run validate:dataset`      | Schema + provenance validation on JSON                  |
+| `npm run compute:all`           | Regenerate all dataset-derived `computed-*.json` models |
+| `npm run verify:computed`       | CI guard — fail if computed artifacts are stale         |
+| `npm run infra:check`           | Env checklist + health aggregate (exit 1 if unhealthy)  |
+| `npm run db:migrate`            | Apply SQL migrations                                    |
+| `npm run db:import`             | Load `dataset.verified.json` into Postgres              |
+| `npm run sec:ingest`            | SEC pipeline (CLI)                                      |
+| `npm run download:free-apis`    | Batch JSON export from free public APIs (see below)     |
+| `npm run clickhouse:migrate`    | Apply ClickHouse variant-store schema                   |
+| `npm run clickhouse:seed`       | Infrastructure demo callset (local dev)                 |
+| `npm run clickhouse:ingest-vcf` | Stream VCF → object storage + ClickHouse summaries      |
+| `npm run python-api:dev`        | FastAPI sidecar on :8000 (REST + GraphQL)               |
+| `npm run python-api:test`       | Pytest for Python API                                   |
 
 ## Python API sidecar (optional)
 

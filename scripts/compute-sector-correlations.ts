@@ -15,6 +15,7 @@
  */
 
 import { readFileSync, writeFileSync } from "fs";
+import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 
 interface Company {
   id: string;
@@ -169,7 +170,7 @@ const overallCorrelation =
     : null;
 
 const output = {
-  generatedAt: new Date().toISOString(),
+  generatedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
   source:
     "Lacuna verified dataset (n=59 acquisitions) + CMS CPT code sector mapping",
   overallCorrelation: {
@@ -186,7 +187,7 @@ const output = {
 
 writeFileSync(
   "src/data/computed-sector-correlations.json",
-  JSON.stringify(output, null, 2),
+  JSON.stringify(output, null, 2) + "\n",
 );
 
 console.log(

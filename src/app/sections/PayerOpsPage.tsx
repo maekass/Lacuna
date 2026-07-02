@@ -11,18 +11,31 @@ import {
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
+import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import { DiscreteSourceNote } from "@/components/DiscreteSources";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import {
-  computeWorkQueueVolumes,
   operatingModel,
   painPoints,
   progressWidths,
-  type SegmentData,
   type SegmentKey,
   segments,
   vcSignals,
 } from "@/data/payerOpsData";
+import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import {
+  computeModeled,
+  OPPORTUNITY_MODEL_FOOTNOTE,
+} from "@/lib/payerOps/opportunityModel";
+import {
+  computeVcSignalDealFlow,
+  VC_SIGNAL_MODEL_FOOTNOTE,
+} from "@/lib/payerOps/vcSignalModel";
+import {
+  computeWorkQueueVolumes,
+  WORK_QUEUE_MODEL_FOOTNOTE,
+} from "@/lib/payerOps/workQueueModel";
 
 const SECTION = "mb-16 scroll-mt-28";
 const SECTION_DESC = "text-sm sm:text-base";
@@ -46,19 +59,6 @@ function formatLivesCount(count: number) {
     return `${Math.round(count / 1_000)}K`;
   }
   return String(count);
-}
-
-function computeModeled(
-  segmentData: SegmentData,
-  denialRate: number,
-  avoidableRate: number,
-) {
-  const avoidableDenials = Math.round(
-    segmentData.claims * (denialRate / 100) * (avoidableRate / 100),
-  );
-  const monthlySavings = Math.round(avoidableDenials * segmentData.adminCost);
-  const authHours = Math.round(segmentData.auths * 0.22);
-  return { avoidableDenials, monthlySavings, authHours };
 }
 
 function useAnimatedNumber(target: number, duration: number): number {
@@ -175,8 +175,27 @@ export default function PayerOpsPage() {
   const animatedAuthHours = useAnimatedNumber(modeled.authHours, 400);
 
   const triageQueues = useMemo(
-    () => computeWorkQueueVolumes(modeled.avoidableDenials),
-    [modeled.avoidableDenials],
+    () =>
+      computeWorkQueueVolumes(
+        modeled.avoidableDenials,
+        activeSegment.adminCost,
+      ),
+    [modeled.avoidableDenials, activeSegment.adminCost],
+  );
+
+  const { verifiedAcquisitions, verifiedCompanies } = useVerifiedDataset();
+
+  const companySectorById = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const company of verifiedCompanies) {
+      map.set(company.id, company.sector);
+    }
+    return map;
+  }, [verifiedCompanies]);
+
+  const vcSignalDealFlow = useMemo(
+    () => computeVcSignalDealFlow(verifiedAcquisitions, companySectorById),
+    [verifiedAcquisitions, companySectorById],
   );
 
   return (
@@ -238,9 +257,15 @@ export default function PayerOpsPage() {
           description="Each payer administrative pain point is also an investment signal. This section maps the operational problems below to the M&A themes they generate — the lens a corporate VC would apply when evaluating women's health deal flow."
           descriptionClassName={SECTION_DESC}
         />
+        <CuratedDatasetBanner className="mb-4" forceShow />
+        <DiscreteSourceNote className="mb-4">
+          {VC_SIGNAL_MODEL_FOOTNOTE}
+        </DiscreteSourceNote>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {vcSignals.map((s) => {
             const isExpanded = expandedDealSignal === s.painPoint;
+            const flow = vcSignalDealFlow.byPainPoint[s.painPoint];
+            const momentum = flow.momentum;
 
             return (
               <div
@@ -248,22 +273,30 @@ export default function PayerOpsPage() {
                 className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <TrendingUp className="h-4 w-4 shrink-0 text-lacuna-blue" />
                     <span className="text-[11px] font-semibold uppercase tracking-wide text-lacuna-blue sm:text-xs">
                       {s.painPoint}
                     </span>
+                    {flow.count > 0
+                      ? (
+                        <span className="rounded-full bg-lacuna-lavender/20 px-2 py-0.5 text-[10px] font-medium text-lacuna-plum/80">
+                          {flow.count}{" "}
+                          verified deal{flow.count === 1 ? "" : "s"}
+                        </span>
+                      )
+                      : null}
                   </div>
                   <span
                     className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
-                      s.momentum === "accelerating"
+                      momentum === "accelerating"
                         ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                        : s.momentum === "early"
+                        : momentum === "early"
                         ? "bg-amber-50 text-amber-700 border border-amber-200"
                         : "bg-lacuna-lavender/20 text-lacuna-plum/70 border border-lacuna-lavender/30"
                     }`}
                   >
-                    {s.momentum === "accelerating"
+                    {momentum === "accelerating"
                       ? (
                         <span
                           className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500 animate-pulse"
@@ -271,7 +304,7 @@ export default function PayerOpsPage() {
                         />
                       )
                       : null}
-                    {s.momentum === "early" ? "early stage" : s.momentum}
+                    {momentum === "early" ? "early stage" : momentum}
                   </span>
                 </div>
                 <p className="mt-3 text-sm leading-relaxed text-lacuna-blue">
@@ -297,9 +330,23 @@ export default function PayerOpsPage() {
                       >
                         <div className="mt-4 flex items-start gap-2 rounded-xl bg-lacuna-lavender/10 p-3">
                           <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lacuna-plum" />
-                          <p className="text-xs leading-relaxed text-lacuna-plum">
-                            {s.dealSignal}
-                          </p>
+                          <div>
+                            <p className="text-xs leading-relaxed text-lacuna-plum">
+                              {s.dealSignal}
+                            </p>
+                            {flow.count > 0
+                              ? flow.examples.map((example) => (
+                                <p
+                                  key={`${example.targetName}-${example.year}`}
+                                  className="mt-2 text-[11px] text-lacuna-plum/70"
+                                >
+                                  {example.targetName} → {example.acquirerName}
+                                  {" "}
+                                  ({example.year})
+                                </p>
+                              ))
+                              : null}
+                          </div>
                         </div>
                       </motion.div>
                     )
@@ -317,6 +364,10 @@ export default function PayerOpsPage() {
           description="A meaningful share of payer administrative cost is created by preventable defects: incomplete documentation, benefit ambiguity, coding mismatches, manual routing, and inconsistent policy interpretation."
           descriptionClassName={SECTION_DESC}
         />
+        <DiscreteSourceNote className="mb-4">
+          External published benchmarks — cited per card (AMA, KFF/AHA, CMS).
+          Not from the Lacuna verified M&A dataset.
+        </DiscreteSourceNote>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-4">
           {painPoints.map(({ title, value, detail, source, icon: Icon }) => (
             <div
@@ -579,11 +630,7 @@ export default function PayerOpsPage() {
               </div>
             )}
           <p className="mt-4 text-xs text-white/45 leading-relaxed">
-            Model: avoidable denials = monthly claims × denial rate × avoidable
-            fraction. Admin savings = avoidable denials × cost per manual touch
-            (CAQH index). Auth hours = monthly auths × 0.22 hrs/touch. All
-            inputs are hypothetical; denial and avoidable-rate assumptions drawn
-            from published industry benchmarks.
+            {OPPORTUNITY_MODEL_FOOTNOTE}
           </p>
         </div>
       </MotionSection>
@@ -594,9 +641,13 @@ export default function PayerOpsPage() {
           description="The project demonstrates how a payer operations team could prioritize work by preventability, risk, automation readiness, and financial impact."
           descriptionClassName={SECTION_DESC}
         />
+        <DiscreteSourceNote className="mb-4">
+          {WORK_QUEUE_MODEL_FOOTNOTE}
+        </DiscreteSourceNote>
         <p className="mb-4 text-sm text-lacuna-blue/70">
-          Example queue structure — volumes, automation readiness, and impact
-          figures are illustrative, not measured operational data.
+          Queue structure and automation readiness are illustrative workflow
+          design. Volumes and monthly impact update from the opportunity
+          simulator model above.
         </p>
         <div>
           <div className="grid gap-4 lg:hidden">
@@ -609,10 +660,14 @@ export default function PayerOpsPage() {
                   {queue.name}
                 </div>
                 <p className="mt-1 text-sm text-lacuna-blue">{queue.action}</p>
-                <div className="mt-4 grid grid-cols-3 gap-2">
+                <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
                   <StatChip
                     label="Volume"
                     value={formatNumber(queue.volume)}
+                  />
+                  <StatChip
+                    label="Impact"
+                    value={queue.impact}
                   />
                   <StatChip
                     label="Automation"

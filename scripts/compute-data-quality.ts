@@ -15,6 +15,7 @@
  */
 
 import { readFileSync, writeFileSync } from "fs";
+import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 
 interface SourceQuality {
   level: "A" | "B" | "C" | "D" | "F";
@@ -257,7 +258,7 @@ const acquisitionGrades = acquisitionScores.reduce((acc, s) => {
 }, {} as Record<string, number>);
 
 const output = {
-  generatedAt: new Date().toISOString(),
+  generatedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
   source: "Lacuna verified dataset (src/data/dataset.verified.json)",
   grading: {
     A: "90-100: SEC filing or equivalent primary source, all fields populated",
@@ -290,7 +291,7 @@ const output = {
 
 writeFileSync(
   "src/data/computed-data-quality-scores.json",
-  JSON.stringify(output, null, 2),
+  JSON.stringify(output, null, 2) + "\n",
 );
 
 console.log(

@@ -5,6 +5,10 @@
     {
       "path": "/api/cron/sec-ingest",
       "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/dataset-summary",
+      "schedule": "30 6 * * *"
     }
   ]
 }

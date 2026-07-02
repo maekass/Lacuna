@@ -1,13 +1,25 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+const LIVE_FETCH_FORBIDDEN =
+  "secEdgarClient tests must mock fetch — live SEC calls are forbidden";
+
+function stubBlockedFetch(): void {
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(() => Promise.reject(new Error(LIVE_FETCH_FORBIDDEN))),
+  );
+}
+
 describe("secEdgarClient (mocked fetch)", () => {
   beforeEach(() => {
     vi.resetModules();
     vi.stubEnv("SEC_EDGAR_USER_AGENT", "Lacuna Research test@example.com");
+    stubBlockedFetch();
   });
 
   afterEach(() => {
     vi.unstubAllGlobals();
+    vi.unstubAllEnvs();
   });
 
   it("loadSecTickerMap resolves tickers from SEC JSON (success)", async () => {
@@ -26,11 +38,16 @@ describe("secEdgarClient (mocked fetch)", () => {
       }),
     );
 
-    const { loadSecTickerMap, resolveTicker } = await import(
-      "@/lib/ingestion/secEdgarClient"
-    );
+    const {
+      loadSecTickerMap,
+      resolveTicker,
+      resetSecEdgarTickerCacheForTests,
+    } = await import("@/lib/ingestion/secEdgarClient");
+    resetSecEdgarTickerCacheForTests();
+
     const map = await loadSecTickerMap();
     expect(map.size).toBe(1);
+    expect(fetch).toHaveBeenCalled();
 
     const entry = await resolveTicker("tdoc");
     expect(entry?.cik).toBe(1477449);
@@ -46,16 +63,26 @@ describe("secEdgarClient (mocked fetch)", () => {
       }),
     );
 
-    const { resolveTicker } = await import("@/lib/ingestion/secEdgarClient");
+    const { resolveTicker, resetSecEdgarTickerCacheForTests } = await import(
+      "@/lib/ingestion/secEdgarClient"
+    );
+    resetSecEdgarTickerCacheForTests();
+
     expect(await resolveTicker("ZZZZ")).toBeUndefined();
+    expect(fetch).toHaveBeenCalled();
   });
 
   it("throws when SEC_EDGAR_USER_AGENT is missing (error)", async () => {
     vi.unstubAllEnvs();
     vi.stubGlobal("fetch", vi.fn());
 
-    const { loadSecTickerMap } = await import("@/lib/ingestion/secEdgarClient");
+    const { loadSecTickerMap, resetSecEdgarTickerCacheForTests } = await import(
+      "@/lib/ingestion/secEdgarClient"
+    );
+    resetSecEdgarTickerCacheForTests();
+
     await expect(loadSecTickerMap()).rejects.toThrow(/SEC_EDGAR_USER_AGENT/);
+    expect(fetch).not.toHaveBeenCalled();
   });
 
   it("fetchRecentFilings filters by keyword and sinceDate (success)", async () => {
@@ -97,6 +124,7 @@ describe("secEdgarClient (mocked fetch)", () => {
     expect(hits).toHaveLength(1);
     expect(hits[0].matchedKeywords).toContain("merger");
     expect(hits[0].filingUrl).toContain("1477449");
+    expect(fetch).toHaveBeenCalled();
   });
 
   it("fetchRecentFilings throws on HTTP error (error)", async () => {
@@ -111,6 +139,7 @@ describe("secEdgarClient (mocked fetch)", () => {
     await expect(fetchRecentFilings(1477449)).rejects.toThrow(
       /submissions failed/,
     );
+    expect(fetch).toHaveBeenCalled();
   });
 
   it("scanAcquisitionFilings skips unknown tickers (edge)", async () => {
@@ -122,12 +151,23 @@ describe("secEdgarClient (mocked fetch)", () => {
       }),
     );
 
-    const { scanAcquisitionFilings } = await import(
-      "@/lib/ingestion/secEdgarClient"
-    );
+    const { scanAcquisitionFilings, resetSecEdgarTickerCacheForTests } =
+      await import("@/lib/ingestion/secEdgarClient");
+    resetSecEdgarTickerCacheForTests();
+
     const hits = await scanAcquisitionFilings(["UNKNOWN"], {
       limitPerTicker: 1,
     });
     expect(hits).toEqual([]);
+    expect(fetch).toHaveBeenCalled();
+  });
+
+  it("rejects accidental live fetch when mock is not applied", async () => {
+    const { loadSecTickerMap, resetSecEdgarTickerCacheForTests } = await import(
+      "@/lib/ingestion/secEdgarClient"
+    );
+    resetSecEdgarTickerCacheForTests();
+
+    await expect(loadSecTickerMap()).rejects.toThrow(LIVE_FETCH_FORBIDDEN);
   });
 });

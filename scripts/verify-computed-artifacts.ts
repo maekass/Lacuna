@@ -1,0 +1,48 @@
+#!/usr/bin/env npx tsx
+
+/**
+ * Fail if dataset-derived computed JSON differs from git HEAD.
+ * Used in CI after `npm run compute:all`.
+ *
+ * Usage: npm run verify:computed
+ */
+
+import process from "node:process";
+import { execSync } from "node:child_process";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const repoRoot = join(__dirname, "..");
+
+/** Artifacts produced by `npm run compute:all` — must stay in sync with dataset. */
+export const DATASET_COMPUTED_ARTIFACTS = [
+  "src/data/computed-benchmarks.json",
+  "src/data/computed-growth-rates.json",
+  "src/data/computed-acquirer-premiums.json",
+  "src/data/computed-sector-correlations.json",
+  "src/data/computed-data-quality-scores.json",
+  "src/data/computed-confidence-intervals.json",
+  "src/data/computed-dataset-summary.json",
+] as const;
+
+function main() {
+  const paths = DATASET_COMPUTED_ARTIFACTS.map((p) => join(repoRoot, p)).join(
+    " ",
+  );
+
+  try {
+    execSync(`git diff --exit-code ${paths}`, {
+      cwd: repoRoot,
+      stdio: "inherit",
+    });
+    console.log("✅ Computed artifacts match the verified dataset.");
+  } catch {
+    console.error(
+      "\n❌ Computed artifacts are stale. Run `npm run compute:all` and commit the changes.",
+    );
+    process.exit(1);
+  }
+}
+
+main();

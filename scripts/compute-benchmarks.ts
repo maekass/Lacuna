@@ -14,6 +14,7 @@
 
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
+import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 
 const ROOT = resolve(__dirname, "..");
 
@@ -154,7 +155,7 @@ for (const [sector, data] of sectorData) {
 benchmarks.sort((a, b) => b.sampleSize - a.sampleSize);
 
 const output = {
-  generatedAt: new Date().toISOString(),
+  generatedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
   source: "Lacuna verified dataset (src/data/dataset.verified.json)",
   datasetStats: {
     totalCompanies: companies.length,
@@ -171,7 +172,7 @@ const output = {
 
 writeFileSync(
   resolve(ROOT, "src/data/computed-benchmarks.json"),
-  JSON.stringify(output, null, 2),
+  JSON.stringify(output, null, 2) + "\n",
 );
 
 console.log(

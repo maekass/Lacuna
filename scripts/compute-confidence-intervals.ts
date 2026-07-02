@@ -16,6 +16,7 @@
  */
 
 import { readFileSync, writeFileSync } from "fs";
+import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 
 interface Company {
   id: string;
@@ -84,17 +85,26 @@ function stdDev(values: number[]): number {
   );
 }
 
-// Bootstrap 95% confidence interval
+function createSeededRandom(seed: number): () => number {
+  let state = seed >>> 0;
+  return () => {
+    state = (state * 1_664_525 + 1_013_904_223) >>> 0;
+    return state / 4_294_967_296;
+  };
+}
+
+// Bootstrap 95% confidence interval (seeded for reproducible CI artifacts)
 function bootstrapCI(
   values: number[],
   iterations = 10000,
 ): { lower: number; upper: number } {
   if (values.length < 2) return { lower: NaN, upper: NaN };
+  const random = createSeededRandom(42);
   const bootstrapped: number[] = [];
   for (let i = 0; i < iterations; i++) {
     const sample: number[] = [];
     for (let j = 0; j < values.length; j++) {
-      sample.push(values[Math.floor(Math.random() * values.length)]);
+      sample.push(values[Math.floor(random() * values.length)]);
     }
     bootstrapped.push(median(sample));
   }
@@ -114,6 +124,9 @@ function normalCI(values: number[]): { lower: number; upper: number } {
 }
 
 // Main — load all computed data
+const verifiedDataset = JSON.parse(
+  readFileSync("src/data/dataset.verified.json", "utf-8"),
+) as { provenance: { lastUpdated: string } };
 const benchmarks = JSON.parse(
   readFileSync("src/data/computed-benchmarks.json", "utf-8"),
 ) as BenchmarksFile;
@@ -218,7 +231,9 @@ for (const ap of premiums.acquirerPremiums) {
 }
 
 const output = {
-  generatedAt: new Date().toISOString(),
+  generatedAt: generatedAtFromProvenance(
+    verifiedDataset.provenance.lastUpdated,
+  ),
   source: "Computed from Lacuna verified dataset via bootstrap resampling",
   results,
   legend: {
@@ -230,7 +245,7 @@ const output = {
 
 writeFileSync(
   "src/data/computed-confidence-intervals.json",
-  JSON.stringify(output, null, 2),
+  JSON.stringify(output, null, 2) + "\n",
 );
 
 console.log(
