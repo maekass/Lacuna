@@ -39,7 +39,9 @@ describe("computeHeadlineStats", () => {
       formatDisclosedValueBillions(stats.disclosedValueMillions),
     );
     expect(stats.uniqueSourceCitations).toBeGreaterThan(0);
-    expect(stats.lastUpdated).toBe(minimalVerifiedDataset.provenance.lastUpdated);
+    expect(stats.lastUpdated).toBe(
+      minimalVerifiedDataset.provenance.lastUpdated,
+    );
   });
 
   it("maps stats to hub tiles (success)", () => {

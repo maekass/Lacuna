@@ -48,7 +48,9 @@ export function countUniqueSourceCitations(
 }
 
 /** Format disclosed deal value (stored in millions) for hub tiles. */
-export function formatDisclosedValueBillions(disclosedValueMillions: number): string {
+export function formatDisclosedValueBillions(
+  disclosedValueMillions: number,
+): string {
   return `$${(disclosedValueMillions / 1000).toFixed(1)}B`;
 }
 

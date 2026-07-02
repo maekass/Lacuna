@@ -1,7 +1,7 @@
 import {
   WORK_QUEUE_VOLUME_WEIGHTS,
-  workQueues,
   type WorkQueue,
+  workQueues,
 } from "@/data/payerOpsData";
 
 function formatQueueImpact(monthlySavings: number): string {

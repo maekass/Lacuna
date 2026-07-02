@@ -1,8 +1,8 @@
 import {
-  vcSignalSectorMap,
-  vcSignals,
   type VcMomentum,
   type VcSignalDealExample,
+  vcSignals,
+  vcSignalSectorMap,
 } from "@/data/payerOpsData";
 import type { VerifiedAcquisitionView } from "@/lib/data/verifiedDataHelpers";
 
@@ -24,9 +24,8 @@ export function deriveVcMomentum(
 ): VcMomentum {
   if (deals.length === 0) return "early";
 
-  const recentCount = deals.filter((deal) =>
-    isRecentDeal(deal.announcedDate, asOfYear)
-  ).length;
+  const recentCount =
+    deals.filter((deal) => isRecentDeal(deal.announcedDate, asOfYear)).length;
 
   if (deals.length <= 2) {
     return recentCount >= 1 ? "accelerating" : "early";

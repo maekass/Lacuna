@@ -1,7 +1,7 @@
 # New deal workflow
 
-Step-by-step guide for promoting a candidate into **verified** data and refreshing
-all quantitative models. Pair with
+Step-by-step guide for promoting a candidate into **verified** data and
+refreshing all quantitative models. Pair with
 [DATA_CURATION_CHECKLIST.md](./DATA_CURATION_CHECKLIST.md) for field rules.
 
 **Verified** = row in `src/data/dataset.verified.json` that passes
@@ -60,15 +60,15 @@ curl https://your-app.vercel.app/api/ingest/sec/status
 
 Before merge, every deal needs:
 
-| Check | Rule |
-| ----- | ---- |
-| Primary source | SEC filing or acquirer/target press release (grade A–B) |
-| Secondary source | Independent corroboration (different publisher or filing type) |
-| Parties | Legal names match sources |
-| Date | `announcedDate` matches primary source (ISO `YYYY-MM-DD`) |
-| Price | `dealValue` **only** if disclosed in A/B source; else omit + `dealValueNote` |
-| Inclusion | Women's health scope or documented exception in `provenance.notes[]` |
-| Staging status | `approved` in CSV or `lacuna_deals` before JSON merge |
+| Check            | Rule                                                                         |
+| ---------------- | ---------------------------------------------------------------------------- |
+| Primary source   | SEC filing or acquirer/target press release (grade A–B)                      |
+| Secondary source | Independent corroboration (different publisher or filing type)               |
+| Parties          | Legal names match sources                                                    |
+| Date             | `announcedDate` matches primary source (ISO `YYYY-MM-DD`)                    |
+| Price            | `dealValue` **only** if disclosed in A/B source; else omit + `dealValueNote` |
+| Inclusion        | Women's health scope or documented exception in `provenance.notes[]`         |
+| Staging status   | `approved` in CSV or `lacuna_deals` before JSON merge                        |
 
 **Reject** grade D–E (aggregator-only, social, unnamed sources).
 
@@ -168,15 +168,15 @@ npm run build               # optional local smoke
 
 `compute:all` regenerates:
 
-| Artifact | Model / script |
-| -------- | -------------- |
-| `computed-benchmarks.json` | Sector valuation multiples (dealValue / funding) |
-| `computed-growth-rates.json` | CAGR estimates per company |
-| `computed-acquirer-premiums.json` | Buyer premium heuristics |
-| `computed-sector-correlations.json` | Reimbursement × valuation correlations |
-| `computed-data-quality-scores.json` | Per-entity provenance grades (A–F) |
-| `computed-confidence-intervals.json` | Bootstrap CIs on benchmarks |
-| `computed-dataset-summary.json` | Hub headline stats (`computeHeadlineStats/v1`) |
+| Artifact                             | Model / script                                   |
+| ------------------------------------ | ------------------------------------------------ |
+| `computed-benchmarks.json`           | Sector valuation multiples (dealValue / funding) |
+| `computed-growth-rates.json`         | CAGR estimates per company                       |
+| `computed-acquirer-premiums.json`    | Buyer premium heuristics                         |
+| `computed-sector-correlations.json`  | Reimbursement × valuation correlations           |
+| `computed-data-quality-scores.json`  | Per-entity provenance grades (A–F)               |
+| `computed-confidence-intervals.json` | Bootstrap CIs on benchmarks                      |
+| `computed-dataset-summary.json`      | Hub headline stats (`computeHeadlineStats/v1`)   |
 
 CI runs `compute:all` + `verify:computed` on every PR — commit the updated JSON
 files with your dataset change.
@@ -236,7 +236,8 @@ npm run verify:computed
 
 ## Related docs
 
-- [DATA_CURATION_CHECKLIST.md](./DATA_CURATION_CHECKLIST.md) — field schema + evidence grades
+- [DATA_CURATION_CHECKLIST.md](./DATA_CURATION_CHECKLIST.md) — field schema +
+  evidence grades
 - [SEC_INGESTION.md](./SEC_INGESTION.md) — daily SEC cron + env vars
 - [MODEL_CARD.md](./MODEL_CARD.md) — what the quant layer does (and does not do)
 - [INFRASTRUCTURE.md](./INFRASTRUCTURE.md) — CI, cron, Postgres

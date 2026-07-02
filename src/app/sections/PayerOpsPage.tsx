@@ -258,7 +258,9 @@ export default function PayerOpsPage() {
           descriptionClassName={SECTION_DESC}
         />
         <CuratedDatasetBanner className="mb-4" forceShow />
-        <DiscreteSourceNote className="mb-4">{VC_SIGNAL_MODEL_FOOTNOTE}</DiscreteSourceNote>
+        <DiscreteSourceNote className="mb-4">
+          {VC_SIGNAL_MODEL_FOOTNOTE}
+        </DiscreteSourceNote>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {vcSignals.map((s) => {
             const isExpanded = expandedDealSignal === s.painPoint;
@@ -279,7 +281,8 @@ export default function PayerOpsPage() {
                     {flow.count > 0
                       ? (
                         <span className="rounded-full bg-lacuna-lavender/20 px-2 py-0.5 text-[10px] font-medium text-lacuna-plum/80">
-                          {flow.count} verified deal{flow.count === 1 ? "" : "s"}
+                          {flow.count}{" "}
+                          verified deal{flow.count === 1 ? "" : "s"}
                         </span>
                       )
                       : null}
@@ -337,7 +340,8 @@ export default function PayerOpsPage() {
                                   key={`${example.targetName}-${example.year}`}
                                   className="mt-2 text-[11px] text-lacuna-plum/70"
                                 >
-                                  {example.targetName} → {example.acquirerName}{" "}
+                                  {example.targetName} → {example.acquirerName}
+                                  {" "}
                                   ({example.year})
                                 </p>
                               ))
@@ -361,8 +365,8 @@ export default function PayerOpsPage() {
           descriptionClassName={SECTION_DESC}
         />
         <DiscreteSourceNote className="mb-4">
-          External published benchmarks — cited per card (AMA, KFF/AHA, CMS). Not
-          from the Lacuna verified M&A dataset.
+          External published benchmarks — cited per card (AMA, KFF/AHA, CMS).
+          Not from the Lacuna verified M&A dataset.
         </DiscreteSourceNote>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-4">
           {painPoints.map(({ title, value, detail, source, icon: Icon }) => (
@@ -637,7 +641,9 @@ export default function PayerOpsPage() {
           description="The project demonstrates how a payer operations team could prioritize work by preventability, risk, automation readiness, and financial impact."
           descriptionClassName={SECTION_DESC}
         />
-        <DiscreteSourceNote className="mb-4">{WORK_QUEUE_MODEL_FOOTNOTE}</DiscreteSourceNote>
+        <DiscreteSourceNote className="mb-4">
+          {WORK_QUEUE_MODEL_FOOTNOTE}
+        </DiscreteSourceNote>
         <p className="mb-4 text-sm text-lacuna-blue/70">
           Queue structure and automation readiness are illustrative workflow
           design. Volumes and monthly impact update from the opportunity

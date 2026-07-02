@@ -24,7 +24,9 @@ function main() {
   const report = validateVerifiedDataset(dataset);
 
   if (!report.ok) {
-    console.error("Dataset validation failed — fix errors before computing summary.");
+    console.error(
+      "Dataset validation failed — fix errors before computing summary.",
+    );
     for (const error of report.errors) {
       console.error(`  [${error.code}] ${error.message}`);
     }
@@ -34,7 +36,9 @@ function main() {
   const summary = buildDatasetSummary(dataset);
   writeFileSync(outputPath, `${JSON.stringify(summary, null, 2)}\n`);
 
-  console.log("Dataset summary written to src/data/computed-dataset-summary.json");
+  console.log(
+    "Dataset summary written to src/data/computed-dataset-summary.json",
+  );
   console.log(`  Model: ${summary.model}`);
   console.log(`  Generated: ${summary.generatedAt}`);
   console.log(`  Companies: ${summary.headline.companiesInNetwork}`);
@@ -44,13 +48,15 @@ function main() {
   );
   console.log(`  Source citations: ${summary.headline.uniqueSourceCitations}`);
   console.log(
-    `  Provenance: ${summary.provenance.datasetVersion ?? "—"} · updated ${
-      summary.provenance.lastUpdated
-    }`,
+    `  Provenance: ${
+      summary.provenance.datasetVersion ?? "—"
+    } · updated ${summary.provenance.lastUpdated}`,
   );
 
   if (report.warnings.length > 0) {
-    console.log(`\n⚠️  ${report.warnings.length} validation warning(s) — see validate:dataset`);
+    console.log(
+      `\n⚠️  ${report.warnings.length} validation warning(s) — see validate:dataset`,
+    );
   }
 }
 

@@ -38,10 +38,7 @@ export default function StatTile({ value, label }: StatTileProps) {
   const displayRef = useRef(displayValue);
 
   useEffect(() => {
-    if (!animatable) {
-      setDisplayValue(value);
-      return;
-    }
+    if (!animatable) return;
 
     const { target, suffix } = animatable;
     let frameId: number;
