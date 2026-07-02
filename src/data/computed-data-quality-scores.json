@@ -10,14 +10,15 @@
   },
   "summary": {
     "companies": {
-      "total": 135,
+      "total": 150,
       "grades": {
         "A": 14,
-        "C": 39,
-        "D": 53,
-        "B": 29
+        "C": 43,
+        "D": 59,
+        "B": 31,
+        "F": 3
       },
-      "avgScore": 65.5
+      "avgScore": 64.3
     },
     "acquisitions": {
       "total": 59,
@@ -1038,12 +1039,12 @@
       "sector": "Contraception",
       "sourceQuality": "B",
       "sourceDescription": "Reputable press/trade publication",
-      "completeness": 73,
+      "completeness": 82,
       "hasValuation": false,
-      "hasFunding": false,
+      "hasFunding": true,
       "hasSource": true,
-      "overallScore": 62,
-      "grade": "C"
+      "overallScore": 75,
+      "grade": "B"
     },
     {
       "id": "c79",
@@ -1155,12 +1156,12 @@
       "sector": "Diagnostics",
       "sourceQuality": "D",
       "sourceDescription": "Data aggregator (secondary)",
-      "completeness": 73,
+      "completeness": 82,
       "hasValuation": false,
-      "hasFunding": false,
+      "hasFunding": true,
       "hasSource": true,
-      "overallScore": 47,
-      "grade": "D"
+      "overallScore": 60,
+      "grade": "C"
     },
     {
       "id": "c88",
@@ -1785,6 +1786,201 @@
       "hasSource": true,
       "overallScore": 41,
       "grade": "D"
+    },
+    {
+      "id": "c136",
+      "name": "AOA Dx",
+      "sector": "Diagnostics",
+      "sourceQuality": "B",
+      "sourceDescription": "Reputable press/trade publication",
+      "completeness": 82,
+      "hasValuation": false,
+      "hasFunding": true,
+      "hasSource": true,
+      "overallScore": 75,
+      "grade": "B"
+    },
+    {
+      "id": "c137",
+      "name": "Bloomlife",
+      "sector": "Maternal Health",
+      "sourceQuality": "F",
+      "sourceDescription": "Unverified or unknown source",
+      "completeness": 73,
+      "hasValuation": false,
+      "hasFunding": false,
+      "hasSource": true,
+      "overallScore": 32,
+      "grade": "F"
+    },
+    {
+      "id": "c138",
+      "name": "Cadence OTC",
+      "sector": "Reproductive Health",
+      "sourceQuality": "C",
+      "sourceDescription": "Company press release",
+      "completeness": 82,
+      "hasValuation": false,
+      "hasFunding": true,
+      "hasSource": true,
+      "overallScore": 67,
+      "grade": "C"
+    },
+    {
+      "id": "c139",
+      "name": "Cayaba Care",
+      "sector": "Maternal Health",
+      "sourceQuality": "F",
+      "sourceDescription": "Unverified or unknown source",
+      "completeness": 82,
+      "hasValuation": false,
+      "hasFunding": true,
+      "hasSource": true,
+      "overallScore": 45,
+      "grade": "D"
+    },
+    {
+      "id": "c140",
+      "name": "Cirqle",
+      "sector": "Contraception",
+      "sourceQuality": "C",
+      "sourceDescription": "Company press release",
+      "completeness": 73,
+      "hasValuation": false,
+      "hasFunding": false,
+      "hasSource": true,
+      "overallScore": 54,
+      "grade": "D"
+    },
+    {
+      "id": "c141",
+      "name": "Cofertility",
+      "sector": "Fertility",
+      "sourceQuality": "C",
+      "sourceDescription": "Company press release",
+      "completeness": 82,
+      "hasValuation": false,
+      "hasFunding": true,
+      "hasSource": true,
+      "overallScore": 67,
+      "grade": "C"
+    },
+    {
+      "id": "c142",
+      "name": "Eli Health",
+      "sector": "Diagnostics",
+      "sourceQuality": "F",
+      "sourceDescription": "Unverified or unknown source",
+      "completeness": 82,
+      "hasValuation": false,
+      "hasFunding": true,
+      "hasSource": true,
+      "overallScore": 45,
+      "grade": "D"
+    },
+    {
+      "id": "c143",
+      "name": "Mae",
+      "sector": "Maternal Health",
+      "sourceQuality": "C",
+      "sourceDescription": "Company press release",
+      "completeness": 82,
+      "hasValuation": false,
+      "hasFunding": true,
+      "hasSource": true,
+      "overallScore": 67,
+      "grade": "C"
+    },
+    {
+      "id": "c144",
+      "name": "Novocuff",
+      "sector": "Maternal Health",
+      "sourceQuality": "C",
+      "sourceDescription": "Company press release",
+      "completeness": 73,
+      "hasValuation": false,
+      "hasFunding": false,
+      "hasSource": true,
+      "overallScore": 54,
+      "grade": "D"
+    },
+    {
+      "id": "c145",
+      "name": "Ocon Med",
+      "sector": "Reproductive Health",
+      "sourceQuality": "F",
+      "sourceDescription": "Unverified or unknown source",
+      "completeness": 73,
+      "hasValuation": false,
+      "hasFunding": false,
+      "hasSource": true,
+      "overallScore": 32,
+      "grade": "F"
+    },
+    {
+      "id": "c146",
+      "name": "Planera",
+      "sector": "Pelvic Health",
+      "sourceQuality": "F",
+      "sourceDescription": "Unverified or unknown source",
+      "completeness": 82,
+      "hasValuation": false,
+      "hasFunding": true,
+      "hasSource": true,
+      "overallScore": 45,
+      "grade": "D"
+    },
+    {
+      "id": "c147",
+      "name": "Raydiant Oximetry",
+      "sector": "Maternal Health",
+      "sourceQuality": "F",
+      "sourceDescription": "Unverified or unknown source",
+      "completeness": 73,
+      "hasValuation": false,
+      "hasFunding": false,
+      "hasSource": true,
+      "overallScore": 32,
+      "grade": "F"
+    },
+    {
+      "id": "c148",
+      "name": "Seven Starling",
+      "sector": "Mental Health",
+      "sourceQuality": "F",
+      "sourceDescription": "Unverified or unknown source",
+      "completeness": 82,
+      "hasValuation": false,
+      "hasFunding": true,
+      "hasSource": true,
+      "overallScore": 45,
+      "grade": "D"
+    },
+    {
+      "id": "c149",
+      "name": "Twenty Eight Health",
+      "sector": "Reproductive Health",
+      "sourceQuality": "F",
+      "sourceDescription": "Unverified or unknown source",
+      "completeness": 82,
+      "hasValuation": false,
+      "hasFunding": true,
+      "hasSource": true,
+      "overallScore": 45,
+      "grade": "D"
+    },
+    {
+      "id": "c150",
+      "name": "Vitra Labs",
+      "sector": "Fertility",
+      "sourceQuality": "A",
+      "sourceDescription": "SEC filing (primary government source)",
+      "completeness": 73,
+      "hasValuation": false,
+      "hasFunding": false,
+      "hasSource": true,
+      "overallScore": 72,
+      "grade": "C"
     }
   ],
   "acquisitions": [

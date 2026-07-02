@@ -25,8 +25,8 @@ export interface PortfolioFit {
 export const INVESTOR_PORTFOLIOS: readonly InvestorPortfolio[] = [
   {
     key: "foreground",
-    investorName: "Foreground Capital",
-    shortName: "Foreground",
+    investorName: "Foreground Capital (RH Capital)",
+    shortName: "RH Capital",
     companies: foregroundPortfolio,
   },
   {

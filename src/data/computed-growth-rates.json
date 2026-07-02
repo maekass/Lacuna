@@ -1351,12 +1351,162 @@
       "yearsOfData": null,
       "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
       "confidence": "low"
+    },
+    {
+      "companyId": "c136",
+      "companyName": "AOA Dx",
+      "sector": "Diagnostics",
+      "cagr": 45,
+      "method": "Stage-based benchmark (Series B)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c137",
+      "companyName": "Bloomlife",
+      "sector": "Maternal Health",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c138",
+      "companyName": "Cadence OTC",
+      "sector": "Reproductive Health",
+      "cagr": null,
+      "method": "none",
+      "yearsOfData": null,
+      "source": "No data available",
+      "confidence": "none"
+    },
+    {
+      "companyId": "c139",
+      "companyName": "Cayaba Care",
+      "sector": "Maternal Health",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c140",
+      "companyName": "Cirqle",
+      "sector": "Contraception",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c141",
+      "companyName": "Cofertility",
+      "sector": "Fertility",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c142",
+      "companyName": "Eli Health",
+      "sector": "Diagnostics",
+      "cagr": null,
+      "method": "none",
+      "yearsOfData": null,
+      "source": "No data available",
+      "confidence": "none"
+    },
+    {
+      "companyId": "c143",
+      "companyName": "Mae",
+      "sector": "Maternal Health",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c144",
+      "companyName": "Novocuff",
+      "sector": "Maternal Health",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c145",
+      "companyName": "Ocon Med",
+      "sector": "Reproductive Health",
+      "cagr": null,
+      "method": "none",
+      "yearsOfData": null,
+      "source": "No data available",
+      "confidence": "none"
+    },
+    {
+      "companyId": "c146",
+      "companyName": "Planera",
+      "sector": "Pelvic Health",
+      "cagr": 80,
+      "method": "Stage-based benchmark (Seed)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c147",
+      "companyName": "Raydiant Oximetry",
+      "sector": "Maternal Health",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c148",
+      "companyName": "Seven Starling",
+      "sector": "Mental Health",
+      "cagr": null,
+      "method": "none",
+      "yearsOfData": null,
+      "source": "No data available",
+      "confidence": "none"
+    },
+    {
+      "companyId": "c149",
+      "companyName": "Twenty Eight Health",
+      "sector": "Reproductive Health",
+      "cagr": 60,
+      "method": "Stage-based benchmark (Series A)",
+      "yearsOfData": null,
+      "source": "Rock Health 2024 Digital Health Funding Report (sector median)",
+      "confidence": "low"
+    },
+    {
+      "companyId": "c150",
+      "companyName": "Vitra Labs",
+      "sector": "Fertility",
+      "cagr": null,
+      "method": "none",
+      "yearsOfData": null,
+      "source": "No data available",
+      "confidence": "none"
     }
   ],
   "sectorMedians": {
     "Fertility": {
-      "medianCAGR": 9.8,
-      "sampleSize": 19,
+      "medianCAGR": 12.1,
+      "sampleSize": 20,
       "confidence": "medium"
     },
     "General Wellness": {
@@ -1365,8 +1515,8 @@
       "confidence": "high"
     },
     "Pelvic Health": {
-      "medianCAGR": 25.8,
-      "sampleSize": 8,
+      "medianCAGR": 45,
+      "sampleSize": 9,
       "confidence": "low"
     },
     "Mental Health": {
@@ -1390,23 +1540,23 @@
       "confidence": "low"
     },
     "Reproductive Health": {
-      "medianCAGR": 45,
-      "sampleSize": 5,
+      "medianCAGR": 52.5,
+      "sampleSize": 6,
       "confidence": "medium"
     },
     "Maternal Health": {
-      "medianCAGR": 30,
-      "sampleSize": 5,
+      "medianCAGR": 60,
+      "sampleSize": 10,
       "confidence": "medium"
     },
     "Diagnostics": {
       "medianCAGR": 0,
-      "sampleSize": 14,
+      "sampleSize": 15,
       "confidence": "low"
     },
     "Contraception": {
-      "medianCAGR": 22.5,
-      "sampleSize": 2,
+      "medianCAGR": 45,
+      "sampleSize": 3,
       "confidence": "low"
     },
     "Precision Medicine": {

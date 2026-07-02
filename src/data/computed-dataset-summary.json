@@ -6,13 +6,13 @@
     "datasetVersion": "v7"
   },
   "headline": {
-    "companiesInNetwork": 135,
+    "companiesInNetwork": 150,
     "acquirerCount": 38,
-    "networkNodeCount": 173,
+    "networkNodeCount": 188,
     "verifiedDeals": 59,
     "disclosedValueMillions": 140254,
     "disclosedValueBillionsLabel": "$140.3B",
-    "uniqueSourceCitations": 431,
+    "uniqueSourceCitations": 465,
     "lastUpdated": "2026-07-02",
     "datasetVersion": "v7"
   },
@@ -23,8 +23,8 @@
     "dealsWithValueNote": 59,
     "disclosureRate": 0.847457627118644,
     "companiesWithValuation": 58,
-    "companiesTotal": 135,
-    "valuationRate": 0.42962962962962964
+    "companiesTotal": 150,
+    "valuationRate": 0.38666666666666666
   },
   "pipelines": {
     "secIngestLastRunAt": null,
