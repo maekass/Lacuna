@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-23T00:00:00.000Z",
+  "generatedAt": "2026-07-02T00:00:00.000Z",
   "source": "Lacuna verified dataset (n=59 acquisitions)",
   "acquirerPremiums": [
     {
@@ -31,6 +31,21 @@
       "sources": [
         "Press reports (Fierce Healthcare, May 2021)",
         "Press reports (TechCrunch, December 2021)"
+      ],
+      "method": "Premium = dealValue / preDealValuation (preferred, from SEC filings & press), or dealValue / lastKnownValuation, or dealValue / totalFunding as last resort."
+    },
+    {
+      "acquirerName": "23andMe",
+      "deals": 1,
+      "avgPremium": 1,
+      "medianPremium": 1,
+      "minPremium": 1,
+      "maxPremium": 1,
+      "sectors": [
+        "Mental Health"
+      ],
+      "sources": [
+        "SEC EDGAR EX-99.1 (23andMe–Lemonaid merger agreement, Oct 22, 2021); Globe Newswire closing release (Nov 1, 2021)"
       ],
       "method": "Premium = dealValue / preDealValuation (preferred, from SEC filings & press), or dealValue / lastKnownValuation, or dealValue / totalFunding as last resort."
     },
@@ -75,6 +90,21 @@
         "SEC EDGAR — CooperCompanies 10-K (FY2012); Oslo Stock Exchange tender offer (Jun 2012)",
         "CooperCompanies investor relations — Globe Newswire (Nov 10, 2021)",
         "CooperCompanies investor relations — Globe Newswire (Aug 1, 2024); SEC 10-K FY2024"
+      ],
+      "method": "Premium = dealValue / preDealValuation (preferred, from SEC filings & press), or dealValue / lastKnownValuation, or dealValue / totalFunding as last resort."
+    },
+    {
+      "acquirerName": "Organon (via Merck spinoff)",
+      "deals": 1,
+      "avgPremium": 9.6,
+      "medianPremium": 9.6,
+      "minPremium": 9.6,
+      "maxPremium": 9.6,
+      "sectors": [
+        "Maternal Health"
+      ],
+      "sources": [
+        "Organon.com press release (Mar 30, 2021); Business Wire"
       ],
       "method": "Premium = dealValue / preDealValuation (preferred, from SEC filings & press), or dealValue / lastKnownValuation, or dealValue / totalFunding as last resort."
     },
@@ -463,6 +493,21 @@
       "method": "Premium = dealValue / preDealValuation (preferred, from SEC filings & press), or dealValue / lastKnownValuation, or dealValue / totalFunding as last resort."
     },
     {
+      "acquirerName": "Hims & Hers Health",
+      "deals": 1,
+      "avgPremium": 27.14,
+      "medianPremium": 27.14,
+      "minPremium": 27.14,
+      "maxPremium": 27.14,
+      "sectors": [
+        "General Wellness"
+      ],
+      "sources": [
+        "Hims & Hers investor relations (June 24, 2021); Business Wire (July 7, 2021)"
+      ],
+      "method": "Premium = dealValue / preDealValuation (preferred, from SEC filings & press), or dealValue / lastKnownValuation, or dealValue / totalFunding as last resort."
+    },
+    {
       "acquirerName": "KKR (via IVI-RMA)",
       "deals": 1,
       "avgPremium": 1.33,
@@ -480,20 +525,20 @@
   ],
   "acquirerTypePremiums": {
     "other": {
-      "avgPremium": 1.35,
-      "sampleSize": 23
+      "avgPremium": 1.33,
+      "sampleSize": 24
     },
     "pharma": {
-      "avgPremium": 1.31,
-      "sampleSize": 5
+      "avgPremium": 2.69,
+      "sampleSize": 6
     },
     "tech": {
       "avgPremium": 1.34,
       "sampleSize": 1
     },
     "healthcare": {
-      "avgPremium": 1.09,
-      "sampleSize": 1
+      "avgPremium": 14.12,
+      "sampleSize": 2
     }
   },
   "method": "Premium = dealValue / lastKnownValuation (preferred) or dealValue / totalFunding (fallback). lastKnownValuation is the most recent pre-acquisition valuation from verified sources.",

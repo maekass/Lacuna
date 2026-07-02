@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-06-23T00:00:00.000Z",
+  "generatedAt": "2026-07-02T00:00:00.000Z",
   "source": "Lacuna verified dataset (n=59 acquisitions) + CMS CPT code sector mapping",
   "overallCorrelation": {
-    "correlation": null,
-    "sampleSize": 4,
+    "correlation": -0.256,
+    "sampleSize": 7,
     "method": "Pearson(hasCPTCode, dealValue/totalFunding) across all sectors"
   },
   "sectors": [
@@ -18,7 +18,7 @@
     {
       "sector": "General Wellness",
       "correlation": null,
-      "sampleSize": 2,
+      "sampleSize": 3,
       "method": "Pearson(hasCPTCode, dealValue/totalFunding) from verified acquisitions",
       "source": "Lacuna verified dataset + CMS CPT code mapping (cms-reimbursement-connector.ts)",
       "warning": "Small sample (n<5) — treat as directional only"
@@ -34,7 +34,7 @@
     {
       "sector": "Mental Health",
       "correlation": null,
-      "sampleSize": 0,
+      "sampleSize": 1,
       "method": "Insufficient data (n<2) for correlation",
       "source": "Lacuna verified dataset",
       "warning": "Sample too small for meaningful correlation"
@@ -74,7 +74,7 @@
     {
       "sector": "Maternal Health",
       "correlation": null,
-      "sampleSize": 0,
+      "sampleSize": 1,
       "method": "Insufficient data (n<2) for correlation",
       "source": "Lacuna verified dataset",
       "warning": "Sample too small for meaningful correlation"

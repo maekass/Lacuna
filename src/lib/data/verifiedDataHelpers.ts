@@ -106,7 +106,7 @@ export function buildVerifiedDerivedData(
         type: "target" as const,
         sector: c.sector,
         stage: c.stage,
-        valuation: c.lastKnownValuation ?? 0,
+        valuation: c.lastKnownValuation ?? -1,
       })),
       ...verifiedAcquirers.map((a) => ({
         id: a.id,
@@ -114,14 +114,14 @@ export function buildVerifiedDerivedData(
         type: "acquirer" as const,
         sector: a.sector,
         stage: "Acquirer" as const,
-        valuation: 0,
+        valuation: -1,
       })),
     ],
     getVerifiedNetworkLinks: () =>
       verifiedAcquisitions.map((deal) => ({
         source: deal.targetId,
         target: deal.acquirerId,
-        value: deal.dealValue ?? 0,
+        value: deal.dealValue ?? -1,
         dealType: deal.dealType,
         date: deal.announcedDate,
       })),

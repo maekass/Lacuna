@@ -88,6 +88,20 @@ const PRE_DEAL_VALUATIONS: Record<string, {
     source: "Axios — Nurx funding coverage, 2021",
     date: "2021-01-01",
   },
+  // deal5: Maven Clinic — Series D at $1B+ before Teladoc strategic investment (Aug 2022)
+  "deal5": {
+    valuation: 1000,
+    source:
+      "TechCrunch / Maven Clinic press release — Series D at $1B+ valuation, Aug 2021",
+    date: "2021-08-17",
+  },
+  // deal6: Kindbody — $1.8B valuation on Perceptive financing two weeks before Teladoc partnership
+  "deal6": {
+    valuation: 1800,
+    source:
+      "Kindbody press release — $100M financing at $1.8B valuation, Mar 2023",
+    date: "2023-03-02",
+  },
   // deal7: Biotheranostics — acquired for $230M, pre-deal est ~$170M per Hologic 8-K
   "deal7": {
     valuation: 170,
@@ -381,13 +395,25 @@ function main() {
   for (const deal of acquisitions) {
     const preDeal = PRE_DEAL_VALUATIONS[deal.id];
 
-    if (preDeal && deal.dealValue) {
+    if (preDeal) {
       deal.preDealValuation = preDeal.valuation;
       deal.preDealValuationSource = preDeal.source;
       deal.preDealValuationDate = preDeal.date;
 
-      const premium = deal.dealValue / preDeal.valuation;
-      deal.computedPremium = Number(premium.toFixed(2));
+      let premiumComputed: number | null = null;
+      let method = `Pre-deal valuation sourced ($${preDeal.valuation}M); no disclosed deal value for premium`;
+
+      if (deal.dealValue) {
+        const premium = deal.dealValue / preDeal.valuation;
+        deal.computedPremium = Number(premium.toFixed(2));
+        premiumComputed = deal.computedPremium;
+        method =
+          `Premium = dealValue ($${deal.dealValue}M) / preDealValuation ($${preDeal.valuation}M) = ${
+            premium.toFixed(2)
+          }x`;
+      } else {
+        delete deal.computedPremium;
+      }
 
       auditTrail.push({
         acquisitionId: deal.id,
@@ -395,18 +421,17 @@ function main() {
         preDealValuation: preDeal.valuation,
         preDealValuationSource: preDeal.source,
         preDealValuationDate: preDeal.date,
-        premiumComputed: Number(premium.toFixed(2)),
-        method:
-          `Premium = dealValue ($${deal.dealValue}M) / preDealValuation ($${preDeal.valuation}M) = ${
-            premium.toFixed(2)
-          }x`,
+        premiumComputed,
+        method,
       });
 
       enriched++;
       console.log(
-        `  ${deal.targetName}: pre-deal=$${preDeal.valuation}M → deal=$${deal.dealValue}M (premium: ${
-          premium.toFixed(2)
-        }x)`,
+        deal.dealValue
+          ? `  ${deal.targetName}: pre-deal=$${preDeal.valuation}M → deal=$${deal.dealValue}M (premium: ${
+            premiumComputed!.toFixed(2)
+          }x)`
+          : `  ${deal.targetName}: pre-deal=$${preDeal.valuation}M (strategic investment — no disclosed deal value)`,
       );
     } else {
       auditTrail.push({

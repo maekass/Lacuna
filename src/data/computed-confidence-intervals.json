@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-23T00:00:00.000Z",
+  "generatedAt": "2026-07-02T00:00:00.000Z",
   "source": "Computed from Lacuna verified dataset via bootstrap resampling",
   "results": [
     {
       "metric": "sector_benchmark_multiple",
       "sector": "General Wellness",
-      "sampleSize": 2,
-      "pointEstimate": 30.23,
+      "sampleSize": 3,
+      "pointEstimate": 27.14,
       "ci95": {
         "lower": 2.542372881355932,
         "upper": 57.916666666666664
@@ -28,6 +28,18 @@
     },
     {
       "metric": "sector_benchmark_multiple",
+      "sector": "Mental Health",
+      "sampleSize": 1,
+      "pointEstimate": 7.27,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "Bootstrap (10,000 iterations, 95% CI)",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "sector_benchmark_multiple",
       "sector": "Reproductive Health",
       "sampleSize": 1,
       "pointEstimate": 6.4,
@@ -39,13 +51,25 @@
       "reliability": "unreliable"
     },
     {
+      "metric": "sector_benchmark_multiple",
+      "sector": "Maternal Health",
+      "sampleSize": 1,
+      "pointEstimate": 9.6,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "Bootstrap (10,000 iterations, 95% CI)",
+      "reliability": "unreliable"
+    },
+    {
       "metric": "sector_growth_rate",
       "sector": "Fertility",
       "sampleSize": 4,
-      "pointEstimate": 14.2,
+      "pointEstimate": 14.7,
       "ci95": {
         "lower": 9.8,
-        "upper": 15.5
+        "upper": 25.6
       },
       "method": "Bootstrap (10,000 iterations, 95% CI)",
       "reliability": "unreliable"
@@ -53,14 +77,14 @@
     {
       "metric": "sector_growth_rate",
       "sector": "General Wellness",
-      "sampleSize": 4,
-      "pointEstimate": 20.6,
+      "sampleSize": 5,
+      "pointEstimate": 24.5,
       "ci95": {
         "lower": 2.2,
-        "upper": 40.2
+        "upper": 60.3
       },
       "method": "Bootstrap (10,000 iterations, 95% CI)",
-      "reliability": "unreliable"
+      "reliability": "directional"
     },
     {
       "metric": "sector_growth_rate",
@@ -77,11 +101,11 @@
     {
       "metric": "sector_growth_rate",
       "sector": "Mental Health",
-      "sampleSize": 2,
-      "pointEstimate": 16.1,
+      "sampleSize": 3,
+      "pointEstimate": 17.2,
       "ci95": {
         "lower": 15.1,
-        "upper": 17.2
+        "upper": 28.1
       },
       "method": "Bootstrap (10,000 iterations, 95% CI)",
       "reliability": "unreliable"
@@ -103,6 +127,18 @@
       "sector": "Reproductive Health",
       "sampleSize": 1,
       "pointEstimate": 540,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "Bootstrap (10,000 iterations, 95% CI)",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "sector_growth_rate",
+      "sector": "Maternal Health",
+      "sampleSize": 1,
+      "pointEstimate": 25.4,
       "ci95": {
         "lower": null,
         "upper": null
@@ -136,6 +172,18 @@
     },
     {
       "metric": "acquirer_premium",
+      "acquirer": "23andMe",
+      "sampleSize": 1,
+      "pointEstimate": 1,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
       "acquirer": "Hologic",
       "sampleSize": 9,
       "pointEstimate": 1.47,
@@ -157,6 +205,18 @@
       },
       "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
       "reliability": "directional"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Organon (via Merck spinoff)",
+      "sampleSize": 1,
+      "pointEstimate": 9.6,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
     },
     {
       "metric": "acquirer_premium",
@@ -451,6 +511,18 @@
       "acquirer": "BPEA EQT",
       "sampleSize": 1,
       "pointEstimate": 1.31,
+      "ci95": {
+        "lower": null,
+        "upper": null
+      },
+      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
+      "reliability": "unreliable"
+    },
+    {
+      "metric": "acquirer_premium",
+      "acquirer": "Hims & Hers Health",
+      "sampleSize": 1,
+      "pointEstimate": 27.14,
       "ci95": {
         "lower": null,
         "upper": null

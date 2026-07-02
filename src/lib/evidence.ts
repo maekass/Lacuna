@@ -14,7 +14,8 @@ export type EvidenceClass =
   | "diagnostic_genomic"
   | "fertility_science"
   | "care_delivery"
-  | "consumer_wellness";
+  | "consumer_wellness"
+  | "portfolio_investment";
 
 export const EVIDENCE_CLASSES: readonly EvidenceClass[] = [
   "clinical_therapeutic",
@@ -22,6 +23,7 @@ export const EVIDENCE_CLASSES: readonly EvidenceClass[] = [
   "fertility_science",
   "care_delivery",
   "consumer_wellness",
+  "portfolio_investment",
 ] as const;
 
 /** Minimal structural shape the classifier needs from a company row. */
@@ -277,6 +279,7 @@ export function classifyEvidence(company: ClassifiableCompany): EvidenceClass {
   let best: EvidenceClass = "care_delivery";
   let bestScore = -1;
   for (const cls of CLASS_PRIORITY) {
+    if (cls === "portfolio_investment") continue;
     const s = scores.get(cls) ?? 0;
     if (s > bestScore) {
       best = cls;
