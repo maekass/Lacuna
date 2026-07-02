@@ -2,10 +2,10 @@
   "generatedAt": "2026-07-02T00:00:00.000Z",
   "source": "Lacuna verified dataset (src/data/dataset.verified.json)",
   "datasetStats": {
-    "totalCompanies": 135,
+    "totalCompanies": 150,
     "totalAcquisitions": 59,
     "acquisitionsWithDealValue": 50,
-    "companiesWithFunding": 29
+    "companiesWithFunding": 40
   },
   "method": "Multiple = dealValue / totalFunding. This is a proxy for revenue multiples when company revenue is not publicly available. Replace with dealValue / annualRevenue when revenue data is sourced.",
   "benchmarks": [

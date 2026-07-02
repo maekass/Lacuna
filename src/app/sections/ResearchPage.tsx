@@ -12,6 +12,7 @@ import {
   VariantCallsetBrowser,
 } from "@/app/lazyDashboard";
 import WomensHealthExitsContext from "@/components/WomensHealthExitsContext";
+import RhCapitalPortfolioContext from "@/components/RhCapitalPortfolioContext";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 
@@ -51,6 +52,14 @@ export default function ResearchPage() {
           description="AOA Dx Follow the Exits (Jan 2026): 276 exits and $100B+ in M&A/IPO value (2000–2025), often mis-tagged in PitchBook. Compared honestly to Lacuna's curated deal set."
         />
         <WomensHealthExitsContext />
+      </MotionSection>
+
+      <MotionSection id="rh-capital-portfolio" delay={0.04} className={SECTION}>
+        <SectionHeader
+          title="RH Capital portfolio"
+          description="Funds I & II (Foreground Capital): cited funding and exit notes for portfolio companies on rhcapital.vc — overlaid on the network graph as RH Capital."
+        />
+        <RhCapitalPortfolioContext />
       </MotionSection>
 
       <MotionSection id="clinical-trials" delay={0.05} className={SECTION}>

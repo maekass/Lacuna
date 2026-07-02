@@ -12,6 +12,7 @@ import {
   type VerifiedAcquisitionView,
   type VerifiedCompanyView,
 } from "@/lib/data/verifiedDataHelpers";
+import { RH_CAPITAL_PORTFOLIO_NAMES } from "./rhCapitalPortfolio";
 
 export type VerifiedCompany = VerifiedCompanyView & {
   readonly sector:
@@ -36,23 +37,8 @@ export const verifiedAcquirers = staticDerived
   .verifiedAcquirers as VerifiedAcquirerView[];
 export const dataProvenance = staticDerived.dataProvenance;
 
-export const foregroundPortfolio = [
-  "Nurx",
-  "Evvy",
-  "Seven Starling",
-  "Cofertility",
-  "Mae",
-  "Millie",
-  "Bloomlife",
-  "Eli Health",
-  "Cadence OTC",
-  "AOA Dx",
-  "Vitra Labs",
-  "Ovian",
-  "Planera",
-  "Gesynta Pharma",
-  "Nadia Care",
-] as const;
+/** Foreground Capital / RH Capital portfolio (rhcapital.vc/portfolio, July 2026). */
+export const foregroundPortfolio = RH_CAPITAL_PORTFOLIO_NAMES;
 
 /** Amboy Street Ventures portfolio, per amboystreet.vc/portfolio (June 2026). */
 export const amboyPortfolio = [
