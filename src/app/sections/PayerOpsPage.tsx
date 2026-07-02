@@ -123,8 +123,12 @@ export default function PayerOpsPage() {
       ...(current ?? segments[segment]),
       ...patch,
     }));
-    if (patch.denialRate !== undefined) setDenialRate(patch.denialRate);
-    if (patch.avoidableRate !== undefined) setAvoidableRate(patch.avoidableRate);
+    if (patch.denialRate !== undefined) {
+      setDenialRate(patch.denialRate);
+    }
+    if (patch.avoidableRate !== undefined) {
+      setAvoidableRate(patch.avoidableRate);
+    }
   }
 
   function resetCustomSegment() {
@@ -505,7 +509,9 @@ export default function PayerOpsPage() {
                 onChange={(e) => {
                   const next = Number(e.target.value);
                   setDenialRate(next);
-                  if (customSegment) updateCustomSegment({ denialRate: next });
+                  if (customSegment) {
+                    updateCustomSegment({ denialRate: next });
+                  }
                 }}
                 className="h-2 w-full touch-pan-x accent-lacuna-plum"
               />
@@ -534,7 +540,9 @@ export default function PayerOpsPage() {
                 onChange={(e) => {
                   const next = Number(e.target.value);
                   setAvoidableRate(next);
-                  if (customSegment) updateCustomSegment({ avoidableRate: next });
+                  if (customSegment) {
+                    updateCustomSegment({ avoidableRate: next });
+                  }
                 }}
                 className="h-2 w-full touch-pan-x accent-lacuna-plum"
               />
