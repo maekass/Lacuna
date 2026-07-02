@@ -11,6 +11,7 @@ import {
   ImpactOpportunityCard,
   VariantCallsetBrowser,
 } from "@/app/lazyDashboard";
+import WomensHealthExitsContext from "@/components/WomensHealthExitsContext";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 
@@ -42,6 +43,14 @@ export default function ResearchPage() {
           description="US GBD 2021 burden × VC deployed — WEF-aligned for CVD/metabolic ($10M / $4M), Rock Health / PitchBook elsewhere. Cardiovascular and metabolic areas now in gap scoring. Heuristic — not financial advice."
         />
         <BurdenCapitalGapValuation />
+      </MotionSection>
+
+      <MotionSection id="womens-health-exits" delay={0.03} className={SECTION}>
+        <SectionHeader
+          title="Women's health exit landscape"
+          description="AOA Dx Follow the Exits (Jan 2026): 276 exits and $100B+ in M&A/IPO value (2000–2025), often mis-tagged in PitchBook. Compared honestly to Lacuna's curated deal set."
+        />
+        <WomensHealthExitsContext />
       </MotionSection>
 
       <MotionSection id="clinical-trials" delay={0.05} className={SECTION}>

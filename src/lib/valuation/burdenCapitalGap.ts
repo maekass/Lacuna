@@ -64,6 +64,18 @@ export const CITATIONS: Record<string, Citation> = {
     reference:
       "World Economic Forum & Boston Consulting Group. Women's Health Investment Outlook 2026. Figure 3 — funding events and capital raised by therapeutic area, 2020–2025. PitchBook, CapIQ, Crunchbase. Used in BCG View chart; valuation VC estimates remain on Rock Health / PitchBook FemTech 2019–2024.",
   },
+  aoa_follow_exits_2026: {
+    id: "aoa_follow_exits_2026",
+    label: "6b",
+    reference:
+      'AOA Dx. "Follow the Exits: Why Women\'s Health Is a Smart Bet in Healthcare." Released Jan 13, 2026, JPMorgan Healthcare Conference. 276 exits, $100B+ M&A/IPO value (2000–2025). Secondary: Stengel, G. Forbes, Jan 13, 2026.',
+  },
+  kearney_wh_2026: {
+    id: "kearney_wh_2026",
+    label: "6c",
+    reference:
+      "Kearney. Women's health private investment analysis — $34B since 2020 across 2,000+ deals; diagnostics/digital health $7.6B. Cited in Forbes (Stengel, Jan 2026).",
+  },
   ihme_endo_2023: {
     id: "ihme_endo_2023",
     label: "7",
