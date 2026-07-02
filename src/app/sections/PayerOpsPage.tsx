@@ -415,12 +415,19 @@ export default function PayerOpsPage() {
         />
         <div className="rounded-3xl border border-white/10 bg-lacuna-plum p-6 shadow-sm">
           <div className="relative after:pointer-events-none after:absolute after:inset-y-0 after:right-0 after:z-10 after:w-10 after:bg-gradient-to-l after:from-lacuna-plum after:to-transparent after:content-[''] sm:after:hidden">
-            <div className="hide-scrollbar flex flex-nowrap items-center gap-2 overflow-x-auto">
+            <div
+              className="hide-scrollbar flex flex-nowrap items-center gap-2 overflow-x-auto"
+              role="group"
+              aria-label="Line of business"
+            >
               {(Object.keys(segments) as SegmentKey[]).map((key) => (
                 <button
                   key={key}
                   type="button"
                   onClick={() => handleSegmentChange(key)}
+                  aria-label={segments[key].label}
+                  aria-pressed={segment === key}
+                  title={segments[key].label}
                   className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
                     segment === key
                       ? "bg-white text-lacuna-plum"
@@ -433,6 +440,7 @@ export default function PayerOpsPage() {
               <button
                 type="button"
                 onClick={() => setCompareAll((active) => !active)}
+                aria-pressed={compareAll}
                 className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
                   compareAll
                     ? "bg-white text-lacuna-plum"
