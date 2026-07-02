@@ -24,6 +24,7 @@ function main(): void {
     fertility_science: 0,
     care_delivery: 0,
     consumer_wellness: 0,
+    portfolio_investment: 0,
   };
 
   let text = raw;

@@ -60,8 +60,9 @@ const COMPANY_SOURCES: Record<string, string[]> = {
     "Company website - proovtest.com",
   ],
   "c13": [ // Lemonaid Health
+    "SEC EDGAR EX-99.1 — 23andMe/Lemonaid merger agreement (Oct 22, 2021)",
+    "Globe Newswire — 23andMe acquisition closing (Nov 1, 2021)",
     "Crunchbase - crunchbase.com/organization/lemonaid-health",
-    "TechCrunch - acquisition coverage by Hims & Hers, 2021",
     "Company website - lemonaidhealth.com",
   ],
   "c18": [ // Natural Cycles

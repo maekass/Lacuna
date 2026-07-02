@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-23T00:00:00.000Z",
+  "generatedAt": "2026-07-02T00:00:00.000Z",
   "source": "Lacuna verified dataset + Rock Health 2024 Digital Health Funding Report",
   "companies": [
     {
@@ -36,10 +36,10 @@
       "companyId": "c4",
       "companyName": "Maven Clinic",
       "sector": "Fertility",
-      "cagr": 13.3,
+      "cagr": 14.4,
       "method": "CAGR(totalFunding → lastKnownValuation, 2014–2026)",
       "yearsOfData": 12,
-      "source": "Verified dataset: Series D valuation (2021)",
+      "source": "Verified dataset: Series D at $1B+ valuation (Aug 2021)",
       "confidence": "medium"
     },
     {
@@ -66,10 +66,10 @@
       "companyId": "c7",
       "companyName": "Kindbody",
       "sector": "Fertility",
-      "cagr": 15.5,
+      "cagr": 25.6,
       "method": "CAGR(totalFunding → lastKnownValuation, 2018–2026)",
       "yearsOfData": 8,
-      "source": "Verified dataset: Series D valuation (2022)",
+      "source": "Verified dataset: $1.8B valuation on Perceptive Advisors financing (Mar 2023)",
       "confidence": "medium"
     },
     {
@@ -126,11 +126,11 @@
       "companyId": "c13",
       "companyName": "Lemonaid Health",
       "sector": "Mental Health",
-      "cagr": 0,
-      "method": "Stage-based benchmark (Acquired)",
-      "yearsOfData": null,
-      "source": "N/A — company acquired, growth rate not applicable",
-      "confidence": "low"
+      "cagr": 28.1,
+      "method": "CAGR(totalFunding → dealValue, 2013–2021)",
+      "yearsOfData": 8,
+      "source": "Verified dataset: SEC EDGAR EX-99.1 — 23andMe/Lemonaid merger agreement (Oct 22, 2021) + acquisition record",
+      "confidence": "high"
     },
     {
       "companyId": "c14",
@@ -306,11 +306,11 @@
       "companyId": "c31",
       "companyName": "Alydia Health",
       "sector": "Maternal Health",
-      "cagr": 0,
-      "method": "Stage-based benchmark (Acquired)",
-      "yearsOfData": null,
-      "source": "N/A — company acquired, growth rate not applicable",
-      "confidence": "low"
+      "cagr": 25.4,
+      "method": "CAGR(totalFunding → dealValue, 2011–2021)",
+      "yearsOfData": 10,
+      "source": "Verified dataset: Organon.com - press release (Mar 30, 2021) + acquisition record",
+      "confidence": "high"
     },
     {
       "companyId": "c32",
@@ -736,11 +736,11 @@
       "companyId": "c74",
       "companyName": "Apostrophe",
       "sector": "General Wellness",
-      "cagr": 0,
-      "method": "Stage-based benchmark (Acquired)",
-      "yearsOfData": null,
-      "source": "N/A — company acquired, growth rate not applicable",
-      "confidence": "low"
+      "cagr": 60.3,
+      "method": "CAGR(totalFunding → dealValue, 2014–2021)",
+      "yearsOfData": 7,
+      "source": "Verified dataset: Hims & Hers investor relations press release (June 24, 2021) + acquisition record",
+      "confidence": "high"
     },
     {
       "companyId": "c75",
@@ -1360,9 +1360,9 @@
       "confidence": "medium"
     },
     "General Wellness": {
-      "medianCAGR": 24.5,
+      "medianCAGR": 30,
       "sampleSize": 7,
-      "confidence": "medium"
+      "confidence": "high"
     },
     "Pelvic Health": {
       "medianCAGR": 25.8,
@@ -1370,9 +1370,9 @@
       "confidence": "low"
     },
     "Mental Health": {
-      "medianCAGR": 15.1,
+      "medianCAGR": 17.2,
       "sampleSize": 3,
-      "confidence": "low"
+      "confidence": "medium"
     },
     "Wearables": {
       "medianCAGR": 20.6,
@@ -1397,7 +1397,7 @@
     "Maternal Health": {
       "medianCAGR": 30,
       "sampleSize": 5,
-      "confidence": "low"
+      "confidence": "medium"
     },
     "Diagnostics": {
       "medianCAGR": 0,
