@@ -9,6 +9,10 @@ import {
   type EvidenceScore,
 } from "@/lib/evidence/evidenceMaturityCalculator";
 import {
+  type EvidenceInputSource,
+  resolveEvidenceInputs,
+} from "@/lib/evidence/staticEvidenceBaseline";
+import {
   type CompanyEvidence,
   computeValuationCorrelation,
   type CorrelationResult,
@@ -25,6 +29,7 @@ interface CompanyRow {
   acquirerName: string;
   evidence: EvidenceScore;
   inputs: EvidenceInputs;
+  inputSource: EvidenceInputSource;
 }
 
 interface APIState {
@@ -133,14 +138,11 @@ export default function EvidenceMaturityDashboard() {
       const ctg = apiState.results.get(target?.name || "");
       const fda = apiState.fdaResults.get(target?.name || "");
 
-      const inputs: EvidenceInputs = {
-        highestPhase: ctg?.highestPhase || "None",
-        totalTrials: ctg?.trials || 0,
-        hasPostedResults: ctg?.hasResults || false,
-        highestFDAClearance: fda?.clearance || "None",
-        hasDrugApproval: fda?.hasDrug || false,
-        totalFDAProducts: fda?.products || 0,
-      };
+      const resolved = resolveEvidenceInputs(
+        target?.evidenceClass ?? "care_delivery",
+        ctg,
+        fda,
+      );
 
       return {
         id: deal.id,
@@ -149,8 +151,9 @@ export default function EvidenceMaturityDashboard() {
         dealValue: deal.dealValue,
         dealDate: deal.announcedDate,
         acquirerName: acquirer?.name || deal.acquirerId,
-        evidence: computeEvidenceMaturity(inputs),
-        inputs,
+        evidence: computeEvidenceMaturity(resolved.inputs),
+        inputs: resolved.inputs,
+        inputSource: resolved.source,
       };
     });
   }, [
@@ -160,6 +163,13 @@ export default function EvidenceMaturityDashboard() {
     apiState.results,
     apiState.fdaResults,
   ]);
+
+  const inputSourceMode = useMemo((): EvidenceInputSource => {
+    const modes = new Set(baseRows.map((r) => r.inputSource));
+    if (modes.has("live")) return "live";
+    if (modes.has("taxonomy")) return "taxonomy";
+    return "empty";
+  }, [baseRows]);
 
   /* ─── sorted rows ─── */
   const sortedRows = useMemo(() => {
@@ -268,7 +278,8 @@ export default function EvidenceMaturityDashboard() {
   // Static dataset metadata carries no trial/FDA inputs, so every deal scores
   // 0 until live enrichment runs — summary stats would read as broken.
   const allScoresZero = baseRows.length > 0 &&
-    baseRows.every((r) => r.evidence.overall === 0);
+    baseRows.every((r) => r.evidence.overall === 0) &&
+    inputSourceMode === "empty";
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 p-4 sm:p-6">
@@ -307,6 +318,8 @@ export default function EvidenceMaturityDashboard() {
           >
             {enriched
               ? "Live Data"
+              : inputSourceMode === "taxonomy"
+              ? "Taxonomy baseline"
               : apiState.loading
               ? "Loading..."
               : "Static"}
@@ -335,10 +348,8 @@ export default function EvidenceMaturityDashboard() {
                   <span className="font-medium text-lacuna-plum">
                     No evidence scores yet.
                   </span>{" "}
-                  The static dataset carries no clinical-trial or FDA metadata,
-                  so all {baseRows.length}{" "}
-                  deals currently score 0 (Pre-clinical) and a valuation
-                  correlation would be meaningless. Use{" "}
+                  No clinical-trial or FDA enrichment is available for these
+                  targets. Use{" "}
                   <span className="font-medium text-lacuna-plum">
                     Enrich with Live Data
                   </span>{" "}
