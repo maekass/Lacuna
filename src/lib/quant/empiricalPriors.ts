@@ -2,7 +2,7 @@
  * Empirical priors derived from the verified dataset's actual deal history.
  *
  * This is the quant engine's data-retrieval layer: instead of hardcoded
- * heuristic multiples, every prior here is computed from the 58 verified
+ * heuristic multiples, every prior here is computed from the verified
  * acquisitions (deal values, dates, sectors) and company funding records.
  *
  * Caveats remain — n is small per sector, deal values are disclosed-only

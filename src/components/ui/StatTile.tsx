@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
+import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
 
 interface StatTileProps {
   value: string;
   label: string;
+  model?: ModelProvenance;
 }
 
 interface AnimatableValue {
@@ -30,7 +33,7 @@ function formatAnimatedValue(current: number, suffix: string): string {
   return `${new Intl.NumberFormat("en-US").format(current)}${suffix}`;
 }
 
-export default function StatTile({ value, label }: StatTileProps) {
+export default function StatTile({ value, label, model }: StatTileProps) {
   const animatable = useMemo(() => parseAnimatableValue(value), [value]);
   const [displayValue, setDisplayValue] = useState(() =>
     animatable ? formatAnimatedValue(0, animatable.suffix) : value
@@ -69,12 +72,20 @@ export default function StatTile({ value, label }: StatTileProps) {
 
   const shown = animatable ? displayValue : value;
 
-  return (
-    <div className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 px-4 py-4 sm:p-6 hover:shadow-md transition-shadow">
+  const tile = (
+    <div
+      className={`bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 px-4 py-4 sm:p-6 hover:shadow-md transition-shadow ${
+        model ? "cursor-help" : ""
+      }`}
+    >
       <p className="text-2xl sm:text-3xl font-bold text-lacuna-plum">
         {shown}
       </p>
       <p className="text-xs sm:text-sm text-lacuna-blue mt-1">{label}</p>
     </div>
   );
+
+  if (!model) return tile;
+
+  return <ModelProvenanceHint model={model}>{tile}</ModelProvenanceHint>;
 }

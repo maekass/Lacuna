@@ -16,6 +16,14 @@
  */
 
 import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
+import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
+
+export const VALUATION_DISPARITY_MODEL: ModelProvenance = {
+  module: "src/lib/fairness/headlineStat.ts",
+  exportName: "getValuationDisparity",
+  definition:
+    "Compares highest vs lowest sector mean lastKnownValuation (USD M); sectors need ≥2 disclosed valuations.",
+};
 
 /** Result shape for the max/min sector valuation pair. */
 export interface ValuationDisparity {

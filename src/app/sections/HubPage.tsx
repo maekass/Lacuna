@@ -5,7 +5,9 @@ import Link from "next/link";
 import DataProvenanceBanner from "@/components/DataProvenanceBanner";
 import MotionSection from "@/components/ui/MotionSection";
 import StatTile from "@/components/ui/StatTile";
+import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
 import { useDashboardData } from "@/lib/data/useDashboardData";
+import { VALUATION_DISPARITY_MODEL } from "@/lib/fairness/headlineStat";
 import { WORKSPACES } from "@/lib/navigation/workspaces";
 
 /** Render huge relative gaps as a multiplier ("76× higher") — "7503% above" is unreadable. */
@@ -55,59 +57,67 @@ export default function HubPage() {
         className="mb-10 grid grid-cols-2 gap-4 md:grid-cols-4"
       >
         {headlineStats.map((stat) => (
-          <StatTile key={stat.label} value={stat.value} label={stat.label} />
+          <StatTile
+            key={stat.label}
+            value={stat.value}
+            label={stat.label}
+            model={stat.model}
+          />
         ))}
       </MotionSection>
 
       {valuationDisparity !== null
         ? (
-          <div className="mb-10 rounded-xl border border-lacuna-lavender/40 bg-lacuna-lavender/20 p-4">
-            <div className="flex items-start gap-3">
-              <span className="shrink-0 text-sm font-medium text-lacuna-plum">
-                Insight
-              </span>
-              <span className="text-sm text-lacuna-blue">
-                Among disclosed valuations, {valuationDisparity.highSector}{" "}
-                averages {formatValuationGap(valuationDisparity.percentDiff)}
-                {" "}
-                {valuationDisparity.lowSector}{" "}
-                — the widest sector gap in the dataset (n={valuationDisparity
-                  .highN} vs n={valuationDisparity.lowN} disclosed).
-              </span>
-              <button
-                type="button"
-                onClick={() => setMethodologyOpen((v) => !v)}
-                aria-label="How is this calculated?"
-                className="ml-auto shrink-0 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold border border-lacuna-lavender/60 text-lacuna-plum/70 hover:bg-lacuna-lavender/30 transition-colors"
-              >
-                ?
-              </button>
-            </div>
-            {methodologyOpen && (
-              <div className="mt-3 rounded-lg border border-lacuna-lavender/30 bg-white/70 px-4 py-3 text-xs text-lacuna-blue leading-relaxed">
-                <p className="font-medium text-lacuna-plum mb-1">
-                  How the sector gap is calculated
-                </p>
-                <p>
-                  For each company with a disclosed last-known valuation, we
-                  group by primary sector and compute the mean valuation per
-                  group. The gap is the percentage difference between the
-                  highest- and lowest-mean sectors. Only sectors with ≥2
-                  disclosed valuations are compared. Valuations sourced from
-                  public filings, press releases, and Crunchbase where cited —
-                  see DataProvenanceBanner above.
-                </p>
-                <a
-                  href="https://github.com/maekass/Lacuna/tree/main/docs"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-1 inline-block underline underline-offset-2 hover:text-lacuna-plum"
+          <ModelProvenanceHint model={VALUATION_DISPARITY_MODEL}>
+            <div className="mb-10 rounded-xl border border-lacuna-lavender/40 bg-lacuna-lavender/20 p-4 cursor-help">
+              <div className="flex items-start gap-3">
+                <span className="shrink-0 text-sm font-medium text-lacuna-plum">
+                  Insight
+                </span>
+                <span className="text-sm text-lacuna-blue">
+                  Among disclosed valuations, {valuationDisparity.highSector}
+                  {" "}
+                  averages {formatValuationGap(valuationDisparity.percentDiff)}
+                  {" "}
+                  {valuationDisparity.lowSector}{" "}
+                  — the widest sector gap in the dataset (n={valuationDisparity
+                    .highN} vs n={valuationDisparity.lowN} disclosed).
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setMethodologyOpen((v) => !v)}
+                  aria-label="How is this calculated?"
+                  className="ml-auto shrink-0 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold border border-lacuna-lavender/60 text-lacuna-plum/70 hover:bg-lacuna-lavender/30 transition-colors"
                 >
-                  Full methodology docs →
-                </a>
+                  ?
+                </button>
               </div>
-            )}
-          </div>
+              {methodologyOpen && (
+                <div className="mt-3 rounded-lg border border-lacuna-lavender/30 bg-white/70 px-4 py-3 text-xs text-lacuna-blue leading-relaxed">
+                  <p className="font-medium text-lacuna-plum mb-1">
+                    How the sector gap is calculated
+                  </p>
+                  <p>
+                    For each company with a disclosed last-known valuation, we
+                    group by primary sector and compute the mean valuation per
+                    group. The gap is the percentage difference between the
+                    highest- and lowest-mean sectors. Only sectors with ≥2
+                    disclosed valuations are compared. Valuations sourced from
+                    public filings, press releases, and Crunchbase where cited —
+                    see DataProvenanceBanner above.
+                  </p>
+                  <a
+                    href="https://github.com/maekass/Lacuna/tree/main/docs"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1 inline-block underline underline-offset-2 hover:text-lacuna-plum"
+                  >
+                    Full methodology docs →
+                  </a>
+                </div>
+              )}
+            </div>
+          </ModelProvenanceHint>
         )
         : null}
 

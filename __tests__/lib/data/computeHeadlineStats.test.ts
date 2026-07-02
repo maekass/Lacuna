@@ -52,5 +52,6 @@ describe("computeHeadlineStats", () => {
     expect(tiles[1]?.value).toBe(stats.verifiedDeals.toString());
     expect(tiles[3]?.label).toBe("Public sources cited");
     expect(tiles[3]?.value).toBe(stats.uniqueSourceCitations.toString());
+    expect(tiles[0]?.model.module).toContain("computeHeadlineStats");
   });
 });

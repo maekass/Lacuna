@@ -40,6 +40,13 @@ import {
 const SECTION = "mb-16 scroll-mt-28";
 const SECTION_DESC = "text-sm sm:text-base";
 
+/** Compact toggle labels — full names live in `segments[key].label`. */
+const SEGMENT_BUTTON_LABELS: Record<SegmentKey, string> = {
+  commercial: "Commercial",
+  medicaid: "Medicaid",
+  medicare: "Medicare Adv.",
+};
+
 function formatNumber(value: number) {
   return new Intl.NumberFormat("en-US").format(value);
 }
@@ -401,32 +408,34 @@ export default function PayerOpsPage() {
           descriptionClassName={SECTION_DESC}
         />
         <div className="rounded-3xl border border-white/10 bg-lacuna-plum p-6 shadow-sm">
-          <div className="flex flex-wrap items-center gap-2">
-            {(Object.keys(segments) as SegmentKey[]).map((key) => (
+          <div className="relative after:pointer-events-none after:absolute after:inset-y-0 after:right-0 after:z-10 after:w-10 after:bg-gradient-to-l after:from-lacuna-plum after:to-transparent after:content-[''] sm:after:hidden">
+            <div className="hide-scrollbar flex flex-nowrap items-center gap-2 overflow-x-auto">
+              {(Object.keys(segments) as SegmentKey[]).map((key) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => handleSegmentChange(key)}
+                  className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+                    segment === key
+                      ? "bg-white text-lacuna-plum"
+                      : "bg-white/10 text-white hover:bg-white/20"
+                  }`}
+                >
+                  {SEGMENT_BUTTON_LABELS[key]}
+                </button>
+              ))}
               <button
-                key={key}
                 type="button"
-                onClick={() => handleSegmentChange(key)}
-                className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
-                  segment === key
+                onClick={() => setCompareAll((active) => !active)}
+                className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+                  compareAll
                     ? "bg-white text-lacuna-plum"
                     : "bg-white/10 text-white hover:bg-white/20"
                 }`}
               >
-                {segments[key].label}
+                Compare all segments
               </button>
-            ))}
-            <button
-              type="button"
-              onClick={() => setCompareAll((active) => !active)}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
-                compareAll
-                  ? "bg-white text-lacuna-plum"
-                  : "bg-white/10 text-white hover:bg-white/20"
-              }`}
-            >
-              Compare all segments
-            </button>
+            </div>
           </div>
           <div className="mt-2">
             <button
