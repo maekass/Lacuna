@@ -22,7 +22,9 @@ async function main() {
   console.log(`EFTS hits: ${result.eftsHits}`);
   console.log(`Parsed: ${result.parsed.length}`);
   console.log(
-    `WH relevant: ${result.classified.filter((c) => c.womensHealthRelevant).length}`,
+    `WH relevant: ${
+      result.classified.filter((c) => c.womensHealthRelevant).length
+    }`,
   );
   if (result.sync) {
     console.log(

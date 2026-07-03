@@ -401,7 +401,8 @@ function main() {
       deal.preDealValuationDate = preDeal.date;
 
       let premiumComputed: number | null = null;
-      let method = `Pre-deal valuation sourced ($${preDeal.valuation}M); no disclosed deal value for premium`;
+      let method =
+        `Pre-deal valuation sourced ($${preDeal.valuation}M); no disclosed deal value for premium`;
 
       if (deal.dealValue) {
         const premium = deal.dealValue / preDeal.valuation;

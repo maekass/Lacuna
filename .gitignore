@@ -70,6 +70,9 @@ ml/clinical_trials/data/aact/*.zip
 ml/clinical_trials/data/aact/*.dump
 ml/clinical_trials/data/aact/*.dmp
 ml/clinical_trials/data/aact/*.sql
+ml/clinical_trials/data/aact/*.html
+ml/clinical_trials/data/aact/data_dictionary.csv
+ml/clinical_trials/data/aact/schema.png
 
 # python sidecar
 services/python-api/.venv/

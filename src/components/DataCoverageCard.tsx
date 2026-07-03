@@ -104,6 +104,11 @@ export default function DataCoverageCard() {
   const sectorCounts = useMemo(() => computeSectorDealCounts(coverageInput), [
     coverageInput,
   ]);
+  const sectorsWithDeals = useMemo(
+    () => sectorCounts.filter((row) => row.deals > 0),
+    [sectorCounts],
+  );
+  const zeroDealSectorCount = sectorCounts.length - sectorsWithDeals.length;
   const yearCounts = useMemo(() => computeYearDealCounts(coverageInput), [
     coverageInput,
   ]);
@@ -183,9 +188,9 @@ export default function DataCoverageCard() {
           </p>
         </div>
         <div className="rounded-md bg-lacuna-pink/10 border border-lacuna-lavender/30 px-3 py-2">
-          <span className="text-lacuna-blue">Sectors tracked</span>
+          <span className="text-lacuna-blue">Sectors with deals</span>
           <p className="font-semibold text-lacuna-plum mt-0.5">
-            {sectorCounts.length}
+            {sectorsWithDeals.length}
           </p>
         </div>
       </div>
@@ -230,7 +235,7 @@ export default function DataCoverageCard() {
                 </tr>
               </thead>
               <tbody>
-                {sectorCounts.map((row) => (
+                {sectorsWithDeals.map((row) => (
                   <tr
                     key={row.sector}
                     className="border-t border-lacuna-lavender/30"
@@ -250,6 +255,15 @@ export default function DataCoverageCard() {
               </tbody>
             </table>
           </div>
+          {zeroDealSectorCount > 0
+            ? (
+              <p className="mt-2 text-[11px] italic text-lacuna-blue/70">
+                {zeroDealSectorCount} sector
+                {zeroDealSectorCount === 1 ? "" : "s"} with companies but no
+                verified deals omitted.
+              </p>
+            )
+            : null}
         </div>
 
         <div>

@@ -22,7 +22,6 @@ import {
   computeWorkQueueVolumes,
   operatingModel,
   painPoints,
-  progressWidths,
   type SegmentKey,
   segments,
   vcSignals,
@@ -216,8 +215,10 @@ export default function PayerOpsPage() {
             <p className="lacuna-eyebrow text-xs font-semibold text-lacuna-blue">
               Portfolio project · healthcare payer administration
             </p>
-            <h1 className="mt-3 max-w-4xl text-3xl font-bold leading-tight text-lacuna-plum sm:text-5xl">
-              PayerOps Navigator for reducing avoidable administrative waste
+            <h1 className="mt-3 max-w-4xl text-3xl font-bold leading-tight text-balance text-lacuna-plum sm:text-5xl">
+              PayerOps Navigator
+              <wbr />{" "}
+              for reducing avoidable administrative waste
             </h1>
             <p className="mt-4 max-w-3xl text-base leading-relaxed text-lacuna-blue sm:text-lg">
               A portfolio case study designed for payer operations roles. This
@@ -339,14 +340,26 @@ export default function PayerOpsPage() {
                               {s.dealSignal}
                             </p>
                             {examples.map((example) => (
-                              <p
+                              <div
                                 key={`${example.targetName}-${example.year}`}
-                                className="mt-2 text-[11px] text-lacuna-plum/70"
                               >
-                                {example.targetName} → {example.acquirerName}
-                                {" "}
-                                ({example.year})
-                              </p>
+                                <p className="mt-2 text-[11px] text-lacuna-plum/70">
+                                  {example.targetName} → {example.acquirerName}
+                                  {" "}
+                                  ({example.year})
+                                </p>
+                                {example.rationale
+                                  ? (
+                                    <p className="mt-1 text-[10px] italic text-lacuna-plum/60 leading-snug">
+                                      &ldquo;{example.rationale.slice(0, 120)}
+                                      {example.rationale.length > 120
+                                        ? "…"
+                                        : ""}
+                                      &rdquo;
+                                    </p>
+                                  )
+                                  : null}
+                              </div>
                             ))}
                             {matchingDeals > 0
                               ? (
@@ -354,7 +367,8 @@ export default function PayerOpsPage() {
                                   model={VC_SIGNAL_DEAL_COUNT_MODEL}
                                 >
                                   <p className="mt-2 cursor-help text-[11px] text-lacuna-plum/70">
-                                    {matchingDeals} matching deal{matchingDeals ===
+                                    {matchingDeals}{" "}
+                                    matching deal{matchingDeals ===
                                         1
                                       ? ""
                                       : "s"} in dataset
@@ -438,7 +452,9 @@ export default function PayerOpsPage() {
                   }`}
                 >
                   <span className="sm:hidden">{segments[key].shortLabel}</span>
-                  <span className="hidden sm:inline">{segments[key].label}</span>
+                  <span className="hidden sm:inline">
+                    {segments[key].label}
+                  </span>
                 </button>
               ))}
               <button
@@ -651,6 +667,7 @@ export default function PayerOpsPage() {
                   value={`$${formatNumber(animatedMonthlySavings)}`}
                   theme="dark"
                   model={OPPORTUNITY_METRIC_MODELS.monthlySavings}
+                  valueLive="polite"
                 />
                 <Metric
                   label="Auth review hours freed"
@@ -737,9 +754,8 @@ export default function PayerOpsPage() {
                 <div className="group relative col-span-2">
                   <div className="h-2 rounded-full bg-lacuna-lavender/20">
                     <div
-                      className={`h-2 rounded-full bg-lacuna-blue ${
-                        progressWidths[queue.automation]
-                      }`}
+                      className="h-2 rounded-full bg-lacuna-blue"
+                      style={{ width: `${queue.automation}%` }}
                     />
                   </div>
                   <div className="mt-1 text-xs text-lacuna-blue">
@@ -768,13 +784,18 @@ export default function PayerOpsPage() {
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {operatingModel.map((item, index) => (
             <div
-              key={item}
+              key={item.title}
               className="flex gap-4 rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
             >
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-lacuna-pink/30 font-bold text-lacuna-plum">
                 {index + 1}
               </div>
-              <p className="leading-relaxed text-lacuna-blue">{item}</p>
+              <div>
+                <p className="text-sm font-semibold text-lacuna-plum mb-1">
+                  {item.title}
+                </p>
+                <p className="leading-relaxed text-lacuna-blue">{item.text}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -896,9 +917,8 @@ function StatChip({
         ? (
           <div className="mt-1.5 h-1 rounded-full bg-lacuna-lavender/20">
             <div
-              className={`h-1 rounded-full bg-lacuna-blue ${
-                progressWidths[progress]
-              }`}
+              className="h-1 rounded-full bg-lacuna-blue"
+              style={{ width: `${progress}%` }}
             />
           </div>
         )
@@ -912,11 +932,13 @@ function Metric({
   value,
   theme = "light",
   model,
+  valueLive,
 }: {
   label: string;
   value: string;
   theme?: "light" | "dark";
   model?: ModelProvenance;
+  valueLive?: "polite";
 }) {
   const inner = theme === "dark"
     ? (
@@ -924,7 +946,12 @@ function Metric({
         className={`rounded-2xl bg-white/10 p-5 ${model ? "cursor-help" : ""}`}
       >
         <div className="text-sm font-semibold text-white/60">{label}</div>
-        <div className="mt-2 text-3xl font-bold text-white">{value}</div>
+        <div
+          className="mt-2 text-3xl font-bold text-white"
+          aria-live={valueLive}
+        >
+          {value}
+        </div>
       </div>
     )
     : (
@@ -934,7 +961,12 @@ function Metric({
         }`}
       >
         <div className="text-sm font-semibold text-lacuna-blue">{label}</div>
-        <div className="mt-2 text-3xl font-bold text-lacuna-plum">{value}</div>
+        <div
+          className="mt-2 text-3xl font-bold text-lacuna-plum"
+          aria-live={valueLive}
+        >
+          {value}
+        </div>
       </div>
     );
 

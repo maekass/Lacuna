@@ -7,7 +7,9 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["__tests__/**/*.test.ts"],
-    exclude: runQuarantineMl ? [] : ["__tests__/lib/ml/ensemblePredictor.test.ts"],
+    exclude: runQuarantineMl
+      ? []
+      : ["__tests__/lib/ml/ensemblePredictor.test.ts"],
     setupFiles: ["./__tests__/setup.ts"],
   },
   resolve: {

@@ -11,7 +11,7 @@ export default function SectionHeader(
 ) {
   return (
     <div className="mb-6">
-      <h2 className="text-2xl font-semibold text-lacuna-plum">{title}</h2>
+      <h2 className="text-xl sm:text-2xl font-semibold text-lacuna-plum">{title}</h2>
       {description
         ? (
           <p

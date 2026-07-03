@@ -11,7 +11,10 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import process from "node:process";
-import { secFetchHeaders, secRateLimitPause } from "../src/lib/ingestion/secFairAccess";
+import {
+  secFetchHeaders,
+  secRateLimitPause,
+} from "../src/lib/ingestion/secFairAccess";
 
 interface FormDIndexRow {
   cik: string;
@@ -70,7 +73,9 @@ async function main() {
   console.log(`Fetching ${url}`);
   const res = await fetch(url, { headers: secFetchHeaders("text/plain, */*") });
   if (!res.ok) {
-    console.error(`HTTP ${res.status} — index may not exist for ${date} (weekends/holidays)`);
+    console.error(
+      `HTTP ${res.status} — index may not exist for ${date} (weekends/holidays)`,
+    );
     process.exit(1);
   }
   const text = await res.text();
@@ -82,7 +87,13 @@ async function main() {
   const outPath = join(outDir, `sec_form_d_bulk_${date}.json`);
   writeFileSync(
     outPath,
-    `${JSON.stringify({ date, sourceUrl: url, count: rows.length, rows }, null, 2)}\n`,
+    `${
+      JSON.stringify(
+        { date, sourceUrl: url, count: rows.length, rows },
+        null,
+        2,
+      )
+    }\n`,
     "utf8",
   );
   console.log(`Form D filings: ${rows.length} → ${outPath}`);

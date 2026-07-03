@@ -40,7 +40,9 @@ export interface ClinicalTrialMlScores {
 }
 
 /** Run all exported clinical-trial ML models on a CT.gov row. */
-export function scoreClinicalTrial(input: TrialScoreInput): ClinicalTrialMlScores {
+export function scoreClinicalTrial(
+  input: TrialScoreInput,
+): ClinicalTrialMlScores {
   return {
     whRelevance: scoreWhTrialRelevance(input),
     completionProxy: scoreTrialCompletionProxy(input),

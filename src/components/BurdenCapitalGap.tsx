@@ -280,7 +280,8 @@ export default function BurdenCapitalGap() {
             <p>Capital: {formatCapitalM(tooltip.row.capitalRaisedM)}</p>
             {tooltip.row.exitValueM !== null && (
               <p>
-                AOA exits (sector): {formatCapitalM(tooltip.row.exitValueM)}{" "}
+                AOA exits (sector): {formatCapitalM(tooltip.row.exitValueM)}
+                {" "}
                 <span className="opacity-80">(2000–2025)</span>
               </p>
             )}

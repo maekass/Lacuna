@@ -15,7 +15,10 @@
  * @module src/lib/fairness/headlineStat
  */
 
-import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
+import type {
+  VerifiedAcquisitionView,
+  VerifiedCompanyView,
+} from "@/lib/data/verifiedDataHelpers";
 import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
 
 export const VALUATION_DISPARITY_MODEL: ModelProvenance = {
@@ -95,4 +98,49 @@ export function getValuationDisparity(
     highN: high.n,
     lowN: low.n,
   };
+}
+
+/** Top sector by verified acquisition count in a rolling year window. */
+export interface DealVelocityTopSector {
+  sector: string;
+  count: number;
+}
+
+/**
+ * Sector with the most verified acquisitions since `currentYear - 4`.
+ * Returns `null` when the leading sector has fewer than `minCount` deals.
+ */
+export function getDealVelocityTopSector(
+  acquisitions: readonly VerifiedAcquisitionView[],
+  companies: readonly VerifiedCompanyView[],
+  currentYear: number,
+  minCount = 3,
+): DealVelocityTopSector | null {
+  const cutoffYear = String(currentYear - 4);
+  const sectorById = new Map(companies.map((company) => [company.id, company.sector]));
+  const counts = new Map<string, number>();
+
+  for (const acquisition of acquisitions) {
+    const year = acquisition.announcedDate.slice(0, 4);
+    if (year < cutoffYear) continue;
+
+    const sector = sectorById.get(acquisition.targetId);
+    if (sector === undefined) continue;
+
+    counts.set(sector, (counts.get(sector) ?? 0) + 1);
+  }
+
+  let top: DealVelocityTopSector | null = null;
+  for (const [sector, count] of counts) {
+    if (
+      top === null ||
+      count > top.count ||
+      (count === top.count && sector.localeCompare(top.sector) < 0)
+    ) {
+      top = { sector, count };
+    }
+  }
+
+  if (top === null || top.count < minCount) return null;
+  return top;
 }

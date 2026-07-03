@@ -7,9 +7,10 @@ Offline **scikit-learn** training for ClinicalTrials.gov — separate from M&A m
 | Model | Task | Status |
 |-------|------|--------|
 | **wh-relevance-v1** | Women's health trial relevance (title + condition + interventions + sponsor) | Shipped |
-| **termination-risk-v1** | Terminated/withdrawn vs active/completed proxy | Experimental — only exported when hold-out ROC-AUC ≥ 0.55 |
+| **termination-risk-v1** | Terminated/withdrawn vs active/completed proxy                               | Experimental — only exported when hold-out ROC-AUC ≥ 0.55 |
 
-Inference runs in the **Next.js app** via exported JSON artifacts in `src/data/ml/clinical-trials/` (TF-IDF + logistic — no Python at runtime).
+Inference runs in the **Next.js app** via exported JSON artifacts in
+`src/data/ml/clinical-trials/` (TF-IDF + logistic — no Python at runtime).
 
 ## Train (no API key)
 
@@ -22,7 +23,9 @@ npm run ml:ct:train   # fetch CT.gov → train → write artifacts
 
 Requirements: Python 3.11+, `pip install -r ml/clinical_trials/requirements.txt`
 
-If CT.gov blocks automated fetch (403), training falls back to `ml/clinical_trials/data/training_seed.json`. **Re-run locally** for live-data artifacts before citing metrics.
+If CT.gov blocks automated fetch (403), training falls back to
+`ml/clinical_trials/data/training_seed.json`. **Re-run locally** for live-data
+artifacts before citing metrics.
 
 ## Layout
 

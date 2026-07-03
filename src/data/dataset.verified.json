@@ -61,7 +61,8 @@
     ],
     "purpose": "Educational demonstration dataset for portfolio project. Not for commercial investment decisions.",
     "disclaimer": "Data compiled from public sources for educational visualization. Verify independently before any commercial use."
-  },
+  }
+,
   "companies": [
     {
       "id": "c1",

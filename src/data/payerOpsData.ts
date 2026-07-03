@@ -71,17 +71,25 @@ export interface VcSignalDealExample {
   targetName: string;
   acquirerName: string;
   year: number;
+  rationale?: string;
 }
 
 /** Maps VC signal pain points to verified-dataset target company sectors. */
 export const vcSignalSectorMap: Record<string, readonly string[]> = {
-  "Prior-auth digitization": ["Mental Health", "General Wellness"],
+  "Prior-auth digitization": [
+    "General Wellness",
+    "Diagnostics",
+    "Precision Medicine",
+  ],
   "Maternal episode coordination": ["Maternal Health"],
   "Behavioral health parity": ["Mental Health"],
-  "Specialty pharmacy exceptions": ["Precision Medicine"],
+  "Specialty pharmacy exceptions": [
+    "Reproductive Health",
+    "Contraception",
+    "Dermatology",
+    "Precision Medicine",
+  ],
 };
-
-export type ProgressWidths = Record<number, string>;
 
 export const segments: Record<SegmentKey, SegmentData> = {
   commercial: {
@@ -185,11 +193,32 @@ export const workQueues: WorkQueueTemplate[] = [
   },
 ];
 
-export const operatingModel: string[] = [
-  "Ingest X12 278/837 status, policy rules, benefits, network files, and notes metadata",
-  "Score each case for administrative preventability, clinical risk, SLA urgency, and provider friction",
-  "Resolve low-risk administrative defects before denial with provider-facing next-best actions",
-  "Escalate clinically sensitive cases with evidence packets and auditable rationale",
+export interface OperatingModelItem {
+  title: string;
+  text: string;
+}
+
+export const operatingModel: OperatingModelItem[] = [
+  {
+    title: "Ingest data",
+    text:
+      "Ingest X12 278/837 status, policy rules, benefits, network files, and notes metadata",
+  },
+  {
+    title: "Score for risk",
+    text:
+      "Score each case for administrative preventability, clinical risk, SLA urgency, and provider friction",
+  },
+  {
+    title: "Resolve defects",
+    text:
+      "Resolve low-risk administrative defects before denial with provider-facing next-best actions",
+  },
+  {
+    title: "Escalate to review",
+    text:
+      "Escalate clinically sensitive cases with evidence packets and auditable rationale",
+  },
 ];
 
 export const vcSignals: VcSignal[] = [
@@ -223,13 +252,6 @@ export const vcSignals: VcSignal[] = [
   },
 ];
 
-export const progressWidths: ProgressWidths = {
-  29: "w-[29%]",
-  43: "w-[43%]",
-  51: "w-[51%]",
-  64: "w-[64%]",
-};
-
 /** Max verified deal examples shown per VC signal pain point. */
 export const VC_SIGNAL_MAX_EXAMPLES = 2;
 
@@ -260,11 +282,15 @@ export function toVcSignalDealExamples(
   return [...matches]
     .sort((a, b) => b.announcedDate.localeCompare(a.announcedDate))
     .slice(0, VC_SIGNAL_MAX_EXAMPLES)
-    .map((acquisition) => ({
-      targetName: acquisition.targetName,
-      acquirerName: acquisition.acquirerName,
-      year: Number(acquisition.announcedDate.slice(0, 4)),
-    }));
+    .map((acquisition) => {
+      const rationale = acquisition.strategicRationale.trim();
+      return {
+        targetName: acquisition.targetName,
+        acquirerName: acquisition.acquirerName,
+        year: Number(acquisition.announcedDate.slice(0, 4)),
+        ...(rationale.length > 0 ? { rationale } : {}),
+      };
+    });
 }
 
 /**

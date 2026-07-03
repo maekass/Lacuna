@@ -17,6 +17,7 @@
         "roc_auc": 1.0,
         "brier": 0.004340609326994763
       }
+
     },
     "completionProxy": {
       "n_total": 725,

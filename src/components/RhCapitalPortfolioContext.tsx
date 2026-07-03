@@ -77,16 +77,16 @@ export default function RhCapitalPortfolioContext() {
               <tr
                 key={company.id}
                 className="border-b border-lacuna-lavender/15"
-              >
+                >
                 <td className="py-2 pr-3">
-                  <a
+                    <a
                     href={company.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     className="font-medium text-lacuna-plum hover:underline"
                   >
                     {company.name}
-                  </a>
+                    </a>
                 </td>
                 <td className="py-2 pr-3">{company.focusArea}</td>
                 <td className="py-2 pr-3">
@@ -94,20 +94,23 @@ export default function RhCapitalPortfolioContext() {
                 </td>
                 <td className="py-2">
                   {company.exit != null ? (
-                    <span>
+                      <span>
                       {company.exit.acquirer}
                       {company.exit.dealValueM != null
-                        ? ` · $${company.exit.dealValueM}M`
-                        : " · terms undisclosed"}
-                    </span>
-                  ) : company.lastKnownValuationM != null ? (
+                          ? ` · $${company.exit.dealValueM}M`
+                          : " · terms undisclosed"}
+                        </span>
+                    )
+                    : company.lastKnownValuationM != null
+                    ? (
                     <span>
-                      Valued ${company.lastKnownValuationM}M (
-                      {company.valuationSource})
+                        Valued ${company.lastKnownValuationM}M (
+                        {company.valuationSource})
                     </span>
-                  ) : (
-                    "—"
-                  )}
+                    )
+                    : (
+                      "—"
+                      )}
                 </td>
               </tr>
             ))}
@@ -118,17 +121,19 @@ export default function RhCapitalPortfolioContext() {
       <ul className="mt-4 space-y-1 text-xs text-lacuna-blue/70">
         {RH_CAPITAL_SOURCES.map((source) => (
           <li key={source.label}>
-            {source.url != null ? (
+            {source.url != null
+              ? (
               <a
-                href={source.url}
+                  href={source.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:underline"
+                  className="hover:underline"
               >
-                {source.label}
+                  {source.label}
               </a>
-            ) : (
-              source.label
+              )
+              : (
+                source.label
             )}
             {" — "}
             {source.reference}

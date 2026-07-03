@@ -172,8 +172,8 @@ export default function ClinicalTrialTracker() {
           <ModelProvenanceHint model={CLINICAL_TRIALS_ML_MODEL}>
             <p className="text-sm text-lacuna-blue cursor-help">
               Live data from ClinicalTrials.gov · WH relevance
-            {isCompletionProxyAvailable() ? " + completion proxy" : ""} (
-            {getClinicalTrialsTrainingSource()})
+              {isCompletionProxyAvailable() ? " + completion proxy" : ""} (
+              {getClinicalTrialsTrainingSource()})
             </p>
           </ModelProvenanceHint>
         </div>
@@ -264,13 +264,13 @@ export default function ClinicalTrialTracker() {
               {Object.entries(phaseDistribution)
                 .sort((a, b) => b[1] - a[1])
                 .map(([phase, count]) => (
-                  <div
+                    <div
                     key={phase}
                     className="flex items-center justify-between text-xs py-1"
-                  >
-                    <span className="text-lacuna-blue truncate mr-2">
+                          >
+                          <span className="text-lacuna-blue truncate mr-2">
                       {phase}
-                    </span>
+                              </span>
                     <div className="flex items-center gap-2">
                       <div className="w-16 h-1.5 bg-lacuna-surface-subtle rounded-full overflow-hidden">
                         <div
@@ -279,7 +279,7 @@ export default function ClinicalTrialTracker() {
                             width: `${(count / trials.length) * 100}%`,
                           }}
                         />
-                      </div>
+                                </div>
                       <span className="font-medium text-lacuna-plum w-4 text-right">
                         {count}
                       </span>
@@ -301,9 +301,9 @@ export default function ClinicalTrialTracker() {
                   .map(([status, count]) => (
                     <span
                       key={status}
-                      className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
+                          className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
                         STATUS_COLORS[status] || STATUS_COLORS.UNKNOWN
-                      }`}
+                          }`}
                     >
                       {statusLabel(status)} ({count})
                     </span>
@@ -354,71 +354,77 @@ export default function ClinicalTrialTracker() {
               const completion = scores.completionProxy;
               return (
               <div
-                key={trial.nctId}
-                className="rounded-lg border border-lacuna-border p-3 hover:border-lacuna-lavender/60 transition-colors"
+                  key={trial.nctId}
+                  className="rounded-lg border border-lacuna-border p-3 hover:border-lacuna-lavender/60 transition-colors"
               >
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1">
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-lacuna-plum leading-snug line-clamp-2">
-                      {trial.title}
-                    </p>
-                    <p className="text-xs text-lacuna-blue mt-1 truncate">
-                      {trial.sponsor} ·{" "}
-                      {trial.condition || "Multiple conditions"}
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-medium text-lacuna-plum leading-snug line-clamp-2">
+                        {trial.title}
+                        </p>
+                      <p className="text-xs text-lacuna-blue mt-1 truncate">
+                        {trial.sponsor} ·{" "}
+                        {trial.condition || "Multiple conditions"}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 shrink-0 mt-1 sm:mt-0 flex-wrap justify-end">
+                    <div className="flex items-center gap-2 shrink-0 mt-1 sm:mt-0 flex-wrap justify-end">
                     <span
                       className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
-                        whScore.label
-                          ? "bg-lacuna-pink/20 text-lacuna-plum border border-lacuna-pink/40"
-                          : "bg-lacuna-surface-subtle text-lacuna-text-secondary"
+                          whScore.label
+                            ? "bg-lacuna-pink/20 text-lacuna-plum border border-lacuna-pink/40"
+                            : "bg-lacuna-surface-subtle text-lacuna-text-secondary"
                       }`}
-                      title={`WH relevance ${Math.round(whScore.probability * 100)}%`}
+                        title={`WH relevance ${
+                          Math.round(whScore.probability * 100)
+                        }%`}
                     >
-                      WH {Math.round(whScore.probability * 100)}%
+                        WH {Math.round(whScore.probability * 100)}%
                     </span>
-                    {completion != null && (
+                      {completion != null && (
                       <span
-                        className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-sky-50 text-sky-800 border border-sky-200"
-                        title={`Completion proxy ${Math.round(completion.probability * 100)}% (COMPLETED vs stopped — not efficacy)`}
-                      >
-                        Complete {Math.round(completion.probability * 100)}%
+                          className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-sky-50 text-sky-800 border border-sky-200"
+                          title={`Completion proxy ${
+                            Math.round(completion.probability * 100)
+                          }% (COMPLETED vs stopped — not efficacy)`}
+                        >
+                          Complete {Math.round(completion.probability * 100)}%
                       </span>
-                    )}
+                          )}
                     <span
                       className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
-                        STATUS_COLORS[trial.status] || STATUS_COLORS.UNKNOWN
+                          STATUS_COLORS[trial.status] || STATUS_COLORS.UNKNOWN
                       }`}
                     >
-                      {statusLabel(trial.status)}
+                        {statusLabel(trial.status)}
                     </span>
-                    <span className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-lacuna-surface-subtle text-lacuna-text-primary">
-                      {trial.phase}
+                      <span className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-lacuna-surface-subtle text-lacuna-text-primary">
+                        {trial.phase}
                     </span>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-[11px] text-lacuna-blue/70">
-                  <span>
-                    <a
-                      href={`https://clinicaltrials.gov/study/${trial.nctId}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-lacuna-blue hover:text-lacuna-plum underline underline-offset-2"
+                  <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-[11px] text-lacuna-blue/70">
+                    <span>
+                      <a
+                        href={`https://clinicaltrials.gov/study/${trial.nctId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-lacuna-blue hover:text-lacuna-plum underline underline-offset-2"
                     >
-                      {trial.nctId}
-                    </a>
+                        {trial.nctId}
+                      </a>
                   </span>
-                  {trial.enrollment > 0 && (
-                    <span>Enrollment: {trial.enrollment.toLocaleString()}</span>
+                    {trial.enrollment > 0 && (
+                      <span>
+                        Enrollment: {trial.enrollment.toLocaleString()}
+                      </span>
                   )}
-                  {trial.startDate && <span>Start: {trial.startDate}</span>}
-                  {trial.completionDate && (
-                    <span>Est. completion: {trial.completionDate}</span>
+                    {trial.startDate && <span>Start: {trial.startDate}</span>}
+                    {trial.completionDate && (
+                      <span>Est. completion: {trial.completionDate}</span>
                   )}
                 </div>
               </div>
-            );
+              );
             })}
           </div>
 
