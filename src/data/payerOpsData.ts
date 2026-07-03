@@ -15,6 +15,7 @@ export type SegmentKey = "commercial" | "medicaid" | "medicare";
 
 export interface SegmentData {
   label: string;
+  shortLabel: string;
   lives: string;
   auths: number;
   claims: number;
@@ -85,6 +86,7 @@ export type ProgressWidths = Record<number, string>;
 export const segments: Record<SegmentKey, SegmentData> = {
   commercial: {
     label: "Commercial ASO + fully insured",
+    shortLabel: "Commercial",
     lives: "1.8M",
     auths: 18400,
     claims: 920000,
@@ -94,6 +96,7 @@ export const segments: Record<SegmentKey, SegmentData> = {
   },
   medicaid: {
     label: "Medicaid managed care",
+    shortLabel: "Medicaid",
     lives: "910K",
     auths: 12200,
     claims: 610000,
@@ -103,6 +106,7 @@ export const segments: Record<SegmentKey, SegmentData> = {
   },
   medicare: {
     label: "Medicare Advantage",
+    shortLabel: "Medicare Adv.",
     lives: "420K",
     auths: 8100,
     claims: 380000,

@@ -44,13 +44,6 @@ import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
 const SECTION = "mb-16 scroll-mt-28";
 const SECTION_DESC = "text-sm sm:text-base";
 
-/** Compact toggle labels — full names live in `segments[key].label`. */
-const SEGMENT_BUTTON_LABELS: Record<SegmentKey, string> = {
-  commercial: "Commercial",
-  medicaid: "Medicaid",
-  medicare: "Medicare Adv.",
-};
-
 function formatNumber(value: number) {
   return new Intl.NumberFormat("en-US").format(value);
 }
@@ -444,7 +437,8 @@ export default function PayerOpsPage() {
                       : "bg-white/10 text-white hover:bg-white/20"
                   }`}
                 >
-                  {SEGMENT_BUTTON_LABELS[key]}
+                  <span className="sm:hidden">{segments[key].shortLabel}</span>
+                  <span className="hidden sm:inline">{segments[key].label}</span>
                 </button>
               ))}
               <button
@@ -465,7 +459,7 @@ export default function PayerOpsPage() {
             <button
               type="button"
               onClick={() => setCustomizeInputs((active) => !active)}
-              className="text-xs font-medium text-lacuna-blue underline-offset-2 hover:underline"
+              className="text-xs font-medium text-white/60 underline-offset-2 hover:text-white hover:underline"
             >
               {customizeInputs ? "Hide custom inputs" : "Customize inputs"}
             </button>
@@ -579,7 +573,7 @@ export default function PayerOpsPage() {
                 className="mb-1 flex flex-col gap-1 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between"
               >
                 <span>Denial rate</span>
-                <span className="font-semibold text-lacuna-plum sm:text-right">
+                <span className="font-semibold text-white sm:text-right">
                   {denialRate.toFixed(1)}%
                 </span>
               </label>
@@ -610,7 +604,7 @@ export default function PayerOpsPage() {
                 className="mb-1 flex flex-col gap-1 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between"
               >
                 <span>Avoidable fraction</span>
-                <span className="font-semibold text-lacuna-plum sm:text-right">
+                <span className="font-semibold text-white sm:text-right">
                   {avoidableRate}%
                 </span>
               </label>
