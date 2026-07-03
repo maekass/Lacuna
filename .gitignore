@@ -66,6 +66,7 @@ staging/sec_candidates.csv
 services/python-api/.venv/
 ml/clinical_trials/.venv/
 ml/clinical_trials/data/cached_training.json
+ml/clinical_trials/data/llm_corpus.jsonl
 __pycache__/
 *.py[cod]
 

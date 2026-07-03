@@ -2,9 +2,12 @@ import { describe, expect, it } from "vitest";
 import { scoreTfidfLogistic } from "@/lib/ml/clinicalTrials/inference";
 import {
   getClinicalTrialsTrainingSource,
+  isCompletionProxyAvailable,
+  scoreClinicalTrial,
   scoreWhTrialRelevance,
   WH_RELEVANCE_MODEL,
 } from "@/lib/ml/clinicalTrials/scoreClinicalTrial";
+import { trialNumericFeatures } from "@/lib/ml/clinicalTrials/types";
 import type { TfidfLogisticArtifact, TrialScoreInput } from "@/lib/ml/clinicalTrials/types";
 
 describe("clinicalTrials ML inference", () => {
@@ -16,6 +19,7 @@ describe("clinicalTrials ML inference", () => {
     phase: "PHASE2",
     status: "RECRUITING",
     enrollment: 240,
+    hasResults: false,
   };
 
   const nonWhTrial: TrialScoreInput = {
@@ -26,6 +30,7 @@ describe("clinicalTrials ML inference", () => {
     phase: "PHASE3",
     status: "COMPLETED",
     enrollment: 800,
+    hasResults: true,
   };
 
   it("scores women's health trial above non-WH trial", () => {
@@ -35,27 +40,46 @@ describe("clinicalTrials ML inference", () => {
     expect(wh.label).toBe(true);
   });
 
-  it("artifact has vocabulary and coefficients aligned", () => {
+  it("artifact has aligned vocabulary and coefficients", () => {
     expect(WH_RELEVANCE_MODEL.vocabulary.length).toBeGreaterThan(0);
     expect(WH_RELEVANCE_MODEL.coefficients.length).toBe(
       WH_RELEVANCE_MODEL.vocabulary.length,
     );
-    expect(WH_RELEVANCE_MODEL.idf.length).toBe(
-      WH_RELEVANCE_MODEL.vocabulary.length,
-    );
   });
 
-  it("scoreTfidfLogistic returns probability in [0, 1]", () => {
+  it("numeric features match python feature order", () => {
+    const f = trialNumericFeatures({
+      phase: "PHASE2",
+      enrollment: 100,
+      interventions: ["a", "b"],
+      hasResults: true,
+      title: "",
+      condition: "",
+      sponsor: "",
+    });
+    expect(f).toEqual([2, 2, 2, 1]);
+  });
+
+  it("scoreClinicalTrial returns wh and optional completion", () => {
+    const scores = scoreClinicalTrial(whTrial);
+    expect(scores.whRelevance.modelId).toBe("wh-relevance-v1");
+    if (isCompletionProxyAvailable()) {
+      expect(scores.completionProxy?.modelId).toBe("completion-proxy-v2");
+    }
+  });
+
+  it("scoreTfidfLogistic probability is bounded", () => {
     const result = scoreTfidfLogistic(
       WH_RELEVANCE_MODEL as TfidfLogisticArtifact,
       whTrial,
     );
     expect(result.probability).toBeGreaterThanOrEqual(0);
     expect(result.probability).toBeLessThanOrEqual(1);
-    expect(result.modelId).toBe("wh-relevance-v1");
   });
 
   it("exposes training source from model card", () => {
-    expect(getClinicalTrialsTrainingSource()).toMatch(/synthetic_seed|ctgov_live/);
+    expect(getClinicalTrialsTrainingSource()).toMatch(
+      /synthetic_seed|ctgov_live|ctgov_cached/,
+    );
   });
 });

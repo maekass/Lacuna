@@ -13,6 +13,7 @@ import {
 } from "@/app/lazyDashboard";
 import WomensHealthExitsContext from "@/components/WomensHealthExitsContext";
 import RhCapitalPortfolioContext from "@/components/RhCapitalPortfolioContext";
+import ClinicalTrialsMlPanel from "@/components/ClinicalTrialsMlPanel";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 
@@ -71,9 +72,10 @@ export default function ResearchPage() {
           <ClinicalTrialTracker />
           <DomesticStudyCatalog />
         </div>
-        <p className="text-center text-xs text-lacuna-blue/80" role="note">
+        <p className="text-center text-xs text-lacuna-blue/80 mb-6" role="note">
           Trial search is live; cohort sample sizes are static citations.
         </p>
+        <ClinicalTrialsMlPanel />
       </MotionSection>
 
       <MotionSection id="evidence-maturity" delay={0.05} className={SECTION}>

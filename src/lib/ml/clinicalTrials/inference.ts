@@ -1,12 +1,11 @@
 import type { TfidfLogisticArtifact, TrialModelScore, TrialScoreInput } from "./types";
-import { trialTextCorpus } from "./types";
+import { trialNumericFeatures, trialTextCorpus } from "./types";
 
 const TOKEN_PATTERN = /\b[a-z0-9']+\b/g;
 
 function tokenize(text: string): string[] {
   const normalized = text.toLowerCase();
-  const matches = normalized.match(TOKEN_PATTERN);
-  return matches ?? [];
+  return normalized.match(TOKEN_PATTERN) ?? [];
 }
 
 function termFrequency(tokens: string[]): Map<string, number> {
@@ -17,7 +16,6 @@ function termFrequency(tokens: string[]): Map<string, number> {
   return tf;
 }
 
-/** Build vocabulary index map once per artifact. */
 function buildVocabIndex(vocabulary: readonly string[]): Map<string, number> {
   const index = new Map<string, number>();
   vocabulary.forEach((term, idx) => {
@@ -26,9 +24,19 @@ function buildVocabIndex(vocabulary: readonly string[]): Map<string, number> {
   return index;
 }
 
+function scaleNumeric(
+  values: number[],
+  means: readonly number[],
+  scales: readonly number[],
+): number[] {
+  return values.map((v, i) => {
+    const scale = scales[i] || 1;
+    return (v - (means[i] ?? 0)) / scale;
+  });
+}
+
 /**
- * Score text with an exported TF-IDF + logistic model (inference only — no training).
- * @param threshold Classification threshold (default 0.5).
+ * Score text (+ optional numeric features) with an exported TF-IDF + logistic model.
  */
 export function scoreTfidfLogistic(
   artifact: TfidfLogisticArtifact,
@@ -47,6 +55,21 @@ export function scoreTfidfLogistic(
     const idf = artifact.idf[idx] ?? 0;
     const tfidf = (1 + Math.log(count)) * idf;
     logit += (artifact.coefficients[idx] ?? 0) * tfidf;
+  }
+
+  if (
+    artifact.numericCoefficients &&
+    artifact.numericMeans &&
+    artifact.numericScales
+  ) {
+    const numeric = scaleNumeric(
+      trialNumericFeatures(input),
+      artifact.numericMeans,
+      artifact.numericScales,
+    );
+    for (let i = 0; i < numeric.length; i++) {
+      logit += (artifact.numericCoefficients[i] ?? 0) * numeric[i];
+    }
   }
 
   const probability = 1 / (1 + Math.exp(-logit));
