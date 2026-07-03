@@ -57,10 +57,19 @@ next-env.d.ts
 # staging outputs (templates in staging/*.template.csv are tracked)
 staging/deals_candidates.csv
 staging/sec_candidates.csv
+staging/sec_ma_efts_hits.json
+staging/sec_form_d_bulk_*.json
 
 # free-API batch exports (see data/exports/free-apis/README.md)
 /data/exports/free-apis/**
 !/data/exports/free-apis/README.md
+/data/exports/cms-bulk/**
+
+# AACT bulk snapshots (register at aact.ctti-clinicaltrials.org)
+ml/clinical_trials/data/aact/*.zip
+ml/clinical_trials/data/aact/*.dump
+ml/clinical_trials/data/aact/*.dmp
+ml/clinical_trials/data/aact/*.sql
 
 # python sidecar
 services/python-api/.venv/

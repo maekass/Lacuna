@@ -62,6 +62,14 @@ export {
   downloadFreeApiBundles,
   readLatestFreeApiExport,
 } from "@/lib/ingestion/freeApi";
+export { enrichCompanyFromPublicApis } from "@/lib/ingestion/companyEnrichment";
+export { runFormDIngest } from "@/lib/ingestion/secFormDIngestPipeline";
+export {
+  searchEdgarFullText,
+  searchFormDFilingsWomensHealth,
+  searchMaFilingsWomensHealth,
+} from "@/lib/ingestion/secFullTextSearch";
+export { parseFormDXml } from "@/lib/ingestion/secFormDConnector";
 export type {
   FreeApiDownloadManifest,
   FreeApiEntityRecord,

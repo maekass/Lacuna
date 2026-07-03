@@ -22,6 +22,13 @@ MAX_PAGES_PER_QUERY = 5
 REQUEST_DELAY_S = 0.4
 USER_AGENT = "Lacuna-ML-Research/1.0 (educational; mps5cy@virginia.edu)"
 
+# Trim API payloads — only modules needed for training/inference
+CTGOV_STUDY_FIELDS = (
+    "NCTId,BriefTitle,OverallStatus,Phase,Condition,"
+    "LeadSponsorName,EnrollmentCount,InterventionName,"
+    "StudyType,StartDate,ResultsFirstPostDate"
+)
+
 
 @dataclass
 class TrialRecord:
@@ -135,6 +142,8 @@ def fetch_studies_for_condition(
     *,
     page_size: int = DEFAULT_PAGE_SIZE,
     max_pages: int = MAX_PAGES_PER_QUERY,
+    fields: str = CTGOV_STUDY_FIELDS,
+    count_total: bool = False,
 ) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     page_token: str | None = None
@@ -144,7 +153,10 @@ def fetch_studies_for_condition(
             "query.cond": condition,
             "pageSize": str(page_size),
             "sort": "LastUpdatePostDate:desc",
+            "fields": fields,
         }
+        if count_total:
+            params["countTotal"] = "true"
         if page_token:
             params["pageToken"] = page_token
 

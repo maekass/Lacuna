@@ -6,8 +6,12 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { clampInt } from "@/lib/api/pageParams";
+import {
+  CTG_API_BASE,
+  CTG_STUDY_FIELDS,
+  ctgFetchHeaders,
+} from "@/lib/ingestion/publicRecords/ctgovClient";
 
-const CLINICAL_TRIALS_API_BASE = "https://clinicaltrials.gov/api/v2";
 const DEFAULT_TRIAL_LIMIT = 10;
 const MAX_TRIAL_LIMIT = 100;
 const MAX_BATCH_NCT_IDS = 25;
@@ -89,14 +93,11 @@ export async function GET(request: NextRequest) {
     if (status) params.append("filter.status", status);
     params.append("pageSize", limit.toString());
     params.append("sort", "LastUpdatePostDate:desc");
+    params.append("fields", CTG_STUDY_FIELDS);
 
     const response = await fetch(
-      `${CLINICAL_TRIALS_API_BASE}/studies?${params.toString()}`,
-      {
-        headers: {
-          "Accept": "application/json",
-        },
-      },
+      `${CTG_API_BASE}/studies?${params.toString()}`,
+      { headers: ctgFetchHeaders() },
     );
 
     if (!response.ok) {
@@ -187,8 +188,8 @@ export async function POST(request: NextRequest) {
       nctIds.map(async (nctId) => {
         try {
           const response = await fetch(
-            `${CLINICAL_TRIALS_API_BASE}/studies/${nctId}`,
-            { headers: { "Accept": "application/json" } },
+            `${CTG_API_BASE}/studies/${nctId}`,
+            { headers: ctgFetchHeaders() },
           );
 
           if (!response.ok) return null;

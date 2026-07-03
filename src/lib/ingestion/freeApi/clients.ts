@@ -9,11 +9,11 @@ import {
   padCik,
   resolveTicker,
 } from "@/lib/ingestion/secEdgarClient";
+import { CTG_API_BASE, ctgFetchHeaders } from "@/lib/ingestion/publicRecords/ctgovClient";
 import { DELAY_MS, sleep } from "./rateLimit";
 import type { FreeApiSourceId, FreeApiSourceResult } from "./types";
 
 const SEC_DATA_BASE = "https://data.sec.gov";
-const CTG_API = "https://clinicaltrials.gov/api/v2";
 const OPENFDA_BASE = "https://api.fda.gov";
 const NIH_REPORTER = "https://api.reporter.nih.gov/v2/projects/search";
 const NCBI_ESEARCH =
@@ -167,9 +167,9 @@ export async function fetchClinicalTrialsGov(
     pageSize: "25",
     sort: "LastUpdatePostDate:desc",
   });
-  const url = `${CTG_API}/studies?${params}`;
+  const url = `${CTG_API_BASE}/studies?${params}`;
   try {
-    const res = await fetch(url, { headers: { Accept: "application/json" } });
+    const res = await fetch(url, { headers: ctgFetchHeaders() });
     if (!res.ok) {
       return errResult("clinical_trials_gov", url, `HTTP ${res.status}`);
     }
