@@ -10,9 +10,9 @@ const nextConfig: NextConfig = {
   // Avoid picking up a parent-directory lockfile when multiple package-lock.json files exist.
   outputFileTracingRoot: projectRoot,
   // Safety net: the repo includes optional/stub modules and experimental panels.
-  // Don't let pre-existing type or lint errors fail the production prototype build.
+  // Don't let pre-existing type errors fail the production prototype build.
+  // Lint runs separately via `npm run lint` in CI — not during `next build` (Next 16).
   typescript: { ignoreBuildErrors: true },
-  eslint: { ignoreDuringBuilds: true },
   async headers() {
     return [
       {
