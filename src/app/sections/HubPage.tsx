@@ -1,14 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import DataProvenanceBanner from "@/components/DataProvenanceBanner";
 import MotionSection from "@/components/ui/MotionSection";
 import StatTile from "@/components/ui/StatTile";
 import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
+import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { useDashboardData } from "@/lib/data/useDashboardData";
-import { VALUATION_DISPARITY_MODEL } from "@/lib/fairness/headlineStat";
+import {
+  getDealVelocityTopSector,
+  VALUATION_DISPARITY_MODEL,
+} from "@/lib/fairness/headlineStat";
 import { WORKSPACES } from "@/lib/navigation/workspaces";
+
+const CURRENT_YEAR = new Date().getFullYear();
 
 /** Render huge relative gaps as a multiplier ("76× higher") — "7503% above" is unreadable. */
 function formatValuationGap(percentDiff: number): string {
@@ -22,8 +28,17 @@ function formatValuationGap(percentDiff: number): string {
 }
 
 export default function HubPage() {
-  const { verifiedAcquisitions, valuationDisparity, headlineStats } =
-    useDashboardData();
+  const { verifiedAcquisitions, verifiedCompanies } = useVerifiedDataset();
+  const { valuationDisparity, headlineStats } = useDashboardData();
+  const dealVelocityTopSector = useMemo(
+    () =>
+      getDealVelocityTopSector(
+        verifiedAcquisitions,
+        verifiedCompanies,
+        CURRENT_YEAR,
+      ),
+    [verifiedAcquisitions, verifiedCompanies],
+  );
   const [methodologyOpen, setMethodologyOpen] = useState(false);
 
   return (
@@ -122,6 +137,22 @@ export default function HubPage() {
         : null}
 
       <MotionSection delay={0.13} className="mb-10">
+        {dealVelocityTopSector !== null
+          ? (
+            <div className="mb-4 rounded-xl border border-lacuna-lavender/40 bg-lacuna-lavender/20 p-4">
+              <div className="flex items-start gap-3">
+                <span className="shrink-0 text-sm font-medium text-lacuna-plum">
+                  Insight
+                </span>
+                <span className="text-sm text-lacuna-blue">
+                  {dealVelocityTopSector.sector} has seen{" "}
+                  {dealVelocityTopSector.count} verified acquisitions in the past
+                  four years — the highest velocity among all dataset sectors.
+                </span>
+              </div>
+            </div>
+          )
+          : null}
         <Link
           href="/payer-ops"
           className="group flex flex-col gap-3 rounded-xl border-l-2 border-lacuna-plum bg-gradient-to-r from-lacuna-plum/5 to-lacuna-lavender/20 p-5 shadow-sm transition-shadow hover:shadow-md sm:flex-row sm:items-center sm:gap-5"
