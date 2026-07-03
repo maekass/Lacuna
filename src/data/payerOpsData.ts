@@ -185,11 +185,32 @@ export const workQueues: WorkQueueTemplate[] = [
   },
 ];
 
-export const operatingModel: string[] = [
-  "Ingest X12 278/837 status, policy rules, benefits, network files, and notes metadata",
-  "Score each case for administrative preventability, clinical risk, SLA urgency, and provider friction",
-  "Resolve low-risk administrative defects before denial with provider-facing next-best actions",
-  "Escalate clinically sensitive cases with evidence packets and auditable rationale",
+export interface OperatingModelItem {
+  title: string;
+  text: string;
+}
+
+export const operatingModel: OperatingModelItem[] = [
+  {
+    title: "Ingest data",
+    text:
+      "Ingest X12 278/837 status, policy rules, benefits, network files, and notes metadata",
+  },
+  {
+    title: "Score for risk",
+    text:
+      "Score each case for administrative preventability, clinical risk, SLA urgency, and provider friction",
+  },
+  {
+    title: "Resolve defects",
+    text:
+      "Resolve low-risk administrative defects before denial with provider-facing next-best actions",
+  },
+  {
+    title: "Escalate to review",
+    text:
+      "Escalate clinically sensitive cases with evidence packets and auditable rationale",
+  },
 ];
 
 export const vcSignals: VcSignal[] = [

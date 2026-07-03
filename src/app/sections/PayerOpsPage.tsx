@@ -771,13 +771,18 @@ export default function PayerOpsPage() {
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {operatingModel.map((item, index) => (
             <div
-              key={item}
+              key={item.title}
               className="flex gap-4 rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
             >
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-lacuna-pink/30 font-bold text-lacuna-plum">
                 {index + 1}
               </div>
-              <p className="leading-relaxed text-lacuna-blue">{item}</p>
+              <div>
+                <p className="text-sm font-semibold text-lacuna-plum mb-1">
+                  {item.title}
+                </p>
+                <p className="leading-relaxed text-lacuna-blue">{item.text}</p>
+              </div>
             </div>
           ))}
         </div>
