@@ -1,0 +1,21 @@
+{
+  "version": "clinical-trials-v1",
+  "description": "Offline-trained scikit-learn TF-IDF + logistic models on ClinicalTrials.gov excerpts. Descriptive only \u2014 not clinical advice.",
+  "trainingSource": "synthetic_seed",
+  "models": {
+    "whRelevance": {
+      "artifact": "wh-relevance-v1.json",
+      "metrics": {
+        "n_total": 440,
+        "n_train": 352,
+        "n_test": 88,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0
+      }
+    },
+    "terminationRisk": null
+  }
+}

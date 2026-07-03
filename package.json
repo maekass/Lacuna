@@ -24,6 +24,8 @@
     "compute:data-quality": "tsx scripts/compute-data-quality.ts",
     "compute:confidence-intervals": "tsx scripts/compute-confidence-intervals.ts",
     "compute:all": "tsx scripts/compute-all.ts",
+    "ml:ct:seed": "PYTHONPATH=ml/clinical_trials python3 ml/clinical_trials/scripts/generate_seed.py",
+    "ml:ct:train": "PYTHONPATH=ml/clinical_trials python3 ml/clinical_trials/scripts/train_all.py",
     "verify:computed": "tsx scripts/verify-computed-artifacts.ts",
     "build:endometriosis-coverage": "tsx scripts/build-endometriosis-coverage.ts",
     "build:endometrial-cancer-coverage": "tsx scripts/build-endometrial-cancer-coverage.ts",

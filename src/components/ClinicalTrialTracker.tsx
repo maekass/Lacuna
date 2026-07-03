@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useReducer } from "react";
+import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
 import { DOMESTIC_TRIAL_PRESETS } from "@/lib/research/institutionPresets";
+import {
+  CLINICAL_TRIALS_ML_MODEL,
+  getClinicalTrialsTrainingSource,
+  scoreWhTrialRelevance,
+} from "@/lib/ml/clinicalTrials/scoreClinicalTrial";
 /* ─── types ─── */
 interface Trial {
   nctId: string;
@@ -13,6 +19,7 @@ interface Trial {
   enrollment: number;
   startDate: string;
   completionDate?: string;
+  interventions?: string[];
 }
 
 interface FetchState {
@@ -161,9 +168,12 @@ export default function ClinicalTrialTracker() {
           <h3 className="text-lg font-semibold text-lacuna-plum">
             Clinical Trial Tracker
           </h3>
-          <p className="text-sm text-lacuna-blue">
-            Live data from ClinicalTrials.gov · i3-style pipeline intelligence
-          </p>
+          <ModelProvenanceHint model={CLINICAL_TRIALS_ML_MODEL}>
+            <p className="text-sm text-lacuna-blue cursor-help">
+              Live data from ClinicalTrials.gov · WH relevance scored by offline
+              TF-IDF model ({getClinicalTrialsTrainingSource()})
+            </p>
+          </ModelProvenanceHint>
         </div>
         <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0 self-start">
           Live API
@@ -328,7 +338,17 @@ export default function ClinicalTrialTracker() {
             <p className="text-xs font-semibold text-lacuna-plum">
               Recent trials
             </p>
-            {trials.slice(0, 8).map((trial) => (
+            {trials.slice(0, 8).map((trial) => {
+              const whScore = scoreWhTrialRelevance({
+                title: trial.title,
+                condition: trial.condition,
+                sponsor: trial.sponsor,
+                interventions: trial.interventions,
+                phase: trial.phase,
+                status: trial.status,
+                enrollment: trial.enrollment,
+              });
+              return (
               <div
                 key={trial.nctId}
                 className="rounded-lg border border-lacuna-border p-3 hover:border-lacuna-lavender/60 transition-colors"
@@ -343,7 +363,17 @@ export default function ClinicalTrialTracker() {
                       {trial.condition || "Multiple conditions"}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 shrink-0 mt-1 sm:mt-0">
+                  <div className="flex items-center gap-2 shrink-0 mt-1 sm:mt-0 flex-wrap justify-end">
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
+                        whScore.label
+                          ? "bg-lacuna-pink/20 text-lacuna-plum border border-lacuna-pink/40"
+                          : "bg-lacuna-surface-subtle text-lacuna-text-secondary"
+                      }`}
+                      title={`WH relevance ${Math.round(whScore.probability * 100)}% (Tier-1 ML)`}
+                    >
+                      WH {Math.round(whScore.probability * 100)}%
+                    </span>
                     <span
                       className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
                         STATUS_COLORS[trial.status] || STATUS_COLORS.UNKNOWN
@@ -376,7 +406,8 @@ export default function ClinicalTrialTracker() {
                   )}
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
 
           {trials.length === 0 && !loading && (

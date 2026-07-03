@@ -64,6 +64,8 @@ staging/sec_candidates.csv
 
 # python sidecar
 services/python-api/.venv/
+ml/clinical_trials/.venv/
+ml/clinical_trials/data/cached_training.json
 __pycache__/
 *.py[cod]
 
