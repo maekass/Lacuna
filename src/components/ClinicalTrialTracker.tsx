@@ -6,7 +6,8 @@ import { DOMESTIC_TRIAL_PRESETS } from "@/lib/research/institutionPresets";
 import {
   CLINICAL_TRIALS_ML_MODEL,
   getClinicalTrialsTrainingSource,
-  scoreWhTrialRelevance,
+  isCompletionProxyAvailable,
+  scoreClinicalTrial,
 } from "@/lib/ml/clinicalTrials/scoreClinicalTrial";
 /* ─── types ─── */
 interface Trial {
@@ -170,8 +171,9 @@ export default function ClinicalTrialTracker() {
           </h3>
           <ModelProvenanceHint model={CLINICAL_TRIALS_ML_MODEL}>
             <p className="text-sm text-lacuna-blue cursor-help">
-              Live data from ClinicalTrials.gov · WH relevance scored by offline
-              TF-IDF model ({getClinicalTrialsTrainingSource()})
+              Live data from ClinicalTrials.gov · WH relevance
+            {isCompletionProxyAvailable() ? " + completion proxy" : ""} (
+            {getClinicalTrialsTrainingSource()})
             </p>
           </ModelProvenanceHint>
         </div>
@@ -339,7 +341,7 @@ export default function ClinicalTrialTracker() {
               Recent trials
             </p>
             {trials.slice(0, 8).map((trial) => {
-              const whScore = scoreWhTrialRelevance({
+              const scores = scoreClinicalTrial({
                 title: trial.title,
                 condition: trial.condition,
                 sponsor: trial.sponsor,
@@ -348,6 +350,8 @@ export default function ClinicalTrialTracker() {
                 status: trial.status,
                 enrollment: trial.enrollment,
               });
+              const whScore = scores.whRelevance;
+              const completion = scores.completionProxy;
               return (
               <div
                 key={trial.nctId}
@@ -370,10 +374,18 @@ export default function ClinicalTrialTracker() {
                           ? "bg-lacuna-pink/20 text-lacuna-plum border border-lacuna-pink/40"
                           : "bg-lacuna-surface-subtle text-lacuna-text-secondary"
                       }`}
-                      title={`WH relevance ${Math.round(whScore.probability * 100)}% (Tier-1 ML)`}
+                      title={`WH relevance ${Math.round(whScore.probability * 100)}%`}
                     >
                       WH {Math.round(whScore.probability * 100)}%
                     </span>
+                    {completion != null && (
+                      <span
+                        className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-sky-50 text-sky-800 border border-sky-200"
+                        title={`Completion proxy ${Math.round(completion.probability * 100)}% (COMPLETED vs stopped — not efficacy)`}
+                      >
+                        Complete {Math.round(completion.probability * 100)}%
+                      </span>
+                    )}
                     <span
                       className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
                         STATUS_COLORS[trial.status] || STATUS_COLORS.UNKNOWN

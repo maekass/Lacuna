@@ -12,6 +12,9 @@ export interface TfidfLogisticArtifact {
   readonly coefficients: readonly number[];
   readonly intercept: number;
   readonly numericFeatureNames?: readonly string[];
+  readonly numericCoefficients?: readonly number[];
+  readonly numericMeans?: readonly number[];
+  readonly numericScales?: readonly number[];
 }
 
 export interface TrialScoreInput {
@@ -22,6 +25,7 @@ export interface TrialScoreInput {
   readonly phase?: string;
   readonly status?: string;
   readonly enrollment?: number;
+  readonly hasResults?: boolean;
 }
 
 export interface TrialModelScore {
@@ -31,9 +35,34 @@ export interface TrialModelScore {
   readonly task: string;
 }
 
+const PHASE_TO_NUM: Record<string, number> = {
+  EARLY_PHASE1: 0.5,
+  PHASE1: 1,
+  PHASE2: 2,
+  PHASE3: 3,
+  PHASE4: 4,
+  NA: 0,
+  "Not Applicable": 0,
+};
+
 export function trialTextCorpus(input: TrialScoreInput): string {
   const interventions = (input.interventions ?? []).join(", ");
   return [input.title, input.condition, interventions, input.sponsor]
     .filter(Boolean)
     .join(" ");
+}
+
+/** Numeric features aligned with ml/clinical_trials/lacuna_ct/features.py */
+export function trialNumericFeatures(input: TrialScoreInput): number[] {
+  const phase = input.phase ?? "";
+  const phaseNum = PHASE_TO_NUM[phase] ?? PHASE_TO_NUM[phase.toUpperCase()] ?? 0;
+  const enrollment = Math.max(input.enrollment ?? 0, 1);
+  const interventionCount = (input.interventions ?? []).filter(Boolean).length;
+  const hasResults = input.hasResults ? 1 : 0;
+  return [
+    phaseNum,
+    Math.log10(enrollment),
+    interventionCount,
+    hasResults,
+  ];
 }
