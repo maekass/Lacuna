@@ -568,10 +568,8 @@ export const RH_CAPITAL_SOURCES = [
 ] as const;
 
 export const RH_CAPITAL_MODEL: ModelProvenance = {
-  id: "rh-capital-portfolio",
-  label: "RH Capital portfolio metrics",
-  version: "2026-07-02",
-  description:
+  module: "src/data/rhCapitalPortfolio.ts",
+  exportName: "computeRhCapitalPortfolioSummary",
+  definition:
     "Cited funding and exit notes for RH Capital portfolio companies. Not merged into Lacuna verified deals except where a disclosed acquisition already exists (Ovia, Nurx/Ro).",
-  sources: RH_CAPITAL_SOURCES.map((s) => s.reference),
 };
