@@ -653,6 +653,7 @@ export default function PayerOpsPage() {
                   value={`$${formatNumber(animatedMonthlySavings)}`}
                   theme="dark"
                   model={OPPORTUNITY_METRIC_MODELS.monthlySavings}
+                  valueLive="polite"
                 />
                 <Metric
                   label="Auth review hours freed"
@@ -914,11 +915,13 @@ function Metric({
   value,
   theme = "light",
   model,
+  valueLive,
 }: {
   label: string;
   value: string;
   theme?: "light" | "dark";
   model?: ModelProvenance;
+  valueLive?: "polite";
 }) {
   const inner = theme === "dark"
     ? (
@@ -926,7 +929,12 @@ function Metric({
         className={`rounded-2xl bg-white/10 p-5 ${model ? "cursor-help" : ""}`}
       >
         <div className="text-sm font-semibold text-white/60">{label}</div>
-        <div className="mt-2 text-3xl font-bold text-white">{value}</div>
+        <div
+          className="mt-2 text-3xl font-bold text-white"
+          aria-live={valueLive}
+        >
+          {value}
+        </div>
       </div>
     )
     : (
@@ -936,7 +944,12 @@ function Metric({
         }`}
       >
         <div className="text-sm font-semibold text-lacuna-blue">{label}</div>
-        <div className="mt-2 text-3xl font-bold text-lacuna-plum">{value}</div>
+        <div
+          className="mt-2 text-3xl font-bold text-lacuna-plum"
+          aria-live={valueLive}
+        >
+          {value}
+        </div>
       </div>
     );
 
