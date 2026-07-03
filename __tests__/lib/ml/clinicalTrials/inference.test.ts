@@ -8,7 +8,10 @@ import {
   WH_RELEVANCE_MODEL,
 } from "@/lib/ml/clinicalTrials/scoreClinicalTrial";
 import { trialNumericFeatures } from "@/lib/ml/clinicalTrials/types";
-import type { TfidfLogisticArtifact, TrialScoreInput } from "@/lib/ml/clinicalTrials/types";
+import type {
+  TfidfLogisticArtifact,
+  TrialScoreInput,
+} from "@/lib/ml/clinicalTrials/types";
 
 describe("clinicalTrials ML inference", () => {
   const whTrial: TrialScoreInput = {

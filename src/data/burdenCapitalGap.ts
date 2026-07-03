@@ -220,9 +220,10 @@ const BURDEN_CAPITAL_GAP_ROWS_BASE: BurdenCapitalGapRow[] = [
 ];
 
 /** Rows with AOA Dx exit crosswalk applied where sector mapping exists. */
-export const BURDEN_CAPITAL_GAP_DATA: BurdenCapitalGapRow[] = applyAoaExitCrosswalk(
-  BURDEN_CAPITAL_GAP_ROWS_BASE,
-);
+export const BURDEN_CAPITAL_GAP_DATA: BurdenCapitalGapRow[] =
+  applyAoaExitCrosswalk(
+    BURDEN_CAPITAL_GAP_ROWS_BASE,
+  );
 
 export const WEF_CATEGORY_LABELS: Record<WefCategory, string> = {
   uniquely: "Affects women uniquely",

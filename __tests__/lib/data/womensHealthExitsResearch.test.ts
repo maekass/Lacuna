@@ -21,15 +21,15 @@ describe("womensHealthExitsResearch", () => {
   });
 
   it("Kearney investment splits sum to $34B total", () => {
-    const split =
-      KEARNEY_WH_INVESTMENT.womenSpecificConditionsB +
+    const split = KEARNEY_WH_INVESTMENT.womenSpecificConditionsB +
       KEARNEY_WH_INVESTMENT.disproportionatelyAffectingWomenB;
     expect(split).toBe(KEARNEY_WH_INVESTMENT.totalPrivateInvestmentB);
   });
 
   it("BCG burden-capital rows include AOA exit crosswalk on mapped sectors", () => {
     expect(
-      BURDEN_CAPITAL_GAP_DATA.find((r) => r.id === "womens-cancers")?.exitValueM,
+      BURDEN_CAPITAL_GAP_DATA.find((r) => r.id === "womens-cancers")
+        ?.exitValueM,
     ).toBe(24_000);
     expect(
       BURDEN_CAPITAL_GAP_DATA.find((r) => r.id === "reproductive-health")

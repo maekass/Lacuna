@@ -32,9 +32,17 @@ function main() {
   console.log("");
 
   console.log("--- Deals by sector (target) ---");
-  for (const row of report.sectorCounts) {
+  const sectorsWithDeals = report.sectorCounts.filter((row) => row.deals > 0);
+  for (const row of sectorsWithDeals) {
     console.log(
       `  ${row.sector}: ${row.deals} deals, ${row.companies} companies, ${row.disclosedPrices} disclosed prices`,
+    );
+  }
+  const zeroDealSectorCount = report.sectorCounts.length -
+    sectorsWithDeals.length;
+  if (zeroDealSectorCount > 0) {
+    console.log(
+      `  (${zeroDealSectorCount} sectors with companies but no verified deals — see warnings)`,
     );
   }
   console.log("");

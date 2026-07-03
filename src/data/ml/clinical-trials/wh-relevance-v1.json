@@ -13,7 +13,8 @@
     "f1": 1.0,
     "roc_auc": 1.0,
     "brier": 0.004340609326994763
-  },
+  }
+,
   "positiveLabel": "womens_health_relevant",
   "vocabulary": [
     "101",

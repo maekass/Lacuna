@@ -55,7 +55,8 @@ export function trialTextCorpus(input: TrialScoreInput): string {
 /** Numeric features aligned with ml/clinical_trials/lacuna_ct/features.py */
 export function trialNumericFeatures(input: TrialScoreInput): number[] {
   const phase = input.phase ?? "";
-  const phaseNum = PHASE_TO_NUM[phase] ?? PHASE_TO_NUM[phase.toUpperCase()] ?? 0;
+  const phaseNum = PHASE_TO_NUM[phase] ?? PHASE_TO_NUM[phase.toUpperCase()] ??
+    0;
   const enrollment = Math.max(input.enrollment ?? 0, 1);
   const interventionCount = (input.interventions ?? []).filter(Boolean).length;
   const hasResults = input.hasResults ? 1 : 0;

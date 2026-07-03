@@ -198,8 +198,7 @@ export const RH_CAPITAL_PORTFOLIO: readonly RhCapitalPortfolioCompany[] = [
     name: "Evvy",
     datasetCompanyId: "c76",
     website: "https://evvy.com",
-    tagline:
-      "At-home vaginal microbiome tests to close the gender health gap.",
+    tagline: "At-home vaginal microbiome tests to close the gender health gap.",
     focusArea: "Diagnostics",
     totalFundingM: 19,
     lastKnownValuationM: null,
@@ -256,8 +255,7 @@ export const RH_CAPITAL_PORTFOLIO: readonly RhCapitalPortfolioCompany[] = [
     name: "Millie",
     datasetCompanyId: "c81",
     website: "https://millieclinic.com",
-    tagline:
-      "Holistic, tech-enabled, midwife-led pregnancy care.",
+    tagline: "Holistic, tech-enabled, midwife-led pregnancy care.",
     focusArea: "Maternal care delivery",
     totalFundingM: 19,
     lastKnownValuationM: null,
@@ -327,7 +325,8 @@ export const RH_CAPITAL_PORTFOLIO: readonly RhCapitalPortfolioCompany[] = [
       note:
         "Stock merger; financial terms not disclosed. Ro had acquired Nurx in Dec 2021 (~$300M estimated).",
     },
-    primarySourceUrl: "https://www.axios.com/2022/02/09/thirty-madison-nurx-merger",
+    primarySourceUrl:
+      "https://www.axios.com/2022/02/09/thirty-madison-nurx-merger",
     sources: [
       "Axios — Thirty Madison / Nurx merger (Feb 2022)",
       "TechCrunch — Ro acquisition coverage (Dec 2021)",
@@ -358,8 +357,7 @@ export const RH_CAPITAL_PORTFOLIO: readonly RhCapitalPortfolioCompany[] = [
     name: "Ovia Health",
     datasetCompanyId: "c64",
     website: "https://oviahealth.com",
-    tagline:
-      "Continuous support across fertility, maternity, and parenting.",
+    tagline: "Continuous support across fertility, maternity, and parenting.",
     focusArea: "Digital maternal health",
     totalFundingM: 23.4,
     lastKnownValuationM: null,
@@ -441,8 +439,7 @@ export const RH_CAPITAL_PORTFOLIO: readonly RhCapitalPortfolioCompany[] = [
     name: "Testmate Health",
     datasetCompanyId: "c87",
     website: "https://testmatehealth.com",
-    tagline:
-      "At-home STI self-testing kits with results in minutes.",
+    tagline: "At-home STI self-testing kits with results in minutes.",
     focusArea: "STI diagnostics",
     totalFundingM: 6,
     lastKnownValuationM: null,
@@ -497,8 +494,7 @@ export const RH_CAPITAL_PORTFOLIO: readonly RhCapitalPortfolioCompany[] = [
     name: "YourChoice Therapeutics",
     datasetCompanyId: "c134",
     website: "https://yourchoicetx.com",
-    tagline:
-      "Novel non-hormonal contraceptives for men and women.",
+    tagline: "Novel non-hormonal contraceptives for men and women.",
     focusArea: "Contraception therapeutics",
     totalFundingM: null,
     lastKnownValuationM: null,
@@ -557,7 +553,8 @@ export function computeRhCapitalPortfolioSummary(): RhCapitalPortfolioSummary {
 export const RH_CAPITAL_SOURCES = [
   {
     label: "RH Capital portfolio",
-    reference: "RH Capital — Portfolio page (Funds I & II, Foreground Capital).",
+    reference:
+      "RH Capital — Portfolio page (Funds I & II, Foreground Capital).",
     url: "https://rhcapital.vc/portfolio/",
   },
   {

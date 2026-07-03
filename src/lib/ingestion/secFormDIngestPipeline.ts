@@ -14,8 +14,8 @@ import {
 } from "@/lib/ingestion/secFormDConnector";
 import {
   type ClassifiedFormD,
-  syncFormDToDatabase,
   type FormDSyncResult,
+  syncFormDToDatabase,
 } from "@/lib/ingestion/secFormDSync";
 import { searchFormDFilingsWomensHealth } from "@/lib/ingestion/secFullTextSearch";
 import { mapWithConcurrency } from "@/lib/util/concurrency";
@@ -73,7 +73,9 @@ export async function runFormDIngest(
     Number.isFinite(maxResults) && maxResults > 0 ? maxResults : 50,
   );
 
-  const parseConcurrency = Number(process.env.SEC_FORM_D_PARSE_CONCURRENCY ?? 2);
+  const parseConcurrency = Number(
+    process.env.SEC_FORM_D_PARSE_CONCURRENCY ?? 2,
+  );
   const parsed = (
     await mapWithConcurrency(
       hits,

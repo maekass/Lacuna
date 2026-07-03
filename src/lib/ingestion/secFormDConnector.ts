@@ -66,17 +66,22 @@ function parseMoney(value: string | null): number | null {
 /** Heuristic parse of Form D primary XML document. */
 export function parseFormDXml(
   xml: string,
-  meta: { cik: string; accession: string; filingDate: string; filingUrl: string },
+  meta: {
+    cik: string;
+    accession: string;
+    filingDate: string;
+    filingUrl: string;
+  },
 ): ParsedFormD {
-  const issuerName = extractXmlTag(xml, "issuerName")
-    ?? extractXmlTag(xml, "entityName")
-    ?? "Unknown issuer";
-  const industryGroup = extractXmlTag(xml, "industryGroupType")
-    ?? extractXmlTag(xml, "industryGroup");
-  const jurisdiction = extractXmlTag(xml, "jurisdictionOfInc")
-    ?? extractXmlTag(xml, "stateOrCountry");
-  const exemptionType = extractXmlTag(xml, "federalExemptionsExclusions")
-    ?? extractXmlTag(xml, "typeOfFiling");
+  const issuerName = extractXmlTag(xml, "issuerName") ??
+    extractXmlTag(xml, "entityName") ??
+    "Unknown issuer";
+  const industryGroup = extractXmlTag(xml, "industryGroupType") ??
+    extractXmlTag(xml, "industryGroup");
+  const jurisdiction = extractXmlTag(xml, "jurisdictionOfInc") ??
+    extractXmlTag(xml, "stateOrCountry");
+  const exemptionType = extractXmlTag(xml, "federalExemptionsExclusions") ??
+    extractXmlTag(xml, "typeOfFiling");
 
   const industryLower = (industryGroup ?? "").toLowerCase();
   const isHealthcareIndustry = FORM_D_HEALTH_INDUSTRY_HINTS.some((h) =>

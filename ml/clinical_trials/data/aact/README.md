@@ -39,10 +39,10 @@ npm run ml:ct:train
 
 ## Labels (completion proxy)
 
-| Label | Definition |
-|-------|------------|
-| `label_completed = 1` | `overallStatus = COMPLETED` |
+| Label                 | Definition                             |
+| --------------------- | -------------------------------------- |
+| `label_completed = 1` | `overallStatus = COMPLETED`            |
 | `label_completed = 0` | `TERMINATED`, `WITHDRAWN`, `SUSPENDED` |
-| `null` | Still recruiting / unknown |
+| `null`                | Still recruiting / unknown             |
 
 Operational status only — not primary-endpoint success.

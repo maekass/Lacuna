@@ -1,4 +1,8 @@
-import type { TfidfLogisticArtifact, TrialModelScore, TrialScoreInput } from "./types";
+import type {
+  TfidfLogisticArtifact,
+  TrialModelScore,
+  TrialScoreInput,
+} from "./types";
 import { trialNumericFeatures, trialTextCorpus } from "./types";
 
 const TOKEN_PATTERN = /\b[a-z0-9']+\b/g;

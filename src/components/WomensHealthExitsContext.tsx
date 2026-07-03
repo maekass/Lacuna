@@ -105,26 +105,28 @@ export default function WomensHealthExitsContext() {
           <ul className="space-y-1.5 text-xs text-lacuna-blue">
             <li>
               <span className="font-semibold text-lacuna-plum">
-                {formatExitBillions(KEARNEY_WH_INVESTMENT.totalPrivateInvestmentB)}
+                {formatExitBillions(
+                  KEARNEY_WH_INVESTMENT.totalPrivateInvestmentB,
+                )}
               </span>{" "}
               total private capital
             </li>
             <li>
-              {formatExitBillions(KEARNEY_WH_INVESTMENT.womenSpecificConditionsB)}{" "}
-              women-specific conditions (fertility, women&apos;s cancers)
+              {formatExitBillions(
+                KEARNEY_WH_INVESTMENT.womenSpecificConditionsB,
+              )} women-specific conditions (fertility, women&apos;s cancers)
             </li>
             <li>
               {formatExitBillions(
                 KEARNEY_WH_INVESTMENT.disproportionatelyAffectingWomenB,
               )}{" "}
-              disproportionately affecting women (CVD, Alzheimer&apos;s, autoimmune,
-              mental health)
+              disproportionately affecting women (CVD, Alzheimer&apos;s,
+              autoimmune, mental health)
             </li>
             <li>
               {formatExitBillions(
                 KEARNEY_WH_INVESTMENT.diagnosticsAndDigitalHealthB,
-              )}{" "}
-              diagnostics &amp; digital health ({KEARNEY_WH_INVESTMENT
+              )} diagnostics &amp; digital health ({KEARNEY_WH_INVESTMENT
                 .privateDealsTrackedMin.toLocaleString()}+ deals tracked)
             </li>
           </ul>
@@ -157,9 +159,7 @@ export default function WomensHealthExitsContext() {
                     {s.label}
                   </a>
                 )
-                : (
-                  <span>{s.label}</span>
-                )}
+                : <span>{s.label}</span>}
               {" — "}
               {s.reference}
             </li>

@@ -22,7 +22,6 @@ import {
   computeWorkQueueVolumes,
   operatingModel,
   painPoints,
-  progressWidths,
   type SegmentKey,
   segments,
   vcSignals,
@@ -341,14 +340,26 @@ export default function PayerOpsPage() {
                               {s.dealSignal}
                             </p>
                             {examples.map((example) => (
-                              <p
+                              <div
                                 key={`${example.targetName}-${example.year}`}
-                                className="mt-2 text-[11px] text-lacuna-plum/70"
                               >
-                                {example.targetName} → {example.acquirerName}
-                                {" "}
-                                ({example.year})
-                              </p>
+                                <p className="mt-2 text-[11px] text-lacuna-plum/70">
+                                  {example.targetName} → {example.acquirerName}
+                                  {" "}
+                                  ({example.year})
+                                </p>
+                                {example.rationale
+                                  ? (
+                                    <p className="mt-1 text-[10px] italic text-lacuna-plum/60 leading-snug">
+                                      &ldquo;{example.rationale.slice(0, 120)}
+                                      {example.rationale.length > 120
+                                        ? "…"
+                                        : ""}
+                                      &rdquo;
+                                    </p>
+                                  )
+                                  : null}
+                              </div>
                             ))}
                             {matchingDeals > 0
                               ? (
@@ -356,7 +367,8 @@ export default function PayerOpsPage() {
                                   model={VC_SIGNAL_DEAL_COUNT_MODEL}
                                 >
                                   <p className="mt-2 cursor-help text-[11px] text-lacuna-plum/70">
-                                    {matchingDeals} matching deal{matchingDeals ===
+                                    {matchingDeals}{" "}
+                                    matching deal{matchingDeals ===
                                         1
                                       ? ""
                                       : "s"} in dataset
@@ -440,7 +452,9 @@ export default function PayerOpsPage() {
                   }`}
                 >
                   <span className="sm:hidden">{segments[key].shortLabel}</span>
-                  <span className="hidden sm:inline">{segments[key].label}</span>
+                  <span className="hidden sm:inline">
+                    {segments[key].label}
+                  </span>
                 </button>
               ))}
               <button
@@ -740,9 +754,8 @@ export default function PayerOpsPage() {
                 <div className="group relative col-span-2">
                   <div className="h-2 rounded-full bg-lacuna-lavender/20">
                     <div
-                      className={`h-2 rounded-full bg-lacuna-blue ${
-                        progressWidths[queue.automation]
-                      }`}
+                      className="h-2 rounded-full bg-lacuna-blue"
+                      style={{ width: `${queue.automation}%` }}
                     />
                   </div>
                   <div className="mt-1 text-xs text-lacuna-blue">
@@ -904,9 +917,8 @@ function StatChip({
         ? (
           <div className="mt-1.5 h-1 rounded-full bg-lacuna-lavender/20">
             <div
-              className={`h-1 rounded-full bg-lacuna-blue ${
-                progressWidths[progress]
-              }`}
+              className="h-1 rounded-full bg-lacuna-blue"
+              style={{ width: `${progress}%` }}
             />
           </div>
         )

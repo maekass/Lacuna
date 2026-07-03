@@ -38,9 +38,11 @@ CMS bulk files are **not** automated — download from
   latest free-API export metadata.
 - `GET /api/ingest/sec/status` — latest SEC cron run (needs Postgres).
 - `GET /api/ingest/free-apis/status` — latest on-disk export manifest.
-- `GET /api/enrichment/company?name=…` — on-demand CT.gov + openFDA + NIH RePORTER.
+- `GET /api/enrichment/company?name=…` — on-demand CT.gov + openFDA + NIH
+  RePORTER.
 
-See [PUBLIC_RECORDS_INGEST.md](./PUBLIC_RECORDS_INGEST.md) for Form D, EFTS, AACT, and CMS bulk scripts.
+See [PUBLIC_RECORDS_INGEST.md](./PUBLIC_RECORDS_INGEST.md) for Form D, EFTS,
+AACT, and CMS bulk scripts.
 
 ## Code layout
 

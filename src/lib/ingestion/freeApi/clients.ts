@@ -9,7 +9,10 @@ import {
   padCik,
   resolveTicker,
 } from "@/lib/ingestion/secEdgarClient";
-import { CTG_API_BASE, ctgFetchHeaders } from "@/lib/ingestion/publicRecords/ctgovClient";
+import {
+  CTG_API_BASE,
+  ctgFetchHeaders,
+} from "@/lib/ingestion/publicRecords/ctgovClient";
 import { DELAY_MS, sleep } from "./rateLimit";
 import type { FreeApiSourceId, FreeApiSourceResult } from "./types";
 
