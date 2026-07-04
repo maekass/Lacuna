@@ -5,6 +5,7 @@ import {
   generateEvidenceSummary,
   generateReimbursementInsights,
   isAIConfigured,
+  type InsightResult,
 } from "@/lib/ai/insights";
 
 interface AcquisitionPayload {
@@ -33,7 +34,7 @@ export function GET() {
   return NextResponse.json({ configured: isAIConfigured() });
 }
 
-/** POST — generate one insight type for a company context. */
+/** POST — generate one insight type for a company context (quality-gated). */
 export async function POST(request: NextRequest) {
   const ip = getClientIp(request);
   const limit = await rateLimit({
@@ -87,7 +88,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    let content = "";
+    let result: InsightResult;
 
     switch (type) {
       case "acquisition": {
@@ -101,7 +102,7 @@ export async function POST(request: NextRequest) {
         const evidenceScore = typeof record.evidenceScore === "number"
           ? record.evidenceScore
           : undefined;
-        content = await generateAcquisitionInsights(
+        result = await generateAcquisitionInsights(
           companyName,
           sector,
           analysis.topAcquirer,
@@ -120,7 +121,7 @@ export async function POST(request: NextRequest) {
             { status: 400 },
           );
         }
-        content = await generateEvidenceSummary(
+        result = await generateEvidenceSummary(
           companyName,
           evidence.phase,
           evidence.fdaStatus,
@@ -142,7 +143,7 @@ export async function POST(request: NextRequest) {
             { status: 400 },
           );
         }
-        content = await generateReimbursementInsights(
+        result = await generateReimbursementInsights(
           companyName,
           reimbursement.businessModel,
           reimbursement.insuranceRevenue,
@@ -157,7 +158,11 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    return NextResponse.json({ content });
+    return NextResponse.json({
+      content: result.content,
+      quality: result.quality,
+      modelId: result.modelId,
+    });
   } catch (error) {
     const message = error instanceof Error
       ? error.message

@@ -14,6 +14,7 @@ import {
 import WomensHealthExitsContext from "@/components/WomensHealthExitsContext";
 import RhCapitalPortfolioContext from "@/components/RhCapitalPortfolioContext";
 import ClinicalTrialsMlPanel from "@/components/ClinicalTrialsMlPanel";
+import SpaceWhResearchGapsPanel from "@/components/SpaceWhResearchGapsPanel";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 
@@ -61,6 +62,14 @@ export default function ResearchPage() {
           description="Funds I & II (Foreground Capital): cited funding and exit notes for portfolio companies on rhcapital.vc — overlaid on the network graph as RH Capital."
         />
         <RhCapitalPortfolioContext />
+      </MotionSection>
+
+      <MotionSection id="space-wh-gaps" delay={0.045} className={SECTION}>
+        <SectionHeader
+          title="Space research → trial → transaction"
+          description="Space-linked women's health assets scored on a fixed pipeline (research signal → space validation → Earth trial → company → verified M&A). Gap matrix and LLM analyst expose where research never becomes a deal."
+        />
+        <SpaceWhResearchGapsPanel />
       </MotionSection>
 
       <MotionSection id="clinical-trials" delay={0.05} className={SECTION}>

@@ -59,9 +59,26 @@ describe("ai insights API", () => {
   it("POST generates acquisition insights", async () => {
     const insights = await import("@/lib/ai/insights");
     vi.mocked(insights.isAIConfigured).mockReturnValue(true);
-    vi.mocked(insights.generateAcquisitionInsights).mockResolvedValue(
-      "Strategic fit summary.",
-    );
+    vi.mocked(insights.generateAcquisitionInsights).mockResolvedValue({
+      content: "Strategic fit summary.",
+      quality: {
+        level: "high",
+        score: 90,
+        warnings: [],
+        flags: {
+          sanitized: true,
+          hallucinationRisk: false,
+          adviceRisk: false,
+          groundingOk: true,
+          lengthOk: true,
+          promptValid: true,
+        },
+        feature: "ui-insights",
+        modelId: "test-model",
+        promptVersion: "2.0.0",
+      },
+      modelId: "test-model",
+    });
 
     const { POST } = await import("@/app/api/ai/insights/route");
     const response = await POST(
@@ -86,6 +103,8 @@ describe("ai insights API", () => {
 
     expect(response.status).toBe(200);
     expect(body.content).toBe("Strategic fit summary.");
+    expect(body.quality?.level).toBe("high");
+    expect(body.modelId).toBe("test-model");
     expect(insights.generateAcquisitionInsights).toHaveBeenCalledWith(
       "Acme",
       "Fertility",

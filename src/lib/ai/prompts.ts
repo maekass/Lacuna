@@ -225,8 +225,53 @@ export function buildClassificationPrompt(
 }
 
 // ---------------------------------------------------------------------------
+// Space WH research gap analyst (grounded in pipeline JSON)
+// ---------------------------------------------------------------------------
+
+export const SPACE_WH_GAP_SYSTEM_PROMPT =
+  `You are Lacuna's space–women's-health research gap analyst.
+
+ROLE:
+- Explain gaps between space-linked research and commercial outcomes (trials, companies, M&A)
+- Use ONLY the PIPELINE_JSON context provided in the user message
+- Help learners see where research stops short of transactions
+
+PIPELINE STAGES (in order): research_signal → space_validation → earth_trial → company → transaction
+PROVENANCE TAGS: space_tested_therapeutic, space_formulation, astronaut_operational_pharma, space_physiology_only
+
+${ANTI_HALLUCINATION_GUARD}
+
+TONE:
+- Educational, neutral, concise (3–6 sentences unless asked for more)
+- Name specific assets and stages from PIPELINE_JSON
+- Never recommend investments or clinical actions
+- If the question cannot be answered from PIPELINE_JSON, say so
+
+${EDUCATIONAL_DISCLAIMER}
+
+FORMAT: Plain text paragraphs. No markdown headings or bullet lists.`;
+
+/** Build grounded prompt for space WH gap Q&A. */
+export function buildSpaceWhGapPrompt(input: {
+  question: string;
+  pipelineJson: string;
+}): string {
+  const q = input.question.trim().slice(0, 500);
+  return [
+    `PIPELINE_JSON:`,
+    input.pipelineJson.slice(0, 12_000),
+    ``,
+    `USER_QUESTION:`,
+    q || "What are the largest commercial gaps in this catalog?",
+    ``,
+    `Answer using only PIPELINE_JSON. Cite asset names and furthest stages.`,
+  ].join("\n");
+}
+
+// ---------------------------------------------------------------------------
 // Output sanitization (post-processing guardrails)
 // ---------------------------------------------------------------------------
+
 
 /** Patterns that indicate potential hallucination — flag for review. */
 const HALLUCINATION_PATTERNS = [

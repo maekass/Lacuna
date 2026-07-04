@@ -172,7 +172,10 @@ export async function POST(request: NextRequest) {
   } as Parameters<typeof streamText>[0];
 
   if (resolved.viaGateway) {
-    const opts = gatewayProviderOptions(["feature:ui-stream"]);
+    const opts = gatewayProviderOptions([
+      "feature:ui-stream",
+      "quality:stream-ungated",
+    ]);
     if (opts) (baseParams as Record<string, unknown>).providerOptions = opts;
   }
 
