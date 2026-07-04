@@ -1,10 +1,9 @@
 /**
  * LLM analyst grounded in the space WH trial→transaction pipeline snapshot.
- * Uses Vercel AI Gateway / OpenAI via inference.ts — not a trained model.
+ * Free-text output always passes through the platform quality gate.
  */
 
 import {
-  generateInferenceText,
   isServerInferenceConfigured,
   resolveInferenceModel,
   SPACE_WH_GAP_GATEWAY_MODEL,
@@ -12,9 +11,13 @@ import {
 } from "@/lib/ai/inference";
 import {
   buildSpaceWhGapPrompt,
-  sanitizeLLMOutput,
   SPACE_WH_GAP_SYSTEM_PROMPT,
 } from "@/lib/ai/prompts";
+import {
+  assessLlmOutput,
+  generateQualifiedInference,
+  type LlmQualityReport,
+} from "@/lib/ai/quality";
 import type { TrialToTransactionSnapshot } from "@/lib/research/trialToTransactionPipeline";
 import { pipelineSnapshotForLlm } from "@/lib/research/trialToTransactionPipeline";
 
@@ -27,6 +30,7 @@ export interface SpaceWhGapAnswer {
   modelId: string | null;
   configured: boolean;
   warnings: string[];
+  quality: LlmQualityReport | null;
 }
 
 const DEFAULT_QUESTION =
@@ -49,39 +53,59 @@ export async function answerSpaceWhGapQuestion(
   });
 
   if (!resolved) {
+    const narrative = buildDeterministicGapNarrative(snapshot);
+    const { text, quality } = assessLlmOutput(narrative, {
+      feature: "space-wh-gap",
+      modelId: "deterministic",
+      groundingContext: pipelineJson,
+    });
     return {
-      answer: buildDeterministicGapNarrative(snapshot),
+      answer: text,
       modelId: null,
       configured: false,
-      warnings: ["Server inference not configured — deterministic summary only."],
+      warnings: [
+        "Server inference not configured — deterministic summary only.",
+        ...quality.warnings,
+      ],
+      quality,
     };
   }
 
   try {
-    const raw = await generateInferenceText({
+    const prompt = buildSpaceWhGapPrompt({ question: q, pipelineJson });
+    const { text, quality } = await generateQualifiedInference({
       resolved,
       system: SPACE_WH_GAP_SYSTEM_PROMPT,
-      prompt: buildSpaceWhGapPrompt({ question: q, pipelineJson }),
+      prompt,
+      feature: "space-wh-gap",
+      groundingContext: pipelineJson,
       maxOutputTokens: 600,
       temperature: 0.2,
-      gatewayTags: ["feature:space-wh-gap"],
     });
-    const { clean, warnings } = sanitizeLLMOutput(raw);
     return {
-      answer: clean,
+      answer: text,
       modelId: resolved.modelId,
       configured: true,
-      warnings,
+      warnings: quality.warnings,
+      quality,
     };
   } catch (error) {
     const message = error instanceof Error
       ? error.message
       : "Gap analysis failed";
+    const narrative =
+      `${buildDeterministicGapNarrative(snapshot)} (LLM unavailable: ${message})`;
+    const { text, quality } = assessLlmOutput(narrative, {
+      feature: "space-wh-gap",
+      modelId: resolved.modelId,
+      groundingContext: pipelineJson,
+    });
     return {
-      answer: `${buildDeterministicGapNarrative(snapshot)} (LLM unavailable: ${message})`,
+      answer: text,
       modelId: resolved.modelId,
       configured: true,
-      warnings: [message],
+      warnings: [message, ...quality.warnings],
+      quality,
     };
   }
 }
@@ -108,9 +132,7 @@ export function buildDeterministicGapNarrative(
     `This catalog has ${summary.assetCount} space-linked women's health research assets. ` +
     `${summary.commercialGapCount} have no company or verified M&A link in Lacuna (commercial gaps). ` +
     `Only ${summary.transactionCount} assets touch a verified transaction. ` +
-    (topGaps
-      ? `Largest area gaps: ${topGaps}. `
-      : "") +
+    (topGaps ? `Largest area gaps: ${topGaps}. ` : "") +
     (stuck ? `Examples stuck before company stage: ${stuck}. ` : "") +
     `Pipeline stages are descriptive evidence flags from public citations — not investment advice.`
   );

@@ -7,6 +7,8 @@
 import { useCallback, useMemo, useState } from "react";
 import { Loader2, Sparkles } from "lucide-react";
 import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
+import LlmQualityBadge from "@/components/ui/LlmQualityBadge";
+import type { LlmQualityReport } from "@/lib/ai/quality";
 import { SPACE_WH_RESEARCH_MODEL } from "@/data/spaceWhResearchAssets";
 import verifiedDataset from "@/data/dataset.verified.json";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
@@ -150,6 +152,7 @@ export default function SpaceWhResearchGapsPanel() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState<string | null>(null);
   const [modelId, setModelId] = useState<string | null>(null);
+  const [quality, setQuality] = useState<LlmQualityReport | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -168,6 +171,7 @@ export default function SpaceWhResearchGapsPanel() {
       const data = await res.json() as {
         answer?: string;
         modelId?: string | null;
+        quality?: LlmQualityReport | null;
         error?: string;
       };
       if (!res.ok) {
@@ -175,6 +179,7 @@ export default function SpaceWhResearchGapsPanel() {
       }
       setAnswer(data.answer ?? "");
       setModelId(data.modelId ?? null);
+      setQuality(data.quality ?? null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Ask failed");
     } finally {
@@ -348,12 +353,8 @@ export default function SpaceWhResearchGapsPanel() {
         {answer && (
           <div className="mt-3 rounded-lg border border-lacuna-lavender/30 bg-white p-3">
             <p className="text-sm leading-relaxed text-lacuna-blue">{answer}</p>
-            {modelId && (
-              <p className="mt-2 text-[10px] text-lacuna-blue/60">
-                Model: {modelId}
-              </p>
-            )}
-            {!modelId && (
+            <LlmQualityBadge quality={quality} modelId={modelId} />
+            {!modelId && !quality && (
               <p className="mt-2 text-[10px] text-lacuna-blue/60">
                 Deterministic summary (LLM not configured)
               </p>

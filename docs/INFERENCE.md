@@ -29,9 +29,11 @@ local dev only.
 
 **Do not** call `api.anthropic.com` directly from app code — use gateway slugs.
 
-## Precision prompting & constraint engineering
+## Precision prompting & quality gate
 
 All prompts are centralized in `src/lib/ai/prompts.ts` (version `2.0.0`).
+All **user-facing free-text** inference goes through
+`generateQualifiedInference()` in `src/lib/ai/quality.ts`.
 
 ### Design principles
 
@@ -40,41 +42,47 @@ All prompts are centralized in `src/lib/ai/prompts.ts` (version `2.0.0`).
 | **Versioned templates**   | `PROMPT_VERSION` tag — bump on semantic changes                                                                    |
 | **Pure functions**        | Every `build*Prompt()` is `input → string`, deterministic and testable                                             |
 | **Composable guardrails** | `ANTI_HALLUCINATION_GUARD`, `EDUCATIONAL_DISCLAIMER`, `OUTPUT_FORMAT_CONSTRAINT` — appended to every system prompt |
-| **Output sanitization**   | `sanitizeLLMOutput()` strips markdown, detects hallucination patterns, enforces length limits                      |
+| **Quality gate**          | `assessLlmOutput()` — sanitize, advice/hallucination flags, grounding, score, block                                |
 | **Template validation**   | `validatePromptTemplate()` checks for unresolved variables, empty sections, length bounds                          |
+| **UI badge**              | `LlmQualityBadge` shows level, score, model, prompt version                                                        |
 
 ### Constraint layers
 
 ```
-User input → build*Prompt() → system prompt + guardrails → LLM → sanitizeLLMOutput() → UI
-                                                              ↓
-                                                        validatePromptTemplate()
+User input → build*Prompt() → system prompt + guardrails → LLM
+  → assessLlmOutput() / generateQualifiedInference()
+  → { text, quality } → UI (LlmQualityBadge)
 ```
 
-1. **Pre-inference**: Template functions enforce structure (DATA/TASK sections,
-   no raw string interpolation)
-2. **System prompt**: Every call includes `ANTI_HALLUCINATION_GUARD` +
-   `EDUCATIONAL_DISCLAIMER`
-3. **Post-inference**: `sanitizeLLMOutput()` strips formatting, flags suspicious
-   claims, truncates long output
+1. **Pre-inference**: Template functions enforce structure; prompt validation
+2. **System prompt**: Every call includes `ANTI_HALLUCINATION_GUARD` + disclaimer
+3. **Post-inference quality gate**:
+   - Markdown strip + length limits (`sanitizeLLMOutput`)
+   - Hallucination-risk patterns (FDA claims, invented deal dates, etc.)
+   - Investment / clinical **advice** patterns → **blocked**
+   - Grounding: `$` amounts and NCT IDs must appear in provided context
+   - Score 0–100 and level: `high` | `medium` | `low` | `blocked`
 
-### Hallucination detection
+### Catalog
 
-`sanitizeLLMOutput()` checks for patterns the LLM should not produce given our
-constrained prompts:
+`GET /api/ai/quality` lists features, standards, and whether inference is configured.
 
-- Dollar amounts and specific deal values
-- FDA approval/clearance claims
-- Percentage growth/decline figures
-- Specific dates for announced/closed deals
-- Phase 4+ or pivotal trial claims
+| Feature | Route | Quality-gated |
+|---------|-------|---------------|
+| UI insights | `POST /api/ai/insights` | Yes |
+| Space WH gap | `POST /api/research/space-wh-pipeline/ask` | Yes |
+| Stream insights | `POST /api/ai/stream` | No (tagged `quality:stream-ungated`) |
+| SEC classification | cron / CLI | Structured output (separate path) |
+
+Prefer **non-streaming** routes for production UI narratives.
 
 ### Adding a new LLM feature
 
 1. Add prompt templates in `src/lib/ai/prompts.ts` as pure functions.
 2. Add the system prompt with all guardrails composed in.
-3. Call `generateInferenceText()` from `src/lib/ai/inference.ts`.
-4. Apply `sanitizeLLMOutput()` on the raw response.
-5. Tag requests: `providerOptions.gateway.tags` (e.g. `feature:my-feature`).
-6. Document the model slug and fallback here.
-7. Add tests in `__tests__/lib/ai/prompts.test.ts`.
+3. Call **`generateQualifiedInference()`** (not bare `generateInferenceText`).
+4. Pass `groundingContext` (and optional `requiredTerms`).
+5. Return `{ content, quality, modelId }` from the API.
+6. Render `LlmQualityBadge` in the UI.
+7. Document the model slug and fallback here.
+8. Add tests in `__tests__/lib/ai/quality.test.ts` and prompts tests.
