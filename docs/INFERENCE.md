@@ -9,6 +9,7 @@ local dev only.
 | Feature                        | Route / module                                     | Model (gateway slug)        | Fallback                           |
 | ------------------------------ | -------------------------------------------------- | --------------------------- | ---------------------------------- |
 | Optional UI narrative blurbs   | `POST /api/ai/insights` → `src/lib/ai/insights.ts` | `anthropic/claude-sonnet-4` | `gpt-4o-mini` via `@ai-sdk/openai` |
+| Space WH gap analyst           | `POST /api/research/space-wh-pipeline/ask`         | `xai/grok-4.3`              | `gpt-4o-mini` or deterministic     |
 | SEC deal classification (cron) | `dealClassificationEngine.ts`                      | `openai/gpt-5.4-mini`       | keyword-only                       |
 
 ## What is **not** inference

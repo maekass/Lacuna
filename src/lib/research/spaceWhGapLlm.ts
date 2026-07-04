@@ -5,10 +5,10 @@
 
 import {
   generateInferenceText,
-  INSIGHTS_GATEWAY_MODEL,
-  INSIGHTS_OPENAI_MODEL,
   isServerInferenceConfigured,
   resolveInferenceModel,
+  SPACE_WH_GAP_GATEWAY_MODEL,
+  SPACE_WH_GAP_OPENAI_MODEL,
 } from "@/lib/ai/inference";
 import {
   buildSpaceWhGapPrompt,
@@ -44,8 +44,8 @@ export async function answerSpaceWhGapQuestion(
   const pipelineJson = pipelineSnapshotForLlm(snapshot);
 
   const resolved = resolveInferenceModel({
-    gatewayModel: INSIGHTS_GATEWAY_MODEL,
-    openaiModel: INSIGHTS_OPENAI_MODEL,
+    gatewayModel: SPACE_WH_GAP_GATEWAY_MODEL,
+    openaiModel: SPACE_WH_GAP_OPENAI_MODEL,
   });
 
   if (!resolved) {
