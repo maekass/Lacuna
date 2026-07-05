@@ -21,6 +21,8 @@ set at least:
 | `AI_GATEWAY_API_KEY` / `VERCEL_OIDC_TOKEN` or `OPENAI_API_KEY` | Optional                      | Server inference per [INFERENCE.md](./INFERENCE.md) (SEC classification + UI narratives) |
 
 Tuning (optional): `SEC_MAX_TICKERS_PER_RUN`, `SEC_MAX_PARSED_FILINGS_PER_RUN`.
+Recommended production values: `50` and `100` — see
+[VERCEL_SETTINGS.md](./VERCEL_SETTINGS.md).
 
 Then locally:
 
@@ -79,3 +81,4 @@ The Datadog workflow is **manual only** (`workflow_dispatch`) until you add
 - After env vars: hit `/api/cron/sec-ingest/status` on production
 
 See [INFRASTRUCTURE.md](./INFRASTRUCTURE.md) for the full ops map.
+See [VERCEL_SETTINGS.md](./VERCEL_SETTINGS.md) for Vercel dashboard tuning.
