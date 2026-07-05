@@ -70,6 +70,7 @@
     "@sentry/nextjs": "^10.55.0",
     "@types/d3": "^7.4.3",
     "@upstash/redis": "^1.38.0",
+    "@vercel/speed-insights": "^2.0.0",
     "ai": "^6.0.193",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

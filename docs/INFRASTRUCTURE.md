@@ -37,6 +37,7 @@ flowchart LR
 | App           | Vercel — https://lacuna-maekass.vercel.app | Next.js 16, default `static` data                                                              |
 | CI            | `.github/workflows/deno.yml`               | lint, test, build, dataset validation                                                          |
 | Cron          | `vercel.json` → `/api/cron/sec-ingest`     | 06:00 UTC daily (Hobby-safe)                                                                   |
+| Vercel tuning | [VERCEL_SETTINGS.md](./VERCEL_SETTINGS.md)   | Region, skew protection, Speed Insights, ignored builds                                        |
 | DB            | `db/migrations/*.sql`                      | Verified dataset + `lacuna_deals` + ingest runs                                                |
 | Local DB      | `docker-compose.yml`                       | Postgres 16 + ClickHouse 24 for dev                                                            |
 | Variant store | `clickhouse/migrations/`                   | Callset catalog + variant summaries — [GENOMICS_VARIANT_STORE.md](./GENOMICS_VARIANT_STORE.md) |
