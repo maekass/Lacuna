@@ -247,6 +247,12 @@ export const LLM_QUALITY_CATALOG = [
     grounded: true,
   },
   {
+    feature: "patient-empowerment-gap",
+    route: "POST /api/research/patient-empowerment/ask",
+    description: "HLTH empowerment baseline × portfolio gap analyst",
+    grounded: true,
+  },
+  {
     feature: "sec-ingest",
     route: "dealClassificationEngine (cron/CLI)",
     description: "SEC 8-K WH classification (structured output)",

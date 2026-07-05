@@ -16,6 +16,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "validate:dataset": "tsx scripts/validate-dataset.ts",
+    "validate:empowerment": "tsx scripts/validate-empowerment.ts",
     "compute:dataset-summary": "tsx scripts/compute-dataset-summary.ts",
     "compute:benchmarks": "tsx scripts/compute-benchmarks.ts",
     "compute:growth-rates": "tsx scripts/compute-growth-rates.ts",

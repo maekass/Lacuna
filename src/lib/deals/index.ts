@@ -10,4 +10,5 @@ export {
 export { getDealById } from "./getDealById";
 export { getFeaturedDeal } from "./getFeaturedDeal";
 export { listComparableDeals } from "./listComparableDeals";
-export { toDealAcquisitionDetail } from "./toDealAcquisitionDetail";
+export { empowermentContextForDeal } from "./empowermentContextForDeal";
+export type { DealEmpowermentContext } from "./empowermentContextForDeal";

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import PatientEmpowermentInsight from "@/components/PatientEmpowermentInsight";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { EPIDEMIOLOGY_DATABASE } from "@/lib/impact/oaisCalculator";
 import {
@@ -225,6 +226,10 @@ function FocusAreaCard({
           : null}
         <p className="text-lacuna-text-muted mt-2">Source: {area.source}</p>
       </div>
+
+      {area.id === "breast-cancer-genetics"
+        ? <PatientEmpowermentInsight variant="inline" className="mt-1" />
+        : null}
 
       <div className="border-t border-lacuna-border-subtle pt-3">
         <p className="text-xs font-medium text-lacuna-text-secondary mb-2">
@@ -628,6 +633,12 @@ export default function HealthEquityDashboard() {
           {dataProvenance.disclaimer}
         </p>
         <div className="flex flex-wrap gap-2">
+          <a
+            href="/research#patient-empowerment"
+            className="inline-flex items-center justify-center rounded-lg border border-lacuna-border bg-white px-3 py-2 text-xs font-medium text-lacuna-text-primary hover:bg-lacuna-surface-muted"
+          >
+            Patient empowerment (HLTH 2022)
+          </a>
           <a
             href="#impact-assessment"
             className="inline-flex items-center justify-center rounded-lg border border-lacuna-border bg-white px-3 py-2 text-xs font-medium text-lacuna-text-primary hover:bg-lacuna-surface-muted"
