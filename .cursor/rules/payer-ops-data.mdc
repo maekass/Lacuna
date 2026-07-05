@@ -1,0 +1,26 @@
+---
+description: Payer Ops data provenance — cited benchmarks, not heuristic data
+globs: src/lib/payerOps/**,src/data/payerOpsData.ts,src/app/sections/PayerOpsPage.tsx
+alwaysApply: false
+---
+
+# Payer Ops — data provenance (not heuristic)
+
+Do **not** describe payer ops simulator inputs or model constants as heuristic data.
+
+## Sources
+
+| Layer | Location | Provenance |
+| ----- | -------- | ---------- |
+| Public benchmarks | `src/data/payerOpsBenchmarks.ts` | Scraped/cited values from CAQH, KFF, Mass HPC, HHS OIG, AMA, Johns Hopkins, NIHCR — refresh with `npm run payer-ops:benchmarks:fetch` |
+| Model constants | `src/lib/payerOps/opportunityModel.ts` → `MODEL_ASSUMPTIONS` | Derived from `payerOpsBenchmarks.ts` (CAQH 2023 Index) |
+| Segment defaults | `src/data/payerOpsData.ts` → `segments` | `benchmarkSegmentDefaults()` — denial/avoidable/admin from public benchmarks; lives/claims/auths remain plan-configurable |
+| Pain-point stats | `payerOpsData.ts` → `painPoints[]` | Each row has an explicit `source` (AMA, KFF/AHA, CMS) |
+| Work queues | `payerOpsData.ts` → `workQueues`, `WORK_QUEUE_VOLUME_WEIGHTS` | Static workflow design; volumes derived from simulator output |
+| VC deal examples | `computeVCSignalCounts` / `computeVCSignalExamples` | Verified dataset (`dataset.verified.json`) filtered by `vcSignalSectorMap` |
+
+## Copy and docs
+
+- Use **cited benchmarks**, **plan-configurable defaults**, or **derived** — not "heuristic"
+- `computeModeled()` math references `MODEL_ASSUMPTIONS` only; admin cost uses `resolveAdminCostPerTouch()` with CAQH floor when unset
+- UI may note inputs are illustrative until real plan data is wired — that is separate from calling coefficients heuristics
