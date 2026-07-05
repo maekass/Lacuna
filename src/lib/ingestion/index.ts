@@ -45,6 +45,18 @@ export type {
   DealClassificationInput,
 } from "@/lib/ingestion/dealClassificationEngine";
 export type { ClassifiedDeal, SyncResult } from "@/lib/ingestion/databaseSync";
+export {
+  countPendingDeals,
+  listPendingDeals,
+  updatePendingDeal,
+} from "@/lib/ingestion/pendingDeals";
+export type {
+  ListPendingDealsOptions,
+  PendingDealRecord,
+  PendingDealStatus,
+  PendingDealsPage,
+  UpdatePendingDealInput,
+} from "@/lib/ingestion/pendingDeals";
 export type {
   IngestEventType,
   IngestLogEvent,

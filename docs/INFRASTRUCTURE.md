@@ -38,6 +38,7 @@ flowchart LR
 | CI            | `.github/workflows/deno.yml`               | lint, test, build, dataset validation                                                          |
 | Cron          | `vercel.json` → `/api/cron/sec-ingest`     | 06:00 UTC daily (Hobby-safe)                                                                   |
 | Vercel tuning | [VERCEL_SETTINGS.md](./VERCEL_SETTINGS.md)   | Region, skew protection, Speed Insights, ignored builds                                        |
+| Deal universe | [EPIC_DEAL_UNIVERSE.md](./EPIC_DEAL_UNIVERSE.md) | SEC queue → human promote → changelog (not auto-merge)                                       |
 | DB            | `db/migrations/*.sql`                      | Verified dataset + `lacuna_deals` + ingest runs                                                |
 | Local DB      | `docker-compose.yml`                       | Postgres 16 + ClickHouse 24 for dev                                                            |
 | Variant store | `clickhouse/migrations/`                   | Callset catalog + variant summaries — [GENOMICS_VARIANT_STORE.md](./GENOMICS_VARIANT_STORE.md) |
