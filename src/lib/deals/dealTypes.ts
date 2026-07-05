@@ -14,9 +14,9 @@ export interface DealAcquisitionExtras {
 
 export type DealTarget = VerifiedDataset["companies"][number];
 export type DealAcquirer = VerifiedDataset["acquirers"][number];
+export type VerifiedAcquisition = VerifiedDataset["acquisitions"][number];
 
-export interface DealAcquisitionDetail
-  extends VerifiedDataset["acquisitions"][number], DealAcquisitionExtras {}
+export type DealAcquisitionDetail = VerifiedAcquisition & DealAcquisitionExtras;
 
 /** Enriched deal record for diligence views and exports. */
 export interface DealDetail {

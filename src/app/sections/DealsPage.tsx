@@ -16,6 +16,7 @@ import {
 } from "@/app/lazyDashboard";
 import DataCoverageCard from "@/components/DataCoverageCard";
 import DataIngestPanel from "@/components/DataIngestPanel";
+import DealReviewQueue from "@/components/DealReviewQueue";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { useDashboardData } from "@/lib/data/useDashboardData";
@@ -41,6 +42,9 @@ export default function DealsPage() {
 
       <MotionSection id="data-pipelines" delay={0.03} className={SECTION}>
         <DataIngestPanel />
+        <div className="mt-6">
+          <DealReviewQueue />
+        </div>
       </MotionSection>
 
       <MotionSection id="network" delay={0.05} className={SECTION}>

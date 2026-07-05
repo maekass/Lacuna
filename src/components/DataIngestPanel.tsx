@@ -137,7 +137,8 @@ export default function DataIngestPanel() {
                 )}
               <CommandBlock command="npm run sec:ingest" />
               <p className="mt-2 text-[11px] text-lacuna-blue/60">
-                API: <code>/api/ingest/sec/status</code>
+                API: <code>/api/ingest/sec/status</code> · Queue:{" "}
+                <code>/api/deals/pending</code>
               </p>
             </section>
 

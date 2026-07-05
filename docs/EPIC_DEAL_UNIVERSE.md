@@ -78,9 +78,9 @@ Make SEC staging **visible and actionable**.
 | A1 | `listPendingDeals()` + types in `src/lib/ingestion/pendingDeals.ts` | ✅ |
 | A2 | `GET /api/deals/pending` (paginated, auth optional `CRON_SECRET` or admin key) | ✅ |
 | A3 | `PATCH /api/deals/pending/[dealId]` — status, `review_notes` | ✅ |
-| A4 | `DealReviewQueue` component on `/deals#pipelines` (replace static copy) |
-| A5 | Row detail: filing URL, Item 2.01 excerpt, WH keywords, confidence |
-| A6 | Approve/reject actions + optimistic UI |
+| A4 | `DealReviewQueue` component on `/deals#pipelines` (replace static copy) | ✅ |
+| A5 | Row detail: filing URL, Item 2.01 excerpt, WH keywords, confidence | ✅ (in queue rows) |
+| A6 | Approve/reject actions + optimistic UI | ✅ |
 | A7 | Link queue count in `PipelineStatusStrip` (“N pending review”) |
 | A8 | Docs + tests; wire `DataIngestPanel` to real pending count |
 
