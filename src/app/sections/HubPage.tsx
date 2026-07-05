@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import DataProvenanceBanner from "@/components/DataProvenanceBanner";
+import PipelineStatusStrip from "@/components/PipelineStatusStrip";
 import MotionSection from "@/components/ui/MotionSection";
 import StatTile from "@/components/ui/StatTile";
 import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
@@ -65,6 +66,10 @@ export default function HubPage() {
 
       <MotionSection delay={0.05} className="mb-10">
         <DataProvenanceBanner />
+      </MotionSection>
+
+      <MotionSection delay={0.06} className="mb-10">
+        <PipelineStatusStrip />
       </MotionSection>
 
       <MotionSection

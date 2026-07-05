@@ -1,6 +1,8 @@
 /**
  * SEC EDGAR ingestion — public exports for CLI, cron, and future MCP server.
  */
+export { buildSecIngestStatusPayload } from "@/lib/ingestion/buildSecIngestStatus";
+export type { SecIngestStatusPayload } from "@/lib/ingestion/buildSecIngestStatus";
 export {
   alertApiFailure,
   alertNewDeal,

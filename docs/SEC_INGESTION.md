@@ -99,6 +99,23 @@ npm run db:migrate
 After this, `/api/cron/sec-ingest/status` will return the latest ingest run row
 (or 503 if DB is missing).
 
+## Review queue UI
+
+Candidates land in `lacuna_deals` with `status=pending` — **not** in verified
+JSON until human promotion ([NEW_DEAL_WORKFLOW.md](./NEW_DEAL_WORKFLOW.md)).
+
+| Surface | Location |
+| ------- | -------- |
+| Review queue | `/deals#data-pipelines` — `DealReviewQueue` (approve / reject) |
+| Pending count | `PipelineStatusStrip` on hub + deals; `GET /api/ingest/sec/status` → `pendingReviewCount` |
+| List / patch API | `GET /api/deals/pending`, `PATCH /api/deals/pending/[dealId]` (Bearer auth in production) |
+
+```bash
+curl -s http://localhost:3000/api/ingest/sec/status | jq '.pendingReviewCount'
+```
+
+See [EPIC_DEAL_UNIVERSE.md](./EPIC_DEAL_UNIVERSE.md) Phase A.
+
 ## Run ingest
 
 ```bash

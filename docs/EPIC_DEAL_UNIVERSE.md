@@ -81,10 +81,10 @@ Make SEC staging **visible and actionable**.
 | A4 | `DealReviewQueue` component on `/deals#pipelines` (replace static copy) | ✅ |
 | A5 | Row detail: filing URL, Item 2.01 excerpt, WH keywords, confidence | ✅ (in queue rows) |
 | A6 | Approve/reject actions + optimistic UI | ✅ |
-| A7 | Link queue count in `PipelineStatusStrip` (“N pending review”) |
-| A8 | Docs + tests; wire `DataIngestPanel` to real pending count |
+| A7 | Link queue count in `PipelineStatusStrip` (“N pending review”) | ✅ |
+| A8 | Docs + tests; wire `DataIngestPanel` to real pending count | ✅ |
 
-**Done when:** Operator can review SEC candidates in-app without `psql`.
+**Phase A complete.** Operator can review SEC candidates in-app without `psql`.
 
 ---
 

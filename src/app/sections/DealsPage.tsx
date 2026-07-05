@@ -17,6 +17,7 @@ import {
 import DataCoverageCard from "@/components/DataCoverageCard";
 import DataIngestPanel from "@/components/DataIngestPanel";
 import DealReviewQueue from "@/components/DealReviewQueue";
+import PipelineStatusStrip from "@/components/PipelineStatusStrip";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { useDashboardData } from "@/lib/data/useDashboardData";
@@ -41,7 +42,10 @@ export default function DealsPage() {
       </MotionSection>
 
       <MotionSection id="data-pipelines" delay={0.03} className={SECTION}>
-        <DataIngestPanel />
+        <PipelineStatusStrip />
+        <div className="mt-4">
+          <DataIngestPanel />
+        </div>
         <div className="mt-6">
           <DealReviewQueue />
         </div>
