@@ -11,7 +11,7 @@ import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { useDashboardData } from "@/lib/data/useDashboardData";
 
-const SECTION = "mb-16 scroll-mt-28";
+const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
 export default function MethodsPage() {
   const { verifiedAcquisitions } = useDashboardData();

@@ -14,6 +14,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { DiscreteSourceNote } from "@/components/DiscreteSources";
 import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
+import { LacunaTooltip } from "@/components/ui/Tooltip";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import {
@@ -39,8 +40,9 @@ import {
   VC_SIGNAL_MODEL_FOOTNOTE,
 } from "@/lib/payerOps/vcSignalModel";
 import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
+import { cn } from "@/lib/utils/cn";
 
-const SECTION = "mb-16 scroll-mt-28";
+const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 const SECTION_DESC = "text-sm sm:text-base";
 
 function formatNumber(value: number) {
@@ -272,120 +274,136 @@ export default function PayerOpsPage() {
         <DiscreteSourceNote className="mb-4">
           {VC_SIGNAL_MODEL_FOOTNOTE}
         </DiscreteSourceNote>
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          {vcSignals.map((s) => {
-            const isExpanded = expandedDealSignal === s.painPoint;
-            const flow = vcSignalDealFlow.byPainPoint[s.painPoint];
-            const momentum = flow.momentum;
-            const matchingDeals = dealCounts[s.painPoint] ?? 0;
-            const examples = vcSignalExamples[s.painPoint] ?? [];
+        {verifiedCompanies.length === 0
+          ? (
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="animate-pulse rounded-2xl bg-lacuna-lavender/10 h-40"
+                />
+              ))}
+            </div>
+          )
+          : (
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+              {vcSignals.map((s) => {
+                const isExpanded = expandedDealSignal === s.painPoint;
+                const flow = vcSignalDealFlow.byPainPoint[s.painPoint];
+                const momentum = flow.momentum;
+                const matchingDeals = dealCounts[s.painPoint] ?? 0;
+                const examples = vcSignalExamples[s.painPoint] ?? [];
 
-            return (
-              <div
-                key={s.painPoint}
-                className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <TrendingUp className="h-4 w-4 shrink-0 text-lacuna-blue" />
-                    <span className="text-[11px] font-semibold uppercase tracking-wide text-lacuna-blue sm:text-xs">
-                      {s.painPoint}
-                    </span>
-                  </div>
-                  <span
-                    className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
-                      momentum === "accelerating"
-                        ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                        : momentum === "early"
-                        ? "bg-amber-50 text-amber-700 border border-amber-200"
-                        : "bg-lacuna-lavender/20 text-lacuna-plum/70 border border-lacuna-lavender/30"
-                    }`}
+                return (
+                  <div
+                    key={s.painPoint}
+                    className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
                   >
-                    {momentum === "accelerating"
-                      ? (
-                        <span
-                          className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500 animate-pulse"
-                          aria-hidden="true"
-                        />
-                      )
-                      : null}
-                    {momentum === "early" ? "early stage" : momentum}
-                  </span>
-                </div>
-                <p className="mt-3 text-sm leading-relaxed text-lacuna-blue">
-                  {s.thesis}
-                </p>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setExpandedDealSignal(isExpanded ? null : s.painPoint)}
-                  className="mt-2 cursor-pointer text-xs font-medium text-lacuna-plum underline-offset-2 hover:underline"
-                >
-                  {isExpanded ? "Hide ↑" : "Show deal signal ↓"}
-                </button>
-                <AnimatePresence initial={false}>
-                  {isExpanded
-                    ? (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="overflow-hidden"
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <TrendingUp className="h-4 w-4 shrink-0 text-lacuna-blue" />
+                        <span className="text-[11px] font-semibold uppercase tracking-wide text-lacuna-blue sm:text-xs">
+                          {s.painPoint}
+                        </span>
+                      </div>
+                      <span
+                        className={cn(
+                          "inline-flex shrink-0 items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
+                          momentum === "accelerating" &&
+                            "bg-emerald-50 text-emerald-700 border border-emerald-200",
+                          momentum === "early" &&
+                            "bg-amber-50 text-amber-700 border border-amber-200",
+                          momentum !== "accelerating" &&
+                            momentum !== "early" &&
+                            "bg-lacuna-lavender/20 text-lacuna-plum/70 border border-lacuna-lavender/30",
+                        )}
                       >
-                        <div className="mt-4 flex items-start gap-2 rounded-xl bg-lacuna-lavender/10 p-3">
-                          <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lacuna-plum" />
-                          <div>
-                            <p className="text-xs leading-relaxed text-lacuna-plum">
-                              {s.dealSignal}
-                            </p>
-                            {examples.map((example) => (
-                              <div
-                                key={`${example.targetName}-${example.year}`}
-                              >
-                                <p className="mt-2 text-[11px] text-lacuna-plum/70">
-                                  {example.targetName} → {example.acquirerName}
-                                  {" "}
-                                  ({example.year})
+                        {momentum === "accelerating"
+                          ? (
+                            <span
+                              className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500 animate-pulse"
+                              aria-hidden="true"
+                            />
+                          )
+                          : null}
+                        {momentum === "early" ? "early stage" : momentum}
+                      </span>
+                    </div>
+                    <p className="mt-3 text-sm leading-relaxed text-lacuna-blue">
+                      {s.thesis}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setExpandedDealSignal(isExpanded ? null : s.painPoint)}
+                      className="mt-2 cursor-pointer text-xs font-medium text-lacuna-plum underline-offset-2 hover:underline"
+                    >
+                      {isExpanded ? "Hide ↑" : "Show deal signal ↓"}
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {isExpanded
+                        ? (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="mt-4 flex items-start gap-2 rounded-xl bg-lacuna-lavender/10 p-3">
+                              <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lacuna-plum" />
+                              <div>
+                                <p className="text-xs leading-relaxed text-lacuna-plum">
+                                  {s.dealSignal}
                                 </p>
-                                {example.rationale
-                                  ? (
-                                    <p className="mt-1 text-[10px] italic text-lacuna-plum/60 leading-snug">
-                                      &ldquo;{example.rationale.slice(0, 120)}
-                                      {example.rationale.length > 120
-                                        ? "…"
-                                        : ""}
-                                      &rdquo;
+                                {examples.map((example) => (
+                                  <div
+                                    key={`${example.targetName}-${example.year}`}
+                                  >
+                                    <p className="mt-2 text-[11px] text-lacuna-plum/70">
+                                      {example.targetName} → {example.acquirerName}
+                                      {" "}
+                                      ({example.year})
                                     </p>
+                                    {example.rationale
+                                      ? (
+                                        <p className="mt-1 text-[10px] italic text-lacuna-plum/60 leading-snug">
+                                          &ldquo;{example.rationale.slice(0, 120)}
+                                          {example.rationale.length > 120
+                                            ? "…"
+                                            : ""}
+                                          &rdquo;
+                                        </p>
+                                      )
+                                      : null}
+                                  </div>
+                                ))}
+                                {matchingDeals > 0
+                                  ? (
+                                    <ModelProvenanceHint
+                                      model={VC_SIGNAL_DEAL_COUNT_MODEL}
+                                    >
+                                      <p className="mt-2 cursor-help text-[11px] text-lacuna-plum/70">
+                                        {matchingDeals}{" "}
+                                        matching deal{matchingDeals ===
+                                            1
+                                          ? ""
+                                          : "s"} in dataset
+                                      </p>
+                                    </ModelProvenanceHint>
                                   )
                                   : null}
                               </div>
-                            ))}
-                            {matchingDeals > 0
-                              ? (
-                                <ModelProvenanceHint
-                                  model={VC_SIGNAL_DEAL_COUNT_MODEL}
-                                >
-                                  <p className="mt-2 cursor-help text-[11px] text-lacuna-plum/70">
-                                    {matchingDeals}{" "}
-                                    matching deal{matchingDeals ===
-                                        1
-                                      ? ""
-                                      : "s"} in dataset
-                                  </p>
-                                </ModelProvenanceHint>
-                              )
-                              : null}
-                          </div>
-                        </div>
-                      </motion.div>
-                    )
-                    : null}
-                </AnimatePresence>
-              </div>
-            );
-          })}
-        </div>
+                            </div>
+                          </motion.div>
+                        )
+                        : null}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </div>
+          )}
       </MotionSection>
 
       <MotionSection id="problem" className={SECTION}>
@@ -399,28 +417,38 @@ export default function PayerOpsPage() {
           Not from the Lacuna verified M&A dataset.
         </DiscreteSourceNote>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-4">
-          {painPoints.map(({ title, value, detail, source, icon: Icon }) => (
-            <div
-              key={title}
-              className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
-            >
-              <Icon className="h-6 w-6 text-lacuna-blue" />
-              <div className="mt-4 text-3xl font-bold text-lacuna-plum">
-                {value}
+          {painPoints.map((pp) => {
+            const Icon = pp.icon;
+            const statClassName = cn(
+              "mt-4 font-bold text-lacuna-plum",
+              pp.source && "cursor-help",
+              pp.value.length > 7
+                ? "text-xl sm:text-2xl"
+                : "text-2xl sm:text-3xl",
+            );
+            const statValue = (
+              <div className={statClassName}>{pp.value}</div>
+            );
+            return (
+              <div
+                key={pp.title}
+                className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
+              >
+                <Icon className="h-6 w-6 text-lacuna-blue" />
+                {pp.source
+                  ? (
+                    <LacunaTooltip content={pp.source}>
+                      {statValue}
+                    </LacunaTooltip>
+                  )
+                  : statValue}
+                <h3 className="mt-2 font-semibold text-lacuna-plum">{pp.title}</h3>
+                <p className="mt-1 text-sm leading-relaxed text-lacuna-blue">
+                  {pp.detail}
+                </p>
               </div>
-              <h3 className="mt-2 font-semibold text-lacuna-plum">{title}</h3>
-              <p className="mt-1 text-sm leading-relaxed text-lacuna-blue">
-                {detail}
-              </p>
-              {source
-                ? (
-                  <span className="mt-2 inline-block rounded-full bg-lacuna-lavender/20 px-2 py-0.5 text-[10px] font-medium text-lacuna-blue/70">
-                    {source}
-                  </span>
-                )
-                : null}
-            </div>
-          ))}
+            );
+          })}
         </div>
       </MotionSection>
 
@@ -445,11 +473,12 @@ export default function PayerOpsPage() {
                   aria-label={segments[key].label}
                   aria-pressed={segment === key}
                   title={segments[key].label}
-                  className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
-                    segment === key
-                      ? "bg-white text-lacuna-plum"
-                      : "bg-white/10 text-white hover:bg-white/20"
-                  }`}
+                  className={cn(
+                    "shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors",
+                    segment === key && "bg-white text-lacuna-plum",
+                    segment !== key &&
+                      "bg-white/10 text-white hover:bg-white/20",
+                  )}
                 >
                   <span className="sm:hidden">{segments[key].shortLabel}</span>
                   <span className="hidden sm:inline">

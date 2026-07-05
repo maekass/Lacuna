@@ -110,6 +110,8 @@ AI and Sentry: [INFERENCE.md](./INFERENCE.md),
 | `npm run clickhouse:ingest-vcf` | Stream VCF → object storage + ClickHouse summaries      |
 | `npm run python-api:dev`        | FastAPI sidecar on :8000 (REST + GraphQL)               |
 | `npm run python-api:test`       | Pytest for Python API                                   |
+| `npm run dotnet-api:dev`        | ASP.NET Core + EF sidecar on :8001 (REST + Swagger)     |
+| `npm run dotnet-api:test`       | xUnit for .NET API                                      |
 
 ## Python API sidecar (optional)
 
@@ -129,6 +131,26 @@ docker compose --profile api up -d
 | `GET /api/v1/dataset/verified` | Verified JSON (parity with Next.js route)    |
 | `GET /api/v1/clinical-trials`  | ClinicalTrials.gov proxy                     |
 | `GET /api/v1/research/studies` | Postgres research catalog when DB configured |
+
+Not deployed on Vercel — local / self-hosted only.
+
+## .NET API sidecar (optional)
+
+ASP.NET Core + EF Core service under `services/dotnet-api/`. See
+[DOTNET_API.md](./DOTNET_API.md).
+
+```bash
+npm run dotnet-api:dev
+# or
+docker compose --profile dotnet-api up -d
+```
+
+| Route (port 8001)              | Purpose                                      |
+| ------------------------------ | -------------------------------------------- |
+| `GET /swagger`                 | OpenAPI (Swashbuckle)                        |
+| `GET /api/v1/dataset/verified` | Verified JSON (parity with Next.js route)    |
+| `GET /api/v1/clinical-trials`  | ClinicalTrials.gov proxy                     |
+| `GET /api/v1/research/studies` | EF Core research catalog when DB configured   |
 
 Not deployed on Vercel — local / self-hosted only.
 
