@@ -52,6 +52,8 @@
     "ingest:worker": "tsx services/ingest-worker/index.ts",
     "python-api:dev": "cd services/python-api && uvicorn app.main:app --reload --port 8000",
     "python-api:test": "cd services/python-api && python -m pytest",
+    "dotnet-api:dev": "cd services/dotnet-api && dotnet watch run --project Lacuna.DotNetApi --urls http://localhost:8001",
+    "dotnet-api:test": "cd services/dotnet-api && dotnet test",
     "infra:check": "tsx scripts/infra-check.ts",
     "monitor:liveness": "sh scripts/monitor-liveness.sh",
     "storybook": "storybook dev -p 6006",

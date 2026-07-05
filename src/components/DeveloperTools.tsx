@@ -33,6 +33,13 @@ const TOOLS: ToolLink[] = [
     type: "api",
   },
   {
+    name: ".NET API (ASP.NET Core + EF)",
+    description:
+      "Local sidecar — REST, Swagger, and EF Core for dataset + research studies (port 8001)",
+    href: "http://localhost:8001/swagger",
+    type: "api",
+  },
+  {
     name: "GitHub Repository",
     description: "Source code, issues, and contribution guidelines",
     href: "https://github.com/maekass/Lacuna",

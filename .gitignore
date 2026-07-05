@@ -76,6 +76,9 @@ ml/clinical_trials/data/aact/schema.png
 
 # python sidecar
 services/python-api/.venv/
+# dotnet sidecar
+services/dotnet-api/**/bin/
+services/dotnet-api/**/obj/
 ml/clinical_trials/.venv/
 ml/clinical_trials/data/cached_training.json
 ml/clinical_trials/data/llm_corpus.jsonl

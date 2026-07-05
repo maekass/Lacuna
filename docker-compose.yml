@@ -82,6 +82,24 @@ services:
       postgres:
         condition: service_healthy
 
+  dotnet-api:
+    profiles: ["dotnet-api"]
+    build:
+      context: .
+      dockerfile: services/dotnet-api/Dockerfile
+    container_name: lacuna-dotnet-api
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    environment:
+      ASPNETCORE_URLS: http://+:8001
+      LACUNA_DATASET_PATH: /app/src/data/dataset.verified.json
+      DATABASE_URL: postgresql://lacuna:lacuna@postgres:5432/lacuna
+      CORS_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   lacuna_pg_data:
   lacuna_ch_data:
