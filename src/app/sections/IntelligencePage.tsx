@@ -14,7 +14,7 @@ import ExportToGamma from "@/components/ExportToGamma";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 
-const SECTION = "mb-16 scroll-mt-28";
+const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
 export default function IntelligencePage() {
   return (
