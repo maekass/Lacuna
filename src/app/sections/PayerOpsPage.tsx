@@ -14,6 +14,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { DiscreteSourceNote } from "@/components/DiscreteSources";
 import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
+import { LacunaTooltip } from "@/components/ui/Tooltip";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import {
@@ -306,13 +307,16 @@ export default function PayerOpsPage() {
                         </span>
                       </div>
                       <span
-                        className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
-                          momentum === "accelerating"
-                            ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                            : momentum === "early"
-                            ? "bg-amber-50 text-amber-700 border border-amber-200"
-                            : "bg-lacuna-lavender/20 text-lacuna-plum/70 border border-lacuna-lavender/30"
-                        }`}
+                        className={cn(
+                          "inline-flex shrink-0 items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
+                          momentum === "accelerating" &&
+                            "bg-emerald-50 text-emerald-700 border border-emerald-200",
+                          momentum === "early" &&
+                            "bg-amber-50 text-amber-700 border border-amber-200",
+                          momentum !== "accelerating" &&
+                            momentum !== "early" &&
+                            "bg-lacuna-lavender/20 text-lacuna-plum/70 border border-lacuna-lavender/30",
+                        )}
                       >
                         {momentum === "accelerating"
                           ? (
@@ -415,33 +419,33 @@ export default function PayerOpsPage() {
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-4">
           {painPoints.map((pp) => {
             const Icon = pp.icon;
+            const statClassName = cn(
+              "mt-4 font-bold text-lacuna-plum",
+              pp.source && "cursor-help",
+              pp.value.length > 7
+                ? "text-xl sm:text-2xl"
+                : "text-2xl sm:text-3xl",
+            );
+            const statValue = (
+              <div className={statClassName}>{pp.value}</div>
+            );
             return (
               <div
                 key={pp.title}
                 className="rounded-2xl border border-lacuna-lavender/35 bg-white p-5 shadow-sm"
               >
                 <Icon className="h-6 w-6 text-lacuna-blue" />
-                <div
-                  className={cn(
-                    "mt-4 font-bold text-lacuna-plum",
-                    pp.value.length > 7
-                      ? "text-xl sm:text-2xl"
-                      : "text-2xl sm:text-3xl",
-                  )}
-                >
-                  {pp.value}
-                </div>
+                {pp.source
+                  ? (
+                    <LacunaTooltip content={pp.source}>
+                      {statValue}
+                    </LacunaTooltip>
+                  )
+                  : statValue}
                 <h3 className="mt-2 font-semibold text-lacuna-plum">{pp.title}</h3>
                 <p className="mt-1 text-sm leading-relaxed text-lacuna-blue">
                   {pp.detail}
                 </p>
-                {pp.source
-                  ? (
-                    <span className="mt-2 inline-block rounded-full bg-lacuna-lavender/20 px-2 py-0.5 text-[10px] font-medium text-lacuna-blue/70">
-                      {pp.source}
-                    </span>
-                  )
-                  : null}
               </div>
             );
           })}
@@ -469,11 +473,12 @@ export default function PayerOpsPage() {
                   aria-label={segments[key].label}
                   aria-pressed={segment === key}
                   title={segments[key].label}
-                  className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
-                    segment === key
-                      ? "bg-white text-lacuna-plum"
-                      : "bg-white/10 text-white hover:bg-white/20"
-                  }`}
+                  className={cn(
+                    "shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors",
+                    segment === key && "bg-white text-lacuna-plum",
+                    segment !== key &&
+                      "bg-white/10 text-white hover:bg-white/20",
+                  )}
                 >
                   <span className="sm:hidden">{segments[key].shortLabel}</span>
                   <span className="hidden sm:inline">

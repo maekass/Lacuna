@@ -220,6 +220,13 @@ export default function HubPage() {
                   </span>
                 ))}
               </div>
+              {ws.slug === "deals"
+                ? (
+                  <span className="mt-3 inline-block text-[11px] font-medium text-lacuna-plum/60">
+                    {verifiedAcquisitions.length} verified deals in dataset
+                  </span>
+                )
+                : null}
             </Link>
           ))}
         </div>

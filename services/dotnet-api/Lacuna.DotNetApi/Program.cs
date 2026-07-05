@@ -144,13 +144,21 @@ app.MapGet(
 app.MapGet(
     "/api/v1/research/studies",
     async (
+        HttpContext httpContext,
         string? institution,
         string? condition,
         int limit = 20,
-        int offset = 0,
-        ResearchStudyService? researchStudyService = null) =>
+        int offset = 0) =>
     {
-        if (!ConnectionStringResolver.IsConfigured(app.Configuration) || researchStudyService is null)
+        if (!ConnectionStringResolver.IsConfigured(app.Configuration))
+        {
+            return Results.Json(
+                new { detail = "DATABASE_URL is not configured for research study queries" },
+                statusCode: StatusCodes.Status503ServiceUnavailable);
+        }
+
+        var researchStudyService = httpContext.RequestServices.GetService<ResearchStudyService>();
+        if (researchStudyService is null)
         {
             return Results.Json(
                 new { detail = "DATABASE_URL is not configured for research study queries" },
