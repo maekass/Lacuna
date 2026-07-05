@@ -14,9 +14,11 @@ const POWER_80_N = 34;
 function HoveredCellTooltip({
   cell,
   allCompanies,
+  anchor,
 }: {
   cell: MatrixCell;
   allCompanies: VerifiedCompanyView[];
+  anchor: { x: number; y: number };
 }) {
   const valuations = useMemo(() => {
     return allCompanies
@@ -60,7 +62,12 @@ function HoveredCellTooltip({
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="mt-4 p-4 bg-lacuna-surface-muted rounded-lg border border-lacuna-border"
+      className="fixed z-50 w-72 max-w-[calc(100vw-2rem)] p-4 bg-lacuna-surface-muted rounded-lg border border-lacuna-border shadow-lg"
+      style={{
+        left: anchor.x,
+        top: anchor.y + 8,
+        transform: "translateX(-50%)",
+      }}
     >
       <h4 className="font-semibold text-lacuna-text-primary">
         {cell.stage} · {cell.sector}
@@ -204,6 +211,9 @@ const SECTOR_CHIP_INACTIVE =
 export default function ValuationMatrix() {
   const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
   const [hoveredCell, setHoveredCell] = useState<MatrixCell | null>(null);
+  const [tooltipAnchor, setTooltipAnchor] = useState<
+    { x: number; y: number } | null
+  >(null);
 
   const allSectors = useMemo(
     () => Array.from(new Set(verifiedCompanies.map((c) => c.sector))).sort(),
@@ -235,7 +245,13 @@ export default function ValuationMatrix() {
       return next;
     });
     if (removed) {
-      setHoveredCell((cell) => (cell?.sector === sector ? null : cell));
+      setHoveredCell((cell) => {
+        if (cell?.sector === sector) {
+          setTooltipAnchor(null);
+          return null;
+        }
+        return cell;
+      });
     }
   }
 
@@ -382,8 +398,8 @@ export default function ValuationMatrix() {
         ))}
       </div>
 
-      <div className="overflow-x-auto mt-4">
-        <div className="min-w-[640px]">
+      <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mt-4">
+        <div className="min-w-[680px]">
           {/* Header row */}
           <div
             className="grid"
@@ -445,8 +461,18 @@ export default function ValuationMatrix() {
                 <motion.div
                   key={`${rowIndex}-${colIndex}`}
                   className="p-1"
-                  onMouseEnter={() => setHoveredCell(cell)}
-                  onMouseLeave={() => setHoveredCell(null)}
+                  onMouseEnter={(event) => {
+                    const rect = event.currentTarget.getBoundingClientRect();
+                    setTooltipAnchor({
+                      x: rect.left + rect.width / 2,
+                      y: rect.bottom,
+                    });
+                    setHoveredCell(cell);
+                  }}
+                  onMouseLeave={() => {
+                    setHoveredCell(null);
+                    setTooltipAnchor(null);
+                  }}
                 >
                   <div
                     className="h-12 rounded-md flex items-center justify-center cursor-pointer transition-all hover:scale-105 hover:shadow-md"
@@ -494,10 +520,11 @@ export default function ValuationMatrix() {
       </div>
 
       {/* Tooltip */}
-      {hoveredCell && hoveredCell.totalCount > 0 && (
+      {hoveredCell && hoveredCell.totalCount > 0 && tooltipAnchor && (
         <HoveredCellTooltip
           cell={hoveredCell}
           allCompanies={verifiedCompanies}
+          anchor={tooltipAnchor}
         />
       )}
 
