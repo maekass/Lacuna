@@ -45,6 +45,18 @@ dataset.verified.json
 
 ### Day 1 — Deal record library ✅
 
+**Audience:** Engineering (foundation); all others (blocked without this)
+
+| Task | Files |
+| ---- | ----- |
+| `DealDetail` interface (acquisition + target + acquirer + comparables) | `src/lib/deals/dealTypes.ts` |
+| `getDealById(id)` | `src/lib/deals/getDealById.ts` |
+| `getFeaturedDeal()` — pinned `deal2` (Modern Fertility / Ro) | `src/lib/deals/getFeaturedDeal.ts` |
+| `listComparableDeals(deal, limit)` — same sector, ±3 years | `src/lib/deals/listComparableDeals.ts` |
+| Vitest fixtures using real IDs | `__tests__/lib/deals/dealSpine.test.ts` |
+
+**Done when:** `getDealById("…")` returns enriched deal from static dataset in a test.
+
 ---
 
 ### Day 2 — Evidence ladder
