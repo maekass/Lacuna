@@ -42,6 +42,7 @@
     "ml:ct:aact:load": "sh scripts/aact-load.sh",
     "ml:ct:aact:export": "PYTHONPATH=ml/clinical_trials python3 ml/clinical_trials/scripts/export_from_aact.py",
     "download:free-apis": "tsx scripts/download-free-apis.ts",
+    "payer-ops:benchmarks:fetch": "tsx scripts/fetch-payer-ops-benchmarks.ts",
     "db:migrate": "tsx scripts/migrate.ts",
     "db:import": "tsx scripts/import-verified-json.ts",
     "db:seed-research": "tsx scripts/seed-research-studies.ts",

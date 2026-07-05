@@ -5,6 +5,11 @@ import {
   type LucideIcon,
   Network,
 } from "lucide-react";
+import {
+  AMA_PRIOR_AUTH,
+  benchmarkSegmentDefaults,
+  MA_HPC_ADMIN_DENIALS,
+} from "@/data/payerOpsBenchmarks";
 import type {
   VerifiedAcquisitionView,
   VerifiedCompanyView,
@@ -91,45 +96,42 @@ export const vcSignalSectorMap: Record<string, readonly string[]> = {
   ],
 };
 
-export const segments: Record<SegmentKey, SegmentData> = {
-  commercial: {
-    label: "Commercial ASO + fully insured",
-    shortLabel: "Commercial",
-    lives: "1.8M",
-    auths: 18400,
-    claims: 920000,
-    denialRate: 10.8,
-    avoidableRate: 31,
-    adminCost: 5.8,
-  },
-  medicaid: {
-    label: "Medicaid managed care",
-    shortLabel: "Medicaid",
-    lives: "910K",
-    auths: 12200,
-    claims: 610000,
-    denialRate: 13.6,
-    avoidableRate: 38,
-    adminCost: 6.9,
-  },
-  medicare: {
-    label: "Medicare Advantage",
-    shortLabel: "Medicare Adv.",
-    lives: "420K",
-    auths: 8100,
-    claims: 380000,
-    denialRate: 15.1,
-    avoidableRate: 34,
-    adminCost: 7.4,
-  },
-};
+export const segments: Record<SegmentKey, SegmentData> = (() => {
+  const rates = benchmarkSegmentDefaults();
+  return {
+    commercial: {
+      label: "Commercial ASO + fully insured",
+      shortLabel: "Commercial",
+      lives: "1.8M",
+      auths: 18400,
+      claims: 920000,
+      ...rates.commercial,
+    },
+    medicaid: {
+      label: "Medicaid managed care",
+      shortLabel: "Medicaid",
+      lives: "910K",
+      auths: 12200,
+      claims: 610000,
+      ...rates.medicaid,
+    },
+    medicare: {
+      label: "Medicare Advantage",
+      shortLabel: "Medicare Adv.",
+      lives: "420K",
+      auths: 8100,
+      claims: 380000,
+      ...rates.medicare,
+    },
+  };
+})();
 
 export const painPoints: PainPoint[] = [
   {
     title: "Prior authorization rework",
-    value: "~40%",
+    value: `~${AMA_PRIOR_AUTH.requestsNeedingExtraDocumentation.value}%`,
     detail: "of pended requests require additional clinical documentation",
-    source: "AMA 2023 Prior Auth Survey",
+    source: AMA_PRIOR_AUTH.requestsNeedingExtraDocumentation.source,
     icon: ClipboardCheck,
   },
   {
@@ -149,10 +151,11 @@ export const painPoints: PainPoint[] = [
     icon: Hospital,
   },
   {
-    title: "Fragmented rules",
-    value: "Many systems",
+    title: "Administrative denials",
+    value: `${MA_HPC_ADMIN_DENIALS.adminDenialShareOfClaims2024.value}%`,
     detail:
-      "policy, benefit, network, medical-necessity, and claim-edit rules held in separate platforms",
+      "of fully-insured commercial claims denied for administrative reasons (Massachusetts, 2024)",
+    source: MA_HPC_ADMIN_DENIALS.adminDenialShareOfClaims2024.source,
     icon: Network,
   },
 ];
