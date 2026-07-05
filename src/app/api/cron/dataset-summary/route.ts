@@ -6,6 +6,8 @@ import { getVerifiedDataset } from "@/lib/data/datasetProvider";
 import { isCronAuthorized } from "@/lib/infra/cronAuth";
 import { getLatestIngestRun } from "@/lib/ingestion/ingestRunState";
 
+export const maxDuration = 300;
+
 /** Daily cache refresh + summary snapshot for monitoring (pairs with SEC ingest cron). */
 export async function GET(request: Request) {
   if (!isCronAuthorized(request)) {
