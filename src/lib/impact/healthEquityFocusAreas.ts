@@ -58,10 +58,10 @@ export const HEALTH_EQUITY_FOCUS_AREAS: readonly HealthEquityFocusArea[] = [
     summary:
       "BRCA1/2, PALB2, and CHEK2 pathogenic variants drive HBOC risk; genomic profiling companies dominate precision-oncology deal flow.",
     disparityLabel:
-      "Black women: 38% higher breast cancer mortality; younger-onset and TNBC more common (ACS 2025)",
+      "Black women: 38% higher breast cancer mortality; 37% not offered genetic testing vs NCCN (ACS 2025; HLTH/Outcomes4Me 2022)",
     dataTier: "cited_epidemiology",
     source:
-      "ACS Breast Cancer Facts & Figures 2024-2025; ACS Cancer Statistics for Black People (Feb 2025)",
+      "ACS Breast Cancer Facts & Figures 2024-2025; HLTH Foundation State of Patient Empowerment (2022); ACS Cancer Statistics for Black People (Feb 2025)",
     sourceYear: 2025,
     relatedSectors: ["Breast Health", "Precision Medicine", "Diagnostics"],
     markerGenes: ["BRCA1", "BRCA2", "PALB2", "CHEK2", "TP53"],

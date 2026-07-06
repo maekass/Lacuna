@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import {
   ClusteringAnalysis,
   CompanySimilarity,
@@ -16,14 +17,45 @@ import {
 } from "@/app/lazyDashboard";
 import DataCoverageCard from "@/components/DataCoverageCard";
 import DataIngestPanel from "@/components/DataIngestPanel";
+import DealEmpowermentContext from "@/components/DealEmpowermentContext";
+import DealReviewQueue from "@/components/DealReviewQueue";
+import PipelineStatusStrip from "@/components/PipelineStatusStrip";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { useDashboardData } from "@/lib/data/useDashboardData";
+import { empowermentContextForDeal } from "@/lib/deals/empowermentContextForDeal";
+import { getFeaturedDeal } from "@/lib/deals/getFeaturedDeal";
+import { buildPatientEmpowermentSnapshot } from "@/lib/research/patientEmpowermentPipeline";
 
 const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
 export default function DealsPage() {
   const { networkNodes, networkLinks, dealsByYear } = useDashboardData();
+  const {
+    verifiedCompanies,
+    verifiedAcquirers,
+    verifiedAcquisitions,
+    dataProvenance,
+  } = useVerifiedDataset();
+
+  const featuredEmpowerment = useMemo(() => {
+    const dataset = {
+      companies: verifiedCompanies,
+      acquirers: verifiedAcquirers,
+      acquisitions: verifiedAcquisitions,
+      provenance: dataProvenance,
+    };
+    const deal = getFeaturedDeal(dataset);
+    if (!deal) return null;
+    const snapshot = buildPatientEmpowermentSnapshot(dataset);
+    return empowermentContextForDeal(deal, snapshot);
+  }, [
+    verifiedCompanies,
+    verifiedAcquirers,
+    verifiedAcquisitions,
+    dataProvenance,
+  ]);
 
   return (
     <div>
@@ -37,10 +69,27 @@ export default function DealsPage() {
 
       <MotionSection id="data-coverage" className={SECTION}>
         <DataCoverageCard />
+        {featuredEmpowerment
+          ? (
+            <div className="mt-4">
+              <SectionHeader
+                title="Featured deal — empowerment context"
+                description="HLTH/Outcomes4Me 2022 baseline dimensions crosswalked to the pinned featured deal target (affinity-based, not live outcomes)."
+              />
+              <DealEmpowermentContext context={featuredEmpowerment} />
+            </div>
+          )
+          : null}
       </MotionSection>
 
       <MotionSection id="data-pipelines" delay={0.03} className={SECTION}>
-        <DataIngestPanel />
+        <PipelineStatusStrip />
+        <div className="mt-4">
+          <DataIngestPanel />
+        </div>
+        <div className="mt-6">
+          <DealReviewQueue />
+        </div>
       </MotionSection>
 
       <MotionSection id="network" delay={0.05} className={SECTION}>

@@ -269,6 +269,46 @@ export function buildSpaceWhGapPrompt(input: {
 }
 
 // ---------------------------------------------------------------------------
+// Patient empowerment gap analyst (grounded in snapshot JSON)
+// ---------------------------------------------------------------------------
+
+export const PATIENT_EMPOWERMENT_GAP_SYSTEM_PROMPT =
+  `You are Lacuna's patient empowerment gap analyst.
+
+ROLE:
+- Explain gaps between HLTH/Outcomes4Me 2022 breast cancer empowerment baselines and Lacuna's verified portfolio crosswalk
+- Use ONLY the SNAPSHOT_JSON context in the user message
+- Distinguish cited survey rates from heuristic portfolio affinity (curated / sector / keyword)
+
+${ANTI_HALLUCINATION_GUARD}
+
+TONE:
+- Educational, neutral, concise (3–6 sentences unless asked for more)
+- Cite gap indices, cited values, and company names from SNAPSHOT_JSON
+- Never recommend investments or clinical actions
+- If the question cannot be answered from SNAPSHOT_JSON, say so
+
+${EDUCATIONAL_DISCLAIMER}
+
+FORMAT: Plain text paragraphs. No markdown headings or bullet lists.`;
+
+export function buildPatientEmpowermentGapPrompt(input: {
+  question: string;
+  snapshotJson: string;
+}): string {
+  const q = input.question.trim().slice(0, 500);
+  return [
+    `SNAPSHOT_JSON:`,
+    input.snapshotJson.slice(0, 12_000),
+    ``,
+    `USER_QUESTION:`,
+    q || "Which empowerment gaps are largest and where does the portfolio not map?",
+    ``,
+    `Answer using only SNAPSHOT_JSON. Reference gap indices and match tiers when citing companies.`,
+  ].join("\n");
+}
+
+// ---------------------------------------------------------------------------
 // Output sanitization (post-processing guardrails)
 // ---------------------------------------------------------------------------
 

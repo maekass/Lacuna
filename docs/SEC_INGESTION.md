@@ -99,6 +99,23 @@ npm run db:migrate
 After this, `/api/cron/sec-ingest/status` will return the latest ingest run row
 (or 503 if DB is missing).
 
+## Review queue UI
+
+Candidates land in `lacuna_deals` with `status=pending` — **not** in verified
+JSON until human promotion ([NEW_DEAL_WORKFLOW.md](./NEW_DEAL_WORKFLOW.md)).
+
+| Surface | Location |
+| ------- | -------- |
+| Review queue | `/deals#data-pipelines` — `DealReviewQueue` (approve / reject) |
+| Pending count | `PipelineStatusStrip` on hub + deals; `GET /api/ingest/sec/status` → `pendingReviewCount` |
+| List / patch API | `GET /api/deals/pending`, `PATCH /api/deals/pending/[dealId]` (Bearer auth in production) |
+
+```bash
+curl -s http://localhost:3000/api/ingest/sec/status | jq '.pendingReviewCount'
+```
+
+See [EPIC_DEAL_UNIVERSE.md](./EPIC_DEAL_UNIVERSE.md) Phase A.
+
 ## Run ingest
 
 ```bash
@@ -111,10 +128,10 @@ npm run sec:ingest -- --dry-run   # scan + classify, no DB writes
 
 ## Scheduled runs
 
-Vercel Cron is configured in `vercel.json` (`0 6 * * *` — once daily at 06:00
-UTC → `/api/cron/sec-ingest`). This schedule fits **Hobby** plans (max one run
-per day; actual invocation may drift by up to ~59 minutes). Set `CRON_SECRET` in
-Vercel env; Vercel sends `Authorization: Bearer <CRON_SECRET>`.
+Vercel Cron is configured in `vercel.json` (`0 6 * * 1` — once weekly, Mondays
+06:00 UTC → `/api/cron/sec-ingest`; dataset summary at `30 6 * * 1`). This
+schedule fits **Hobby** plans. Actual invocation may drift by up to ~59 minutes.
+Set `CRON_SECRET` in Vercel env; Vercel sends `Authorization: Bearer <CRON_SECRET>`.
 
 For more frequent polling (e.g. every 6 hours), use **Pro** cron or an external
 scheduler: Render cron, GitHub Actions, or `npm run sec:ingest` on a VPS.

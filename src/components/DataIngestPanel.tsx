@@ -1,20 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
-interface SecIngestStatus {
-  ok: boolean;
-  latest?: {
-    id: number;
-    status: string;
-    started_at: string;
-    finished_at: string | null;
-    scanned_tickers: number | null;
-    parsed_filings: number | null;
-    error_message: string | null;
-  } | null;
+import type { SecIngestStatusPayload } from "@/lib/ingestion/buildSecIngestStatus";
+
+type SecIngestStatus = SecIngestStatusPayload | {
+  ok: false;
   error?: string;
-  cli?: string;
-}
+};
 
 interface FreeApiStatus {
   ok: boolean;
@@ -121,7 +114,18 @@ export default function DataIngestPanel() {
                         {sec.latest.scanned_tickers ?? "—"}
                       </dd>
                     </div>
-                    <div className="col-span-2">
+                    <div>
+                      <dt className="text-lacuna-blue/70">Pending review</dt>
+                      <dd className="font-medium text-lacuna-plum">
+                        <Link
+                          href={sec.reviewQueuePath}
+                          className="underline underline-offset-2 hover:text-lacuna-blue"
+                        >
+                          {sec.pendingReviewCount}
+                        </Link>
+                      </dd>
+                    </div>
+                    <div>
                       <dt className="text-lacuna-blue/70">Last run</dt>
                       <dd className="font-medium text-lacuna-plum">
                         {sec.latest.finished_at ?? sec.latest.started_at}
@@ -137,7 +141,8 @@ export default function DataIngestPanel() {
                 )}
               <CommandBlock command="npm run sec:ingest" />
               <p className="mt-2 text-[11px] text-lacuna-blue/60">
-                API: <code>/api/ingest/sec/status</code>
+                API: <code>/api/ingest/sec/status</code> · Queue:{" "}
+                <code>/api/deals/pending</code>
               </p>
             </section>
 

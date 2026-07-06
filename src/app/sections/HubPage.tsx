@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import DataProvenanceBanner from "@/components/DataProvenanceBanner";
+import PatientEmpowermentInsight from "@/components/PatientEmpowermentInsight";
+import PipelineStatusStrip from "@/components/PipelineStatusStrip";
 import MotionSection from "@/components/ui/MotionSection";
 import StatTile from "@/components/ui/StatTile";
 import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
@@ -65,6 +67,10 @@ export default function HubPage() {
 
       <MotionSection delay={0.05} className="mb-10">
         <DataProvenanceBanner />
+      </MotionSection>
+
+      <MotionSection delay={0.06} className="mb-10">
+        <PipelineStatusStrip />
       </MotionSection>
 
       <MotionSection
@@ -137,6 +143,7 @@ export default function HubPage() {
         : null}
 
       <MotionSection delay={0.13} className="mb-10">
+        <PatientEmpowermentInsight className="mb-4" />
         {dealVelocityTopSector !== null
           ? (
             <div className="mb-4 rounded-xl border border-lacuna-lavender/40 bg-lacuna-lavender/20 p-4">

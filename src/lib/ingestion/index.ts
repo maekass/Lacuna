@@ -1,6 +1,8 @@
 /**
  * SEC EDGAR ingestion — public exports for CLI, cron, and future MCP server.
  */
+export { buildSecIngestStatusPayload } from "@/lib/ingestion/buildSecIngestStatus";
+export type { SecIngestStatusPayload } from "@/lib/ingestion/buildSecIngestStatus";
 export {
   alertApiFailure,
   alertNewDeal,
@@ -45,6 +47,18 @@ export type {
   DealClassificationInput,
 } from "@/lib/ingestion/dealClassificationEngine";
 export type { ClassifiedDeal, SyncResult } from "@/lib/ingestion/databaseSync";
+export {
+  countPendingDeals,
+  listPendingDeals,
+  updatePendingDeal,
+} from "@/lib/ingestion/pendingDeals";
+export type {
+  ListPendingDealsOptions,
+  PendingDealRecord,
+  PendingDealStatus,
+  PendingDealsPage,
+  UpdatePendingDealInput,
+} from "@/lib/ingestion/pendingDeals";
 export type {
   IngestEventType,
   IngestLogEvent,

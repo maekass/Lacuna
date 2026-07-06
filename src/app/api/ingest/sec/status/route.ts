@@ -1,8 +1,8 @@
 import process from "node:process";
 import { NextResponse } from "next/server";
-import { getLatestIngestRun } from "@/lib/ingestion/ingestRunState";
+import { buildSecIngestStatusPayload } from "@/lib/ingestion/buildSecIngestStatus";
 
-/** Latest SEC EDGAR ingest run (Postgres). Alias of `/api/cron/sec-ingest/status`. */
+/** Latest SEC EDGAR ingest run + pending review queue count (Postgres). */
 export async function GET() {
   if (!process.env.DATABASE_URL?.trim()) {
     return NextResponse.json(
@@ -15,11 +15,15 @@ export async function GET() {
     );
   }
 
-  const latest = await getLatestIngestRun();
-  return NextResponse.json({
-    ok: true,
-    latest,
-    cronPath: "/api/cron/sec-ingest",
-    cli: "npm run sec:ingest",
-  });
+  try {
+    const payload = await buildSecIngestStatusPayload();
+    return NextResponse.json(payload, {
+      headers: { "cache-control": "no-store" },
+    });
+  } catch (error) {
+    const message = error instanceof Error
+      ? error.message
+      : "Failed to load SEC ingest status";
+    return NextResponse.json({ ok: false, error: message }, { status: 500 });
+  }
 }

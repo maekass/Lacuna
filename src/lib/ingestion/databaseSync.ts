@@ -168,10 +168,5 @@ export async function syncDealsToDatabase(
   return { inserted, updated, skipped };
 }
 
-/** Count pending candidates awaiting human review. */
-export async function countPendingDeals(): Promise<number> {
-  const rows = await query<{ count: string }>(
-    `SELECT COUNT(*)::text AS count FROM lacuna_deals WHERE status IN ('pending', 'pending_review')`,
-  );
-  return Number(rows[0]?.count ?? 0);
-}
+/** @deprecated Import from `@/lib/ingestion/pendingDeals` */
+export { countPendingDeals } from "@/lib/ingestion/pendingDeals";

@@ -11,6 +11,7 @@ import {
   ImpactOpportunityCard,
   VariantCallsetBrowser,
 } from "@/app/lazyDashboard";
+import PatientEmpowermentPanel from "@/components/PatientEmpowermentPanel";
 import WomensHealthExitsContext from "@/components/WomensHealthExitsContext";
 import RhCapitalPortfolioContext from "@/components/RhCapitalPortfolioContext";
 import ClinicalTrialsMlPanel from "@/components/ClinicalTrialsMlPanel";
@@ -18,9 +19,17 @@ import SpaceWhResearchGapsPanel from "@/components/SpaceWhResearchGapsPanel";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 
+import type { PatientEmpowermentSnapshot } from "@/lib/research/patientEmpowermentPipeline";
+
 const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
-export default function ResearchPage() {
+interface ResearchPageProps {
+  empowermentSnapshot?: PatientEmpowermentSnapshot;
+}
+
+export default function ResearchPage({
+  empowermentSnapshot,
+}: ResearchPageProps) {
   return (
     <div>
       <header className="mb-10">
@@ -28,8 +37,8 @@ export default function ResearchPage() {
           Research workspace
         </h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
-          Clinical trials, evidence maturity, genomics, and health equity
-          markers — public data, cited.
+          Clinical trials, evidence maturity, genomics, health equity, and
+          patient empowerment baselines — public data, cited.
         </p>
       </header>
 
@@ -97,6 +106,14 @@ export default function ResearchPage() {
 
       <MotionSection id="variant-callsets" delay={0.1} className={SECTION}>
         <VariantCallsetBrowser />
+      </MotionSection>
+
+      <MotionSection id="patient-empowerment" delay={0.12} className={SECTION}>
+        <SectionHeader
+          title="Patient empowerment baseline"
+          description="HLTH Foundation / Outcomes4Me (2022): cited empowerment gaps indexed 0–100 and crosswalked to Lacuna portfolio by sector + keyword affinity. GET /api/research/patient-empowerment."
+        />
+        <PatientEmpowermentPanel snapshot={empowermentSnapshot} />
       </MotionSection>
 
       <MotionSection id="health-equity" delay={0.15} className={SECTION}>

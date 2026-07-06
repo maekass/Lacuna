@@ -56,10 +56,12 @@ export const WORKSPACES: Workspace[] = [
     href: "/research",
     label: "Research",
     description:
-      "Clinical trials, evidence maturity, genomics, and health equity.",
-    tags: ["clinical trials", "evidence", "genomics"],
+      "Clinical trials, evidence maturity, genomics, health equity, and patient empowerment baselines.",
+    tags: ["clinical trials", "evidence", "empowerment"],
     sections: [
       { id: "burden-capital-gap", label: "Gap" },
+      { id: "womens-health-exits", label: "Exits" },
+      { id: "patient-empowerment", label: "Empowerment" },
       { id: "clinical-trials", label: "Trials" },
       { id: "evidence-maturity", label: "Evidence" },
       { id: "variant-callsets", label: "Genetics" },

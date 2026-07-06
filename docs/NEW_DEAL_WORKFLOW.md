@@ -33,7 +33,7 @@ SEC cron / sec:ingest / sec:scan
 ### Automated (staging only)
 
 ```bash
-# Production: daily 06:00 UTC → /api/cron/sec-ingest
+# Production: weekly Mon 06:00 UTC → /api/cron/sec-ingest
 export SEC_EDGAR_USER_AGENT="Lacuna Research you@example.edu"
 export DATABASE_URL="postgres://..."
 
@@ -238,6 +238,6 @@ npm run verify:computed
 
 - [DATA_CURATION_CHECKLIST.md](./DATA_CURATION_CHECKLIST.md) — field schema +
   evidence grades
-- [SEC_INGESTION.md](./SEC_INGESTION.md) — daily SEC cron + env vars
+- [SEC_INGESTION.md](./SEC_INGESTION.md) — weekly SEC cron + env vars
 - [MODEL_CARD.md](./MODEL_CARD.md) — what the quant layer does (and does not do)
 - [INFRASTRUCTURE.md](./INFRASTRUCTURE.md) — CI, cron, Postgres
