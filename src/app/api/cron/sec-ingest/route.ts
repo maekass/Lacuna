@@ -1,6 +1,7 @@
 import process from "node:process";
 import { NextResponse } from "next/server";
 import { isCronAuthorized } from "@/lib/infra/cronAuth";
+import { runHandsOffPipeline } from "@/lib/ingestion/runHandsOffPipeline";
 import { runSecIngest } from "@/lib/ingestion/secIngestPipeline";
 
 export const maxDuration = 300;
@@ -19,6 +20,8 @@ export async function GET(request: Request) {
 
   try {
     const result = await runSecIngest();
+    const handsOff = await runHandsOffPipeline();
+
     return NextResponse.json({
       ok: true,
       scannedTickers: result.scannedTickers,
@@ -29,6 +32,7 @@ export async function GET(request: Request) {
       sync: result.sync,
       runId: result.runId ?? null,
       sinceDateUsed: result.sinceDateUsed ?? null,
+      handsOff,
     });
   } catch (error) {
     const message = error instanceof Error

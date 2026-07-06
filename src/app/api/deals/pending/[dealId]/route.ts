@@ -1,15 +1,23 @@
 import { NextResponse } from "next/server";
 import { guardDealReviewRequest } from "@/lib/api/dealReviewAccess";
 import {
+  getPendingDealByDealId,
   updatePendingDeal,
   type PendingDealStatus,
 } from "@/lib/ingestion/pendingDeals";
+import {
+  isAutoPromoteEnabled,
+  promoteApprovedDeal,
+  resolvePromoteTarget,
+  canPromoteInRuntime,
+} from "@/lib/ingestion/promoteApprovedDeals";
 
 const VALID_STATUSES = new Set<PendingDealStatus>([
   "pending",
   "pending_review",
   "approved",
   "rejected",
+  "merged",
 ]);
 
 interface PatchBody {
@@ -75,10 +83,25 @@ export async function PATCH(
       return NextResponse.json({ error: "Deal not found" }, { status: 404 });
     }
 
+    let promotion: Awaited<ReturnType<typeof promoteApprovedDeal>> | null =
+      null;
+    if (patch.status === "approved" && isAutoPromoteEnabled()) {
+      if (canPromoteInRuntime()) {
+        promotion = await promoteApprovedDeal(updated.dealId, {
+          target: resolvePromoteTarget(),
+        });
+      }
+    }
+
+    const item = promotion?.ok
+      ? await getPendingDealByDealId(updated.dealId) ?? updated
+      : updated;
+
     return NextResponse.json({
       ok: true,
       probe: "pending-deal-update",
-      item: updated,
+      item,
+      promotion,
     }, {
       headers: { "cache-control": "no-store" },
     });

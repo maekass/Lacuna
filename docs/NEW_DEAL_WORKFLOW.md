@@ -157,6 +157,19 @@ curated release.
 
 ---
 
+## Step 3b — Auto-promote approved deals (optional)
+
+| Path | How |
+| ---- | --- |
+| **UI** | `/deals#data-pipelines` → **Approve & add to verified** |
+| **CLI** | `npm run deals:promote-approved` |
+| **GitHub** | Weekly workflow `promote-approved-deals.yml` → commits JSON |
+| **Vercel** | Cron `/api/cron/promote-approved` when `LACUNA_DATA_MODE=db` |
+
+Set `LACUNA_AUTO_PROMOTE=true` to promote on Approve via the review API.
+
+---
+
 ## Step 4 — Validate and refresh models
 
 ```bash

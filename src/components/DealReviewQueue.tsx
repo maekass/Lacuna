@@ -38,10 +38,12 @@ function PendingDealRow({
   deal,
   busy,
   onReview,
+  onPromote,
 }: {
   deal: PendingDealRecord;
   busy: boolean;
   onReview: (dealId: string, status: PendingDealStatus) => void;
+  onPromote: (dealId: string) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
 
@@ -97,6 +99,14 @@ function PendingDealRow({
             className="rounded-md bg-lacuna-plum px-2.5 py-1.5 text-xs font-medium text-white hover:bg-lacuna-blue disabled:opacity-50"
           >
             Approve
+          </button>
+          <button
+            type="button"
+            disabled={busy}
+            onClick={() => onPromote(deal.dealId)}
+            className="rounded-md border border-lacuna-plum/30 bg-lacuna-plum/10 px-2.5 py-1.5 text-xs font-medium text-lacuna-plum hover:bg-lacuna-plum/20 disabled:opacity-50"
+          >
+            Approve &amp; add to verified
           </button>
           <button
             type="button"
@@ -190,6 +200,47 @@ export default function DealReviewQueue() {
     };
   }, [refreshToken]);
 
+  const handlePromote = useCallback(async (dealId: string) => {
+    setActionDealId(dealId);
+    try {
+      const approveResponse = await fetch(
+        `/api/deals/pending/${encodeURIComponent(dealId)}`,
+        {
+          method: "PATCH",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ status: "approved" }),
+        },
+      );
+      if (!approveResponse.ok) {
+        const body = await approveResponse.json() as { error?: string };
+        setError(body.error ?? "Approve failed.");
+        return;
+      }
+
+      const promoteResponse = await fetch(
+        `/api/deals/pending/${encodeURIComponent(dealId)}/promote`,
+        { method: "POST" },
+      );
+      const body = await promoteResponse.json() as {
+        ok?: boolean;
+        error?: string;
+        result?: { acquisitionId?: string };
+      };
+      if (!promoteResponse.ok || !body.ok) {
+        setError(body.error ?? "Promotion failed.");
+        return;
+      }
+
+      setItems((prev) => prev.filter((d) => d.dealId !== dealId));
+      setReviewableTotal((n) => Math.max(0, n - 1));
+      setError(null);
+    } catch {
+      setError("Promotion failed.");
+    } finally {
+      setActionDealId(null);
+    }
+  }, []);
+
   const handleReview = useCallback(async (
     dealId: string,
     status: PendingDealStatus,
@@ -224,9 +275,8 @@ export default function DealReviewQueue() {
           </h3>
           <p className="mt-1 max-w-2xl text-sm text-lacuna-blue">
             Staging rows from <code className="text-xs">lacuna_deals</code>{" "}
-            — human review required before merge into{" "}
-            <code className="text-xs">dataset.verified.json</code>. Not live
-            verified deals.
+            — approve candidates, then promote into verified dataset (JSON locally
+            or Postgres on Vercel db mode). Not live until promoted.
           </p>
         </div>
         <button
@@ -272,6 +322,7 @@ export default function DealReviewQueue() {
                 deal={deal}
                 busy={actionDealId === deal.dealId}
                 onReview={handleReview}
+                onPromote={handlePromote}
               />
             ))}
           </div>
