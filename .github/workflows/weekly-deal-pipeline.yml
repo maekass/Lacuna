@@ -1,0 +1,64 @@
+name: Weekly deal pipeline
+
+# Fully unattended: SEC ingest → auto-approve → promote JSON → compute → commit → Vercel deploys.
+on:
+  schedule:
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  weekly-deal-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Migrate Postgres
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PGSSLMODE: disable
+        run: npm run db:migrate
+
+      - name: SEC ingest + hands-off promote
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PGSSLMODE: disable
+          SEC_EDGAR_USER_AGENT: ${{ secrets.SEC_EDGAR_USER_AGENT }}
+          LACUNA_HANDS_OFF_INGEST: "true"
+          LACUNA_AUTO_APPROVE_CONFIDENCE: high
+          LACUNA_PROMOTE_TARGET: both
+          LACUNA_INGEST_RUN_TRACKING: "true"
+          SEC_USE_DB_CURSOR: "true"
+          SEC_MAX_TICKERS_PER_RUN: "50"
+          SEC_MAX_PARSED_FILINGS_PER_RUN: "100"
+        run: npm run pipeline:weekly
+
+      - name: Recompute quantitative artifacts
+        run: npm run compute:all
+
+      - name: Validate dataset
+        run: npm run validate:dataset
+
+      - name: Commit if verified universe grew
+        run: |
+          if git diff --quiet; then
+            echo "No new deals this week."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/dataset.verified.json src/data/computed-*.json
+          git commit -m "chore: weekly hands-off SEC deal pipeline"
+          git push

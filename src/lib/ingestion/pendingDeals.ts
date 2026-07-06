@@ -9,7 +9,8 @@ export type PendingDealStatus =
   | "pending"
   | "pending_review"
   | "approved"
-  | "rejected";
+  | "rejected"
+  | "merged";
 
 const REVIEWABLE_STATUSES: PendingDealStatus[] = ["pending", "pending_review"];
 
@@ -39,6 +40,8 @@ export interface PendingDealRecord {
   ingestedAt: string;
   updatedAt: string;
   reviewNotes: string | null;
+  mergedAcquisitionId: string | null;
+  promotedAt: string | null;
 }
 
 export interface ListPendingDealsOptions {
@@ -89,7 +92,9 @@ const DEAL_ROW_COLUMNS = `
   parse_quality,
   ingested_at,
   updated_at,
-  review_notes
+  review_notes,
+  merged_acquisition_id,
+  promoted_at
 `;
 
 interface LacunaDealRow {
@@ -118,6 +123,8 @@ interface LacunaDealRow {
   ingested_at: Date | string;
   updated_at: Date | string;
   review_notes: string | null;
+  merged_acquisition_id: string | null;
+  promoted_at: Date | string | null;
   total_count?: string;
 }
 
@@ -165,6 +172,8 @@ function mapRow(row: LacunaDealRow): PendingDealRecord {
     ingestedAt: toIsoDateTime(row.ingested_at),
     updatedAt: toIsoDateTime(row.updated_at),
     reviewNotes: row.review_notes,
+    mergedAcquisitionId: row.merged_acquisition_id,
+    promotedAt: row.promoted_at ? toIsoDateTime(row.promoted_at) : null,
   };
 }
 
@@ -259,6 +268,52 @@ export async function updatePendingDeal(
     params,
   );
 
+  const row = rows[0];
+  if (!row) return null;
+  return mapRow(row);
+}
+
+/** Fetch one staging row by public `deal_id`. */
+export async function getPendingDealByDealId(
+  dealId: string,
+): Promise<PendingDealRecord | null> {
+  const rows = await query<LacunaDealRow>(
+    `SELECT ${DEAL_ROW_COLUMNS} FROM lacuna_deals WHERE deal_id = $1`,
+    [dealId],
+  );
+  const row = rows[0];
+  if (!row) return null;
+  return mapRow(row);
+}
+
+/** Approved rows awaiting promotion into verified dataset. */
+export async function listApprovedDealsForPromotion(): Promise<
+  PendingDealRecord[]
+> {
+  const rows = await query<LacunaDealRow>(
+    `SELECT ${DEAL_ROW_COLUMNS}
+     FROM lacuna_deals
+     WHERE status = 'approved'
+     ORDER BY filing_date DESC NULLS LAST, ingested_at DESC`,
+  );
+  return rows.map(mapRow);
+}
+
+/** Mark a staging row as merged into verified dataset. */
+export async function markDealMerged(
+  dealId: string,
+  mergedAcquisitionId: string,
+): Promise<PendingDealRecord | null> {
+  const rows = await query<LacunaDealRow>(
+    `UPDATE lacuna_deals
+     SET status = 'merged',
+         merged_acquisition_id = $2,
+         promoted_at = NOW(),
+         updated_at = NOW()
+     WHERE deal_id = $1
+     RETURNING ${DEAL_ROW_COLUMNS}`,
+    [dealId, mergedAcquisitionId],
+  );
   const row = rows[0];
   if (!row) return null;
   return mapRow(row);

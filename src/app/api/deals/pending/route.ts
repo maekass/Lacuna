@@ -11,6 +11,7 @@ const VALID_STATUSES = new Set<PendingDealStatus>([
   "pending_review",
   "approved",
   "rejected",
+  "merged",
 ]);
 
 /**

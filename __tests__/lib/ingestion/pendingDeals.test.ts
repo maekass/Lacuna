@@ -44,6 +44,8 @@ describe("pendingDeals", () => {
           ingested_at: "2024-03-17T12:00:00.000Z",
           updated_at: "2024-03-17T12:00:00.000Z",
           review_notes: null,
+          merged_acquisition_id: null,
+          promoted_at: null,
           total_count: "3",
         }],
       })
@@ -95,6 +97,8 @@ describe("pendingDeals", () => {
         ingested_at: "2024-03-17T12:00:00.000Z",
         updated_at: "2024-03-18T12:00:00.000Z",
         review_notes: "Dual sources verified",
+        merged_acquisition_id: null,
+        promoted_at: null,
       }],
     });
 

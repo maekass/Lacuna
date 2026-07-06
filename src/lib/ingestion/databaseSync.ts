@@ -71,7 +71,7 @@ ON CONFLICT (sec_accession) DO UPDATE SET
   classification_keywords = EXCLUDED.classification_keywords,
   womens_health_relevant = EXCLUDED.womens_health_relevant,
   status = CASE
-    WHEN lacuna_deals.status IN ('approved', 'rejected') THEN lacuna_deals.status
+    WHEN lacuna_deals.status IN ('approved', 'rejected', 'merged') THEN lacuna_deals.status
     ELSE EXCLUDED.status
   END,
   sic_code = COALESCE(EXCLUDED.sic_code, lacuna_deals.sic_code),
