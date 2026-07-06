@@ -31,8 +31,9 @@ export interface EmpowermentPrerequisite {
 export interface PatientEmpowermentMetric {
   id: string;
   label: string;
-  /** Human-readable cited statistic from the report */
   citedValue: string;
+  sourceYear: number;
+  conditionScope: "breast_cancer_baseline";
   phase: EmpowermentCarePhase;
   prerequisiteId: EmpowermentPrerequisiteId;
   /**
@@ -52,6 +53,9 @@ export interface PatientEmpowermentMetric {
 }
 
 export interface PatientEmpowermentHeadline {
+  reportVersion: string;
+  sourceYear: number;
+  stalenessNote: string;
   surveyRespondents: number;
   surveyWindow: string;
   publishedDate: string;
@@ -63,6 +67,10 @@ export interface PatientEmpowermentHeadline {
 }
 
 export const PATIENT_EMPOWERMENT_HEADLINE: PatientEmpowermentHeadline = {
+  reportVersion: "2022.11.14",
+  sourceYear: 2022,
+  stalenessNote:
+    "Static HLTH/Outcomes4Me baseline (Nov 2022). Check outcomes4me.com/empowerment2022 for updates — not live Lacuna patient data.",
   surveyRespondents: 1828,
   surveyWindow: "Oct 13 – Nov 1, 2022",
   publishedDate: "Nov 14, 2022",
@@ -101,10 +109,15 @@ export const EMPOWERMENT_PREREQUISITES: readonly EmpowermentPrerequisite[] = [
 ] as const;
 
 function metric(
-  partial: Omit<PatientEmpowermentMetric, "gapSeverity" | "dataTier">,
+  partial: Omit<
+    PatientEmpowermentMetric,
+    "gapSeverity" | "dataTier" | "sourceYear" | "conditionScope"
+  >,
 ): PatientEmpowermentMetric {
   return {
     ...partial,
+    sourceYear: 2022,
+    conditionScope: "breast_cancer_baseline",
     dataTier: "cited_survey_2022",
     gapSeverity: gapSeverityFromIndex(partial.gapIndexPct),
   };
@@ -228,13 +241,14 @@ export const PATIENT_EMPOWERMENT_METRICS: readonly PatientEmpowermentMetric[] = 
     polarity: "asset_inverted",
     phase: "treatment",
     prerequisiteId: "evidence-standards",
-    relatedSectors: ["Precision Medicine", "Diagnostics", "Breast Health"],
+    relatedSectors: ["Precision Medicine", "Breast Health", "Digital Health"],
     matchKeywords: [
       "clinical trial",
       "trial matching",
       "trial enrollment",
       "nct",
     ],
+    note: "Diagnostics sector removed — sector overlap inflated heuristic coverage without trial-offering evidence.",
   }),
   metric({
     id: "no-survivorship-plan",
@@ -260,8 +274,9 @@ export const PATIENT_EMPOWERMENT_METRICS: readonly PatientEmpowermentMetric[] = 
     polarity: "deficit_rate",
     phase: "survivorship",
     prerequisiteId: "life-goals",
-    relatedSectors: ["Breast Health", "Digital Health", "Mental Health"],
+    relatedSectors: ["Breast Health", "Digital Health"],
     matchKeywords: ["survivorship", "support program", "patient community"],
+    note: "Mental Health sector removed — general therapy apps lack breast-cancer survivorship resource evidence.",
   }),
   metric({
     id: "not-in-control",

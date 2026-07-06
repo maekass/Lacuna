@@ -6,11 +6,11 @@
   "crons": [
     {
       "path": "/api/cron/sec-ingest",
-      "schedule": "0 6 * * *"
+      "schedule": "0 6 * * 1"
     },
     {
       "path": "/api/cron/dataset-summary",
-      "schedule": "30 6 * * *"
+      "schedule": "30 6 * * 1"
     }
   ]
 }

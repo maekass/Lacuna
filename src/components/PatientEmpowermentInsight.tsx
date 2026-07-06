@@ -22,9 +22,7 @@ export default function PatientEmpowermentInsight({
     [],
   );
   const { summary, headline } = snapshot;
-  const topGap = [...snapshot.dimensions].sort(
-    (a, b) => b.metric.gapIndexPct - a.metric.gapIndexPct,
-  )[0];
+  const topPriority = snapshot.priorityRankings[0];
   const weakestPrereq = EMPOWERMENT_PREREQUISITE_LABELS[
     summary.highestGapPrerequisiteId
   ];
@@ -39,11 +37,11 @@ export default function PatientEmpowermentInsight({
           {headline.surveyRespondents.toLocaleString()})
         </p>
         <p className="mt-1 text-lacuna-blue/80">
-          Report: {topGap?.metric.citedValue}{" "}
-          {topGap?.metric.label.toLowerCase()} (gap index{" "}
-          {topGap?.metric.gapIndexPct}/100). Lacuna crosswalk:{" "}
-          {summary.linkedCompanyCount} companies, {summary.curatedLinkCount}{" "}
-          curated links.
+          Report: {summary.maxGapMetricLabel} (index {summary.maxGapIndexPct}).
+          Weighted burden {summary.weightedBurdenIndexPct}/100 ·{" "}
+          {summary.criticalMetricCount} critical gaps. Crosswalk:{" "}
+          {summary.curatedLinkCount} curated · {summary.evidenceBackedLinkCount}{" "}
+          evidence-backed.
         </p>
         <Link
           href="/research#patient-empowerment"
@@ -67,15 +65,16 @@ export default function PatientEmpowermentInsight({
         <div className="min-w-0 flex-1">
           <p className="text-sm text-lacuna-blue">
             HLTH/Outcomes4Me 2022 (breast cancer, n=
-            {headline.surveyRespondents.toLocaleString()}):{" "}
-            {topGap?.metric.citedValue} {topGap?.metric.label.toLowerCase()}{" "}
-            (index {topGap?.metric.gapIndexPct}/100). Weakest prerequisite:{" "}
-            {weakestPrereq.toLowerCase()}. Crosswalked to{" "}
-            {summary.linkedCompanyCount} sample companies (
-            {summary.curatedLinkCount} curated).
+            {headline.surveyRespondents.toLocaleString()}): max gap{" "}
+            {summary.maxGapIndexPct}/100 ({summary.maxGapMetricLabel.toLowerCase()}).
+            Weighted burden {summary.weightedBurdenIndexPct}/100 · median{" "}
+            {summary.medianGapIndexPct}/100 · {summary.criticalMetricCount}{" "}
+            critical. Top priority: {topPriority?.metric.label.toLowerCase()} (
+            score {topPriority?.priorityScore}). Weakest prerequisite:{" "}
+            {weakestPrereq.toLowerCase()}.
           </p>
           <p className="mt-2 text-xs text-lacuna-plum/70 group-hover:text-lacuna-blue">
-            Cited survey baseline — not Lacuna patient data →
+            Cited 2022 survey — not live Lacuna patient data →
           </p>
         </div>
       </div>

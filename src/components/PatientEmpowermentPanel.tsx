@@ -10,6 +10,7 @@ import { Loader2, Sparkles } from "lucide-react";
 import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
 import LlmQualityBadge from "@/components/ui/LlmQualityBadge";
 import { CitedSourceFooter } from "@/components/research/CitedSourceFooter";
+import { GapDistributionChart } from "@/components/research/GapDistributionChart";
 import { GapIndexBar } from "@/components/research/GapIndexBar";
 import { ResearchMethodologyDrawer } from "@/components/research/ResearchMethodologyDrawer";
 import { ResearchStatTile } from "@/components/research/ResearchStatTile";
@@ -29,6 +30,7 @@ import {
 } from "@/lib/research/patientEmpowermentPipeline";
 import {
   EMPOWERMENT_DATA_TIER_LABELS,
+  EMPOWERMENT_SOURCE_TIER_LABELS,
   type EmpowermentMatchTier,
 } from "@/lib/research/patientEmpowermentTaxonomy";
 
@@ -39,6 +41,7 @@ const MATCH_TIER_LABELS: Record<EmpowermentMatchTier, string> = {
 };
 
 const SUGGESTED_QUESTIONS = [
+  "Where is gap index high but portfolio coverage low?",
   "Which gaps have zero portfolio coverage?",
   "How does genetic testing gap compare to clinical trials?",
   "Which prerequisite has the weakest portfolio crosswalk?",
@@ -59,6 +62,31 @@ function PrerequisiteCard({ row }: { row: PrerequisiteGapRow }) {
         {row.linkedDealCount} deals
       </p>
     </div>
+  );
+}
+
+function PriorityRow({ view }: { view: GapDimensionView }) {
+  const { metric } = view;
+  return (
+    <tr className="border-t border-lacuna-lavender/20 hover:bg-lacuna-surface-muted/50">
+      <td className="p-2 align-top text-xs font-medium text-lacuna-plum">
+        {metric.label}
+      </td>
+      <td className="p-2 align-top">
+        <GapIndexBar gapIndexPct={metric.gapIndexPct} />
+      </td>
+      <td className="p-2 align-top text-right text-xs font-bold tabular-nums text-amber-900">
+        {view.priorityScore}
+      </td>
+      <td className="p-2 align-top text-right text-xs tabular-nums text-lacuna-blue">
+        {view.evidenceCoveragePct}%
+        <span className="block text-[10px] text-lacuna-blue/60">evidence</span>
+      </td>
+      <td className="p-2 align-top text-right text-xs tabular-nums text-lacuna-blue">
+        {view.curatedCoveragePct}%
+        <span className="block text-[10px] text-lacuna-blue/60">curated</span>
+      </td>
+    </tr>
   );
 }
 
@@ -88,8 +116,24 @@ function DimensionRow({ view }: { view: GapDimensionView }) {
                 <li key={c.id}>
                   {c.name}{" "}
                   <span className="text-lacuna-blue/60" title={c.matchNote}>
-                    ({MATCH_TIER_LABELS[c.matchTier]})
+                    ({MATCH_TIER_LABELS[c.matchTier]}
+                    {c.sourceTier
+                      ? ` · ${EMPOWERMENT_SOURCE_TIER_LABELS[c.sourceTier]}`
+                      : ""}
+                    )
                   </span>
+                  {c.sourceUrl
+                    ? (
+                      <a
+                        href={c.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-1 text-sky-800 underline underline-offset-2"
+                      >
+                        ↗
+                      </a>
+                    )
+                    : null}
                 </li>
               ))}
               {view.linkedCompanies.length > 3
@@ -108,15 +152,17 @@ function DimensionRow({ view }: { view: GapDimensionView }) {
       <td className="p-2 align-top text-right text-[11px] tabular-nums text-lacuna-blue">
         {view.linkedDeals.length}
         <span className="block text-[10px] text-lacuna-blue/60">
-          {view.portfolioCoveragePct}% of n={view.addressableInSample}
+          n={view.addressableInSample} addressable
         </span>
-        {view.curatedLinkCount > 0
-          ? (
-            <span className="block text-[10px] text-emerald-700">
-              {view.curatedLinkCount} curated
-            </span>
-          )
-          : null}
+        <span className="block text-[10px] text-emerald-700">
+          {view.curatedCoveragePct}% curated
+        </span>
+        <span className="block text-[10px] text-sky-800">
+          {view.evidenceCoveragePct}% evidence
+        </span>
+        <span className="block text-[10px] text-lacuna-blue/80">
+          {view.heuristicCoveragePct}% heuristic
+        </span>
       </td>
     </tr>
   );
@@ -135,10 +181,15 @@ export default function PatientEmpowermentPanel({
     [],
   );
   const data = snapshotProp ?? fallbackSnapshot;
-  const { headline, summary, prerequisiteMatrix, phaseSummary, dimensions } =
+  const { headline, summary, prerequisiteMatrix, phaseSummary, dimensions, gapDistribution } =
     data;
 
   const topGaps = useMemo(
+    () => data.priorityRankings.slice(0, 5),
+    [data.priorityRankings],
+  );
+
+  const topByIndex = useMemo(
     () =>
       [...dimensions].sort(
         (a, b) => b.metric.gapIndexPct - a.metric.gapIndexPct,
@@ -210,16 +261,28 @@ export default function PatientEmpowermentPanel({
           </div>
         </ModelProvenanceHint>
 
+        <div className="mb-4 rounded-lg border border-amber-100 bg-amber-50/90 px-3 py-2 text-[11px] text-amber-950">
+          <span className="font-medium">Data freshness:</span>{" "}
+          {headline.stalenessNote}
+        </div>
+
         <ResearchMethodologyDrawer title="Methodology: gap index & crosswalk">
           <p className="mb-2">
             <strong>Gap index (0–100):</strong> higher = more patients
-            underserved. Deficit rates use the cited % directly; positive rates
-            invert (e.g. 45% records access → index 55).
+            underserved. Example: 45% records access → index 55 (asset_inverted).
           </p>
           <p className="mb-2">
-            <strong>Portfolio crosswalk tiers:</strong> curated analyst mappings
-            (preferred) → sector overlap → description keywords. Crosswalk is{" "}
-            {EMPOWERMENT_DATA_TIER_LABELS.heuristic_affinity}.
+            <strong>Priority score:</strong> gap index × (1 − curated analyst
+            coverage %). Surfaces high patient need with thin reviewed mappings.
+          </p>
+          <p className="mb-2">
+            <strong>Weighted burden index:</strong> phase × prerequisite × severity
+            weights — overweight treatment/survivorship and critical gaps.
+          </p>
+          <p className="mb-2">
+            <strong>Detail table coverage:</strong> curated % = analyst-reviewed
+            links; evidence % = curated links with a public source URL; heuristic
+            % = sector/keyword matches excluding curated.
           </p>
           <p>
             See{" "}
@@ -236,28 +299,43 @@ export default function PatientEmpowermentPanel({
           </p>
         </ResearchMethodologyDrawer>
 
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-7">
           <ResearchStatTile
-            value={headline.surveyRespondents.toLocaleString()}
-            label={`Survey n (${headline.surveyWindow})`}
+            value={`${summary.medianGapIndexPct}/100`}
+            label="Median gap index"
           />
           <ResearchStatTile
-            value={`${summary.meanGapIndexPct}/100`}
-            label="Mean gap index"
+            value={`${summary.weightedBurdenIndexPct}/100`}
+            label="Weighted burden index"
           />
           <ResearchStatTile
-            value={String(summary.linkedCompanyCount)}
-            label="Companies matched"
+            value={`${summary.meanHighSeverityGapIndexPct}/100`}
+            label="Mean high+ severity"
+          />
+          <ResearchStatTile
+            value={String(summary.criticalMetricCount)}
+            label={`Critical gaps (≥60)`}
+          />
+          <ResearchStatTile
+            value={`${summary.maxGapIndexPct}`}
+            label="Max gap index"
           />
           <ResearchStatTile
             value={String(summary.curatedLinkCount)}
             label="Curated links"
           />
           <ResearchStatTile
-            value={String(summary.portfolioGapCount)}
-            label="Portfolio gaps"
+            value={String(summary.evidenceBackedLinkCount)}
+            label="Evidence-backed links"
           />
         </div>
+
+        <p className="mt-2 text-[10px] text-lacuna-blue/60">
+          Unweighted mean {summary.meanGapIndexPct}/100 across {summary.metricCount}{" "}
+          dimensions · mean evidence coverage {summary.meanEvidenceCoveragePct}% ·
+          n={headline.surveyRespondents.toLocaleString()} survey · max gap:{" "}
+          {summary.maxGapMetricLabel}
+        </p>
 
         <div className="mt-3 flex flex-wrap gap-2">
           <button
@@ -300,7 +378,39 @@ export default function PatientEmpowermentPanel({
           </div>
         </div>
 
+        <div className="mt-5">
+          <GapDistributionChart
+            distribution={gapDistribution}
+            metrics={dimensions}
+          />
+        </div>
+
+        <div className="mt-5 overflow-x-auto rounded-lg border border-amber-200/60 bg-amber-50/30">
+          <p className="px-2 pt-2 text-xs font-semibold text-amber-950">
+            Priority ranking (gap × thin coverage)
+          </p>
+          <table className="w-full min-w-[480px] text-left">
+            <thead className="text-[11px] text-lacuna-text-muted">
+              <tr>
+                <th className="p-2 font-medium">Dimension</th>
+                <th className="p-2 font-medium">Gap index</th>
+                <th className="p-2 font-medium text-right">Priority</th>
+                <th className="p-2 font-medium text-right">Evidence</th>
+                <th className="p-2 font-medium text-right">Coverage</th>
+              </tr>
+            </thead>
+            <tbody>
+              {topGaps.map((view) => (
+                <PriorityRow key={view.metric.id} view={view} />
+              ))}
+            </tbody>
+          </table>
+        </div>
+
         <div className="mt-5 overflow-x-auto rounded-lg border border-lacuna-lavender/25">
+          <p className="px-2 pt-2 text-xs font-semibold text-lacuna-plum">
+            Top gaps by index (portfolio detail)
+          </p>
           <table className="w-full min-w-[720px] text-left">
             <thead className="bg-lacuna-surface-muted text-[11px] text-lacuna-text-muted">
               <tr>
@@ -311,7 +421,7 @@ export default function PatientEmpowermentPanel({
               </tr>
             </thead>
             <tbody>
-              {topGaps.map((view) => (
+              {topByIndex.map((view) => (
                 <DimensionRow key={view.metric.id} view={view} />
               ))}
             </tbody>

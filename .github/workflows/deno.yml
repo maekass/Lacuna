@@ -50,6 +50,9 @@ jobs:
       - name: Validate verified dataset
         run: npm run validate:dataset
 
+      - name: Validate patient empowerment catalog
+        run: npm run validate:empowerment
+
       - name: Recompute quantitative artifacts
         run: npm run compute:all
 

@@ -73,6 +73,26 @@ export const EMPOWERMENT_DATA_TIER_LABELS: Record<EmpowermentDataTier, string> =
   heuristic_affinity: "Portfolio crosswalk (heuristic)",
 };
 
+/** Public evidence tier for curated company ↔ gap links. */
+export type EmpowermentSourceTier = "filing" | "press" | "trial" | "website";
+
+export const EMPOWERMENT_SOURCE_TIER_LABELS: Record<
+  EmpowermentSourceTier,
+  string
+> = {
+  filing: "SEC / regulatory filing",
+  press: "Press release",
+  trial: "Clinical trial / publication",
+  website: "Company / product site",
+};
+
+/** Curated link counts as evidence-backed when it cites a public URL. */
+export function isEvidenceBackedLink(link: {
+  sourceUrl?: string;
+}): boolean {
+  return Boolean(link.sourceUrl?.trim());
+}
+
 /** Portfolio join tier — curated mappings beat sector/keyword heuristics. */
 export type EmpowermentMatchTier = "curated" | "sector" | "keyword";
 

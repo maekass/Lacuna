@@ -258,7 +258,7 @@ export default function DealReviewQueue() {
           <p className="mt-4 rounded-lg border border-dashed border-lacuna-lavender/40 bg-lacuna-lavender/10 px-4 py-6 text-center text-sm text-lacuna-blue/80">
             No pending candidates. Run{" "}
             <code className="text-xs">npm run sec:ingest</code> with Postgres,
-            or wait for the daily cron.
+            or wait for the weekly cron (Mondays 06:00 UTC).
           </p>
         )
         : null}

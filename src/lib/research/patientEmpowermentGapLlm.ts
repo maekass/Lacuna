@@ -35,7 +35,7 @@ export interface PatientEmpowermentGapAnswer {
 }
 
 const DEFAULT_QUESTION =
-  "Which empowerment gaps have the highest gap index and weakest portfolio coverage in Lacuna's sample?";
+  "Where is gap index high but portfolio coverage low in Lacuna's sample?";
 
 export async function answerPatientEmpowermentGapQuestion(
   snapshot: PatientEmpowermentSnapshot,
@@ -114,36 +114,36 @@ export async function answerPatientEmpowermentGapQuestion(
 export function buildDeterministicEmpowermentNarrative(
   snapshot: PatientEmpowermentSnapshot,
 ): string {
-  const { summary, prerequisiteMatrix, dimensions } = snapshot;
-  const topGaps = [...dimensions]
-    .sort((a, b) => b.metric.gapIndexPct - a.metric.gapIndexPct)
-    .slice(0, 3)
-    .map((d) =>
-      `${d.metric.label} (index ${d.metric.gapIndexPct}, cited ${d.metric.citedValue})`
-    )
-    .join("; ");
+  const { summary, prerequisiteMatrix, priorityRankings } = snapshot;
+
+  const topPriority = priorityRankings.slice(0, 3).map((d) =>
+    `${d.metric.label} (priority ${d.priorityScore}, gap ${d.metric.gapIndexPct}, curated ${d.curatedCoveragePct}%, evidence ${d.evidenceCoveragePct}%)`
+  ).join("; ");
 
   const weakPrereq = [...prerequisiteMatrix]
     .sort((a, b) => b.meanGapIndexPct - a.meanGapIndexPct)[0];
 
-  const zeroCoverage = dimensions
+  const portfolioGaps = priorityRankings
     .filter((d) => d.isPortfolioGap)
     .slice(0, 3)
-    .map((d) => d.metric.id.replace(/-/g, " "))
+    .map((d) => d.metric.label)
     .join(", ");
 
   return (
     `HLTH/Outcomes4Me 2022 breast cancer baseline (n=${summary.surveyRespondents}): ` +
-    `mean gap index ${summary.meanGapIndexPct}/100 across ${summary.metricCount} dimensions. ` +
-    (topGaps ? `Largest gaps: ${topGaps}. ` : "") +
+    `median gap ${summary.medianGapIndexPct}/100, weighted burden ${summary.weightedBurdenIndexPct}/100, ` +
+    `${summary.criticalMetricCount} critical and ${summary.highMetricCount} high-severity dimensions. ` +
+    `Max gap: ${summary.maxGapMetricLabel} (${summary.maxGapIndexPct}/100). ` +
+    (topPriority
+      ? `Highest priority (gap × thin coverage): ${topPriority}. `
+      : "") +
     (weakPrereq
-      ? `Weakest prerequisite: ${weakPrereq.label} (mean index ${weakPrereq.meanGapIndexPct}). `
+      ? `Weakest prerequisite: ${weakPrereq.label} (mean ${weakPrereq.meanGapIndexPct}/100). `
       : "") +
-    `${summary.linkedCompanyCount} sample companies and ${summary.linkedDealCount} verified deals crosswalked ` +
-    `(${summary.curatedLinkCount} curated links). ` +
-    (zeroCoverage
-      ? `Portfolio gaps (zero match despite addressable sectors): ${zeroCoverage}. `
+    `${summary.linkedCompanyCount} companies, ${summary.linkedDealCount} deals, ${summary.curatedLinkCount} curated links. ` +
+    (portfolioGaps
+      ? `Portfolio gaps (zero match): ${portfolioGaps}. `
       : "") +
-    `Crosswalk uses curated mappings, sector overlap, and keywords — not live patient data or investment advice.`
+    `Not live patient data or investment advice.`
   );
 }

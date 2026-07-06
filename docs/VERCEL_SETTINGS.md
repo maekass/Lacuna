@@ -77,7 +77,7 @@ Set if cron logs show slow runs or 504 timeouts (300s Fluid Compute cap):
 | `SEC_USE_DB_CURSOR` | `true` |
 | `LACUNA_INGEST_RUN_TRACKING` | `true` |
 
-With `SEC_USE_DB_CURSOR=true`, truncated runs resume on the next daily cron.
+With `SEC_USE_DB_CURSOR=true`, truncated runs resume on the next weekly cron.
 
 Inspect runs: `GET /api/cron/sec-ingest/status` (requires `DATABASE_URL`).
 
@@ -88,7 +88,7 @@ Inspect runs: `GET /api/cron/sec-ingest/status` (requires `DATABASE_URL`).
 | Fluid Compute | On |
 | Node.js 24 | `engines` + `.nvmrc` |
 | Production build priority | On |
-| Daily crons | `vercel.json` — 06:00 / 06:30 UTC |
+| Weekly crons | `vercel.json` — Mon 06:00 / 06:30 UTC |
 | `maxDuration` on crons | 300s on both cron routes |
 
 ## Optional (paid / later)

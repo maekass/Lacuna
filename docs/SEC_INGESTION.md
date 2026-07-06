@@ -128,10 +128,10 @@ npm run sec:ingest -- --dry-run   # scan + classify, no DB writes
 
 ## Scheduled runs
 
-Vercel Cron is configured in `vercel.json` (`0 6 * * *` — once daily at 06:00
-UTC → `/api/cron/sec-ingest`). This schedule fits **Hobby** plans (max one run
-per day; actual invocation may drift by up to ~59 minutes). Set `CRON_SECRET` in
-Vercel env; Vercel sends `Authorization: Bearer <CRON_SECRET>`.
+Vercel Cron is configured in `vercel.json` (`0 6 * * 1` — once weekly, Mondays
+06:00 UTC → `/api/cron/sec-ingest`; dataset summary at `30 6 * * 1`). This
+schedule fits **Hobby** plans. Actual invocation may drift by up to ~59 minutes.
+Set `CRON_SECRET` in Vercel env; Vercel sends `Authorization: Bearer <CRON_SECRET>`.
 
 For more frequent polling (e.g. every 6 hours), use **Pro** cron or an external
 scheduler: Render cron, GitHub Actions, or `npm run sec:ingest` on a VPS.
