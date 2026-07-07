@@ -227,7 +227,7 @@ export async function enrichPendingDeal(
     classificationConfidence: classification.confidence,
     classificationKeywords: classification.matchedKeywords.length > 0
       ? classification.matchedKeywords
-      : null,
+      : undefined,
     womensHealthRelevant: classification.womensHealthRelevant,
   };
 
