@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 import { guardDealReviewRequest } from "@/lib/api/dealReviewAccess";
 import { getDataMode } from "@/lib/data/datasetProvider";
 import {
+  getPendingDealByDealId,
+  updatePendingDeal,
+} from "@/lib/ingestion/pendingDeals";
+import { parseReviewerPromotionBody } from "@/lib/ingestion/parseReviewerPromotionBody";
+import {
   canPromoteInRuntime,
   promoteApprovedDeal,
   resolvePromoteTarget,
@@ -31,10 +36,49 @@ export async function POST(
     );
   }
 
+  let body: unknown = {};
+  try {
+    const text = await request.text();
+    if (text.trim()) body = JSON.parse(text);
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+
+  const parsed = parseReviewerPromotionBody(body);
+  const reviewerFields = parsed?.reviewerFields;
+  const approveFirst = parsed?.approveFirst ?? true;
+
   const target = resolvePromoteTarget();
 
   try {
-    const result = await promoteApprovedDeal(dealId, { target });
+    let deal = await getPendingDealByDealId(dealId);
+    if (!deal) {
+      return NextResponse.json({ error: "Deal not found" }, { status: 404 });
+    }
+
+    if (
+      approveFirst && deal.status !== "approved" && deal.status !== "merged"
+    ) {
+      const updated = await updatePendingDeal(dealId, { status: "approved" });
+      if (updated) deal = updated;
+    }
+
+    if (deal.status !== "approved") {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: "Deal must be approved before promotion",
+        },
+        { status: 409 },
+      );
+    }
+
+    const result = await promoteApprovedDeal(dealId, {
+      target,
+      reviewerFields,
+      secondarySourceUrl: reviewerFields?.secondarySourceUrl,
+    });
+
     if (!result.ok) {
       return NextResponse.json(
         { ok: false, error: result.error ?? "Promotion failed", result },
@@ -46,7 +90,11 @@ export async function POST(
       ok: true,
       probe: "pending-deal-promote",
       target,
+      mode,
       result,
+      verifiedDealUrl: result.acquisitionId
+        ? `/deals/${result.acquisitionId}`
+        : undefined,
     }, {
       headers: { "cache-control": "no-store" },
     });

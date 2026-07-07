@@ -176,6 +176,23 @@ export function listPromotionMissingFields(
   return missing;
 }
 
+/** Whether promotion will create new company / acquirer rows. */
+export function getPromotionEntityNeeds(
+  dataset: VerifiedDataset,
+  deal: PendingDealRecord,
+): { needsNewCompany: boolean; needsNewAcquirer: boolean } {
+  return {
+    needsNewCompany: !findCompanyIdByName(
+      dataset,
+      deal.targetName?.trim() ?? null,
+    ),
+    needsNewAcquirer: !findAcquirerIdByName(
+      dataset,
+      deal.acquirerName?.trim() ?? null,
+    ),
+  };
+}
+
 /** Build merge-ready verified rows from one approved staging deal. */
 export function buildPromotionDraft(
   options: BuildPromotionDraftOptions,

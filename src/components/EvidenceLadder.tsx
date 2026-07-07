@@ -53,6 +53,18 @@ export default function EvidenceLadder(
               {run.label}
             </p>
             <p className="mt-1">{run.citation}</p>
+            {run.url
+              ? (
+                <a
+                  href={run.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1 inline-block text-xs font-medium underline underline-offset-2"
+                >
+                  Open source
+                </a>
+              )
+              : null}
           </li>
         ))}
       </ol>

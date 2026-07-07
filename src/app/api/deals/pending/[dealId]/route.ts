@@ -51,6 +51,40 @@ function parsePatchBody(body: unknown): PatchBody | null {
   return patch;
 }
 
+/** Fetch one SEC candidate by `deal_id` (staging — not verified). */
+export async function GET(
+  request: Request,
+  context: { params: Promise<{ dealId: string }> },
+) {
+  const denied = guardDealReviewRequest(request);
+  if (denied) return denied;
+
+  const { dealId } = await context.params;
+  if (!dealId?.trim()) {
+    return NextResponse.json({ error: "dealId is required" }, { status: 400 });
+  }
+
+  try {
+    const item = await getPendingDealByDealId(dealId);
+    if (!item) {
+      return NextResponse.json({ error: "Deal not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({
+      ok: true,
+      probe: "pending-deal-detail",
+      item,
+    }, {
+      headers: { "cache-control": "no-store" },
+    });
+  } catch (error) {
+    const message = error instanceof Error
+      ? error.message
+      : "Failed to load pending deal";
+    return NextResponse.json({ ok: false, error: message }, { status: 500 });
+  }
+}
+
 /** Update review status / notes for one SEC candidate (`deal_id`). */
 export async function PATCH(
   request: Request,
