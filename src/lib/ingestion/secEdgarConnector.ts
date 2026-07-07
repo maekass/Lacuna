@@ -472,4 +472,47 @@ export async function listHealthcareTickers(
   return healthcare;
 }
 
+/** Resolve the primary 8-K document URL from CIK + accession (submissions API). */
+export async function resolvePrimaryFilingDocumentUrl(input: {
+  cik: string;
+  accession: string;
+  fallbackUrl?: string;
+}): Promise<string | null> {
+  const cikNum = Number(input.cik.replace(/\D/g, ""));
+  if (!Number.isFinite(cikNum)) {
+    return input.fallbackUrl?.includes("-index.htm")
+      ? null
+      : input.fallbackUrl ??
+        null;
+  }
+
+  const normalizedTarget = input.accession.replace(/-/g, "").toLowerCase();
+  const url = `${SEC_DATA_BASE}/submissions/CIK${padCik(cikNum)}.json`;
+  const response = await secFetch(url);
+  if (!response.ok) {
+    return input.fallbackUrl?.includes("-index.htm")
+      ? null
+      : input.fallbackUrl ??
+        null;
+  }
+
+  const data = (await response.json()) as SubmissionsJson;
+  const recent = data.filings.recent;
+
+  for (let i = 0; i < recent.accessionNumber.length; i++) {
+    const accession = recent.accessionNumber[i];
+    if (accession.replace(/-/g, "").toLowerCase() !== normalizedTarget) {
+      continue;
+    }
+    const primaryDocument = recent.primaryDocument[i];
+    if (!primaryDocument) continue;
+    return buildFilingUrl(cikNum, accession, primaryDocument);
+  }
+
+  if (input.fallbackUrl && !input.fallbackUrl.includes("-index.htm")) {
+    return input.fallbackUrl;
+  }
+  return null;
+}
+
 export { buildFilingUrl, loadSecTickerMap, padCik, resolveTicker };

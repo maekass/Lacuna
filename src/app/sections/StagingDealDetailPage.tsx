@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import EvidenceLadder from "@/components/EvidenceLadder";
+import EnrichmentDiffPanel from "@/components/EnrichmentDiffPanel";
 import PromotionChecklist from "@/components/PromotionChecklist";
 import PromotionForm from "@/components/PromotionForm";
 import PromotionPreviewDiffPanel from "@/components/PromotionPreviewDiff";
@@ -14,6 +15,7 @@ import {
   PROMOTION_MISSING_FIELD_LABELS,
 } from "@/lib/ingestion/promotionFieldLabels";
 import type { PromotionPreviewResult } from "@/lib/ingestion/promotionPreview";
+import type { EnrichPendingDealResult } from "@/lib/ingestion/enrichPendingDeal";
 import { buildStagingEvidenceLadder } from "@/lib/ingestion/stagingEvidenceLadder";
 import type {
   PendingDealRecord,
@@ -65,6 +67,12 @@ export default function StagingDealDetailPage(
   const [checklistReady, setChecklistReady] = useState(false);
   const [promoting, setPromoting] = useState(false);
   const [promoteSuccess, setPromoteSuccess] = useState<string | null>(null);
+  const [enriching, setEnriching] = useState(false);
+  const [enrichResult, setEnrichResult] = useState<
+    EnrichPendingDealResult | null
+  >(
+    null,
+  );
   const [authRetry, setAuthRetry] = useState(0);
   const previewTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -182,6 +190,35 @@ export default function StagingDealDetailPage(
     }
   };
 
+  const handleEnrich = async () => {
+    if (!deal) return;
+    setEnriching(true);
+    setError(null);
+    setEnrichResult(null);
+    try {
+      const response = await fetch(
+        `/api/deals/pending/${encodeURIComponent(dealId)}/enrich`,
+        { method: "POST" },
+      );
+      const body = await response.json() as {
+        ok?: boolean;
+        result?: EnrichPendingDealResult;
+        error?: string;
+      };
+      if (!response.ok || !body.result) {
+        setError(body.error ?? "Enrichment failed.");
+        return;
+      }
+      setEnrichResult(body.result);
+      setDeal(body.result.after);
+      void refreshPreview(reviewerFields);
+    } catch {
+      setError("Enrichment failed.");
+    } finally {
+      setEnriching(false);
+    }
+  };
+
   const handlePromote = async () => {
     if (!deal || !preview?.ready) return;
     setPromoting(true);
@@ -270,6 +307,8 @@ export default function StagingDealDetailPage(
 
   const canPromote = checklistReady && preview?.ready === true &&
     !previewLoading;
+  const canEnrich = deal.parseQuality === "keyword_only" ||
+    deal.parseQuality === "partial";
 
   return (
     <div className="space-y-8">
@@ -369,6 +408,39 @@ export default function StagingDealDetailPage(
           <PromotionChecklist deal={deal} onReadyChange={setChecklistReady} />
         </div>
       </section>
+
+      {canEnrich
+        ? (
+          <section id="enrich" className="space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 className="text-lg font-semibold text-lacuna-plum">
+                  Pre-review enrichment
+                </h2>
+                <p className="mt-1 text-sm text-lacuna-blue/80">
+                  Fetch the 8-K from SEC EDGAR and propose structured fields.
+                  Human attestation still required to promote.
+                </p>
+              </div>
+              <button
+                type="button"
+                disabled={enriching}
+                onClick={() => void handleEnrich()}
+                className="rounded-md border border-lacuna-plum bg-white px-4 py-2 text-sm font-medium text-lacuna-plum disabled:opacity-50"
+              >
+                {enriching ? "Enriching…" : "Enrich from 8-K"}
+              </button>
+            </div>
+            <EnrichmentDiffPanel
+              changes={enrichResult?.changes ?? []}
+              duplicates={enrichResult?.duplicates ?? []}
+              skipped={enrichResult?.skipped}
+              skipReason={enrichResult?.skipReason}
+              loading={enriching}
+            />
+          </section>
+        )
+        : null}
 
       <section id="promote" className="space-y-4">
         <h2 className="text-lg font-semibold text-lacuna-plum">
