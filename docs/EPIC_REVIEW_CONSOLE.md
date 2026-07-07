@@ -45,9 +45,44 @@ Issue bodies live in `docs/issues/e0-boundaries.md` … `e7-polish.md`.
 
 ---
 
-## Step-by-step PR plan
+## Pathway stack (E4+ — one branch, one PR)
 
-Each PR is **one phase**, merges to `main` in order. Branch naming:
+After **#103 (E0)** and **#105 (E1+E2)** merged, remaining phases use a **single
+stacked branch** instead of per-phase PRs:
+
+| Item           | Value                                                                                    |
+| -------------- | ---------------------------------------------------------------------------------------- |
+| **Branch**     | `feat/review-console-e1-e2-staging`                                                      |
+| **Open PR**    | One PR at a time → `main` (currently [#108](https://github.com/maekass/Lacuna/pull/108)) |
+| **Automation** | `npm run review-console:stack`                                                           |
+
+```bash
+# Before starting a phase (sync with main)
+npm run review-console:stack -- prepare
+
+# … implement E5 / E6 / E7 on feat/review-console-e1-e2-staging …
+
+# Commit, then ship (push + refresh PR)
+npm run review-console:stack -- ship --phase E5
+
+# After the pathway PR merges to main
+npm run review-console:stack -- after-merge
+npm run review-console:stack -- ship --phase E6
+```
+
+Push to the pathway branch **updates the open PR automatically** — no new PR per
+phase.
+
+---
+
+## Step-by-step PR plan (historical E0–E3)
+
+E0–E3 shipped as separate PRs
+([#103](https://github.com/maekass/Lacuna/pull/103),
+[#105](https://github.com/maekass/Lacuna/pull/105),
+[#106](https://github.com/maekass/Lacuna/pull/106)). E4+ uses the pathway stack
+above. Original per-phase branch names:
+
 `feat/review-console-e{N}-{short-name}`.
 
 ### PR 1 — Phase E0: Promotion honesty + data boundaries
@@ -165,7 +200,8 @@ npm run validate:dataset
 
 **Closes:** [#99](https://github.com/maekass/Lacuna/issues/99)
 
-**Status:** 🚧 in progress on `feat/review-console-e4-enrich`
+**Status:** 🚧 on pathway branch →
+[#108](https://github.com/maekass/Lacuna/pull/108)
 
 **Changes:**
 
@@ -268,13 +304,14 @@ flowchart TD
 
 ---
 
-## PR checklist (every PR)
+## PR checklist (pathway stack, E4+)
 
-1. Branch from latest `main`: `git checkout -b feat/review-console-e{N}-…`
-2. Implement scope in epic PR section only
+1. `npm run review-console:stack -- prepare`
+2. Implement scope for one phase on `feat/review-console-e1-e2-staging`
 3. `npm run lint && npm test && npm run validate:dataset && npm run build`
-4. PR body: `Closes #9X` + test plan from issue
-5. Merge to `main` before starting next phase branch
+4. `npm run review-console:stack -- ship --phase EX`
+5. Merge pathway PR to `main`, then
+   `npm run review-console:stack -- after-merge`
 
 ---
 
