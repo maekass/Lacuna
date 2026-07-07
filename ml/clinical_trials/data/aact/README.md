@@ -1,6 +1,7 @@
 # AACT bulk ingest (Tier 2)
 
-[AACT](https://aact.ctti-clinicaltrials.org/) provides a full ClinicalTrials.gov PostgreSQL dump — best for training at scale.
+[AACT](https://aact.ctti-clinicaltrials.org/) provides a full ClinicalTrials.gov
+PostgreSQL dump — best for training at scale.
 
 ## Quick start
 

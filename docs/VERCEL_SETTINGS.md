@@ -83,6 +83,21 @@ With `SEC_USE_DB_CURSOR=true`, truncated runs resume on the next weekly cron.
 
 Inspect runs: `GET /api/cron/sec-ingest/status` (requires `DATABASE_URL`).
 
+### 6. Deployment Checks (couple Vercel to GitHub CI)
+
+**Settings → Git → Deployment Checks**
+
+Enable waiting for required GitHub commit checks before promoting a deployment
+to **Production**. Add:
+
+| Check name | Workflow job | Purpose                                                       |
+| ---------- | ------------ | ------------------------------------------------------------- |
+| `build`    | `build`      | `typecheck` + `next build` (catches Turbopack compile errors) |
+| `ci`       | `ci`         | fmt, lint, dataset validation, tests                          |
+
+Without this, Vercel still builds on every `main` push even when GitHub CI is
+red. Deployment Checks keep the production alias on the last green deployment.
+
 ## Already configured (no action)
 
 | Setting                   | Status                                |

@@ -30,7 +30,7 @@ export const EVIDENCE_CLASSES: readonly EvidenceClass[] = [
 export interface ClassifiableCompany {
   readonly name: string;
   readonly sector: string;
-  readonly description: string;
+  readonly description?: string;
 }
 
 export function isEvidenceClass(value: unknown): value is EvidenceClass {
@@ -226,6 +226,7 @@ const SIGNALS: SignalTable = {
     ["app", 2],
     ["dispensers", 5],
   ],
+  portfolio_investment: [],
 };
 
 // Light sector prior — nudges thin descriptions toward the typical class.
@@ -265,7 +266,9 @@ export function classifyEvidence(company: ClassifiableCompany): EvidenceClass {
   const override = EVIDENCE_OVERRIDES[company.name];
   if (override) return override;
 
-  const haystack = `${company.name} ${company.sector} ${company.description}`
+  const haystack = `${company.name} ${company.sector} ${
+    company.description ?? ""
+  }`
     .toLowerCase();
 
   const scores = new Map<EvidenceClass, number>();

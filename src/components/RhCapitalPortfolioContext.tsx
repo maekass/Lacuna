@@ -122,20 +122,14 @@ export default function RhCapitalPortfolioContext() {
       <ul className="mt-4 space-y-1 text-xs text-lacuna-blue/70">
         {RH_CAPITAL_SOURCES.map((source) => (
           <li key={source.label}>
-            {source.url != null
-              ? (
-                <a
-                  href={source.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline"
-                >
-                  {source.label}
-                </a>
-              )
-              : (
-                source.label
-              )}
+            <a
+              href={source.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline"
+            >
+              {source.label}
+            </a>
             {" — "}
             {source.reference}
           </li>

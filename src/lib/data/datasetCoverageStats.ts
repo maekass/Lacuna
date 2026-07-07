@@ -6,6 +6,7 @@ export interface CoverageDatasetInput {
     id: string;
     sector: string;
     lastKnownValuation?: number;
+    sources?: readonly string[];
   }>;
   acquisitions: ReadonlyArray<{
     targetId: string;
@@ -13,6 +14,7 @@ export interface CoverageDatasetInput {
     announcedDate: string;
     dealValue?: number;
     dealValueNote?: string;
+    source?: string;
   }>;
   acquirers: ReadonlyArray<{ id: string }>;
 }

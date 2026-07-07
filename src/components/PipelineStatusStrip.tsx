@@ -50,7 +50,7 @@ export default function PipelineStatusStrip() {
   }, []);
 
   const pendingCount = sec?.pendingReviewCount;
-  const secRunAt = sec?.latest?.finished_at ?? sec?.latest?.started_at;
+  const secRunAt = sec?.latest?.ended_at ?? sec?.latest?.started_at;
 
   return (
     <div className="rounded-lg border border-lacuna-lavender/35 bg-lacuna-lavender/10 px-4 py-3 text-xs text-lacuna-blue">

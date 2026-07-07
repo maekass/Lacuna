@@ -16,13 +16,13 @@ export interface VerifiedDataset {
     name: string;
     sector: string;
     stage: string;
-    founded: number;
-    hq: string;
-    description: string;
+    founded?: number;
+    hq?: string;
+    description?: string;
     lastKnownValuation?: number;
     valuationSource?: string;
     totalFunding?: number;
-    sources?: string[];
+    sources?: readonly string[];
     /**
      * Research-x-transactions evidence taxonomy. Optional at the raw-data layer:
      * the static JSON carries it for every company, and the DB path is backfilled

@@ -1,12 +1,13 @@
 # Lacuna clinical trials ML (Tier 1)
 
-Offline **scikit-learn** training for ClinicalTrials.gov — separate from M&A models.
+Offline **scikit-learn** training for ClinicalTrials.gov — separate from M&A
+models.
 
 ## Models
 
-| Model | Task | Status |
-|-------|------|--------|
-| **wh-relevance-v1** | Women's health trial relevance (title + condition + interventions + sponsor) | Shipped |
+| Model                   | Task                                                                         | Status                                                    |
+| ----------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------- |
+| **wh-relevance-v1**     | Women's health trial relevance (title + condition + interventions + sponsor) | Shipped                                                   |
 | **termination-risk-v1** | Terminated/withdrawn vs active/completed proxy                               | Experimental — only exported when hold-out ROC-AUC ≥ 0.55 |
 
 Inference runs in the **Next.js app** via exported JSON artifacts in

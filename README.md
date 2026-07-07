@@ -62,14 +62,14 @@ prototype with a curated, source-linked snapshot of women's health M&A (58
 verified deals), rendered as D3 network views and **descriptive** analytics with
 published methodology.
 
-| Claim                   | Reality                                                                                                   |
-| ----------------------- | --------------------------------------------------------------------------------------------------------- |
+| Claim                   | Reality                                                                                                                                            |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Deal data               | Static `dataset.verified.json` v8 — dual scope: medicine & biotech (default) + consumer health (`/consumer`); 150 companies, 59 deals full catalog |
-| Scores & "predictors"   | Deterministic rules and small-_n_ statistics — [MODEL_CARD.md](docs/MODEL_CARD.md)                        |
-| "ML" / TensorFlow       | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app                                 |
-| Server LLM              | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev)                   |
-| Clinical trials panel   | Live ClinicalTrials.gov search; **M&A panels** still use the curated dataset                              |
-| Production intelligence | **No** — not PitchBook, not a data SLA, not investment advice                                             |
+| Scores & "predictors"   | Deterministic rules and small-_n_ statistics — [MODEL_CARD.md](docs/MODEL_CARD.md)                                                                 |
+| "ML" / TensorFlow       | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app                                                                          |
+| Server LLM              | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev)                                                            |
+| Clinical trials panel   | Live ClinicalTrials.gov search; **M&A panels** still use the curated dataset                                                                       |
+| Production intelligence | **No** — not PitchBook, not a data SLA, not investment advice                                                                                      |
 
 Open source under [BSL 1.1](LICENSE) for corp VC diligence workflows, portfolio
 review, and self-hosted exploration. Commercial competitive products need a
@@ -118,9 +118,13 @@ Every analytical panel in the app shows the provenance line above.
 
 ### Verified deal explorer
 
-- **51 medicine & biotech acquisitions** (default Deals workspace) — fertility science, oncology, diagnostics, menopause therapeutics, medtech
-- **8 consumer health acquisitions** ([`/consumer`](https://lacuna-maekass.vercel.app/consumer)) — wearables, wellness apps, consumer digital health
-- **46 fund portfolio investments** (c90–c135) — overlays filter by workspace scope
+- **51 medicine & biotech acquisitions** (default Deals workspace) — fertility
+  science, oncology, diagnostics, menopause therapeutics, medtech
+- **8 consumer health acquisitions**
+  ([`/consumer`](https://lacuna-maekass.vercel.app/consumer)) — wearables,
+  wellness apps, consumer digital health
+- **46 fund portfolio investments** (c90–c135) — overlays filter by workspace
+  scope
 - Acquirers include Hologic, KKR, Pfizer, Gilead, Boston Scientific, and others
   named in sources
 - Dataset **v8** · `provenance.lastUpdated: 2026-07-06`

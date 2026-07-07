@@ -128,15 +128,17 @@ export default function DataIngestPanel() {
                     <div>
                       <dt className="text-lacuna-blue/70">Last run</dt>
                       <dd className="font-medium text-lacuna-plum">
-                        {sec.latest.finished_at ?? sec.latest.started_at}
+                        {sec.latest.ended_at ?? sec.latest.started_at}
                       </dd>
                     </div>
                   </dl>
                 )
                 : (
                   <p className="mt-3 text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-md px-2 py-1.5">
-                    {sec?.error ??
-                      "No ingest run recorded. Configure DATABASE_URL and run the cron or CLI."}
+                    {sec && !sec.ok && "error" in sec
+                      ? sec.error ??
+                        "No ingest run recorded. Configure DATABASE_URL and run the cron or CLI."
+                      : "No ingest run recorded. Configure DATABASE_URL and run the cron or CLI."}
                   </p>
                 )}
               <CommandBlock command="npm run sec:ingest" />

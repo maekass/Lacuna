@@ -214,7 +214,7 @@ export function scoreGapDimension(
         tier,
       });
     }
-    if (descriptionMatches(company.description, metric.matchKeywords)) {
+    if (descriptionMatches(company.description ?? "", metric.matchKeywords)) {
       const existing = matches.get(company.id);
       const tier = bestMatchTier(existing?.tier ?? null, "keyword");
       matches.set(company.id, {

@@ -28,8 +28,10 @@ Then locally:
 
 ```bash
 vercel env pull .env.local
-npm run db:migrate
+npm run db:restore
 ```
+
+New or replaced Neon database? See [RESTORE_POSTGRES.md](./RESTORE_POSTGRES.md).
 
 See [SEC_INGESTION.md](./SEC_INGESTION.md) for ingest behavior and bounds.
 
@@ -40,8 +42,8 @@ See [SEC_INGESTION.md](./SEC_INGESTION.md) for ingest behavior and bounds.
 
 ## 3. GitHub branch protection
 
-Require the **CI** workflow (`.github/workflows/deno.yml`) before merging to
-`main`:
+Require the **build** and **ci** workflows (`.github/workflows/deno.yml`) before
+merging to `main`:
 
 ```bash
 ./scripts/configure-branch-protection.sh
@@ -49,7 +51,11 @@ Require the **CI** workflow (`.github/workflows/deno.yml`) before merging to
 
 Requires `gh` CLI and admin access on `maekass/Lacuna`. Manual alternative:
 Repository → Settings → Branches → Add rule for `main` → Require status checks →
-select **ci**.
+select **build** and **ci**.
+
+Direct pushes to `main` bypass PR review but still need both checks green once
+protection is enabled. Pair with Vercel **Deployment Checks** (below) so
+production does not promote until GitHub CI passes.
 
 ## 4. Uptime monitoring
 

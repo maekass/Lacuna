@@ -1,4 +1,5 @@
 {
+  // Pin Deno v2.1.4 — matches package.json scripts and GitHub CI.
   "lint": {
     "rules": {
       "tags": [],

@@ -41,7 +41,7 @@ dataset, partial price disclosure, methodology in `docs/`).
 | Styling           | **Tailwind CSS v4** + `globals.css` / `src/lib/theme/palette.ts`                  |
 | Viz               | D3.js v7, Framer Motion                                                           |
 | Server LLM        | Vercel AI Gateway via `src/lib/ai/inference.ts` (AI SDK); see `docs/INFERENCE.md` |
-| Scoring / vectors | simple-statistics on **verified dataset only** — no invented fallbacks |
+| Scoring / vectors | simple-statistics on **verified dataset only** — no invented fallbacks            |
 | HTTP              | Native **`fetch`** (no axios)                                                     |
 | Data              | `src/data/dataset.verified.json` via `getVerifiedDataset()`                       |
 | Future DB         | `LACUNA_DATA_MODE=db` in `src/lib/data/datasetProvider.ts`                        |
@@ -75,6 +75,7 @@ Single source of truth: verified dataset + adapters. Do not reintroduce
 synthetic `maDeals` data. Keep provenance honest (`DataCoverageCard`, docs).
 
 **No invented numbers in production UI.** Do not add:
+
 - Hardcoded TAM/SAM/SOM, payer-mix tables, or sector multiple fallbacks
 - Legacy acquirer panels (`STRATEGIC_ACQUIRERS`) or keyword-derived risk scores
 - `sampleSize: 0` editorial benchmarks merged into valuation outputs
@@ -88,8 +89,13 @@ CI guard: `__tests__/lib/data/noSyntheticData.test.ts`.
 
 ## CI
 
-`npm run lint` · `npm run validate:dataset` · `deno lint` (fix `require-await`,
-`no-unused-vars`) · Datadog needs `DD_API_KEY` / `DD_APP_KEY` secrets
+`npm run lint` · `npm run validate:dataset` · `npm run deno:fmt:check` (Deno
+**v2.1.4** via `npx`; Husky auto-formats on commit) · `npm run deno:lint` (fix
+`require-await`, `no-unused-vars`) · Datadog needs `DD_API_KEY` / `DD_APP_KEY`
+secrets
+
+Use the **Deno** VS Code/Cursor formatter for `src/`, `scripts/`, and
+`__tests__/` — not Prettier (CI enforces `deno fmt`).
 
 Ops runbook: [docs/INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md). Uptime monitors:
 `GET /api/health` only — [docs/MONITORING.md](docs/MONITORING.md). Local

@@ -25,4 +25,4 @@ Every deal links `acquirerId` → `targetId` with public source citations.
 - Commits: `feat:` / `fix:` / `chore:` — short, why-focused
 
 ## CI
-`npm run lint` (ESLint) + `deno lint` (require-await, no-unused-vars) + Vercel deploy preview
+`npm run lint` (ESLint) + `npm run deno:fmt:check` + `npm run deno:lint` (require-await, no-unused-vars) + Vercel deploy preview. Husky auto-runs `deno fmt` on commit; use Deno formatter in editor for `src/` and `scripts/`.

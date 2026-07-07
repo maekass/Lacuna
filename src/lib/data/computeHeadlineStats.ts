@@ -1,11 +1,11 @@
 import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
 import type { VerifiedDataset } from "./datasetTypes";
-import { computeDisclosureStats } from "./datasetCoverageStats";
+import {
+  computeDisclosureStats,
+  type CoverageDatasetInput,
+} from "./datasetCoverageStats";
 
-export interface HeadlineStatsInput {
-  companies: ReadonlyArray<{ sources?: readonly string[] }>;
-  acquirers: ReadonlyArray<{ id: string }>;
-  acquisitions: ReadonlyArray<{ dealValue?: number; source?: string }>;
+export interface HeadlineStatsInput extends CoverageDatasetInput {
   provenance: {
     lastUpdated: string;
     datasetVersion?: string;

@@ -213,10 +213,10 @@ function calculateFinancialFit(
   acquirer: AcquirerProfile,
   empiricalPriors?: EmpiricalPriors,
 ): number {
-  const estimatedValue = deriveCompanyValueEstimate(
-    company,
-    empiricalPriors,
-  ).medianM;
+  const estimate = deriveCompanyValueEstimate(company, empiricalPriors);
+  if (!estimate) return 50;
+
+  const estimatedValue = estimate.medianM;
 
   // Check if in typical deal range
   if (estimatedValue < acquirer.typicalDealSize.min) return 40; // Too small
@@ -262,7 +262,7 @@ interface CompanyValueEstimate {
 function deriveCompanyValueEstimate(
   company: CompanyProfile,
   empiricalPriors?: EmpiricalPriors,
-): CompanyValueEstimate {
+): CompanyValueEstimate | null {
   const bucket = normalizeSectorBucket(company.sector);
   const sectorPrior = empiricalPriors?.sectorPriors.get(bucket);
   const fundingM = company.fundingTotal / 1_000_000;

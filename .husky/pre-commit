@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+set -e
+
+# Auto-format with the same Deno version as CI (package.json scripts).
+npm run deno:fmt
+
+# Re-stage files Deno may have reformatted (already tracked in git).
+git diff --name-only | while IFS= read -r file; do
+  [ -n "$file" ] && git add "$file"
+done
+
+npm run deno:fmt:check
