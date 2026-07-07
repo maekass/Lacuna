@@ -142,6 +142,8 @@ npm run validate:dataset
 
 **Closes:** [#98](https://github.com/maekass/Lacuna/issues/98)
 
+**Status:** ✅ shipped to `main` in commit `2d56a49` (2026-07-07).
+
 **Changes:**
 
 1. `/deals#review` tabbed layout: M&A queue | Funding | Import | Pipeline.
