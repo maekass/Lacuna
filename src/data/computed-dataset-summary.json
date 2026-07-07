@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-02T00:00:00.000Z",
+  "generatedAt": "2026-07-06T00:00:00.000Z",
   "model": "computeHeadlineStats/v1",
   "provenance": {
-    "lastUpdated": "2026-07-02",
-    "datasetVersion": "v7"
+    "lastUpdated": "2026-07-06",
+    "datasetVersion": "v8"
   },
   "headline": {
     "companiesInNetwork": 150,
@@ -13,8 +13,8 @@
     "disclosedValueMillions": 140254,
     "disclosedValueBillionsLabel": "$140.3B",
     "uniqueSourceCitations": 465,
-    "lastUpdated": "2026-07-02",
-    "datasetVersion": "v7"
+    "lastUpdated": "2026-07-06",
+    "datasetVersion": "v8"
   },
   "disclosure": {
     "dealsTotal": 59,
