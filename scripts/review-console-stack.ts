@@ -13,6 +13,9 @@
  */
 
 import { execSync } from "node:child_process";
+import { unlinkSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import process from "node:process";
 
 /** Long-lived pathway branch — all E4+ phases commit here (not per-phase branches). */
@@ -147,6 +150,16 @@ export function pushPathwayBranch(): void {
   console.log(`✓ pushed ${PATHWAY_BRANCH}`);
 }
 
+function withBodyFile(body: string, fn: (bodyPath: string) => void): void {
+  const bodyPath = join(tmpdir(), `lacuna-pr-body-${Date.now()}.md`);
+  writeFileSync(bodyPath, body, "utf8");
+  try {
+    fn(bodyPath);
+  } finally {
+    unlinkSync(bodyPath);
+  }
+}
+
 /** Create or refresh the open pathway PR for the given phase. */
 export function ensurePathwayPr(phase: string): void {
   if (!hasGhCli()) {
@@ -155,6 +168,7 @@ export function ensurePathwayPr(phase: string): void {
   }
 
   const meta = PHASES[phase];
+  const body = buildPrBody(phase);
   const existing = run(
     `gh pr list --head ${PATHWAY_BRANCH} --state open --json number --jq '.[0].number'`,
     { allowFail: true },
@@ -162,21 +176,25 @@ export function ensurePathwayPr(phase: string): void {
 
   if (existing) {
     console.log(`Open PR #${existing} — push updates the diff automatically.`);
-    runInherit(
-      `gh pr edit ${existing} --title ${JSON.stringify(meta.prTitle)} --body ${
-        JSON.stringify(buildPrBody(phase))
-      }`,
-    );
+    withBodyFile(body, (bodyPath) => {
+      runInherit(
+        `gh pr edit ${existing} --title ${
+          JSON.stringify(meta.prTitle)
+        } --body-file ${JSON.stringify(bodyPath)}`,
+      );
+    });
     const url = run(`gh pr view ${existing} --json url --jq .url`);
     console.log(`✓ refreshed PR #${existing}: ${url}`);
     return;
   }
 
-  runInherit(
-    `gh pr create --head ${PATHWAY_BRANCH} --base ${BASE_BRANCH} --title ${
-      JSON.stringify(meta.prTitle)
-    } --body ${JSON.stringify(buildPrBody(phase))}`,
-  );
+  withBodyFile(body, (bodyPath) => {
+    runInherit(
+      `gh pr create --head ${PATHWAY_BRANCH} --base ${BASE_BRANCH} --title ${
+        JSON.stringify(meta.prTitle)
+      } --body-file ${JSON.stringify(bodyPath)}`,
+    );
+  });
   const url = run(
     `gh pr list --head ${PATHWAY_BRANCH} --state open --json url --jq '.[0].url'`,
   );
