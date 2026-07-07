@@ -1,7 +1,7 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import PromotionChecklist from "@/components/PromotionChecklist";
 import ReviewAccessGate from "@/components/ReviewAccessGate";
 import type {
   PendingDealRecord,
@@ -19,12 +19,6 @@ interface PendingDealsResponse {
     reviewableTotal: number;
   };
   error?: string;
-}
-
-interface ApproveResponse {
-  ok?: boolean;
-  error?: string;
-  promotion?: { ok?: boolean; result?: { acquisitionId?: string } };
 }
 
 function confidenceClass(confidence: string): string {
@@ -46,15 +40,12 @@ function PendingDealCard({
   deal,
   busy,
   onReview,
-  onPromote,
 }: {
   deal: PendingDealRecord;
   busy: boolean;
   onReview: (dealId: string, status: PendingDealStatus) => void;
-  onPromote: (dealId: string) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
-  const [promoteReady, setPromoteReady] = useState(false);
 
   return (
     <article className="rounded-lg border border-lacuna-lavender/30 bg-white p-4">
@@ -95,6 +86,12 @@ function PendingDealCard({
           </div>
         </div>
         <div className="flex shrink-0 flex-wrap gap-2">
+          <Link
+            href={`/deals/staging/${encodeURIComponent(deal.dealId)}`}
+            className="rounded-md border border-lacuna-plum/30 bg-lacuna-plum/10 px-2.5 py-1.5 text-xs font-medium text-lacuna-plum hover:bg-lacuna-plum/20"
+          >
+            Open dossier
+          </Link>
           <a
             href={deal.filingUrl}
             target="_blank"
@@ -110,17 +107,6 @@ function PendingDealCard({
             className="rounded-md bg-lacuna-plum px-2.5 py-1.5 text-xs font-medium text-white hover:bg-lacuna-blue disabled:opacity-50"
           >
             Approve
-          </button>
-          <button
-            type="button"
-            disabled={busy || !promoteReady}
-            onClick={() => onPromote(deal.dealId)}
-            title={promoteReady
-              ? undefined
-              : "Complete promotion checklist first"}
-            className="rounded-md border border-lacuna-plum/30 bg-lacuna-plum/10 px-2.5 py-1.5 text-xs font-medium text-lacuna-plum hover:bg-lacuna-plum/20 disabled:opacity-50"
-          >
-            Approve &amp; add to verified
           </button>
           <button
             type="button"
@@ -161,14 +147,6 @@ function PendingDealCard({
           </div>
         )
         : null}
-
-      <div className="mt-4">
-        <PromotionChecklist
-          key={deal.dealId}
-          deal={deal}
-          onReadyChange={setPromoteReady}
-        />
-      </div>
     </article>
   );
 }
@@ -228,53 +206,6 @@ export default function DealReviewQueue({
     };
   }, [refreshToken, externalRefresh]);
 
-  const handlePromote = useCallback(async (dealId: string) => {
-    setActionDealId(dealId);
-    try {
-      const approveResponse = await fetch(
-        `/api/deals/pending/${encodeURIComponent(dealId)}`,
-        {
-          method: "PATCH",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ status: "approved" }),
-        },
-      );
-      const approveBody = await approveResponse.json() as ApproveResponse;
-      if (!approveResponse.ok || !approveBody.ok) {
-        setError(approveBody.error ?? "Approve failed.");
-        return;
-      }
-
-      if (approveBody.promotion?.ok) {
-        setItems((prev) => prev.filter((d) => d.dealId !== dealId));
-        setReviewableTotal((n) => Math.max(0, n - 1));
-        setError(null);
-        return;
-      }
-
-      const promoteResponse = await fetch(
-        `/api/deals/pending/${encodeURIComponent(dealId)}/promote`,
-        { method: "POST" },
-      );
-      const body = await promoteResponse.json() as {
-        ok?: boolean;
-        error?: string;
-      };
-      if (!promoteResponse.ok || !body.ok) {
-        setError(body.error ?? "Promotion failed.");
-        return;
-      }
-
-      setItems((prev) => prev.filter((d) => d.dealId !== dealId));
-      setReviewableTotal((n) => Math.max(0, n - 1));
-      setError(null);
-    } catch {
-      setError("Promotion failed.");
-    } finally {
-      setActionDealId(null);
-    }
-  }, []);
-
   const handleReview = useCallback(async (
     dealId: string,
     status: PendingDealStatus,
@@ -312,8 +243,8 @@ export default function DealReviewQueue({
           </h3>
           <p className="mt-1 max-w-2xl text-sm text-lacuna-blue">
             Staging rows from <code className="text-xs">lacuna_deals</code>{" "}
-            — approve candidates, then promote into verified dataset (JSON
-            locally or Postgres on Vercel db mode). Not live until promoted.
+            — open a dossier to review evidence, attest promotion fields, and
+            merge into verified JSON.
           </p>
         </div>
         <button
@@ -370,7 +301,6 @@ export default function DealReviewQueue({
                 deal={deal}
                 busy={actionDealId === deal.dealId}
                 onReview={handleReview}
-                onPromote={handlePromote}
               />
             ))}
           </div>
