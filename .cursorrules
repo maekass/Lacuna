@@ -20,6 +20,7 @@ Every deal links `acquirerId` → `targetId` with public source citations.
 ## Key rules
 - No `async` without `await` (Deno CI fails)
 - No synthetic `maDeals` data — only verified dataset
+- No invented TAM/SAM, sector-multiple fallbacks, or keyword risk scores in UI — show "insufficient data" instead
 - Components ~300 lines max; prefer `interface` for shared shapes
 - Commits: `feat:` / `fix:` / `chore:` — short, why-focused
 

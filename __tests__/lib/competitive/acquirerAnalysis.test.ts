@@ -71,19 +71,19 @@ describe("analyzeVelocity", () => {
     const velocity = analyzeVelocity(amazon, [
       {
         acquirerId: "acquirer-amazon",
-        companyId: "c1",
+        companyId: "c24",
         year: 2020,
         value: 100,
       },
       {
         acquirerId: "acquirer-amazon",
-        companyId: "c2",
+        companyId: "c39",
         year: 2021,
         value: 200,
       },
       {
         acquirerId: "acquirer-amazon",
-        companyId: "c1",
+        companyId: "c24",
         year: 2022,
         value: 150,
       },
@@ -105,8 +105,8 @@ describe("analyzeMarketStructure", () => {
     const structure = analyzeMarketStructure(
       [teladoc, amazon],
       [
-        { acquirerId: "acquirer-teladoc", companyId: "c1", year: 2020 },
-        { acquirerId: "acquirer-amazon", companyId: "c2", year: 2021 },
+        { acquirerId: "acquirer-teladoc", companyId: "c24", year: 2020 },
+        { acquirerId: "acquirer-amazon", companyId: "c39", year: 2021 },
       ],
       companies,
     );
@@ -123,13 +123,13 @@ describe("compareAcquirerTypes", () => {
       [
         {
           acquirerId: "acquirer-teladoc",
-          companyId: "c1",
+          companyId: "c24",
           year: 2020,
           value: 100,
         },
         {
           acquirerId: "acquirer-amazon",
-          companyId: "c2",
+          companyId: "c39",
           year: 2021,
           value: 200,
         },

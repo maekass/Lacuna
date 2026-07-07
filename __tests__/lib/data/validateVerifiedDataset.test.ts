@@ -78,12 +78,12 @@ describe("validateVerifiedDataset", () => {
 
   it("warns on corporate acquirer id (warning)", () => {
     const corporate = structuredClone(minimalVerifiedDataset);
-    const corporateAcquirer = full.companies.find((c) => c.id === "c2");
+    const corporateAcquirer = full.companies.find((c) => c.id === "c39");
     if (!corporateAcquirer) {
-      throw new Error("fixture c2 missing from verified dataset");
+      throw new Error("fixture c39 missing from verified dataset");
     }
     corporate.companies.push(corporateAcquirer);
-    corporate.acquisitions[0].acquirerId = "c2";
+    corporate.acquisitions[0].acquirerId = "c39";
     const report = validateVerifiedDataset(corporate);
     expect(report.warnings.some((w) => w.code === "deal.corporateAcquirer"))
       .toBe(true);

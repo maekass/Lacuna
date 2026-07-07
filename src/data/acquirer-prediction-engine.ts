@@ -58,7 +58,7 @@ export interface AcquirerMatch {
   culturalFit: number; // 0-100
   financialFit: number; // 0-100
   marketFit: number; // 0-100
-  estimatedValue: { min: number; max: number; median: number };
+  estimatedValue: { min: number; max: number; median: number } | null;
   valueRationale: string;
   competitiveThreat: "high" | "medium" | "low";
   keyRationale: string[];
@@ -71,7 +71,7 @@ export interface CompetitiveAnalysis {
   winProbability: number;
   competitiveThreatLevel: "high" | "medium" | "low";
   estimatedBiddingWarPremium: number; // percentage
-  fairValueEstimate: { min: number; max: number; median: number };
+  fairValueEstimate: { min: number; max: number; median: number } | null;
   timelineEstimate: { months: number; triggers: string[] };
   sectorComparables: ComparableDeal[];
 }
@@ -87,209 +87,9 @@ export interface ComparableDeal {
 }
 
 /**
- * @deprecated Legacy illustrative panel — use `buildAcquirerProfilesFromVerified`
- * with verified acquirers and acquisitions instead.
+ * @deprecated Removed — use `buildAcquirerProfilesFromVerified` with verified dataset only.
  */
-export const STRATEGIC_ACQUIRERS: AcquirerProfile[] = [
-  {
-    id: "cvs-health",
-    name: "CVS Health",
-    type: "strategic_healthcare",
-    marketCap: 130,
-    cashOnHand: 12,
-    acquisitionHistory: [
-      {
-        targetName: "Signify Health",
-        targetSector: "home_health",
-        dealValue: 8000,
-        dealDate: "2022-09",
-        stageAtAcquisition: "growth",
-        strategicRationale: "Expand primary care services",
-      },
-    ],
-    sectorFocus: ["primary_care", "digital_health", "womens_health"],
-    stagePreference: ["series_b", "growth", "late_stage"],
-    typicalDealSize: { min: 500, max: 10000 },
-    recentActivity: "high",
-    strategicPriorities: [
-      "primary care expansion",
-      "digital health",
-      "women health services",
-    ],
-    integrationStyle: "platform",
-  },
-  {
-    id: "unitedhealth",
-    name: "UnitedHealth Group",
-    type: "strategic_healthcare",
-    marketCap: 450,
-    cashOnHand: 25,
-    acquisitionHistory: [
-      {
-        targetName: "Change Healthcare",
-        targetSector: "healthcare_it",
-        dealValue: 13000,
-        dealDate: "2022-07",
-        stageAtAcquisition: "public",
-        strategicRationale: "Healthcare data and analytics",
-      },
-      {
-        targetName: "LHC Group",
-        targetSector: "home_health",
-        dealValue: 5400,
-        dealDate: "2022-03",
-        stageAtAcquisition: "public",
-        strategicRationale: "Home health expansion",
-      },
-    ],
-    sectorFocus: [
-      "healthcare_it",
-      "home_health",
-      "digital_health",
-      "womens_health",
-    ],
-    stagePreference: ["growth", "late_stage", "public"],
-    typicalDealSize: { min: 1000, max: 15000 },
-    recentActivity: "high",
-    strategicPriorities: [
-      "Optum platform",
-      "digital health",
-      "home-based care",
-    ],
-    integrationStyle: "hands_on",
-  },
-  {
-    id: "teladoc",
-    name: "Teladoc Health",
-    type: "strategic_tech",
-    marketCap: 2.5,
-    acquisitionHistory: [
-      {
-        targetName: "Livongo",
-        targetSector: "digital_therapeutics",
-        dealValue: 18500,
-        dealDate: "2020-08",
-        stageAtAcquisition: "public",
-        strategicRationale: "Chronic care management platform",
-      },
-    ],
-    sectorFocus: ["telehealth", "digital_therapeutics", "chronic_care"],
-    stagePreference: ["series_b", "growth"],
-    typicalDealSize: { min: 100, max: 2000 },
-    recentActivity: "medium",
-    strategicPriorities: [
-      "whole person care",
-      "AI integration",
-      "chronic conditions",
-    ],
-    integrationStyle: "platform",
-  },
-  {
-    id: "ro-health",
-    name: "Ro Health",
-    type: "strategic_tech",
-    marketCap: 7,
-    acquisitionHistory: [
-      {
-        targetName: "Modern Fertility",
-        targetSector: "fertility",
-        dealValue: 150,
-        dealDate: "2021-05",
-        stageAtAcquisition: "series_a",
-        strategicRationale: "Women health expansion",
-      },
-    ],
-    sectorFocus: ["telehealth", "fertility", "mens_health", "womens_health"],
-    stagePreference: ["seed", "series_a", "series_b"],
-    typicalDealSize: { min: 50, max: 500 },
-    recentActivity: "medium",
-    strategicPriorities: [
-      "platform expansion",
-      "women health",
-      "fertility services",
-    ],
-    integrationStyle: "hands_off",
-  },
-  {
-    id: "progyny",
-    name: "Progyny",
-    type: "strategic_healthcare",
-    marketCap: 4,
-    acquisitionHistory: [],
-    sectorFocus: ["fertility", "womens_health", "benefits_management"],
-    stagePreference: ["series_b", "growth"],
-    typicalDealSize: { min: 50, max: 300 },
-    recentActivity: "low",
-    strategicPriorities: [
-      "fertility benefits",
-      "employer solutions",
-      "platform scale",
-    ],
-    integrationStyle: "hands_on",
-  },
-  {
-    id: "fertility-lifespan",
-    name: "Fertility Lifespan",
-    type: "pe",
-    acquisitionHistory: [
-      {
-        targetName: "IVF Florida",
-        targetSector: "fertility",
-        dealValue: 200,
-        dealDate: "2019-06",
-        stageAtAcquisition: "growth",
-        strategicRationale: "Clinic consolidation",
-      },
-    ],
-    sectorFocus: ["fertility", "womens_health"],
-    stagePreference: ["growth", "late_stage"],
-    typicalDealSize: { min: 100, max: 500 },
-    recentActivity: "medium",
-    strategicPriorities: [
-      "clinic consolidation",
-      "platform building",
-      "geographic expansion",
-    ],
-    integrationStyle: "hands_on",
-  },
-  {
-    id: "warburg-pincus",
-    name: "Warburg Pincus",
-    type: "pe",
-    acquisitionHistory: [
-      {
-        targetName: "Syneos Health",
-        targetSector: "cro",
-        dealValue: 7100,
-        dealDate: "2017-08",
-        stageAtAcquisition: "public",
-        strategicRationale: "Healthcare services platform",
-      },
-    ],
-    sectorFocus: ["healthcare_services", "digital_health", "womens_health"],
-    stagePreference: ["growth", "late_stage"],
-    typicalDealSize: { min: 500, max: 5000 },
-    recentActivity: "high",
-    strategicPriorities: [
-      "healthcare services",
-      "platform investing",
-      "digital health",
-    ],
-    integrationStyle: "hands_off",
-  },
-];
-
-// Sector-specific valuation multiples
-const SECTOR_MULTIPLES: Record<string, number> = {
-  "fertility": 3.5,
-  "maternal_health": 4.2,
-  "mental_health": 3.8,
-  "gynecology": 4.0,
-  "telehealth": 3.2,
-  "digital_therapeutics": 2.8,
-  "diagnostics": 3.0,
-  "wearables": 2.5,
-};
+export const STRATEGIC_ACQUIRERS: AcquirerProfile[] = [];
 
 /**
  * Calculate acquirer-company match score
@@ -354,7 +154,7 @@ export function calculateMatchScore(
     financialFit,
     marketFit,
     estimatedValue,
-    valueRationale: estimatedValue.rationale || "",
+    valueRationale: estimatedValue?.rationale ?? "Insufficient disclosed comparables in verified dataset",
     competitiveThreat: "medium", // Default, calculated separately
     keyRationale,
   };
@@ -496,12 +296,7 @@ function deriveCompanyValueEstimate(
     };
   }
 
-  const fallbackMultiple = SECTOR_MULTIPLES[company.sector] ?? 3.0;
-  return {
-    medianM: fundingM > 0 ? fundingM * fallbackMultiple : fallbackMultiple * 10,
-    rationale:
-      `Heuristic ${fallbackMultiple}x funding multiple — insufficient disclosed comparables in verified dataset`,
-  };
+  return null;
 }
 
 function estimateValue(
@@ -509,8 +304,9 @@ function estimateValue(
   acquirer: AcquirerProfile,
   matchScore: number,
   empiricalPriors?: EmpiricalPriors,
-): { min: number; max: number; median: number; rationale?: string } {
+): { min: number; max: number; median: number; rationale?: string } | null {
   const base = deriveCompanyValueEstimate(company, empiricalPriors);
+  if (!base) return null;
 
   const qualityAdjustment = (matchScore - 50) / 100;
   const adjustedValue = base.medianM * (1 + qualityAdjustment * 0.25);
@@ -619,10 +415,13 @@ export function analyzeCompetitiveDynamics(
     ? 15
     : 0;
 
-  // Fair value estimate (average of top 3)
-  const top3Values = topMatches.slice(0, 3).map((m) => m.estimatedValue.median);
-  const fairValueMedian = top3Values.reduce((a, b) => a + b, 0) /
-    top3Values.length;
+  // Fair value estimate (average of top 3 with disclosed comparables)
+  const top3Values = topMatches
+    .map((m) => m.estimatedValue?.median)
+    .filter((v): v is number => typeof v === "number");
+  const fairValueMedian = top3Values.length > 0
+    ? top3Values.reduce((a, b) => a + b, 0) / top3Values.length
+    : null;
 
   // Timeline estimate
   const timelineEstimate = estimateTimeline(company, topMatches[0]);
@@ -639,11 +438,13 @@ export function analyzeCompetitiveDynamics(
     winProbability,
     competitiveThreatLevel,
     estimatedBiddingWarPremium,
-    fairValueEstimate: {
-      min: Math.round(fairValueMedian * 0.75),
-      max: Math.round(fairValueMedian * 1.35),
-      median: Math.round(fairValueMedian),
-    },
+    fairValueEstimate: fairValueMedian !== null
+      ? {
+        min: Math.round(fairValueMedian * 0.75),
+        max: Math.round(fairValueMedian * 1.35),
+        median: Math.round(fairValueMedian),
+      }
+      : null,
     timelineEstimate,
     sectorComparables,
   };

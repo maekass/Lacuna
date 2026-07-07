@@ -7,10 +7,8 @@ import {
   CompanySimilarity,
   CompetitiveAnalysisDashboard,
   DealFlowChart,
-  ExitPredictor,
   ForceNetwork,
   NetworkAnalysisHonest,
-  QuantValuationPanel,
   SurvivalCurve,
   ValidationTracker,
   ValuationMatrix,
@@ -120,14 +118,6 @@ export default function DealsPage() {
         <ValuationMatrix />
       </MotionSection>
 
-      <MotionSection id="quant-valuation" delay={0.17} className={SECTION}>
-        <SectionHeader
-          title="Quant valuation & exit-likelihood (heuristic)"
-          description="Rule-based valuation anchored on verified comparable deals, with burden-capital gap signal per sector. Not a trained model — not investment advice."
-        />
-        <QuantValuationPanel />
-      </MotionSection>
-
       <MotionSection id="network-analysis" delay={0.2} className={SECTION}>
         <SectionHeader
           title="A Closer Look at the Network"
@@ -158,7 +148,6 @@ export default function DealsPage() {
           description="Which women's health companies share similar profiles? Explore natural groupings and see how they compare."
         />
         <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2">
-          <ExitPredictor />
           <CompanySimilarity />
         </div>
         <ClusteringAnalysis />

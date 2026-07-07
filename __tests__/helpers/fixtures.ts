@@ -12,15 +12,15 @@ const full = verifiedJson as VerifiedDataset;
 /** Minimal slice of the real verified JSON — not invented companies or deals. */
 export const minimalVerifiedDataset: VerifiedDataset = {
   provenance: full.provenance,
-  companies: full.companies.filter((c) => c.id === "c1" || c.id === "c2"),
-  acquirers: full.acquirers.filter((a) => a.id === "acquirer-ro"),
-  acquisitions: full.acquisitions.filter((d) => d.id === "deal2"),
+  companies: full.companies.filter((c) => c.id === "c24" || c.id === "c39"),
+  acquirers: full.acquirers.filter((a) => a.id === "acquirer-hologic"),
+  acquisitions: full.acquisitions.filter((d) => d.id === "deal7"),
 };
 
 const company = minimalVerifiedDataset.companies[0];
-const teladocAcquirer = full.acquirers.find((a) => a.id === "acquirer-teladoc");
-if (!teladocAcquirer) {
-  throw new Error("fixture acquirer-teladoc missing from verified dataset");
+const hologicAcquirer = full.acquirers.find((a) => a.id === "acquirer-hologic");
+if (!hologicAcquirer) {
+  throw new Error("fixture acquirer-hologic missing from verified dataset");
 }
 const deal = minimalVerifiedDataset.acquisitions[0];
 
@@ -47,11 +47,11 @@ export const sampleCompanyRow: CompanyRow = {
 };
 
 export const sampleAcquirerRow: AcquirerRow = {
-  id: teladocAcquirer.id,
-  name: teladocAcquirer.name,
-  ticker: teladocAcquirer.ticker ?? null,
-  sector: teladocAcquirer.sector,
-  hq: teladocAcquirer.hq,
+  id: hologicAcquirer.id,
+  name: hologicAcquirer.name,
+  ticker: hologicAcquirer.ticker ?? null,
+  sector: hologicAcquirer.sector,
+  hq: hologicAcquirer.hq,
 };
 
 export const sampleAcquisitionRow: AcquisitionRow = {

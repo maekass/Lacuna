@@ -7,13 +7,13 @@ import {
 
 describe("growthRateProvider", () => {
   it("returns company-specific CAGR when companyId is known (success)", () => {
-    const rate = getCompanyGrowthRate("c1");
-    expect(rate).toBe(9.8);
+    const rate = getCompanyGrowthRate("c31");
+    expect(rate).toBe(25.4);
   });
 
   it("returns sector median for fertility slug (success)", () => {
     const rate = getSectorGrowthRate("fertility");
-    expect(rate).toBe(9.8);
+    expect(rate).toBe(12.1);
   });
 
   it("maps digital_therapeutics to Digital Health sector median (success)", () => {
@@ -24,11 +24,11 @@ describe("growthRateProvider", () => {
 
   it("prefers company CAGR over sector when both available (success)", () => {
     const resolved = resolveGrowthRate({
-      companyId: "c1",
-      sector: "Fertility",
+      companyId: "c31",
+      sector: "Maternal Health",
     });
     expect(resolved.source).toBe("company");
-    expect(resolved.growthRate).toBe(9.8);
+    expect(resolved.growthRate).toBe(25.4);
     expect(resolved.confidence).toBe("high");
   });
 

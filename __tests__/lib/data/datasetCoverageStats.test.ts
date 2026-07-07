@@ -53,9 +53,10 @@ describe("computeDisclosureStats", () => {
 describe("computeSectorDealCounts", () => {
   it("groups deals by target company sector (success)", () => {
     const sectors = computeSectorDealCounts(minimalVerifiedDataset);
-    expect(sectors.some((s) => s.sector === "Fertility" && s.deals === 1)).toBe(
-      true,
-    );
+    expect(sectors.some((s) => s.sector === "Breast Health" && s.deals === 1))
+      .toBe(
+        true,
+      );
     expect(sectors.every((s) => s.companies >= 0)).toBe(true);
   });
 

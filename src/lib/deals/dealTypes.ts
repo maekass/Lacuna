@@ -1,7 +1,10 @@
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 
-/** Canonical demo deal — Modern Fertility / Ro (2021). Used in tests and hub CTA. */
-export const FEATURED_DEAL_ID = "deal2";
+/** Canonical demo deal — Biotheranostics / Hologic (2021). Used in tests and hub CTA. */
+export const FEATURED_DEAL_ID = "deal7";
+
+/** Consumer health workspace featured deal — Teladoc / Livongo (2020). */
+export const CONSUMER_FEATURED_DEAL_ID = "deal1";
 
 /** Optional fields present on curated records in `dataset.verified.json`. */
 export interface DealAcquisitionExtras {

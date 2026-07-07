@@ -1,4 +1,5 @@
 export {
+  CONSUMER_FEATURED_DEAL_ID,
   FEATURED_DEAL_ID,
   type ComparableDealSummary,
   type DealAcquisitionDetail,

@@ -10,15 +10,15 @@ import {
 describe("deal spine", () => {
   const dataset = getStaticVerifiedDataset();
 
-  it("resolves featured Modern Fertility deal by id", () => {
+  it("resolves featured Biotheranostics deal by id", () => {
     const deal = getDealById(dataset, FEATURED_DEAL_ID);
     expect(deal).not.toBeNull();
-    expect(deal?.acquisition.targetName).toBe("Modern Fertility");
-    expect(deal?.acquisition.acquirerName).toBe("Ro");
-    expect(deal?.target.sector).toBe("Fertility");
-    expect(deal?.acquirer.id).toBe("acquirer-ro");
-    expect(deal?.acquisition.dealValue).toBe(225);
-    expect(deal?.acquisition.source).toContain("Fierce Healthcare");
+    expect(deal?.acquisition.targetName).toBe("Biotheranostics");
+    expect(deal?.acquisition.acquirerName).toBe("Hologic");
+    expect(deal?.target.sector).toBe("Breast Health");
+    expect(deal?.acquirer.id).toBe("acquirer-hologic");
+    expect(deal?.acquisition.dealValue).toBe(230);
+    expect(deal?.acquisition.source).toContain("Hologic");
   });
 
   it("getFeaturedDeal returns pinned demo deal", () => {
@@ -30,10 +30,10 @@ describe("deal spine", () => {
     expect(getDealById(dataset, "deal-nonexistent")).toBeNull();
   });
 
-  it("lists fertility-sector comparables within year window", () => {
+  it("lists breast-health-sector comparables within year window", () => {
     const comparables = listComparableDeals(dataset, FEATURED_DEAL_ID);
     expect(comparables.length).toBeGreaterThan(0);
-    expect(comparables.every((c) => c.sector === "Fertility")).toBe(true);
+    expect(comparables.every((c) => c.sector === "Breast Health")).toBe(true);
     expect(comparables.every((c) => c.id !== FEATURED_DEAL_ID)).toBe(true);
   });
 

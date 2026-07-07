@@ -26,7 +26,8 @@ Future DB toggle: `LACUNA_DATA_MODE=db` in `src/lib/data/datasetProvider.ts`. Op
 - Functional React + hooks; `interface` for shared shapes; JSDoc on exported lib fns
 
 ## Don't
-- Synthetic `maDeals` data
+- Synthetic `maDeals` data or invented TAM/SAM/sector-multiple fallbacks in UI
+- Keyword-derived risk scores presented as measured data
 - `axios` / `styled-jsx` / Postgres unless asked
 - `async` without `await` (Deno CI fails)
 - `any` type; components over ~300 lines

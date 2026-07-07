@@ -21,10 +21,10 @@ describe("mapRowsToVerifiedDataset", () => {
         ? sampleProvenanceRow.last_updated.toISOString().slice(0, 10)
         : String(sampleProvenanceRow.last_updated).slice(0, 10),
     );
-    expect(dataset.companies[0].lastKnownValuation).toBe(225);
-    expect(dataset.acquirers[0].ticker).toBe("TDOC");
-    expect(dataset.acquisitions[0].targetId).toBe("c1");
-    expect(dataset.acquisitions[0].dealValue).toBe(225);
+    expect(dataset.companies[0].lastKnownValuation).toBe(230);
+    expect(dataset.acquirers[0].ticker).toBe("HOLX");
+    expect(dataset.acquisitions[0].targetId).toBe("c24");
+    expect(dataset.acquisitions[0].dealValue).toBe(230);
   });
 
   it("handles empty entity arrays (edge)", () => {

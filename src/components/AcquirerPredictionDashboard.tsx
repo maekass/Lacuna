@@ -186,7 +186,9 @@ export default function AcquirerPredictionDashboard() {
               </div>
               <div className="text-center">
                 <div className="text-lg font-semibold text-lacuna-plum">
-                  {formatCurrency(selectedAnalysis.fairValueEstimate.median)}
+                  {selectedAnalysis.fairValueEstimate
+                    ? formatCurrency(selectedAnalysis.fairValueEstimate.median)
+                    : "—"}
                 </div>
                 <div className="text-xs text-lacuna-text-muted">
                   Estimated Fair Value
@@ -211,10 +213,12 @@ export default function AcquirerPredictionDashboard() {
                 </div>
                 <div className="text-xs text-green-600">
                   Match Score:{" "}
-                  {selectedAnalysis.topMatches[0].matchScore}/100 • Estimated
-                  Value: {formatCurrency(
-                    selectedAnalysis.topMatches[0].estimatedValue.median,
-                  )}
+                  {selectedAnalysis.topMatches[0].matchScore}/100
+                  {selectedAnalysis.topMatches[0].estimatedValue
+                    ? ` • Estimated Value: ${formatCurrency(
+                      selectedAnalysis.topMatches[0].estimatedValue.median,
+                    )}`
+                    : " • Value: insufficient disclosed comparables"}
                 </div>
               </div>
             )}
@@ -227,7 +231,7 @@ export default function AcquirerPredictionDashboard() {
                   topAcquirer: selectedAnalysis.topMatches[0]?.acquirer.name ||
                     "N/A",
                   matchScore: selectedAnalysis.topMatches[0]?.matchScore || 0,
-                  estimatedValue: selectedAnalysis.fairValueEstimate.median,
+                  estimatedValue: selectedAnalysis.fairValueEstimate?.median ?? 0,
                   competitiveThreat: selectedAnalysis.competitiveThreatLevel,
                 }}
               />
@@ -313,7 +317,9 @@ export default function AcquirerPredictionDashboard() {
                     </div>
                     <div className="p-2 bg-lacuna-surface-muted rounded">
                       <div className="text-sm font-semibold text-green-600">
-                        {formatCurrency(match.estimatedValue.median)}
+                        {match.estimatedValue
+                          ? formatCurrency(match.estimatedValue.median)
+                          : "—"}
                       </div>
                       <div className="text-xs text-lacuna-text-muted">
                         Estimated Value
@@ -448,7 +454,9 @@ export default function AcquirerPredictionDashboard() {
                       {analysis.topMatches[0]?.matchScore || 0}
                     </td>
                     <td className="px-4 py-3 text-right font-medium">
-                      {formatCurrency(analysis.fairValueEstimate.median)}
+                      {analysis.fairValueEstimate
+                        ? formatCurrency(analysis.fairValueEstimate.median)
+                        : "—"}
                     </td>
                     <td className="px-4 py-3 text-center">
                       <span

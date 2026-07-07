@@ -18,9 +18,9 @@ describe("buildVerifiedDerivedData", () => {
     );
     const nodes = getVerifiedNetworkNodes();
 
-    expect(nodes.some((n) => n.id === "c1" && n.type === "target")).toBe(true);
+    expect(nodes.some((n) => n.id === "c24" && n.type === "target")).toBe(true);
     expect(
-      nodes.some((n) => n.id === "acquirer-ro" && n.type === "acquirer"),
+      nodes.some((n) => n.id === "acquirer-hologic" && n.type === "acquirer"),
     ).toBe(true);
   });
 
@@ -34,7 +34,7 @@ describe("buildVerifiedDerivedData", () => {
     const { getVerifiedNetworkLinks } = buildVerifiedDerivedData(dataset);
     const links = getVerifiedNetworkLinks();
 
-    expect(links.find((l) => l.value === 225)).toBeDefined();
+    expect(links.find((l) => l.value === 230)).toBeDefined();
     expect(links.find((l) => l.value === -1)).toBeDefined();
   });
 
@@ -42,7 +42,7 @@ describe("buildVerifiedDerivedData", () => {
     const { getVerifiedTotalDealValue } = buildVerifiedDerivedData(
       minimalVerifiedDataset,
     );
-    expect(getVerifiedTotalDealValue()).toBe(225);
+    expect(getVerifiedTotalDealValue()).toBe(230);
   });
 
   it("getVerifiedDealsByYear aggregates by announcement year (success)", () => {

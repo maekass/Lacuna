@@ -41,7 +41,7 @@ dataset, partial price disclosure, methodology in `docs/`).
 | Styling           | **Tailwind CSS v4** + `globals.css` / `src/lib/theme/palette.ts`                  |
 | Viz               | D3.js v7, Framer Motion                                                           |
 | Server LLM        | Vercel AI Gateway via `src/lib/ai/inference.ts` (AI SDK); see `docs/INFERENCE.md` |
-| Scoring / vectors | simple-statistics (heuristics — not trained models)                               |
+| Scoring / vectors | simple-statistics on **verified dataset only** — no invented fallbacks |
 | HTTP              | Native **`fetch`** (no axios)                                                     |
 | Data              | `src/data/dataset.verified.json` via `getVerifiedDataset()`                       |
 | Future DB         | `LACUNA_DATA_MODE=db` in `src/lib/data/datasetProvider.ts`                        |
@@ -73,6 +73,18 @@ logic · `src/data` JSON · `@/*` → `src/*`
 
 Single source of truth: verified dataset + adapters. Do not reintroduce
 synthetic `maDeals` data. Keep provenance honest (`DataCoverageCard`, docs).
+
+**No invented numbers in production UI.** Do not add:
+- Hardcoded TAM/SAM/SOM, payer-mix tables, or sector multiple fallbacks
+- Legacy acquirer panels (`STRATEGIC_ACQUIRERS`) or keyword-derived risk scores
+- `sampleSize: 0` editorial benchmarks merged into valuation outputs
+
+When verified data is insufficient, show empty state / “insufficient disclosed
+data” — never silently substitute PitchBook/Rock Health rule-of-thumb values.
+Cited external research datasets (WEF, HLTH survey, payer benchmarks) must keep
+`cited_*` provenance and stay separate from `dataset.verified.json`.
+
+CI guard: `__tests__/lib/data/noSyntheticData.test.ts`.
 
 ## CI
 

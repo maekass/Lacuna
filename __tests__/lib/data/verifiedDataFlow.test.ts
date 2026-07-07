@@ -46,9 +46,9 @@ describe("buildAcquirerProfilesFromVerified", () => {
     );
 
     expect(profiles.length).toBe(derived.verifiedAcquirers.length);
-    const teladoc = profiles.find((p) => p.name.includes("Teladoc"));
-    expect(teladoc?.acquisitionHistory.length).toBeGreaterThan(0);
-    expect(teladoc?.acquisitionHistory[0].targetName).toBeTruthy();
+    const hologic = profiles.find((p) => p.name.includes("Hologic"));
+    expect(hologic?.acquisitionHistory.length).toBeGreaterThan(0);
+    expect(hologic?.acquisitionHistory[0].targetName).toBeTruthy();
   });
 });
 
@@ -65,8 +65,8 @@ describe("verifiedComparables", () => {
 
 describe("formatCuratedDatasetProvenanceLine", () => {
   it("substitutes live deal count", () => {
-    expect(formatCuratedDatasetProvenanceLine(59)).toContain(
-      "n=59 verified deals",
+    expect(formatCuratedDatasetProvenanceLine(51)).toContain(
+      "n=51 verified deals",
     );
   });
 });

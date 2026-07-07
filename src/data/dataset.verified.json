@@ -1,7 +1,7 @@
 {
   "provenance": {
-    "lastUpdated": "2026-07-02",
-    "datasetVersion": "v7",
+    "lastUpdated": "2026-07-06",
+    "datasetVersion": "v8",
     "sources": [
       "SEC EDGAR filings (acquisitions, 8-K/10-K)",
       "Crunchbase (funding rounds, where cited)",
@@ -57,12 +57,12 @@
       "Hologic acquisition history now spans 7 deals (Biotheranostics, Endomagnetics, Gynesonics, Acessa Health, Bolder Surgical, Focal Therapeutics, Faxitron Bioptics, SuperSonic Imagine) — largest disclosed women's health serial acquirer in dataset",
       "Dataset v5 expands to 58 acquisitions with menopause therapeutics (Bayer/KaNDy, Astellas/Ogeda), large-cap diagnostics (Hologic/Gen-Probe $3.7B), global fertility clinic consolidation (KKR/IVI-RMA $3.25B, BPEA EQT/Indira IVF $657M, IVI-RMA/Eugin NA), and women's health-focused acquirer expansions (Organon/Dermavant $1.2B, Hims & Hers/Apostrophe)",
       "2026-06-11: Added 14 Amboy Street Ventures portfolio companies with press-verified founding, stage, and funding data (totalFunding omitted where no source states a total), plus the Gennev / Unified Women's Healthcare acquisition (2022, terms not disclosed).",
-      "2026-07-02: Corrected deal4 (Lemonaid Health acquired by 23andMe for $400M per SEC filing, not Amazon). Added disclosed deal values for Alydia Health ($240M), Apostrophe (~$190M), and cited pre-deal valuations for Maven/Kindbody strategic investments."
+      "2026-07-02: Corrected deal4 (Lemonaid Health acquired by 23andMe for $400M per SEC filing, not Amazon). Added disclosed deal values for Alydia Health ($240M), Apostrophe (~$190M), and cited pre-deal valuations for Maven/Kindbody strategic investments.",
+      "2026-07-06: Dual-scope dataset — medicine & biotech (default product) and consumer health (separate /consumer workspace). Full catalog retained; each workspace filters in memory."
     ],
     "purpose": "Educational demonstration dataset for portfolio project. Not for commercial investment decisions.",
     "disclaimer": "Data compiled from public sources for educational visualization. Verify independently before any commercial use."
-  }
-,
+  },
   "companies": [
     {
       "id": "c1",

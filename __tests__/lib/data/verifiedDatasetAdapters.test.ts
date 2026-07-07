@@ -13,9 +13,9 @@ const derived = buildVerifiedDerivedData(minimalVerifiedDataset);
 describe("verifiedDatasetAdapters", () => {
   it("getVerifiedCompaniesForAnalysis maps company fields (success)", () => {
     const companies = getVerifiedCompaniesForAnalysis(derived);
-    expect(companies[0].id).toBe("c1");
+    expect(companies[0].id).toBe("c24");
     expect(companies[0].employees).toBe(0);
-    expect(companies[0].valuation).toBe(225);
+    expect(companies[0].valuation).toBe(230);
   });
 
   it("getVerifiedAcquisitionsForAnalysis normalizes deal types (success)", () => {
@@ -26,16 +26,16 @@ describe("verifiedDatasetAdapters", () => {
   it("getVerifiedCompetitiveAnalysisData builds acquirer graph inputs (success)", () => {
     const { acquirers, companies, acquisitions } =
       getVerifiedCompetitiveAnalysisData(derived);
-    expect(acquirers.some((a) => a.id === "acquirer-ro")).toBe(true);
-    expect(companies.some((c) => c.id === "c1")).toBe(true);
+    expect(acquirers.some((a) => a.id === "acquirer-hologic")).toBe(true);
+    expect(companies.some((c) => c.id === "c24")).toBe(true);
     expect(acquisitions).toHaveLength(1);
   });
 
   it("getVerifiedNetworkGraph returns nodes and edges (success)", () => {
     const { nodes, edges } = getVerifiedNetworkGraph(derived);
     expect(nodes.length).toBeGreaterThan(0);
-    expect(edges[0].source).toBe("acquirer-ro");
-    expect(edges[0].target).toBe("c1");
+    expect(edges[0].source).toBe("acquirer-hologic");
+    expect(edges[0].target).toBe("c24");
   });
 
   it("handles empty dataset without throwing (edge)", () => {

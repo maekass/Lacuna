@@ -22,7 +22,7 @@ describe("dataset verified API", () => {
 
     expect(response.status).toBe(200);
     expect(body.companies).toHaveLength(2);
-    expect(body.acquisitions[0].id).toBe("deal2");
+    expect(body.acquisitions[0].id).toBe("deal7");
   });
 
   it("GET returns paginated slice when limit is provided (success)", async () => {
@@ -81,8 +81,8 @@ describe("deals.csv export API", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("content-type")).toContain("text/csv");
     expect(csv.split("\n")[0]).toContain("announcedDate");
-    expect(csv).toContain('"Modern Fertility"');
-    expect(csv).toContain("225");
+    expect(csv).toContain('"Biotheranostics"');
+    expect(csv).toContain("230");
   });
 
   it("GET handles missing optional deal fields (edge)", async () => {
@@ -103,7 +103,7 @@ describe("deals.csv export API", () => {
     const { GET } = await import("@/app/api/export/deals.csv/route");
     const csv = await (await GET()).text();
     const dataRow = csv.split("\n")[1];
-    expect(dataRow).toContain('"deal2"');
+    expect(dataRow).toContain('"deal7"');
     expect(dataRow).not.toContain("undefined");
   });
 });

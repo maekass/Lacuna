@@ -13,6 +13,10 @@ const FORBIDDEN_IN_SRC = [
   /\bBig Pharma Co\b/,
   /expectedScaling:\s*[\d.]+/,
   /actualScaling:\s*[\d.]+/,
+  /\bgenerateMarketSizing\b/,
+  /\bfounder-pattern-analyzer\b/,
+  /sampleSize:\s*0,\s*\n\s*reimbursementCorrelation/,
+  /totalAddressableMarket:\s*base\.tam/,
 ];
 
 function walk(dir: string): string[] {
@@ -22,6 +26,7 @@ function walk(dir: string): string[] {
     const full = path.join(dir, entry);
     const stat = statSync(full);
     if (stat.isDirectory()) {
+      if (entry === "_quarantine") continue;
       files.push(...walk(full));
     } else if (/\.(ts|tsx)$/.test(entry)) {
       files.push(full);
@@ -55,11 +60,11 @@ describe("test fixtures use verified JSON slice", () => {
     const { minimalVerifiedDataset } = await import("../../helpers/fixtures");
     expect(
       minimalVerifiedDataset.companies.some((c) =>
-        c.name === "Modern Fertility"
+        c.name === "Biotheranostics"
       ),
     ).toBe(true);
     expect(minimalVerifiedDataset.acquisitions[0].targetName).toBe(
-      "Modern Fertility",
+      "Biotheranostics",
     );
     expect(minimalVerifiedDataset.provenance.sources.length).toBeGreaterThan(0);
   });

@@ -46,7 +46,7 @@ export default function IntelligencePage() {
       >
         <SectionHeader
           title="Reimbursement & Commercial Due Diligence"
-          description="Investment-grade reimbursement risk scoring, TAM/SAM/SOM market sizing, and competitive intelligence for life sciences M&A."
+          description="Verified deal context by sector from the curated dataset — no invented TAM, payer mix, or keyword risk scores."
         />
         <InvestmentGradeReimbursementIntel />
       </MotionSection>

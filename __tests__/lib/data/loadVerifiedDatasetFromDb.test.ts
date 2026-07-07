@@ -40,7 +40,7 @@ describe("loadVerifiedDatasetFromDb", () => {
     );
     const dataset = await loadVerifiedDatasetFromDb();
 
-    expect(dataset.companies[0].name).toBe("Modern Fertility");
+    expect(dataset.companies[0].name).toBe("Biotheranostics");
     expect(mockQuery).toHaveBeenCalledTimes(4);
   });
 

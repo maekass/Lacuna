@@ -9,7 +9,7 @@ SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified de
 </p>
 
 <blockquote align="center">
-  <p><strong>Curated dataset · n=59 verified deals · 135 companies (inc. 46 fund portfolio investments) · Not live market data · Scores are descriptive, not forecasts.</strong></p>
+  <p><strong>Curated dataset · n=51 verified deals · 99 companies (inc. 32 med/biotech fund portfolio holdings) · Not live market data · Scores are descriptive, not forecasts.</strong></p>
 </blockquote>
 
 <p align="center">
@@ -64,7 +64,7 @@ published methodology.
 
 | Claim                   | Reality                                                                                                   |
 | ----------------------- | --------------------------------------------------------------------------------------------------------- |
-| Deal data               | Static `dataset.verified.json` v7 (manual verification from SEC, press, filings; 135 companies, 59 deals) |
+| Deal data               | Static `dataset.verified.json` v8 (manual verification from SEC, press, filings; 99 companies, 51 deals — medicine & biotech scope) |
 | Scores & "predictors"   | Deterministic rules and small-_n_ statistics — [MODEL_CARD.md](docs/MODEL_CARD.md)                        |
 | "ML" / TensorFlow       | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app                                 |
 | Server LLM              | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev)                   |
@@ -118,14 +118,12 @@ Every analytical panel in the app shows the provenance line above.
 
 ### Verified deal explorer
 
-- **59 verified acquisitions** (fertility, oncology, diagnostics, menopause,
-  pelvic health, precision medicine)
-- **46 active fund portfolio investments** (c90–c135) — wearables, therapeutics,
-  consumer health, medtech, biotech; fund metadata includes `portfolioFunds` and
-  `portfolioInitialInvestment` per company
+- **51 verified acquisitions** (fertility science, oncology, diagnostics, menopause therapeutics, medtech, precision medicine)
+- **32 med/biotech fund portfolio holdings** (c91–c135 subset) — therapeutics, diagnostics, medtech, biotech; fund metadata includes `portfolioFunds` and
+  `portfolioInitialInvestment` per company. Consumer health and wearables removed from scope (v8).
 - Acquirers include Hologic, KKR, Pfizer, Gilead, Boston Scientific, and others
   named in sources
-- Dataset **v7** · `provenance.lastUpdated: 2026-06-23`
+- Dataset **v8** · `provenance.lastUpdated: 2026-07-06`
 - Sources: SEC EDGAR, press releases, investor relations, fund portfolio listing
   (see [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md))
 

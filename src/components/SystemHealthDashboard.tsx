@@ -62,8 +62,10 @@ function useHealthChecks() {
 
       try {
         if (check.endpoint === "__build_check__") {
-          // Simulated build check - in production this would check deployment status
-          await new Promise((r) => setTimeout(r, 100));
+          const response = await fetch("/api/health", { method: "GET" });
+          if (!response.ok) {
+            throw new Error(`Health check failed: ${response.status}`);
+          }
           return {
             ...check,
             status: "healthy",
