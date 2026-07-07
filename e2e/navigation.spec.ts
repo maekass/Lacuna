@@ -11,6 +11,12 @@ test.describe("Lacuna workspace navigation", () => {
     await expect(page.getByRole("heading", { name: /Deals workspace/i }))
       .toBeVisible();
 
+    await page.getByRole("link", { name: "Consumer health", exact: true }).click();
+    await expect(page).toHaveURL(/\/consumer$/);
+    await expect(
+      page.getByRole("heading", { name: /Consumer health workspace/i }),
+    ).toBeVisible();
+
     await page.getByRole("link", { name: "Research", exact: true }).click();
     await expect(page).toHaveURL(/\/research$/);
 

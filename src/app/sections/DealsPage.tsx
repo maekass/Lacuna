@@ -15,6 +15,7 @@ import {
   WhiteSpaceAnalysis,
 } from "@/app/lazyDashboard";
 import DataCoverageCard from "@/components/DataCoverageCard";
+import DatasetScopeBanner from "@/components/DatasetScopeBanner";
 import DataIngestPanel from "@/components/DataIngestPanel";
 import DealEmpowermentContext from "@/components/DealEmpowermentContext";
 import DealReviewQueue from "@/components/DealReviewQueue";
@@ -63,10 +64,19 @@ export default function DealsPage() {
       <header className="mb-10">
         <h1 className="text-3xl font-bold text-lacuna-plum">Deals workspace</h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
-          Verified M&A network, deal flow, valuations, and acquirer landscape —
-          descriptive analytics from public sources only.
+          Medicine and biotech M&A — therapeutics, diagnostics, medtech, and
+          clinical women&apos;s health. Descriptive analytics from public sources
+          only.
         </p>
       </header>
+
+      <MotionSection className="mb-8">
+        <DatasetScopeBanner
+          scope="med_biotech"
+          companyCount={verifiedCompanies.length}
+          dealCount={verifiedAcquisitions.length}
+        />
+      </MotionSection>
 
       <MotionSection id="data-coverage" className={SECTION}>
         <DataCoverageCard />

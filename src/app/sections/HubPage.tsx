@@ -297,7 +297,14 @@ export default function HubPage() {
               {ws.slug === "deals"
                 ? (
                   <span className="mt-3 inline-block text-[11px] font-medium text-lacuna-plum/60">
-                    {verifiedAcquisitions.length} verified deals in dataset
+                    {verifiedAcquisitions.length} medicine &amp; biotech deals
+                  </span>
+                )
+                : null}
+              {ws.slug === "consumer"
+                ? (
+                  <span className="mt-3 inline-block text-[11px] font-medium text-lacuna-plum/60">
+                    Separate consumer health track
                   </span>
                 )
                 : null}

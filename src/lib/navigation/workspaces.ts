@@ -14,6 +14,20 @@ export interface Workspace {
 
 export const WORKSPACES: Workspace[] = [
   {
+    slug: "consumer",
+    href: "/consumer",
+    label: "Consumer health",
+    description:
+      "Wearables, wellness apps, and consumer digital health M&A — separate from medicine & biotech.",
+    tags: ["wearables", "wellness", "digital health"],
+    sections: [
+      { id: "coverage", label: "Coverage" },
+      { id: "network", label: "Network" },
+      { id: "activity", label: "Activity" },
+      { id: "matrix", label: "Matrix" },
+    ],
+  },
+  {
     slug: "deals",
     href: "/deals",
     label: "Deals",

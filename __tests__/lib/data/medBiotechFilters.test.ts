@@ -2,14 +2,17 @@ import { describe, expect, it } from "vitest";
 import verifiedJson from "@/data/dataset.verified.json";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import {
+  applyConsumerHealthScope,
+  applyDatasetScope,
   applyMedBiotechScope,
+  isConsumerHealthRelevantCompany,
   isMedBiotechRelevantCompany,
 } from "@/lib/data/medBiotechFilters";
 
-const dataset = verifiedJson as VerifiedDataset;
+const full = verifiedJson as VerifiedDataset;
 
 describe("medBiotechFilters", () => {
-  it("excludes wearables and consumer wellness brands", () => {
+  it("excludes wearables and consumer wellness brands from med/biotech scope", () => {
     expect(
       isMedBiotechRelevantCompany({
         name: "Oura",
@@ -18,30 +21,37 @@ describe("medBiotechFilters", () => {
       }),
     ).toBe(false);
     expect(
-      isMedBiotechRelevantCompany({
-        name: "Everlywell",
-        sector: "General Wellness",
+      isConsumerHealthRelevantCompany({
+        name: "Oura",
+        sector: "Wearables",
         evidenceClass: "consumer_wellness",
       }),
-    ).toBe(false);
+    ).toBe(true);
   });
 
-  it("keeps biotech portfolio holdings and precision medicine deals", () => {
-    const hera = dataset.companies.find((c) => c.name === "Hera Biotech");
-    const flatiron = dataset.companies.find((c) => c.name === "Flatiron Health");
+  it("keeps biotech portfolio holdings in med/biotech scope", () => {
+    const hera = full.companies.find((c) => c.name === "Hera Biotech");
     expect(hera).toBeDefined();
-    expect(flatiron).toBeDefined();
     expect(isMedBiotechRelevantCompany(hera!)).toBe(true);
-    expect(isMedBiotechRelevantCompany(flatiron!)).toBe(true);
+    expect(isConsumerHealthRelevantCompany(hera!)).toBe(false);
   });
 
-  it("dataset on disk is already scoped to medicine and biotech", () => {
-    const scoped = applyMedBiotechScope(dataset);
-    expect(scoped.companies).toHaveLength(dataset.companies.length);
-    expect(scoped.acquisitions).toHaveLength(dataset.acquisitions.length);
-    expect(dataset.companies.some((c) => c.sector === "Wearables")).toBe(false);
-    expect(
-      dataset.companies.some((c) => c.evidenceClass === "consumer_wellness"),
-    ).toBe(false);
+  it("partitions the full catalog without overlap", () => {
+    const med = applyMedBiotechScope(full);
+    const consumer = applyConsumerHealthScope(full);
+    expect(med.companies).toHaveLength(99);
+    expect(consumer.companies).toHaveLength(51);
+    expect(med.companies.length + consumer.companies.length).toBe(
+      full.companies.length,
+    );
+    expect(med.acquisitions).toHaveLength(51);
+    expect(consumer.acquisitions).toHaveLength(8);
+  });
+
+  it("applyDatasetScope matches dedicated helpers", () => {
+    expect(applyDatasetScope(full, "med_biotech").companies.length).toBe(99);
+    expect(applyDatasetScope(full, "consumer_health").companies.length).toBe(
+      51,
+    );
   });
 });

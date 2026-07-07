@@ -9,7 +9,7 @@ SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified de
 </p>
 
 <blockquote align="center">
-  <p><strong>Curated dataset · n=51 verified deals · 99 companies (inc. 32 med/biotech fund portfolio holdings) · Not live market data · Scores are descriptive, not forecasts.</strong></p>
+  <p><strong>Curated dataset · n=51 med/biotech deals (default) + consumer health workspace · 150 companies total · Not live market data.</strong></p>
 </blockquote>
 
 <p align="center">
@@ -64,7 +64,7 @@ published methodology.
 
 | Claim                   | Reality                                                                                                   |
 | ----------------------- | --------------------------------------------------------------------------------------------------------- |
-| Deal data               | Static `dataset.verified.json` v8 (manual verification from SEC, press, filings; 99 companies, 51 deals — medicine & biotech scope) |
+| Deal data               | Static `dataset.verified.json` v8 — dual scope: medicine & biotech (default) + consumer health (`/consumer`); 150 companies, 59 deals full catalog |
 | Scores & "predictors"   | Deterministic rules and small-_n_ statistics — [MODEL_CARD.md](docs/MODEL_CARD.md)                        |
 | "ML" / TensorFlow       | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app                                 |
 | Server LLM              | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev)                   |
@@ -118,9 +118,9 @@ Every analytical panel in the app shows the provenance line above.
 
 ### Verified deal explorer
 
-- **51 verified acquisitions** (fertility science, oncology, diagnostics, menopause therapeutics, medtech, precision medicine)
-- **32 med/biotech fund portfolio holdings** (c91–c135 subset) — therapeutics, diagnostics, medtech, biotech; fund metadata includes `portfolioFunds` and
-  `portfolioInitialInvestment` per company. Consumer health and wearables removed from scope (v8).
+- **51 medicine & biotech acquisitions** (default Deals workspace) — fertility science, oncology, diagnostics, menopause therapeutics, medtech
+- **8 consumer health acquisitions** ([`/consumer`](https://lacuna-maekass.vercel.app/consumer)) — wearables, wellness apps, consumer digital health
+- **46 fund portfolio investments** (c90–c135) — overlays filter by workspace scope
 - Acquirers include Hologic, KKR, Pfizer, Gilead, Boston Scientific, and others
   named in sources
 - Dataset **v8** · `provenance.lastUpdated: 2026-07-06`
