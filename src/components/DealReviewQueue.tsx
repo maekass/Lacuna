@@ -249,7 +249,7 @@ export default function DealReviewQueue({
           <p className="mt-2 text-xs text-lacuna-blue/70">
             Guide:{" "}
             <a
-              href="/docs/REVIEWER_PROMOTION_GUIDE.md"
+              href="https://github.com/maekass/Lacuna/blob/main/docs/REVIEWER_PROMOTION_GUIDE.md"
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium underline underline-offset-2"
