@@ -232,6 +232,35 @@ export async function countPendingDeals(): Promise<number> {
   return Number(rows[0]?.count ?? 0);
 }
 
+export interface OldestPendingDealSnapshot {
+  dealId: string;
+  ingestedAt: string;
+}
+
+/** Oldest candidate in `pending` or `pending_review` (for SLA chips). */
+export async function getOldestPendingDeal(): Promise<
+  OldestPendingDealSnapshot | null
+> {
+  const rows = await query<{ deal_id: string; ingested_at: Date | string }>(
+    `SELECT deal_id, ingested_at
+     FROM lacuna_deals
+     WHERE status = ANY($1::text[])
+     ORDER BY ingested_at ASC
+     LIMIT 1`,
+    [REVIEWABLE_STATUSES],
+  );
+
+  const row = rows[0];
+  if (!row) return null;
+
+  return {
+    dealId: row.deal_id,
+    ingestedAt: row.ingested_at instanceof Date
+      ? row.ingested_at.toISOString()
+      : new Date(row.ingested_at).toISOString(),
+  };
+}
+
 /**
  * Updates review status and/or notes for a candidate by `deal_id`.
  * Returns null when no row matches.
