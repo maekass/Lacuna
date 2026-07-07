@@ -6,6 +6,7 @@ vi.mock("@/lib/ingestion/ingestRunState", () => ({
 
 vi.mock("@/lib/ingestion/pendingDeals", () => ({
   countPendingDeals: vi.fn(),
+  getOldestPendingDeal: vi.fn(),
 }));
 
 describe("buildSecIngestStatus", () => {
@@ -18,7 +19,9 @@ describe("buildSecIngestStatus", () => {
     const { getLatestIngestRun } = await import(
       "@/lib/ingestion/ingestRunState"
     );
-    const { countPendingDeals } = await import("@/lib/ingestion/pendingDeals");
+    const { countPendingDeals, getOldestPendingDeal } = await import(
+      "@/lib/ingestion/pendingDeals"
+    );
     vi.mocked(getLatestIngestRun).mockResolvedValue({
       id: 1,
       status: "success",
@@ -29,6 +32,7 @@ describe("buildSecIngestStatus", () => {
       error_message: null,
     });
     vi.mocked(countPendingDeals).mockResolvedValue(5);
+    vi.mocked(getOldestPendingDeal).mockResolvedValue(null);
 
     const { buildSecIngestStatusPayload } = await import(
       "@/lib/ingestion/buildSecIngestStatus"
@@ -37,7 +41,7 @@ describe("buildSecIngestStatus", () => {
 
     expect(payload.ok).toBe(true);
     expect(payload.pendingReviewCount).toBe(5);
-    expect(payload.reviewQueuePath).toBe("/deals#data-pipelines");
+    expect(payload.reviewQueuePath).toBe("/deals#review");
   });
 });
 
@@ -53,9 +57,10 @@ describe("GET /api/ingest/sec/status", () => {
         ok: true,
         latest: null,
         pendingReviewCount: 2,
+        oldestPendingIngestedAt: null,
         cronPath: "/api/cron/sec-ingest",
         cli: "npm run sec:ingest",
-        reviewQueuePath: "/deals#data-pipelines",
+        reviewQueuePath: "/deals#review",
         pendingApiPath: "/api/deals/pending",
       }),
     }));
