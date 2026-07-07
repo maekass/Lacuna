@@ -21,6 +21,7 @@ export default function PipelineStatusStrip() {
   const [health, setHealth] = useState<HealthPayload | null>(null);
   const [sec, setSec] = useState<SecIngestStatusPayload | null>(null);
   const [loading, setLoading] = useState(true);
+  const [nowMs, setNowMs] = useState<number>(() => Date.now());
 
   useEffect(() => {
     let cancelled = false;
@@ -50,7 +51,24 @@ export default function PipelineStatusStrip() {
   }, []);
 
   const pendingCount = sec?.pendingReviewCount;
+  const oldestPendingIngestedAt = sec?.oldestPendingIngestedAt ?? null;
   const secRunAt = sec?.latest?.ended_at ?? sec?.latest?.started_at;
+
+  useEffect(() => {
+    const interval = setInterval(() => setNowMs(Date.now()), 60_000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const oldestLabel = (() => {
+    if (!oldestPendingIngestedAt) return null;
+    const oldest = new Date(oldestPendingIngestedAt).getTime();
+    if (!Number.isFinite(oldest)) return null;
+    const diffMs = nowMs - oldest;
+    const hours = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60)));
+    if (hours < 48) return `${hours}h`;
+    const days = Math.max(0, Math.floor(hours / 24));
+    return `${days}d`;
+  })();
 
   return (
     <div className="rounded-lg border border-lacuna-lavender/35 bg-lacuna-lavender/10 px-4 py-3 text-xs text-lacuna-blue">
@@ -86,7 +104,8 @@ export default function PipelineStatusStrip() {
               href="/deals#review"
               className="font-medium text-lacuna-plum underline underline-offset-2 hover:text-lacuna-blue"
             >
-              {pendingCount} pending review
+              {pendingCount}{" "}
+              pending review{oldestLabel ? ` · oldest ${oldestLabel}` : ""}
             </Link>
           )
           : null}
