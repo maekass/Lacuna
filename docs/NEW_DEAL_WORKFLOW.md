@@ -167,6 +167,10 @@ curated release.
 | **Vercel** | Cron `/api/cron/promote-approved` when `LACUNA_DATA_MODE=db` |
 
 Set `LACUNA_AUTO_PROMOTE=true` to promote on Approve via the review API.
+Auto-promote still requires **reviewer-attested** profile fields (sector, HQ,
+founded year, secondary source) — see
+[DATA_BOUNDARIES.md](./DATA_BOUNDARIES.md). Keyword or LLM classification alone
+never satisfies promotion gates.
 
 ---
 

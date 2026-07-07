@@ -82,7 +82,7 @@ export async function runFormDIngest(
       Number.isFinite(parseConcurrency) && parseConcurrency > 0
         ? parseConcurrency
         : 2,
-      async (hit) => fetchAndParseFormD(hit),
+      (hit) => fetchAndParseFormD(hit),
     )
   ).filter((p): p is ParsedFormD => p != null);
 

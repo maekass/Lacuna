@@ -52,7 +52,7 @@ export async function POST(request: Request) {
 }
 
 /** Clear review session cookie. */
-export async function DELETE() {
+export function DELETE() {
   const response = NextResponse.json({ ok: true });
   response.cookies.set(REVIEW_SESSION_COOKIE, "", {
     httpOnly: true,

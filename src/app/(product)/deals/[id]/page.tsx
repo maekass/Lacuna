@@ -10,7 +10,7 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   const dataset = getStaticVerifiedDataset();
   return dataset.acquisitions.map((a) => ({ id: a.id }));
 }

@@ -24,11 +24,13 @@ deals only).
 | **ClinicalTrials.gov** | Live API + ML ingest        | Trials research — **not** deal records                     |
 | **NIH RePORTER**       | Company enrichment API      | Grant context — **not** deal ingestion                     |
 | **Free API batch**     | `download:free-apis`        | Export folder; no unified deal queue                       |
-| **Review UI**          | **Missing**                 | `countPendingDeals()` exists; no queue page or promote API |
-| **Hub changelog**      | **Missing**                 | No “N deals since last visit”                              |
+| **Review UI**          | `/deals#data-pipelines`     | Queue, import, funding panel, promote API ✅               |
+| **Hub changelog**      | Hub strip                   | Verified growth changelog ✅                               |
 
-**Bottom line:** Ingest **candidates** exist; **promotion UX** and **transparent
-changelog** do not.
+**Bottom line:** Candidate ingest and review UX exist; **Phase E** adds staging
+dossier, promotion preview, and unified Review Console — see
+[EPIC_REVIEW_CONSOLE.md](./EPIC_REVIEW_CONSOLE.md) (issues
+[#95](https://github.com/maekass/Lacuna/issues/95)–[#102](https://github.com/maekass/Lacuna/issues/102)).
 
 ---
 
@@ -205,6 +207,16 @@ Use everywhere (hub, Framer, exports):
 2. Run **Phase A** (review queue) in parallel if `DATABASE_URL` is set
 3. **Phase B–C** after first successful manual promote
 4. **Phase D** only when queue UX is stable
+5. **Phase E** — [EPIC_REVIEW_CONSOLE.md](./EPIC_REVIEW_CONSOLE.md) (8 PRs,
+   milestone _Review Console_)
+
+---
+
+## Phase E — Review Console (next)
+
+Staging dossier, form-driven promotion, unified console, data boundaries.
+Tracked in GitHub milestone **Review Console (Phase E)** and
+[EPIC_REVIEW_CONSOLE.md](./EPIC_REVIEW_CONSOLE.md).
 
 ---
 
@@ -215,3 +227,6 @@ Use everywhere (hub, Framer, exports):
 - [PUBLIC_RECORDS_INGEST.md](./PUBLIC_RECORDS_INGEST.md) — Tier 1/2 sources
 - [DATA_CURATION_CHECKLIST.md](./DATA_CURATION_CHECKLIST.md) — evidence grades
 - [SPRINT_DEAL_SPINE.md](./SPRINT_DEAL_SPINE.md) — verified deal UX
+- [EPIC_REVIEW_CONSOLE.md](./EPIC_REVIEW_CONSOLE.md) — Phase E issues + PR plan
+- [DATA_BOUNDARIES.md](./DATA_BOUNDARIES.md) — what not to merge into verified
+  JSON
