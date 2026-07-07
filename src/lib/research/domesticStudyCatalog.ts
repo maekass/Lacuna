@@ -9,7 +9,11 @@ export type DomesticInstitution =
   | "mit"
   | "harvard_mit_collab";
 
-export type StudyDataTier = "cited_public" | "illustrative_static";
+export type StudyDataTier =
+  | "cited_public"
+  | "illustrative_static"
+  /** LLM-suggested staging row — requires human review before catalog merge. */
+  | "llm_suggested";
 
 export interface DomesticResearchStudy {
   studyId: string;

@@ -224,6 +224,9 @@ npm run validate:dataset
 
 **Closes:** [#100](https://github.com/maekass/Lacuna/issues/100)
 
+**Status:** 🚧 on pathway branch (stack with E4 via
+`npm run review-console:stack -- ship --phase E5`)
+
 **Changes:**
 
 1. Choose auth: GitHub OAuth allowlist | Clerk `reviewer` role | Vercel

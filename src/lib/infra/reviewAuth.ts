@@ -1,6 +1,18 @@
 import process from "node:process";
+import { NextResponse } from "next/server";
+import { isGitHubReviewOAuthConfigured } from "@/lib/infra/reviewGitHubOAuth";
+import {
+  actorFromSession,
+  LEGACY_REVIEW_TOKEN_COOKIE,
+  parseSessionFromCookie,
+  REVIEW_SESSION_COOKIE,
+  type ReviewActor,
+  signReviewSession,
+  verifyReviewSession,
+} from "@/lib/infra/reviewSession";
 
-export const REVIEW_SESSION_COOKIE = "lacuna_review_token";
+/** @deprecated Use REVIEW_SESSION_COOKIE — kept for one release of migration. */
+export const REVIEW_SESSION_COOKIE_LEGACY = LEGACY_REVIEW_TOKEN_COOKIE;
 
 function reviewSecrets(): string[] {
   const reviewKey = process.env.LACUNA_REVIEW_API_KEY?.trim();
@@ -13,7 +25,7 @@ function isProductionEnv(): boolean {
     process.env.VERCEL_ENV === "production";
 }
 
-/** Whether a bearer or session token matches configured review secrets. */
+/** Whether a bearer token matches configured review API secrets (CLI / automation). */
 export function isReviewTokenAuthorized(
   token: string | null | undefined,
 ): boolean {
@@ -21,43 +33,65 @@ export function isReviewTokenAuthorized(
   return reviewSecrets().some((secret) => secret === token);
 }
 
-/** Parse review session cookie from a Cookie header value. */
+/** Parse legacy review session cookie (raw API key). */
 export function parseReviewTokenFromCookie(
   cookieHeader: string | null,
 ): string | null {
   if (!cookieHeader) return null;
   const match = cookieHeader.match(
-    new RegExp(`(?:^|;\\s*)${REVIEW_SESSION_COOKIE}=([^;]+)`),
+    new RegExp(`(?:^|;\\s*)${LEGACY_REVIEW_TOKEN_COOKIE}=([^;]+)`),
   );
   return match ? decodeURIComponent(match[1]) : null;
 }
 
-/**
- * Authorize access to deal review APIs (`/api/deals/pending`, PATCH, import).
- * Accepts Bearer token or `lacuna_review_token` session cookie (set via
- * `POST /api/deals/review/session`).
- */
-export function isDealReviewAuthorized(request: Request): boolean {
+/** Resolve reviewer identity from request (signed session, legacy cookie, or bearer). */
+export function getReviewActor(request: Request): ReviewActor | null {
   if (!isProductionEnv()) {
-    return true;
+    return { id: "dev:local", method: "dev", label: "Local dev" };
   }
 
   if (process.env.LACUNA_REVIEW_UI_PUBLIC === "true") {
-    return true;
+    return { id: "public:review", method: "dev", label: "Public review UI" };
   }
 
-  if (reviewSecrets().length === 0) {
-    return false;
+  const session = parseSessionFromCookie(request.headers.get("cookie"));
+  if (session) {
+    return actorFromSession(session);
   }
 
   const auth = request.headers.get("authorization");
   const bearer = auth?.startsWith("Bearer ")
     ? auth.slice("Bearer ".length)
     : null;
-  const cookieToken = parseReviewTokenFromCookie(request.headers.get("cookie"));
 
-  return isReviewTokenAuthorized(bearer) ||
-    isReviewTokenAuthorized(cookieToken);
+  if (isReviewTokenAuthorized(bearer)) {
+    return {
+      id: "api_key:review",
+      method: "api_key",
+      label: "API key (Bearer)",
+    };
+  }
+
+  const legacyCookie = parseReviewTokenFromCookie(
+    request.headers.get("cookie"),
+  );
+  if (isReviewTokenAuthorized(legacyCookie)) {
+    return {
+      id: "api_key:review",
+      method: "api_key",
+      label: "API key (session)",
+    };
+  }
+
+  return null;
+}
+
+/**
+ * Authorize access to deal review APIs (`/api/deals/pending`, PATCH, import).
+ * Accepts signed session cookie, legacy API-key cookie, or Bearer token.
+ */
+export function isDealReviewAuthorized(request: Request): boolean {
+  return getReviewActor(request) !== null;
 }
 
 /** Whether review API env is configured for production. */
@@ -65,6 +99,61 @@ export function isDealReviewAuthConfigured(): boolean {
   return Boolean(
     process.env.LACUNA_REVIEW_UI_PUBLIC === "true" ||
       process.env.LACUNA_REVIEW_API_KEY?.trim() ||
-      process.env.CRON_SECRET?.trim(),
+      process.env.CRON_SECRET?.trim() ||
+      isGitHubReviewOAuthConfigured(),
   );
 }
+
+/** Whether GitHub OAuth is the preferred production sign-in path. */
+export function isGitHubReviewSignInAvailable(): boolean {
+  return isGitHubReviewOAuthConfigured();
+}
+
+export function setReviewSessionCookie(
+  response: NextResponse,
+  input: { sub: string; method: "github" | "api_key" },
+): void {
+  const token = signReviewSession(input);
+  if (!token) {
+    throw new Error("Review session secret is not configured");
+  }
+
+  const secure = isProductionEnv();
+  response.cookies.set(REVIEW_SESSION_COOKIE, token, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure,
+    path: "/",
+    maxAge: 60 * 60 * 12,
+  });
+  response.cookies.set(LEGACY_REVIEW_TOKEN_COOKIE, "", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure,
+    path: "/",
+    maxAge: 0,
+  });
+}
+
+export function clearReviewSessionCookies(response: NextResponse): void {
+  const secure = isProductionEnv();
+  for (const name of [REVIEW_SESSION_COOKIE, LEGACY_REVIEW_TOKEN_COOKIE]) {
+    response.cookies.set(name, "", {
+      httpOnly: true,
+      sameSite: "lax",
+      secure,
+      path: "/",
+      maxAge: 0,
+    });
+  }
+}
+
+/** Validate bearer or legacy token and return signed session subject. */
+export function apiKeySessionSubject(
+  token: string | null | undefined,
+): string | null {
+  if (!isReviewTokenAuthorized(token)) return null;
+  return "api_key:review";
+}
+
+export { verifyReviewSession };

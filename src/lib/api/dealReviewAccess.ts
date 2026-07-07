@@ -27,7 +27,8 @@ export function guardDealReviewRequest(
     return NextResponse.json(
       {
         ok: false,
-        error: "Configure CRON_SECRET or LACUNA_REVIEW_API_KEY for review APIs",
+        error:
+          "Configure GitHub OAuth or LACUNA_REVIEW_API_KEY for review APIs",
       },
       { status: 503 },
     );

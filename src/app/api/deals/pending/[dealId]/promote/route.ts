@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { auditReviewRequest } from "@/lib/api/reviewAudit";
 import { guardDealReviewRequest } from "@/lib/api/dealReviewAccess";
 import { getDataMode } from "@/lib/data/datasetProvider";
 import {
@@ -85,6 +86,15 @@ export async function POST(
         { status: result.skipped ? 409 : 422 },
       );
     }
+
+    await auditReviewRequest(request, {
+      dealId,
+      action: "promote",
+      metadata: {
+        acquisitionId: result.acquisitionId,
+        target,
+      },
+    });
 
     return NextResponse.json({
       ok: true,
