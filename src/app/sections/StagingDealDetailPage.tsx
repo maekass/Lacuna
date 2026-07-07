@@ -232,7 +232,7 @@ export default function StagingDealDetailPage(
       <div className="rounded-lg border border-amber-200 bg-amber-50 p-6 text-sm text-amber-900">
         {error ?? "Staging candidate not found."}
         <Link
-          href="/deals#data-pipelines"
+          href="/deals#review"
           className="mt-3 block font-medium underline"
         >
           Back to review queue
@@ -258,7 +258,7 @@ export default function StagingDealDetailPage(
             View verified deal
           </Link>
           <Link
-            href="/deals#data-pipelines"
+            href="/deals#review"
             className="rounded-md border border-lacuna-lavender/50 px-4 py-2 text-sm font-medium text-lacuna-plum"
           >
             Back to queue
@@ -309,7 +309,7 @@ export default function StagingDealDetailPage(
             </p>
           </div>
           <Link
-            href="/deals#data-pipelines"
+            href="/deals#review"
             className="text-sm font-medium text-lacuna-plum underline underline-offset-2"
           >
             ← Review queue

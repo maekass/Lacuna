@@ -14,14 +14,10 @@ import {
   ValuationMatrix,
   WhiteSpaceAnalysis,
 } from "@/app/lazyDashboard";
-import CandidateImportPanel from "@/components/CandidateImportPanel";
 import DataCoverageCard from "@/components/DataCoverageCard";
 import DatasetScopeBanner from "@/components/DatasetScopeBanner";
-import DataIngestPanel from "@/components/DataIngestPanel";
 import DealEmpowermentContext from "@/components/DealEmpowermentContext";
-import DealReviewQueue from "@/components/DealReviewQueue";
-import FundingEventsPanel from "@/components/FundingEventsPanel";
-import PipelineStatusStrip from "@/components/PipelineStatusStrip";
+import ReviewConsole from "@/components/ReviewConsole";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
@@ -34,7 +30,6 @@ const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
 export default function DealsPage() {
   const searchParams = useSearchParams();
-  const [pipelineRefresh, setPipelineRefresh] = useState(0);
   const highlightNodeId = searchParams.get("highlight") ?? undefined;
   const { networkNodes, networkLinks, dealsByYear } = useDashboardData();
   const {
@@ -96,19 +91,15 @@ export default function DealsPage() {
           : null}
       </MotionSection>
 
-      <MotionSection id="data-pipelines" delay={0.03} className={SECTION}>
-        <PipelineStatusStrip />
+      <MotionSection id="review" delay={0.03} className={SECTION}>
+        {/* Back-compat anchor for older links */}
+        <span id="data-pipelines" />
+        <SectionHeader
+          title="Review console"
+          description="Staging candidates (SEC + manual import) live in Postgres until promoted into the verified dataset. Use this console to review, attest, preview, and promote."
+        />
         <div className="mt-4">
-          <DataIngestPanel />
-        </div>
-        <div className="mt-6">
-          <DealReviewQueue refreshToken={pipelineRefresh} />
-        </div>
-        <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <CandidateImportPanel
-            onImported={() => setPipelineRefresh((n) => n + 1)}
-          />
-          <FundingEventsPanel refreshToken={pipelineRefresh} />
+          <ReviewConsole />
         </div>
       </MotionSection>
 

@@ -26,7 +26,7 @@ export async function buildSecIngestStatusPayload(): Promise<
     pendingReviewCount,
     cronPath: "/api/cron/sec-ingest",
     cli: "npm run sec:ingest",
-    reviewQueuePath: "/deals#data-pipelines",
+    reviewQueuePath: "/deals#review",
     pendingApiPath: "/api/deals/pending",
   };
 }

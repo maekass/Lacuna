@@ -43,7 +43,7 @@ export default function MethodsPage() {
           verified deals (staging SEC candidates live in Postgres until promoted
           — see{" "}
           <Link
-            href="/deals#data-pipelines"
+            href="/deals#review"
             className="underline underline-offset-2"
           >
             deals pipeline

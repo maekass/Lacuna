@@ -83,7 +83,7 @@ export default function PipelineStatusStrip() {
         {pendingCount !== undefined
           ? (
             <Link
-              href="/deals#data-pipelines"
+              href="/deals#review"
               className="font-medium text-lacuna-plum underline underline-offset-2 hover:text-lacuna-blue"
             >
               {pendingCount} pending review
