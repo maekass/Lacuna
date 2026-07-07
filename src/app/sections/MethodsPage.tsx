@@ -9,12 +9,20 @@ import {
 } from "@/app/lazyDashboard";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { getDatasetChangelog } from "@/lib/data/getDatasetChangelog";
+import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 import { useDashboardData } from "@/lib/data/useDashboardData";
+import { useMemo } from "react";
+import Link from "next/link";
 
 const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
 export default function MethodsPage() {
   const { verifiedAcquisitions } = useDashboardData();
+  const changelog = useMemo(
+    () => getDatasetChangelog(getStaticVerifiedDataset()),
+    [],
+  );
 
   return (
     <div>
@@ -32,7 +40,11 @@ export default function MethodsPage() {
         >
           Scores and models here are exploratory heuristics on n=
           {verifiedAcquisitions.length}{" "}
-          verified deals. They are not validated for investment decisions.
+          verified deals (staging SEC candidates live in Postgres until promoted — see{" "}
+          <Link href="/deals#data-pipelines" className="underline underline-offset-2">
+            deals pipeline
+          </Link>
+          ). {changelog.label}. They are not validated for investment decisions.
         </p>
       </header>
 

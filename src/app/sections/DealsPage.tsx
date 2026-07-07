@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   ClusteringAnalysis,
   CompanySimilarity,
@@ -31,6 +32,8 @@ import { buildPatientEmpowermentSnapshot } from "@/lib/research/patientEmpowerme
 const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
 export default function DealsPage() {
+  const searchParams = useSearchParams();
+  const highlightNodeId = searchParams.get("highlight") ?? undefined;
   const { networkNodes, networkLinks, dealsByYear } = useDashboardData();
   const {
     verifiedCompanies,
@@ -101,6 +104,7 @@ export default function DealsPage() {
           nodes={networkNodes}
           links={networkLinks}
           highlightPortfolios={true}
+          highlightNodeId={highlightNodeId}
         />
       </MotionSection>
 

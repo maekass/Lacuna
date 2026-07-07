@@ -8,12 +8,15 @@ import PipelineStatusStrip from "@/components/PipelineStatusStrip";
 import MotionSection from "@/components/ui/MotionSection";
 import StatTile from "@/components/ui/StatTile";
 import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
+import { getDatasetChangelog } from "@/lib/data/getDatasetChangelog";
+import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { useDashboardData } from "@/lib/data/useDashboardData";
 import {
   getDealVelocityTopSector,
   VALUATION_DISPARITY_MODEL,
 } from "@/lib/fairness/headlineStat";
+import { FEATURED_DEAL_ID } from "@/lib/deals";
 import { WORKSPACES } from "@/lib/navigation/workspaces";
 
 const CURRENT_YEAR = new Date().getFullYear();
@@ -42,6 +45,10 @@ export default function HubPage() {
     [verifiedAcquisitions, verifiedCompanies],
   );
   const [methodologyOpen, setMethodologyOpen] = useState(false);
+  const changelog = useMemo(
+    () => getDatasetChangelog(getStaticVerifiedDataset()),
+    [],
+  );
 
   return (
     <div id="top">
@@ -71,6 +78,66 @@ export default function HubPage() {
 
       <MotionSection delay={0.06} className="mb-10">
         <PipelineStatusStrip />
+      </MotionSection>
+
+      {changelog.hasNewDeals
+        ? (
+          <MotionSection delay={0.065} className="mb-10">
+            <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+              Dataset changelog: {changelog.label}
+            </div>
+          </MotionSection>
+        )
+        : null}
+
+      <MotionSection delay={0.07} className="mb-10">
+        <h2 className="mb-3 text-xl font-semibold text-lacuna-plum">
+          Where do you want to start?
+        </h2>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <Link
+            href={`/deals/${FEATURED_DEAL_ID}`}
+            className="group rounded-xl border border-lacuna-plum/30 bg-gradient-to-br from-lacuna-plum/10 to-lacuna-lavender/20 p-5 shadow-sm transition-shadow hover:shadow-md"
+          >
+            <p className="text-xs font-semibold uppercase tracking-wide text-lacuna-plum/70">
+              Start diligence
+            </p>
+            <p className="mt-2 text-base font-semibold text-lacuna-plum group-hover:text-lacuna-blue">
+              Walk a verified deal
+            </p>
+            <p className="mt-1 text-sm text-lacuna-blue">
+              Sources, valuation gaps, comparables — corp VC walkthrough path.
+            </p>
+          </Link>
+          <Link
+            href="/research#health-equity"
+            className="group rounded-xl border border-lacuna-lavender/50 bg-white/90 p-5 shadow-sm transition-shadow hover:shadow-md"
+          >
+            <p className="text-xs font-semibold uppercase tracking-wide text-lacuna-plum/70">
+              Evidence &amp; equity
+            </p>
+            <p className="mt-2 text-base font-semibold text-lacuna-plum group-hover:text-lacuna-blue">
+              Health equity lens
+            </p>
+            <p className="mt-1 text-sm text-lacuna-blue">
+              Patient empowerment dimensions and policy context on public data.
+            </p>
+          </Link>
+          <Link
+            href="/methods#causal-dag"
+            className="group rounded-xl border border-lacuna-lavender/50 bg-white/90 p-5 shadow-sm transition-shadow hover:shadow-md"
+          >
+            <p className="text-xs font-semibold uppercase tracking-wide text-lacuna-plum/70">
+              How it&apos;s built
+            </p>
+            <p className="mt-2 text-base font-semibold text-lacuna-plum group-hover:text-lacuna-blue">
+              Methods &amp; infrastructure
+            </p>
+            <p className="mt-1 text-sm text-lacuna-blue">
+              Causal framing, pipeline ops, and honest small-n limits.
+            </p>
+          </Link>
+        </div>
       </MotionSection>
 
       <MotionSection

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import DealsPage from "@/app/sections/DealsPage";
 
 export const revalidate = 86_400;
@@ -11,5 +12,15 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <DealsPage />;
+  return (
+    <Suspense
+      fallback={
+        <div className="py-12 text-center text-sm text-lacuna-blue">
+          Loading deals workspace…
+        </div>
+      }
+    >
+      <DealsPage />
+    </Suspense>
+  );
 }

@@ -30,6 +30,8 @@ interface ForceNetworkProps {
   width?: number;
   height?: number;
   highlightPortfolios?: boolean;
+  /** Emphasize a company or acquirer node (e.g. from ?highlight= URL param). */
+  highlightNodeId?: string;
 }
 
 import {
@@ -89,6 +91,7 @@ export default function ForceNetwork(
     width: widthProp,
     height: heightProp,
     highlightPortfolios = true,
+    highlightNodeId,
   }: ForceNetworkProps,
 ) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -119,14 +122,15 @@ export default function ForceNetwork(
   const [searchQuery, setSearchQuery] = useState("");
   const matchingNodeIds = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
-    if (!query) return new Set<string>();
-
-    return new Set(
-      nodes
-        .filter((node) => node.name.toLowerCase().includes(query))
-        .map((node) => node.id),
-    );
-  }, [searchQuery, nodes]);
+    const ids = new Set<string>();
+    if (highlightNodeId) ids.add(highlightNodeId);
+    if (query) {
+      for (const node of nodes) {
+        if (node.name.toLowerCase().includes(query)) ids.add(node.id);
+      }
+    }
+    return ids;
+  }, [searchQuery, nodes, highlightNodeId]);
   const portfolioNameSets = useMemo(
     () =>
       new Map<PortfolioKey, ReadonlySet<string>>(
@@ -449,7 +453,15 @@ export default function ForceNetwork(
     selectNode,
   ]);
 
-  const isSearchActive = searchQuery.trim().length > 0;
+  const isSearchActive = searchQuery.trim().length > 0 || Boolean(highlightNodeId);
+
+  useEffect(() => {
+    if (!highlightNodeId) return;
+    const node = nodes.find((n) => n.id === highlightNodeId);
+    if (!node) return;
+    const frameId = requestAnimationFrame(() => selectNode(node));
+    return () => cancelAnimationFrame(frameId);
+  }, [highlightNodeId, nodes, selectNode]);
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -478,7 +490,7 @@ export default function ForceNetwork(
           : 0.05;
       },
     );
-  }, [isSearchActive, matchingNodeIds]);
+  }, [isSearchActive, matchingNodeIds, highlightNodeId]);
 
   const graphLabel =
     `M&A network graph showing ${nodes.length} companies and ${links.length} verified deal relationships.`;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import PromotionChecklist from "@/components/PromotionChecklist";
 import type {
   PendingDealRecord,
   PendingDealStatus,
@@ -34,7 +35,7 @@ function formatDealValue(millions: number | null): string {
   return `$${millions.toLocaleString()}M`;
 }
 
-function PendingDealRow({
+function PendingDealCard({
   deal,
   busy,
   onReview,
@@ -46,6 +47,7 @@ function PendingDealRow({
   onPromote: (dealId: string) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
+  const [promoteReady, setPromoteReady] = useState(false);
 
   return (
     <article className="rounded-lg border border-lacuna-lavender/30 bg-white p-4">
@@ -102,8 +104,9 @@ function PendingDealRow({
           </button>
           <button
             type="button"
-            disabled={busy}
+            disabled={busy || !promoteReady}
             onClick={() => onPromote(deal.dealId)}
+            title={promoteReady ? undefined : "Complete promotion checklist first"}
             className="rounded-md border border-lacuna-plum/30 bg-lacuna-plum/10 px-2.5 py-1.5 text-xs font-medium text-lacuna-plum hover:bg-lacuna-plum/20 disabled:opacity-50"
           >
             Approve &amp; add to verified
@@ -147,6 +150,14 @@ function PendingDealRow({
           </div>
         )
         : null}
+
+      <div className="mt-4">
+        <PromotionChecklist
+          key={deal.dealId}
+          deal={deal}
+          onReadyChange={setPromoteReady}
+        />
+      </div>
     </article>
   );
 }
@@ -317,7 +328,7 @@ export default function DealReviewQueue() {
         ? (
           <div className="mt-4 space-y-3">
             {items.map((deal) => (
-              <PendingDealRow
+              <PendingDealCard
                 key={deal.dealId}
                 deal={deal}
                 busy={actionDealId === deal.dealId}
