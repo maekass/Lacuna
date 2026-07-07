@@ -70,6 +70,19 @@ export function getPromotionCheckItems(
       hint: "Target sector or product line is in-scope for Lacuna.",
       autoPass: !keywordOnly && hasWhScope,
     },
+    {
+      id: "profile-attestation",
+      label: "Sector, HQ, and founded year attested (not inferred)",
+      hint:
+        "Reviewer confirmed target/acquirer profile fields — no keyword inference.",
+      autoPass: false,
+    },
+    {
+      id: "classification-attestation",
+      label: "Classification ≠ attestation",
+      hint: "ML or keyword classification does not replace dual-source review.",
+      autoPass: false,
+    },
   ];
 }
 

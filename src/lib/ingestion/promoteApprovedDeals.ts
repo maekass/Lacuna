@@ -7,6 +7,7 @@ import { validateVerifiedDataset } from "@/lib/data/validateVerifiedDataset";
 import {
   buildPromotionDraft,
   type PromotionDraft,
+  type ReviewerPromotionFields,
 } from "@/lib/ingestion/buildPromotionDraft";
 import {
   getPendingDealByDealId,
@@ -23,6 +24,7 @@ export interface PromoteApprovedDealsOptions {
   jsonPath?: string;
   dryRun?: boolean;
   secondarySourceUrl?: string | null;
+  reviewerFields?: ReviewerPromotionFields;
 }
 
 export interface PromoteDealResult {
@@ -165,19 +167,23 @@ async function promoteOneDeal(
   dataset: VerifiedDataset,
   options: PromoteApprovedDealsOptions,
 ): Promise<{ result: PromoteDealResult; dataset: VerifiedDataset }> {
-  const draft = buildPromotionDraft({
+  const { draft, missingFields } = buildPromotionDraft({
     dataset,
     deal,
     secondarySourceUrl: options.secondarySourceUrl,
+    reviewerFields: options.reviewerFields,
   });
 
   if (!draft) {
+    const error = missingFields.length > 0
+      ? `Missing reviewer-attested fields: ${missingFields.join(", ")}`
+      : "Missing required fields or duplicate source URL";
     return {
       result: {
         dealId: deal.dealId,
         ok: false,
         skipped: true,
-        error: "Missing required fields or duplicate source URL",
+        error,
       },
       dataset,
     };

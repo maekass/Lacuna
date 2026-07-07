@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { getCachedStaticVerifiedDataset } from "@/lib/data/cachedDataset";
-import { buildPromotionDraft } from "@/lib/ingestion/buildPromotionDraft";
+import {
+  buildPromotionDraft,
+  listPromotionMissingFields,
+  type ReviewerPromotionFields,
+} from "@/lib/ingestion/buildPromotionDraft";
 import { applyPromotionDraft } from "@/lib/ingestion/promoteApprovedDeals";
 import type { PendingDealRecord } from "@/lib/ingestion/pendingDeals";
 import { validateVerifiedDataset } from "@/lib/data/validateVerifiedDataset";
@@ -40,36 +44,94 @@ function makeDeal(
   };
 }
 
+function reviewerFields(
+  overrides: Partial<ReviewerPromotionFields> = {},
+): ReviewerPromotionFields {
+  return {
+    companySector: "Fertility",
+    companyHq: "Boston, MA",
+    companyFounded: 2018,
+    acquirerSector: "Healthcare",
+    acquirerHq: "San Francisco, CA",
+    ...overrides,
+  };
+}
+
 describe("buildPromotionDraft", () => {
-  it("builds merge-ready rows for a new deal", async () => {
+  it("builds merge-ready rows when reviewer fields are attested", async () => {
     const dataset = await getCachedStaticVerifiedDataset();
-    const draft = buildPromotionDraft({
+    const { draft, missingFields } = buildPromotionDraft({
       dataset,
       deal: makeDeal(),
+      reviewerFields: reviewerFields(),
     });
 
+    expect(missingFields).toEqual([]);
     expect(draft).not.toBeNull();
     expect(draft?.acquisition.id).toBe("deal60");
     expect(draft?.company?.name).toBe("Example FemTech Co");
+    expect(draft?.company?.sector).toBe("Fertility");
+    expect(draft?.company?.hq).toBe("Boston, MA");
     expect(draft?.acquirer?.name).toBe("Example Health Corp");
+    expect(draft?.acquirer?.hq).toBe("San Francisco, CA");
     expect(draft?.company?.sources).toHaveLength(2);
+  });
+
+  it("does not invent sector or HQ without reviewer attestation", async () => {
+    const dataset = await getCachedStaticVerifiedDataset();
+    const missing = listPromotionMissingFields({
+      dataset,
+      deal: makeDeal({ reviewNotes: null }),
+    });
+
+    expect(missing).toContain("company.sector");
+    expect(missing).toContain("company.hq");
+    expect(missing).toContain("company.founded");
+    expect(missing).toContain("company.sources.secondary");
+    expect(missing).toContain("acquirer.sector");
+    expect(missing).toContain("acquirer.hq");
+
+    const { draft } = buildPromotionDraft({
+      dataset,
+      deal: makeDeal({ reviewNotes: null }),
+    });
+    expect(draft).toBeNull();
+  });
+
+  it("blocks keyword_only rows without reviewer profile fields", async () => {
+    const dataset = await getCachedStaticVerifiedDataset();
+    const { draft, missingFields } = buildPromotionDraft({
+      dataset,
+      deal: makeDeal({
+        parseQuality: "keyword_only",
+        item201Excerpt: null,
+        reviewNotes: null,
+      }),
+    });
+
+    expect(draft).toBeNull();
+    expect(missingFields).toContain("company.description");
+    expect(missingFields).toContain("company.sector");
   });
 
   it("skips duplicate filing sources", async () => {
     const dataset = await getCachedStaticVerifiedDataset();
     const existingSource = dataset.acquisitions[0]?.source;
-    const draft = buildPromotionDraft({
+    const { draft, missingFields } = buildPromotionDraft({
       dataset,
       deal: makeDeal({ filingUrl: existingSource ?? "https://example.com" }),
+      reviewerFields: reviewerFields(),
     });
     expect(draft).toBeNull();
+    expect(missingFields).toContain("duplicateSource");
   });
 
   it("produces a dataset that passes validation", async () => {
     const dataset = await getCachedStaticVerifiedDataset();
-    const draft = buildPromotionDraft({
+    const { draft } = buildPromotionDraft({
       dataset,
       deal: makeDeal(),
+      reviewerFields: reviewerFields(),
     });
     expect(draft).not.toBeNull();
     if (!draft) return;

@@ -50,11 +50,13 @@ describe("promotion checklist", () => {
     expect(state.secondary).toBe(false);
   });
 
-  it("requires manual secondary corroboration", () => {
+  it("requires manual secondary corroboration and profile attestation", () => {
     const items = getPromotionCheckItems(mockDeal());
     const state = initialCheckState(items);
     expect(allChecksPassed(state, items)).toBe(false);
     state.secondary = true;
+    state["profile-attestation"] = true;
+    state["classification-attestation"] = true;
     expect(allChecksPassed(state, items)).toBe(true);
   });
 

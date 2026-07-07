@@ -73,6 +73,8 @@ logic · `src/data` JSON · `@/*` → `src/*`
 
 Single source of truth: verified dataset + adapters. Do not reintroduce
 synthetic `maDeals` data. Keep provenance honest (`DataCoverageCard`, docs).
+Promotion must not invent sector, HQ, or founded year — see
+[docs/DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md).
 
 **No invented numbers in production UI.** Do not add:
 

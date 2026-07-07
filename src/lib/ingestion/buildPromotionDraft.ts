@@ -7,10 +7,28 @@ export interface PromotionDraft {
   acquisition: VerifiedDataset["acquisitions"][number];
 }
 
+/** Reviewer-attested fields required for new verified rows (Phase E0). */
+export interface ReviewerPromotionFields {
+  companySector?: string | null;
+  companyHq?: string | null;
+  companyFounded?: number | null;
+  companyDescription?: string | null;
+  companyStage?: string | null;
+  acquirerSector?: string | null;
+  acquirerHq?: string | null;
+  secondarySourceUrl?: string | null;
+}
+
 export interface BuildPromotionDraftOptions {
   dataset: VerifiedDataset;
   deal: PendingDealRecord;
   secondarySourceUrl?: string | null;
+  reviewerFields?: ReviewerPromotionFields;
+}
+
+export interface BuildPromotionDraftResult {
+  draft: PromotionDraft | null;
+  missingFields: string[];
 }
 
 function normalizeName(value: string): string {
@@ -62,32 +80,20 @@ function findAcquirerIdByName(
   )?.id;
 }
 
-function inferSector(keywords: string[]): string {
-  const joined = keywords.join(" ").toLowerCase();
-  if (joined.includes("fertility") || joined.includes("ivf")) {
-    return "Fertility";
-  }
-  if (joined.includes("oncology") || joined.includes("cancer")) {
-    return "Oncology";
-  }
-  if (joined.includes("diagnostic")) return "Diagnostics";
-  if (joined.includes("telehealth") || joined.includes("virtual")) {
-    return "Digital Health";
-  }
-  return "Women's Health";
-}
-
-function inferFoundedYear(announcedDate: string | null): number {
-  if (announcedDate) {
-    const year = Number(announcedDate.slice(0, 4));
-    if (Number.isFinite(year)) return Math.max(1990, year - 5);
-  }
-  return new Date().getFullYear() - 5;
+function resolveSecondarySource(
+  deal: PendingDealRecord,
+  options: BuildPromotionDraftOptions,
+): string | null {
+  const fromReviewer = options.reviewerFields?.secondarySourceUrl?.trim();
+  if (fromReviewer) return fromReviewer;
+  const fromOptions = options.secondarySourceUrl?.trim();
+  if (fromOptions) return fromOptions;
+  return extractUrls(deal.reviewNotes)[0] ?? null;
 }
 
 function buildCompanySources(
   filingUrl: string,
-  secondarySourceUrl?: string | null,
+  secondarySourceUrl: string | null,
 ): string[] {
   const sources = [filingUrl];
   if (secondarySourceUrl && secondarySourceUrl !== filingUrl) {
@@ -102,21 +108,88 @@ function buildStrategicRationale(deal: PendingDealRecord): string {
   return `Acquisition disclosed in SEC Item 2.01 filing (${deal.secAccession}).`;
 }
 
-/** Build merge-ready verified rows from one approved staging deal. */
-export function buildPromotionDraft(
+function resolveCompanyDescription(
+  deal: PendingDealRecord,
+  reviewerFields?: ReviewerPromotionFields,
+): string | null {
+  const fromReviewer = reviewerFields?.companyDescription?.trim();
+  if (fromReviewer) return fromReviewer.slice(0, 280);
+  const excerpt = deal.item201Excerpt?.trim();
+  if (excerpt) return excerpt.slice(0, 280);
+  return null;
+}
+
+/**
+ * List reviewer fields still required before a promotion draft can be built.
+ * Does not invent sector, HQ, or founded year from keywords.
+ */
+export function listPromotionMissingFields(
   options: BuildPromotionDraftOptions,
-): PromotionDraft | null {
-  const { dataset, deal, secondarySourceUrl } = options;
+): string[] {
+  const { dataset, deal } = options;
+  const missing: string[] = [];
+  const reviewer = options.reviewerFields ?? {};
+
   const targetName = deal.targetName?.trim();
   const acquirerName = deal.acquirerName?.trim();
   const announcedDate = deal.announcedDate;
 
-  if (!targetName || !acquirerName || !announcedDate) return null;
+  if (!targetName) missing.push("targetName");
+  if (!acquirerName) missing.push("acquirerName");
+  if (!announcedDate) missing.push("announcedDate");
 
   const duplicateBySource = dataset.acquisitions.some((row) =>
     row.source === deal.filingUrl
   );
-  if (duplicateBySource) return null;
+  if (duplicateBySource) missing.push("duplicateSource");
+
+  const existingTargetId = findCompanyIdByName(dataset, targetName ?? null);
+  const existingAcquirerId = findAcquirerIdByName(
+    dataset,
+    acquirerName ?? null,
+  );
+  const secondary = resolveSecondarySource(deal, options);
+
+  if (!existingTargetId) {
+    if (!reviewer.companySector?.trim()) missing.push("company.sector");
+    if (!reviewer.companyHq?.trim()) missing.push("company.hq");
+    if (
+      reviewer.companyFounded === null ||
+      reviewer.companyFounded === undefined ||
+      !Number.isFinite(reviewer.companyFounded)
+    ) {
+      missing.push("company.founded");
+    }
+    if (!resolveCompanyDescription(deal, reviewer)) {
+      missing.push("company.description");
+    }
+    if (!secondary || secondary === deal.filingUrl) {
+      missing.push("company.sources.secondary");
+    }
+  }
+
+  if (!existingAcquirerId) {
+    if (!reviewer.acquirerSector?.trim()) missing.push("acquirer.sector");
+    if (!reviewer.acquirerHq?.trim()) missing.push("acquirer.hq");
+  }
+
+  return missing;
+}
+
+/** Build merge-ready verified rows from one approved staging deal. */
+export function buildPromotionDraft(
+  options: BuildPromotionDraftOptions,
+): BuildPromotionDraftResult {
+  const { dataset, deal } = options;
+  const missingFields = listPromotionMissingFields(options);
+  if (missingFields.length > 0) {
+    return { draft: null, missingFields };
+  }
+
+  const targetName = deal.targetName!.trim();
+  const acquirerName = deal.acquirerName!.trim();
+  const announcedDate = deal.announcedDate!;
+  const reviewer = options.reviewerFields ?? {};
 
   const existingTargetId = findCompanyIdByName(dataset, targetName);
   const existingAcquirerId = findAcquirerIdByName(dataset, acquirerName);
@@ -130,18 +203,16 @@ export function buildPromotionDraft(
     dataset.acquisitions.map((row) => row.id),
   );
 
-  const secondary = secondarySourceUrl ??
-    extractUrls(deal.reviewNotes)[0] ??
-    null;
+  const secondary = resolveSecondarySource(deal, options)!;
 
   const company = existingTargetId ? undefined : {
     id: targetId,
     name: targetName,
-    sector: inferSector(deal.classificationKeywords),
-    stage: "Private",
-    founded: inferFoundedYear(announcedDate),
-    hq: "Unknown",
-    description: buildStrategicRationale(deal).slice(0, 280),
+    sector: reviewer.companySector!.trim(),
+    stage: reviewer.companyStage?.trim() || "Acquired",
+    founded: reviewer.companyFounded!,
+    hq: reviewer.companyHq!.trim(),
+    description: resolveCompanyDescription(deal, reviewer)!,
     sources: buildCompanySources(deal.filingUrl, secondary),
   };
 
@@ -149,8 +220,8 @@ export function buildPromotionDraft(
     id: acquirerId,
     name: acquirerName,
     ticker: deal.acquirerTicker ?? undefined,
-    sector: "Healthcare",
-    hq: "Unknown",
+    sector: reviewer.acquirerSector!.trim(),
+    hq: reviewer.acquirerHq!.trim(),
   };
 
   const acquisition: VerifiedDataset["acquisitions"][number] = {
@@ -174,5 +245,8 @@ export function buildPromotionDraft(
       : {}),
   };
 
-  return { company, acquirer, acquisition };
+  return {
+    draft: { company, acquirer, acquisition },
+    missingFields: [],
+  };
 }
