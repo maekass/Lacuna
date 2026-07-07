@@ -67,6 +67,23 @@ export interface UpdatePendingDealInput {
   reviewNotes?: string | null;
 }
 
+/** Parsed fields merged by 8-K enrichment — never changes review status. */
+export interface PendingDealEnrichmentInput {
+  targetName?: string | null;
+  announcedDate?: string | null;
+  closedDate?: string | null;
+  dealValueMillions?: number | null;
+  dealValueNote?: string | null;
+  dealStructure?: string | null;
+  earnoutTerms?: string | null;
+  item201Excerpt?: string | null;
+  parseQuality?: string;
+  filingUrl?: string;
+  classificationConfidence?: ClassificationConfidence;
+  classificationKeywords?: string[];
+  womensHealthRelevant?: boolean;
+}
+
 const DEAL_ROW_COLUMNS = `
   id,
   deal_id,
@@ -326,6 +343,57 @@ export async function listApprovedDealsForPromotion(): Promise<
      ORDER BY filing_date DESC NULLS LAST, ingested_at DESC`,
   );
   return rows.map(mapRow);
+}
+
+/**
+ * Apply 8-K parse results to a staging row. Status is preserved (never set to
+ * `approved` by enrichment alone).
+ */
+export async function applyPendingDealEnrichment(
+  dealId: string,
+  input: PendingDealEnrichmentInput,
+): Promise<PendingDealRecord | null> {
+  const rows = await query<LacunaDealRow>(
+    `UPDATE lacuna_deals
+     SET
+       target_name = COALESCE($2, target_name),
+       announced_date = COALESCE($3, announced_date),
+       closed_date = COALESCE($4, closed_date),
+       deal_value_millions = COALESCE($5, deal_value_millions),
+       deal_value_note = COALESCE($6, deal_value_note),
+       deal_structure = COALESCE($7, deal_structure),
+       earnout_terms = COALESCE($8, earnout_terms),
+       item_201_excerpt = COALESCE($9, item_201_excerpt),
+       parse_quality = COALESCE($10, parse_quality),
+       filing_url = COALESCE($11, filing_url),
+       classification_confidence = COALESCE($12, classification_confidence),
+       classification_keywords = COALESCE($13, classification_keywords),
+       womens_health_relevant = COALESCE($14, womens_health_relevant),
+       updated_at = NOW()
+     WHERE deal_id = $1
+       AND status <> 'merged'
+     RETURNING ${DEAL_ROW_COLUMNS}`,
+    [
+      dealId,
+      input.targetName ?? null,
+      input.announcedDate ?? null,
+      input.closedDate ?? null,
+      input.dealValueMillions ?? null,
+      input.dealValueNote ?? null,
+      input.dealStructure ?? null,
+      input.earnoutTerms ?? null,
+      input.item201Excerpt ?? null,
+      input.parseQuality ?? null,
+      input.filingUrl ?? null,
+      input.classificationConfidence ?? null,
+      input.classificationKeywords ?? null,
+      input.womensHealthRelevant ?? null,
+    ],
+  );
+
+  const row = rows[0];
+  if (!row) return null;
+  return mapRow(row);
 }
 
 /** Mark a staging row as merged into verified dataset. */
