@@ -128,55 +128,63 @@ export default function DealDetailPage({ dealId }: DealDetailPageProps) {
   const sectorKeyword = encodeURIComponent(deal.target.sector.split(/\s+/)[0] ?? "women");
 
   return (
-    <div>
-      <nav className="mb-6 text-sm text-lacuna-blue/80">
+    <div className="min-w-0">
+      <nav className="mb-4 flex flex-wrap items-center gap-x-1 gap-y-1 text-xs sm:mb-6 sm:text-sm text-lacuna-blue/80">
         <Link href="/" className="hover:text-lacuna-plum">Hub</Link>
-        <span className="mx-2">/</span>
+        <span className="hidden sm:inline mx-1">/</span>
         <Link href="/deals" className="hover:text-lacuna-plum">Deals</Link>
-        <span className="mx-2">/</span>
-        <span className="text-lacuna-plum">{acq.targetName}</span>
+        <span className="hidden sm:inline mx-1">/</span>
+        <span className="w-full truncate text-lacuna-plum sm:w-auto sm:max-w-[12rem] md:max-w-none">
+          {acq.targetName}
+        </span>
       </nav>
 
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-lacuna-plum sm:text-4xl">
-          {acq.targetName}
-          <span className="mx-2 text-lacuna-blue/60">→</span>
-          {acq.acquirerName}
+        <h1 className="text-2xl font-bold leading-tight text-lacuna-plum sm:text-3xl md:text-4xl">
+          <span className="block sm:inline">{acq.targetName}</span>
+          <span className="mx-0 my-1 block text-lacuna-blue/60 sm:mx-2 sm:my-0 sm:inline">
+            →
+          </span>
+          <span className="block sm:inline">{acq.acquirerName}</span>
         </h1>
-        <p className="mt-2 text-lacuna-blue">
+        <p className="mt-2 text-sm leading-relaxed text-lacuna-blue sm:text-base">
           {acq.dealType} · Announced {acq.announcedDate}
           {acq.closedDate ? ` · Closed ${acq.closedDate}` : ""}
         </p>
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
           <button
             type="button"
             onClick={() => void copyLink()}
-            className="rounded-md border border-lacuna-lavender/50 px-3 py-1.5 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20"
+            className="min-h-10 w-full rounded-md border border-lacuna-lavender/50 px-3 py-2.5 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20 sm:w-auto sm:py-1.5"
           >
-            {copyStatus === "ok" ? "Link copied" : "Copy link"}
+            {copyStatus === "ok"
+              ? "Link copied"
+              : copyStatus === "err"
+              ? "Copy failed"
+              : "Copy link"}
           </button>
           <button
             type="button"
             onClick={() => void exportBrief()}
-            className="rounded-md bg-lacuna-plum px-3 py-1.5 text-xs font-medium text-white hover:bg-lacuna-blue"
+            className="min-h-10 w-full rounded-md bg-lacuna-plum px-3 py-2.5 text-xs font-medium text-white hover:bg-lacuna-blue sm:w-auto sm:py-1.5"
           >
             Export brief
           </button>
           <Link
             href={`/deals?highlight=${encodeURIComponent(deal.target.id)}#network`}
-            className="rounded-md border border-lacuna-plum/30 bg-lacuna-plum/10 px-3 py-1.5 text-xs font-medium text-lacuna-plum hover:bg-lacuna-plum/20"
+            className="inline-flex min-h-10 w-full items-center justify-center rounded-md border border-lacuna-plum/30 bg-lacuna-plum/10 px-3 py-2.5 text-center text-xs font-medium text-lacuna-plum hover:bg-lacuna-plum/20 sm:w-auto sm:py-1.5"
           >
             View in network
           </Link>
         </div>
       </header>
 
-      <MotionSection className="mb-10 grid gap-6 md:grid-cols-2">
-        <div className="rounded-xl border border-lacuna-lavender/40 bg-white/90 p-5">
+      <MotionSection className="mb-10 grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
+        <div className="rounded-xl border border-lacuna-lavender/40 bg-white/90 p-4 sm:p-5">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-lacuna-plum/80">
             Valuation
           </h2>
-          <p className="mt-2 text-2xl font-bold text-lacuna-plum">
+          <p className="mt-2 text-xl font-bold text-lacuna-plum sm:text-2xl break-words">
             {formatValue(acq.dealValue, acq.dealValueNote)}
           </p>
           {acq.dealStructure
@@ -191,7 +199,7 @@ export default function DealDetailPage({ dealId }: DealDetailPageProps) {
             )
             : null}
         </div>
-        <div className="rounded-xl border border-lacuna-lavender/40 bg-white/90 p-5">
+        <div className="rounded-xl border border-lacuna-lavender/40 bg-white/90 p-4 sm:p-5">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-lacuna-plum/80">
             Target profile
           </h2>

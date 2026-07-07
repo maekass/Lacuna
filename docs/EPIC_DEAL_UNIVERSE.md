@@ -122,16 +122,16 @@ confirmed deals.
 
 ---
 
-### Phase D — Additional candidate streams (optional, bounded) — ~10+ days
+### Phase D — Additional candidate streams (optional, bounded) — ~10+ days ✅
 
 **Not “the entire web.”** Each stream lands in the **same review queue**.
 
-| Source | Command / path | Feeds | Scope cap |
-| ------ | -------------- | ----- | --------- |
-| SEC EFTS 8-K | `sec:search-ma` | `lacuna_deals` upsert | WH keyword filter |
-| Press / manual | CSV template | review UI import | Human-entered |
-| Crunchbase text | `feat/crunchbase-ingest-*` branch if merged | staging | WH companies only |
-| Form D | `lacuna_funding_events` | separate funding panel | Not M&A |
+| Source | Command / path | Feeds | Scope cap | Status |
+| ------ | -------------- | ----- | --------- | ------ |
+| SEC EFTS 8-K | `sec:ingest-efts` | `lacuna_deals` upsert | WH keyword filter | ✅ |
+| Press / manual | CSV template + `/api/deals/candidates/import` | review UI import | Human-entered | ✅ |
+| Crunchbase text | `feat/crunchbase-ingest-*` branch if merged | staging | WH companies only | optional |
+| Form D | `lacuna_funding_events` + `FundingEventsPanel` | separate funding panel | Not M&A | ✅ |
 
 **Explicitly out of scope for Phase D:**
 

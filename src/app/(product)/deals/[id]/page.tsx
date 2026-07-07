@@ -27,6 +27,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${acq.targetName} → ${acq.acquirerName} · Lacuna`,
     description: `Verified women's health M&A: ${acq.dealType}, announced ${acq.announcedDate}. Sources and limitations from public filings.`,
     alternates: { canonical: `/deals/${id}` },
+    openGraph: {
+      title: `${acq.targetName} → ${acq.acquirerName}`,
+      description: `Verified women's health M&A: ${acq.dealType}, announced ${acq.announcedDate}.`,
+      type: "article",
+    },
   };
 }
 

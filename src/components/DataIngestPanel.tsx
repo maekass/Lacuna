@@ -80,7 +80,7 @@ export default function DataIngestPanel() {
           </p>
         )
         : (
-          <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
             <section className="rounded-lg border border-lacuna-lavender/30 p-4">
               <h4 className="text-sm font-semibold text-lacuna-plum">
                 SEC EDGAR ingest
@@ -195,6 +195,23 @@ export default function DataIngestPanel() {
               <CommandBlock command="npm run download:free-apis" />
               <p className="mt-2 text-[11px] text-lacuna-blue/60">
                 API: <code>/api/ingest/free-apis/status</code>
+              </p>
+            </section>
+
+            <section className="rounded-lg border border-lacuna-lavender/30 p-4">
+              <h4 className="text-sm font-semibold text-lacuna-plum">
+                SEC EFTS 8-K discovery
+              </h4>
+              <p className="mt-1 text-xs text-lacuna-blue">
+                Full-text search for Item 2.01 + women&apos;s health terms →
+                {" "}
+                <code className="text-[11px]">lacuna_deals</code> upsert (same
+                review queue).
+              </p>
+              <CommandBlock command="npm run sec:ingest-efts" />
+              <p className="mt-2 text-[11px] text-lacuna-blue/60">
+                Staging JSON only: <code>npm run sec:search-ma</code> · Import
+                API: <code>/api/deals/candidates/import</code>
               </p>
             </section>
           </div>

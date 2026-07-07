@@ -14,11 +14,13 @@ import {
   ValuationMatrix,
   WhiteSpaceAnalysis,
 } from "@/app/lazyDashboard";
+import CandidateImportPanel from "@/components/CandidateImportPanel";
 import DataCoverageCard from "@/components/DataCoverageCard";
 import DatasetScopeBanner from "@/components/DatasetScopeBanner";
 import DataIngestPanel from "@/components/DataIngestPanel";
 import DealEmpowermentContext from "@/components/DealEmpowermentContext";
 import DealReviewQueue from "@/components/DealReviewQueue";
+import FundingEventsPanel from "@/components/FundingEventsPanel";
 import PipelineStatusStrip from "@/components/PipelineStatusStrip";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -100,6 +102,10 @@ export default function DealsPage() {
         </div>
         <div className="mt-6">
           <DealReviewQueue />
+        </div>
+        <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <CandidateImportPanel />
+          <FundingEventsPanel />
         </div>
       </MotionSection>
 

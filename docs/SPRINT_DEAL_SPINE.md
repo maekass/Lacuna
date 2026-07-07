@@ -59,7 +59,7 @@ dataset.verified.json
 
 ---
 
-### Day 2 — Evidence ladder
+### Day 2 — Evidence ladder ✅
 
 **Audience:** Health equity + VC (trust); recruiters (polish)
 
@@ -74,7 +74,7 @@ dataset.verified.json
 
 ---
 
-### Day 3 — Deal detail route (shell)
+### Day 3 — Deal detail route (shell) ✅
 
 **Audience:** VC + recruiters (first shareable URL)
 
@@ -90,7 +90,7 @@ dataset.verified.json
 
 ---
 
-### Day 4 — Deal detail content (diligence core)
+### Day 4 — Deal detail content (diligence core) ✅
 
 **Audience:** Corp VC (primary)
 
@@ -106,7 +106,7 @@ dataset.verified.json
 
 ---
 
-### Day 5 — Comparables + acquirer context
+### Day 5 — Comparables + acquirer context ✅
 
 **Audience:** VC + methods
 
@@ -120,7 +120,7 @@ dataset.verified.json
 
 ---
 
-### Day 6 — Pipeline freshness strip (real data)
+### Day 6 — Pipeline freshness strip (real data) ✅
 
 **Audience:** Engineering + VC
 
@@ -136,7 +136,7 @@ Replace mocked timings in `DataPipelineStatus` for hub use — new lightweight s
 
 ---
 
-### Day 7 — Hub triage (three ramps)
+### Day 7 — Hub triage (three ramps) ✅
 
 **Audience:** All — interdisciplinary entry
 
@@ -152,7 +152,7 @@ Refactor hub: move Payer Ops featured card below triage or keep as fourth "spotl
 
 ---
 
-### Day 8 — Permalinks + network highlight
+### Day 8 — Permalinks + network highlight ✅
 
 **Audience:** Recruiters (shareable demos); VC
 
@@ -166,7 +166,7 @@ Refactor hub: move Payer Ops featured card below triage or keep as fourth "spotl
 
 ---
 
-### Day 9 — Deal brief export (lib)
+### Day 9 — Deal brief export (lib) ✅
 
 **Audience:** VC + equity (export); intelligence workspace reuse
 
@@ -182,7 +182,7 @@ Extend `formatLacunaForGamma` later; keep deal brief separate for clarity.
 
 ---
 
-### Day 10 — Export UI + polish
+### Day 10 — Export UI + polish ✅
 
 **Audience:** Recruiters + VC
 
@@ -196,7 +196,7 @@ Extend `formatLacunaForGamma` later; keep deal brief separate for clarity.
 
 ---
 
-### Day 11 — Cross-workspace bridges (minimal)
+### Day 11 — Cross-workspace bridges (minimal) ✅
 
 **Audience:** Interdisciplinary glue
 
@@ -212,7 +212,7 @@ No new APIs required for MVP — deep links only.
 
 ---
 
-### Day 12 — Demo scripts + QA
+### Day 12 — Demo scripts + QA ✅
 
 **Audience:** Recruiters + all
 
@@ -243,13 +243,26 @@ Also later: production `LACUNA_DATA_MODE=db`, Framer marketing site,
 
 ## Definition of done (sprint)
 
-- [ ] `/deals/[id]` works for all verified acquisitions
-- [ ] Hub has three triage CTAs + pipeline strip
-- [ ] Evidence ladder on every deal detail
-- [ ] Export brief with citations + limitations footer
-- [ ] Permalink + network highlight for featured deal
-- [ ] `docs/DEMO_SCRIPTS.md` written
-- [ ] CI green
+- [x] `/deals/[id]` works for all verified acquisitions
+- [x] Hub has three triage CTAs + pipeline strip
+- [x] Evidence ladder on every deal detail
+- [x] Export brief with citations + limitations footer
+- [x] Permalink + network highlight for featured deal
+- [x] `docs/DEMO_SCRIPTS.md` written
+- [x] CI green
+
+**Shipped:** 2026-07-06 (`f563d03` deal spine, `65d0afb` heuristic cleanup, `7607d96` dual-scope workspaces).
+
+### Post-sprint (not in original 12 days)
+
+| Item | Status |
+| ---- | ------ |
+| Per-deal OG images (`deals/[id]/opengraph-image.tsx`) | Done |
+| Mobile pass on deal detail | Done |
+| Phase B3 promotion checklist | Done (epic overlap) |
+| Phase C hub changelog | Done (epic overlap) |
+| Heuristic / invented data removal | Done (`65d0afb`) — no TAM fallbacks, no `STRATEGIC_ACQUIRERS` |
+| Phase D (EFTS, CSV, Form D panel) | ✅ — see [EPIC_DEAL_UNIVERSE.md](./EPIC_DEAL_UNIVERSE.md) |
 
 ---
 

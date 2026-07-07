@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { PendingDealRow } from "@/lib/ingestion/pendingDeals";
+import type { PendingDealRecord } from "@/lib/ingestion/pendingDeals";
 import {
   allChecksPassed,
   getPromotionCheckItems,
@@ -10,7 +10,7 @@ import {
 } from "@/lib/ingestion/promotionChecklist";
 
 interface PromotionChecklistProps {
-  deal: PendingDealRow;
+  deal: PendingDealRecord;
   onReadyChange: (ready: boolean) => void;
 }
 
@@ -33,8 +33,6 @@ export default function PromotionChecklist({
     setState((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const ready = allChecksPassed(state, items);
-
   return (
     <div className="rounded-lg border border-lacuna-lavender/50 bg-white p-4">
       <div className="mb-3 flex items-center justify-between gap-2">
@@ -55,13 +53,13 @@ export default function PromotionChecklist({
         {items.map((item) => (
           <li key={item.id} className="flex gap-2 text-sm">
             <input
-              id={`check-${deal.id}-${item.id}`}
+              id={`check-${deal.dealId}-${item.id}`}
               type="checkbox"
               checked={state[item.id] ?? false}
               onChange={() => toggle(item.id)}
               className="mt-1 h-4 w-4 rounded border-gray-300 text-lacuna-plum focus:ring-lacuna-plum"
             />
-            <label htmlFor={`check-${deal.id}-${item.id}`} className="cursor-pointer">
+            <label htmlFor={`check-${deal.dealId}-${item.id}`} className="cursor-pointer">
               <span className="font-medium text-lacuna-text">{item.label}</span>
               <span className="mt-0.5 block text-xs text-lacuna-text-secondary">
                 {item.hint}

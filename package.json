@@ -37,6 +37,8 @@
     "pipeline:weekly": "tsx scripts/weekly-deal-pipeline.ts",
     "sec:ingest-form-d": "tsx scripts/sec-ingest-form-d.ts",
     "sec:search-ma": "tsx scripts/sec-search-ma.ts",
+    "sec:ingest-efts": "tsx scripts/sec-ingest-efts.ts",
+    "deals:import-csv": "tsx scripts/import-deals-candidates-csv.ts",
     "sec:form-d-bulk": "tsx scripts/download-sec-form-d-bulk.ts",
     "download:cms-bulk": "tsx scripts/download-cms-bulk.ts",
     "download:aact": "sh scripts/download-aact.sh",
