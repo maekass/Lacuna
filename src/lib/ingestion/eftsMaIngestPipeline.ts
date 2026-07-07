@@ -24,6 +24,9 @@ export interface EftsMaIngestOptions {
   sinceDate?: string;
   maxResults?: number;
   dryRun?: boolean;
+  /** After sync, enrich keyword-only rows (bounded SEC fetches). */
+  enrich?: boolean;
+  enrichMax?: number;
 }
 
 export interface EftsMaIngestResult {
@@ -31,6 +34,11 @@ export interface EftsMaIngestResult {
   hits: EftsHit[];
   classified: ClassifiedDeal[];
   sync: SyncResult | null;
+  enrich?: Awaited<
+    ReturnType<
+      typeof import("@/lib/ingestion/enrichPendingDeal").enrichKeywordOnlyDeals
+    >
+  >;
 }
 
 function buildFilingIndexUrl(cik: string, accession: string): string {
@@ -104,5 +112,18 @@ export async function runEftsMaIngest(
     sync = await syncDealsToDatabase(classified);
   }
 
-  return { sinceDateUsed, hits, classified, sync };
+  let enrich: EftsMaIngestResult["enrich"];
+  if (options.enrich && !options.dryRun && process.env.DATABASE_URL) {
+    const { enrichKeywordOnlyDeals } = await import(
+      "@/lib/ingestion/enrichPendingDeal"
+    );
+    const dealIds = classified
+      .filter((row) => row.parseQuality === "keyword_only")
+      .map((row) => row.dealId);
+    enrich = await enrichKeywordOnlyDeals(dealIds, {
+      max: options.enrichMax ?? 10,
+    });
+  }
+
+  return { sinceDateUsed, hits, classified, sync, enrich };
 }

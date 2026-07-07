@@ -165,6 +165,8 @@ npm run validate:dataset
 
 **Closes:** [#99](https://github.com/maekass/Lacuna/issues/99)
 
+**Status:** 🚧 in progress on `feat/review-console-e4-enrich`
+
 **Changes:**
 
 1. `src/lib/ingestion/enrichPendingDeal.ts` — fetch 8-K when `keyword_only`.

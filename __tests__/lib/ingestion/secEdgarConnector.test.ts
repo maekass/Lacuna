@@ -115,4 +115,37 @@ describe("secEdgarConnector fetch (mocked)", () => {
     expect(meta.sic).toBe("2834");
     expect(meta.name).toBe("Test Pharma Inc");
   });
+
+  it("resolvePrimaryFilingDocumentUrl maps accession to primary doc", async () => {
+    vi.stubEnv("SEC_EDGAR_USER_AGENT", "Lacuna Test test@example.com");
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            name: "Test Pharma Inc",
+            cik: "0000123456",
+            filings: {
+              recent: {
+                accessionNumber: ["0001193125-24-000001"],
+                filingDate: ["2024-03-16"],
+                form: ["8-K"],
+                primaryDocument: ["d8k.htm"],
+                primaryDocDescription: ["8-K"],
+              },
+            },
+          }),
+      }),
+    );
+
+    const { resolvePrimaryFilingDocumentUrl } = await import(
+      "@/lib/ingestion/secEdgarConnector"
+    );
+    const url = await resolvePrimaryFilingDocumentUrl({
+      cik: "123456",
+      accession: "0001193125-24-000001",
+    });
+    expect(url).toContain("d8k.htm");
+  });
 });
