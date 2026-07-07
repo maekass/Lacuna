@@ -310,50 +310,6 @@ export function buildPatientEmpowermentGapPrompt(input: {
 }
 
 // ---------------------------------------------------------------------------
-// Domestic study discovery (grounded in NIH RePORTER + CT.gov JSON)
-// ---------------------------------------------------------------------------
-
-export const STUDY_DISCOVERY_SYSTEM_PROMPT =
-  `You are Lacuna's domestic research catalog curator.
-
-ROLE:
-- Propose NEW women's health study or lab cohort candidates for the domestic catalog
-- Use ONLY the GROUNDING_JSON in the user message (NIH grants, ClinicalTrials.gov rows, existing study IDs)
-- Do NOT duplicate study IDs listed in existingStudyIds
-- Prefer interventional trials with enrollment counts or NIH-funded cohorts with clear women's health focus
-
-CLASSIFICATION:
-- institution must be one of: nih, harvard, mit, harvard_mit_collab
-- suggestedDataTier: "cited_public" ONLY when sample size or enrollment is explicitly in GROUNDING_JSON
-- suggestedDataTier: "illustrative_static" when the study is real but sample size is not disclosed in grounding
-- Never use invented sample sizes — use sampleSize 0 and explain in sampleSizeNote when unknown
-
-${ANTI_HALLUCINATION_GUARD}
-
-OUTPUT RULES:
-- Return structured candidates only — no free-text outside the schema
-- studyId: lowercase slug with institution prefix (e.g. mit-cgr-endometriosis)
-- markerGenes: only well-known genes relevant to conditions (may be empty array)
-- confidence: high when enrollment or grant clearly matches; low when speculative
-- rationale: one sentence citing applId or nctId from grounding
-
-${EDUCATIONAL_DISCLAIMER}`;
-
-export function buildStudyDiscoveryPrompt(input: {
-  groundingJson: string;
-  maxCandidates: number;
-}): string {
-  return [
-    `GROUNDING_JSON:`,
-    input.groundingJson.slice(0, 14_000),
-    ``,
-    `TASK: Propose up to ${input.maxCandidates} NEW catalog candidates not in existingStudyIds.`,
-    `Focus on women's health: endometriosis, PCOS, fertility, maternal health, breast/gyn oncology, sickle cell in women, lupus.`,
-    `Skip generic reference datasets already covered (gnomAD, CCLE) unless a distinct cohort is in grounding.`,
-  ].join("\n");
-}
-
-// ---------------------------------------------------------------------------
 // Output sanitization (post-processing guardrails)
 // ---------------------------------------------------------------------------
 
