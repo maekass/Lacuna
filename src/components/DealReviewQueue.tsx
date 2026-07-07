@@ -246,6 +246,17 @@ export default function DealReviewQueue({
             — open a dossier to review evidence, attest promotion fields, and
             merge into verified JSON.
           </p>
+          <p className="mt-2 text-xs text-lacuna-blue/70">
+            Guide:{" "}
+            <a
+              href="/docs/REVIEWER_PROMOTION_GUIDE.md"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium underline underline-offset-2"
+            >
+              Reviewer promotion steps (E2)
+            </a>
+          </p>
         </div>
         <button
           type="button"

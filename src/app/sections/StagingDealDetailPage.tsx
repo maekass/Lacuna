@@ -282,6 +282,16 @@ export default function StagingDealDetailPage(
           <code className="text-xs">lacuna_deals</code>. Not in hub counts or
           analytics until promoted with attested fields.
         </p>
+        <p className="mt-2 text-xs text-amber-900/80">
+          <a
+            href="/docs/REVIEWER_PROMOTION_GUIDE.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium underline underline-offset-2"
+          >
+            Reviewer promotion steps (E2)
+          </a>
+        </p>
       </div>
 
       <MotionSection>
