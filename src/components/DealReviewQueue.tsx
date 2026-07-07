@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import PromotionChecklist from "@/components/PromotionChecklist";
+import ReviewAccessGate from "@/components/ReviewAccessGate";
 import type {
   PendingDealRecord,
   PendingDealStatus,
@@ -18,6 +19,12 @@ interface PendingDealsResponse {
     reviewableTotal: number;
   };
   error?: string;
+}
+
+interface ApproveResponse {
+  ok?: boolean;
+  error?: string;
+  promotion?: { ok?: boolean; result?: { acquisitionId?: string } };
 }
 
 function confidenceClass(confidence: string): string {
@@ -69,7 +76,9 @@ function PendingDealCard({
           </p>
           <div className="mt-2 flex flex-wrap gap-2">
             <span
-              className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${confidenceClass(deal.classificationConfidence)}`}
+              className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
+                confidenceClass(deal.classificationConfidence)
+              }`}
             >
               {deal.classificationConfidence} confidence
             </span>
@@ -106,7 +115,9 @@ function PendingDealCard({
             type="button"
             disabled={busy || !promoteReady}
             onClick={() => onPromote(deal.dealId)}
-            title={promoteReady ? undefined : "Complete promotion checklist first"}
+            title={promoteReady
+              ? undefined
+              : "Complete promotion checklist first"}
             className="rounded-md border border-lacuna-plum/30 bg-lacuna-plum/10 px-2.5 py-1.5 text-xs font-medium text-lacuna-plum hover:bg-lacuna-plum/20 disabled:opacity-50"
           >
             Approve &amp; add to verified
@@ -163,11 +174,16 @@ function PendingDealCard({
 }
 
 /** SEC candidate queue (`lacuna_deals`) — staging only, not verified JSON. */
-export default function DealReviewQueue() {
+export default function DealReviewQueue({
+  refreshToken: externalRefresh = 0,
+}: {
+  refreshToken?: number;
+}) {
   const [items, setItems] = useState<PendingDealRecord[]>([]);
   const [reviewableTotal, setReviewableTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [needsAuth, setNeedsAuth] = useState(false);
   const [actionDealId, setActionDealId] = useState<string | null>(null);
   const [refreshToken, setRefreshToken] = useState(0);
 
@@ -184,14 +200,15 @@ export default function DealReviewQueue() {
         if (!response.ok || !body.ok) {
           setItems([]);
           setReviewableTotal(0);
+          const unauthorized = response.status === 401;
+          setNeedsAuth(unauthorized);
           setError(
-            body.error ??
-              (response.status === 401
-                ? "Review API requires Bearer auth in production — use local dev or curl."
-                : "Pending queue unavailable (DATABASE_URL or ingest not configured)."),
+            unauthorized ? null : body.error ??
+              "Pending queue unavailable (DATABASE_URL or ingest not configured).",
           );
           return;
         }
+        setNeedsAuth(false);
         setItems(body.items ?? []);
         setReviewableTotal(body.meta?.reviewableTotal ?? 0);
       } catch {
@@ -209,7 +226,7 @@ export default function DealReviewQueue() {
     return () => {
       cancelled = true;
     };
-  }, [refreshToken]);
+  }, [refreshToken, externalRefresh]);
 
   const handlePromote = useCallback(async (dealId: string) => {
     setActionDealId(dealId);
@@ -222,9 +239,16 @@ export default function DealReviewQueue() {
           body: JSON.stringify({ status: "approved" }),
         },
       );
-      if (!approveResponse.ok) {
-        const body = await approveResponse.json() as { error?: string };
-        setError(body.error ?? "Approve failed.");
+      const approveBody = await approveResponse.json() as ApproveResponse;
+      if (!approveResponse.ok || !approveBody.ok) {
+        setError(approveBody.error ?? "Approve failed.");
+        return;
+      }
+
+      if (approveBody.promotion?.ok) {
+        setItems((prev) => prev.filter((d) => d.dealId !== dealId));
+        setReviewableTotal((n) => Math.max(0, n - 1));
+        setError(null);
         return;
       }
 
@@ -235,7 +259,6 @@ export default function DealReviewQueue() {
       const body = await promoteResponse.json() as {
         ok?: boolean;
         error?: string;
-        result?: { acquisitionId?: string };
       };
       if (!promoteResponse.ok || !body.ok) {
         setError(body.error ?? "Promotion failed.");
@@ -258,11 +281,14 @@ export default function DealReviewQueue() {
   ) => {
     setActionDealId(dealId);
     try {
-      const response = await fetch(`/api/deals/pending/${encodeURIComponent(dealId)}`, {
-        method: "PATCH",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ status }),
-      });
+      const response = await fetch(
+        `/api/deals/pending/${encodeURIComponent(dealId)}`,
+        {
+          method: "PATCH",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ status }),
+        },
+      );
       const body = await response.json() as { ok?: boolean; error?: string };
       if (!response.ok || !body.ok) {
         setError(body.error ?? "Review action failed.");
@@ -286,8 +312,8 @@ export default function DealReviewQueue() {
           </h3>
           <p className="mt-1 max-w-2xl text-sm text-lacuna-blue">
             Staging rows from <code className="text-xs">lacuna_deals</code>{" "}
-            — approve candidates, then promote into verified dataset (JSON locally
-            or Postgres on Vercel db mode). Not live until promoted.
+            — approve candidates, then promote into verified dataset (JSON
+            locally or Postgres on Vercel db mode). Not live until promoted.
           </p>
         </div>
         <button
@@ -303,8 +329,19 @@ export default function DealReviewQueue() {
       <p className="mt-3 text-xs text-lacuna-blue/80">
         {loading
           ? "Loading queue…"
-          : `${reviewableTotal} candidate${reviewableTotal === 1 ? "" : "s"} awaiting review`}
+          : `${reviewableTotal} candidate${
+            reviewableTotal === 1 ? "" : "s"
+          } awaiting review`}
       </p>
+
+      {needsAuth
+        ? (
+          <ReviewAccessGate
+            className="mt-3"
+            onUnlocked={() => setRefreshToken((n) => n + 1)}
+          />
+        )
+        : null}
 
       {error
         ? (
@@ -314,12 +351,12 @@ export default function DealReviewQueue() {
         )
         : null}
 
-      {!loading && items.length === 0 && !error
+      {!loading && items.length === 0 && !error && !needsAuth
         ? (
           <p className="mt-4 rounded-lg border border-dashed border-lacuna-lavender/40 bg-lacuna-lavender/10 px-4 py-6 text-center text-sm text-lacuna-blue/80">
             No pending candidates. Run{" "}
-            <code className="text-xs">npm run sec:ingest</code> with Postgres,
-            or wait for the weekly cron (Mondays 06:00 UTC).
+            <code className="text-xs">npm run sec:ingest</code>{" "}
+            with Postgres, or wait for the weekly cron (Mondays 06:00 UTC).
           </p>
         )
         : null}

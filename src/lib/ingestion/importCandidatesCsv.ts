@@ -4,6 +4,7 @@
  */
 
 import { createHash } from "node:crypto";
+import { classifyDealKeywordOnly } from "@/lib/ingestion/dealClassificationEngine";
 import {
   type ClassifiedDeal,
   syncDealsToDatabase,
@@ -84,9 +85,7 @@ function rowFromFields(fields: string[]): CsvCandidateRow | null {
     return null;
   }
   const valueRaw = map.deal_value_millions.trim();
-  const dealValueMillions = valueRaw
-    ? Number.parseFloat(valueRaw)
-    : undefined;
+  const dealValueMillions = valueRaw ? Number.parseFloat(valueRaw) : undefined;
   return {
     status: map.status || undefined,
     targetName: map.target_name,
@@ -141,6 +140,14 @@ function csvRowToClassifiedDeal(row: CsvCandidateRow): ClassifiedDeal {
     row.strategicRationale ? `Rationale: ${row.strategicRationale}` : null,
   ].filter(Boolean).join("\n");
 
+  const classification = classifyDealKeywordOnly({
+    filingText: [row.strategicRationale, row.inclusionNotes, row.targetName]
+      .filter(Boolean)
+      .join(" "),
+    targetName: row.targetName,
+    acquirerName: row.acquirerName,
+  });
+
   return {
     dealId,
     secAccession,
@@ -159,8 +166,11 @@ function csvRowToClassifiedDeal(row: CsvCandidateRow): ClassifiedDeal {
     parseQuality: "keyword_only",
     filingTextSample: reviewNotes.slice(0, 500),
     classificationConfidence: "low",
-    classificationKeywords: ["manual_csv"],
-    womensHealthRelevant: true,
+    classificationKeywords: classification.matchedKeywords.length > 0
+      ? [...classification.matchedKeywords, "manual_csv"]
+      : ["manual_csv"],
+    womensHealthRelevant: classification.womensHealthRelevant,
+    reviewNotes: reviewNotes || null,
     status: "pending_review",
   };
 }

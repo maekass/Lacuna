@@ -63,7 +63,9 @@ describe("GET /api/deals/pending", () => {
     vi.stubEnv("DATABASE_URL", "");
 
     const { GET } = await import("@/app/api/deals/pending/route");
-    const response = await GET(new Request("http://localhost/api/deals/pending"));
+    const response = await GET(
+      new Request("http://localhost/api/deals/pending"),
+    );
     expect(response.status).toBe(503);
   });
 
@@ -73,7 +75,9 @@ describe("GET /api/deals/pending", () => {
     vi.stubEnv("CRON_SECRET", "test-secret");
 
     const { GET } = await import("@/app/api/deals/pending/route");
-    const response = await GET(new Request("http://localhost/api/deals/pending"));
+    const response = await GET(
+      new Request("http://localhost/api/deals/pending"),
+    );
     expect(response.status).toBe(401);
   });
 });

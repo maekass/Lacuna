@@ -34,7 +34,9 @@ async function main() {
     if (row.ok) {
       console.log(`promoted ${row.dealId} → ${row.acquisitionId}`);
     } else if (row.skipped) {
-      console.log(`skipped ${row.dealId}: ${row.error ?? "duplicate or incomplete"}`);
+      console.log(
+        `skipped ${row.dealId}: ${row.error ?? "duplicate or incomplete"}`,
+      );
     } else {
       console.error(`failed ${row.dealId}: ${row.error}`);
     }

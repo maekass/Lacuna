@@ -23,7 +23,8 @@ export const CAQH_2023_PRIOR_AUTH = {
   payerCostManual: {
     value: 3.52,
     unit: "USD per transaction",
-    source: "CAQH, 2023 Index Report — plan labor cost, manual prior authorization",
+    source:
+      "CAQH, 2023 Index Report — plan labor cost, manual prior authorization",
     sourceUrl:
       "https://www.caqh.org/hubfs/43908627/drupal/2024-01/2023_CAQH_Index_Report.pdf",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
@@ -32,7 +33,8 @@ export const CAQH_2023_PRIOR_AUTH = {
   payerCostElectronic: {
     value: 0.05,
     unit: "USD per transaction",
-    source: "CAQH, 2023 Index Report — plan labor cost, fully electronic prior authorization",
+    source:
+      "CAQH, 2023 Index Report — plan labor cost, fully electronic prior authorization",
     sourceUrl:
       "https://www.caqh.org/hubfs/43908627/drupal/2024-01/2023_CAQH_Index_Report.pdf",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
@@ -40,7 +42,8 @@ export const CAQH_2023_PRIOR_AUTH = {
   providerCostManual: {
     value: 10.97,
     unit: "USD per transaction",
-    source: "CAQH, 2023 Index Report — provider labor cost, manual prior authorization",
+    source:
+      "CAQH, 2023 Index Report — provider labor cost, manual prior authorization",
     sourceUrl:
       "https://www.caqh.org/hubfs/43908627/drupal/2024-01/2023_CAQH_Index_Report.pdf",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
@@ -48,7 +51,8 @@ export const CAQH_2023_PRIOR_AUTH = {
   providerCostElectronic: {
     value: 5.79,
     unit: "USD per transaction",
-    source: "CAQH, 2023 Index Report — provider labor cost, fully electronic prior authorization",
+    source:
+      "CAQH, 2023 Index Report — provider labor cost, fully electronic prior authorization",
     sourceUrl:
       "https://www.caqh.org/hubfs/43908627/drupal/2024-01/2023_CAQH_Index_Report.pdf",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
@@ -56,7 +60,8 @@ export const CAQH_2023_PRIOR_AUTH = {
   providerMinutesElectronic: {
     value: 11,
     unit: "minutes per transaction",
-    source: "CAQH, 2023 Index Report — average provider time, electronic prior authorization",
+    source:
+      "CAQH, 2023 Index Report — average provider time, electronic prior authorization",
     sourceUrl:
       "https://www.caqh.org/hubfs/43908627/drupal/2024-01/2023_CAQH_Index_Report.pdf",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
@@ -64,7 +69,8 @@ export const CAQH_2023_PRIOR_AUTH = {
   providerMinutesPortal: {
     value: 16,
     unit: "minutes per transaction",
-    source: "CAQH, 2023 Index Report — average provider time, portal prior authorization",
+    source:
+      "CAQH, 2023 Index Report — average provider time, portal prior authorization",
     sourceUrl:
       "https://www.caqh.org/hubfs/43908627/drupal/2024-01/2023_CAQH_Index_Report.pdf",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
@@ -76,7 +82,8 @@ export const KFF_CLAIM_DENIALS = {
   marketplaceInNetworkDenialRate2023: {
     value: 20,
     unit: "percent of in-network claims",
-    source: "KFF, Claims Denials and Appeals in ACA Marketplace Plans in 2023 (CMS transparency PUF)",
+    source:
+      "KFF, Claims Denials and Appeals in ACA Marketplace Plans in 2023 (CMS transparency PUF)",
     sourceUrl:
       "https://www.kff.org/private-insurance/claims-denials-and-appeals-in-aca-marketplace-plans-in-2023/",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
@@ -92,26 +99,32 @@ export const KFF_CLAIM_DENIALS = {
   adminDenialReasonShare2023: {
     value: 21,
     unit: "percent of in-network denial reasons",
-    source: "KFF 2023 Marketplace denials brief — administrative denial reason share",
+    source:
+      "KFF 2023 Marketplace denials brief — administrative denial reason share",
     sourceUrl:
       "https://www.kff.org/private-insurance/claims-denials-and-appeals-in-aca-marketplace-plans-in-2023/",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
-    notes: "Administrative reasons among reported denial reasons for in-network claims.",
+    notes:
+      "Administrative reasons among reported denial reasons for in-network claims.",
   },
   medicareAdvantagePriorAuthDenialRate2024: {
     value: 7.7,
     unit: "percent of prior authorization requests",
-    source: "KFF, Medicare Advantage prior authorization denials analysis (2024 CMS data)",
+    source:
+      "KFF, Medicare Advantage prior authorization denials analysis (2024 CMS data)",
     sourceUrl:
       "https://www.kff.org/patient-consumer-protections/claims-denials-and-appeals-in-aca-marketplace-plans-in-2024/",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
-    notes: "Cited within KFF 2024 marketplace brief; MA PA denial rate nearly 8%.",
+    notes:
+      "Cited within KFF 2024 marketplace brief; MA PA denial rate nearly 8%.",
   },
   medicareAdvantageAppealOverturnRate2023: {
     value: 81.7,
     unit: "percent of appealed prior authorization denials",
-    source: "KFF via HFMA summary of CMS Medicare Advantage prior authorization appeals (2023)",
-    sourceUrl: "https://www.hfma.org/fast-finance/aca-marketplace-plans-payment-denial/",
+    source:
+      "KFF via HFMA summary of CMS Medicare Advantage prior authorization appeals (2023)",
+    sourceUrl:
+      "https://www.hfma.org/fast-finance/aca-marketplace-plans-payment-denial/",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
   },
 } as const satisfies Record<string, PublicBenchmark<number>>;
@@ -121,7 +134,8 @@ export const MA_HPC_ADMIN_DENIALS = {
   overallDenialRate2024: {
     value: 20.4,
     unit: "percent of all claims",
-    source: "Massachusetts HPC Datapoints Issue 33 (2024 fully-insured commercial claims)",
+    source:
+      "Massachusetts HPC Datapoints Issue 33 (2024 fully-insured commercial claims)",
     sourceUrl:
       "https://masshpc.gov/publications/datapoints-series/issue-33-evidence-administrative-complexity-health-insurance-claim",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
@@ -129,7 +143,8 @@ export const MA_HPC_ADMIN_DENIALS = {
   adminDenialShareOfClaims2024: {
     value: 16.6,
     unit: "percent of all claims",
-    source: "Massachusetts HPC Datapoints Issue 33 — administrative denial categories F–I",
+    source:
+      "Massachusetts HPC Datapoints Issue 33 — administrative denial categories F–I",
     sourceUrl:
       "https://masshpc.gov/publications/datapoints-series/issue-33-evidence-administrative-complexity-health-insurance-claim",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
@@ -137,7 +152,8 @@ export const MA_HPC_ADMIN_DENIALS = {
   adminDenialShareOfDeniedClaimsProfMedSurg2024: {
     value: 80,
     unit: "percent of denied professional medical/surgical claims",
-    source: "Massachusetts HPC Datapoints Issue 33 — administrative denial share of denied claims",
+    source:
+      "Massachusetts HPC Datapoints Issue 33 — administrative denial share of denied claims",
     sourceUrl:
       "https://masshpc.gov/publications/datapoints-series/issue-33-evidence-administrative-complexity-health-insurance-claim",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
@@ -149,7 +165,8 @@ export const MEDICAID_PRIOR_AUTH = {
   mcoPriorAuthDenialRate2019: {
     value: 12.5,
     unit: "percent of prior authorization requests",
-    source: "HHS OIG, Medicaid MCO prior authorization denials (2019), via KFF/HFMA summaries",
+    source:
+      "HHS OIG, Medicaid MCO prior authorization denials (2019), via KFF/HFMA summaries",
     sourceUrl:
       "https://www.kff.org/patient-consumer-protections/claims-denials-and-appeals-in-aca-marketplace-plans-in-2024/",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
@@ -158,7 +175,8 @@ export const MEDICAID_PRIOR_AUTH = {
     value: 46,
     unit: "percent of externally reviewed appealed denials",
     source: "HHS OIG Medicaid MCO prior authorization appeals (2019), via HFMA",
-    sourceUrl: "https://www.hfma.org/fast-finance/aca-marketplace-plans-payment-denial/",
+    sourceUrl:
+      "https://www.hfma.org/fast-finance/aca-marketplace-plans-payment-denial/",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
   },
 } as const satisfies Record<string, PublicBenchmark<number>>;
@@ -168,10 +186,13 @@ export const AMA_PRIOR_AUTH = {
   requestsNeedingExtraDocumentation: {
     value: 40,
     unit: "percent of pended requests",
-    source: "AMA 2023 Prior Authorization Survey (~40% require additional documentation)",
-    sourceUrl: "https://www.ama-assn.org/practice-management/prior-authorization",
+    source:
+      "AMA 2023 Prior Authorization Survey (~40% require additional documentation)",
+    sourceUrl:
+      "https://www.ama-assn.org/practice-management/prior-authorization",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
-    notes: "Rounded from AMA survey reporting ~40% of pended requests need more documentation.",
+    notes:
+      "Rounded from AMA survey reporting ~40% of pended requests need more documentation.",
   },
 } as const satisfies Record<string, PublicBenchmark<number>>;
 
@@ -180,7 +201,8 @@ export const JOHNS_HOPKINS_PRIOR_AUTH = {
   studiesInSystematicReview: {
     value: 25,
     unit: "studies",
-    source: "Johns Hopkins systematic review of prior authorization adverse effects",
+    source:
+      "Johns Hopkins systematic review of prior authorization adverse effects",
     sourceUrl:
       "https://pure.johnshopkins.edu/en/publications/adverse-effects-of-health-plan-prior-authorization-on-clinical-ef/",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
@@ -188,7 +210,8 @@ export const JOHNS_HOPKINS_PRIOR_AUTH = {
   physicianHoursPerWeekOnPriorAuth: {
     value: 13,
     unit: "hours per physician per week",
-    source: "AMA physician survey, cited in Johns Hopkins prior authorization systematic review (2025)",
+    source:
+      "AMA physician survey, cited in Johns Hopkins prior authorization systematic review (2025)",
     sourceUrl:
       "https://pure.johnshopkins.edu/en/publications/adverse-effects-of-health-plan-prior-authorization-on-clinical-ef/",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
@@ -202,11 +225,13 @@ export const NIHCR_PRIOR_AUTH = {
   physicianPracticeCostLowEstimate: {
     value: 2200,
     unit: "USD per physician per year (2010 dollars)",
-    source: "NIHCR Foundation / Altarum, Impacts of Prior Authorization on Health Care Costs and Quality (2019)",
+    source:
+      "NIHCR Foundation / Altarum, Impacts of Prior Authorization on Health Care Costs and Quality (2019)",
     sourceUrl:
       "https://www.nihcr.org/wp-content/uploads/Altarum-Prior-Authorization-Review-November-2019.pdf",
     retrievedAt: PAYER_OPS_BENCHMARK_RETRIEVED_AT,
-    notes: "Lower-bound staff-time estimate focused on PA interactions with insurers.",
+    notes:
+      "Lower-bound staff-time estimate focused on PA interactions with insurers.",
   },
   physicianPracticeCostHighEstimate: {
     value: 3400,
@@ -222,7 +247,8 @@ export const NIHCR_PRIOR_AUTH = {
 export const SEGMENT_BENCHMARK_BINDINGS = {
   commercial: {
     denialRate: KFF_CLAIM_DENIALS.marketplaceInNetworkDenialRate2023,
-    avoidableRate: MA_HPC_ADMIN_DENIALS.adminDenialShareOfDeniedClaimsProfMedSurg2024,
+    avoidableRate:
+      MA_HPC_ADMIN_DENIALS.adminDenialShareOfDeniedClaimsProfMedSurg2024,
     adminCost: CAQH_2023_PRIOR_AUTH.payerCostManual,
   },
   medicaid: {

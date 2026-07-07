@@ -4,8 +4,8 @@
 
 import type { DealDetail } from "@/lib/deals/dealTypes";
 import {
-  listEmpowermentComparableCompanyIds,
   type GapDimensionView,
+  listEmpowermentComparableCompanyIds,
   type PatientEmpowermentSnapshot,
 } from "@/lib/research/patientEmpowermentPipeline";
 import {
@@ -13,8 +13,8 @@ import {
   EMPOWERMENT_HIGH_ALIGNMENT_SECTORS,
 } from "@/lib/research/patientEmpowermentScoring";
 import {
-  isEvidenceBackedLink,
   type EmpowermentSourceTier,
+  isEvidenceBackedLink,
 } from "@/lib/research/patientEmpowermentTaxonomy";
 
 export type DealEmpowermentScopeAlignment = "high" | "limited" | "none";
@@ -94,9 +94,8 @@ export function empowermentContextForDeal(
     (m) => m.targetMatchTier === "curated",
   );
   const curatedDimensionCount = curatedMatches.length;
-  const evidenceBackedDimensionCount = curatedMatches.filter((m) =>
-    isEvidenceBackedLink(m)
-  ).length;
+  const evidenceBackedDimensionCount =
+    curatedMatches.filter((m) => isEvidenceBackedLink(m)).length;
   const affinityScore = matchedDimensions.length > 0
     ? Math.round((curatedDimensionCount / matchedDimensions.length) * 100)
     : 0;
@@ -112,7 +111,8 @@ export function empowermentContextForDeal(
     dealId: deal.acquisition.id,
     targetName: deal.target.name,
     sector: deal.target.sector,
-    conditionScopeLabel: EMPOWERMENT_CONDITION_SCOPE_LABEL.breast_cancer_baseline,
+    conditionScopeLabel:
+      EMPOWERMENT_CONDITION_SCOPE_LABEL.breast_cancer_baseline,
     baselineNote: buildBaselineNote(scopeAlignment),
     scopeAlignment,
     affinityScore,

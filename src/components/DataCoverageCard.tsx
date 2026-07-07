@@ -259,8 +259,8 @@ export default function DataCoverageCard() {
             ? (
               <p className="mt-2 text-[11px] italic text-lacuna-blue/70">
                 {zeroDealSectorCount} sector
-                {zeroDealSectorCount === 1 ? "" : "s"} with companies but no
-                verified deals omitted.
+                {zeroDealSectorCount === 1 ? "" : "s"}{" "}
+                with companies but no verified deals omitted.
               </p>
             )
             : null}

@@ -93,8 +93,9 @@ export async function answerSpaceWhGapQuestion(
     const message = error instanceof Error
       ? error.message
       : "Gap analysis failed";
-    const narrative =
-      `${buildDeterministicGapNarrative(snapshot)} (LLM unavailable: ${message})`;
+    const narrative = `${
+      buildDeterministicGapNarrative(snapshot)
+    } (LLM unavailable: ${message})`;
     const { text, quality } = assessLlmOutput(narrative, {
       feature: "space-wh-gap",
       modelId: resolved.modelId,

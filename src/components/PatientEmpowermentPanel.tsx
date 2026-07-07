@@ -145,9 +145,7 @@ function DimensionRow({ view }: { view: GapDimensionView }) {
                 : null}
             </ul>
           )
-          : (
-            <span className="text-amber-800">Portfolio gap — no matches</span>
-          )}
+          : <span className="text-amber-800">Portfolio gap — no matches</span>}
       </td>
       <td className="p-2 align-top text-right text-[11px] tabular-nums text-lacuna-blue">
         {view.linkedDeals.length}
@@ -176,13 +174,18 @@ export default function PatientEmpowermentPanel({
   snapshot: snapshotProp,
 }: PatientEmpowermentPanelProps) {
   const fallbackSnapshot = useMemo(
-    () =>
-      buildPatientEmpowermentSnapshot(verifiedDataset as VerifiedDataset),
+    () => buildPatientEmpowermentSnapshot(verifiedDataset as VerifiedDataset),
     [],
   );
   const data = snapshotProp ?? fallbackSnapshot;
-  const { headline, summary, prerequisiteMatrix, phaseSummary, dimensions, gapDistribution } =
-    data;
+  const {
+    headline,
+    summary,
+    prerequisiteMatrix,
+    phaseSummary,
+    dimensions,
+    gapDistribution,
+  } = data;
 
   const topGaps = useMemo(
     () => data.priorityRankings.slice(0, 5),
@@ -268,21 +271,25 @@ export default function PatientEmpowermentPanel({
 
         <ResearchMethodologyDrawer title="Methodology: gap index & crosswalk">
           <p className="mb-2">
-            <strong>Gap index (0–100):</strong> higher = more patients
-            underserved. Example: 45% records access → index 55 (asset_inverted).
+            <strong>Gap index (0–100):</strong>{" "}
+            higher = more patients underserved. Example: 45% records access →
+            index 55 (asset_inverted).
           </p>
           <p className="mb-2">
-            <strong>Priority score:</strong> gap index × (1 − curated analyst
-            coverage %). Surfaces high patient need with thin reviewed mappings.
+            <strong>Priority score:</strong>{" "}
+            gap index × (1 − curated analyst coverage %). Surfaces high patient
+            need with thin reviewed mappings.
           </p>
           <p className="mb-2">
-            <strong>Weighted burden index:</strong> phase × prerequisite × severity
-            weights — overweight treatment/survivorship and critical gaps.
+            <strong>Weighted burden index:</strong>{" "}
+            phase × prerequisite × severity weights — overweight
+            treatment/survivorship and critical gaps.
           </p>
           <p className="mb-2">
-            <strong>Detail table coverage:</strong> curated % = analyst-reviewed
-            links; evidence % = curated links with a public source URL; heuristic
-            % = sector/keyword matches excluding curated.
+            <strong>Detail table coverage:</strong>{" "}
+            curated % = analyst-reviewed links; evidence % = curated links with
+            a public source URL; heuristic % = sector/keyword matches excluding
+            curated.
           </p>
           <p>
             See{" "}
@@ -293,9 +300,11 @@ export default function PatientEmpowermentPanel({
               rel="noopener noreferrer"
             >
               docs/PATIENT_EMPOWERMENT.md
-            </a>
-            {" "}and{" "}
-            <code className="text-lacuna-plum">GET /api/research/patient-empowerment</code>.
+            </a>{" "}
+            and{" "}
+            <code className="text-lacuna-plum">
+              GET /api/research/patient-empowerment
+            </code>.
           </p>
         </ResearchMethodologyDrawer>
 
@@ -331,10 +340,10 @@ export default function PatientEmpowermentPanel({
         </div>
 
         <p className="mt-2 text-[10px] text-lacuna-blue/60">
-          Unweighted mean {summary.meanGapIndexPct}/100 across {summary.metricCount}{" "}
-          dimensions · mean evidence coverage {summary.meanEvidenceCoveragePct}% ·
-          n={headline.surveyRespondents.toLocaleString()} survey · max gap:{" "}
-          {summary.maxGapMetricLabel}
+          Unweighted mean {summary.meanGapIndexPct}/100 across{" "}
+          {summary.metricCount} dimensions · mean evidence coverage{" "}
+          {summary.meanEvidenceCoveragePct}% · n={headline.surveyRespondents
+            .toLocaleString()} survey · max gap: {summary.maxGapMetricLabel}
         </p>
 
         <div className="mt-3 flex flex-wrap gap-2">
@@ -366,7 +375,10 @@ export default function PatientEmpowermentPanel({
           </p>
           <div className="space-y-2">
             {phaseSummary.map((phase) => (
-              <div key={phase.phase} className="flex items-center gap-3 text-xs">
+              <div
+                key={phase.phase}
+                className="flex items-center gap-3 text-xs"
+              >
                 <span className="w-36 shrink-0 text-lacuna-blue">
                   {phase.label}
                 </span>

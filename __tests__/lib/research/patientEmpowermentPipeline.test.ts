@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import verifiedDataset from "@/data/dataset.verified.json";
-import { CURATED_EMPOWERMENT_LINKS, curatedCompanyIds } from "@/data/patientEmpowermentCrosswalk";
+import {
+  CURATED_EMPOWERMENT_LINKS,
+  curatedCompanyIds,
+} from "@/data/patientEmpowermentCrosswalk";
 import { PATIENT_EMPOWERMENT_METRICS } from "@/data/patientEmpowermentReport";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import { empowermentContextForDeal } from "@/lib/deals/empowermentContextForDeal";
@@ -26,18 +29,26 @@ describe("patientEmpowermentPipeline", () => {
   it("scores all cited gap dimensions", () => {
     const snapshot = buildPatientEmpowermentSnapshot(dataset);
     expect(snapshot.dimensions.length).toBe(PATIENT_EMPOWERMENT_METRICS.length);
-    expect(snapshot.priorityRankings.length).toBe(PATIENT_EMPOWERMENT_METRICS.length);
-    expect(snapshot.summary.metricCount).toBe(PATIENT_EMPOWERMENT_METRICS.length);
+    expect(snapshot.priorityRankings.length).toBe(
+      PATIENT_EMPOWERMENT_METRICS.length,
+    );
+    expect(snapshot.summary.metricCount).toBe(
+      PATIENT_EMPOWERMENT_METRICS.length,
+    );
   });
 
   it("exposes composite summary indices", () => {
     const snapshot = buildPatientEmpowermentSnapshot(dataset);
     const { summary } = snapshot;
     expect(summary.medianGapIndexPct).toBeGreaterThan(0);
-    expect(summary.weightedBurdenIndexPct).toBeGreaterThanOrEqual(summary.meanGapIndexPct);
+    expect(summary.weightedBurdenIndexPct).toBeGreaterThanOrEqual(
+      summary.meanGapIndexPct,
+    );
     expect(summary.criticalMetricCount).toBeGreaterThanOrEqual(1);
     expect(summary.maxGapMetricLabel.length).toBeGreaterThan(5);
-    expect(summary.meanHighSeverityGapIndexPct).toBeGreaterThan(summary.meanGapIndexPct);
+    expect(summary.meanHighSeverityGapIndexPct).toBeGreaterThan(
+      summary.meanGapIndexPct,
+    );
   });
 
   it("computes priority score as gap × thin coverage", () => {
@@ -57,8 +68,11 @@ describe("patientEmpowermentPipeline", () => {
     expect(view.curatedCoveragePct).toBeGreaterThan(0);
     expect(view.heuristicCoveragePct).toBeGreaterThan(0);
     expect(view.evidenceCoveragePct).toBeGreaterThan(0);
-    expect(view.evidenceCoveragePct).toBeLessThanOrEqual(view.curatedCoveragePct);
-    expect(view.curatedCoveragePct + view.heuristicCoveragePct).toBeLessThanOrEqual(100);
+    expect(view.evidenceCoveragePct).toBeLessThanOrEqual(
+      view.curatedCoveragePct,
+    );
+    expect(view.curatedCoveragePct + view.heuristicCoveragePct)
+      .toBeLessThanOrEqual(100);
     expect(view.portfolioCoveragePct).toBe(100);
     expect(view.priorityScore).toBeGreaterThan(0);
   });
@@ -165,6 +179,8 @@ describe("GET /api/research/patient-empowerment", () => {
     expect(body.summary.medianGapIndexPct).toBeGreaterThan(0);
     expect(body.summary.weightedBurdenIndexPct).toBeGreaterThan(0);
     expect(body.gapDistribution.critical).toBeGreaterThanOrEqual(1);
-    expect(body.priorityRankings.length).toBe(PATIENT_EMPOWERMENT_METRICS.length);
+    expect(body.priorityRankings.length).toBe(
+      PATIENT_EMPOWERMENT_METRICS.length,
+    );
   });
 });

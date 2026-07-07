@@ -48,18 +48,18 @@ export default function ClinicalTrialsMlPanel() {
         {completion
           ? (
             <>
-                <Metric
+              <Metric
                 label="Completion ROC-AUC"
                 value={completion.roc_auc?.toFixed(2) ?? "—"}
-                />
-            <Metric
+              />
+              <Metric
                 label="Completion baseline"
                 value={completion.majority_baseline_accuracy != null
                   ? `${
                     (completion.majority_baseline_accuracy * 100).toFixed(0)
                   }%`
                   : "—"}
-            />
+              />
             </>
           )
           : <Metric label="Completion model" value="Not exported" />}

@@ -1,12 +1,12 @@
 export {
-  CONSUMER_FEATURED_DEAL_ID,
-  FEATURED_DEAL_ID,
   type ComparableDealSummary,
+  CONSUMER_FEATURED_DEAL_ID,
+  type DealAcquirer,
   type DealAcquisitionDetail,
   type DealAcquisitionExtras,
-  type DealAcquirer,
   type DealDetail,
   type DealTarget,
+  FEATURED_DEAL_ID,
 } from "./dealTypes";
 export { getDealById } from "./getDealById";
 export { getFeaturedDeal } from "./getFeaturedDeal";

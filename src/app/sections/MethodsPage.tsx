@@ -40,8 +40,12 @@ export default function MethodsPage() {
         >
           Scores and models here are exploratory heuristics on n=
           {verifiedAcquisitions.length}{" "}
-          verified deals (staging SEC candidates live in Postgres until promoted — see{" "}
-          <Link href="/deals#data-pipelines" className="underline underline-offset-2">
+          verified deals (staging SEC candidates live in Postgres until promoted
+          — see{" "}
+          <Link
+            href="/deals#data-pipelines"
+            className="underline underline-offset-2"
+          >
             deals pipeline
           </Link>
           ). {changelog.label}. They are not validated for investment decisions.

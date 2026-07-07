@@ -6,7 +6,9 @@ import {
   initialCheckState,
 } from "@/lib/ingestion/promotionChecklist";
 
-function mockDeal(overrides: Partial<PendingDealRecord> = {}): PendingDealRecord {
+function mockDeal(
+  overrides: Partial<PendingDealRecord> = {},
+): PendingDealRecord {
   return {
     id: 1,
     dealId: "test-deal",
@@ -18,7 +20,7 @@ function mockDeal(overrides: Partial<PendingDealRecord> = {}): PendingDealRecord
     announcedDate: "2024-01-01",
     closedDate: null,
     dealValueMillions: null,
-    dealValueNote: null,
+    dealValueNote: "Undisclosed per filing",
     dealStructure: null,
     earnoutTerms: null,
     filingUrl: "https://www.sec.gov/Archives/edgar/data/123/8-k.htm",
@@ -54,5 +56,17 @@ describe("promotion checklist", () => {
     expect(allChecksPassed(state, items)).toBe(false);
     state.secondary = true;
     expect(allChecksPassed(state, items)).toBe(true);
+  });
+
+  it("does not auto-pass keyword-only staging rows", () => {
+    const items = getPromotionCheckItems(
+      mockDeal({ parseQuality: "keyword_only", reviewNotes: null }),
+    );
+    const state = initialCheckState(items);
+    expect(state.primary).toBe(false);
+    expect(state.parties).toBe(false);
+    expect(state.price).toBe(false);
+    expect(state["wh-scope"]).toBe(false);
+    expect(allChecksPassed(state, items)).toBe(false);
   });
 });

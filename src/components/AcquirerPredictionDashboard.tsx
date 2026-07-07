@@ -212,12 +212,13 @@ export default function AcquirerPredictionDashboard() {
                   Most Likely Acquirer: {selectedAnalysis.predictedWinner.name}
                 </div>
                 <div className="text-xs text-green-600">
-                  Match Score:{" "}
-                  {selectedAnalysis.topMatches[0].matchScore}/100
+                  Match Score: {selectedAnalysis.topMatches[0].matchScore}/100
                   {selectedAnalysis.topMatches[0].estimatedValue
-                    ? ` • Estimated Value: ${formatCurrency(
-                      selectedAnalysis.topMatches[0].estimatedValue.median,
-                    )}`
+                    ? ` • Estimated Value: ${
+                      formatCurrency(
+                        selectedAnalysis.topMatches[0].estimatedValue.median,
+                      )
+                    }`
                     : " • Value: insufficient disclosed comparables"}
                 </div>
               </div>
@@ -231,7 +232,8 @@ export default function AcquirerPredictionDashboard() {
                   topAcquirer: selectedAnalysis.topMatches[0]?.acquirer.name ||
                     "N/A",
                   matchScore: selectedAnalysis.topMatches[0]?.matchScore || 0,
-                  estimatedValue: selectedAnalysis.fairValueEstimate?.median ?? 0,
+                  estimatedValue: selectedAnalysis.fairValueEstimate?.median ??
+                    0,
                   competitiveThreat: selectedAnalysis.competitiveThreatLevel,
                 }}
               />

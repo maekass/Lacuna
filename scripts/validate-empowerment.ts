@@ -4,8 +4,8 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { VerifiedDataset } from "../src/lib/data/datasetTypes";
 import {
-  curatedCompanyIds,
   CURATED_EMPOWERMENT_LINKS,
+  curatedCompanyIds,
 } from "../src/data/patientEmpowermentCrosswalk";
 import { PATIENT_EMPOWERMENT_METRICS } from "../src/data/patientEmpowermentReport";
 import { buildPatientEmpowermentSnapshot } from "../src/lib/research/patientEmpowermentPipeline";
@@ -85,7 +85,9 @@ function main() {
   if (snapshot.dimensions.length !== PATIENT_EMPOWERMENT_METRICS.length) {
     errors.push("pipeline: dimension count mismatch");
   }
-  if (snapshot.summary.weightedBurdenIndexPct <= snapshot.summary.meanGapIndexPct) {
+  if (
+    snapshot.summary.weightedBurdenIndexPct <= snapshot.summary.meanGapIndexPct
+  ) {
     warnings.push(
       "pipeline: weighted burden should typically exceed unweighted mean",
     );

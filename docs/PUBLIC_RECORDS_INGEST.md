@@ -1,11 +1,13 @@
 # Public records ingestion (Tiers 1 & 2)
 
-Lacuna ingests **free government APIs** for clinical trials, M&A, private funding, and company enrichment. Nothing auto-merges into `dataset.verified.json` without human review.
+Lacuna ingests **free government APIs** for clinical trials, M&A, private
+funding, and company enrichment. Nothing auto-merges into
+`dataset.verified.json` without human review.
 
 ## Tier 1 — REST APIs (automate daily/weekly)
 
-| Source | Command / endpoint | Output |
-|--------|-------------------|--------|
+| Source                | Command / endpoint                                     | Output                                         |
+| --------------------- | ------------------------------------------------------ | ---------------------------------------------- |
 | ClinicalTrials.gov v2 | `npm run ml:ct:ingest -- --all-queries --max-pages 20` | `ml/clinical_trials/data/cached_training.json` |
 | CT.gov live search    | `GET /api/clinical-trials?condition=endometriosis`     | JSON trials (User-Agent + `fields=`)           |
 | SEC 8-K Item 2.01     | `npm run sec:ingest`                                   | `lacuna_deals` (Postgres)                      |

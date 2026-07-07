@@ -1,6 +1,9 @@
 "use client";
 
-import type { EvidenceLadderResult, EvidenceTier } from "@/lib/deals/evidenceLadder";
+import type {
+  EvidenceLadderResult,
+  EvidenceTier,
+} from "@/lib/deals/evidenceLadder";
 
 const tierStyles: Record<EvidenceTier, string> = {
   primary: "border-emerald-300 bg-emerald-50 text-emerald-900",
@@ -14,7 +17,9 @@ interface EvidenceLadderProps {
   compact?: boolean;
 }
 
-export default function EvidenceLadder({ ladder, compact = false }: EvidenceLadderProps) {
+export default function EvidenceLadder(
+  { ladder, compact = false }: EvidenceLadderProps,
+) {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap gap-2">
@@ -58,9 +63,7 @@ export default function EvidenceLadder({ ladder, compact = false }: EvidenceLadd
             Limitations
           </p>
           <ul className="mt-2 list-disc space-y-1 pl-4 text-sm text-lacuna-text-secondary">
-            {ladder.limitations.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
+            {ladder.limitations.map((item) => <li key={item}>{item}</li>)}
           </ul>
         </div>
       )}

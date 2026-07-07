@@ -13,6 +13,7 @@ import {
   syncDealsToDatabase,
   type SyncResult,
 } from "@/lib/ingestion/databaseSync";
+import { WH_CONDITION_SEARCH_TERMS } from "@/lib/ingestion/publicRecords/whSearchTerms";
 import { buildDealId } from "@/lib/ingestion/secEdgarConnector";
 import {
   type EftsHit,
@@ -35,15 +36,18 @@ export interface EftsMaIngestResult {
 function buildFilingIndexUrl(cik: string, accession: string): string {
   const normalized = accession.includes("-")
     ? accession
-    : `${accession.slice(0, 10)}-${accession.slice(10, 12)}-${accession.slice(12)}`;
+    : `${accession.slice(0, 10)}-${accession.slice(10, 12)}-${
+      accession.slice(12)
+    }`;
   const dashless = normalized.replace(/-/g, "");
   return `https://www.sec.gov/Archives/edgar/data/${cik}/${dashless}/${normalized}-index.htm`;
 }
 
 /** Map an EFTS hit to a staging row (keyword-only until full 8-K parse). */
 export function eftsHitToClassifiedDeal(hit: EftsHit): ClassifiedDeal {
+  const whContext = WH_CONDITION_SEARCH_TERMS.slice(0, 4).join(" ");
   const excerpt =
-    `EFTS 8-K Item 2.01 hit — ${hit.companyName} (${hit.form}, ${hit.filingDate}). Review filing for target and consideration.`;
+    `Women's health EFTS query (${whContext}) — 8-K Item 2.01 hit: ${hit.companyName} (${hit.form}, ${hit.filingDate}). Review filing for target and consideration.`;
   const classification = classifyDealKeywordOnly({
     filingText: excerpt,
     acquirerName: hit.companyName,
@@ -64,13 +68,11 @@ export function eftsHitToClassifiedDeal(hit: EftsHit): ClassifiedDeal {
     item201Excerpt: excerpt,
     parseQuality: "keyword_only",
     filingTextSample: excerpt.slice(0, 500),
-    classificationConfidence: classification.confidence === "low"
-      ? "medium"
-      : classification.confidence,
+    classificationConfidence: classification.confidence,
     classificationKeywords: classification.matchedKeywords.length > 0
       ? classification.matchedKeywords
       : ["efts_wh_query"],
-    womensHealthRelevant: true,
+    womensHealthRelevant: classification.womensHealthRelevant,
     classificationMethod: "keyword",
     status: eligible
       ? statusForConfidence(classification.confidence)

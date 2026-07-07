@@ -173,8 +173,13 @@ body {
   background-attachment: fixed;
   color: var(--foreground);
   font-family:
-    var(--font-playfair), "Didot", "Bodoni MT", "Playfair Display", Georgia,
-    "Times New Roman", serif;
+    var(--font-playfair),
+    "Didot",
+    "Bodoni MT",
+    "Playfair Display",
+    Georgia,
+    "Times New Roman",
+    serif;
 }
 
 /* Didone serif hierarchy — weight/size/tracking only */

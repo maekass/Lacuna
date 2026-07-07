@@ -50,7 +50,8 @@ export const SPACE_WH_RESEARCH_ASSETS: readonly SpaceWhResearchAsset[] = [
     citations: [
       {
         label: "ISS National Lab — osteoporosis therapeutic case study",
-        url: "https://issnationallab.org/case_study/new-osteoporosis-therapeutic/",
+        url:
+          "https://issnationallab.org/case_study/new-osteoporosis-therapeutic/",
       },
       {
         label: "npj Microgravity 2023 — BP-NELL-PEG ISS study",
@@ -87,7 +88,8 @@ export const SPACE_WH_RESEARCH_ASSETS: readonly SpaceWhResearchAsset[] = [
       },
       {
         label: "NASA OCHMO VTE risk assessment (2025)",
-        url: "https://www.nasa.gov/wp-content/uploads/2025/02/venous-thromboembolism-vte-report-ochmo-012825.pdf",
+        url:
+          "https://www.nasa.gov/wp-content/uploads/2025/02/venous-thromboembolism-vte-report-ochmo-012825.pdf",
       },
     ],
     gapNotes: [
@@ -112,11 +114,13 @@ export const SPACE_WH_RESEARCH_ASSETS: readonly SpaceWhResearchAsset[] = [
     citations: [
       {
         label: "NASA — ISS research informs FDA-approved cancer therapy",
-        url: "https://www.nasa.gov/missions/station/iss-research/space-station-research-informs-new-fda-approved-cancer-therapy/",
+        url:
+          "https://www.nasa.gov/missions/station/iss-research/space-station-research-informs-new-fda-approved-cancer-therapy/",
       },
       {
         label: "ISS National Lab — Merck pembrolizumab crystallization",
-        url: "https://issnationallab.org/press-releases/merk-lab-research-could-improve-cancer-drug-delivery/",
+        url:
+          "https://issnationallab.org/press-releases/merk-lab-research-could-improve-cancer-drug-delivery/",
       },
     ],
     gapNotes: [
@@ -164,10 +168,12 @@ export const SPACE_WH_RESEARCH_ASSETS: readonly SpaceWhResearchAsset[] = [
     citations: [
       {
         label: "KU Medical Center — NASA female fertility research",
-        url: "https://www.kumc.edu/about/news/news-archive/nasa-female-fertility-research.html",
+        url:
+          "https://www.kumc.edu/about/news/news-archive/nasa-female-fertility-research.html",
       },
       {
-        label: "PNAS abstract — female reproductive dysfunction after spaceflight",
+        label:
+          "PNAS abstract — female reproductive dysfunction after spaceflight",
         url: "https://www.pnas.org/doi/abs/10.1073/pnas.2606092123",
       },
     ],

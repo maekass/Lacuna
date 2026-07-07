@@ -100,7 +100,9 @@ async function main() {
     const probe = await probeUrl(key, benchmark);
     uniqueUrls.set(benchmark.sourceUrl, probe);
     const label = probe.ok ? "ok" : "fail";
-    console.log(`[${label}] ${probe.httpStatus ?? "ERR"} ${benchmark.sourceUrl}`);
+    console.log(
+      `[${label}] ${probe.httpStatus ?? "ERR"} ${benchmark.sourceUrl}`,
+    );
   }
 
   const outDir = join(process.cwd(), "src/data");
@@ -116,7 +118,9 @@ async function main() {
 
   const failed = [...uniqueUrls.values()].filter((row) => !row.ok);
   if (failed.length > 0) {
-    console.error(`${failed.length} source URL(s) unreachable — check snapshot.`);
+    console.error(
+      `${failed.length} source URL(s) unreachable — check snapshot.`,
+    );
     process.exitCode = 1;
   }
 }

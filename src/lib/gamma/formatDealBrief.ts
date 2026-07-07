@@ -54,8 +54,12 @@ export function formatDealBrief(
   if (comparables.length > 0) {
     lines.push("## Comparable deals");
     for (const c of comparables.slice(0, 5)) {
-      const val = typeof c.dealValue === "number" ? `$${c.dealValue}M` : "undisclosed";
-      lines.push(`- ${c.targetName} → ${c.acquirerName} (${c.announcedDate}, ${val})`);
+      const val = typeof c.dealValue === "number"
+        ? `$${c.dealValue}M`
+        : "undisclosed";
+      lines.push(
+        `- ${c.targetName} → ${c.acquirerName} (${c.announcedDate}, ${val})`,
+      );
     }
     lines.push("");
   }

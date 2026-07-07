@@ -20,9 +20,24 @@ export function GapDistributionChart({
   );
 
   const buckets = [
-    { key: "critical", label: "Critical (≥60)", count: distribution.critical, className: "bg-red-400/80" },
-    { key: "high", label: "High (40–59)", count: distribution.high, className: "bg-amber-400/80" },
-    { key: "moderate", label: "Moderate (<40)", count: distribution.moderate, className: "bg-sky-400/80" },
+    {
+      key: "critical",
+      label: "Critical (≥60)",
+      count: distribution.critical,
+      className: "bg-red-400/80",
+    },
+    {
+      key: "high",
+      label: "High (40–59)",
+      count: distribution.high,
+      className: "bg-amber-400/80",
+    },
+    {
+      key: "moderate",
+      label: "Moderate (<40)",
+      count: distribution.moderate,
+      className: "bg-sky-400/80",
+    },
   ] as const;
 
   const sortedMetrics = [...metrics].sort(
@@ -58,8 +73,14 @@ export function GapDistributionChart({
         </p>
         <div className="space-y-1 max-h-40 overflow-y-auto pr-1">
           {sortedMetrics.map(({ metric }) => (
-            <div key={metric.id} className="flex items-center gap-2 text-[10px]">
-              <span className="w-24 truncate text-lacuna-blue/80" title={metric.label}>
+            <div
+              key={metric.id}
+              className="flex items-center gap-2 text-[10px]"
+            >
+              <span
+                className="w-24 truncate text-lacuna-blue/80"
+                title={metric.label}
+              >
                 {metric.id.replace(/-/g, " ")}
               </span>
               <div className="h-2 flex-1 rounded bg-lacuna-pink/10">

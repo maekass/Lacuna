@@ -4,8 +4,8 @@ import {
   generateAcquisitionInsights,
   generateEvidenceSummary,
   generateReimbursementInsights,
-  isAIConfigured,
   type InsightResult,
+  isAIConfigured,
 } from "@/lib/ai/insights";
 
 interface AcquisitionPayload {

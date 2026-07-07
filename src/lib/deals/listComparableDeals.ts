@@ -4,7 +4,10 @@ import type { ComparableDealSummary } from "./dealTypes";
 const DEFAULT_LIMIT = 5;
 const YEAR_WINDOW = 3;
 
-function targetSector(dataset: VerifiedDataset, targetId: string): string | null {
+function targetSector(
+  dataset: VerifiedDataset,
+  targetId: string,
+): string | null {
   return dataset.companies.find((c) => c.id === targetId)?.sector ?? null;
 }
 

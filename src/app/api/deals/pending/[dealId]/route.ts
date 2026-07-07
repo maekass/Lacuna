@@ -2,14 +2,14 @@ import { NextResponse } from "next/server";
 import { guardDealReviewRequest } from "@/lib/api/dealReviewAccess";
 import {
   getPendingDealByDealId,
-  updatePendingDeal,
   type PendingDealStatus,
+  updatePendingDeal,
 } from "@/lib/ingestion/pendingDeals";
 import {
+  canPromoteInRuntime,
   isAutoPromoteEnabled,
   promoteApprovedDeal,
   resolvePromoteTarget,
-  canPromoteInRuntime,
 } from "@/lib/ingestion/promoteApprovedDeals";
 
 const VALID_STATUSES = new Set<PendingDealStatus>([
@@ -31,8 +31,10 @@ function parsePatchBody(body: unknown): PatchBody | null {
   const patch: PatchBody = {};
 
   if (record.status !== undefined) {
-    if (typeof record.status !== "string" ||
-      !VALID_STATUSES.has(record.status as PendingDealStatus)) {
+    if (
+      typeof record.status !== "string" ||
+      !VALID_STATUSES.has(record.status as PendingDealStatus)
+    ) {
       return null;
     }
     patch.status = record.status as PendingDealStatus;

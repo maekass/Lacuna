@@ -29,9 +29,10 @@ export async function GET(request: Request) {
   });
 
   const statusParam = url.searchParams.get("status");
-  const status = statusParam && VALID_STATUSES.has(statusParam as PendingDealStatus)
-    ? (statusParam as PendingDealStatus)
-    : undefined;
+  const status =
+    statusParam && VALID_STATUSES.has(statusParam as PendingDealStatus)
+      ? (statusParam as PendingDealStatus)
+      : undefined;
   const womensHealthOnly = url.searchParams.get("womensHealth") === "true";
 
   try {

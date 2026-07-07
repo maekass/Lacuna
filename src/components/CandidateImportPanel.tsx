@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import ReviewAccessGate from "@/components/ReviewAccessGate";
 
 interface ImportResponse {
   ok: boolean;
@@ -11,18 +12,27 @@ interface ImportResponse {
   error?: string;
 }
 
+interface CandidateImportPanelProps {
+  refreshToken?: number;
+  onImported?: () => void;
+}
+
 /** Paste or upload CSV candidates into `lacuna_deals` staging. */
-export default function CandidateImportPanel() {
+export default function CandidateImportPanel({
+  onImported,
+}: CandidateImportPanelProps) {
   const [csv, setCsv] = useState("");
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<ImportResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [needsAuth, setNeedsAuth] = useState(false);
 
   const handleImport = useCallback(async () => {
     if (!csv.trim()) return;
     setBusy(true);
     setError(null);
     setResult(null);
+    setNeedsAuth(false);
     try {
       const response = await fetch("/api/deals/candidates/import", {
         method: "POST",
@@ -31,28 +41,36 @@ export default function CandidateImportPanel() {
       });
       const body = await response.json() as ImportResponse;
       if (!response.ok || !body.ok) {
+        if (response.status === 401) {
+          setNeedsAuth(true);
+          return;
+        }
         setError(body.error ?? "Import failed.");
         return;
       }
       setResult(body);
+      onImported?.();
     } catch {
       setError("Import request failed.");
     } finally {
       setBusy(false);
     }
-  }, [csv]);
+  }, [csv, onImported]);
 
-  const handleFile = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      setCsv(typeof reader.result === "string" ? reader.result : "");
-      setResult(null);
-      setError(null);
-    };
-    reader.readAsText(file);
-  }, []);
+  const handleFile = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        setCsv(typeof reader.result === "string" ? reader.result : "");
+        setResult(null);
+        setError(null);
+      };
+      reader.readAsText(file);
+    },
+    [],
+  );
 
   return (
     <div className="rounded-xl border border-lacuna-lavender/40 bg-white p-6 shadow-sm">
@@ -62,8 +80,18 @@ export default function CandidateImportPanel() {
       <p className="mt-1 text-sm text-lacuna-blue">
         Import human-curated candidates into the review queue. Template:{" "}
         <code className="text-xs">staging/deals_candidates.template.csv</code>
-        {" "}— never auto-merges to verified JSON.
+        {" "}
+        — never auto-merges to verified JSON.
       </p>
+
+      {needsAuth
+        ? (
+          <ReviewAccessGate
+            className="mt-4"
+            onUnlocked={() => setNeedsAuth(false)}
+          />
+        )
+        : null}
 
       <div className="mt-4 flex flex-wrap gap-3">
         <label className="cursor-pointer rounded-md border border-lacuna-lavender/50 px-3 py-1.5 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20">
@@ -78,7 +106,7 @@ export default function CandidateImportPanel() {
         <button
           type="button"
           onClick={() => void handleImport()}
-          disabled={busy || !csv.trim()}
+          disabled={busy || !csv.trim() || needsAuth}
           className="rounded-md bg-lacuna-plum px-3 py-1.5 text-xs font-medium text-white hover:bg-lacuna-plum/90 disabled:opacity-50"
         >
           {busy ? "Importing…" : "Import to staging"}
@@ -105,8 +133,8 @@ export default function CandidateImportPanel() {
         ? (
           <p className="mt-3 text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-md px-3 py-2">
             Imported {result.parsed ?? 0} row(s) — inserted{" "}
-            {result.sync?.inserted ?? 0}, updated {result.sync?.updated ?? 0}.
-            Refresh the review queue below.
+            {result.sync?.inserted ?? 0}, updated{" "}
+            {result.sync?.updated ?? 0}. Review queue refreshed.
           </p>
         )
         : null}

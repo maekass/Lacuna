@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
-import { buildEvidenceLadder, FEATURED_DEAL_ID, getDealById } from "@/lib/deals";
+import {
+  buildEvidenceLadder,
+  FEATURED_DEAL_ID,
+  getDealById,
+} from "@/lib/deals";
 import { formatDealBrief } from "@/lib/gamma/formatDealBrief";
 
 describe("evidence ladder", () => {

@@ -14,10 +14,15 @@ export interface DatasetChangelog {
 /**
  * Compares live verified dataset against the last computed snapshot for hub/methods footnotes.
  */
-export function getDatasetChangelog(dataset: VerifiedDataset): DatasetChangelog {
+export function getDatasetChangelog(
+  dataset: VerifiedDataset,
+): DatasetChangelog {
   const currentDealCount = dataset.acquisitions.length;
   const priorDealCount = computedSummary.headline.verifiedDeals;
-  const dealsAddedSinceSnapshot = Math.max(0, currentDealCount - priorDealCount);
+  const dealsAddedSinceSnapshot = Math.max(
+    0,
+    currentDealCount - priorDealCount,
+  );
   const currentLastUpdated = dataset.provenance.lastUpdated;
   const priorLastUpdated = computedSummary.provenance.lastUpdated;
   const hasNewDeals = dealsAddedSinceSnapshot > 0;

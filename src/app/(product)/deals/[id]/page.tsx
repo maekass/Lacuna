@@ -15,7 +15,9 @@ export async function generateStaticParams() {
   return dataset.acquisitions.map((a) => ({ id: a.id }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: PageProps,
+): Promise<Metadata> {
   const { id } = await params;
   const dataset = getStaticVerifiedDataset();
   const deal = getDealById(dataset, id);
@@ -25,11 +27,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const acq = deal.acquisition;
   return {
     title: `${acq.targetName} → ${acq.acquirerName} · Lacuna`,
-    description: `Verified women's health M&A: ${acq.dealType}, announced ${acq.announcedDate}. Sources and limitations from public filings.`,
+    description:
+      `Verified women's health M&A: ${acq.dealType}, announced ${acq.announcedDate}. Sources and limitations from public filings.`,
     alternates: { canonical: `/deals/${id}` },
     openGraph: {
       title: `${acq.targetName} → ${acq.acquirerName}`,
-      description: `Verified women's health M&A: ${acq.dealType}, announced ${acq.announcedDate}.`,
+      description:
+        `Verified women's health M&A: ${acq.dealType}, announced ${acq.announcedDate}.`,
       type: "article",
     },
   };

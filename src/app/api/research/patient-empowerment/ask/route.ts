@@ -32,7 +32,10 @@ export async function POST(request: NextRequest) {
   try {
     const dataset = await getVerifiedDataset();
     const snapshot = buildPatientEmpowermentSnapshot(dataset);
-    const result = await answerPatientEmpowermentGapQuestion(snapshot, question);
+    const result = await answerPatientEmpowermentGapQuestion(
+      snapshot,
+      question,
+    );
     return NextResponse.json(result);
   } catch (error) {
     console.error("patient-empowerment ask error:", error);

@@ -5,8 +5,8 @@
 
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import {
-  curatedLinksByMetricId,
   type CuratedEmpowermentLink,
+  curatedLinksByMetricId,
 } from "@/data/patientEmpowermentCrosswalk";
 import {
   PATIENT_EMPOWERMENT_HEADLINE,
@@ -17,21 +17,21 @@ import {
   computeGapPriorityScore,
   computeGapSeverityDistribution,
   computeWeightedBurdenIndex,
+  type GapSeverityDistribution,
   meanRounded,
   median,
-  type GapSeverityDistribution,
 } from "@/lib/research/patientEmpowermentScoring";
 import {
+  bestMatchTier,
   EMPOWERMENT_PHASE_LABELS,
   EMPOWERMENT_PHASE_ORDER,
   EMPOWERMENT_PREREQUISITE_LABELS,
   EMPOWERMENT_PREREQUISITE_ORDER,
-  bestMatchTier,
-  isEvidenceBackedLink,
   type EmpowermentCarePhase,
   type EmpowermentMatchTier,
   type EmpowermentPrerequisiteId,
   type EmpowermentSourceTier,
+  isEvidenceBackedLink,
 } from "@/lib/research/patientEmpowermentTaxonomy";
 
 export interface LinkedCompany {
@@ -261,9 +261,8 @@ export function scoreGapDimension(
   }
 
   const addressableInSample = sectorIds.size;
-  const linkedInSectorCount = linkedCompanies.filter((c) =>
-    sectorIds.has(c.id)
-  ).length;
+  const linkedInSectorCount =
+    linkedCompanies.filter((c) => sectorIds.has(c.id)).length;
   const portfolioCoveragePct = addressableInSample > 0
     ? Math.min(
       100,
@@ -283,7 +282,8 @@ export function scoreGapDimension(
     ? Math.round((heuristicInSectorCount / addressableInSample) * 100)
     : 0;
   const evidenceInSectorCount = linkedCompanies.filter(
-    (c) => sectorIds.has(c.id) && c.matchTier === "curated" &&
+    (c) =>
+      sectorIds.has(c.id) && c.matchTier === "curated" &&
       isEvidenceBackedLink(c),
   ).length;
   const evidenceCoveragePct = addressableInSample > 0
@@ -419,8 +419,8 @@ export function buildPatientEmpowermentSnapshot(
         dimensions.map((d) => d.evidenceCoveragePct),
       ),
       highestGapMetricId: sortedByGap[0]?.metric.id ?? "",
-      highestGapPrerequisiteId:
-        sortedPrereq[0]?.prerequisiteId ?? "evidence-standards",
+      highestGapPrerequisiteId: sortedPrereq[0]?.prerequisiteId ??
+        "evidence-standards",
     },
     disclaimer:
       "HLTH Foundation / Outcomes4Me 2022 breast cancer empowerment baseline crosswalked to Lacuna's verified M&A sample using curated analyst mappings (preferred), sector overlap, and description keyword affinity. Gap indices are cited static rates — not live patient outcomes, clinical benchmarks, or investment advice.",
@@ -458,7 +458,9 @@ export function exportEmpowermentCrosswalkCsv(
     "",
     "prerequisite,label,mean_gap_index,companies,deals",
     ...prerequisiteMatrix.map((p) =>
-      `prerequisite,${csvEscape(p.label)},${p.meanGapIndexPct},${p.linkedCompanyCount},${p.linkedDealCount}`
+      `prerequisite,${
+        csvEscape(p.label)
+      },${p.meanGapIndexPct},${p.linkedCompanyCount},${p.linkedDealCount}`
     ),
     "",
     "metric_id,metric_label,gap_index,priority_score,cited_value,evidence_coverage_pct,company_id,company_name,sector,match_tier,match_note,source_tier,source_url,deal_count",

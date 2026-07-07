@@ -196,8 +196,32 @@ export class ValuationPremiumCalculator {
    */
   calculateValuation(input: ValuationInput): ValuationOutput {
     const sectorKey = input.sector.toLowerCase().replace(/\s+/g, "_");
-    const benchmark = SECTOR_BENCHMARKS[sectorKey] ||
-      SECTOR_BENCHMARKS["digital_therapeutics"];
+    const benchmark = SECTOR_BENCHMARKS[sectorKey];
+
+    if (!benchmark || benchmark.sampleSize < 1) {
+      const emptyBenchmark: SectorBenchmark = {
+        medianMultiple: 0,
+        p25Multiple: 0,
+        p75Multiple: 0,
+        sampleSize: 0,
+        // Verified dataset has no payer linkage for this sector.
+        reimbursementCorrelation: 0,
+      };
+      return {
+        baseMultiple: 0,
+        reimbursementPremium: 0,
+        adjustedMultiple: 0,
+        impliedValuation: 0,
+        rangeLow: 0,
+        rangeHigh: 0,
+        confidence: "low",
+        keyFactors: [
+          "No verified-deal benchmark for this sector — pick a sector with deals in the curated dataset.",
+        ],
+        acquirerPremium: 1,
+        sectorBenchmark: emptyBenchmark,
+      };
+    }
 
     // Base multiple from sector
     let baseMultiple = benchmark.medianMultiple;

@@ -37,11 +37,12 @@ export default function PatientEmpowermentInsight({
           {headline.surveyRespondents.toLocaleString()})
         </p>
         <p className="mt-1 text-lacuna-blue/80">
-          Report: {summary.maxGapMetricLabel} (index {summary.maxGapIndexPct}).
-          Weighted burden {summary.weightedBurdenIndexPct}/100 ·{" "}
-          {summary.criticalMetricCount} critical gaps. Crosswalk:{" "}
-          {summary.curatedLinkCount} curated · {summary.evidenceBackedLinkCount}{" "}
-          evidence-backed.
+          Report: {summary.maxGapMetricLabel} (index{" "}
+          {summary.maxGapIndexPct}). Weighted burden{" "}
+          {summary.weightedBurdenIndexPct}/100 · {summary.criticalMetricCount}
+          {" "}
+          critical gaps. Crosswalk: {summary.curatedLinkCount} curated ·{" "}
+          {summary.evidenceBackedLinkCount} evidence-backed.
         </p>
         <Link
           href="/research#patient-empowerment"
@@ -66,11 +67,13 @@ export default function PatientEmpowermentInsight({
           <p className="text-sm text-lacuna-blue">
             HLTH/Outcomes4Me 2022 (breast cancer, n=
             {headline.surveyRespondents.toLocaleString()}): max gap{" "}
-            {summary.maxGapIndexPct}/100 ({summary.maxGapMetricLabel.toLowerCase()}).
-            Weighted burden {summary.weightedBurdenIndexPct}/100 · median{" "}
+            {summary.maxGapIndexPct}/100 ({summary.maxGapMetricLabel
+              .toLowerCase()}). Weighted burden{" "}
+            {summary.weightedBurdenIndexPct}/100 · median{" "}
             {summary.medianGapIndexPct}/100 · {summary.criticalMetricCount}{" "}
-            critical. Top priority: {topPriority?.metric.label.toLowerCase()} (
-            score {topPriority?.priorityScore}). Weakest prerequisite:{" "}
+            critical. Top priority: {topPriority?.metric.label.toLowerCase()}
+            {" "}
+            ( score {topPriority?.priorityScore}). Weakest prerequisite:{" "}
             {weakestPrereq.toLowerCase()}.
           </p>
           <p className="mt-2 text-xs text-lacuna-plum/70 group-hover:text-lacuna-blue">

@@ -35,10 +35,10 @@ export default function RhCapitalPortfolioContext() {
             RH Capital portfolio (Foreground Capital)
           </h3>
           <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/80">
-            {RH_CAPITAL_MANAGER_NOTE} Metrics below are from press releases and
-            trade press — not Lacuna verified M&A deals unless noted as an exit.
-            Toggle the RH Capital overlay on the network graph to highlight these
-            companies.
+            {RH_CAPITAL_MANAGER_NOTE}{" "}
+            Metrics below are from press releases and trade press — not Lacuna
+            verified M&A deals unless noted as an exit. Toggle the RH Capital
+            overlay on the network graph to highlight these companies.
           </p>
         </div>
       </ModelProvenanceHint>
@@ -77,40 +77,41 @@ export default function RhCapitalPortfolioContext() {
               <tr
                 key={company.id}
                 className="border-b border-lacuna-lavender/15"
-                >
+              >
                 <td className="py-2 pr-3">
-                    <a
+                  <a
                     href={company.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="font-medium text-lacuna-plum hover:underline"
                   >
                     {company.name}
-                    </a>
+                  </a>
                 </td>
                 <td className="py-2 pr-3">{company.focusArea}</td>
                 <td className="py-2 pr-3">
                   {formatFunding(company.totalFundingM)}
                 </td>
                 <td className="py-2">
-                  {company.exit != null ? (
+                  {company.exit != null
+                    ? (
                       <span>
-                      {company.exit.acquirer}
-                      {company.exit.dealValueM != null
+                        {company.exit.acquirer}
+                        {company.exit.dealValueM != null
                           ? ` · $${company.exit.dealValueM}M`
                           : " · terms undisclosed"}
-                        </span>
+                      </span>
                     )
                     : company.lastKnownValuationM != null
                     ? (
-                    <span>
+                      <span>
                         Valued ${company.lastKnownValuationM}M (
                         {company.valuationSource})
-                    </span>
+                      </span>
                     )
                     : (
                       "—"
-                      )}
+                    )}
                 </td>
               </tr>
             ))}
@@ -123,18 +124,18 @@ export default function RhCapitalPortfolioContext() {
           <li key={source.label}>
             {source.url != null
               ? (
-              <a
+                <a
                   href={source.url}
-                target="_blank"
-                rel="noopener noreferrer"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:underline"
-              >
+                >
                   {source.label}
-              </a>
+                </a>
               )
               : (
                 source.label
-            )}
+              )}
             {" — "}
             {source.reference}
           </li>

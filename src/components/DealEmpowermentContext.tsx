@@ -96,7 +96,8 @@ export default function DealEmpowermentContext({
       {context.comparableCompanyIds.length > 0
         ? (
           <p className="mt-2 text-lacuna-blue/70">
-            Curated comparables in sample: {context.comparableCompanyIds.length}{" "}
+            Curated comparables in sample: {context.comparableCompanyIds.length}
+            {" "}
             companies share empowerment tags
           </p>
         )

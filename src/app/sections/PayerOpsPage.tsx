@@ -25,8 +25,8 @@ import {
   painPoints,
   type SegmentKey,
   segments,
-  vcSignals,
   VC_SIGNAL_DEAL_COUNT_MODEL,
+  vcSignals,
   WORK_QUEUE_MODEL_FOOTNOTE,
 } from "@/data/payerOpsData";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
@@ -219,8 +219,7 @@ export default function PayerOpsPage() {
             </p>
             <h1 className="mt-3 max-w-4xl text-3xl font-bold leading-tight text-balance text-lacuna-plum sm:text-5xl">
               PayerOps Navigator
-              <wbr />{" "}
-              for reducing avoidable administrative waste
+              <wbr /> for reducing avoidable administrative waste
             </h1>
             <p className="mt-4 max-w-3xl text-base leading-relaxed text-lacuna-blue sm:text-lg">
               A portfolio case study designed for payer operations roles. This
@@ -361,14 +360,16 @@ export default function PayerOpsPage() {
                                     key={`${example.targetName}-${example.year}`}
                                   >
                                     <p className="mt-2 text-[11px] text-lacuna-plum/70">
-                                      {example.targetName} → {example.acquirerName}
-                                      {" "}
-                                      ({example.year})
+                                      {example.targetName} →{" "}
+                                      {example.acquirerName} ({example.year})
                                     </p>
                                     {example.rationale
                                       ? (
                                         <p className="mt-1 text-[10px] italic text-lacuna-plum/60 leading-snug">
-                                          &ldquo;{example.rationale.slice(0, 120)}
+                                          &ldquo;{example.rationale.slice(
+                                            0,
+                                            120,
+                                          )}
                                           {example.rationale.length > 120
                                             ? "…"
                                             : ""}
@@ -426,9 +427,7 @@ export default function PayerOpsPage() {
                 ? "text-xl sm:text-2xl"
                 : "text-2xl sm:text-3xl",
             );
-            const statValue = (
-              <div className={statClassName}>{pp.value}</div>
-            );
+            const statValue = <div className={statClassName}>{pp.value}</div>;
             return (
               <div
                 key={pp.title}
@@ -442,7 +441,9 @@ export default function PayerOpsPage() {
                     </LacunaTooltip>
                   )
                   : statValue}
-                <h3 className="mt-2 font-semibold text-lacuna-plum">{pp.title}</h3>
+                <h3 className="mt-2 font-semibold text-lacuna-plum">
+                  {pp.title}
+                </h3>
                 <p className="mt-1 text-sm leading-relaxed text-lacuna-blue">
                   {pp.detail}
                 </p>

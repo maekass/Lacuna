@@ -154,7 +154,8 @@ export function calculateMatchScore(
     financialFit,
     marketFit,
     estimatedValue,
-    valueRationale: estimatedValue?.rationale ?? "Insufficient disclosed comparables in verified dataset",
+    valueRationale: estimatedValue?.rationale ??
+      "Insufficient disclosed comparables in verified dataset",
     competitiveThreat: "medium", // Default, calculated separately
     keyRationale,
   };

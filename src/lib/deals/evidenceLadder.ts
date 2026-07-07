@@ -70,9 +70,8 @@ export function buildEvidenceLadder(deal: DealDetail): EvidenceLadderResult {
   }
 
   const primaryCount = runs.filter((r) => r.tier === "primary").length;
-  const secondaryCount = runs.filter((r) =>
-    r.tier === "secondary" || r.tier === "primary"
-  ).length;
+  const secondaryCount =
+    runs.filter((r) => r.tier === "secondary" || r.tier === "primary").length;
   const hasDualSource = primaryCount >= 1 && secondaryCount >= 2 ||
     runs.length >= 2;
 

@@ -3,10 +3,10 @@
  */
 
 import {
-  isServerInferenceConfigured,
-  resolveInferenceModel,
   EMPOWERMENT_GAP_GATEWAY_MODEL,
   EMPOWERMENT_GAP_OPENAI_MODEL,
+  isServerInferenceConfigured,
+  resolveInferenceModel,
 } from "@/lib/ai/inference";
 import {
   buildPatientEmpowermentGapPrompt,
@@ -93,8 +93,9 @@ export async function answerPatientEmpowermentGapQuestion(
     const message = error instanceof Error
       ? error.message
       : "Empowerment gap analysis failed";
-    const narrative =
-      `${buildDeterministicEmpowermentNarrative(snapshot)} (LLM unavailable: ${message})`;
+    const narrative = `${
+      buildDeterministicEmpowermentNarrative(snapshot)
+    } (LLM unavailable: ${message})`;
     const { text, quality } = assessLlmOutput(narrative, {
       feature: "patient-empowerment-gap",
       modelId: resolved.modelId,
@@ -141,9 +142,7 @@ export function buildDeterministicEmpowermentNarrative(
       ? `Weakest prerequisite: ${weakPrereq.label} (mean ${weakPrereq.meanGapIndexPct}/100). `
       : "") +
     `${summary.linkedCompanyCount} companies, ${summary.linkedDealCount} deals, ${summary.curatedLinkCount} curated links. ` +
-    (portfolioGaps
-      ? `Portfolio gaps (zero match): ${portfolioGaps}. `
-      : "") +
+    (portfolioGaps ? `Portfolio gaps (zero match): ${portfolioGaps}. ` : "") +
     `Not live patient data or investment advice.`
   );
 }

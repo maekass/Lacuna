@@ -12,8 +12,8 @@ import {
   furthestStage,
   missingStages,
   PIPELINE_STAGE_ORDER,
-  THERAPEUTIC_AREA_LABELS,
   type SpaceWhTherapeuticArea,
+  THERAPEUTIC_AREA_LABELS,
   type TrialToTransactionStage,
 } from "@/lib/research/spaceWhTaxonomy";
 
@@ -207,9 +207,7 @@ export function buildTrialToTransactionSnapshot(
   }
 
   const areaMatrix: AreaGapRow[] = [...areas].map((area) => {
-    const inArea = views.filter((v) =>
-      v.asset.therapeuticAreas.includes(area)
-    );
+    const inArea = views.filter((v) => v.asset.therapeuticAreas.includes(area));
     const stageReachCounts = emptyStageCounts();
     for (const view of inArea) {
       for (const stage of view.stagesReached) {

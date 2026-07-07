@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { guardDealReviewRequest } from "@/lib/api/dealReviewAccess";
 import { parsePageParams } from "@/lib/api/pageParams";
 import {
-  listFundingEvents,
   type FundingEventStatus,
+  listFundingEvents,
 } from "@/lib/ingestion/fundingEvents";
 
 const VALID_STATUSES = new Set<FundingEventStatus>([

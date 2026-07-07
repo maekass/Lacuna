@@ -70,7 +70,8 @@ export default function PipelineStatusStrip() {
         {secRunAt
           ? (
             <span>
-              <span className="font-medium text-lacuna-plum">SEC ingest</span>{" "}
+              <span className="font-medium text-lacuna-plum">SEC ingest</span>
+              {" "}
               {sec?.latest?.status ?? "—"} · {secRunAt}
             </span>
           )

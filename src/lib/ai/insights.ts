@@ -124,7 +124,13 @@ export function generateEvidenceSummary(
     trialCount,
     overallScore,
   });
-  const grounding = [companyName, phase, fdaStatus, String(trialCount), String(overallScore)]
+  const grounding = [
+    companyName,
+    phase,
+    fdaStatus,
+    String(trialCount),
+    String(overallScore),
+  ]
     .join("\n");
   return runInsightPrompt(prompt, 300, grounding, [companyName]);
 }

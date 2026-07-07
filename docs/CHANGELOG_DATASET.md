@@ -6,17 +6,19 @@ Human-readable notes when verified acquisitions are promoted from staging.
 
 Compared against `src/data/computed-dataset-summary.json`:
 
-| Field | Baseline value |
-| ----- | -------------- |
-| Verified deals | 59 |
-| Last updated | 2026-07-02 |
-| Dataset version | v7 |
+| Field           | Baseline value |
+| --------------- | -------------- |
+| Verified deals  | 59             |
+| Last updated    | 2026-07-02     |
+| Dataset version | v7             |
 
 Live count comes from `dataset.verified.json` → `provenance.lastUpdated`.
 
 ## Hub strip
 
-`getDatasetChangelog()` in `src/lib/data/getDatasetChangelog.ts` diffs current JSON vs computed snapshot. When deals are added and `npm run compute:all` has not yet refreshed the snapshot, hub shows **"+N verified deals since …"**.
+`getDatasetChangelog()` in `src/lib/data/getDatasetChangelog.ts` diffs current
+JSON vs computed snapshot. When deals are added and `npm run compute:all` has
+not yet refreshed the snapshot, hub shows **"+N verified deals since …"**.
 
 ## After promoting new deals
 
@@ -26,6 +28,7 @@ Live count comes from `dataset.verified.json` → `provenance.lastUpdated`.
 
 ```markdown
 ## Dataset
+
 - [ ] `npm run validate:dataset` passes
 - [ ] `docs/CHANGELOG_DATASET.md` updated if acquisitions changed
 - [ ] Promotion checklist completed for each new deal (dual-source gates)
@@ -33,7 +36,7 @@ Live count comes from `dataset.verified.json` → `provenance.lastUpdated`.
 
 ## Candidate vs verified
 
-| Layer | Location | Visible in charts? |
-| ----- | -------- | ------------------ |
-| Verified | `dataset.verified.json` | Yes |
-| Staging | Postgres `lacuna_deals` | No — review queue on `/deals#data-pipelines` |
+| Layer    | Location                | Visible in charts?                           |
+| -------- | ----------------------- | -------------------------------------------- |
+| Verified | `dataset.verified.json` | Yes                                          |
+| Staging  | Postgres `lacuna_deals` | No — review queue on `/deals#data-pipelines` |

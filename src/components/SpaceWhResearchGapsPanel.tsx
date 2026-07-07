@@ -116,8 +116,7 @@ function AssetRow({ view }: { view: PipelineAssetView }) {
       )}
       {view.linkedAcquisitions.length > 0 && (
         <p className="mt-1 text-[11px] text-lacuna-blue">
-          Deals:{" "}
-          {view.linkedAcquisitions
+          Deals: {view.linkedAcquisitions
             .map((d) => `${d.acquirerName} ← ${d.targetName}`)
             .join("; ")}
         </p>
@@ -304,9 +303,10 @@ export default function SpaceWhResearchGapsPanel() {
           </h4>
         </div>
         <p className="mb-3 text-xs text-lacuna-blue/80">
-          Grounded only in the pipeline JSON above. Uses Vercel AI Gateway
-          model <code className="text-lacuna-plum">xai/grok-4.3</code> when
-          configured; otherwise a deterministic summary.
+          Grounded only in the pipeline JSON above. Uses Vercel AI Gateway model
+          {" "}
+          <code className="text-lacuna-plum">xai/grok-4.3</code>{" "}
+          when configured; otherwise a deterministic summary.
         </p>
         <div className="mb-2 flex flex-wrap gap-2">
           {SUGGESTED_QUESTIONS.map((q) => (

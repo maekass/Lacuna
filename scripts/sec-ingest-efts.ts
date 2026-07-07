@@ -29,13 +29,17 @@ async function main() {
 
   const result = await runEftsMaIngest({ sinceDate, maxResults, dryRun });
 
-  console.log(`EFTS search since ${result.sinceDateUsed}: ${result.hits.length} hit(s)`);
+  console.log(
+    `EFTS search since ${result.sinceDateUsed}: ${result.hits.length} hit(s)`,
+  );
   if (result.sync) {
     console.log(
       `DB sync — inserted: ${result.sync.inserted}, updated: ${result.sync.updated}, skipped: ${result.sync.skipped}`,
     );
   } else if (dryRun) {
-    console.log(`Dry run — ${result.classified.length} candidate row(s) mapped`);
+    console.log(
+      `Dry run — ${result.classified.length} candidate row(s) mapped`,
+    );
   }
 }
 

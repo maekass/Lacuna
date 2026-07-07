@@ -41,8 +41,7 @@ export const CURATED_EMPOWERMENT_LINKS: readonly CuratedEmpowermentLink[] = [
     note: "Biotheranostics — Breast Cancer Index for survivorship planning",
     rationale:
       "BCI guides extended endocrine therapy in survivorship; JNCCN registry shows plan changes.",
-    sourceUrl:
-      "https://jnccn.org/view/journals/jnccn/22/2/article-p99.xml",
+    sourceUrl: "https://jnccn.org/view/journals/jnccn/22/2/article-p99.xml",
     sourceTier: "trial",
   }),
   link({
@@ -59,13 +58,15 @@ export const CURATED_EMPOWERMENT_LINKS: readonly CuratedEmpowermentLink[] = [
     companyId: "c25",
     metricId: "genetic-testing-not-recommended",
     note: "Endomagnetics — lymphatic mapping in breast cancer surgery",
-    rationale: "Breast Health surgical oncology; adjacency to treatment pathway gaps.",
+    rationale:
+      "Breast Health surgical oncology; adjacency to treatment pathway gaps.",
   }),
   link({
     companyId: "c37",
     metricId: "genetic-testing-not-recommended",
     note: "Genomic Health — Oncotype DX",
-    rationale: "Precision oncology genomic assay; direct NCCN-adjacent testing theme.",
+    rationale:
+      "Precision oncology genomic assay; direct NCCN-adjacent testing theme.",
     sourceUrl:
       "https://www.exactsciences.com/oncology/oncotype-dx-breast-recurrence-score-test",
     sourceTier: "website",
@@ -94,7 +95,8 @@ export const CURATED_EMPOWERMENT_LINKS: readonly CuratedEmpowermentLink[] = [
     companyId: "c38",
     metricId: "genetic-testing-not-recommended",
     note: "Foundation Medicine — comprehensive genomic profiling",
-    rationale: "Tumor genomic profiling; report cites under-recommendation of testing.",
+    rationale:
+      "Tumor genomic profiling; report cites under-recommendation of testing.",
     sourceUrl: "https://www.foundationmedicine.com",
     sourceTier: "website",
   }),
@@ -102,7 +104,8 @@ export const CURATED_EMPOWERMENT_LINKS: readonly CuratedEmpowermentLink[] = [
     companyId: "c38",
     metricId: "clinical-trial-offered",
     note: "Foundation Medicine — trial matching ecosystem",
-    rationale: "Precision oncology platforms surface trial options; maps to 1-in-5 gap.",
+    rationale:
+      "Precision oncology platforms surface trial options; maps to 1-in-5 gap.",
     sourceUrl: "https://www.foundationmedicine.com",
     sourceTier: "website",
   }),
@@ -127,7 +130,8 @@ export const CURATED_EMPOWERMENT_LINKS: readonly CuratedEmpowermentLink[] = [
     companyId: "c39",
     metricId: "no-survivorship-plan",
     note: "Flatiron — survivorship / RWE monitoring",
-    rationale: "Longitudinal oncology data supports survivorship care planning.",
+    rationale:
+      "Longitudinal oncology data supports survivorship care planning.",
     sourceUrl: "https://flatiron.com",
     sourceTier: "website",
   }),
@@ -198,7 +202,8 @@ export const CURATED_EMPOWERMENT_LINKS: readonly CuratedEmpowermentLink[] = [
     companyId: "c56",
     metricId: "oncologist-listens",
     note: "Seagen — oncology therapeutics",
-    rationale: "Precision Medicine oncology; treatment plan preference integration.",
+    rationale:
+      "Precision Medicine oncology; treatment plan preference integration.",
     sourceUrl:
       "https://www.pfizer.com/news/press-release/press-release-detail/pfizer-completes-acquisition-seagen",
     sourceTier: "press",
@@ -300,7 +305,8 @@ export const CURATED_EMPOWERMENT_LINKS: readonly CuratedEmpowermentLink[] = [
     companyId: "c65",
     metricId: "genetic-testing-not-recommended",
     note: "Sividon Diagnostics — EndoPredict",
-    rationale: "Breast prognostic RNA assay; genetic/genomic profiling dimension.",
+    rationale:
+      "Breast prognostic RNA assay; genetic/genomic profiling dimension.",
     sourceUrl: "https://www.myriad.com/products/endopredict/",
     sourceTier: "website",
   }),
@@ -350,7 +356,8 @@ export const CURATED_EMPOWERMENT_LINKS: readonly CuratedEmpowermentLink[] = [
     companyId: "c114",
     metricId: "full-records-access",
     note: "Maven Clinic — care navigation + records",
-    rationale: "Women's health navigation platform; records access prerequisite.",
+    rationale:
+      "Women's health navigation platform; records access prerequisite.",
     sourceUrl: "https://www.mavenclinic.com",
     sourceTier: "website",
   }),
@@ -398,7 +405,8 @@ export const CURATED_EMPOWERMENT_LINKS: readonly CuratedEmpowermentLink[] = [
     companyId: "c133",
     metricId: "clinical-trial-offered",
     note: "xCures — trial matching platform",
-    rationale: "Digital Health trial navigation; direct clinical-trial-offered gap.",
+    rationale:
+      "Digital Health trial navigation; direct clinical-trial-offered gap.",
     sourceUrl:
       "https://www.prnewswire.com/news-releases/xcures-raises-12-69-million-in-series-a-funding-for-their-ai-powered-precision-oncology-platform-301318198.html",
     sourceTier: "press",

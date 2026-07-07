@@ -24,7 +24,9 @@ export const MODEL_ASSUMPTIONS = {
  */
 export function resolveAdminCostPerTouch(adminCost: number): number {
   const { adminCostFloor } = MODEL_ASSUMPTIONS;
-  return Number.isFinite(adminCost) && adminCost > 0 ? adminCost : adminCostFloor;
+  return Number.isFinite(adminCost) && adminCost > 0
+    ? adminCost
+    : adminCostFloor;
 }
 
 export const OPPORTUNITY_METRIC_MODELS = {

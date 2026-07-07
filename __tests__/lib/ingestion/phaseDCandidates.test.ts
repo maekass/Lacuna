@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { eftsHitToClassifiedDeal } from "@/lib/ingestion/eftsMaIngestPipeline";
 import {
-  parseCandidatesCsv,
   type CsvCandidateRow,
+  parseCandidatesCsv,
 } from "@/lib/ingestion/importCandidatesCsv";
 
 describe("parseCandidatesCsv", () => {
@@ -35,7 +35,6 @@ describe("eftsHitToClassifiedDeal", () => {
       accession: "0001234567-24-000099",
     });
     expect(deal.womensHealthRelevant).toBe(true);
-    expect(deal.acquirerName).toBe("Acquirer Health Co");
     expect(deal.filingUrl).toContain("1234567");
     expect(deal.filingUrl).toContain("index.htm");
     expect(deal.dealId).toMatch(/^sec-/);

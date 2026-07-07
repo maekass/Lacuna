@@ -31,9 +31,9 @@ local dev only.
 
 ## Precision prompting & quality gate
 
-All prompts are centralized in `src/lib/ai/prompts.ts` (version `2.0.0`).
-All **user-facing free-text** inference goes through
-`generateQualifiedInference()` in `src/lib/ai/quality.ts`.
+All prompts are centralized in `src/lib/ai/prompts.ts` (version `2.0.0`). All
+**user-facing free-text** inference goes through `generateQualifiedInference()`
+in `src/lib/ai/quality.ts`.
 
 ### Design principles
 
@@ -55,7 +55,8 @@ User input → build*Prompt() → system prompt + guardrails → LLM
 ```
 
 1. **Pre-inference**: Template functions enforce structure; prompt validation
-2. **System prompt**: Every call includes `ANTI_HALLUCINATION_GUARD` + disclaimer
+2. **System prompt**: Every call includes `ANTI_HALLUCINATION_GUARD` +
+   disclaimer
 3. **Post-inference quality gate**:
    - Markdown strip + length limits (`sanitizeLLMOutput`)
    - Hallucination-risk patterns (FDA claims, invented deal dates, etc.)
@@ -65,14 +66,15 @@ User input → build*Prompt() → system prompt + guardrails → LLM
 
 ### Catalog
 
-`GET /api/ai/quality` lists features, standards, and whether inference is configured.
+`GET /api/ai/quality` lists features, standards, and whether inference is
+configured.
 
-| Feature | Route | Quality-gated |
-|---------|-------|---------------|
-| UI insights | `POST /api/ai/insights` | Yes |
-| Space WH gap | `POST /api/research/space-wh-pipeline/ask` | Yes |
-| Stream insights | `POST /api/ai/stream` | No (tagged `quality:stream-ungated`) |
-| SEC classification | cron / CLI | Structured output (separate path) |
+| Feature            | Route                                      | Quality-gated                        |
+| ------------------ | ------------------------------------------ | ------------------------------------ |
+| UI insights        | `POST /api/ai/insights`                    | Yes                                  |
+| Space WH gap       | `POST /api/research/space-wh-pipeline/ask` | Yes                                  |
+| Stream insights    | `POST /api/ai/stream`                      | No (tagged `quality:stream-ungated`) |
+| SEC classification | cron / CLI                                 | Structured output (separate path)    |
 
 Prefer **non-streaming** routes for production UI narratives.
 

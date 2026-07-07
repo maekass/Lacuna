@@ -7,7 +7,6 @@ import process from "node:process";
 export const CTG_API_BASE = "https://clinicaltrials.gov/api/v2";
 
 export const CTG_USER_AGENT =
-
   "Lacuna-Research/1.0 (educational; mps5cy@virginia.edu)";
 
 /** Modules requested on /studies to minimize payload size. */

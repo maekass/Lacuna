@@ -14,8 +14,7 @@
     "roc_auc": 0.6255144032921811,
     "brier": 0.23498414942849025,
     "majority_baseline_accuracy": 0.6136363636363636
-  }
-,
+  },
   "positiveLabel": "completed_vs_stopped",
   "vocabulary": [
     "101",

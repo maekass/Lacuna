@@ -83,7 +83,9 @@ export function assessLlmOutput(
   for (const pattern of ADVICE_PATTERNS) {
     if (pattern.test(clean)) {
       adviceRisk = true;
-      warnings.push("Advice risk: output resembles investment or clinical advice");
+      warnings.push(
+        "Advice risk: output resembles investment or clinical advice",
+      );
       break;
     }
   }
@@ -99,7 +101,9 @@ export function assessLlmOutput(
     groundingOk = grounding.ok;
     if (!grounding.ok) {
       warnings.push(
-        `Grounding: terms not found in context: ${grounding.missing.slice(0, 5).join(", ")}`,
+        `Grounding: terms not found in context: ${
+          grounding.missing.slice(0, 5).join(", ")
+        }`,
       );
     }
   }
@@ -167,8 +171,9 @@ export function checkGrounding(
   const ctx = context.toLowerCase();
   const missing: string[] = [];
 
-  const money = output.match(/\$[\d,]+(?:\.\d+)?\s*(?:million|billion|M|B)?/gi) ??
-    [];
+  const money =
+    output.match(/\$[\d,]+(?:\.\d+)?\s*(?:million|billion|M|B)?/gi) ??
+      [];
   for (const m of money) {
     const norm = m.toLowerCase().replace(/,/g, "");
     if (!ctx.includes(norm) && !ctx.includes(m.toLowerCase())) {
@@ -204,7 +209,10 @@ export async function generateQualifiedInference(
   params: QualifiedInferenceParams,
 ): Promise<{ text: string; quality: LlmQualityReport }> {
   const promptCheck = validatePromptTemplate(params.prompt);
-  if (!promptCheck.valid && promptCheck.issues.some((i) => i.includes("too short"))) {
+  if (
+    !promptCheck.valid &&
+    promptCheck.issues.some((i) => i.includes("too short"))
+  ) {
     return assessLlmOutput("", {
       feature: params.feature,
       modelId: params.resolved.modelId,
@@ -237,7 +245,8 @@ export const LLM_QUALITY_CATALOG = [
   {
     feature: "ui-insights",
     route: "POST /api/ai/insights",
-    description: "Company narrative blurbs (acquisition, evidence, reimbursement)",
+    description:
+      "Company narrative blurbs (acquisition, evidence, reimbursement)",
     grounded: true,
   },
   {

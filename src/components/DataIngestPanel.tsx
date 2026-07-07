@@ -205,13 +205,13 @@ export default function DataIngestPanel() {
               <p className="mt-1 text-xs text-lacuna-blue">
                 Full-text search for Item 2.01 + women&apos;s health terms →
                 {" "}
-                <code className="text-[11px]">lacuna_deals</code> upsert (same
-                review queue).
+                <code className="text-[11px]">lacuna_deals</code>{" "}
+                upsert (same review queue).
               </p>
               <CommandBlock command="npm run sec:ingest-efts" />
               <p className="mt-2 text-[11px] text-lacuna-blue/60">
-                Staging JSON only: <code>npm run sec:search-ma</code> · Import
-                API: <code>/api/deals/candidates/import</code>
+                Staging JSON only: <code>npm run sec:search-ma</code>{" "}
+                · Import API: <code>/api/deals/candidates/import</code>
               </p>
             </section>
           </div>

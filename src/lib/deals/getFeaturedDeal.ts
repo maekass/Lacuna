@@ -15,7 +15,9 @@ const WOMENS_HEALTH_SECTOR_HINTS = [
 
 function sectorScore(sector: string): number {
   const lower = sector.toLowerCase();
-  return WOMENS_HEALTH_SECTOR_HINTS.some((hint) => lower.includes(hint)) ? 1 : 0;
+  return WOMENS_HEALTH_SECTOR_HINTS.some((hint) => lower.includes(hint))
+    ? 1
+    : 0;
 }
 
 /**

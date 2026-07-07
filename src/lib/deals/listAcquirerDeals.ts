@@ -17,7 +17,9 @@ export function listAcquirerDeals(
   return dataset.acquisitions
     .filter((a) => a.id !== dealId && a.acquirerId === reference.acquirerId)
     .map((a): ComparableDealSummary => {
-      const sector = dataset.companies.find((c) => c.id === a.targetId)?.sector ?? "Unknown";
+      const sector = dataset.companies.find((c) =>
+        c.id === a.targetId
+      )?.sector ?? "Unknown";
       return {
         id: a.id,
         targetName: a.targetName,

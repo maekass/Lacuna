@@ -59,7 +59,10 @@ export default function PromotionChecklist({
               onChange={() => toggle(item.id)}
               className="mt-1 h-4 w-4 rounded border-gray-300 text-lacuna-plum focus:ring-lacuna-plum"
             />
-            <label htmlFor={`check-${deal.dealId}-${item.id}`} className="cursor-pointer">
+            <label
+              htmlFor={`check-${deal.dealId}-${item.id}`}
+              className="cursor-pointer"
+            >
               <span className="font-medium text-lacuna-text">{item.label}</span>
               <span className="mt-0.5 block text-xs text-lacuna-text-secondary">
                 {item.hint}

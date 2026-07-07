@@ -27,7 +27,9 @@ function buildSectorIntel(
 ): SectorIntel {
   const deals = acquisitions.filter((a) =>
     a.targetName.toLowerCase().includes(sector.toLowerCase()) ||
-    sector.toLowerCase().includes(a.targetName.toLowerCase().split(" ")[0] ?? "")
+    sector.toLowerCase().includes(
+      a.targetName.toLowerCase().split(" ")[0] ?? "",
+    )
   );
   const disclosed = deals
     .map((d) => d.dealValue)
@@ -38,7 +40,8 @@ function buildSectorIntel(
 
   return {
     sector,
-    companyCount: companies.filter((c) => sectorKey(c.sector) === sector).length,
+    companyCount:
+      companies.filter((c) => sectorKey(c.sector) === sector).length,
     deals: deals.slice(0, 8),
     disclosedCount: disclosed.length,
     medianDealValueM,
@@ -54,7 +57,8 @@ export default function InvestmentGradeReimbursementIntel() {
   const [selectedSector, setSelectedSector] = useState<string | null>(null);
 
   const sectors = useMemo(
-    () => [...new Set(verifiedCompanies.map((c) => sectorKey(c.sector)))].sort(),
+    () =>
+      [...new Set(verifiedCompanies.map((c) => sectorKey(c.sector)))].sort(),
     [verifiedCompanies],
   );
 
@@ -79,10 +83,10 @@ export default function InvestmentGradeReimbursementIntel() {
         </h3>
         <p className="mt-1 text-sm text-lacuna-blue">
           Descriptive counts from{" "}
-          <code className="text-xs">dataset.verified.json</code> only. TAM/SAM,
-          reimbursement risk scores, and payer-mix estimates are not shown —
-          they require cited CMS/FDA or third-party market research, not keyword
-          heuristics.
+          <code className="text-xs">dataset.verified.json</code>{" "}
+          only. TAM/SAM, reimbursement risk scores, and payer-mix estimates are
+          not shown — they require cited CMS/FDA or third-party market research,
+          not keyword heuristics.
         </p>
 
         <div className="mt-4 flex flex-wrap gap-2">
@@ -107,19 +111,33 @@ export default function InvestmentGradeReimbursementIntel() {
             <div className="mt-6 space-y-4">
               <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                 <div className="rounded-lg border border-lacuna-lavender/40 p-3">
-                  <p className="text-xs uppercase text-lacuna-blue/70">Companies</p>
-                  <p className="text-2xl font-bold text-lacuna-plum">{active.companyCount}</p>
+                  <p className="text-xs uppercase text-lacuna-blue/70">
+                    Companies
+                  </p>
+                  <p className="text-2xl font-bold text-lacuna-plum">
+                    {active.companyCount}
+                  </p>
                 </div>
                 <div className="rounded-lg border border-lacuna-lavender/40 p-3">
-                  <p className="text-xs uppercase text-lacuna-blue/70">Verified deals</p>
-                  <p className="text-2xl font-bold text-lacuna-plum">{active.deals.length}</p>
+                  <p className="text-xs uppercase text-lacuna-blue/70">
+                    Verified deals
+                  </p>
+                  <p className="text-2xl font-bold text-lacuna-plum">
+                    {active.deals.length}
+                  </p>
                 </div>
                 <div className="rounded-lg border border-lacuna-lavender/40 p-3">
-                  <p className="text-xs uppercase text-lacuna-blue/70">Disclosed values</p>
-                  <p className="text-2xl font-bold text-lacuna-plum">{active.disclosedCount}</p>
+                  <p className="text-xs uppercase text-lacuna-blue/70">
+                    Disclosed values
+                  </p>
+                  <p className="text-2xl font-bold text-lacuna-plum">
+                    {active.disclosedCount}
+                  </p>
                 </div>
                 <div className="rounded-lg border border-lacuna-lavender/40 p-3">
-                  <p className="text-xs uppercase text-lacuna-blue/70">Median deal ($M)</p>
+                  <p className="text-xs uppercase text-lacuna-blue/70">
+                    Median deal ($M)
+                  </p>
                   <p className="text-2xl font-bold text-lacuna-plum">
                     {active.medianDealValueM !== null
                       ? active.medianDealValueM.toLocaleString()
@@ -150,7 +168,10 @@ export default function InvestmentGradeReimbursementIntel() {
                       </thead>
                       <tbody>
                         {active.deals.map((d) => (
-                          <tr key={d.id} className="border-t border-lacuna-lavender/30">
+                          <tr
+                            key={d.id}
+                            className="border-t border-lacuna-lavender/30"
+                          >
                             <td className="px-3 py-2">
                               <Link
                                 href={`/deals/${d.id}`}
@@ -174,7 +195,8 @@ export default function InvestmentGradeReimbursementIntel() {
                 )
                 : (
                   <p className="rounded-lg border border-dashed border-lacuna-lavender/50 px-4 py-6 text-center text-sm text-lacuna-blue/80">
-                    No verified acquisitions tagged to this sector in the dataset.
+                    No verified acquisitions tagged to this sector in the
+                    dataset.
                   </p>
                 )}
             </div>

@@ -4,7 +4,10 @@
  * Run: node --import tsx scripts/apply-med-biotech-scope.ts [med_biotech|consumer_health]
  */
 import type { DatasetScope } from "../src/lib/data/medBiotechFilters";
-import { applyDatasetScope, DATASET_SCOPE_LABELS } from "../src/lib/data/medBiotechFilters";
+import {
+  applyDatasetScope,
+  DATASET_SCOPE_LABELS,
+} from "../src/lib/data/medBiotechFilters";
 import verifiedJson from "../src/data/dataset.verified.json";
 import type { VerifiedDataset } from "../src/lib/data/datasetTypes";
 
@@ -13,5 +16,7 @@ const dataset = verifiedJson as VerifiedDataset;
 const scoped = applyDatasetScope(dataset, scope);
 
 console.log(
-  `${DATASET_SCOPE_LABELS[scope]}: ${scoped.companies.length} companies, ${scoped.acquisitions.length} acquisitions`,
+  `${
+    DATASET_SCOPE_LABELS[scope]
+  }: ${scoped.companies.length} companies, ${scoped.acquisitions.length} acquisitions`,
 );

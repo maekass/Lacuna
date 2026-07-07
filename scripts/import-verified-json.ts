@@ -65,7 +65,13 @@ async function main() {
     for (const a of acquirers) {
       await client.query(
         `INSERT INTO acquirers (id, name, ticker, sector, hq) VALUES ($1,$2,$3,$4,$5)`,
-        [a.id, a.name, a.ticker ?? null, a.sector ?? "Healthcare", a.hq ?? "Unknown"],
+        [
+          a.id,
+          a.name,
+          a.ticker ?? null,
+          a.sector ?? "Healthcare",
+          a.hq ?? "Unknown",
+        ],
       );
     }
 

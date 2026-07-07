@@ -1,6 +1,10 @@
 "use client";
 
-import { DealFlowChart, ForceNetwork, ValuationMatrix } from "@/app/lazyDashboard";
+import {
+  DealFlowChart,
+  ForceNetwork,
+  ValuationMatrix,
+} from "@/app/lazyDashboard";
 import DataCoverageCard from "@/components/DataCoverageCard";
 import DatasetScopeBanner from "@/components/DatasetScopeBanner";
 import MotionSection from "@/components/ui/MotionSection";
@@ -56,8 +60,9 @@ export default function ConsumerHealthPage() {
         ? (
           <MotionSection delay={0.03} className="mb-8">
             <div className="rounded-xl border border-lacuna-lavender/30 bg-white/80 p-4 text-sm text-lacuna-blue">
-              <span className="font-medium text-lacuna-plum">Featured deal:</span>
-              {" "}
+              <span className="font-medium text-lacuna-plum">
+                Featured deal:
+              </span>{" "}
               {featuredDeal.acquisition.acquirerName} →{" "}
               {featuredDeal.acquisition.targetName}
               {featuredDeal.acquisition.dealValue

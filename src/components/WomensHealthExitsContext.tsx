@@ -41,11 +41,13 @@ export default function WomensHealthExitsContext() {
             Women&apos;s health exit landscape (macro research)
           </h3>
           <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/80">
-            AOA Dx&apos;s <em>Follow the Exits</em> report (Jan 2026) manually
-            re-tags acquisitions and IPOs often filed under diagnostics or
-            oncology — surfacing exits investors&apos; databases miss. Lacuna&apos;s{" "}
-            {lacuna.verifiedDeals} verified deals ({lacuna.disclosedValueBillionsLabel}{" "}
-            disclosed) are a curated educational subset, not this 276-exit universe.
+            AOA Dx&apos;s <em>Follow the Exits</em>{" "}
+            report (Jan 2026) manually re-tags acquisitions and IPOs often filed
+            under diagnostics or oncology — surfacing exits investors&apos;
+            databases miss. Lacuna&apos;s {lacuna.verifiedDeals}{" "}
+            verified deals ({lacuna.disclosedValueBillionsLabel}{" "}
+            disclosed) are a curated educational subset, not this 276-exit
+            universe.
           </p>
         </div>
       </ModelProvenanceHint>
@@ -93,8 +95,8 @@ export default function WomensHealthExitsContext() {
             </p>
           )}
           <p className="mt-2 text-[11px] text-lacuna-blue/80">
-            {formatExitBillions(headline.exitValue2025B)} in transactions in 2025
-            alone — largest year on record (AOA Dx).
+            {formatExitBillions(headline.exitValue2025B)}{" "}
+            in transactions in 2025 alone — largest year on record (AOA Dx).
           </p>
         </div>
 

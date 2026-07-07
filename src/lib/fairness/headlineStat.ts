@@ -117,7 +117,9 @@ export function getDealVelocityTopSector(
   minCount = 3,
 ): DealVelocityTopSector | null {
   const cutoffYear = String(currentYear - 4);
-  const sectorById = new Map(companies.map((company) => [company.id, company.sector]));
+  const sectorById = new Map(
+    companies.map((company) => [company.id, company.sector]),
+  );
   const counts = new Map<string, number>();
 
   for (const acquisition of acquisitions) {

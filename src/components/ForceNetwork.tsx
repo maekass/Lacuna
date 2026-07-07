@@ -453,7 +453,8 @@ export default function ForceNetwork(
     selectNode,
   ]);
 
-  const isSearchActive = searchQuery.trim().length > 0 || Boolean(highlightNodeId);
+  const isSearchActive = searchQuery.trim().length > 0 ||
+    Boolean(highlightNodeId);
 
   useEffect(() => {
     if (!highlightNodeId) return;

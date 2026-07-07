@@ -37,7 +37,9 @@ describe("autoApproveDeals", () => {
     const count = await autoApproveHighConfidenceDeals();
 
     expect(count).toBe(2);
-    expect(mockPoolQuery.mock.calls[0]?.[0]).toContain("classification_confidence");
+    expect(mockPoolQuery.mock.calls[0]?.[0]).toContain(
+      "classification_confidence",
+    );
     expect(mockPoolQuery.mock.calls[0]?.[1]).toEqual([["high"]]);
   });
 });

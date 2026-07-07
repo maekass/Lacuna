@@ -80,5 +80,5 @@ The Datadog workflow is **manual only** (`workflow_dispatch`) until you add
 - Post-deploy once: `GET /api/health/ready`
 - After env vars: hit `/api/cron/sec-ingest/status` on production
 
-See [INFRASTRUCTURE.md](./INFRASTRUCTURE.md) for the full ops map.
-See [VERCEL_SETTINGS.md](./VERCEL_SETTINGS.md) for Vercel dashboard tuning.
+See [INFRASTRUCTURE.md](./INFRASTRUCTURE.md) for the full ops map. See
+[VERCEL_SETTINGS.md](./VERCEL_SETTINGS.md) for Vercel dashboard tuning.

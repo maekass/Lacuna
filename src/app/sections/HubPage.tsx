@@ -220,8 +220,9 @@ export default function HubPage() {
                 </span>
                 <span className="text-sm text-lacuna-blue">
                   {dealVelocityTopSector.sector} has seen{" "}
-                  {dealVelocityTopSector.count} verified acquisitions in the past
-                  four years — the highest velocity among all dataset sectors.
+                  {dealVelocityTopSector.count}{" "}
+                  verified acquisitions in the past four years — the highest
+                  velocity among all dataset sectors.
                 </span>
               </div>
             </div>

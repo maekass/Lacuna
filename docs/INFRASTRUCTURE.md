@@ -32,16 +32,16 @@ flowchart LR
   cron --> pg
 ```
 
-| Layer         | Location                                   | Notes                                                                                          |
-| ------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------- |
-| App           | Vercel — https://lacuna-maekass.vercel.app | Next.js 16, default `static` data                                                              |
-| CI            | `.github/workflows/deno.yml`               | lint, test, build, dataset validation                                                          |
-| Cron          | `vercel.json` → `/api/cron/sec-ingest`     | 06:00 UTC Mondays (`0 6 * * 1`, Hobby-safe)                                                    |
-| Vercel tuning | [VERCEL_SETTINGS.md](./VERCEL_SETTINGS.md)   | Region, skew protection, Speed Insights, ignored builds                                        |
-| Deal universe | [EPIC_DEAL_UNIVERSE.md](./EPIC_DEAL_UNIVERSE.md) | SEC queue → human promote → changelog (not auto-merge)                                       |
-| DB            | `db/migrations/*.sql`                      | Verified dataset + `lacuna_deals` + ingest runs                                                |
-| Local DB      | `docker-compose.yml`                       | Postgres 16 + ClickHouse 24 for dev                                                            |
-| Variant store | `clickhouse/migrations/`                   | Callset catalog + variant summaries — [GENOMICS_VARIANT_STORE.md](./GENOMICS_VARIANT_STORE.md) |
+| Layer         | Location                                         | Notes                                                                                          |
+| ------------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| App           | Vercel — https://lacuna-maekass.vercel.app       | Next.js 16, default `static` data                                                              |
+| CI            | `.github/workflows/deno.yml`                     | lint, test, build, dataset validation                                                          |
+| Cron          | `vercel.json` → `/api/cron/sec-ingest`           | 06:00 UTC Mondays (`0 6 * * 1`, Hobby-safe)                                                    |
+| Vercel tuning | [VERCEL_SETTINGS.md](./VERCEL_SETTINGS.md)       | Region, skew protection, Speed Insights, ignored builds                                        |
+| Deal universe | [EPIC_DEAL_UNIVERSE.md](./EPIC_DEAL_UNIVERSE.md) | SEC queue → human promote → changelog (not auto-merge)                                         |
+| DB            | `db/migrations/*.sql`                            | Verified dataset + `lacuna_deals` + ingest runs                                                |
+| Local DB      | `docker-compose.yml`                             | Postgres 16 + ClickHouse 24 for dev                                                            |
+| Variant store | `clickhouse/migrations/`                         | Callset catalog + variant summaries — [GENOMICS_VARIANT_STORE.md](./GENOMICS_VARIANT_STORE.md) |
 
 ## Quick local stack
 
@@ -147,12 +147,12 @@ npm run dotnet-api:dev
 docker compose --profile dotnet-api up -d
 ```
 
-| Route (port 8001)              | Purpose                                      |
-| ------------------------------ | -------------------------------------------- |
-| `GET /swagger`                 | OpenAPI (Swashbuckle)                        |
-| `GET /api/v1/dataset/verified` | Verified JSON (parity with Next.js route)    |
-| `GET /api/v1/clinical-trials`  | ClinicalTrials.gov proxy                     |
-| `GET /api/v1/research/studies` | EF Core research catalog when DB configured   |
+| Route (port 8001)              | Purpose                                     |
+| ------------------------------ | ------------------------------------------- |
+| `GET /swagger`                 | OpenAPI (Swashbuckle)                       |
+| `GET /api/v1/dataset/verified` | Verified JSON (parity with Next.js route)   |
+| `GET /api/v1/clinical-trials`  | ClinicalTrials.gov proxy                    |
+| `GET /api/v1/research/studies` | EF Core research catalog when DB configured |
 
 Not deployed on Vercel — local / self-hosted only.
 

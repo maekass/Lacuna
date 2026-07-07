@@ -302,7 +302,8 @@ export function buildPatientEmpowermentGapPrompt(input: {
     input.snapshotJson.slice(0, 12_000),
     ``,
     `USER_QUESTION:`,
-    q || "Which empowerment gaps are largest and where does the portfolio not map?",
+    q ||
+    "Which empowerment gaps are largest and where does the portfolio not map?",
     ``,
     `Answer using only SNAPSHOT_JSON. Reference gap indices and match tiers when citing companies.`,
   ].join("\n");
@@ -311,7 +312,6 @@ export function buildPatientEmpowermentGapPrompt(input: {
 // ---------------------------------------------------------------------------
 // Output sanitization (post-processing guardrails)
 // ---------------------------------------------------------------------------
-
 
 /** Patterns that indicate potential hallucination — flag for review. */
 const HALLUCINATION_PATTERNS = [

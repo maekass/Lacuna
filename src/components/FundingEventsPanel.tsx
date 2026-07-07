@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import ReviewAccessGate from "@/components/ReviewAccessGate";
 import type { FundingEventRecord } from "@/lib/ingestion/fundingEvents";
 
 interface FundingResponse {
@@ -18,11 +19,16 @@ function formatUsd(value: number | null): string {
 }
 
 /** SEC Form D funding candidates — separate from M&A review queue. */
-export default function FundingEventsPanel() {
+export default function FundingEventsPanel({
+  refreshToken: externalRefresh = 0,
+}: {
+  refreshToken?: number;
+}) {
   const [items, setItems] = useState<FundingEventRecord[]>([]);
   const [reviewableTotal, setReviewableTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [needsAuth, setNeedsAuth] = useState(false);
   const [refreshToken, setRefreshToken] = useState(0);
 
   useEffect(() => {
@@ -38,12 +44,19 @@ export default function FundingEventsPanel() {
         if (!response.ok || !body.ok) {
           setItems([]);
           setReviewableTotal(0);
+          if (response.status === 401) {
+            setNeedsAuth(true);
+            setError(null);
+            return;
+          }
+          setNeedsAuth(false);
           setError(
             body.error ??
               "Funding queue unavailable (run sec:ingest-form-d with DATABASE_URL).",
           );
           return;
         }
+        setNeedsAuth(false);
         setItems(body.items ?? []);
         setReviewableTotal(body.meta?.reviewableTotal ?? 0);
       } catch {
@@ -60,7 +73,7 @@ export default function FundingEventsPanel() {
     return () => {
       cancelled = true;
     };
-  }, [refreshToken]);
+  }, [refreshToken, externalRefresh]);
 
   const handleRefresh = useCallback(() => {
     setRefreshToken((n) => n + 1);
@@ -75,8 +88,9 @@ export default function FundingEventsPanel() {
           </h3>
           <p className="mt-1 max-w-2xl text-sm text-lacuna-blue">
             SEC Form D private placements in{" "}
-            <code className="text-xs">lacuna_funding_events</code> — funding
-            rounds, not acquisitions. Enrichment context only until reviewed.
+            <code className="text-xs">lacuna_funding_events</code>{" "}
+            — funding rounds, not acquisitions. Enrichment context only until
+            reviewed.
           </p>
         </div>
         <button
@@ -94,6 +108,15 @@ export default function FundingEventsPanel() {
           ? "Loading…"
           : `${reviewableTotal} pending funding event(s) · CLI: npm run sec:ingest-form-d`}
       </p>
+
+      {needsAuth
+        ? (
+          <ReviewAccessGate
+            className="mt-3"
+            onUnlocked={() => setRefreshToken((n) => n + 1)}
+          />
+        )
+        : null}
 
       {error
         ? (
@@ -154,8 +177,8 @@ export default function FundingEventsPanel() {
         ? (
           <p className="mt-4 text-sm text-lacuna-blue/70">
             No Form D candidates yet. Run{" "}
-            <code className="text-xs">npm run sec:ingest-form-d</code> with
-            DATABASE_URL configured.
+            <code className="text-xs">npm run sec:ingest-form-d</code>{" "}
+            with DATABASE_URL configured.
           </p>
         )
         : null}

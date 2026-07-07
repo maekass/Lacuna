@@ -10,15 +10,16 @@ export type SpaceWhProvenanceTag =
   | "astronaut_operational_pharma"
   | "space_physiology_only";
 
-export const SPACE_WH_PROVENANCE_LABELS: Record<SpaceWhProvenanceTag, string> = {
-  space_tested_therapeutic:
-    "Therapeutic tested in space (animal/cell efficacy)",
-  space_formulation: "Formulation / delivery informed by microgravity",
-  astronaut_operational_pharma:
-    "Operational pharma used by women in flight (not a product trial)",
-  space_physiology_only:
-    "Physiology / device / cell study — no therapeutic candidate",
-};
+export const SPACE_WH_PROVENANCE_LABELS: Record<SpaceWhProvenanceTag, string> =
+  {
+    space_tested_therapeutic:
+      "Therapeutic tested in space (animal/cell efficacy)",
+    space_formulation: "Formulation / delivery informed by microgravity",
+    astronaut_operational_pharma:
+      "Operational pharma used by women in flight (not a product trial)",
+    space_physiology_only:
+      "Physiology / device / cell study — no therapeutic candidate",
+  };
 
 /**
  * Ordered pipeline from research signal → commercial transaction.

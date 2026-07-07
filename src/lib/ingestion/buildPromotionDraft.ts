@@ -64,7 +64,9 @@ function findAcquirerIdByName(
 
 function inferSector(keywords: string[]): string {
   const joined = keywords.join(" ").toLowerCase();
-  if (joined.includes("fertility") || joined.includes("ivf")) return "Fertility";
+  if (joined.includes("fertility") || joined.includes("ivf")) {
+    return "Fertility";
+  }
   if (joined.includes("oncology") || joined.includes("cancer")) {
     return "Oncology";
   }
@@ -132,28 +134,24 @@ export function buildPromotionDraft(
     extractUrls(deal.reviewNotes)[0] ??
     null;
 
-  const company = existingTargetId
-    ? undefined
-    : {
-      id: targetId,
-      name: targetName,
-      sector: inferSector(deal.classificationKeywords),
-      stage: "Private",
-      founded: inferFoundedYear(announcedDate),
-      hq: "Unknown",
-      description: buildStrategicRationale(deal).slice(0, 280),
-      sources: buildCompanySources(deal.filingUrl, secondary),
-    };
+  const company = existingTargetId ? undefined : {
+    id: targetId,
+    name: targetName,
+    sector: inferSector(deal.classificationKeywords),
+    stage: "Private",
+    founded: inferFoundedYear(announcedDate),
+    hq: "Unknown",
+    description: buildStrategicRationale(deal).slice(0, 280),
+    sources: buildCompanySources(deal.filingUrl, secondary),
+  };
 
-  const acquirer = existingAcquirerId
-    ? undefined
-    : {
-      id: acquirerId,
-      name: acquirerName,
-      ticker: deal.acquirerTicker ?? undefined,
-      sector: "Healthcare",
-      hq: "Unknown",
-    };
+  const acquirer = existingAcquirerId ? undefined : {
+    id: acquirerId,
+    name: acquirerName,
+    ticker: deal.acquirerTicker ?? undefined,
+    sector: "Healthcare",
+    hq: "Unknown",
+  };
 
   const acquisition: VerifiedDataset["acquisitions"][number] = {
     id: acquisitionId,

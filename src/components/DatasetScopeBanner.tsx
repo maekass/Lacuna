@@ -28,9 +28,10 @@ export default function DatasetScopeBanner({
       <p>
         <span className="font-medium text-lacuna-plum">
           {DATASET_SCOPE_LABELS[scope]}
-        </span>
-        {" "}scope — {companyCount} companies · {dealCount} verified deals in
-        this workspace. Not live market data; descriptive analytics only.
+        </span>{" "}
+        scope — {companyCount} companies · {dealCount}{" "}
+        verified deals in this workspace. Not live market data; descriptive
+        analytics only.
       </p>
       <p className="mt-1 text-lacuna-blue/85">
         {isConsumer

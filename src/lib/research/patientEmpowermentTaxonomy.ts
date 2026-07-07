@@ -34,8 +34,8 @@ export type EmpowermentPrerequisiteId =
   | "evidence-standards"
   | "life-goals";
 
-export const EMPOWERMENT_PREREQUISITE_ORDER: readonly EmpowermentPrerequisiteId[] =
-  [
+export const EMPOWERMENT_PREREQUISITE_ORDER:
+  readonly EmpowermentPrerequisiteId[] = [
     "records-access",
     "care-team",
     "evidence-standards",
@@ -67,11 +67,12 @@ export type EmpowermentDataTier =
   | "derived_static"
   | "heuristic_affinity";
 
-export const EMPOWERMENT_DATA_TIER_LABELS: Record<EmpowermentDataTier, string> = {
-  cited_survey_2022: "Cited survey (HLTH 2022)",
-  derived_static: "Derived gap index",
-  heuristic_affinity: "Portfolio crosswalk (heuristic)",
-};
+export const EMPOWERMENT_DATA_TIER_LABELS: Record<EmpowermentDataTier, string> =
+  {
+    cited_survey_2022: "Cited survey (HLTH 2022)",
+    derived_static: "Derived gap index",
+    heuristic_affinity: "Portfolio crosswalk (heuristic)",
+  };
 
 /** Public evidence tier for curated company ↔ gap links. */
 export type EmpowermentSourceTier = "filing" | "press" | "trial" | "website";
@@ -113,7 +114,9 @@ export function bestMatchTier(
     : current;
 }
 
-export function gapSeverityFromIndex(gapIndexPct: number): EmpowermentGapSeverity {
+export function gapSeverityFromIndex(
+  gapIndexPct: number,
+): EmpowermentGapSeverity {
   if (gapIndexPct >= 60) return "critical";
   if (gapIndexPct >= 40) return "high";
   return "moderate";

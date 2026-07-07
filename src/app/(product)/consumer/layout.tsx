@@ -11,6 +11,8 @@ export default async function ConsumerLayout({
   const full = await getVerifiedDataset();
   const dataset = applyDatasetScope(full, "consumer_health");
   return (
-    <VerifiedDatasetProvider dataset={dataset}>{children}</VerifiedDatasetProvider>
+    <VerifiedDatasetProvider dataset={dataset}>
+      {children}
+    </VerifiedDatasetProvider>
   );
 }

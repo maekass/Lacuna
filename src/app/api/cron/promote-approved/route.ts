@@ -43,9 +43,7 @@ export async function GET(request: Request) {
       validationErrors: result.validationErrors,
     });
   } catch (error) {
-    const message = error instanceof Error
-      ? error.message
-      : "Promotion failed";
+    const message = error instanceof Error ? error.message : "Promotion failed";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

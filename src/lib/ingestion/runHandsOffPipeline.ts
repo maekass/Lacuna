@@ -1,8 +1,11 @@
-import { autoApproveHighConfidenceDeals, isHandsOffIngestEnabled } from "@/lib/ingestion/autoApproveDeals";
+import {
+  autoApproveHighConfidenceDeals,
+  isHandsOffIngestEnabled,
+} from "@/lib/ingestion/autoApproveDeals";
 import {
   promoteApprovedDeals,
-  resolvePromoteTarget,
   type PromoteApprovedDealsResult,
+  resolvePromoteTarget,
 } from "@/lib/ingestion/promoteApprovedDeals";
 
 export interface HandsOffPipelineResult {

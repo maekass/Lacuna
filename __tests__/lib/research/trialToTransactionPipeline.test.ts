@@ -1,9 +1,7 @@
 import { describe, expect, it } from "vitest";
 import verifiedDataset from "@/data/dataset.verified.json";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
-import {
-  buildDeterministicGapNarrative,
-} from "@/lib/research/spaceWhGapLlm";
+import { buildDeterministicGapNarrative } from "@/lib/research/spaceWhGapLlm";
 import {
   buildTrialToTransactionSnapshot,
   pipelineSnapshotForLlm,
@@ -22,7 +20,9 @@ describe("trialToTransactionPipeline", () => {
   });
 
   it("marks physiology-only assets without space_validation", () => {
-    const astro = SPACE_WH_RESEARCH_ASSETS.find((a) => a.id === "astrocup-menstrual-cups");
+    const astro = SPACE_WH_RESEARCH_ASSETS.find((a) =>
+      a.id === "astrocup-menstrual-cups"
+    );
     expect(astro).toBeDefined();
     const view = scoreAssetPipeline(astro!, dataset);
     expect(view.stagesReached).toContain("research_signal");

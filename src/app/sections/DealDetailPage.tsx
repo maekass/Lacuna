@@ -22,7 +22,9 @@ function formatValue(millions?: number, note?: string): string {
   if (typeof millions !== "number") {
     return note ? `Undisclosed (${note})` : "Undisclosed";
   }
-  return note ? `$${millions.toLocaleString()}M (${note})` : `$${millions.toLocaleString()}M`;
+  return note
+    ? `$${millions.toLocaleString()}M (${note})`
+    : `$${millions.toLocaleString()}M`;
 }
 
 function DealTable({
@@ -30,7 +32,13 @@ function DealTable({
   rows,
 }: {
   title: string;
-  rows: { id: string; targetName: string; acquirerName: string; announcedDate: string; dealValue?: number }[];
+  rows: {
+    id: string;
+    targetName: string;
+    acquirerName: string;
+    announcedDate: string;
+    dealValue?: number;
+  }[];
 }) {
   if (rows.length === 0) return null;
   return (
@@ -57,8 +65,12 @@ function DealTable({
                     {row.targetName}
                   </Link>
                 </td>
-                <td className="px-3 py-2 text-lacuna-blue">{row.acquirerName}</td>
-                <td className="px-3 py-2 text-lacuna-blue/80">{row.announcedDate}</td>
+                <td className="px-3 py-2 text-lacuna-blue">
+                  {row.acquirerName}
+                </td>
+                <td className="px-3 py-2 text-lacuna-blue/80">
+                  {row.announcedDate}
+                </td>
                 <td className="px-3 py-2 text-lacuna-blue/80">
                   {typeof row.dealValue === "number"
                     ? `$${row.dealValue.toLocaleString()}M`
@@ -117,7 +129,10 @@ export default function DealDetailPage({ dealId }: DealDetailPageProps) {
     return (
       <div className="rounded-xl border border-dashed border-lacuna-lavender/50 p-8 text-center">
         <p className="text-lacuna-plum font-semibold">Deal not found</p>
-        <Link href="/deals" className="mt-2 inline-block text-sm text-lacuna-blue underline">
+        <Link
+          href="/deals"
+          className="mt-2 inline-block text-sm text-lacuna-blue underline"
+        >
           Back to deals workspace
         </Link>
       </div>
@@ -125,7 +140,9 @@ export default function DealDetailPage({ dealId }: DealDetailPageProps) {
   }
 
   const acq = deal.acquisition;
-  const sectorKeyword = encodeURIComponent(deal.target.sector.split(/\s+/)[0] ?? "women");
+  const sectorKeyword = encodeURIComponent(
+    deal.target.sector.split(/\s+/)[0] ?? "women",
+  );
 
   return (
     <div className="min-w-0">
@@ -171,7 +188,9 @@ export default function DealDetailPage({ dealId }: DealDetailPageProps) {
             Export brief
           </button>
           <Link
-            href={`/deals?highlight=${encodeURIComponent(deal.target.id)}#network`}
+            href={`/deals?highlight=${
+              encodeURIComponent(deal.target.id)
+            }#network`}
             className="inline-flex min-h-10 w-full items-center justify-center rounded-md border border-lacuna-plum/30 bg-lacuna-plum/10 px-3 py-2.5 text-center text-xs font-medium text-lacuna-plum hover:bg-lacuna-plum/20 sm:w-auto sm:py-1.5"
           >
             View in network
@@ -188,13 +207,19 @@ export default function DealDetailPage({ dealId }: DealDetailPageProps) {
             {formatValue(acq.dealValue, acq.dealValueNote)}
           </p>
           {acq.dealStructure
-            ? <p className="mt-1 text-sm text-lacuna-blue">Structure: {acq.dealStructure}</p>
+            ? (
+              <p className="mt-1 text-sm text-lacuna-blue">
+                Structure: {acq.dealStructure}
+              </p>
+            )
             : null}
           {typeof acq.preDealValuation === "number"
             ? (
               <p className="mt-2 text-xs text-lacuna-blue/80">
                 Pre-deal valuation ~${acq.preDealValuation}M
-                {acq.preDealValuationSource ? ` (${acq.preDealValuationSource})` : ""}
+                {acq.preDealValuationSource
+                  ? ` (${acq.preDealValuationSource})`
+                  : ""}
               </p>
             )
             : null}
@@ -203,10 +228,16 @@ export default function DealDetailPage({ dealId }: DealDetailPageProps) {
           <h2 className="text-sm font-semibold uppercase tracking-wide text-lacuna-plum/80">
             Target profile
           </h2>
-          <p className="mt-2 font-semibold text-lacuna-plum">{deal.target.name}</p>
+          <p className="mt-2 font-semibold text-lacuna-plum">
+            {deal.target.name}
+          </p>
           <p className="text-sm text-lacuna-blue">{deal.target.sector}</p>
           {deal.target.hq
-            ? <p className="mt-1 text-xs text-lacuna-blue/80">HQ: {deal.target.hq}</p>
+            ? (
+              <p className="mt-1 text-xs text-lacuna-blue/80">
+                HQ: {deal.target.hq}
+              </p>
+            )
             : null}
         </div>
       </MotionSection>
@@ -214,7 +245,9 @@ export default function DealDetailPage({ dealId }: DealDetailPageProps) {
       {acq.strategicRationale
         ? (
           <MotionSection delay={0.05} className="mb-10">
-            <h2 className="text-lg font-semibold text-lacuna-plum">Strategic rationale</h2>
+            <h2 className="text-lg font-semibold text-lacuna-plum">
+              Strategic rationale
+            </h2>
             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-lacuna-blue">
               {acq.strategicRationale}
             </p>
@@ -225,19 +258,29 @@ export default function DealDetailPage({ dealId }: DealDetailPageProps) {
       {ladder
         ? (
           <MotionSection delay={0.08} className="mb-10">
-            <h2 className="mb-3 text-lg font-semibold text-lacuna-plum">Evidence ladder</h2>
+            <h2 className="mb-3 text-lg font-semibold text-lacuna-plum">
+              Evidence ladder
+            </h2>
             <EvidenceLadder ladder={ladder} />
           </MotionSection>
         )
         : null}
 
       <MotionSection delay={0.1} className="mb-10 space-y-8">
-        <DealTable title="Comparable deals (same sector, ±3 years)" rows={comparables} />
-        <DealTable title={`Other deals by ${deal.acquirer.name}`} rows={acquirerDeals} />
+        <DealTable
+          title="Comparable deals (same sector, ±3 years)"
+          rows={comparables}
+        />
+        <DealTable
+          title={`Other deals by ${deal.acquirer.name}`}
+          rows={acquirerDeals}
+        />
       </MotionSection>
 
       <MotionSection delay={0.12} className="mb-10">
-        <h2 className="text-lg font-semibold text-lacuna-plum">Related workspaces</h2>
+        <h2 className="text-lg font-semibold text-lacuna-plum">
+          Related workspaces
+        </h2>
         <div className="mt-3 flex flex-wrap gap-2">
           <Link
             href={`/research#clinical-trials?q=${sectorKeyword}`}

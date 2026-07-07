@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   ClusteringAnalysis,
@@ -34,6 +34,7 @@ const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
 export default function DealsPage() {
   const searchParams = useSearchParams();
+  const [pipelineRefresh, setPipelineRefresh] = useState(0);
   const highlightNodeId = searchParams.get("highlight") ?? undefined;
   const { networkNodes, networkLinks, dealsByYear } = useDashboardData();
   const {
@@ -67,8 +68,8 @@ export default function DealsPage() {
         <h1 className="text-3xl font-bold text-lacuna-plum">Deals workspace</h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
           Medicine and biotech M&A — therapeutics, diagnostics, medtech, and
-          clinical women&apos;s health. Descriptive analytics from public sources
-          only.
+          clinical women&apos;s health. Descriptive analytics from public
+          sources only.
         </p>
       </header>
 
@@ -101,11 +102,13 @@ export default function DealsPage() {
           <DataIngestPanel />
         </div>
         <div className="mt-6">
-          <DealReviewQueue />
+          <DealReviewQueue refreshToken={pipelineRefresh} />
         </div>
         <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <CandidateImportPanel />
-          <FundingEventsPanel />
+          <CandidateImportPanel
+            onImported={() => setPipelineRefresh((n) => n + 1)}
+          />
+          <FundingEventsPanel refreshToken={pipelineRefresh} />
         </div>
       </MotionSection>
 

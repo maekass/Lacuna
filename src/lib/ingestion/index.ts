@@ -55,8 +55,8 @@ export {
 export type {
   ListPendingDealsOptions,
   PendingDealRecord,
-  PendingDealStatus,
   PendingDealsPage,
+  PendingDealStatus,
   UpdatePendingDealInput,
 } from "@/lib/ingestion/pendingDeals";
 export type {
