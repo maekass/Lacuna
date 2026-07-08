@@ -4,12 +4,12 @@ Honest verified vs candidate counts; post-promote lands on verified deal spine.
 
 ## Tasks
 
-- [ ] Extend `getDatasetChangelog()` — separate verified growth from candidate
+- [x] Extend `getDatasetChangelog()` — separate verified growth from candidate
       counts
-- [ ] Hub + Methods footnote: "N verified · M candidates" with definitions
-- [ ] Queue metrics API: approve/reject/pending, median age
-- [ ] Post-promote success → `/deals/[acquisitionId]` + network link
-- [ ] Optional: GitHub Action opens PR with dataset diff on promote
+- [x] Hub + Methods footnote: "N verified · M candidates" with definitions
+- [x] Queue metrics API: approve/reject/pending, median age
+- [x] Post-promote success → `/deals/[acquisitionId]` + network link
+- [x] Optional: GitHub Action opens PR with dataset diff on promote
 
 ## Acceptance criteria
 

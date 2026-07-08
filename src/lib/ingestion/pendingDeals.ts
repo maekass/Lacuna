@@ -14,6 +14,10 @@ export type PendingDealStatus =
 
 const REVIEWABLE_STATUSES: PendingDealStatus[] = ["pending", "pending_review"];
 
+/** Statuses in the human review queue (exported for metrics SQL). */
+export const REVIEWABLE_QUEUE_STATUSES: readonly PendingDealStatus[] =
+  REVIEWABLE_STATUSES;
+
 export interface PendingDealRecord {
   id: number;
   dealId: string;

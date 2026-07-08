@@ -1,78 +1,76 @@
-# Demo scripts — deal spine v1
+# Demo scripts — Review Console (Phase E)
 
-Shareable paths built on **Modern Fertility → Ro** (`/deals/deal2`,
-`FEATURED_DEAL_ID`).
+Portfolio walkthrough for the **ingest → review → promote** path. Live app:
+https://lacuna-maekass.vercel.app
 
----
-
-## 90-second recruiter walkthrough
-
-1. Open **Hub** — point to three triage CTAs and pipeline strip (dataset date +
-   build SHA).
-2. Click **Start diligence** → `/deals/deal2`.
-3. Scroll: valuation block (disclosed estimate + note), strategic rationale,
-   evidence ladder.
-4. Click **Copy link** — paste in chat to show permalink.
-5. **View in network** — target node highlighted on ForceNetwork.
-6. **Export brief** — Markdown with citations lands on clipboard.
-
-**Closing line:** “One verified deal, full provenance, export-ready —
-educational demo, not live feeds.”
+**Data honesty:** Staging candidates in Postgres are **not** verified deals
+until promoted with attested fields. Hub counts show verified JSON only.
 
 ---
 
-## 3 min — Corp VC voiceover
+## 2-minute reviewer path (production)
 
-| Step | Screen             | Talk track                                                                               |
-| ---- | ------------------ | ---------------------------------------------------------------------------------------- |
-| 1    | Hub triage         | “Three entry ramps: diligence, equity, methods — same dataset, different workflows.”     |
-| 2    | Deal detail header | “Ro acquired Modern Fertility — telehealth + at-home fertility testing.”                 |
-| 3    | Valuation          | “~$225M estimate with honest disclosure note — not all deals have disclosed values.”     |
-| 4    | Evidence ladder    | “Press-sourced secondary tier; we flag single-source limits before you trust multiples.” |
-| 5    | Comparables        | “Same-sector peers within ±3 years — small n, descriptive only.”                         |
-| 6    | Acquirer context   | “Ro’s other deals in dataset — buyer pattern, not prediction.”                           |
-| 7    | Export brief       | “One-click diligence memo for Gamma or email — citations included.”                      |
+**Prereqs:** Postgres + reviewer auth configured — see
+[REVIEW_CONSOLE.md](./REVIEW_CONSOLE.md).
 
----
+| Step | Action              | URL / control                                                                      |
+| ---- | ------------------- | ---------------------------------------------------------------------------------- |
+| 1    | Open Review Console | [/deals#review](https://lacuna-maekass.vercel.app/deals#review)                    |
+| 2    | Sign in             | **Sign in with GitHub** (allowlisted) or API key                                   |
+| 3    | Pick a candidate    | **Open dossier** on any M&A queue card                                             |
+| 4    | Enrich (optional)   | **Enrich** when parse quality is `keyword_only` / `partial`                        |
+| 5    | Attest fields       | Sector, HQ, founded year, secondary source URL                                     |
+| 6    | Preview diff        | Scroll to **Promotion preview** — verify companies / acquirers / acquisitions diff |
+| 7    | Promote             | **Promote to verified dataset**                                                    |
+| 8    | Land on spine       | **View verified deal** → deal detail; **View in network graph** → `/deals#network` |
 
-## 3 min — Health equity voiceover
-
-| Step | Screen                      | Talk track                                                                          |
-| ---- | --------------------------- | ----------------------------------------------------------------------------------- |
-| 1    | Hub → **Evidence & equity** | “Patient empowerment dimensions on public data — not clinical outcomes.”            |
-| 2    | `/deals/deal2` rationale    | “Access to at-home fertility testing — equity angle on reach vs. clinic-only care.” |
-| 3    | Evidence limitations        | “Single-source press — we say what we don’t know.”                                  |
-| 4    | Related → Research          | “Crosswalk to health equity section for policy framing.”                            |
+**Talking point:** “Candidates never inflate hub analytics — promotion is a
+deliberate human gate with a JSON diff preview.”
 
 ---
 
-## 3 min — Engineering voiceover
+## Local demo (development)
 
-| Step | Screen                  | Talk track                                                                         |
-| ---- | ----------------------- | ---------------------------------------------------------------------------------- |
-| 1    | Hub pipeline strip      | “`provenance.lastUpdated`, Vercel build SHA, optional SEC cron status.”            |
-| 2    | `/deals#data-pipelines` | “Staging in Postgres (`lacuna_deals`) — promotion checklist before verified JSON.” |
-| 3    | Promotion checklist     | “Dual-source gates from runbook — auto-checks where parse quality allows.”         |
-| 4    | Methods → causal DAG    | “Heuristics labeled; small-n everywhere.”                                          |
-| 5    | `GET /api/health`       | “Liveness for monitors — see docs/MONITORING.md.”                                  |
+```bash
+docker compose up -d
+npm run db:migrate
+npm run dev
+```
+
+1. Visit http://localhost:3000/deals#review
+2. In dev, review APIs work without production OAuth when `DATABASE_URL` is set.
+3. Staging dossier: `/deals/staging/<deal_id>`
+
+Seed or ingest candidates:
+
+```bash
+npm run sec:ingest-efts   # bounded WH keyword filter
+# or import CSV:
+npm run deals:import-csv -- --file=data/staging/deals_candidates.csv
+```
 
 ---
 
-## 3 min — Portfolio / methods reviewer
+## Static-mode promote (GitHub Action)
 
-| Step | Screen                       | Talk track                                                  |
-| ---- | ---------------------------- | ----------------------------------------------------------- |
-| 1    | Methods footnote             | “n=59 verified; candidates separate until promoted.”        |
-| 2    | Deal detail evidence ladder  | “Tier classification from source string — filing vs press.” |
-| 3    | Comparables table            | “Sector + year window — no synthetic deals.”                |
-| 4    | Limitations footer on export | “Educational only — BUSL 1.1.”                              |
+When Vercel runs `LACUNA_DATA_MODE=static`, the app cannot write
+`dataset.verified.json` at promote time. Use the manual workflow instead:
+
+1. Approve + attest in Review Console (marks row `approved` in Postgres).
+2. GitHub → **Actions** → **Promote approved deals** → **Run workflow**.
+3. Workflow opens a PR with dataset diff when the verified universe grows.
 
 ---
 
-## Smoke checklist (pre-demo)
+## Hub / methods footnote (E6)
 
-- [ ] `/api/health` → 200
-- [ ] `/deals/deal2` loads with evidence ladder
-- [ ] Hub triage CTAs resolve
-- [ ] `/deals?highlight=c1#network` emphasizes Modern Fertility node
-- [ ] Export brief copies Markdown
+- Hub and Methods show **N verified · M staging candidates** with definitions.
+- Queue metrics API: `GET /api/deals/pending/metrics` (aggregate counts only).
+
+---
+
+## Related docs
+
+- [REVIEWER_PROMOTION_GUIDE.md](./REVIEWER_PROMOTION_GUIDE.md) — field checklist
+- [DATA_BOUNDARIES.md](./DATA_BOUNDARIES.md) — three-tier data model
+- [EPIC_REVIEW_CONSOLE.md](./EPIC_REVIEW_CONSOLE.md) — Phase E issue map

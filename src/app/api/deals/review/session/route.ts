@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server";
+import { logReviewAction } from "@/lib/ingestion/reviewAuditLog";
 import {
+  apiKeySessionSubject,
+  clearReviewSessionCookies,
+  getReviewActor,
+  isGitHubReviewSignInAvailable,
   isReviewTokenAuthorized,
-  REVIEW_SESSION_COOKIE,
+  setReviewSessionCookie,
 } from "@/lib/infra/reviewAuth";
 
 interface SessionBody {
@@ -9,9 +14,29 @@ interface SessionBody {
 }
 
 /**
- * Set an httpOnly review session cookie after validating the API key.
- * Browser UI on Vercel can unlock staging tools without Bearer headers.
+ * Review session: GET current actor, POST API-key sign-in (signed cookie),
+ * DELETE sign-out.
  */
+export function GET(request: Request) {
+  const actor = getReviewActor(request);
+  if (!actor) {
+    return NextResponse.json({ ok: false, authenticated: false }, {
+      status: 401,
+      headers: { "cache-control": "no-store" },
+    });
+  }
+
+  return NextResponse.json({
+    ok: true,
+    authenticated: true,
+    actor,
+    githubSignInAvailable: isGitHubReviewSignInAvailable(),
+  }, {
+    headers: { "cache-control": "no-store" },
+  });
+}
+
+/** Set signed httpOnly session after validating API key (automation fallback). */
 export async function POST(request: Request) {
   if (!process.env.DATABASE_URL?.trim()) {
     return NextResponse.json(
@@ -38,28 +63,49 @@ export async function POST(request: Request) {
     );
   }
 
-  const response = NextResponse.json({ ok: true, probe: "review-session" });
-  const secure = process.env.NODE_ENV === "production" ||
-    process.env.VERCEL_ENV === "production";
-  response.cookies.set(REVIEW_SESSION_COOKIE, token, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure,
-    path: "/",
-    maxAge: 60 * 60 * 12,
+  const subject = apiKeySessionSubject(token);
+  if (!subject) {
+    return NextResponse.json(
+      { ok: false, error: "Invalid review API key" },
+      { status: 401 },
+    );
+  }
+
+  const response = NextResponse.json({
+    ok: true,
+    probe: "review-session",
+    actor: {
+      id: subject,
+      method: "api_key",
+      label: "API key reviewer",
+    },
+    githubSignInAvailable: isGitHubReviewSignInAvailable(),
   });
+  setReviewSessionCookie(response, { sub: "review", method: "api_key" });
+
+  await logReviewAction({
+    action: "session_start",
+    actorId: subject,
+    actorMethod: "api_key",
+    metadata: { provider: "api_key" },
+  });
+
   return response;
 }
 
-/** Clear review session cookie. */
-export function DELETE() {
+/** Clear review session cookies. */
+export async function DELETE(request: Request) {
+  const actor = getReviewActor(request);
   const response = NextResponse.json({ ok: true });
-  response.cookies.set(REVIEW_SESSION_COOKIE, "", {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: 0,
-  });
+  clearReviewSessionCookies(response);
+
+  if (actor) {
+    await logReviewAction({
+      action: "session_end",
+      actorId: actor.id,
+      actorMethod: actor.method,
+    });
+  }
+
   return response;
 }

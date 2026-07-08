@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { auditReviewRequest } from "@/lib/api/reviewAudit";
 import { guardDealReviewRequest } from "@/lib/api/dealReviewAccess";
 import {
   getPendingDealByDealId,
@@ -117,6 +118,20 @@ export async function PATCH(
     const updated = await updatePendingDeal(dealId, patch);
     if (!updated) {
       return NextResponse.json({ error: "Deal not found" }, { status: 404 });
+    }
+
+    if (patch.status === "approved") {
+      await auditReviewRequest(request, {
+        dealId,
+        action: "approve",
+        metadata: { status: updated.status },
+      });
+    } else if (patch.status === "rejected") {
+      await auditReviewRequest(request, {
+        dealId,
+        action: "reject",
+        metadata: { status: updated.status },
+      });
     }
 
     let promotion: Awaited<ReturnType<typeof promoteApprovedDeal>> | null =

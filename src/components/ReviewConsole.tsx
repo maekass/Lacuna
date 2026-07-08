@@ -36,8 +36,8 @@ export default function ReviewConsole({
   );
 
   return (
-    <div className="rounded-xl border border-lacuna-lavender/40 bg-white/90 p-6 shadow-sm">
-      <PipelineStatusStrip />
+    <div className="rounded-xl border border-lacuna-lavender/40 bg-white/90 p-4 sm:p-6 shadow-sm">
+      <PipelineStatusStrip queueDetail refreshToken={refreshToken} />
 
       <div className="mt-4 flex flex-wrap gap-2">
         {tabs.map((t) => {

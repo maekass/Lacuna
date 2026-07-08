@@ -224,6 +224,9 @@ npm run validate:dataset
 
 **Closes:** [#100](https://github.com/maekass/Lacuna/issues/100)
 
+**Status:** 🚧 on pathway branch (stack with E4 via
+`npm run review-console:stack -- ship --phase E5`)
+
 **Changes:**
 
 1. Choose auth: GitHub OAuth allowlist | Clerk `reviewer` role | Vercel
@@ -245,13 +248,17 @@ npm run validate:dataset
 
 **Closes:** [#101](https://github.com/maekass/Lacuna/issues/101)
 
+**Status:** 🚧 on pathway branch
+(`npm run review-console:stack -- ship --phase E6`)
+
 **Changes:**
 
 1. `getDatasetChangelog()` — separate verified vs candidate counts.
 2. Hub / Methods footnote: “N verified · M candidates” with definitions.
 3. Queue metrics API: approve/reject/pending, median age.
-4. Post-promote success → link `/deals/[acquisitionId]`.
-5. Optional: GitHub Action PR promotion with dataset diff.
+4. Post-promote success → link `/deals/[acquisitionId]` + network graph.
+5. Optional: GitHub Action `promote-approved-deals.yml` opens PR with dataset
+   diff.
 
 **PR title:** `feat: honest growth metrics and post-promote verified deal link`
 
@@ -265,12 +272,15 @@ npm run validate:dataset
 
 **Closes:** [#102](https://github.com/maekass/Lacuna/issues/102)
 
+**Status:** 🚧 on pathway branch
+(`npm run review-console:stack -- ship --phase E7`)
+
 **Changes:**
 
 1. `docs/DEMO_SCRIPTS.md` — 2 min reviewer walkthrough.
 2. Mobile pass: staging dossier + review console.
-3. E2E: unlock → dossier → preview promote (mock DB).
-4. Refresh `EPIC_DEAL_UNIVERSE.md` (Review UI ✅, Phase E table).
+3. E2E: review flow with mock DB (`e2e/review-console.spec.ts`).
+4. Refresh `EPIC_DEAL_UNIVERSE.md` (Review UI ✅, Phase E pointer).
 
 **PR title:** `chore: review console demo scripts and epic doc refresh`
 

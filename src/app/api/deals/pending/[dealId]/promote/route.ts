@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { auditReviewRequest } from "@/lib/api/reviewAudit";
 import { guardDealReviewRequest } from "@/lib/api/dealReviewAccess";
 import { getDataMode } from "@/lib/data/datasetProvider";
 import {
@@ -86,6 +87,15 @@ export async function POST(
       );
     }
 
+    await auditReviewRequest(request, {
+      dealId,
+      action: "promote",
+      metadata: {
+        acquisitionId: result.acquisitionId,
+        target,
+      },
+    });
+
     return NextResponse.json({
       ok: true,
       probe: "pending-deal-promote",
@@ -94,6 +104,11 @@ export async function POST(
       result,
       verifiedDealUrl: result.acquisitionId
         ? `/deals/${result.acquisitionId}`
+        : undefined,
+      networkUrl: result.networkHighlightId
+        ? `/deals?highlight=${
+          encodeURIComponent(result.networkHighlightId)
+        }#network`
         : undefined,
     }, {
       headers: { "cache-control": "no-store" },

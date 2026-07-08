@@ -1,0 +1,74 @@
+name: Promote approved deals
+
+# Manual reviewer path: promote approved staging rows → JSON diff → PR.
+on:
+  workflow_dispatch:
+    inputs:
+      deal_id:
+        description: Optional lacuna_deals deal_id (omit to promote all approved)
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  promote-approved-deals:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Migrate Postgres
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PGSSLMODE: disable
+        run: npm run db:migrate
+
+      - name: Promote approved deals
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PGSSLMODE: disable
+          LACUNA_PROMOTE_TARGET: json
+        run: |
+          if [ -n "${{ inputs.deal_id }}" ]; then
+            npm run deals:promote-approved -- --deal-id="${{ inputs.deal_id }}"
+          else
+            npm run deals:promote-approved
+          fi
+
+      - name: Recompute quantitative artifacts
+        run: npm run compute:all
+
+      - name: Validate dataset
+        run: npm run validate:dataset
+
+      - name: Open PR when verified universe changed
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: chore/promote-approved-${{ github.run_id }}
+          delete-branch: true
+          title: "chore: promote approved staging deals to verified JSON"
+          commit-message: "chore: promote approved staging deals to verified JSON"
+          body: |
+            ## Summary
+            Promotes reviewer-approved `lacuna_deals` rows into `dataset.verified.json` via the manual **Promote approved deals** workflow.
+
+            ## Checklist
+            - [ ] Promotion checklist completed for each deal (dual-source gates)
+            - [ ] `npm run validate:dataset` passes in CI
+            - [ ] `docs/CHANGELOG_DATASET.md` updated if needed
+
+            Triggered by @${{ github.actor }} (run `${{ github.run_id }}`).
+          labels: dataset

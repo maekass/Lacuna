@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { auditReviewRequest } from "@/lib/api/reviewAudit";
 import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
 import { guardDealReviewRequest } from "@/lib/api/dealReviewAccess";
 import { enrichPendingDeal } from "@/lib/ingestion/enrichPendingDeal";
@@ -45,6 +46,17 @@ export async function POST(
     }
 
     const result = await enrichPendingDeal(deal);
+
+    if (result.ok && !result.skipped && result.changes.length > 0) {
+      await auditReviewRequest(request, {
+        dealId,
+        action: "enrich",
+        metadata: {
+          changeCount: result.changes.length,
+          parseQuality: result.after.parseQuality,
+        },
+      });
+    }
 
     return NextResponse.json({
       ok: result.ok,

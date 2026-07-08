@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { auditReviewRequest } from "@/lib/api/reviewAudit";
 import { guardDealReviewRequest } from "@/lib/api/dealReviewAccess";
 import { importCandidatesCsv } from "@/lib/ingestion/importCandidatesCsv";
 
@@ -34,6 +35,14 @@ export async function POST(request: Request) {
 
   try {
     const result = await importCandidatesCsv(csv);
+    await auditReviewRequest(request, {
+      action: "import",
+      metadata: {
+        parsed: result.parsed,
+        skipped: result.skipped,
+        errorCount: result.errors.length,
+      },
+    });
     return NextResponse.json({
       ok: true,
       probe: "candidates-import",

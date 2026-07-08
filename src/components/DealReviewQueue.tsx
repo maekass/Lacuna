@@ -85,7 +85,7 @@ function PendingDealCard({
               : null}
           </div>
         </div>
-        <div className="flex shrink-0 flex-wrap gap-2">
+        <div className="flex shrink-0 flex-col gap-2 sm:flex-row sm:flex-wrap">
           <Link
             href={`/deals/staging/${encodeURIComponent(deal.dealId)}`}
             className="rounded-md border border-lacuna-plum/30 bg-lacuna-plum/10 px-2.5 py-1.5 text-xs font-medium text-lacuna-plum hover:bg-lacuna-plum/20"

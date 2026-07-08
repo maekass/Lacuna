@@ -42,8 +42,8 @@ See [SEC_INGESTION.md](./SEC_INGESTION.md) for ingest behavior and bounds.
 
 ## 3. GitHub branch protection
 
-Require the **build** and **ci** workflows (`.github/workflows/deno.yml`) before
-merging to `main`:
+Require the **build**, **ci**, and **e2e** workflows
+(`.github/workflows/deno.yml`) before merging to `main`:
 
 ```bash
 ./scripts/configure-branch-protection.sh
@@ -51,7 +51,7 @@ merging to `main`:
 
 Requires `gh` CLI and admin access on `maekass/Lacuna`. Manual alternative:
 Repository → Settings → Branches → Add rule for `main` → Require status checks →
-select **build** and **ci**.
+select **build**, **ci**, and **e2e**.
 
 Direct pushes to `main` bypass PR review but still need both checks green once
 protection is enabled. Pair with Vercel **Deployment Checks** (below) so
@@ -79,7 +79,8 @@ The Datadog workflow is **manual only** (`workflow_dispatch`) until you add
 
 ## 5. Verify
 
-- `npm run lint && npm test && npm run build && npm run infra:check` locally
+- `npm run lint && npm run typecheck && npm run build:ci && npm run infra:check`
+  locally
 - Push a PR and confirm **CI** is green
 - Uptime: `npm run monitor:liveness` (or `GET /api/health` → `ok: true`,
   `probe: "live"`)

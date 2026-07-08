@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:ci": "LACUNA_DATA_MODE=static next build",
     "start": "next start",
+    "start:ci": "LACUNA_DATA_MODE=static next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
     "prepare": "husky",
@@ -68,7 +70,8 @@
     "monitor:liveness": "sh scripts/monitor-liveness.sh",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:e2e:smoke": "playwright test e2e/deploy-smoke.spec.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.67",

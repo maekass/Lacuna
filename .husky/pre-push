@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -e
+
+# Static dataset build — matches CI/Vercel; avoids local db-mode .env.local failures.
+npm run typecheck
+npm run build:ci

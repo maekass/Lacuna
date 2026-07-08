@@ -17,8 +17,10 @@ Live count comes from `dataset.verified.json` → `provenance.lastUpdated`.
 ## Hub strip
 
 `getDatasetChangelog()` in `src/lib/data/getDatasetChangelog.ts` diffs current
-JSON vs computed snapshot. When deals are added and `npm run compute:all` has
-not yet refreshed the snapshot, hub shows **"+N verified deals since …"**.
+JSON vs computed snapshot. Hub and Methods use `DatasetCoverageFootnote` to show
+**N verified · M staging candidates** (M from `GET /api/deals/pending/metrics`).
+When deals are added and `npm run compute:all` has not yet refreshed the
+snapshot, hub shows **"+N verified deals since …"**.
 
 ## After promoting new deals
 
@@ -36,7 +38,7 @@ not yet refreshed the snapshot, hub shows **"+N verified deals since …"**.
 
 ## Candidate vs verified
 
-| Layer    | Location                | Visible in charts?                           |
-| -------- | ----------------------- | -------------------------------------------- |
-| Verified | `dataset.verified.json` | Yes                                          |
-| Staging  | Postgres `lacuna_deals` | No — review queue on `/deals#data-pipelines` |
+| Layer    | Location                | Visible in charts?                   |
+| -------- | ----------------------- | ------------------------------------ |
+| Verified | `dataset.verified.json` | Yes                                  |
+| Staging  | Postgres `lacuna_deals` | No — review queue on `/deals#review` |

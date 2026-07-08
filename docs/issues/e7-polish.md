@@ -4,11 +4,11 @@ Demo-ready reviewer walkthrough and stale epic doc cleanup.
 
 ## Tasks
 
-- [ ] `docs/DEMO_SCRIPTS.md` — 2 min reviewer path (unlock → dossier → preview →
+- [x] `docs/DEMO_SCRIPTS.md` — 2 min reviewer path (unlock → dossier → preview →
       promote)
-- [ ] Mobile pass: staging dossier + review console
-- [ ] E2E: review flow with mock DB
-- [ ] Refresh `EPIC_DEAL_UNIVERSE.md` (Review UI ✅, Phase E pointer)
+- [x] Mobile pass: staging dossier + review console
+- [x] E2E: review flow with mock DB
+- [x] Refresh `EPIC_DEAL_UNIVERSE.md` (Review UI ✅, Phase E pointer)
 
 ## Acceptance criteria
 
