@@ -4,9 +4,8 @@ vi.mock("@/lib/ingestion/ingestRunState", () => ({
   getLatestIngestRun: vi.fn(),
 }));
 
-vi.mock("@/lib/ingestion/pendingDeals", () => ({
-  countPendingDeals: vi.fn(),
-  getOldestPendingDeal: vi.fn(),
+vi.mock("@/lib/ingestion/pendingQueueMetrics", () => ({
+  buildPendingQueueMetrics: vi.fn(),
 }));
 
 describe("buildSecIngestStatus", () => {
@@ -15,12 +14,12 @@ describe("buildSecIngestStatus", () => {
     vi.stubEnv("DATABASE_URL", "postgresql://user:pass@localhost:5432/lacuna");
   });
 
-  it("buildSecIngestStatusPayload includes pending review count", async () => {
+  it("buildSecIngestStatusPayload delegates queue fields to metrics", async () => {
     const { getLatestIngestRun } = await import(
       "@/lib/ingestion/ingestRunState"
     );
-    const { countPendingDeals, getOldestPendingDeal } = await import(
-      "@/lib/ingestion/pendingDeals"
+    const { buildPendingQueueMetrics } = await import(
+      "@/lib/ingestion/pendingQueueMetrics"
     );
     vi.mocked(getLatestIngestRun).mockResolvedValue({
       id: 1,
@@ -31,8 +30,16 @@ describe("buildSecIngestStatus", () => {
       parsed_filings: 3,
       error_message: null,
     });
-    vi.mocked(countPendingDeals).mockResolvedValue(5);
-    vi.mocked(getOldestPendingDeal).mockResolvedValue(null);
+    vi.mocked(buildPendingQueueMetrics).mockResolvedValue({
+      ok: true,
+      pending: 5,
+      approved: 2,
+      rejected: 1,
+      merged: 4,
+      stagingCandidateCount: 7,
+      medianAgeHours: 18,
+      oldestPendingIngestedAt: null,
+    });
 
     const { buildSecIngestStatusPayload } = await import(
       "@/lib/ingestion/buildSecIngestStatus"
@@ -41,6 +48,7 @@ describe("buildSecIngestStatus", () => {
 
     expect(payload.ok).toBe(true);
     expect(payload.pendingReviewCount).toBe(5);
+    expect(payload.queue.stagingCandidateCount).toBe(7);
     expect(payload.reviewQueuePath).toBe("/deals#review");
   });
 });
@@ -58,6 +66,16 @@ describe("GET /api/ingest/sec/status", () => {
         latest: null,
         pendingReviewCount: 2,
         oldestPendingIngestedAt: null,
+        queue: {
+          ok: true,
+          pending: 2,
+          approved: 0,
+          rejected: 0,
+          merged: 0,
+          stagingCandidateCount: 2,
+          medianAgeHours: null,
+          oldestPendingIngestedAt: null,
+        },
         cronPath: "/api/cron/sec-ingest",
         cli: "npm run sec:ingest",
         reviewQueuePath: "/deals#review",

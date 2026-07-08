@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import DataProvenanceBanner from "@/components/DataProvenanceBanner";
+import DatasetCoverageFootnote from "@/components/DatasetCoverageFootnote";
 import PatientEmpowermentInsight from "@/components/PatientEmpowermentInsight";
 import PipelineStatusStrip from "@/components/PipelineStatusStrip";
 import MotionSection from "@/components/ui/MotionSection";
@@ -64,10 +65,10 @@ export default function HubPage() {
             analytics from public sources.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-lacuna-blue/80">
-            n={verifiedAcquisitions.length}{" "}
-            verified deals · SEC EDGAR ingest · HIPAA/GDPR genomics layer ·
-            descriptive analytics only. Not PitchBook, not live market feeds,
-            and not investment advice.
+            <DatasetCoverageFootnote variant="compact" />{" "}
+            — SEC EDGAR ingest · HIPAA/GDPR genomics layer · descriptive
+            analytics only. Not PitchBook, not live market feeds, and not
+            investment advice.
           </p>
         </div>
       </MotionSection>

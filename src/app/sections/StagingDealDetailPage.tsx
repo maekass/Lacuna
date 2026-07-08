@@ -17,6 +17,7 @@ import {
 import type { PromotionPreviewResult } from "@/lib/ingestion/promotionPreview";
 import type { EnrichPendingDealResult } from "@/lib/ingestion/enrichPendingDeal";
 import { buildStagingEvidenceLadder } from "@/lib/ingestion/stagingEvidenceLadder";
+import { resolvePromoteLandingUrls } from "@/lib/ingestion/resolvePromoteLandingUrls";
 import type {
   PendingDealRecord,
   PendingDealStatus,
@@ -66,7 +67,9 @@ export default function StagingDealDetailPage(
   const [previewLoading, setPreviewLoading] = useState(false);
   const [checklistReady, setChecklistReady] = useState(false);
   const [promoting, setPromoting] = useState(false);
-  const [promoteSuccess, setPromoteSuccess] = useState<string | null>(null);
+  const [promoteSuccess, setPromoteSuccess] = useState<
+    ReturnType<typeof resolvePromoteLandingUrls>
+  >(null);
   const [enriching, setEnriching] = useState(false);
   const [enrichResult, setEnrichResult] = useState<
     EnrichPendingDealResult | null
@@ -232,21 +235,21 @@ export default function StagingDealDetailPage(
           body: JSON.stringify({ reviewerFields, approveFirst: true }),
         },
       );
-      const body = await response.json() as {
-        ok?: boolean;
-        error?: string;
-        verifiedDealUrl?: string;
-        result?: { acquisitionId?: string };
-      };
+      const body = await response.json() as
+        & Parameters<
+          typeof resolvePromoteLandingUrls
+        >[0]
+        & { ok?: boolean; error?: string };
       if (!response.ok || !body.ok) {
         setError(body.error ?? "Promotion failed.");
         return;
       }
-      const url = body.verifiedDealUrl ??
-        (body.result?.acquisitionId
-          ? `/deals/${body.result.acquisitionId}`
-          : null);
-      setPromoteSuccess(url);
+      const landing = resolvePromoteLandingUrls(body);
+      if (!landing) {
+        setError("Promotion succeeded but verified deal URL is missing.");
+        return;
+      }
+      setPromoteSuccess(landing);
     } catch {
       setError("Promotion failed.");
     } finally {
@@ -280,23 +283,33 @@ export default function StagingDealDetailPage(
 
   if (promoteSuccess) {
     return (
-      <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-6">
+      <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 sm:p-6">
         <h2 className="text-lg font-semibold text-emerald-900">
           Promoted to verified dataset
         </h2>
         <p className="mt-2 text-sm text-emerald-800">
           This candidate is now in the verified universe.
         </p>
-        <div className="mt-4 flex flex-wrap gap-3">
+        <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-3">
           <Link
-            href={promoteSuccess}
-            className="rounded-md bg-lacuna-plum px-4 py-2 text-sm font-medium text-white"
+            href={promoteSuccess.verifiedDealUrl}
+            className="rounded-md bg-lacuna-plum px-4 py-2 text-center text-sm font-medium text-white"
           >
             View verified deal
           </Link>
+          {promoteSuccess.networkUrl
+            ? (
+              <Link
+                href={promoteSuccess.networkUrl}
+                className="rounded-md border border-emerald-300 bg-white px-4 py-2 text-center text-sm font-medium text-emerald-900"
+              >
+                View in network graph
+              </Link>
+            )
+            : null}
           <Link
             href="/deals#review"
-            className="rounded-md border border-lacuna-lavender/50 px-4 py-2 text-sm font-medium text-lacuna-plum"
+            className="rounded-md border border-lacuna-lavender/50 px-4 py-2 text-center text-sm font-medium text-lacuna-plum"
           >
             Back to queue
           </Link>
@@ -311,7 +324,7 @@ export default function StagingDealDetailPage(
     deal.parseQuality === "partial";
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       <div className="rounded-xl border-2 border-amber-300 bg-amber-50 px-4 py-3">
         <p className="text-xs font-bold uppercase tracking-wide text-amber-900">
           Candidate · not verified
@@ -442,7 +455,7 @@ export default function StagingDealDetailPage(
         )
         : null}
 
-      <section id="promote" className="space-y-4">
+      <section id="promote" className="space-y-4 scroll-mt-24">
         <h2 className="text-lg font-semibold text-lacuna-plum">
           Promote to verified
         </h2>

@@ -31,6 +31,7 @@ export interface PromoteDealResult {
   dealId: string;
   ok: boolean;
   acquisitionId?: string;
+  networkHighlightId?: string;
   error?: string;
   skipped?: boolean;
 }
@@ -219,6 +220,7 @@ async function promoteOneDeal(
       dealId: deal.dealId,
       ok: true,
       acquisitionId: draft.acquisition.id,
+      networkHighlightId: draft.acquisition.acquirerId,
     },
     dataset: nextDataset,
   };

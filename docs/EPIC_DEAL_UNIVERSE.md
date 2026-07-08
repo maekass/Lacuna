@@ -15,22 +15,22 @@ deals only).
 
 ## What exists today
 
-| Layer                  | Status                      | Notes                                                      |
-| ---------------------- | --------------------------- | ---------------------------------------------------------- |
-| **Verified universe**  | `dataset.verified.json`     | Source of truth for the app; dual-attested manual curation |
-| **SEC 8-K Item 2.01**  | Cron + CLI → `lacuna_deals` | `pending` / `pending_review`; **never** auto-merged        |
-| **SEC EFTS full-text** | `npm run sec:search-ma`     | Staging JSON; manual review                                |
-| **SEC Form D**         | `lacuna_funding_events`     | Funding, not M&A; separate table                           |
-| **ClinicalTrials.gov** | Live API + ML ingest        | Trials research — **not** deal records                     |
-| **NIH RePORTER**       | Company enrichment API      | Grant context — **not** deal ingestion                     |
-| **Free API batch**     | `download:free-apis`        | Export folder; no unified deal queue                       |
-| **Review UI**          | `/deals#data-pipelines`     | Queue, import, funding panel, promote API ✅               |
-| **Hub changelog**      | Hub strip                   | Verified growth changelog ✅                               |
+| Layer                  | Status                      | Notes                                                         |
+| ---------------------- | --------------------------- | ------------------------------------------------------------- |
+| **Verified universe**  | `dataset.verified.json`     | Source of truth for the app; dual-attested manual curation    |
+| **SEC 8-K Item 2.01**  | Cron + CLI → `lacuna_deals` | `pending` / `pending_review`; **never** auto-merged           |
+| **SEC EFTS full-text** | `npm run sec:search-ma`     | Staging JSON; manual review                                   |
+| **SEC Form D**         | `lacuna_funding_events`     | Funding, not M&A; separate table                              |
+| **ClinicalTrials.gov** | Live API + ML ingest        | Trials research — **not** deal records                        |
+| **NIH RePORTER**       | Company enrichment API      | Grant context — **not** deal ingestion                        |
+| **Free API batch**     | `download:free-apis`        | Export folder; no unified deal queue                          |
+| **Review UI**          | `/deals#review`             | Staging dossier, promotion preview, unified Review Console ✅ |
+| **Hub changelog**      | Hub + Methods footnotes     | Verified vs staging candidate counts ✅                       |
 
-**Bottom line:** Candidate ingest and review UX exist; **Phase E** adds staging
-dossier, promotion preview, and unified Review Console — see
-[EPIC_REVIEW_CONSOLE.md](./EPIC_REVIEW_CONSOLE.md) (issues
-[#95](https://github.com/maekass/Lacuna/issues/95)–[#102](https://github.com/maekass/Lacuna/issues/102)).
+**Bottom line:** Review Console (Phase E) shipped on pathway branch — staging
+dossier, promotion preview, auth, metrics. See
+[EPIC_REVIEW_CONSOLE.md](./EPIC_REVIEW_CONSOLE.md) and
+[DEMO_SCRIPTS.md](./DEMO_SCRIPTS.md).
 
 ---
 

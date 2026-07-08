@@ -10,6 +10,7 @@ local dev only.
 | ------------------------------ | -------------------------------------------------- | --------------------------- | ---------------------------------- |
 | Optional UI narrative blurbs   | `POST /api/ai/insights` → `src/lib/ai/insights.ts` | `anthropic/claude-sonnet-4` | `gpt-4o-mini` via `@ai-sdk/openai` |
 | Space WH gap analyst           | `POST /api/research/space-wh-pipeline/ask`         | `xai/grok-4.3`              | `gpt-4o-mini` or deterministic     |
+| Domestic study discovery       | `POST /api/research/studies/discover`              | `xai/grok-4.5`              | deterministic NIH/CT.gov parse     |
 | SEC deal classification (cron) | `dealClassificationEngine.ts`                      | `openai/gpt-5.4-mini`       | keyword-only                       |
 
 ## What is **not** inference

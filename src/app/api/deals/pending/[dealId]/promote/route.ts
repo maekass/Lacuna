@@ -105,6 +105,11 @@ export async function POST(
       verifiedDealUrl: result.acquisitionId
         ? `/deals/${result.acquisitionId}`
         : undefined,
+      networkUrl: result.networkHighlightId
+        ? `/deals?highlight=${
+          encodeURIComponent(result.networkHighlightId)
+        }#network`
+        : undefined,
     }, {
       headers: { "cache-control": "no-store" },
     });

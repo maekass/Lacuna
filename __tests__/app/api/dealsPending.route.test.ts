@@ -6,6 +6,10 @@ vi.mock("@/lib/ingestion/pendingDeals", () => ({
   getPendingDealByDealId: vi.fn(),
 }));
 
+vi.mock("@/lib/api/reviewAudit", () => ({
+  auditReviewRequest: vi.fn().mockResolvedValue(undefined),
+}));
+
 describe("GET /api/deals/pending", () => {
   beforeEach(() => {
     vi.resetModules();
@@ -118,6 +122,8 @@ describe("PATCH /api/deals/pending/[dealId]", () => {
       parseQuality: "partial",
       ingestedAt: "2024-01-02T00:00:00.000Z",
       updatedAt: "2024-01-03T00:00:00.000Z",
+      mergedAcquisitionId: null,
+      promotedAt: null,
       reviewNotes: "Verified",
     });
 

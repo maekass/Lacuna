@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import QueueMetricsBreakdown from "@/components/QueueMetricsBreakdown";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import type { SecIngestStatusPayload } from "@/lib/ingestion/buildSecIngestStatus";
+import { formatQueueSlaLabel } from "@/lib/ingestion/queueAge";
 
 interface HealthPayload {
   buildSha: string | null;
@@ -16,7 +18,13 @@ function shortSha(sha: string | null): string {
 }
 
 /** Live pipeline freshness — dataset date, deploy SHA, SEC ingest, pending queue. */
-export default function PipelineStatusStrip() {
+export default function PipelineStatusStrip({
+  queueDetail = false,
+  refreshToken = 0,
+}: {
+  queueDetail?: boolean;
+  refreshToken?: number;
+}) {
   const { dataProvenance } = useVerifiedDataset();
   const [health, setHealth] = useState<HealthPayload | null>(null);
   const [sec, setSec] = useState<SecIngestStatusPayload | null>(null);
@@ -27,6 +35,7 @@ export default function PipelineStatusStrip() {
     let cancelled = false;
 
     async function load() {
+      setLoading(true);
       try {
         const [healthRes, secRes] = await Promise.all([
           fetch("/api/health"),
@@ -38,6 +47,8 @@ export default function PipelineStatusStrip() {
         }
         if (secRes.ok) {
           setSec(await secRes.json() as SecIngestStatusPayload);
+        } else {
+          setSec(null);
         }
       } finally {
         if (!cancelled) setLoading(false);
@@ -48,27 +59,19 @@ export default function PipelineStatusStrip() {
     return () => {
       cancelled = true;
     };
-  }, []);
-
-  const pendingCount = sec?.pendingReviewCount;
-  const oldestPendingIngestedAt = sec?.oldestPendingIngestedAt ?? null;
-  const secRunAt = sec?.latest?.ended_at ?? sec?.latest?.started_at;
+  }, [refreshToken]);
 
   useEffect(() => {
     const interval = setInterval(() => setNowMs(Date.now()), 60_000);
     return () => clearInterval(interval);
   }, []);
 
-  const oldestLabel = (() => {
-    if (!oldestPendingIngestedAt) return null;
-    const oldest = new Date(oldestPendingIngestedAt).getTime();
-    if (!Number.isFinite(oldest)) return null;
-    const diffMs = nowMs - oldest;
-    const hours = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60)));
-    if (hours < 48) return `${hours}h`;
-    const days = Math.max(0, Math.floor(hours / 24));
-    return `${days}d`;
-  })();
+  const pendingCount = sec?.pendingReviewCount;
+  const oldestLabel = formatQueueSlaLabel(
+    sec?.oldestPendingIngestedAt ?? null,
+    nowMs,
+  );
+  const secRunAt = sec?.latest?.ended_at ?? sec?.latest?.started_at;
 
   return (
     <div className="rounded-lg border border-lacuna-lavender/35 bg-lacuna-lavender/10 px-4 py-3 text-xs text-lacuna-blue">
@@ -110,6 +113,15 @@ export default function PipelineStatusStrip() {
           )
           : null}
       </div>
+      {queueDetail
+        ? (
+          <QueueMetricsBreakdown
+            metrics={sec?.queue ?? null}
+            unavailable={!sec?.queue}
+            className="mt-2 border-t border-lacuna-lavender/25 pt-2"
+          />
+        )
+        : null}
     </div>
   );
 }

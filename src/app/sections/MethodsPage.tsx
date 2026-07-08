@@ -9,20 +9,13 @@ import {
 } from "@/app/lazyDashboard";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { getDatasetChangelog } from "@/lib/data/getDatasetChangelog";
-import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
+import DatasetCoverageFootnote from "@/components/DatasetCoverageFootnote";
 import { useDashboardData } from "@/lib/data/useDashboardData";
-import { useMemo } from "react";
-import Link from "next/link";
 
 const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
 export default function MethodsPage() {
   const { verifiedAcquisitions } = useDashboardData();
-  const changelog = useMemo(
-    () => getDatasetChangelog(getStaticVerifiedDataset()),
-    [],
-  );
 
   return (
     <div>
@@ -34,21 +27,10 @@ export default function MethodsPage() {
           Causal framing, Bayesian small-n, temporal patterns, and sensitivity
           analysis.
         </p>
-        <p
-          className="mt-3 rounded-lg border border-lacuna-lavender/40 bg-lacuna-lavender/15 px-3 py-2 text-xs text-lacuna-blue"
-          role="note"
-        >
-          Scores and models here are exploratory heuristics on n=
-          {verifiedAcquisitions.length}{" "}
-          verified deals (staging SEC candidates live in Postgres until promoted
-          — see{" "}
-          <Link
-            href="/deals#review"
-            className="underline underline-offset-2"
-          >
-            deals pipeline
-          </Link>
-          ). {changelog.label}. They are not validated for investment decisions.
+        <DatasetCoverageFootnote className="mt-3 rounded-lg border border-lacuna-lavender/40 bg-lacuna-lavender/15 px-3 py-2 text-xs text-lacuna-blue" />
+        <p className="mt-2 text-xs text-lacuna-blue/80">
+          Scores and models here are exploratory heuristics — not validated for
+          investment decisions.
         </p>
       </header>
 
