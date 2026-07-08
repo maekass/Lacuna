@@ -90,10 +90,11 @@ Inspect runs: `GET /api/cron/sec-ingest/status` (requires `DATABASE_URL`).
 Enable waiting for required GitHub commit checks before promoting a deployment
 to **Production**. Add:
 
-| Check name | Workflow job | Purpose                                                       |
-| ---------- | ------------ | ------------------------------------------------------------- |
-| `build`    | `build`      | `typecheck` + `next build` (catches Turbopack compile errors) |
-| `ci`       | `ci`         | fmt, lint, dataset validation, tests                          |
+| Check name | Workflow job | Purpose                                                              |
+| ---------- | ------------ | -------------------------------------------------------------------- |
+| `build`    | `build`      | `typecheck` + static `next build` (catches Turbopack compile errors) |
+| `ci`       | `ci`         | fmt, lint, dataset validation, tests                                 |
+| `e2e`      | `e2e`        | Playwright smokes: `/api/health`, `/deals`, `/deals/deal1`           |
 
 Without this, Vercel still builds on every `main` push even when GitHub CI is
 red. Deployment Checks keep the production alias on the last green deployment.
