@@ -1,11 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { PendingQueueMetrics } from "@/lib/ingestion/pendingQueueMetrics";
 
 export interface PendingQueueMetricsState {
   metrics: PendingQueueMetrics | null;
   unavailable: boolean;
-  loading: boolean;
-  refresh: () => void;
 }
 
 const METRICS_PATH = "/api/deals/pending/metrics";
@@ -16,16 +14,9 @@ export function usePendingQueueMetrics(
 ): PendingQueueMetricsState {
   const [metrics, setMetrics] = useState<PendingQueueMetrics | null>(null);
   const [unavailable, setUnavailable] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [localRefresh, setLocalRefresh] = useState(0);
-
-  const refresh = useCallback(() => {
-    setLocalRefresh((n) => n + 1);
-  }, []);
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
 
     async function load() {
       try {
@@ -46,8 +37,6 @@ export function usePendingQueueMetrics(
           setMetrics(null);
           setUnavailable(true);
         }
-      } finally {
-        if (!cancelled) setLoading(false);
       }
     }
 
@@ -55,7 +44,7 @@ export function usePendingQueueMetrics(
     return () => {
       cancelled = true;
     };
-  }, [refreshToken, localRefresh]);
+  }, [refreshToken]);
 
-  return { metrics, unavailable, loading, refresh };
+  return { metrics, unavailable };
 }
