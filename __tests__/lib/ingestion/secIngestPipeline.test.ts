@@ -2,6 +2,7 @@ import process from "node:process";
 import { join } from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ParsedAcquisition } from "@/lib/ingestion/secEdgarConnector";
+import { buildSecDealNaturalKey } from "@/lib/ingestion/secDealNaturalKey";
 
 const mockScan = vi.fn();
 const mockSync = vi.fn();
@@ -42,6 +43,12 @@ function sampleParsed(
   return {
     dealId: "sec-0001193125-24-000001",
     secAccession: "0001193125-24-000001",
+    naturalKey: buildSecDealNaturalKey(
+      "0001193125-24-000001",
+      "1234567",
+      "8-K",
+    ),
+    formType: "8-K",
     acquirerName: "Acquirer Inc",
     acquirerTicker: "ACQ",
     acquirerCik: "1234567",
@@ -73,7 +80,12 @@ describe("runSecIngest", () => {
     });
 
     mockScan.mockResolvedValue([sampleParsed()]);
-    mockSync.mockResolvedValue({ inserted: 1, updated: 0, skipped: 0 });
+    mockSync.mockResolvedValue({
+      inserted: 1,
+      updated: 0,
+      skipped: 0,
+      deduped: 0,
+    });
 
     vi.stubEnv("SEC_EXTRA_TICKERS", "");
     vi.stubEnv("SEC_SCAN_SINCE", "2024-01-01");
@@ -118,7 +130,12 @@ describe("runSecIngest", () => {
     const result = await runSecIngest({ datasetPath });
 
     expect(mockSync).toHaveBeenCalledOnce();
-    expect(result.sync).toEqual({ inserted: 1, updated: 0, skipped: 0 });
+    expect(result.sync).toEqual({
+      inserted: 1,
+      updated: 0,
+      skipped: 0,
+      deduped: 0,
+    });
     expect(mockLogIngestComplete).toHaveBeenCalledWith(
       expect.objectContaining({
         scanned: expect.any(Number),

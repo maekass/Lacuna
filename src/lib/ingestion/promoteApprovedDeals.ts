@@ -12,9 +12,9 @@ import {
 import {
   getPendingDealByDealId,
   listApprovedDealsForPromotion,
-  markDealMerged,
   type PendingDealRecord,
 } from "@/lib/ingestion/pendingDeals";
+import { logReviewActionWithClient } from "@/lib/ingestion/reviewAuditLog";
 
 export type PromoteTarget = "json" | "db" | "both";
 
@@ -25,6 +25,9 @@ export interface PromoteApprovedDealsOptions {
   dryRun?: boolean;
   secondarySourceUrl?: string | null;
   reviewerFields?: ReviewerPromotionFields;
+  /** Audit actor for automated promote paths (cron / hands-off). */
+  auditActorId?: string;
+  auditActorMethod?: "github" | "api_key" | "dev";
 }
 
 export interface PromoteDealResult {
@@ -87,7 +90,11 @@ export function applyPromotionDraft(
   };
 }
 
-async function upsertPromotionToDb(draft: PromotionDraft): Promise<void> {
+async function upsertPromotionToDb(
+  draft: PromotionDraft,
+  deal: PendingDealRecord,
+  options: PromoteApprovedDealsOptions,
+): Promise<void> {
   await withTransaction(async (client) => {
     if (draft.company) {
       await client.query(
@@ -160,6 +167,36 @@ async function upsertPromotionToDb(draft: PromotionDraft): Promise<void> {
         `Auto-promoted ${draft.acquisition.id} from SEC staging.`,
       ],
     );
+
+    const mergeResult = await client.query(
+      `UPDATE lacuna_deals
+       SET status = 'merged',
+           merged_acquisition_id = $2,
+           promoted_at = NOW(),
+           updated_at = NOW()
+       WHERE deal_id = $1
+         AND status = 'approved'
+       RETURNING deal_id`,
+      [deal.dealId, draft.acquisition.id],
+    );
+
+    if ((mergeResult.rowCount ?? 0) === 0) {
+      throw new Error(
+        `Deal ${deal.dealId} is not in approved status — promotion aborted`,
+      );
+    }
+
+    await logReviewActionWithClient(client, {
+      dealId: deal.dealId,
+      action: "promote",
+      actorId: options.auditActorId ?? "system:promote",
+      actorMethod: options.auditActorMethod ?? "dev",
+      metadata: {
+        acquisitionId: draft.acquisition.id,
+        target: options.target ?? "json",
+        automated: true,
+      },
+    });
   });
 }
 
@@ -205,14 +242,43 @@ async function promoteOneDeal(
 
   if (!options.dryRun) {
     const target = options.target ?? "json";
+    if (target === "db" || target === "both") {
+      await upsertPromotionToDb(draft, deal, options);
+    } else {
+      await withTransaction(async (client) => {
+        const mergeResult = await client.query(
+          `UPDATE lacuna_deals
+           SET status = 'merged',
+               merged_acquisition_id = $2,
+               promoted_at = NOW(),
+               updated_at = NOW()
+           WHERE deal_id = $1
+             AND status = 'approved'
+           RETURNING deal_id`,
+          [deal.dealId, draft.acquisition.id],
+        );
+        if ((mergeResult.rowCount ?? 0) === 0) {
+          throw new Error(
+            `Deal ${deal.dealId} is not in approved status — promotion aborted`,
+          );
+        }
+        await logReviewActionWithClient(client, {
+          dealId: deal.dealId,
+          action: "promote",
+          actorId: options.auditActorId ?? "system:promote",
+          actorMethod: options.auditActorMethod ?? "dev",
+          metadata: {
+            acquisitionId: draft.acquisition.id,
+            target,
+            automated: true,
+          },
+        });
+      });
+    }
     if (target === "json" || target === "both") {
       const jsonPath = options.jsonPath ?? defaultJsonPath;
       writeJsonDataset(jsonPath, nextDataset);
     }
-    if (target === "db" || target === "both") {
-      await upsertPromotionToDb(draft);
-    }
-    await markDealMerged(deal.dealId, draft.acquisition.id);
   }
 
   return {

@@ -15,6 +15,7 @@ import {
 } from "@/lib/ingestion/databaseSync";
 import { WH_CONDITION_SEARCH_TERMS } from "@/lib/ingestion/publicRecords/whSearchTerms";
 import { buildDealId } from "@/lib/ingestion/secEdgarConnector";
+import { buildSecDealNaturalKey } from "@/lib/ingestion/secDealNaturalKey";
 import {
   type EftsHit,
   searchMaFilingsWomensHealth,
@@ -64,9 +65,13 @@ export function eftsHitToClassifiedDeal(hit: EftsHit): ClassifiedDeal {
 
   const eligible = shouldAutoInsert(classification.confidence);
 
+  const formType = hit.form || "8-K";
+
   return {
-    dealId: buildDealId(hit.accession, hit.cik),
+    dealId: buildDealId(hit.accession, hit.cik, formType),
     secAccession: hit.accession,
+    naturalKey: buildSecDealNaturalKey(hit.accession, hit.cik, formType),
+    formType,
     acquirerName: hit.companyName,
     acquirerCik: hit.cik,
     targetName: undefined,

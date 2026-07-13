@@ -1,18 +1,18 @@
-import process from "node:process";
-
-/**
- * SEC EDGAR connector — submissions API, 8-K Item 2.01 heuristic parse.
- * Callable from CLI, cron route, or future MCP server wrapper.
- *
- * @see https://www.sec.gov/os/webmaster-faq#code-support
- * Requires SEC_EDGAR_USER_AGENT env (e.g. "Lacuna Research mps5cy@virginia.edu").
- */
-
 import {
   alertApiFailure,
   alertPartialParse,
   logRateLimitPause,
 } from "@/lib/ingestion/monitoringAlerts";
+import {
+  acquireSecRequestPermit,
+  secFetchHeaders,
+} from "@/lib/ingestion/secFairAccess";
+import {
+  buildDealId,
+  buildSecDealNaturalKey,
+  type FilingCheckpoint,
+  shouldSkipFilingOnResume,
+} from "@/lib/ingestion/secDealNaturalKey";
 import {
   buildFilingUrl,
   buildFullSubmissionTextUrl,
@@ -23,9 +23,10 @@ import {
 } from "@/lib/ingestion/secEdgarClient";
 
 const SEC_DATA_BASE = "https://data.sec.gov";
-export const SEC_RATE_LIMIT_MS = 120;
 
-/** Healthcare/pharma SIC prefixes per SEC industry codes. */
+/** @deprecated Use SEC_RATE_LIMIT_MS from secFairAccess */
+export { SEC_RATE_LIMIT_MS } from "@/lib/ingestion/secFairAccess";
+export { buildDealId } from "@/lib/ingestion/secDealNaturalKey";
 export const HEALTHCARE_SIC_PREFIXES = ["283", "384"] as const;
 
 export type ParseQuality = "full" | "partial" | "keyword_only";
@@ -41,6 +42,8 @@ export interface SecSubmissionMeta {
 export interface ParsedAcquisition {
   dealId: string;
   secAccession: string;
+  naturalKey: string;
+  formType: string;
   acquirerName: string;
   acquirerTicker?: string;
   acquirerCik: string;
@@ -77,32 +80,18 @@ interface SubmissionsJson {
   };
 }
 
-function getUserAgent(): string {
-  const ua = process.env.SEC_EDGAR_USER_AGENT?.trim();
-  if (!ua) {
-    throw new Error(
-      'SEC_EDGAR_USER_AGENT is required (SEC policy). Example: "Lacuna Research mps5cy@virginia.edu"',
-    );
-  }
-  return ua;
-}
-
-export async function secRateLimitPause(
-  ms: number = SEC_RATE_LIMIT_MS,
-): Promise<void> {
-  logRateLimitPause(ms);
-  await new Promise((r) => setTimeout(r, ms));
+export async function secRateLimitPause(): Promise<void> {
+  logRateLimitPause(100);
+  await acquireSecRequestPermit();
 }
 
 async function secFetch(
   url: string,
   accept = "application/json",
 ): Promise<Response> {
+  await acquireSecRequestPermit();
   const response = await fetch(url, {
-    headers: {
-      Accept: accept,
-      "User-Agent": getUserAgent(),
-    },
+    headers: secFetchHeaders(accept),
   });
   if (!response.ok) {
     alertApiFailure(url, response.status);
@@ -115,8 +104,55 @@ export function isHealthcareSic(sic: string | undefined): boolean {
   return HEALTHCARE_SIC_PREFIXES.some((prefix) => sic.startsWith(prefix));
 }
 
-export function buildDealId(accession: string, cik: string): string {
-  return `sec-${cik}-${accession.replace(/-/g, "")}`;
+function buildParsedDealFields(input: {
+  accession: string;
+  filingUrl: string;
+  filingDate: string;
+  acquirerName: string;
+  acquirerTicker?: string;
+  acquirerCik: string;
+  formType: string;
+  sicCode?: string;
+  sicDescription?: string;
+  filingTextSample: string;
+  item201Excerpt?: string;
+  parseQuality: ParseQuality;
+  targetName?: string;
+  announcedDate?: string;
+  closedDate?: string;
+  dealValueMillions?: number;
+  dealValueNote?: string;
+  dealStructure?: string;
+  earnoutTerms?: string;
+}): ParsedAcquisition {
+  const formType = input.formType;
+  return {
+    dealId: buildDealId(input.accession, input.acquirerCik, formType),
+    secAccession: input.accession,
+    naturalKey: buildSecDealNaturalKey(
+      input.accession,
+      input.acquirerCik,
+      formType,
+    ),
+    formType,
+    acquirerName: input.acquirerName,
+    acquirerTicker: input.acquirerTicker,
+    acquirerCik: input.acquirerCik,
+    targetName: input.targetName,
+    announcedDate: input.announcedDate,
+    closedDate: input.closedDate,
+    dealValueMillions: input.dealValueMillions,
+    dealValueNote: input.dealValueNote,
+    dealStructure: input.dealStructure,
+    earnoutTerms: input.earnoutTerms,
+    filingUrl: input.filingUrl,
+    filingDate: input.filingDate,
+    item201Excerpt: input.item201Excerpt,
+    parseQuality: input.parseQuality,
+    sicCode: input.sicCode,
+    sicDescription: input.sicDescription,
+    filingTextSample: input.filingTextSample,
+  };
 }
 
 /** Fetch company submissions metadata including SIC. */
@@ -301,9 +337,11 @@ export function parseItem201(input: {
   acquirerName: string;
   acquirerTicker?: string;
   acquirerCik: string;
+  formType?: string;
   sicCode?: string;
   sicDescription?: string;
 }): ParsedAcquisition | undefined {
+  const formType = input.formType ?? "8-K";
   if (!filingContainsItem201(input.text)) return undefined;
 
   const section = extractItem201Section(input.text);
@@ -312,19 +350,19 @@ export function parseItem201(input: {
       input.accession,
       "Item 2.01 header found but section boundary unclear",
     );
-    return {
-      dealId: buildDealId(input.accession, input.acquirerCik),
-      secAccession: input.accession,
+    return buildParsedDealFields({
+      accession: input.accession,
+      filingUrl: input.filingUrl,
+      filingDate: input.filingDate,
       acquirerName: input.acquirerName,
       acquirerTicker: input.acquirerTicker,
       acquirerCik: input.acquirerCik,
-      filingUrl: input.filingUrl,
-      filingDate: input.filingDate,
-      parseQuality: "keyword_only",
+      formType,
       sicCode: input.sicCode,
       sicDescription: input.sicDescription,
       filingTextSample: input.text.slice(0, 4000),
-    };
+      parseQuality: "keyword_only",
+    });
   }
 
   const targetName = parseTargetName(section);
@@ -346,12 +384,14 @@ export function parseItem201(input: {
     alertPartialParse(input.accession, "Incomplete target or value fields");
   }
 
-  return {
-    dealId: buildDealId(input.accession, input.acquirerCik),
-    secAccession: input.accession,
+  return buildParsedDealFields({
+    accession: input.accession,
+    filingUrl: input.filingUrl,
+    filingDate: input.filingDate,
     acquirerName: input.acquirerName,
     acquirerTicker: input.acquirerTicker,
     acquirerCik: input.acquirerCik,
+    formType,
     targetName,
     announcedDate: input.filingDate,
     closedDate,
@@ -359,20 +399,19 @@ export function parseItem201(input: {
     dealValueNote: note,
     dealStructure,
     earnoutTerms,
-    filingUrl: input.filingUrl,
-    filingDate: input.filingDate,
     item201Excerpt: section.slice(0, 4000),
     parseQuality,
     sicCode: input.sicCode,
     sicDescription: input.sicDescription,
     filingTextSample: section.slice(0, 4000),
-  };
+  });
 }
 
 export interface ScanOptions {
   sinceDate?: string;
   limitPerTicker?: number;
   healthcareSicOnly?: boolean;
+  checkpoint?: FilingCheckpoint | null;
 }
 
 /**
@@ -386,6 +425,7 @@ export async function scanItem201Acquisitions(
     sinceDate = `${new Date().getFullYear() - 1}-01-01`,
     limitPerTicker = 15,
     healthcareSicOnly = false,
+    checkpoint = null,
   } = options;
 
   const results: ParsedAcquisition[] = [];
@@ -406,7 +446,21 @@ export async function scanItem201Acquisitions(
     });
 
     for (const filing of filings) {
-      await secRateLimitPause();
+      const naturalKey = buildSecDealNaturalKey(
+        filing.accessionNumber,
+        String(entry.cik),
+        filing.formType,
+      );
+      if (
+        shouldSkipFilingOnResume(
+          filing.filingDate,
+          naturalKey,
+          checkpoint,
+        )
+      ) {
+        continue;
+      }
+
       let text: string;
       let filingUrl = filing.filingUrl;
       try {
@@ -429,6 +483,7 @@ export async function scanItem201Acquisitions(
         acquirerName: meta.name,
         acquirerTicker: entry.ticker,
         acquirerCik: String(entry.cik),
+        formType: filing.formType,
         sicCode: meta.sic,
         sicDescription: meta.sicDescription,
       });
@@ -448,6 +503,7 @@ interface FilingRef {
   filingDate: string;
   filingUrl: string;
   primaryDocument: string;
+  formType: string;
 }
 
 async function listRecent8KFilings(
@@ -466,7 +522,8 @@ async function listRecent8KFilings(
   const refs: FilingRef[] = [];
 
   for (let i = 0; i < recent.form.length && refs.length < options.limit; i++) {
-    if (recent.form[i] !== "8-K") continue;
+    const formType = recent.form[i];
+    if (formType !== "8-K") continue;
     const filingDate = recent.filingDate[i];
     if (filingDate < options.sinceDate) continue;
 
@@ -476,6 +533,7 @@ async function listRecent8KFilings(
       accessionNumber,
       filingDate,
       primaryDocument,
+      formType,
       filingUrl: buildFilingUrl(cik, accessionNumber, primaryDocument),
     });
   }
