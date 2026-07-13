@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { withLlmDevHeaders } from "@/lib/ai/devHeaders";
+import { resetLlmAccounting } from "@/lib/ai/inference";
 import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
 import { getVerifiedDataset } from "@/lib/data/datasetProvider";
 import { buildPatientEmpowermentSnapshot } from "@/lib/research/patientEmpowermentPipeline";
@@ -30,13 +32,14 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    resetLlmAccounting();
     const dataset = await getVerifiedDataset();
     const snapshot = buildPatientEmpowermentSnapshot(dataset);
     const result = await answerPatientEmpowermentGapQuestion(
       snapshot,
       question,
     );
-    return NextResponse.json(result);
+    return withLlmDevHeaders(NextResponse.json(result));
   } catch (error) {
     console.error("patient-empowerment ask error:", error);
     return NextResponse.json(

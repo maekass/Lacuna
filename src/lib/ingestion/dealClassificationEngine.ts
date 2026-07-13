@@ -9,6 +9,7 @@
 import {
   CLASSIFICATION_GATEWAY_MODEL,
   CLASSIFICATION_OPENAI_MODEL,
+  generateInferenceObject,
   isServerInferenceConfigured,
   resolveInferenceModel,
 } from "@/lib/ai/inference";
@@ -16,8 +17,11 @@ import {
   buildClassificationPrompt,
   CLASSIFICATION_SYSTEM_PROMPT,
 } from "@/lib/ai/prompts";
-import { generateText, type LanguageModel, Output } from "ai";
-import { z } from "zod";
+import {
+  type DealClassificationAiOutput,
+  dealClassificationSchema,
+} from "@/lib/ai/schemas";
+import type { LanguageModel } from "ai";
 
 export type ClassificationConfidence = "high" | "medium" | "low";
 export type ClassificationMethod = "keyword" | "ai";
@@ -54,6 +58,11 @@ export {
   CLASSIFICATION_OPENAI_MODEL,
   hasAiGatewayAuth,
 } from "@/lib/ai/inference";
+
+export {
+  type DealClassificationAiOutput,
+  dealClassificationSchema,
+} from "@/lib/ai/schemas";
 
 /** Curated keywords — sectors, products, and clinical areas in women's health M&A. */
 export const WOMENS_HEALTH_KEYWORDS = [
@@ -109,29 +118,8 @@ const HIGH_SIGNAL = new Set([
   "femtech",
 ]);
 
-const aiClassificationSchema = z.object({
-  womensHealthRelevant: z
-    .boolean()
-    .describe(
-      "True when the acquisition target or rationale is primarily women's / female health",
-    ),
-  confidence: z.enum(["high", "medium", "low"]).describe(
-    "high = explicit WH focus; low = tangential",
-  ),
-  matchedKeywords: z
-    .array(z.string())
-    .describe("Specific women's health terms found in the disclosure"),
-  matchedThemes: z
-    .array(z.string())
-    .describe(
-      "Broader themes e.g. fertility, maternal care, femtech, OB-GYN devices",
-    ),
-  rationale: z.string().describe(
-    "One or two sentences citing evidence from the filing excerpt",
-  ),
-});
-
-export type AiClassificationOutput = z.infer<typeof aiClassificationSchema>;
+/** @deprecated Use DealClassificationAiOutput from @/lib/ai/schemas */
+export type AiClassificationOutput = DealClassificationAiOutput;
 
 function normalize(text: string): string {
   return text.toLowerCase().replace(/\s+/g, " ");
@@ -240,24 +228,9 @@ export async function classifyDealAsync(
   }
 
   try {
-    const { output } = await generateText({
-      model: resolved.model,
-      ...(resolved.viaGateway
-        ? {
-          providerOptions: {
-            gateway: {
-              tags: ["feature:sec-ingest", "pipeline:deal-classification"],
-            },
-          },
-        }
-        : {}),
+    const { data: output } = await generateInferenceObject({
+      resolved,
       system: CLASSIFICATION_SYSTEM_PROMPT,
-      output: Output.object({
-        name: "WomensHealthDealClassification",
-        description:
-          "Women's health relevance of an SEC 8-K acquisition filing",
-        schema: aiClassificationSchema,
-      }),
       prompt: buildClassificationPrompt({
         filingText: input.filingText,
         targetName: input.targetName,
@@ -265,11 +238,15 @@ export async function classifyDealAsync(
         sicCode: input.sicCode,
         sicDescription: input.sicDescription,
       }),
+      schema: dealClassificationSchema,
+      schemaName: "WomensHealthDealClassification",
+      schemaDescription:
+        "Women's health relevance of an SEC 8-K acquisition filing",
+      feature: "sec-deal-classification",
+      gatewayTags: ["feature:sec-ingest", "pipeline:deal-classification"],
+      maxOutputTokens: 512,
+      temperature: 0.1,
     });
-
-    if (!output) {
-      throw new Error("AI classification returned no structured output");
-    }
 
     const keywordBaseline = classifyDealKeywordOnly(input);
     const mergedKeywords = [

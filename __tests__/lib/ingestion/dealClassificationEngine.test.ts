@@ -1,7 +1,10 @@
-import { generateText, Output } from "ai";
+import { generateObject } from "ai";
 import { MockLanguageModelV3 } from "ai/test";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { z } from "zod";
+import {
+  type DealClassificationAiOutput,
+  dealClassificationSchema,
+} from "@/lib/ai/schemas";
 import {
   classifyDeal,
   classifyDealAsync,
@@ -13,15 +16,7 @@ import {
   WOMENS_HEALTH_KEYWORDS,
 } from "@/lib/ingestion/dealClassificationEngine";
 
-const aiClassificationSchema = z.object({
-  womensHealthRelevant: z.boolean(),
-  confidence: z.enum(["high", "medium", "low"]),
-  matchedKeywords: z.array(z.string()),
-  matchedThemes: z.array(z.string()),
-  rationale: z.string(),
-});
-
-function mockAiModel(payload: z.infer<typeof aiClassificationSchema>) {
+function mockAiModel(payload: DealClassificationAiOutput) {
   return new MockLanguageModelV3({
     doGenerate: () => ({
       content: [{ type: "text", text: JSON.stringify(payload) }],
@@ -157,7 +152,7 @@ describe("dealClassificationEngine", () => {
     expect(classifyDeal(input)).toEqual(classifyDealKeywordOnly(input));
   });
 
-  it("generateText + Output.object validates mock integration shape", async () => {
+  it("generateObject validates mock integration shape", async () => {
     const model = mockAiModel({
       womensHealthRelevant: false,
       confidence: "low",
@@ -166,12 +161,12 @@ describe("dealClassificationEngine", () => {
       rationale: "General logistics software.",
     });
 
-    const { output } = await generateText({
+    const { object } = await generateObject({
       model,
-      output: Output.object({ schema: aiClassificationSchema }),
+      schema: dealClassificationSchema,
       prompt: "classify",
     });
 
-    expect(output?.womensHealthRelevant).toBe(false);
+    expect(object.womensHealthRelevant).toBe(false);
   });
 });

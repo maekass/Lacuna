@@ -4,9 +4,10 @@
  */
 
 import {
-  generateInferenceText,
+  generateInferenceObject,
   type ResolvedInferenceModel,
 } from "@/lib/ai/inference";
+import { groundedNarrativeSchema } from "@/lib/ai/schemas";
 import {
   PROMPT_VERSION,
   sanitizeLLMOutput,
@@ -222,14 +223,20 @@ export async function generateQualifiedInference(
     });
   }
 
-  const raw = await generateInferenceText({
+  const { data } = await generateInferenceObject({
     resolved: params.resolved,
     system: params.system,
     prompt: params.prompt,
+    schema: groundedNarrativeSchema,
+    schemaName: "GroundedNarrative",
+    schemaDescription: "Educational narrative grounded in provided context",
+    feature: params.feature,
     maxOutputTokens: params.maxOutputTokens,
     temperature: params.temperature,
     gatewayTags: [`feature:${params.feature}`, "quality:gated"],
   });
+
+  const raw = data.answer.trim();
 
   return assessLlmOutput(raw, {
     feature: params.feature,
@@ -264,7 +271,13 @@ export const LLM_QUALITY_CATALOG = [
   {
     feature: "sec-ingest",
     route: "dealClassificationEngine (cron/CLI)",
-    description: "SEC 8-K WH classification (structured output)",
+    description: "SEC 8-K WH classification (generateObject + Zod)",
+    grounded: true,
+  },
+  {
+    feature: "study-discovery",
+    route: "domesticStudyDiscoveryLlm",
+    description: "Domestic study catalog expansion (structured candidates)",
     grounded: true,
   },
 ] as const;
