@@ -123,5 +123,8 @@ If referencing this tool in academic or professional contexts:
 
 ## Contact
 
-Mae Kass · [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu) ·
-[github.com/maekass](https://github.com/maekass)
+Mae Kass, MPH (PsyD candidate; incoming MBA 2027) ·
+[mps5cy@virginia.edu](mailto:mps5cy@virginia.edu) ·
+[github.com/maekass](https://github.com/maekass) ·
+[H20 Call to Action signatory](https://www.icn.ch/sites/default/files/2024-08/H20%20Call%20to%20action%20-%20Final%20version.pdf)
+(G20 & G7 HDP, Aug 2024)

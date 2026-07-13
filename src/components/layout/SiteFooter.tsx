@@ -1,3 +1,5 @@
+import H20SignatoryNote from "@/components/H20SignatoryNote";
+
 export default function SiteFooter() {
   return (
     <footer className="mt-20 pt-8 border-t border-lacuna-lavender/40">
@@ -47,6 +49,9 @@ export default function SiteFooter() {
             ClinicalTrials.gov. An open investment-research prototype for
             women&apos;s health M&amp;A — not investment advice and not a
             substitute for paid deal-intelligence products.
+          </p>
+          <p className="mt-1">
+            <H20SignatoryNote />
           </p>
         </div>
       </div>

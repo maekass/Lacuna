@@ -75,7 +75,12 @@ Open source under [BSL 1.1](LICENSE) for corp VC diligence workflows, portfolio
 review, and self-hosted exploration. Commercial competitive products need a
 separate license — [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu).
 
-Portfolio project by [Mae Kass](https://github.com/maekass).
+Portfolio project by [Mae Kass](https://github.com/maekass) (MPH; PsyD
+candidate; incoming MBA 2027) —
+[signatory](https://www.icn.ch/sites/default/files/2024-08/H20%20Call%20to%20action%20-%20Final%20version.pdf)
+to the G20 & G7 Health and Development Partnership
+[H20 Call to Action](https://www.icn.ch/sites/default/files/2024-08/H20%20Call%20to%20action%20-%20Final%20version.pdf)
+on global health diplomacy (Aug 2024).
 
 **Deployment:** The analytics product runs on **Vercel** (this repo). A separate
 **Framer** site is for brand and narrative only, with one primary CTA into the
@@ -415,8 +420,15 @@ separate agreement. Converts to Apache 2.0 May 2030.
 
 ## Author
 
-**[Mae Kass](https://github.com/maekass)** — open investment-research tools for
-women's health data literacy and honest analytics.
+**[Mae Kass](https://github.com/maekass)** — MPH; PsyD candidate; incoming MBA
+(2027). Open investment-research tools for women's health data literacy and
+honest analytics.
+
+Signatory to the
+[G20 & G7 Health and Development Partnership H20 Call to Action](https://www.icn.ch/sites/default/files/2024-08/H20%20Call%20to%20action%20-%20Final%20version.pdf)
+(_The Future of Global Health Diplomacy in a Changing World_, August 2024) —
+advocating for women's, maternal, and child health on the G7/G20 agenda,
+gender-specific health data, and innovative financing for women's health.
 
 <p align="center">
   <sup>†</sup> <small>Deal counts and acquisition examples shown in-app — including Payer Ops VC signals — are computed from <code>src/data/dataset.verified.json</code> via <code>src/lib/payerOps/vcSignalModel.ts</code> and related model scripts; not synthetic deal data.</small>

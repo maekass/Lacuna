@@ -69,8 +69,7 @@ export interface GenerateInferenceBaseParams {
   abortSignal?: AbortSignal;
 }
 
-export interface GenerateInferenceTextParams
-  extends GenerateInferenceBaseParams {}
+export type GenerateInferenceTextParams = GenerateInferenceBaseParams;
 
 export interface GenerateInferenceObjectParams<T extends z.ZodTypeAny>
   extends GenerateInferenceBaseParams {
