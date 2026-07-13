@@ -75,7 +75,7 @@ Open source under [BSL 1.1](LICENSE) for corp VC diligence workflows, portfolio
 review, and self-hosted exploration. Commercial competitive products need a
 separate license — [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu).
 
-Portfolio project by [Mae Kass](https://github.com/maekass) (MPH; PsyD
+Portfolio project by [Mae Kass](https://github.com/maekass) (MS/MPH; PsyD
 candidate; incoming MBA 2027) —
 [signatory](https://www.icn.ch/sites/default/files/2024-08/H20%20Call%20to%20action%20-%20Final%20version.pdf)
 to the G20 & G7 Health and Development Partnership
@@ -420,8 +420,8 @@ separate agreement. Converts to Apache 2.0 May 2030.
 
 ## Author
 
-**[Mae Kass](https://github.com/maekass)** — MPH; PsyD candidate; incoming MBA
-(2027). Open investment-research tools for women's health data literacy and
+**[Mae Kass](https://github.com/maekass)** — MS/MPH; PsyD candidate; incoming
+MBA (2027). Open investment-research tools for women's health data literacy and
 honest analytics.
 
 Signatory to the
