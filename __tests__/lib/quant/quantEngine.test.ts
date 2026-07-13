@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   AcquisitionPredictor,
   HealthImpactModeler,
+  isSufficient,
+  numericOrNull,
   PortfolioOptimizer,
   type QuantCompany,
   ValuationEngine,
@@ -28,9 +30,16 @@ describe("ValuationEngine", () => {
 
   it("does not throw and returns a finite consensus (regression: percentile crash)", () => {
     const result = engine.valuateCompany(makeCompany({ annualRevenue: 10 }));
-    expect(Number.isFinite(result.consensusEstimate)).toBe(true);
-    expect(result.consensusEstimate).toBeGreaterThan(0);
-    expect(result.consensusRange.every(Number.isFinite)).toBe(true);
+    expect(isSufficient(result.consensus)).toBe(true);
+    const consensus = numericOrNull(result.consensus);
+    expect(consensus).not.toBeNull();
+    expect(Number.isFinite(consensus)).toBe(true);
+    expect(consensus!).toBeGreaterThan(0);
+    if (isSufficient(result.consensus)) {
+      expect(result.consensus.confidenceInterval.every(Number.isFinite)).toBe(
+        true,
+      );
+    }
   });
 
   it("returns INSUFFICIENT DATA (not NaN) when no inputs are present", () => {
@@ -38,16 +47,21 @@ describe("ValuationEngine", () => {
       makeCompany({ raisedToDate: 0, targetMarketSize: undefined }),
     );
     expect(result.recommendation).toBe("INSUFFICIENT DATA");
-    expect(result.consensusEstimate).toBe(0);
-    expect(Number.isNaN(result.consensusEstimate)).toBe(false);
+    expect(numericOrNull(result.consensus)).toBeNull();
   });
 
   it("applies a configurable Africa discount", () => {
-    const base = engine.valuateCompany(makeCompany({ annualRevenue: 10 }));
-    const discounted = engine.valuateCompany(
-      makeCompany({ annualRevenue: 10, geographicFocus: ["Africa"] }),
+    const base = numericOrNull(
+      engine.valuateCompany(makeCompany({ annualRevenue: 10 })).consensus,
     );
-    expect(discounted.consensusEstimate).toBeLessThan(base.consensusEstimate);
+    const discounted = numericOrNull(
+      engine.valuateCompany(
+        makeCompany({ annualRevenue: 10, geographicFocus: ["Africa"] }),
+      ).consensus,
+    );
+    expect(discounted).not.toBeNull();
+    expect(base).not.toBeNull();
+    expect(discounted!).toBeLessThan(base!);
   });
 });
 
@@ -55,19 +69,26 @@ describe("AcquisitionPredictor", () => {
   const predictor = new AcquisitionPredictor();
 
   it("keeps probability within [0.05, 0.95] and varies by company quality", () => {
-    const strong = predictor.predictAcquisition(
-      makeCompany({ clinicalStage: "fda_approved", geographicFocus: ["US"] }),
-    ).probabilityOfAcquisition;
-    const weak = predictor.predictAcquisition(
-      makeCompany({ clinicalStage: "preclinical", geographicFocus: ["Asia"] }),
-    ).probabilityOfAcquisition;
+    const strong = numericOrNull(
+      predictor.predictAcquisition(
+        makeCompany({ clinicalStage: "fda_approved", geographicFocus: ["US"] }),
+      ).probability,
+    );
+    const weak = numericOrNull(
+      predictor.predictAcquisition(
+        makeCompany({
+          clinicalStage: "preclinical",
+          geographicFocus: ["Asia"],
+        }),
+      ).probability,
+    );
 
     for (const p of [strong, weak]) {
-      expect(p).toBeGreaterThanOrEqual(0.05);
-      expect(p).toBeLessThanOrEqual(0.95);
+      expect(p).not.toBeNull();
+      expect(p!).toBeGreaterThanOrEqual(0.05);
+      expect(p!).toBeLessThanOrEqual(0.95);
     }
-    // Regression: old code clamped everything to ~0.1-0.14 (a near-constant).
-    expect(strong).toBeGreaterThan(weak);
+    expect(strong!).toBeGreaterThan(weak!);
   });
 });
 
@@ -80,7 +101,6 @@ describe("HealthImpactModeler", () => {
     );
     expect(Number.isFinite(impact.cumulativeLivesSaved)).toBe(true);
     expect(impact.cumulativeLivesSaved).toBeGreaterThanOrEqual(0);
-    // ~287k maternal deaths/yr globally (WHO) → 5yr ceiling. Old model blew past this.
     expect(impact.cumulativeLivesSaved).toBeLessThan(287_000 * 5);
   });
 });
@@ -109,8 +129,8 @@ describe("PortfolioOptimizer", () => {
     ];
     const result = new PortfolioOptimizer().optimizePortfolio(candidates, 500);
     const rois = new Set(result.companies.map((c) => c.roi));
-    expect(rois.size).toBeGreaterThan(1); // not a constant 1.5 across all companies
-    expect(Number.isFinite(result.expectedROI)).toBe(true);
+    expect(rois.size).toBeGreaterThan(1);
+    expect(numericOrNull(result.expectedROI)).not.toBeNull();
   });
 });
 
