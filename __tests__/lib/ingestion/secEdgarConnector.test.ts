@@ -82,6 +82,45 @@ describe("secEdgarConnector", () => {
   });
 });
 
+describe("fetchFilingTextForItem201 (mocked)", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+  });
+
+  it("falls back to full submission .txt when primary 8-K lacks Item 2.01 (success)", async () => {
+    vi.stubEnv("SEC_EDGAR_USER_AGENT", "Lacuna Test test@example.com");
+    const item201Text =
+      "Item 2.01 Completion of Acquisition or Disposition of Assets. The Company acquired Target Co for $10 million.";
+    const primaryText =
+      "Item 1.01 Entry into a Material Definitive Agreement only.";
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation((url: string) => {
+        const body = url.endsWith(".txt") ? item201Text : primaryText;
+        return Promise.resolve({
+          ok: true,
+          text: () => Promise.resolve(`<html>${body}</html>`),
+        });
+      }),
+    );
+
+    const { fetchFilingTextForItem201 } = await import(
+      "@/lib/ingestion/secEdgarConnector"
+    );
+    const result = await fetchFilingTextForItem201(
+      1477449,
+      "0001104659-20-119769",
+      "https://www.sec.gov/Archives/edgar/data/1477449/000110465920119769/tm.htm",
+    );
+
+    expect(result.filingUrl).toContain(".txt");
+    expect(result.text).toContain("Item 2.01");
+    expect(fetch).toHaveBeenCalledTimes(2);
+  });
+});
+
 describe("secEdgarConnector fetch (mocked)", () => {
   it("fetchSubmissions parses SIC from JSON (success)", async () => {
     vi.stubEnv("SEC_EDGAR_USER_AGENT", "Lacuna Test test@example.com");

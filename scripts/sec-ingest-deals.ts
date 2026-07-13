@@ -21,6 +21,16 @@ async function main() {
   const result = await runSecIngest({ dryRun });
 
   console.log(`Tickers scanned: ${result.scannedTickers}`);
+  if (result.unresolvedTickers.length > 0) {
+    console.warn(
+      `Unresolved tickers (skipped — foreign ADR or set SEC_TICKER_CIK_OVERRIDES): ${
+        result.unresolvedTickers.join(", ")
+      }`,
+    );
+  }
+  if (result.sinceDateUsed) {
+    console.log(`Since date: ${result.sinceDateUsed}`);
+  }
   console.log(`Item 2.01 filings parsed: ${result.parsedFilings.length}`);
   console.log(
     `Women's health candidates: ${

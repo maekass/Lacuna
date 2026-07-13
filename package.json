@@ -7,8 +7,8 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "build:ci": "LACUNA_DATA_MODE=static next build",
+    "build": "npm run validate:dataset && next build",
+    "build:ci": "npm run validate:dataset && LACUNA_DATA_MODE=static next build",
     "start": "next start",
     "start:ci": "LACUNA_DATA_MODE=static next start",
     "lint": "eslint",
@@ -119,6 +119,7 @@
     "eslint-config-next": "16.2.6",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "husky": "^9.1.7",
+    "pg-mem": "^3.0.5",
     "storybook": "^9.1.20",
     "tailwindcss": "^4",
     "tsx": "^4.20.3",

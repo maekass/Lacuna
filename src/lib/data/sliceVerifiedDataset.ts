@@ -37,6 +37,21 @@ function paginate<T>(items: T[], limit: number, offset: number): T[] {
   return items.slice(offset, offset + limit);
 }
 
+function sortCompanies(companies: VerifiedDataset["companies"]) {
+  return [...companies].sort((a, b) => a.id.localeCompare(b.id));
+}
+
+function sortAcquirers(acquirers: VerifiedDataset["acquirers"]) {
+  return [...acquirers].sort((a, b) => a.id.localeCompare(b.id));
+}
+
+function sortAcquisitions(acquisitions: VerifiedDataset["acquisitions"]) {
+  return [...acquisitions].sort((a, b) => {
+    const dateCmp = b.announcedDate.localeCompare(a.announcedDate);
+    return dateCmp !== 0 ? dateCmp : a.id.localeCompare(b.id);
+  });
+}
+
 /** Slice an in-memory verified dataset without loading extra copies from disk. */
 export function sliceVerifiedDataset(
   dataset: VerifiedDataset,
@@ -45,8 +60,9 @@ export function sliceVerifiedDataset(
   const resource = options.resource ?? "all";
   const companiesById = new Map(dataset.companies.map((c) => [c.id, c]));
 
-  let companies = dataset.companies;
-  let acquisitions = dataset.acquisitions;
+  let companies = sortCompanies(dataset.companies);
+  let acquisitions = sortAcquisitions(dataset.acquisitions);
+  const acquirers = sortAcquirers(dataset.acquirers);
 
   if (options.sector) {
     companies = companies.filter((c) => c.sector === options.sector);
@@ -62,7 +78,7 @@ export function sliceVerifiedDataset(
   const totals = {
     companies: companies.length,
     acquisitions: acquisitions.length,
-    acquirers: dataset.acquirers.length,
+    acquirers: acquirers.length,
   };
 
   const slicedCompanies = resource === "all" || resource === "companies"
@@ -72,7 +88,7 @@ export function sliceVerifiedDataset(
     ? paginate(acquisitions, options.limit, options.offset)
     : [];
   const slicedAcquirers = resource === "all" || resource === "acquirers"
-    ? paginate(dataset.acquirers, options.limit, options.offset)
+    ? paginate(acquirers, options.limit, options.offset)
     : [];
 
   return {

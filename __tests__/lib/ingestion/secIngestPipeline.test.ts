@@ -6,6 +6,11 @@ import type { ParsedAcquisition } from "@/lib/ingestion/secEdgarConnector";
 const mockScan = vi.fn();
 const mockSync = vi.fn();
 const mockLogIngestComplete = vi.fn();
+const mockResolveTicker = vi.fn();
+
+vi.mock("@/lib/ingestion/secEdgarClient", () => ({
+  resolveTicker: (...args: unknown[]) => mockResolveTicker(...args),
+}));
 
 vi.mock("@/lib/ingestion/secEdgarConnector", async (importOriginal) => {
   const actual = await importOriginal<
@@ -59,6 +64,13 @@ describe("runSecIngest", () => {
     mockScan.mockReset();
     mockSync.mockReset();
     mockLogIngestComplete.mockReset();
+    mockResolveTicker.mockReset();
+
+    mockResolveTicker.mockImplementation(async (ticker: string) => {
+      const upper = String(ticker).toUpperCase();
+      if (upper === "ZZZZ") return undefined;
+      return { cik: 1, ticker: upper, title: upper };
+    });
 
     mockScan.mockResolvedValue([sampleParsed()]);
     mockSync.mockResolvedValue({ inserted: 1, updated: 0, skipped: 0 });
@@ -68,6 +80,8 @@ describe("runSecIngest", () => {
     vi.stubEnv("SEC_LIMIT_PER_TICKER", "5");
     vi.stubEnv("SEC_HEALTHCARE_SIC_ONLY", "");
     vi.stubEnv("DATABASE_URL", "");
+    vi.stubEnv("LACUNA_INGEST_RUN_TRACKING", "");
+    vi.stubEnv("SEC_USE_DB_CURSOR", "");
   });
 
   it("scans dataset tickers and classifies filings in dry run (success)", async () => {
@@ -86,11 +100,16 @@ describe("runSecIngest", () => {
 
   it("merges extraTickers with dataset tickers (edge)", async () => {
     const { runSecIngest } = await import("@/lib/ingestion/secIngestPipeline");
-    await runSecIngest({ dryRun: true, datasetPath, extraTickers: ["ZZZZ"] });
+    const result = await runSecIngest({
+      dryRun: true,
+      datasetPath,
+      extraTickers: ["ZZZZ"],
+    });
 
     const [tickers] = mockScan.mock.calls[0];
     expect(tickers).toContain("ZZZZ");
     expect(tickers.length).toBeGreaterThan(1);
+    expect(result.unresolvedTickers).toContain("ZZZZ");
   });
 
   it("syncs classified deals when DATABASE_URL is set (success)", async () => {
