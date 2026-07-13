@@ -1,0 +1,100 @@
+[
+  {
+    "id": "wh-ivf-high",
+    "input": {
+      "filingText": "On March 12, 2024, ParentCo completed the acquisition of FertilityCo, a leading in vitro fertilization clinic network focused on women's reproductive health.",
+      "targetName": "FertilityCo",
+      "acquirerName": "ParentCo",
+      "sicCode": "8099"
+    },
+    "expected": { "womensHealthRelevant": true, "confidence": "high" },
+    "mockAi": {
+      "womensHealthRelevant": true,
+      "confidence": "high",
+      "matchedKeywords": ["in vitro", "fertility", "reproductive health"],
+      "matchedThemes": ["fertility", "reproductive health"],
+      "rationale": "Filing describes acquisition of an IVF clinic network for women's reproductive health."
+    }
+  },
+  {
+    "id": "menopause-medium",
+    "input": {
+      "filingText": "Buyer acquired a digital menopause symptom management platform serving midlife women.",
+      "targetName": "PauseWell",
+      "acquirerName": "HealthTech Holdings"
+    },
+    "expected": { "womensHealthRelevant": true, "confidence": "medium" },
+    "mockAi": {
+      "womensHealthRelevant": true,
+      "confidence": "medium",
+      "matchedKeywords": ["menopause"],
+      "matchedThemes": ["menopause", "femtech"],
+      "rationale": "Target is a menopause care platform — women's health but consumer digital."
+    }
+  },
+  {
+    "id": "logistics-negative",
+    "input": {
+      "filingText": "Completion of acquisition of a logistics software company for supply chain optimization.",
+      "targetName": "LogiSoft",
+      "acquirerName": "Industrial Corp"
+    },
+    "expected": { "womensHealthRelevant": false, "confidence": "low" },
+    "mockAi": {
+      "womensHealthRelevant": false,
+      "confidence": "low",
+      "matchedKeywords": [],
+      "matchedThemes": [],
+      "rationale": "General logistics software with no women's health focus."
+    }
+  },
+  {
+    "id": "obgyn-device-high",
+    "input": {
+      "filingText": "Acquisition of a pelvic floor rehabilitation device manufacturer for OB-GYN clinical settings.",
+      "targetName": "PelviTech",
+      "acquirerName": "MedDevice Inc",
+      "sicCode": "3842"
+    },
+    "expected": { "womensHealthRelevant": true, "confidence": "high" },
+    "mockAi": {
+      "womensHealthRelevant": true,
+      "confidence": "high",
+      "matchedKeywords": ["pelvic floor", "ob-gyn"],
+      "matchedThemes": ["pelvic health", "OB-GYN devices"],
+      "rationale": "Pelvic floor device for OB-GYN — explicit women's health medical device."
+    }
+  },
+  {
+    "id": "general-pharma-low",
+    "input": {
+      "filingText": "Acquisition of a diversified pharmaceutical distribution business with no stated female-specific therapeutic focus.",
+      "targetName": "PharmaDistro",
+      "acquirerName": "Global Health"
+    },
+    "expected": { "womensHealthRelevant": false, "confidence": "low" },
+    "mockAi": {
+      "womensHealthRelevant": false,
+      "confidence": "low",
+      "matchedKeywords": [],
+      "matchedThemes": [],
+      "rationale": "General pharma distribution without women's health specificity."
+    }
+  },
+  {
+    "id": "maternal-high",
+    "input": {
+      "filingText": "Purchase of a maternal remote monitoring platform for high-risk pregnancies and preeclampsia detection.",
+      "targetName": "MaternalWatch",
+      "acquirerName": "CareSystems"
+    },
+    "expected": { "womensHealthRelevant": true, "confidence": "high" },
+    "mockAi": {
+      "womensHealthRelevant": true,
+      "confidence": "high",
+      "matchedKeywords": ["maternal", "pregnancy", "preeclampsia"],
+      "matchedThemes": ["maternal health", "pregnancy monitoring"],
+      "rationale": "Maternal monitoring for high-risk pregnancy — core women's health."
+    }
+  }
+]

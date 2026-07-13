@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { withLlmDevHeaders } from "@/lib/ai/devHeaders";
+import { resetLlmAccounting } from "@/lib/ai/inference";
 import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
 import { getVerifiedDataset } from "@/lib/data/datasetProvider";
 import { buildTrialToTransactionSnapshot } from "@/lib/research/trialToTransactionPipeline";
@@ -30,10 +32,11 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    resetLlmAccounting();
     const dataset = await getVerifiedDataset();
     const snapshot = buildTrialToTransactionSnapshot(dataset);
     const result = await answerSpaceWhGapQuestion(snapshot, question);
-    return NextResponse.json(result);
+    return withLlmDevHeaders(NextResponse.json(result));
   } catch (error) {
     console.error("space-wh-pipeline ask error:", error);
     return NextResponse.json(

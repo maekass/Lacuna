@@ -310,6 +310,40 @@ export function buildPatientEmpowermentGapPrompt(input: {
 }
 
 // ---------------------------------------------------------------------------
+// Domestic study discovery (structured candidates from source text)
+// ---------------------------------------------------------------------------
+
+export const STUDY_DISCOVERY_SYSTEM_PROMPT =
+  `You are Lacuna's domestic women's health study discovery assistant.
+
+ROLE:
+- Extract research study candidates from SOURCE_TEXT for the given INSTITUTION preset
+- Return only studies clearly described in SOURCE_TEXT — do not invent titles or NCT IDs
+- Focus on US women's health, reproductive, maternal, or sex-specific research
+
+${ANTI_HALLUCINATION_GUARD}
+
+${EDUCATIONAL_DISCLAIMER}
+
+OUTPUT: Structured JSON matching the schema — candidates array with title, conditions, institutionHint, sourceHint, rationale.`;
+
+export function buildStudyDiscoveryPrompt(input: {
+  institution: string;
+  sourceText: string;
+  maxCandidates: number;
+}): string {
+  return [
+    `INSTITUTION_PRESET: ${input.institution}`,
+    `MAX_CANDIDATES: ${input.maxCandidates}`,
+    ``,
+    `SOURCE_TEXT:`,
+    input.sourceText.slice(0, 14_000),
+    ``,
+    `List up to ${input.maxCandidates} study candidates found in SOURCE_TEXT only.`,
+  ].join("\n");
+}
+
+// ---------------------------------------------------------------------------
 // Output sanitization (post-processing guardrails)
 // ---------------------------------------------------------------------------
 
