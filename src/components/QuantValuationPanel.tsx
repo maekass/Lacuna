@@ -6,7 +6,12 @@ import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { adaptQuantCompanies } from "@/lib/quant/adaptQuantCompany";
 import { deriveEmpiricalPriors } from "@/lib/quant/empiricalPriors";
-import { AcquisitionPredictor, ValuationEngine } from "@/lib/quant/quantEngine";
+import {
+  AcquisitionPredictor,
+  isSufficient,
+  numericOrNull,
+  ValuationEngine,
+} from "@/lib/quant/quantEngine";
 import { gapScoreForSector } from "@/lib/valuation/burdenCapitalGap";
 
 type DriverKey = keyof ReturnType<
@@ -64,15 +69,13 @@ export default function QuantValuationPanel() {
           DriverKey,
           number,
         ][]).sort((a, b) => b[1] - a[1])[0][0];
+        const consensusValue = numericOrNull(valuation.consensus);
         const hasComparableAnchor = valuation.valuations.some(
           (v) => v.methodName === "Comparable Deals" && v.confidence > 0,
         );
-        // A company is valuable-to-model if any method produced an estimate —
-        // including the comparable-deals anchor (no funding required for the
-        // sector-median fallback).
         const modelEstimate =
-          hasValuationInput || valuation.consensusEstimate > 0
-            ? valuation.consensusEstimate
+          hasValuationInput || (consensusValue !== null && consensusValue > 0)
+            ? consensusValue
             : null;
 
         return {
@@ -85,7 +88,7 @@ export default function QuantValuationPanel() {
             ? modelEstimate
             : null,
           hasComparableAnchor,
-          acquisitionProbability: prediction.probabilityOfAcquisition,
+          acquisitionProbability: numericOrNull(prediction.probability) ?? 0,
           topDriver: DRIVER_LABELS[topDriver],
           gapScore: gapScoreForSector(company.sector),
         };
@@ -135,14 +138,17 @@ export default function QuantValuationPanel() {
         valuations now include a comparable-deals method derived from{" "}
         {priors.dealCount} verified acquisitions ({priors.disclosedDealCount}
         {" "}
-        with disclosed values, {priors.medianFundingMultipleAll !== undefined
+        with disclosed values,{" "}
+        {isSufficient(priors.medianFundingMultipleAllEstimate)
           ? `median exit/funding multiple ${
-            priors.medianFundingMultipleAll.toFixed(1)
+            priors.medianFundingMultipleAllEstimate.value.toFixed(1)
           }x`
           : "no funding multiples available"}). The exit base rate is the
-        dataset&apos;s observed{" "}
-        {(priors.overallExitRate * 100).toFixed(0)}% exit share — small-n and
-        disclosure-biased, so treat as exploratory framing, not advice.
+        dataset&apos;s observed {isSufficient(priors.overallExitRateEstimate)
+          ? `${(priors.overallExitRateEstimate.value * 100).toFixed(0)}%`
+          : "n/a"}{" "}
+        exit share — small-n and disclosure-biased, so treat as exploratory
+        framing, not advice.
       </div>
 
       <div className="overflow-x-auto">

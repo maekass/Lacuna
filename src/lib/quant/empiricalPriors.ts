@@ -1,65 +1,53 @@
 /**
  * Empirical priors derived from the verified dataset's actual deal history.
- *
- * This is the quant engine's data-retrieval layer: instead of hardcoded
- * heuristic multiples, every prior here is computed from the verified
- * acquisitions (deal values, dates, sectors) and company funding records.
- *
- * Caveats remain — n is small per sector, deal values are disclosed-only
- * (survivorship/disclosure bias), and funding-to-exit multiples exist only
- * where both figures are public. Each prior carries its own sample size so
- * the UI and engines can weight confidence accordingly.
+ * Per-sector aggregates are gated behind min sample sizes and surfaced as
+ * {@link QuantValue} so small-n buckets cannot render as bare numbers.
  */
 
-import { median, quantile } from "simple-statistics";
+import { median } from "simple-statistics";
 import type {
   VerifiedAcquisitionView,
   VerifiedCompanyView,
 } from "@/lib/data/verifiedDataHelpers";
-
-// ==================== TYPES ====================
+import {
+  bcaBootstrapCi,
+  disclosedFraction,
+  gatedMedian,
+  gatedProportionCi,
+  heckmanSelectionCaveat,
+  isSufficient,
+  MIN_FUNDING_MULTIPLE_SAMPLE,
+  MIN_SECTOR_SAMPLE,
+} from "./estimators";
+import type { QuantValue } from "./types";
 
 export interface SectorPrior {
   sector: string;
-  /** Deals matched to this sector. */
   dealCount: number;
-  /** Median disclosed deal value ($M) — undefined when no values disclosed. */
-  medianDealValue?: number;
-  /** [P25, P75] of disclosed deal values ($M). */
-  dealValueIQR?: [number, number];
-  /** Median exit-value / total-funding multiple (where both disclosed). */
-  medianFundingMultiple?: number;
-  /** Sample size behind medianFundingMultiple. */
-  fundingMultipleN: number;
-  /** Median years from company founding to deal announcement. */
+  disclosedDealCount: number;
+  disclosedFraction: number;
+  selectionCaveat: string;
+  companyCount: number;
+  acquiredInSector: number;
+  medianDealValueEstimate: QuantValue<number>;
+  medianFundingMultipleEstimate: QuantValue<number>;
+  sectorExitRateEstimate: QuantValue<number>;
   medianYearsToExit?: number;
 }
 
 export interface EmpiricalPriors {
-  /** Share of dataset companies that have been acquired (overall base rate). */
-  overallExitRate: number;
-  /** Companies in the dataset. */
+  overallExitRateEstimate: QuantValue<number>;
   companyCount: number;
-  /** Acquisitions in the dataset. */
   dealCount: number;
-  /** Deals with a disclosed value. */
   disclosedDealCount: number;
-  /** Median disclosed deal value across all sectors ($M). */
-  medianDealValueAll?: number;
-  /** Median exit/funding multiple across all sectors. */
-  medianFundingMultipleAll?: number;
-  /** Per-sector priors keyed by normalized sector bucket. */
+  disclosedFraction: number;
+  selectionCaveat: string;
+  medianDealValueAllEstimate: QuantValue<number>;
+  medianFundingMultipleAllEstimate: QuantValue<number>;
   sectorPriors: Map<string, SectorPrior>;
-  /** Provenance note for UI disclosure. */
   derivationNote: string;
 }
 
-// ==================== SECTOR NORMALIZATION ====================
-
-/**
- * Normalize free-form sector strings into comparable buckets so that
- * "Diagnostics / Oncology" and "Diagnostics" pool into the same prior.
- */
 export function normalizeSectorBucket(sector: string): string {
   const s = sector.toLowerCase();
   if (s.includes("diagn") || s.includes("screen") || s.includes("imaging")) {
@@ -68,7 +56,7 @@ export function normalizeSectorBucket(sector: string): string {
   if (s.includes("fertil") || s.includes("reproduct") || s.includes("ivf")) {
     return "fertility";
   }
-  if (s.includes("maternal") || s.includes("pregnan")) return "maternal";
+  if (s.includes("maternal") || s.includes("pregn")) return "maternal";
   if (s.includes("oncolog") || s.includes("cancer")) return "oncology";
   if (s.includes("menopause")) return "menopause";
   if (s.includes("pelvic")) return "pelvic";
@@ -81,8 +69,6 @@ export function normalizeSectorBucket(sector: string): string {
   return "other";
 }
 
-// ==================== DERIVATION ====================
-
 function yearsBetween(foundedYear: number, isoDate: string): number | null {
   const announced = new Date(isoDate);
   if (Number.isNaN(announced.getTime()) || foundedYear <= 1900) return null;
@@ -90,17 +76,13 @@ function yearsBetween(foundedYear: number, isoDate: string): number | null {
   return years >= 0 && years < 60 ? years : null;
 }
 
-/**
- * Derive empirical priors from the verified dataset. Pure function — same
- * inputs always produce the same priors (no randomness, no fabrication).
- */
 export function deriveEmpiricalPriors(
   companies: readonly VerifiedCompanyView[],
   acquisitions: readonly VerifiedAcquisitionView[],
 ): EmpiricalPriors {
   const companyById = new Map(companies.map((c) => [c.id, c]));
+  const acquiredTargetIds = new Set(acquisitions.map((d) => d.targetId));
 
-  // Group deals by the *target company's* sector bucket.
   const dealsBySector = new Map<string, VerifiedAcquisitionView[]>();
   for (const deal of acquisitions) {
     const target = companyById.get(deal.targetId);
@@ -120,7 +102,6 @@ export function deriveEmpiricalPriors(
       .filter((v): v is number => typeof v === "number" && v > 0);
     allDisclosedValues.push(...disclosed);
 
-    // Funding-to-exit multiples: need both dealValue and target totalFunding.
     const multiples: number[] = [];
     const yearsToExit: number[] = [];
     for (const deal of deals) {
@@ -131,60 +112,105 @@ export function deriveEmpiricalPriors(
       ) {
         multiples.push(deal.dealValue / target.totalFunding);
       }
-      if (target && target.founded !== undefined) {
-        const yrs = yearsBetween(target.founded!, deal.announcedDate);
+      if (target?.founded !== undefined) {
+        const yrs = yearsBetween(target.founded, deal.announcedDate);
         if (yrs !== null) yearsToExit.push(yrs);
       }
     }
     allFundingMultiples.push(...multiples);
 
+    const sectorCompanies = companies.filter(
+      (c) => normalizeSectorBucket(c.sector) === bucket,
+    );
+    const acquiredInSector = sectorCompanies.filter((c) =>
+      acquiredTargetIds.has(c.id) || c.stage.toLowerCase().includes("acquired")
+    ).length;
+
+    const dealFrac = disclosedFraction(disclosed.length, deals.length);
+
     sectorPriors.set(bucket, {
       sector: bucket,
       dealCount: deals.length,
-      medianDealValue: disclosed.length > 0 ? median(disclosed) : undefined,
-      dealValueIQR: disclosed.length >= 2
-        ? [quantile(disclosed, 0.25), quantile(disclosed, 0.75)]
-        : undefined,
-      medianFundingMultiple: multiples.length > 0
-        ? median(multiples)
-        : undefined,
-      fundingMultipleN: multiples.length,
+      disclosedDealCount: disclosed.length,
+      disclosedFraction: dealFrac,
+      selectionCaveat: heckmanSelectionCaveat(disclosed.length, deals.length),
+      companyCount: sectorCompanies.length,
+      acquiredInSector,
+      medianDealValueEstimate: gatedMedian(disclosed, {
+        minSampleSize: MIN_SECTOR_SAMPLE,
+        disclosedCount: disclosed.length,
+        totalCount: deals.length,
+      }),
+      medianFundingMultipleEstimate: bcaBootstrapCi(
+        multiples,
+        median,
+        {
+          minSampleSize: MIN_FUNDING_MULTIPLE_SAMPLE,
+          disclosedCount: disclosed.length,
+          totalCount: deals.length,
+        },
+      ),
+      sectorExitRateEstimate: gatedProportionCi(
+        acquiredInSector,
+        sectorCompanies.length,
+        { minSampleSize: MIN_SECTOR_SAMPLE },
+      ),
       medianYearsToExit: yearsToExit.length > 0
         ? median(yearsToExit)
         : undefined,
     });
   }
 
-  // Overall exit base rate: acquired targets / total companies.
-  const acquiredTargetIds = new Set(acquisitions.map((d) => d.targetId));
   const acquiredInDataset =
     companies.filter((c) =>
       acquiredTargetIds.has(c.id) || c.stage.toLowerCase().includes("acquired")
     ).length;
-  const overallExitRate = companies.length > 0
-    ? acquiredInDataset / companies.length
-    : 0;
+
+  const disclosedDealCount =
+    acquisitions.filter((d) =>
+      typeof d.dealValue === "number" && d.dealValue > 0
+    ).length;
+
+  const overallFrac = disclosedFraction(
+    disclosedDealCount,
+    acquisitions.length,
+  );
 
   return {
-    overallExitRate,
+    overallExitRateEstimate: gatedProportionCi(
+      acquiredInDataset,
+      companies.length,
+      { minSampleSize: MIN_SECTOR_SAMPLE },
+    ),
     companyCount: companies.length,
     dealCount: acquisitions.length,
-    disclosedDealCount: allDisclosedValues.length,
-    medianDealValueAll: allDisclosedValues.length > 0
-      ? median(allDisclosedValues)
-      : undefined,
-    medianFundingMultipleAll: allFundingMultiples.length > 0
-      ? median(allFundingMultiples)
-      : undefined,
+    disclosedDealCount,
+    disclosedFraction: overallFrac,
+    selectionCaveat: heckmanSelectionCaveat(
+      disclosedDealCount,
+      acquisitions.length,
+    ),
+    medianDealValueAllEstimate: gatedMedian(allDisclosedValues, {
+      minSampleSize: MIN_SECTOR_SAMPLE,
+      disclosedCount: disclosedDealCount,
+      totalCount: acquisitions.length,
+    }),
+    medianFundingMultipleAllEstimate: bcaBootstrapCi(
+      allFundingMultiples,
+      median,
+      {
+        minSampleSize: MIN_FUNDING_MULTIPLE_SAMPLE,
+        disclosedCount: disclosedDealCount,
+        totalCount: acquisitions.length,
+      },
+    ),
     sectorPriors,
     derivationNote:
-      `Derived from ${acquisitions.length} verified deals (${allDisclosedValues.length} with disclosed values, ` +
-      `${allFundingMultiples.length} with funding-to-exit multiples) across ${companies.length} companies. ` +
-      `Disclosed-only values carry disclosure bias; per-sector n is small.`,
+      `Derived from ${acquisitions.length} verified deals (${disclosedDealCount} disclosed, ` +
+      `${allFundingMultiples.length} with funding multiples) across ${companies.length} companies. ` +
+      `Per-sector aggregates require n≥${MIN_SECTOR_SAMPLE}; disclosed-only values carry selection bias.`,
   };
 }
-
-// ==================== STAGE MEDIAN DERIVATION ====================
 
 export type FundingStageKey =
   | "Pre-Seed"
@@ -215,10 +241,6 @@ function normalizeFundingStage(stage: string): FundingStageKey | null {
   return null;
 }
 
-/**
- * Derive stage-level funding medians from the verified dataset.
- * Proxy: median total-funding-raised by funding stage (not pre-money valuation).
- */
 export function deriveStageMedians(
   companies: readonly VerifiedCompanyView[],
 ): DatasetStageMedians {
@@ -249,15 +271,21 @@ export function deriveStageMedians(
     medians,
     sampleSizes,
     derivationNote:
-      `Stage medians derived from ${totalN} verified companies with disclosed funding ` +
-      `(proxy: median total-funding-raised by stage — not a pre-money valuation).`,
+      `Stage medians from ${totalN} companies with disclosed funding ` +
+      `(proxy: median total-funding-raised by stage).`,
   };
 }
 
-/** Look up the sector prior for a free-form sector string. */
 export function getSectorPrior(
   priors: EmpiricalPriors,
   sector: string,
 ): SectorPrior | undefined {
   return priors.sectorPriors.get(normalizeSectorBucket(sector));
+}
+
+/** @deprecated Use overallExitRateEstimate via isSufficient() */
+export function overallExitRateScalar(priors: EmpiricalPriors): number {
+  return isSufficient(priors.overallExitRateEstimate)
+    ? priors.overallExitRateEstimate.value
+    : 0;
 }

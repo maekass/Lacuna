@@ -118,6 +118,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "eslint-plugin-jsx-a11y": "^6.10.2",
+    "fast-check": "^4.3.0",
     "husky": "^9.1.7",
     "pg-mem": "^3.0.5",
     "storybook": "^9.1.20",

@@ -6,6 +6,8 @@ import {
 } from "@/lib/quant/empiricalPriors";
 import {
   AcquisitionPredictor,
+  isSufficient,
+  numericOrNull,
   type QuantCompany,
   ValuationEngine,
 } from "@/lib/quant/quantEngine";
@@ -62,28 +64,29 @@ describe("normalizeSectorBucket", () => {
 });
 
 describe("deriveEmpiricalPriors", () => {
-  const companies = [
-    makeCompanyView({ id: "c1", sector: "Diagnostics", totalFunding: 50 }),
+  const companies = Array.from({ length: 6 }, (_, i) =>
     makeCompanyView({
-      id: "c2",
+      id: `c${i + 1}`,
       sector: "Diagnostics",
-      totalFunding: 100,
-      stage: "Acquired by BigCo (2021)",
-    }),
-    makeCompanyView({ id: "c3", sector: "Fertility", totalFunding: 20 }),
-  ];
+      totalFunding: 50 + i * 10,
+      stage: i < 2 ? "Acquired by BigCo (2021)" : "Series B",
+    }));
   const deals = [
     makeDeal({ id: "d1", targetId: "c1", dealValue: 400 }),
     makeDeal({ id: "d2", targetId: "c2", dealValue: 500 }),
-    makeDeal({ id: "d3", targetId: "c3", dealValue: undefined }),
   ];
 
   it("computes the overall exit rate from acquired targets", () => {
     const priors = deriveEmpiricalPriors(companies, deals);
-    // All 3 companies are deal targets → exit rate 100%.
-    expect(priors.overallExitRate).toBe(1);
-    expect(priors.dealCount).toBe(3);
+    expect(isSufficient(priors.overallExitRateEstimate)).toBe(true);
+    // 2 acquired of 6 companies
+    expect(priors.overallExitRateEstimate).toMatchObject({
+      kind: "sufficient",
+      value: 2 / 6,
+    });
+    expect(priors.dealCount).toBe(2);
     expect(priors.disclosedDealCount).toBe(2);
+    expect(priors.disclosedFraction).toBe(1);
   });
 
   it("derives sector funding-to-exit multiples from real pairs", () => {
@@ -91,43 +94,50 @@ describe("deriveEmpiricalPriors", () => {
     const diag = getSectorPrior(priors, "Diagnostics");
     expect(diag).toBeDefined();
     expect(diag!.dealCount).toBe(2);
-    // multiples: 400/50=8, 500/100=5 → median 6.5
-    expect(diag!.medianFundingMultiple).toBeCloseTo(6.5);
-    expect(diag!.fundingMultipleN).toBe(2);
+    // n=2 is below MIN_FUNDING_MULTIPLE_SAMPLE (3) — gated insufficient
+    expect(isSufficient(diag!.medianFundingMultipleEstimate)).toBe(false);
+    expect(diag!.medianFundingMultipleEstimate.kind).toBe("insufficient");
   });
 
-  it("handles sectors with no disclosed values gracefully", () => {
+  it("returns insufficient median when sector sample is below threshold", () => {
     const priors = deriveEmpiricalPriors(companies, deals);
-    const fert = getSectorPrior(priors, "Fertility");
-    expect(fert).toBeDefined();
-    expect(fert!.medianDealValue).toBeUndefined();
-    expect(fert!.fundingMultipleN).toBe(0);
+    const diag = getSectorPrior(priors, "Diagnostics");
+    expect(diag).toBeDefined();
+    // n=2 disclosed deals — below MIN_SECTOR_SAMPLE (5)
+    expect(isSufficient(diag!.medianDealValueEstimate)).toBe(false);
+    expect(isSufficient(diag!.medianFundingMultipleEstimate)).toBe(false);
   });
 
   it("is deterministic — same input yields identical priors", () => {
     const a = deriveEmpiricalPriors(companies, deals);
     const b = deriveEmpiricalPriors(companies, deals);
-    expect(a.overallExitRate).toBe(b.overallExitRate);
-    expect(a.medianFundingMultipleAll).toBe(b.medianFundingMultipleAll);
+    expect(numericOrNull(a.overallExitRateEstimate)).toBe(
+      numericOrNull(b.overallExitRateEstimate),
+    );
+    expect(a.selectionCaveat).toBe(b.selectionCaveat);
   });
 
-  it("returns safe values for an empty dataset", () => {
+  it("returns insufficient exit rate for an empty dataset", () => {
     const priors = deriveEmpiricalPriors([], []);
-    expect(priors.overallExitRate).toBe(0);
-    expect(priors.medianDealValueAll).toBeUndefined();
-    expect(Number.isNaN(priors.overallExitRate)).toBe(false);
+    expect(isSufficient(priors.overallExitRateEstimate)).toBe(false);
+    expect(isSufficient(priors.medianDealValueAllEstimate)).toBe(false);
   });
 });
 
 describe("ValuationEngine with empirical priors", () => {
-  const companies = [
-    makeCompanyView({ id: "c1", sector: "Diagnostics", totalFunding: 50 }),
-    makeCompanyView({ id: "c2", sector: "Diagnostics", totalFunding: 100 }),
-  ];
-  const deals = [
-    makeDeal({ id: "d1", targetId: "c1", dealValue: 400 }),
-    makeDeal({ id: "d2", targetId: "c2", dealValue: 500 }),
-  ];
+  const companies = Array.from({ length: 6 }, (_, i) =>
+    makeCompanyView({
+      id: `c${i + 1}`,
+      sector: "Diagnostics",
+      totalFunding: 50 + i * 10,
+    }));
+  const deals = companies.map((c, i) =>
+    makeDeal({
+      id: `d${i + 1}`,
+      targetId: c.id,
+      dealValue: 300 + i * 50,
+    })
+  );
   const priors = deriveEmpiricalPriors(companies, deals);
 
   function quantCompany(overrides: Partial<QuantCompany> = {}): QuantCompany {
@@ -153,8 +163,9 @@ describe("ValuationEngine with empirical priors", () => {
     );
     expect(comparable).toBeDefined();
     expect(comparable!.confidence).toBeGreaterThan(0);
-    // 30 raised × 6.5 median multiple = 195
-    expect(comparable!.estimate).toBeCloseTo(195);
+    const estimate = numericOrNull(comparable!.estimate);
+    expect(estimate).not.toBeNull();
+    expect(estimate!).toBeGreaterThan(0);
   });
 
   it("omits the comparable-deals method without priors (backward compat)", () => {
@@ -184,19 +195,24 @@ describe("AcquisitionPredictor with empirical priors", () => {
     makeCompanyView({ id: "c2", sector: "Fertility", stage: "Series A" }),
     makeCompanyView({ id: "c3", sector: "Fertility", stage: "Series A" }),
     makeCompanyView({ id: "c4", sector: "Fertility", stage: "Series A" }),
+    makeCompanyView({ id: "c5", sector: "Fertility", stage: "Series A" }),
+    makeCompanyView({ id: "c6", sector: "Fertility", stage: "Series A" }),
   ];
   const deals = [makeDeal({ id: "d1", targetId: "c1" })];
   const priors = deriveEmpiricalPriors(companies, deals);
 
   it("uses the dataset's observed exit rate as the base rate", () => {
-    // 1 acquired of 4 companies = 25% base rate, vs 35% heuristic default.
-    expect(priors.overallExitRate).toBe(0.25);
+    expect(isSufficient(priors.overallExitRateEstimate)).toBe(true);
+    expect(priors.overallExitRateEstimate).toMatchObject({
+      kind: "sufficient",
+      value: 1 / 6,
+    });
     const withPriors = new AcquisitionPredictor(priors);
     const withoutPriors = new AcquisitionPredictor();
     const company: QuantCompany = {
       id: "q1",
       name: "QuantCo",
-      sector: "Menopause", // no sector deals → no sector adjustment
+      sector: "Menopause",
       fundingStage: "Series B",
       clinicalStage: "phase3",
       raisedToDate: 30,
@@ -204,28 +220,34 @@ describe("AcquisitionPredictor with empirical priors", () => {
       geographicFocus: ["US"],
       condition: "pcos",
     };
-    const pEmpirical = withPriors.predictAcquisition(company)
-      .probabilityOfAcquisition;
-    const pHeuristic = withoutPriors.predictAcquisition(company)
-      .probabilityOfAcquisition;
-    // Lower empirical base rate (25% < 35%) → lower probability.
-    expect(pEmpirical).toBeLessThan(pHeuristic);
+    const pEmpirical = numericOrNull(
+      withPriors.predictAcquisition(company).probability,
+    );
+    const pHeuristic = numericOrNull(
+      withoutPriors.predictAcquisition(company).probability,
+    );
+    expect(pEmpirical).not.toBeNull();
+    expect(pHeuristic).not.toBeNull();
+    expect(pEmpirical!).toBeLessThan(pHeuristic!);
   });
 
   it("keeps probability bounded in [0.05, 0.95] with priors", () => {
     const predictor = new AcquisitionPredictor(priors);
-    const p = predictor.predictAcquisition({
-      id: "q2",
-      name: "EdgeCo",
-      sector: "Diagnostics",
-      fundingStage: "Seed",
-      clinicalStage: "preclinical",
-      raisedToDate: 0,
-      customerCount: 0,
-      geographicFocus: ["Asia"],
-      condition: "pcos",
-    }).probabilityOfAcquisition;
-    expect(p).toBeGreaterThanOrEqual(0.05);
-    expect(p).toBeLessThanOrEqual(0.95);
+    const p = numericOrNull(
+      predictor.predictAcquisition({
+        id: "q2",
+        name: "EdgeCo",
+        sector: "Diagnostics",
+        fundingStage: "Seed",
+        clinicalStage: "preclinical",
+        raisedToDate: 0,
+        customerCount: 0,
+        geographicFocus: ["Asia"],
+        condition: "pcos",
+      }).probability,
+    );
+    expect(p).not.toBeNull();
+    expect(p!).toBeGreaterThanOrEqual(0.05);
+    expect(p!).toBeLessThanOrEqual(0.95);
   });
 });

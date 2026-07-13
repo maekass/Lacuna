@@ -15,7 +15,7 @@ import type {
   GeographicRegion,
   MaternalCondition,
   QuantCompany,
-} from "./quantEngine";
+} from "./types";
 
 export interface AdaptedQuantCompany {
   company: QuantCompany;

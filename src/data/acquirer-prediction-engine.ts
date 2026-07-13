@@ -7,6 +7,7 @@
  */
 import type { EmpiricalPriors } from "@/lib/quant/empiricalPriors";
 import { normalizeSectorBucket } from "@/lib/quant/empiricalPriors";
+import { isSufficient } from "@/lib/quant/estimators";
 
 // Types
 export interface CompanyProfile {
@@ -267,33 +268,40 @@ function deriveCompanyValueEstimate(
   const sectorPrior = empiricalPriors?.sectorPriors.get(bucket);
   const fundingM = company.fundingTotal / 1_000_000;
 
+  const fundingMultiple = sectorPrior?.medianFundingMultipleEstimate;
   if (
     fundingM > 0 &&
-    sectorPrior?.medianFundingMultiple &&
-    sectorPrior.fundingMultipleN > 0
+    fundingMultiple &&
+    isSufficient(fundingMultiple)
   ) {
-    const medianM = fundingM * sectorPrior.medianFundingMultiple;
+    const medianM = fundingM * fundingMultiple.value;
     return {
       medianM,
       rationale: `Median ${
-        sectorPrior.medianFundingMultiple.toFixed(1)
-      }x funding-to-exit multiple from ${sectorPrior.fundingMultipleN} verified ${bucket} deals`,
+        fundingMultiple.value.toFixed(1)
+      }x funding-to-exit multiple from ${fundingMultiple.sampleSize} verified ${bucket} deals`,
     };
   }
 
-  if (sectorPrior?.medianDealValue) {
+  const sectorDealMedian = sectorPrior?.medianDealValueEstimate;
+  if (sectorDealMedian && isSufficient(sectorDealMedian)) {
     return {
-      medianM: sectorPrior.medianDealValue,
+      medianM: sectorDealMedian.value,
       rationale:
-        `Median disclosed deal value ($${sectorPrior.medianDealValue}M) from ${sectorPrior.dealCount} verified ${bucket} deals`,
+        `Median disclosed deal value ($${sectorDealMedian.value}M) from ${
+          sectorPrior!.dealCount
+        } verified ${bucket} deals`,
     };
   }
 
-  if (empiricalPriors?.medianDealValueAll) {
+  const allDealMedian = empiricalPriors?.medianDealValueAllEstimate;
+  if (allDealMedian && isSufficient(allDealMedian)) {
     return {
-      medianM: empiricalPriors.medianDealValueAll,
+      medianM: allDealMedian.value,
       rationale:
-        `Dataset median disclosed deal value ($${empiricalPriors.medianDealValueAll}M, n=${empiricalPriors.disclosedDealCount})`,
+        `Dataset median disclosed deal value ($${allDealMedian.value}M, n=${
+          empiricalPriors!.disclosedDealCount
+        })`,
     };
   }
 
