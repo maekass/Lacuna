@@ -72,8 +72,51 @@ describe("secEdgarClient (mocked fetch)", () => {
     expect(fetch).toHaveBeenCalled();
   });
 
+  it("resolveTicker uses built-in CIK override when ticker JSON omits symbol (success)", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve({}),
+      }),
+    );
+
+    const { resolveTicker, resetSecEdgarTickerCacheForTests } = await import(
+      "@/lib/ingestion/secEdgarClient"
+    );
+    resetSecEdgarTickerCacheForTests();
+
+    const holx = await resolveTicker("HOLX");
+    expect(holx?.cik).toBe(859737);
+    expect(holx?.ticker).toBe("HOLX");
+
+    const exas = await resolveTicker("EXAS");
+    expect(exas?.cik).toBe(1124140);
+  });
+
+  it("resolveTicker honors SEC_TICKER_CIK_OVERRIDES env (success)", async () => {
+    vi.stubEnv("SEC_TICKER_CIK_OVERRIDES", "CUSTOM:999");
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve({}),
+      }),
+    );
+
+    const { resolveTicker, resetSecEdgarTickerCacheForTests } = await import(
+      "@/lib/ingestion/secEdgarClient"
+    );
+    resetSecEdgarTickerCacheForTests();
+
+    const entry = await resolveTicker("CUSTOM");
+    expect(entry?.cik).toBe(999);
+  });
+
   it("throws when SEC_EDGAR_USER_AGENT is missing (error)", async () => {
     vi.unstubAllEnvs();
+    delete process.env.SEC_EDGAR_USER_AGENT;
+    delete process.env.SEC_TICKER_CIK_OVERRIDES;
     vi.stubGlobal("fetch", vi.fn());
 
     const { loadSecTickerMap, resetSecEdgarTickerCacheForTests } = await import(

@@ -1,4 +1,4 @@
-import type { VerifiedDataset } from "./datasetTypes";
+import { parseVerifiedDataset, type VerifiedDataset } from "./datasetSchema";
 
 export interface ProvenanceRow {
   last_updated: Date | string;
@@ -61,13 +61,69 @@ function toNumber(
   return Number.isFinite(n) ? n : undefined;
 }
 
+function compact<T extends Record<string, unknown>>(obj: T): T {
+  const out: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (value !== undefined) {
+      out[key] = value;
+    }
+  }
+  return out as T;
+}
+
+/** Omit DB import sentinels so optional fields match static JSON absence. */
+function mapCompanyRow(c: CompanyRow) {
+  const founded = c.founded;
+  const hq = c.hq;
+  return compact({
+    id: c.id,
+    name: c.name,
+    sector: c.sector,
+    stage: c.stage,
+    ...(founded !== 0 ? { founded } : {}),
+    ...(hq !== "Unknown" ? { hq } : {}),
+    ...(c.description ? { description: c.description } : {}),
+    lastKnownValuation: toNumber(c.last_known_valuation),
+    valuationSource: c.valuation_source ?? undefined,
+    totalFunding: toNumber(c.total_funding),
+    sources: c.sources ?? [],
+  });
+}
+
+function mapAcquirerRow(a: AcquirerRow) {
+  return compact({
+    id: a.id,
+    name: a.name,
+    ticker: a.ticker ?? undefined,
+    ...(a.sector ? { sector: a.sector } : {}),
+    hq: a.hq,
+  });
+}
+
+function mapAcquisitionRow(d: AcquisitionRow) {
+  return compact({
+    id: d.id,
+    targetId: d.target_id,
+    acquirerId: d.acquirer_id,
+    targetName: d.target_name,
+    acquirerName: d.acquirer_name,
+    announcedDate: toIsoDate(d.announced_date) ?? "",
+    closedDate: toIsoDate(d.closed_date),
+    dealValue: toNumber(d.deal_value),
+    dealValueNote: d.deal_value_note ?? undefined,
+    dealType: d.deal_type,
+    source: d.source,
+    strategicRationale: d.strategic_rationale,
+  });
+}
+
 export function mapRowsToVerifiedDataset(
   provenance: ProvenanceRow,
   companies: CompanyRow[],
   acquirers: AcquirerRow[],
   acquisitions: AcquisitionRow[],
 ): VerifiedDataset {
-  return {
+  return parseVerifiedDataset({
     provenance: {
       lastUpdated: toIsoDate(provenance.last_updated) ?? "",
       purpose: provenance.purpose,
@@ -75,39 +131,8 @@ export function mapRowsToVerifiedDataset(
       sources: provenance.sources ?? [],
       notes: provenance.notes ?? [],
     },
-    companies: companies.map((c) => ({
-      id: c.id,
-      name: c.name,
-      sector: c.sector,
-      stage: c.stage,
-      founded: c.founded,
-      hq: c.hq,
-      description: c.description,
-      lastKnownValuation: toNumber(c.last_known_valuation),
-      valuationSource: c.valuation_source ?? undefined,
-      totalFunding: toNumber(c.total_funding),
-      sources: c.sources ?? [],
-    })),
-    acquirers: acquirers.map((a) => ({
-      id: a.id,
-      name: a.name,
-      ticker: a.ticker ?? undefined,
-      sector: a.sector,
-      hq: a.hq,
-    })),
-    acquisitions: acquisitions.map((d) => ({
-      id: d.id,
-      targetId: d.target_id,
-      acquirerId: d.acquirer_id,
-      targetName: d.target_name,
-      acquirerName: d.acquirer_name,
-      announcedDate: toIsoDate(d.announced_date) ?? "",
-      closedDate: toIsoDate(d.closed_date),
-      dealValue: toNumber(d.deal_value),
-      dealValueNote: d.deal_value_note ?? undefined,
-      dealType: d.deal_type,
-      source: d.source,
-      strategicRationale: d.strategic_rationale,
-    })),
-  };
+    companies: companies.map(mapCompanyRow),
+    acquirers: acquirers.map(mapAcquirerRow),
+    acquisitions: acquisitions.map(mapAcquisitionRow),
+  });
 }

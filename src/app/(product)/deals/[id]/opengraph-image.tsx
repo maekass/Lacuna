@@ -2,7 +2,6 @@ import { ImageResponse } from "next/og";
 import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 import { getDealById } from "@/lib/deals";
 
-export const runtime = "edge";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

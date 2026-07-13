@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 import verifiedJson from "@/data/dataset.verified.json";
-import type { VerifiedDataset } from "@/lib/data/datasetTypes";
+import { parseStaticVerifiedDatasetJson } from "@/lib/data/staticDataset";
 import { minimalVerifiedDataset } from "../../helpers/fixtures";
 import { validateVerifiedDataset } from "@/lib/data/validateVerifiedDataset";
 
-const full = verifiedJson as VerifiedDataset;
+const full = parseStaticVerifiedDatasetJson(verifiedJson);
 
 describe("validateVerifiedDataset", () => {
   it("passes for minimal verified JSON slice (success)", () => {

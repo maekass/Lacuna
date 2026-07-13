@@ -18,6 +18,7 @@ import {
   type SyncResult,
 } from "@/lib/ingestion/databaseSync";
 import { logIngestComplete } from "@/lib/ingestion/monitoringAlerts";
+import { resolveTicker } from "@/lib/ingestion/secEdgarClient";
 import {
   type ParsedAcquisition,
   scanItem201Acquisitions,
@@ -41,6 +42,7 @@ export interface SecIngestOptions extends ScanOptions {
 
 export interface SecIngestResult {
   scannedTickers: number;
+  unresolvedTickers: string[];
   parsedFilings: ParsedAcquisition[];
   classified: ClassifiedDeal[];
   sync: SyncResult | null;
@@ -138,6 +140,16 @@ export async function runSecIngest(
     ? tickers.slice(0, maxTickers)
     : tickers;
 
+  const resolution = await Promise.all(
+    tickersToScan.map(async (ticker) => ({
+      ticker,
+      resolved: Boolean(await resolveTicker(ticker)),
+    })),
+  );
+  const unresolvedTickers = resolution
+    .filter((r) => !r.resolved)
+    .map((r) => r.ticker);
+
   const parsedFilingsAll = await scanItem201Acquisitions(tickersToScan, {
     sinceDate: sinceDateUsed,
     limitPerTicker: options.limitPerTicker ??
@@ -211,6 +223,7 @@ export async function runSecIngest(
 
   return {
     scannedTickers: tickersToScan.length,
+    unresolvedTickers,
     parsedFilings,
     classified,
     sync,

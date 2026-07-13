@@ -2,15 +2,40 @@ import process from "node:process";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import type { VerifiedDataset } from "../src/lib/data/datasetTypes";
+import { ZodError } from "zod";
+import { parseStaticVerifiedDatasetJson } from "../src/lib/data/staticDataset";
 import { validateVerifiedDataset } from "../src/lib/data/validateVerifiedDataset";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const datasetPath = join(__dirname, "../src/data/dataset.verified.json");
 
+function formatSchemaErrors(error: ZodError): string[] {
+  return error.issues.map((issue) => {
+    const path = issue.path.length > 0 ? issue.path.join(".") : "(root)";
+    return `[schema.${path}] ${issue.message}`;
+  });
+}
+
 function main() {
   const raw = readFileSync(datasetPath, "utf8");
-  const dataset = JSON.parse(raw) as VerifiedDataset;
+  let dataset;
+  try {
+    dataset = parseStaticVerifiedDatasetJson(JSON.parse(raw));
+  } catch (error) {
+    console.error("Lacuna verified dataset validation");
+    console.error("File:", datasetPath);
+    console.error("");
+    console.error("--- Schema errors ---");
+    if (error instanceof ZodError) {
+      for (const line of formatSchemaErrors(error)) {
+        console.error(`  ${line}`);
+      }
+    } else {
+      console.error(error);
+    }
+    process.exit(1);
+  }
+
   const report = validateVerifiedDataset(dataset);
 
   console.log("Lacuna verified dataset validation");

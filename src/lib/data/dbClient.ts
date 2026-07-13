@@ -2,6 +2,12 @@ import process from "node:process";
 import { Pool, type QueryResultRow } from "pg";
 
 let pool: Pool | undefined;
+let poolOverride: Pool | undefined;
+
+/** Inject an in-memory pool (pg-mem) for integration tests. */
+export function setPoolForTests(testPool: Pool | undefined): void {
+  poolOverride = testPool;
+}
 
 function getDatabaseUrl(): string {
   const url = process.env.DATABASE_URL;
@@ -12,6 +18,9 @@ function getDatabaseUrl(): string {
 }
 
 function getPool(): Pool {
+  if (poolOverride) {
+    return poolOverride;
+  }
   if (!pool) {
     pool = new Pool({
       connectionString: getDatabaseUrl(),
@@ -52,6 +61,11 @@ export async function withTransaction<T>(
 }
 
 export async function closePool(): Promise<void> {
+  if (poolOverride) {
+    await poolOverride.end();
+    poolOverride = undefined;
+    return;
+  }
   if (pool) {
     await pool.end();
     pool = undefined;

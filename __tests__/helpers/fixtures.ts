@@ -1,5 +1,6 @@
 import verifiedJson from "@/data/dataset.verified.json";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
+import { parseStaticVerifiedDatasetJson } from "@/lib/data/staticDataset";
 import type {
   AcquirerRow,
   AcquisitionRow,
@@ -7,7 +8,7 @@ import type {
   ProvenanceRow,
 } from "@/lib/data/mapVerifiedDataset";
 
-const full = verifiedJson as VerifiedDataset;
+const full = parseStaticVerifiedDatasetJson(verifiedJson);
 
 /** Minimal slice of the real verified JSON — not invented companies or deals. */
 export const minimalVerifiedDataset: VerifiedDataset = {
@@ -37,9 +38,9 @@ export const sampleCompanyRow: CompanyRow = {
   name: company.name,
   sector: company.sector,
   stage: company.stage,
-  founded: company.founded,
-  hq: company.hq,
-  description: company.description,
+  founded: company.founded ?? 0,
+  hq: company.hq ?? "Unknown",
+  description: company.description ?? "",
   last_known_valuation: company.lastKnownValuation ?? null,
   valuation_source: company.valuationSource ?? null,
   total_funding: company.totalFunding ?? null,

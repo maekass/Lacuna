@@ -28,6 +28,7 @@ Legacy keyword scan (no Item 2.01 parse): `secEdgarClient.ts` +
 | `SEC_SCAN_SINCE`                 | No              | ISO date floor (default: Jan 1 prior year)                                                    |
 | `SEC_LIMIT_PER_TICKER`           | No              | Max 8-K filings per ticker (default: 15)                                                      |
 | `SEC_EXTRA_TICKERS`              | No              | Comma-separated extra tickers                                                                 |
+| `SEC_TICKER_CIK_OVERRIDES`       | No              | `TICKER:CIK` pairs when SEC `company_tickers.json` omits a symbol (built-ins: HOLX, EXAS)     |
 | `SEC_HEALTHCARE_SIC_ONLY`        | No              | `true` to skip non-283x/384x SIC companies                                                    |
 | `PGSSLMODE`                      | No              | Set `disable` for local Postgres                                                              |
 | `SEC_MAX_TICKERS_PER_RUN`        | No              | Hard cap on tickers per ingest run (default: no cap)                                          |

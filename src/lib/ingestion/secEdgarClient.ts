@@ -105,9 +105,41 @@ function matchesAcquisition(text: string): string[] {
 /** Load SEC company tickers map (ticker → CIK). Cached per process. */
 let tickerCache: Map<string, SecTickerEntry> | undefined;
 
+/**
+ * Tickers absent from SEC `company_tickers.json` but with EDGAR submission history.
+ * Foreign-only filers (VITR, RICHTER, COLO-B) are intentionally omitted — no US 8-Ks.
+ */
+const BUILTIN_TICKER_CIK_OVERRIDES: Record<string, number> = {
+  HOLX: 859737, // Hologic — privatized; ticker dropped from SEC map
+  EXAS: 1124140, // Exact Sciences — in submissions API, omitted from ticker JSON
+};
+
+let tickerCikOverrideCache: Map<string, number> | undefined;
+
+function loadTickerCikOverrides(): Map<string, number> {
+  const map = new Map<string, number>(
+    Object.entries(BUILTIN_TICKER_CIK_OVERRIDES).map(([ticker, cik]) => [
+      ticker.toUpperCase(),
+      cik,
+    ]),
+  );
+  const env = process.env.SEC_TICKER_CIK_OVERRIDES?.trim();
+  if (!env) return map;
+
+  for (const part of env.split(",")) {
+    const [ticker, cikStr] = part.split(":").map((s) => s.trim());
+    const cik = Number(cikStr);
+    if (ticker && Number.isFinite(cik) && cik > 0) {
+      map.set(ticker.toUpperCase(), cik);
+    }
+  }
+  return map;
+}
+
 /** Clears the in-memory ticker cache (Vitest isolation only). */
 export function resetSecEdgarTickerCacheForTests(): void {
   tickerCache = undefined;
+  tickerCikOverrideCache = undefined;
 }
 
 export async function loadSecTickerMap(): Promise<Map<string, SecTickerEntry>> {
@@ -132,8 +164,28 @@ export async function loadSecTickerMap(): Promise<Map<string, SecTickerEntry>> {
 export async function resolveTicker(
   ticker: string,
 ): Promise<SecTickerEntry | undefined> {
+  const upper = ticker.toUpperCase();
   const map = await loadSecTickerMap();
-  return map.get(ticker.toUpperCase());
+  const fromMap = map.get(upper);
+  if (fromMap) return fromMap;
+
+  if (!tickerCikOverrideCache) {
+    tickerCikOverrideCache = loadTickerCikOverrides();
+  }
+  const cik = tickerCikOverrideCache.get(upper);
+  if (!cik) return undefined;
+
+  return { cik, ticker: upper, title: upper };
+}
+
+/** Full EDGAR submission text (all documents) — more reliable for Item 2.01 than primary 8-K HTML. */
+export function buildFullSubmissionTextUrl(
+  cik: number,
+  accessionNumber: string,
+): string {
+  return `${SEC_ARCHIVES_BASE}/${cik}/${
+    stripAccessionDashes(accessionNumber)
+  }/${accessionNumber}.txt`;
 }
 
 /** Recent filings for a CIK, optionally filtered by form type. */

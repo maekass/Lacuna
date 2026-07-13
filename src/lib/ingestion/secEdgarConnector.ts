@@ -15,6 +15,7 @@ import {
 } from "@/lib/ingestion/monitoringAlerts";
 import {
   buildFilingUrl,
+  buildFullSubmissionTextUrl,
   loadSecTickerMap,
   padCik,
   resolveTicker,
@@ -137,6 +138,33 @@ export async function fetchSubmissions(
     sicDescription: data.sicDescription,
     tickers: data.tickers,
   };
+}
+
+/**
+ * Fetch filing text for Item 2.01 parsing. Primary 8-K HTML often omits section body;
+ * falls back to the full submission `.txt` bundle when the primary doc lacks Item 2.01.
+ */
+export async function fetchFilingTextForItem201(
+  cik: number,
+  accessionNumber: string,
+  primaryDocumentUrl: string,
+): Promise<{ text: string; filingUrl: string }> {
+  const primaryText = await fetchFilingText(primaryDocumentUrl);
+  if (filingContainsItem201(primaryText)) {
+    return { text: primaryText, filingUrl: primaryDocumentUrl };
+  }
+
+  const fullSubmissionUrl = buildFullSubmissionTextUrl(cik, accessionNumber);
+  try {
+    const fullText = await fetchFilingText(fullSubmissionUrl);
+    if (filingContainsItem201(fullText)) {
+      return { text: fullText, filingUrl: fullSubmissionUrl };
+    }
+  } catch {
+    // Some legacy filings lack a bundled .txt submission.
+  }
+
+  return { text: primaryText, filingUrl: primaryDocumentUrl };
 }
 
 /** Download primary 8-K document as plain text (HTML tags stripped). */
@@ -380,8 +408,15 @@ export async function scanItem201Acquisitions(
     for (const filing of filings) {
       await secRateLimitPause();
       let text: string;
+      let filingUrl = filing.filingUrl;
       try {
-        text = await fetchFilingText(filing.filingUrl);
+        const fetched = await fetchFilingTextForItem201(
+          entry.cik,
+          filing.accessionNumber,
+          filing.filingUrl,
+        );
+        text = fetched.text;
+        filingUrl = fetched.filingUrl;
       } catch {
         continue;
       }
@@ -389,7 +424,7 @@ export async function scanItem201Acquisitions(
       const parsed = parseItem201({
         text,
         accession: filing.accessionNumber,
-        filingUrl: filing.filingUrl,
+        filingUrl,
         filingDate: filing.filingDate,
         acquirerName: meta.name,
         acquirerTicker: entry.ticker,
@@ -515,4 +550,10 @@ export async function resolvePrimaryFilingDocumentUrl(input: {
   return null;
 }
 
-export { buildFilingUrl, loadSecTickerMap, padCik, resolveTicker };
+export {
+  buildFilingUrl,
+  buildFullSubmissionTextUrl,
+  loadSecTickerMap,
+  padCik,
+  resolveTicker,
+};
