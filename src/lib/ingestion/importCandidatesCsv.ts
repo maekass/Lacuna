@@ -10,6 +10,7 @@ import {
   syncDealsToDatabase,
   type SyncResult,
 } from "@/lib/ingestion/databaseSync";
+import { buildSecDealNaturalKey } from "@/lib/ingestion/secDealNaturalKey";
 
 export interface CsvCandidateRow {
   status?: string;
@@ -148,9 +149,13 @@ function csvRowToClassifiedDeal(row: CsvCandidateRow): ClassifiedDeal {
     acquirerName: row.acquirerName,
   });
 
+  const formType = "MANUAL";
+
   return {
     dealId,
     secAccession,
+    naturalKey: buildSecDealNaturalKey(secAccession, "manual", formType),
+    formType,
     acquirerName: row.acquirerName,
     acquirerTicker: row.acquirerTicker,
     acquirerCik: "manual",
@@ -183,7 +188,7 @@ export async function importCandidatesCsv(
   const classified = rows.map(csvRowToClassifiedDeal);
   const sync = classified.length > 0
     ? await syncDealsToDatabase(classified)
-    : { inserted: 0, updated: 0, skipped: 0 };
+    : { inserted: 0, updated: 0, skipped: 0, deduped: 0 };
 
   return {
     parsed: rows.length,

@@ -1,4 +1,5 @@
 import { query } from "@/lib/data/dbClient";
+import type { Pool } from "pg";
 import type { ReviewAuthMethod } from "@/lib/infra/reviewSession";
 
 export type ReviewAuditAction =
@@ -61,16 +62,40 @@ export async function logReviewAction(
       deal_id, action, actor_id, actor_method, metadata
     ) VALUES ($1, $2, $3, $4, $5::jsonb)
     RETURNING id, deal_id, action, actor_id, actor_method, metadata, created_at`,
-    [
-      input.dealId ?? null,
-      input.action,
-      input.actorId,
-      input.actorMethod,
-      JSON.stringify(input.metadata ?? {}),
-    ],
+    auditParams(input),
   );
 
   const row = rows[0];
+  if (!row) {
+    throw new Error("Failed to insert review audit log row");
+  }
+  return mapRow(row);
+}
+
+function auditParams(input: ReviewAuditLogInput): unknown[] {
+  return [
+    input.dealId ?? null,
+    input.action,
+    input.actorId,
+    input.actorMethod,
+    JSON.stringify(input.metadata ?? {}),
+  ];
+}
+
+/** Same as logReviewAction but participates in an open transaction. */
+export async function logReviewActionWithClient(
+  client: Pick<Pool, "query">,
+  input: ReviewAuditLogInput,
+): Promise<ReviewAuditLogRow> {
+  const result = await client.query<ReviewAuditLogDbRow>(
+    `INSERT INTO review_audit_log (
+      deal_id, action, actor_id, actor_method, metadata
+    ) VALUES ($1, $2, $3, $4, $5::jsonb)
+    RETURNING id, deal_id, action, actor_id, actor_method, metadata, created_at`,
+    auditParams(input),
+  );
+
+  const row = result.rows[0];
   if (!row) {
     throw new Error("Failed to insert review audit log row");
   }

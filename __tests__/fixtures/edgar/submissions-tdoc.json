@@ -1,0 +1,16 @@
+{
+  "name": "Teladoc Health Inc",
+  "cik": "0001477449",
+  "sic": "2834",
+  "sicDescription": "Pharmaceutical Preparations",
+  "tickers": ["TDOC"],
+  "filings": {
+    "recent": {
+      "accessionNumber": ["0001104659-24-012345"],
+      "filingDate": ["2024-03-16"],
+      "form": ["8-K"],
+      "primaryDocument": ["tm20240316_8k.htm"],
+      "primaryDocDescription": ["8-K"]
+    }
+  }
+}

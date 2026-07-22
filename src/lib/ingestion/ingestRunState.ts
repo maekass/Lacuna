@@ -1,7 +1,12 @@
 import process from "node:process";
 import { query, withTransaction } from "@/lib/data/dbClient";
+import type { Pool } from "pg";
+import type { FilingCheckpoint } from "@/lib/ingestion/secDealNaturalKey";
 
 export type IngestRunStatus = "running" | "success" | "failed";
+
+/** Fixed advisory lock id for SEC ingest cron mutual exclusion. */
+export const SEC_INGEST_ADVISORY_LOCK_KEY = 8_421_337;
 
 export interface IngestRunRow {
   id: number;
@@ -20,8 +25,26 @@ export interface IngestRunRow {
   error_message: string | null;
 }
 
+export interface IngestCheckpoint extends FilingCheckpoint {
+  lastProcessedAccession: string | null;
+}
+
 function getBuildSha(): string | null {
   return process.env.VERCEL_GIT_COMMIT_SHA?.trim() ?? null;
+}
+
+/** Try to acquire the SEC ingest advisory lock (non-blocking). */
+export async function tryAcquireSecIngestLock(): Promise<boolean> {
+  const rows = await query<{ acquired: boolean }>(
+    "SELECT pg_try_advisory_lock($1) AS acquired",
+    [SEC_INGEST_ADVISORY_LOCK_KEY],
+  );
+  return rows[0]?.acquired === true;
+}
+
+/** Release the SEC ingest advisory lock. */
+export async function releaseSecIngestLock(): Promise<void> {
+  await query("SELECT pg_advisory_unlock($1)", [SEC_INGEST_ADVISORY_LOCK_KEY]);
 }
 
 export async function startIngestRun(input: {
@@ -113,6 +136,69 @@ export async function finishIngestRunFailure(input: {
       WHERE id = $1
     `,
     [input.runId, input.errorMessage.slice(0, 1500)],
+  );
+}
+
+/** Monotonic ingest checkpoint for crash-safe resume (newest-first scan). */
+export async function getIngestCheckpoint(): Promise<IngestCheckpoint | null> {
+  const rows = await query<{
+    last_processed_accession: string | null;
+    last_processed_natural_key: string | null;
+    last_processed_filing_date: string | null;
+  }>(
+    `
+      SELECT
+        last_processed_accession,
+        last_processed_natural_key,
+        last_processed_filing_date::text
+      FROM lacuna_ingest_state
+      WHERE id = 1
+    `,
+  );
+  const row = rows[0];
+  if (!row?.last_processed_natural_key || !row.last_processed_filing_date) {
+    return null;
+  }
+  return {
+    lastProcessedAccession: row.last_processed_accession,
+    naturalKey: row.last_processed_natural_key,
+    filingDate: row.last_processed_filing_date,
+  };
+}
+
+/**
+ * Advance checkpoint when processing filings newest-first.
+ * Only moves backward in time (older filing dates / keys).
+ */
+export async function updateIngestCheckpoint(
+  client: Pick<Pool, "query">,
+  input: {
+    accession: string;
+    naturalKey: string;
+    filingDate: string;
+  },
+): Promise<void> {
+  await client.query(
+    `
+      UPDATE lacuna_ingest_state
+      SET
+        last_processed_accession = $1,
+        last_processed_natural_key = $2,
+        last_processed_filing_date = $3::date
+      WHERE id = 1
+        AND (
+          last_processed_filing_date IS NULL
+          OR $3::date < last_processed_filing_date
+          OR (
+            $3::date = last_processed_filing_date
+            AND (
+              last_processed_natural_key IS NULL
+              OR $2 < last_processed_natural_key
+            )
+          )
+        )
+    `,
+    [input.accession, input.naturalKey, input.filingDate],
   );
 }
 

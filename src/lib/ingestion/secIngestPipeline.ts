@@ -27,8 +27,11 @@ import {
 import {
   finishIngestRunFailure,
   finishIngestRunSuccess,
+  getIngestCheckpoint,
   getIngestCursorSinceDate,
+  releaseSecIngestLock,
   startIngestRun,
+  tryAcquireSecIngestLock,
 } from "@/lib/ingestion/ingestRunState";
 import { mapWithConcurrency } from "@/lib/util/concurrency";
 
@@ -48,6 +51,8 @@ export interface SecIngestResult {
   sync: SyncResult | null;
   sinceDateUsed?: string;
   runId?: number;
+  /** True when another cron run held the advisory lock. */
+  lockSkipped?: boolean;
 }
 
 function loadAcquirerTickers(datasetPath: string): string[] {
@@ -105,9 +110,49 @@ export async function runSecIngest(
   const shouldPersistRun = Boolean(process.env.DATABASE_URL) &&
     options.dryRun !== true &&
     process.env.LACUNA_INGEST_RUN_TRACKING === "true";
+
+  let lockHeld = false;
+  if (shouldPersistRun) {
+    const acquired = await tryAcquireSecIngestLock();
+    if (!acquired) {
+      return {
+        scannedTickers: 0,
+        unresolvedTickers: [],
+        parsedFilings: [],
+        classified: [],
+        sync: null,
+        lockSkipped: true,
+      };
+    }
+    lockHeld = true;
+  }
+
   const runId = shouldPersistRun
     ? await startIngestRun({ trigger: "cron" })
     : undefined;
+
+  try {
+    return await runSecIngestBody(options, {
+      datasetPath,
+      shouldPersistRun,
+      runId,
+    });
+  } finally {
+    if (lockHeld) {
+      await releaseSecIngestLock();
+    }
+  }
+}
+
+async function runSecIngestBody(
+  options: SecIngestOptions,
+  ctx: {
+    datasetPath: string;
+    shouldPersistRun: boolean;
+    runId?: number;
+  },
+): Promise<SecIngestResult> {
+  const { datasetPath, shouldPersistRun, runId } = ctx;
 
   const fromDataset = loadAcquirerTickers(datasetPath);
   const fromEnv = (process.env.SEC_EXTRA_TICKERS ?? "")
@@ -150,12 +195,15 @@ export async function runSecIngest(
     .filter((r) => !r.resolved)
     .map((r) => r.ticker);
 
+  const checkpoint = shouldPersistRun ? await getIngestCheckpoint() : null;
+
   const parsedFilingsAll = await scanItem201Acquisitions(tickersToScan, {
     sinceDate: sinceDateUsed,
     limitPerTicker: options.limitPerTicker ??
       Number(process.env.SEC_LIMIT_PER_TICKER ?? 15),
     healthcareSicOnly: options.healthcareSicOnly ??
       process.env.SEC_HEALTHCARE_SIC_ONLY === "true",
+    checkpoint,
   });
 
   const maxParsedFilings = Number(
@@ -186,7 +234,7 @@ export async function runSecIngest(
         parsed: parsedFilings.length,
         inserted: sync.inserted,
         updated: sync.updated,
-        skipped: sync.skipped,
+        skipped: sync.skipped + sync.deduped,
       });
     } else if (!options.dryRun && !process.env.DATABASE_URL) {
       logIngestComplete({
@@ -255,9 +303,12 @@ export {
 export {
   finishIngestRunFailure,
   finishIngestRunSuccess,
+  getIngestCheckpoint,
   getIngestCursorSinceDate,
   getLatestIngestRun,
+  releaseSecIngestLock,
   startIngestRun,
+  tryAcquireSecIngestLock,
 } from "@/lib/ingestion/ingestRunState";
 export {
   syncDealsToDatabase,
