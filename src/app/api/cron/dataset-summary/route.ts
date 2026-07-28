@@ -5,6 +5,7 @@ import { buildDatasetSummary } from "@/lib/data/buildDatasetSummary";
 import { getVerifiedDataset } from "@/lib/data/datasetProvider";
 import { isCronAuthorized } from "@/lib/infra/cronAuth";
 import { getLatestIngestRun } from "@/lib/ingestion/ingestRunState";
+import { reportError } from "@/lib/observability/reportError";
 
 export const maxDuration = 300;
 
@@ -14,30 +15,36 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  revalidateTag("verified-dataset", "max");
+  try {
+    revalidateTag("verified-dataset", "max");
 
-  const dataset = await getVerifiedDataset();
+    const dataset = await getVerifiedDataset();
 
-  let pipelines = {
-    secIngestLastRunAt: null as string | null,
-    secIngestStatus: null as "running" | "success" | "failed" | null,
-  };
+    let pipelines = {
+      secIngestLastRunAt: null as string | null,
+      secIngestStatus: null as "running" | "success" | "failed" | null,
+    };
 
-  if (process.env.DATABASE_URL?.trim()) {
-    const latest = await getLatestIngestRun();
-    if (latest) {
-      pipelines = {
-        secIngestLastRunAt: latest.ended_at ?? latest.started_at,
-        secIngestStatus: latest.status,
-      };
+    if (process.env.DATABASE_URL?.trim()) {
+      const latest = await getLatestIngestRun();
+      if (latest) {
+        pipelines = {
+          secIngestLastRunAt: latest.ended_at ?? latest.started_at,
+          secIngestStatus: latest.status,
+        };
+      }
     }
+
+    const summary = buildDatasetSummary(dataset, pipelines);
+
+    return NextResponse.json({
+      ok: true,
+      revalidated: true,
+      summary,
+    });
+  } catch (error) {
+    // Cron schedulers retry on non-2xx — a swallowed failure looks like success.
+    const message = reportError("api.cron.datasetSummary", error);
+    return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
-
-  const summary = buildDatasetSummary(dataset, pipelines);
-
-  return NextResponse.json({
-    ok: true,
-    revalidated: true,
-    summary,
-  });
 }

@@ -1,6 +1,10 @@
 import process from "node:process";
 import { NextResponse } from "next/server";
-import { writeAuditEvent } from "@/lib/compliance/auditEventSink";
+import {
+  isAuditSinkConfigured,
+  writeAuditEvent,
+} from "@/lib/compliance/auditEventSink";
+import { reportError } from "@/lib/observability/reportError";
 
 /**
  * HIPAA/GDPR governance for patient-linked genomic data (VCF call sets).
@@ -89,7 +93,7 @@ export function auditPatientDataAccess(
 
   void (async () => {
     try {
-      await writeAuditEvent({
+      const persisted = await writeAuditEvent({
         timestamp: record.timestamp,
         action: record.action,
         resource: record.resource,
@@ -97,8 +101,20 @@ export function auditPatientDataAccess(
         allowed: record.allowed ? 1 : 0,
         mode: record.mode,
       });
+      // A configured sink that persists nothing means audit rows are being
+      // dropped — that is a compliance failure, not a console-only deployment.
+      if (!persisted && isAuditSinkConfigured()) {
+        reportError(
+          "patient-data-audit",
+          new Error("Audit event dropped: every configured sink failed"),
+          { action: record.action, resource: record.resource },
+        );
+      }
     } catch (error) {
-      console.error("[patient-data-audit] sink failed:", error);
+      reportError("patient-data-audit", error, {
+        action: record.action,
+        resource: record.resource,
+      });
     }
   })();
 }

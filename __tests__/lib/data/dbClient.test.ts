@@ -89,6 +89,26 @@ describe("dbClient", () => {
     expect(mockRelease).toHaveBeenCalledOnce();
   });
 
+  it("withTransaction surfaces the original error when rollback fails (edge)", async () => {
+    const consoleError = vi.spyOn(console, "error").mockImplementation(
+      () => {},
+    );
+    mockClientQuery.mockImplementation((sql: string) => {
+      if (sql === "ROLLBACK") throw new Error("connection terminated");
+      return Promise.resolve({ rows: [] });
+    });
+
+    const { withTransaction } = await import("@/lib/data/dbClient");
+    await expect(
+      withTransaction(() => {
+        throw new Error("insert failed");
+      }),
+    ).rejects.toThrow("insert failed");
+
+    expect(consoleError).toHaveBeenCalled();
+    expect(mockRelease).toHaveBeenCalledOnce();
+  });
+
   it("closePool ends the pool (success)", async () => {
     const { query, closePool } = await import("@/lib/data/dbClient");
     await query("SELECT 1");

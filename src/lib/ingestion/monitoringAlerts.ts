@@ -9,7 +9,8 @@ export type IngestEventType =
   | "partial_disclosure"
   | "new_deal"
   | "ingest_complete"
-  | "rate_limit_pause";
+  | "rate_limit_pause"
+  | "fetch_skipped";
 
 export interface IngestLogEvent {
   type: IngestEventType;
@@ -63,6 +64,26 @@ export function alertPartialParse(accession: string, reason: string): void {
     message: `Partial 8-K Item 2.01 parse for ${accession}`,
     timestamp: new Date().toISOString(),
     context: { accession, reason },
+  });
+}
+
+/**
+ * Record a source document the run skipped after a recoverable fetch failure.
+ * Skips are expected (legacy filings, throttled CIKs) but must stay visible —
+ * a silent `continue` makes an incomplete run look like an empty one.
+ */
+export function alertFetchSkipped(
+  error: unknown,
+  context: Record<string, unknown>,
+): void {
+  emit({
+    type: "fetch_skipped",
+    level: "warn",
+    message: `SEC fetch skipped: ${
+      error instanceof Error ? error.message : String(error)
+    }`,
+    timestamp: new Date().toISOString(),
+    context,
   });
 }
 

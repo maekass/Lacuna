@@ -18,6 +18,7 @@ import {
   type CorrelationResult,
 } from "@/lib/evidence/valuationCorrelation";
 import { isGenomicsRelevantCompany } from "@/lib/data/genomicsFilters";
+import { reportWarning } from "@/lib/observability/reportError";
 
 /* ─── types ─── */
 interface CompanyRow {
@@ -44,6 +45,7 @@ interface APIState {
     string,
     { clearance: string; hasDrug: boolean; products: number }
   >;
+  failures: number;
 }
 
 type APIAction =
@@ -63,12 +65,19 @@ type APIAction =
     products: number;
   }
   | { type: "TICK" }
+  | { type: "FAILED" }
   | { type: "DONE" };
 
 function apiReducer(state: APIState, action: APIAction): APIState {
   switch (action.type) {
     case "START":
-      return { ...state, loading: true, progress: 0, total: action.total };
+      return {
+        ...state,
+        loading: true,
+        progress: 0,
+        total: action.total,
+        failures: 0,
+      };
     case "CTG_DONE": {
       const results = new Map(state.results);
       results.set(action.company, {
@@ -89,6 +98,8 @@ function apiReducer(state: APIState, action: APIAction): APIState {
     }
     case "TICK":
       return { ...state, progress: state.progress + 1 };
+    case "FAILED":
+      return { ...state, failures: state.failures + 1 };
     case "DONE":
       return { ...state, loading: false };
   }
@@ -100,6 +111,7 @@ const INITIAL_API: APIState = {
   total: 0,
   results: new Map(),
   fdaResults: new Map(),
+  failures: 0,
 };
 
 /* ─── tier badge colors ─── */
@@ -224,34 +236,46 @@ export default function EvidenceMaturityDashboard() {
         const ctgRes = await fetch(
           `/api/evidence/clinical-trials?company=${encodeURIComponent(name)}`,
         );
-        if (ctgRes.ok) {
-          const ctg = await ctgRes.json();
-          dispatch({
-            type: "CTG_DONE",
-            company: name,
-            trials: ctg.totalTrials || 0,
-            highestPhase: ctg.highestPhase || "None",
-            hasResults: ctg.hasPostedResults || false,
-          });
+        if (!ctgRes.ok) {
+          throw new Error(`clinical-trials lookup failed: ${ctgRes.status}`);
         }
-      } catch { /* non-critical */ }
+        const ctg = await ctgRes.json();
+        dispatch({
+          type: "CTG_DONE",
+          company: name,
+          trials: ctg.totalTrials || 0,
+          highestPhase: ctg.highestPhase || "None",
+          hasResults: ctg.hasPostedResults || false,
+        });
+      } catch (error) {
+        // Per-company failures degrade the table rather than abort the run,
+        // but the count is surfaced so partial data is never read as complete.
+        reportWarning("evidence.enrich.clinicalTrials", error, {
+          company: name,
+        });
+        dispatch({ type: "FAILED" });
+      }
       dispatch({ type: "TICK" });
 
       try {
         const fdaRes = await fetch(
           `/api/evidence/fda?company=${encodeURIComponent(name)}`,
         );
-        if (fdaRes.ok) {
-          const fda = await fdaRes.json();
-          dispatch({
-            type: "FDA_DONE",
-            company: name,
-            clearance: fda.highestDeviceClearance || "None",
-            hasDrug: fda.hasDrugApproval || false,
-            products: fda.totalProducts || 0,
-          });
+        if (!fdaRes.ok) {
+          throw new Error(`FDA lookup failed: ${fdaRes.status}`);
         }
-      } catch { /* non-critical */ }
+        const fda = await fdaRes.json();
+        dispatch({
+          type: "FDA_DONE",
+          company: name,
+          clearance: fda.highestDeviceClearance || "None",
+          hasDrug: fda.hasDrugApproval || false,
+          products: fda.totalProducts || 0,
+        });
+      } catch (error) {
+        reportWarning("evidence.enrich.fda", error, { company: name });
+        dispatch({ type: "FAILED" });
+      }
       dispatch({ type: "TICK" });
     }
 
@@ -326,6 +350,21 @@ export default function EvidenceMaturityDashboard() {
           </span>
         </div>
       </div>
+
+      {/* Partial enrichment must be visible — missing lookups read as low evidence */}
+      {!apiState.loading && apiState.failures > 0 && (
+        <div
+          role="status"
+          className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 mb-6"
+        >
+          <p className="text-sm text-amber-800 leading-relaxed">
+            <span className="font-medium">Partial enrichment.</span>{" "}
+            {apiState.failures} of {apiState.total}{" "}
+            ClinicalTrials.gov / openFDA lookups failed, so some rows still show
+            static scores. Re-run enrichment to retry.
+          </p>
+        </div>
+      )}
 
       {/* Honest zero-state: static metadata yields no differentiating scores */}
       {allScoresZero && (
