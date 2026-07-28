@@ -34,6 +34,15 @@ import {
 import StrategicPositioningMap from "./StrategicPositioningMap";
 import { getVerifiedNetworkGraph } from "@/lib/data/verifiedDatasetAdapters";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import {
+  DISPLAY_FONT,
+  displayFont,
+  LABEL_FONT,
+  labelFont,
+  labelFontUppercase,
+} from "@/lib/theme/typography";
+import AnalysisPanelHeader from "@/components/ui/AnalysisPanelHeader";
+import MetricTile from "@/components/ui/MetricTile";
 
 export default function NetworkAnalysisHonest() {
   const dataset = useVerifiedDataset();
@@ -106,7 +115,7 @@ export default function NetworkAnalysisHonest() {
           <div>
             <h2
               className="font-medium text-red-900 text-lg"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Small-N Network Analysis
             </h2>
@@ -124,26 +133,10 @@ export default function NetworkAnalysisHonest() {
       </div>
 
       {/* Header */}
-      <div className="border-b border-lacuna-border pb-4">
-        <h3
-          className="text-2xl font-light tracking-tight"
-          style={{
-            fontFamily: "'Bodoni MT', Didot, serif",
-            textTransform: "uppercase",
-          }}
-        >
-          Honest Network Analysis
-        </h3>
-        <p
-          className="text-sm tracking-widest text-lacuna-text-muted mt-1"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
-        >
-          Bootstrap CIs | Gini/HHI Concentration | Null Model Comparison
-        </p>
-      </div>
+      <AnalysisPanelHeader
+        title="Honest Network Analysis"
+        subtitle="Bootstrap CIs | Gini/HHI Concentration | Null Model Comparison"
+      />
 
       {/* Tab Navigation */}
       <div className="border-b border-lacuna-border">
@@ -167,7 +160,7 @@ export default function NetworkAnalysisHonest() {
                   : "border-transparent text-lacuna-text-muted hover:text-lacuna-text-primary"
               }`}
               style={{
-                fontFamily: "'Arial Narrow', sans-serif",
+                fontFamily: LABEL_FONT,
                 textTransform: "uppercase",
                 letterSpacing: "0.05em",
               }}
@@ -189,14 +182,14 @@ export default function NetworkAnalysisHonest() {
             <div className="bg-white border border-lacuna-border p-4 rounded-lg">
               <div
                 className="text-xs text-lacuna-text-muted uppercase mb-1"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Network Size
               </div>
               <div
                 className="text-3xl font-light"
                 style={{
-                  fontFamily: "'Bodoni MT', Didot, serif",
+                  fontFamily: DISPLAY_FONT,
                   color: "#5D4E6D",
                 }}
               >
@@ -210,14 +203,14 @@ export default function NetworkAnalysisHonest() {
             <div className="bg-white border border-lacuna-border p-4 rounded-lg">
               <div
                 className="text-xs text-lacuna-text-muted uppercase mb-1"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Density
               </div>
               <div
                 className="text-3xl font-light"
                 style={{
-                  fontFamily: "'Bodoni MT', Didot, serif",
+                  fontFamily: DISPLAY_FONT,
                   color: "#4A5D8A",
                 }}
               >
@@ -231,14 +224,14 @@ export default function NetworkAnalysisHonest() {
             <div className="bg-white border border-lacuna-border p-4 rounded-lg">
               <div
                 className="text-xs text-lacuna-text-muted uppercase mb-1"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Components
               </div>
               <div
                 className="text-3xl font-light"
                 style={{
-                  fontFamily: "'Bodoni MT', Didot, serif",
+                  fontFamily: DISPLAY_FONT,
                   color: "#E8B4B8",
                 }}
               >
@@ -252,14 +245,14 @@ export default function NetworkAnalysisHonest() {
             <div className="bg-white border border-lacuna-border p-4 rounded-lg">
               <div
                 className="text-xs text-lacuna-text-muted uppercase mb-1"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Diameter
               </div>
               <div
                 className="text-3xl font-light"
                 style={{
-                  fontFamily: "'Bodoni MT', Didot, serif",
+                  fontFamily: DISPLAY_FONT,
                   color: "#B8A9C9",
                 }}
               >
@@ -275,7 +268,7 @@ export default function NetworkAnalysisHonest() {
           <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-4"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Degree Distribution (Robust Statistics)
             </h4>
@@ -285,69 +278,29 @@ export default function NetworkAnalysisHonest() {
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-              <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
-                <div
-                  className="text-2xl font-light"
-                  style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
-                >
-                  {stats.degree.median}
-                </div>
-                <div
-                  className="text-xs text-lacuna-text-muted uppercase mt-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
-                >
-                  Median Degree
-                </div>
-              </div>
-              <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
-                <div
-                  className="text-2xl font-light"
-                  style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
-                >
-                  [{stats.degree.iqr[0]}, {stats.degree.iqr[1]}]
-                </div>
-                <div
-                  className="text-xs text-lacuna-text-muted uppercase mt-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
-                >
-                  IQR
-                </div>
-              </div>
-              <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
-                <div
-                  className="text-2xl font-light"
-                  style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
-                >
-                  {stats.degree.min}-{stats.degree.max}
-                </div>
-                <div
-                  className="text-xs text-lacuna-text-muted uppercase mt-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
-                >
-                  Range
-                </div>
-              </div>
-              <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
-                <div
-                  className="text-2xl font-light"
-                  style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
-                >
-                  {stats.degree.mean.toFixed(1)}
-                </div>
-                <div
-                  className="text-xs text-lacuna-text-muted uppercase mt-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
-                >
-                  Mean (less robust)
-                </div>
-              </div>
+              <MetricTile
+                value={<>{stats.degree.median}</>}
+                label="Median Degree"
+              />
+              <MetricTile
+                value={<>[{stats.degree.iqr[0]}, {stats.degree.iqr[1]}]</>}
+                label="IQR"
+              />
+              <MetricTile
+                value={<>{stats.degree.min}-{stats.degree.max}</>}
+                label="Range"
+              />
+              <MetricTile
+                value={<>{stats.degree.mean.toFixed(1)}</>}
+                label="Mean (less robust)"
+              />
             </div>
 
             {/* Distribution histogram */}
             <div className="mt-4">
               <div
                 className="text-xs text-lacuna-text-muted uppercase mb-2"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Distribution
               </div>
@@ -390,7 +343,7 @@ export default function NetworkAnalysisHonest() {
           <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-4"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Clustering Coefficient
             </h4>
@@ -403,7 +356,7 @@ export default function NetworkAnalysisHonest() {
                       <div
                         className="text-2xl font-light"
                         style={{
-                          fontFamily: "'Bodoni MT', Didot, serif",
+                          fontFamily: DISPLAY_FONT,
                           color: "#5D4E6D",
                         }}
                       >
@@ -411,7 +364,7 @@ export default function NetworkAnalysisHonest() {
                       </div>
                       <div
                         className="text-xs text-lacuna-text-muted uppercase mt-1"
-                        style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                        style={labelFont}
                       >
                         Average
                       </div>
@@ -420,7 +373,7 @@ export default function NetworkAnalysisHonest() {
                       <div
                         className="text-2xl font-light"
                         style={{
-                          fontFamily: "'Bodoni MT', Didot, serif",
+                          fontFamily: DISPLAY_FONT,
                           color: "#E8B4B8",
                         }}
                       >
@@ -428,7 +381,7 @@ export default function NetworkAnalysisHonest() {
                       </div>
                       <div
                         className="text-xs text-lacuna-text-muted uppercase mt-1"
-                        style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                        style={labelFont}
                       >
                         Network Type
                       </div>
@@ -456,7 +409,7 @@ export default function NetworkAnalysisHonest() {
                       <div
                         className="text-2xl font-light"
                         style={{
-                          fontFamily: "'Bodoni MT', Didot, serif",
+                          fontFamily: DISPLAY_FONT,
                           color: "#5D4E6D",
                         }}
                       >
@@ -464,7 +417,7 @@ export default function NetworkAnalysisHonest() {
                       </div>
                       <div
                         className="text-xs text-lacuna-text-muted uppercase mt-1"
-                        style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                        style={labelFont}
                       >
                         Average
                       </div>
@@ -473,7 +426,7 @@ export default function NetworkAnalysisHonest() {
                       <div
                         className="text-lg font-light"
                         style={{
-                          fontFamily: "'Bodoni MT', Didot, serif",
+                          fontFamily: DISPLAY_FONT,
                           color: "#4A5D8A",
                         }}
                       >
@@ -482,7 +435,7 @@ export default function NetworkAnalysisHonest() {
                       </div>
                       <div
                         className="text-xs text-lacuna-text-muted uppercase mt-1"
-                        style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                        style={labelFont}
                       >
                         95% Bootstrap CI
                       </div>
@@ -491,7 +444,7 @@ export default function NetworkAnalysisHonest() {
                       <div
                         className="text-2xl font-light"
                         style={{
-                          fontFamily: "'Bodoni MT', Didot, serif",
+                          fontFamily: DISPLAY_FONT,
                           color: "#B8A9C9",
                         }}
                       >
@@ -499,7 +452,7 @@ export default function NetworkAnalysisHonest() {
                       </div>
                       <div
                         className="text-xs text-lacuna-text-muted uppercase mt-1"
-                        style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                        style={labelFont}
                       >
                         Bootstrap Samples
                       </div>
@@ -534,7 +487,7 @@ export default function NetworkAnalysisHonest() {
           <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-4"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Buyer Concentration Analysis
             </h4>
@@ -549,14 +502,14 @@ export default function NetworkAnalysisHonest() {
               <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200">
                 <h5
                   className="text-sm uppercase tracking-wider text-purple-700 mb-2"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   Gini Coefficient
                 </h5>
                 <div
                   className="text-4xl font-light"
                   style={{
-                    fontFamily: "'Bodoni MT', Didot, serif",
+                    fontFamily: DISPLAY_FONT,
                     color: "#5D4E6D",
                   }}
                 >
@@ -574,14 +527,14 @@ export default function NetworkAnalysisHonest() {
               <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-4 rounded-lg border border-blue-200">
                 <h5
                   className="text-sm uppercase tracking-wider text-blue-700 mb-2"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   Herfindahl-Hirschman Index
                 </h5>
                 <div
                   className="text-4xl font-light"
                   style={{
-                    fontFamily: "'Bodoni MT', Didot, serif",
+                    fontFamily: DISPLAY_FONT,
                     color: "#4A5D8A",
                   }}
                 >
@@ -601,7 +554,7 @@ export default function NetworkAnalysisHonest() {
             <div className="bg-lacuna-surface-muted p-4 rounded-lg">
               <h5
                 className="text-sm font-medium mb-3"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Top-K Concentration of Acquisitions
               </h5>
@@ -609,7 +562,7 @@ export default function NetworkAnalysisHonest() {
                 <div className="text-center">
                   <div
                     className="text-3xl font-light"
-                    style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+                    style={displayFont}
                   >
                     {(stats.gini.topConcentration.top1 * 100).toFixed(0)}%
                   </div>
@@ -620,7 +573,7 @@ export default function NetworkAnalysisHonest() {
                 <div className="text-center">
                   <div
                     className="text-3xl font-light"
-                    style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+                    style={displayFont}
                   >
                     {(stats.gini.topConcentration.top3 * 100).toFixed(0)}%
                   </div>
@@ -631,7 +584,7 @@ export default function NetworkAnalysisHonest() {
                 <div className="text-center">
                   <div
                     className="text-3xl font-light"
-                    style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+                    style={displayFont}
                   >
                     {(stats.gini.topConcentration.top5 * 100).toFixed(0)}%
                   </div>
@@ -646,7 +599,7 @@ export default function NetworkAnalysisHonest() {
             <div className="mt-4">
               <h5
                 className="text-sm font-medium mb-3"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Deals per Acquirer
               </h5>
@@ -687,7 +640,7 @@ export default function NetworkAnalysisHonest() {
           <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-4"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Acquisition Velocity Over Time
             </h4>
@@ -697,7 +650,7 @@ export default function NetworkAnalysisHonest() {
                 <div
                   className="text-2xl font-light"
                   style={{
-                    fontFamily: "'Bodoni MT', Didot, serif",
+                    fontFamily: DISPLAY_FONT,
                     color: "#5D4E6D",
                   }}
                 >
@@ -705,7 +658,7 @@ export default function NetworkAnalysisHonest() {
                 </div>
                 <div
                   className="text-xs text-lacuna-text-muted uppercase mt-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   Total Events
                 </div>
@@ -714,7 +667,7 @@ export default function NetworkAnalysisHonest() {
                 <div
                   className="text-2xl font-light"
                   style={{
-                    fontFamily: "'Bodoni MT', Didot, serif",
+                    fontFamily: DISPLAY_FONT,
                     color: "#4A5D8A",
                   }}
                 >
@@ -723,7 +676,7 @@ export default function NetworkAnalysisHonest() {
                 </div>
                 <div
                   className="text-xs text-lacuna-text-muted uppercase mt-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   Year Span
                 </div>
@@ -732,7 +685,7 @@ export default function NetworkAnalysisHonest() {
                 <div
                   className="text-2xl font-light"
                   style={{
-                    fontFamily: "'Bodoni MT', Didot, serif",
+                    fontFamily: DISPLAY_FONT,
                     color: "#E8B4B8",
                   }}
                 >
@@ -740,7 +693,7 @@ export default function NetworkAnalysisHonest() {
                 </div>
                 <div
                   className="text-xs text-lacuna-text-muted uppercase mt-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   Median/Year
                 </div>
@@ -749,7 +702,7 @@ export default function NetworkAnalysisHonest() {
                 <div
                   className="text-lg font-light"
                   style={{
-                    fontFamily: "'Bodoni MT', Didot, serif",
+                    fontFamily: DISPLAY_FONT,
                     color: "#B8A9C9",
                   }}
                 >
@@ -757,7 +710,7 @@ export default function NetworkAnalysisHonest() {
                 </div>
                 <div
                   className="text-xs text-lacuna-text-muted uppercase mt-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   IQR
                 </div>
@@ -768,7 +721,7 @@ export default function NetworkAnalysisHonest() {
             <div className="mb-4">
               <div
                 className="text-xs text-lacuna-text-muted uppercase mb-2"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Deals per Year
               </div>
@@ -807,7 +760,7 @@ export default function NetworkAnalysisHonest() {
             <div className="mt-8 bg-lacuna-surface-muted p-4 rounded-lg">
               <h5
                 className="text-sm font-medium mb-3"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Trend Assessment (with caveats)
               </h5>
@@ -871,7 +824,7 @@ export default function NetworkAnalysisHonest() {
             <h4
               className="font-medium mb-3"
               style={{
-                fontFamily: "'Arial Narrow', sans-serif",
+                fontFamily: LABEL_FONT,
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
               }}
@@ -903,7 +856,7 @@ export default function NetworkAnalysisHonest() {
           <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-4"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Community Detection (Simplified Louvain)
             </h4>
@@ -917,7 +870,7 @@ export default function NetworkAnalysisHonest() {
                 <div
                   className="text-2xl font-light"
                   style={{
-                    fontFamily: "'Bodoni MT', Didot, serif",
+                    fontFamily: DISPLAY_FONT,
                     color: "#5D4E6D",
                   }}
                 >
@@ -925,7 +878,7 @@ export default function NetworkAnalysisHonest() {
                 </div>
                 <div
                   className="text-xs text-lacuna-text-muted uppercase mt-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   Communities Found
                 </div>
@@ -934,7 +887,7 @@ export default function NetworkAnalysisHonest() {
                 <div
                   className="text-2xl font-light"
                   style={{
-                    fontFamily: "'Bodoni MT', Didot, serif",
+                    fontFamily: DISPLAY_FONT,
                     color: "#4A5D8A",
                   }}
                 >
@@ -942,7 +895,7 @@ export default function NetworkAnalysisHonest() {
                 </div>
                 <div
                   className="text-xs text-lacuna-text-muted uppercase mt-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   Modularity (Q)
                 </div>
@@ -956,13 +909,13 @@ export default function NetworkAnalysisHonest() {
                       ? "text-yellow-600"
                       : "text-red-600"
                   }`}
-                  style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+                  style={displayFont}
                 >
                   {(stats.communities.stability.score * 100).toFixed(0)}%
                 </div>
                 <div
                   className="text-xs text-lacuna-text-muted uppercase mt-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   Stability
                 </div>
@@ -971,7 +924,7 @@ export default function NetworkAnalysisHonest() {
                 <div
                   className="text-lg font-light"
                   style={{
-                    fontFamily: "'Bodoni MT', Didot, serif",
+                    fontFamily: DISPLAY_FONT,
                     color: stats.communities.stability.isReliable
                       ? "#22c55e"
                       : "#e76f51",
@@ -983,7 +936,7 @@ export default function NetworkAnalysisHonest() {
                 </div>
                 <div
                   className="text-xs text-lacuna-text-muted uppercase mt-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   Assessment
                 </div>
@@ -994,7 +947,7 @@ export default function NetworkAnalysisHonest() {
             <div className="mb-4">
               <h5
                 className="text-sm font-medium mb-2"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Community Size Distribution
               </h5>
@@ -1028,7 +981,7 @@ export default function NetworkAnalysisHonest() {
             <div className="mt-4 bg-lacuna-surface-muted p-4 rounded-lg">
               <h5
                 className="text-sm font-medium mb-3"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Qualitative Descriptions
               </h5>
@@ -1071,7 +1024,7 @@ export default function NetworkAnalysisHonest() {
             <h4
               className="font-medium mb-3"
               style={{
-                fontFamily: "'Arial Narrow', sans-serif",
+                fontFamily: LABEL_FONT,
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
               }}
@@ -1120,7 +1073,7 @@ export default function NetworkAnalysisHonest() {
           <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-4"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Network Stability Analysis
             </h4>
@@ -1135,7 +1088,7 @@ export default function NetworkAnalysisHonest() {
                 <div
                   className="text-2xl font-light"
                   style={{
-                    fontFamily: "'Bodoni MT', Didot, serif",
+                    fontFamily: DISPLAY_FONT,
                     color: "#5D4E6D",
                   }}
                 >
@@ -1143,7 +1096,7 @@ export default function NetworkAnalysisHonest() {
                 </div>
                 <div
                   className="text-xs text-lacuna-text-muted uppercase mt-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   Target Sample Size
                 </div>
@@ -1152,7 +1105,7 @@ export default function NetworkAnalysisHonest() {
                 <div
                   className="text-2xl font-light"
                   style={{
-                    fontFamily: "'Bodoni MT', Didot, serif",
+                    fontFamily: DISPLAY_FONT,
                     color: "#4A5D8A",
                   }}
                 >
@@ -1162,7 +1115,7 @@ export default function NetworkAnalysisHonest() {
                 </div>
                 <div
                   className="text-xs text-lacuna-text-muted uppercase mt-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   High Reliability Findings
                 </div>
@@ -1171,7 +1124,7 @@ export default function NetworkAnalysisHonest() {
                 <div
                   className="text-2xl font-light"
                   style={{
-                    fontFamily: "'Bodoni MT', Didot, serif",
+                    fontFamily: DISPLAY_FONT,
                     color: "#e76f51",
                   }}
                 >
@@ -1181,7 +1134,7 @@ export default function NetworkAnalysisHonest() {
                 </div>
                 <div
                   className="text-xs text-lacuna-text-muted uppercase mt-1"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   Low Reliability Findings
                 </div>
@@ -1193,7 +1146,7 @@ export default function NetworkAnalysisHonest() {
               <thead>
                 <tr
                   className="text-xs text-lacuna-text-muted uppercase border-b border-lacuna-border"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   <th className="text-left py-2">Metric</th>
                   <th className="text-right py-2">Mean</th>
@@ -1240,7 +1193,7 @@ export default function NetworkAnalysisHonest() {
             <div className="mb-4">
               <h5
                 className="text-sm font-medium mb-3"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Findings Ranked by Reliability (most → least stable)
               </h5>
@@ -1276,7 +1229,7 @@ export default function NetworkAnalysisHonest() {
             <div className="bg-blue-50 border border-blue-200 rounded p-4 mb-4">
               <h5
                 className="font-medium text-blue-800 mb-2 text-sm"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Validation Strategy
               </h5>
@@ -1305,7 +1258,7 @@ export default function NetworkAnalysisHonest() {
             <h4
               className="font-medium mb-3"
               style={{
-                fontFamily: "'Arial Narrow', sans-serif",
+                fontFamily: LABEL_FONT,
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
               }}
@@ -1340,7 +1293,7 @@ export default function NetworkAnalysisHonest() {
           <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-4"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Null Model Comparison
             </h4>
@@ -1487,10 +1440,7 @@ export default function NetworkAnalysisHonest() {
           <div className="bg-red-50 border border-red-200 rounded-lg p-6">
             <h4
               className="font-medium text-red-800 mb-4"
-              style={{
-                fontFamily: "'Arial Narrow', sans-serif",
-                textTransform: "uppercase",
-              }}
+              style={labelFontUppercase}
             >
               ✗ What We CANNOT Reliably Claim
             </h4>
@@ -1531,7 +1481,7 @@ export default function NetworkAnalysisHonest() {
           <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-4"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Why We Don&apos;t Fit Power Laws (Detailed)
             </h4>
@@ -1559,7 +1509,7 @@ export default function NetworkAnalysisHonest() {
             <h4
               className="font-medium mb-3"
               style={{
-                fontFamily: "'Arial Narrow', sans-serif",
+                fontFamily: LABEL_FONT,
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
               }}

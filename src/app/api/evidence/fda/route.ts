@@ -4,8 +4,8 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { enforceRateLimit } from "@/lib/api/rateLimitGuard";
 import { fetchWithTimeout } from "@/lib/api/fetchWithTimeout";
-import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
 
 const OPENFDA_BASE = "https://api.fda.gov";
 
@@ -66,18 +66,12 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const ip = getClientIp(request);
-  const bucket = await rateLimit({
-    key: `evidence-fda:${ip}`,
+  const limited = await enforceRateLimit(request, {
+    key: "evidence-fda",
     limit: 40,
     windowMs: 60_000,
   });
-  if (!bucket.ok) {
-    return NextResponse.json(
-      { error: "Rate limited", retryAt: bucket.resetAtMs },
-      { status: 429 },
-    );
-  }
+  if (limited) return limited;
 
   try {
     const [deviceData, drugData] = await Promise.all([
