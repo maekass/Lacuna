@@ -35,9 +35,8 @@ export async function GET(request: Request) {
       handsOff,
     });
   } catch (error) {
-    const message = error instanceof Error
-      ? error.message
-      : "SEC ingest failed";
+    console.error("cron/sec-ingest:", error);
+    const message = "SEC ingest failed";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

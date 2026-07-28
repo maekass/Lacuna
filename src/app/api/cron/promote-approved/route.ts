@@ -43,7 +43,8 @@ export async function GET(request: Request) {
       validationErrors: result.validationErrors,
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Promotion failed";
+    console.error("cron/promote-approved:", error);
+    const message = "Promotion failed";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
