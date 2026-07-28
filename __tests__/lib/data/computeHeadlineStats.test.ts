@@ -50,8 +50,10 @@ describe("computeHeadlineStats", () => {
     expect(tiles).toHaveLength(4);
     expect(tiles[0]?.label).toBe("Companies in our network");
     expect(tiles[1]?.value).toBe(stats.verifiedDeals.toString());
+    expect(tiles[2]?.label).toBe("WH disclosed value (completed)");
     expect(tiles[3]?.label).toBe("Public sources cited");
     expect(tiles[3]?.value).toBe(stats.uniqueSourceCitations.toString());
     expect(tiles[0]?.model.module).toContain("computeHeadlineStats");
+    expect(stats.estimand).toBe("disclosed_only_observed_sum");
   });
 });

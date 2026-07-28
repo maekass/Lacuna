@@ -1,0 +1,1053 @@
+{
+  "version": 1,
+  "description": "Sidecar annotations for lacunaDataset \u2014 scope, value provenance tier, terminal status, date precision. Not a substitute for dataset.verified.json fields.",
+  "deals": {
+    "deal1": {
+      "valueTier": "sec_filing",
+      "scope": "adjacency",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2020-07-01",
+          "statusSource": "SEC 8-K filing, July 2020"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2020-10-30",
+          "statusSource": "SEC 8-K filing, July 2020"
+        }
+      ]
+    },
+    "deal2": {
+      "valueTier": "market_research",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2021-05-19",
+          "statusSource": "Press reports (Fierce Healthcare, May 2021)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2021-07-15",
+          "statusSource": "Press reports (Fierce Healthcare, May 2021)"
+        }
+      ]
+    },
+    "deal3": {
+      "valueTier": "market_research",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2021-12-15",
+          "statusSource": "Press reports (TechCrunch, December 2021)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2022-02-28",
+          "statusSource": "Press reports (TechCrunch, December 2021)"
+        }
+      ]
+    },
+    "deal4": {
+      "valueTier": "sec_filing",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2021-10-22",
+          "statusSource": "SEC EDGAR EX-99.1 (23andMe\u2013Lemonaid merger agreement, Oct 22, 2021); Globe Newswire closing release (Nov 1, 2021)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2021-11-01",
+          "statusSource": "SEC EDGAR EX-99.1 (23andMe\u2013Lemonaid merger agreement, Oct 22, 2021); Globe Newswire closing release (Nov 1, 2021)"
+        }
+      ]
+    },
+    "deal5": {
+      "valueTier": "market_research",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "announced",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2022-08-10",
+          "statusSource": "Press reports (Teladoc partnership announcement)"
+        }
+      ]
+    },
+    "deal6": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "announced",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2023-03-15",
+          "statusSource": "Partnership press release"
+        }
+      ]
+    },
+    "deal7": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2021-01-05",
+          "statusSource": "Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2021-02-22",
+          "statusSource": "Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)"
+        }
+      ]
+    },
+    "deal8": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2024-05-20",
+          "statusSource": "Nasdaq press release (Jul 25, 2024)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2024-07-25",
+          "statusSource": "Nasdaq press release (Jul 25, 2024)"
+        }
+      ]
+    },
+    "deal9": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2024-09-15",
+          "statusSource": "Tracxn acquisition records; Hologic investor relations (Oct 2024)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2024-10-14",
+          "statusSource": "Tracxn acquisition records; Hologic investor relations (Oct 2024)"
+        }
+      ]
+    },
+    "deal10": {
+      "valueTier": "sec_filing",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2012-06-04",
+          "statusSource": "SEC EDGAR \u2014 CooperCompanies 10-K (FY2012); Oslo Stock Exchange tender offer (Jun 2012)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2012-07-11",
+          "statusSource": "SEC EDGAR \u2014 CooperCompanies 10-K (FY2012); Oslo Stock Exchange tender offer (Jun 2012)"
+        }
+      ]
+    },
+    "deal11": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2021-11-10",
+          "statusSource": "CooperCompanies investor relations \u2014 Globe Newswire (Nov 10, 2021)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2022-01-31",
+          "statusSource": "CooperCompanies investor relations \u2014 Globe Newswire (Nov 10, 2021)"
+        }
+      ]
+    },
+    "deal12": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "terminated",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2022-02-07",
+          "statusSource": "CooperCompanies investor relations press release (Feb 7, 2022)"
+        },
+        {
+          "status": "pending_regulatory",
+          "statusAsOf": "2022-03-01",
+          "statusSource": "Customary closing conditions (IR coverage)"
+        },
+        {
+          "status": "terminated",
+          "statusAsOf": "2024-07-01",
+          "statusSource": "Cook Medical RH subsequently acquired by Astorg; CooperSurgical transaction treated as terminated/restructured for completed-exit aggregates"
+        }
+      ]
+    },
+    "deal13": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "announced",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2024-06-10",
+          "statusSource": "CooperSurgical press release (Jun 10, 2024)"
+        }
+      ]
+    },
+    "deal14": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2021-03-30",
+          "statusSource": "Organon.com press release (Mar 30, 2021); Business Wire"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2021-07-01",
+          "statusSource": "Organon.com press release (Mar 30, 2021); Business Wire"
+        }
+      ]
+    },
+    "deal15": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2021-11-11",
+          "statusSource": "Business Wire (Dec 13, 2021); Organon.com press release"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2021-12-13",
+          "statusSource": "Business Wire (Dec 13, 2021); Organon.com press release"
+        }
+      ]
+    },
+    "deal16": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2021-07-08",
+          "statusSource": "Cision/Vitrolife press release (Jul 8, 2021); PR Newswire (Nov 30, 2021)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2021-11-30",
+          "statusSource": "Cision/Vitrolife press release (Jul 8, 2021); PR Newswire (Nov 30, 2021)"
+        }
+      ]
+    },
+    "deal17": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2024-06-12",
+          "statusSource": "Gedeon Richter press release (Jun 12, 2024); Budapest Stock Exchange filing"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2024-06-12",
+          "statusSource": "Gedeon Richter press release (Jun 12, 2024); Budapest Stock Exchange filing"
+        }
+      ]
+    },
+    "deal18": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "announced",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2026-03-03",
+          "statusSource": "Gedeon Richter press release (Mar 3, 2026); Budapest Stock Exchange filing"
+        }
+      ]
+    },
+    "deal19": {
+      "valueTier": "sec_filing",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2016-07-27",
+          "statusSource": "SEC EDGAR \u2014 LabCorp/Sequenom merger filing (Jul 27, 2016)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2016-09-06",
+          "statusSource": "SEC EDGAR \u2014 LabCorp/Sequenom merger filing (Jul 27, 2016)"
+        }
+      ]
+    },
+    "deal20": {
+      "valueTier": "sec_filing",
+      "scope": "adjacency",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2019-07-29",
+          "statusSource": "Exact Sciences newsroom (Jul 29, 2019); SEC merger proxy"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2019-11-08",
+          "statusSource": "Exact Sciences newsroom (Jul 29, 2019); SEC merger proxy"
+        }
+      ]
+    },
+    "deal21": {
+      "valueTier": "market_research",
+      "scope": "adjacency",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2018-06-19",
+          "statusSource": "Roche media release (Jun 19, 2018); Fierce Biotech"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2018-07-18",
+          "statusSource": "Roche media release (Jun 19, 2018); Fierce Biotech"
+        }
+      ]
+    },
+    "deal22": {
+      "valueTier": "market_research",
+      "scope": "adjacency",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2018-01-08",
+          "statusSource": "Roche media release (Apr 6, 2018)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2018-04-06",
+          "statusSource": "Roche media release (Apr 6, 2018)"
+        }
+      ]
+    },
+    "deal23": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2020-08-25",
+          "statusSource": "Business Wire \u2014 Hologic press release (Aug 25, 2020)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2020-08-25",
+          "statusSource": "Business Wire \u2014 Hologic press release (Aug 25, 2020)"
+        }
+      ]
+    },
+    "deal24": {
+      "valueTier": "sec_filing",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2021-10-14",
+          "statusSource": "Nasdaq \u2014 Hologic press release (Oct 14, 2021); SEC 10-K FY2022"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2021-11-29",
+          "statusSource": "Nasdaq \u2014 Hologic press release (Oct 14, 2021); SEC 10-K FY2022"
+        }
+      ]
+    },
+    "deal25": {
+      "valueTier": "sec_filing",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2018-09-26",
+          "statusSource": "Hologic investor relations press release (Sep 26, 2018); SEC 10-K FY2019"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2018-10-01",
+          "statusSource": "Hologic investor relations press release (Sep 26, 2018); SEC 10-K FY2019"
+        }
+      ]
+    },
+    "deal26": {
+      "valueTier": "sec_filing",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2024-08-01",
+          "statusSource": "CooperCompanies investor relations \u2014 Globe Newswire (Aug 1, 2024); SEC 10-K FY2024"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2024-08-01",
+          "statusSource": "CooperCompanies investor relations \u2014 Globe Newswire (Aug 1, 2024); SEC 10-K FY2024"
+        }
+      ]
+    },
+    "deal27": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2016-05-18",
+          "statusSource": "Medtronic press release (May 18, 2016); Smith & Nephew press release (Aug 8, 2016 \u2014 close confirmation)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2016-08-08",
+          "statusSource": "Medtronic press release (May 18, 2016); Smith & Nephew press release (Aug 8, 2016 \u2014 close confirmation)"
+        }
+      ]
+    },
+    "deal28": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2018-04-16",
+          "statusSource": "PR Newswire \u2014 Boston Scientific press release (Apr 16, 2018); MassDevice deal coverage"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2018-04-16",
+          "statusSource": "PR Newswire \u2014 Boston Scientific press release (Apr 16, 2018); MassDevice deal coverage"
+        }
+      ]
+    },
+    "deal29": {
+      "valueTier": "trade_press",
+      "scope": "adjacency",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2020-09-21",
+          "statusSource": "Illumina press release (Sep 21, 2020); SEC merger filing; GRAIL completion announcement (Aug 18, 2021)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2021-08-18",
+          "statusSource": "Illumina press release (Sep 21, 2020); SEC merger filing; GRAIL completion announcement (Aug 18, 2021)"
+        }
+      ]
+    },
+    "deal30": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2024-07-22",
+          "statusSource": "Business Wire \u2014 Astorg press release (Dec 2, 2024); Weil Gotshal advisory announcement (Jul 24, 2024)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2024-12-02",
+          "statusSource": "Business Wire \u2014 Astorg press release (Dec 2, 2024); Weil Gotshal advisory announcement (Jul 24, 2024)"
+        }
+      ]
+    },
+    "deal31": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2024-05-02",
+          "statusSource": "Cision \u2014 Vitrolife press release (May 22, 2024)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2024-05-22",
+          "statusSource": "Cision \u2014 Vitrolife press release (May 22, 2024)"
+        }
+      ]
+    },
+    "deal32": {
+      "valueTier": "sec_filing",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2018-03-12",
+          "statusSource": "SEC EDGAR \u2014 Cogentix Medical merger filing (Mar 12, 2018); Laborie press release (Apr 23, 2019 \u2014 completion)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2019-04-23",
+          "statusSource": "SEC EDGAR \u2014 Cogentix Medical merger filing (Mar 12, 2018); Laborie press release (Apr 23, 2019 \u2014 completion)"
+        }
+      ]
+    },
+    "deal33": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2020-11-03",
+          "statusSource": "Globe Newswire \u2014 Coloplast press release (Nov 3, 2020)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2020-11-03",
+          "statusSource": "Globe Newswire \u2014 Coloplast press release (Nov 3, 2020)"
+        }
+      ]
+    },
+    "deal34": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2022-10-24",
+          "statusSource": "Sumitomo Pharma press release (Oct 24, 2022); Business Wire \u2014 completion announcement (Mar 10, 2023)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2023-03-10",
+          "statusSource": "Sumitomo Pharma press release (Oct 24, 2022); Business Wire \u2014 completion announcement (Mar 10, 2023)"
+        }
+      ]
+    },
+    "deal35": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2018-05-28",
+          "statusSource": "Globe Newswire \u2014 Myriad Genetics press release (May 28, 2018)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2018-08-01",
+          "statusSource": "Globe Newswire \u2014 Myriad Genetics press release (May 28, 2018)"
+        }
+      ]
+    },
+    "deal36": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2022-11-01",
+          "statusSource": "Globe Newswire \u2014 Myriad Genetics press release (Nov 1, 2022)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2022-11-01",
+          "statusSource": "Globe Newswire \u2014 Myriad Genetics press release (Nov 1, 2022)"
+        }
+      ]
+    },
+    "deal37": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2024-01-22",
+          "statusSource": "Business Wire \u2014 Natera press release (Jan 22, 2024)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2024-01-22",
+          "statusSource": "Business Wire \u2014 Natera press release (Jan 22, 2024)"
+        }
+      ]
+    },
+    "deal38": {
+      "valueTier": "sec_filing",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2022-12-30",
+          "statusSource": "Business Wire \u2014 TherapeuticsMD press release (Jan 3, 2023); SEC EDGAR 8-K (Dec 30, 2022)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2023-01-03",
+          "statusSource": "Business Wire \u2014 TherapeuticsMD press release (Jan 3, 2023); SEC EDGAR 8-K (Dec 30, 2022)"
+        }
+      ]
+    },
+    "deal39": {
+      "valueTier": "sec_filing",
+      "scope": "adjacency",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2023-03-13",
+          "statusSource": "SEC EDGAR \u2014 Pfizer 8-K (Mar 13, 2023); Business Wire completion announcement (Dec 14, 2023)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2023-12-14",
+          "statusSource": "SEC EDGAR \u2014 Pfizer 8-K (Mar 13, 2023); Business Wire completion announcement (Dec 14, 2023)"
+        }
+      ]
+    },
+    "deal40": {
+      "valueTier": "trade_press",
+      "scope": "adjacency",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2020-08-02",
+          "statusSource": "Siemens Healthineers press release (Aug 2, 2020); PR Newswire \u2014 Varian merger announcement"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2021-04-15",
+          "statusSource": "Siemens Healthineers press release (Aug 2, 2020); PR Newswire \u2014 Varian merger announcement"
+        }
+      ]
+    },
+    "deal41": {
+      "valueTier": "trade_press",
+      "scope": "adjacency",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2020-09-13",
+          "statusSource": "Business Wire \u2014 Gilead/Immunomedics announcement (Sep 13, 2020); Gilead Sciences press release"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2020-10-22",
+          "statusSource": "Business Wire \u2014 Gilead/Immunomedics announcement (Sep 13, 2020); Gilead Sciences press release"
+        }
+      ]
+    },
+    "deal42": {
+      "valueTier": "trade_press",
+      "scope": "adjacency",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2020-10-27",
+          "statusSource": "PR Newswire \u2014 Exact Sciences announcement (Oct 27, 2020); completion (Jan 5, 2021)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2021-01-05",
+          "statusSource": "PR Newswire \u2014 Exact Sciences announcement (Oct 27, 2020); completion (Jan 5, 2021)"
+        }
+      ]
+    },
+    "deal43": {
+      "valueTier": "sec_filing",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2022-01-09",
+          "statusSource": "PR Newswire \u2014 Exact Sciences press release (Jan 9, 2022); SEC EDGAR 8-K (Jan 10, 2022)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2022-01-09",
+          "statusSource": "PR Newswire \u2014 Exact Sciences press release (Jan 9, 2022); SEC EDGAR 8-K (Jan 10, 2022)"
+        }
+      ]
+    },
+    "deal44": {
+      "valueTier": "sec_filing",
+      "scope": "adjacency",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2017-06-16",
+          "statusSource": "SEC EDGAR \u2014 PerkinElmer 8-K (Jun 16, 2017); Revvity investor relations \u2014 completion (Dec 19, 2017)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2017-12-19",
+          "statusSource": "SEC EDGAR \u2014 PerkinElmer 8-K (Jun 16, 2017); Revvity investor relations \u2014 completion (Dec 19, 2017)"
+        }
+      ]
+    },
+    "deal45": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2018-07-31",
+          "statusSource": "PR Newswire \u2014 Hologic press release (Jul 31, 2018); BioSpace deal coverage"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2018-07-31",
+          "statusSource": "PR Newswire \u2014 Hologic press release (Jul 31, 2018); BioSpace deal coverage"
+        }
+      ]
+    },
+    "deal46": {
+      "valueTier": "market_research",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2019-06-21",
+          "statusSource": "MassDevice \u2014 Hologic/SSI announcement (Jun 21, 2019); AuntMinnie \u2014 46% stake acquisition (Aug 4, 2019)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2019-12-19",
+          "statusSource": "MassDevice \u2014 Hologic/SSI announcement (Jun 21, 2019); AuntMinnie \u2014 46% stake acquisition (Aug 4, 2019)"
+        }
+      ]
+    },
+    "deal47": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2021-08-12",
+          "statusSource": "Business Wire \u2014 LabCorp press release (Aug 12, 2021); LabCorp investor relations"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2021-08-12",
+          "statusSource": "Business Wire \u2014 LabCorp press release (Aug 12, 2021); LabCorp investor relations"
+        }
+      ]
+    },
+    "deal48": {
+      "valueTier": "sec_filing",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2016-05-31",
+          "statusSource": "Globe Newswire \u2014 Myriad Genetics press release (May 31, 2016); SEC EDGAR \u2014 Myriad 8-K"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2016-05-31",
+          "statusSource": "Globe Newswire \u2014 Myriad Genetics press release (May 31, 2016); SEC EDGAR \u2014 Myriad 8-K"
+        }
+      ]
+    },
+    "deal49": {
+      "valueTier": "sec_filing",
+      "scope": "adjacency",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2016-02-01",
+          "statusSource": "SEC EDGAR \u2014 Abbott/Alere amended merger (Apr 14, 2017); Abbott Mediaroom \u2014 closing (Sep 29, 2017)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2017-10-03",
+          "statusSource": "SEC EDGAR \u2014 Abbott/Alere amended merger (Apr 14, 2017); Abbott Mediaroom \u2014 closing (Sep 29, 2017)"
+        }
+      ]
+    },
+    "deal50": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2025-03-20",
+          "statusSource": "Business Wire \u2014 Caldera Medical press release (Mar 20, 2025)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2025-03-20",
+          "statusSource": "Business Wire \u2014 Caldera Medical press release (Mar 20, 2025)"
+        }
+      ]
+    },
+    "deal51": {
+      "valueTier": "sec_filing",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2012-04-30",
+          "statusSource": "SEC EDGAR DEFM14A filing; Hologic press release (August 1, 2012)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2012-08-01",
+          "statusSource": "SEC EDGAR DEFM14A filing; Hologic press release (August 1, 2012)"
+        }
+      ]
+    },
+    "deal52": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2020-08-11",
+          "statusSource": "Business Wire press release (August 11, 2020); Bayer.com media (September 9, 2020)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2020-09-09",
+          "statusSource": "Business Wire press release (August 11, 2020); Bayer.com media (September 9, 2020)"
+        }
+      ]
+    },
+    "deal53": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2017-04-03",
+          "statusSource": "Astellas Pharma press release (May 17, 2017); PR Newswire"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2017-05-17",
+          "statusSource": "Astellas Pharma press release (May 17, 2017); PR Newswire"
+        }
+      ]
+    },
+    "deal54": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2024-09-18",
+          "statusSource": "Organon press release (September 18, 2024); Fierce Pharma"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2024-12-31",
+          "statusSource": "Organon press release (September 18, 2024); Fierce Pharma"
+        }
+      ]
+    },
+    "deal55": {
+      "valueTier": "market_research",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2022-03-01",
+          "statusSource": "Axios Pro (April 13, 2022); Fertility Bridge (January 26, 2023); CNMC approval (December 21, 2022)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2023-01-18",
+          "statusSource": "Axios Pro (April 13, 2022); Fertility Bridge (January 26, 2023); CNMC approval (December 21, 2022)"
+        }
+      ]
+    },
+    "deal56": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2023-07-28",
+          "statusSource": "EQT Group press release (July 28, 2023); Times of India (July 29, 2023)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2023-12-31",
+          "statusSource": "EQT Group press release (July 28, 2023); Times of India (July 29, 2023)"
+        }
+      ]
+    },
+    "deal57": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2021-06-24",
+          "statusSource": "Hims & Hers investor relations (June 24, 2021); Business Wire (July 7, 2021)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2021-07-07",
+          "statusSource": "Hims & Hers investor relations (June 24, 2021); Business Wire (July 7, 2021)"
+        }
+      ]
+    },
+    "deal58": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2023-11-01",
+          "statusSource": "Business Wire (January 31, 2024); PitchBook (November 2023)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2024-01-31",
+          "statusSource": "Business Wire (January 31, 2024); PitchBook (November 2023)"
+        }
+      ]
+    },
+    "deal59": {
+      "valueTier": "trade_press",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "terminalStatus": "completed",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2022-10-17",
+          "statusSource": "Business Wire press release (October 17, 2022); GeekWire coverage"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2022-10-17",
+          "statusSource": "Business Wire press release (October 17, 2022); GeekWire coverage"
+        }
+      ]
+    }
+  }
+}

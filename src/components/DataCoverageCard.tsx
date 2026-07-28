@@ -12,6 +12,10 @@ import {
   COVERAGE_STAT_MODELS,
   type EffectiveNBadges,
 } from "@/lib/data/datasetCoverageStats";
+import {
+  formatDisclosedBillions,
+  liveDisclosedStats,
+} from "@/lib/data/lacunaDataset";
 import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
 
 function countDisclosedDealValues(acquisitions: { dealValue?: number }[]) {
@@ -22,6 +26,61 @@ function countDisclosedDealValues(acquisitions: { dealValue?: number }[]) {
     else undisclosed += 1;
   }
   return { disclosed, undisclosed };
+}
+
+const ESTIMAND_MODEL: ModelProvenance = {
+  module: "src/lib/data/lacunaDataset.ts",
+  exportName: "liveDisclosedStats",
+  definition:
+    "disclosed_only_observed_sum over completed women's-health deals. " +
+    "Coverage is an observed ratio vs AOA Dx — not capture-recapture.",
+};
+
+function DisclosedEstimandNote() {
+  const {
+    verifiedCompanies,
+    verifiedAcquisitions,
+    verifiedAcquirers,
+    dataProvenance,
+  } = useVerifiedDataset();
+  const live = useMemo(
+    () =>
+      liveDisclosedStats({
+        provenance: dataProvenance,
+        companies: verifiedCompanies,
+        acquirers: verifiedAcquirers,
+        acquisitions: verifiedAcquisitions,
+      }),
+    [
+      verifiedCompanies,
+      verifiedAcquisitions,
+      verifiedAcquirers,
+      dataProvenance,
+    ],
+  );
+  const wh = live.womensHealth;
+  return (
+    <ModelProvenanceHint model={ESTIMAND_MODEL}>
+      <div className="mt-4 cursor-help rounded-lg border border-lacuna-lavender/40 bg-lacuna-lavender/10 px-3 py-2 text-xs text-lacuna-blue">
+        <p className="font-semibold text-lacuna-plum">
+          Estimand: disclosed-only observed sum (completed women&apos;s health)
+        </p>
+        <p className="mt-1">
+          {formatDisclosedBillions(wh.disclosedOnlyTotalMillions)}{" "}
+          disclosed among completed WH deals ·{" "}
+          {formatDisclosedBillions(live.adjacencyExcludedMillions)}{" "}
+          adjacency excluded · coverage{" "}
+          {(wh.coverage.rate * 100).toFixed(1)}% vs {wh.coverage.referenceName}
+          {" "}
+          (n={wh.coverage.denominator}). Not a market topline — see{" "}
+          <a href="/methods" className="underline underline-offset-2">
+            methods
+          </a>{" "}
+          and docs/LIMITATIONS.md.
+        </p>
+      </div>
+    </ModelProvenanceHint>
+  );
 }
 
 const tierStyles: Record<EffectiveNBadges["network"]["tier"], string> = {
@@ -157,6 +216,8 @@ export default function DataCoverageCard() {
           model={COVERAGE_STAT_MODELS.undisclosedPrice}
         />
       </div>
+
+      <DisclosedEstimandNote />
 
       <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
         <ModelProvenanceHint model={COVERAGE_STAT_MODELS.valuationCoverage}>

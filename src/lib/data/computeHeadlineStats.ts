@@ -1,4 +1,9 @@
 import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
+import {
+  formatDisclosedBillions,
+  type LiveDisclosedStats,
+  liveDisclosedStats,
+} from "@/lib/data/lacunaDataset";
 import type { VerifiedDataset } from "./datasetTypes";
 import {
   computeDisclosureStats,
@@ -17,8 +22,18 @@ export interface HeadlineStats {
   acquirerCount: number;
   networkNodeCount: number;
   verifiedDeals: number;
+  /** @deprecated Prefer disclosedValueMillionsWh — was all-scope sum including adjacency. */
   disclosedValueMillions: number;
   disclosedValueBillionsLabel: string;
+  /** Women's-health completed disclosed-only (estimand: disclosed_only_observed_sum). */
+  disclosedValueMillionsWh: number;
+  disclosedValueBillionsLabelWh: string;
+  adjacencyExcludedMillions: number;
+  estimand: LiveDisclosedStats["womensHealth"]["estimand"];
+  estimandNote: string;
+  coverageRate: number;
+  coverageDenominator: number;
+  coverageReferenceName: string;
   uniqueSourceCitations: number;
   lastUpdated: string;
   datasetVersion?: string;
@@ -47,10 +62,11 @@ export const HEADLINE_STAT_MODELS = {
       "verifiedDeals = acquisitions.length in dataset.verified.json (via computeDisclosureStats).",
   },
   disclosedValue: {
-    module: HEADLINE_STATS_MODULE,
-    exportName: "formatDisclosedValueBillions",
+    module: "src/lib/data/lacunaDataset.ts",
+    exportName: "liveDisclosedStats",
     definition:
-      "Sum of dealValue (USD millions) on verified acquisitions with disclosed price, formatted as $B.",
+      "Women's-health completed disclosed-only sum (estimand: disclosed_only_observed_sum). " +
+      "Excludes adjacency scope and non-completed lifecycle rows. Not a market topline.",
   },
   uniqueSourceCitations: {
     module: HEADLINE_STATS_MODULE,
@@ -83,29 +99,52 @@ export function countUniqueSourceCitations(
 export function formatDisclosedValueBillions(
   disclosedValueMillions: number,
 ): string {
-  return `$${(disclosedValueMillions / 1000).toFixed(1)}B`;
+  return formatDisclosedBillions(disclosedValueMillions);
 }
 
 /**
  * Hub headline metrics derived from the verified dataset.
  * Shared by UI, `/api/dataset/summary`, and `scripts/compute-dataset-summary.ts`.
+ *
+ * Disclosed-value tile uses lacunaDataset's women's-health completed
+ * disclosed-only estimand — not the all-scope adjacency-inflated sum.
  */
 export function computeHeadlineStats(input: HeadlineStatsInput): HeadlineStats {
   const disclosure = computeDisclosureStats(input);
-  const disclosedValueMillions = input.acquisitions.reduce(
-    (sum, deal) => sum + (deal.dealValue ?? 0),
-    0,
-  );
+  const live = liveDisclosedStats({
+    provenance: {
+      lastUpdated: input.provenance.lastUpdated,
+      datasetVersion: input.provenance.datasetVersion,
+      sources: [],
+      notes: [],
+      purpose: "headline-stats",
+      disclaimer: "internal",
+    },
+    companies: input.companies as VerifiedDataset["companies"],
+    acquirers: input.acquirers as VerifiedDataset["acquirers"],
+    acquisitions: input.acquisitions as VerifiedDataset["acquisitions"],
+  });
+  const disclosedValueMillionsWh = live.womensHealth.disclosedOnlyTotalMillions;
 
   return {
     companiesInNetwork: disclosure.companiesTotal,
     acquirerCount: input.acquirers.length,
     networkNodeCount: disclosure.companiesTotal + input.acquirers.length,
     verifiedDeals: disclosure.dealsTotal,
-    disclosedValueMillions,
+    disclosedValueMillions: disclosedValueMillionsWh,
     disclosedValueBillionsLabel: formatDisclosedValueBillions(
-      disclosedValueMillions,
+      disclosedValueMillionsWh,
     ),
+    disclosedValueMillionsWh,
+    disclosedValueBillionsLabelWh: formatDisclosedValueBillions(
+      disclosedValueMillionsWh,
+    ),
+    adjacencyExcludedMillions: live.adjacencyExcludedMillions,
+    estimand: live.womensHealth.estimand,
+    estimandNote: live.womensHealth.estimandNote,
+    coverageRate: live.womensHealth.coverage.rate,
+    coverageDenominator: live.womensHealth.coverage.denominator,
+    coverageReferenceName: live.womensHealth.coverage.referenceName,
     uniqueSourceCitations: countUniqueSourceCitations(
       input.companies,
       input.acquisitions,
@@ -137,8 +176,8 @@ export function headlineStatsToTiles(
       model: HEADLINE_STAT_MODELS.verifiedDeals,
     },
     {
-      label: "In disclosed value",
-      value: stats.disclosedValueBillionsLabel,
+      label: "WH disclosed value (completed)",
+      value: stats.disclosedValueBillionsLabelWh,
       model: HEADLINE_STAT_MODELS.disclosedValue,
     },
     {
