@@ -51,9 +51,8 @@ export async function GET(request: Request) {
       headers: { "cache-control": "no-store" },
     });
   } catch (error) {
-    const message = error instanceof Error
-      ? error.message
-      : "Failed to list funding events";
+    console.error("funding/pending:", error);
+    const message = "Failed to list funding events";
     return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 }

@@ -7,6 +7,8 @@ interface ImportBody {
   csv?: string;
 }
 
+const MAX_CSV_CHARS = 2_000_000;
+
 /**
  * Import manual / press deal candidates from CSV into `lacuna_deals` staging.
  * Template: `staging/deals_candidates.template.csv`
@@ -33,6 +35,13 @@ export async function POST(request: Request) {
     );
   }
 
+  if (csv.length > MAX_CSV_CHARS) {
+    return NextResponse.json(
+      { ok: false, error: `csv exceeds ${MAX_CSV_CHARS} characters` },
+      { status: 413 },
+    );
+  }
+
   try {
     const result = await importCandidatesCsv(csv);
     await auditReviewRequest(request, {
@@ -52,9 +61,8 @@ export async function POST(request: Request) {
       errors: result.errors,
     });
   } catch (error) {
-    const message = error instanceof Error
-      ? error.message
-      : "CSV import failed";
+    console.error("deals/candidates/import:", error);
+    const message = "CSV import failed";
     return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 }

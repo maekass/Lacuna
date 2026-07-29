@@ -114,9 +114,8 @@ export async function POST(
       headers: { "cache-control": "no-store" },
     });
   } catch (error) {
-    const message = error instanceof Error
-      ? error.message
-      : "Failed to promote deal";
+    console.error("deals/pending/[dealId]/promote:", error);
+    const message = "Failed to promote deal";
     return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 }

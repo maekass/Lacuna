@@ -1,6 +1,7 @@
 import process from "node:process";
 import { NextResponse } from "next/server";
 import { writeAuditEvent } from "@/lib/compliance/auditEventSink";
+import { secureEquals } from "@/lib/infra/secureCompare";
 
 /**
  * HIPAA/GDPR governance for patient-linked genomic data (VCF call sets).
@@ -60,7 +61,7 @@ export function isPatientDataAuthorized(request: Request): boolean {
   const token = header.startsWith("Bearer ")
     ? header.slice("Bearer ".length).trim()
     : "";
-  return token.length > 0 && token === expected;
+  return secureEquals(token, expected);
 }
 
 function effectiveMode(request: Request): PatientDataAccessMode {

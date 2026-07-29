@@ -16,9 +16,8 @@ export async function GET() {
       },
     });
   } catch (error) {
-    const message = error instanceof Error
-      ? error.message
-      : "readiness check failed";
+    console.error("health/ready:", error);
+    const message = "readiness check failed";
     return NextResponse.json(
       {
         ok: false,

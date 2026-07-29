@@ -16,9 +16,8 @@ export async function GET() {
       headers: { "cache-control": "no-store" },
     });
   } catch (error) {
-    const message = error instanceof Error
-      ? error.message
-      : "Failed to load SEC ingest status";
+    console.error("cron/sec-ingest/status:", error);
+    const message = "Failed to load SEC ingest status";
     return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 }
