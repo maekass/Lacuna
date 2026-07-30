@@ -158,9 +158,8 @@ export async function POST(request: NextRequest) {
       modelId: result.modelId,
     });
   } catch (error) {
-    const message = error instanceof Error
-      ? error.message
-      : "Insight generation failed";
+    console.error("ai/insights:", error);
+    const message = "Insight generation failed";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

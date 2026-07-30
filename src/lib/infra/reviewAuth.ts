@@ -1,6 +1,7 @@
 import process from "node:process";
 import { NextResponse } from "next/server";
 import { isGitHubReviewOAuthConfigured } from "@/lib/infra/reviewGitHubOAuth";
+import { secureEquals } from "@/lib/infra/secureCompare";
 import {
   actorFromSession,
   LEGACY_REVIEW_TOKEN_COOKIE,
@@ -13,6 +14,13 @@ import {
 
 /** @deprecated Use REVIEW_SESSION_COOKIE — kept for one release of migration. */
 export const REVIEW_SESSION_COOKIE_LEGACY = LEGACY_REVIEW_TOKEN_COOKIE;
+
+/** Demo-only actor id used when the review console runs without sign-in. */
+export const PUBLIC_REVIEW_ACTOR_ID = "public:review";
+
+export function isPublicReviewUiEnabled(): boolean {
+  return process.env.LACUNA_REVIEW_UI_PUBLIC === "true";
+}
 
 function reviewSecrets(): string[] {
   const reviewKey = process.env.LACUNA_REVIEW_API_KEY?.trim();
@@ -30,7 +38,7 @@ export function isReviewTokenAuthorized(
   token: string | null | undefined,
 ): boolean {
   if (!token) return false;
-  return reviewSecrets().some((secret) => secret === token);
+  return reviewSecrets().some((secret) => secureEquals(secret, token));
 }
 
 /** Parse legacy review session cookie (raw API key). */
@@ -50,8 +58,12 @@ export function getReviewActor(request: Request): ReviewActor | null {
     return { id: "dev:local", method: "dev", label: "Local dev" };
   }
 
-  if (process.env.LACUNA_REVIEW_UI_PUBLIC === "true") {
-    return { id: "public:review", method: "dev", label: "Public review UI" };
+  if (isPublicReviewUiEnabled()) {
+    return {
+      id: PUBLIC_REVIEW_ACTOR_ID,
+      method: "dev",
+      label: "Public review UI",
+    };
   }
 
   const session = parseSessionFromCookie(request.headers.get("cookie"));
@@ -97,7 +109,7 @@ export function isDealReviewAuthorized(request: Request): boolean {
 /** Whether review API env is configured for production. */
 export function isDealReviewAuthConfigured(): boolean {
   return Boolean(
-    process.env.LACUNA_REVIEW_UI_PUBLIC === "true" ||
+    isPublicReviewUiEnabled() ||
       process.env.LACUNA_REVIEW_API_KEY?.trim() ||
       process.env.CRON_SECRET?.trim() ||
       isGitHubReviewOAuthConfigured(),

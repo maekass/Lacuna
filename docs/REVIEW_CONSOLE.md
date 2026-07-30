@@ -5,12 +5,12 @@ funding panels.
 
 ## Auth models
 
-| Mode                         | When                       | How                                                                     |
-| ---------------------------- | -------------------------- | ----------------------------------------------------------------------- |
-| **Local dev**                | `NODE_ENV !== production`  | Review APIs open (no sign-in)                                           |
-| **GitHub OAuth** (preferred) | Production + OAuth env set | Allowlisted GitHub logins → signed session cookie                       |
-| **API key**                  | Production fallback / CLI  | `LACUNA_REVIEW_API_KEY` or `CRON_SECRET` via Bearer or POST session     |
-| **Public review UI**         | Demo only                  | `LACUNA_REVIEW_UI_PUBLIC=true` — disables auth (not for real reviewers) |
+| Mode                         | When                       | How                                                                 |
+| ---------------------------- | -------------------------- | ------------------------------------------------------------------- |
+| **Local dev**                | `NODE_ENV !== production`  | Review APIs open (no sign-in)                                       |
+| **GitHub OAuth** (preferred) | Production + OAuth env set | Allowlisted GitHub logins → signed session cookie                   |
+| **API key**                  | Production fallback / CLI  | `LACUNA_REVIEW_API_KEY` or `CRON_SECRET` via Bearer or POST session |
+| **Public review UI**         | Demo only                  | `LACUNA_REVIEW_UI_PUBLIC=true` — read-only browsing, no sign-in     |
 
 Signed session cookie: `lacuna_review_session` (httpOnly, 12h). Legacy
 `lacuna_review_token` (raw key) is cleared on sign-in.
@@ -27,7 +27,7 @@ Signed session cookie: `lacuna_review_session` (httpOnly, 12h). Legacy
 | `LACUNA_REVIEW_SESSION_SECRET`     | Recommended        | HMAC session signing (falls back to `CRON_SECRET`)   |
 | `LACUNA_REVIEW_API_KEY`            | Fallback           | API key for automation / emergency unlock            |
 | `CRON_SECRET`                      | Optional           | Also accepted as API key + session secret fallback   |
-| `LACUNA_REVIEW_UI_PUBLIC`          | Never in prod      | Bypass auth (demo only)                              |
+| `LACUNA_REVIEW_UI_PUBLIC`          | Never in prod      | Read-only demo access (writes still return 403)      |
 
 ### GitHub OAuth app setup
 

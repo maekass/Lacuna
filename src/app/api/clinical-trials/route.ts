@@ -6,6 +6,9 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { clampInt } from "@/lib/api/pageParams";
+import { guardedUpstreamFetch } from "@/lib/api/guardedFetch";
+import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
+import { fetchWithTimeout } from "@/lib/api/fetchWithTimeout";
 import {
   CTG_API_BASE,
   CTG_STUDY_FIELDS,
@@ -15,6 +18,7 @@ import {
 const DEFAULT_TRIAL_LIMIT = 10;
 const MAX_TRIAL_LIMIT = 100;
 const MAX_BATCH_NCT_IDS = 25;
+const NCT_ID_PATTERN = /^NCT\d{1,10}$/i;
 
 // ClinicalTrials.gov API types
 interface CTGStudy {
@@ -95,10 +99,12 @@ export async function GET(request: NextRequest) {
     params.append("sort", "LastUpdatePostDate:desc");
     params.append("fields", CTG_STUDY_FIELDS);
 
-    const response = await fetch(
+    const response = await guardedUpstreamFetch(
       `${CTG_API_BASE}/studies?${params.toString()}`,
       { headers: ctgFetchHeaders() },
+      { request, rateLimitKey: "clinicalTrials", limit: 40, windowMs: 60_000 },
     );
+    if (response instanceof NextResponse) return response;
 
     if (!response.ok) {
       throw new Error(`ClinicalTrials.gov API error: ${response.status}`);
@@ -165,6 +171,18 @@ export async function GET(request: NextRequest) {
 
 // POST endpoint for batch trial lookup
 export async function POST(request: NextRequest) {
+  const bucket = await rateLimit({
+    key: `clinicalTrialsBatch:${getClientIp(request)}`,
+    limit: 20,
+    windowMs: 60_000,
+  });
+  if (!bucket.ok) {
+    return NextResponse.json(
+      { error: "Rate limited", retryAt: bucket.resetAtMs },
+      { status: 429 },
+    );
+  }
+
   try {
     const body = await request.json();
     const { nctIds } = body;
@@ -183,12 +201,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (
+      !nctIds.every((id) => typeof id === "string" && NCT_ID_PATTERN.test(id))
+    ) {
+      return NextResponse.json(
+        { error: "nctIds must be NCT identifiers (e.g. NCT01234567)" },
+        { status: 400 },
+      );
+    }
+
     // Fetch multiple trials in parallel
     const trials = await Promise.all(
-      nctIds.map(async (nctId) => {
+      nctIds.map(async (nctId: string) => {
         try {
-          const response = await fetch(
-            `${CTG_API_BASE}/studies/${nctId}`,
+          const response = await fetchWithTimeout(
+            `${CTG_API_BASE}/studies/${encodeURIComponent(nctId)}`,
             { headers: ctgFetchHeaders() },
           );
 
