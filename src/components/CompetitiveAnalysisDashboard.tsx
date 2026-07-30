@@ -20,6 +20,13 @@ import {
 } from "@/lib/competitive/acquirerAnalysis";
 import { getVerifiedCompetitiveAnalysisData } from "@/lib/data/verifiedDatasetAdapters";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import {
+  DISPLAY_FONT,
+  displayFont,
+  LABEL_FONT,
+  labelFont,
+} from "@/lib/theme/typography";
+import AnalysisPanelHeader from "@/components/ui/AnalysisPanelHeader";
 
 export default function CompetitiveAnalysisDashboard() {
   const dataset = useVerifiedDataset();
@@ -93,7 +100,7 @@ export default function CompetitiveAnalysisDashboard() {
           <div>
             <h2
               className="font-medium text-amber-900 text-lg"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Descriptive Analysis Only
             </h2>
@@ -108,27 +115,10 @@ export default function CompetitiveAnalysisDashboard() {
       </div>
 
       {/* Header */}
-      <div className="border-b border-lacuna-border pb-4">
-        <h3
-          className="text-2xl font-light tracking-tight"
-          style={{
-            fontFamily: "'Bodoni MT', Didot, serif",
-            textTransform: "uppercase",
-          }}
-        >
-          Competitive Analysis Framework
-        </h3>
-        <p
-          className="text-sm tracking-widest text-lacuna-text-muted mt-1"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
-        >
-          Acquirer Portfolio | Deal Velocity | Market Structure | Type
-          Comparison
-        </p>
-      </div>
+      <AnalysisPanelHeader
+        title="Competitive Analysis Framework"
+        subtitle="Acquirer Portfolio | Deal Velocity | Market Structure | Type Comparison"
+      />
 
       {/* Tab Navigation */}
       <div className="border-b border-lacuna-border">
@@ -148,7 +138,7 @@ export default function CompetitiveAnalysisDashboard() {
                   : "border-transparent text-lacuna-text-muted hover:text-lacuna-text-primary"
               }`}
               style={{
-                fontFamily: "'Arial Narrow', sans-serif",
+                fontFamily: LABEL_FONT,
                 textTransform: "uppercase",
                 letterSpacing: "0.05em",
               }}
@@ -177,7 +167,7 @@ export default function CompetitiveAnalysisDashboard() {
                     ? "bg-[#5D4E6D] text-white"
                     : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-subtle"
                 }`}
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 {p.acquirerName} ({p.totalAcquisitions})
               </button>
@@ -190,7 +180,7 @@ export default function CompetitiveAnalysisDashboard() {
               <div className="bg-white border border-lacuna-border rounded-lg p-6">
                 <h4
                   className="font-medium mb-3"
-                  style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+                  style={displayFont}
                 >
                   {selectedPortfolio.acquirerName} Portfolio Overview
                 </h4>
@@ -199,7 +189,7 @@ export default function CompetitiveAnalysisDashboard() {
                     <div
                       className="text-2xl font-light"
                       style={{
-                        fontFamily: "'Bodoni MT', Didot, serif",
+                        fontFamily: DISPLAY_FONT,
                         color: "#5D4E6D",
                       }}
                     >
@@ -207,7 +197,7 @@ export default function CompetitiveAnalysisDashboard() {
                     </div>
                     <div
                       className="text-xs text-lacuna-text-muted uppercase mt-1"
-                      style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                      style={labelFont}
                     >
                       Acquisitions
                     </div>
@@ -216,7 +206,7 @@ export default function CompetitiveAnalysisDashboard() {
                     <div
                       className="text-2xl font-light"
                       style={{
-                        fontFamily: "'Bodoni MT', Didot, serif",
+                        fontFamily: DISPLAY_FONT,
                         color: "#4A5D8A",
                       }}
                     >
@@ -224,7 +214,7 @@ export default function CompetitiveAnalysisDashboard() {
                     </div>
                     <div
                       className="text-xs text-lacuna-text-muted uppercase mt-1"
-                      style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                      style={labelFont}
                     >
                       Median Deal Value
                     </div>
@@ -233,7 +223,7 @@ export default function CompetitiveAnalysisDashboard() {
                     <div
                       className="text-2xl font-light"
                       style={{
-                        fontFamily: "'Bodoni MT', Didot, serif",
+                        fontFamily: DISPLAY_FONT,
                         color: "#E8B4B8",
                       }}
                     >
@@ -241,7 +231,7 @@ export default function CompetitiveAnalysisDashboard() {
                     </div>
                     <div
                       className="text-xs text-lacuna-text-muted uppercase mt-1"
-                      style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                      style={labelFont}
                     >
                       Median Target Age
                     </div>
@@ -250,7 +240,7 @@ export default function CompetitiveAnalysisDashboard() {
                     <div
                       className="text-2xl font-light"
                       style={{
-                        fontFamily: "'Bodoni MT', Didot, serif",
+                        fontFamily: DISPLAY_FONT,
                         color: "#B8A9C9",
                       }}
                     >
@@ -258,7 +248,7 @@ export default function CompetitiveAnalysisDashboard() {
                     </div>
                     <div
                       className="text-xs text-lacuna-text-muted uppercase mt-1"
-                      style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                      style={labelFont}
                     >
                       Unique Sectors
                     </div>
@@ -269,7 +259,7 @@ export default function CompetitiveAnalysisDashboard() {
                 <div className="mb-4">
                   <h5
                     className="text-sm font-medium mb-2"
-                    style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                    style={labelFont}
                   >
                     Sector Composition
                   </h5>
@@ -297,7 +287,7 @@ export default function CompetitiveAnalysisDashboard() {
                 <div className="mb-4">
                   <h5
                     className="text-sm font-medium mb-2"
-                    style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                    style={labelFont}
                   >
                     Stage Composition
                   </h5>
@@ -352,7 +342,7 @@ export default function CompetitiveAnalysisDashboard() {
                     ? "bg-[#5D4E6D] text-white"
                     : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-subtle"
                 }`}
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 {v.acquirerName}
               </button>
@@ -363,7 +353,7 @@ export default function CompetitiveAnalysisDashboard() {
             <div className="bg-white border border-lacuna-border rounded-lg p-6">
               <h4
                 className="font-medium mb-3"
-                style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+                style={displayFont}
               >
                 {selectedVelocity.acquirerName} Deal Velocity
               </h4>
@@ -378,14 +368,14 @@ export default function CompetitiveAnalysisDashboard() {
                     >
                       <div
                         className="text-xs text-lacuna-text-muted uppercase"
-                        style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                        style={labelFont}
                       >
                         {p.period} ({p.yearRange[0]}-{p.yearRange[1]})
                       </div>
                       <div
                         className="text-2xl font-light mt-1"
                         style={{
-                          fontFamily: "'Bodoni MT', Didot, serif",
+                          fontFamily: DISPLAY_FONT,
                           color: "#5D4E6D",
                         }}
                       >
@@ -403,7 +393,7 @@ export default function CompetitiveAnalysisDashboard() {
               <div className="mb-4">
                 <h5
                   className="text-xs uppercase text-lacuna-text-muted mb-2"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   Acquisitions Per Year
                 </h5>
@@ -443,7 +433,7 @@ export default function CompetitiveAnalysisDashboard() {
                 <div className="mb-4">
                   <h5
                     className="text-sm font-medium mb-2"
-                    style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                    style={labelFont}
                   >
                     External Events (Context)
                   </h5>
@@ -518,7 +508,7 @@ export default function CompetitiveAnalysisDashboard() {
           <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-3"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Sector Contestability
             </h4>
@@ -563,7 +553,7 @@ export default function CompetitiveAnalysisDashboard() {
           <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-3"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Most Contestable Targets
             </h4>
@@ -612,7 +602,7 @@ export default function CompetitiveAnalysisDashboard() {
           <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-3"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Acquirer Type Comparison
             </h4>
@@ -625,7 +615,7 @@ export default function CompetitiveAnalysisDashboard() {
               <thead>
                 <tr
                   className="text-xs text-lacuna-text-muted uppercase border-b border-lacuna-border"
-                  style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                  style={labelFont}
                 >
                   <th className="text-left py-2">Type</th>
                   <th className="text-right py-2">Acquirers</th>
@@ -723,7 +713,7 @@ export default function CompetitiveAnalysisDashboard() {
         <h4
           className="font-medium mb-3"
           style={{
-            fontFamily: "'Arial Narrow', sans-serif",
+            fontFamily: LABEL_FONT,
             textTransform: "uppercase",
             letterSpacing: "0.1em",
           }}

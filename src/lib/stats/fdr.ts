@@ -8,6 +8,8 @@
  *   Holm (1979). Scand J Stat 6(2):65–70. (step-down Bonferroni)
  */
 
+import { logBeta } from "@/lib/stats/specialFunctions";
+
 export interface PValuedTest {
   label: string;
   pValue: number;
@@ -154,30 +156,6 @@ function betaCF(a: number, b: number, x: number): number {
     if (Math.abs(del - 1) < eps) break;
   }
   return h;
-}
-
-function logBeta(a: number, b: number) {
-  return logGamma(a) + logGamma(b) - logGamma(a + b);
-}
-function logGamma(z: number): number {
-  const c = [
-    76.18009172947146,
-    -86.50532032941677,
-    24.01409824083091,
-    -1.231739572450155,
-    1.208650973866179e-3,
-    -5.395239384953e-6,
-  ];
-  const x = z;
-  let y = z;
-  let tmp = x + 5.5;
-  tmp -= (x + 0.5) * Math.log(tmp);
-  let ser = 1.000000000190015;
-  for (const ci of c) {
-    y++;
-    ser += ci / y;
-  }
-  return -tmp + Math.log(2.5066282746310005 * ser / x);
 }
 
 /**

@@ -19,6 +19,13 @@ import {
   UNMEASURABLE_FACTORS,
 } from "@/lib/impact/oaisCalculator";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import {
+  displayFont,
+  LABEL_FONT,
+  labelFont,
+  labelFontUppercase,
+} from "@/lib/theme/typography";
+import AnalysisPanelHeader from "@/components/ui/AnalysisPanelHeader";
 
 interface CompanyProfile {
   name: string;
@@ -151,17 +158,7 @@ export default function ImpactOpportunityCard() {
     return (
       <div className="space-y-4">
         <CuratedDatasetBanner />
-        <div className="border-b border-lacuna-border pb-4">
-          <h3
-            className="text-2xl font-light tracking-tight"
-            style={{
-              fontFamily: "'Bodoni MT', Didot, serif",
-              textTransform: "uppercase",
-            }}
-          >
-            Opportunity-Adjusted Impact Score (OAIS)
-          </h3>
-        </div>
+        <AnalysisPanelHeader title="Opportunity-Adjusted Impact Score (OAIS)" />
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-900">
           OAIS requires cited epidemiology and market penetration data for the
           company&apos;s sector.
@@ -209,26 +206,10 @@ export default function ImpactOpportunityCard() {
     >
       <CuratedDatasetBanner />
       {/* Header */}
-      <div className="border-b border-lacuna-border pb-4">
-        <h3
-          className="text-2xl font-light tracking-tight"
-          style={{
-            fontFamily: "'Bodoni MT', Didot, serif",
-            textTransform: "uppercase",
-          }}
-        >
-          Opportunity-Adjusted Impact Score (OAIS)
-        </h3>
-        <p
-          className="text-sm tracking-widest text-lacuna-text-muted mt-1"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
-        >
-          Defensible Health Impact Assessment | Honest About What We Can Measure
-        </p>
-      </div>
+      <AnalysisPanelHeader
+        title="Opportunity-Adjusted Impact Score (OAIS)"
+        subtitle="Defensible Health Impact Assessment | Honest About What We Can Measure"
+      />
 
       {/* Company Selector */}
       <div className="flex flex-wrap gap-2">
@@ -241,7 +222,7 @@ export default function ImpactOpportunityCard() {
                 ? "bg-[#5D4E6D] text-white"
                 : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-subtle"
             }`}
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+            style={labelFont}
           >
             {c.name}
           </button>
@@ -254,7 +235,7 @@ export default function ImpactOpportunityCard() {
           <div>
             <h4
               className="font-medium text-lg"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               {company.name}
             </h4>
@@ -306,7 +287,7 @@ export default function ImpactOpportunityCard() {
             <div className="absolute inset-0 flex items-center justify-center">
               <span
                 className="text-3xl font-light"
-                style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+                style={displayFont}
               >
                 {oais.score.toFixed(1)}
               </span>
@@ -315,10 +296,7 @@ export default function ImpactOpportunityCard() {
           <div>
             <p
               className="font-medium"
-              style={{
-                fontFamily: "'Arial Narrow', sans-serif",
-                textTransform: "uppercase",
-              }}
+              style={labelFontUppercase}
             >
               {getScoreInterpretation(oais.score)}
             </p>
@@ -333,13 +311,13 @@ export default function ImpactOpportunityCard() {
           <div className="bg-lacuna-surface-muted p-3 rounded-lg">
             <div
               className="text-xs text-lacuna-text-muted uppercase"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               Addressable Population
             </div>
             <div
               className="text-lg font-light mt-1"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               {oais.components.addressablePopScore}M
             </div>
@@ -349,13 +327,13 @@ export default function ImpactOpportunityCard() {
           <div className="bg-lacuna-surface-muted p-3 rounded-lg">
             <div
               className="text-xs text-lacuna-text-muted uppercase"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               Penetration Gap
             </div>
             <div
               className="text-lg font-light mt-1"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               {(oais.components.penetrationGapScore * 100).toFixed(0)}%
             </div>
@@ -365,13 +343,13 @@ export default function ImpactOpportunityCard() {
           <div className="bg-lacuna-surface-muted p-3 rounded-lg">
             <div
               className="text-xs text-lacuna-text-muted uppercase"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               Stage Credibility
             </div>
             <div
               className="text-lg font-light mt-1"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               {(oais.components.stageCredibilityScore * 100).toFixed(0)}%
             </div>
@@ -381,13 +359,13 @@ export default function ImpactOpportunityCard() {
           <div className="bg-lacuna-surface-muted p-3 rounded-lg">
             <div
               className="text-xs text-lacuna-text-muted uppercase"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               Founder Quality
             </div>
             <div
               className="text-lg font-light mt-1"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               {(oais.components.founderQualityScore * 100).toFixed(0)}%
             </div>
@@ -397,13 +375,13 @@ export default function ImpactOpportunityCard() {
           <div className="bg-lacuna-surface-muted p-3 rounded-lg">
             <div
               className="text-xs text-lacuna-text-muted uppercase"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               Scaling Likely
             </div>
             <div
               className="text-lg font-light mt-1"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               {oais.components.scalingLikelihoodScore.toFixed(1)}×
             </div>
@@ -413,13 +391,13 @@ export default function ImpactOpportunityCard() {
           <div className="bg-lacuna-surface-muted p-3 rounded-lg">
             <div
               className="text-xs text-lacuna-text-muted uppercase"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               Saturation Penalty
             </div>
             <div
               className="text-lg font-light mt-1"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               -{(oais.components.marketSaturationPenalty * 100).toFixed(0)}%
             </div>
@@ -432,10 +410,7 @@ export default function ImpactOpportunityCard() {
       <div className="bg-green-50 border border-green-200 rounded-lg p-6">
         <h4
           className="font-medium text-green-800 mb-4"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
+          style={labelFontUppercase}
         >
           ✓ What We CAN Reliably Measure (Tier 1)
         </h4>
@@ -488,10 +463,7 @@ export default function ImpactOpportunityCard() {
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
         <h4
           className="font-medium text-yellow-800 mb-4"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
+          style={labelFontUppercase}
         >
           ~ What We CAN Proxy (Tier 2 - Medium Confidence)
         </h4>
@@ -557,7 +529,7 @@ export default function ImpactOpportunityCard() {
           <span
             className="font-medium"
             style={{
-              fontFamily: "'Arial Narrow', sans-serif",
+              fontFamily: LABEL_FONT,
               textTransform: "uppercase",
               letterSpacing: "0.1em",
             }}
@@ -576,7 +548,7 @@ export default function ImpactOpportunityCard() {
             <div className="bg-white p-4 rounded border border-lacuna-border">
               <h5
                 className="font-medium mb-3"
-                style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+                style={displayFont}
               >
                 Critical Transparency Statements
               </h5>
@@ -614,7 +586,7 @@ export default function ImpactOpportunityCard() {
               <h5
                 className="font-medium mt-5 mb-2 text-sm text-lacuna-text-secondary"
                 style={{
-                  fontFamily: "'Arial Narrow', sans-serif",
+                  fontFamily: LABEL_FONT,
                   textTransform: "uppercase",
                   letterSpacing: "0.05em",
                 }}
@@ -653,7 +625,7 @@ export default function ImpactOpportunityCard() {
         <h4
           className="font-medium mb-3"
           style={{
-            fontFamily: "'Arial Narrow', sans-serif",
+            fontFamily: LABEL_FONT,
             textTransform: "uppercase",
             letterSpacing: "0.1em",
           }}

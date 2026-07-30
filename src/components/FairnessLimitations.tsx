@@ -14,6 +14,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { cohenH, powerAnalysis } from "@/lib/fairness/statisticalMethods";
+import {
+  displayFont,
+  displayFontUppercase,
+  LABEL_FONT,
+  labelFont,
+  labelFontUppercase,
+} from "@/lib/theme/typography";
 
 interface FairnessLimitationsProps {
   sampleSize: number;
@@ -85,19 +92,13 @@ export default function FairnessLimitations({
       <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
         <h3
           className="text-xl font-light tracking-tight text-red-800"
-          style={{
-            fontFamily: "'Bodoni MT', Didot, serif",
-            textTransform: "uppercase",
-          }}
+          style={displayFontUppercase}
         >
           What This Audit CANNOT Tell You
         </h3>
         <p
           className="text-xs tracking-widest text-red-600 mt-1"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
+          style={labelFontUppercase}
         >
           Explicit Acknowledgment of Methodological Limitations
         </p>
@@ -118,7 +119,7 @@ export default function FairnessLimitations({
             <span className="text-red-500">✗</span>
             <span
               className="font-medium text-red-800"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               Heterogeneous Treatment Effects
             </span>
@@ -143,7 +144,7 @@ export default function FairnessLimitations({
             <span className="text-red-500">✗</span>
             <span
               className="font-medium text-red-800"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               All Three Fairness Metrics
             </span>
@@ -169,7 +170,7 @@ export default function FairnessLimitations({
             <span className="text-red-500">✗</span>
             <span
               className="font-medium text-red-800"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               Selection Bias Correction
             </span>
@@ -192,7 +193,7 @@ export default function FairnessLimitations({
             <span className="text-red-500">✗</span>
             <span
               className="font-medium text-red-800"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               Causal Discrimination Claims
             </span>
@@ -212,7 +213,7 @@ export default function FairnessLimitations({
         >
           <h4
             className="font-medium mb-4"
-            style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+            style={displayFont}
           >
             Statistical Power Analysis
           </h4>
@@ -225,7 +226,7 @@ export default function FairnessLimitations({
             <thead>
               <tr
                 className="text-xs text-lacuna-text-muted uppercase border-b border-lacuna-border"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 <th className="text-left py-2">Effect Size (Δ)</th>
                 <th className="text-left py-2">Cohen&apos;s h</th>
@@ -298,7 +299,7 @@ export default function FairnessLimitations({
         >
           <h4
             className="font-medium mb-4"
-            style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+            style={displayFont}
           >
             Mathematical Incompatibility of Fairness Metrics
           </h4>
@@ -351,7 +352,7 @@ export default function FairnessLimitations({
         >
           <h4
             className="font-medium mb-4"
-            style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+            style={displayFont}
           >
             Selection Bias in Our Dataset
           </h4>
@@ -423,7 +424,7 @@ export default function FairnessLimitations({
         >
           <h4
             className="font-medium mb-4"
-            style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+            style={displayFont}
           >
             Descriptive vs Causal: Critical Distinction
           </h4>
@@ -483,7 +484,7 @@ export default function FairnessLimitations({
         <h4
           className="font-medium text-red-900 mb-3"
           style={{
-            fontFamily: "'Arial Narrow', sans-serif",
+            fontFamily: LABEL_FONT,
             textTransform: "uppercase",
             letterSpacing: "0.1em",
           }}
