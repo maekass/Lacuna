@@ -72,7 +72,8 @@
     "build-storybook": "storybook build",
     "test:e2e": "playwright test",
     "test:e2e:smoke": "playwright test e2e/deploy-smoke.spec.ts",
-    "eval:llm": "tsx scripts/eval-llm.ts"
+    "eval:llm": "tsx scripts/eval-llm.ts",
+    "ai:models:sync": "tsx scripts/sync-ai-models.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.67",

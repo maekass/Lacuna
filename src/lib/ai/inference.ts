@@ -15,6 +15,7 @@ import {
 } from "ai";
 import { openai } from "@ai-sdk/openai";
 import type { z } from "zod";
+import { getModelPricing, type ModelPricing } from "@/lib/ai/modelCatalog";
 
 /** Gateway slug for optional UI insight narratives. */
 export const INSIGHTS_GATEWAY_MODEL = "anthropic/claude-sonnet-4" as const;
@@ -186,28 +187,26 @@ function retryDelayMs(attempt: number, baseMs: number): number {
   return exp + jitter;
 }
 
-/** Rough USD estimate — illustrative only, not billing truth. */
+/** Applied when a model is absent from the synced catalog. */
+export const FALLBACK_MODEL_PRICING: ModelPricing = {
+  inputPerMillionTokens: 0.5,
+  outputPerMillionTokens: 1.5,
+};
+
+/**
+ * Rough USD estimate — illustrative only, not billing truth. Prices come from
+ * the gateway snapshot refreshed by `npm run ai:models:sync`, so they track
+ * provider changes instead of drifting.
+ */
 export function estimateLlmCostUsd(
   modelId: string,
   inputTokens: number,
   outputTokens: number,
 ): number {
-  const id = modelId.toLowerCase();
-  let inputPerM = 0.5;
-  let outputPerM = 1.5;
-  if (id.includes("gpt-4o-mini") || id.includes("gpt-5.4-mini")) {
-    inputPerM = 0.15;
-    outputPerM = 0.6;
-  } else if (id.includes("claude-sonnet")) {
-    inputPerM = 3;
-    outputPerM = 15;
-  } else if (id.includes("grok")) {
-    inputPerM = 2;
-    outputPerM = 10;
-  } else if (id === "mock") {
-    return 0;
-  }
-  return (inputTokens / 1e6) * inputPerM + (outputTokens / 1e6) * outputPerM;
+  if (modelId.toLowerCase() === "mock") return 0;
+  const pricing = getModelPricing(modelId) ?? FALLBACK_MODEL_PRICING;
+  return (inputTokens / 1e6) * pricing.inputPerMillionTokens +
+    (outputTokens / 1e6) * pricing.outputPerMillionTokens;
 }
 
 function recordLlmAccounting(accounting: LlmUsageAccounting): void {
