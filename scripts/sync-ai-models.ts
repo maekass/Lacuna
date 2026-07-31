@@ -7,14 +7,19 @@
  * Usage: npm run ai:models:sync
  * Auth is optional — the directory endpoint answers unauthenticated; the key is
  * used when present so the request is attributed to the team.
+ *
+ * The snapshot is rewritten only when model metadata actually changed, so
+ * `fetchedAt` does not churn the file (and the daily workflow) every run.
  */
 
-import { writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import process from "node:process";
 import { z } from "zod";
 import {
   type CatalogModel,
+  type ModelCatalogSnapshot,
+  modelCatalogSnapshotSchema,
   type ModelPricing,
   TRACKED_MODEL_IDS,
 } from "../src/lib/ai/modelCatalog";
@@ -84,6 +89,14 @@ async function fetchGatewayModels(): Promise<GatewayModel[]> {
   return gatewayResponseSchema.parse(await res.json()).data;
 }
 
+function readExistingSnapshot(): ModelCatalogSnapshot | null {
+  if (!existsSync(OUT_PATH)) return null;
+  const parsed = modelCatalogSnapshotSchema.safeParse(
+    JSON.parse(readFileSync(OUT_PATH, "utf8")),
+  );
+  return parsed.success ? parsed.data : null;
+}
+
 async function main() {
   const gatewayModels = await fetchGatewayModels();
   const byId = new Map(gatewayModels.map((model) => [model.id, model]));
@@ -96,12 +109,12 @@ async function main() {
       missing.push(id);
       continue;
     }
-    models.push(toCatalogModel(model));
-    const pricing = toPricing(model);
+    const catalogModel = toCatalogModel(model);
+    models.push(catalogModel);
     console.log(
-      `[ok] ${id} · knowledge=${model.knowledge ?? "n/a"} · in=$${
-        pricing?.inputPerMillionTokens ?? "n/a"
-      }/M out=$${pricing?.outputPerMillionTokens ?? "n/a"}/M`,
+      `[ok] ${id} · knowledge=${catalogModel.knowledgeCutoff ?? "n/a"} · in=$${
+        catalogModel.pricing?.inputPerMillionTokens ?? "n/a"
+      }/M out=$${catalogModel.pricing?.outputPerMillionTokens ?? "n/a"}/M`,
     );
   }
 
@@ -115,7 +128,18 @@ async function main() {
     return;
   }
 
-  const snapshot = {
+  const previous = readExistingSnapshot();
+  if (
+    previous?.source === MODELS_ENDPOINT &&
+    JSON.stringify(previous.models) === JSON.stringify(models)
+  ) {
+    console.log(
+      `Model metadata unchanged since ${previous.fetchedAt}; snapshot left as is.`,
+    );
+    return;
+  }
+
+  const snapshot: ModelCatalogSnapshot = {
     fetchedAt: new Date().toISOString(),
     source: MODELS_ENDPOINT,
     models,

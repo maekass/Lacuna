@@ -6,33 +6,38 @@
  * Refresh snapshot: `npm run ai:models:sync` (daily via `.github/workflows/ai-models-sync.yml`)
  */
 
+import { z } from "zod";
 import snapshot from "@/data/ai-models.snapshot.json";
 
-export interface ModelPricing {
+export const modelPricingSchema = z.object({
   /** USD per 1M input tokens. */
-  inputPerMillionTokens: number;
+  inputPerMillionTokens: z.number().positive(),
   /** USD per 1M output tokens. */
-  outputPerMillionTokens: number;
+  outputPerMillionTokens: z.number().positive(),
   /** USD per 1M cached input tokens, when the provider publishes one. */
-  cachedInputPerMillionTokens?: number;
-}
+  cachedInputPerMillionTokens: z.number().nonnegative().optional(),
+});
 
-export interface CatalogModel {
-  id: string;
-  name: string;
+export const catalogModelSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
   /** Provider-declared training knowledge cutoff (ISO date), when published. */
-  knowledgeCutoff: string | null;
-  contextWindow: number | null;
-  maxOutputTokens: number | null;
-  pricing: ModelPricing | null;
-}
+  knowledgeCutoff: z.string().nullable(),
+  contextWindow: z.number().positive().nullable(),
+  maxOutputTokens: z.number().positive().nullable(),
+  pricing: modelPricingSchema.nullable(),
+});
 
-export interface ModelCatalogSnapshot {
-  /** ISO timestamp of the last successful sync. */
-  fetchedAt: string;
-  source: string;
-  models: CatalogModel[];
-}
+export const modelCatalogSnapshotSchema = z.object({
+  /** ISO timestamp of the last sync that changed model metadata. */
+  fetchedAt: z.iso.datetime(),
+  source: z.url(),
+  models: z.array(catalogModelSchema).nonempty(),
+});
+
+export type ModelPricing = z.infer<typeof modelPricingSchema>;
+export type CatalogModel = z.infer<typeof catalogModelSchema>;
+export type ModelCatalogSnapshot = z.infer<typeof modelCatalogSnapshotSchema>;
 
 /**
  * Gateway slugs whose metadata the sync script tracks. Kept as literals so the
@@ -48,7 +53,8 @@ export const TRACKED_MODEL_IDS = [
   "xai/grok-4.5",
 ] as const;
 
-const catalog = snapshot as ModelCatalogSnapshot;
+/** Parsed rather than cast: a truncated or malformed snapshot fails loudly. */
+const catalog = modelCatalogSnapshotSchema.parse(snapshot);
 
 /** ISO timestamp of the snapshot currently compiled into the app. */
 export const MODEL_CATALOG_FETCHED_AT = catalog.fetchedAt;

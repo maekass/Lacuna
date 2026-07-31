@@ -5,6 +5,7 @@ import {
   getModelPricing,
   listCatalogModels,
   MODEL_CATALOG_FETCHED_AT,
+  modelCatalogSnapshotSchema,
   TRACKED_MODEL_IDS,
 } from "@/lib/ai/modelCatalog";
 import {
@@ -59,6 +60,16 @@ describe("model catalog snapshot", () => {
 
   it("returns null for models outside the snapshot", () => {
     expect(getModelPricing("acme/not-a-model")).toBeNull();
+  });
+
+  it("rejects a malformed snapshot instead of casting it", () => {
+    expect(
+      modelCatalogSnapshotSchema.safeParse({
+        fetchedAt: "2026-07-30T20:47:19.176Z",
+        source: "https://ai-gateway.vercel.sh/v1/models",
+        models: [{ id: "openai/gpt-4o-mini" }],
+      }).success,
+    ).toBe(false);
   });
 });
 
