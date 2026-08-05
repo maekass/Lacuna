@@ -128,5 +128,8 @@
     "tsx": "^4.20.3",
     "typescript": "^5",
     "vitest": "^3.2.7"
+  },
+  "overrides": {
+    "form-data": "^4.0.6"
   }
 }
