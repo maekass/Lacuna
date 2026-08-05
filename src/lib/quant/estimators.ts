@@ -5,7 +5,6 @@
 
 import { mean, quantile } from "simple-statistics";
 import { bcaBootstrap } from "@/lib/stats/bca";
-import { createSeededRng } from "@/lib/stats/random";
 import type { InsufficientData, QuantValue, Sufficient } from "./types";
 
 export const MIN_SECTOR_SAMPLE = 5;
@@ -38,8 +37,6 @@ export function heckmanSelectionCaveat(
 export function numericOrNull(value: QuantValue<number>): number | null {
   return isSufficient(value) ? value.value : null;
 }
-
-export { createSeededRng };
 
 function insufficient(
   partial: Omit<InsufficientData, "kind">,
@@ -232,17 +229,33 @@ export function weightedConsensus(
     (s, e) => s + (e.value as Sufficient<number>).value * e.weight,
     0,
   ) / totalWeight;
-
-  const lo = valid.reduce(
-    (s, e) =>
-      s + (e.value as Sufficient<number>).confidenceInterval[0] * e.weight,
-    0,
-  ) / totalWeight;
-  const hi = valid.reduce(
-    (s, e) =>
-      s + (e.value as Sufficient<number>).confidenceInterval[1] * e.weight,
-    0,
-  ) / totalWeight;
+  const z95 = 1.96;
+  const withinVariance = valid.reduce((sum, estimate) => {
+    const result = estimate.value as Sufficient<number>;
+    const halfWidth =
+      (result.confidenceInterval[1] - result.confidenceInterval[0]) / 2;
+    // Use the weighted mean of variances rather than variance-of-the-mean
+    // shrinkage because these heuristic methods are not independent.
+    return sum + estimate.weight * (halfWidth / z95) ** 2;
+  }, 0) / totalWeight;
+  const betweenVariance = valid.reduce((sum, estimate) => {
+    const result = estimate.value as Sufficient<number>;
+    return sum + estimate.weight * (result.value - value) ** 2;
+  }, 0) / totalWeight;
+  const totalVariance = withinVariance + betweenVariance;
+  if (totalVariance === 0) {
+    return insufficient({
+      code: "no_uncertainty",
+      message: "Consensus uncertainty cannot be quantified from these methods",
+      sampleSize: Math.min(
+        ...valid.map((e) => (e.value as Sufficient<number>).sampleSize),
+      ),
+      minRequired: 1,
+    });
+  }
+  const halfWidth = z95 * Math.sqrt(totalVariance);
+  const lo = value - halfWidth;
+  const hi = value + halfWidth;
 
   const sampleSize = Math.min(
     ...valid.map((e) => (e.value as Sufficient<number>).sampleSize),
@@ -252,15 +265,15 @@ export function weightedConsensus(
     value,
     sampleSize,
     confidenceInterval: [lo, hi],
-    disclosedFraction: valid.find((e) =>
+    disclosedFraction: (
+      valid.find((e) =>
         (e.value as Sufficient<number>).disclosedFraction !== undefined
-      )
-      ? (valid[0].value as Sufficient<number>).disclosedFraction
-      : undefined,
-    selectionCaveat: valid.find((e) =>
-        (e.value as Sufficient<number>).selectionCaveat
-      )
-      ? (valid[0].value as Sufficient<number>).selectionCaveat
-      : undefined,
+      )?.value as Sufficient<number> | undefined
+    )?.disclosedFraction,
+    selectionCaveat: (
+      valid.find((e) =>
+        (e.value as Sufficient<number>).selectionCaveat !== undefined
+      )?.value as Sufficient<number> | undefined
+    )?.selectionCaveat,
   });
 }

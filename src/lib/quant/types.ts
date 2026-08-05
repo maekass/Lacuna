@@ -48,6 +48,7 @@ export interface QuantCompany {
 export type InsufficientDataCode =
   | "small_sample"
   | "no_disclosed_values"
+  | "no_uncertainty"
   | "missing_input";
 
 export interface InsufficientData {

@@ -3,12 +3,15 @@ import * as fc from "fast-check";
 import { mean, quantile } from "simple-statistics";
 import {
   bcaBootstrapCi,
-  createSeededRng,
   gatedMedian,
   gatedProportionCi,
   isSufficient,
   MIN_BCA_SAMPLE,
+  pointEstimate,
+  sufficient,
+  weightedConsensus,
 } from "@/lib/quant/estimators";
+import { createSeededRng } from "@/lib/stats/random";
 
 /** Fisher–Yates shuffle with seeded RNG. */
 function permute<T>(arr: T[], rng: () => number): T[] {
@@ -21,6 +24,46 @@ function permute<T>(arr: T[], rng: () => number): T[] {
 }
 
 describe("estimators property tests", () => {
+  it("pools within-method and between-method uncertainty", () => {
+    const result = weightedConsensus([
+      {
+        value: sufficient({
+          value: 10,
+          sampleSize: 20,
+          confidenceInterval: [8, 12],
+        }),
+        weight: 1,
+      },
+      {
+        value: sufficient({
+          value: 20,
+          sampleSize: 20,
+          confidenceInterval: [19, 21],
+          disclosedFraction: 0.5,
+          selectionCaveat: "selection",
+        }),
+        weight: 1,
+      },
+    ]);
+    expect(isSufficient(result)).toBe(true);
+    if (isSufficient(result)) {
+      expect(result.value).toBe(15);
+      expect(result.confidenceInterval[0]).toBeLessThan(10);
+      expect(result.confidenceInterval[1]).toBeGreaterThan(20);
+      expect(result.disclosedFraction).toBe(0.5);
+      expect(result.selectionCaveat).toBe("selection");
+    }
+  });
+
+  it("does not claim zero-width uncertainty for point-only consensus", () => {
+    const result = weightedConsensus([
+      { value: pointEstimate(10, "example"), weight: 1 },
+      { value: pointEstimate(10, "example"), weight: 1 },
+    ]);
+    expect(isSufficient(result)).toBe(false);
+    if (!isSufficient(result)) expect(result.code).toBe("no_uncertainty");
+  });
+
   it("BCa median is permutation-invariant", () => {
     fc.assert(
       fc.property(
@@ -138,5 +181,25 @@ describe("estimators property tests", () => {
     const a = bcaBootstrapCi(sample, mean, { seed: 42, resamples: 200 });
     const b = bcaBootstrapCi(sample, mean, { seed: 42, resamples: 200 });
     expect(a).toEqual(b);
+  });
+
+  it("confidence interval width is monotone in confidence level", () => {
+    const sample = [10, 20, 30, 40, 50, 60, 70, 80];
+    const narrow = bcaBootstrapCi(sample, mean, {
+      seed: 42,
+      resamples: 1000,
+      alpha: 0.2,
+    });
+    const wide = bcaBootstrapCi(sample, mean, {
+      seed: 42,
+      resamples: 1000,
+      alpha: 0.05,
+    });
+    if (!isSufficient(narrow) || !isSufficient(wide)) return;
+    const narrowWidth = narrow.confidenceInterval[1] -
+      narrow.confidenceInterval[0];
+    const wideWidth = wide.confidenceInterval[1] -
+      wide.confidenceInterval[0];
+    expect(wideWidth).toBeGreaterThanOrEqual(narrowWidth);
   });
 });
