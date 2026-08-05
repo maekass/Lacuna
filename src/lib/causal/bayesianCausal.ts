@@ -19,6 +19,8 @@
  * - Wager & Athey (2018): Causal forests (but noting limitations)
  */
 
+import { createSeededRng, shuffle } from "@/lib/stats/random";
+
 export interface BayesianCausalConfig {
   nObservations: number;
   nTreatments: number;
@@ -259,7 +261,7 @@ export interface CrossFittingResult {
   selectionSet: number[]; // Indices for model selection
   inferenceSet: number[]; // Indices for final inference
   modelSelected: string[]; // Variables selected
-  finalEstimate: BayesianEstimate;
+  finalEstimate: BayesianEstimate | null;
   isReliable: boolean;
   warning: string;
 }
@@ -275,7 +277,7 @@ export function crossFittingAnalysis(
       selectionSet: [],
       inferenceSet: allData.map((_, i) => i),
       modelSelected: ["main_effect_only"], // No selection possible
-      finalEstimate: null as unknown as BayesianEstimate,
+      finalEstimate: null,
       isReliable: false,
       warning:
         `n=${nTotal} insufficient for cross-fitting. Using all data for single estimate with strong priors.`,
@@ -287,7 +289,7 @@ export function crossFittingAnalysis(
   const indices = Array.from({ length: nTotal }, (_, i) => i);
 
   // Shuffle deterministically (Fisher-Yates with seed)
-  const shuffled = seededShuffle(indices, 42);
+  const shuffled = shuffle(indices, createSeededRng(42));
 
   const selectionSet = shuffled.slice(0, splitPoint);
   const inferenceSet = shuffled.slice(splitPoint);
@@ -296,33 +298,12 @@ export function crossFittingAnalysis(
     selectionSet,
     inferenceSet,
     modelSelected: ["selected_on_" + selectionSet.length + "_obs"],
-    finalEstimate: null as unknown as BayesianEstimate,
+    finalEstimate: null,
     isReliable: inferenceSet.length >= 10,
     warning: inferenceSet.length < 10
       ? `Inference set only ${inferenceSet.length} obs - results uncertain`
       : "Cross-fitting valid",
   };
-}
-
-/**
- * Deterministic shuffle for reproducibility
- */
-function seededShuffle(array: number[], seed: number): number[] {
-  const result = [...array];
-  let currentSeed = seed;
-
-  // Simple LCG for reproducibility
-  const random = () => {
-    currentSeed = (currentSeed * 1664525 + 1013904223) % 4294967296;
-    return currentSeed / 4294967296;
-  };
-
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-
-  return result;
 }
 
 /**
@@ -371,19 +352,12 @@ export function smallSampleCausalAnalysis(
       };
     }
 
-    // Simulate hypothesis test with strong regularization
-    const simEstimate = h.expectedEffect * 0.5; // Shrink toward null
-    const simSE = mleStandardError * 1.5; // Inflate uncertainty
-
-    const result = bayesianEstimate(simEstimate, simSE ** 2, config);
-
     return {
       hypothesis: h,
-      result,
-      status: "tested" as const,
-      note: result.probabilityPositive > 0.8 || result.probabilityNegative > 0.8
-        ? "Evidence supports pre-registered hypothesis"
-        : "Inconclusive evidence for pre-registered hypothesis",
+      result: null,
+      status: "not_applicable" as const,
+      note:
+        "Pre-registered direction recorded; no hypothesis result is computed without observed outcome data",
     };
   });
 

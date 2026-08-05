@@ -5,6 +5,7 @@ import {
   meanBCaCI,
   medianBCaCI,
 } from "@/lib/stats/bootstrap";
+import { bcaBootstrapCi } from "@/lib/quant/estimators";
 
 const sample = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
@@ -51,6 +52,34 @@ describe("bcaCI", () => {
     expect(result.method).toBe("percentile");
     expect(result.warning).toContain("jackknife acceleration unreliable");
   });
+
+  it("handles constant samples with finite percentile bounds (edge)", () => {
+    const result = bcaCI([5, 5, 5, 5, 5, 5, 5, 5], (s) => s[0]);
+    expect(result.method).toBe("percentile");
+    expect(result.lower).toBe(5);
+    expect(result.upper).toBe(5);
+    expect(Number.isFinite(result.lower)).toBe(true);
+    expect(Number.isFinite(result.upper)).toBe(true);
+  });
+
+  it("returns identical bounds through both BCa wrappers", () => {
+    const statistic = (s: number[]) =>
+      s.reduce((sum, value) => sum + value, 0) / s.length;
+    const bootstrap = bcaCI(sample, statistic, 1999, 0.95, 42);
+    const quant = bcaBootstrapCi(sample, statistic, {
+      resamples: 1999,
+      alpha: 0.05,
+      seed: 42,
+      minSampleSize: 4,
+    });
+    expect(quant.kind).toBe("sufficient");
+    if (quant.kind === "sufficient") {
+      expect(quant.confidenceInterval).toEqual([
+        bootstrap.lower,
+        bootstrap.upper,
+      ]);
+    }
+  });
 });
 
 describe("meanBCaCI", () => {
@@ -90,5 +119,17 @@ describe("diffMeanBCaCI", () => {
     const b = diffMeanBCaCI([5, 6, 7, 8, 9], [1, 2, 3, 4, 5], 0.95, 3);
     expect(a.lower).toBe(b.lower);
     expect(a.upper).toBe(b.upper);
+  });
+
+  it("uses finite percentile bounds for n < 10 and one-element groups", () => {
+    const small = diffMeanBCaCI([5, 6], [1, 2], 0.95, 3);
+    expect(small.method).toBe("percentile");
+    expect(Number.isFinite(small.lower)).toBe(true);
+    expect(Number.isFinite(small.upper)).toBe(true);
+
+    const single = diffMeanBCaCI([5], [1], 0.95, 3);
+    expect(single.method).toBe("percentile");
+    expect(single.lower).toBe(4);
+    expect(single.upper).toBe(4);
   });
 });

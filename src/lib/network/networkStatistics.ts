@@ -17,6 +17,8 @@
  * - Newman, M.E.J. (2003). "The structure and function of complex networks"
  */
 
+import { createSeededRng, shuffle } from "@/lib/stats/random";
+
 export interface NetworkNode {
   id: string;
   label: string;
@@ -40,6 +42,7 @@ export interface BootstrapResult {
   median: number;
   iqr: [number, number];
   numSamples: number;
+  seed: number;
 }
 
 /**
@@ -51,6 +54,7 @@ export function bootstrap<T>(
   statistic: (sample: T[]) => number,
   numResamples: number = 1000,
   confidenceLevel: number = 0.95,
+  seed: number = 42,
 ): BootstrapResult {
   if (data.length === 0) {
     return {
@@ -60,17 +64,19 @@ export function bootstrap<T>(
       median: 0,
       iqr: [0, 0],
       numSamples: 0,
+      seed,
     };
   }
 
   const estimate = statistic(data);
   const samples: number[] = [];
+  const rng = createSeededRng(seed);
 
   for (let i = 0; i < numResamples; i++) {
     // Sample with replacement
     const resample: T[] = [];
     for (let j = 0; j < data.length; j++) {
-      resample.push(data[Math.floor(Math.random() * data.length)]);
+      resample.push(data[Math.floor(rng() * data.length)]);
     }
     samples.push(statistic(resample));
   }
@@ -90,6 +96,7 @@ export function bootstrap<T>(
     median: samples[medianIdx],
     iqr: [samples[q1Idx], samples[q3Idx]],
     numSamples: numResamples,
+    seed,
   };
 }
 
@@ -180,6 +187,7 @@ export function networkDensity(
 export function clusteringCoefficient(
   nodes: NetworkNode[],
   edges: NetworkEdge[],
+  seed: number = 42,
 ): {
   byNode: Map<string, number>;
   average: number;
@@ -231,6 +239,8 @@ export function clusteringCoefficient(
     values,
     (sample) => sample.reduce((s, v) => s + v, 0) / Math.max(1, sample.length),
     1000,
+    0.95,
+    seed,
   );
 
   return { byNode: clustering, average, bootstrap: bootstrapCI };
@@ -445,7 +455,9 @@ export function herfindahlIndex(values: number[]): {
 export function nullModelComparison(
   observedValues: number[],
   numSimulations: number = 1000,
+  seed: number = 42,
 ): {
+  seed: number;
   observed: { gini: number; hhi: number; top3: number };
   randomBaseline: {
     gini: { mean: number; ci: [number, number] };
@@ -468,6 +480,7 @@ export function nullModelComparison(
       },
       zScore: { gini: 0, hhi: 0, top3: 0 },
       interpretation: "No data",
+      seed,
     };
   }
 
@@ -482,11 +495,12 @@ export function nullModelComparison(
   const randomGinis: number[] = [];
   const randomHHIs: number[] = [];
   const randomTop3s: number[] = [];
+  const rng = createSeededRng(seed);
 
   for (let sim = 0; sim < numSimulations; sim++) {
     const buckets = new Array(n).fill(0);
     for (let i = 0; i < total; i++) {
-      buckets[Math.floor(Math.random() * n)]++;
+      buckets[Math.floor(rng() * n)]++;
     }
     randomGinis.push(giniCoefficient(buckets).gini);
     randomHHIs.push(herfindahlIndex(buckets).hhi);
@@ -547,7 +561,7 @@ export function nullModelComparison(
     interpretation = "Observed concentration consistent with random allocation";
   }
 
-  return { observed, randomBaseline, zScore, interpretation };
+  return { observed, randomBaseline, zScore, interpretation, seed };
 }
 
 /**
@@ -694,6 +708,7 @@ export function temporalAnalysis(edges: NetworkEdge[]): TemporalAnalysisResult {
  * Returns communities with explicit stability caveats.
  */
 export interface CommunityDetectionResult {
+  seed: number;
   communities: Map<string, number>; // nodeId -> communityId
   numCommunities: number;
   modularity: number;
@@ -710,6 +725,7 @@ export interface CommunityDetectionResult {
 export function communityDetection(
   nodes: NetworkNode[],
   edges: NetworkEdge[],
+  seed: number = 42,
 ): CommunityDetectionResult {
   if (nodes.length === 0) {
     return {
@@ -720,6 +736,7 @@ export function communityDetection(
       stability: { score: 0, interpretation: "No data", isReliable: false },
       qualitativeDescription: [],
       caveats: ["No nodes to analyze"],
+      seed,
     };
   }
 
@@ -750,6 +767,7 @@ export function communityDetection(
       },
       qualitativeDescription: ["No connections; each node is isolated"],
       caveats: ["No edges in network"],
+      seed,
     };
   }
 
@@ -845,7 +863,7 @@ export function communityDetection(
 
   for (let trial = 0; trial < numSubsets; trial++) {
     // Random subset
-    const shuffled = [...nodes].sort(() => Math.random() - 0.5);
+    const shuffled = shuffle(nodes, createSeededRng(seed + trial));
     const subset = shuffled.slice(0, subsetSize);
     const subsetIds = new Set(subset.map((n) => n.id));
     const subsetEdges = edges.filter((e) =>
@@ -946,6 +964,7 @@ export function communityDetection(
   caveats.push("Treat as exploratory clustering, not confirmatory analysis");
 
   return {
+    seed,
     communities,
     numCommunities,
     modularity,
@@ -1140,6 +1159,7 @@ export function strategicPositioning(
  * Critical for determining if conclusions would survive larger samples.
  */
 export interface StabilityAnalysisResult {
+  seed: number;
   // Stability of each metric under data perturbation
   metricStability: {
     gini: { mean: number; sd: number; cv: number; isStable: boolean };
@@ -1165,6 +1185,7 @@ export function networkStabilityAnalysis(
   nodes: NetworkNode[],
   edges: NetworkEdge[],
   numSimulations: number = 100,
+  seed: number = 42,
 ): StabilityAnalysisResult {
   const acquirers = nodes.filter((n) => n.type === "acquirer");
 
@@ -1181,6 +1202,7 @@ export function networkStabilityAnalysis(
       findingReliability: [],
       validationStrategy: ["Insufficient data for stability analysis"],
       caveats: ["No data to analyze"],
+      seed,
     };
   }
 
@@ -1199,15 +1221,13 @@ export function networkStabilityAnalysis(
     averageDegree: [],
   };
 
+  const rng = createSeededRng(seed);
   for (let sim = 0; sim < numSimulations; sim++) {
-    // Random sampling with bootstrapping
+    // Proper n-out-of-n bootstrap sampling with replacement.
     const sampleEdges: NetworkEdge[] = [];
-    const targetSize = Math.max(
-      1,
-      Math.floor(edges.length * (0.7 + Math.random() * 0.6)),
-    );
+    const targetSize = edges.length;
     for (let i = 0; i < targetSize; i++) {
-      sampleEdges.push(edges[Math.floor(Math.random() * edges.length)]);
+      sampleEdges.push(edges[Math.floor(rng() * edges.length)]);
     }
 
     // Calculate metrics
@@ -1313,6 +1333,7 @@ export function networkStabilityAnalysis(
   ];
 
   return {
+    seed,
     metricStability,
     recommendedSampleSize,
     findingReliability,

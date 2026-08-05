@@ -1,8 +1,7 @@
 /**
  * Sensitivity Analysis Dashboard Component
  *
- * Displays Oster's Delta and Rotnitzky Bounds with visualizations
- * Emphasizes TRANSPARENCY about causal assumptions
+ * Illustrative Oster's Delta and Rotnitzky Bounds method demonstrator.
  */
 
 "use client";
@@ -86,8 +85,16 @@ export default function SensitivityAnalysis() {
       {/* Header */}
       <AnalysisPanelHeader
         title="Causal Sensitivity Analysis"
-        subtitle="Oster&apos;s δ & Rotnitzky Bounds | Unobserved Confounding Assessment"
+        subtitle="Illustrative Method Demonstrator | Oster&apos;s δ & Rotnitzky Bounds"
       />
+      <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+        <p className="text-sm text-blue-800">
+          <strong>Illustrative inputs only:</strong>{" "}
+          the editable ATEs, R² values, and standard error below are not Lacuna
+          estimates. They are user-adjustable examples for understanding
+          sensitivity methods.
+        </p>
+      </div>
 
       {/* Input Controls */}
       <div className="bg-lacuna-surface-muted p-4 rounded-lg space-y-4">
