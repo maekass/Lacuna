@@ -49,6 +49,7 @@ export const TRACKED_MODEL_IDS = [
   "anthropic/claude-sonnet-4",
   "openai/gpt-4o-mini",
   "openai/gpt-5.4-mini",
+  "openai/gpt-5.6-terra",
   "xai/grok-4.3",
   "xai/grok-4.5",
 ] as const;
