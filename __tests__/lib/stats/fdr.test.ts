@@ -49,6 +49,15 @@ describe("benjaminiHochberg", () => {
     expect(result.find((r) => r.label === "sig")!.significant).toBe(true);
     expect(result.find((r) => r.label === "ns")!.significant).toBe(false);
   });
+
+  it("preserves small adjusted p-values without display rounding", () => {
+    const result = benjaminiHochberg([
+      { label: "tiny", pValue: 0.000001 },
+      { label: "large", pValue: 0.8 },
+    ]);
+    expect(result.find((r) => r.label === "tiny")!.pAdjusted)
+      .toBeCloseTo(0.000002, 12);
+  });
 });
 
 describe("holmBonferroni", () => {

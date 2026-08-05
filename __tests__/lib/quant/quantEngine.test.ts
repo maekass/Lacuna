@@ -106,26 +106,44 @@ describe("HealthImpactModeler", () => {
 });
 
 describe("PortfolioOptimizer", () => {
-  it("does not fabricate portfolio ROI from point-only valuations", () => {
+  it("produces a bundle when multiple valuation methods provide estimates", () => {
     const candidates: QuantCompany[] = [
       makeCompany({
         id: "a",
         condition: "preeclampsia",
         clinicalStage: "preclinical",
         raisedToDate: 5,
+        annualRevenue: 3,
+        targetMarketSize: 100,
       }),
       makeCompany({
         id: "b",
         condition: "pcos",
         clinicalStage: "fda_approved",
         raisedToDate: 30,
+        annualRevenue: 20,
+        targetMarketSize: 500,
       }),
       makeCompany({
         id: "c",
         condition: "sickle_cell",
         clinicalStage: "phase3",
         raisedToDate: 15,
+        annualRevenue: 8,
+        targetMarketSize: 250,
       }),
+    ];
+    const result = new PortfolioOptimizer().optimizePortfolio(candidates, 500);
+    expect(result.companies.length).toBeGreaterThan(1);
+    expect(new Set(result.companies.map((company) => company.roi)).size)
+      .toBeGreaterThan(1);
+    expect(numericOrNull(result.expectedROI)).not.toBeNull();
+  });
+
+  it("does not fabricate portfolio ROI from point-only valuations", () => {
+    const candidates: QuantCompany[] = [
+      makeCompany({ id: "point-a", raisedToDate: 5 }),
+      makeCompany({ id: "point-b", raisedToDate: 30 }),
     ];
     const result = new PortfolioOptimizer().optimizePortfolio(candidates, 500);
     expect(result.companies).toHaveLength(0);

@@ -375,7 +375,12 @@ export function logisticRegression(
       return sum +
         y[i] * Math.log(Math.max(1e-15, probability)) +
         (1 - y[i]) * Math.log(Math.max(1e-15, 1 - probability));
-    }, 0);
+    }, 0) -
+    ridge / 2 *
+      coefficients.slice(1).reduce(
+        (sum, coefficient) => sum + coefficient ** 2,
+        0,
+      );
 
   for (iterations = 0; iterations < maxIterations; iterations++) {
     // Compute predicted probabilities

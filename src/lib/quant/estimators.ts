@@ -5,8 +5,6 @@
 
 import { mean, quantile } from "simple-statistics";
 import { bcaBootstrap } from "@/lib/stats/bca";
-import { createSeededRng } from "@/lib/stats/random";
-export { normalCdf, normalQuantile } from "@/lib/stats/primitives";
 import type { InsufficientData, QuantValue, Sufficient } from "./types";
 
 export const MIN_SECTOR_SAMPLE = 5;
@@ -39,8 +37,6 @@ export function heckmanSelectionCaveat(
 export function numericOrNull(value: QuantValue<number>): number | null {
   return isSufficient(value) ? value.value : null;
 }
-
-export { createSeededRng };
 
 function insufficient(
   partial: Omit<InsufficientData, "kind">,
@@ -238,6 +234,8 @@ export function weightedConsensus(
     const result = estimate.value as Sufficient<number>;
     const halfWidth =
       (result.confidenceInterval[1] - result.confidenceInterval[0]) / 2;
+    // Use the weighted mean of variances rather than variance-of-the-mean
+    // shrinkage because these heuristic methods are not independent.
     return sum + estimate.weight * (halfWidth / z95) ** 2;
   }, 0) / totalWeight;
   const betweenVariance = valid.reduce((sum, estimate) => {
@@ -247,8 +245,8 @@ export function weightedConsensus(
   const totalVariance = withinVariance + betweenVariance;
   if (totalVariance === 0) {
     return insufficient({
-      code: "missing_input",
-      message: "Consensus requires at least one interval with uncertainty",
+      code: "no_uncertainty",
+      message: "Consensus uncertainty cannot be quantified from these methods",
       sampleSize: Math.min(
         ...valid.map((e) => (e.value as Sufficient<number>).sampleSize),
       ),

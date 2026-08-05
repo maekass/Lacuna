@@ -3,7 +3,6 @@ import * as fc from "fast-check";
 import { mean, quantile } from "simple-statistics";
 import {
   bcaBootstrapCi,
-  createSeededRng,
   gatedMedian,
   gatedProportionCi,
   isSufficient,
@@ -12,6 +11,7 @@ import {
   sufficient,
   weightedConsensus,
 } from "@/lib/quant/estimators";
+import { createSeededRng } from "@/lib/stats/random";
 
 /** Fisher–Yates shuffle with seeded RNG. */
 function permute<T>(arr: T[], rng: () => number): T[] {
@@ -61,6 +61,7 @@ describe("estimators property tests", () => {
       { value: pointEstimate(10, "example"), weight: 1 },
     ]);
     expect(isSufficient(result)).toBe(false);
+    if (!isSufficient(result)) expect(result.code).toBe("no_uncertainty");
   });
 
   it("BCa median is permutation-invariant", () => {
