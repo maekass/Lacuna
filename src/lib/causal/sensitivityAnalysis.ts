@@ -260,7 +260,7 @@ function generateTransparencyStatement(
     `2. NO INTERACTION: We assume measured and unmeasured confounders do not interact.`,
     `3. COMMON SUPPORT: We assume overlap in confounder distributions across treatment groups.`,
     `4. SUTVA: We assume no interference between units (stable unit treatment value assumption).`,
-    `5. UNCONFOUNDEDNESS (tested): Our Oster's δ = ${oster.delta} suggests robustness to violations.`,
+    `5. UNCONFOUNDEDNESS (input-conditional): The supplied inputs produce Oster's δ = ${oster.delta}.`,
     ``,
     `WHAT WOULD NEED TO BE TRUE TO INVALIDATE OUR CLAIM:`,
     `- An unobserved confounder ${oster.delta}x stronger than ALL observed confounders combined`,
@@ -272,10 +272,10 @@ function generateTransparencyStatement(
       (0.1 * 100).toFixed(0)
     }%`,
     ``,
-    `BOTTOM LINE: ${
+    `INPUT-CONDITIONAL INTERPRETATION: ${
       oster.isRobust
-        ? "Our causal claim is reasonably robust to unobserved confounding."
-        : "Our causal claim is potentially fragile - treat with caution."
+        ? "Under these supplied inputs, the sensitivity calculation is relatively robust to the modeled confounding scenario."
+        : "Under these supplied inputs, the sensitivity calculation is potentially fragile and should be treated cautiously."
     }`,
   ];
 
@@ -293,21 +293,21 @@ function generateRecommendations(
 
   if (!oster.isRobust) {
     recommendations.push(
-      "URGENT: Collect additional confounder data - current results may be biased",
+      "Consider collecting additional confounder data; supplied inputs may not represent the target population",
       "Consider propensity score matching or inverse probability weighting",
       "Run placebo tests to assess specification validity",
       'Report results as "associational" rather than "causal" until robustness improves',
     );
   } else if (oster.delta < 2) {
     recommendations.push(
-      "MODERATE: Results are somewhat robust but sensitive to strong confounding",
+      "MODERATE: The supplied inputs are somewhat robust but sensitive to strong confounding",
       "Conduct additional sensitivity analyses with different confounder sets",
       "Consider bounding approaches for reporting uncertainty",
       "Collect qualitative data to assess plausibility of unobserved confounders",
     );
   } else {
     recommendations.push(
-      "STRONG: Results are robust to plausible levels of unobserved confounding",
+      "STRONG: Under the supplied inputs, results are robust to the modeled levels of unobserved confounding",
       "Still report sensitivity bounds in all publications",
       'Consider this result as "preliminary causal evidence" pending replication',
       "Document the sensitivity analysis methodology for transparency",

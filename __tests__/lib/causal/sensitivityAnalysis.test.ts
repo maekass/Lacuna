@@ -90,6 +90,8 @@ describe("exampleFemTechAnalysis", () => {
   it("runs end-to-end example without throwing (success)", () => {
     const report = exampleFemTechAnalysis();
     expect(report.oster.delta).toBeDefined();
-    expect(report.transparencyStatement).toContain("BOTTOM LINE");
+    expect(report.transparencyStatement).toContain(
+      "INPUT-CONDITIONAL INTERPRETATION",
+    );
   });
 });

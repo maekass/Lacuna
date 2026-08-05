@@ -1,12 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
   bootstrap,
+  communityDetection,
   degreeDistribution,
   giniCoefficient,
   herfindahlIndex,
   networkDensity,
   type NetworkEdge,
   type NetworkNode,
+  networkStabilityAnalysis,
   nullModelComparison,
   temporalAnalysis,
 } from "@/lib/network/networkStatistics";
@@ -43,7 +45,18 @@ describe("bootstrap", () => {
       median: 0,
       iqr: [0, 0],
       numSamples: 0,
+      seed: 42,
     });
+  });
+
+  it("is byte-identical for the same seed and differs across seeds", () => {
+    const statistic = (s: number[]) =>
+      s.reduce((sum, value) => sum + value, 0) / s.length;
+    const first = bootstrap([1, 2, 3, 4, 5], statistic, 200, 0.95, 42);
+    const second = bootstrap([1, 2, 3, 4, 5], statistic, 200, 0.95, 42);
+    const different = bootstrap([1, 2, 3, 4, 5], statistic, 200, 0.95, 43);
+    expect(first).toEqual(second);
+    expect(first).not.toEqual(different);
   });
 });
 
@@ -121,6 +134,24 @@ describe("nullModelComparison", () => {
   it("returns no-data interpretation for empty values (edge)", () => {
     const result = nullModelComparison([]);
     expect(result.interpretation).toBe("No data");
+  });
+
+  it("is reproducible for seeded network simulations", () => {
+    const first = nullModelComparison([10, 2, 1, 1], 100, 42);
+    const second = nullModelComparison([10, 2, 1, 1], 100, 42);
+    const different = nullModelComparison([10, 2, 1, 1], 100, 43);
+    expect(first).toEqual(second);
+    expect(first).not.toEqual(different);
+  });
+
+  it("is reproducible for seeded community and stability analyses", () => {
+    const firstCommunities = communityDetection(nodes, edges, 42);
+    const secondCommunities = communityDetection(nodes, edges, 42);
+    expect(firstCommunities).toEqual(secondCommunities);
+
+    const firstStability = networkStabilityAnalysis(nodes, edges, 20, 42);
+    const secondStability = networkStabilityAnalysis(nodes, edges, 20, 42);
+    expect(firstStability).toEqual(secondStability);
   });
 });
 

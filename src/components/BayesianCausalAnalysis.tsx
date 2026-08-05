@@ -1,7 +1,7 @@
 /**
  * Bayesian Causal Analysis Dashboard
  *
- * Small-sample causal inference with defaults derived from the verified dataset.
+ * Illustrative small-sample causal inference demonstrator.
  */
 "use client";
 
@@ -104,8 +104,17 @@ export default function BayesianCausalAnalysis() {
       {/* Header */}
       <AnalysisPanelHeader
         title="Bayesian Causal Inference"
-        subtitle="Small Sample Analysis | Main Effects Only | Pre-Registered Hypotheses"
+        subtitle="Illustrative Method Demonstrator | Main Effects Only | Pre-Registered Hypotheses"
       />
+      <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+        <p className="text-sm text-blue-800">
+          <strong>Illustrative inputs only:</strong>{" "}
+          the editable estimate, standard error, and prior settings below are
+          not Lacuna estimates and are not calculated from the verified dataset.
+          Adjust them to explore the method; no causal claim is made about
+          Lacuna.
+        </p>
+      </div>
 
       {/* Input Controls */}
       <div className="bg-lacuna-surface-muted p-4 rounded-lg space-y-4">
@@ -523,6 +532,10 @@ export default function BayesianCausalAnalysis() {
                       </div>
                     </div>
                   )}
+                  <p className="mt-3 text-xs text-lacuna-text-muted">
+                    Registration records the expected direction only. Evidence
+                    is not computed without observed outcome data.
+                  </p>
 
                   <p className="text-xs text-lacuna-text-muted mt-2">
                     {result.note}
