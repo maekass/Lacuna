@@ -18,7 +18,7 @@ export default function WorkspaceNav() {
           className={`touch-target-inline pb-0.5 text-sm transition-colors duration-150 ${
             pathname === "/"
               ? "border-b-2 border-lacuna-plum font-semibold text-lacuna-plum"
-              : "text-lacuna-blue/60 hover:text-lacuna-plum"
+              : "text-lacuna-blue hover:text-lacuna-plum"
           }`}
           aria-current={pathname === "/" ? "page" : undefined}
         >
@@ -34,7 +34,7 @@ export default function WorkspaceNav() {
               className={`touch-target-inline pb-0.5 text-sm transition-colors duration-150 ${
                 active
                   ? "border-b-2 border-lacuna-plum font-semibold text-lacuna-plum"
-                  : "text-lacuna-blue/60 hover:text-lacuna-plum"
+                  : "text-lacuna-blue hover:text-lacuna-plum"
               }`}
               aria-current={active ? "page" : undefined}
             >
