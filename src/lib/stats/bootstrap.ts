@@ -17,6 +17,13 @@ export interface BootstrapCIResult {
   warning?: string;
 }
 
+/**
+ * Compute a BCa interval for a scalar statistic.
+ *
+ * For n < 4, this entry point returns a zero-width percentile fallback at
+ * the point estimate, with `B: 0` and a warning because bootstrap resampling
+ * is not attempted.
+ */
 export function bcaCI(
   data: number[],
   statistic: (sample: number[]) => number,

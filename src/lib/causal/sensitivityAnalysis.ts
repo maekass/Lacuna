@@ -131,7 +131,7 @@ export function calculateOsterDelta(
     interpretation = "Fragile to unobserved confounding";
     explanation = `A relatively weak unobserved confounder (${
       delta.toFixed(2)
-    }x observed strength) could explain away the result. Do not rely on this causal claim.`;
+    }x observed strength) could explain away the supplied estimate. Treat this sensitivity calculation cautiously.`;
   }
 
   return {
@@ -256,19 +256,19 @@ function generateTransparencyStatement(
   rotnitzky: RotnitzkyBounds,
 ): string {
   const assumptions = [
-    `1. LINEARITY: We assume linear relationships between treatment, confounders, and outcome.`,
-    `2. NO INTERACTION: We assume measured and unmeasured confounders do not interact.`,
-    `3. COMMON SUPPORT: We assume overlap in confounder distributions across treatment groups.`,
-    `4. SUTVA: We assume no interference between units (stable unit treatment value assumption).`,
+    `1. LINEARITY: This calculation assumes linear relationships between treatment, confounders, and outcome.`,
+    `2. NO INTERACTION: This calculation assumes measured and unmeasured confounders do not interact.`,
+    `3. COMMON SUPPORT: This calculation assumes overlap in confounder distributions across treatment groups.`,
+    `4. SUTVA: This calculation assumes no interference between units (stable unit treatment value assumption).`,
     `5. UNCONFOUNDEDNESS (input-conditional): The supplied inputs produce Oster's δ = ${oster.delta}.`,
     ``,
-    `WHAT WOULD NEED TO BE TRUE TO INVALIDATE OUR CLAIM:`,
-    `- An unobserved confounder ${oster.delta}x stronger than ALL observed confounders combined`,
+    `WHAT WOULD NEED TO BE TRUE TO INVALIDATE THIS CALCULATION:`,
+    `- An unobserved confounder ${oster.delta}x stronger than all observed confounders combined`,
     `- Selection bias exceeding ${
       (rotnitzky.biasRange[1] / Math.abs(rotnitzky.pointEstimate) * 100)
         .toFixed(1)
     }% of the treatment effect`,
-    `- Systematic measurement error in treatment assignment exceeding ${
+    `- Systematic measurement error in the supplied treatment assignment exceeding ${
       (0.1 * 100).toFixed(0)
     }%`,
     ``,

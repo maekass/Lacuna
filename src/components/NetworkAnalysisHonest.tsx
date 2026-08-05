@@ -44,8 +44,9 @@ import {
 import AnalysisPanelHeader from "@/components/ui/AnalysisPanelHeader";
 import MetricTile from "@/components/ui/MetricTile";
 
+const NETWORK_SEED = 42;
+
 export default function NetworkAnalysisHonest() {
-  const NETWORK_SEED = 42;
   const dataset = useVerifiedDataset();
   const { nodes: sampleNodes, edges: sampleEdges } = useMemo(
     () => getVerifiedNetworkGraph(dataset),

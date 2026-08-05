@@ -1,5 +1,21 @@
 import { createSeededRng } from "./random";
 
+/**
+ * Bias-corrected and accelerated (BCa) bootstrap confidence intervals.
+ *
+ * The bias correction z₀ accounts for the proportion of bootstrap estimates
+ * below the observed estimate (θ̂). The acceleration a adjusts for skew in
+ * the statistic's jackknife influence values. See Efron & Tibshirani (1994),
+ * *An Introduction to the Bootstrap*, Ch. 14, and DiCiccio & Efron (1996),
+ * "Bootstrap Confidence Intervals", Statistical Science 11(3):189–228.
+ *
+ * The result uses `method: "percentile"` rather than `"BCa"` when:
+ * - the sample is smaller than `minSampleSize`;
+ * - no finite bootstrap replicates are available;
+ * - every bootstrap replicate equals θ̂;
+ * - n < 10, making jackknife acceleration unreliable; or
+ * - adjusted BCa quantiles are non-finite, degenerate, or out of bounds.
+ */
 export interface BcaOptions {
   resamples: number;
   level: number;
@@ -188,7 +204,7 @@ export function bcaBootstrap<T>({
   const jackMean = jack.reduce((sum, value) => sum + value, 0) / jack.length;
   const cubed = jack.reduce((sum, value) => sum + (jackMean - value) ** 3, 0);
   const squared = jack.reduce((sum, value) => sum + (jackMean - value) ** 2, 0);
-  const acceleration = data.length < 10 ? 0 : cubed / (6 * squared ** 1.5 || 1);
+  const acceleration = cubed / (6 * squared ** 1.5 || 1);
   if (data.length < 10) {
     warnings.push(
       `n=${data.length} < 10 — jackknife acceleration unreliable; BCa degrades to percentile`,

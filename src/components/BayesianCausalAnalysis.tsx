@@ -480,58 +480,6 @@ export default function BayesianCausalAnalysis() {
                     </span>
                   </div>
 
-                  {result.result && (
-                    <div className="mt-3 pt-3 border-t border-lacuna-border-subtle grid grid-cols-3 gap-4 text-center">
-                      <div>
-                        <div
-                          className="text-lg font-light"
-                          style={displayFont}
-                        >
-                          {result.result.posteriorMean.toFixed(3)}
-                        </div>
-                        <div className="text-xs text-lacuna-text-muted">
-                          Posterior Mean
-                        </div>
-                      </div>
-                      <div>
-                        <div
-                          className={`text-lg font-light ${
-                            getProbabilityColor(
-                              result.result.probabilityPositive,
-                              result.hypothesis.direction === "positive"
-                                ? "positive"
-                                : "negative",
-                            )
-                          }`}
-                        >
-                          {result.hypothesis.direction === "positive"
-                            ? (result.result.probabilityPositive * 100).toFixed(
-                              0,
-                            )
-                            : (result.result.probabilityNegative * 100).toFixed(
-                              0,
-                            )}%
-                        </div>
-                        <div className="text-xs text-lacuna-text-muted">
-                          P(Hypothesis)
-                        </div>
-                      </div>
-                      <div>
-                        <div
-                          className="text-lg font-light"
-                          style={{
-                            fontFamily: DISPLAY_FONT,
-                            color: "#5D4E6D",
-                          }}
-                        >
-                          {result.result.bayesFactor.toFixed(1)}
-                        </div>
-                        <div className="text-xs text-lacuna-text-muted">
-                          Bayes Factor
-                        </div>
-                      </div>
-                    </div>
-                  )}
                   <p className="mt-3 text-xs text-lacuna-text-muted">
                     Registration records the expected direction only. Evidence
                     is not computed without observed outcome data.
