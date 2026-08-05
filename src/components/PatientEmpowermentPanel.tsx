@@ -5,11 +5,10 @@
  * Snapshot is built server-side when passed from /research page.
  */
 
-import { useCallback, useMemo, useState } from "react";
-import { Loader2, Sparkles } from "lucide-react";
+import { useCallback, useMemo } from "react";
 import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
-import LlmQualityBadge from "@/components/ui/LlmQualityBadge";
 import { CitedSourceFooter } from "@/components/research/CitedSourceFooter";
+import GapAnalystPanel from "@/components/research/GapAnalystPanel";
 import { GapDistributionChart } from "@/components/research/GapDistributionChart";
 import { GapIndexBar } from "@/components/research/GapIndexBar";
 import { ResearchMethodologyDrawer } from "@/components/research/ResearchMethodologyDrawer";
@@ -20,7 +19,6 @@ import {
   PATIENT_EMPOWERMENT_SOURCES,
 } from "@/data/patientEmpowermentReport";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
-import type { LlmQualityReport } from "@/lib/ai/quality";
 import {
   buildPatientEmpowermentSnapshot,
   exportEmpowermentCrosswalkCsv,
@@ -199,40 +197,6 @@ export default function PatientEmpowermentPanel({
       ).slice(0, 5),
     [dimensions],
   );
-
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState<string | null>(null);
-  const [modelId, setModelId] = useState<string | null>(null);
-  const [quality, setQuality] = useState<LlmQualityReport | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const ask = useCallback(async (q?: string) => {
-    const prompt = (q ?? question).trim();
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch("/api/research/patient-empowerment/ask", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: prompt || undefined }),
-      });
-      const body = await res.json() as {
-        answer?: string;
-        modelId?: string | null;
-        quality?: LlmQualityReport | null;
-        error?: string;
-      };
-      if (!res.ok) throw new Error(body.error ?? `HTTP ${res.status}`);
-      setAnswer(body.answer ?? "");
-      setModelId(body.modelId ?? null);
-      setQuality(body.quality ?? null);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Ask failed");
-    } finally {
-      setLoading(false);
-    }
-  }, [question]);
 
   const downloadCsv = useCallback(() => {
     const csv = exportEmpowermentCrosswalkCsv(data);
@@ -462,66 +426,12 @@ export default function PatientEmpowermentPanel({
         <CitedSourceFooter sources={[...PATIENT_EMPOWERMENT_SOURCES]} />
       </div>
 
-      <div className="rounded-xl border border-lacuna-lavender/40 bg-lacuna-pink/5 p-5">
-        <div className="mb-3 flex items-center gap-2">
-          <Sparkles className="h-4 w-4 text-lacuna-plum" aria-hidden />
-          <h4 className="text-sm font-semibold text-lacuna-plum">
-            Gap analyst (LLM)
-          </h4>
-        </div>
-        <p className="mb-3 text-xs text-lacuna-blue/80">
-          Grounded only in the empowerment snapshot JSON. Deterministic summary
-          when inference is not configured.
-        </p>
-        <div className="mb-2 flex flex-wrap gap-2">
-          {SUGGESTED_QUESTIONS.map((q) => (
-            <button
-              key={q}
-              type="button"
-              onClick={() => {
-                setQuestion(q);
-                void ask(q);
-              }}
-              className="rounded-full border border-lacuna-lavender/40 bg-white px-3 py-1 text-[11px] text-lacuna-blue hover:border-lacuna-plum/40"
-            >
-              {q}
-            </button>
-          ))}
-        </div>
-        <div className="flex flex-col gap-2 sm:flex-row">
-          <input
-            type="text"
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") void ask();
-            }}
-            placeholder="Ask about gaps, prerequisites, or portfolio coverage…"
-            className="flex-1 rounded-lg border border-lacuna-lavender/40 bg-white px-3 py-2 text-sm text-lacuna-plum placeholder:text-lacuna-blue/40"
-            maxLength={500}
-          />
-          <button
-            type="button"
-            onClick={() => void ask()}
-            disabled={loading}
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-lacuna-plum px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
-          >
-            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-            Ask
-          </button>
-        </div>
-        {error && (
-          <p className="mt-2 text-xs text-red-600" role="alert">
-            {error}
-          </p>
-        )}
-        {answer && (
-          <div className="mt-3 rounded-lg border border-lacuna-lavender/30 bg-white p-3">
-            <p className="text-sm leading-relaxed text-lacuna-blue">{answer}</p>
-            <LlmQualityBadge quality={quality} modelId={modelId} />
-          </div>
-        )}
-      </div>
+      <GapAnalystPanel
+        endpoint="/api/research/patient-empowerment/ask"
+        description="Grounded only in the empowerment snapshot JSON. Deterministic summary when inference is not configured."
+        placeholder="Ask about gaps, prerequisites, or portfolio coverage…"
+        suggestedQuestions={SUGGESTED_QUESTIONS}
+      />
     </div>
   );
 }

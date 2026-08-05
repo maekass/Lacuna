@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@/lib/api/rateLimitGuard";
 import { getVerifiedDataset } from "@/lib/data/datasetProvider";
-import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
 
 function csvEscape(value: string) {
   const raw = value ?? "";
@@ -12,18 +12,12 @@ function csvEscape(value: string) {
 }
 
 export async function GET(request: Request) {
-  const ip = getClientIp(request);
-  const limit = await rateLimit({
-    key: `exportCsv:${ip}`,
+  const limited = await enforceRateLimit(request, {
+    key: "exportCsv",
     limit: 30,
     windowMs: 60_000,
   });
-  if (!limit.ok) {
-    return NextResponse.json(
-      { error: "Rate limited", retryAt: limit.resetAtMs },
-      { status: 429 },
-    );
-  }
+  if (limited) return limited;
 
   const dataset = await getVerifiedDataset();
   const { acquisitions } = dataset;

@@ -52,9 +52,8 @@ export async function POST(
       headers: { "cache-control": "no-store" },
     });
   } catch (error) {
-    const message = error instanceof Error
-      ? error.message
-      : "Failed to build promotion preview";
+    console.error("deals/pending/[dealId]/promote/preview:", error);
+    const message = "Failed to build promotion preview";
     return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 }

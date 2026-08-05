@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
+import { enforceRateLimit } from "@/lib/api/rateLimitGuard";
 import {
   getPatientDataAccessMode,
   requirePatientDataAccess,
@@ -25,18 +25,12 @@ export async function GET(request: Request, context: RouteContext) {
   );
   if (accessDenied) return accessDenied;
 
-  const ip = getClientIp(request);
-  const bucket = await rateLimit({
-    key: `genomics-object:${ip}`,
+  const limited = await enforceRateLimit(request, {
+    key: "genomics-object",
     limit: 30,
     windowMs: 60_000,
   });
-  if (!bucket.ok) {
-    return NextResponse.json(
-      { error: "Rate limited", retryAt: bucket.resetAtMs },
-      { status: 429 },
-    );
-  }
+  if (limited) return limited;
 
   try {
     const { callsetId } = await context.params;

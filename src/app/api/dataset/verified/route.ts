@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@/lib/api/rateLimitGuard";
 import { parsePageParams } from "@/lib/api/pageParams";
 import {
   getVerifiedDataset,
   getVerifiedDatasetPage,
 } from "@/lib/data/datasetProvider";
 import type { DatasetResource } from "@/lib/data/sliceVerifiedDataset";
-import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
 
 const VALID_RESOURCES = new Set<DatasetResource>([
   "companies",
@@ -15,18 +15,12 @@ const VALID_RESOURCES = new Set<DatasetResource>([
 ]);
 
 export async function GET(request: Request) {
-  const ip = getClientIp(request);
-  const limit = await rateLimit({
-    key: `verifiedDataset:${ip}`,
+  const limited = await enforceRateLimit(request, {
+    key: "verifiedDataset",
     limit: 20,
     windowMs: 60_000,
   });
-  if (!limit.ok) {
-    return NextResponse.json(
-      { error: "Rate limited", retryAt: limit.resetAtMs },
-      { status: 429 },
-    );
-  }
+  if (limited) return limited;
 
   const url = new URL(request.url);
   const { limit: pageLimit, offset } = parsePageParams(url.searchParams);

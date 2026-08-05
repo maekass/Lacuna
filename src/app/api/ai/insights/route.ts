@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
+import { enforceRateLimit } from "@/lib/api/rateLimitGuard";
 import {
   generateAcquisitionInsights,
   generateEvidenceSummary,
@@ -36,18 +36,12 @@ export function GET() {
 
 /** POST — generate one insight type for a company context (quality-gated). */
 export async function POST(request: NextRequest) {
-  const ip = getClientIp(request);
-  const limit = await rateLimit({
-    key: `aiInsights:${ip}`,
+  const limited = await enforceRateLimit(request, {
+    key: "aiInsights",
     limit: 10,
     windowMs: 60_000,
   });
-  if (!limit.ok) {
-    return NextResponse.json(
-      { error: "Rate limited", retryAt: limit.resetAtMs },
-      { status: 429 },
-    );
-  }
+  if (limited) return limited;
 
   if (!isAIConfigured()) {
     return NextResponse.json(
@@ -164,9 +158,8 @@ export async function POST(request: NextRequest) {
       modelId: result.modelId,
     });
   } catch (error) {
-    const message = error instanceof Error
-      ? error.message
-      : "Insight generation failed";
+    console.error("ai/insights:", error);
+    const message = "Insight generation failed";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

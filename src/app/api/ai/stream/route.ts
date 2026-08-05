@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { enforceRateLimit } from "@/lib/api/rateLimitGuard";
 import { streamText } from "ai";
-import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
 import { isAIConfigured } from "@/lib/ai/insights";
 import {
   buildAcquisitionInsightPrompt,
@@ -43,18 +43,12 @@ export function GET() {
 
 /** POST — same payload shape as /api/ai/insights but returns a text stream */
 export async function POST(request: NextRequest) {
-  const ip = getClientIp(request);
-  const limit = await rateLimit({
-    key: `aiStream:${ip}`,
+  const limited = await enforceRateLimit(request, {
+    key: "aiStream",
     limit: 10,
     windowMs: 60_000,
   });
-  if (!limit.ok) {
-    return NextResponse.json(
-      { error: "Rate limited", retryAt: limit.resetAtMs },
-      { status: 429 },
-    );
-  }
+  if (limited) return limited;
 
   if (!isAIConfigured()) {
     return NextResponse.json(

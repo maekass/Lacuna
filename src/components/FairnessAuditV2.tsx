@@ -35,6 +35,12 @@ import {
 } from "@/lib/fairness/statisticalMethods";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import {
+  DISPLAY_FONT,
+  displayFont,
+  LABEL_FONT,
+  labelFont,
+} from "@/lib/theme/typography";
 
 /** Founder gender is not in the verified public dataset — no name-inference panel. */
 const SAMPLE_FOUNDERS: FounderClassification[] = [];
@@ -164,7 +170,7 @@ export default function FairnessAuditV2() {
           <div>
             <h2
               className="font-medium text-red-900 text-lg"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Modular Fairness Audit Framework v2.0
             </h2>
@@ -201,7 +207,7 @@ export default function FairnessAuditV2() {
                   : "border-transparent text-lacuna-text-muted hover:text-lacuna-text-primary"
               }`}
               style={{
-                fontFamily: "'Arial Narrow', sans-serif",
+                fontFamily: LABEL_FONT,
                 textTransform: "uppercase",
                 letterSpacing: "0.05em",
               }}
@@ -224,14 +230,14 @@ export default function FairnessAuditV2() {
             <div className="bg-white border border-lacuna-border p-4 rounded-lg">
               <div
                 className="text-xs text-lacuna-text-muted uppercase mb-1"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Sample Size
               </div>
               <div
                 className="text-3xl font-light"
                 style={{
-                  fontFamily: "'Bodoni MT', Didot, serif",
+                  fontFamily: DISPLAY_FONT,
                   color: "#5D4E6D",
                 }}
               >
@@ -245,14 +251,14 @@ export default function FairnessAuditV2() {
             <div className="bg-white border border-lacuna-border p-4 rounded-lg">
               <div
                 className="text-xs text-lacuna-text-muted uppercase mb-1"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Women-Founded
               </div>
               <div
                 className="text-3xl font-light"
                 style={{
-                  fontFamily: "'Bodoni MT', Didot, serif",
+                  fontFamily: DISPLAY_FONT,
                   color: "#E8B4B8",
                 }}
               >
@@ -267,7 +273,7 @@ export default function FairnessAuditV2() {
             <div className="bg-white border border-lacuna-border p-4 rounded-lg">
               <div
                 className="text-xs text-lacuna-text-muted uppercase mb-1"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Observed Power
               </div>
@@ -279,7 +285,7 @@ export default function FairnessAuditV2() {
                     ? "text-yellow-600"
                     : "text-red-600"
                 }`}
-                style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+                style={displayFont}
               >
                 {(parityAnalysis.power.power * 100).toFixed(0)}%
               </div>
@@ -291,14 +297,14 @@ export default function FairnessAuditV2() {
             <div className="bg-white border border-lacuna-border p-4 rounded-lg">
               <div
                 className="text-xs text-lacuna-text-muted uppercase mb-1"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Fisher P-value
               </div>
               <div
                 className="text-3xl font-light"
                 style={{
-                  fontFamily: "'Bodoni MT', Didot, serif",
+                  fontFamily: DISPLAY_FONT,
                   color: "#4A5D8A",
                 }}
               >
@@ -316,7 +322,7 @@ export default function FairnessAuditV2() {
           <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-3"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Headline Findings (with Statistical Rigor)
             </h4>
@@ -366,7 +372,7 @@ export default function FairnessAuditV2() {
             <h4
               className="font-medium mb-3"
               style={{
-                fontFamily: "'Arial Narrow', sans-serif",
+                fontFamily: LABEL_FONT,
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
               }}
@@ -437,7 +443,7 @@ export default function FairnessAuditV2() {
           <div className="bg-white border border-lacuna-border rounded-lg p-6">
             <h4
               className="font-medium mb-4"
-              style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+              style={displayFont}
             >
               Demographic Parity: Rigorous Statistical Tests
             </h4>

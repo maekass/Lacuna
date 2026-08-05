@@ -16,6 +16,14 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import {
+  DISPLAY_FONT,
+  displayFont,
+  LABEL_FONT,
+  labelFont,
+  labelFontUppercase,
+} from "@/lib/theme/typography";
+import AnalysisPanelHeader from "@/components/ui/AnalysisPanelHeader";
 
 export interface FounderClassification {
   name: string;
@@ -109,26 +117,16 @@ export default function GenderInferenceQuality({
       className="space-y-6"
     >
       {/* Header */}
-      <div className="border-b border-lacuna-border pb-4">
-        <h3
-          className="text-xl font-light tracking-tight"
-          style={{
-            fontFamily: "'Bodoni MT', Didot, serif",
-            textTransform: "uppercase",
-          }}
-        >
-          Gender Inference Quality Report
-        </h3>
-        <p
-          className="text-xs tracking-widest text-lacuna-text-muted mt-1"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
-        >
-          Provider: {apiProvider} | Transparent Measurement Error Quantification
-        </p>
-      </div>
+      <AnalysisPanelHeader
+        title="Gender Inference Quality Report"
+        subtitle={
+          <>
+            Provider: {apiProvider}{" "}
+            | Transparent Measurement Error Quantification
+          </>
+        }
+        size="md"
+      />
 
       {/* Top-line Quality Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -136,7 +134,7 @@ export default function GenderInferenceQuality({
           <div
             className="text-3xl font-light"
             style={{
-              fontFamily: "'Bodoni MT', Didot, serif",
+              fontFamily: DISPLAY_FONT,
               color: "#22c55e",
             }}
           >
@@ -144,7 +142,7 @@ export default function GenderInferenceQuality({
           </div>
           <div
             className="text-xs text-lacuna-text-muted uppercase mt-1"
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+            style={labelFont}
           >
             Provider Accuracy
           </div>
@@ -154,7 +152,7 @@ export default function GenderInferenceQuality({
           <div
             className="text-3xl font-light"
             style={{
-              fontFamily: "'Bodoni MT', Didot, serif",
+              fontFamily: DISPLAY_FONT,
               color: "#e76f51",
             }}
           >
@@ -162,7 +160,7 @@ export default function GenderInferenceQuality({
           </div>
           <div
             className="text-xs text-lacuna-text-muted uppercase mt-1"
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+            style={labelFont}
           >
             Error Rate
           </div>
@@ -172,7 +170,7 @@ export default function GenderInferenceQuality({
           <div
             className="text-3xl font-light"
             style={{
-              fontFamily: "'Bodoni MT', Didot, serif",
+              fontFamily: DISPLAY_FONT,
               color: "#5D4E6D",
             }}
           >
@@ -180,7 +178,7 @@ export default function GenderInferenceQuality({
           </div>
           <div
             className="text-xs text-lacuna-text-muted uppercase mt-1"
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+            style={labelFont}
           >
             Expected Errors
           </div>
@@ -190,7 +188,7 @@ export default function GenderInferenceQuality({
           <div
             className="text-3xl font-light"
             style={{
-              fontFamily: "'Bodoni MT', Didot, serif",
+              fontFamily: DISPLAY_FONT,
               color: "#4A5D8A",
             }}
           >
@@ -198,7 +196,7 @@ export default function GenderInferenceQuality({
           </div>
           <div
             className="text-xs text-lacuna-text-muted uppercase mt-1"
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+            style={labelFont}
           >
             Ambiguous Names
           </div>
@@ -223,7 +221,7 @@ export default function GenderInferenceQuality({
       <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <h4
           className="font-medium mb-4"
-          style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+          style={displayFont}
         >
           Classification Distribution
         </h4>
@@ -285,7 +283,7 @@ export default function GenderInferenceQuality({
       <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <h4
           className="font-medium mb-4"
-          style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+          style={displayFont}
         >
           Confidence Distribution
         </h4>
@@ -295,7 +293,7 @@ export default function GenderInferenceQuality({
             <div
               className="text-2xl font-light"
               style={{
-                fontFamily: "'Bodoni MT', Didot, serif",
+                fontFamily: DISPLAY_FONT,
                 color: "#22c55e",
               }}
             >
@@ -303,7 +301,7 @@ export default function GenderInferenceQuality({
             </div>
             <div
               className="text-xs text-green-700 uppercase mt-1"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               High Confidence
             </div>
@@ -314,7 +312,7 @@ export default function GenderInferenceQuality({
             <div
               className="text-2xl font-light"
               style={{
-                fontFamily: "'Bodoni MT', Didot, serif",
+                fontFamily: DISPLAY_FONT,
                 color: "#eab308",
               }}
             >
@@ -322,7 +320,7 @@ export default function GenderInferenceQuality({
             </div>
             <div
               className="text-xs text-yellow-700 uppercase mt-1"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               Medium Confidence
             </div>
@@ -333,7 +331,7 @@ export default function GenderInferenceQuality({
             <div
               className="text-2xl font-light"
               style={{
-                fontFamily: "'Bodoni MT', Didot, serif",
+                fontFamily: DISPLAY_FONT,
                 color: "#ef4444",
               }}
             >
@@ -341,7 +339,7 @@ export default function GenderInferenceQuality({
             </div>
             <div
               className="text-xs text-red-700 uppercase mt-1"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               Low Confidence
             </div>
@@ -354,7 +352,7 @@ export default function GenderInferenceQuality({
       <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <h4
           className="font-medium mb-4"
-          style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+          style={displayFont}
         >
           Inference Source Attribution
         </h4>
@@ -367,7 +365,7 @@ export default function GenderInferenceQuality({
                 ? "bg-[#5D4E6D] text-white"
                 : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-subtle"
             }`}
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+            style={labelFont}
           >
             All ({stats.total})
           </button>
@@ -380,7 +378,7 @@ export default function GenderInferenceQuality({
                   ? "bg-[#5D4E6D] text-white"
                   : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-subtle"
               }`}
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               {source.replace("_", " ")} ({count})
             </button>
@@ -392,7 +390,7 @@ export default function GenderInferenceQuality({
           <table className="w-full text-xs">
             <thead
               className="text-lacuna-text-muted uppercase border-b border-lacuna-border"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               <tr>
                 <th className="text-left py-2">Name</th>
@@ -448,7 +446,7 @@ export default function GenderInferenceQuality({
           <span
             className="font-medium"
             style={{
-              fontFamily: "'Arial Narrow', sans-serif",
+              fontFamily: LABEL_FONT,
               textTransform: "uppercase",
               letterSpacing: "0.1em",
             }}
@@ -473,7 +471,7 @@ export default function GenderInferenceQuality({
                 <thead>
                   <tr
                     className="text-xs text-lacuna-text-muted uppercase border-b border-lacuna-border"
-                    style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                    style={labelFont}
                   >
                     <th className="text-left py-2">Origin</th>
                     <th className="text-right py-2">Accuracy</th>
@@ -527,10 +525,7 @@ export default function GenderInferenceQuality({
       <div className="bg-lacuna-surface-inverse text-white p-4 rounded-lg text-sm">
         <h4
           className="font-medium mb-2"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
+          style={labelFontUppercase}
         >
           Methodology
         </h4>
