@@ -1,5 +1,3 @@
-import { createSeededRng } from "./random";
-
 /**
  * Bias-corrected and accelerated (BCa) bootstrap confidence intervals.
  *
@@ -16,6 +14,9 @@ import { createSeededRng } from "./random";
  * - n < 10, making jackknife acceleration unreliable; or
  * - adjusted BCa quantiles are non-finite, degenerate, or out of bounds.
  */
+
+import { createSeededRng } from "./random";
+
 export interface BcaOptions {
   resamples: number;
   level: number;
