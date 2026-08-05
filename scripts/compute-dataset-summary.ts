@@ -44,7 +44,7 @@ function main() {
   console.log(`  Companies: ${summary.headline.companiesInNetwork}`);
   console.log(`  Verified deals: ${summary.headline.verifiedDeals}`);
   console.log(
-    `  Disclosed value: ${summary.headline.disclosedValueBillionsLabel}`,
+    `  All-scope disclosed value: ${summary.headline.disclosedValueBillionsLabel}`,
   );
   console.log(`  Source citations: ${summary.headline.uniqueSourceCitations}`);
   console.log(

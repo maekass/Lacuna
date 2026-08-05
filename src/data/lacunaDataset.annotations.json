@@ -1,12 +1,11 @@
 {
   "version": 1,
-  "description": "Sidecar annotations for lacunaDataset \u2014 scope, value provenance tier, terminal status, date precision. Not a substitute for dataset.verified.json fields.",
+  "description": "Sidecar annotations for lacunaDataset \u2014 scope, value provenance tier, date precision, and status history. Not a substitute for dataset.verified.json fields.",
   "deals": {
     "deal1": {
       "valueTier": "sec_filing",
       "scope": "adjacency",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -24,7 +23,6 @@
       "valueTier": "market_research",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -42,7 +40,6 @@
       "valueTier": "market_research",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -60,7 +57,6 @@
       "valueTier": "sec_filing",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -78,7 +74,6 @@
       "valueTier": "market_research",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "announced",
       "statusHistory": [
         {
           "status": "announced",
@@ -91,7 +86,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "announced",
       "statusHistory": [
         {
           "status": "announced",
@@ -104,7 +98,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -122,7 +115,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -140,7 +132,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -158,7 +149,6 @@
       "valueTier": "sec_filing",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -176,7 +166,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -194,7 +183,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "terminated",
       "statusHistory": [
         {
           "status": "announced",
@@ -217,7 +205,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "announced",
       "statusHistory": [
         {
           "status": "announced",
@@ -230,7 +217,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -248,7 +234,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -266,7 +251,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -284,7 +268,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -302,7 +285,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "announced",
       "statusHistory": [
         {
           "status": "announced",
@@ -315,7 +297,6 @@
       "valueTier": "sec_filing",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -333,7 +314,6 @@
       "valueTier": "sec_filing",
       "scope": "adjacency",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -351,7 +331,6 @@
       "valueTier": "market_research",
       "scope": "adjacency",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -369,7 +348,6 @@
       "valueTier": "market_research",
       "scope": "adjacency",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -387,7 +365,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -405,7 +382,6 @@
       "valueTier": "sec_filing",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -423,7 +399,6 @@
       "valueTier": "sec_filing",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -441,7 +416,6 @@
       "valueTier": "sec_filing",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -459,7 +433,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -477,7 +450,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -495,7 +467,6 @@
       "valueTier": "trade_press",
       "scope": "adjacency",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -513,7 +484,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -531,7 +501,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -549,7 +518,6 @@
       "valueTier": "sec_filing",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -567,7 +535,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -585,7 +552,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -603,7 +569,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -621,7 +586,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -639,7 +603,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -657,7 +620,6 @@
       "valueTier": "sec_filing",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -675,7 +637,6 @@
       "valueTier": "sec_filing",
       "scope": "adjacency",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -693,7 +654,6 @@
       "valueTier": "trade_press",
       "scope": "adjacency",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -711,7 +671,6 @@
       "valueTier": "trade_press",
       "scope": "adjacency",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -729,7 +688,6 @@
       "valueTier": "trade_press",
       "scope": "adjacency",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -747,7 +705,6 @@
       "valueTier": "sec_filing",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -765,7 +722,6 @@
       "valueTier": "sec_filing",
       "scope": "adjacency",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -783,7 +739,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -801,7 +756,6 @@
       "valueTier": "market_research",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -819,7 +773,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -837,7 +790,6 @@
       "valueTier": "sec_filing",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -855,7 +807,6 @@
       "valueTier": "sec_filing",
       "scope": "adjacency",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -873,7 +824,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -891,7 +841,6 @@
       "valueTier": "sec_filing",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -909,7 +858,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -927,7 +875,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -945,7 +892,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -963,7 +909,6 @@
       "valueTier": "market_research",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -981,7 +926,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -999,7 +943,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -1017,7 +960,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",
@@ -1035,7 +977,6 @@
       "valueTier": "trade_press",
       "scope": "womens_health",
       "announcedPrecision": "day",
-      "terminalStatus": "completed",
       "statusHistory": [
         {
           "status": "announced",

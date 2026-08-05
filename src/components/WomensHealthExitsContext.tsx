@@ -46,8 +46,8 @@ export default function WomensHealthExitsContext() {
             under diagnostics or oncology — surfacing exits investors&apos;
             databases miss. Lacuna&apos;s {lacuna.verifiedDeals}{" "}
             verified deals ({lacuna.disclosedValueBillionsLabel}{" "}
-            disclosed) are a curated educational subset, not this 276-exit
-            universe.
+            all-scope disclosed) are a curated educational subset, not this
+            276-exit universe.
           </p>
         </div>
       </ModelProvenanceHint>

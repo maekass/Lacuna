@@ -22,7 +22,7 @@ export interface HeadlineStats {
   acquirerCount: number;
   networkNodeCount: number;
   verifiedDeals: number;
-  /** @deprecated Prefer disclosedValueMillionsWh — was all-scope sum including adjacency. */
+  /** All-scope sum of disclosed deal values, preserving the published API key. */
   disclosedValueMillions: number;
   disclosedValueBillionsLabel: string;
   /** Women's-health completed disclosed-only (estimand: disclosed_only_observed_sum). */
@@ -61,7 +61,7 @@ export const HEADLINE_STAT_MODELS = {
     definition:
       "verifiedDeals = acquisitions.length in dataset.verified.json (via computeDisclosureStats).",
   },
-  disclosedValue: {
+  womensHealthDisclosedValue: {
     module: "src/lib/data/lacunaDataset.ts",
     exportName: "liveDisclosedStats",
     definition:
@@ -106,8 +106,8 @@ export function formatDisclosedValueBillions(
  * Hub headline metrics derived from the verified dataset.
  * Shared by UI, `/api/dataset/summary`, and `scripts/compute-dataset-summary.ts`.
  *
- * Disclosed-value tile uses lacunaDataset's women's-health completed
- * disclosed-only estimand — not the all-scope adjacency-inflated sum.
+ * The legacy disclosed-value fields preserve the all-scope sum semantics.
+ * Women's-health tiles use lacunaDataset's completed disclosed-only estimand.
  */
 export function computeHeadlineStats(input: HeadlineStatsInput): HeadlineStats {
   const disclosure = computeDisclosureStats(input);
@@ -124,6 +124,10 @@ export function computeHeadlineStats(input: HeadlineStatsInput): HeadlineStats {
     acquirers: input.acquirers as VerifiedDataset["acquirers"],
     acquisitions: input.acquisitions as VerifiedDataset["acquisitions"],
   });
+  const disclosedValueMillions = input.acquisitions.reduce(
+    (sum, deal) => sum + (deal.dealValue ?? 0),
+    0,
+  );
   const disclosedValueMillionsWh = live.womensHealth.disclosedOnlyTotalMillions;
 
   return {
@@ -131,9 +135,9 @@ export function computeHeadlineStats(input: HeadlineStatsInput): HeadlineStats {
     acquirerCount: input.acquirers.length,
     networkNodeCount: disclosure.companiesTotal + input.acquirers.length,
     verifiedDeals: disclosure.dealsTotal,
-    disclosedValueMillions: disclosedValueMillionsWh,
+    disclosedValueMillions,
     disclosedValueBillionsLabel: formatDisclosedValueBillions(
-      disclosedValueMillionsWh,
+      disclosedValueMillions,
     ),
     disclosedValueMillionsWh,
     disclosedValueBillionsLabelWh: formatDisclosedValueBillions(
@@ -178,7 +182,7 @@ export function headlineStatsToTiles(
     {
       label: "WH disclosed value (completed)",
       value: stats.disclosedValueBillionsLabelWh,
-      model: HEADLINE_STAT_MODELS.disclosedValue,
+      model: HEADLINE_STAT_MODELS.womensHealthDisclosedValue,
     },
     {
       label: "Public sources cited",

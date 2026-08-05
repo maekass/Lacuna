@@ -8,7 +8,6 @@ import { announcedFromIsoDay } from "./datePrecision";
 import type {
   AnnouncedDate,
   DealScope,
-  DealStatus,
   LacunaDeal,
   StatusTransition,
   ValueTier,
@@ -19,7 +18,6 @@ interface DealAnnotation {
   readonly valueTier: ValueTier;
   readonly scope: DealScope;
   readonly announcedPrecision: "day" | "month" | "year";
-  readonly terminalStatus: DealStatus;
   readonly statusHistory: readonly StatusTransition[];
   readonly yearMonth?: string;
   readonly year?: number;
