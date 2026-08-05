@@ -3,6 +3,11 @@
  */
 
 import { query } from "@/lib/data/dbClient";
+import {
+  toIsoDate,
+  toIsoDateTime,
+  toNumber,
+} from "@/lib/ingestion/rowCoercion";
 import type { ClassificationConfidence } from "@/lib/ingestion/dealClassificationEngine";
 
 export type FundingEventStatus =
@@ -101,23 +106,6 @@ interface FundingRow {
   updated_at: Date | string;
   review_notes: string | null;
   total_count?: string;
-}
-
-function toIsoDate(value: Date | string | null): string | null {
-  if (value === null) return null;
-  if (value instanceof Date) return value.toISOString().slice(0, 10);
-  return value.slice(0, 10);
-}
-
-function toIsoDateTime(value: Date | string): string {
-  if (value instanceof Date) return value.toISOString();
-  return new Date(value).toISOString();
-}
-
-function toNumber(value: string | number | null): number | null {
-  if (value === null) return null;
-  const n = typeof value === "number" ? value : Number(value);
-  return Number.isFinite(n) ? n : null;
 }
 
 function mapRow(row: FundingRow): FundingEventRecord {

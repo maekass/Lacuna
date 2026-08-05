@@ -4,8 +4,11 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { fetchWithTimeout } from "@/lib/api/fetchWithTimeout";
+import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
 
 const GAMMA_API_BASE = "https://public-api.gamma.app/v1.0";
+const GENERATION_ID_PATTERN = /^[A-Za-z0-9_-]{1,64}$/;
 
 export async function GET(
   request: NextRequest,
@@ -21,12 +24,30 @@ export async function GET(
     );
   }
 
+  if (!GENERATION_ID_PATTERN.test(id)) {
+    return NextResponse.json(
+      { error: "Invalid generation id" },
+      { status: 400 },
+    );
+  }
+
+  const bucket = await rateLimit({
+    key: `gammaStatus:${getClientIp(request)}`,
+    limit: 60,
+    windowMs: 60_000,
+  });
+  if (!bucket.ok) {
+    return NextResponse.json(
+      { error: "Rate limited", retryAt: bucket.resetAtMs },
+      { status: 429 },
+    );
+  }
+
   try {
-    const response = await fetch(`${GAMMA_API_BASE}/generations/${id}`, {
-      headers: {
-        "X-API-KEY": apiKey,
-      },
-    });
+    const response = await fetchWithTimeout(
+      `${GAMMA_API_BASE}/generations/${encodeURIComponent(id)}`,
+      { headers: { "X-API-KEY": apiKey } },
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));

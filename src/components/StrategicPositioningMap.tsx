@@ -25,6 +25,8 @@ import {
   sectorNodeColors,
   stageAxisPositions,
 } from "@/lib/network/strategicPositioningHelpers";
+import { displayFont, LABEL_FONT, labelFont } from "@/lib/theme/typography";
+import MetricTile from "@/components/ui/MetricTile";
 
 interface StrategicPositioningMapProps {
   result: StrategicPositioningResult;
@@ -142,7 +144,7 @@ export default function StrategicPositioningMap(
         <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <h4
             className="font-medium"
-            style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+            style={displayFont}
           >
             Company Strategic Positioning Map
           </h4>
@@ -263,7 +265,7 @@ export default function StrategicPositioningMap(
               textAnchor="middle"
               className="text-sm fill-lacuna-text-primary font-medium"
               style={{
-                fontFamily: "'Arial Narrow', sans-serif",
+                fontFamily: LABEL_FONT,
                 letterSpacing: "0.08em",
               }}
             >
@@ -278,7 +280,7 @@ export default function StrategicPositioningMap(
               className="text-sm fill-lacuna-text-primary font-medium"
               transform={`rotate(-90, 15, ${margin.top + innerHeight / 2})`}
               style={{
-                fontFamily: "'Arial Narrow', sans-serif",
+                fontFamily: LABEL_FONT,
                 letterSpacing: "0.08em",
               }}
             >
@@ -399,7 +401,7 @@ export default function StrategicPositioningMap(
             <div className="absolute left-2 top-2 bg-white border border-lacuna-border rounded-lg p-3 shadow-lg max-w-xs">
               <div
                 className="font-medium text-sm"
-                style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+                style={displayFont}
               >
                 {hoveredCompany.name}
               </div>
@@ -442,7 +444,7 @@ export default function StrategicPositioningMap(
             <div>
               <h5
                 className="font-medium text-lg"
-                style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+                style={displayFont}
               >
                 {selectedCompany.name}
               </h5>
@@ -464,70 +466,34 @@ export default function StrategicPositioningMap(
           </div>
 
           <div className="grid grid-cols-4 gap-3 mb-4">
-            <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
-              <div
-                className="text-2xl font-light"
-                style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
-              >
-                {selectedCompany.founded}
-              </div>
-              <div
-                className="text-xs text-lacuna-text-muted uppercase mt-1"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
-              >
-                Founded
-              </div>
-            </div>
-            <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
-              <div
-                className="text-2xl font-light"
-                style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
-              >
-                {selectedCompany.sector}
-              </div>
-              <div
-                className="text-xs text-lacuna-text-muted uppercase mt-1"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
-              >
-                Sector
-              </div>
-            </div>
-            <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
-              <div
-                className="text-2xl font-light"
-                style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
-              >
-                {selectedCompany.stage}
-              </div>
-              <div
-                className="text-xs text-lacuna-text-muted uppercase mt-1"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
-              >
-                Stage
-              </div>
-            </div>
-            <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
-              <div
-                className="text-2xl font-light"
-                style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
-              >
-                {typeof selectedCompany.lastKnownValuation === "number"
-                  ? `$${selectedCompany.lastKnownValuation}M`
-                  : "N/A"}
-              </div>
-              <div
-                className="text-xs text-lacuna-text-muted uppercase mt-1"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
-              >
-                Valuation
-              </div>
-            </div>
+            <MetricTile
+              value={<>{selectedCompany.founded}</>}
+              label="Founded"
+            />
+            <MetricTile
+              value={<>{selectedCompany.sector}</>}
+              label="Sector"
+            />
+            <MetricTile
+              value={<>{selectedCompany.stage}</>}
+              label="Stage"
+            />
+            <MetricTile
+              value={
+                <>
+                  {typeof selectedCompany.lastKnownValuation === "number"
+                    ? `$${selectedCompany.lastKnownValuation}M`
+                    : "N/A"}
+                </>
+              }
+              label="Valuation"
+            />
           </div>
 
           <div>
             <div
               className="text-xs text-lacuna-text-muted uppercase mb-1"
-              style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+              style={labelFont}
             >
               Foreground Fit
             </div>
@@ -557,7 +523,7 @@ export default function StrategicPositioningMap(
       <div className="bg-white border border-lacuna-border rounded-lg p-6">
         <h4
           className="font-medium mb-3"
-          style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+          style={displayFont}
         >
           Qualitative Patterns Identified
         </h4>
@@ -584,7 +550,7 @@ export default function StrategicPositioningMap(
         <h4
           className="font-medium mb-3"
           style={{
-            fontFamily: "'Arial Narrow', sans-serif",
+            fontFamily: LABEL_FONT,
             textTransform: "uppercase",
             letterSpacing: "0.1em",
           }}

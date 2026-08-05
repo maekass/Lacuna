@@ -14,12 +14,15 @@
  * acceleration estimate becomes unreliable; a warning is attached.
  */
 
-/** Seeded LCG for reproducible bootstrap samples (Knuth MMIX constants). */
+/**
+ * Seeded 32-bit LCG for reproducible bootstrap samples (Numerical Recipes
+ * constants). All arithmetic stays within 32-bit integer range so the
+ * recurrence does not lose precision to floating-point rounding.
+ */
 function lcg(seed: number) {
   let s = seed >>> 0;
   return () => {
-    s = Math.imul(6364136223846793005, s) + 1442695040888963407;
-    s = s >>> 0;
+    s = (Math.imul(1664525, s) + 1013904223) >>> 0;
     return s / 4294967296;
   };
 }

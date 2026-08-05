@@ -1,4 +1,5 @@
 import process from "node:process";
+import { secureEquals } from "@/lib/infra/secureCompare";
 /**
  * Authorize Vercel Cron / manual cron hits to `/api/cron/*`.
  * Production requires `CRON_SECRET` and `Authorization: Bearer <secret>`.
@@ -13,5 +14,5 @@ export function isCronAuthorized(request: Request): boolean {
   }
 
   const auth = request.headers.get("authorization");
-  return auth === `Bearer ${secret}`;
+  return secureEquals(auth, `Bearer ${secret}`);
 }

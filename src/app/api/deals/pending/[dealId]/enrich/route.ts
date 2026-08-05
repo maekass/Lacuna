@@ -70,9 +70,8 @@ export async function POST(
       headers: { "cache-control": "no-store" },
     });
   } catch (error) {
-    const message = error instanceof Error
-      ? error.message
-      : "Failed to enrich pending deal";
+    console.error("deals/pending/[dealId]/enrich:", error);
+    const message = "Failed to enrich pending deal";
     return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 }

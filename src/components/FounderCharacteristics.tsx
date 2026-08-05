@@ -16,6 +16,13 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import {
+  DISPLAY_FONT,
+  displayFont,
+  LABEL_FONT,
+  labelFont,
+} from "@/lib/theme/typography";
+import AnalysisPanelHeader from "@/components/ui/AnalysisPanelHeader";
 
 export interface CompanyProfile {
   id: string;
@@ -184,40 +191,25 @@ export default function FounderCharacteristics(
       className="space-y-6"
     >
       {/* Header */}
-      <div className="border-b border-lacuna-border pb-4">
-        <h3
-          className="text-xl font-light tracking-tight"
-          style={{
-            fontFamily: "'Bodoni MT', Didot, serif",
-            textTransform: "uppercase",
-          }}
-        >
-          Founder Characteristics Analysis
-        </h3>
-        <p
-          className="text-xs tracking-widest text-lacuna-text-muted mt-1"
-          style={{
-            fontFamily: "'Arial Narrow', sans-serif",
-            textTransform: "uppercase",
-          }}
-        >
-          Descriptive Profile Comparison | NOT Causal Claims
-        </p>
-      </div>
+      <AnalysisPanelHeader
+        title="Founder Characteristics Analysis"
+        subtitle="Descriptive Profile Comparison | NOT Causal Claims"
+        size="md"
+      />
 
       {/* Sample Summary */}
       <div className="grid grid-cols-2 gap-4">
         <div className="bg-pink-50 border border-pink-200 p-4 rounded-lg">
           <div
             className="text-xs text-pink-700 uppercase mb-2"
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+            style={labelFont}
           >
             Women-Founded Companies
           </div>
           <div
             className="text-3xl font-light"
             style={{
-              fontFamily: "'Bodoni MT', Didot, serif",
+              fontFamily: DISPLAY_FONT,
               color: COLORS.womenDark,
             }}
           >
@@ -232,14 +224,14 @@ export default function FounderCharacteristics(
         <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
           <div
             className="text-xs text-blue-700 uppercase mb-2"
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+            style={labelFont}
           >
             Men-Founded Companies
           </div>
           <div
             className="text-3xl font-light"
             style={{
-              fontFamily: "'Bodoni MT', Didot, serif",
+              fontFamily: DISPLAY_FONT,
               color: COLORS.menDark,
             }}
           >
@@ -262,7 +254,7 @@ export default function FounderCharacteristics(
                 ? "bg-[#5D4E6D] text-white"
                 : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-subtle"
             }`}
-            style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+            style={labelFont}
           >
             {v === "sector"
               ? "By Sector"
@@ -284,7 +276,7 @@ export default function FounderCharacteristics(
         >
           <h4
             className="font-medium mb-4"
-            style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+            style={displayFont}
           >
             Sector Distribution Comparison
           </h4>
@@ -370,7 +362,7 @@ export default function FounderCharacteristics(
         >
           <h4
             className="font-medium mb-4"
-            style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+            style={displayFont}
           >
             Stage Distribution Comparison
           </h4>
@@ -419,7 +411,7 @@ export default function FounderCharacteristics(
         >
           <h4
             className="font-medium mb-4"
-            style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+            style={displayFont}
           >
             Time to Acquisition (Years)
           </h4>
@@ -428,14 +420,14 @@ export default function FounderCharacteristics(
             <div className="bg-pink-50 p-4 rounded-lg border border-pink-200">
               <div
                 className="text-xs text-pink-700 uppercase mb-2"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Women-Founded
               </div>
               <div
                 className="text-3xl font-light"
                 style={{
-                  fontFamily: "'Bodoni MT', Didot, serif",
+                  fontFamily: DISPLAY_FONT,
                   color: COLORS.womenDark,
                 }}
               >
@@ -454,14 +446,14 @@ export default function FounderCharacteristics(
             <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
               <div
                 className="text-xs text-blue-700 uppercase mb-2"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Men-Founded
               </div>
               <div
                 className="text-3xl font-light"
                 style={{
-                  fontFamily: "'Bodoni MT', Didot, serif",
+                  fontFamily: DISPLAY_FONT,
                   color: COLORS.menDark,
                 }}
               >
@@ -502,7 +494,7 @@ export default function FounderCharacteristics(
         >
           <h4
             className="font-medium mb-4"
-            style={{ fontFamily: "'Bodoni MT', Didot, serif" }}
+            style={displayFont}
           >
             Acquisition Value Comparison
           </h4>
@@ -511,14 +503,14 @@ export default function FounderCharacteristics(
             <div className="bg-pink-50 p-4 rounded-lg border border-pink-200">
               <div
                 className="text-xs text-pink-700 uppercase mb-2"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Women-Founded (n={valueComparison.women.count})
               </div>
               <div
                 className="text-3xl font-light"
                 style={{
-                  fontFamily: "'Bodoni MT', Didot, serif",
+                  fontFamily: DISPLAY_FONT,
                   color: COLORS.womenDark,
                 }}
               >
@@ -540,14 +532,14 @@ export default function FounderCharacteristics(
             <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
               <div
                 className="text-xs text-blue-700 uppercase mb-2"
-                style={{ fontFamily: "'Arial Narrow', sans-serif" }}
+                style={labelFont}
               >
                 Men-Founded (n={valueComparison.men.count})
               </div>
               <div
                 className="text-3xl font-light"
                 style={{
-                  fontFamily: "'Bodoni MT', Didot, serif",
+                  fontFamily: DISPLAY_FONT,
                   color: COLORS.menDark,
                 }}
               >
@@ -584,7 +576,7 @@ export default function FounderCharacteristics(
         <h4
           className="font-medium mb-3"
           style={{
-            fontFamily: "'Arial Narrow', sans-serif",
+            fontFamily: LABEL_FONT,
             textTransform: "uppercase",
             letterSpacing: "0.1em",
           }}

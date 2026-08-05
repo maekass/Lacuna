@@ -79,9 +79,8 @@ export async function GET(
       headers: { "cache-control": "no-store" },
     });
   } catch (error) {
-    const message = error instanceof Error
-      ? error.message
-      : "Failed to load pending deal";
+    console.error("deals/pending/[dealId]:", error);
+    const message = "Failed to load pending deal";
     return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 }
@@ -157,9 +156,8 @@ export async function PATCH(
       headers: { "cache-control": "no-store" },
     });
   } catch (error) {
-    const message = error instanceof Error
-      ? error.message
-      : "Failed to update pending deal";
+    console.error("deals/pending/[dealId]:", error);
+    const message = "Failed to update pending deal";
     return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 }

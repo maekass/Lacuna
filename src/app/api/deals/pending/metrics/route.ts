@@ -21,9 +21,8 @@ export async function GET() {
       headers: { "cache-control": "no-store" },
     });
   } catch (error) {
-    const message = error instanceof Error
-      ? error.message
-      : "Failed to load pending queue metrics";
+    console.error("deals/pending/metrics:", error);
+    const message = "Failed to load pending queue metrics";
     return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 }
