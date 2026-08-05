@@ -216,3 +216,99 @@ body {
   background-clip: text;
   color: transparent;
 }
+
+/* Stratified depth: elevation, glass surfaces, and ambient parallax. */
+:root {
+  --elev-1:
+    0 2px 4px -1px rgba(93, 78, 109, 0.12), 0 6px 16px -3px rgba(
+    93,
+    78,
+    109,
+    0.18
+  );
+  --elev-2:
+    0 4px 8px -2px rgba(93, 78, 109, 0.16), 0 16px 36px -8px rgba(
+    93,
+    78,
+    109,
+    0.26
+  );
+  --elev-3:
+    0 8px 18px -4px rgba(93, 78, 109, 0.22), 0 32px 64px -12px rgba(
+    93,
+    78,
+    109,
+    0.34
+  );
+  --elev-float:
+    0 16px 32px -8px rgba(93, 78, 109, 0.3), 0 52px 104px -20px rgba(
+    93,
+    78,
+    109,
+    0.46
+  );
+}
+
+.elev-1 {
+  box-shadow: var(--elev-1);
+}
+
+.elev-2 {
+  box-shadow: var(--elev-2);
+}
+
+.elev-3 {
+  box-shadow: var(--elev-3);
+}
+
+.depth-card {
+  box-shadow: var(--elev-2);
+  transition:
+    box-shadow 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.36s ease;
+}
+
+.depth-card:hover {
+  box-shadow: var(--elev-float);
+  transform: translateY(-8px) scale(1.012);
+}
+
+.glass-layer {
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: saturate(200%) blur(32px);
+  backdrop-filter: saturate(200%) blur(32px);
+}
+
+.glass-layer-tint {
+  background: rgba(240, 235, 244, 0.72);
+  -webkit-backdrop-filter: saturate(185%) blur(24px);
+  backdrop-filter: saturate(185%) blur(24px);
+}
+
+.ambient-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(82px);
+  opacity: 0.6;
+}
+
+@media (max-width: 767px) {
+  .ambient-field {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .depth-card:hover {
+    transform: none;
+  }
+}
