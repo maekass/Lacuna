@@ -20,6 +20,7 @@
  */
 
 import { createSeededRng, shuffle } from "@/lib/stats/random";
+import { normalCdf } from "@/lib/stats/primitives";
 
 export interface BayesianCausalConfig {
   nObservations: number;
@@ -103,8 +104,8 @@ export function bayesianEstimate(
 
   // Probability of positive/negative effect
   const sd = Math.sqrt(posteriorVariance);
-  const probabilityPositive = 1 - normalCDF(0, posteriorMean, sd);
-  const probabilityNegative = normalCDF(0, posteriorMean, sd);
+  const probabilityPositive = 1 - normalCdf((0 - posteriorMean) / sd);
+  const probabilityNegative = normalCdf((0 - posteriorMean) / sd);
 
   // Bayes factor (approximate, for effect vs no effect)
   // BF10 = P(data|H1) / P(data|H0)
@@ -139,33 +140,6 @@ export function bayesianEstimate(
 /**
  * Normal cumulative distribution function
  */
-function normalCDF(x: number, mean: number, sd: number): number {
-  const z = (x - mean) / (sd * Math.sqrt(2));
-  return 0.5 * (1 + erf(z));
-}
-
-/**
- * Error function approximation
- */
-function erf(x: number): number {
-  // Abramowitz and Stegun approximation
-  const sign = x >= 0 ? 1 : -1;
-  x = Math.abs(x);
-
-  const a1 = 0.254829592;
-  const a2 = -0.284496736;
-  const a3 = 1.421413741;
-  const a4 = -1.453152027;
-  const a5 = 1.061405429;
-  const p = 0.3275911;
-
-  const t = 1 / (1 + p * x);
-  const y = 1 -
-    (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
-
-  return sign * y;
-}
-
 /**
  * Calculate Bayes Factor (H1: effect exists vs H0: no effect)
  */

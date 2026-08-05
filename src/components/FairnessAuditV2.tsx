@@ -177,9 +177,10 @@ export default function FairnessAuditV2() {
             <p className="text-sm text-red-700 mt-1">
               Verified companies n={sampleCompanies.length}.{" "}
               {hasFounderGenderLabels
-                ? `Observed power: ${
-                  (parityAnalysis.power.power * 100).toFixed(0)
-                }%.`
+                ? `Prospective minimum detectable difference: ${
+                  (parityAnalysis.power.minimumDetectableDifference * 100)
+                    .toFixed(0)
+                }pp.`
                 : "Founder gender is not in the verified dataset — demographic parity by gender is disabled."}
               {" "}
               <strong>Descriptive analysis only.</strong>
@@ -275,22 +276,17 @@ export default function FairnessAuditV2() {
                 className="text-xs text-lacuna-text-muted uppercase mb-1"
                 style={labelFont}
               >
-                Observed Power
+                Minimum Detectable Difference
               </div>
               <div
-                className={`text-3xl font-light ${
-                  parityAnalysis.power.power >= 0.8
-                    ? "text-green-600"
-                    : parityAnalysis.power.power >= 0.5
-                    ? "text-yellow-600"
-                    : "text-red-600"
-                }`}
+                className="text-3xl font-light text-red-600"
                 style={displayFont}
               >
-                {(parityAnalysis.power.power * 100).toFixed(0)}%
+                {(parityAnalysis.power.minimumDetectableDifference * 100)
+                  .toFixed(1)}pp
               </div>
               <div className="text-xs text-lacuna-text-secondary mt-1">
-                to detect effect
+                at 80% prospective power
               </div>
             </div>
 
@@ -360,9 +356,9 @@ export default function FairnessAuditV2() {
                 {parityAnalysis.bonferroni.numTests} tests significant)
               </li>
               <li>
-                • <strong>Power:</strong>{" "}
-                {(parityAnalysis.power.power * 100).toFixed(0)}%
-                ({parityAnalysis.power.interpretation})
+                • <strong>Prospective MDE:</strong>{" "}
+                {(parityAnalysis.power.minimumDetectableDifference * 100)
+                  .toFixed(1)}pp ({parityAnalysis.power.interpretation})
               </li>
             </ul>
           </div>
@@ -397,9 +393,7 @@ export default function FairnessAuditV2() {
                 : " includes zero"}.
               <br />
               <br />
-              However, our{" "}
-              {(parityAnalysis.power.power * 100).toFixed(0)}% power means we
-              cannot detect effects smaller than{" "}
+              The prospective minimum detectable difference is{" "}
               {(parityAnalysis.power.minimumDetectableDifference * 100).toFixed(
                 0,
               )}pp.
@@ -494,10 +488,16 @@ export default function FairnessAuditV2() {
                     <strong>{parityAnalysis.fisher.pValue.toFixed(4)}</strong>
                   </div>
                   <div>
-                    Odds ratio:{" "}
+                    Odds ratio (Haldane–Anscombe corrected):{" "}
                     <strong>
-                      {parityAnalysis.fisher.oddsRatio.toFixed(2)}
+                      {parityAnalysis.fisher.correctedOddsRatio.toFixed(2)}
                     </strong>
+                  </div>
+                  <div className="text-xs text-lacuna-text-muted">
+                    Exact conditional odds ratio:{" "}
+                    {Number.isFinite(parityAnalysis.fisher.oddsRatio)
+                      ? parityAnalysis.fisher.oddsRatio.toFixed(2)
+                      : "∞"}
                   </div>
                   <div className="text-lacuna-text-secondary mt-1">
                     {parityAnalysis.fisher.interpretation}
@@ -548,20 +548,14 @@ export default function FairnessAuditV2() {
                 </h5>
                 <div className="text-sm space-y-1">
                   <div>
-                    Observed power:{" "}
-                    <strong>
-                      {(parityAnalysis.power.power * 100).toFixed(1)}%
-                    </strong>
-                  </div>
-                  <div>
-                    Minimum detectable difference at 80% power:{" "}
+                    Prospective MDE at 80% power:{" "}
                     <strong>
                       {(parityAnalysis.power.minimumDetectableDifference * 100)
                         .toFixed(1)}pp
                     </strong>
                   </div>
                   <div>
-                    Sample size needed for 80% power:{" "}
+                    Recommended sample size for the observed difference:{" "}
                     <strong>
                       n={parityAnalysis.power.recommendedSampleSize}
                     </strong>

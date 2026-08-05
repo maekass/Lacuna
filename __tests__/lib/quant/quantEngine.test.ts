@@ -106,7 +106,7 @@ describe("HealthImpactModeler", () => {
 });
 
 describe("PortfolioOptimizer", () => {
-  it("produces varying ROI by stage and a valid bundle", () => {
+  it("does not fabricate portfolio ROI from point-only valuations", () => {
     const candidates: QuantCompany[] = [
       makeCompany({
         id: "a",
@@ -128,9 +128,8 @@ describe("PortfolioOptimizer", () => {
       }),
     ];
     const result = new PortfolioOptimizer().optimizePortfolio(candidates, 500);
-    const rois = new Set(result.companies.map((c) => c.roi));
-    expect(rois.size).toBeGreaterThan(1);
-    expect(numericOrNull(result.expectedROI)).not.toBeNull();
+    expect(result.companies).toHaveLength(0);
+    expect(numericOrNull(result.expectedROI)).toBeNull();
   });
 });
 

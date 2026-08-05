@@ -14,6 +14,13 @@
  * - Cohen, J. (1988). "Statistical Power Analysis for the Behavioral Sciences"
  */
 
+import {
+  logGamma,
+  normalCdf as normalCDF,
+  normalQuantile as inverseNormalCDF,
+} from "@/lib/stats/primitives";
+import { benjaminiHochberg, type PValuedTest } from "@/lib/stats/fdr";
+
 /**
  * Wilson confidence interval for a single proportion
  * More accurate than normal approximation for small samples
@@ -103,17 +110,28 @@ export function proportionDifferenceCI(
  */
 export function fishersExactTest(a: number, b: number, c: number, d: number): {
   oddsRatio: number;
+  correctedOddsRatio: number;
   pValue: number;
   interpretation: string;
 } {
   const n = a + b + c + d;
 
   if (n === 0) {
-    return { oddsRatio: 1, pValue: 1, interpretation: "No data" };
+    return {
+      oddsRatio: 1,
+      correctedOddsRatio: 1,
+      pValue: 1,
+      interpretation: "No data",
+    };
   }
 
-  // Odds ratio
-  const oddsRatio = (a * d) / Math.max(1, b * c);
+  const numerator = a * d;
+  const denominator = b * c;
+  const oddsRatio = denominator === 0
+    ? (numerator > 0 ? Infinity : 1)
+    : numerator / denominator;
+  const correctedOddsRatio = (a + 0.5) * (d + 0.5) /
+    ((b + 0.5) * (c + 0.5));
 
   // Calculate p-value using hypergeometric distribution
   const pValue = calculateFishersPValue(a, b, c, d);
@@ -129,7 +147,7 @@ export function fishersExactTest(a: number, b: number, c: number, d: number): {
     interpretation = "No significant association detected";
   }
 
-  return { oddsRatio, pValue, interpretation };
+  return { oddsRatio, correctedOddsRatio, pValue, interpretation };
 }
 
 function calculateFishersPValue(
@@ -160,7 +178,7 @@ function calculateFishersPValue(
 
     const logProb = logHypergeometric(newA, newB, newC, newD);
 
-    if (logProb <= observedLogProb) {
+    if (logProb <= observedLogProb + Math.log1p(1e-7)) {
       pValue += Math.exp(logProb);
     }
   }
@@ -177,12 +195,7 @@ function logHypergeometric(a: number, b: number, c: number, d: number): number {
 }
 
 function logFactorial(n: number): number {
-  if (n <= 1) return 0;
-  let sum = 0;
-  for (let i = 2; i <= n; i++) {
-    sum += Math.log(i);
-  }
-  return sum;
+  return n <= 1 ? 0 : logGamma(n + 1);
 }
 
 /**
@@ -223,27 +236,17 @@ export function benjaminiHochbergCorrection(
   criticalValues: number[];
   numSignificant: number;
 } {
-  const n = pValues.length;
-  const indexed = pValues.map((p, i) => ({ p, originalIndex: i }));
-  indexed.sort((a, b) => a.p - b.p);
-
-  const significant: boolean[] = new Array(n).fill(false);
-  const criticalValues: number[] = new Array(n);
-
-  let largestSignificantRank = -1;
-  for (let i = 0; i < n; i++) {
-    const rank = i + 1;
-    const criticalValue = (rank / n) * fdr;
-    criticalValues[indexed[i].originalIndex] = criticalValue;
-
-    if (indexed[i].p <= criticalValue) {
-      largestSignificantRank = i;
-    }
-  }
-
-  // All tests up to largest significant are considered significant
-  for (let i = 0; i <= largestSignificantRank; i++) {
-    significant[indexed[i].originalIndex] = true;
+  const tests: PValuedTest[] = pValues.map((pValue, index) => ({
+    label: String(index),
+    pValue,
+  }));
+  const corrected = benjaminiHochberg(tests, fdr);
+  const significant = new Array(pValues.length).fill(false);
+  const criticalValues = new Array(pValues.length).fill(0);
+  for (const result of corrected) {
+    const index = Number(result.label);
+    significant[index] = result.significant;
+    criticalValues[index] = (result.rank / pValues.length) * fdr;
   }
 
   return {
@@ -274,8 +277,11 @@ export function cohenH(p1: number, p2: number): {
 }
 
 /**
- * Statistical power analysis for proportion test
- * Returns the probability of correctly rejecting null hypothesis
+ * Prospective sensitivity analysis for a two-sample proportion comparison.
+ *
+ * Returns the minimum detectable difference at 80% prospective power rather
+ * than post-hoc observed power, which is a deterministic transform of the
+ * observed p-value and is not useful for interpreting that same result.
  */
 export function powerAnalysis(
   p1: number,
@@ -284,50 +290,35 @@ export function powerAnalysis(
   n2: number,
   alpha: number = 0.05,
 ): {
-  power: number;
   minimumDetectableDifference: number;
   recommendedSampleSize: number;
   interpretation: string;
 } {
-  cohenH(p1, p2);
-
-  // Standard error under alternative hypothesis
-  const se = Math.sqrt(
-    (p1 * (1 - p1)) / Math.max(1, n1) +
-      (p2 * (1 - p2)) / Math.max(1, n2),
-  );
-
   const zAlpha = inverseNormalCDF(1 - alpha / 2); // Two-sided
   const observedDifference = Math.abs(p1 - p2);
-
-  // Power = P(reject H0 | H1 true)
-  const zBeta = (observedDifference / se) - zAlpha;
-  const power = normalCDF(zBeta);
-
-  // Minimum detectable difference at 80% power
-  const zBeta80 = 0.84; // 80th percentile of standard normal
-  const minimumDetectableDifference = (zAlpha + zBeta80) * se;
+  const totalN = Math.max(1, n1 + n2);
+  const pooledP = (p1 * n1 + p2 * n2) / totalN;
+  const pooledVariance = pooledP * (1 - pooledP);
+  const pooledSe = Math.sqrt(
+    pooledVariance / Math.max(1, n1) +
+      pooledVariance / Math.max(1, n2),
+  );
+  const zBeta80 = 0.8416;
+  const minimumDetectableDifference = (zAlpha + zBeta80) * pooledSe;
 
   // Sample size needed for 80% power to detect the observed difference
   const recommendedSampleSize = observedDifference > 0
     ? Math.ceil(
-      2 * Math.pow((zAlpha + zBeta80) / observedDifference, 2) * p1 * (1 - p1),
+      2 * Math.pow((zAlpha + zBeta80) / observedDifference, 2) *
+        pooledVariance,
     )
     : Infinity;
 
-  let interpretation: string;
-  if (power >= 0.8) {
-    interpretation = "Adequate power to detect this effect";
-  } else if (power >= 0.5) {
-    interpretation = "Moderate power; results uncertain";
-  } else if (power >= 0.2) {
-    interpretation = "Low power; null results inconclusive";
-  } else {
-    interpretation = "Very low power; cannot reliably detect effects";
-  }
+  const interpretation = observedDifference >= minimumDetectableDifference
+    ? "Observed difference exceeds the prospective minimum detectable difference"
+    : "Observed difference is below the prospective minimum detectable difference";
 
   return {
-    power: Math.max(0, Math.min(1, power)),
     minimumDetectableDifference,
     recommendedSampleSize,
     interpretation,
@@ -377,6 +368,14 @@ export function logisticRegression(
   let beta = new Array(pi).fill(0);
   let converged = false;
   let iterations = 0;
+  const ridge = 1e-4;
+  const logLikelihood = (coefficients: number[]): number =>
+    Xi.reduce((sum, row, i) => {
+      const probability = sigmoid(dotProduct(row, coefficients));
+      return sum +
+        y[i] * Math.log(Math.max(1e-15, probability)) +
+        (1 - y[i]) * Math.log(Math.max(1e-15, 1 - probability));
+    }, 0);
 
   for (iterations = 0; iterations < maxIterations; iterations++) {
     // Compute predicted probabilities
@@ -399,12 +398,32 @@ export function logisticRegression(
         }
       }
     }
+    for (let j = 1; j < pi; j++) {
+      gradient[j] -= ridge * beta[j];
+      hessian[j][j] -= ridge;
+    }
 
-    // Newton-Raphson update: beta = beta - H^-1 * g
+    // Newton-Raphson update: beta = beta - H^-1 * g.
     const update = solveLinearSystem(hessian, gradient.map((g) => -g));
     if (!update) break;
 
-    const newBeta = beta.map((b, i) => b - update[i]);
+    const currentLikelihood = logLikelihood(beta);
+    let step = 1;
+    let newBeta = beta.map((b, i) => b + update[i]);
+    while (
+      step > 1 / 1024 &&
+      (!newBeta.every(Number.isFinite) ||
+        logLikelihood(newBeta) < currentLikelihood)
+    ) {
+      step /= 2;
+      newBeta = beta.map((b, i) => b + step * update[i]);
+    }
+    if (
+      !newBeta.every(Number.isFinite) ||
+      logLikelihood(newBeta) < currentLikelihood
+    ) {
+      break;
+    }
 
     // Check convergence
     const change = Math.max(...newBeta.map((b, i) => Math.abs(b - beta[i])));
@@ -429,6 +448,9 @@ export function logisticRegression(
         informationMatrix[j][k] += w * Xi[i][j] * Xi[i][k];
       }
     }
+  }
+  for (let j = 1; j < pi; j++) {
+    informationMatrix[j][j] += ridge;
   }
 
   const covMatrix = invertMatrix(informationMatrix);
@@ -531,80 +553,6 @@ function invertMatrix(matrix: number[][]): number[][] | null {
 
   // Transpose
   return identity.map((_, i) => result.map((row) => row[i]));
-}
-
-function normalCDF(z: number): number {
-  const a1 = 0.254829592;
-  const a2 = -0.284496736;
-  const a3 = 1.421413741;
-  const a4 = -1.453152027;
-  const a5 = 1.061405429;
-  const p = 0.3275911;
-
-  const sign = z >= 0 ? 1 : -1;
-  const x = Math.abs(z) / Math.sqrt(2);
-  const t = 1.0 / (1.0 + p * x);
-  const y = 1.0 -
-    (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
-
-  return 0.5 * (1.0 + sign * y);
-}
-
-function inverseNormalCDF(p: number): number {
-  // Beasley-Springer-Moro algorithm
-  if (p <= 0 || p >= 1) return p <= 0 ? -Infinity : Infinity;
-
-  const a = [
-    -3.969683028665376e+01,
-    2.209460984245205e+02,
-    -2.759285104469687e+02,
-    1.383577518672690e+02,
-    -3.066479806614716e+01,
-    2.506628277459239e+00,
-  ];
-  const b = [
-    -5.447609879822406e+01,
-    1.615858368580409e+02,
-    -1.556989798598866e+02,
-    6.680131188771972e+01,
-    -1.328068155288572e+01,
-  ];
-  const c = [
-    -7.784894002430293e-03,
-    -3.223964580411365e-01,
-    -2.400758277161838e+00,
-    -2.549732539343734e+00,
-    4.374664141464968e+00,
-    2.938163982698783e+00,
-  ];
-  const d = [
-    7.784695709041462e-03,
-    3.224671290700398e-01,
-    2.445134137142996e+00,
-    3.754408661907416e+00,
-  ];
-
-  const pLow = 0.02425;
-  const pHigh = 1 - pLow;
-
-  if (p < pLow) {
-    const q = Math.sqrt(-2 * Math.log(p));
-    return (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q +
-      c[5]) /
-      ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1);
-  } else if (p <= pHigh) {
-    const q = p - 0.5;
-    const r = q * q;
-    return (((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r + a[4]) * r +
-      a[5]) *
-      q /
-      (((((b[0] * r + b[1]) * r + b[2]) * r + b[3]) * r + b[4]) * r + 1);
-  } else {
-    const q = Math.sqrt(-2 * Math.log(1 - p));
-    return -(((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q +
-      c[5]) /
-      ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1);
-  }
 }
 
 export { inverseNormalCDF, normalCDF };

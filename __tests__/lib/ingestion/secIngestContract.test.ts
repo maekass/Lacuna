@@ -103,6 +103,8 @@ describe("SEC ingest contract (msw fixtures)", () => {
   });
 
   beforeEach(async () => {
+    vi.stubEnv("ALLOW_MSW_HTTP", "1");
+    vi.unstubAllGlobals();
     vi.stubEnv("SEC_EDGAR_USER_AGENT", "Lacuna Contract Test test@example.com");
     vi.stubEnv("SEC_SCAN_SINCE", "2024-01-01");
     vi.stubEnv("SEC_LIMIT_PER_TICKER", "5");
