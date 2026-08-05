@@ -15,10 +15,10 @@ export default function WorkspaceNav() {
       >
         <Link
           href="/"
-          className={`touch-target-inline rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+          className={`touch-target-inline pb-0.5 text-sm transition-colors duration-150 ${
             pathname === "/"
-              ? "bg-lacuna-lavender/30 text-lacuna-plum"
-              : "text-lacuna-blue hover:bg-lacuna-pink/15 hover:text-lacuna-plum"
+              ? "border-b-2 border-lacuna-plum font-semibold text-lacuna-plum"
+              : "text-lacuna-blue hover:text-lacuna-plum"
           }`}
           aria-current={pathname === "/" ? "page" : undefined}
         >
@@ -31,10 +31,10 @@ export default function WorkspaceNav() {
             <Link
               key={ws.slug}
               href={ws.href}
-              className={`touch-target-inline rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+              className={`touch-target-inline pb-0.5 text-sm transition-colors duration-150 ${
                 active
-                  ? "bg-lacuna-lavender/30 text-lacuna-plum"
-                  : "text-lacuna-blue hover:bg-lacuna-pink/15 hover:text-lacuna-plum"
+                  ? "border-b-2 border-lacuna-plum font-semibold text-lacuna-plum"
+                  : "text-lacuna-blue hover:text-lacuna-plum"
               }`}
               aria-current={active ? "page" : undefined}
             >
