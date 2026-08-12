@@ -16,25 +16,43 @@ describe("traced lineage collections", () => {
     const result = fromRecords("acquisitions", [
       { id: "d1", targetId: "c1", dealValue: 10, sources: ["deal source"] },
     ])
-      .join("companies", companies, (deal) => deal.targetId)
+      .join("companies", "company", companies, (deal) => deal.targetId)
       .estimate("sector.moic.median");
 
     expect(result.lineage.inputs).toEqual([
       { table: "acquisitions", id: "d1" },
+    ]);
+    expect(result.lineage.supporting).toEqual([
       { table: "companies", id: "c1" },
     ]);
     expect(result.lineage.sources).toEqual(
       expect.arrayContaining([
-        { kind: "citation", rawCitation: "deal source" },
-        { kind: "citation", rawCitation: "company source" },
+        { kind: "prose", rawCitation: "deal source" },
+        { kind: "prose", rawCitation: "company source" },
       ]),
     );
+  });
+
+  it("exposes the explicit joined relation and excludes unmatched sources", () => {
+    const joined = fromRecords("acquisitions", [
+      { id: "d1", targetId: "c1", dealValue: 10 },
+      { id: "d2", targetId: "missing", dealValue: 20 },
+    ]).join("companies", "company", companies, (deal) => deal.targetId);
+
+    expect(joined.records[0].value.company.id).toBe("c1");
+    expect(joined.sources).toEqual([
+      { kind: "prose", rawCitation: "company source" },
+    ]);
+    expect(joined.sources).not.toContainEqual({
+      kind: "prose",
+      rawCitation: "shared source",
+    });
   });
 
   it("records unmatched join rows as exclusions", () => {
     const collection = fromRecords("acquisitions", [
       { id: "d1", targetId: "missing", dealValue: 10 },
-    ]).join("companies", companies, (deal) => deal.targetId);
+    ]).join("companies", "company", companies, (deal) => deal.targetId);
 
     expect(collection.n).toBe(0);
     expect(collection.excluded).toEqual([
@@ -42,6 +60,7 @@ describe("traced lineage collections", () => {
         ref: { table: "acquisitions", id: "d1" },
         reason: "unmatched_join:companies",
         field: "company",
+        evaluatedCount: 1,
       },
     ]);
   });
@@ -63,8 +82,17 @@ describe("traced lineage collections", () => {
     expect(collection.excluded).toHaveLength(2);
     expect(collection.missingness).toEqual([
       { field: "dealValue", missing: 1, total: 3 },
-      { field: "totalFunding", missing: 1, total: 3 },
+      { field: "totalFunding", missing: 1, total: 2 },
     ]);
+  });
+
+  it("does not classify unfielded exclusions as missingness", () => {
+    const collection = fromRecords("acquisitions", [
+      { id: "d1", dealValue: 10 },
+    ]).exclude(() => true, "out_of_scope");
+
+    expect(collection.excluded).toHaveLength(1);
+    expect(collection.missingness).toEqual([]);
   });
 
   it("suppresses below minN and estimates above it", () => {

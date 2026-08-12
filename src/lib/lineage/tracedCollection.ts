@@ -1,6 +1,7 @@
 import type { InsufficientData, QuantValue } from "@/lib/quant/types";
 import { estimateRegisteredMetric, getMetricDeclaration } from "./registry";
 import type {
+  DatasetTable,
   ExcludedRef,
   Lineage,
   LineageOptions,
@@ -13,23 +14,16 @@ import type {
 } from "./types";
 
 interface CollectionState<T> {
-  readonly table: string;
+  readonly table: DatasetTable;
   readonly records: readonly TracedRecord<T>[];
   readonly excluded: readonly ExcludedRef[];
   readonly inputCount: number;
-  readonly inputRefs: readonly RecordRef[];
-  readonly sources: readonly SourceRef[];
+  readonly supporting: readonly RecordRef[];
   readonly options: LineageOptions;
 }
 
 export interface JoinableRecord extends RecordWithSources {
   readonly id: string;
-}
-
-function singularize(table: string): string {
-  if (table.endsWith("ies")) return `${table.slice(0, -3)}y`;
-  if (table.endsWith("s")) return table.slice(0, -1);
-  return table;
 }
 
 function uniqueBy<T>(items: readonly T[], key: (item: T) => string): T[] {
@@ -43,11 +37,13 @@ function uniqueBy<T>(items: readonly T[], key: (item: T) => string): T[] {
 }
 
 function sourceKey(source: SourceRef): string {
-  return JSON.stringify(source);
+  return source.url ??
+    source.secAccession ??
+    `${source.kind}:${source.rawCitation}`;
 }
 
 function sourceFromCitation(rawCitation: string): SourceRef {
-  return { kind: "citation", rawCitation };
+  return { kind: "prose", rawCitation };
 }
 
 function sourcesForRecord(record: RecordWithSources): SourceRef[] {
@@ -59,22 +55,26 @@ function sourcesForRecord(record: RecordWithSources): SourceRef[] {
   return uniqueBy([...structured, ...citations], sourceKey);
 }
 
-function recordSources<T>(record: TracedRecord<T>): SourceRef[] {
-  return [...record.sources];
-}
-
 function missingnessFor(
   excluded: readonly ExcludedRef[],
-  total: number,
 ): Missingness[] {
-  const counts = new Map<string, number>();
+  const counts = new Map<string, { missing: number; total: number }>();
   for (const entry of excluded) {
-    const field = entry.field ?? entry.reason;
-    counts.set(field, (counts.get(field) ?? 0) + 1);
+    if (!entry.field) continue;
+    const key = `${entry.field}:${entry.evaluatedCount}`;
+    const current = counts.get(key) ?? {
+      missing: 0,
+      total: entry.evaluatedCount,
+    };
+    current.missing += 1;
+    counts.set(key, current);
   }
   return [...counts.entries()]
     .sort(([a], [b]) => a.localeCompare(b))
-    .map(([field, missing]) => ({ field, missing, total }));
+    .map(([key, value]) => ({
+      field: key.slice(0, key.lastIndexOf(":")),
+      ...value,
+    }));
 }
 
 function makeLineage(
@@ -86,20 +86,16 @@ function makeLineage(
   return {
     metricId,
     estimator,
-    inputs: uniqueBy(
-      [...state.inputRefs, ...state.excluded.map((entry) => entry.ref)],
-      (ref) => `${ref.table}:${ref.id}`,
-    ),
+    inputs: state.records.map((record) => record.ref),
+    supporting: state.supporting,
     sources: uniqueBy(
-      [
-        ...state.sources,
-        ...state.records.flatMap(recordSources),
-      ],
+      state.records.flatMap((record) => record.sources),
       sourceKey,
     ),
     n: state.records.length,
+    originalInputCount: state.inputCount,
     excluded: state.excluded,
-    missingness: missingnessFor(state.excluded, state.inputCount),
+    missingness: missingnessFor(state.excluded),
     suppression,
     datasetVersion: state.options.datasetVersion,
     computedAt: state.options.computedAt ?? new Date().toISOString(),
@@ -117,7 +113,7 @@ export class TracedCollection<T> {
   private constructor(private readonly state: CollectionState<T>) {}
 
   static fromRecords<T extends JoinableRecord>(
-    table: string,
+    table: RecordRef["table"],
     records: readonly T[],
     options: LineageOptions = {},
   ): TracedCollection<T> {
@@ -131,25 +127,24 @@ export class TracedCollection<T> {
       records: tracedRecords,
       excluded: [],
       inputCount: records.length,
-      inputRefs: tracedRecords.map((record) => record.ref),
-      sources: tracedRecords.flatMap((record) => record.sources),
+      supporting: [],
       options,
     });
   }
 
-  join<K extends string, R extends JoinableRecord>(
-    table: K,
+  join<Relation extends string, R extends JoinableRecord>(
+    table: RecordRef["table"],
+    relation: Relation,
     records: readonly R[],
     on: (value: T) => string | undefined,
     reason = `unmatched_join:${table}`,
-  ): TracedCollection<
-    T & { readonly [P in K extends `${infer Stem}s` ? Stem : K]: R }
-  > {
+  ): TracedCollection<T & { readonly [P in Relation]: R }> {
     const rightById = new Map(records.map((record) => [record.id, record]));
-    const joined: TracedRecord<unknown>[] = [];
+    const joined: TracedRecord<
+      T & { readonly [P in Relation]: R }
+    >[] = [];
     const newExcluded = [...this.state.excluded];
-    const joinedRefs = [...this.state.inputRefs];
-    const relation = singularize(table);
+    const joinedRefs: RecordRef[] = [];
 
     for (const left of this.state.records) {
       const right = on(left.value);
@@ -159,6 +154,7 @@ export class TracedCollection<T> {
           ref: left.ref,
           reason,
           field: relation,
+          evaluatedCount: this.state.records.length,
         });
         continue;
       }
@@ -167,7 +163,7 @@ export class TracedCollection<T> {
         value: {
           ...(left.value as object),
           [relation]: match,
-        },
+        } as T & { readonly [P in Relation]: R },
         sources: uniqueBy(
           [...left.sources, ...sourcesForRecord(match)],
           sourceKey,
@@ -181,21 +177,12 @@ export class TracedCollection<T> {
       records: joined,
       excluded: newExcluded,
       inputCount: this.state.inputCount,
-      inputRefs: uniqueBy(
-        joinedRefs,
+      supporting: uniqueBy(
+        [...this.state.supporting, ...joinedRefs],
         (ref) => `${ref.table}:${ref.id}`,
       ),
-      sources: uniqueBy(
-        [
-          ...this.state.sources,
-          ...records.flatMap(sourcesForRecord),
-        ],
-        sourceKey,
-      ),
       options: this.state.options,
-    }) as TracedCollection<
-      T & { readonly [P in K extends `${infer Stem}s` ? Stem : K]: R }
-    >;
+    });
   }
 
   exclude(
@@ -207,7 +194,12 @@ export class TracedCollection<T> {
     const excluded = [...this.state.excluded];
     for (const record of this.state.records) {
       if (predicate(record.value)) {
-        excluded.push({ ref: record.ref, reason, field });
+        excluded.push({
+          ref: record.ref,
+          reason,
+          field,
+          evaluatedCount: this.state.records.length,
+        });
       } else {
         kept.push(record);
       }
@@ -229,11 +221,14 @@ export class TracedCollection<T> {
     });
   }
 
-  estimate(metricId: string): TracedValue<number> {
+  estimate(
+    this: TracedCollection<number>,
+    metricId: string,
+  ): TracedValue<number> {
     const declaration = getMetricDeclaration(metricId);
-    const values = this.state.records.map((record) => record.value as number);
+    const values = this.state.records.map((record) => record.value);
     const lineage = makeLineage(
-      this.state as CollectionState<number>,
+      this.state,
       declaration.id,
       declaration.estimator,
     );
@@ -266,7 +261,10 @@ export class TracedCollection<T> {
   }
 
   get sources(): readonly SourceRef[] {
-    return this.state.sources;
+    return uniqueBy(
+      this.state.records.flatMap((record) => record.sources),
+      sourceKey,
+    );
   }
 
   get records(): readonly TracedRecord<T>[] {
@@ -274,7 +272,7 @@ export class TracedCollection<T> {
   }
 
   get missingness(): readonly Missingness[] {
-    return missingnessFor(this.state.excluded, this.state.inputCount);
+    return missingnessFor(this.state.excluded);
   }
 }
 

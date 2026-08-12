@@ -4,13 +4,31 @@ import type {
   Sufficient,
 } from "@/lib/quant/types";
 
+export type DatasetTable =
+  | "companies"
+  | "acquirers"
+  | "acquisitions"
+  | "cpt_codes"
+  | "hcpcs_codes"
+  | "clinical_trials"
+  | "sec_filings";
+
 export interface RecordRef {
-  readonly table: string;
+  readonly table: DatasetTable;
   readonly id: string;
 }
 
+export type SourceKind =
+  | "sec_filing"
+  | "press"
+  | "crunchbase"
+  | "company_site"
+  | "exchange_filing"
+  | "cms"
+  | "prose";
+
 export interface SourceRef {
-  readonly kind: string;
+  readonly kind: SourceKind;
   readonly rawCitation: string;
   readonly url?: string;
   readonly secAccession?: string;
@@ -23,6 +41,7 @@ export interface ExcludedRef {
   readonly ref: RecordRef;
   readonly reason: string;
   readonly field?: string;
+  readonly evaluatedCount: number;
 }
 
 export interface Missingness {
@@ -35,8 +54,10 @@ export interface Lineage {
   readonly metricId: string;
   readonly estimator: string;
   readonly inputs: readonly RecordRef[];
+  readonly supporting: readonly RecordRef[];
   readonly sources: readonly SourceRef[];
   readonly n: number;
+  readonly originalInputCount: number;
   readonly excluded: readonly ExcludedRef[];
   readonly missingness: readonly Missingness[];
   readonly suppression?: string;

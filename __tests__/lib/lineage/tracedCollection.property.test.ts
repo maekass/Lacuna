@@ -15,8 +15,8 @@ describe("traced lineage collection properties", () => {
             id,
             sources: [`source-${id}`],
           }));
-          const forward = fromRecords("deals", records);
-          const reverse = fromRecords("deals", [...records].reverse());
+          const forward = fromRecords("acquisitions", records);
+          const reverse = fromRecords("acquisitions", [...records].reverse());
           const refs = (value: typeof forward) =>
             value.records.map((record) =>
               `${record.ref.table}:${record.ref.id}`
@@ -42,7 +42,7 @@ describe("traced lineage collection properties", () => {
             id: `d${index}`,
             value: isMissing ? undefined : index + 1,
           }));
-          const collection = fromRecords("deals", records).exclude(
+          const collection = fromRecords("acquisitions", records).exclude(
             (record) => record.value === undefined,
             "value_missing",
             "value",

@@ -8,6 +8,7 @@ export {
   type MetricId,
 } from "./registry";
 export type {
+  DatasetTable,
   ExcludedRef,
   Lineage,
   LineageOptions,
@@ -15,6 +16,7 @@ export type {
   QuantValueWithLineage,
   RecordRef,
   RecordWithSources,
+  SourceKind,
   SourceRef,
   TracedInsufficientData,
   TracedRecord,
