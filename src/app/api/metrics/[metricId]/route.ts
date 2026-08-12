@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import benchmarks from "@/data/computed-benchmarks.json";
 import premiums from "@/data/computed-acquirer-premiums.json";
+import confidenceIntervals from "@/data/computed-confidence-intervals.json";
+import correlations from "@/data/computed-sector-correlations.json";
 
 interface MetricRecord {
   readonly metricId: string;
@@ -8,12 +10,20 @@ interface MetricRecord {
   readonly lineage?: unknown;
 }
 
+function isMetricEstimate(
+  value: unknown,
+): value is { readonly lineage?: { readonly metricId?: string } } {
+  return typeof value === "object" && value !== null;
+}
+
 function findMetric(metricId: string): MetricRecord | undefined {
-  const benchmark = benchmarks.benchmarks.find((row) =>
-    row.medianMoic?.lineage?.metricId === metricId
-  );
-  if (benchmark) {
-    return { metricId, estimate: benchmark.medianMoic };
+  for (const row of benchmarks.benchmarks) {
+    for (const value of Object.values(row)) {
+      if (
+        isMetricEstimate(value) &&
+        value.lineage?.metricId === metricId
+      ) return { metricId, estimate: value };
+    }
   }
   const premium = (
     premiums.premiumMetrics as Record<string, {
@@ -21,9 +31,15 @@ function findMetric(metricId: string): MetricRecord | undefined {
     }>
   )[metricId];
   if (premium) return { metricId, estimate: premium.estimate };
+  const confidence = confidenceIntervals.results.find((result) =>
+    result.metricId === metricId
+  );
+  if (confidence) return { metricId, estimate: confidence.estimate };
   const withheld = [
     ...benchmarks.withheld,
     ...premiums.withheld,
+    ...confidenceIntervals.withheld,
+    ...correlations.withheld,
   ].find((entry) => entry.metricId === metricId);
   return withheld ? { metricId, lineage: withheld.lineage } : undefined;
 }
