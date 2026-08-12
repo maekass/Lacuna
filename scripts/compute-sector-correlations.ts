@@ -1,7 +1,11 @@
 #!/usr/bin/env npx tsx
 
 import { readFileSync, writeFileSync } from "node:fs";
-import { fromRecords, type LineageOptions } from "../src/lib/lineage";
+import {
+  fromRecords,
+  type LineageOptions,
+  summarizeLineage,
+} from "../src/lib/lineage";
 import { isSufficient } from "../src/lib/quant/estimators";
 import type { VerifiedDataset } from "../src/lib/data/datasetSchema";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
@@ -50,7 +54,7 @@ const output = {
       reason:
         "Withheld: Pearson correlation used sectors as observations and the deal-level version has only the same 7 usable pairs; no honest registered estimator exists.",
       lineage: {
-        ...(lineageEstimate.lineage),
+        ...summarizeLineage(lineageEstimate.lineage),
         metricId: "sector.correlation.pearson",
         estimator: "not-computed",
       },

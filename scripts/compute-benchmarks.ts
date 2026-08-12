@@ -6,6 +6,8 @@ import {
   fromRecords,
   getMetricDeclaration,
   type LineageOptions,
+  type LineageSummary,
+  summarizeLineage,
   type TracedValue,
 } from "../src/lib/lineage";
 import { isSufficient } from "../src/lib/quant/estimators";
@@ -36,7 +38,7 @@ interface WithheldMetric {
   readonly metricId: string;
   readonly scope: string;
   readonly reason: string;
-  readonly lineage: TracedValue["lineage"];
+  readonly lineage: LineageSummary;
 }
 
 const base = fromRecords(
@@ -62,7 +64,7 @@ function metric(
       metricId,
       scope,
       reason: estimate.message,
-      lineage: estimate.lineage,
+      lineage: summarizeLineage(estimate.lineage),
     });
     return undefined;
   }

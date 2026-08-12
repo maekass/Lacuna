@@ -5,6 +5,7 @@ import type {
   ExcludedRef,
   Lineage,
   LineageOptions,
+  LineageSummary,
   Missingness,
   RecordRef,
   RecordWithSources,
@@ -18,7 +19,6 @@ interface CollectionState<T> {
   readonly records: readonly TracedRecord<T>[];
   readonly excluded: readonly ExcludedRef[];
   readonly inputCount: number;
-  readonly supporting: readonly RecordRef[];
   readonly options: LineageOptions;
 }
 
@@ -87,7 +87,10 @@ function makeLineage(
     metricId,
     estimator,
     inputs: state.records.map((record) => record.ref),
-    supporting: state.supporting,
+    supporting: uniqueBy(
+      state.records.flatMap((record) => record.supporting),
+      (ref) => `${ref.table}:${ref.id}`,
+    ),
     sources: uniqueBy(
       state.records.flatMap((record) => record.sources),
       sourceKey,
@@ -99,6 +102,26 @@ function makeLineage(
     suppression,
     datasetVersion: state.options.datasetVersion,
     computedAt: state.options.computedAt ?? new Date().toISOString(),
+  };
+}
+
+export function summarizeLineage(lineage: Lineage): LineageSummary {
+  const counts = new Map<string, number>();
+  for (const entry of lineage.excluded) {
+    counts.set(entry.reason, (counts.get(entry.reason) ?? 0) + 1);
+  }
+  return {
+    metricId: lineage.metricId,
+    estimator: lineage.estimator,
+    n: lineage.n,
+    originalInputCount: lineage.originalInputCount,
+    excluded: [...counts.entries()]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([reason, count]) => ({ reason, count })),
+    missingness: lineage.missingness,
+    suppression: lineage.suppression,
+    datasetVersion: lineage.datasetVersion,
+    computedAt: lineage.computedAt,
   };
 }
 
@@ -121,13 +144,13 @@ export class TracedCollection<T> {
       ref: { table, id: record.id },
       value: record,
       sources: sourcesForRecord(record),
+      supporting: [],
     }));
     return new TracedCollection({
       table,
       records: tracedRecords,
       excluded: [],
       inputCount: records.length,
-      supporting: [],
       options,
     });
   }
@@ -144,8 +167,6 @@ export class TracedCollection<T> {
       T & { readonly [P in Relation]: R }
     >[] = [];
     const newExcluded = [...this.state.excluded];
-    const joinedRefs: RecordRef[] = [];
-
     for (const left of this.state.records) {
       const right = on(left.value);
       const match = right === undefined ? undefined : rightById.get(right);
@@ -168,8 +189,11 @@ export class TracedCollection<T> {
           [...left.sources, ...sourcesForRecord(match)],
           sourceKey,
         ),
+        supporting: uniqueBy(
+          [...left.supporting, { table, id: match.id }],
+          (ref) => `${ref.table}:${ref.id}`,
+        ),
       });
-      joinedRefs.push({ table, id: match.id });
     }
 
     return new TracedCollection({
@@ -177,10 +201,6 @@ export class TracedCollection<T> {
       records: joined,
       excluded: newExcluded,
       inputCount: this.state.inputCount,
-      supporting: uniqueBy(
-        [...this.state.supporting, ...joinedRefs],
-        (ref) => `${ref.table}:${ref.id}`,
-      ),
       options: this.state.options,
     });
   }

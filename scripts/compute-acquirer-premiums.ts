@@ -5,6 +5,8 @@ import {
   fromRecords,
   getMetricDeclaration,
   type LineageOptions,
+  type LineageSummary,
+  summarizeLineage,
   type TracedValue,
 } from "../src/lib/lineage";
 import { isSufficient } from "../src/lib/quant/estimators";
@@ -42,7 +44,7 @@ interface AcquirerPremiumOutput {
 interface WithheldMetric {
   readonly metricId: string;
   readonly reason: string;
-  readonly lineage: TracedValue["lineage"];
+  readonly lineage: LineageSummary;
 }
 
 const base = fromRecords(
@@ -119,7 +121,7 @@ function estimate(
     withheld.push({
       metricId,
       reason: result.message,
-      lineage: result.lineage,
+      lineage: summarizeLineage(result.lineage),
     });
     return undefined;
   }
@@ -163,7 +165,7 @@ for (const metricId of Object.keys(denominatorFields) as PremiumMetricId[]) {
           metricId,
           reason:
             `Acquirer ${acquirerName} has n=${collection.n}; aggregate withheld below the registry minimum`,
-          lineage: result.lineage,
+          lineage: summarizeLineage(result.lineage),
         });
       }
       continue;

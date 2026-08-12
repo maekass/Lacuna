@@ -5,6 +5,8 @@ import {
   fromRecords,
   getMetricDeclaration,
   type LineageOptions,
+  type LineageSummary,
+  summarizeLineage,
   type TracedValue,
 } from "../src/lib/lineage";
 import { isSufficient } from "../src/lib/quant/estimators";
@@ -30,7 +32,7 @@ interface ConfidenceResult {
 interface WithheldMetric {
   readonly metricId: string;
   readonly reason: string;
-  readonly lineage: TracedValue["lineage"];
+  readonly lineage: LineageSummary;
 }
 
 const base = fromRecords(
@@ -90,7 +92,7 @@ for (const scope of ["All sectors", ...sectors]) {
       withheld.push({
         metricId,
         reason: estimate.message,
-        lineage: estimate.lineage,
+        lineage: summarizeLineage(estimate.lineage),
       });
       continue;
     }
