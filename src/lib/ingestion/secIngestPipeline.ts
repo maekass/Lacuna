@@ -41,6 +41,8 @@ export interface SecIngestOptions extends ScanOptions {
   /** Skip DB sync (scan + classify only). */
   dryRun?: boolean;
   datasetPath?: string;
+  /** Force deterministic keyword classification, primarily for isolated tests. */
+  forceKeywordOnly?: boolean;
 }
 
 export interface SecIngestResult {
@@ -69,6 +71,7 @@ function loadAcquirerTickers(datasetPath: string): string[] {
 
 async function classifyParsed(
   deal: ParsedAcquisition,
+  forceKeywordOnly = false,
 ): Promise<ClassifiedDeal> {
   const classification = await classifyDealAsync({
     filingText: deal.item201Excerpt ?? deal.filingTextSample,
@@ -76,7 +79,7 @@ async function classifyParsed(
     acquirerName: deal.acquirerName,
     sicCode: deal.sicCode,
     sicDescription: deal.sicDescription,
-  });
+  }, { forceKeywordOnly });
 
   const eligible = shouldAutoInsert(classification.confidence);
 
@@ -220,7 +223,7 @@ async function runSecIngestBody(
     Number.isFinite(classifyConcurrency) && classifyConcurrency > 0
       ? classifyConcurrency
       : 3,
-    classifyParsed,
+    (deal) => classifyParsed(deal, options.forceKeywordOnly),
   );
   const womensHealthCandidates =
     classified.filter((c) => c.womensHealthRelevant).length;

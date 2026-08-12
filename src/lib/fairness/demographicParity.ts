@@ -13,6 +13,8 @@
  * "Inherent trade-offs in the fair determination of risk scores."
  */
 
+import { normalCdf } from "@/lib/stats/primitives";
+
 export type GenderInference = {
   founder: string;
   inferredGender: "female" | "male" | "ambiguous";
@@ -137,7 +139,7 @@ export function calculateDemographicParity(
 
   // Z-test for proportions
   const zScore = se > 0 ? parityDifference / se : 0;
-  const pValue = 2 * (1 - normalCDF(Math.abs(zScore)));
+  const pValue = 2 * (1 - normalCdf(Math.abs(zScore)));
 
   // Power analysis
   const n = validCompanies.length;
@@ -219,7 +221,7 @@ function calculateStatisticalPower(
   const z_beta = (Math.abs(effectSize) / standardError) - z_alpha;
 
   // Power = 1 - β = P(Z > z_beta)
-  return Math.max(0, Math.min(1, normalCDF(z_beta)));
+  return Math.max(0, Math.min(1, normalCdf(z_beta)));
 }
 
 /**
@@ -228,26 +230,6 @@ function calculateStatisticalPower(
 function calculateMinimumDetectableDifference(standardError: number): number {
   // For 80% power, two-sided alpha = 0.05
   return 2.8 * standardError;
-}
-
-/**
- * Normal CDF approximation
- */
-function normalCDF(z: number): number {
-  const a1 = 0.254829592;
-  const a2 = -0.284496736;
-  const a3 = 1.421413741;
-  const a4 = -1.453152027;
-  const a5 = 1.061405429;
-  const p = 0.3275911;
-
-  const sign = z >= 0 ? 1 : -1;
-  const x = Math.abs(z) / Math.sqrt(2);
-  const t = 1.0 / (1.0 + p * x);
-  const y = 1.0 -
-    (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
-
-  return 0.5 * (1.0 + sign * y);
 }
 
 /**

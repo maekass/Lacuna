@@ -125,9 +125,8 @@ export default function FairnessLimitations({
             </span>
           </div>
           <p className="text-xs text-red-600">
-            With n={sampleSize}, we have only{" "}
-            {(observedPower.power * 100).toFixed(0)}% power to detect this
-            effect size
+            With n={sampleSize}, the prospective minimum detectable difference
+            is {(observedPower.minimumDetectableDifference * 100).toFixed(0)}pp
           </p>
         </button>
 
@@ -230,15 +229,20 @@ export default function FairnessLimitations({
               >
                 <th className="text-left py-2">Effect Size (Δ)</th>
                 <th className="text-left py-2">Cohen&apos;s h</th>
-                <th className="text-right py-2">Power</th>
-                <th className="text-right py-2">Min n for 80%</th>
+                <th className="text-right py-2">Prospective MDE</th>
+                <th className="text-right py-2">Recommended n</th>
                 <th className="text-left py-2 pl-4">Interpretation</th>
               </tr>
             </thead>
             <tbody>
               {powerByEffect.map(
                 (
-                  { effectSize, power, recommendedSampleSize, interpretation },
+                  {
+                    effectSize,
+                    minimumDetectableDifference,
+                    recommendedSampleSize,
+                    interpretation,
+                  },
                 ) => {
                   const h = cohenH(baselineRate, baselineRate + effectSize);
                   return (
@@ -253,15 +257,7 @@ export default function FairnessLimitations({
                         {h.h.toFixed(2)} ({h.magnitude})
                       </td>
                       <td className="py-2 text-right">
-                        <span
-                          className={power >= 0.8
-                            ? "text-green-600"
-                            : power >= 0.5
-                            ? "text-yellow-600"
-                            : "text-red-600"}
-                        >
-                          {(power * 100).toFixed(0)}%
-                        </span>
+                        {(minimumDetectableDifference * 100).toFixed(1)}pp
                       </td>
                       <td className="py-2 text-right text-lacuna-text-muted">
                         {recommendedSampleSize < 10000
@@ -280,12 +276,12 @@ export default function FairnessLimitations({
 
           <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded text-sm text-red-800">
             <strong>Bottom Line:</strong>{" "}
-            With our current sample size, we can only reliably detect very large
-            effects (≥{(powerByEffect.find((p) =>
-              p.power >= 0.8
-            )?.effectSize || 0.4) * 100}pp). A null finding does NOT mean
-            &quot;no bias exists&quot; - it means &quot;we couldn&apos;t detect
-            bias smaller than this threshold.&quot;
+            With our current sample size, the prospective minimum detectable
+            difference is approximately{" "}
+            {(observedPower.minimumDetectableDifference * 100).toFixed(0)}pp. A
+            null finding does NOT mean &quot;no bias exists&quot; - it means
+            &quot;we couldn&apos;t detect bias smaller than this
+            threshold.&quot;
           </div>
         </motion.div>
       )}

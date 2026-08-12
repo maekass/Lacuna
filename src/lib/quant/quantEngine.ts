@@ -30,7 +30,6 @@ export type {
 export {
   bcaBootstrapCi,
   BOOTSTRAP_RESAMPLES,
-  createSeededRng,
   DEFAULT_BOOTSTRAP_SEED,
   disclosedFraction,
   gatedMedian,

@@ -5,7 +5,6 @@ import {
   ArrowUpRight,
   CheckCircle2,
   ShieldCheck,
-  Sparkles,
   Stethoscope,
   TrendingUp,
 } from "lucide-react";
@@ -212,54 +211,35 @@ export default function PayerOpsPage() {
   return (
     <div>
       <header className="mb-10 overflow-hidden rounded-3xl border border-lacuna-lavender/40 bg-white/80 p-6 shadow-sm sm:p-8">
-        <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
-          <div>
-            <p className="lacuna-eyebrow text-xs font-semibold text-lacuna-blue">
-              Portfolio project · healthcare payer administration
-            </p>
-            <h1 className="mt-3 max-w-4xl text-3xl font-bold leading-tight text-balance text-lacuna-plum sm:text-5xl">
-              PayerOps Navigator
-              <wbr /> for reducing avoidable administrative waste
-            </h1>
-            <p className="mt-4 max-w-3xl text-base leading-relaxed text-lacuna-blue sm:text-lg">
-              A portfolio case study designed for payer operations roles. This
-              concept shows how a health plan could combine workflow design,
-              operational analytics, and governance controls to reduce
-              prior-authorization and claims-administration friction without
-              weakening oversight.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              {[
-                "Prior auth",
-                "Claims ops",
-                "Provider abrasion",
-                "Appeals",
-                "Rules governance",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-lacuna-lavender/40 bg-lacuna-lavender/15 px-3 py-1 text-sm font-medium text-lacuna-plum"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="rounded-2xl bg-lacuna-plum p-5 text-white shadow-lg">
-            <div className="flex items-center gap-2 text-sm font-semibold text-lacuna-pink">
-              <Sparkles className="h-4 w-4" /> Role-fit signal
-            </div>
-            <p className="mt-3 text-2xl font-bold">
-              Built to demonstrate payer operations fluency, product thinking,
-              analytics, and implementation judgment.
-            </p>
-            <p className="mt-4 text-sm leading-relaxed text-white/75">
-              Use the opportunity simulator below to model avoidable denial
-              volume and admin savings by line of business. All segment inputs
-              are hypothetical — swap in real plan data to generate a grounded
-              business case.
-            </p>
-          </div>
+        <p className="lacuna-eyebrow text-xs font-semibold text-lacuna-blue">
+          Portfolio project · healthcare payer administration
+        </p>
+        <h1 className="mt-3 max-w-4xl text-3xl font-bold leading-tight text-balance text-lacuna-plum sm:text-5xl">
+          PayerOps Navigator
+          <wbr /> for reducing avoidable administrative waste
+        </h1>
+        <p className="mt-4 max-w-3xl text-base leading-relaxed text-lacuna-blue sm:text-lg">
+          A portfolio case study designed for payer operations roles. This
+          concept shows how a health plan could combine workflow design,
+          operational analytics, and governance controls to reduce
+          prior-authorization and claims-administration friction without
+          weakening oversight.
+        </p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          {[
+            "Prior auth",
+            "Claims ops",
+            "Provider abrasion",
+            "Appeals",
+            "Rules governance",
+          ].map((item) => (
+            <span
+              key={item}
+              className="rounded-full border border-lacuna-lavender/40 bg-lacuna-lavender/15 px-3 py-1 text-sm font-medium text-lacuna-plum"
+            >
+              {item}
+            </span>
+          ))}
         </div>
       </header>
 

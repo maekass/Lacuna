@@ -44,6 +44,8 @@ import {
 import AnalysisPanelHeader from "@/components/ui/AnalysisPanelHeader";
 import MetricTile from "@/components/ui/MetricTile";
 
+const NETWORK_SEED = 42;
+
 export default function NetworkAnalysisHonest() {
   const dataset = useVerifiedDataset();
   const { nodes: sampleNodes, edges: sampleEdges } = useMemo(
@@ -65,7 +67,11 @@ export default function NetworkAnalysisHonest() {
   const stats = useMemo(() => {
     const degree = degreeDistribution(sampleNodes, sampleEdges);
     const density = networkDensity(sampleNodes.length, sampleEdges.length);
-    const clustering = clusteringCoefficient(sampleNodes, sampleEdges);
+    const clustering = clusteringCoefficient(
+      sampleNodes,
+      sampleEdges,
+      NETWORK_SEED,
+    );
     const paths = averageShortestPath(sampleNodes, sampleEdges);
 
     // Acquirer concentration analysis
@@ -78,11 +84,20 @@ export default function NetworkAnalysisHonest() {
 
     const gini = giniCoefficient(acquirerDeals);
     const hhi = herfindahlIndex(acquirerDeals);
-    const nullModel = nullModelComparison(acquirerDeals);
+    const nullModel = nullModelComparison(acquirerDeals, 1000, NETWORK_SEED);
     const temporal = temporalAnalysis(sampleEdges);
-    const communities = communityDetection(sampleNodes, sampleEdges);
+    const communities = communityDetection(
+      sampleNodes,
+      sampleEdges,
+      NETWORK_SEED,
+    );
     const positioning = strategicPositioning(sampleNodes, sampleEdges);
-    const stability = networkStabilityAnalysis(sampleNodes, sampleEdges);
+    const stability = networkStabilityAnalysis(
+      sampleNodes,
+      sampleEdges,
+      100,
+      NETWORK_SEED,
+    );
 
     return {
       degree,
@@ -137,6 +152,10 @@ export default function NetworkAnalysisHonest() {
         title="Honest Network Analysis"
         subtitle="Bootstrap CIs | Gini/HHI Concentration | Null Model Comparison"
       />
+      <p className="text-xs text-lacuna-text-muted">
+        Bootstrap CIs and simulation-based metrics use seed{" "}
+        {NETWORK_SEED}; values are reproducible for identical input data.
+      </p>
 
       {/* Tab Navigation */}
       <div className="border-b border-lacuna-border">
