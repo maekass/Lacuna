@@ -1,173 +1,147 @@
 #!/usr/bin/env npx tsx
 
-/**
- * Benchmark Computation Script
- *
- * Derives real valuation multiples from the Lacuna verified dataset (n=59 deals).
- * Computes median, p25, p75 multiples per sector, plus sample sizes and
- * reimbursement-to-valuation correlations.
- *
- * Output: src/data/computed-benchmarks.json
- *
- * Usage: npx tsx scripts/compute-benchmarks.ts
- */
-
-import { existsSync, readFileSync, writeFileSync } from "fs";
-import { resolve } from "path";
+import { readFileSync, writeFileSync } from "node:fs";
+import { resolve } from "node:path";
+import {
+  fromRecords,
+  getMetricDeclaration,
+  type LineageOptions,
+  type TracedValue,
+} from "../src/lib/lineage";
+import { isSufficient } from "../src/lib/quant/estimators";
+import type { VerifiedDataset } from "../src/lib/data/datasetSchema";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 
 const ROOT = resolve(__dirname, "..");
-
-interface Company {
-  id: string;
-  name: string;
-  sector: string;
-  lastKnownValuation?: number;
-  totalFunding?: number;
-  founded?: number;
-  sources?: string[];
-}
-
-interface Acquisition {
-  id: string;
-  targetId: string;
-  targetName: string;
-  acquirerName: string;
-  dealValue?: number;
-  dealValueNote?: string;
-  source?: string;
-  announcedDate?: string;
-}
-
-interface SectorBenchmark {
-  sector: string;
-  medianMultiple: number | null;
-  p25Multiple: number | null;
-  p75Multiple: number | null;
-  sampleSize: number;
-  dealsUsed: string[];
-  sources: string[];
-  computationMethod: string;
-}
-
-// --- Stats helpers ---
-
-function median(values: number[]): number {
-  if (values.length === 0) return NaN;
-  const sorted = [...values].sort((a, b) => a - b);
-  const mid = Math.floor(sorted.length / 2);
-  return sorted.length % 2 === 0
-    ? (sorted[mid - 1] + sorted[mid]) / 2
-    : sorted[mid];
-}
-
-function percentile(values: number[], p: number): number {
-  if (values.length === 0) return NaN;
-  const sorted = [...values].sort((a, b) => a - b);
-  const idx = (sorted.length - 1) * p;
-  const lo = Math.floor(idx);
-  const hi = Math.ceil(idx);
-  if (lo === hi) return sorted[lo];
-  return sorted[lo] + (sorted[hi] - sorted[lo]) * (idx - lo);
-}
-
-function pearson(x: number[], y: number[]): number {
-  if (x.length !== y.length || x.length === 0) return 0;
-  const n = x.length;
-  const meanX = x.reduce((a, b) => a + b, 0) / n;
-  const meanY = y.reduce((a, b) => a + b, 0) / n;
-  let num = 0, denomX = 0, denomY = 0;
-  for (let i = 0; i < n; i++) {
-    num += (x[i] - meanX) * (y[i] - meanY);
-    denomX += (x[i] - meanX) ** 2;
-    denomY += (y[i] - meanY) ** 2;
-  }
-  const denom = Math.sqrt(denomX * denomY);
-  return denom === 0 ? 0 : num / denom;
-}
-
-// --- Main computation ---
-
 const dataset = JSON.parse(
   readFileSync(resolve(ROOT, "src/data/dataset.verified.json"), "utf-8"),
+) as VerifiedDataset;
+const options: LineageOptions = {
+  datasetVersion: dataset.provenance.datasetVersion,
+  computedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
+};
+
+interface BenchmarkRow {
+  readonly sector: string;
+  readonly label: string;
+  readonly definition: string;
+  readonly unit: string;
+  readonly medianMoic?: TracedValue;
+  readonly p25Moic?: TracedValue;
+  readonly p75Moic?: TracedValue;
+  readonly sampleSize: number;
+}
+
+interface WithheldMetric {
+  readonly metricId: string;
+  readonly scope: string;
+  readonly reason: string;
+  readonly lineage: TracedValue["lineage"];
+}
+
+const base = fromRecords(
+  "acquisitions",
+  dataset.acquisitions,
+  options,
+).join(
+  "companies",
+  "company",
+  dataset.companies,
+  (deal) => deal.targetId,
 );
-const companies: Company[] = dataset.companies || [];
-const acquisitions: Acquisition[] = dataset.acquisitions || [];
 
-// Build company lookup
-const companyMap = new Map<string, Company>();
-for (const c of companies) companyMap.set(c.id, c);
-
-// Compute valuation-to-funding multiple for each deal
-// Multiple = dealValue / totalFunding (proxy for revenue multiple when revenue unavailable)
-const sectorData = new Map<
-  string,
-  { multiples: number[]; dealNames: string[]; sources: string[] }
->();
-
-for (const deal of acquisitions) {
-  if (!deal.dealValue || deal.dealValue <= 0) continue;
-
-  const target = companyMap.get(deal.targetId);
-  if (!target) continue;
-
-  const sector = target.sector;
-  if (!sector) continue;
-
-  // Compute multiple: deal value / total funding (proxy when no revenue)
-  const funding = target.totalFunding;
-  if (!funding || funding <= 0) continue;
-
-  const multiple = deal.dealValue / funding;
-
-  if (!sectorData.has(sector)) {
-    sectorData.set(sector, { multiples: [], dealNames: [], sources: [] });
+function metric(
+  collection: ReturnType<typeof base.map>,
+  metricId: string,
+  scope: string,
+  withheld: WithheldMetric[],
+): TracedValue | undefined {
+  const estimate = collection.estimate(metricId);
+  if (!isSufficient(estimate)) {
+    withheld.push({
+      metricId,
+      scope,
+      reason: estimate.message,
+      lineage: estimate.lineage,
+    });
+    return undefined;
   }
-  const sd = sectorData.get(sector)!;
-  sd.multiples.push(multiple);
-  sd.dealNames.push(deal.targetName);
-  if (deal.source) sd.sources.push(deal.source);
+  return estimate;
 }
 
-// Build benchmark output
-const benchmarks: SectorBenchmark[] = [];
-for (const [sector, data] of sectorData) {
-  benchmarks.push({
+function collectionForSector(sector?: string) {
+  let collection = base;
+  if (sector !== undefined) {
+    collection = collection.exclude(
+      (deal) => deal.company.sector !== sector,
+      "out_of_sector",
+    );
+  }
+  return collection
+    .exclude(
+      (deal) => deal.dealValue === undefined || deal.dealValue <= 0,
+      "value_undisclosed",
+      "dealValue",
+    )
+    .exclude(
+      (deal) =>
+        deal.company.totalFunding === undefined ||
+        deal.company.totalFunding <= 0,
+      "funding_unresearched",
+      "totalFunding",
+    )
+    .map((deal) => deal.dealValue! / deal.company.totalFunding!);
+}
+
+function buildRow(
+  sector: string,
+  collection: ReturnType<typeof collectionForSector>,
+  withheld: WithheldMetric[],
+): BenchmarkRow | undefined {
+  const medianMoic = metric(
+    collection,
+    "sector.moic.median",
     sector,
-    medianMultiple: data.multiples.length > 0
-      ? Number(median(data.multiples).toFixed(2))
-      : null,
-    p25Multiple: data.multiples.length > 0
-      ? Number(percentile(data.multiples, 0.25).toFixed(2))
-      : null,
-    p75Multiple: data.multiples.length > 0
-      ? Number(percentile(data.multiples, 0.75).toFixed(2))
-      : null,
-    sampleSize: data.multiples.length,
-    dealsUsed: data.dealNames,
-    sources: [...new Set(data.sources)],
-    computationMethod:
-      "dealValue / totalFunding (proxy multiple — revenue data not available in verified dataset)",
-  });
+    withheld,
+  );
+  const p25Moic = metric(collection, "sector.moic.p25", sector, withheld);
+  const p75Moic = metric(collection, "sector.moic.p75", sector, withheld);
+  const declaration = getMetricDeclaration("sector.moic.median");
+
+  if (!medianMoic && !p25Moic && !p75Moic) return undefined;
+  return {
+    sector,
+    label: declaration.label,
+    definition: declaration.definition,
+    unit: declaration.unit,
+    medianMoic,
+    p25Moic,
+    p75Moic,
+    sampleSize: medianMoic?.sampleSize ?? p25Moic?.sampleSize ??
+      p75Moic?.sampleSize ?? 0,
+  };
 }
 
-// Sort by sample size descending
-benchmarks.sort((a, b) => b.sampleSize - a.sampleSize);
+const withheld: WithheldMetric[] = [];
+const sectors = [
+  ...new Set(dataset.companies.map((company) => company.sector)),
+].filter(Boolean);
+const benchmarks = sectors
+  .map((sector) => buildRow(sector, collectionForSector(sector), withheld))
+  .filter((row): row is BenchmarkRow => row !== undefined);
+const allSectors = buildRow(
+  "All sectors",
+  collectionForSector(),
+  withheld,
+);
+if (allSectors) benchmarks.unshift(allSectors);
 
 const output = {
-  generatedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
+  generatedAt: options.computedAt,
+  datasetVersion: options.datasetVersion,
   source: "Lacuna verified dataset (src/data/dataset.verified.json)",
-  datasetStats: {
-    totalCompanies: companies.length,
-    totalAcquisitions: acquisitions.length,
-    acquisitionsWithDealValue: acquisitions.filter((a) => a.dealValue).length,
-    companiesWithFunding: companies.filter((c) => c.totalFunding).length,
-  },
-  method:
-    "Multiple = dealValue / totalFunding. This is a proxy for revenue multiples when company revenue is not publicly available. Replace with dealValue / annualRevenue when revenue data is sourced.",
   benchmarks,
-  warning:
-    "Small sample sizes (n<5) produce unreliable statistics. Treat n<5 sectors as directional only.",
+  withheld,
 };
 
 writeFileSync(
@@ -176,22 +150,5 @@ writeFileSync(
 );
 
 console.log(
-  "✅ Computed benchmarks written to src/data/computed-benchmarks.json\n",
+  `✅ Computed ${benchmarks.length} benchmark rows; withheld ${withheld.length} metrics`,
 );
-console.log(
-  `Dataset: ${companies.length} companies, ${acquisitions.length} acquisitions`,
-);
-console.log(`Sectors with computed multiples: ${benchmarks.length}\n`);
-
-for (const b of benchmarks) {
-  console.log(
-    `  ${b.sector}: n=${b.sampleSize}, median=${b.medianMultiple}x, p25=${b.p25Multiple}x, p75=${b.p75Multiple}x`,
-  );
-}
-
-console.log(
-  `\n⚠️  Sectors with n<5: ${
-    benchmarks.filter((b) => b.sampleSize < 5).map((b) => b.sector).join(", ")
-  }`,
-);
-console.log("   These should be treated as directional estimates only.");
