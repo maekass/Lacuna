@@ -55,8 +55,9 @@ function buildCellEstimate(
   companies: readonly VerifiedCompanyView[],
   sector: string,
   stage: CanonicalStage,
+  datasetVersion?: string,
 ): { estimate: TracedValue; valuations: readonly number[] } {
-  const collection = fromRecords("companies", companies)
+  const collection = fromRecords("companies", companies, { datasetVersion })
     .exclude((company) => company.sector !== sector, "out_of_sector")
     .exclude(
       (company) => canonicalStage(company.stage) !== stage,
@@ -87,7 +88,11 @@ function classifyMomentum(recent: number, prior: number): MomentumLabel {
 }
 
 export default function ValuationMatrix() {
-  const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
+  const {
+    verifiedCompanies,
+    verifiedAcquisitions,
+    dataProvenance,
+  } = useVerifiedDataset();
   const [activeSectors, setActiveSectors] = useState<Set<string> | null>(null);
   const allSectors = useMemo(
     () =>
@@ -130,6 +135,7 @@ export default function ValuationMatrix() {
           verifiedCompanies,
           sector,
           stage,
+          dataProvenance.datasetVersion,
         );
         const dealCount = verifiedAcquisitions.filter((deal) => {
           const target = byId.get(deal.targetId);
@@ -161,7 +167,12 @@ export default function ValuationMatrix() {
       totalDisclosed: verifiedCompanies.filter(hasValuation).length,
       dealCounts,
     };
-  }, [sectors, verifiedCompanies, verifiedAcquisitions]);
+  }, [
+    dataProvenance.datasetVersion,
+    sectors,
+    verifiedCompanies,
+    verifiedAcquisitions,
+  ]);
 
   const momentum = useMemo(
     () =>

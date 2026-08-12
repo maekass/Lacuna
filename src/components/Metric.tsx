@@ -40,6 +40,16 @@ interface MetricProps {
 
 const defaultFormat = (value: number): string => String(value);
 
+function formatComputedAt(value: string): string {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+    timeStyle: "long",
+    timeZone: "UTC",
+  }).format(date);
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
@@ -268,7 +278,9 @@ function WithheldEvidence(
       <Missingness lineage={lineage} />
       <p className="text-xs text-lacuna-text-muted">
         Dataset {lineage.datasetVersion ?? "unknown"} · computed{" "}
-        {lineage.computedAt}
+        <time dateTime={lineage.computedAt} title={lineage.computedAt}>
+          {formatComputedAt(lineage.computedAt)}
+        </time>
       </p>
     </div>
   );
@@ -300,7 +312,9 @@ function SummaryEvidence({ summary }: { readonly summary: LineageSummary }) {
       <Missingness lineage={summary} />
       <p className="text-xs text-lacuna-text-muted">
         Dataset {summary.datasetVersion ?? "unknown"} · computed{" "}
-        {summary.computedAt}
+        <time dateTime={summary.computedAt} title={summary.computedAt}>
+          {formatComputedAt(summary.computedAt)}
+        </time>
       </p>
     </div>
   );
