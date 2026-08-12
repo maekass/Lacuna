@@ -31,12 +31,33 @@ export interface AssumptionMetric {
   readonly caveat?: string;
 }
 
+export interface ArtifactMetric {
+  readonly kind: "artifact";
+  readonly metricId: string;
+  readonly estimate:
+    | {
+      readonly kind: "sufficient";
+      readonly value: number;
+      readonly sampleSize: number;
+      readonly confidenceInterval: readonly [number, number];
+    }
+    | {
+      readonly kind: "insufficient";
+      readonly sampleSize: number;
+      readonly minRequired: number;
+      readonly message: string;
+    };
+}
+
 export type MetricProvenance =
   | MeasuredMetric
   | WithheldMetric
   | ProxyMetric
-  | AssumptionMetric;
+  | AssumptionMetric
+  | ArtifactMetric;
 
+export function lineageForMetric(metric: MeasuredMetric): Lineage;
+export function lineageForMetric(metric: WithheldMetric): LineageSummary;
 export function lineageForMetric(
   metric: MeasuredMetric | WithheldMetric,
 ): Lineage | LineageSummary {
