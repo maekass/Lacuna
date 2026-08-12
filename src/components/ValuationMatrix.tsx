@@ -57,11 +57,10 @@ function buildCellEstimate(
   stage: CanonicalStage,
 ): { estimate: TracedValue; valuations: readonly number[] } {
   const collection = fromRecords("companies", companies)
-    .exclude((company) => company.sector !== sector, "out_of_sector", "sector")
+    .exclude((company) => company.sector !== sector, "out_of_sector")
     .exclude(
       (company) => canonicalStage(company.stage) !== stage,
       "out_of_stage",
-      "stage",
     )
     .exclude(
       (company) => !hasValuation(company),
