@@ -1,0 +1,691 @@
+{
+  "generatedAt": "2026-07-06T00:00:00.000Z",
+  "datasetVersion": "v8",
+  "metrics": [
+    {
+      "metricId": "sector.moic.median",
+      "scope": "All sectors",
+      "label": "Median sector MOIC",
+      "definition": "Deal value divided by total capital raised (money-on-invested-capital); not a revenue multiple.",
+      "unit": "x",
+      "estimate": {
+        "kind": "sufficient",
+        "value": 7.2727272727272725,
+        "sampleSize": 7,
+        "disclosedFraction": 1,
+        "confidenceInterval": [
+          2.542372881355932,
+          27.142857142857142
+        ],
+        "selectionCaveat": "Disclosed-price deals are a non-random subsample (100% of n=7 sector deals). Selection bias may inflate medians; Heckman correction not applied."
+      },
+      "n": 7
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Fertility",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 1,
+      "withheldReason": "n=1 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Fertility",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 1,
+      "withheldReason": "n=1 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Fertility",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 1,
+      "withheldReason": "n=1 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "General Wellness",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 3,
+      "withheldReason": "n=3 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "General Wellness",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 3,
+      "withheldReason": "n=3 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "General Wellness",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 3,
+      "withheldReason": "n=3 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Pelvic Health",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Pelvic Health",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Pelvic Health",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Mental Health",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 1,
+      "withheldReason": "n=1 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Mental Health",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 1,
+      "withheldReason": "n=1 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Mental Health",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 1,
+      "withheldReason": "n=1 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Wearables",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Wearables",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Wearables",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Breast Health",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Breast Health",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Breast Health",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Gynecological Surgery",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Gynecological Surgery",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Gynecological Surgery",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Reproductive Health",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 1,
+      "withheldReason": "n=1 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Reproductive Health",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 1,
+      "withheldReason": "n=1 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Reproductive Health",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 1,
+      "withheldReason": "n=1 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Maternal Health",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 1,
+      "withheldReason": "n=1 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Maternal Health",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 1,
+      "withheldReason": "n=1 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Maternal Health",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 1,
+      "withheldReason": "n=1 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Diagnostics",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Diagnostics",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Diagnostics",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Contraception",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Contraception",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Contraception",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Precision Medicine",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Precision Medicine",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Precision Medicine",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Menopause",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Menopause",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Menopause",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Dermatology",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Dermatology",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Dermatology",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Sexual Wellness",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Sexual Wellness",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Sexual Wellness",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Consumer",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Consumer",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Consumer",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Medical Device",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Medical Device",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Medical Device",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Digital Health",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Digital Health",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Digital Health",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Therapeutics",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Therapeutics",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Therapeutics",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Tech Bio",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Tech Bio",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Tech Bio",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Diagnostic",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Diagnostic",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Diagnostic",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Biotech",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Biotech",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Biotech",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Reproductive",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Reproductive",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Reproductive",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.median",
+      "scope": "Wellness",
+      "label": "sector.moic.median",
+      "definition": "sector.moic.median",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "Wellness",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "Wellness",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 0,
+      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "scope": "All sectors",
+      "label": "sector.moic.p25",
+      "definition": "sector.moic.p25",
+      "unit": "x",
+      "n": 7,
+      "withheldReason": "n=7 below minimum 10 for 25th percentile sector MOIC"
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "scope": "All sectors",
+      "label": "sector.moic.p75",
+      "definition": "sector.moic.p75",
+      "unit": "x",
+      "n": 7,
+      "withheldReason": "n=7 below minimum 10 for 75th percentile sector MOIC"
+    }
+  ]
+}

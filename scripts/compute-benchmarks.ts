@@ -13,6 +13,7 @@ import {
 import { isSufficient } from "../src/lib/quant/estimators";
 import type { VerifiedDataset } from "../src/lib/data/datasetSchema";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
+import { withoutLineage, writeSlimArtifact } from "./slimArtifacts";
 
 const ROOT = resolve(__dirname, "..");
 const dataset = JSON.parse(
@@ -149,6 +150,34 @@ const output = {
 writeFileSync(
   resolve(ROOT, "src/data/computed-benchmarks.json"),
   JSON.stringify(output, null, 2) + "\n",
+);
+writeSlimArtifact(
+  "computed-benchmarks.slim.json",
+  output,
+  [
+    ...benchmarks.flatMap((row) =>
+      row.medianMoic
+        ? [{
+          metricId: "sector.moic.median",
+          scope: row.sector,
+          label: row.label,
+          definition: row.definition,
+          unit: row.unit,
+          estimate: withoutLineage(row.medianMoic) as Record<string, unknown>,
+          n: row.medianMoic.sampleSize,
+        }]
+        : []
+    ),
+    ...withheld.map((entry) => ({
+      metricId: entry.metricId,
+      scope: entry.scope,
+      label: entry.metricId,
+      definition: entry.metricId,
+      unit: "x",
+      n: entry.lineage.n,
+      withheldReason: entry.reason,
+    })),
+  ],
 );
 
 console.log(

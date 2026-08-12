@@ -16,6 +16,7 @@ import type {
   VerifiedDataset,
 } from "../src/lib/data/datasetSchema";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
+import { withoutLineage, writeSlimArtifact } from "./slimArtifacts";
 
 const dataset = JSON.parse(
   readFileSync("src/data/dataset.verified.json", "utf-8"),
@@ -190,6 +191,28 @@ const output = {
 writeFileSync(
   "src/data/computed-acquirer-premiums.json",
   JSON.stringify(output, null, 2) + "\n",
+);
+writeSlimArtifact(
+  "computed-acquirer-premiums.slim.json",
+  output,
+  [
+    ...Object.values(premiumMetrics).map((metric) => ({
+      metricId: metric.metricId,
+      label: metric.label,
+      definition: metric.definition,
+      unit: metric.unit,
+      estimate: withoutLineage(metric.estimate) as Record<string, unknown>,
+      n: metric.estimate.sampleSize,
+    })),
+    ...withheld.map((entry) => ({
+      metricId: entry.metricId,
+      label: entry.metricId,
+      definition: entry.metricId,
+      unit: "x",
+      n: entry.lineage.n,
+      withheldReason: entry.reason,
+    })),
+  ],
 );
 
 console.log(

@@ -32,6 +32,19 @@ export const METRIC_REGISTRY = {
       "Disclosed-price deals are a non-random subsample.",
     ],
   },
+  "valuation.matrix.median": {
+    id: "valuation.matrix.median",
+    label: "Median disclosed valuation",
+    definition:
+      "Median last-known valuation for companies in a normalized sector and stage bucket.",
+    unit: "$M",
+    estimator: "gatedMedian",
+    minN: 5,
+    caveats: [
+      "Only companies with a disclosed last-known valuation contribute.",
+      "Sector and stage buckets are normalized from verified dataset labels.",
+    ],
+  },
   "sector.moic.p25": {
     id: "sector.moic.p25",
     label: "25th percentile sector MOIC",

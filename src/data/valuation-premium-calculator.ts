@@ -74,14 +74,39 @@ function loadSectorBenchmarks(): {
   }> = [];
 
   try {
-    // Dynamic require — works in both Node scripts and Next.js server components.
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const raw = require("./computed-benchmarks.json") as {
-      benchmarks: typeof computed;
-      withheld: typeof withheld;
+    const raw = require("./computed-benchmarks.slim.json") as {
+      metrics: Array<{
+        metricId: string;
+        scope?: string;
+        definition: string;
+        estimate?: { kind: "sufficient"; value: number };
+        n: number;
+        withheldReason?: string;
+      }>;
     };
-    computed = raw.benchmarks ?? [];
-    withheld = raw.withheld ?? [];
+    computed = raw.metrics
+      .filter((metric) =>
+        metric.metricId === "sector.moic.median" &&
+        metric.estimate !== undefined
+      )
+      .map((metric) => ({
+        sector: metric.scope ?? metric.metricId,
+        definition: metric.definition,
+        medianMoic: metric.estimate,
+        sampleSize: metric.n,
+      }));
+    withheld = raw.metrics
+      .filter((metric) =>
+        metric.metricId === "sector.moic.median" &&
+        metric.withheldReason !== undefined
+      )
+      .map((metric) => ({
+        metricId: metric.metricId,
+        scope: metric.metricId,
+        reason: metric.withheldReason ?? "Insufficient disclosed data",
+        lineage: { n: metric.n },
+      }));
   } catch {
     // File not yet generated.
   }
@@ -130,13 +155,15 @@ function loadAcquirerPremiums(): Record<
 > {
   try {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const raw = require("./computed-acquirer-premiums.json") as {
-      premiumMetrics?: Record<string, {
+    const raw = require("./computed-acquirer-premiums.slim.json") as {
+      metrics?: Array<{
+        metricId: string;
         estimate?: { kind: "sufficient"; value: number };
       }>;
     };
     const result: Record<string, { premium: number; capability: string }> = {};
-    for (const [metricId, metric] of Object.entries(raw.premiumMetrics ?? {})) {
+    for (const metric of raw.metrics ?? []) {
+      const metricId = metric.metricId;
       if (!metric.estimate || metric.estimate.kind !== "sufficient") continue;
       const denominator = metricId.split(".").at(-1);
       if (denominator === "preDealValuation") {
