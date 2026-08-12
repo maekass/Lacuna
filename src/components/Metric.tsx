@@ -21,6 +21,7 @@ import {
   SheetBody,
   SheetClose,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -110,6 +111,7 @@ function RecordList({
   readonly records: readonly { table: string; id: string }[];
   readonly limit?: number;
 }) {
+  if (records.length === 0) return null;
   const visible = records.slice(0, limit);
   return (
     <section>
@@ -135,21 +137,26 @@ function RecordList({
 
 function ExclusionRollup({
   exclusions,
+  expected,
 }: {
   readonly exclusions: readonly ExcludedRef[] | LineageSummary["excluded"];
+  readonly expected?: number;
 }) {
+  if (exclusions.length === 0) return null;
   const counts = new Map<string, number>();
+  let total = 0;
   for (const entry of exclusions) {
-    counts.set(
-      entry.reason,
-      (counts.get(entry.reason) ?? 0) + (
-        "count" in entry ? entry.count : 1
-      ),
-    );
+    const count = "count" in entry ? entry.count : 1;
+    counts.set(entry.reason, (counts.get(entry.reason) ?? 0) + count);
+    total += count;
   }
   return (
     <section>
       <h4 className="font-semibold">Exclusion reasons</h4>
+      <p className="mt-1 text-xs text-lacuna-text-muted">
+        {total}{" "}
+        excluded records{expected === undefined ? "" : ` of ${expected}`}
+      </p>
       <ul className="mt-2 text-xs">
         {[...counts.entries()].map(([reason, count]) => (
           <li key={reason}>{reason}: {count}</li>
@@ -201,28 +208,33 @@ function MeasuredEvidence({
       {additionalEvidence}
       <RecordList title="Contributing records" records={lineage.inputs} />
       <RecordList title="Supporting records" records={lineage.supporting} />
-      <section>
-        <h4 className="font-semibold">Sources</h4>
-        <ul className="mt-2 max-h-40 overflow-y-auto text-xs">
-          {lineage.sources.slice(0, 25).map((source) => (
-            <li key={`${source.kind}:${source.rawCitation}`}>
-              {source.url
-                ? (
-                  <a className="underline" href={source.url}>
-                    {source.rawCitation}
-                  </a>
-                )
-                : source.rawCitation}
-            </li>
-          ))}
-        </ul>
-        {lineage.sources.length > 25 && (
-          <p className="mt-1 text-xs text-lacuna-text-muted">
-            +{lineage.sources.length - 25} more sources
-          </p>
-        )}
-      </section>
-      <ExclusionRollup exclusions={lineage.excluded} />
+      {lineage.sources.length > 0 && (
+        <section>
+          <h4 className="font-semibold">Sources</h4>
+          <ul className="mt-2 max-h-40 overflow-y-auto text-xs">
+            {lineage.sources.slice(0, 25).map((source) => (
+              <li key={`${source.kind}:${source.rawCitation}`}>
+                {source.url
+                  ? (
+                    <a className="underline" href={source.url}>
+                      {source.rawCitation}
+                    </a>
+                  )
+                  : source.rawCitation}
+              </li>
+            ))}
+          </ul>
+          {lineage.sources.length > 25 && (
+            <p className="mt-1 text-xs text-lacuna-text-muted">
+              +{lineage.sources.length - 25} more sources
+            </p>
+          )}
+        </section>
+      )}
+      <ExclusionRollup
+        exclusions={lineage.excluded}
+        expected={lineage.originalInputCount - lineage.n}
+      />
       <Missingness lineage={lineage} />
     </div>
   );
@@ -249,7 +261,10 @@ function WithheldEvidence(
         <h4 className="font-semibold">Why this number is withheld</h4>
         <p className="mt-1">{provenance.estimate.message}</p>
       </section>
-      <ExclusionRollup exclusions={lineage.excluded} />
+      <ExclusionRollup
+        exclusions={lineage.excluded}
+        expected={lineage.originalInputCount - lineage.n}
+      />
       <Missingness lineage={lineage} />
       <p className="text-xs text-lacuna-text-muted">
         Dataset {lineage.datasetVersion ?? "unknown"} · computed{" "}
@@ -278,7 +293,10 @@ function SummaryEvidence({ summary }: { readonly summary: LineageSummary }) {
           {summary.suppression ?? "Insufficient disclosed data"}
         </p>
       </section>
-      <ExclusionRollup exclusions={summary.excluded} />
+      <ExclusionRollup
+        exclusions={summary.excluded}
+        expected={summary.originalInputCount - summary.n}
+      />
       <Missingness lineage={summary} />
       <p className="text-xs text-lacuna-text-muted">
         Dataset {summary.datasetVersion ?? "unknown"} · computed{" "}
@@ -382,6 +400,9 @@ export default function Metric({
       <SheetContent side="right" className="w-[min(32rem,95vw)]">
         <SheetHeader>
           <SheetTitle>{label ?? "Why this number?"}</SheetTitle>
+          <SheetDescription>
+            Evidence and provenance for this metric.
+          </SheetDescription>
           <SheetClose aria-label="Close evidence panel">×</SheetClose>
         </SheetHeader>
         <SheetBody>
