@@ -3,14 +3,18 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import Metric from "@/components/Metric";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
-import { gapScoreForSector } from "@/lib/valuation/burdenCapitalGap";
+import { fromRecords, summarizeLineage, type TracedValue } from "@/lib/lineage";
 import { medianBCaCI } from "@/lib/stats/bootstrap";
+import { gapScoreForSector } from "@/lib/valuation/burdenCapitalGap";
 import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
+import type { MetricProvenance } from "@/lib/provenance/metricProvenance";
 
 /** Minimum n for 80% power to detect d=0.5 at α=0.05 two-tailed ≈ 34 per group. */
 const POWER_80_N = 34;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function HoveredCellTooltip({
   cell,
   allCompanies,
@@ -72,7 +76,7 @@ function HoveredCellTooltip({
       <h4 className="font-semibold text-lacuna-text-primary">
         {cell.stage} · {cell.sector}
       </h4>
-      {cell.medianValuation > 0
+      {cell.medianValuation !== null && cell.medianValuation > 0
         ? (
           <div className="mt-2 space-y-1">
             <p className="text-sm text-lacuna-text-secondary">
@@ -197,7 +201,8 @@ function canonicalStage(raw: string): CanonicalStage | null {
 interface MatrixCell {
   sector: string;
   stage: CanonicalStage;
-  medianValuation: number;
+  estimate: TracedValue;
+  medianValuation: number | null;
   disclosedCount: number;
   totalCount: number;
   dealCount: number;
@@ -208,12 +213,43 @@ const SECTOR_CHIP_ACTIVE =
 const SECTOR_CHIP_INACTIVE =
   "rounded-full px-3 py-1 text-xs font-medium bg-lacuna-lavender/20 text-lacuna-plum";
 
+const METRIC_ID = "valuation.matrix.median";
+
+function buildCellEstimate(
+  companies: readonly VerifiedCompanyView[],
+  sector: string,
+  stage: CanonicalStage,
+): TracedValue {
+  const collection = fromRecords("companies", companies)
+    .exclude(
+      (company) => company.sector !== sector,
+      "out_of_sector",
+      "sector",
+    )
+    .exclude(
+      (company) => canonicalStage(company.stage) !== stage,
+      "out_of_stage",
+      "stage",
+    )
+    .exclude(
+      (company) => typeof company.lastKnownValuation !== "number",
+      "valuation_undisclosed",
+      "lastKnownValuation",
+    )
+    .map((company) => company.lastKnownValuation as number);
+  return collection.estimate(METRIC_ID);
+}
+
+function metricFromEstimate(estimate: TracedValue): MetricProvenance {
+  return estimate.kind === "sufficient" ? { kind: "measured", estimate } : {
+    kind: "withheld",
+    estimate,
+    summary: summarizeLineage(estimate.lineage),
+  };
+}
+
 export default function ValuationMatrix() {
   const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
-  const [hoveredCell, setHoveredCell] = useState<MatrixCell | null>(null);
-  const [tooltipAnchor, setTooltipAnchor] = useState<
-    { x: number; y: number } | null
-  >(null);
 
   const allSectors = useMemo(
     () => Array.from(new Set(verifiedCompanies.map((c) => c.sector))).sort(),
@@ -222,7 +258,10 @@ export default function ValuationMatrix() {
 
   const [activeSectors, setActiveSectors] = useState<Set<string> | null>(null);
 
-  const resolvedActiveSectors = activeSectors ?? new Set(allSectors);
+  const resolvedActiveSectors = useMemo(
+    () => activeSectors ?? new Set(allSectors),
+    [activeSectors, allSectors],
+  );
 
   const allSectorsActive = allSectors.length > 0 &&
     allSectors.every((sector) => resolvedActiveSectors.has(sector));
@@ -232,27 +271,16 @@ export default function ValuationMatrix() {
   }
 
   function toggleSector(sector: string) {
-    let removed = false;
     setActiveSectors((prev) => {
       const next = new Set(prev ?? allSectors);
       if (next.has(sector)) {
         if (next.size <= 1) return prev;
         next.delete(sector);
-        removed = true;
       } else {
         next.add(sector);
       }
       return next;
     });
-    if (removed) {
-      setHoveredCell((cell) => {
-        if (cell?.sector === sector) {
-          setTooltipAnchor(null);
-          return null;
-        }
-        return cell;
-      });
-    }
   }
 
   const {
@@ -287,14 +315,11 @@ export default function ValuationMatrix() {
           const cs = canonicalStage(c.stage);
           return c.sector === sector && cs === stage;
         });
-        const withVal = inCell.filter((c) =>
-          typeof c.lastKnownValuation === "number"
+        const estimate = buildCellEstimate(
+          verifiedCompanies,
+          sector,
+          stage,
         );
-        const valuations = withVal.map((c) => c.lastKnownValuation as number)
-          .sort((a, b) => a - b);
-        const median = valuations.length > 0
-          ? valuations[Math.floor(valuations.length / 2)]
-          : 0;
 
         const deals = verifiedAcquisitions.filter((a) => {
           const target = companyById.get(a.targetId);
@@ -306,15 +331,21 @@ export default function ValuationMatrix() {
         return {
           sector,
           stage,
-          medianValuation: median,
-          disclosedCount: withVal.length,
+          estimate,
+          medianValuation: estimate.kind === "sufficient"
+            ? estimate.value
+            : null,
+          disclosedCount: estimate.sampleSize,
           totalCount: inCell.length,
           dealCount: deals.length,
         };
       })
     );
 
-    const max = Math.max(1, ...grid.flat().map((c) => c.medianValuation));
+    const max = Math.max(
+      1,
+      ...grid.flat().map((c) => c.medianValuation ?? 0),
+    );
     const disclosed = verifiedCompanies.filter((c) =>
       typeof c.lastKnownValuation === "number"
     ).length;
@@ -348,7 +379,8 @@ export default function ValuationMatrix() {
     resolvedActiveSectors,
   ]);
 
-  const getColor = (value: number) => {
+  const getColor = (value: number | null) => {
+    if (value === null) return "#f8fafc";
     if (value === 0) return "#f8fafc";
     const intensity = value / maxValuation;
     if (intensity < 0.25) return "#fce7f3";
@@ -461,18 +493,6 @@ export default function ValuationMatrix() {
                 <motion.div
                   key={`${rowIndex}-${colIndex}`}
                   className="p-1"
-                  onMouseEnter={(event) => {
-                    const rect = event.currentTarget.getBoundingClientRect();
-                    setTooltipAnchor({
-                      x: rect.left + rect.width / 2,
-                      y: rect.bottom,
-                    });
-                    setHoveredCell(cell);
-                  }}
-                  onMouseLeave={() => {
-                    setHoveredCell(null);
-                    setTooltipAnchor(null);
-                  }}
                 >
                   <div
                     className="h-12 rounded-md flex items-center justify-center cursor-pointer transition-all hover:scale-105 hover:shadow-md"
@@ -483,18 +503,13 @@ export default function ValuationMatrix() {
                       } · ${cell.disclosedCount} disclosed`
                       : "No companies in this cell"}
                   >
-                    {cell.medianValuation > 0 && (
-                      <span className="text-xs font-semibold text-lacuna-text-primary">
-                        ${cell.medianValuation}M
-                      </span>
-                    )}
-                    {cell.medianValuation === 0 && cell.totalCount > 0 && (
-                      <span
-                        className="text-xs text-lacuna-text-muted"
-                        title="Companies present, no public valuations"
-                      >
-                        ·{cell.totalCount}
-                      </span>
+                    {cell.totalCount > 0 && (
+                      <Metric
+                        label={`${cell.stage} · ${cell.sector}`}
+                        provenance={metricFromEstimate(cell.estimate)}
+                        formatValue={(value) => `$${Math.round(value)}M`}
+                        className="h-12 w-full justify-center text-xs font-semibold text-lacuna-text-primary"
+                      />
                     )}
                   </div>
                 </motion.div>
@@ -519,18 +534,9 @@ export default function ValuationMatrix() {
         <span className="text-xs text-lacuna-text-muted">Higher median</span>
       </div>
 
-      {/* Tooltip */}
-      {hoveredCell && hoveredCell.totalCount > 0 && tooltipAnchor && (
-        <HoveredCellTooltip
-          cell={hoveredCell}
-          allCompanies={verifiedCompanies}
-          anchor={tooltipAnchor}
-        />
-      )}
-
       <p className="mt-4 text-xs text-lacuna-text-muted leading-relaxed">
         Empty cells reflect honest gaps in the verified dataset — not low
-        activity. Medians shown only where ≥1 company has a disclosed valuation.
+        activity. Cells below the minimum sample are explained absences.
       </p>
     </div>
   );
