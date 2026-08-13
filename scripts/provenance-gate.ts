@@ -124,7 +124,12 @@ function isInsideMetric(
 function isNumericType(type: ts.Type): boolean {
   if ((type.flags & ts.TypeFlags.NumberLike) !== 0) return true;
   if ((type.flags & ts.TypeFlags.Union) !== 0) {
-    return type.types.some(isNumericType);
+    const nonNullableTypes = type.types.filter(
+      (member) =>
+        (member.flags & (ts.TypeFlags.Null | ts.TypeFlags.Undefined)) === 0,
+    );
+    return nonNullableTypes.length > 0 &&
+      nonNullableTypes.every(isNumericType);
   }
   return false;
 }

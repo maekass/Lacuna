@@ -1,13 +1,10 @@
 {
   "version": 1,
-  "total": 1090,
-  "covered": 8,
+  "total": 1054,
+  "covered": 7,
   "exempt": 0,
-  "uncovered": 1082,
+  "uncovered": 1047,
   "perFileUncovered": {
-    "src/app/(product)/consumer/layout.tsx": 1,
-    "src/app/(product)/layout.tsx": 1,
-    "src/app/layout.tsx": 1,
     "src/app/lazyDashboard.tsx": 10,
     "src/app/sections/ConsumerHealthPage.tsx": 7,
     "src/app/sections/DealDetailPage.tsx": 11,
@@ -32,12 +29,11 @@
     "src/components/ClinicalTrialTracker.tsx": 10,
     "src/components/ClusteringAnalysis.tsx": 6,
     "src/components/CommercializationReadiness.tsx": 8,
-    "src/components/CompanySimilarity.tsx": 7,
+    "src/components/CompanySimilarity.tsx": 5,
     "src/components/CompetitiveAnalysisDashboard.tsx": 33,
-    "src/components/ConfidenceLevelIndicator.tsx": 1,
     "src/components/CuratedDatasetBanner.tsx": 1,
-    "src/components/DataCoverageCard.tsx": 20,
-    "src/components/DataExport.tsx": 9,
+    "src/components/DataCoverageCard.tsx": 19,
+    "src/components/DataExport.tsx": 8,
     "src/components/DataIngestPanel.tsx": 5,
     "src/components/DataPipelineStatus.tsx": 8,
     "src/components/DataProvenanceBanner.tsx": 1,
@@ -46,7 +42,7 @@
     "src/components/DealEmpowermentContext.tsx": 4,
     "src/components/DealFlowChart.tsx": 22,
     "src/components/DealReviewQueue.tsx": 2,
-    "src/components/DiscreteSources.tsx": 2,
+    "src/components/DiscreteSources.tsx": 1,
     "src/components/DomesticStudyCatalog.tsx": 10,
     "src/components/EnrichmentDiffPanel.tsx": 2,
     "src/components/EvidenceMaturityDashboard.tsx": 17,
@@ -54,7 +50,7 @@
     "src/components/ExitPredictor.tsx": 13,
     "src/components/ExportToGamma.tsx": 5,
     "src/components/FairnessAuditV2.tsx": 46,
-    "src/components/FairnessLimitations.tsx": 12,
+    "src/components/FairnessLimitations.tsx": 11,
     "src/components/ForceNetwork.tsx": 4,
     "src/components/FounderCharacteristics.tsx": 33,
     "src/components/FundingEventsPanel.tsx": 5,
@@ -63,24 +59,22 @@
     "src/components/ImpactOpportunityCard.tsx": 19,
     "src/components/InvestmentGradeReimbursementIntel.tsx": 5,
     "src/components/KeyboardShortcuts.tsx": 1,
-    "src/components/layout/AppShell.tsx": 2,
     "src/components/layout/GlobalProvenanceBar.tsx": 1,
     "src/components/layout/SiteFooter.tsx": 1,
-    "src/components/MetricEvidence.tsx": 20,
+    "src/components/MetricEvidence.tsx": 17,
     "src/components/NetworkAnalysisHonest.tsx": 90,
     "src/components/PatientEmpowermentInsight.tsx": 12,
     "src/components/PatientEmpowermentPanel.tsx": 22,
     "src/components/PipelineStatusStrip.tsx": 1,
     "src/components/PitchBrief.tsx": 7,
-    "src/components/PromotionForm.tsx": 4,
-    "src/components/Providers.tsx": 3,
+    "src/components/PromotionForm.tsx": 3,
+    "src/components/Providers.tsx": 2,
     "src/components/QuantValuationPanel.tsx": 11,
     "src/components/QueueMetricsBreakdown.tsx": 4,
-    "src/components/ReimbursementIntelligenceDashboard.tsx": 16,
-    "src/components/research/GapAnalystPanel.tsx": 2,
+    "src/components/ReimbursementIntelligenceDashboard.tsx": 15,
+    "src/components/research/GapAnalystPanel.tsx": 1,
     "src/components/research/GapDistributionChart.tsx": 3,
     "src/components/research/GapIndexBar.tsx": 4,
-    "src/components/research/ResearchMethodologyDrawer.tsx": 1,
     "src/components/ReviewConsole.tsx": 3,
     "src/components/RhCapitalPortfolioContext.tsx": 4,
     "src/components/SensitivityAnalysis.tsx": 16,
@@ -90,17 +84,10 @@
     "src/components/SystemHealthDashboard.tsx": 3,
     "src/components/TemporalValidation.tsx": 3,
     "src/components/TherapeuticAreaCoveragePanel.tsx": 11,
-    "src/components/ui/AnalysisPanelHeader.tsx": 2,
-    "src/components/ui/Card.tsx": 1,
-    "src/components/ui/ChartTooltip.tsx": 1,
-    "src/components/ui/Dialog.tsx": 2,
     "src/components/ui/LlmQualityBadge.tsx": 1,
-    "src/components/ui/MetricTile.tsx": 2,
-    "src/components/ui/ModelProvenanceHint.tsx": 2,
-    "src/components/ui/MotionSection.tsx": 2,
-    "src/components/ui/Sheet.tsx": 2,
+    "src/components/ui/ModelProvenanceHint.tsx": 1,
     "src/components/ui/StatTile.tsx": 4,
-    "src/components/ui/Tooltip.tsx": 3,
+    "src/components/ui/Tooltip.tsx": 1,
     "src/components/ValidationTracker.tsx": 4,
     "src/components/ValuationMatrix.tsx": 3,
     "src/components/ValuationMatrixCell.tsx": 3,
@@ -110,30 +97,6 @@
     "src/components/WomensHealthExitsContext.tsx": 10
   },
   "sites": [
-    {
-      "file": "src/app/(product)/consumer/layout.tsx",
-      "functionName": "ConsumerLayout",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/app/(product)/consumer/layout.tsx::ConsumerLayout::children",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/app/(product)/layout.tsx",
-      "functionName": "ProductLayout",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/app/(product)/layout.tsx::ProductLayout::children",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/app/layout.tsx",
-      "functionName": "RootLayout",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/app/layout.tsx::RootLayout::children",
-      "class": "uncovered"
-    },
     {
       "file": "src/app/lazyDashboard.tsx",
       "functionName": "DealFlowChartSkeleton",
@@ -2441,22 +2404,6 @@
     {
       "file": "src/components/CompanySimilarity.tsx",
       "functionName": "CompanySimilarity",
-      "expression": "selected.lastKnownValuation && ` · $${selected.lastKnownValuation}M valuation`",
-      "kind": "numeric-jsx",
-      "key": "src/components/CompanySimilarity.tsx::CompanySimilarity::selected.lastKnownValuation && ` · $${selected.lastKnownValuation}M valuation`",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CompanySimilarity.tsx",
-      "functionName": "CompanySimilarity",
-      "expression": "selected.totalFunding && ` · $${selected.totalFunding}M raised`",
-      "kind": "numeric-jsx",
-      "key": "src/components/CompanySimilarity.tsx::CompanySimilarity::selected.totalFunding && ` · $${selected.totalFunding}M raised`",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CompanySimilarity.tsx",
-      "functionName": "CompanySimilarity",
       "expression": "verifiedCompanies.length",
       "kind": "numeric-jsx",
       "key": "src/components/CompanySimilarity.tsx::CompanySimilarity::verifiedCompanies.length",
@@ -2727,27 +2674,11 @@
       "class": "uncovered"
     },
     {
-      "file": "src/components/ConfidenceLevelIndicator.tsx",
-      "functionName": "DataPointWithConfidence",
-      "expression": "value",
-      "kind": "numeric-jsx",
-      "key": "src/components/ConfidenceLevelIndicator.tsx::DataPointWithConfidence::value",
-      "class": "uncovered"
-    },
-    {
       "file": "src/components/CuratedDatasetBanner.tsx",
       "functionName": "CuratedDatasetBanner",
       "expression": "formatCuratedDatasetProvenanceLine(dealCount)",
       "kind": "formatting-call",
       "key": "src/components/CuratedDatasetBanner.tsx::CuratedDatasetBanner::formatCuratedDatasetProvenanceLine(dealCount)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DataCoverageCard.tsx",
-      "functionName": "CoverageStatBox",
-      "expression": "value",
-      "kind": "numeric-jsx",
-      "key": "src/components/DataCoverageCard.tsx::CoverageStatBox::value",
       "class": "uncovered"
     },
     {
@@ -2908,14 +2839,6 @@
       "expression": "lastExport.recordCount",
       "kind": "numeric-jsx",
       "key": "src/components/DataExport.tsx::DataExport::lastExport.recordCount",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DataExport.tsx",
-      "functionName": "DataExport",
-      "expression": "option.icon",
-      "kind": "numeric-jsx",
-      "key": "src/components/DataExport.tsx::DataExport::option.icon",
       "class": "uncovered"
     },
     {
@@ -3332,14 +3255,6 @@
       "expression": "formatDealValue(deal.dealValueMillions)",
       "kind": "formatting-call",
       "key": "src/components/DealReviewQueue.tsx::PendingDealCard::formatDealValue(deal.dealValueMillions)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DiscreteSources.tsx",
-      "functionName": "DiscreteSourceNote",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/components/DiscreteSources.tsx::DiscreteSourceNote::children",
       "class": "uncovered"
     },
     {
@@ -4217,14 +4132,6 @@
     {
       "file": "src/components/FairnessLimitations.tsx",
       "functionName": "FairnessLimitations",
-      "expression": "recommendedSampleSize < 10000 ? recommendedSampleSize : \"∞\"",
-      "kind": "numeric-jsx",
-      "key": "src/components/FairnessLimitations.tsx::FairnessLimitations::recommendedSampleSize < 10000 ? recommendedSampleSize : \"∞\"",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/FairnessLimitations.tsx",
-      "functionName": "FairnessLimitations",
       "expression": "sampleSize",
       "kind": "numeric-jsx",
       "key": "src/components/FairnessLimitations.tsx::FairnessLimitations::sampleSize",
@@ -5071,22 +4978,6 @@
       "class": "uncovered"
     },
     {
-      "file": "src/components/layout/AppShell.tsx",
-      "functionName": "AppShell",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/components/layout/AppShell.tsx::AppShell::children",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/layout/AppShell.tsx",
-      "functionName": "AppShell",
-      "expression": "sections.length > 0 ? ( <div className=\"grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[220px_minmax(0,1fr)]\"> <SectionNav sections={sections} /> <div>{children}</div> </div> ) : children",
-      "kind": "numeric-jsx",
-      "key": "src/components/layout/AppShell.tsx::AppShell::sections.length > 0 ? ( <div className=\"grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[220px_minmax(0,1fr)]\"> <SectionNav sections={sections} /> <div>{children}</div> </div> ) : children",
-      "class": "uncovered"
-    },
-    {
       "file": "src/components/layout/GlobalProvenanceBar.tsx",
       "functionName": "GlobalProvenanceBar",
       "expression": "formatCuratedDatasetProvenanceLine(verifiedAcquisitions.length)",
@@ -5101,14 +4992,6 @@
       "kind": "numeric-jsx",
       "key": "src/components/layout/SiteFooter.tsx::SiteFooter::112",
       "class": "uncovered"
-    },
-    {
-      "file": "src/components/Metric.tsx",
-      "functionName": "Metric",
-      "expression": "additionalEvidence",
-      "kind": "numeric-jsx",
-      "key": "src/components/Metric.tsx::Metric::additionalEvidence",
-      "class": "covered"
     },
     {
       "file": "src/components/Metric.tsx",
@@ -5193,14 +5076,6 @@
     {
       "file": "src/components/MetricEvidence.tsx",
       "functionName": "MeasuredEvidence",
-      "expression": "additionalEvidence",
-      "kind": "numeric-jsx",
-      "key": "src/components/MetricEvidence.tsx::MeasuredEvidence::additionalEvidence",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/MetricEvidence.tsx",
-      "functionName": "MeasuredEvidence",
       "expression": "lineage.n",
       "kind": "numeric-jsx",
       "key": "src/components/MetricEvidence.tsx::MeasuredEvidence::lineage.n",
@@ -5220,22 +5095,6 @@
       "expression": "lineage.sources.length - 25",
       "kind": "numeric-jsx",
       "key": "src/components/MetricEvidence.tsx::MeasuredEvidence::lineage.sources.length - 25",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/MetricEvidence.tsx",
-      "functionName": "MetricEvidence",
-      "expression": "additionalEvidence",
-      "kind": "numeric-jsx",
-      "key": "src/components/MetricEvidence.tsx::MetricEvidence::additionalEvidence",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/MetricEvidence.tsx",
-      "functionName": "MetricEvidence",
-      "expression": "additionalEvidence",
-      "kind": "numeric-jsx",
-      "key": "src/components/MetricEvidence.tsx::MetricEvidence::additionalEvidence#2",
       "class": "uncovered"
     },
     {
@@ -6407,14 +6266,6 @@
       "class": "uncovered"
     },
     {
-      "file": "src/components/PromotionForm.tsx",
-      "functionName": "PromotionForm",
-      "expression": "value.companyFounded ?? \"\"",
-      "kind": "numeric-jsx",
-      "key": "src/components/PromotionForm.tsx::PromotionForm::value.companyFounded ?? \"\"",
-      "class": "uncovered"
-    },
-    {
       "file": "src/components/Providers.tsx",
       "functionName": "Providers",
       "expression": "100",
@@ -6428,14 +6279,6 @@
       "expression": "300",
       "kind": "numeric-jsx",
       "key": "src/components/Providers.tsx::Providers::300",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/Providers.tsx",
-      "functionName": "Providers",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/components/Providers.tsx::Providers::children",
       "class": "uncovered"
     },
     {
@@ -6601,14 +6444,6 @@
     {
       "file": "src/components/ReimbursementIntelligenceDashboard.tsx",
       "functionName": "ReimbursementIntelligenceDashboard",
-      "expression": "analysis.classification.reimbursementStatus.codeCount || \"-\"",
-      "kind": "numeric-jsx",
-      "key": "src/components/ReimbursementIntelligenceDashboard.tsx::ReimbursementIntelligenceDashboard::analysis.classification.reimbursementStatus.codeCount || \"-\"",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ReimbursementIntelligenceDashboard.tsx",
-      "functionName": "ReimbursementIntelligenceDashboard",
       "expression": "formatCurrency(analysis.valuation.impliedValuation)",
       "kind": "formatting-call",
       "key": "src/components/ReimbursementIntelligenceDashboard.tsx::ReimbursementIntelligenceDashboard::formatCurrency(analysis.valuation.impliedValuation)",
@@ -6695,14 +6530,6 @@
       "class": "uncovered"
     },
     {
-      "file": "src/components/research/GapAnalystPanel.tsx",
-      "functionName": "GapAnalystPanel",
-      "expression": "description",
-      "kind": "numeric-jsx",
-      "key": "src/components/research/GapAnalystPanel.tsx::GapAnalystPanel::description",
-      "class": "uncovered"
-    },
-    {
       "file": "src/components/research/GapDistributionChart.tsx",
       "functionName": "GapDistributionChart",
       "expression": "b.count",
@@ -6756,14 +6583,6 @@
       "expression": "gapIndexPct",
       "kind": "numeric-jsx",
       "key": "src/components/research/GapIndexBar.tsx::GapIndexBar::gapIndexPct#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/research/ResearchMethodologyDrawer.tsx",
-      "functionName": "ResearchMethodologyDrawer",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/components/research/ResearchMethodologyDrawer.tsx::ResearchMethodologyDrawer::children",
       "class": "uncovered"
     },
     {
@@ -7767,54 +7586,6 @@
       "class": "uncovered"
     },
     {
-      "file": "src/components/ui/AnalysisPanelHeader.tsx",
-      "functionName": "AnalysisPanelHeader",
-      "expression": "subtitle",
-      "kind": "numeric-jsx",
-      "key": "src/components/ui/AnalysisPanelHeader.tsx::AnalysisPanelHeader::subtitle",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ui/AnalysisPanelHeader.tsx",
-      "functionName": "AnalysisPanelHeader",
-      "expression": "title",
-      "kind": "numeric-jsx",
-      "key": "src/components/ui/AnalysisPanelHeader.tsx::AnalysisPanelHeader::title",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ui/Card.tsx",
-      "functionName": "Card",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/components/ui/Card.tsx::Card::children",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ui/ChartTooltip.tsx",
-      "functionName": "ChartTooltip",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/components/ui/ChartTooltip.tsx::ChartTooltip::children",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ui/Dialog.tsx",
-      "functionName": "DialogBody",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/components/ui/Dialog.tsx::DialogBody::children",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ui/Dialog.tsx",
-      "functionName": "DialogContent",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/components/ui/Dialog.tsx::DialogContent::children",
-      "class": "uncovered"
-    },
-    {
       "file": "src/components/ui/LlmQualityBadge.tsx",
       "functionName": "LlmQualityBadge",
       "expression": "quality.score",
@@ -7823,67 +7594,11 @@
       "class": "uncovered"
     },
     {
-      "file": "src/components/ui/MetricTile.tsx",
-      "functionName": "MetricTile",
-      "expression": "label",
-      "kind": "numeric-jsx",
-      "key": "src/components/ui/MetricTile.tsx::MetricTile::label",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ui/MetricTile.tsx",
-      "functionName": "MetricTile",
-      "expression": "value",
-      "kind": "numeric-jsx",
-      "key": "src/components/ui/MetricTile.tsx::MetricTile::value",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ui/ModelProvenanceHint.tsx",
-      "functionName": "ModelProvenanceHint",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/components/ui/ModelProvenanceHint.tsx::ModelProvenanceHint::children",
-      "class": "uncovered"
-    },
-    {
       "file": "src/components/ui/ModelProvenanceHint.tsx",
       "functionName": "ModelProvenanceHint",
       "expression": "formatModelProvenanceLine(model)",
       "kind": "formatting-call",
       "key": "src/components/ui/ModelProvenanceHint.tsx::ModelProvenanceHint::formatModelProvenanceLine(model)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ui/MotionSection.tsx",
-      "functionName": "MotionSection",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/components/ui/MotionSection.tsx::MotionSection::children",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ui/MotionSection.tsx",
-      "functionName": "MotionSection",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/components/ui/MotionSection.tsx::MotionSection::children#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ui/Sheet.tsx",
-      "functionName": "MobileSheetNav",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/components/ui/Sheet.tsx::MobileSheetNav::children",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ui/Sheet.tsx",
-      "functionName": "SheetContent",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/components/ui/Sheet.tsx::SheetContent::children",
       "class": "uncovered"
     },
     {
@@ -7916,22 +7631,6 @@
       "expression": "formatAnimatedValue(target, suffix)",
       "kind": "formatting-call",
       "key": "src/components/ui/StatTile.tsx::tick::formatAnimatedValue(target, suffix)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ui/Tooltip.tsx",
-      "functionName": "LacunaTooltip",
-      "expression": "children",
-      "kind": "numeric-jsx",
-      "key": "src/components/ui/Tooltip.tsx::LacunaTooltip::children",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ui/Tooltip.tsx",
-      "functionName": "LacunaTooltip",
-      "expression": "content",
-      "kind": "numeric-jsx",
-      "key": "src/components/ui/Tooltip.tsx::LacunaTooltip::content",
       "class": "uncovered"
     },
     {

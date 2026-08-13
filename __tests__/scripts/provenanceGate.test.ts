@@ -49,6 +49,9 @@ describe("provenance census", () => {
         site.class === "uncovered"
       ),
     ).toBe(true);
+    expect(
+      census.sites.some((site) => site.functionName === "ReactNodeValue"),
+    ).toBe(false);
   });
 
   it("produces deterministic site output", () => {
