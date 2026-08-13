@@ -8,9 +8,10 @@
 import {
   CompanyReimbursementProfile,
   ReimbursementStatus,
-  ValuationImpact,
 } from "./cms-reimbursement-connector";
 import { resolveGrowthRate } from "@/lib/data/growthRateProvider";
+import { isSufficient, missingInput } from "@/lib/quant/estimators";
+import type { QuantValue } from "@/lib/quant/types";
 
 export interface ValuationInput {
   annualRevenue: number;
@@ -22,24 +23,25 @@ export interface ValuationInput {
 }
 
 export interface ValuationOutput {
-  baseMultiple: number;
-  reimbursementPremium: number;
-  adjustedMultiple: number;
-  impliedValuation: number;
-  rangeLow: number;
-  rangeHigh: number;
+  baseMultiple: number | null;
+  reimbursementPremium: number | null;
+  adjustedMultiple: number | null;
+  impliedValuation: number | null;
+  rangeLow: number | null;
+  rangeHigh: number | null;
   confidence: "high" | "medium" | "low";
   keyFactors: string[];
-  acquirerPremium: number;
-  sectorBenchmark: SectorBenchmark;
+  acquirerPremium: number | null;
+  sectorBenchmark: SectorBenchmark | null;
+  benchmarkEstimate: QuantValue<number>;
 }
 
 export interface SectorBenchmark {
-  medianMultiple: number;
-  p25Multiple: number;
-  p75Multiple: number;
+  medianMoic: number;
+  p25Moic: number | null;
+  p75Moic: number | null;
   sampleSize: number;
-  reimbursementCorrelation: number;
+  definition: string;
 }
 
 export interface AcquirerProfile {
@@ -51,23 +53,24 @@ export interface AcquirerProfile {
 
 /**
  * Load sector benchmarks from the computed JSON derived from real verified deals.
- * Falls back to a minimal set of industry-median estimates (flagged as low-confidence)
- * only when a sector has no deals in the verified dataset.
- *
- * Primary source: scripts/compute-benchmarks.ts → src/data/computed-benchmarks.json
- * Secondary fallback: published sector medians (Rock Health 2024, PitchBook 2024) —
- * each fallback entry is explicitly labelled with sampleSize: 0 and a comment.
- *
- * NOTE: reimbursementCorrelation is NOT computable from our dataset (no payer data).
- * All correlation values below are set to 0 (unknown) rather than fabricated.
  */
-function loadSectorBenchmarks(): Record<string, SectorBenchmark> {
+function loadSectorBenchmarks(): {
+  benchmarks: Record<string, SectorBenchmark>;
+  withheld: Record<string, QuantValue<number>>;
+} {
   let computed: Array<{
     sector: string;
-    medianMultiple: number | null;
-    p25Multiple: number | null;
-    p75Multiple: number | null;
+    definition: string;
+    medianMoic?: { kind: "sufficient"; value: number };
+    p25Moic?: { kind: "sufficient"; value: number };
+    p75Moic?: { kind: "sufficient"; value: number };
     sampleSize: number;
+  }> = [];
+  let withheld: Array<{
+    metricId: string;
+    scope: string;
+    reason: string;
+    lineage: { n: number };
   }> = [];
 
   try {
@@ -75,56 +78,50 @@ function loadSectorBenchmarks(): Record<string, SectorBenchmark> {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const raw = require("./computed-benchmarks.json") as {
       benchmarks: typeof computed;
+      withheld: typeof withheld;
     };
     computed = raw.benchmarks ?? [];
+    withheld = raw.withheld ?? [];
   } catch {
-    // File not yet generated — will use fallbacks only.
+    // File not yet generated.
   }
 
   const result: Record<string, SectorBenchmark> = {};
+  const withheldResult: Record<string, QuantValue<number>> = {};
 
   for (const b of computed) {
-    if (b.medianMultiple === null) continue;
+    if (!b.medianMoic || b.medianMoic.kind !== "sufficient") continue;
     const key = b.sector.toLowerCase().replace(/[^a-z0-9]+/g, "_");
     result[key] = {
-      medianMultiple: b.medianMultiple,
-      p25Multiple: b.p25Multiple ?? b.medianMultiple * 0.7,
-      p75Multiple: b.p75Multiple ?? b.medianMultiple * 1.4,
+      medianMoic: b.medianMoic.value,
+      p25Moic: b.p25Moic?.value ?? null,
+      p75Moic: b.p75Moic?.value ?? null,
       sampleSize: b.sampleSize,
-      // Correlation not computable from our dataset — set to 0 (unknown)
-      reimbursementCorrelation: 0,
+      definition: b.definition,
     };
   }
 
-  return result;
+  for (const entry of withheld) {
+    if (entry.metricId !== "sector.moic.median") continue;
+    const key = entry.scope.toLowerCase().replace(/[^a-z0-9]+/g, "_");
+    withheldResult[key] = {
+      kind: "insufficient",
+      code: "small_sample",
+      message: entry.reason,
+      sampleSize: entry.lineage.n,
+      minRequired: 5,
+    };
+  }
+
+  return { benchmarks: result, withheld: withheldResult };
 }
 
-const SECTOR_BENCHMARKS: Record<string, SectorBenchmark> =
-  loadSectorBenchmarks();
-
-// Valuation multiples by reimbursement profile
-const REIMBURSEMENT_MULTIPLIERS = {
-  reimbursement_rich: {
-    multiple: 5.2,
-    description: "Multiple CPT codes, high RVU, multi-payer",
-    examples: ["Teladoc", "Ro Health"],
-  },
-  moderate_reimbursement: {
-    multiple: 2.8,
-    description: "1-2 codes, medium RVU, limited payers",
-    examples: ["Modern Fertility", "Tia"],
-  },
-  limited_reimbursement: {
-    multiple: 1.5,
-    description: "No CPT codes or consumer-only model",
-    examples: ["Flo", "Clue"],
-  },
-};
+const loadedSectorBenchmarks = loadSectorBenchmarks();
+const SECTOR_BENCHMARKS = loadedSectorBenchmarks.benchmarks;
+const WITHHELD_SECTOR_BENCHMARKS = loadedSectorBenchmarks.withheld;
 
 /**
  * Load acquirer-type premiums from the computed JSON derived from real verified deals.
- * Falls back to broad industry averages only when computed data is unavailable.
- *
  * Primary source: scripts/compute-acquirer-premiums.ts → src/data/computed-acquirer-premiums.json
  */
 function loadAcquirerPremiums(): Record<
@@ -134,55 +131,25 @@ function loadAcquirerPremiums(): Record<
   try {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const raw = require("./computed-acquirer-premiums.json") as {
-      acquirerTypePremiums?: Record<
-        string,
-        { avgPremium: number; sampleSize: number }
-      >;
+      premiumMetrics?: Record<string, {
+        estimate?: { kind: "sufficient"; value: number };
+      }>;
     };
-    const typePremiums = raw.acquirerTypePremiums;
-    if (typePremiums && Object.keys(typePremiums).length > 0) {
-      const result: Record<string, { premium: number; capability: string }> =
-        {};
-      for (const [type, stat] of Object.entries(typePremiums)) {
-        const capability = type === "pharma" || type === "healthcare"
-          ? "strong"
-          : type === "tech"
-          ? "weak"
-          : "moderate";
-        result[type] = { premium: stat.avgPremium, capability };
+    const result: Record<string, { premium: number; capability: string }> = {};
+    for (const [metricId, metric] of Object.entries(raw.premiumMetrics ?? {})) {
+      if (!metric.estimate || metric.estimate.kind !== "sufficient") continue;
+      const denominator = metricId.split(".").at(-1);
+      if (denominator === "preDealValuation") {
+        result.preDealValuation = {
+          premium: metric.estimate.value,
+          capability: "unknown",
+        };
       }
-      // Ensure all keys exist with computed or fallback values
-      if (!result["healthcare"]) {
-        result["healthcare"] = { premium: 1.35, capability: "strong" };
-      }
-      if (!result["pharma"]) {
-        result["pharma"] = { premium: 1.25, capability: "strong" };
-      }
-      if (!result["tech"]) {
-        result["tech"] = { premium: 0.95, capability: "weak" };
-      }
-      if (!result["retail"]) {
-        result["retail"] = { premium: 1.15, capability: "moderate" };
-      }
-      if (!result["other"]) {
-        result["other"] = { premium: 1.0, capability: "moderate" };
-      }
-      return result;
     }
+    return result;
   } catch {
-    // File not yet generated — use verified-deal-derived fallback medians below.
+    return {};
   }
-
-  // Fallback: medians derived from verified dataset manual review.
-  // Healthcare (Hologic series): ~1.47x median. Pharma (Bayer, Astellas): ~1.35x.
-  // These are grounded estimates, not arbitrary round numbers.
-  return {
-    healthcare: { premium: 1.47, capability: "strong" },
-    pharma: { premium: 1.35, capability: "strong" },
-    tech: { premium: 1.10, capability: "weak" },
-    retail: { premium: 1.15, capability: "moderate" },
-    other: { premium: 1.20, capability: "moderate" },
-  };
 }
 
 const ACQUIRER_PREMIUMS: Record<
@@ -199,32 +166,52 @@ export class ValuationPremiumCalculator {
     const benchmark = SECTOR_BENCHMARKS[sectorKey];
 
     if (!benchmark || benchmark.sampleSize < 1) {
-      const emptyBenchmark: SectorBenchmark = {
-        medianMultiple: 0,
-        p25Multiple: 0,
-        p75Multiple: 0,
-        sampleSize: 0,
-        // Verified dataset has no payer linkage for this sector.
-        reimbursementCorrelation: 0,
-      };
+      const benchmarkEstimate = WITHHELD_SECTOR_BENCHMARKS[sectorKey] ??
+        missingInput("No verified-deal benchmark for this sector");
       return {
-        baseMultiple: 0,
-        reimbursementPremium: 0,
-        adjustedMultiple: 0,
-        impliedValuation: 0,
-        rangeLow: 0,
-        rangeHigh: 0,
+        baseMultiple: null,
+        reimbursementPremium: null,
+        adjustedMultiple: null,
+        impliedValuation: null,
+        rangeLow: null,
+        rangeHigh: null,
         confidence: "low",
         keyFactors: [
-          "No verified-deal benchmark for this sector — pick a sector with deals in the curated dataset.",
+          isSufficient(benchmarkEstimate)
+            ? "No verified-deal benchmark for this sector"
+            : benchmarkEstimate.message,
         ],
-        acquirerPremium: 1,
-        sectorBenchmark: emptyBenchmark,
+        acquirerPremium: null,
+        sectorBenchmark: null,
+        benchmarkEstimate,
+      };
+    }
+    const acquirerData = ACQUIRER_PREMIUMS[input.acquirerType];
+    if (!acquirerData) {
+      const benchmarkEstimate: QuantValue<number> = {
+        kind: "insufficient",
+        code: "missing_input",
+        message: "No denominator-specific acquirer premium is available",
+        sampleSize: benchmark.sampleSize,
+        minRequired: 1,
+      };
+      return {
+        baseMultiple: null,
+        reimbursementPremium: null,
+        adjustedMultiple: null,
+        impliedValuation: null,
+        rangeLow: null,
+        rangeHigh: null,
+        confidence: "low",
+        keyFactors: [benchmarkEstimate.message],
+        acquirerPremium: null,
+        sectorBenchmark: benchmark,
+        benchmarkEstimate,
       };
     }
 
     // Base multiple from sector
-    let baseMultiple = benchmark.medianMultiple;
+    let baseMultiple = benchmark.medianMoic;
 
     // Adjust for reimbursement status
     let reimbursementPremium = 1.0;
@@ -278,8 +265,6 @@ export class ValuationPremiumCalculator {
     }
 
     // Apply acquirer premium
-    const acquirerData = ACQUIRER_PREMIUMS[input.acquirerType] ||
-      ACQUIRER_PREMIUMS["other"];
     const acquirerPremium = acquirerData.premium;
 
     if (acquirerPremium > 1.0) {
@@ -322,6 +307,12 @@ export class ValuationPremiumCalculator {
       keyFactors,
       acquirerPremium,
       sectorBenchmark: benchmark,
+      benchmarkEstimate: {
+        kind: "sufficient",
+        value: benchmark.medianMoic,
+        sampleSize: benchmark.sampleSize,
+        confidenceInterval: [benchmark.medianMoic, benchmark.medianMoic],
+      },
     };
   }
 
@@ -335,8 +326,8 @@ export class ValuationPremiumCalculator {
   ): {
     insuranceDriven: ValuationOutput;
     consumerOnly: ValuationOutput;
-    premium: number;
-    premiumPercent: number;
+    premium: number | null;
+    premiumPercent: number | null;
   } {
     const growthRate = resolveGrowthRate({ sector, companyId }).growthRate;
 
@@ -375,9 +366,16 @@ export class ValuationPremiumCalculator {
     const insuranceValuation = this.calculateValuation(insuranceInput);
     const consumerValuation = this.calculateValuation(consumerInput);
 
-    const premium = insuranceValuation.impliedValuation -
-      consumerValuation.impliedValuation;
-    const premiumPercent = (premium / consumerValuation.impliedValuation) * 100;
+    const premium = isSufficient(insuranceValuation.benchmarkEstimate) &&
+        isSufficient(consumerValuation.benchmarkEstimate)
+      ? insuranceValuation.impliedValuation! -
+        consumerValuation.impliedValuation!
+      : null;
+    const premiumPercent = premium !== null &&
+        consumerValuation.impliedValuation !== null &&
+        consumerValuation.impliedValuation !== 0
+      ? (premium / consumerValuation.impliedValuation) * 100
+      : null;
 
     return {
       insuranceDriven: insuranceValuation,
@@ -392,7 +390,7 @@ export class ValuationPremiumCalculator {
    * occurred; Lyra Health figure was a private round, not an acquisition).
    * Returns empty — callers should source comparables from getVerifiedDataset().
    */
-  getComparableTransactions(_sector: string): {
+  getComparableTransactions(sector: string): {
     company: string;
     acquirer: string;
     valuation: number;
@@ -400,6 +398,7 @@ export class ValuationPremiumCalculator {
     reimbursementStatus: string;
     date: string;
   }[] {
+    void sector;
     return [];
   }
 

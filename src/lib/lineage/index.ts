@@ -1,4 +1,8 @@
-export { fromRecords, TracedCollection } from "./tracedCollection";
+export {
+  fromRecords,
+  summarizeLineage,
+  TracedCollection,
+} from "./tracedCollection";
 export {
   estimateRegisteredMetric,
   getMetricDeclaration,
@@ -10,8 +14,10 @@ export {
 export type {
   DatasetTable,
   ExcludedRef,
+  ExclusionSummary,
   Lineage,
   LineageOptions,
+  LineageSummary,
   Missingness,
   QuantValueWithLineage,
   RecordRef,

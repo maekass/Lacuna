@@ -15,10 +15,7 @@ import {
   ReimbursementAnalysisResult,
   reimbursementIntelligence,
 } from "@/data/reimbursement-intelligence-integration";
-import {
-  BusinessModel,
-  SECTOR_REIMBURSEMENT_PATTERNS,
-} from "@/data/cms-reimbursement-connector";
+import { BusinessModel } from "@/data/cms-reimbursement-connector";
 
 // Sector color mapping
 const SECTOR_COLORS: Record<string, string> = {
@@ -90,13 +87,15 @@ export default function ReimbursementIntelligenceDashboard() {
     return Array.from(sectorSet).sort();
   }, [analyses]);
 
-  const formatCurrency = (value: number): string => {
+  const formatCurrency = (value: number | null): string => {
+    if (value === null) return "Insufficient disclosed data";
     if (value >= 1000000000) return `$${(value / 1000000000).toFixed(1)}B`;
     if (value >= 1000000) return `$${(value / 1000000).toFixed(1)}M`;
     return `$${(value / 1000).toFixed(0)}K`;
   };
 
-  const formatMultiple = (value: number): string => `${value.toFixed(1)}x`;
+  const formatMultiple = (value: number | null): string =>
+    value === null ? "Insufficient disclosed data" : `${value.toFixed(1)}x`;
 
   const getBusinessModelLabel = (model: BusinessModel): string => {
     switch (model) {
@@ -305,9 +304,10 @@ export default function ReimbursementIntelligenceDashboard() {
                   <td className="px-4 py-3">
                     <span
                       className={`font-semibold ${
-                        analysis.valuation.adjustedMultiple > 4
+                        (analysis.valuation.adjustedMultiple ?? -Infinity) > 4
                           ? "text-green-600"
-                          : analysis.valuation.adjustedMultiple > 2.5
+                          : (analysis.valuation.adjustedMultiple ?? -Infinity) >
+                              2.5
                           ? "text-blue-600"
                           : "text-orange-600"
                       }`}

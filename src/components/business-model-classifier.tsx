@@ -148,7 +148,8 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
     }
   };
 
-  const formatCurrency = (value: number): string => {
+  const formatCurrency = (value: number | null): string => {
+    if (value === null) return "Insufficient disclosed data";
     if (value >= 1000000000) {
       return `$${(value / 1000000000).toFixed(1)}B`;
     } else if (value >= 1000000) {
@@ -158,7 +159,8 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
     }
   };
 
-  const formatMultiple = (value: number): string => {
+  const formatMultiple = (value: number | null): string => {
+    if (value === null) return "Insufficient disclosed data";
     return `${value.toFixed(1)}x`;
   };
 
@@ -392,7 +394,9 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
                 Reimbursement Premium
               </div>
               <div className="text-2xl font-bold text-purple-700">
-                +{modelComparison.premiumPercent.toFixed(0)}%
+                {modelComparison.premiumPercent === null
+                  ? "Insufficient disclosed data"
+                  : `+${modelComparison.premiumPercent.toFixed(0)}%`}
               </div>
             </div>
             <div className="text-right">
@@ -400,7 +404,9 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
                 Additional Value
               </div>
               <div className="text-xl font-bold text-purple-700">
-                {formatCurrency(modelComparison.premium)}
+                {modelComparison.premium === null
+                  ? "Insufficient disclosed data"
+                  : formatCurrency(modelComparison.premium)}
               </div>
             </div>
           </div>
