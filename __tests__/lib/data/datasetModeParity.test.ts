@@ -118,7 +118,7 @@ describe("static vs db parity", () => {
       vi.stubEnv("LACUNA_DATA_MODE", "db");
       const dbSlice = await getVerifiedDatasetPage(request);
 
-      expect(dbSlice).toEqual(staticSlice);
+      expect(toDbComparableSlice(dbSlice)).toEqual(staticSlice);
     },
   );
 });

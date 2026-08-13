@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { minimalVerifiedDataset } from "../../helpers/fixtures";
+import { hashDataset } from "@/lib/lineage/datasetHash";
 
 vi.mock("@/lib/data/loadVerifiedDatasetFromDb", () => ({
   loadVerifiedDatasetFromDb: vi.fn(),
@@ -45,7 +46,13 @@ describe("datasetProvider", () => {
     const dataset = await getVerifiedDataset();
 
     expect(loadVerifiedDatasetFromDb).toHaveBeenCalledOnce();
-    expect(dataset).toEqual(minimalVerifiedDataset);
+    expect(dataset).toEqual({
+      ...minimalVerifiedDataset,
+      provenance: {
+        ...minimalVerifiedDataset.provenance,
+        datasetHash: hashDataset(minimalVerifiedDataset).fullHash,
+      },
+    });
   });
 
   it("getVerifiedDataset propagates DB loader errors (error)", async () => {

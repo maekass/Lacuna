@@ -26,6 +26,34 @@ function formatComputedAt(value: string): string {
   }).format(date);
 }
 
+function DatasetFooter({
+  datasetVersion,
+  datasetHash,
+  computedAt,
+}: {
+  readonly datasetVersion?: string;
+  readonly datasetHash?: string;
+  readonly computedAt: string;
+}) {
+  return (
+    <p className="text-xs text-lacuna-text-muted">
+      Dataset {datasetVersion ?? "unknown"}
+      {datasetHash
+        ? (
+          <>
+            {" · hash "}
+            <span title={datasetHash}>{datasetHash.slice(0, 12)}</span>
+          </>
+        )
+        : null}
+      {" · computed "}
+      <time dateTime={computedAt} title={computedAt}>
+        {formatComputedAt(computedAt)}
+      </time>
+    </p>
+  );
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
@@ -252,12 +280,11 @@ function WithheldEvidence(
         expected={lineage.originalInputCount - lineage.n}
       />
       <Missingness lineage={lineage} />
-      <p className="text-xs text-lacuna-text-muted">
-        Dataset {lineage.datasetVersion ?? "unknown"} · computed{" "}
-        <time dateTime={lineage.computedAt} title={lineage.computedAt}>
-          {formatComputedAt(lineage.computedAt)}
-        </time>
-      </p>
+      <DatasetFooter
+        datasetVersion={lineage.datasetVersion}
+        datasetHash={lineage.datasetHash}
+        computedAt={lineage.computedAt}
+      />
     </div>
   );
 }
@@ -286,12 +313,11 @@ function SummaryEvidence({ summary }: { readonly summary: LineageSummary }) {
         expected={summary.originalInputCount - summary.n}
       />
       <Missingness lineage={summary} />
-      <p className="text-xs text-lacuna-text-muted">
-        Dataset {summary.datasetVersion ?? "unknown"} · computed{" "}
-        <time dateTime={summary.computedAt} title={summary.computedAt}>
-          {formatComputedAt(summary.computedAt)}
-        </time>
-      </p>
+      <DatasetFooter
+        datasetVersion={summary.datasetVersion}
+        datasetHash={summary.datasetHash}
+        computedAt={summary.computedAt}
+      />
     </div>
   );
 }

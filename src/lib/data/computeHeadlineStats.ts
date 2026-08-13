@@ -9,6 +9,7 @@ export interface HeadlineStatsInput extends CoverageDatasetInput {
   provenance: {
     lastUpdated: string;
     datasetVersion?: string;
+    datasetHash?: string;
   };
 }
 
@@ -22,6 +23,7 @@ export interface HeadlineStats {
   uniqueSourceCitations: number;
   lastUpdated: string;
   datasetVersion?: string;
+  datasetHash?: string;
 }
 
 export interface HeadlineStatTile {
@@ -112,6 +114,7 @@ export function computeHeadlineStats(input: HeadlineStatsInput): HeadlineStats {
     ),
     lastUpdated: input.provenance.lastUpdated,
     datasetVersion: input.provenance.datasetVersion,
+    datasetHash: input.provenance.datasetHash,
   };
 }
 

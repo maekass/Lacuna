@@ -1,6 +1,7 @@
 {
   "generatedAt": "2026-07-06T00:00:00.000Z",
   "datasetVersion": "v8",
+  "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
   "metrics": [
     {
       "metricId": "acquirer.premium.preDealValuation",

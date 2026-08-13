@@ -13,6 +13,7 @@ const optionalStringArray = z.array(z.string()).readonly().optional();
 export const provenanceSchema = z.object({
   lastUpdated: isoDateSchema,
   datasetVersion: optionalString,
+  datasetHash: optionalString,
   sources: z.array(z.string()),
   notes: z.array(z.string()),
   purpose: z.string().min(1),

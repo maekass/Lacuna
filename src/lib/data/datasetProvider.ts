@@ -1,6 +1,7 @@
 import process from "node:process";
 import { getCachedStaticVerifiedDataset } from "./cachedDataset";
 import type { DataMode, VerifiedDataset } from "./datasetTypes";
+import { hashDataset } from "@/lib/lineage/datasetHash";
 import {
   type DatasetResource,
   type DatasetSliceResult,
@@ -17,13 +18,27 @@ export function getDataMode(): DataMode {
 }
 
 export async function getVerifiedDataset(): Promise<VerifiedDataset> {
+  let dataset: VerifiedDataset;
   if (getMode() === "db") {
     const { loadVerifiedDatasetFromDb } = await import(
       "./loadVerifiedDatasetFromDb"
     );
-    return loadVerifiedDatasetFromDb();
+    dataset = await loadVerifiedDatasetFromDb();
+  } else {
+    dataset = await getCachedStaticVerifiedDataset();
   }
-  return getCachedStaticVerifiedDataset();
+  return withDatasetIdentity(dataset);
+}
+
+function withDatasetIdentity(dataset: VerifiedDataset): VerifiedDataset {
+  const identity = hashDataset(dataset);
+  return {
+    ...dataset,
+    provenance: {
+      ...dataset.provenance,
+      datasetHash: identity.fullHash,
+    },
+  };
 }
 
 export interface VerifiedDatasetPageRequest {
@@ -92,9 +107,10 @@ export async function getVerifiedDatasetPage(
       acquirerRows,
       acquisitionRows,
     );
+    const identity = await getVerifiedDataset();
 
     return {
-      provenance: mapped.provenance,
+      provenance: identity.provenance,
       companies: includeCompanies ? mapped.companies : [],
       acquirers: includeAcquirers ? mapped.acquirers : [],
       acquisitions: includeAcquisitions ? mapped.acquisitions : [],
@@ -113,7 +129,7 @@ export async function getVerifiedDatasetPage(
     };
   }
 
-  const dataset = await getCachedStaticVerifiedDataset();
+  const dataset = await getVerifiedDataset();
   return sliceVerifiedDataset(dataset, {
     resource,
     limit: request.limit,

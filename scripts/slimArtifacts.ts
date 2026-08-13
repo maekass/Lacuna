@@ -24,7 +24,11 @@ function withoutLineage(value: unknown): unknown {
 
 export function writeSlimArtifact(
   filename: string,
-  metadata: { generatedAt: string; datasetVersion: string },
+  metadata: {
+    generatedAt: string;
+    datasetVersion?: string;
+    datasetHash: string;
+  },
   metrics: readonly SlimMetric[],
 ): void {
   writeFileSync(
@@ -33,6 +37,7 @@ export function writeSlimArtifact(
       {
         generatedAt: metadata.generatedAt,
         datasetVersion: metadata.datasetVersion,
+        datasetHash: metadata.datasetHash,
         metrics,
       },
       null,
