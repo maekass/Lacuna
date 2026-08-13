@@ -5,6 +5,7 @@ import ts from "typescript";
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const sourceRoots = ["src/components", "src/app"];
 const baselinePath = path.join(repoRoot, "scripts/provenance-baseline.json");
+const tsconfigPath = path.join(repoRoot, "tsconfig.json");
 const exemptionsPath = path.join(
   repoRoot,
   "scripts/provenance-exemptions.json",
@@ -123,7 +124,7 @@ function isInsideMetric(
 function isNumericType(type: ts.Type): boolean {
   if ((type.flags & ts.TypeFlags.NumberLike) !== 0) return true;
   if ((type.flags & ts.TypeFlags.Union) !== 0) {
-    return type.types.length > 0 && type.types.every(isNumericType);
+    return type.types.some(isNumericType);
   }
   return false;
 }
@@ -162,14 +163,28 @@ function siteKey(
 }
 
 export function collectCensus(options: CensusOptions): ProvenanceCensus {
+  const config = ts.readConfigFile(tsconfigPath, ts.sys.readFile);
+  if (config.error) {
+    throw new Error(ts.flattenDiagnosticMessageText(
+      config.error.messageText,
+      "\n",
+    ));
+  }
+  const parsedConfig = ts.parseJsonConfigFileContent(
+    config.config,
+    ts.sys,
+    repoRoot,
+  );
+  if (parsedConfig.errors.length > 0) {
+    throw new Error(ts.flattenDiagnosticMessageText(
+      parsedConfig.errors.map((error) => error.messageText).join("\n"),
+      "\n",
+    ));
+  }
   const compilerOptions: ts.CompilerOptions = {
-    allowJs: false,
-    jsx: ts.JsxEmit.ReactJSX,
-    module: ts.ModuleKind.ESNext,
-    moduleResolution: ts.ModuleResolutionKind.Bundler,
-    strict: true,
-    target: ts.ScriptTarget.ES2022,
-    skipLibCheck: true,
+    ...parsedConfig.options,
+    noEmit: true,
+    incremental: false,
   };
   const program = ts.createProgram([...options.files], compilerOptions);
   const checker = program.getTypeChecker();
@@ -296,8 +311,19 @@ function summarizeFailure(
 ): string {
   const baselineKeys = new Set(baseline.sites.map((site) => site.key));
   const newSites = fresh.sites.filter((site) => !baselineKeys.has(site.key));
+  const uncoveredRegression = fresh.uncovered > baseline.uncovered;
+  const exemptionRegression = fresh.exempt > baseline.exempt;
+  if (!uncoveredRegression && !exemptionRegression) {
+    return [
+      "Provenance baseline is stale after an improvement or benign census drift.",
+      `Uncovered display sites went from ${baseline.uncovered} to ${fresh.uncovered}.`,
+      `Exemptions went from ${baseline.exempt} to ${fresh.exempt}.`,
+      "The debt did not increase, but the committed census changed.",
+      "Re-record the baseline with `npm run gate:provenance -- --record` and review the baseline diff.",
+    ].join("\n");
+  }
   const lines = [
-    "Provenance gate failed.",
+    "Provenance gate failed: display debt increased.",
     `Uncovered display sites: ${fresh.uncovered} (baseline ${baseline.uncovered}).`,
     `Exemptions: ${fresh.exempt} (baseline ${baseline.exempt}).`,
   ];
@@ -332,10 +358,7 @@ export function ratchetFailure(
   fresh: ProvenanceCensus,
   baseline: ProvenanceCensus,
 ): string | null {
-  if (
-    fresh.uncovered <= baseline.uncovered && fresh.exempt <= baseline.exempt &&
-    stableJson(fresh) === stableJson(baseline)
-  ) {
+  if (stableJson(fresh) === stableJson(baseline)) {
     return null;
   }
   return summarizeFailure(fresh, baseline);

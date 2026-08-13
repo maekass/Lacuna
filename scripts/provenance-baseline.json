@@ -1,90 +1,139 @@
 {
   "version": 1,
-  "total": 748,
-  "covered": 7,
+  "total": 1090,
+  "covered": 8,
   "exempt": 0,
-  "uncovered": 741,
+  "uncovered": 1082,
   "perFileUncovered": {
+    "src/app/(product)/consumer/layout.tsx": 1,
+    "src/app/(product)/layout.tsx": 1,
+    "src/app/layout.tsx": 1,
     "src/app/lazyDashboard.tsx": 10,
-    "src/app/sections/ConsumerHealthPage.tsx": 5,
-    "src/app/sections/DealDetailPage.tsx": 9,
-    "src/app/sections/DealsPage.tsx": 10,
-    "src/app/sections/HubPage.tsx": 11,
+    "src/app/sections/ConsumerHealthPage.tsx": 7,
+    "src/app/sections/DealDetailPage.tsx": 11,
+    "src/app/sections/DealsPage.tsx": 12,
+    "src/app/sections/HubPage.tsx": 15,
     "src/app/sections/IntelligencePage.tsx": 4,
     "src/app/sections/MethodsPage.tsx": 4,
-    "src/app/sections/PayerOpsPage.tsx": 36,
+    "src/app/sections/PayerOpsPage.tsx": 49,
     "src/app/sections/ResearchPage.tsx": 10,
     "src/app/sections/StagingDealDetailPage.tsx": 2,
-    "src/components/AcquirerPredictionDashboard.tsx": 9,
-    "src/components/AcquirerProfile.tsx": 1,
+    "src/components/AcquirerPredictionDashboard.tsx": 23,
+    "src/components/AcquirerProfile.tsx": 2,
     "src/components/AIInsightsPanel.tsx": 1,
-    "src/components/BayesianCausalAnalysis.tsx": 19,
-    "src/components/BurdenCapitalGap.tsx": 4,
-    "src/components/BurdenCapitalGapValuation.tsx": 16,
-    "src/components/business-model-classifier.tsx": 15,
+    "src/components/BayesianCausalAnalysis.tsx": 26,
+    "src/components/BurdenCapitalGap.tsx": 16,
+    "src/components/BurdenCapitalGapValuation.tsx": 22,
+    "src/components/business-model-classifier.tsx": 18,
     "src/components/CandidateImportPanel.tsx": 4,
     "src/components/CausalDAG.tsx": 17,
-    "src/components/CausalInferenceEngine.tsx": 3,
+    "src/components/CausalInferenceEngine.tsx": 4,
     "src/components/ClinicalTrialsMlPanel.tsx": 3,
     "src/components/ClinicalTrialTracker.tsx": 10,
-    "src/components/ClusteringAnalysis.tsx": 2,
-    "src/components/CompanySimilarity.tsx": 2,
-    "src/components/CompetitiveAnalysisDashboard.tsx": 8,
-    "src/components/DataCoverageCard.tsx": 6,
-    "src/components/DataExport.tsx": 5,
-    "src/components/DataIngestPanel.tsx": 3,
+    "src/components/ClusteringAnalysis.tsx": 6,
+    "src/components/CommercializationReadiness.tsx": 8,
+    "src/components/CompanySimilarity.tsx": 7,
+    "src/components/CompetitiveAnalysisDashboard.tsx": 33,
+    "src/components/ConfidenceLevelIndicator.tsx": 1,
+    "src/components/CuratedDatasetBanner.tsx": 1,
+    "src/components/DataCoverageCard.tsx": 20,
+    "src/components/DataExport.tsx": 9,
+    "src/components/DataIngestPanel.tsx": 5,
     "src/components/DataPipelineStatus.tsx": 8,
+    "src/components/DataProvenanceBanner.tsx": 1,
+    "src/components/DatasetCoverageFootnote.tsx": 1,
     "src/components/DatasetScopeBanner.tsx": 2,
+    "src/components/DealEmpowermentContext.tsx": 4,
     "src/components/DealFlowChart.tsx": 22,
     "src/components/DealReviewQueue.tsx": 2,
+    "src/components/DiscreteSources.tsx": 2,
     "src/components/DomesticStudyCatalog.tsx": 10,
     "src/components/EnrichmentDiffPanel.tsx": 2,
-    "src/components/EvidenceMaturityDashboard.tsx": 10,
-    "src/components/EvidenceTimeline.tsx": 2,
-    "src/components/ExitPredictor.tsx": 10,
-    "src/components/ExportToGamma.tsx": 2,
-    "src/components/FairnessAuditV2.tsx": 40,
-    "src/components/FairnessLimitations.tsx": 10,
+    "src/components/EvidenceMaturityDashboard.tsx": 17,
+    "src/components/EvidenceTimeline.tsx": 8,
+    "src/components/ExitPredictor.tsx": 13,
+    "src/components/ExportToGamma.tsx": 5,
+    "src/components/FairnessAuditV2.tsx": 46,
+    "src/components/FairnessLimitations.tsx": 12,
     "src/components/ForceNetwork.tsx": 4,
     "src/components/FounderCharacteristics.tsx": 33,
     "src/components/FundingEventsPanel.tsx": 5,
     "src/components/GenderInferenceQuality.tsx": 26,
-    "src/components/HealthEquityDashboard.tsx": 7,
-    "src/components/ImpactOpportunityCard.tsx": 13,
+    "src/components/HealthEquityDashboard.tsx": 9,
+    "src/components/ImpactOpportunityCard.tsx": 19,
     "src/components/InvestmentGradeReimbursementIntel.tsx": 5,
     "src/components/KeyboardShortcuts.tsx": 1,
+    "src/components/layout/AppShell.tsx": 2,
+    "src/components/layout/GlobalProvenanceBar.tsx": 1,
     "src/components/layout/SiteFooter.tsx": 1,
-    "src/components/MetricEvidence.tsx": 11,
-    "src/components/NetworkAnalysisHonest.tsx": 47,
-    "src/components/PatientEmpowermentInsight.tsx": 2,
-    "src/components/PatientEmpowermentPanel.tsx": 2,
+    "src/components/MetricEvidence.tsx": 20,
+    "src/components/NetworkAnalysisHonest.tsx": 90,
+    "src/components/PatientEmpowermentInsight.tsx": 12,
+    "src/components/PatientEmpowermentPanel.tsx": 22,
+    "src/components/PipelineStatusStrip.tsx": 1,
     "src/components/PitchBrief.tsx": 7,
-    "src/components/PromotionForm.tsx": 3,
-    "src/components/Providers.tsx": 2,
-    "src/components/QuantValuationPanel.tsx": 9,
-    "src/components/ReimbursementIntelligenceDashboard.tsx": 11,
-    "src/components/research/GapAnalystPanel.tsx": 1,
-    "src/components/research/GapDistributionChart.tsx": 1,
+    "src/components/PromotionForm.tsx": 4,
+    "src/components/Providers.tsx": 3,
+    "src/components/QuantValuationPanel.tsx": 11,
+    "src/components/QueueMetricsBreakdown.tsx": 4,
+    "src/components/ReimbursementIntelligenceDashboard.tsx": 16,
+    "src/components/research/GapAnalystPanel.tsx": 2,
+    "src/components/research/GapDistributionChart.tsx": 3,
     "src/components/research/GapIndexBar.tsx": 4,
+    "src/components/research/ResearchMethodologyDrawer.tsx": 1,
     "src/components/ReviewConsole.tsx": 3,
-    "src/components/RhCapitalPortfolioContext.tsx": 3,
-    "src/components/SensitivityAnalysis.tsx": 10,
-    "src/components/SpaceWhResearchGapsPanel.tsx": 2,
-    "src/components/StrategicPositioningMap.tsx": 59,
-    "src/components/SurvivalCurve.tsx": 11,
+    "src/components/RhCapitalPortfolioContext.tsx": 4,
+    "src/components/SensitivityAnalysis.tsx": 16,
+    "src/components/SpaceWhResearchGapsPanel.tsx": 5,
+    "src/components/StrategicPositioningMap.tsx": 62,
+    "src/components/SurvivalCurve.tsx": 18,
     "src/components/SystemHealthDashboard.tsx": 3,
-    "src/components/TherapeuticAreaCoveragePanel.tsx": 1,
+    "src/components/TemporalValidation.tsx": 3,
+    "src/components/TherapeuticAreaCoveragePanel.tsx": 11,
+    "src/components/ui/AnalysisPanelHeader.tsx": 2,
+    "src/components/ui/Card.tsx": 1,
+    "src/components/ui/ChartTooltip.tsx": 1,
+    "src/components/ui/Dialog.tsx": 2,
+    "src/components/ui/LlmQualityBadge.tsx": 1,
+    "src/components/ui/MetricTile.tsx": 2,
+    "src/components/ui/ModelProvenanceHint.tsx": 2,
+    "src/components/ui/MotionSection.tsx": 2,
+    "src/components/ui/Sheet.tsx": 2,
     "src/components/ui/StatTile.tsx": 4,
-    "src/components/ui/Tooltip.tsx": 1,
+    "src/components/ui/Tooltip.tsx": 3,
     "src/components/ValidationTracker.tsx": 4,
-    "src/components/ValuationMatrix.tsx": 1,
-    "src/components/ValuationMatrixCell.tsx": 2,
+    "src/components/ValuationMatrix.tsx": 3,
+    "src/components/ValuationMatrixCell.tsx": 3,
     "src/components/ValuationMatrixGrid.tsx": 1,
     "src/components/VariantCallsetBrowser.tsx": 4,
     "src/components/WhiteSpaceAnalysis.tsx": 86,
-    "src/components/WomensHealthExitsContext.tsx": 2
+    "src/components/WomensHealthExitsContext.tsx": 10
   },
   "sites": [
+    {
+      "file": "src/app/(product)/consumer/layout.tsx",
+      "functionName": "ConsumerLayout",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/app/(product)/consumer/layout.tsx::ConsumerLayout::children",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/(product)/layout.tsx",
+      "functionName": "ProductLayout",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/app/(product)/layout.tsx::ProductLayout::children",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/layout.tsx",
+      "functionName": "RootLayout",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/app/layout.tsx::RootLayout::children",
+      "class": "uncovered"
+    },
     {
       "file": "src/app/lazyDashboard.tsx",
       "functionName": "DealFlowChartSkeleton",
@@ -206,6 +255,22 @@
       "class": "uncovered"
     },
     {
+      "file": "src/app/sections/ConsumerHealthPage.tsx",
+      "functionName": "ConsumerHealthPage",
+      "expression": "verifiedAcquisitions.length",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/ConsumerHealthPage.tsx::ConsumerHealthPage::verifiedAcquisitions.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/ConsumerHealthPage.tsx",
+      "functionName": "ConsumerHealthPage",
+      "expression": "verifiedCompanies.length",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/ConsumerHealthPage.tsx::ConsumerHealthPage::verifiedCompanies.length",
+      "class": "uncovered"
+    },
+    {
       "file": "src/app/sections/DealDetailPage.tsx",
       "functionName": "DealDetailPage",
       "expression": "0.05",
@@ -243,6 +308,22 @@
       "expression": "0.14",
       "kind": "numeric-jsx",
       "key": "src/app/sections/DealDetailPage.tsx::DealDetailPage::0.14",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/DealDetailPage.tsx",
+      "functionName": "DealDetailPage",
+      "expression": "acq.preDealValuation",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/DealDetailPage.tsx::DealDetailPage::acq.preDealValuation",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/DealDetailPage.tsx",
+      "functionName": "DealDetailPage",
+      "expression": "formatDealBrief(deal, comparables)",
+      "kind": "formatting-call",
+      "key": "src/app/sections/DealDetailPage.tsx::DealDetailPage::formatDealBrief(deal, comparables)",
       "class": "uncovered"
     },
     {
@@ -358,6 +439,22 @@
       "class": "uncovered"
     },
     {
+      "file": "src/app/sections/DealsPage.tsx",
+      "functionName": "DealsPage",
+      "expression": "verifiedAcquisitions.length",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/DealsPage.tsx::DealsPage::verifiedAcquisitions.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/DealsPage.tsx",
+      "functionName": "DealsPage",
+      "expression": "verifiedCompanies.length",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/DealsPage.tsx::DealsPage::verifiedCompanies.length",
+      "class": "uncovered"
+    },
+    {
       "file": "src/app/sections/HubPage.tsx",
       "functionName": "formatValuationGap",
       "expression": "multiple.toFixed(0)",
@@ -440,9 +537,41 @@
     {
       "file": "src/app/sections/HubPage.tsx",
       "functionName": "HubPage",
+      "expression": "dealVelocityTopSector.count",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/HubPage.tsx::HubPage::dealVelocityTopSector.count",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/HubPage.tsx",
+      "functionName": "HubPage",
       "expression": "formatValuationGap(valuationDisparity.percentDiff)",
       "kind": "formatting-call",
       "key": "src/app/sections/HubPage.tsx::HubPage::formatValuationGap(valuationDisparity.percentDiff)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/HubPage.tsx",
+      "functionName": "HubPage",
+      "expression": "valuationDisparity .highN",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/HubPage.tsx::HubPage::valuationDisparity .highN",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/HubPage.tsx",
+      "functionName": "HubPage",
+      "expression": "valuationDisparity.lowN",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/HubPage.tsx::HubPage::valuationDisparity.lowN",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/HubPage.tsx",
+      "functionName": "HubPage",
+      "expression": "verifiedAcquisitions.length",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/HubPage.tsx::HubPage::verifiedAcquisitions.length",
       "class": "uncovered"
     },
     {
@@ -704,9 +833,81 @@
     {
       "file": "src/app/sections/PayerOpsPage.tsx",
       "functionName": "PayerOpsPage",
+      "expression": "avoidableRate",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/PayerOpsPage.tsx::PayerOpsPage::avoidableRate",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/PayerOpsPage.tsx",
+      "functionName": "PayerOpsPage",
+      "expression": "avoidableRate",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/PayerOpsPage.tsx::PayerOpsPage::avoidableRate#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/PayerOpsPage.tsx",
+      "functionName": "PayerOpsPage",
+      "expression": "denialRate",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/PayerOpsPage.tsx::PayerOpsPage::denialRate",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/PayerOpsPage.tsx",
+      "functionName": "PayerOpsPage",
       "expression": "denialRate.toFixed(1)",
       "kind": "formatting-call",
       "key": "src/app/sections/PayerOpsPage.tsx::PayerOpsPage::denialRate.toFixed(1)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/PayerOpsPage.tsx",
+      "functionName": "PayerOpsPage",
+      "expression": "editingSegment.adminCost",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/PayerOpsPage.tsx::PayerOpsPage::editingSegment.adminCost",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/PayerOpsPage.tsx",
+      "functionName": "PayerOpsPage",
+      "expression": "editingSegment.auths",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/PayerOpsPage.tsx::PayerOpsPage::editingSegment.auths",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/PayerOpsPage.tsx",
+      "functionName": "PayerOpsPage",
+      "expression": "editingSegment.avoidableRate",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/PayerOpsPage.tsx::PayerOpsPage::editingSegment.avoidableRate",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/PayerOpsPage.tsx",
+      "functionName": "PayerOpsPage",
+      "expression": "editingSegment.claims",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/PayerOpsPage.tsx::PayerOpsPage::editingSegment.claims",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/PayerOpsPage.tsx",
+      "functionName": "PayerOpsPage",
+      "expression": "editingSegment.denialRate",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/PayerOpsPage.tsx::PayerOpsPage::editingSegment.denialRate",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/PayerOpsPage.tsx",
+      "functionName": "PayerOpsPage",
+      "expression": "example.year",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/PayerOpsPage.tsx::PayerOpsPage::example.year",
       "class": "uncovered"
     },
     {
@@ -768,9 +969,41 @@
     {
       "file": "src/app/sections/PayerOpsPage.tsx",
       "functionName": "PayerOpsPage",
+      "expression": "index + 1",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/PayerOpsPage.tsx::PayerOpsPage::index + 1",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/PayerOpsPage.tsx",
+      "functionName": "PayerOpsPage",
+      "expression": "matchingDeals",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/PayerOpsPage.tsx::PayerOpsPage::matchingDeals",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/PayerOpsPage.tsx",
+      "functionName": "PayerOpsPage",
       "expression": "parseLives(editingSegment.lives)",
       "kind": "numeric-jsx",
       "key": "src/app/sections/PayerOpsPage.tsx::PayerOpsPage::parseLives(editingSegment.lives)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/PayerOpsPage.tsx",
+      "functionName": "PayerOpsPage",
+      "expression": "queue.automation",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/PayerOpsPage.tsx::PayerOpsPage::queue.automation",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/app/sections/PayerOpsPage.tsx",
+      "functionName": "PayerOpsPage",
+      "expression": "queue.automation",
+      "kind": "numeric-jsx",
+      "key": "src/app/sections/PayerOpsPage.tsx::PayerOpsPage::queue.automation#2",
       "class": "uncovered"
     },
     {
@@ -896,6 +1129,14 @@
     {
       "file": "src/components/AcquirerPredictionDashboard.tsx",
       "functionName": "AcquirerPredictionDashboard",
+      "expression": "analysis.topMatches[0]?.matchScore || 0",
+      "kind": "numeric-jsx",
+      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::analysis.topMatches[0]?.matchScore || 0",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/AcquirerPredictionDashboard.tsx",
+      "functionName": "AcquirerPredictionDashboard",
       "expression": "formatCurrency( match.acquirer.typicalDealSize.max, )",
       "kind": "formatting-call",
       "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::formatCurrency( match.acquirer.typicalDealSize.max, )",
@@ -952,9 +1193,113 @@
     {
       "file": "src/components/AcquirerPredictionDashboard.tsx",
       "functionName": "AcquirerPredictionDashboard",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::i",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/AcquirerPredictionDashboard.tsx",
+      "functionName": "AcquirerPredictionDashboard",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::i#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/AcquirerPredictionDashboard.tsx",
+      "functionName": "AcquirerPredictionDashboard",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::i#3",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/AcquirerPredictionDashboard.tsx",
+      "functionName": "AcquirerPredictionDashboard",
+      "expression": "idx + 1",
+      "kind": "numeric-jsx",
+      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::idx + 1",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/AcquirerPredictionDashboard.tsx",
+      "functionName": "AcquirerPredictionDashboard",
+      "expression": "match.financialFit",
+      "kind": "numeric-jsx",
+      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::match.financialFit",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/AcquirerPredictionDashboard.tsx",
+      "functionName": "AcquirerPredictionDashboard",
+      "expression": "match.marketFit",
+      "kind": "numeric-jsx",
+      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::match.marketFit",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/AcquirerPredictionDashboard.tsx",
+      "functionName": "AcquirerPredictionDashboard",
+      "expression": "match.matchScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::match.matchScore",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/AcquirerPredictionDashboard.tsx",
+      "functionName": "AcquirerPredictionDashboard",
+      "expression": "match.strategicFit",
+      "kind": "numeric-jsx",
+      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::match.strategicFit",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/AcquirerPredictionDashboard.tsx",
+      "functionName": "AcquirerPredictionDashboard",
       "expression": "Math.round(selectedAnalysis.winProbability * 100)",
       "kind": "numeric-jsx",
       "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::Math.round(selectedAnalysis.winProbability * 100)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/AcquirerPredictionDashboard.tsx",
+      "functionName": "AcquirerPredictionDashboard",
+      "expression": "selectedAnalysis.timelineEstimate.months",
+      "kind": "numeric-jsx",
+      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::selectedAnalysis.timelineEstimate.months",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/AcquirerPredictionDashboard.tsx",
+      "functionName": "AcquirerPredictionDashboard",
+      "expression": "selectedAnalysis.topMatches.filter((m) => m.likelihood === \"high\" ).length",
+      "kind": "numeric-jsx",
+      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::selectedAnalysis.topMatches.filter((m) => m.likelihood === \"high\" ).length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/AcquirerPredictionDashboard.tsx",
+      "functionName": "AcquirerPredictionDashboard",
+      "expression": "selectedAnalysis.topMatches[0].matchScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::selectedAnalysis.topMatches[0].matchScore",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/AcquirerPredictionDashboard.tsx",
+      "functionName": "AcquirerPredictionDashboard",
+      "expression": "verifiedAcquirers.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::verifiedAcquirers.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/AcquirerPredictionDashboard.tsx",
+      "functionName": "AcquirerPredictionDashboard",
+      "expression": "verifiedAcquisitions.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::verifiedAcquisitions.length",
       "class": "uncovered"
     },
     {
@@ -971,6 +1316,14 @@
       "expression": "averageDealValue.toFixed(1)",
       "kind": "formatting-call",
       "key": "src/components/AcquirerProfile.tsx::AcquirerProfile::averageDealValue.toFixed(1)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/AcquirerProfile.tsx",
+      "functionName": "AcquirerProfile",
+      "expression": "deals.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/AcquirerProfile.tsx::AcquirerProfile::deals.length",
       "class": "uncovered"
     },
     {
@@ -1104,9 +1457,49 @@
     {
       "file": "src/components/BayesianCausalAnalysis.tsx",
       "functionName": "BayesianCausalAnalysis",
+      "expression": "field.min",
+      "kind": "numeric-jsx",
+      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::field.min",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BayesianCausalAnalysis.tsx",
+      "functionName": "BayesianCausalAnalysis",
       "expression": "field.step",
       "kind": "numeric-jsx",
       "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::field.step",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BayesianCausalAnalysis.tsx",
+      "functionName": "BayesianCausalAnalysis",
+      "expression": "index",
+      "kind": "numeric-jsx",
+      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::index",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BayesianCausalAnalysis.tsx",
+      "functionName": "BayesianCausalAnalysis",
+      "expression": "index + 1",
+      "kind": "numeric-jsx",
+      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::index + 1",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BayesianCausalAnalysis.tsx",
+      "functionName": "BayesianCausalAnalysis",
+      "expression": "index + 1",
+      "kind": "numeric-jsx",
+      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::index + 1#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BayesianCausalAnalysis.tsx",
+      "functionName": "BayesianCausalAnalysis",
+      "expression": "index",
+      "kind": "numeric-jsx",
+      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::index#2",
       "class": "uncovered"
     },
     {
@@ -1134,6 +1527,30 @@
       "class": "uncovered"
     },
     {
+      "file": "src/components/BayesianCausalAnalysis.tsx",
+      "functionName": "BayesianCausalAnalysis",
+      "expression": "PRE_REGISTERED_HYPOTHESES.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::PRE_REGISTERED_HYPOTHESES.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BayesianCausalAnalysis.tsx",
+      "functionName": "BayesianCausalAnalysis",
+      "expression": "result.hypothesis.expectedEffect",
+      "kind": "numeric-jsx",
+      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::result.hypothesis.expectedEffect",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGap.tsx",
+      "functionName": "BurdenCapitalGap",
+      "expression": "BURDEN_CAPITAL_GAP_DATA.find((r) => r.id === \"cardiovascular\") ?.fundingEvents",
+      "kind": "numeric-jsx",
+      "key": "src/components/BurdenCapitalGap.tsx::BurdenCapitalGap::BURDEN_CAPITAL_GAP_DATA.find((r) => r.id === \"cardiovascular\") ?.fundingEvents",
+      "class": "uncovered"
+    },
+    {
       "file": "src/components/BurdenCapitalGap.tsx",
       "functionName": "BurdenCapitalGap",
       "expression": "chartHeight",
@@ -1147,6 +1564,94 @@
       "expression": "d.fundingEvents.toLocaleString()",
       "kind": "formatting-call",
       "key": "src/components/BurdenCapitalGap.tsx::BurdenCapitalGap::d.fundingEvents.toLocaleString()",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGap.tsx",
+      "functionName": "BurdenCapitalGap",
+      "expression": "formatCapitalM(10)",
+      "kind": "formatting-call",
+      "key": "src/components/BurdenCapitalGap.tsx::BurdenCapitalGap::formatCapitalM(10)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGap.tsx",
+      "functionName": "BurdenCapitalGap",
+      "expression": "formatCapitalM(Number(d))",
+      "kind": "formatting-call",
+      "key": "src/components/BurdenCapitalGap.tsx::BurdenCapitalGap::formatCapitalM(Number(d))",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGap.tsx",
+      "functionName": "BurdenCapitalGap",
+      "expression": "formatCapitalM(row.bcg.capitalRaisedM)",
+      "kind": "formatting-call",
+      "key": "src/components/BurdenCapitalGap.tsx::BurdenCapitalGap::formatCapitalM(row.bcg.capitalRaisedM)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGap.tsx",
+      "functionName": "BurdenCapitalGap",
+      "expression": "formatCapitalM(row.valuationVcM)",
+      "kind": "formatting-call",
+      "key": "src/components/BurdenCapitalGap.tsx::BurdenCapitalGap::formatCapitalM(row.valuationVcM)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGap.tsx",
+      "functionName": "BurdenCapitalGap",
+      "expression": "formatCapitalM(tooltip.row.capitalRaisedM)",
+      "kind": "formatting-call",
+      "key": "src/components/BurdenCapitalGap.tsx::BurdenCapitalGap::formatCapitalM(tooltip.row.capitalRaisedM)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGap.tsx",
+      "functionName": "BurdenCapitalGap",
+      "expression": "formatCapitalM(tooltip.row.exitValueM)",
+      "kind": "formatting-call",
+      "key": "src/components/BurdenCapitalGap.tsx::BurdenCapitalGap::formatCapitalM(tooltip.row.exitValueM)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGap.tsx",
+      "functionName": "BurdenCapitalGap",
+      "expression": "formatModelProvenanceLine(BURDEN_CAPITAL_GAP_MODEL)",
+      "kind": "formatting-call",
+      "key": "src/components/BurdenCapitalGap.tsx::BurdenCapitalGap::formatModelProvenanceLine(BURDEN_CAPITAL_GAP_MODEL)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGap.tsx",
+      "functionName": "BurdenCapitalGap",
+      "expression": "summary.mapped",
+      "kind": "numeric-jsx",
+      "key": "src/components/BurdenCapitalGap.tsx::BurdenCapitalGap::summary.mapped",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGap.tsx",
+      "functionName": "BurdenCapitalGap",
+      "expression": "summary.partial",
+      "kind": "numeric-jsx",
+      "key": "src/components/BurdenCapitalGap.tsx::BurdenCapitalGap::summary.partial",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGap.tsx",
+      "functionName": "BurdenCapitalGap",
+      "expression": "summary.unmapped",
+      "kind": "numeric-jsx",
+      "key": "src/components/BurdenCapitalGap.tsx::BurdenCapitalGap::summary.unmapped",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGap.tsx",
+      "functionName": "BurdenCapitalGap",
+      "expression": "tooltip.row.burdenDALYsM",
+      "kind": "numeric-jsx",
+      "key": "src/components/BurdenCapitalGap.tsx::BurdenCapitalGap::tooltip.row.burdenDALYsM",
       "class": "uncovered"
     },
     {
@@ -1208,9 +1713,57 @@
     {
       "file": "src/components/BurdenCapitalGapValuation.tsx",
       "functionName": "BurdenCapitalGapValuation",
+      "expression": "f.score",
+      "kind": "numeric-jsx",
+      "key": "src/components/BurdenCapitalGapValuation.tsx::BurdenCapitalGapValuation::f.score",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGapValuation.tsx",
+      "functionName": "BurdenCapitalGapValuation",
       "expression": "f.score.toFixed(1)",
       "kind": "formatting-call",
       "key": "src/components/BurdenCapitalGapValuation.tsx::BurdenCapitalGapValuation::f.score.toFixed(1)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGapValuation.tsx",
+      "functionName": "BurdenCapitalGapValuation",
+      "expression": "formatValuation(result.highM)",
+      "kind": "formatting-call",
+      "key": "src/components/BurdenCapitalGapValuation.tsx::BurdenCapitalGapValuation::formatValuation(result.highM)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGapValuation.tsx",
+      "functionName": "BurdenCapitalGapValuation",
+      "expression": "formatValuation(result.lowM)",
+      "kind": "formatting-call",
+      "key": "src/components/BurdenCapitalGapValuation.tsx::BurdenCapitalGapValuation::formatValuation(result.lowM)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGapValuation.tsx",
+      "functionName": "BurdenCapitalGapValuation",
+      "expression": "formatValuation(result.midM)",
+      "kind": "formatting-call",
+      "key": "src/components/BurdenCapitalGapValuation.tsx::BurdenCapitalGapValuation::formatValuation(result.midM)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGapValuation.tsx",
+      "functionName": "BurdenCapitalGapValuation",
+      "expression": "formatValuation(result.midM)",
+      "kind": "formatting-call",
+      "key": "src/components/BurdenCapitalGapValuation.tsx::BurdenCapitalGapValuation::formatValuation(result.midM)#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/BurdenCapitalGapValuation.tsx",
+      "functionName": "BurdenCapitalGapValuation",
+      "expression": "formatValuation(result.stageComparableM)",
+      "kind": "formatting-call",
+      "key": "src/components/BurdenCapitalGapValuation.tsx::BurdenCapitalGapValuation::formatValuation(result.stageComparableM)",
       "class": "uncovered"
     },
     {
@@ -1304,6 +1857,22 @@
     {
       "file": "src/components/business-model-classifier.tsx",
       "functionName": "BusinessModelClassifier",
+      "expression": "classification.reimbursementStatus.codeCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/business-model-classifier.tsx::BusinessModelClassifier::classification.reimbursementStatus.codeCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/business-model-classifier.tsx",
+      "functionName": "BusinessModelClassifier",
+      "expression": "codeCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/business-model-classifier.tsx::BusinessModelClassifier::codeCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/business-model-classifier.tsx",
+      "functionName": "BusinessModelClassifier",
       "expression": "formatCurrency(classification.valuationImpact.impliedValuation)",
       "kind": "formatting-call",
       "key": "src/components/business-model-classifier.tsx::BusinessModelClassifier::formatCurrency(classification.valuationImpact.impliedValuation)",
@@ -1363,6 +1932,14 @@
       "expression": "formatMultiple(modelComparison.insuranceDriven.adjustedMultiple)",
       "kind": "formatting-call",
       "key": "src/components/business-model-classifier.tsx::BusinessModelClassifier::formatMultiple(modelComparison.insuranceDriven.adjustedMultiple)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/business-model-classifier.tsx",
+      "functionName": "BusinessModelClassifier",
+      "expression": "idx",
+      "kind": "numeric-jsx",
+      "key": "src/components/business-model-classifier.tsx::BusinessModelClassifier::idx",
       "class": "uncovered"
     },
     {
@@ -1606,6 +2183,14 @@
       "class": "uncovered"
     },
     {
+      "file": "src/components/CausalInferenceEngine.tsx",
+      "functionName": "CausalInferenceEngine",
+      "expression": "totalDeals",
+      "kind": "numeric-jsx",
+      "key": "src/components/CausalInferenceEngine.tsx::CausalInferenceEngine::totalDeals",
+      "class": "uncovered"
+    },
+    {
       "file": "src/components/ClinicalTrialsMlPanel.tsx",
       "functionName": "ClinicalTrialsMlPanel",
       "expression": "(completion.majority_baseline_accuracy * 100).toFixed(0)",
@@ -1712,6 +2297,14 @@
     {
       "file": "src/components/ClusteringAnalysis.tsx",
       "functionName": "ClusteringAnalysis",
+      "expression": "cluster.companies.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/ClusteringAnalysis.tsx::ClusteringAnalysis::cluster.companies.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ClusteringAnalysis.tsx",
+      "functionName": "ClusteringAnalysis",
       "expression": "cluster.companies.length - 4",
       "kind": "numeric-jsx",
       "key": "src/components/ClusteringAnalysis.tsx::ClusteringAnalysis::cluster.companies.length - 4",
@@ -1720,9 +2313,97 @@
     {
       "file": "src/components/ClusteringAnalysis.tsx",
       "functionName": "ClusteringAnalysis",
+      "expression": "cluster.id",
+      "kind": "numeric-jsx",
+      "key": "src/components/ClusteringAnalysis.tsx::ClusteringAnalysis::cluster.id",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ClusteringAnalysis.tsx",
+      "functionName": "ClusteringAnalysis",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/ClusteringAnalysis.tsx::ClusteringAnalysis::i",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ClusteringAnalysis.tsx",
+      "functionName": "ClusteringAnalysis",
       "expression": "K",
       "kind": "numeric-jsx",
       "key": "src/components/ClusteringAnalysis.tsx::ClusteringAnalysis::K",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ClusteringAnalysis.tsx",
+      "functionName": "ClusteringAnalysis",
+      "expression": "unclusteredCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/ClusteringAnalysis.tsx::ClusteringAnalysis::unclusteredCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CommercializationReadiness.tsx",
+      "functionName": "CommercializationReadiness",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::i",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CommercializationReadiness.tsx",
+      "functionName": "CommercializationReadiness",
+      "expression": "items.filter((i) => i.tags.includes(\"maternal-health\")) .length",
+      "kind": "numeric-jsx",
+      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::items.filter((i) => i.tags.includes(\"maternal-health\")) .length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CommercializationReadiness.tsx",
+      "functionName": "CommercializationReadiness",
+      "expression": "items.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::items.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CommercializationReadiness.tsx",
+      "functionName": "CommercializationReadiness",
+      "expression": "maternalHealthCandidates.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::maternalHealthCandidates.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CommercializationReadiness.tsx",
+      "functionName": "CommercializationReadiness",
+      "expression": "score.acquirerFitScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::score.acquirerFitScore",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CommercializationReadiness.tsx",
+      "functionName": "CommercializationReadiness",
+      "expression": "score.evidenceScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::score.evidenceScore",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CommercializationReadiness.tsx",
+      "functionName": "CommercializationReadiness",
+      "expression": "score.overallScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::score.overallScore",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CommercializationReadiness.tsx",
+      "functionName": "CommercializationReadiness",
+      "expression": "score.reimbursementScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::score.reimbursementScore",
       "class": "uncovered"
     },
     {
@@ -1736,9 +2417,49 @@
     {
       "file": "src/components/CompanySimilarity.tsx",
       "functionName": "CompanySimilarity",
+      "expression": "j",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompanySimilarity.tsx::CompanySimilarity::j",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompanySimilarity.tsx",
+      "functionName": "CompanySimilarity",
+      "expression": "portfolioMatches.portfolioCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompanySimilarity.tsx::CompanySimilarity::portfolioMatches.portfolioCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompanySimilarity.tsx",
+      "functionName": "CompanySimilarity",
       "expression": "sectors.length",
       "kind": "numeric-jsx",
       "key": "src/components/CompanySimilarity.tsx::CompanySimilarity::sectors.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompanySimilarity.tsx",
+      "functionName": "CompanySimilarity",
+      "expression": "selected.lastKnownValuation && ` · $${selected.lastKnownValuation}M valuation`",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompanySimilarity.tsx::CompanySimilarity::selected.lastKnownValuation && ` · $${selected.lastKnownValuation}M valuation`",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompanySimilarity.tsx",
+      "functionName": "CompanySimilarity",
+      "expression": "selected.totalFunding && ` · $${selected.totalFunding}M raised`",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompanySimilarity.tsx::CompanySimilarity::selected.totalFunding && ` · $${selected.totalFunding}M raised`",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompanySimilarity.tsx",
+      "functionName": "CompanySimilarity",
+      "expression": "verifiedCompanies.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompanySimilarity.tsx::CompanySimilarity::verifiedCompanies.length",
       "class": "uncovered"
     },
     {
@@ -1752,9 +2473,129 @@
     {
       "file": "src/components/CompetitiveAnalysisDashboard.tsx",
       "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "d.count",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::d.count",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "d.year",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::d.year",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "d.year",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::d.year#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "e.year",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::e.year",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::i",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::i#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
       "expression": "p.avgPerYear.toFixed(1)",
       "kind": "formatting-call",
       "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::p.avgPerYear.toFixed(1)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "p.totalAcquisitions",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::p.totalAcquisitions",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "p.totalDeals",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::p.totalDeals",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "p.yearRange[0]",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::p.yearRange[0]",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "p.yearRange[1]",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::p.yearRange[1]",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "s.contestable",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::s.contestable",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "s.count",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::s.count",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "s.count",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::s.count#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "s.count",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::s.count#3",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "s.count",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::s.count#4",
       "class": "uncovered"
     },
     {
@@ -1792,6 +2633,46 @@
     {
       "file": "src/components/CompetitiveAnalysisDashboard.tsx",
       "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "s.total",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::s.total",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "selectedPortfolio.ageAtAcquisitionStats.median",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::selectedPortfolio.ageAtAcquisitionStats.median",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "selectedPortfolio.sectorComposition.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::selectedPortfolio.sectorComposition.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "selectedPortfolio.totalAcquisitions",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::selectedPortfolio.totalAcquisitions",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "selectedPortfolio.valueStats.median",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::selectedPortfolio.valueStats.median",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
       "expression": "selectedVelocity.trend.rSquared.toFixed(2)",
       "kind": "formatting-call",
       "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::selectedVelocity.trend.rSquared.toFixed(2)",
@@ -1803,6 +2684,70 @@
       "expression": "selectedVelocity.trend.slope.toFixed(2)",
       "kind": "formatting-call",
       "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::selectedVelocity.trend.slope.toFixed(2)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "t.count",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::t.count",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "t.potentialBuyers.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::t.potentialBuyers.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "t.totalAcquisitions",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::t.totalAcquisitions",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "t.valueStats.medianTargetAge",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::t.valueStats.medianTargetAge",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+      "functionName": "CompetitiveAnalysisDashboard",
+      "expression": "t.valueStats.medianTargetValue",
+      "kind": "numeric-jsx",
+      "key": "src/components/CompetitiveAnalysisDashboard.tsx::CompetitiveAnalysisDashboard::t.valueStats.medianTargetValue",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ConfidenceLevelIndicator.tsx",
+      "functionName": "DataPointWithConfidence",
+      "expression": "value",
+      "kind": "numeric-jsx",
+      "key": "src/components/ConfidenceLevelIndicator.tsx::DataPointWithConfidence::value",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/CuratedDatasetBanner.tsx",
+      "functionName": "CuratedDatasetBanner",
+      "expression": "formatCuratedDatasetProvenanceLine(dealCount)",
+      "kind": "formatting-call",
+      "key": "src/components/CuratedDatasetBanner.tsx::CuratedDatasetBanner::formatCuratedDatasetProvenanceLine(dealCount)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataCoverageCard.tsx",
+      "functionName": "CoverageStatBox",
+      "expression": "value",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataCoverageCard.tsx::CoverageStatBox::value",
       "class": "uncovered"
     },
     {
@@ -1840,9 +2785,113 @@
     {
       "file": "src/components/DataCoverageCard.tsx",
       "functionName": "DataCoverageCard",
+      "expression": "row.companies",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::row.companies",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataCoverageCard.tsx",
+      "functionName": "DataCoverageCard",
+      "expression": "row.count",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::row.count",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataCoverageCard.tsx",
+      "functionName": "DataCoverageCard",
+      "expression": "row.deals",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::row.deals",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataCoverageCard.tsx",
+      "functionName": "DataCoverageCard",
+      "expression": "row.disclosedPrices",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::row.disclosedPrices",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataCoverageCard.tsx",
+      "functionName": "DataCoverageCard",
+      "expression": "row.disclosedPrices",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::row.disclosedPrices#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataCoverageCard.tsx",
+      "functionName": "DataCoverageCard",
+      "expression": "row.year",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::row.year",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataCoverageCard.tsx",
+      "functionName": "DataCoverageCard",
+      "expression": "row.year",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::row.year#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataCoverageCard.tsx",
+      "functionName": "DataCoverageCard",
+      "expression": "sectorsWithDeals.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::sectorsWithDeals.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataCoverageCard.tsx",
+      "functionName": "DataCoverageCard",
+      "expression": "stats .dealsWithValueNote",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::stats .dealsWithValueNote",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataCoverageCard.tsx",
+      "functionName": "DataCoverageCard",
+      "expression": "stats.companiesTotal",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::stats.companiesTotal",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataCoverageCard.tsx",
+      "functionName": "DataCoverageCard",
+      "expression": "stats.companiesWithValuation",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::stats.companiesWithValuation",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataCoverageCard.tsx",
+      "functionName": "DataCoverageCard",
       "expression": "undisclosed",
       "kind": "numeric-jsx",
       "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::undisclosed",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataCoverageCard.tsx",
+      "functionName": "DataCoverageCard",
+      "expression": "verifiedAcquisitions.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::verifiedAcquisitions.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataCoverageCard.tsx",
+      "functionName": "DataCoverageCard",
+      "expression": "verifiedCompanies.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::verifiedCompanies.length",
       "class": "uncovered"
     },
     {
@@ -1859,6 +2908,38 @@
       "expression": "lastExport.recordCount",
       "kind": "numeric-jsx",
       "key": "src/components/DataExport.tsx::DataExport::lastExport.recordCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataExport.tsx",
+      "functionName": "DataExport",
+      "expression": "option.icon",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataExport.tsx::DataExport::option.icon",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataExport.tsx",
+      "functionName": "DataExport",
+      "expression": "verifiedAcquirers.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataExport.tsx::DataExport::verifiedAcquirers.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataExport.tsx",
+      "functionName": "DataExport",
+      "expression": "verifiedAcquisitions.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataExport.tsx::DataExport::verifiedAcquisitions.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataExport.tsx",
+      "functionName": "DataExport",
+      "expression": "verifiedCompanies.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataExport.tsx::DataExport::verifiedCompanies.length",
       "class": "uncovered"
     },
     {
@@ -1915,6 +2996,22 @@
       "expression": "new Date(freeApi.latest.downloadedAt).toLocaleString()",
       "kind": "formatting-call",
       "key": "src/components/DataIngestPanel.tsx::DataIngestPanel::new Date(freeApi.latest.downloadedAt).toLocaleString()",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataIngestPanel.tsx",
+      "functionName": "DataIngestPanel",
+      "expression": "sec.latest.scanned_tickers ?? \"—\"",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataIngestPanel.tsx::DataIngestPanel::sec.latest.scanned_tickers ?? \"—\"",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataIngestPanel.tsx",
+      "functionName": "DataIngestPanel",
+      "expression": "sec.pendingReviewCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataIngestPanel.tsx::DataIngestPanel::sec.pendingReviewCount",
       "class": "uncovered"
     },
     {
@@ -1982,6 +3079,22 @@
       "class": "uncovered"
     },
     {
+      "file": "src/components/DataProvenanceBanner.tsx",
+      "functionName": "DataProvenanceBanner",
+      "expression": "verifiedAcquisitions.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/DataProvenanceBanner.tsx::DataProvenanceBanner::verifiedAcquisitions.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DatasetCoverageFootnote.tsx",
+      "functionName": "DatasetCoverageFootnote",
+      "expression": "formatTierCoverageDefinition( { verifiedDealCount: changelog.currentDealCount, stagingCandidateCount: candidateCount, }, { metricsUnavailable: unavailable }, )",
+      "kind": "formatting-call",
+      "key": "src/components/DatasetCoverageFootnote.tsx::DatasetCoverageFootnote::formatTierCoverageDefinition( { verifiedDealCount: changelog.currentDealCount, stagingCandidateCount: candidateCount, }, { metricsUnavailable: unavailable }, )",
+      "class": "uncovered"
+    },
+    {
       "file": "src/components/DatasetScopeBanner.tsx",
       "functionName": "DatasetScopeBanner",
       "expression": "companyCount",
@@ -1995,6 +3108,38 @@
       "expression": "dealCount",
       "kind": "numeric-jsx",
       "key": "src/components/DatasetScopeBanner.tsx::DatasetScopeBanner::dealCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DealEmpowermentContext.tsx",
+      "functionName": "DealEmpowermentContext",
+      "expression": "context.affinityScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/DealEmpowermentContext.tsx::DealEmpowermentContext::context.affinityScore",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DealEmpowermentContext.tsx",
+      "functionName": "DealEmpowermentContext",
+      "expression": "context.comparableCompanyIds.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/DealEmpowermentContext.tsx::DealEmpowermentContext::context.comparableCompanyIds.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DealEmpowermentContext.tsx",
+      "functionName": "DealEmpowermentContext",
+      "expression": "context.evidenceScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/DealEmpowermentContext.tsx::DealEmpowermentContext::context.evidenceScore",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DealEmpowermentContext.tsx",
+      "functionName": "DealEmpowermentContext",
+      "expression": "match.dimension.metric.gapIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/DealEmpowermentContext.tsx::DealEmpowermentContext::match.dimension.metric.gapIndexPct",
       "class": "uncovered"
     },
     {
@@ -2190,6 +3335,22 @@
       "class": "uncovered"
     },
     {
+      "file": "src/components/DiscreteSources.tsx",
+      "functionName": "DiscreteSourceNote",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/components/DiscreteSources.tsx::DiscreteSourceNote::children",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DiscreteSources.tsx",
+      "functionName": "DiscreteSources",
+      "expression": "formatSourceLine(sources, { max, valuationSource })",
+      "kind": "formatting-call",
+      "key": "src/components/DiscreteSources.tsx::DiscreteSources::formatSourceLine(sources, { max, valuationSource })",
+      "class": "uncovered"
+    },
+    {
       "file": "src/components/DomesticStudyCatalog.tsx",
       "functionName": "DomesticStudyCatalog",
       "expression": "formatSampleSize( stats.byInstitution.harvard.sampleSize + stats.byInstitution.harvard_mit_collab.sampleSize, )",
@@ -2360,9 +3521,105 @@
     {
       "file": "src/components/EvidenceMaturityDashboard.tsx",
       "functionName": "EvidenceMaturityDashboard",
+      "expression": "correlation.n",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::correlation.n",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
+      "expression": "correlation.pearsonR",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::correlation.pearsonR",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
+      "expression": "correlation.premiumMultiple",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::correlation.premiumMultiple",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
       "expression": "count",
       "kind": "numeric-jsx",
       "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::count",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
+      "expression": "row.evidence.overall",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::row.evidence.overall",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
+      "expression": "row.inputs.totalFDAProducts",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::row.inputs.totalFDAProducts",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
+      "expression": "row.inputs.totalTrials",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::row.inputs.totalTrials",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
+      "expression": "score",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::score",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceTimeline.tsx",
+      "functionName": "EvidenceTimeline",
+      "expression": "evidenceScore.atAcquisition.evidenceScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceTimeline.tsx::EvidenceTimeline::evidenceScore.atAcquisition.evidenceScore",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceTimeline.tsx",
+      "functionName": "EvidenceTimeline",
+      "expression": "evidenceScore.fdaStatusScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceTimeline.tsx::EvidenceTimeline::evidenceScore.fdaStatusScore",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceTimeline.tsx",
+      "functionName": "EvidenceTimeline",
+      "expression": "evidenceScore.overallScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceTimeline.tsx::EvidenceTimeline::evidenceScore.overallScore",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceTimeline.tsx",
+      "functionName": "EvidenceTimeline",
+      "expression": "evidenceScore.phaseScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceTimeline.tsx::EvidenceTimeline::evidenceScore.phaseScore",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceTimeline.tsx",
+      "functionName": "EvidenceTimeline",
+      "expression": "fdaProfile.totalProducts",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceTimeline.tsx::EvidenceTimeline::fdaProfile.totalProducts",
       "class": "uncovered"
     },
     {
@@ -2371,6 +3628,14 @@
       "expression": "height",
       "kind": "numeric-jsx",
       "key": "src/components/EvidenceTimeline.tsx::EvidenceTimeline::height",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceTimeline.tsx",
+      "functionName": "EvidenceTimeline",
+      "expression": "trialProfile.totalTrials",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceTimeline.tsx::EvidenceTimeline::trialProfile.totalTrials",
       "class": "uncovered"
     },
     {
@@ -2462,6 +3727,30 @@
       "class": "uncovered"
     },
     {
+      "file": "src/components/ExitPredictor.tsx",
+      "functionName": "ExitPredictor",
+      "expression": "verifiedAcquisitions.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/ExitPredictor.tsx::ExitPredictor::verifiedAcquisitions.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ExitPredictor.tsx",
+      "functionName": "ExitPredictor",
+      "expression": "verifiedAcquisitions.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/ExitPredictor.tsx::ExitPredictor::verifiedAcquisitions.length#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ExitPredictor.tsx",
+      "functionName": "ExitPredictor",
+      "expression": "verifiedCompanies.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/ExitPredictor.tsx::ExitPredictor::verifiedCompanies.length",
+      "class": "uncovered"
+    },
+    {
       "file": "src/components/ExportToGamma.tsx",
       "functionName": "ExportToGamma",
       "expression": "2",
@@ -2475,6 +3764,30 @@
       "expression": "2",
       "kind": "numeric-jsx",
       "key": "src/components/ExportToGamma.tsx::ExportToGamma::2#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ExportToGamma.tsx",
+      "functionName": "ExportToGamma",
+      "expression": "formatLacunaForGamma(rawDataset, scope)",
+      "kind": "formatting-call",
+      "key": "src/components/ExportToGamma.tsx::ExportToGamma::formatLacunaForGamma(rawDataset, scope)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ExportToGamma.tsx",
+      "functionName": "ExportToGamma",
+      "expression": "verifiedAcquisitions.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/ExportToGamma.tsx::ExportToGamma::verifiedAcquisitions.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ExportToGamma.tsx",
+      "functionName": "ExportToGamma",
+      "expression": "verifiedCompanies.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/ExportToGamma.tsx::ExportToGamma::verifiedCompanies.length",
       "class": "uncovered"
     },
     {
@@ -2688,6 +4001,14 @@
     {
       "file": "src/components/FairnessAuditV2.tsx",
       "functionName": "FairnessAuditV2",
+      "expression": "parityAnalysis.benjaminiHochberg.numSignificant",
+      "kind": "numeric-jsx",
+      "key": "src/components/FairnessAuditV2.tsx::FairnessAuditV2::parityAnalysis.benjaminiHochberg.numSignificant",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/FairnessAuditV2.tsx",
+      "functionName": "FairnessAuditV2",
       "expression": "parityAnalysis.bonferroni.adjustedAlpha.toFixed(3)",
       "kind": "formatting-call",
       "key": "src/components/FairnessAuditV2.tsx::FairnessAuditV2::parityAnalysis.bonferroni.adjustedAlpha.toFixed(3)",
@@ -2699,6 +4020,38 @@
       "expression": "parityAnalysis.bonferroni.adjustedAlpha.toFixed(4)",
       "kind": "formatting-call",
       "key": "src/components/FairnessAuditV2.tsx::FairnessAuditV2::parityAnalysis.bonferroni.adjustedAlpha.toFixed(4)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/FairnessAuditV2.tsx",
+      "functionName": "FairnessAuditV2",
+      "expression": "parityAnalysis.bonferroni.numSignificant",
+      "kind": "numeric-jsx",
+      "key": "src/components/FairnessAuditV2.tsx::FairnessAuditV2::parityAnalysis.bonferroni.numSignificant",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/FairnessAuditV2.tsx",
+      "functionName": "FairnessAuditV2",
+      "expression": "parityAnalysis.bonferroni.numSignificant",
+      "kind": "numeric-jsx",
+      "key": "src/components/FairnessAuditV2.tsx::FairnessAuditV2::parityAnalysis.bonferroni.numSignificant#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/FairnessAuditV2.tsx",
+      "functionName": "FairnessAuditV2",
+      "expression": "parityAnalysis.bonferroni.numTests",
+      "kind": "numeric-jsx",
+      "key": "src/components/FairnessAuditV2.tsx::FairnessAuditV2::parityAnalysis.bonferroni.numTests",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/FairnessAuditV2.tsx",
+      "functionName": "FairnessAuditV2",
+      "expression": "parityAnalysis.bonferroni.numTests",
+      "kind": "numeric-jsx",
+      "key": "src/components/FairnessAuditV2.tsx::FairnessAuditV2::parityAnalysis.bonferroni.numTests#2",
       "class": "uncovered"
     },
     {
@@ -2755,6 +4108,14 @@
       "expression": "parityAnalysis.menRate",
       "kind": "numeric-jsx",
       "key": "src/components/FairnessAuditV2.tsx::FairnessAuditV2::parityAnalysis.menRate",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/FairnessAuditV2.tsx",
+      "functionName": "FairnessAuditV2",
+      "expression": "parityAnalysis.power.recommendedSampleSize",
+      "kind": "numeric-jsx",
+      "key": "src/components/FairnessAuditV2.tsx::FairnessAuditV2::parityAnalysis.power.recommendedSampleSize",
       "class": "uncovered"
     },
     {
@@ -2832,6 +4193,14 @@
     {
       "file": "src/components/FairnessLimitations.tsx",
       "functionName": "FairnessLimitations",
+      "expression": "effectSize",
+      "kind": "numeric-jsx",
+      "key": "src/components/FairnessLimitations.tsx::FairnessLimitations::effectSize",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/FairnessLimitations.tsx",
+      "functionName": "FairnessLimitations",
       "expression": "h.h.toFixed(2)",
       "kind": "formatting-call",
       "key": "src/components/FairnessLimitations.tsx::FairnessLimitations::h.h.toFixed(2)",
@@ -2843,6 +4212,14 @@
       "expression": "Math.round(94)",
       "kind": "numeric-jsx",
       "key": "src/components/FairnessLimitations.tsx::FairnessLimitations::Math.round(94)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/FairnessLimitations.tsx",
+      "functionName": "FairnessLimitations",
+      "expression": "recommendedSampleSize < 10000 ? recommendedSampleSize : \"∞\"",
+      "kind": "numeric-jsx",
+      "key": "src/components/FairnessLimitations.tsx::FairnessLimitations::recommendedSampleSize < 10000 ? recommendedSampleSize : \"∞\"",
       "class": "uncovered"
     },
     {
@@ -3478,6 +4855,22 @@
       "class": "uncovered"
     },
     {
+      "file": "src/components/HealthEquityDashboard.tsx",
+      "functionName": "HealthEquityDashboard",
+      "expression": "portfolioStats.companiesInScope",
+      "kind": "numeric-jsx",
+      "key": "src/components/HealthEquityDashboard.tsx::HealthEquityDashboard::portfolioStats.companiesInScope",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/HealthEquityDashboard.tsx",
+      "functionName": "HealthEquityDashboard",
+      "expression": "portfolioStats.dealsInScope",
+      "kind": "numeric-jsx",
+      "key": "src/components/HealthEquityDashboard.tsx::HealthEquityDashboard::portfolioStats.dealsInScope",
+      "class": "uncovered"
+    },
+    {
       "file": "src/components/ImpactOpportunityCard.tsx",
       "functionName": "ImpactOpportunityCard",
       "expression": "((1 - estimatedPenetration) * 100).toFixed(0)",
@@ -3552,9 +4945,57 @@
     {
       "file": "src/components/ImpactOpportunityCard.tsx",
       "functionName": "ImpactOpportunityCard",
+      "expression": "epiData .addressablePopulation.upperBound",
+      "kind": "numeric-jsx",
+      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::epiData .addressablePopulation.upperBound",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ImpactOpportunityCard.tsx",
+      "functionName": "ImpactOpportunityCard",
+      "expression": "epiData.addressablePopulation.lowerBound",
+      "kind": "numeric-jsx",
+      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::epiData.addressablePopulation.lowerBound",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ImpactOpportunityCard.tsx",
+      "functionName": "ImpactOpportunityCard",
+      "expression": "epiData.addressablePopulation.pointEstimate",
+      "kind": "numeric-jsx",
+      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::epiData.addressablePopulation.pointEstimate",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ImpactOpportunityCard.tsx",
+      "functionName": "ImpactOpportunityCard",
       "expression": "i",
       "kind": "numeric-jsx",
       "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::i",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ImpactOpportunityCard.tsx",
+      "functionName": "ImpactOpportunityCard",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::i#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ImpactOpportunityCard.tsx",
+      "functionName": "ImpactOpportunityCard",
+      "expression": "oais.components.addressablePopScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::oais.components.addressablePopScore",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ImpactOpportunityCard.tsx",
+      "functionName": "ImpactOpportunityCard",
+      "expression": "oais.components.addressablePopScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::oais.components.addressablePopScore#2",
       "class": "uncovered"
     },
     {
@@ -3630,12 +5071,44 @@
       "class": "uncovered"
     },
     {
+      "file": "src/components/layout/AppShell.tsx",
+      "functionName": "AppShell",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/components/layout/AppShell.tsx::AppShell::children",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/layout/AppShell.tsx",
+      "functionName": "AppShell",
+      "expression": "sections.length > 0 ? ( <div className=\"grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[220px_minmax(0,1fr)]\"> <SectionNav sections={sections} /> <div>{children}</div> </div> ) : children",
+      "kind": "numeric-jsx",
+      "key": "src/components/layout/AppShell.tsx::AppShell::sections.length > 0 ? ( <div className=\"grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[220px_minmax(0,1fr)]\"> <SectionNav sections={sections} /> <div>{children}</div> </div> ) : children",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/layout/GlobalProvenanceBar.tsx",
+      "functionName": "GlobalProvenanceBar",
+      "expression": "formatCuratedDatasetProvenanceLine(verifiedAcquisitions.length)",
+      "kind": "formatting-call",
+      "key": "src/components/layout/GlobalProvenanceBar.tsx::GlobalProvenanceBar::formatCuratedDatasetProvenanceLine(verifiedAcquisitions.length)",
+      "class": "uncovered"
+    },
+    {
       "file": "src/components/layout/SiteFooter.tsx",
       "functionName": "SiteFooter",
       "expression": "112",
       "kind": "numeric-jsx",
       "key": "src/components/layout/SiteFooter.tsx::SiteFooter::112",
       "class": "uncovered"
+    },
+    {
+      "file": "src/components/Metric.tsx",
+      "functionName": "Metric",
+      "expression": "additionalEvidence",
+      "kind": "numeric-jsx",
+      "key": "src/components/Metric.tsx::Metric::additionalEvidence",
+      "class": "covered"
     },
     {
       "file": "src/components/Metric.tsx",
@@ -3720,6 +5193,22 @@
     {
       "file": "src/components/MetricEvidence.tsx",
       "functionName": "MeasuredEvidence",
+      "expression": "additionalEvidence",
+      "kind": "numeric-jsx",
+      "key": "src/components/MetricEvidence.tsx::MeasuredEvidence::additionalEvidence",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/MetricEvidence.tsx",
+      "functionName": "MeasuredEvidence",
+      "expression": "lineage.n",
+      "kind": "numeric-jsx",
+      "key": "src/components/MetricEvidence.tsx::MeasuredEvidence::lineage.n",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/MetricEvidence.tsx",
+      "functionName": "MeasuredEvidence",
       "expression": "lineage.originalInputCount - lineage.n",
       "kind": "numeric-jsx",
       "key": "src/components/MetricEvidence.tsx::MeasuredEvidence::lineage.originalInputCount - lineage.n",
@@ -3731,6 +5220,38 @@
       "expression": "lineage.sources.length - 25",
       "kind": "numeric-jsx",
       "key": "src/components/MetricEvidence.tsx::MeasuredEvidence::lineage.sources.length - 25",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/MetricEvidence.tsx",
+      "functionName": "MetricEvidence",
+      "expression": "additionalEvidence",
+      "kind": "numeric-jsx",
+      "key": "src/components/MetricEvidence.tsx::MetricEvidence::additionalEvidence",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/MetricEvidence.tsx",
+      "functionName": "MetricEvidence",
+      "expression": "additionalEvidence",
+      "kind": "numeric-jsx",
+      "key": "src/components/MetricEvidence.tsx::MetricEvidence::additionalEvidence#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/MetricEvidence.tsx",
+      "functionName": "Missingness",
+      "expression": "entry.missing",
+      "kind": "numeric-jsx",
+      "key": "src/components/MetricEvidence.tsx::Missingness::entry.missing",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/MetricEvidence.tsx",
+      "functionName": "Missingness",
+      "expression": "entry.total",
+      "kind": "numeric-jsx",
+      "key": "src/components/MetricEvidence.tsx::Missingness::entry.total",
       "class": "uncovered"
     },
     {
@@ -3760,6 +5281,14 @@
     {
       "file": "src/components/MetricEvidence.tsx",
       "functionName": "SummaryEvidence",
+      "expression": "summary.n",
+      "kind": "numeric-jsx",
+      "key": "src/components/MetricEvidence.tsx::SummaryEvidence::summary.n",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/MetricEvidence.tsx",
+      "functionName": "SummaryEvidence",
       "expression": "summary.originalInputCount - summary.n",
       "kind": "numeric-jsx",
       "key": "src/components/MetricEvidence.tsx::SummaryEvidence::summary.originalInputCount - summary.n",
@@ -3776,9 +5305,25 @@
     {
       "file": "src/components/MetricEvidence.tsx",
       "functionName": "WithheldEvidence",
+      "expression": "lineage.n",
+      "kind": "numeric-jsx",
+      "key": "src/components/MetricEvidence.tsx::WithheldEvidence::lineage.n",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/MetricEvidence.tsx",
+      "functionName": "WithheldEvidence",
       "expression": "lineage.originalInputCount - lineage.n",
       "kind": "numeric-jsx",
       "key": "src/components/MetricEvidence.tsx::WithheldEvidence::lineage.originalInputCount - lineage.n",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/MetricEvidence.tsx",
+      "functionName": "WithheldEvidence",
+      "expression": "provenance.estimate.minRequired",
+      "kind": "numeric-jsx",
+      "key": "src/components/MetricEvidence.tsx::WithheldEvidence::provenance.estimate.minRequired",
       "class": "uncovered"
     },
     {
@@ -3888,6 +5433,38 @@
     {
       "file": "src/components/NetworkAnalysisHonest.tsx",
       "functionName": "NetworkAnalysisHonest",
+      "expression": "d.count",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::d.count",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "d.year",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::d.year",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "d.year",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::d.year#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "deals",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::deals",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
       "expression": "degree",
       "kind": "numeric-jsx",
       "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::degree",
@@ -3899,6 +5476,94 @@
       "expression": "degree",
       "kind": "numeric-jsx",
       "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::degree#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::i",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "i + 1",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::i + 1",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "i + 1",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::i + 1#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::i#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::i#3",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::i#4",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::i#5",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::i#6",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::i#7",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::i#8",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "i",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::i#9",
       "class": "uncovered"
     },
     {
@@ -3920,6 +5585,14 @@
     {
       "file": "src/components/NetworkAnalysisHonest.tsx",
       "functionName": "NetworkAnalysisHonest",
+      "expression": "POWER_LAW_LIMITATIONS .minimumSampleSize",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::POWER_LAW_LIMITATIONS .minimumSampleSize",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
       "expression": "s.mean.toFixed(3)",
       "kind": "formatting-call",
       "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::s.mean.toFixed(3)",
@@ -3931,6 +5604,78 @@
       "expression": "s.sd.toFixed(3)",
       "kind": "formatting-call",
       "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::s.sd.toFixed(3)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "sampleEdges.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::sampleEdges.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "sampleEdges.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::sampleEdges.length#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "sampleEdges.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::sampleEdges.length#3",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "sampleNodes.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::sampleNodes.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "sampleNodes.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::sampleNodes.length#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "sampleNodes.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::sampleNodes.length#3",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "sampleNodes.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::sampleNodes.length#4",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "size",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::size",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "stats .stability.recommendedSampleSize",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats .stability.recommendedSampleSize",
       "class": "uncovered"
     },
     {
@@ -3968,6 +5713,14 @@
     {
       "file": "src/components/NetworkAnalysisHonest.tsx",
       "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.clustering.bootstrap.numSamples",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.clustering.bootstrap.numSamples",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
       "expression": "stats.clustering.bootstrap.upper.toFixed(3)",
       "kind": "formatting-call",
       "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.clustering.bootstrap.upper.toFixed(3)",
@@ -4000,6 +5753,22 @@
     {
       "file": "src/components/NetworkAnalysisHonest.tsx",
       "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.communities.numCommunities",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.communities.numCommunities",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.communities.numCommunities",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.communities.numCommunities#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
       "expression": "stats.communities.stability.score.toFixed(2)",
       "kind": "formatting-call",
       "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.communities.stability.score.toFixed(2)",
@@ -4008,9 +5777,49 @@
     {
       "file": "src/components/NetworkAnalysisHonest.tsx",
       "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.degree.iqr[0]",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.degree.iqr[0]",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.degree.iqr[1]",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.degree.iqr[1]",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.degree.max",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.degree.max",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
       "expression": "stats.degree.mean.toFixed(1)",
       "kind": "formatting-call",
       "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.degree.mean.toFixed(1)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.degree.median",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.degree.median",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.degree.min",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.degree.min",
       "class": "uncovered"
     },
     {
@@ -4120,6 +5929,86 @@
     {
       "file": "src/components/NetworkAnalysisHonest.tsx",
       "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.paths.componentSizes.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.paths.componentSizes.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.paths.diameter",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.paths.diameter",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.stability.findingReliability.filter((f) => f.reliability === \"high\" ).length",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.stability.findingReliability.filter((f) => f.reliability === \"high\" ).length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.stability.findingReliability.filter((f) => f.reliability === \"low\" ).length",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.stability.findingReliability.filter((f) => f.reliability === \"low\" ).length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.stability.recommendedSampleSize",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.stability.recommendedSampleSize",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.temporal.iqr[0]",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.temporal.iqr[0]",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.temporal.iqr[1]",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.temporal.iqr[1]",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.temporal.median",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.temporal.median",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.temporal.totalAcquisitions",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.temporal.totalAcquisitions",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
+      "expression": "stats.temporal.totalAcquisitions",
+      "kind": "numeric-jsx",
+      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.temporal.totalAcquisitions#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/NetworkAnalysisHonest.tsx",
+      "functionName": "NetworkAnalysisHonest",
       "expression": "stats.temporal.trend.rSquared.toFixed(2)",
       "kind": "formatting-call",
       "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.temporal.trend.rSquared.toFixed(2)",
@@ -4174,6 +6063,126 @@
       "class": "uncovered"
     },
     {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "summary.criticalMetricCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.criticalMetricCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "summary.criticalMetricCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.criticalMetricCount#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "summary.curatedLinkCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.curatedLinkCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "summary.evidenceBackedLinkCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.evidenceBackedLinkCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "summary.maxGapIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.maxGapIndexPct",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "summary.maxGapIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.maxGapIndexPct#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "summary.medianGapIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.medianGapIndexPct",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "summary.weightedBurdenIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.weightedBurdenIndexPct",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "summary.weightedBurdenIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.weightedBurdenIndexPct#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "topPriority?.priorityScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::topPriority?.priorityScore",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "DimensionRow",
+      "expression": "metric.gapIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::DimensionRow::metric.gapIndexPct",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "DimensionRow",
+      "expression": "view.addressableInSample",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::DimensionRow::view.addressableInSample",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "DimensionRow",
+      "expression": "view.curatedCoveragePct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::DimensionRow::view.curatedCoveragePct",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "DimensionRow",
+      "expression": "view.evidenceCoveragePct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::DimensionRow::view.evidenceCoveragePct",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "DimensionRow",
+      "expression": "view.heuristicCoveragePct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::DimensionRow::view.heuristicCoveragePct",
+      "class": "uncovered"
+    },
+    {
       "file": "src/components/PatientEmpowermentPanel.tsx",
       "functionName": "DimensionRow",
       "expression": "view.linkedCompanies.length - 3",
@@ -4183,10 +6192,138 @@
     },
     {
       "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "DimensionRow",
+      "expression": "view.linkedDeals.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::DimensionRow::view.linkedDeals.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "PatientEmpowermentPanel",
+      "expression": "dimensions.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::PatientEmpowermentPanel::dimensions.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
       "functionName": "PatientEmpowermentPanel",
       "expression": "headline.surveyRespondents .toLocaleString()",
       "kind": "formatting-call",
       "key": "src/components/PatientEmpowermentPanel.tsx::PatientEmpowermentPanel::headline.surveyRespondents .toLocaleString()",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "PatientEmpowermentPanel",
+      "expression": "phase.meanGapIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::PatientEmpowermentPanel::phase.meanGapIndexPct",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "PatientEmpowermentPanel",
+      "expression": "summary.meanEvidenceCoveragePct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::PatientEmpowermentPanel::summary.meanEvidenceCoveragePct",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "PatientEmpowermentPanel",
+      "expression": "summary.meanGapIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::PatientEmpowermentPanel::summary.meanGapIndexPct",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "PatientEmpowermentPanel",
+      "expression": "summary.metricCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::PatientEmpowermentPanel::summary.metricCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "PrerequisiteCard",
+      "expression": "row.linkedCompanyCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::PrerequisiteCard::row.linkedCompanyCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "PrerequisiteCard",
+      "expression": "row.linkedDealCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::PrerequisiteCard::row.linkedDealCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "PrerequisiteCard",
+      "expression": "row.meanGapIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::PrerequisiteCard::row.meanGapIndexPct",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "PrerequisiteCard",
+      "expression": "row.meanGapIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::PrerequisiteCard::row.meanGapIndexPct#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "PrerequisiteCard",
+      "expression": "row.metricCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::PrerequisiteCard::row.metricCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "PriorityRow",
+      "expression": "metric.gapIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::PriorityRow::metric.gapIndexPct",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "PriorityRow",
+      "expression": "view.curatedCoveragePct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::PriorityRow::view.curatedCoveragePct",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "PriorityRow",
+      "expression": "view.evidenceCoveragePct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::PriorityRow::view.evidenceCoveragePct",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentPanel.tsx",
+      "functionName": "PriorityRow",
+      "expression": "view.priorityScore",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentPanel.tsx::PriorityRow::view.priorityScore",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PipelineStatusStrip.tsx",
+      "functionName": "PipelineStatusStrip",
+      "expression": "pendingCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/PipelineStatusStrip.tsx::PipelineStatusStrip::pendingCount",
       "class": "uncovered"
     },
     {
@@ -4270,6 +6407,14 @@
       "class": "uncovered"
     },
     {
+      "file": "src/components/PromotionForm.tsx",
+      "functionName": "PromotionForm",
+      "expression": "value.companyFounded ?? \"\"",
+      "kind": "numeric-jsx",
+      "key": "src/components/PromotionForm.tsx::PromotionForm::value.companyFounded ?? \"\"",
+      "class": "uncovered"
+    },
+    {
       "file": "src/components/Providers.tsx",
       "functionName": "Providers",
       "expression": "100",
@@ -4283,6 +6428,14 @@
       "expression": "300",
       "kind": "numeric-jsx",
       "key": "src/components/Providers.tsx::Providers::300",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/Providers.tsx",
+      "functionName": "Providers",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/components/Providers.tsx::Providers::children",
       "class": "uncovered"
     },
     {
@@ -4336,6 +6489,22 @@
     {
       "file": "src/components/QuantValuationPanel.tsx",
       "functionName": "QuantValuationPanel",
+      "expression": "priors.dealCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/QuantValuationPanel.tsx::QuantValuationPanel::priors.dealCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/QuantValuationPanel.tsx",
+      "functionName": "QuantValuationPanel",
+      "expression": "priors.disclosedDealCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/QuantValuationPanel.tsx::QuantValuationPanel::priors.disclosedDealCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/QuantValuationPanel.tsx",
+      "functionName": "QuantValuationPanel",
       "expression": "priors.medianFundingMultipleAllEstimate.value.toFixed(1)",
       "kind": "formatting-call",
       "key": "src/components/QuantValuationPanel.tsx::QuantValuationPanel::priors.medianFundingMultipleAllEstimate.value.toFixed(1)",
@@ -4355,6 +6524,38 @@
       "expression": "rows.length",
       "kind": "numeric-jsx",
       "key": "src/components/QuantValuationPanel.tsx::QuantValuationPanel::rows.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/QueueMetricsBreakdown.tsx",
+      "functionName": "QueueMetricsBreakdown",
+      "expression": "metrics.approved",
+      "kind": "numeric-jsx",
+      "key": "src/components/QueueMetricsBreakdown.tsx::QueueMetricsBreakdown::metrics.approved",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/QueueMetricsBreakdown.tsx",
+      "functionName": "QueueMetricsBreakdown",
+      "expression": "metrics.merged",
+      "kind": "numeric-jsx",
+      "key": "src/components/QueueMetricsBreakdown.tsx::QueueMetricsBreakdown::metrics.merged",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/QueueMetricsBreakdown.tsx",
+      "functionName": "QueueMetricsBreakdown",
+      "expression": "metrics.pending",
+      "kind": "numeric-jsx",
+      "key": "src/components/QueueMetricsBreakdown.tsx::QueueMetricsBreakdown::metrics.pending",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/QueueMetricsBreakdown.tsx",
+      "functionName": "QueueMetricsBreakdown",
+      "expression": "metrics.rejected",
+      "kind": "numeric-jsx",
+      "key": "src/components/QueueMetricsBreakdown.tsx::QueueMetricsBreakdown::metrics.rejected",
       "class": "uncovered"
     },
     {
@@ -4400,6 +6601,14 @@
     {
       "file": "src/components/ReimbursementIntelligenceDashboard.tsx",
       "functionName": "ReimbursementIntelligenceDashboard",
+      "expression": "analysis.classification.reimbursementStatus.codeCount || \"-\"",
+      "kind": "numeric-jsx",
+      "key": "src/components/ReimbursementIntelligenceDashboard.tsx::ReimbursementIntelligenceDashboard::analysis.classification.reimbursementStatus.codeCount || \"-\"",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ReimbursementIntelligenceDashboard.tsx",
+      "functionName": "ReimbursementIntelligenceDashboard",
       "expression": "formatCurrency(analysis.valuation.impliedValuation)",
       "kind": "formatting-call",
       "key": "src/components/ReimbursementIntelligenceDashboard.tsx::ReimbursementIntelligenceDashboard::formatCurrency(analysis.valuation.impliedValuation)",
@@ -4432,6 +6641,30 @@
     {
       "file": "src/components/ReimbursementIntelligenceDashboard.tsx",
       "functionName": "ReimbursementIntelligenceDashboard",
+      "expression": "stats.consumerOnly",
+      "kind": "numeric-jsx",
+      "key": "src/components/ReimbursementIntelligenceDashboard.tsx::ReimbursementIntelligenceDashboard::stats.consumerOnly",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ReimbursementIntelligenceDashboard.tsx",
+      "functionName": "ReimbursementIntelligenceDashboard",
+      "expression": "stats.hybrid",
+      "kind": "numeric-jsx",
+      "key": "src/components/ReimbursementIntelligenceDashboard.tsx::ReimbursementIntelligenceDashboard::stats.hybrid",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ReimbursementIntelligenceDashboard.tsx",
+      "functionName": "ReimbursementIntelligenceDashboard",
+      "expression": "stats.insuranceDriven",
+      "kind": "numeric-jsx",
+      "key": "src/components/ReimbursementIntelligenceDashboard.tsx::ReimbursementIntelligenceDashboard::stats.insuranceDriven",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ReimbursementIntelligenceDashboard.tsx",
+      "functionName": "ReimbursementIntelligenceDashboard",
       "expression": "stats.reimbursementPremiumRange.max.toFixed(1)",
       "kind": "formatting-call",
       "key": "src/components/ReimbursementIntelligenceDashboard.tsx::ReimbursementIntelligenceDashboard::stats.reimbursementPremiumRange.max.toFixed(1)",
@@ -4446,11 +6679,43 @@
       "class": "uncovered"
     },
     {
+      "file": "src/components/ReimbursementIntelligenceDashboard.tsx",
+      "functionName": "ReimbursementIntelligenceDashboard",
+      "expression": "stats.totalCompanies",
+      "kind": "numeric-jsx",
+      "key": "src/components/ReimbursementIntelligenceDashboard.tsx::ReimbursementIntelligenceDashboard::stats.totalCompanies",
+      "class": "uncovered"
+    },
+    {
       "file": "src/components/research/GapAnalystPanel.tsx",
       "functionName": "GapAnalystPanel",
       "expression": "500",
       "kind": "numeric-jsx",
       "key": "src/components/research/GapAnalystPanel.tsx::GapAnalystPanel::500",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/research/GapAnalystPanel.tsx",
+      "functionName": "GapAnalystPanel",
+      "expression": "description",
+      "kind": "numeric-jsx",
+      "key": "src/components/research/GapAnalystPanel.tsx::GapAnalystPanel::description",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/research/GapDistributionChart.tsx",
+      "functionName": "GapDistributionChart",
+      "expression": "b.count",
+      "kind": "numeric-jsx",
+      "key": "src/components/research/GapDistributionChart.tsx::GapDistributionChart::b.count",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/research/GapDistributionChart.tsx",
+      "functionName": "GapDistributionChart",
+      "expression": "metric.gapIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/research/GapDistributionChart.tsx::GapDistributionChart::metric.gapIndexPct",
       "class": "uncovered"
     },
     {
@@ -4494,6 +6759,14 @@
       "class": "uncovered"
     },
     {
+      "file": "src/components/research/ResearchMethodologyDrawer.tsx",
+      "functionName": "ResearchMethodologyDrawer",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/components/research/ResearchMethodologyDrawer.tsx::ResearchMethodologyDrawer::children",
+      "class": "uncovered"
+    },
+    {
       "file": "src/components/ReviewConsole.tsx",
       "functionName": "ReviewConsole",
       "expression": "refreshToken",
@@ -4528,6 +6801,14 @@
     {
       "file": "src/components/RhCapitalPortfolioContext.tsx",
       "functionName": "RhCapitalPortfolioContext",
+      "expression": "company.lastKnownValuationM",
+      "kind": "numeric-jsx",
+      "key": "src/components/RhCapitalPortfolioContext.tsx::RhCapitalPortfolioContext::company.lastKnownValuationM",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/RhCapitalPortfolioContext.tsx",
+      "functionName": "RhCapitalPortfolioContext",
       "expression": "formatFunding(company.totalFundingM)",
       "kind": "formatting-call",
       "key": "src/components/RhCapitalPortfolioContext.tsx::RhCapitalPortfolioContext::formatFunding(company.totalFundingM)",
@@ -4552,9 +6833,41 @@
     {
       "file": "src/components/SensitivityAnalysis.tsx",
       "functionName": "SensitivityAnalysis",
+      "expression": "field.max",
+      "kind": "numeric-jsx",
+      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::field.max",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/SensitivityAnalysis.tsx",
+      "functionName": "SensitivityAnalysis",
+      "expression": "field.min",
+      "kind": "numeric-jsx",
+      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::field.min",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/SensitivityAnalysis.tsx",
+      "functionName": "SensitivityAnalysis",
       "expression": "field.step",
       "kind": "numeric-jsx",
       "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::field.step",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/SensitivityAnalysis.tsx",
+      "functionName": "SensitivityAnalysis",
+      "expression": "index",
+      "kind": "numeric-jsx",
+      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::index",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/SensitivityAnalysis.tsx",
+      "functionName": "SensitivityAnalysis",
+      "expression": "index + 1",
+      "kind": "numeric-jsx",
+      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::index + 1",
       "class": "uncovered"
     },
     {
@@ -4568,9 +6881,25 @@
     {
       "file": "src/components/SensitivityAnalysis.tsx",
       "functionName": "SensitivityAnalysis",
+      "expression": "report.oster.criticalDelta",
+      "kind": "numeric-jsx",
+      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::report.oster.criticalDelta",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/SensitivityAnalysis.tsx",
+      "functionName": "SensitivityAnalysis",
       "expression": "report.oster.delta.toFixed(2)",
       "kind": "formatting-call",
       "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::report.oster.delta.toFixed(2)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/SensitivityAnalysis.tsx",
+      "functionName": "SensitivityAnalysis",
+      "expression": "report.oster.robustnessThreshold",
+      "kind": "numeric-jsx",
+      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::report.oster.robustnessThreshold",
       "class": "uncovered"
     },
     {
@@ -4638,6 +6967,30 @@
       "class": "uncovered"
     },
     {
+      "file": "src/components/SpaceWhResearchGapsPanel.tsx",
+      "functionName": "SpaceWhResearchGapsPanel",
+      "expression": "n",
+      "kind": "numeric-jsx",
+      "key": "src/components/SpaceWhResearchGapsPanel.tsx::SpaceWhResearchGapsPanel::n",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/SpaceWhResearchGapsPanel.tsx",
+      "functionName": "SpaceWhResearchGapsPanel",
+      "expression": "row.commercialGapCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/SpaceWhResearchGapsPanel.tsx::SpaceWhResearchGapsPanel::row.commercialGapCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/SpaceWhResearchGapsPanel.tsx",
+      "functionName": "SpaceWhResearchGapsPanel",
+      "expression": "snapshot.summary.stageCounts[stage]",
+      "kind": "numeric-jsx",
+      "key": "src/components/SpaceWhResearchGapsPanel.tsx::SpaceWhResearchGapsPanel::snapshot.summary.stageCounts[stage]",
+      "class": "uncovered"
+    },
+    {
       "file": "src/components/StrategicPositioningMap.tsx",
       "functionName": "StrategicPositioningMap",
       "expression": "15",
@@ -4672,6 +7025,14 @@
     {
       "file": "src/components/StrategicPositioningMap.tsx",
       "functionName": "StrategicPositioningMap",
+      "expression": "companyPositions.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/StrategicPositioningMap.tsx::StrategicPositioningMap::companyPositions.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/StrategicPositioningMap.tsx",
+      "functionName": "StrategicPositioningMap",
       "expression": "height",
       "kind": "numeric-jsx",
       "key": "src/components/StrategicPositioningMap.tsx::StrategicPositioningMap::height",
@@ -4691,6 +7052,14 @@
       "expression": "hoveredCompany && hoveredCompany.id !== company.id ? 0.4 : 1",
       "kind": "numeric-jsx",
       "key": "src/components/StrategicPositioningMap.tsx::StrategicPositioningMap::hoveredCompany && hoveredCompany.id !== company.id ? 0.4 : 1",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/StrategicPositioningMap.tsx",
+      "functionName": "StrategicPositioningMap",
+      "expression": "hoveredCompany.lastKnownValuation",
+      "kind": "numeric-jsx",
+      "key": "src/components/StrategicPositioningMap.tsx::StrategicPositioningMap::hoveredCompany.lastKnownValuation",
       "class": "uncovered"
     },
     {
@@ -4928,6 +7297,14 @@
     {
       "file": "src/components/StrategicPositioningMap.tsx",
       "functionName": "StrategicPositioningMap",
+      "expression": "selectedCompany.founded",
+      "kind": "numeric-jsx",
+      "key": "src/components/StrategicPositioningMap.tsx::StrategicPositioningMap::selectedCompany.founded",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/StrategicPositioningMap.tsx",
+      "functionName": "StrategicPositioningMap",
       "expression": "t.toFixed(2)",
       "kind": "formatting-call",
       "key": "src/components/StrategicPositioningMap.tsx::StrategicPositioningMap::t.toFixed(2)",
@@ -5160,9 +7537,49 @@
     {
       "file": "src/components/SurvivalCurve.tsx",
       "functionName": "SurvivalCurve",
+      "expression": "km.n",
+      "kind": "numeric-jsx",
+      "key": "src/components/SurvivalCurve.tsx::SurvivalCurve::km.n",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/SurvivalCurve.tsx",
+      "functionName": "SurvivalCurve",
+      "expression": "km.nEvents",
+      "kind": "numeric-jsx",
+      "key": "src/components/SurvivalCurve.tsx::SurvivalCurve::km.nEvents",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/SurvivalCurve.tsx",
+      "functionName": "SurvivalCurve",
       "expression": "logRank.chiSquared.toFixed(2)",
       "kind": "formatting-call",
       "key": "src/components/SurvivalCurve.tsx::SurvivalCurve::logRank.chiSquared.toFixed(2)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/SurvivalCurve.tsx",
+      "functionName": "SurvivalCurve",
+      "expression": "logRank.df",
+      "kind": "numeric-jsx",
+      "key": "src/components/SurvivalCurve.tsx::SurvivalCurve::logRank.df",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/SurvivalCurve.tsx",
+      "functionName": "SurvivalCurve",
+      "expression": "logRankCorrected[0].pAdjusted",
+      "kind": "numeric-jsx",
+      "key": "src/components/SurvivalCurve.tsx::SurvivalCurve::logRankCorrected[0].pAdjusted",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/SurvivalCurve.tsx",
+      "functionName": "SurvivalCurve",
+      "expression": "nRisk",
+      "kind": "numeric-jsx",
+      "key": "src/components/SurvivalCurve.tsx::SurvivalCurve::nRisk",
       "class": "uncovered"
     },
     {
@@ -5198,6 +7615,22 @@
       "class": "uncovered"
     },
     {
+      "file": "src/components/SurvivalCurve.tsx",
+      "functionName": "SurvivalCurve",
+      "expression": "totalEvents",
+      "kind": "numeric-jsx",
+      "key": "src/components/SurvivalCurve.tsx::SurvivalCurve::totalEvents",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/SurvivalCurve.tsx",
+      "functionName": "SurvivalCurve",
+      "expression": "totalN",
+      "kind": "numeric-jsx",
+      "key": "src/components/SurvivalCurve.tsx::SurvivalCurve::totalN",
+      "class": "uncovered"
+    },
+    {
       "file": "src/components/SystemHealthDashboard.tsx",
       "functionName": "SystemHealthDashboard",
       "expression": "stats.degraded",
@@ -5222,11 +7655,235 @@
       "class": "uncovered"
     },
     {
+      "file": "src/components/TemporalValidation.tsx",
+      "functionName": "TemporalValidation",
+      "expression": "d.count",
+      "kind": "numeric-jsx",
+      "key": "src/components/TemporalValidation.tsx::TemporalValidation::d.count",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/TemporalValidation.tsx",
+      "functionName": "TemporalValidation",
+      "expression": "d.year",
+      "kind": "numeric-jsx",
+      "key": "src/components/TemporalValidation.tsx::TemporalValidation::d.year",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/TemporalValidation.tsx",
+      "functionName": "TemporalValidation",
+      "expression": "d.year",
+      "kind": "numeric-jsx",
+      "key": "src/components/TemporalValidation.tsx::TemporalValidation::d.year#2",
+      "class": "uncovered"
+    },
+    {
       "file": "src/components/TherapeuticAreaCoveragePanel.tsx",
       "functionName": "TherapeuticAreaCoveragePanel",
       "expression": "company.crunchbaseRank.toLocaleString()",
       "kind": "formatting-call",
       "key": "src/components/TherapeuticAreaCoveragePanel.tsx::TherapeuticAreaCoveragePanel::company.crunchbaseRank.toLocaleString()",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/TherapeuticAreaCoveragePanel.tsx",
+      "functionName": "TherapeuticAreaCoveragePanel",
+      "expression": "stats.crunchbaseSearchTotal",
+      "kind": "numeric-jsx",
+      "key": "src/components/TherapeuticAreaCoveragePanel.tsx::TherapeuticAreaCoveragePanel::stats.crunchbaseSearchTotal",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/TherapeuticAreaCoveragePanel.tsx",
+      "functionName": "TherapeuticAreaCoveragePanel",
+      "expression": "stats.crunchbaseSearchTotal",
+      "kind": "numeric-jsx",
+      "key": "src/components/TherapeuticAreaCoveragePanel.tsx::TherapeuticAreaCoveragePanel::stats.crunchbaseSearchTotal#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/TherapeuticAreaCoveragePanel.tsx",
+      "functionName": "TherapeuticAreaCoveragePanel",
+      "expression": "stats.excludedClinicalServices",
+      "kind": "numeric-jsx",
+      "key": "src/components/TherapeuticAreaCoveragePanel.tsx::TherapeuticAreaCoveragePanel::stats.excludedClinicalServices",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/TherapeuticAreaCoveragePanel.tsx",
+      "functionName": "TherapeuticAreaCoveragePanel",
+      "expression": "stats.excludedNoFundingStatus",
+      "kind": "numeric-jsx",
+      "key": "src/components/TherapeuticAreaCoveragePanel.tsx::TherapeuticAreaCoveragePanel::stats.excludedNoFundingStatus",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/TherapeuticAreaCoveragePanel.tsx",
+      "functionName": "TherapeuticAreaCoveragePanel",
+      "expression": "stats.excludedNonForProfit",
+      "kind": "numeric-jsx",
+      "key": "src/components/TherapeuticAreaCoveragePanel.tsx::TherapeuticAreaCoveragePanel::stats.excludedNonForProfit",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/TherapeuticAreaCoveragePanel.tsx",
+      "functionName": "TherapeuticAreaCoveragePanel",
+      "expression": "stats.includedCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/TherapeuticAreaCoveragePanel.tsx::TherapeuticAreaCoveragePanel::stats.includedCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/TherapeuticAreaCoveragePanel.tsx",
+      "functionName": "TherapeuticAreaCoveragePanel",
+      "expression": "stats.includedCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/TherapeuticAreaCoveragePanel.tsx::TherapeuticAreaCoveragePanel::stats.includedCount#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/TherapeuticAreaCoveragePanel.tsx",
+      "functionName": "TherapeuticAreaCoveragePanel",
+      "expression": "stats.includedCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/TherapeuticAreaCoveragePanel.tsx::TherapeuticAreaCoveragePanel::stats.includedCount#3",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/TherapeuticAreaCoveragePanel.tsx",
+      "functionName": "TherapeuticAreaCoveragePanel",
+      "expression": "stats.verifiedOverlap",
+      "kind": "numeric-jsx",
+      "key": "src/components/TherapeuticAreaCoveragePanel.tsx::TherapeuticAreaCoveragePanel::stats.verifiedOverlap",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/TherapeuticAreaCoveragePanel.tsx",
+      "functionName": "TherapeuticAreaCoveragePanel",
+      "expression": "stats.verifiedOverlap",
+      "kind": "numeric-jsx",
+      "key": "src/components/TherapeuticAreaCoveragePanel.tsx::TherapeuticAreaCoveragePanel::stats.verifiedOverlap#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/AnalysisPanelHeader.tsx",
+      "functionName": "AnalysisPanelHeader",
+      "expression": "subtitle",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/AnalysisPanelHeader.tsx::AnalysisPanelHeader::subtitle",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/AnalysisPanelHeader.tsx",
+      "functionName": "AnalysisPanelHeader",
+      "expression": "title",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/AnalysisPanelHeader.tsx::AnalysisPanelHeader::title",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/Card.tsx",
+      "functionName": "Card",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/Card.tsx::Card::children",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/ChartTooltip.tsx",
+      "functionName": "ChartTooltip",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/ChartTooltip.tsx::ChartTooltip::children",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/Dialog.tsx",
+      "functionName": "DialogBody",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/Dialog.tsx::DialogBody::children",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/Dialog.tsx",
+      "functionName": "DialogContent",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/Dialog.tsx::DialogContent::children",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/LlmQualityBadge.tsx",
+      "functionName": "LlmQualityBadge",
+      "expression": "quality.score",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/LlmQualityBadge.tsx::LlmQualityBadge::quality.score",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/MetricTile.tsx",
+      "functionName": "MetricTile",
+      "expression": "label",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/MetricTile.tsx::MetricTile::label",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/MetricTile.tsx",
+      "functionName": "MetricTile",
+      "expression": "value",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/MetricTile.tsx::MetricTile::value",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/ModelProvenanceHint.tsx",
+      "functionName": "ModelProvenanceHint",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/ModelProvenanceHint.tsx::ModelProvenanceHint::children",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/ModelProvenanceHint.tsx",
+      "functionName": "ModelProvenanceHint",
+      "expression": "formatModelProvenanceLine(model)",
+      "kind": "formatting-call",
+      "key": "src/components/ui/ModelProvenanceHint.tsx::ModelProvenanceHint::formatModelProvenanceLine(model)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/MotionSection.tsx",
+      "functionName": "MotionSection",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/MotionSection.tsx::MotionSection::children",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/MotionSection.tsx",
+      "functionName": "MotionSection",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/MotionSection.tsx::MotionSection::children#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/Sheet.tsx",
+      "functionName": "MobileSheetNav",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/Sheet.tsx::MobileSheetNav::children",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/Sheet.tsx",
+      "functionName": "SheetContent",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/Sheet.tsx::SheetContent::children",
       "class": "uncovered"
     },
     {
@@ -5259,6 +7916,22 @@
       "expression": "formatAnimatedValue(target, suffix)",
       "kind": "formatting-call",
       "key": "src/components/ui/StatTile.tsx::tick::formatAnimatedValue(target, suffix)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/Tooltip.tsx",
+      "functionName": "LacunaTooltip",
+      "expression": "children",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/Tooltip.tsx::LacunaTooltip::children",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ui/Tooltip.tsx",
+      "functionName": "LacunaTooltip",
+      "expression": "content",
+      "kind": "numeric-jsx",
+      "key": "src/components/ui/Tooltip.tsx::LacunaTooltip::content",
       "class": "uncovered"
     },
     {
@@ -5307,6 +7980,30 @@
       "expression": "maxValuation",
       "kind": "numeric-jsx",
       "key": "src/components/ValuationMatrix.tsx::ValuationMatrix::maxValuation",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ValuationMatrix.tsx",
+      "functionName": "ValuationMatrix",
+      "expression": "totalDisclosed",
+      "kind": "numeric-jsx",
+      "key": "src/components/ValuationMatrix.tsx::ValuationMatrix::totalDisclosed",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ValuationMatrix.tsx",
+      "functionName": "ValuationMatrix",
+      "expression": "verifiedCompanies.length",
+      "kind": "numeric-jsx",
+      "key": "src/components/ValuationMatrix.tsx::ValuationMatrix::verifiedCompanies.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ValuationMatrixCell.tsx",
+      "functionName": "ValuationMatrixCell",
+      "expression": "interval.B",
+      "kind": "numeric-jsx",
+      "key": "src/components/ValuationMatrixCell.tsx::ValuationMatrixCell::interval.B",
       "class": "uncovered"
     },
     {
@@ -6056,6 +8753,62 @@
     {
       "file": "src/components/WomensHealthExitsContext.tsx",
       "functionName": "WomensHealthExitsContext",
+      "expression": "formatExitBillions( KEARNEY_WH_INVESTMENT.diagnosticsAndDigitalHealthB, )",
+      "kind": "formatting-call",
+      "key": "src/components/WomensHealthExitsContext.tsx::WomensHealthExitsContext::formatExitBillions( KEARNEY_WH_INVESTMENT.diagnosticsAndDigitalHealthB, )",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/WomensHealthExitsContext.tsx",
+      "functionName": "WomensHealthExitsContext",
+      "expression": "formatExitBillions( KEARNEY_WH_INVESTMENT.disproportionatelyAffectingWomenB, )",
+      "kind": "formatting-call",
+      "key": "src/components/WomensHealthExitsContext.tsx::WomensHealthExitsContext::formatExitBillions( KEARNEY_WH_INVESTMENT.disproportionatelyAffectingWomenB, )",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/WomensHealthExitsContext.tsx",
+      "functionName": "WomensHealthExitsContext",
+      "expression": "formatExitBillions( KEARNEY_WH_INVESTMENT.totalPrivateInvestmentB, )",
+      "kind": "formatting-call",
+      "key": "src/components/WomensHealthExitsContext.tsx::WomensHealthExitsContext::formatExitBillions( KEARNEY_WH_INVESTMENT.totalPrivateInvestmentB, )",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/WomensHealthExitsContext.tsx",
+      "functionName": "WomensHealthExitsContext",
+      "expression": "formatExitBillions( KEARNEY_WH_INVESTMENT.womenSpecificConditionsB, )",
+      "kind": "formatting-call",
+      "key": "src/components/WomensHealthExitsContext.tsx::WomensHealthExitsContext::formatExitBillions( KEARNEY_WH_INVESTMENT.womenSpecificConditionsB, )",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/WomensHealthExitsContext.tsx",
+      "functionName": "WomensHealthExitsContext",
+      "expression": "formatExitBillions(headline.exitValue2025B)",
+      "kind": "formatting-call",
+      "key": "src/components/WomensHealthExitsContext.tsx::WomensHealthExitsContext::formatExitBillions(headline.exitValue2025B)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/WomensHealthExitsContext.tsx",
+      "functionName": "WomensHealthExitsContext",
+      "expression": "formatExitBillions(headline.totalExitValueMinB, true)",
+      "kind": "formatting-call",
+      "key": "src/components/WomensHealthExitsContext.tsx::WomensHealthExitsContext::formatExitBillions(headline.totalExitValueMinB, true)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/WomensHealthExitsContext.tsx",
+      "functionName": "WomensHealthExitsContext",
+      "expression": "formatExitBillions(s.exitValueB)",
+      "kind": "formatting-call",
+      "key": "src/components/WomensHealthExitsContext.tsx::WomensHealthExitsContext::formatExitBillions(s.exitValueB)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/WomensHealthExitsContext.tsx",
+      "functionName": "WomensHealthExitsContext",
       "expression": "headline.exitCount.toLocaleString()",
       "kind": "formatting-call",
       "key": "src/components/WomensHealthExitsContext.tsx::WomensHealthExitsContext::headline.exitCount.toLocaleString()",
@@ -6067,6 +8820,14 @@
       "expression": "KEARNEY_WH_INVESTMENT .privateDealsTrackedMin.toLocaleString()",
       "kind": "formatting-call",
       "key": "src/components/WomensHealthExitsContext.tsx::WomensHealthExitsContext::KEARNEY_WH_INVESTMENT .privateDealsTrackedMin.toLocaleString()",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/WomensHealthExitsContext.tsx",
+      "functionName": "WomensHealthExitsContext",
+      "expression": "lacuna.verifiedDeals",
+      "kind": "numeric-jsx",
+      "key": "src/components/WomensHealthExitsContext.tsx::WomensHealthExitsContext::lacuna.verifiedDeals",
       "class": "uncovered"
     }
   ]

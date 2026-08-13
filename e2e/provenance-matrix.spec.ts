@@ -10,6 +10,7 @@ test("valuation matrix exposes resolvable metric provenance", async ({ page }) =
     elements.map((element) => ({
       id: element.getAttribute("data-metric-id"),
       provenanceClass: element.getAttribute("data-provenance-class"),
+      model: element.getAttribute("data-provenance-model"),
     }))
   );
   const registryIds = new Set(Object.keys(METRIC_REGISTRY));
@@ -18,7 +19,16 @@ test("valuation matrix exposes resolvable metric provenance", async ({ page }) =
     expect(["measured", "withheld", "proxy", "assumption"]).toContain(
       node.provenanceClass,
     );
-    expect(node.id).not.toBeNull();
-    expect(registryIds.has(node.id ?? "")).toBe(true);
+    if (
+      node.provenanceClass === "measured" ||
+      node.provenanceClass === "withheld"
+    ) {
+      expect(node.id).not.toBeNull();
+      expect(registryIds.has(node.id ?? "")).toBe(true);
+    } else {
+      expect(node.id).toBeNull();
+      expect(node.model).not.toBeNull();
+      expect(node.model).not.toBe("");
+    }
   }
 });

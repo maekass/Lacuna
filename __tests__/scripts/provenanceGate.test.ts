@@ -42,6 +42,13 @@ describe("provenance census", () => {
     expect(census.covered).toBeGreaterThan(0);
     expect(census.exempt).toBe(1);
     expect(census.uncovered).toBeGreaterThan(0);
+    expect(
+      census.sites.some((site) =>
+        site.functionName === "Nullable" &&
+        site.expression === "value" &&
+        site.class === "uncovered"
+      ),
+    ).toBe(true);
   });
 
   it("produces deterministic site output", () => {
@@ -54,7 +61,7 @@ describe("provenance census", () => {
       .toThrow("key, supported category, and reason are required");
   });
 
-  it("rejects regressions and accepts an improvement", () => {
+  it("distinguishes regressions from stale improvements", () => {
     const baseline: ProvenanceCensus = {
       version: 1,
       total: 1,
@@ -64,8 +71,14 @@ describe("provenance census", () => {
       perFileUncovered: { "fixture.tsx": 1 },
       sites: [],
     };
+    const regression = { ...baseline, total: 2, uncovered: 2 };
+    expect(ratchetFailure(regression, baseline)).toContain(
+      "Provenance gate failed: display debt increased.",
+    );
     const improved = { ...baseline, covered: 1, uncovered: 0 };
-    expect(ratchetFailure(improved, baseline)).toBeTruthy();
+    expect(ratchetFailure(improved, baseline)).toContain(
+      "Provenance baseline is stale after an improvement or benign census drift.",
+    );
     expect(ratchetFailure(improved, improved)).toBeNull();
   });
 });
