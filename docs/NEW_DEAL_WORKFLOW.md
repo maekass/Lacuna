@@ -185,15 +185,15 @@ npm run build               # optional local smoke
 
 `compute:all` regenerates:
 
-| Artifact                             | Model / script                                   |
-| ------------------------------------ | ------------------------------------------------ |
-| `computed-benchmarks.json`           | Sector valuation multiples (dealValue / funding) |
-| `computed-growth-rates.json`         | CAGR estimates per company                       |
-| `computed-acquirer-premiums.json`    | Buyer premium heuristics                         |
-| `computed-sector-correlations.json`  | Reimbursement × valuation correlations           |
-| `computed-data-quality-scores.json`  | Per-entity provenance grades (A–F)               |
-| `computed-confidence-intervals.json` | Bootstrap CIs on benchmarks                      |
-| `computed-dataset-summary.json`      | Hub headline stats (`computeHeadlineStats/v1`)   |
+| Artifact                             | Model / script                                                                                                |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| `computed-benchmarks.json`           | Sector MOIC benchmarks (dealValue / funding)                                                                  |
+| `computed-growth-rates.json`         | CAGR estimates per company                                                                                    |
+| `computed-acquirer-premiums.json`    | Buyer premium heuristics by explicit denominator (pre-deal valuation, last-known valuation, or total funding) |
+| `computed-sector-correlations.json`  | Withheld sector-correlation lineage; no correlation is published                                              |
+| `computed-data-quality-scores.json`  | Per-entity provenance grades (A–F)                                                                            |
+| `computed-confidence-intervals.json` | Bootstrap CIs on benchmarks                                                                                   |
+| `computed-dataset-summary.json`      | Hub headline stats (`computeHeadlineStats/v1`)                                                                |
 
 CI runs `compute:all` + `verify:computed` on every PR — commit the updated JSON
 files with your dataset change.

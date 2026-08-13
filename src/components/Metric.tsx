@@ -2,7 +2,10 @@
 
 import { type ReactNode, useState } from "react";
 import MetricEvidence, { type MetricDetail } from "@/components/MetricEvidence";
-import type { MetricProvenance } from "@/lib/provenance/metricProvenance";
+import {
+  lineageForMetric,
+  type MetricProvenance,
+} from "@/lib/provenance/metricProvenance";
 import { LacunaTooltip } from "@/components/ui/Tooltip";
 import {
   Sheet,
@@ -68,6 +71,20 @@ export default function Metric({
       : provenance.kind === "withheld"
       ? `n=${provenance.estimate.sampleSize} · ${provenance.estimate.message}`
       : provenance.caveat ?? provenance.model.definition);
+  const provenanceClass = provenance.kind === "artifact"
+    ? provenance.estimate.kind === "sufficient" ? "measured" : "withheld"
+    : provenance.kind;
+  const metricId = provenance.kind === "artifact"
+    ? provenance.metricId
+    : provenance.kind === "measured"
+    ? lineageForMetric(provenance).metricId
+    : provenance.kind === "withheld"
+    ? lineageForMetric(provenance).metricId
+    : undefined;
+  const modelModule = provenance.kind === "proxy" ||
+      provenance.kind === "assumption"
+    ? provenance.model.module
+    : undefined;
   const setLoaded = (next: MetricDetail) => setDetail(next);
 
   return (
@@ -80,6 +97,9 @@ export default function Metric({
             className ?? ""
           }`}
           aria-label={`Why this number: ${label ?? display}`}
+          data-provenance-class={provenanceClass}
+          {...(metricId ? { "data-metric-id": metricId } : {})}
+          {...(modelModule ? { "data-provenance-model": modelModule } : {})}
         >
           <span>{display}</span>
           <span aria-hidden className="text-xs text-lacuna-plum/70">ⓘ</span>
