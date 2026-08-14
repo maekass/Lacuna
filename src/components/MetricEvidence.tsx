@@ -250,6 +250,11 @@ function MeasuredEvidence({
         expected={lineage.originalInputCount - lineage.n}
       />
       <Missingness lineage={lineage} />
+      <DatasetFooter
+        datasetVersion={lineage.datasetVersion}
+        datasetHash={lineage.datasetHash}
+        computedAt={lineage.computedAt}
+      />
     </div>
   );
 }
