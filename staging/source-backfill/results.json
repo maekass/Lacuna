@@ -1,0 +1,630 @@
+{
+  "generatedAt": "deterministic-from-cache",
+  "source": "SEC EDGAR full-text search",
+  "records": [
+    {
+      "dealId": "deal1",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/1477449/000110465920090575/tm2026658d1_8k.htm",
+        "accession": "0001104659-20-090575",
+        "form": "8-K",
+        "filedAt": "2020-08-05",
+        "filerCik": "0001477449",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:31:20.139Z",
+        "quote": "Item 8.01    Other Events.    \n\n   \n\n On August 5, 2020, Teladoc Health, Inc.\n(“Teladoc”) and Livongo Health, Inc. (“Livongo”) issued a joint press release announcing Teladoc’s\nand Livongo’s entry into a def",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 88
+    },
+    {
+      "dealId": "deal2",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal3",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal4",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal5",
+      "status": "rejected",
+      "reason": "no_hit",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal6",
+      "status": "rejected",
+      "reason": "no_hit",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal7",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal8",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal9",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal10",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/711404/000119312512257770/d362335d8k.htm",
+        "accession": "0001193125-12-257770",
+        "form": "8-K",
+        "filedAt": "2012-06-04",
+        "filerCik": "0000711404",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:33:37.069Z",
+        "quote": "has made a voluntary tender offer to acquire all the issued and outstanding\nshares and warrants of Origio a/s, Oslo Stock Exchange (OSE: ORO), for NOK 28 per share. The tender offer is set to expire June 22,",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 14
+    },
+    {
+      "dealId": "deal11",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/711404/000119312521326207/d204711d8k.htm",
+        "accession": "0001193125-21-326207",
+        "form": "8-K",
+        "filedAt": "2021-11-10",
+        "filerCik": "0000711404",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:33:54.469Z",
+        "quote": "ich are other than statements of historical fact, including statements regarding the acquisition of Generate Life Sciences including financial position, market position, product development and business strategy, expected",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 14
+    },
+    {
+      "dealId": "deal12",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/711404/000119312522029799/d310069dex992.htm",
+        "accession": "0001193125-22-029799",
+        "form": "8-K",
+        "filedAt": "2022-02-07",
+        "filerCik": "0000711404",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:33:56.073Z",
+        "quote": "orm 10-Q, copies of which are available on the Company’s website: www.coopercos.com.   \n \n   \n      Cook Medical Reproductive Health\nManufactures and sells minimally invasive medical devices focused on fertility, obstetrics and gyn",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 5
+    },
+    {
+      "dealId": "deal13",
+      "status": "rejected",
+      "reason": "no_hit",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal14",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/1821825/000119312521180652/d49288dex992.htm",
+        "accession": "0001193125-21-180652",
+        "form": "8-K",
+        "filedAt": "2021-06-03",
+        "filerCik": "0001821825",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:34:01.979Z",
+        "quote": "ontraceptive and fertility businesses and boosted by its recently announced proposed acquisition of Alydia Health, a medical device company focused on preventing maternal morbidity and mortality caused by postpar",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 13
+    },
+    {
+      "dealId": "deal15",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/1821825/000110465921137472/tm2131080d1_ex99-1.htm",
+        "accession": "0001104659-21-137472",
+        "form": "8-K",
+        "filedAt": "2021-11-12",
+        "filerCik": "0001821825",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:34:09.786Z",
+        "quote": "A margin, narrowed   \n\n  \n\n  \n     •    Executing on business development; announces acquisition of Forendo Pharma   \n\n   \n\n Jersey City, N.J., November 11, 2021 – Organon (NYSE: OGN)\n(the “company”), today announ",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 11
+    },
+    {
+      "dealId": "deal16",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal17",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal18",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal19",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/920148/000119312516660283/d200155d8k.htm",
+        "accession": "0001193125-16-660283",
+        "form": "8-K",
+        "filedAt": "2016-07-27",
+        "filerCik": "0000920148",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:34:10.653Z",
+        "quote": "e       On July 27, 2016, Laboratory Corporation of America ®  Holdings (LabCorp ® ) (NYSE: LH) and Sequenom, Inc. (NASDAQ: SQNM) announced that they have entered into a definitive agreement and plan of\nmerg",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 44
+    },
+    {
+      "dealId": "deal20",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal21",
+      "status": "rejected",
+      "reason": "no_hit",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal22",
+      "status": "rejected",
+      "reason": "no_hit",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal23",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal24",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal25",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal26",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/711404/000071140425000010/cooperq12025pressrelease.htm",
+        "accession": "0000711404-25-000010",
+        "form": "8-K",
+        "filedAt": "2025-03-06",
+        "filerCik": "0000711404",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:35:02.215Z",
+        "quote": "integration-related       5                    charges in fiscal 2025 were primarily related to the obp Surgical and the Cook Medical acquisition and integration expenses. The acquisition and integration-related",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 9
+    },
+    {
+      "dealId": "deal27",
+      "status": "rejected",
+      "reason": "no_hit",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal28",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/885725/000088572518000019/q12018earningsrelease.htm",
+        "accession": "0000885725-18-000019",
+        "form": "8-K",
+        "filedAt": "2018-04-25",
+        "filerCik": "0000885725",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:35:04.548Z",
+        "quote": "Drug Administration (FDA) approval of the VERCISE™ DBS System.                     •      Acquired nVision Medical Corporation, a privately-held company which developed the first and only device cleared by the U.S",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 5
+    },
+    {
+      "dealId": "deal29",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/1110803/000095015720001121/ex10-1.htm",
+        "accession": "0000950157-20-001121",
+        "form": "8-K",
+        "filedAt": "2020-09-21",
+        "filerCik": "0001110803",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:35:34.773Z",
+        "quote": "n (“ Parent ”) and each of the undersigned stockholders (the “ Selling\n\n\n\n\n\n        Investors ”) of GRAIL, Inc., a Delaware corporation (the “ Company ”), set forth on Schedule 1(b) hereto.",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 79
+    },
+    {
+      "dealId": "deal30",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal31",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal32",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal33",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal34",
+      "status": "rejected",
+      "reason": "no_hit",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal35",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/899923/000119312518175904/d568140d8k.htm",
+        "accession": "0001193125-18-175904",
+        "form": "8-K",
+        "filedAt": "2018-05-29",
+        "filerCik": "0000899923",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:37:08.824Z",
+        "quote": "nt) with Cinnamon Merger Sub, Inc., a wholly owned subsidiary of the Myriad (Merger Subsidiary), Counsyl, Inc. (Counsyl), and\nFortis Advisors LLC, as the representative of the securityholders of Counsy",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 25
+    },
+    {
+      "dealId": "deal36",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/899923/000089992322000137/mygn-20221101.htm",
+        "accession": "0000899923-22-000137",
+        "form": "8-K",
+        "filedAt": "2022-11-01",
+        "filerCik": "0000899923",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:37:18.277Z",
+        "quote": "Act of 1995, including the company's 2022 financial guidance, expectations about the acquisition of Gateway Genomics, including that the acquisition is expected to be accretive to the company's growth rate, earnings",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 14
+    },
+    {
+      "dealId": "deal37",
+      "status": "rejected",
+      "reason": "no_hit",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal38",
+      "status": "rejected",
+      "reason": "no_hit",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal39",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/78003/000119312523068538/d408093d8k.htm",
+        "accession": "0001193125-23-068538",
+        "form": "8-K",
+        "filedAt": "2023-03-13",
+        "filerCik": "0000078003",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:37:25.372Z",
+        "quote": "zer ”) entered into an Agreement and Plan of Merger (the “ Merger Agreement ”) by and among Pfizer, Seagen Inc. (“ Seagen ”) and Aris Merger Sub, Inc., a wholly owned subsidiary of Pfizer (“ Merger Sub ”),",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 27
+    },
+    {
+      "dealId": "deal40",
+      "status": "rejected",
+      "reason": "no_hit",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal41",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/882095/000095010320017822/dp136480_8k.htm",
+        "accession": "0000950103-20-017822",
+        "form": "8-K",
+        "filedAt": "2020-09-14",
+        "filerCik": "0000882095",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:37:45.140Z",
+        "quote": "“ Gilead ”), entered into an Agreement and Plan of\nMerger (the “ Merger Agreement ”), among Parent, Immunomedics, Inc., a Delaware corporation (“Immunomedics”),\nand Maui Merger Sub, Inc., a Delaware corporation",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 55
+    },
+    {
+      "dealId": "deal42",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal43",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal44",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/31791/000119312517206411/d410886d8k.htm",
+        "accession": "0001193125-17-206411",
+        "form": "8-K",
+        "filedAt": "2017-06-19",
+        "filerCik": "0000031791",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:38:27.435Z",
+        "quote": "ngsgesellschaft mbH & Co. KG (St&ouml;cker KG), which together hold\na majority equity interest in EUROIMMUN Medizinische Labordiagnostika AG (EUROIMMUN), pursuant to which the Company or a wholly owned su",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 19
+    },
+    {
+      "dealId": "deal45",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal46",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal47",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/920148/000092014821000053/form81221ex991oviaacquisit.htm",
+        "accession": "0000920148-21-000053",
+        "form": "8-K",
+        "filedAt": "2021-08-13",
+        "filerCik": "0000920148",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:38:45.889Z",
+        "quote": "6     Investor@Labcorp.com         LABCORP EXTENDS LEADERSHIP IN WOMEN’S HEALTH WITH ACQUISITION OF OVIA HEALTH         Transaction Improves Patient Experience, Patient Outcomes and Aims to Reduce Health Care C",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 4
+    },
+    {
+      "dealId": "deal48",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/899923/000119312516608366/d195219d8k.htm",
+        "accession": "0001193125-16-608366",
+        "form": "8-K",
+        "filedAt": "2016-05-31",
+        "filerCik": "0000899923",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:38:48.603Z",
+        "quote": "s, Inc.\n(Myriad or the Company) issued a press release relating to the Companys acquisition of Sividon Diagnostics GmbH. On its conference call announcing the acquisition Myriad also delivered a slide presentation",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 8
+    },
+    {
+      "dealId": "deal49",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/1800/000110465916092968/a16-3252_18k.htm",
+        "accession": "0001104659-16-092968",
+        "form": "8-K",
+        "filedAt": "2016-02-02",
+        "filerCik": "0000001800",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:38:56.166Z",
+        "quote": "corporation (Abbott), entered into an Agreement and Plan of Merger (the Merger Agreement) with Alere Inc., a Delaware corporation (Alere).  The Merger Agreement provides for the merger of a newly f",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 27
+    },
+    {
+      "dealId": "deal50",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal51",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal52",
+      "status": "rejected",
+      "reason": "no_hit",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal53",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal54",
+      "status": "accepted",
+      "reason": null,
+      "ref": {
+        "kind": "sec_filing",
+        "url": "https://www.sec.gov/Archives/edgar/data/1821825/000110465924102053/tm2424316d1_8k.htm",
+        "accession": "0001104659-24-102053",
+        "form": "8-K",
+        "filedAt": "2024-09-23",
+        "filerCik": "0001821825",
+        "publisher": "SEC EDGAR",
+        "retrievedAt": "2026-08-14T20:40:04.931Z",
+        "quote": "d into an Agreement and Plan of Merger (the\n“ Merger Agreement ”) by and among Organon, Merger Sub, Dermavant Sciences Ltd., an exempted company limited by shares\nincorporated under the laws of Bermuda (“ Dermavant ”)",
+        "dateUnverified": false
+      },
+      "otherAcceptedCandidates": 15
+    },
+    {
+      "dealId": "deal55",
+      "status": "error",
+      "reason": null,
+      "ref": null,
+      "otherAcceptedCandidates": 0,
+      "errorCode": "oversized_document",
+      "error": "SEC document exceeds 5242880 byte cache limit: https://www.sec.gov/Archives/edgar/data/1404912/000140491226000017/kkr-20260331.htm"
+    },
+    {
+      "dealId": "deal56",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal57",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal58",
+      "status": "rejected",
+      "reason": "no_hit",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    },
+    {
+      "dealId": "deal59",
+      "status": "rejected",
+      "reason": "acquirer_not_a_filer",
+      "ref": null,
+      "otherAcceptedCandidates": 0
+    }
+  ]
+}
