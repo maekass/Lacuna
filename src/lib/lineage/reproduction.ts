@@ -42,6 +42,18 @@ export interface MetricReproductionArtifact {
   readonly contributors: readonly ContributorValue[];
 }
 
+export function assertDatasetHashMatches(
+  exportedHash: string | undefined,
+  currentHash: string,
+): void {
+  if (exportedHash !== currentHash) {
+    throw new Error(
+      `Dataset state mismatch: export records ${exportedHash ?? "no hash"}, ` +
+        `but the current dataset is ${currentHash}.`,
+    );
+  }
+}
+
 function expectedFromValue(
   value: TracedValue,
 ): ReproductionExpected | ReproductionWithheld {

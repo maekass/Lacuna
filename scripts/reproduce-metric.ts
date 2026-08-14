@@ -3,6 +3,7 @@
 import { readFileSync } from "node:fs";
 import process from "node:process";
 import {
+  assertDatasetHashMatches,
   getMetricDeclaration,
   type MetricReproductionArtifact,
   reproduceArtifact,
@@ -118,13 +119,10 @@ async function verifyDataset(
   );
   const dataset = getStaticVerifiedDataset();
   const currentHash = hashDataset(dataset).fullHash;
-  if (artifact.datasetHash !== currentHash) {
-    fail(
-      `Dataset state mismatch: export records ${
-        artifact.datasetHash ?? "no hash"
-      }, ` +
-        `but the current dataset is ${currentHash}.`,
-    );
+  try {
+    assertDatasetHashMatches(artifact.datasetHash, currentHash);
+  } catch (error) {
+    fail((error as Error).message);
   }
   for (const contributor of artifact.contributors) {
     const record = recordsFor(dataset, contributor.ref.table).find(

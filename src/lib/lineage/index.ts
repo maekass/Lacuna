@@ -13,6 +13,7 @@ export {
   type MetricId,
 } from "./registry";
 export {
+  assertDatasetHashMatches,
   createReproductionArtifact,
   type MetricReproductionArtifact,
   reproduceArtifact,

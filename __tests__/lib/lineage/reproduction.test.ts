@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  assertDatasetHashMatches,
   createReproductionArtifact,
   fromRecords,
   reproduceArtifact,
@@ -111,5 +112,13 @@ describe("metric reproduction artifacts", () => {
     expect(JSON.stringify(artifact(), null, 2)).toBe(
       JSON.stringify(artifact(), null, 2),
     );
+  });
+
+  it("rejects an export from a different dataset state", () => {
+    expect(() => assertDatasetHashMatches("a".repeat(64), "b".repeat(64)))
+      .toThrow(
+        "Dataset state mismatch: export records " +
+          `${"a".repeat(64)}, but the current dataset is ${"b".repeat(64)}.`,
+      );
   });
 });
