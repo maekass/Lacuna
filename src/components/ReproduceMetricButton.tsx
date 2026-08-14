@@ -10,20 +10,25 @@ import { lineageForMetric } from "@/lib/provenance/metricProvenance";
 
 export default function ReproduceMetricButton({
   provenance,
+  filenameHint,
 }: {
   readonly provenance: MeasuredMetric | WithheldMetric;
+  readonly filenameHint?: string;
 }) {
   const artifact = useMemo(
     () =>
       createReproductionArtifact(
         provenance.estimate,
-        provenance.kind === "measured"
-          ? lineageForMetric(provenance)
-          : lineageForMetric(provenance),
+        lineageForMetric(provenance),
       ),
     [provenance],
   );
-  const filename = `lacuna-${artifact.metricId.replaceAll(".", "-")}.json`;
+  const suffix = filenameHint
+    ? `-${filenameHint.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-")}`
+    : "";
+  const filename = `lacuna-${
+    artifact.metricId.replaceAll(".", "-")
+  }${suffix}.json`;
   const command = `npm run reproduce -- ${filename}`;
   const datasetCommand = `${command} --dataset`;
   const download = useCallback(() => {

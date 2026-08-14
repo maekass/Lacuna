@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  assertDatasetCrossCheckAvailable,
   assertDatasetHashMatches,
   createReproductionArtifact,
   fromRecords,
@@ -21,7 +22,11 @@ function artifact() {
     computedAt: "2026-01-01T00:00:00.000Z",
   }).map(
     (company) => company.lastKnownValuation,
-    "lastKnownValuation",
+    ({ input, ref }) => [{
+      ref,
+      field: "lastKnownValuation",
+      value: input.lastKnownValuation,
+    }],
   ).estimate("valuation.matrix.median");
   return createReproductionArtifact(estimate, estimate.lineage);
 }
@@ -42,28 +47,48 @@ describe("metric reproduction artifacts", () => {
     expect(exported.contributors).toEqual([
       {
         ref: { table: "companies", id: "c1" },
-        field: "lastKnownValuation",
         value: 10,
+        reads: [{
+          ref: { table: "companies", id: "c1" },
+          field: "lastKnownValuation",
+          value: 10,
+        }],
       },
       {
         ref: { table: "companies", id: "c2" },
-        field: "lastKnownValuation",
         value: 20,
+        reads: [{
+          ref: { table: "companies", id: "c2" },
+          field: "lastKnownValuation",
+          value: 20,
+        }],
       },
       {
         ref: { table: "companies", id: "c3" },
-        field: "lastKnownValuation",
         value: 30,
+        reads: [{
+          ref: { table: "companies", id: "c3" },
+          field: "lastKnownValuation",
+          value: 30,
+        }],
       },
       {
         ref: { table: "companies", id: "c4" },
-        field: "lastKnownValuation",
         value: 40,
+        reads: [{
+          ref: { table: "companies", id: "c4" },
+          field: "lastKnownValuation",
+          value: 40,
+        }],
       },
       {
         ref: { table: "companies", id: "c5" },
-        field: "lastKnownValuation",
         value: 50,
+        reads: [{
+          ref: { table: "companies", id: "c5" },
+          field: "lastKnownValuation",
+          value: 50,
+        }],
       },
     ]);
   });
@@ -96,7 +121,7 @@ describe("metric reproduction artifacts", () => {
       "companies",
       records.slice(0, 2),
       { computedAt: "2026-01-01T00:00:00.000Z" },
-    ).map((company) => company.lastKnownValuation, "lastKnownValuation")
+    ).map((company) => company.lastKnownValuation)
       .estimate("valuation.matrix.median");
     const exported = createReproductionArtifact(estimate, estimate.lineage);
 
@@ -120,5 +145,23 @@ describe("metric reproduction artifacts", () => {
         "Dataset state mismatch: export records " +
           `${"a".repeat(64)}, but the current dataset is ${"b".repeat(64)}.`,
       );
+  });
+
+  it("refuses dataset cross-checks without traced reads", () => {
+    const estimate = fromRecords("companies", records, {
+      datasetHash: "a".repeat(64),
+      computedAt: "2026-01-01T00:00:00.000Z",
+    }).map((company) => company.lastKnownValuation)
+      .estimate("valuation.matrix.median");
+    const exported = createReproductionArtifact(estimate, estimate.lineage);
+
+    expect(() =>
+      assertDatasetCrossCheckAvailable(
+        exported.contributors,
+        exported.metricId,
+      )
+    ).toThrow(
+      "Dataset cross-check unavailable for metric valuation.matrix.median",
+    );
   });
 });

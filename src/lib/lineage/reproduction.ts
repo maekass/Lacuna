@@ -42,6 +42,18 @@ export interface MetricReproductionArtifact {
   readonly contributors: readonly ContributorValue[];
 }
 
+export function assertDatasetCrossCheckAvailable(
+  contributors: readonly ContributorValue[],
+  metricId: string,
+): void {
+  if (contributors.some((contributor) => contributor.reads.length === 0)) {
+    throw new Error(
+      `Dataset cross-check unavailable for metric ${metricId}: ` +
+        "contributors do not include traced field reads.",
+    );
+  }
+}
+
 export function assertDatasetHashMatches(
   exportedHash: string | undefined,
   currentHash: string,

@@ -117,6 +117,7 @@ export default function Metric({
           <MetricEvidence
             provenance={provenance}
             additionalEvidence={additionalEvidence}
+            filenameHint={label}
             loaded={detail}
             onLoaded={setLoaded}
           />

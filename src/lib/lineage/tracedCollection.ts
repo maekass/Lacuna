@@ -4,6 +4,7 @@ import type {
   ContributorValue,
   DatasetTable,
   ExcludedRef,
+  FieldRead,
   Lineage,
   LineageOptions,
   LineageSummary,
@@ -25,6 +26,13 @@ interface CollectionState<T> {
 
 export interface JoinableRecord extends RecordWithSources {
   readonly id: string;
+}
+
+export interface TraceReadContext<T, U> {
+  readonly input: T;
+  readonly output: U;
+  readonly ref: RecordRef;
+  readonly supporting: readonly RecordRef[];
 }
 
 function uniqueBy<T>(items: readonly T[], key: (item: T) => string): T[] {
@@ -102,8 +110,8 @@ function makeLineage(
       )
       .map<ContributorValue>((record) => ({
         ref: record.ref,
-        field: record.valueField ?? "value",
         value: record.value,
+        reads: record.reads ?? [],
       })),
     n: state.records.length,
     originalInputCount: state.inputCount,
@@ -206,6 +214,7 @@ export class TracedCollection<T> {
           [...left.supporting, { table, id: match.id }],
           (ref) => `${ref.table}:${ref.id}`,
         ),
+        ...(left.reads === undefined ? {} : { reads: left.reads }),
       });
     }
 
@@ -246,15 +255,27 @@ export class TracedCollection<T> {
 
   map<U>(
     mapper: (value: T) => U,
-    valueField = "value",
+    reads?: (
+      context: TraceReadContext<T, U>,
+    ) => readonly FieldRead[],
   ): TracedCollection<U> {
     return new TracedCollection({
       ...this.state,
-      records: this.state.records.map((record) => ({
-        ...record,
-        value: mapper(record.value),
-        valueField,
-      })),
+      records: this.state.records.map((record) => {
+        const output = mapper(record.value);
+        return {
+          ...record,
+          value: output,
+          ...(reads === undefined ? {} : {
+            reads: reads({
+              input: record.value,
+              output,
+              ref: record.ref,
+              supporting: record.supporting,
+            }),
+          }),
+        };
+      }),
     });
   }
 

@@ -80,7 +80,11 @@ function buildCellEstimate(
     estimate: collection
       .map(
         (company) => hasValuation(company) ? company.lastKnownValuation : 0,
-        "lastKnownValuation",
+        ({ input, ref, output }) => [{
+          ref,
+          field: "lastKnownValuation",
+          value: hasValuation(input) ? output : undefined,
+        }],
       )
       .estimate(METRIC_ID),
     valuations,

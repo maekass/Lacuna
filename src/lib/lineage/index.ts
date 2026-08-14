@@ -13,6 +13,7 @@ export {
   type MetricId,
 } from "./registry";
 export {
+  assertDatasetCrossCheckAvailable,
   assertDatasetHashMatches,
   createReproductionArtifact,
   type MetricReproductionArtifact,
@@ -24,6 +25,7 @@ export type {
   DatasetTable,
   ExcludedRef,
   ExclusionSummary,
+  FieldRead,
   Lineage,
   LineageOptions,
   LineageSummary,

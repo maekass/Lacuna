@@ -3,6 +3,7 @@
 import { readFileSync } from "node:fs";
 import process from "node:process";
 import {
+  assertDatasetCrossCheckAvailable,
   assertDatasetHashMatches,
   getMetricDeclaration,
   type MetricReproductionArtifact,
@@ -75,42 +76,6 @@ function recordsFor(
     : fail(`Unsupported contributor table: ${table}`);
 }
 
-function pathValue(record: Record<string, unknown>, path: string): unknown {
-  return path.split(".").reduce<unknown>(
-    (current, key) =>
-      current && typeof current === "object"
-        ? (current as Record<string, unknown>)[key]
-        : undefined,
-    record,
-  );
-}
-
-function contributorValue(
-  record: Record<string, unknown>,
-  field: string,
-  dataset: VerifiedDataset,
-): unknown {
-  const [left, right] = field.split(" / ");
-  if (!right) return pathValue(record, field);
-  const numerator = pathValue(record, left);
-  if (!right.startsWith("company.")) {
-    const denominator = pathValue(record, right);
-    return typeof numerator === "number" && typeof denominator === "number"
-      ? numerator / denominator
-      : undefined;
-  }
-  const targetId = record.targetId;
-  const company = dataset.companies.find((candidate) =>
-    candidate.id === targetId
-  );
-  const denominator = company === undefined
-    ? undefined
-    : pathValue(company, right.slice("company.".length));
-  return typeof numerator === "number" && typeof denominator === "number"
-    ? numerator / denominator
-    : undefined;
-}
-
 async function verifyDataset(
   artifact: MetricReproductionArtifact,
 ): Promise<void> {
@@ -119,28 +84,29 @@ async function verifyDataset(
   );
   const dataset = getStaticVerifiedDataset();
   const currentHash = hashDataset(dataset).fullHash;
+  assertDatasetCrossCheckAvailable(artifact.contributors, artifact.metricId);
   try {
     assertDatasetHashMatches(artifact.datasetHash, currentHash);
   } catch (error) {
     fail((error as Error).message);
   }
   for (const contributor of artifact.contributors) {
-    const record = recordsFor(dataset, contributor.ref.table).find(
-      (candidate) => candidate.id === contributor.ref.id,
-    );
-    if (!record) {
-      fail(
-        `Dataset contributor missing: ${contributor.ref.table}/${contributor.ref.id}.`,
+    for (const read of contributor.reads) {
+      const record = recordsFor(dataset, read.ref.table).find(
+        (candidate) => candidate.id === read.ref.id,
       );
-    }
-    const current = contributorValue(record, contributor.field, dataset);
-    if (current !== contributor.value) {
-      fail(
-        `Dataset contributor mismatch for ${contributor.ref.table}/${contributor.ref.id} ` +
-          `${contributor.field}: export=${contributor.value}, current=${
-            String(current)
-          }.`,
-      );
+      if (!record) {
+        fail(`Dataset field record missing: ${read.ref.table}/${read.ref.id}.`);
+      }
+      const current = record[read.field];
+      if (current !== read.value) {
+        fail(
+          `Dataset field mismatch for ${read.ref.table}/${read.ref.id} ` +
+            `${read.field}: export=${String(read.value)}, current=${
+              String(current)
+            }.`,
+        );
+      }
     }
   }
 }

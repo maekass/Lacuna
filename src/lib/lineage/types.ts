@@ -50,10 +50,16 @@ export interface Missingness {
   readonly total: number;
 }
 
-export interface ContributorValue {
+export interface FieldRead {
   readonly ref: RecordRef;
   readonly field: string;
+  readonly value: unknown;
+}
+
+export interface ContributorValue {
+  readonly ref: RecordRef;
   readonly value: number;
+  readonly reads: readonly FieldRead[];
 }
 
 export interface ExclusionSummary {
@@ -120,7 +126,7 @@ export interface RecordWithSources {
 export type TracedRecord<T> = {
   readonly ref: RecordRef;
   readonly value: T;
-  readonly valueField?: string;
+  readonly reads?: readonly FieldRead[];
   readonly sources: readonly SourceRef[];
   readonly supporting: readonly RecordRef[];
 };
