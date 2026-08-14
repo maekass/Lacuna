@@ -7,6 +7,7 @@ import {
   extractSourceQuote,
   hasAdjacentTargetMatch,
   normalizeCompanyName,
+  rejectionReasons,
   runSourceBackfill,
   sourceBackfillCoverageText,
   summarizeSourceBackfill,
@@ -92,6 +93,35 @@ describe("source backfill acceptance helpers", () => {
     expect(sourceBackfillCoverageText(coverage)).toContain(
       "Accepted: 1 / 3",
     );
+  });
+
+  it("uses exactly the specification's rejection reason codes", () => {
+    const reasons = rejectionReasons();
+    expect(reasons).toEqual([
+      "no_fulltext_coverage",
+      "acquirer_not_a_filer",
+      "no_hit",
+      "target_name_not_matched",
+      "no_transaction_language",
+      "date_out_of_range",
+      "no_quote_extractable",
+    ]);
+    const report = {
+      generatedAt: "deterministic-from-cache",
+      source: "SEC EDGAR full-text search" as const,
+      records: reasons.map((reason, index) => ({
+        dealId: `deal${index}`,
+        status: "rejected" as const,
+        reason,
+        ref: null,
+        otherAcceptedCandidates: 0 as const,
+      })),
+    };
+    const coverage = summarizeSourceBackfill(report);
+    expect(coverage.rejected).toBe(reasons.length);
+    for (const reason of reasons) {
+      expect(coverage.byReason[reason]).toBe(1);
+    }
   });
 
   it("round-trips an accepted record and is byte-stable over a fixed cache", async () => {
