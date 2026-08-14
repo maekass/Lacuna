@@ -1,7 +1,7 @@
 import process from "node:process";
 import { getCachedStaticVerifiedDataset } from "./cachedDataset";
 import type { DataMode, VerifiedDataset } from "./datasetTypes";
-import { hashDataset } from "@/lib/lineage/datasetHash";
+import { type DatasetIdentity, hashDataset } from "@/lib/lineage/datasetHash";
 import {
   type DatasetResource,
   type DatasetSliceResult,
@@ -12,6 +12,9 @@ function getMode(): DataMode {
   const raw = process.env.LACUNA_DATA_MODE;
   return raw === "db" ? "db" : "static";
 }
+
+const datasetIdentities = new WeakMap<VerifiedDataset, DatasetIdentity>();
+const dbIdentities = new Map<string, Promise<DatasetIdentity>>();
 
 export function getDataMode(): DataMode {
   return getMode();
@@ -31,7 +34,11 @@ export async function getVerifiedDataset(): Promise<VerifiedDataset> {
 }
 
 function withDatasetIdentity(dataset: VerifiedDataset): VerifiedDataset {
-  const identity = hashDataset(dataset);
+  let identity = datasetIdentities.get(dataset);
+  if (!identity) {
+    identity = hashDataset(dataset);
+    datasetIdentities.set(dataset, identity);
+  }
   return {
     ...dataset,
     provenance: {
@@ -39,6 +46,44 @@ function withDatasetIdentity(dataset: VerifiedDataset): VerifiedDataset {
       datasetHash: identity.fullHash,
     },
   };
+}
+
+function dbRevisionKey(provenance: {
+  readonly last_updated: Date | string;
+  readonly purpose: string;
+  readonly disclaimer: string;
+  readonly sources: readonly string[];
+  readonly notes: readonly string[];
+}): string {
+  return JSON.stringify([
+    String(provenance.last_updated),
+    provenance.purpose,
+    provenance.disclaimer,
+    provenance.sources,
+    provenance.notes,
+  ]);
+}
+
+async function getCachedDbIdentity(
+  provenance: Parameters<typeof dbRevisionKey>[0],
+): Promise<DatasetIdentity> {
+  const key = dbRevisionKey(provenance);
+  const cached = dbIdentities.get(key);
+  if (cached) return cached;
+
+  const pending = (async () => {
+    const { loadVerifiedDatasetFromDb } = await import(
+      "./loadVerifiedDatasetFromDb"
+    );
+    return hashDataset(await loadVerifiedDatasetFromDb());
+  })();
+  dbIdentities.set(key, pending);
+  try {
+    return await pending;
+  } catch (error) {
+    dbIdentities.delete(key);
+    throw error;
+  }
 }
 
 export interface VerifiedDatasetPageRequest {
@@ -107,10 +152,13 @@ export async function getVerifiedDatasetPage(
       acquirerRows,
       acquisitionRows,
     );
-    const identity = await getVerifiedDataset();
+    const identity = await getCachedDbIdentity(provenance);
 
     return {
-      provenance: identity.provenance,
+      provenance: {
+        ...mapped.provenance,
+        datasetHash: identity.fullHash,
+      },
       companies: includeCompanies ? mapped.companies : [],
       acquirers: includeAcquirers ? mapped.acquirers : [],
       acquisitions: includeAcquisitions ? mapped.acquisitions : [],
