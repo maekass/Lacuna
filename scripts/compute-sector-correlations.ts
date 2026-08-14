@@ -45,7 +45,10 @@ const collection = fromRecords(
     "funding_unresearched",
     "totalFunding",
   )
-  .map((deal) => deal.dealValue! / deal.company.totalFunding!);
+  .map(
+    (deal) => deal.dealValue! / deal.company.totalFunding!,
+    "dealValue / company.totalFunding",
+  );
 
 const lineageEstimate = collection.estimate("sector.moic.median");
 const output = {

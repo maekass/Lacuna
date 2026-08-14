@@ -35,6 +35,64 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal1"
+            },
+            "field": "dealValue / company.totalFunding",
+            "value": 57.916666666666664
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal2"
+            },
+            "field": "dealValue / company.totalFunding",
+            "value": 1.4516129032258065
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal3"
+            },
+            "field": "dealValue / company.totalFunding",
+            "value": 2.542372881355932
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal4"
+            },
+            "field": "dealValue / company.totalFunding",
+            "value": 7.2727272727272725
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal11"
+            },
+            "field": "dealValue / company.totalFunding",
+            "value": 6.4
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal14"
+            },
+            "field": "dealValue / company.totalFunding",
+            "value": 9.6
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal57"
+            },
+            "field": "dealValue / company.totalFunding",
+            "value": 27.142857142857142
+          }
+        ],
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
         "computedAt": "2026-07-06T00:00:00.000Z"

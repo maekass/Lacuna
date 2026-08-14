@@ -15,6 +15,7 @@ import {
   type MetricProvenance,
   type WithheldMetric,
 } from "@/lib/provenance/metricProvenance";
+import ReproduceMetricButton from "./ReproduceMetricButton";
 
 function formatComputedAt(value: string): string {
   const date = new Date(value);
@@ -250,6 +251,7 @@ function MeasuredEvidence({
         expected={lineage.originalInputCount - lineage.n}
       />
       <Missingness lineage={lineage} />
+      <ReproduceMetricButton provenance={provenance} />
       <DatasetFooter
         datasetVersion={lineage.datasetVersion}
         datasetHash={lineage.datasetHash}
@@ -285,6 +287,7 @@ function WithheldEvidence(
         expected={lineage.originalInputCount - lineage.n}
       />
       <Missingness lineage={lineage} />
+      <ReproduceMetricButton provenance={provenance} />
       <DatasetFooter
         datasetVersion={lineage.datasetVersion}
         datasetHash={lineage.datasetHash}

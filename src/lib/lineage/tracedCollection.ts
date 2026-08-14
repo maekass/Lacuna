@@ -1,6 +1,7 @@
 import type { InsufficientData, QuantValue } from "@/lib/quant/types";
 import { estimateRegisteredMetric, getMetricDeclaration } from "./registry";
 import type {
+  ContributorValue,
   DatasetTable,
   ExcludedRef,
   Lineage,
@@ -95,6 +96,15 @@ function makeLineage(
       state.records.flatMap((record) => record.sources),
       sourceKey,
     ),
+    contributors: state.records
+      .filter((record): record is TracedRecord<number> =>
+        typeof record.value === "number"
+      )
+      .map<ContributorValue>((record) => ({
+        ref: record.ref,
+        field: record.valueField ?? "value",
+        value: record.value,
+      })),
     n: state.records.length,
     originalInputCount: state.inputCount,
     excluded: state.excluded,
@@ -120,6 +130,7 @@ export function summarizeLineage(lineage: Lineage): LineageSummary {
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([reason, count]) => ({ reason, count })),
     missingness: lineage.missingness,
+    contributors: lineage.contributors,
     suppression: lineage.suppression,
     datasetVersion: lineage.datasetVersion,
     datasetHash: lineage.datasetHash,
@@ -233,12 +244,16 @@ export class TracedCollection<T> {
     });
   }
 
-  map<U>(mapper: (value: T) => U): TracedCollection<U> {
+  map<U>(
+    mapper: (value: T) => U,
+    valueField = "value",
+  ): TracedCollection<U> {
     return new TracedCollection({
       ...this.state,
       records: this.state.records.map((record) => ({
         ...record,
         value: mapper(record.value),
+        valueField,
       })),
     });
   }

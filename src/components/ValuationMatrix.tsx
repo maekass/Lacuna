@@ -78,7 +78,10 @@ function buildCellEstimate(
     .map((company) => company.lastKnownValuation);
   return {
     estimate: collection
-      .map((company) => hasValuation(company) ? company.lastKnownValuation : 0)
+      .map(
+        (company) => hasValuation(company) ? company.lastKnownValuation : 0,
+        "lastKnownValuation",
+      )
       .estimate(METRIC_ID),
     valuations,
   };

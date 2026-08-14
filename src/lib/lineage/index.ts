@@ -7,11 +7,19 @@ export {
   estimateRegisteredMetric,
   getMetricDeclaration,
   METRIC_REGISTRY,
+  METRIC_REPRODUCTION_SEED,
   type MetricDeclaration,
   type MetricEstimator,
   type MetricId,
 } from "./registry";
+export {
+  createReproductionArtifact,
+  type MetricReproductionArtifact,
+  reproduceArtifact,
+  REPRODUCTION_FORMAT_VERSION,
+} from "./reproduction";
 export type {
+  ContributorValue,
   DatasetTable,
   ExcludedRef,
   ExclusionSummary,

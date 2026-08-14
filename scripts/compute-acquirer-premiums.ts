@@ -74,10 +74,17 @@ const denominatorFields = {
 type PremiumMetricId = keyof typeof denominatorFields;
 
 function denominatorCollection(metricId: PremiumMetricId) {
-  return eligibleCollection(metricId).map((deal) => {
-    const getDenominator = denominatorFields[metricId];
-    return deal.dealValue! / getDenominator(deal)!;
-  });
+  return eligibleCollection(metricId).map(
+    (deal) => {
+      const getDenominator = denominatorFields[metricId];
+      return deal.dealValue! / getDenominator(deal)!;
+    },
+    metricId === "acquirer.premium.preDealValuation"
+      ? "dealValue / preDealValuation"
+      : metricId === "acquirer.premium.lastKnownValuation"
+      ? "dealValue / company.lastKnownValuation"
+      : "dealValue / company.totalFunding",
+  );
 }
 
 function eligibleCollection(
@@ -161,6 +168,11 @@ for (const metricId of Object.keys(denominatorFields) as PremiumMetricId[]) {
   for (const acquirerName of acquirerNames) {
     const collection = eligibleCollection(metricId, acquirerName).map(
       (deal) => deal.dealValue! / getDenominator(deal)!,
+      metricId === "acquirer.premium.preDealValuation"
+        ? "dealValue / preDealValuation"
+        : metricId === "acquirer.premium.lastKnownValuation"
+        ? "dealValue / company.lastKnownValuation"
+        : "dealValue / company.totalFunding",
     );
     const result = collection.estimate(metricId);
     if (!isSufficient(result)) {

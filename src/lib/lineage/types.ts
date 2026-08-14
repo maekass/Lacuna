@@ -50,6 +50,12 @@ export interface Missingness {
   readonly total: number;
 }
 
+export interface ContributorValue {
+  readonly ref: RecordRef;
+  readonly field: string;
+  readonly value: number;
+}
+
 export interface ExclusionSummary {
   readonly reason: string;
   readonly count: number;
@@ -62,6 +68,7 @@ export interface LineageSummary {
   readonly originalInputCount: number;
   readonly excluded: readonly ExclusionSummary[];
   readonly missingness: readonly Missingness[];
+  readonly contributors: readonly ContributorValue[];
   readonly suppression?: string;
   readonly datasetVersion?: string;
   readonly datasetHash?: string;
@@ -74,6 +81,7 @@ export interface Lineage {
   readonly inputs: readonly RecordRef[];
   readonly supporting: readonly RecordRef[];
   readonly sources: readonly SourceRef[];
+  readonly contributors: readonly ContributorValue[];
   readonly n: number;
   readonly originalInputCount: number;
   readonly excluded: readonly ExcludedRef[];
@@ -112,6 +120,7 @@ export interface RecordWithSources {
 export type TracedRecord<T> = {
   readonly ref: RecordRef;
   readonly value: T;
+  readonly valueField?: string;
   readonly sources: readonly SourceRef[];
   readonly supporting: readonly RecordRef[];
 };
