@@ -10,6 +10,12 @@ import type {
   LineageSummary,
   TracedValue,
 } from "./types";
+import type { VerifiedDataset } from "@/lib/data/datasetSchema";
+import { buildVerifiedDerivedData } from "@/lib/data/verifiedDataHelpers";
+import {
+  buildValuationMatrixEstimate,
+  type CanonicalStage,
+} from "@/lib/valuation/valuationMatrix";
 
 export const REPRODUCTION_FORMAT_VERSION = 1;
 
@@ -39,6 +45,7 @@ export interface MetricReproductionArtifact {
   readonly datasetVersion?: string;
   readonly datasetHash?: string;
   readonly computedAt: string;
+  readonly reproductionParameters?: Readonly<Record<string, string>>;
   readonly contributors: readonly ContributorValue[];
 }
 
@@ -46,7 +53,10 @@ export function assertDatasetCrossCheckAvailable(
   contributors: readonly ContributorValue[],
   metricId: string,
 ): void {
-  if (contributors.some((contributor) => contributor.reads.length === 0)) {
+  if (
+    contributors.length === 0 ||
+    contributors.some((contributor) => contributor.reads.length === 0)
+  ) {
     throw new Error(
       `Dataset cross-check unavailable for metric ${metricId}: ` +
         "contributors do not include traced field reads.",
@@ -102,7 +112,85 @@ export function createReproductionArtifact(
     datasetVersion: lineage.datasetVersion,
     datasetHash: lineage.datasetHash,
     computedAt: lineage.computedAt,
+    reproductionParameters: lineage.reproductionParameters,
     contributors: lineage.contributors,
+  };
+}
+
+export interface DatasetReproductionResult {
+  readonly estimate: TracedValue;
+  readonly contributors: readonly ContributorValue[];
+  readonly n: number;
+}
+
+export function assertDatasetReproductionMatches(
+  artifact: MetricReproductionArtifact,
+  result: DatasetReproductionResult,
+): void {
+  if (result.n !== artifact.n) {
+    throw new Error(
+      `Dataset recomputation mismatch: export n=${artifact.n}, ` +
+        `current n=${result.n}.`,
+    );
+  }
+  const actual = result.estimate;
+  if (artifact.expected.kind === "insufficient") {
+    if (
+      actual.kind !== "insufficient" ||
+      actual.sampleSize !== artifact.expected.sampleSize ||
+      actual.minRequired !== artifact.expected.minRequired
+    ) {
+      throw new Error(
+        `Dataset recomputation mismatch: expected withholding n=${artifact.expected.sampleSize} (minimum ${artifact.expected.minRequired}), ` +
+          `current=${actual.kind}.`,
+      );
+    }
+  } else if (
+    actual.kind !== "sufficient" ||
+    actual.value !== artifact.expected.value ||
+    actual.confidenceInterval[0] !== artifact.expected.confidenceInterval[0] ||
+    actual.confidenceInterval[1] !== artifact.expected.confidenceInterval[1]
+  ) {
+    throw new Error(
+      "Dataset recomputation mismatch: regenerated estimate differs from " +
+        "the artifact.",
+    );
+  }
+  if (
+    JSON.stringify(result.contributors) !==
+      JSON.stringify(artifact.contributors)
+  ) {
+    throw new Error(
+      "Dataset recomputation mismatch: contributors differ from the " +
+        "production computation.",
+    );
+  }
+}
+
+export function reproduceFromDataset(
+  metricId: string,
+  dataset: VerifiedDataset,
+  parameters: Readonly<Record<string, string>> | undefined,
+): DatasetReproductionResult | undefined {
+  if (metricId !== "valuation.matrix.median") return undefined;
+  const sector = parameters?.sector;
+  const stage = parameters?.stage;
+  if (!sector || !stage) return undefined;
+  const { verifiedCompanies } = buildVerifiedDerivedData(dataset);
+  const result = buildValuationMatrixEstimate(
+    verifiedCompanies,
+    sector,
+    stage as CanonicalStage,
+    {
+      datasetVersion: dataset.provenance.datasetVersion,
+      datasetHash: dataset.provenance.datasetHash,
+      reproductionParameters: { sector, stage },
+    },
+  );
+  return {
+    estimate: result.estimate,
+    contributors: result.estimate.lineage.contributors,
+    n: result.estimate.lineage.n,
   };
 }
 

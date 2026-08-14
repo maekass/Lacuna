@@ -1,11 +1,16 @@
 import { describe, expect, it } from "vitest";
+import { parseVerifiedDataset } from "@/lib/data/datasetSchema";
+import { buildVerifiedDerivedData } from "@/lib/data/verifiedDataHelpers";
 import {
   assertDatasetCrossCheckAvailable,
   assertDatasetHashMatches,
+  assertDatasetReproductionMatches,
   createReproductionArtifact,
   fromRecords,
   reproduceArtifact,
+  reproduceFromDataset,
 } from "@/lib/lineage";
+import { buildValuationMatrixEstimate } from "@/lib/valuation/valuationMatrix";
 
 const records = [
   { id: "c1", lastKnownValuation: 10 },
@@ -163,5 +168,116 @@ describe("metric reproduction artifacts", () => {
     ).toThrow(
       "Dataset cross-check unavailable for metric valuation.matrix.median",
     );
+  });
+
+  it("rejects a consistently scaled forgery during dataset recomputation", () => {
+    const dataset = parseVerifiedDataset({
+      provenance: {
+        lastUpdated: "2026-01-01",
+        datasetVersion: "v8",
+        sources: [],
+        notes: [],
+        purpose: "test",
+        disclaimer: "test",
+      },
+      companies: [
+        {
+          id: "c1",
+          name: "One",
+          sector: "Breast Health",
+          stage: "Acquired",
+          lastKnownValuation: 10,
+          sources: [],
+        },
+        {
+          id: "c2",
+          name: "Two",
+          sector: "Breast Health",
+          stage: "Acquired",
+          lastKnownValuation: 20,
+          sources: [],
+        },
+        {
+          id: "c3",
+          name: "Three",
+          sector: "Breast Health",
+          stage: "Acquired",
+          lastKnownValuation: 30,
+          sources: [],
+        },
+        {
+          id: "c4",
+          name: "Four",
+          sector: "Breast Health",
+          stage: "Acquired",
+          lastKnownValuation: 40,
+          sources: [],
+        },
+        {
+          id: "c5",
+          name: "Five",
+          sector: "Breast Health",
+          stage: "Acquired",
+          lastKnownValuation: 50,
+          sources: [],
+        },
+      ],
+      acquirers: [],
+      acquisitions: [],
+    });
+    const estimate = buildValuationMatrixEstimate(
+      buildVerifiedDerivedData(dataset).verifiedCompanies,
+      "Breast Health",
+      "Acquired",
+      {
+        reproductionParameters: { sector: "Breast Health", stage: "Acquired" },
+      },
+    ).estimate;
+    const exported = createReproductionArtifact(estimate, estimate.lineage);
+    const forged = {
+      ...exported,
+      expected: exported.expected.kind === "sufficient"
+        ? {
+          ...exported.expected,
+          value: exported.expected.value * 2,
+          confidenceInterval: exported.expected.confidenceInterval.map(
+            (value) => value * 2,
+          ) as readonly [number, number],
+        }
+        : exported.expected,
+      contributors: exported.contributors.map((contributor) => ({
+        ...contributor,
+        value: contributor.value * 2,
+      })),
+    };
+    const recomputed = reproduceFromDataset(
+      forged.metricId,
+      dataset,
+      forged.reproductionParameters,
+    );
+    expect(recomputed).not.toBeUndefined();
+    expect(() => assertDatasetReproductionMatches(forged, recomputed!)).toThrow(
+      "Dataset recomputation mismatch",
+    );
+  });
+
+  it("does not claim a vacuous withheld cross-check passed", () => {
+    const estimate = fromRecords(
+      "companies",
+      records.slice(0, 2),
+      { computedAt: "2026-01-01T00:00:00.000Z" },
+    ).map((company) => company.lastKnownValuation)
+      .estimate("valuation.matrix.median");
+    const exported = {
+      ...createReproductionArtifact(estimate, estimate.lineage),
+      contributors: [],
+    };
+    expect(exported.contributors).toHaveLength(0);
+    expect(() =>
+      assertDatasetCrossCheckAvailable(
+        exported.contributors,
+        exported.metricId,
+      )
+    ).toThrow("cross-check unavailable");
   });
 });

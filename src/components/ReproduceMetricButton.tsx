@@ -29,7 +29,7 @@ export default function ReproduceMetricButton({
   const filename = `lacuna-${
     artifact.metricId.replaceAll(".", "-")
   }${suffix}.json`;
-  const command = `npm run reproduce -- ${filename}`;
+  const command = `npm run reproduce -- ~/Downloads/${filename}`;
   const datasetCommand = `${command} --dataset`;
   const download = useCallback(() => {
     const blob = new Blob(

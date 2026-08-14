@@ -5,17 +5,14 @@ import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import ValuationMatrixGrid from "@/components/ValuationMatrixGrid";
 import type { ValuationMatrixCellData } from "@/components/ValuationMatrixCell";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
-import { fromRecords, type TracedValue } from "@/lib/lineage";
+import type { TracedValue } from "@/lib/lineage";
 import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
+import {
+  buildValuationMatrixEstimate,
+  type CanonicalStage,
+  canonicalStage,
+} from "@/lib/valuation/valuationMatrix";
 
-type CanonicalStage =
-  | "Seed"
-  | "Series A"
-  | "Series B"
-  | "Series C"
-  | "Series D+"
-  | "Public"
-  | "Acquired";
 type MomentumLabel = "High" | "Stable" | "Cooling";
 
 const STAGE_ORDER: CanonicalStage[] = [
@@ -27,68 +24,14 @@ const STAGE_ORDER: CanonicalStage[] = [
   "Public",
   "Acquired",
 ];
-const METRIC_ID = "valuation.matrix.median";
 const CHIP_ACTIVE =
   "rounded-full px-3 py-1 text-xs font-medium bg-lacuna-plum text-white";
 const CHIP_INACTIVE =
   "rounded-full px-3 py-1 text-xs font-medium bg-lacuna-lavender/20 text-lacuna-plum";
-function canonicalStage(raw: string): CanonicalStage | null {
-  if (/Acquired/i.test(raw)) return "Acquired";
-  if (/Public/i.test(raw)) return "Public";
-  if (/Series D|Series E|Series F|Late Stage|Pre-IPO/i.test(raw)) {
-    return "Series D+";
-  }
-  if (/Series C/i.test(raw)) return "Series C";
-  if (/Series B/i.test(raw)) return "Series B";
-  if (/Series A/i.test(raw)) return "Series A";
-  if (/Seed/i.test(raw)) return "Seed";
-  return null;
-}
-
 function hasValuation(
   company: VerifiedCompanyView,
 ): company is VerifiedCompanyView & { readonly lastKnownValuation: number } {
   return typeof company.lastKnownValuation === "number";
-}
-
-function buildCellEstimate(
-  companies: readonly VerifiedCompanyView[],
-  sector: string,
-  stage: CanonicalStage,
-  datasetVersion?: string,
-  datasetHash?: string,
-): { estimate: TracedValue; valuations: readonly number[] } {
-  const collection = fromRecords("companies", companies, {
-    datasetVersion,
-    datasetHash,
-  })
-    .exclude((company) => company.sector !== sector, "out_of_sector")
-    .exclude(
-      (company) => canonicalStage(company.stage) !== stage,
-      "out_of_stage",
-    )
-    .exclude(
-      (company) => !hasValuation(company),
-      "valuation_undisclosed",
-      "lastKnownValuation",
-    );
-  const valuations = collection.records
-    .map((record) => record.value)
-    .filter(hasValuation)
-    .map((company) => company.lastKnownValuation);
-  return {
-    estimate: collection
-      .map(
-        (company) => hasValuation(company) ? company.lastKnownValuation : 0,
-        ({ input, ref, output }) => [{
-          ref,
-          field: "lastKnownValuation",
-          value: hasValuation(input) ? output : undefined,
-        }],
-      )
-      .estimate(METRIC_ID),
-    valuations,
-  };
 }
 
 function classifyMomentum(recent: number, prior: number): MomentumLabel {
@@ -142,12 +85,14 @@ export default function ValuationMatrix() {
             company.sector === sector &&
             canonicalStage(company.stage) === stage,
         );
-        const { estimate, valuations } = buildCellEstimate(
+        const { estimate, valuations } = buildValuationMatrixEstimate(
           verifiedCompanies,
           sector,
           stage,
-          dataProvenance.datasetVersion,
-          dataProvenance.datasetHash,
+          {
+            datasetVersion: dataProvenance.datasetVersion,
+            datasetHash: dataProvenance.datasetHash,
+          },
         );
         const dealCount = verifiedAcquisitions.filter((deal) => {
           const target = byId.get(deal.targetId);

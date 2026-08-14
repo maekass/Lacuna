@@ -121,6 +121,7 @@ function makeLineage(
     datasetVersion: state.options.datasetVersion,
     datasetHash: state.options.datasetHash,
     computedAt: state.options.computedAt ?? new Date().toISOString(),
+    reproductionParameters: state.options.reproductionParameters,
   };
 }
 
@@ -143,6 +144,7 @@ export function summarizeLineage(lineage: Lineage): LineageSummary {
     datasetVersion: lineage.datasetVersion,
     datasetHash: lineage.datasetHash,
     computedAt: lineage.computedAt,
+    reproductionParameters: lineage.reproductionParameters,
   };
 }
 

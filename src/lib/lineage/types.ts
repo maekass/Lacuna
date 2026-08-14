@@ -79,6 +79,7 @@ export interface LineageSummary {
   readonly datasetVersion?: string;
   readonly datasetHash?: string;
   readonly computedAt: string;
+  readonly reproductionParameters?: Readonly<Record<string, string>>;
 }
 
 export interface Lineage {
@@ -96,6 +97,7 @@ export interface Lineage {
   readonly datasetVersion?: string;
   readonly datasetHash?: string;
   readonly computedAt: string;
+  readonly reproductionParameters?: Readonly<Record<string, string>>;
 }
 
 export type TracedSufficient<T extends number = number> = Sufficient<T> & {
@@ -114,6 +116,7 @@ export interface LineageOptions {
   readonly datasetVersion?: string;
   readonly datasetHash?: string;
   readonly computedAt?: string;
+  readonly reproductionParameters?: Readonly<Record<string, string>>;
 }
 
 export interface RecordWithSources {
