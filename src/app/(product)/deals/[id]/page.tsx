@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import DealDetailPage from "@/app/sections/DealDetailPage";
 import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
-import { getDealById } from "@/lib/deals";
+import { getDealById, getDealDetailView } from "@/lib/deals";
 
 export const revalidate = 86_400;
 
@@ -42,8 +42,9 @@ export async function generateMetadata(
 export default async function Page({ params }: PageProps) {
   const { id } = await params;
   const dataset = getStaticVerifiedDataset();
-  if (!getDealById(dataset, id)) {
+  const view = getDealDetailView(dataset, id);
+  if (!view) {
     notFound();
   }
-  return <DealDetailPage dealId={id} />;
+  return <DealDetailPage view={view} />;
 }

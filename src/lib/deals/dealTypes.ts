@@ -37,4 +37,7 @@ export interface ComparableDealSummary {
   dealValue?: number;
   dealType: string;
   sector: string;
+  evidenceClass?: string;
+  sameEvidenceClass?: boolean;
+  sameAcquirer?: boolean;
 }

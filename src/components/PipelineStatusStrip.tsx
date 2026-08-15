@@ -21,9 +21,12 @@ function shortSha(sha: string | null): string {
 export default function PipelineStatusStrip({
   queueDetail = false,
   refreshToken = 0,
+  showSecIngest = true,
 }: {
   queueDetail?: boolean;
   refreshToken?: number;
+  /** When false, skip the SEC ingest probe (public deal pages). */
+  showSecIngest?: boolean;
 }) {
   const { dataProvenance } = useVerifiedDataset();
   const [health, setHealth] = useState<HealthPayload | null>(null);
@@ -37,15 +40,15 @@ export default function PipelineStatusStrip({
     async function load() {
       setLoading(true);
       try {
-        const [healthRes, secRes] = await Promise.all([
-          fetch("/api/health"),
-          fetch("/api/ingest/sec/status"),
-        ]);
+        const healthRes = await fetch("/api/health");
+        const secRes = showSecIngest
+          ? await fetch("/api/ingest/sec/status")
+          : null;
         if (cancelled) return;
         if (healthRes.ok) {
           setHealth(await healthRes.json() as HealthPayload);
         }
-        if (secRes.ok) {
+        if (secRes?.ok) {
           setSec(await secRes.json() as SecIngestStatusPayload);
         } else {
           setSec(null);
@@ -59,7 +62,7 @@ export default function PipelineStatusStrip({
     return () => {
       cancelled = true;
     };
-  }, [refreshToken]);
+  }, [refreshToken, showSecIngest]);
 
   useEffect(() => {
     const interval = setInterval(() => setNowMs(Date.now()), 60_000);
@@ -88,19 +91,24 @@ export default function PipelineStatusStrip({
           {loading ? "…" : shortSha(health?.buildSha ?? null)}
           {health?.dataMode ? ` · ${health.dataMode}` : ""}
         </span>
-        {secRunAt
+        {showSecIngest
           ? (
-            <span>
-              <span className="font-medium text-lacuna-plum">SEC ingest</span>
-              {" "}
-              {sec?.latest?.status ?? "—"} · {secRunAt}
-            </span>
+            secRunAt
+              ? (
+                <span>
+                  <span className="font-medium text-lacuna-plum">
+                    SEC ingest
+                  </span>{" "}
+                  {sec?.latest?.status ?? "—"} · {secRunAt}
+                </span>
+              )
+              : (
+                <span className="text-lacuna-blue/70">
+                  SEC ingest — configure Postgres to enable
+                </span>
+              )
           )
-          : (
-            <span className="text-lacuna-blue/70">
-              SEC ingest — configure Postgres to enable
-            </span>
-          )}
+          : null}
         {pendingCount !== undefined
           ? (
             <Link
