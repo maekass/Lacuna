@@ -73,9 +73,9 @@ interval.
 
 ### Datadog synthetics (optional)
 
-The Datadog workflow is **manual only** (`workflow_dispatch`) until you add
-`DD_API_KEY` and `DD_APP_KEY`. Tag synthetics `e2e-tests` and target
-`/api/health`, not `/ready`. Run from Actions when ready.
+The Datadog workflow runs daily and on `workflow_dispatch`. If `DD_API_KEY` /
+`DD_APP_KEY` are unset, the job succeeds and skips the Datadog action. Tag
+synthetics `e2e-tests` and target `/api/health`, not `/ready`.
 
 ## 5. Verify
 

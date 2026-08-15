@@ -1,17 +1,11 @@
 import process from "node:process";
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import packageJson from "../../../package.json";
 import { getDataMode } from "@/lib/data/datasetProvider";
 import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 import { isVariantStoreEnabled } from "@/lib/genomics/variantStoreConfig";
 import { pingClickHouse } from "@/lib/genomics/clickhouseClient";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import { validateVerifiedDataset } from "@/lib/data/validateVerifiedDataset";
-import { reportWarning } from "@/lib/observability/reportError";
-
-const packageRoot = dirname(fileURLToPath(import.meta.url));
-const repoRoot = join(packageRoot, "../../..");
 
 export interface DatabaseHealth {
   configured: boolean;
@@ -63,16 +57,9 @@ export interface ReadinessPayload {
   };
 }
 
+/** Bundled at compile time — `readFileSync(package.json)` fails on Vercel serverless. */
 function readAppVersion(): string {
-  try {
-    const pkg = JSON.parse(
-      readFileSync(join(repoRoot, "package.json"), "utf8"),
-    ) as { version?: string };
-    return pkg.version ?? "0.0.0";
-  } catch (error) {
-    reportWarning("health.readAppVersion", error, { repoRoot });
-    return "0.0.0";
-  }
+  return packageJson.version;
 }
 
 function loadStaticDatasetMeta(): Pick<
@@ -205,7 +192,9 @@ export async function runReadinessCheck(): Promise<ReadinessPayload> {
     pingDatabase(),
     pingVariantStore(),
   ]);
-  const ok = dataset.ok && database.ok && variantStore.ok;
+  // Static mode serves the bundled dataset; a stale DATABASE_URL must not fail ready.
+  const ok = dataset.ok && (mode === "db" ? database.ok : true) &&
+    variantStore.ok;
 
   return {
     ok,

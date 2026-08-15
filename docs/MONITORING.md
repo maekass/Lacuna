@@ -80,8 +80,9 @@ VERCEL_PROTECTION_BYPASS='your-secret' npm run monitor:liveness
 
 Repository workflow
 [`.github/workflows/datadog-synthetics.yml`](../.github/workflows/datadog-synthetics.yml)
-runs tests tagged in Datadog; ensure those tests target `/api/health`, not
-`/ready`.
+runs tests tagged in Datadog when `DD_API_KEY` / `DD_APP_KEY` are set; if those
+secrets are missing the job succeeds and skips the Datadog action. Ensure those
+tests target `/api/health`, not `/ready`.
 
 ### UptimeRobot / Better Stack / Pingdom
 
@@ -115,7 +116,9 @@ curl -sf "https://lacuna-maekass.vercel.app/api/health/ready" | jq .
 ```
 
 Run once after env changes, `db:migrate`, or `db:import` — not on the same
-schedule as uptime.
+schedule as uptime. In `static` data mode, readiness stays 200 even if a
+leftover `DATABASE_URL` cannot be reached; `checks.database` still records the
+ping.
 
 ## Related
 

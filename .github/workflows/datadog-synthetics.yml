@@ -1,5 +1,6 @@
-# Optional Datadog Synthetic CI gate — manual only until keys are configured.
-# GitHub Actions does not allow `secrets.*` in job-level `if` (workflow would fail at parse time).
+# Optional Datadog Synthetic CI gate.
+# GitHub Actions does not allow `secrets.*` in job-level `if` (the workflow
+# would fail at parse time), so credentials are checked in a step instead.
 #
 # Uptime monitors must hit LIVENESS only (constant-time):
 #   GET https://lacuna-maekass.vercel.app/api/health
@@ -8,7 +9,7 @@
 # Setup:
 # 1. Add repository secrets DD_API_KEY and DD_APP_KEY.
 # 2. In Datadog, create/configure synthetics tagged e2e-tests → URL /api/health, assert probe=live.
-# 3. Run this workflow from Actions → "Run Datadog Synthetic tests" → Run workflow.
+# 3. Daily cron runs when keys exist; otherwise the job succeeds and skips the Datadog action.
 
 name: Run Datadog Synthetic tests
 
@@ -20,10 +21,25 @@ on:
 jobs:
   synthetics:
     runs-on: ubuntu-latest
+    env:
+      DD_API_KEY: ${{ secrets.DD_API_KEY }}
+      DD_APP_KEY: ${{ secrets.DD_APP_KEY }}
     steps:
+      - name: Check Datadog credentials
+        id: creds
+        run: |
+          if [ -z "$DD_API_KEY" ] || [ -z "$DD_APP_KEY" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "DD_API_KEY / DD_APP_KEY are not set; skipping synthetics."
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/checkout@v4
+        if: steps.creds.outputs.configured == 'true'
 
       - name: Run Datadog Synthetic tests
+        if: steps.creds.outputs.configured == 'true'
         uses: DataDog/synthetics-ci-github-action@v1.4.0
         with:
           api_key: ${{ secrets.DD_API_KEY }}

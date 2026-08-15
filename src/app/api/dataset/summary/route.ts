@@ -1,30 +1,14 @@
-import process from "node:process";
 import { NextResponse } from "next/server";
 import { buildDatasetSummary } from "@/lib/data/buildDatasetSummary";
 import { getVerifiedDataset } from "@/lib/data/datasetProvider";
-import { getLatestIngestRun } from "@/lib/ingestion/ingestRunState";
+import { loadSummaryPipelines } from "@/lib/ingestion/loadSummaryPipelines";
 import { reportError } from "@/lib/observability/reportError";
 
 /** Live headline stats and disclosure metrics from the verified dataset model. */
 export async function GET() {
   try {
     const dataset = await getVerifiedDataset();
-
-    let pipelines = {
-      secIngestLastRunAt: null as string | null,
-      secIngestStatus: null as "running" | "success" | "failed" | null,
-    };
-
-    if (process.env.DATABASE_URL?.trim()) {
-      const latest = await getLatestIngestRun();
-      if (latest) {
-        pipelines = {
-          secIngestLastRunAt: latest.ended_at ?? latest.started_at,
-          secIngestStatus: latest.status,
-        };
-      }
-    }
-
+    const pipelines = await loadSummaryPipelines();
     const summary = buildDatasetSummary(dataset, pipelines);
 
     return NextResponse.json(summary, {

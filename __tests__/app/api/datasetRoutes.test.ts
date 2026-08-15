@@ -66,6 +66,25 @@ describe("dataset verified API", () => {
   });
 });
 
+describe("dataset summary API", () => {
+  beforeEach(async () => {
+    const { getVerifiedDataset } = await import("@/lib/data/datasetProvider");
+    vi.mocked(getVerifiedDataset).mockReset();
+    vi.mocked(getVerifiedDataset).mockResolvedValue(minimalVerifiedDataset);
+    vi.stubEnv("DATABASE_URL", "");
+  });
+
+  it("GET returns headline stats from the verified dataset (success)", async () => {
+    const { GET } = await import("@/app/api/dataset/summary/route");
+    const response = await GET();
+    const body = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(body.headline.verifiedDeals).toBe(1);
+    expect(body.pipelines.secIngestLastRunAt).toBeNull();
+  });
+});
+
 describe("deals.csv export API", () => {
   beforeEach(async () => {
     const { getVerifiedDataset } = await import("@/lib/data/datasetProvider");
