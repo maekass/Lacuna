@@ -3,6 +3,7 @@ import DealComparableTables from "@/components/DealComparableTables";
 import DealDetailActions from "@/components/DealDetailActions";
 import DealEconomicsCard from "@/components/DealEconomicsCard";
 import DealEmpowermentContext from "@/components/DealEmpowermentContext";
+import DealTargetLastKnownValuation from "@/components/DealTargetLastKnownValuation";
 import DealVerifiedProvenance from "@/components/DealVerifiedProvenance";
 import EvidenceLadder from "@/components/EvidenceLadder";
 import MotionSection from "@/components/ui/MotionSection";
@@ -99,6 +100,13 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
               foundedLabel,
             ].filter(Boolean).join(" · ")}
           </p>
+          {view.targetLastKnownValuation
+            ? (
+              <DealTargetLastKnownValuation
+                valuation={view.targetLastKnownValuation}
+              />
+            )
+            : null}
           {deal.target.description
             ? (
               <p className="mt-2 text-sm leading-relaxed text-lacuna-blue">

@@ -92,6 +92,7 @@ describe("formatDealBrief", () => {
     expect(brief).toContain("Close speed: 48 days");
     expect(brief).toContain("Immunomedics");
     expect(brief).toContain("clinical adjacency");
+    expect(brief).not.toMatch(/Last known valuation/);
     const peerBlock = brief.split("## Same-sector adjacency")[0];
     expect(peerBlock).not.toMatch(/Immunomedics → Gilead/);
   });
@@ -112,6 +113,9 @@ describe("getDealDetailView", () => {
     ).toBe(true);
     expect(view?.announcedLabel).toBe("Jan 5, 2021");
     expect(view?.closedLabel).toBe("Feb 22, 2021");
+    expect(view?.deal.target.lastKnownValuation).toBe(230);
+    expect(view?.deal.acquisition.dealValue).toBe(230);
+    expect(view?.targetLastKnownValuation).toBeNull();
     const peerIds = new Set(view!.comparables.map((c) => c.id));
     const adjacencyIds = new Set(view!.adjacencyNotPeers.map((c) => c.id));
     expect(
@@ -130,5 +134,19 @@ describe("getDealDetailView", () => {
       ),
     ).toBe(true);
     expect(view?.empowerment.hasDirectMatch).toBe(true);
+  });
+
+  it("shows lastKnownValuation only when it is sourced and distinct from deal price", () => {
+    const foundation = getDealDetailView(dataset, "deal21");
+    expect(foundation?.deal.acquisition.targetName).toBe("Foundation Medicine");
+    expect(foundation?.deal.acquisition.dealValue).toBe(2400);
+    expect(foundation?.targetLastKnownValuation?.value).toBe(5300);
+    expect(foundation?.targetLastKnownValuation?.source).toMatch(/5\.3B/);
+    expect(foundation?.briefMarkdown).toContain(
+      "Last known valuation: $5,300M",
+    );
+    expect(foundation?.briefMarkdown).toContain(
+      foundation!.targetLastKnownValuation!.source,
+    );
   });
 });

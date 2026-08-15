@@ -4,11 +4,13 @@ import type { DealDetail } from "@/lib/deals/dealTypes";
 import type { DealEmpowermentContext } from "@/lib/deals/empowermentContextForDeal";
 import { buildEvidenceLadder } from "@/lib/deals/evidenceLadder";
 import { premiumPercent } from "@/lib/deals/dealTiming";
+import type { SourcedLastKnownValuation } from "@/lib/deals/sourcedLastKnownValuation";
 
 export interface DealBriefExtras {
   adjacencyNotPeers?: AdjacentNonPeer[];
   closeDays?: number | null;
   premiumMultiple?: number | null;
+  targetLastKnownValuation?: SourcedLastKnownValuation | null;
   targetSources?: readonly string[];
   empowerment?: DealEmpowermentContext;
   disclaimer?: string;
@@ -62,6 +64,14 @@ export function formatDealBrief(
       `Premium: ${sign}${pct.toFixed(0)}% (${
         extras.premiumMultiple.toFixed(2)
       }× disclosed / pre-deal)`,
+    );
+  }
+  if (extras.targetLastKnownValuation) {
+    lines.push(
+      `Last known valuation: $${extras.targetLastKnownValuation.value.toLocaleString()}M`,
+    );
+    lines.push(
+      `Valuation source: ${extras.targetLastKnownValuation.source}`,
     );
   }
   lines.push("");
