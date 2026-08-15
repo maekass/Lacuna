@@ -106,6 +106,15 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
               </p>
             )
             : null}
+          {deal.target.sources && deal.target.sources.length > 0
+            ? (
+              <ul className="mt-2 list-disc space-y-0.5 pl-4 text-[11px] text-lacuna-blue/70">
+                {deal.target.sources.slice(0, 3).map((source) => (
+                  <li key={source}>{source}</li>
+                ))}
+              </ul>
+            )
+            : null}
         </div>
         <div className="rounded-xl border border-lacuna-lavender/40 bg-white/90 p-4 sm:p-5">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-lacuna-plum/80">
@@ -168,26 +177,16 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
 
       <MotionSection delay={0.14} className="mb-10">
         <h2 className="text-lg font-semibold text-lacuna-plum">
-          Related workspaces
+          Related verified workspaces
         </h2>
         <div className="mt-3 flex flex-wrap gap-2">
           <Link
-            href="/research#clinical-trials"
+            href={`/deals?highlight=${
+              encodeURIComponent(deal.target.id)
+            }#network`}
             className="rounded-full border border-lacuna-lavender/50 px-3 py-1 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20"
           >
-            Clinical trials workspace
-          </Link>
-          <Link
-            href="/research#patient-empowerment"
-            className="rounded-full border border-lacuna-lavender/50 px-3 py-1 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20"
-          >
-            Patient empowerment research
-          </Link>
-          <Link
-            href="/research#health-equity"
-            className="rounded-full border border-lacuna-lavender/50 px-3 py-1 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20"
-          >
-            Health equity markers
+            Verified deals network
           </Link>
           <Link
             href="/methods#causal-dag"

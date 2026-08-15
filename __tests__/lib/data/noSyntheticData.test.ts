@@ -58,6 +58,8 @@ describe("no synthetic M&A demo data in src/", () => {
       "app/sections/DealDetailPage.tsx",
       "lib/deals/getDealDetailView.ts",
       "lib/deals/empowermentContextForDeal.ts",
+      "lib/gamma/formatDealBrief.ts",
+      "app/sections/DealsPage.tsx",
       "components/DealEmpowermentContext.tsx",
     ];
     const forbidden = [
@@ -66,6 +68,8 @@ describe("no synthetic M&A demo data in src/", () => {
       /\bCommercializationReadiness\b/,
       /\bSTRATEGIC_ACQUIRERS\b/,
       /\bPipelineStatusStrip\b/,
+      /\bbuildPatientEmpowermentSnapshot\b/,
+      /\bmatchKeywords\b/,
     ];
     const violations: string[] = [];
     for (const relative of files) {
