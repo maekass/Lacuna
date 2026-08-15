@@ -1,7 +1,11 @@
 import process from "node:process";
 import { NextResponse } from "next/server";
-import { writeAuditEvent } from "@/lib/compliance/auditEventSink";
+import {
+  isAuditSinkConfigured,
+  writeAuditEvent,
+} from "@/lib/compliance/auditEventSink";
 import { secureEquals } from "@/lib/infra/secureCompare";
+import { reportError } from "@/lib/observability/reportError";
 
 /**
  * HIPAA/GDPR governance for patient-linked genomic data (VCF call sets).
