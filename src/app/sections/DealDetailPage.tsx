@@ -1,5 +1,6 @@
 import DealComparableTables from "@/components/DealComparableTables";
 import DealDetailActions from "@/components/DealDetailActions";
+import DealEconomicsCard from "@/components/DealEconomicsCard";
 import DealEmpowermentContext from "@/components/DealEmpowermentContext";
 import EvidenceLadder from "@/components/EvidenceLadder";
 import PipelineStatusStrip from "@/components/PipelineStatusStrip";
@@ -16,11 +17,6 @@ const EVIDENCE_CLASS_LABELS: Record<string, string> = {
   portfolio_investment: "Portfolio investment",
 };
 
-function formatHeadlineValue(millions?: number): string {
-  if (typeof millions !== "number") return "Undisclosed";
-  return `$${millions.toLocaleString()}M`;
-}
-
 function briefFileName(
   target: string,
   acquirer: string,
@@ -33,52 +29,6 @@ function briefFileName(
   return `${slug}.md`;
 }
 
-function DealCloseTimeline({
-  announcedDate,
-  closedDate,
-  closeDays,
-}: {
-  announcedDate: string;
-  closedDate?: string;
-  closeDays: number | null;
-}) {
-  return (
-    <ol className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-0">
-      <li className="rounded-lg border border-lacuna-lavender/40 bg-white/90 px-3 py-2">
-        <p className="text-[11px] font-semibold uppercase tracking-wide text-lacuna-plum/70">
-          Announced
-        </p>
-        <p className="text-sm font-medium text-lacuna-plum">{announcedDate}</p>
-      </li>
-      {typeof closeDays === "number" && closedDate
-        ? (
-          <>
-            <li
-              className="hidden h-px flex-1 bg-lacuna-lavender/60 sm:block"
-              aria-hidden
-            />
-            <li className="text-xs font-medium text-lacuna-blue sm:px-3">
-              {closeDays} days
-            </li>
-            <li
-              className="hidden h-px flex-1 bg-lacuna-lavender/60 sm:block"
-              aria-hidden
-            />
-            <li className="rounded-lg border border-lacuna-lavender/40 bg-white/90 px-3 py-2">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-lacuna-plum/70">
-                Closed
-              </p>
-              <p className="text-sm font-medium text-lacuna-plum">
-                {closedDate}
-              </p>
-            </li>
-          </>
-        )
-        : null}
-    </ol>
-  );
-}
-
 export default function DealDetailPage({ view }: { view: DealDetailView }) {
   const { deal, ladder, comparables, adjacencyNotPeers, acquirerDeals } = view;
   const acq = deal.acquisition;
@@ -86,11 +36,8 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
     ? EVIDENCE_CLASS_LABELS[deal.target.evidenceClass] ??
       deal.target.evidenceClass
     : null;
-  const premiumLabel = typeof view.premiumPercent === "number" &&
-      typeof view.premiumMultiple === "number"
-    ? `${view.premiumPercent >= 0 ? "+" : ""}${
-      view.premiumPercent.toFixed(0)
-    }% premium (${view.premiumMultiple.toFixed(2)}×)`
+  const foundedLabel = deal.target.founded
+    ? `Founded ${String(deal.target.founded)}`
     : null;
 
   return (
@@ -117,11 +64,6 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
           {acq.dealType}
           {deal.acquirer.ticker ? ` · ${deal.acquirer.ticker}` : ""}
         </p>
-        <DealCloseTimeline
-          announcedDate={acq.announcedDate}
-          closedDate={acq.closedDate}
-          closeDays={view.closeDays}
-        />
         <DealDetailActions
           targetId={deal.target.id}
           briefMarkdown={view.briefMarkdown}
@@ -134,40 +76,7 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
       </header>
 
       <MotionSection className="mb-10 grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3">
-        <div className="rounded-xl border border-lacuna-lavender/40 bg-white/90 p-4 sm:p-5">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-lacuna-plum/80">
-            Economics
-          </h2>
-          <p className="mt-2 text-xl font-bold text-lacuna-plum sm:text-2xl">
-            {formatHeadlineValue(acq.dealValue)}
-          </p>
-          <p className="mt-1 text-sm text-lacuna-blue">
-            {[
-              acq.dealStructure,
-              premiumLabel,
-              typeof view.closeDays === "number"
-                ? `Closed in ${view.closeDays} days`
-                : null,
-            ].filter(Boolean).join(" · ")}
-          </p>
-          {typeof acq.preDealValuation === "number"
-            ? (
-              <p className="mt-2 text-xs text-lacuna-blue/80">
-                Pre-deal ~${acq.preDealValuation.toLocaleString()}M
-                {acq.preDealValuationSource
-                  ? ` · ${acq.preDealValuationSource}`
-                  : ""}
-              </p>
-            )
-            : null}
-          {acq.dealValueNote
-            ? (
-              <p className="mt-2 text-xs text-lacuna-blue/70">
-                {acq.dealValueNote}
-              </p>
-            )
-            : null}
-        </div>
+        <DealEconomicsCard view={view} />
         <div className="rounded-xl border border-lacuna-lavender/40 bg-white/90 p-4 sm:p-5">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-lacuna-plum/80">
             Target
@@ -182,7 +91,7 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
           <p className="mt-1 text-xs text-lacuna-blue/80">
             {[
               deal.target.hq ? `HQ ${deal.target.hq}` : null,
-              deal.target.founded ? `Founded ${deal.target.founded}` : null,
+              foundedLabel,
             ].filter(Boolean).join(" · ")}
           </p>
           {deal.target.description
@@ -284,7 +193,7 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
         </div>
       </MotionSection>
 
-      <MotionSection delay={0.16}>
+      <MotionSection>
         <PipelineStatusStrip showSecIngest={false} />
       </MotionSection>
     </div>

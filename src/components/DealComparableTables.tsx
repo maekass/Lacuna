@@ -1,12 +1,12 @@
+import type { ReactNode } from "react";
+import Link from "next/link";
+import Metric from "@/components/Metric";
 import type { AdjacentNonPeer } from "@/lib/deals/listComparableDeals";
 import type { ComparableDealSummary } from "@/lib/deals/dealTypes";
-import Link from "next/link";
-
-function formatValue(millions?: number): string {
-  return typeof millions === "number"
-    ? `$${millions.toLocaleString()}M`
-    : "Undisclosed";
-}
+import {
+  DEAL_VALUE_MODEL,
+  VALUE_RATIO_MODEL,
+} from "@/lib/deals/dealMetricModels";
 
 function DealTable<T extends ComparableDealSummary>({
   title,
@@ -19,7 +19,7 @@ function DealTable<T extends ComparableDealSummary>({
   caption?: string;
   rows: T[];
   extraHeader?: string;
-  extraCell?: (row: T) => string | null;
+  extraCell?: (row: T) => ReactNode;
 }) {
   if (rows.length === 0) return null;
   return (
@@ -59,7 +59,20 @@ function DealTable<T extends ComparableDealSummary>({
                   {row.announcedDate}
                 </td>
                 <td className="px-3 py-2 text-lacuna-blue/80">
-                  {formatValue(row.dealValue)}
+                  {typeof row.dealValue === "number"
+                    ? (
+                      <Metric
+                        label={`${row.targetName} disclosed value`}
+                        provenance={{
+                          kind: "proxy",
+                          value: row.dealValue,
+                          model: DEAL_VALUE_MODEL,
+                        }}
+                        formatValue={(millions) =>
+                          `$${millions.toLocaleString()}M`}
+                      />
+                    )
+                    : "Undisclosed"}
                 </td>
                 {extraHeader
                   ? (
@@ -111,7 +124,19 @@ export default function DealComparableTables({
             caption="These deals share the sector tag and window but sit outside the 0.25×–4× value band. The dataset keeps them for clinical adjacency, not as price comps."
             rows={adjacencyNotPeers}
             extraHeader="Vs this deal"
-            extraCell={(row) => `${row.valueRatio.toFixed(0)}× disclosed value`}
+            extraCell={(row) => (
+              <Metric
+                label={`${row.targetName} value vs this deal`}
+                provenance={{
+                  kind: "proxy",
+                  value: row.valueRatio,
+                  model: VALUE_RATIO_MODEL,
+                  caveat:
+                    "Not a valuation peer — disclosed value is outside 0.25×–4× of the reference deal.",
+                }}
+                formatValue={(ratio) => `${ratio.toFixed(0)}× disclosed value`}
+              />
+            )}
           />
         )
         : null}

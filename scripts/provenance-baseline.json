@@ -1,13 +1,13 @@
 {
   "version": 1,
   "total": 1056,
-  "covered": 8,
+  "covered": 14,
   "exempt": 2,
-  "uncovered": 1046,
+  "uncovered": 1040,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
     "src/app/sections/ConsumerHealthPage.tsx": 7,
-    "src/app/sections/DealDetailPage.tsx": 11,
+    "src/app/sections/DealDetailPage.tsx": 5,
     "src/app/sections/DealsPage.tsx": 12,
     "src/app/sections/HubPage.tsx": 15,
     "src/app/sections/IntelligencePage.tsx": 4,
@@ -271,54 +271,6 @@
       "expression": "0.14",
       "kind": "numeric-jsx",
       "key": "src/app/sections/DealDetailPage.tsx::DealDetailPage::0.14",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/app/sections/DealDetailPage.tsx",
-      "functionName": "DealDetailPage",
-      "expression": "acq.preDealValuation",
-      "kind": "numeric-jsx",
-      "key": "src/app/sections/DealDetailPage.tsx::DealDetailPage::acq.preDealValuation",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/app/sections/DealDetailPage.tsx",
-      "functionName": "DealDetailPage",
-      "expression": "formatDealBrief(deal, comparables)",
-      "kind": "formatting-call",
-      "key": "src/app/sections/DealDetailPage.tsx::DealDetailPage::formatDealBrief(deal, comparables)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/app/sections/DealDetailPage.tsx",
-      "functionName": "DealDetailPage",
-      "expression": "formatValue(acq.dealValue, acq.dealValueNote)",
-      "kind": "formatting-call",
-      "key": "src/app/sections/DealDetailPage.tsx::DealDetailPage::formatValue(acq.dealValue, acq.dealValueNote)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/app/sections/DealDetailPage.tsx",
-      "functionName": "DealTable",
-      "expression": "row.dealValue.toLocaleString()",
-      "kind": "formatting-call",
-      "key": "src/app/sections/DealDetailPage.tsx::DealTable::row.dealValue.toLocaleString()",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/app/sections/DealDetailPage.tsx",
-      "functionName": "formatValue",
-      "expression": "millions.toLocaleString()",
-      "kind": "formatting-call",
-      "key": "src/app/sections/DealDetailPage.tsx::formatValue::millions.toLocaleString()",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/app/sections/DealDetailPage.tsx",
-      "functionName": "formatValue",
-      "expression": "millions.toLocaleString()",
-      "kind": "formatting-call",
-      "key": "src/app/sections/DealDetailPage.tsx::formatValue::millions.toLocaleString()#2",
       "class": "uncovered"
     },
     {
@@ -3032,6 +2984,54 @@
       "kind": "numeric-jsx",
       "key": "src/components/DatasetScopeBanner.tsx::DatasetScopeBanner::dealCount",
       "class": "uncovered"
+    },
+    {
+      "file": "src/components/DealComparableTables.tsx",
+      "functionName": "DealComparableTables",
+      "expression": "ratio.toFixed(0)",
+      "kind": "formatting-call",
+      "key": "src/components/DealComparableTables.tsx::DealComparableTables::ratio.toFixed(0)",
+      "class": "covered"
+    },
+    {
+      "file": "src/components/DealComparableTables.tsx",
+      "functionName": "DealTable",
+      "expression": "millions.toLocaleString()",
+      "kind": "formatting-call",
+      "key": "src/components/DealComparableTables.tsx::DealTable::millions.toLocaleString()",
+      "class": "covered"
+    },
+    {
+      "file": "src/components/DealEconomicsCard.tsx",
+      "functionName": "DealEconomicsCard",
+      "expression": "millions.toLocaleString()",
+      "kind": "formatting-call",
+      "key": "src/components/DealEconomicsCard.tsx::DealEconomicsCard::millions.toLocaleString()",
+      "class": "covered"
+    },
+    {
+      "file": "src/components/DealEconomicsCard.tsx",
+      "functionName": "DealEconomicsCard",
+      "expression": "millions.toLocaleString()",
+      "kind": "formatting-call",
+      "key": "src/components/DealEconomicsCard.tsx::DealEconomicsCard::millions.toLocaleString()#2",
+      "class": "covered"
+    },
+    {
+      "file": "src/components/DealEconomicsCard.tsx",
+      "functionName": "DealEconomicsCard",
+      "expression": "multiple.toFixed(2)",
+      "kind": "formatting-call",
+      "key": "src/components/DealEconomicsCard.tsx::DealEconomicsCard::multiple.toFixed(2)",
+      "class": "covered"
+    },
+    {
+      "file": "src/components/DealEconomicsCard.tsx",
+      "functionName": "DealEconomicsCard",
+      "expression": "pct.toFixed(0)",
+      "kind": "formatting-call",
+      "key": "src/components/DealEconomicsCard.tsx::DealEconomicsCard::pct.toFixed(0)",
+      "class": "covered"
     },
     {
       "file": "src/components/DealEmpowermentContext.tsx",
