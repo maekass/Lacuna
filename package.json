@@ -35,6 +35,7 @@
     "ml:ct:corpus": "PYTHONPATH=ml/clinical_trials python3 ml/clinical_trials/scripts/export_llm_corpus.py",
     "verify:computed": "tsx scripts/verify-computed-artifacts.ts",
     "reproduce": "tsx scripts/reproduce-metric.ts",
+    "source:backfill": "tsx scripts/source-backfill.ts",
     "build:endometriosis-coverage": "tsx scripts/build-endometriosis-coverage.ts",
     "build:endometrial-cancer-coverage": "tsx scripts/build-endometrial-cancer-coverage.ts",
     "sec:scan": "tsx scripts/sec-scan-acquirers.ts",

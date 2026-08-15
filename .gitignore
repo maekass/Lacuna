@@ -59,6 +59,7 @@ staging/deals_candidates.csv
 staging/sec_candidates.csv
 staging/sec_ma_efts_hits.json
 staging/sec_form_d_bulk_*.json
+staging/source-backfill/cache/
 
 # free-API batch exports (see data/exports/free-apis/README.md)
 /data/exports/free-apis/**
