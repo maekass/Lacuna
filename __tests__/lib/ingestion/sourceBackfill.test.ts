@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { parseVerifiedDataset } from "@/lib/data/datasetSchema";
@@ -125,130 +126,128 @@ describe("source backfill acceptance helpers", () => {
   });
 
   it("round-trips an accepted record and is byte-stable over a fixed cache", async () => {
-    const cacheDir = join(
-      "/home/ubuntu",
-      `source-backfill-test-${process.pid}`,
-    );
-    rmSync(cacheDir, { recursive: true, force: true });
-    mkdirSync(cacheDir, { recursive: true });
-    const tickerUrl = "https://www.sec.gov/files/company_tickers.json";
-    const searchUrl = (() => {
-      const params = new URLSearchParams({
-        q: '"Example Target"',
-        dateRange: "custom",
-        startdt: "2001-01-01",
-        enddt: "2099-12-31",
-        ciks: "0000000001",
-        from: "0",
-        size: "100",
-      });
-      return `https://efts.sec.gov/LATEST/search-index?${params.toString()}`;
-    })();
-    const fullTextUrl =
-      "https://www.sec.gov/Archives/edgar/data/1/000000000100000001/example-8k.htm";
-    function cache(url: string, body: string): void {
-      const key = createHash("sha256").update(url).digest("hex");
-      writeFileSync(
-        join(cacheDir, `${key}.json`),
-        `${
-          JSON.stringify(
-            {
-              url,
-              status: 200,
-              headers: { "content-type": "application/json" },
-              body,
-              retrievedAt: "2026-08-15T00:00:00.000Z",
-            },
-            null,
-            2,
-          )
-        }\n`,
+    const cacheDir = mkdtempSync(join(tmpdir(), "source-backfill-test-"));
+    try {
+      const tickerUrl = "https://www.sec.gov/files/company_tickers.json";
+      const searchUrl = (() => {
+        const params = new URLSearchParams({
+          q: '"Example Target"',
+          dateRange: "custom",
+          startdt: "2001-01-01",
+          enddt: "2099-12-31",
+          ciks: "0000000001",
+          from: "0",
+          size: "100",
+        });
+        return `https://efts.sec.gov/LATEST/search-index?${params.toString()}`;
+      })();
+      const fullTextUrl =
+        "https://www.sec.gov/Archives/edgar/data/1/000000000100000001/example-8k.htm";
+      function cache(url: string, body: string): void {
+        const key = createHash("sha256").update(url).digest("hex");
+        writeFileSync(
+          join(cacheDir, `${key}.json`),
+          `${
+            JSON.stringify(
+              {
+                url,
+                status: 200,
+                headers: { "content-type": "application/json" },
+                body,
+                retrievedAt: "2026-08-15T00:00:00.000Z",
+              },
+              null,
+              2,
+            )
+          }\n`,
+        );
+      }
+      cache(
+        tickerUrl,
+        JSON.stringify({
+          "0": { cik_str: 1, ticker: "EXMP", title: "Example Acquirer" },
+        }),
       );
-    }
-    cache(
-      tickerUrl,
-      JSON.stringify({
-        "0": { cik_str: 1, ticker: "EXMP", title: "Example Acquirer" },
-      }),
-    );
-    cache(
-      searchUrl,
-      JSON.stringify({
-        hits: {
-          total: { value: 1 },
-          hits: [{
-            _id: "0000000001-00-000001:example-8k.htm",
-            _source: {
-              ciks: ["0000000001"],
-              adsh: "0000000001-00-000001",
-              form: "8-K",
-              file_date: "2021-06-01",
-            },
-          }],
+      cache(
+        searchUrl,
+        JSON.stringify({
+          hits: {
+            total: { value: 1 },
+            hits: [{
+              _id: "0000000001-00-000001:example-8k.htm",
+              _source: {
+                ciks: ["0000000001"],
+                adsh: "0000000001-00-000001",
+                form: "8-K",
+                file_date: "2021-06-01",
+              },
+            }],
+          },
+        }),
+      );
+      cache(
+        fullTextUrl,
+        "<html><body>The company completed its acquisition of Example Target on June 1.</body></html>",
+      );
+      const dataset = parseVerifiedDataset({
+        provenance: {
+          lastUpdated: "2026-01-01",
+          sources: [],
+          notes: [],
+          purpose: "test",
+          disclaimer: "test",
         },
-      }),
-    );
-    cache(
-      fullTextUrl,
-      "<html><body>The company completed its acquisition of Example Target on June 1.</body></html>",
-    );
-    const dataset = parseVerifiedDataset({
-      provenance: {
-        lastUpdated: "2026-01-01",
-        sources: [],
-        notes: [],
-        purpose: "test",
-        disclaimer: "test",
-      },
-      companies: [],
-      acquirers: [{
-        id: "a1",
-        name: "Example Acquirer",
-        ticker: "EXMP",
-        hq: "Test",
-      }],
-      acquisitions: [{
-        id: "deal1",
-        targetId: "target1",
-        acquirerId: "a1",
-        targetName: "Example Target",
-        acquirerName: "Example Acquirer",
-        announcedDate: "2021-05-20",
-        dealType: "Acquisition",
-        source: "test",
-        strategicRationale: "test",
-      }],
-    });
-    const first = await runSourceBackfill(dataset, {
-      cacheDir,
-      userAgent: "Lacuna Source Backfill mps5cy@virginia.edu",
-      offline: true,
-    });
-    const second = await runSourceBackfill(dataset, {
-      cacheDir,
-      userAgent: "Lacuna Source Backfill mps5cy@virginia.edu",
-      offline: true,
-    });
-    expect(JSON.stringify(first)).toBe(JSON.stringify(second));
-    const record = first.records[0];
-    expect(record?.status).toBe("accepted");
-    if (record?.status === "accepted") {
-      expect(record.ref.url).toContain("sec.gov/Archives");
-      expect(record.ref.accession).toBe("0000000001-00-000001");
-      expect(record.ref.form).toBe("8-K");
-      expect(record.ref.filedAt).toBe("2021-06-01");
-      expect(record.ref.publisher).toBe("SEC EDGAR");
-      expect(record.ref.retrievedAt).toBe("2026-08-15T00:00:00.000Z");
-      expect(record.ref.quote.length).toBeLessThanOrEqual(300);
-    }
-    const cachedOutput = readFileSync(
-      join(
+        companies: [],
+        acquirers: [{
+          id: "a1",
+          name: "Example Acquirer",
+          ticker: "EXMP",
+          hq: "Test",
+        }],
+        acquisitions: [{
+          id: "deal1",
+          targetId: "target1",
+          acquirerId: "a1",
+          targetName: "Example Target",
+          acquirerName: "Example Acquirer",
+          announcedDate: "2021-05-20",
+          dealType: "Acquisition",
+          source: "test",
+          strategicRationale: "test",
+        }],
+      });
+      const first = await runSourceBackfill(dataset, {
         cacheDir,
-        `${createHash("sha256").update(tickerUrl).digest("hex")}.json`,
-      ),
-      "utf8",
-    );
-    expect(cachedOutput).toContain("retrievedAt");
-    rmSync(cacheDir, { recursive: true, force: true });
+        userAgent: "Lacuna Source Backfill mps5cy@virginia.edu",
+        offline: true,
+      });
+      const second = await runSourceBackfill(dataset, {
+        cacheDir,
+        userAgent: "Lacuna Source Backfill mps5cy@virginia.edu",
+        offline: true,
+      });
+      expect(JSON.stringify(first)).toBe(JSON.stringify(second));
+      const record = first.records[0];
+      expect(record?.status).toBe("accepted");
+      if (record?.status === "accepted") {
+        expect(record.ref.url).toContain("sec.gov/Archives");
+        expect(record.ref.accession).toBe("0000000001-00-000001");
+        expect(record.ref.form).toBe("8-K");
+        expect(record.ref.filedAt).toBe("2021-06-01");
+        expect(record.ref.publisher).toBe("SEC EDGAR");
+        expect(record.ref.retrievedAt).toBe("2026-08-15T00:00:00.000Z");
+        expect(record.ref.quote.length).toBeLessThanOrEqual(300);
+      }
+      const cachedOutput = readFileSync(
+        join(
+          cacheDir,
+          `${createHash("sha256").update(tickerUrl).digest("hex")}.json`,
+        ),
+        "utf8",
+      );
+      expect(cachedOutput).toContain("retrievedAt");
+    } finally {
+      rmSync(cacheDir, { recursive: true, force: true });
+    }
   });
 });
