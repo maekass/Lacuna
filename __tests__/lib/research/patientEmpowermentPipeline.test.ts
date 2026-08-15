@@ -134,8 +134,7 @@ describe("patientEmpowermentPipeline", () => {
   it("builds deal context from curated mappings only", () => {
     const deal = getFeaturedDeal(dataset);
     expect(deal).not.toBeNull();
-    const snapshot = buildPatientEmpowermentSnapshot(dataset);
-    const ctx = empowermentContextForDeal(deal!, snapshot);
+    const ctx = empowermentContextForDeal(deal!, dataset);
     expect(ctx.scopeAlignment).toBe("high");
     expect(ctx.hasDirectMatch).toBe(true);
     expect(ctx.matchedDimensions.length).toBeGreaterThan(0);
@@ -151,8 +150,7 @@ describe("patientEmpowermentPipeline", () => {
   it("hides keyword/sector affinity on deals without curated links", () => {
     const deal = getDealById(dataset, "deal9");
     expect(deal?.acquisition.targetName).toBe("Gynesonics");
-    const snapshot = buildPatientEmpowermentSnapshot(dataset);
-    const ctx = empowermentContextForDeal(deal!, snapshot);
+    const ctx = empowermentContextForDeal(deal!, dataset);
     expect(ctx.hasDirectMatch).toBe(false);
     expect(ctx.matchedDimensions).toEqual([]);
     expect(ctx.scopeAlignment).toBe("none");

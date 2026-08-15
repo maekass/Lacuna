@@ -85,6 +85,8 @@ describe("formatDealBrief", () => {
     expect(brief).toContain("Hologic");
     expect(brief).toContain("Evidence ladder");
     expect(brief).toContain("not investment advice");
+    expect(brief).toContain("Cited empowerment gaps");
+    expect(brief).toContain("Hologic investor relations");
     expect(brief).toContain("Valuation peers");
     expect(brief).toContain("Premium: +35%");
     expect(brief).toContain("Close speed: 48 days");
@@ -121,7 +123,7 @@ describe("getDealDetailView", () => {
       view!.acquirerDeals.some((c) => c.targetName === "Endomagnetics"),
     ).toBe(false);
     expect(view?.provenanceLine).toContain("verified dataset");
-    expect(view?.provenanceLine).toContain("not live market data");
+    expect(view?.provenanceLine).toContain("Verify independently");
     expect(
       view?.empowerment.matchedDimensions.every((m) =>
         m.targetMatchTier === "curated"
