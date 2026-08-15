@@ -6,6 +6,7 @@ const mockResolveUrl = vi.fn();
 const mockFetchFilingText = vi.fn();
 const mockApplyEnrichment = vi.fn();
 const mockSecRateLimitPause = vi.fn();
+const mockGetPendingDealByDealId = vi.fn();
 
 vi.mock("@/lib/ingestion/detectPendingDealDuplicates", () => ({
   detectPendingDealDuplicates: (...args: unknown[]) =>
@@ -33,6 +34,8 @@ vi.mock("@/lib/ingestion/pendingDeals", async (importOriginal) => {
     ...actual,
     applyPendingDealEnrichment: (...args: unknown[]) =>
       mockApplyEnrichment(...args),
+    getPendingDealByDealId: (...args: unknown[]) =>
+      mockGetPendingDealByDealId(...args),
   };
 });
 
@@ -86,6 +89,7 @@ describe("enrichPendingDeal", () => {
     mockResolveUrl.mockResolvedValue("https://www.sec.gov/example/d8k.htm");
     mockFetchFilingText.mockResolvedValue(ITEM_201_TEXT);
     mockSecRateLimitPause.mockResolvedValue(undefined);
+    mockGetPendingDealByDealId.mockResolvedValue(mockDeal());
   });
 
   it("skips full-parse rows without SEC fetch", async () => {
@@ -126,6 +130,21 @@ describe("enrichPendingDeal", () => {
     );
     expect(result.changes.length).toBeGreaterThan(0);
     expect(result.after.status).toBe("pending");
+  });
+
+  it("batch reports the reason each deal failed (error)", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    mockResolveUrl.mockRejectedValue(new Error("SEC 429 throttled"));
+
+    const { enrichKeywordOnlyDeals } = await import(
+      "@/lib/ingestion/enrichPendingDeal"
+    );
+    const batch = await enrichKeywordOnlyDeals(["sec-123-0001"]);
+
+    expect(batch.failed).toBe(1);
+    expect(batch.failures).toEqual([
+      { dealId: "sec-123-0001", error: "SEC 429 throttled" },
+    ]);
   });
 
   it("never auto-approves — apply input has no status field", async () => {

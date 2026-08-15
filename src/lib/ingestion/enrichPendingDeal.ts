@@ -8,6 +8,7 @@ import {
   detectPendingDealDuplicates,
   type DuplicateMatch,
 } from "@/lib/ingestion/detectPendingDealDuplicates";
+import { reportError } from "@/lib/observability/reportError";
 import {
   applyPendingDealEnrichment,
   type PendingDealRecord,
@@ -247,11 +248,17 @@ export async function enrichPendingDeal(
   };
 }
 
+export interface EnrichBatchFailure {
+  dealId: string;
+  error: string;
+}
+
 export interface EnrichBatchResult {
   enriched: number;
   skipped: number;
   failed: number;
   results: EnrichPendingDealResult[];
+  failures: EnrichBatchFailure[];
 }
 
 /** Enrich up to `max` keyword-only staging rows (CLI batch helper). */
@@ -264,9 +271,9 @@ export async function enrichKeywordOnlyDeals(
   );
   const max = options.max ?? 10;
   const results: EnrichPendingDealResult[] = [];
+  const failures: EnrichBatchFailure[] = [];
   let enriched = 0;
   let skipped = 0;
-  let failed = 0;
 
   for (const dealId of dealIds.slice(0, max)) {
     const deal = await getPendingDealByDealId(dealId);
@@ -282,11 +289,20 @@ export async function enrichKeywordOnlyDeals(
       } else {
         enriched += 1;
       }
-    } catch {
-      failed += 1;
+    } catch (error) {
+      failures.push({
+        dealId,
+        error: reportError("ingest.enrichPendingDeal", error, { dealId }),
+      });
     }
     await secRateLimitPause();
   }
 
-  return { enriched, skipped, failed, results };
+  return {
+    enriched,
+    skipped,
+    failed: failures.length,
+    results,
+    failures,
+  };
 }

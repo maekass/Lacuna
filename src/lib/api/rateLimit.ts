@@ -1,5 +1,6 @@
 import process from "node:process";
 import { Redis } from "@upstash/redis";
+import { reportError, reportWarning } from "@/lib/observability/reportError";
 
 type Bucket = { count: number; resetAtMs: number };
 
@@ -54,7 +55,11 @@ function getRedisClient(): Redis | null {
     redisClient = new Redis({ url, token });
     redisConfigured = true;
     return redisClient;
-  } catch {
+  } catch (error) {
+    // Credentials are set but unusable: fall back, but never silently.
+    reportError("rateLimit.redisInit", error, {
+      detail: "Upstash Redis client init failed, using in-memory rate limiting",
+    });
     redisConfigured = false;
     return null;
   }
@@ -136,7 +141,9 @@ async function rateLimitRedis(
     };
   } catch (error) {
     // Redis failure: fall back to in-memory
-    console.warn("Redis rate limit failed, using in-memory fallback:", error);
+    reportWarning("rateLimit.redis", error, {
+      detail: "Redis rate limit failed, using in-memory fallback",
+    });
     return rateLimitInMemory(input);
   }
 }

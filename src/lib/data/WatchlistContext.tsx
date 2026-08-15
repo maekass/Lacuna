@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import type { VerifiedCompanyView } from "./verifiedDataHelpers";
+import { reportWarning } from "@/lib/observability/reportError";
 
 interface WatchlistItem {
   companyId: string;
@@ -46,7 +47,10 @@ function loadFromStorage(): WatchlistItem[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? (JSON.parse(raw) as WatchlistItem[]) : [];
-  } catch {
+  } catch (error) {
+    // Corrupt or unreadable storage resets the list — say so instead of
+    // presenting an empty watchlist as the user's actual saved state.
+    reportWarning("watchlist.load", error, { storageKey: STORAGE_KEY });
     return [];
   }
 }
@@ -55,8 +59,13 @@ function saveToStorage(items: WatchlistItem[]) {
   if (typeof window === "undefined") return;
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  } catch {
-    // Ignore quota errors
+  } catch (error) {
+    // Quota or private-mode failure: the in-memory list survives this session
+    // but will not persist.
+    reportWarning("watchlist.save", error, {
+      storageKey: STORAGE_KEY,
+      itemCount: items.length,
+    });
   }
 }
 

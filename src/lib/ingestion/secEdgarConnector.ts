@@ -1,5 +1,6 @@
 import {
   alertApiFailure,
+  alertFetchSkipped,
   alertPartialParse,
   logRateLimitPause,
 } from "@/lib/ingestion/monitoringAlerts";
@@ -196,8 +197,14 @@ export async function fetchFilingTextForItem201(
     if (filingContainsItem201(fullText)) {
       return { text: fullText, filingUrl: fullSubmissionUrl };
     }
-  } catch {
+  } catch (error) {
     // Some legacy filings lack a bundled .txt submission.
+    alertFetchSkipped(error, {
+      stage: "full_submission_text",
+      cik,
+      accessionNumber,
+      url: fullSubmissionUrl,
+    });
   }
 
   return { text: primaryText, filingUrl: primaryDocumentUrl };
@@ -471,7 +478,13 @@ export async function scanItem201Acquisitions(
         );
         text = fetched.text;
         filingUrl = fetched.filingUrl;
-      } catch {
+      } catch (error) {
+        alertFetchSkipped(error, {
+          stage: "filing_text",
+          cik: entry.cik,
+          accessionNumber: filing.accessionNumber,
+          url: filing.filingUrl,
+        });
         continue;
       }
 
@@ -557,8 +570,13 @@ export async function listHealthcareTickers(
         healthcare.push(entry);
       }
       await secRateLimitPause();
-    } catch {
+    } catch (error) {
       // skip CIKs that fail submissions fetch
+      alertFetchSkipped(error, {
+        stage: "submissions",
+        cik: entry.cik,
+        ticker: entry.ticker,
+      });
     }
   }
 

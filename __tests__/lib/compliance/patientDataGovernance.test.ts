@@ -2,9 +2,13 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/compliance/auditEventSink", () => ({
   writeAuditEvent: vi.fn().mockResolvedValue(true),
+  isAuditSinkConfigured: vi.fn().mockReturnValue(false),
 }));
 
-import { writeAuditEvent } from "@/lib/compliance/auditEventSink";
+import {
+  isAuditSinkConfigured,
+  writeAuditEvent,
+} from "@/lib/compliance/auditEventSink";
 import {
   auditPatientDataAccess,
   getPatientDataAccessMode,
@@ -124,5 +128,46 @@ describe("patientDataGovernance", () => {
         mode: "de_identified",
       }),
     );
+  });
+
+  it("reports dropped audit events when a sink is configured (error)", async () => {
+    const consoleError = vi.spyOn(console, "error").mockImplementation(
+      () => {},
+    );
+    vi.spyOn(console, "info").mockImplementation(() => {});
+    vi.mocked(writeAuditEvent).mockResolvedValueOnce(false);
+    vi.mocked(isAuditSinkConfigured).mockReturnValueOnce(true);
+
+    auditPatientDataAccess({
+      action: "download_raw",
+      resource: "genomics/callsets/object",
+      actor: "127.0.0.1",
+      allowed: true,
+      mode: "authorized",
+    });
+    await vi.waitFor(() => expect(consoleError).toHaveBeenCalled());
+
+    expect(consoleError.mock.calls[0]?.[0]).toContain("patient-data-audit");
+  });
+
+  it("stays quiet when no sink is configured (edge)", async () => {
+    const consoleError = vi.spyOn(console, "error").mockImplementation(
+      () => {},
+    );
+    vi.spyOn(console, "info").mockImplementation(() => {});
+    vi.mocked(writeAuditEvent).mockResolvedValueOnce(false);
+    vi.mocked(isAuditSinkConfigured).mockReturnValueOnce(false);
+
+    auditPatientDataAccess({
+      action: "read_summary",
+      resource: "genomics/variants",
+      actor: "127.0.0.1",
+      allowed: true,
+      mode: "de_identified",
+    });
+    await Promise.resolve();
+    await Promise.resolve();
+
+    expect(consoleError).not.toHaveBeenCalled();
   });
 });

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { reportWarning } from "@/lib/observability/reportError";
 
 interface ReviewAccessGateProps {
   onUnlocked?: () => void;
@@ -32,12 +33,22 @@ export default function ReviewAccessGate({
     async function probeSession() {
       try {
         const response = await fetch("/api/deals/review/session");
+        // 401 is the normal signed-out case; anything else is a real failure.
+        if (!response.ok && response.status !== 401) {
+          throw new Error(`Session probe failed: ${response.status}`);
+        }
         const body = await response.json() as SessionResponse;
         if (cancelled) return;
         setGithubAvailable(body.githubSignInAvailable === true);
         if (body.authenticated) onUnlocked?.();
-      } catch {
-        // gate stays visible
+      } catch (probeError) {
+        // Gate stays visible, but the sign-in options shown may be wrong.
+        if (cancelled) return;
+        setError(
+          `Could not check review session (${
+            reportWarning("reviewGate.sessionProbe", probeError)
+          }).`,
+        );
       }
     }
     void probeSession();

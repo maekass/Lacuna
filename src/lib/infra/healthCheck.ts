@@ -8,6 +8,7 @@ import { isVariantStoreEnabled } from "@/lib/genomics/variantStoreConfig";
 import { pingClickHouse } from "@/lib/genomics/clickhouseClient";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import { validateVerifiedDataset } from "@/lib/data/validateVerifiedDataset";
+import { reportWarning } from "@/lib/observability/reportError";
 
 const packageRoot = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(packageRoot, "../../..");
@@ -68,7 +69,8 @@ function readAppVersion(): string {
       readFileSync(join(repoRoot, "package.json"), "utf8"),
     ) as { version?: string };
     return pkg.version ?? "0.0.0";
-  } catch {
+  } catch (error) {
+    reportWarning("health.readAppVersion", error, { repoRoot });
     return "0.0.0";
   }
 }

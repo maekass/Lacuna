@@ -2,6 +2,7 @@ import process from "node:process";
 import { createHash } from "node:crypto";
 import { type ClickHouseClient, createClient } from "@clickhouse/client";
 import { query } from "@/lib/data/dbClient";
+import { reportError, reportWarning } from "@/lib/observability/reportError";
 import type {
   PatientDataAccessLevel,
   PatientDataAccessMode,
@@ -46,6 +47,11 @@ function getAuditClient(): ClickHouseClient | null {
 
 function isPostgresConfigured(): boolean {
   return !!process.env.DATABASE_URL;
+}
+
+/** True when at least one durable audit sink is configured for this deployment. */
+export function isAuditSinkConfigured(): boolean {
+  return !!clickhouseClient || !!getClickHouseUrl() || isPostgresConfigured();
 }
 
 /** SHA-256 hash of client IP — never store raw IPs in audit rows. */
@@ -99,7 +105,9 @@ export async function writeAuditEvent(
       });
       return true;
     } catch (err) {
-      console.warn("[AUDIT] ClickHouse write failed, trying Postgres:", err);
+      reportWarning("audit.clickhouse", err, {
+        detail: "ClickHouse audit write failed, trying Postgres",
+      });
     }
   }
 
@@ -123,7 +131,9 @@ export async function writeAuditEvent(
       );
       return true;
     } catch (err) {
-      console.error("[AUDIT] Postgres write failed:", err);
+      reportError("audit.postgres", err, {
+        detail: "Postgres audit write failed",
+      });
     }
   }
 
