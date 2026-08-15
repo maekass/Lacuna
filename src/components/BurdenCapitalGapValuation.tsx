@@ -17,6 +17,7 @@ import {
   valuateInvestment,
   type ValuationInputs,
 } from "@/lib/valuation/burdenCapitalGap";
+import { reportWarning } from "@/lib/observability/reportError";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
@@ -177,7 +178,7 @@ export default function BurdenCapitalGapValuation() {
   const [hasEquityAngle, setHasEquityAngle] = useState(false);
   const [isPlatform, setIsPlatform] = useState(false);
 
-  const result = useMemo(() => {
+  const valuation = useMemo(() => {
     const inputs: ValuationInputs = {
       areaKey,
       stage,
@@ -188,9 +189,18 @@ export default function BurdenCapitalGapValuation() {
       isPlatform,
     };
     try {
-      return valuateInvestment(inputs, allMetrics, stageMedians.medians);
-    } catch {
-      return null;
+      return {
+        result: valuateInvestment(inputs, allMetrics, stageMedians.medians),
+        error: null,
+      };
+    } catch (error) {
+      return {
+        result: null,
+        error: reportWarning("valuation.burdenCapitalGap", error, {
+          areaKey,
+          stage,
+        }),
+      };
     }
   }, [
     areaKey,
@@ -203,6 +213,8 @@ export default function BurdenCapitalGapValuation() {
     allMetrics,
     stageMedians,
   ]);
+
+  const result = valuation.result;
 
   const selectedMetrics = allMetrics.find((m) => m.areaKey === areaKey);
   const selectedArea = BURDEN_AREAS[areaKey];
@@ -429,6 +441,22 @@ export default function BurdenCapitalGapValuation() {
                 </p>
               )}
               <CitationFootnotes ids={selectedArea.citationIds} />
+            </div>
+          )}
+
+          {/* A failed computation must say so — an empty panel reads as "no data" */}
+          {valuation.error && (
+            <div
+              role="alert"
+              className="rounded-xl border border-amber-200 bg-amber-50 p-5"
+            >
+              <h3 className="text-sm font-semibold text-amber-800">
+                Valuation unavailable
+              </h3>
+              <p className="mt-1 text-xs text-amber-700">
+                These inputs could not be valued ({valuation.error}). Adjust the
+                stage or focus area and try again.
+              </p>
             </div>
           )}
 

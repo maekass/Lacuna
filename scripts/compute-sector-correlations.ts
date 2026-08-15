@@ -6,8 +6,12 @@ import {
   type LineageOptions,
   summarizeLineage,
 } from "../src/lib/lineage";
+import { hashDataset } from "../src/lib/lineage/datasetHash";
 import { isSufficient } from "../src/lib/quant/estimators";
-import type { VerifiedDataset } from "../src/lib/data/datasetSchema";
+import {
+  parseVerifiedDataset,
+  type VerifiedDataset,
+} from "../src/lib/data/datasetSchema";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 
 const dataset = JSON.parse(
@@ -15,6 +19,7 @@ const dataset = JSON.parse(
 ) as VerifiedDataset;
 const options: LineageOptions = {
   datasetVersion: dataset.provenance.datasetVersion,
+  datasetHash: hashDataset(parseVerifiedDataset(dataset)).fullHash,
   computedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
 };
 
@@ -46,6 +51,7 @@ const lineageEstimate = collection.estimate("sector.moic.median");
 const output = {
   generatedAt: options.computedAt,
   datasetVersion: options.datasetVersion,
+  datasetHash: options.datasetHash ?? hashDataset(dataset).fullHash,
   source: "Lacuna verified dataset (src/data/dataset.verified.json)",
   sectors: [],
   withheld: [

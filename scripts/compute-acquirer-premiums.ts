@@ -9,12 +9,14 @@ import {
   summarizeLineage,
   type TracedValue,
 } from "../src/lib/lineage";
+import { hashDataset } from "../src/lib/lineage/datasetHash";
 import { isSufficient } from "../src/lib/quant/estimators";
 import type {
   VerifiedAcquisition,
   VerifiedCompany,
   VerifiedDataset,
 } from "../src/lib/data/datasetSchema";
+import { parseVerifiedDataset } from "../src/lib/data/datasetSchema";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 import { withoutLineage, writeSlimArtifact } from "./slimArtifacts";
 
@@ -23,6 +25,7 @@ const dataset = JSON.parse(
 ) as VerifiedDataset;
 const options: LineageOptions = {
   datasetVersion: dataset.provenance.datasetVersion,
+  datasetHash: hashDataset(parseVerifiedDataset(dataset)).fullHash,
   computedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
 };
 
@@ -182,6 +185,8 @@ for (const metricId of Object.keys(denominatorFields) as PremiumMetricId[]) {
 const output = {
   generatedAt: options.computedAt,
   datasetVersion: options.datasetVersion,
+  datasetHash: options.datasetHash ??
+    hashDataset(parseVerifiedDataset(dataset)).fullHash,
   source: "Lacuna verified dataset (src/data/dataset.verified.json)",
   premiumMetrics,
   acquirerPremiums,

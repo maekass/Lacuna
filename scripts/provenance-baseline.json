@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "total": 1054,
+  "total": 1055,
   "covered": 7,
-  "exempt": 0,
-  "uncovered": 1047,
+  "exempt": 2,
+  "uncovered": 1046,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
     "src/app/sections/ConsumerHealthPage.tsx": 7,
@@ -61,7 +61,7 @@
     "src/components/KeyboardShortcuts.tsx": 1,
     "src/components/layout/GlobalProvenanceBar.tsx": 1,
     "src/components/layout/SiteFooter.tsx": 1,
-    "src/components/MetricEvidence.tsx": 17,
+    "src/components/MetricEvidence.tsx": 16,
     "src/components/NetworkAnalysisHonest.tsx": 90,
     "src/components/PatientEmpowermentInsight.tsx": 12,
     "src/components/PatientEmpowermentPanel.tsx": 22,
@@ -3388,6 +3388,14 @@
     {
       "file": "src/components/EvidenceMaturityDashboard.tsx",
       "functionName": "EvidenceMaturityDashboard",
+      "expression": "apiState.failures",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.failures",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
       "expression": "apiState.progress",
       "kind": "numeric-jsx",
       "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.progress",
@@ -3416,6 +3424,14 @@
       "kind": "numeric-jsx",
       "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.total#2",
       "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
+      "expression": "apiState.total",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.total#3",
+      "class": "exempt"
     },
     {
       "file": "src/components/EvidenceMaturityDashboard.tsx",
@@ -5051,6 +5067,14 @@
     },
     {
       "file": "src/components/MetricEvidence.tsx",
+      "functionName": "DatasetFooter",
+      "expression": "formatComputedAt(computedAt)",
+      "kind": "formatting-call",
+      "key": "src/components/MetricEvidence.tsx::DatasetFooter::formatComputedAt(computedAt)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/MetricEvidence.tsx",
       "functionName": "ExclusionRollup",
       "expression": "count",
       "kind": "numeric-jsx",
@@ -5132,14 +5156,6 @@
     {
       "file": "src/components/MetricEvidence.tsx",
       "functionName": "SummaryEvidence",
-      "expression": "formatComputedAt(summary.computedAt)",
-      "kind": "formatting-call",
-      "key": "src/components/MetricEvidence.tsx::SummaryEvidence::formatComputedAt(summary.computedAt)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/MetricEvidence.tsx",
-      "functionName": "SummaryEvidence",
       "expression": "summary.n",
       "kind": "numeric-jsx",
       "key": "src/components/MetricEvidence.tsx::SummaryEvidence::summary.n",
@@ -5151,14 +5167,6 @@
       "expression": "summary.originalInputCount - summary.n",
       "kind": "numeric-jsx",
       "key": "src/components/MetricEvidence.tsx::SummaryEvidence::summary.originalInputCount - summary.n",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/MetricEvidence.tsx",
-      "functionName": "WithheldEvidence",
-      "expression": "formatComputedAt(lineage.computedAt)",
-      "kind": "formatting-call",
-      "key": "src/components/MetricEvidence.tsx::WithheldEvidence::formatComputedAt(lineage.computedAt)",
       "class": "uncovered"
     },
     {

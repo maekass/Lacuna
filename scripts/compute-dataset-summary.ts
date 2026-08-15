@@ -50,7 +50,7 @@ function main() {
   console.log(
     `  Provenance: ${
       summary.provenance.datasetVersion ?? "—"
-    } · updated ${summary.provenance.lastUpdated}`,
+    } · hash ${summary.provenance.datasetHash} · updated ${summary.provenance.lastUpdated}`,
   );
 
   if (report.warnings.length > 0) {

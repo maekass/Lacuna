@@ -56,8 +56,12 @@ function buildCellEstimate(
   sector: string,
   stage: CanonicalStage,
   datasetVersion?: string,
+  datasetHash?: string,
 ): { estimate: TracedValue; valuations: readonly number[] } {
-  const collection = fromRecords("companies", companies, { datasetVersion })
+  const collection = fromRecords("companies", companies, {
+    datasetVersion,
+    datasetHash,
+  })
     .exclude((company) => company.sector !== sector, "out_of_sector")
     .exclude(
       (company) => canonicalStage(company.stage) !== stage,
@@ -136,6 +140,7 @@ export default function ValuationMatrix() {
           sector,
           stage,
           dataProvenance.datasetVersion,
+          dataProvenance.datasetHash,
         );
         const dealCount = verifiedAcquisitions.filter((deal) => {
           const target = byId.get(deal.targetId);
@@ -169,6 +174,7 @@ export default function ValuationMatrix() {
     };
   }, [
     dataProvenance.datasetVersion,
+    dataProvenance.datasetHash,
     sectors,
     verifiedCompanies,
     verifiedAcquisitions,

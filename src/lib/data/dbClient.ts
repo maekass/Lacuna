@@ -1,5 +1,6 @@
 import process from "node:process";
 import { Pool, type QueryResultRow } from "pg";
+import { reportError } from "@/lib/observability/reportError";
 
 let pool: Pool | undefined;
 let poolOverride: Pool | undefined;
@@ -53,7 +54,14 @@ export async function withTransaction<T>(
     await client.query("COMMIT");
     return value;
   } catch (error) {
-    await client.query("ROLLBACK");
+    try {
+      await client.query("ROLLBACK");
+    } catch (rollbackError) {
+      // Never let a rollback failure mask the error that caused it.
+      reportError("db.rollback", rollbackError, {
+        cause: error instanceof Error ? error.message : String(error),
+      });
+    }
     throw error;
   } finally {
     client.release();

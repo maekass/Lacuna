@@ -3,7 +3,8 @@
   "model": "computeHeadlineStats/v1",
   "provenance": {
     "lastUpdated": "2026-07-06",
-    "datasetVersion": "v8"
+    "datasetVersion": "v8",
+    "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6"
   },
   "headline": {
     "companiesInNetwork": 150,

@@ -58,6 +58,16 @@ describe("auditEventSink", () => {
     expect(JSON.stringify(payload.values[0])).not.toMatch(/\.vcf|sample_id/i);
   });
 
+  it("distinguishes a configured sink from console-only deployments (edge)", async () => {
+    const { isAuditSinkConfigured } = await import(
+      "@/lib/compliance/auditEventSink"
+    );
+    expect(isAuditSinkConfigured()).toBe(false);
+
+    setAuditClickHouseClient({ insert: vi.fn(), close: vi.fn() } as never);
+    expect(isAuditSinkConfigured()).toBe(true);
+  });
+
   it("returns false when ClickHouse is not configured (edge)", async () => {
     const ok = await writeAuditEvent({
       timestamp: "2026-06-09T12:00:00.000Z",

@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import LlmQualityBadge from "@/components/ui/LlmQualityBadge";
 import type { LlmQualityReport } from "@/lib/ai/quality";
+import { reportWarning } from "@/lib/observability/reportError";
 
 interface AIInsightsPanelProps {
   companyName: string;
@@ -69,18 +70,31 @@ export default function AIInsightsPanel({
 
   const [expanded, setExpanded] = useState<InsightType | null>(null);
   const [configured, setConfigured] = useState<boolean | null>(null);
+  const [configError, setConfigError] = useState<string | null>(null);
   const [copiedType, setCopiedType] = useState<InsightType | null>(null);
   const abortRefs = useRef<Partial<Record<InsightType, AbortController>>>({});
 
   useEffect(() => {
     let cancelled = false;
     fetch("/api/ai/insights")
-      .then((res) => res.json())
-      .then((data: { configured?: boolean }) => {
-        if (!cancelled) setConfigured(Boolean(data.configured));
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Config probe failed: ${res.status}`);
+        }
+        return res.json();
       })
-      .catch(() => {
-        if (!cancelled) setConfigured(false);
+      .then((data: { configured?: boolean }) => {
+        if (cancelled) return;
+        setConfigError(null);
+        setConfigured(Boolean(data.configured));
+      })
+      .catch((error: unknown) => {
+        if (cancelled) return;
+        // An unreachable probe is not the same as "AI is not configured".
+        setConfigError(
+          reportWarning("aiInsights.configProbe", error),
+        );
+        setConfigured(false);
       });
     return () => {
       cancelled = true;
@@ -197,11 +211,14 @@ export default function AIInsightsPanel({
           <AlertCircle className="w-5 h-5 text-amber-600 mt-0.5" />
           <div>
             <h4 className="font-medium text-amber-800">
-              AI Insights Not Configured
+              {configError
+                ? "AI Insights Status Unavailable"
+                : "AI Insights Not Configured"}
             </h4>
             <p className="text-sm text-amber-700 mt-1">
-              Enable Vercel AI Gateway (OIDC on Vercel or AI_GATEWAY_API_KEY) or
-              set OPENAI_API_KEY for optional narrative blurbs.
+              {configError
+                ? `Could not reach the insights service (${configError}). Insights are hidden until the check succeeds.`
+                : "Enable Vercel AI Gateway (OIDC on Vercel or AI_GATEWAY_API_KEY) or set OPENAI_API_KEY for optional narrative blurbs."}
             </p>
           </div>
         </div>

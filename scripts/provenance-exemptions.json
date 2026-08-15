@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.failures",
+    "category": "ui-count",
+    "reason": "Session-local count of ClinicalTrials.gov / openFDA lookups that failed during this enrichment run. Not a dataset statistic — it only tells the operator that some rows still show static scores."
+  },
+  {
+    "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.total#3",
+    "category": "ui-count",
+    "reason": "Denominator for the same session-local failure banner (lookups attempted this run). The first two apiState.total sites are the in-progress enrich counter, already in the baseline."
+  }
+]
