@@ -101,6 +101,18 @@ function SheetTitle({
   );
 }
 
+function SheetDescription({
+  className,
+  ...props
+}: ComponentPropsWithoutRef<typeof DialogPrimitive.Description>) {
+  return (
+    <DialogPrimitive.Description
+      className={cn("sr-only", className)}
+      {...props}
+    />
+  );
+}
+
 function SheetBody({
   className,
   ...props
@@ -170,6 +182,7 @@ export {
   SheetBody,
   SheetClose,
   SheetContent,
+  SheetDescription,
   SheetHamburger,
   SheetHeader,
   SheetOverlay,
