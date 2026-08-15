@@ -44,6 +44,13 @@ describe("resolveEvidenceInputs", () => {
     expect(resolved.source).toBe("empty");
     expect(resolved.inputs.totalTrials).toBe(0);
   });
+
+  it("returns empty inputs when evidenceClass is omitted (edge)", () => {
+    const resolved = resolveEvidenceInputs(undefined, undefined, undefined);
+    expect(resolved.source).toBe("empty");
+    expect(resolved.inputs.totalTrials).toBe(0);
+    expect(resolved.inputs.highestPhase).toBe("None");
+  });
 });
 
 describe("hasLiveEvidenceEnrichment", () => {

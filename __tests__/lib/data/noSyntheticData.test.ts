@@ -61,6 +61,7 @@ describe("no synthetic M&A demo data in src/", () => {
       "lib/gamma/formatDealBrief.ts",
       "app/sections/DealsPage.tsx",
       "components/DealEmpowermentContext.tsx",
+      "lib/data/verifiedDataHelpers.ts",
     ];
     const forbidden = [
       /\bclassifyEvidence\b/,

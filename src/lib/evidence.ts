@@ -261,6 +261,9 @@ function scoreClass(
  * Classify a single company into its {@link EvidenceClass}. Override map wins;
  * otherwise the weighted keyword scorer (plus a light sector prior) decides,
  * with {@link CLASS_PRIORITY} breaking ties. Always returns a valid class.
+ *
+ * Runtime adapters must not call this — use the stored `evidenceClass` or
+ * leave it blank. One-shot backfill: `scripts/apply-evidence-class.ts`.
  */
 export function classifyEvidence(company: ClassifiableCompany): EvidenceClass {
   const override = EVIDENCE_OVERRIDES[company.name];

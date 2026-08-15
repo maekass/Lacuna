@@ -61,4 +61,18 @@ describe("buildVerifiedDerivedData", () => {
     expect(derived.getVerifiedDealsByYear()).toEqual([]);
     expect(derived.getVerifiedNetworkLinks()).toEqual([]);
   });
+
+  it("keeps stored evidenceClass and leaves omitted class blank (success)", () => {
+    const derived = buildVerifiedDerivedData(minimalVerifiedDataset);
+    const biotheranostics = derived.verifiedCompanies.find((c) =>
+      c.id === "c24"
+    );
+    expect(biotheranostics?.evidenceClass).toBe("diagnostic_genomic");
+
+    const unlabeled = structuredClone(minimalVerifiedDataset);
+    delete unlabeled.companies[0].evidenceClass;
+    const unlabeledDerived = buildVerifiedDerivedData(unlabeled);
+    expect(unlabeledDerived.verifiedCompanies[0]?.evidenceClass)
+      .toBeUndefined();
+  });
 });

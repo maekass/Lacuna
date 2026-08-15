@@ -3,8 +3,9 @@ import type { EvidenceInputs } from "@/lib/evidence/evidenceMaturityCalculator";
 
 /**
  * Conservative taxonomy priors for evidence maturity when live CTG/FDA
- * enrichment has not run. Derived from each company's `evidenceClass` —
- * not a substitute for trial/regulatory lookups.
+ * enrichment has not run. Used only when the company has a stored
+ * `evidenceClass` — not a substitute for trial/regulatory lookups, and not
+ * applied when the class is missing.
  */
 const TAXONOMY_BASELINE: Record<EvidenceClass, EvidenceInputs> = {
   clinical_therapeutic: {
@@ -59,7 +60,7 @@ const TAXONOMY_BASELINE: Record<EvidenceClass, EvidenceInputs> = {
 
 export type EvidenceInputSource = "live" | "taxonomy" | "empty";
 
-/** Taxonomy prior inputs from a stored or derived evidence class. */
+/** Taxonomy prior inputs from a stored evidence class. */
 export function deriveTaxonomyEvidenceInputs(
   evidenceClass: EvidenceClass,
 ): EvidenceInputs {
@@ -84,9 +85,9 @@ export function hasLiveEvidenceEnrichment(
   return false;
 }
 
-/** Prefer live API enrichment; fall back to taxonomy prior; else empty inputs. */
+/** Prefer live API enrichment; use a stored class taxonomy prior; else empty. */
 export function resolveEvidenceInputs(
-  evidenceClass: EvidenceClass,
+  evidenceClass: EvidenceClass | undefined,
   ctg:
     | { trials: number; highestPhase: string; hasResults: boolean }
     | undefined,
@@ -118,7 +119,7 @@ export function resolveEvidenceInputs(
     };
   }
 
-  if (evidenceClass !== "portfolio_investment") {
+  if (evidenceClass && evidenceClass !== "portfolio_investment") {
     return {
       source: "taxonomy",
       inputs: deriveTaxonomyEvidenceInputs(evidenceClass),
