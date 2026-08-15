@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "total": 1052,
-  "covered": 14,
+  "total": 1053,
+  "covered": 15,
   "exempt": 2,
   "uncovered": 1036,
   "perFileUncovered": {
@@ -3223,6 +3223,14 @@
       "kind": "formatting-call",
       "key": "src/components/DealReviewQueue.tsx::PendingDealCard::formatDealValue(deal.dealValueMillions)",
       "class": "uncovered"
+    },
+    {
+      "file": "src/components/DealTargetLastKnownValuation.tsx",
+      "functionName": "DealTargetLastKnownValuation",
+      "expression": "millions.toLocaleString()",
+      "kind": "formatting-call",
+      "key": "src/components/DealTargetLastKnownValuation.tsx::DealTargetLastKnownValuation::millions.toLocaleString()",
+      "class": "covered"
     },
     {
       "file": "src/components/DisclosedEstimandNote.tsx",

@@ -26,6 +26,11 @@ export {
 export type { EvidenceLadderResult, EvidenceTier } from "./evidenceLadder";
 export { getDealDetailView } from "./getDealDetailView";
 export type { DealDetailView } from "./getDealDetailView";
+export { sourcedDistinctLastKnownValuation } from "./sourcedLastKnownValuation";
+export type {
+  LastKnownValuationInput,
+  SourcedLastKnownValuation,
+} from "./sourcedLastKnownValuation";
 export { formatDealDate } from "./formatDealDate";
 export { inferSourceUrl, isEdgarLocatorUrl } from "./inferSourceUrl";
 export type { SourceUrlKind } from "./inferSourceUrl";

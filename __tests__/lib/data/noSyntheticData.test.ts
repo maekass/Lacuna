@@ -83,6 +83,20 @@ describe("no synthetic M&A demo data in src/", () => {
     }
     expect(violations).toEqual([]);
   });
+
+  it("deal economics never fall back to lastKnownValuation as a second price", () => {
+    const economics = readFileSync(
+      path.join(SRC_ROOT, "components/DealEconomicsCard.tsx"),
+      "utf8",
+    );
+    expect(economics).not.toMatch(/lastKnownValuation/);
+    const page = readFileSync(
+      path.join(SRC_ROOT, "app/sections/DealDetailPage.tsx"),
+      "utf8",
+    );
+    expect(page).not.toMatch(/deal\.target\.lastKnownValuation/);
+    expect(page).toMatch(/targetLastKnownValuation/);
+  });
 });
 
 describe("test fixtures use verified JSON slice", () => {

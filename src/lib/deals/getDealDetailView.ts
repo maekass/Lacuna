@@ -17,6 +17,10 @@ import {
   premiumMultiple,
   premiumPercent,
 } from "./dealTiming";
+import {
+  sourcedDistinctLastKnownValuation,
+  type SourcedLastKnownValuation,
+} from "./sourcedLastKnownValuation";
 
 export interface DealDetailView {
   deal: DealDetail;
@@ -30,6 +34,8 @@ export interface DealDetailView {
   closedLabel: string | null;
   premiumMultiple: number | null;
   premiumPercent: number | null;
+  /** Distinct sourced company valuation — null when it duplicates deal price. */
+  targetLastKnownValuation: SourcedLastKnownValuation | null;
   briefMarkdown: string;
   provenanceLine: string;
 }
@@ -58,6 +64,12 @@ export function getDealDetailView(
   );
   const multiple = premiumMultiple(deal.acquisition);
   const empowerment = empowermentContextForDeal(deal, dataset);
+  const targetLastKnownValuation = sourcedDistinctLastKnownValuation({
+    lastKnownValuation: deal.target.lastKnownValuation,
+    valuationSource: deal.target.valuationSource,
+    dealValue: deal.acquisition.dealValue,
+    preDealValuation: deal.acquisition.preDealValuation,
+  });
 
   return {
     deal,
@@ -73,10 +85,12 @@ export function getDealDetailView(
       : null,
     premiumMultiple: multiple,
     premiumPercent: multiple === null ? null : premiumPercent(multiple),
+    targetLastKnownValuation,
     briefMarkdown: formatDealBrief(deal, peers, {
       adjacencyNotPeers,
       closeDays,
       premiumMultiple: multiple,
+      targetLastKnownValuation,
       targetSources: deal.target.sources,
       empowerment,
       disclaimer: dataset.provenance.disclaimer,

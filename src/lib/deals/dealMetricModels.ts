@@ -8,6 +8,14 @@ export const DEAL_VALUE_MODEL: ModelProvenance = {
     "Disclosed transaction value in USD millions on the verified acquisition row (filing or press).",
 };
 
+/** Cited company `lastKnownValuation` (USD millions), never a deal-price fallback. */
+export const LAST_KNOWN_VALUATION_MODEL: ModelProvenance = {
+  module: "src/data/dataset.verified.json",
+  exportName: "companies.lastKnownValuation",
+  definition:
+    "Cited lastKnownValuation on the target company row, shown only with valuationSource and only when the figure is distinct from dealValue and preDealValuation. Not a TAM or deal-price fallback.",
+};
+
 /** Cited `preDealValuation` on a verified acquisition (USD millions). */
 export const PRE_DEAL_VALUATION_MODEL: ModelProvenance = {
   module: "src/data/dataset.verified.json",
