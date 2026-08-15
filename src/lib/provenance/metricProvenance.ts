@@ -60,6 +60,9 @@ export function lineageForMetric(metric: MeasuredMetric): Lineage;
 export function lineageForMetric(metric: WithheldMetric): LineageSummary;
 export function lineageForMetric(
   metric: MeasuredMetric | WithheldMetric,
+): Lineage | LineageSummary;
+export function lineageForMetric(
+  metric: MeasuredMetric | WithheldMetric,
 ): Lineage | LineageSummary {
   return metric.kind === "measured" ? metric.estimate.lineage : metric.summary;
 }

@@ -15,6 +15,7 @@ import {
   type MetricProvenance,
   type WithheldMetric,
 } from "@/lib/provenance/metricProvenance";
+import ReproduceMetricButton from "./ReproduceMetricButton";
 
 function formatComputedAt(value: string): string {
   const date = new Date(value);
@@ -202,9 +203,11 @@ function Missingness(
 function MeasuredEvidence({
   provenance,
   additionalEvidence,
+  filenameHint,
 }: {
   readonly provenance: MeasuredMetric;
   readonly additionalEvidence?: ReactNode;
+  readonly filenameHint?: string;
 }) {
   const lineage = lineageForMetric(provenance);
   const declaration = getMetricDeclaration(lineage.metricId);
@@ -250,6 +253,10 @@ function MeasuredEvidence({
         expected={lineage.originalInputCount - lineage.n}
       />
       <Missingness lineage={lineage} />
+      <ReproduceMetricButton
+        provenance={provenance}
+        filenameHint={filenameHint}
+      />
       <DatasetFooter
         datasetVersion={lineage.datasetVersion}
         datasetHash={lineage.datasetHash}
@@ -260,7 +267,13 @@ function MeasuredEvidence({
 }
 
 function WithheldEvidence(
-  { provenance }: { readonly provenance: WithheldMetric },
+  {
+    provenance,
+    filenameHint,
+  }: {
+    readonly provenance: WithheldMetric;
+    readonly filenameHint?: string;
+  },
 ) {
   const lineage = lineageForMetric(provenance);
   const declaration = getMetricDeclaration(lineage.metricId);
@@ -285,6 +298,10 @@ function WithheldEvidence(
         expected={lineage.originalInputCount - lineage.n}
       />
       <Missingness lineage={lineage} />
+      <ReproduceMetricButton
+        provenance={provenance}
+        filenameHint={filenameHint}
+      />
       <DatasetFooter
         datasetVersion={lineage.datasetVersion}
         datasetHash={lineage.datasetHash}
@@ -359,11 +376,13 @@ function ArtifactEvidence({
 export default function MetricEvidence({
   provenance,
   additionalEvidence,
+  filenameHint,
   loaded,
   onLoaded,
 }: {
   readonly provenance: MetricProvenance;
   readonly additionalEvidence?: ReactNode;
+  readonly filenameHint?: string;
   readonly loaded: MetricDetail | null;
   readonly onLoaded: (detail: MetricDetail) => void;
 }) {
@@ -376,6 +395,7 @@ export default function MetricEvidence({
         <MeasuredEvidence
           provenance={{ kind: "measured", estimate: loaded.estimate }}
           additionalEvidence={additionalEvidence}
+          filenameHint={filenameHint}
         />
       )
       : loaded.summary
@@ -387,11 +407,17 @@ export default function MetricEvidence({
       <MeasuredEvidence
         provenance={provenance}
         additionalEvidence={additionalEvidence}
+        filenameHint={filenameHint}
       />
     );
   }
   if (provenance.kind === "withheld") {
-    return <WithheldEvidence provenance={provenance} />;
+    return (
+      <WithheldEvidence
+        provenance={provenance}
+        filenameHint={filenameHint}
+      />
+    );
   }
   return (
     <div className="space-y-3 text-sm">

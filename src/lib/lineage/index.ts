@@ -7,14 +7,28 @@ export {
   estimateRegisteredMetric,
   getMetricDeclaration,
   METRIC_REGISTRY,
+  METRIC_REPRODUCTION_SEED,
   type MetricDeclaration,
   type MetricEstimator,
   type MetricId,
 } from "./registry";
+export {
+  assertDatasetCrossCheckAvailable,
+  assertDatasetHashMatches,
+  assertDatasetReproductionMatches,
+  createReproductionArtifact,
+  type DatasetReproductionResult,
+  type MetricReproductionArtifact,
+  reproduceArtifact,
+  reproduceFromDataset,
+  REPRODUCTION_FORMAT_VERSION,
+} from "./reproduction";
 export type {
+  ContributorValue,
   DatasetTable,
   ExcludedRef,
   ExclusionSummary,
+  FieldRead,
   Lineage,
   LineageOptions,
   LineageSummary,

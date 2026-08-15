@@ -72,7 +72,17 @@ function moicCollection(sector?: string) {
       "funding_unresearched",
       "totalFunding",
     )
-    .map((deal) => deal.dealValue! / deal.company.totalFunding!);
+    .map(
+      (deal) => deal.dealValue! / deal.company.totalFunding!,
+      ({ input, ref, supporting }) => [
+        { ref, field: "dealValue", value: input.dealValue },
+        {
+          ref: supporting[0]!,
+          field: "totalFunding",
+          value: input.company.totalFunding,
+        },
+      ],
+    );
 }
 
 const withheld: WithheldMetric[] = [];

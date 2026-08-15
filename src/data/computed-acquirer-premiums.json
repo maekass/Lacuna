@@ -1068,6 +1068,1183 @@
               "rawCitation": "Fresenius SE press release (divestiture)"
             }
           ],
+          "contributors": [
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal1"
+              },
+              "value": 1.3238095238095238,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal1"
+                  },
+                  "field": "dealValue",
+                  "value": 13900
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal1"
+                  },
+                  "field": "preDealValuation",
+                  "value": 10500
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal2"
+              },
+              "value": 1.5,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal2"
+                  },
+                  "field": "dealValue",
+                  "value": 225
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal2"
+                  },
+                  "field": "preDealValuation",
+                  "value": 150
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal3"
+              },
+              "value": 1.2,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal3"
+                  },
+                  "field": "dealValue",
+                  "value": 300
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal3"
+                  },
+                  "field": "preDealValuation",
+                  "value": 250
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal7"
+              },
+              "value": 1.3529411764705883,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal7"
+                  },
+                  "field": "dealValue",
+                  "value": 230
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal7"
+                  },
+                  "field": "preDealValuation",
+                  "value": 170
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal8"
+              },
+              "value": 1.55,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal8"
+                  },
+                  "field": "dealValue",
+                  "value": 310
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal8"
+                  },
+                  "field": "preDealValuation",
+                  "value": 200
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal9"
+              },
+              "value": 1.5909090909090908,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal9"
+                  },
+                  "field": "dealValue",
+                  "value": 350
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal9"
+                  },
+                  "field": "preDealValuation",
+                  "value": 220
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal10"
+              },
+              "value": 1.47,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal10"
+                  },
+                  "field": "dealValue",
+                  "value": 147
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal10"
+                  },
+                  "field": "preDealValuation",
+                  "value": 100
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal11"
+              },
+              "value": 1.3333333333333333,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal11"
+                  },
+                  "field": "dealValue",
+                  "value": 1600
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal11"
+                  },
+                  "field": "preDealValuation",
+                  "value": 1200
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal15"
+              },
+              "value": 1.5,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal15"
+                  },
+                  "field": "dealValue",
+                  "value": 75
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal15"
+                  },
+                  "field": "preDealValuation",
+                  "value": 50
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal16"
+              },
+              "value": 1.3181818181818181,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal16"
+                  },
+                  "field": "dealValue",
+                  "value": 1450
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal16"
+                  },
+                  "field": "preDealValuation",
+                  "value": 1100
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal17"
+              },
+              "value": 1.5,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal17"
+                  },
+                  "field": "dealValue",
+                  "value": 195
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal17"
+                  },
+                  "field": "preDealValuation",
+                  "value": 130
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal19"
+              },
+              "value": 1.325,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal19"
+                  },
+                  "field": "dealValue",
+                  "value": 371
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal19"
+                  },
+                  "field": "preDealValuation",
+                  "value": 280
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal20"
+              },
+              "value": 1.1666666666666667,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal20"
+                  },
+                  "field": "dealValue",
+                  "value": 2800
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal20"
+                  },
+                  "field": "preDealValuation",
+                  "value": 2400
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal21"
+              },
+              "value": 1.3333333333333333,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal21"
+                  },
+                  "field": "dealValue",
+                  "value": 2400
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal21"
+                  },
+                  "field": "preDealValuation",
+                  "value": 1800
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal22"
+              },
+              "value": 1.2666666666666666,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal22"
+                  },
+                  "field": "dealValue",
+                  "value": 1900
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal22"
+                  },
+                  "field": "preDealValuation",
+                  "value": 1500
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal23"
+              },
+              "value": 1.4545454545454546,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal23"
+                  },
+                  "field": "dealValue",
+                  "value": 80
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal23"
+                  },
+                  "field": "preDealValuation",
+                  "value": 55
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal24"
+              },
+              "value": 1.6,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal24"
+                  },
+                  "field": "dealValue",
+                  "value": 160
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal24"
+                  },
+                  "field": "preDealValuation",
+                  "value": 100
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal25"
+              },
+              "value": 1.5625,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal25"
+                  },
+                  "field": "dealValue",
+                  "value": 125
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal25"
+                  },
+                  "field": "preDealValuation",
+                  "value": 80
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal26"
+              },
+              "value": 1.5384615384615385,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal26"
+                  },
+                  "field": "dealValue",
+                  "value": 100
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal26"
+                  },
+                  "field": "preDealValuation",
+                  "value": 65
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal27"
+              },
+              "value": 1.4,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal27"
+                  },
+                  "field": "dealValue",
+                  "value": 350
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal27"
+                  },
+                  "field": "preDealValuation",
+                  "value": 250
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal28"
+              },
+              "value": 1.5277777777777777,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal28"
+                  },
+                  "field": "dealValue",
+                  "value": 275
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal28"
+                  },
+                  "field": "preDealValuation",
+                  "value": 180
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal29"
+              },
+              "value": 1.2307692307692308,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal29"
+                  },
+                  "field": "dealValue",
+                  "value": 8000
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal29"
+                  },
+                  "field": "preDealValuation",
+                  "value": 6500
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal30"
+              },
+              "value": 1.2818181818181817,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal30"
+                  },
+                  "field": "dealValue",
+                  "value": 282
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal30"
+                  },
+                  "field": "preDealValuation",
+                  "value": 220
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal32"
+              },
+              "value": 1.3375,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal32"
+                  },
+                  "field": "dealValue",
+                  "value": 214
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal32"
+                  },
+                  "field": "preDealValuation",
+                  "value": 160
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal33"
+              },
+              "value": 1.45,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal33"
+                  },
+                  "field": "dealValue",
+                  "value": 145
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal33"
+                  },
+                  "field": "preDealValuation",
+                  "value": 100
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal34"
+              },
+              "value": 1.2083333333333333,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal34"
+                  },
+                  "field": "dealValue",
+                  "value": 2900
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal34"
+                  },
+                  "field": "preDealValuation",
+                  "value": 2400
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal35"
+              },
+              "value": 1.5,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal35"
+                  },
+                  "field": "dealValue",
+                  "value": 375
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal35"
+                  },
+                  "field": "preDealValuation",
+                  "value": 250
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal36"
+              },
+              "value": 1.5,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal36"
+                  },
+                  "field": "dealValue",
+                  "value": 67.5
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal36"
+                  },
+                  "field": "preDealValuation",
+                  "value": 45
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal37"
+              },
+              "value": 1.3125,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal37"
+                  },
+                  "field": "dealValue",
+                  "value": 52.5
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal37"
+                  },
+                  "field": "preDealValuation",
+                  "value": 40
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal38"
+              },
+              "value": 1.53,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal38"
+                  },
+                  "field": "dealValue",
+                  "value": 153
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal38"
+                  },
+                  "field": "preDealValuation",
+                  "value": 100
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal39"
+              },
+              "value": 1.131578947368421,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal39"
+                  },
+                  "field": "dealValue",
+                  "value": 43000
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal39"
+                  },
+                  "field": "preDealValuation",
+                  "value": 38000
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal40"
+              },
+              "value": 1.0933333333333333,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal40"
+                  },
+                  "field": "dealValue",
+                  "value": 16400
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal40"
+                  },
+                  "field": "preDealValuation",
+                  "value": 15000
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal41"
+              },
+              "value": 1.1666666666666667,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal41"
+                  },
+                  "field": "dealValue",
+                  "value": 21000
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal41"
+                  },
+                  "field": "preDealValuation",
+                  "value": 18000
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal42"
+              },
+              "value": 1.2647058823529411,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal42"
+                  },
+                  "field": "dealValue",
+                  "value": 2150
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal42"
+                  },
+                  "field": "preDealValuation",
+                  "value": 1700
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal43"
+              },
+              "value": 1.3571428571428572,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal43"
+                  },
+                  "field": "dealValue",
+                  "value": 190
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal43"
+                  },
+                  "field": "preDealValuation",
+                  "value": 140
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal44"
+              },
+              "value": 1.3,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal44"
+                  },
+                  "field": "dealValue",
+                  "value": 1300
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal44"
+                  },
+                  "field": "preDealValuation",
+                  "value": 1000
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal45"
+              },
+              "value": 1.5454545454545454,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal45"
+                  },
+                  "field": "dealValue",
+                  "value": 85
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal45"
+                  },
+                  "field": "preDealValuation",
+                  "value": 55
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal46"
+              },
+              "value": 1.4166666666666667,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal46"
+                  },
+                  "field": "dealValue",
+                  "value": 85
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal46"
+                  },
+                  "field": "preDealValuation",
+                  "value": 60
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal48"
+              },
+              "value": 1.4,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal48"
+                  },
+                  "field": "dealValue",
+                  "value": 56
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal48"
+                  },
+                  "field": "preDealValuation",
+                  "value": 40
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal49"
+              },
+              "value": 1.127659574468085,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal49"
+                  },
+                  "field": "dealValue",
+                  "value": 5300
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal49"
+                  },
+                  "field": "preDealValuation",
+                  "value": 4700
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal51"
+              },
+              "value": 1.15625,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal51"
+                  },
+                  "field": "dealValue",
+                  "value": 3700
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal51"
+                  },
+                  "field": "preDealValuation",
+                  "value": 3200
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal52"
+              },
+              "value": 1.4166666666666667,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal52"
+                  },
+                  "field": "dealValue",
+                  "value": 425
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal52"
+                  },
+                  "field": "preDealValuation",
+                  "value": 300
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal53"
+              },
+              "value": 1.4,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal53"
+                  },
+                  "field": "dealValue",
+                  "value": 560
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal53"
+                  },
+                  "field": "preDealValuation",
+                  "value": 400
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal54"
+              },
+              "value": 1.3333333333333333,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal54"
+                  },
+                  "field": "dealValue",
+                  "value": 1200
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal54"
+                  },
+                  "field": "preDealValuation",
+                  "value": 900
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal55"
+              },
+              "value": 1.25,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal55"
+                  },
+                  "field": "dealValue",
+                  "value": 3250
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal55"
+                  },
+                  "field": "preDealValuation",
+                  "value": 2600
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal56"
+              },
+              "value": 1.314,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal56"
+                  },
+                  "field": "dealValue",
+                  "value": 657
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal56"
+                  },
+                  "field": "preDealValuation",
+                  "value": 500
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal58"
+              },
+              "value": 1.335,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal58"
+                  },
+                  "field": "dealValue",
+                  "value": 534
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal58"
+                  },
+                  "field": "preDealValuation",
+                  "value": 400
+                }
+              ]
+            }
+          ],
           "n": 47,
           "originalInputCount": 59,
           "excluded": [
@@ -2290,6 +3467,1208 @@
               "rawCitation": "Fresenius SE press release (divestiture)"
             }
           ],
+          "contributors": [
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal1"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal1"
+                  },
+                  "field": "dealValue",
+                  "value": 13900
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c23"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 13900
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal2"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal2"
+                  },
+                  "field": "dealValue",
+                  "value": 225
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c1"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 225
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal3"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal3"
+                  },
+                  "field": "dealValue",
+                  "value": 300
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c12"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 300
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal4"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal4"
+                  },
+                  "field": "dealValue",
+                  "value": 400
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c13"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 400
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal7"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal7"
+                  },
+                  "field": "dealValue",
+                  "value": 230
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c24"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 230
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal8"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal8"
+                  },
+                  "field": "dealValue",
+                  "value": 310
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c25"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 310
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal9"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal9"
+                  },
+                  "field": "dealValue",
+                  "value": 350
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c26"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 350
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal10"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal10"
+                  },
+                  "field": "dealValue",
+                  "value": 147
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c27"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 147
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal11"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal11"
+                  },
+                  "field": "dealValue",
+                  "value": 1600
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c28"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 1600
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal15"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal15"
+                  },
+                  "field": "dealValue",
+                  "value": 75
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c32"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 75
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal16"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal16"
+                  },
+                  "field": "dealValue",
+                  "value": 1450
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c33"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 1450
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal17"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal17"
+                  },
+                  "field": "dealValue",
+                  "value": 195
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c34"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 195
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal19"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal19"
+                  },
+                  "field": "dealValue",
+                  "value": 371
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c36"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 371
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal20"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal20"
+                  },
+                  "field": "dealValue",
+                  "value": 2800
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c37"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 2800
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal21"
+              },
+              "value": 0.4528301886792453,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal21"
+                  },
+                  "field": "dealValue",
+                  "value": 2400
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c38"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 5300
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal22"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal22"
+                  },
+                  "field": "dealValue",
+                  "value": 1900
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c39"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 1900
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal23"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal23"
+                  },
+                  "field": "dealValue",
+                  "value": 80
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c40"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 80
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal24"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal24"
+                  },
+                  "field": "dealValue",
+                  "value": 160
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c41"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 160
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal25"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal25"
+                  },
+                  "field": "dealValue",
+                  "value": 125
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c42"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 125
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal26"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal26"
+                  },
+                  "field": "dealValue",
+                  "value": 100
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c43"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 100
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal27"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal27"
+                  },
+                  "field": "dealValue",
+                  "value": 350
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c44"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 350
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal28"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal28"
+                  },
+                  "field": "dealValue",
+                  "value": 275
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c45"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 275
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal29"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal29"
+                  },
+                  "field": "dealValue",
+                  "value": 8000
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c46"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 8000
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal30"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal30"
+                  },
+                  "field": "dealValue",
+                  "value": 282
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c47"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 282
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal32"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal32"
+                  },
+                  "field": "dealValue",
+                  "value": 214
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c49"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 214
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal33"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal33"
+                  },
+                  "field": "dealValue",
+                  "value": 145
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c50"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 145
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal34"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal34"
+                  },
+                  "field": "dealValue",
+                  "value": 2900
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c51"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 2900
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal35"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal35"
+                  },
+                  "field": "dealValue",
+                  "value": 375
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c52"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 375
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal36"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal36"
+                  },
+                  "field": "dealValue",
+                  "value": 67.5
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c53"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 67.5
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal37"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal37"
+                  },
+                  "field": "dealValue",
+                  "value": 52.5
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c54"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 52.5
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal38"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal38"
+                  },
+                  "field": "dealValue",
+                  "value": 153
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c55"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 153
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal39"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal39"
+                  },
+                  "field": "dealValue",
+                  "value": 43000
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c56"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 43000
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal40"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal40"
+                  },
+                  "field": "dealValue",
+                  "value": 16400
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c57"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 16400
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal41"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal41"
+                  },
+                  "field": "dealValue",
+                  "value": 21000
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c58"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 21000
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal42"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal42"
+                  },
+                  "field": "dealValue",
+                  "value": 2150
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c59"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 2150
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal43"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal43"
+                  },
+                  "field": "dealValue",
+                  "value": 190
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c60"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 190
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal44"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal44"
+                  },
+                  "field": "dealValue",
+                  "value": 1300
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c61"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 1300
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal45"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal45"
+                  },
+                  "field": "dealValue",
+                  "value": 85
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c62"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 85
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal46"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal46"
+                  },
+                  "field": "dealValue",
+                  "value": 85
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c63"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 85
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal48"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal48"
+                  },
+                  "field": "dealValue",
+                  "value": 56
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c65"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 56
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal49"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal49"
+                  },
+                  "field": "dealValue",
+                  "value": 5300
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c66"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 5300
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal51"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal51"
+                  },
+                  "field": "dealValue",
+                  "value": 3700
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c68"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 3700
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal52"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal52"
+                  },
+                  "field": "dealValue",
+                  "value": 425
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c69"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 425
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal53"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal53"
+                  },
+                  "field": "dealValue",
+                  "value": 560
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c70"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 560
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal54"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal54"
+                  },
+                  "field": "dealValue",
+                  "value": 1200
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c71"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 1200
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal55"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal55"
+                  },
+                  "field": "dealValue",
+                  "value": 3250
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c72"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 3250
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal56"
+              },
+              "value": 0.5972727272727273,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal56"
+                  },
+                  "field": "dealValue",
+                  "value": 657
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c73"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 1100
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal58"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal58"
+                  },
+                  "field": "dealValue",
+                  "value": 534
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c75"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 534
+                }
+              ]
+            }
+          ],
           "n": 48,
           "originalInputCount": 59,
           "excluded": [
@@ -2617,6 +4996,183 @@
             {
               "kind": "prose",
               "rawCitation": "Company website - apostrophe.com"
+            }
+          ],
+          "contributors": [
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal1"
+              },
+              "value": 57.916666666666664,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal1"
+                  },
+                  "field": "dealValue",
+                  "value": 13900
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c23"
+                  },
+                  "field": "totalFunding",
+                  "value": 240
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal2"
+              },
+              "value": 1.4516129032258065,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal2"
+                  },
+                  "field": "dealValue",
+                  "value": 225
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c1"
+                  },
+                  "field": "totalFunding",
+                  "value": 155
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal3"
+              },
+              "value": 2.542372881355932,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal3"
+                  },
+                  "field": "dealValue",
+                  "value": 300
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c12"
+                  },
+                  "field": "totalFunding",
+                  "value": 118
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal4"
+              },
+              "value": 7.2727272727272725,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal4"
+                  },
+                  "field": "dealValue",
+                  "value": 400
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c13"
+                  },
+                  "field": "totalFunding",
+                  "value": 55
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal11"
+              },
+              "value": 6.4,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal11"
+                  },
+                  "field": "dealValue",
+                  "value": 1600
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c28"
+                  },
+                  "field": "totalFunding",
+                  "value": 250
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal14"
+              },
+              "value": 9.6,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal14"
+                  },
+                  "field": "dealValue",
+                  "value": 240
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c31"
+                  },
+                  "field": "totalFunding",
+                  "value": 25
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal57"
+              },
+              "value": 27.142857142857142,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal57"
+                  },
+                  "field": "dealValue",
+                  "value": 190
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c74"
+                  },
+                  "field": "totalFunding",
+                  "value": 7
+                }
+              ]
             }
           ],
           "n": 7,
@@ -3329,6 +5885,233 @@
               "rawCitation": "Gen-Probe Incorporated SEC filings"
             }
           ],
+          "contributors": [
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal7"
+              },
+              "value": 1.3529411764705883,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal7"
+                  },
+                  "field": "dealValue",
+                  "value": 230
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal7"
+                  },
+                  "field": "preDealValuation",
+                  "value": 170
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal8"
+              },
+              "value": 1.55,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal8"
+                  },
+                  "field": "dealValue",
+                  "value": 310
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal8"
+                  },
+                  "field": "preDealValuation",
+                  "value": 200
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal9"
+              },
+              "value": 1.5909090909090908,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal9"
+                  },
+                  "field": "dealValue",
+                  "value": 350
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal9"
+                  },
+                  "field": "preDealValuation",
+                  "value": 220
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal23"
+              },
+              "value": 1.4545454545454546,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal23"
+                  },
+                  "field": "dealValue",
+                  "value": 80
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal23"
+                  },
+                  "field": "preDealValuation",
+                  "value": 55
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal24"
+              },
+              "value": 1.6,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal24"
+                  },
+                  "field": "dealValue",
+                  "value": 160
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal24"
+                  },
+                  "field": "preDealValuation",
+                  "value": 100
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal25"
+              },
+              "value": 1.5625,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal25"
+                  },
+                  "field": "dealValue",
+                  "value": 125
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal25"
+                  },
+                  "field": "preDealValuation",
+                  "value": 80
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal45"
+              },
+              "value": 1.5454545454545454,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal45"
+                  },
+                  "field": "dealValue",
+                  "value": 85
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal45"
+                  },
+                  "field": "preDealValuation",
+                  "value": 55
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal46"
+              },
+              "value": 1.4166666666666667,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal46"
+                  },
+                  "field": "dealValue",
+                  "value": 85
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal46"
+                  },
+                  "field": "preDealValuation",
+                  "value": 60
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal51"
+              },
+              "value": 1.15625,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal51"
+                  },
+                  "field": "dealValue",
+                  "value": 3700
+                },
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal51"
+                  },
+                  "field": "preDealValuation",
+                  "value": 3200
+                }
+              ]
+            }
+          ],
           "n": 9,
           "originalInputCount": 59,
           "excluded": [
@@ -3981,6 +6764,233 @@
               "rawCitation": "Gen-Probe Incorporated SEC filings"
             }
           ],
+          "contributors": [
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal7"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal7"
+                  },
+                  "field": "dealValue",
+                  "value": 230
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c24"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 230
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal8"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal8"
+                  },
+                  "field": "dealValue",
+                  "value": 310
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c25"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 310
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal9"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal9"
+                  },
+                  "field": "dealValue",
+                  "value": 350
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c26"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 350
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal23"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal23"
+                  },
+                  "field": "dealValue",
+                  "value": 80
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c40"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 80
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal24"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal24"
+                  },
+                  "field": "dealValue",
+                  "value": 160
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c41"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 160
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal25"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal25"
+                  },
+                  "field": "dealValue",
+                  "value": 125
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c42"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 125
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal45"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal45"
+                  },
+                  "field": "dealValue",
+                  "value": 85
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c62"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 85
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal46"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal46"
+                  },
+                  "field": "dealValue",
+                  "value": 85
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c63"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 85
+                }
+              ]
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal51"
+              },
+              "value": 1,
+              "reads": [
+                {
+                  "ref": {
+                    "table": "acquisitions",
+                    "id": "deal51"
+                  },
+                  "field": "dealValue",
+                  "value": 3700
+                },
+                {
+                  "ref": {
+                    "table": "companies",
+                    "id": "c68"
+                  },
+                  "field": "lastKnownValuation",
+                  "value": 3700
+                }
+              ]
+            }
+          ],
           "n": 9,
           "originalInputCount": 59,
           "excluded": [
@@ -4450,6 +7460,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal1"
+            },
+            "value": 1.3238095238095238,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal1"
+                },
+                "field": "dealValue",
+                "value": 13900
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal1"
+                },
+                "field": "preDealValuation",
+                "value": 10500
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -4488,6 +7525,58 @@
             "field": "preDealValuation",
             "missing": 3,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal2"
+            },
+            "value": 1.5,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal2"
+                },
+                "field": "dealValue",
+                "value": 225
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal2"
+                },
+                "field": "preDealValuation",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal3"
+            },
+            "value": 1.2,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal3"
+                },
+                "field": "dealValue",
+                "value": 300
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal3"
+                },
+                "field": "preDealValuation",
+                "value": 250
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -4530,6 +7619,83 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal10"
+            },
+            "value": 1.47,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal10"
+                },
+                "field": "dealValue",
+                "value": 147
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal10"
+                },
+                "field": "preDealValuation",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal11"
+            },
+            "value": 1.3333333333333333,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal11"
+                },
+                "field": "dealValue",
+                "value": 1600
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal11"
+                },
+                "field": "preDealValuation",
+                "value": 1200
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal26"
+            },
+            "value": 1.5384615384615385,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal26"
+                },
+                "field": "dealValue",
+                "value": 100
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal26"
+                },
+                "field": "preDealValuation",
+                "value": 65
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -4568,6 +7734,58 @@
             "field": "preDealValuation",
             "missing": 3,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal15"
+            },
+            "value": 1.5,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal15"
+                },
+                "field": "dealValue",
+                "value": 75
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal15"
+                },
+                "field": "preDealValuation",
+                "value": 50
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal54"
+            },
+            "value": 1.3333333333333333,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal54"
+                },
+                "field": "dealValue",
+                "value": 1200
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal54"
+                },
+                "field": "preDealValuation",
+                "value": 900
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -4610,6 +7828,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal16"
+            },
+            "value": 1.3181818181818181,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal16"
+                },
+                "field": "dealValue",
+                "value": 1450
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal16"
+                },
+                "field": "preDealValuation",
+                "value": 1100
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -4648,6 +7893,33 @@
             "field": "preDealValuation",
             "missing": 3,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal17"
+            },
+            "value": 1.5,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal17"
+                },
+                "field": "dealValue",
+                "value": 195
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal17"
+                },
+                "field": "preDealValuation",
+                "value": 130
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -4690,6 +7962,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal19"
+            },
+            "value": 1.325,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal19"
+                },
+                "field": "dealValue",
+                "value": 371
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal19"
+                },
+                "field": "preDealValuation",
+                "value": 280
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -4728,6 +8027,83 @@
             "field": "preDealValuation",
             "missing": 3,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal20"
+            },
+            "value": 1.1666666666666667,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal20"
+                },
+                "field": "dealValue",
+                "value": 2800
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal20"
+                },
+                "field": "preDealValuation",
+                "value": 2400
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal42"
+            },
+            "value": 1.2647058823529411,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal42"
+                },
+                "field": "dealValue",
+                "value": 2150
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal42"
+                },
+                "field": "preDealValuation",
+                "value": 1700
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal43"
+            },
+            "value": 1.3571428571428572,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal43"
+                },
+                "field": "dealValue",
+                "value": 190
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal43"
+                },
+                "field": "preDealValuation",
+                "value": 140
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -4770,6 +8146,58 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal21"
+            },
+            "value": 1.3333333333333333,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal21"
+                },
+                "field": "dealValue",
+                "value": 2400
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal21"
+                },
+                "field": "preDealValuation",
+                "value": 1800
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal22"
+            },
+            "value": 1.2666666666666666,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal22"
+                },
+                "field": "dealValue",
+                "value": 1900
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal22"
+                },
+                "field": "preDealValuation",
+                "value": 1500
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -4808,6 +8236,33 @@
             "field": "preDealValuation",
             "missing": 3,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal27"
+            },
+            "value": 1.4,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal27"
+                },
+                "field": "dealValue",
+                "value": 350
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal27"
+                },
+                "field": "preDealValuation",
+                "value": 250
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -4850,6 +8305,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal28"
+            },
+            "value": 1.5277777777777777,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal28"
+                },
+                "field": "dealValue",
+                "value": 275
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal28"
+                },
+                "field": "preDealValuation",
+                "value": 180
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -4888,6 +8370,33 @@
             "field": "preDealValuation",
             "missing": 3,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal29"
+            },
+            "value": 1.2307692307692308,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal29"
+                },
+                "field": "dealValue",
+                "value": 8000
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal29"
+                },
+                "field": "preDealValuation",
+                "value": 6500
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -4930,6 +8439,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal30"
+            },
+            "value": 1.2818181818181817,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal30"
+                },
+                "field": "dealValue",
+                "value": 282
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal30"
+                },
+                "field": "preDealValuation",
+                "value": 220
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -4968,6 +8504,33 @@
             "field": "preDealValuation",
             "missing": 3,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal32"
+            },
+            "value": 1.3375,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal32"
+                },
+                "field": "dealValue",
+                "value": 214
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal32"
+                },
+                "field": "preDealValuation",
+                "value": 160
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -5010,6 +8573,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal33"
+            },
+            "value": 1.45,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal33"
+                },
+                "field": "dealValue",
+                "value": 145
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal33"
+                },
+                "field": "preDealValuation",
+                "value": 100
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -5048,6 +8638,33 @@
             "field": "preDealValuation",
             "missing": 3,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal34"
+            },
+            "value": 1.2083333333333333,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal34"
+                },
+                "field": "dealValue",
+                "value": 2900
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal34"
+                },
+                "field": "preDealValuation",
+                "value": 2400
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -5090,6 +8707,83 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal35"
+            },
+            "value": 1.5,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal35"
+                },
+                "field": "dealValue",
+                "value": 375
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal35"
+                },
+                "field": "preDealValuation",
+                "value": 250
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal36"
+            },
+            "value": 1.5,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal36"
+                },
+                "field": "dealValue",
+                "value": 67.5
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal36"
+                },
+                "field": "preDealValuation",
+                "value": 45
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal48"
+            },
+            "value": 1.4,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal48"
+                },
+                "field": "dealValue",
+                "value": 56
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal48"
+                },
+                "field": "preDealValuation",
+                "value": 40
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -5128,6 +8822,33 @@
             "field": "preDealValuation",
             "missing": 3,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal37"
+            },
+            "value": 1.3125,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal37"
+                },
+                "field": "dealValue",
+                "value": 52.5
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal37"
+                },
+                "field": "preDealValuation",
+                "value": 40
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -5170,6 +8891,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal38"
+            },
+            "value": 1.53,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal38"
+                },
+                "field": "dealValue",
+                "value": 153
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal38"
+                },
+                "field": "preDealValuation",
+                "value": 100
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -5208,6 +8956,33 @@
             "field": "preDealValuation",
             "missing": 3,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal39"
+            },
+            "value": 1.131578947368421,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal39"
+                },
+                "field": "dealValue",
+                "value": 43000
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal39"
+                },
+                "field": "preDealValuation",
+                "value": 38000
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -5250,6 +9025,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal40"
+            },
+            "value": 1.0933333333333333,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal40"
+                },
+                "field": "dealValue",
+                "value": 16400
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal40"
+                },
+                "field": "preDealValuation",
+                "value": 15000
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -5288,6 +9090,33 @@
             "field": "preDealValuation",
             "missing": 3,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal41"
+            },
+            "value": 1.1666666666666667,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal41"
+                },
+                "field": "dealValue",
+                "value": 21000
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal41"
+                },
+                "field": "preDealValuation",
+                "value": 18000
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -5330,6 +9159,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal44"
+            },
+            "value": 1.3,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal44"
+                },
+                "field": "dealValue",
+                "value": 1300
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal44"
+                },
+                "field": "preDealValuation",
+                "value": 1000
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -5368,6 +9224,33 @@
             "field": "preDealValuation",
             "missing": 3,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal49"
+            },
+            "value": 1.127659574468085,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal49"
+                },
+                "field": "dealValue",
+                "value": 5300
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal49"
+                },
+                "field": "preDealValuation",
+                "value": 4700
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -5410,6 +9293,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal52"
+            },
+            "value": 1.4166666666666667,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal52"
+                },
+                "field": "dealValue",
+                "value": 425
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal52"
+                },
+                "field": "preDealValuation",
+                "value": 300
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -5448,6 +9358,33 @@
             "field": "preDealValuation",
             "missing": 3,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal53"
+            },
+            "value": 1.4,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal53"
+                },
+                "field": "dealValue",
+                "value": 560
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal53"
+                },
+                "field": "preDealValuation",
+                "value": 400
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -5490,6 +9427,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal55"
+            },
+            "value": 1.25,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal55"
+                },
+                "field": "dealValue",
+                "value": 3250
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal55"
+                },
+                "field": "preDealValuation",
+                "value": 2600
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -5528,6 +9492,33 @@
             "field": "preDealValuation",
             "missing": 3,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal56"
+            },
+            "value": 1.314,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal56"
+                },
+                "field": "dealValue",
+                "value": 657
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal56"
+                },
+                "field": "preDealValuation",
+                "value": 500
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -5570,6 +9561,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal58"
+            },
+            "value": 1.335,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal58"
+                },
+                "field": "dealValue",
+                "value": 534
+              },
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal58"
+                },
+                "field": "preDealValuation",
+                "value": 400
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -5610,6 +9628,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal1"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal1"
+                },
+                "field": "dealValue",
+                "value": 13900
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c23"
+                },
+                "field": "lastKnownValuation",
+                "value": 13900
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -5648,6 +9693,58 @@
             "field": "lastKnownValuation",
             "missing": 2,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal2"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal2"
+                },
+                "field": "dealValue",
+                "value": 225
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c1"
+                },
+                "field": "lastKnownValuation",
+                "value": 225
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal3"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal3"
+                },
+                "field": "dealValue",
+                "value": 300
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c12"
+                },
+                "field": "lastKnownValuation",
+                "value": 300
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -5690,6 +9787,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal4"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal4"
+                },
+                "field": "dealValue",
+                "value": 400
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c13"
+                },
+                "field": "lastKnownValuation",
+                "value": 400
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -5728,6 +9852,83 @@
             "field": "lastKnownValuation",
             "missing": 2,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal10"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal10"
+                },
+                "field": "dealValue",
+                "value": 147
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c27"
+                },
+                "field": "lastKnownValuation",
+                "value": 147
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal11"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal11"
+                },
+                "field": "dealValue",
+                "value": 1600
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c28"
+                },
+                "field": "lastKnownValuation",
+                "value": 1600
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal26"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal26"
+                },
+                "field": "dealValue",
+                "value": 100
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c43"
+                },
+                "field": "lastKnownValuation",
+                "value": 100
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -5770,6 +9971,58 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal15"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal15"
+                },
+                "field": "dealValue",
+                "value": 75
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c32"
+                },
+                "field": "lastKnownValuation",
+                "value": 75
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal54"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal54"
+                },
+                "field": "dealValue",
+                "value": 1200
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c71"
+                },
+                "field": "lastKnownValuation",
+                "value": 1200
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -5808,6 +10061,33 @@
             "field": "lastKnownValuation",
             "missing": 2,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal16"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal16"
+                },
+                "field": "dealValue",
+                "value": 1450
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c33"
+                },
+                "field": "lastKnownValuation",
+                "value": 1450
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -5850,6 +10130,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal17"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal17"
+                },
+                "field": "dealValue",
+                "value": 195
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c34"
+                },
+                "field": "lastKnownValuation",
+                "value": 195
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -5888,6 +10195,33 @@
             "field": "lastKnownValuation",
             "missing": 2,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal19"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal19"
+                },
+                "field": "dealValue",
+                "value": 371
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c36"
+                },
+                "field": "lastKnownValuation",
+                "value": 371
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -5930,6 +10264,83 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal20"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal20"
+                },
+                "field": "dealValue",
+                "value": 2800
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c37"
+                },
+                "field": "lastKnownValuation",
+                "value": 2800
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal42"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal42"
+                },
+                "field": "dealValue",
+                "value": 2150
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c59"
+                },
+                "field": "lastKnownValuation",
+                "value": 2150
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal43"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal43"
+                },
+                "field": "dealValue",
+                "value": 190
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c60"
+                },
+                "field": "lastKnownValuation",
+                "value": 190
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -5968,6 +10379,58 @@
             "field": "lastKnownValuation",
             "missing": 2,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal21"
+            },
+            "value": 0.4528301886792453,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal21"
+                },
+                "field": "dealValue",
+                "value": 2400
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c38"
+                },
+                "field": "lastKnownValuation",
+                "value": 5300
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal22"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal22"
+                },
+                "field": "dealValue",
+                "value": 1900
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c39"
+                },
+                "field": "lastKnownValuation",
+                "value": 1900
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -6010,6 +10473,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal27"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal27"
+                },
+                "field": "dealValue",
+                "value": 350
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c44"
+                },
+                "field": "lastKnownValuation",
+                "value": 350
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -6048,6 +10538,33 @@
             "field": "lastKnownValuation",
             "missing": 2,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal28"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal28"
+                },
+                "field": "dealValue",
+                "value": 275
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c45"
+                },
+                "field": "lastKnownValuation",
+                "value": 275
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -6090,6 +10607,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal29"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal29"
+                },
+                "field": "dealValue",
+                "value": 8000
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c46"
+                },
+                "field": "lastKnownValuation",
+                "value": 8000
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -6128,6 +10672,33 @@
             "field": "lastKnownValuation",
             "missing": 2,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal30"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal30"
+                },
+                "field": "dealValue",
+                "value": 282
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c47"
+                },
+                "field": "lastKnownValuation",
+                "value": 282
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -6170,6 +10741,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal32"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal32"
+                },
+                "field": "dealValue",
+                "value": 214
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c49"
+                },
+                "field": "lastKnownValuation",
+                "value": 214
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -6208,6 +10806,33 @@
             "field": "lastKnownValuation",
             "missing": 2,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal33"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal33"
+                },
+                "field": "dealValue",
+                "value": 145
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c50"
+                },
+                "field": "lastKnownValuation",
+                "value": 145
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -6250,6 +10875,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal34"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal34"
+                },
+                "field": "dealValue",
+                "value": 2900
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c51"
+                },
+                "field": "lastKnownValuation",
+                "value": 2900
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -6288,6 +10940,83 @@
             "field": "lastKnownValuation",
             "missing": 2,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal35"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal35"
+                },
+                "field": "dealValue",
+                "value": 375
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c52"
+                },
+                "field": "lastKnownValuation",
+                "value": 375
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal36"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal36"
+                },
+                "field": "dealValue",
+                "value": 67.5
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c53"
+                },
+                "field": "lastKnownValuation",
+                "value": 67.5
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal48"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal48"
+                },
+                "field": "dealValue",
+                "value": 56
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c65"
+                },
+                "field": "lastKnownValuation",
+                "value": 56
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -6330,6 +11059,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal37"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal37"
+                },
+                "field": "dealValue",
+                "value": 52.5
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c54"
+                },
+                "field": "lastKnownValuation",
+                "value": 52.5
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -6368,6 +11124,33 @@
             "field": "lastKnownValuation",
             "missing": 2,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal38"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal38"
+                },
+                "field": "dealValue",
+                "value": 153
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c55"
+                },
+                "field": "lastKnownValuation",
+                "value": 153
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -6410,6 +11193,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal39"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal39"
+                },
+                "field": "dealValue",
+                "value": 43000
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c56"
+                },
+                "field": "lastKnownValuation",
+                "value": 43000
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -6448,6 +11258,33 @@
             "field": "lastKnownValuation",
             "missing": 2,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal40"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal40"
+                },
+                "field": "dealValue",
+                "value": 16400
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c57"
+                },
+                "field": "lastKnownValuation",
+                "value": 16400
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -6490,6 +11327,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal41"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal41"
+                },
+                "field": "dealValue",
+                "value": 21000
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c58"
+                },
+                "field": "lastKnownValuation",
+                "value": 21000
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -6528,6 +11392,33 @@
             "field": "lastKnownValuation",
             "missing": 2,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal44"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal44"
+                },
+                "field": "dealValue",
+                "value": 1300
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c61"
+                },
+                "field": "lastKnownValuation",
+                "value": 1300
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -6570,6 +11461,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal49"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal49"
+                },
+                "field": "dealValue",
+                "value": 5300
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c66"
+                },
+                "field": "lastKnownValuation",
+                "value": 5300
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -6608,6 +11526,33 @@
             "field": "lastKnownValuation",
             "missing": 2,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal52"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal52"
+                },
+                "field": "dealValue",
+                "value": 425
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c69"
+                },
+                "field": "lastKnownValuation",
+                "value": 425
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -6650,6 +11595,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal53"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal53"
+                },
+                "field": "dealValue",
+                "value": 560
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c70"
+                },
+                "field": "lastKnownValuation",
+                "value": 560
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -6688,6 +11660,33 @@
             "field": "lastKnownValuation",
             "missing": 2,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal55"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal55"
+                },
+                "field": "dealValue",
+                "value": 3250
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c72"
+                },
+                "field": "lastKnownValuation",
+                "value": 3250
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -6730,6 +11729,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal56"
+            },
+            "value": 0.5972727272727273,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal56"
+                },
+                "field": "dealValue",
+                "value": 657
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c73"
+                },
+                "field": "lastKnownValuation",
+                "value": 1100
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -6770,6 +11796,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal58"
+            },
+            "value": 1,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal58"
+                },
+                "field": "dealValue",
+                "value": 534
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c75"
+                },
+                "field": "lastKnownValuation",
+                "value": 534
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -6808,6 +11861,33 @@
             "field": "totalFunding",
             "missing": 43,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal1"
+            },
+            "value": 57.916666666666664,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal1"
+                },
+                "field": "dealValue",
+                "value": 13900
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c23"
+                },
+                "field": "totalFunding",
+                "value": 240
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -6850,6 +11930,58 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal2"
+            },
+            "value": 1.4516129032258065,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal2"
+                },
+                "field": "dealValue",
+                "value": 225
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c1"
+                },
+                "field": "totalFunding",
+                "value": 155
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal3"
+            },
+            "value": 2.542372881355932,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal3"
+                },
+                "field": "dealValue",
+                "value": 300
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c12"
+                },
+                "field": "totalFunding",
+                "value": 118
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -6888,6 +12020,33 @@
             "field": "totalFunding",
             "missing": 43,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal4"
+            },
+            "value": 7.2727272727272725,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal4"
+                },
+                "field": "dealValue",
+                "value": 400
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c13"
+                },
+                "field": "totalFunding",
+                "value": 55
+              }
+            ]
           }
         ],
         "suppression": "n<5",
@@ -6930,6 +12089,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal11"
+            },
+            "value": 6.4,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal11"
+                },
+                "field": "dealValue",
+                "value": 1600
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c28"
+                },
+                "field": "totalFunding",
+                "value": 250
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -6970,6 +12156,33 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal14"
+            },
+            "value": 9.6,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal14"
+                },
+                "field": "dealValue",
+                "value": 240
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c31"
+                },
+                "field": "totalFunding",
+                "value": 25
+              }
+            ]
+          }
+        ],
         "suppression": "n<5",
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
@@ -7008,6 +12221,33 @@
             "field": "totalFunding",
             "missing": 43,
             "total": 50
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal57"
+            },
+            "value": 27.142857142857142,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal57"
+                },
+                "field": "dealValue",
+                "value": 190
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c74"
+                },
+                "field": "totalFunding",
+                "value": 7
+              }
+            ]
           }
         ],
         "suppression": "n<5",

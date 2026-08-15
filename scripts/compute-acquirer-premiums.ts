@@ -2,6 +2,7 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import {
+  type FieldRead,
   fromRecords,
   getMetricDeclaration,
   type LineageOptions,
@@ -74,10 +75,38 @@ const denominatorFields = {
 type PremiumMetricId = keyof typeof denominatorFields;
 
 function denominatorCollection(metricId: PremiumMetricId) {
-  return eligibleCollection(metricId).map((deal) => {
-    const getDenominator = denominatorFields[metricId];
-    return deal.dealValue! / getDenominator(deal)!;
-  });
+  return eligibleCollection(metricId).map(
+    (deal) => {
+      const getDenominator = denominatorFields[metricId];
+      return deal.dealValue! / getDenominator(deal)!;
+    },
+    ({ input, ref, supporting }): readonly FieldRead[] => {
+      const denominatorField = metricId ===
+          "acquirer.premium.preDealValuation"
+        ? "preDealValuation"
+        : metricId === "acquirer.premium.lastKnownValuation"
+        ? "lastKnownValuation"
+        : "totalFunding";
+      const denominatorRef = metricId ===
+          "acquirer.premium.preDealValuation"
+        ? ref
+        : supporting[0]!;
+      const denominatorValue = metricId ===
+          "acquirer.premium.preDealValuation"
+        ? input.preDealValuation
+        : metricId === "acquirer.premium.lastKnownValuation"
+        ? input.company.lastKnownValuation
+        : input.company.totalFunding;
+      return [
+        { ref, field: "dealValue", value: input.dealValue },
+        {
+          ref: denominatorRef,
+          field: denominatorField,
+          value: denominatorValue,
+        },
+      ];
+    },
+  );
 }
 
 function eligibleCollection(
@@ -161,6 +190,32 @@ for (const metricId of Object.keys(denominatorFields) as PremiumMetricId[]) {
   for (const acquirerName of acquirerNames) {
     const collection = eligibleCollection(metricId, acquirerName).map(
       (deal) => deal.dealValue! / getDenominator(deal)!,
+      ({ input, ref, supporting }): readonly FieldRead[] => {
+        const denominatorField = metricId ===
+            "acquirer.premium.preDealValuation"
+          ? "preDealValuation"
+          : metricId === "acquirer.premium.lastKnownValuation"
+          ? "lastKnownValuation"
+          : "totalFunding";
+        const denominatorRef = metricId ===
+            "acquirer.premium.preDealValuation"
+          ? ref
+          : supporting[0]!;
+        const denominatorValue = metricId ===
+            "acquirer.premium.preDealValuation"
+          ? input.preDealValuation
+          : metricId === "acquirer.premium.lastKnownValuation"
+          ? input.company.lastKnownValuation
+          : input.company.totalFunding;
+        return [
+          { ref, field: "dealValue", value: input.dealValue },
+          {
+            ref: denominatorRef,
+            field: denominatorField,
+            value: denominatorValue,
+          },
+        ];
+      },
     );
     const result = collection.estimate(metricId);
     if (!isSufficient(result)) {

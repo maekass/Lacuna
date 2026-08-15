@@ -1,8 +1,10 @@
 import type { InsufficientData, QuantValue } from "@/lib/quant/types";
 import { estimateRegisteredMetric, getMetricDeclaration } from "./registry";
 import type {
+  ContributorValue,
   DatasetTable,
   ExcludedRef,
+  FieldRead,
   Lineage,
   LineageOptions,
   LineageSummary,
@@ -24,6 +26,13 @@ interface CollectionState<T> {
 
 export interface JoinableRecord extends RecordWithSources {
   readonly id: string;
+}
+
+export interface TraceReadContext<T, U> {
+  readonly input: T;
+  readonly output: U;
+  readonly ref: RecordRef;
+  readonly supporting: readonly RecordRef[];
 }
 
 function uniqueBy<T>(items: readonly T[], key: (item: T) => string): T[] {
@@ -95,6 +104,15 @@ function makeLineage(
       state.records.flatMap((record) => record.sources),
       sourceKey,
     ),
+    contributors: state.records
+      .filter((record): record is TracedRecord<number> =>
+        typeof record.value === "number"
+      )
+      .map<ContributorValue>((record) => ({
+        ref: record.ref,
+        value: record.value,
+        reads: record.reads ?? [],
+      })),
     n: state.records.length,
     originalInputCount: state.inputCount,
     excluded: state.excluded,
@@ -103,6 +121,7 @@ function makeLineage(
     datasetVersion: state.options.datasetVersion,
     datasetHash: state.options.datasetHash,
     computedAt: state.options.computedAt ?? new Date().toISOString(),
+    reproductionParameters: state.options.reproductionParameters,
   };
 }
 
@@ -120,10 +139,12 @@ export function summarizeLineage(lineage: Lineage): LineageSummary {
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([reason, count]) => ({ reason, count })),
     missingness: lineage.missingness,
+    contributors: lineage.contributors,
     suppression: lineage.suppression,
     datasetVersion: lineage.datasetVersion,
     datasetHash: lineage.datasetHash,
     computedAt: lineage.computedAt,
+    reproductionParameters: lineage.reproductionParameters,
   };
 }
 
@@ -195,6 +216,7 @@ export class TracedCollection<T> {
           [...left.supporting, { table, id: match.id }],
           (ref) => `${ref.table}:${ref.id}`,
         ),
+        ...(left.reads === undefined ? {} : { reads: left.reads }),
       });
     }
 
@@ -233,13 +255,29 @@ export class TracedCollection<T> {
     });
   }
 
-  map<U>(mapper: (value: T) => U): TracedCollection<U> {
+  map<U>(
+    mapper: (value: T) => U,
+    reads?: (
+      context: TraceReadContext<T, U>,
+    ) => readonly FieldRead[],
+  ): TracedCollection<U> {
     return new TracedCollection({
       ...this.state,
-      records: this.state.records.map((record) => ({
-        ...record,
-        value: mapper(record.value),
-      })),
+      records: this.state.records.map((record) => {
+        const output = mapper(record.value);
+        return {
+          ...record,
+          value: output,
+          ...(reads === undefined ? {} : {
+            reads: reads({
+              input: record.value,
+              output,
+              ref: record.ref,
+              supporting: record.supporting,
+            }),
+          }),
+        };
+      }),
     });
   }
 
