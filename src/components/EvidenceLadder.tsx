@@ -27,10 +27,16 @@ export default function EvidenceLadder(
           className={`rounded-full border px-2.5 py-0.5 text-xs font-medium ${
             ladder.hasDualSource
               ? "border-emerald-300 bg-emerald-50 text-emerald-800"
+              : ladder.pressOnly
+              ? "border-amber-300 bg-amber-50 text-amber-800"
               : "border-amber-300 bg-amber-50 text-amber-800"
           }`}
         >
-          {ladder.hasDualSource ? "Dual-source corroboration" : "Single-source"}
+          {ladder.hasDualSource
+            ? "Dual-source corroboration"
+            : ladder.pressOnly
+            ? "Press only — no primary filing"
+            : "Single-source"}
         </span>
         <span
           className={`rounded-full border px-2.5 py-0.5 text-xs font-medium ${
@@ -61,7 +67,9 @@ export default function EvidenceLadder(
                   rel="noopener noreferrer"
                   className="mt-1 inline-block text-xs font-medium underline underline-offset-2"
                 >
-                  Open source
+                  {run.urlKind === "edgar_locator"
+                    ? "SEC EDGAR filings (ticker locator)"
+                    : "Open source"}
                 </a>
               )
               : null}

@@ -10,10 +10,25 @@ export {
 } from "./dealTypes";
 export { getDealById } from "./getDealById";
 export { getFeaturedDeal } from "./getFeaturedDeal";
-export { listComparableDeals } from "./listComparableDeals";
+export {
+  listComparableDeals,
+  listComparableDealSets,
+} from "./listComparableDeals";
+export type {
+  AdjacentNonPeer,
+  ComparableDealSets,
+} from "./listComparableDeals";
 export { listAcquirerDeals } from "./listAcquirerDeals";
-export { buildEvidenceLadder } from "./evidenceLadder";
+export {
+  buildEvidenceLadder,
+  hasPrimaryAndIndependent,
+} from "./evidenceLadder";
 export type { EvidenceLadderResult, EvidenceTier } from "./evidenceLadder";
+export { getDealDetailView } from "./getDealDetailView";
+export type { DealDetailView } from "./getDealDetailView";
+export { formatDealDate } from "./formatDealDate";
+export { inferSourceUrl, isEdgarLocatorUrl } from "./inferSourceUrl";
+export type { SourceUrlKind } from "./inferSourceUrl";
 export { empowermentContextForDeal } from "./empowermentContextForDeal";
 export type {
   DealEmpowermentContext,

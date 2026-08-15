@@ -52,6 +52,32 @@ describe("no synthetic M&A demo data in src/", () => {
 
     expect(violations).toEqual([]);
   });
+
+  it("deal dossier does not import keyword classifiers or invented TAM panels", () => {
+    const files = [
+      "app/sections/DealDetailPage.tsx",
+      "lib/deals/getDealDetailView.ts",
+      "lib/deals/empowermentContextForDeal.ts",
+      "components/DealEmpowermentContext.tsx",
+    ];
+    const forbidden = [
+      /\bclassifyEvidence\b/,
+      /\bgenerateMarketSizing\b/,
+      /\bCommercializationReadiness\b/,
+      /\bSTRATEGIC_ACQUIRERS\b/,
+      /\bPipelineStatusStrip\b/,
+    ];
+    const violations: string[] = [];
+    for (const relative of files) {
+      const content = readFileSync(path.join(SRC_ROOT, relative), "utf8");
+      for (const pattern of forbidden) {
+        if (pattern.test(content)) {
+          violations.push(`${relative} matched ${pattern}`);
+        }
+      }
+    }
+    expect(violations).toEqual([]);
+  });
 });
 
 describe("test fixtures use verified JSON slice", () => {

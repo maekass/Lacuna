@@ -34,7 +34,12 @@ export interface ComparableDealSummary {
   targetName: string;
   acquirerName: string;
   announcedDate: string;
+  /** Display label for `announcedDate` (UTC calendar). */
+  announcedLabel: string;
   dealValue?: number;
   dealType: string;
   sector: string;
+  evidenceClass?: string;
+  sameEvidenceClass?: boolean;
+  sameAcquirer?: boolean;
 }

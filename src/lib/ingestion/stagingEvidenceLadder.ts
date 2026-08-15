@@ -2,6 +2,7 @@ import type {
   EvidenceLadderResult,
   EvidenceRun,
 } from "@/lib/deals/evidenceLadder";
+import { hasPrimaryAndIndependent } from "@/lib/deals/evidenceLadder";
 import type { PendingDealRecord } from "@/lib/ingestion/pendingDeals";
 
 function extractUrls(text: string | null): string[] {
@@ -54,10 +55,9 @@ export function buildStagingEvidenceLadder(
   }
 
   const primaryCount = runs.filter((r) => r.tier === "primary").length;
-  const secondaryCount =
-    runs.filter((r) => r.tier === "secondary" || r.tier === "primary").length;
-  const hasDualSource = primaryCount >= 1 && secondaryCount >= 2 ||
-    runs.length >= 2;
+  const secondaryCount = runs.filter((r) => r.tier === "secondary").length;
+  const hasDualSource = hasPrimaryAndIndependent(runs);
+  const pressOnly = !hasDualSource && primaryCount === 0 && runs.length >= 2;
 
   const priceDisclosed = deal.dealValueMillions !== null;
   const limitations: string[] = [
@@ -87,6 +87,7 @@ export function buildStagingEvidenceLadder(
     primaryCount,
     secondaryCount,
     hasDualSource,
+    pressOnly,
     priceDisclosed,
     priceNote: deal.dealValueNote ?? undefined,
     limitations,

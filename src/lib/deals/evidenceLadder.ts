@@ -1,4 +1,9 @@
 import type { DealDetail } from "./dealTypes";
+import {
+  inferSourceUrl,
+  isEdgarLocatorUrl,
+  type SourceUrlKind,
+} from "./inferSourceUrl";
 
 export type EvidenceTier = "primary" | "secondary" | "tertiary" | "unknown";
 
@@ -7,6 +12,7 @@ export interface EvidenceRun {
   label: string;
   citation: string;
   url?: string;
+  urlKind?: SourceUrlKind;
 }
 
 export interface EvidenceLadderResult {
@@ -14,6 +20,8 @@ export interface EvidenceLadderResult {
   primaryCount: number;
   secondaryCount: number;
   hasDualSource: boolean;
+  /** True when two or more citations exist but none is a primary filing. */
+  pressOnly: boolean;
   priceDisclosed: boolean;
   priceNote?: string;
   limitations: string[];
@@ -50,16 +58,56 @@ function tierLabel(tier: EvidenceTier): string {
   }
 }
 
+function citationKey(text: string): string {
+  return text.trim().toLowerCase();
+}
+
+/**
+ * Dual-source means a primary filing plus an independent press/IR or trade citation.
+ * Two wires of the same announcement do not qualify.
+ */
+export function hasPrimaryAndIndependent(
+  runs: readonly EvidenceRun[],
+): boolean {
+  const hasPrimary = runs.some((r) => r.tier === "primary");
+  const hasIndependent = runs.some((r) =>
+    r.tier === "secondary" || r.tier === "tertiary"
+  );
+  return hasPrimary && hasIndependent;
+}
+
 /**
  * Builds an evidence ladder from a verified deal's source string and value fields.
  */
 export function buildEvidenceLadder(deal: DealDetail): EvidenceLadderResult {
   const acq = deal.acquisition;
-  const parts = splitSources(acq.source);
-  const runs: EvidenceRun[] = parts.map((citation) => {
+  const ticker = deal.acquirer.ticker;
+  const seen = new Set<string>();
+  const runs: EvidenceRun[] = [];
+
+  function pushCitation(citation: string): void {
+    const key = citationKey(citation);
+    if (!key || seen.has(key)) return;
+    seen.add(key);
     const tier = classifyCitation(citation);
-    return { tier, label: tierLabel(tier), citation };
-  });
+    const url = inferSourceUrl(citation, ticker);
+    runs.push({
+      tier,
+      label: tierLabel(tier),
+      citation,
+      url,
+      urlKind: url
+        ? (isEdgarLocatorUrl(url) ? "edgar_locator" : "direct")
+        : undefined,
+    });
+  }
+
+  for (const part of splitSources(acq.source)) {
+    pushCitation(part);
+  }
+  if (acq.preDealValuationSource) {
+    pushCitation(acq.preDealValuationSource);
+  }
 
   if (runs.length === 0) {
     runs.push({
@@ -70,15 +118,18 @@ export function buildEvidenceLadder(deal: DealDetail): EvidenceLadderResult {
   }
 
   const primaryCount = runs.filter((r) => r.tier === "primary").length;
-  const secondaryCount =
-    runs.filter((r) => r.tier === "secondary" || r.tier === "primary").length;
-  const hasDualSource = primaryCount >= 1 && secondaryCount >= 2 ||
-    runs.length >= 2;
+  const secondaryCount = runs.filter((r) => r.tier === "secondary").length;
+  const hasDualSource = hasPrimaryAndIndependent(runs);
+  const pressOnly = !hasDualSource && primaryCount === 0 && runs.length >= 2;
 
   const priceDisclosed = typeof acq.dealValue === "number";
   const limitations: string[] = [];
 
-  if (!hasDualSource) {
+  if (pressOnly) {
+    limitations.push(
+      "Citations are press/IR only — two wires of the same announcement are not dual-source. Add a primary filing.",
+    );
+  } else if (!hasDualSource) {
     limitations.push(
       "Single-source or weak corroboration — treat valuation and timing as directional.",
     );
@@ -90,7 +141,10 @@ export function buildEvidenceLadder(deal: DealDetail): EvidenceLadderResult {
   } else if (acq.dealValueNote) {
     limitations.push(acq.dealValueNote);
   }
-  if (acq.preDealValuationSource) {
+  if (
+    acq.preDealValuationSource &&
+    !SEC_PATTERN.test(acq.preDealValuationSource)
+  ) {
     limitations.push(
       `Pre-deal valuation sourced from: ${acq.preDealValuationSource}`,
     );
@@ -101,6 +155,7 @@ export function buildEvidenceLadder(deal: DealDetail): EvidenceLadderResult {
     primaryCount,
     secondaryCount,
     hasDualSource,
+    pressOnly,
     priceDisclosed,
     priceNote: acq.dealValueNote,
     limitations,

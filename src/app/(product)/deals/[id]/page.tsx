@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import DealDetailPage from "@/app/sections/DealDetailPage";
 import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
-import { getDealById } from "@/lib/deals";
+import { getDealById, getDealDetailView } from "@/lib/deals";
 
 export const revalidate = 86_400;
 
@@ -25,15 +25,18 @@ export async function generateMetadata(
     return { title: "Deal not found · Lacuna" };
   }
   const acq = deal.acquisition;
+  const valueBit = typeof acq.dealValue === "number"
+    ? ` $${acq.dealValue}M disclosed.`
+    : " Value undisclosed.";
+  const description =
+    `Verified women's health ${acq.dealType}: ${acq.targetName} → ${acq.acquirerName}, announced ${acq.announcedDate}.${valueBit} Sources and limitations from public filings.`;
   return {
     title: `${acq.targetName} → ${acq.acquirerName} · Lacuna`,
-    description:
-      `Verified women's health M&A: ${acq.dealType}, announced ${acq.announcedDate}. Sources and limitations from public filings.`,
+    description,
     alternates: { canonical: `/deals/${id}` },
     openGraph: {
       title: `${acq.targetName} → ${acq.acquirerName}`,
-      description:
-        `Verified women's health M&A: ${acq.dealType}, announced ${acq.announcedDate}.`,
+      description,
       type: "article",
     },
   };
@@ -42,8 +45,9 @@ export async function generateMetadata(
 export default async function Page({ params }: PageProps) {
   const { id } = await params;
   const dataset = getStaticVerifiedDataset();
-  if (!getDealById(dataset, id)) {
+  const view = getDealDetailView(dataset, id);
+  if (!view) {
     notFound();
   }
-  return <DealDetailPage dealId={id} />;
+  return <DealDetailPage view={view} />;
 }

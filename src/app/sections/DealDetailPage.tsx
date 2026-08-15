@@ -1,148 +1,45 @@
-"use client";
-
-import { useCallback, useMemo, useState } from "react";
-import Link from "next/link";
+import DealCloseTimeline from "@/components/DealCloseTimeline";
+import DealComparableTables from "@/components/DealComparableTables";
+import DealDetailActions from "@/components/DealDetailActions";
+import DealEconomicsCard from "@/components/DealEconomicsCard";
+import DealEmpowermentContext from "@/components/DealEmpowermentContext";
+import DealVerifiedProvenance from "@/components/DealVerifiedProvenance";
 import EvidenceLadder from "@/components/EvidenceLadder";
-import PipelineStatusStrip from "@/components/PipelineStatusStrip";
 import MotionSection from "@/components/ui/MotionSection";
-import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
-import {
-  buildEvidenceLadder,
-  getDealById,
-  listAcquirerDeals,
-  listComparableDeals,
-} from "@/lib/deals";
-import { formatDealBrief } from "@/lib/gamma/formatDealBrief";
+import type { DealDetailView } from "@/lib/deals";
+import Link from "next/link";
 
-interface DealDetailPageProps {
-  dealId: string;
+const EVIDENCE_CLASS_LABELS: Record<string, string> = {
+  diagnostic_genomic: "Diagnostic / genomic",
+  clinical_therapeutic: "Clinical / therapeutic",
+  fertility_science: "Fertility science",
+  care_delivery: "Care delivery",
+  consumer_wellness: "Consumer wellness",
+  portfolio_investment: "Portfolio investment",
+};
+
+function briefFileName(
+  target: string,
+  acquirer: string,
+  announced: string,
+): string {
+  const slug = `${target}-${acquirer}-${announced.slice(0, 4)}`
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+  return `${slug}.md`;
 }
 
-function formatValue(millions?: number, note?: string): string {
-  if (typeof millions !== "number") {
-    return note ? `Undisclosed (${note})` : "Undisclosed";
-  }
-  return note
-    ? `$${millions.toLocaleString()}M (${note})`
-    : `$${millions.toLocaleString()}M`;
-}
-
-function DealTable({
-  title,
-  rows,
-}: {
-  title: string;
-  rows: {
-    id: string;
-    targetName: string;
-    acquirerName: string;
-    announcedDate: string;
-    dealValue?: number;
-  }[];
-}) {
-  if (rows.length === 0) return null;
-  return (
-    <div>
-      <h3 className="text-lg font-semibold text-lacuna-plum">{title}</h3>
-      <div className="mt-3 overflow-x-auto rounded-lg border border-lacuna-lavender/40">
-        <table className="min-w-full text-sm">
-          <thead className="bg-lacuna-lavender/20 text-left text-xs uppercase tracking-wide text-lacuna-plum/80">
-            <tr>
-              <th className="px-3 py-2">Target</th>
-              <th className="px-3 py-2">Acquirer</th>
-              <th className="px-3 py-2">Announced</th>
-              <th className="px-3 py-2">Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row) => (
-              <tr key={row.id} className="border-t border-lacuna-lavender/30">
-                <td className="px-3 py-2">
-                  <Link
-                    href={`/deals/${row.id}`}
-                    className="font-medium text-lacuna-plum hover:text-lacuna-blue underline-offset-2 hover:underline"
-                  >
-                    {row.targetName}
-                  </Link>
-                </td>
-                <td className="px-3 py-2 text-lacuna-blue">
-                  {row.acquirerName}
-                </td>
-                <td className="px-3 py-2 text-lacuna-blue/80">
-                  {row.announcedDate}
-                </td>
-                <td className="px-3 py-2 text-lacuna-blue/80">
-                  {typeof row.dealValue === "number"
-                    ? `$${row.dealValue.toLocaleString()}M`
-                    : "Undisclosed"}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-export default function DealDetailPage({ dealId }: DealDetailPageProps) {
-  const dataset = useMemo(() => getStaticVerifiedDataset(), []);
-  const deal = useMemo(() => getDealById(dataset, dealId), [dataset, dealId]);
-  const [copyStatus, setCopyStatus] = useState<"idle" | "ok" | "err">("idle");
-
-  const comparables = useMemo(
-    () => listComparableDeals(dataset, dealId),
-    [dataset, dealId],
-  );
-  const acquirerDeals = useMemo(
-    () => listAcquirerDeals(dataset, dealId),
-    [dataset, dealId],
-  );
-  const ladder = useMemo(
-    () => (deal ? buildEvidenceLadder(deal) : null),
-    [deal],
-  );
-
-  const copyLink = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      setCopyStatus("ok");
-      setTimeout(() => setCopyStatus("idle"), 2000);
-    } catch {
-      setCopyStatus("err");
-    }
-  }, []);
-
-  const exportBrief = useCallback(async () => {
-    if (!deal) return;
-    const markdown = formatDealBrief(deal, comparables);
-    try {
-      await navigator.clipboard.writeText(markdown);
-      setCopyStatus("ok");
-      setTimeout(() => setCopyStatus("idle"), 2000);
-    } catch {
-      setCopyStatus("err");
-    }
-  }, [deal, comparables]);
-
-  if (!deal) {
-    return (
-      <div className="rounded-xl border border-dashed border-lacuna-lavender/50 p-8 text-center">
-        <p className="text-lacuna-plum font-semibold">Deal not found</p>
-        <Link
-          href="/deals"
-          className="mt-2 inline-block text-sm text-lacuna-blue underline"
-        >
-          Back to deals workspace
-        </Link>
-      </div>
-    );
-  }
-
+export default function DealDetailPage({ view }: { view: DealDetailView }) {
+  const { deal, ladder, comparables, adjacencyNotPeers, acquirerDeals } = view;
   const acq = deal.acquisition;
-  const sectorKeyword = encodeURIComponent(
-    deal.target.sector.split(/\s+/)[0] ?? "women",
-  );
+  const evidenceLabel = deal.target.evidenceClass
+    ? EVIDENCE_CLASS_LABELS[deal.target.evidenceClass] ??
+      deal.target.evidenceClass
+    : null;
+  const foundedLabel = deal.target.founded
+    ? `Founded ${String(deal.target.founded)}`
+    : null;
 
   return (
     <div className="min-w-0">
@@ -165,77 +62,67 @@ export default function DealDetailPage({ dealId }: DealDetailPageProps) {
           <span className="block sm:inline">{acq.acquirerName}</span>
         </h1>
         <p className="mt-2 text-sm leading-relaxed text-lacuna-blue sm:text-base">
-          {acq.dealType} · Announced {acq.announcedDate}
-          {acq.closedDate ? ` · Closed ${acq.closedDate}` : ""}
+          {acq.dealType}
+          {acq.dealStructure ? ` · ${acq.dealStructure}` : ""}
+          {deal.acquirer.ticker ? ` · ${deal.acquirer.ticker}` : ""}
+          {` · announced ${view.announcedLabel}`}
         </p>
-        <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-          <button
-            type="button"
-            onClick={() => void copyLink()}
-            className="min-h-10 w-full rounded-md border border-lacuna-lavender/50 px-3 py-2.5 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20 sm:w-auto sm:py-1.5"
-          >
-            {copyStatus === "ok"
-              ? "Link copied"
-              : copyStatus === "err"
-              ? "Copy failed"
-              : "Copy link"}
-          </button>
-          <button
-            type="button"
-            onClick={() => void exportBrief()}
-            className="min-h-10 w-full rounded-md bg-lacuna-plum px-3 py-2.5 text-xs font-medium text-white hover:bg-lacuna-blue sm:w-auto sm:py-1.5"
-          >
-            Export brief
-          </button>
-          <Link
-            href={`/deals?highlight=${
-              encodeURIComponent(deal.target.id)
-            }#network`}
-            className="inline-flex min-h-10 w-full items-center justify-center rounded-md border border-lacuna-plum/30 bg-lacuna-plum/10 px-3 py-2.5 text-center text-xs font-medium text-lacuna-plum hover:bg-lacuna-plum/20 sm:w-auto sm:py-1.5"
-          >
-            View in network
-          </Link>
-        </div>
+        <DealDetailActions
+          targetId={deal.target.id}
+          briefMarkdown={view.briefMarkdown}
+          downloadName={briefFileName(
+            acq.targetName,
+            acq.acquirerName,
+            acq.announcedDate,
+          )}
+        />
       </header>
 
-      <MotionSection className="mb-10 grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
+      <DealCloseTimeline view={view} />
+
+      <MotionSection className="mb-10 mt-6 grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3">
+        <DealEconomicsCard view={view} />
         <div className="rounded-xl border border-lacuna-lavender/40 bg-white/90 p-4 sm:p-5">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-lacuna-plum/80">
-            Valuation
-          </h2>
-          <p className="mt-2 text-xl font-bold text-lacuna-plum sm:text-2xl break-words">
-            {formatValue(acq.dealValue, acq.dealValueNote)}
-          </p>
-          {acq.dealStructure
-            ? (
-              <p className="mt-1 text-sm text-lacuna-blue">
-                Structure: {acq.dealStructure}
-              </p>
-            )
-            : null}
-          {typeof acq.preDealValuation === "number"
-            ? (
-              <p className="mt-2 text-xs text-lacuna-blue/80">
-                Pre-deal valuation ~${acq.preDealValuation}M
-                {acq.preDealValuationSource
-                  ? ` (${acq.preDealValuationSource})`
-                  : ""}
-              </p>
-            )
-            : null}
-        </div>
-        <div className="rounded-xl border border-lacuna-lavender/40 bg-white/90 p-4 sm:p-5">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-lacuna-plum/80">
-            Target profile
+            Target
           </h2>
           <p className="mt-2 font-semibold text-lacuna-plum">
             {deal.target.name}
           </p>
-          <p className="text-sm text-lacuna-blue">{deal.target.sector}</p>
-          {deal.target.hq
+          <p className="text-sm text-lacuna-blue">
+            {deal.target.sector}
+            {evidenceLabel ? ` · ${evidenceLabel}` : ""}
+          </p>
+          <p className="mt-1 text-xs text-lacuna-blue/80">
+            {[
+              deal.target.hq ? `HQ ${deal.target.hq}` : null,
+              foundedLabel,
+            ].filter(Boolean).join(" · ")}
+          </p>
+          {deal.target.description
             ? (
-              <p className="mt-1 text-xs text-lacuna-blue/80">
-                HQ: {deal.target.hq}
+              <p className="mt-2 text-sm leading-relaxed text-lacuna-blue">
+                {deal.target.description}
+              </p>
+            )
+            : null}
+        </div>
+        <div className="rounded-xl border border-lacuna-lavender/40 bg-white/90 p-4 sm:p-5">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-lacuna-plum/80">
+            Acquirer
+          </h2>
+          <p className="mt-2 font-semibold text-lacuna-plum">
+            {deal.acquirer.name}
+            {deal.acquirer.ticker ? ` (${deal.acquirer.ticker})` : ""}
+          </p>
+          <p className="text-sm text-lacuna-blue">{deal.acquirer.sector}</p>
+          <p className="mt-1 text-xs text-lacuna-blue/80">
+            HQ {deal.acquirer.hq}
+          </p>
+          {deal.acquirer.description
+            ? (
+              <p className="mt-2 text-sm leading-relaxed text-lacuna-blue">
+                {deal.acquirer.description}
               </p>
             )
             : null}
@@ -246,7 +133,7 @@ export default function DealDetailPage({ dealId }: DealDetailPageProps) {
         ? (
           <MotionSection delay={0.05} className="mb-10">
             <h2 className="text-lg font-semibold text-lacuna-plum">
-              Strategic rationale
+              Why this buyer
             </h2>
             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-lacuna-blue">
               {acq.strategicRationale}
@@ -255,62 +142,64 @@ export default function DealDetailPage({ dealId }: DealDetailPageProps) {
         )
         : null}
 
-      {ladder
-        ? (
-          <MotionSection delay={0.08} className="mb-10">
-            <h2 className="mb-3 text-lg font-semibold text-lacuna-plum">
-              Evidence ladder
-            </h2>
-            <EvidenceLadder ladder={ladder} />
-          </MotionSection>
-        )
-        : null}
+      <MotionSection delay={0.08} className="mb-10">
+        <h2 className="mb-3 text-lg font-semibold text-lacuna-plum">
+          Evidence ladder
+        </h2>
+        <EvidenceLadder ladder={ladder} />
+      </MotionSection>
 
-      <MotionSection delay={0.1} className="mb-10 space-y-8">
-        <DealTable
-          title="Comparable deals (same sector, ±3 years)"
-          rows={comparables}
-        />
-        <DealTable
-          title={`Other deals by ${deal.acquirer.name}`}
-          rows={acquirerDeals}
+      <MotionSection delay={0.1} className="mb-10">
+        <DealComparableTables
+          sector={deal.target.sector}
+          acquirerName={deal.acquirer.name}
+          peers={comparables}
+          adjacencyNotPeers={adjacencyNotPeers}
+          acquirerDeals={acquirerDeals}
         />
       </MotionSection>
 
       <MotionSection delay={0.12} className="mb-10">
+        <h2 className="mb-3 text-lg font-semibold text-lacuna-plum">
+          Patient empowerment context
+        </h2>
+        <DealEmpowermentContext context={view.empowerment} />
+      </MotionSection>
+
+      <MotionSection delay={0.14} className="mb-10">
         <h2 className="text-lg font-semibold text-lacuna-plum">
           Related workspaces
         </h2>
         <div className="mt-3 flex flex-wrap gap-2">
           <Link
-            href={`/research#clinical-trials?q=${sectorKeyword}`}
+            href="/research#clinical-trials"
             className="rounded-full border border-lacuna-lavender/50 px-3 py-1 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20"
           >
-            Clinical trials · {deal.target.sector}
+            Clinical trials workspace
+          </Link>
+          <Link
+            href="/research#patient-empowerment"
+            className="rounded-full border border-lacuna-lavender/50 px-3 py-1 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20"
+          >
+            Patient empowerment research
           </Link>
           <Link
             href="/research#health-equity"
             className="rounded-full border border-lacuna-lavender/50 px-3 py-1 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20"
           >
-            Health equity context
+            Health equity markers
           </Link>
           <Link
-            href="/methods#causal-dag?context=deal"
+            href="/methods#causal-dag"
             className="rounded-full border border-lacuna-lavender/50 px-3 py-1 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20"
           >
             Methods &amp; limitations
           </Link>
-          <Link
-            href="/intelligence#reimbursement"
-            className="rounded-full border border-lacuna-lavender/50 px-3 py-1 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20"
-          >
-            Reimbursement intelligence
-          </Link>
         </div>
       </MotionSection>
 
-      <MotionSection delay={0.14}>
-        <PipelineStatusStrip />
+      <MotionSection>
+        <DealVerifiedProvenance line={view.provenanceLine} />
       </MotionSection>
     </div>
   );

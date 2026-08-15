@@ -7,6 +7,7 @@ import {
 import { PATIENT_EMPOWERMENT_METRICS } from "@/data/patientEmpowermentReport";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import { empowermentContextForDeal } from "@/lib/deals/empowermentContextForDeal";
+import { getDealById } from "@/lib/deals/getDealById";
 import { getFeaturedDeal } from "@/lib/deals/getFeaturedDeal";
 import {
   buildDeterministicEmpowermentNarrative,
@@ -130,17 +131,31 @@ describe("patientEmpowermentPipeline", () => {
     expect(Array.isArray(ids)).toBe(true);
   });
 
-  it("builds deal context with scope alignment and affinity", () => {
+  it("builds deal context from curated mappings only", () => {
     const deal = getFeaturedDeal(dataset);
     expect(deal).not.toBeNull();
     const snapshot = buildPatientEmpowermentSnapshot(dataset);
     const ctx = empowermentContextForDeal(deal!, snapshot);
-    expect(ctx.scopeAlignment).toBeTruthy();
+    expect(ctx.scopeAlignment).toBe("high");
+    expect(ctx.hasDirectMatch).toBe(true);
+    expect(ctx.matchedDimensions.length).toBeGreaterThan(0);
+    expect(
+      ctx.matchedDimensions.every((m) => m.targetMatchTier === "curated"),
+    ).toBe(true);
+    expect(ctx.matchedDimensions.every((m) => m.citedValue.length > 0)).toBe(
+      true,
+    );
     expect(ctx.conditionScopeLabel).toContain("Breast cancer");
-    expect(ctx.affinityScore).toBeGreaterThanOrEqual(0);
-    expect(ctx.affinityScore).toBeLessThanOrEqual(100);
-    expect(ctx.evidenceScore).toBeGreaterThanOrEqual(0);
-    expect(ctx.evidenceScore).toBeLessThanOrEqual(100);
+  });
+
+  it("hides keyword/sector affinity on deals without curated links", () => {
+    const deal = getDealById(dataset, "deal9");
+    expect(deal?.acquisition.targetName).toBe("Gynesonics");
+    const snapshot = buildPatientEmpowermentSnapshot(dataset);
+    const ctx = empowermentContextForDeal(deal!, snapshot);
+    expect(ctx.hasDirectMatch).toBe(false);
+    expect(ctx.matchedDimensions).toEqual([]);
+    expect(ctx.scopeAlignment).toBe("none");
   });
 
   it("validates curated links have reviewedAt", () => {
