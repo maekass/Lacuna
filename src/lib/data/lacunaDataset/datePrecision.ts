@@ -25,6 +25,22 @@ function pad(n: number): string {
   return n < 10 ? `0${n}` : String(n);
 }
 
+function parseYearMonth(yearMonth: string): { year: number; month: number } {
+  if (!MONTH.test(yearMonth)) {
+    throw new Error(`Invalid yearMonth: ${yearMonth}`);
+  }
+  const [ys, ms] = yearMonth.split("-");
+  const year = Number(ys);
+  const month = Number(ms);
+  if (!Number.isInteger(year) || year < 1900 || year > 2100) {
+    throw new Error(`Invalid yearMonth: ${yearMonth}`);
+  }
+  if (month < 1 || month > 12) {
+    throw new Error(`Invalid yearMonth: ${yearMonth}`);
+  }
+  return { year, month };
+}
+
 /** Earliest/latest calendar bounds for an announced date. */
 export function toInterval(announced: AnnouncedDate): DateInterval {
   if (announced.precision === "day") {
@@ -34,12 +50,7 @@ export function toInterval(announced: AnnouncedDate): DateInterval {
     return [announced.date, announced.date];
   }
   if (announced.precision === "month") {
-    if (!MONTH.test(announced.yearMonth)) {
-      throw new Error(`Invalid yearMonth: ${announced.yearMonth}`);
-    }
-    const [ys, ms] = announced.yearMonth.split("-");
-    const year = Number(ys);
-    const month = Number(ms);
+    const { year, month } = parseYearMonth(announced.yearMonth);
     const last = daysInMonth(year, month);
     return [
       `${year}-${pad(month)}-01`,
@@ -59,6 +70,7 @@ const PRECISION_RANK: Record<DatePrecision, number> = {
   year: 2,
 };
 
+/** True when announced precision is at least as fine as the requested floor. */
 export function meetsPrecisionFloor(
   announced: AnnouncedDate,
   floor: DatePrecision,

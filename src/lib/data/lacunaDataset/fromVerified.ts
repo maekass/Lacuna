@@ -91,9 +91,31 @@ function inferTierFromSource(source: string): ValueTier {
   return "market_research";
 }
 
+/**
+ * Acquisition fields required to build a LacunaDeal.
+ * `id` is mandatory so annotation lookup cannot silently miss every row.
+ */
+export interface VerifiedAcquisitionLike {
+  readonly id: string;
+  readonly targetId: string;
+  readonly acquirerId: string;
+  readonly targetName: string;
+  readonly acquirerName: string;
+  readonly announcedDate: string;
+  readonly closedDate?: string;
+  readonly dealValue?: number;
+  readonly source: string;
+}
+
+/** Dataset slice consumed by lacunaDataset adapters. */
+export interface VerifiedDealSource {
+  readonly provenance: VerifiedDataset["provenance"];
+  readonly acquisitions: readonly VerifiedAcquisitionLike[];
+}
+
 /** Map one verified acquisition (+ optional annotation) to a LacunaDeal. */
 export function toLacunaDeal(
-  acquisition: VerifiedDataset["acquisitions"][number],
+  acquisition: VerifiedAcquisitionLike,
   annotation?: DealAnnotation,
 ): LacunaDeal {
   const valueTier = annotation && isValueTier(annotation.valueTier)
@@ -125,7 +147,7 @@ export function toLacunaDeal(
 
 /** Full verified dataset → LacunaDeal[]. */
 export function dealsFromVerifiedDataset(
-  dataset: VerifiedDataset,
+  dataset: VerifiedDealSource,
 ): LacunaDeal[] {
   return dataset.acquisitions.map((acquisition) =>
     toLacunaDeal(acquisition, annotations.deals[acquisition.id])

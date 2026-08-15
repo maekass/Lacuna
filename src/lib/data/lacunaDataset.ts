@@ -111,6 +111,10 @@ export {
   rankMeasurements,
 } from "./lacunaDataset/measurements";
 
+export type {
+  VerifiedAcquisitionLike,
+  VerifiedDealSource,
+} from "./lacunaDataset/fromVerified";
 export {
   dealsFromVerifiedDataset,
   getDealAnnotation,

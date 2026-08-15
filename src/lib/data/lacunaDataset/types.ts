@@ -73,7 +73,6 @@ declare const completedDealBrand: unique symbol;
 
 export type CompletedDeal = LacunaDeal & {
   readonly [completedDealBrand]: true;
-  readonly status: "completed";
 };
 
 export interface CoverageRatio {

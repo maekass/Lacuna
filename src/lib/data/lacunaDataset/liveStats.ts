@@ -2,9 +2,11 @@
  * Live disclosed-only stats for UI + LIMITATIONS.md drift pins.
  */
 
-import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import { aoaDxCoverage } from "./samplingFrame";
-import { dealsFromVerifiedDataset } from "./fromVerified";
+import {
+  dealsFromVerifiedDataset,
+  type VerifiedDealSource,
+} from "./fromVerified";
 import {
   adjacencyExclusionMillions,
   type AggregationParams,
@@ -27,12 +29,13 @@ export interface LiveDisclosedStats {
   readonly params: AggregationParams;
 }
 
+/** Format a USD-millions figure as a `$X.XB` label for UI and docs. */
 export function formatDisclosedBillions(millions: number): string {
   return `$${(millions / 1000).toFixed(1)}B`;
 }
 
 function hubParams(
-  dataset: VerifiedDataset,
+  dataset: VerifiedDealSource,
   womensHealthOnly: boolean,
 ): AggregationParams {
   const deals = dealsFromVerifiedDataset(dataset);
@@ -51,7 +54,7 @@ function hubParams(
  * Estimand: disclosed value among completed deals that disclosed a price.
  */
 export function liveDisclosedStats(
-  dataset: VerifiedDataset,
+  dataset: VerifiedDealSource,
 ): LiveDisclosedStats {
   const deals = dealsFromVerifiedDataset(dataset);
   const whParams = hubParams(dataset, true);

@@ -48,6 +48,7 @@ export function currentStatus(deal: LacunaDeal): DealStatus {
   return history[history.length - 1]!.status;
 }
 
+/** True when a deal status cannot transition further. */
 export function isTerminalStatus(status: DealStatus): boolean {
   return TERMINAL.has(status);
 }

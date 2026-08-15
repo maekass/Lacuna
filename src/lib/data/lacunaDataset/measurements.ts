@@ -68,6 +68,7 @@ export type Comparability =
   | { readonly ok: true }
   | { readonly ok: false; readonly reasons: readonly IncomparableReason[] };
 
+/** Compare two measurements; mismatch reasons are returned instead of coerced. */
 export function isComparable(a: Measurement, b: Measurement): Comparability {
   const reasons: IncomparableReason[] = [];
   if (a.endpoint !== b.endpoint) {

@@ -44,6 +44,7 @@ export type ClinicalComparable = ClinicalAsset & {
   readonly dealId?: never;
 };
 
+/** Brand a clinical asset as a transaction target bound to a deal id. */
 export function asTransactionTarget(
   asset: ClinicalAsset,
   dealId: string,
@@ -54,6 +55,7 @@ export function asTransactionTarget(
   return { ...asset, dealId, [transactionBrand]: true };
 }
 
+/** Brand a clinical asset as a comparable that must not carry a deal id. */
 export function asClinicalComparable(
   asset: ClinicalAsset & { dealId?: undefined },
 ): ClinicalComparable {

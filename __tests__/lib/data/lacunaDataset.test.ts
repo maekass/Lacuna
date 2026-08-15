@@ -174,6 +174,13 @@ describe("date precision (prompt 2)", () => {
     ]);
   });
 
+  it("toInterval rejects impossible months instead of fabricating a range", () => {
+    expect(() => toInterval({ precision: "month", yearMonth: "2024-13" }))
+      .toThrow("Invalid yearMonth: 2024-13");
+    expect(() => toInterval({ precision: "month", yearMonth: "2024-00" }))
+      .toThrow("Invalid yearMonth: 2024-00");
+  });
+
   it("timeSeries returns excluded rows instead of dropping them", () => {
     const deals: LacunaDeal[] = [
       {

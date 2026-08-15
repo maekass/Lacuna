@@ -3,6 +3,7 @@ import {
   formatDisclosedBillions,
   type LiveDisclosedStats,
   liveDisclosedStats,
+  type VerifiedAcquisitionLike,
 } from "@/lib/data/lacunaDataset";
 import type { VerifiedDataset } from "./datasetTypes";
 import {
@@ -10,12 +11,17 @@ import {
   type CoverageDatasetInput,
 } from "./datasetCoverageStats";
 
-export interface HeadlineStatsInput extends CoverageDatasetInput {
-  provenance: {
-    lastUpdated: string;
-    datasetVersion?: string;
-    datasetHash?: string;
-  };
+/**
+ * Headline stats require the full verified acquisition identity (`id`, names,
+ * `closedDate`) so lacunaDataset can look up annotations and lifecycle.
+ * The older CoverageDatasetInput slice is not enough — missing `id` would
+ * silently drop every deal from the completed-WH total.
+ */
+export interface HeadlineStatsInput {
+  companies: CoverageDatasetInput["companies"];
+  acquirers: CoverageDatasetInput["acquirers"];
+  acquisitions: readonly VerifiedAcquisitionLike[];
+  provenance: VerifiedDataset["provenance"];
 }
 
 export interface HeadlineStats {
@@ -113,19 +119,7 @@ export function formatDisclosedValueBillions(
  */
 export function computeHeadlineStats(input: HeadlineStatsInput): HeadlineStats {
   const disclosure = computeDisclosureStats(input);
-  const live = liveDisclosedStats({
-    provenance: {
-      lastUpdated: input.provenance.lastUpdated,
-      datasetVersion: input.provenance.datasetVersion,
-      sources: [],
-      notes: [],
-      purpose: "headline-stats",
-      disclaimer: "internal",
-    },
-    companies: input.companies as VerifiedDataset["companies"],
-    acquirers: input.acquirers as VerifiedDataset["acquirers"],
-    acquisitions: input.acquisitions as VerifiedDataset["acquisitions"],
-  });
+  const live = liveDisclosedStats(input);
   const disclosedValueMillions = input.acquisitions.reduce(
     (sum, deal) => sum + (deal.dealValue ?? 0),
     0,
