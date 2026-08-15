@@ -120,5 +120,13 @@ describe("getDealDetailView", () => {
     expect(
       view!.acquirerDeals.some((c) => c.targetName === "Endomagnetics"),
     ).toBe(false);
+    expect(view?.provenanceLine).toContain("verified dataset");
+    expect(view?.provenanceLine).toContain("not live market data");
+    expect(
+      view?.empowerment.matchedDimensions.every((m) =>
+        m.targetMatchTier === "curated"
+      ),
+    ).toBe(true);
+    expect(view?.empowerment.hasDirectMatch).toBe(true);
   });
 });

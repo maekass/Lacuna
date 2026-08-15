@@ -1,5 +1,6 @@
 /**
- * Deal-level empowerment context — maps verified deals to HLTH gap dimensions.
+ * Deal-level empowerment context — curated HLTH 2022 mappings only.
+ * Keyword/sector affinity stays on the research workspace, not the deal dossier.
  */
 
 import type { DealDetail } from "@/lib/deals/dealTypes";
@@ -21,11 +22,12 @@ export type DealEmpowermentScopeAlignment = "high" | "limited" | "none";
 
 export interface DealEmpowermentDimensionMatch {
   dimension: GapDimensionView;
-  targetMatchTier: GapDimensionView["linkedCompanies"][number]["matchTier"];
+  targetMatchTier: "curated";
   targetMatchNote?: string;
   sourceUrl?: string;
   sourceTier?: EmpowermentSourceTier;
   rationale?: string;
+  citedValue: string;
 }
 
 export interface DealEmpowermentContext {
@@ -35,77 +37,95 @@ export interface DealEmpowermentContext {
   conditionScopeLabel: string;
   baselineNote: string;
   scopeAlignment: DealEmpowermentScopeAlignment;
-  /** 0–100: share of matched dimensions with curated target link */
-  affinityScore: number;
-  /** 0–100: share of curated matches with a public source URL */
-  evidenceScore: number;
   curatedDimensionCount: number;
   evidenceBackedDimensionCount: number;
+  heuristicMatchCount: number;
   matchedDimensions: DealEmpowermentDimensionMatch[];
-  comparableCompanyIds: string[];
+  comparableNames: string[];
   hasDirectMatch: boolean;
 }
 
 function scopeAlignmentForDeal(
   deal: DealDetail,
-  hasMatch: boolean,
+  hasCuratedMatch: boolean,
 ): DealEmpowermentScopeAlignment {
+  if (!hasCuratedMatch) return "none";
   if (EMPOWERMENT_HIGH_ALIGNMENT_SECTORS.has(deal.target.sector)) {
-    return hasMatch ? "high" : "limited";
+    return "high";
   }
-  return hasMatch ? "limited" : "none";
+  return "limited";
 }
 
-function buildBaselineNote(alignment: DealEmpowermentScopeAlignment): string {
+function buildBaselineNote(
+  alignment: DealEmpowermentScopeAlignment,
+  heuristicMatchCount: number,
+): string {
   const scope = EMPOWERMENT_CONDITION_SCOPE_LABEL.breast_cancer_baseline;
   if (alignment === "high") {
-    return `HLTH/Outcomes4Me 2022 surveyed breast cancer patients (n=1,828). Target sector aligns with ${scope}. Matches are affinity-based, not live outcomes.`;
+    return `HLTH/Outcomes4Me 2022 surveyed breast cancer patients (n=1,828). ${scope}. Rows below are analyst-curated mappings to cited survey items — not live patient outcomes for this target.`;
   }
   if (alignment === "limited") {
-    return `HLTH/Outcomes4Me 2022 baseline is ${scope}. Fertility and general wellness targets have limited direct overlap — heuristic keyword/sector affinity only.`;
+    return `HLTH/Outcomes4Me 2022 baseline is ${scope}. This target has curated mappings but sits outside the survey's breast-cancer sector set.`;
   }
-  return `HLTH/Outcomes4Me 2022 baseline is ${scope}. No portfolio crosswalk for this target in the current sample.`;
+  if (heuristicMatchCount > 0) {
+    return `HLTH/Outcomes4Me 2022 baseline is ${scope}. This target has sector/keyword affinity only — that heuristic is not shown on deal dossiers.`;
+  }
+  return `HLTH/Outcomes4Me 2022 baseline is ${scope}. No curated mapping for this target.`;
+}
+
+function companyNameById(
+  snapshot: PatientEmpowermentSnapshot,
+): Map<string, string> {
+  const names = new Map<string, string>();
+  for (const dim of snapshot.dimensions) {
+    for (const company of dim.linkedCompanies) {
+      names.set(company.id, company.name);
+    }
+  }
+  return names;
 }
 
 /**
- * Returns empowerment gap dimensions relevant to a verified deal's target company.
+ * Curated HLTH 2022 mappings for a verified deal target. Heuristic
+ * sector/keyword hits are counted but not returned as dossier rows.
  */
 export function empowermentContextForDeal(
   deal: DealDetail,
   snapshot: PatientEmpowermentSnapshot,
 ): DealEmpowermentContext {
   const targetId = deal.target.id;
-  const matchedDimensions: DealEmpowermentDimensionMatch[] = [];
+  const curatedMatches: DealEmpowermentDimensionMatch[] = [];
+  let heuristicMatchCount = 0;
 
   for (const dim of snapshot.dimensions) {
     const targetLink = dim.linkedCompanies.find((c) => c.id === targetId);
     if (!targetLink) continue;
-    matchedDimensions.push({
+    if (targetLink.matchTier !== "curated") {
+      heuristicMatchCount += 1;
+      continue;
+    }
+    curatedMatches.push({
       dimension: dim,
-      targetMatchTier: targetLink.matchTier,
+      targetMatchTier: "curated",
       targetMatchNote: targetLink.matchNote,
       sourceUrl: targetLink.sourceUrl,
       sourceTier: targetLink.sourceTier,
       rationale: targetLink.rationale,
+      citedValue: dim.metric.citedValue,
     });
   }
 
-  const curatedMatches = matchedDimensions.filter(
-    (m) => m.targetMatchTier === "curated",
-  );
-  const curatedDimensionCount = curatedMatches.length;
   const evidenceBackedDimensionCount =
     curatedMatches.filter((m) => isEvidenceBackedLink(m)).length;
-  const affinityScore = matchedDimensions.length > 0
-    ? Math.round((curatedDimensionCount / matchedDimensions.length) * 100)
-    : 0;
-  const evidenceScore = curatedDimensionCount > 0
-    ? Math.round((evidenceBackedDimensionCount / curatedDimensionCount) * 100)
-    : 0;
-  const scopeAlignment = scopeAlignmentForDeal(
-    deal,
-    matchedDimensions.length > 0,
-  );
+  const hasCuratedMatch = curatedMatches.length > 0;
+  const scopeAlignment = scopeAlignmentForDeal(deal, hasCuratedMatch);
+  const names = companyNameById(snapshot);
+  const comparableNames = listEmpowermentComparableCompanyIds(
+    snapshot,
+    targetId,
+  )
+    .map((id) => names.get(id))
+    .filter((name): name is string => Boolean(name));
 
   return {
     dealId: deal.acquisition.id,
@@ -113,17 +133,13 @@ export function empowermentContextForDeal(
     sector: deal.target.sector,
     conditionScopeLabel:
       EMPOWERMENT_CONDITION_SCOPE_LABEL.breast_cancer_baseline,
-    baselineNote: buildBaselineNote(scopeAlignment),
+    baselineNote: buildBaselineNote(scopeAlignment, heuristicMatchCount),
     scopeAlignment,
-    affinityScore,
-    evidenceScore,
-    curatedDimensionCount,
+    curatedDimensionCount: curatedMatches.length,
     evidenceBackedDimensionCount,
-    matchedDimensions,
-    comparableCompanyIds: listEmpowermentComparableCompanyIds(
-      snapshot,
-      targetId,
-    ),
-    hasDirectMatch: matchedDimensions.length > 0,
+    heuristicMatchCount,
+    matchedDimensions: curatedMatches,
+    comparableNames,
+    hasDirectMatch: hasCuratedMatch,
   };
 }

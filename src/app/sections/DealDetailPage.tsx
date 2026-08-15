@@ -3,8 +3,8 @@ import DealComparableTables from "@/components/DealComparableTables";
 import DealDetailActions from "@/components/DealDetailActions";
 import DealEconomicsCard from "@/components/DealEconomicsCard";
 import DealEmpowermentContext from "@/components/DealEmpowermentContext";
+import DealVerifiedProvenance from "@/components/DealVerifiedProvenance";
 import EvidenceLadder from "@/components/EvidenceLadder";
-import PipelineStatusStrip from "@/components/PipelineStatusStrip";
 import MotionSection from "@/components/ui/MotionSection";
 import type { DealDetailView } from "@/lib/deals";
 import Link from "next/link";
@@ -199,7 +199,7 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
       </MotionSection>
 
       <MotionSection>
-        <PipelineStatusStrip showSecIngest={false} />
+        <DealVerifiedProvenance line={view.provenanceLine} />
       </MotionSection>
     </div>
   );

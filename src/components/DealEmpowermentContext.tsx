@@ -5,12 +5,12 @@ import type { DealEmpowermentContext } from "@/lib/deals/empowermentContextForDe
 import { EMPOWERMENT_SOURCE_TIER_LABELS } from "@/lib/research/patientEmpowermentTaxonomy";
 
 const SCOPE_LABELS = {
-  high: "High baseline alignment",
-  limited: "Limited baseline alignment",
-  none: "No crosswalk match",
+  high: "Curated survey mapping",
+  limited: "Curated mapping · off-baseline sector",
+  none: "No curated mapping",
 } as const;
 
-/** Deal-level empowerment dimensions (HLTH 2022 baseline affinity). */
+/** Deal-level HLTH 2022 rows — curated mappings and cited survey copy only. */
 export default function DealEmpowermentContext({
   context,
 }: {
@@ -30,7 +30,7 @@ export default function DealEmpowermentContext({
           href="/research#patient-empowerment"
           className="mt-2 inline-block font-medium text-lacuna-plum underline underline-offset-2"
         >
-          View empowerment gap matrix →
+          Research workspace (includes heuristic crosswalk) →
         </Link>
       </div>
     );
@@ -45,16 +45,6 @@ export default function DealEmpowermentContext({
         <span className="rounded-full border border-lacuna-lavender/40 bg-white px-2 py-0.5 text-[10px] font-medium text-lacuna-plum">
           {SCOPE_LABELS[context.scopeAlignment]}
         </span>
-        <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-800">
-          Affinity {context.affinityScore}% curated
-        </span>
-        {context.evidenceBackedDimensionCount > 0
-          ? (
-            <span className="rounded-full border border-sky-200 bg-sky-50 px-2 py-0.5 text-[10px] font-medium text-sky-900">
-              Evidence {context.evidenceScore}% sourced
-            </span>
-          )
-          : null}
       </div>
       <p className="mt-1 text-lacuna-blue/70">{context.baselineNote}</p>
       <ul className="mt-2 space-y-1.5">
@@ -64,18 +54,21 @@ export default function DealEmpowermentContext({
             className="flex justify-between gap-3 rounded border border-lacuna-lavender/25 bg-white/70 px-2 py-1"
           >
             <span>
-              {match.dimension.metric.label}{" "}
-              <span className="text-lacuna-blue/60">
-                ({match.targetMatchTier}
-                {match.sourceTier
-                  ? ` · ${EMPOWERMENT_SOURCE_TIER_LABELS[match.sourceTier]}`
-                  : ""}
+              {match.dimension.metric.label}
+              {match.sourceTier
+                ? (
+                  <span className="text-lacuna-blue/60">
+                    {" "}({EMPOWERMENT_SOURCE_TIER_LABELS[match.sourceTier]})
+                  </span>
                 )
-              </span>
+                : null}
             </span>
             <span className="shrink-0 text-right">
-              <span className="font-semibold text-lacuna-plum tabular-nums">
-                {match.dimension.metric.gapIndexPct}/100
+              <span className="font-semibold text-lacuna-plum">
+                {match.citedValue}
+              </span>
+              <span className="block text-[10px] text-lacuna-blue/70">
+                cited HLTH 2022
               </span>
               {match.sourceUrl
                 ? (
@@ -85,7 +78,7 @@ export default function DealEmpowermentContext({
                     rel="noopener noreferrer"
                     className="mt-0.5 block text-[10px] font-medium text-sky-800 underline underline-offset-2"
                   >
-                    Source →
+                    Mapping source →
                   </a>
                 )
                 : null}
@@ -93,12 +86,11 @@ export default function DealEmpowermentContext({
           </li>
         ))}
       </ul>
-      {context.comparableCompanyIds.length > 0
+      {context.comparableNames.length > 0
         ? (
           <p className="mt-2 text-lacuna-blue/70">
-            Curated comparables in sample: {context.comparableCompanyIds.length}
-            {" "}
-            companies share empowerment tags
+            Other curated mappings on these gaps:{" "}
+            {context.comparableNames.slice(0, 4).join(", ")}
           </p>
         )
         : null}
@@ -106,7 +98,7 @@ export default function DealEmpowermentContext({
         href="/research#patient-empowerment"
         className="mt-2 inline-block font-medium text-lacuna-plum underline underline-offset-2"
       >
-        Full gap matrix →
+        Full cited gap matrix →
       </Link>
     </div>
   );

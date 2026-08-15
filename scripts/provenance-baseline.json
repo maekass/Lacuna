@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "total": 1056,
+  "total": 1052,
   "covered": 14,
   "exempt": 2,
-  "uncovered": 1040,
+  "uncovered": 1036,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
     "src/app/sections/ConsumerHealthPage.tsx": 7,
@@ -39,7 +39,6 @@
     "src/components/DataProvenanceBanner.tsx": 1,
     "src/components/DatasetCoverageFootnote.tsx": 1,
     "src/components/DatasetScopeBanner.tsx": 2,
-    "src/components/DealEmpowermentContext.tsx": 4,
     "src/components/DealFlowChart.tsx": 22,
     "src/components/DealReviewQueue.tsx": 2,
     "src/components/DiscreteSources.tsx": 1,
@@ -3032,38 +3031,6 @@
       "kind": "formatting-call",
       "key": "src/components/DealEconomicsCard.tsx::DealEconomicsCard::pct.toFixed(0)",
       "class": "covered"
-    },
-    {
-      "file": "src/components/DealEmpowermentContext.tsx",
-      "functionName": "DealEmpowermentContext",
-      "expression": "context.affinityScore",
-      "kind": "numeric-jsx",
-      "key": "src/components/DealEmpowermentContext.tsx::DealEmpowermentContext::context.affinityScore",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DealEmpowermentContext.tsx",
-      "functionName": "DealEmpowermentContext",
-      "expression": "context.comparableCompanyIds.length",
-      "kind": "numeric-jsx",
-      "key": "src/components/DealEmpowermentContext.tsx::DealEmpowermentContext::context.comparableCompanyIds.length",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DealEmpowermentContext.tsx",
-      "functionName": "DealEmpowermentContext",
-      "expression": "context.evidenceScore",
-      "kind": "numeric-jsx",
-      "key": "src/components/DealEmpowermentContext.tsx::DealEmpowermentContext::context.evidenceScore",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DealEmpowermentContext.tsx",
-      "functionName": "DealEmpowermentContext",
-      "expression": "match.dimension.metric.gapIndexPct",
-      "kind": "numeric-jsx",
-      "key": "src/components/DealEmpowermentContext.tsx::DealEmpowermentContext::match.dimension.metric.gapIndexPct",
-      "class": "uncovered"
     },
     {
       "file": "src/components/DealFlowChart.tsx",

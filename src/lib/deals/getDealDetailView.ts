@@ -32,6 +32,7 @@ export interface DealDetailView {
   premiumMultiple: number | null;
   premiumPercent: number | null;
   briefMarkdown: string;
+  provenanceLine: string;
 }
 
 /**
@@ -78,5 +79,15 @@ export function getDealDetailView(
       closeDays,
       premiumMultiple: multiple,
     }),
+    provenanceLine: [
+      `Curated verified dataset${
+        dataset.provenance.datasetVersion
+          ? ` ${dataset.provenance.datasetVersion}`
+          : ""
+      }`,
+      `updated ${dataset.provenance.lastUpdated}`,
+      `${ladder.runs.length} citations on this deal`,
+      "not live market data",
+    ].join(" · "),
   };
 }
