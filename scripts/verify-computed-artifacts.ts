@@ -18,8 +18,10 @@ const repoRoot = join(__dirname, "..");
 /** Artifacts produced by `npm run compute:all` — must stay in sync with dataset. */
 export const DATASET_COMPUTED_ARTIFACTS = [
   "src/data/computed-benchmarks.json",
+  "src/data/computed-benchmarks.slim.json",
   "src/data/computed-growth-rates.json",
   "src/data/computed-acquirer-premiums.json",
+  "src/data/computed-acquirer-premiums.slim.json",
   "src/data/computed-sector-correlations.json",
   "src/data/computed-data-quality-scores.json",
   "src/data/computed-confidence-intervals.json",

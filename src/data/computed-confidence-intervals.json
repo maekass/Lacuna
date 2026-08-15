@@ -1,551 +1,2627 @@
 {
   "generatedAt": "2026-07-06T00:00:00.000Z",
-  "source": "Computed from Lacuna verified dataset via bootstrap resampling",
+  "datasetVersion": "v8",
+  "source": "Lacuna verified dataset (src/data/dataset.verified.json)",
   "results": [
     {
-      "metric": "sector_benchmark_multiple",
-      "sector": "General Wellness",
-      "sampleSize": 3,
-      "pointEstimate": 27.14,
-      "ci95": {
-        "lower": 2.542372881355932,
-        "upper": 57.916666666666664
-      },
-      "method": "Bootstrap (10,000 iterations, 95% CI)",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "sector_benchmark_multiple",
-      "sector": "Fertility",
-      "sampleSize": 1,
-      "pointEstimate": 1.45,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "Bootstrap (10,000 iterations, 95% CI)",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "sector_benchmark_multiple",
-      "sector": "Mental Health",
-      "sampleSize": 1,
-      "pointEstimate": 7.27,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "Bootstrap (10,000 iterations, 95% CI)",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "sector_benchmark_multiple",
-      "sector": "Reproductive Health",
-      "sampleSize": 1,
-      "pointEstimate": 6.4,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "Bootstrap (10,000 iterations, 95% CI)",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "sector_benchmark_multiple",
-      "sector": "Maternal Health",
-      "sampleSize": 1,
-      "pointEstimate": 9.6,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "Bootstrap (10,000 iterations, 95% CI)",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "sector_growth_rate",
-      "sector": "Fertility",
-      "sampleSize": 4,
-      "pointEstimate": 14.7,
-      "ci95": {
-        "lower": 9.8,
-        "upper": 25.6
-      },
-      "method": "Bootstrap (10,000 iterations, 95% CI)",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "sector_growth_rate",
-      "sector": "General Wellness",
-      "sampleSize": 5,
-      "pointEstimate": 24.5,
-      "ci95": {
-        "lower": 2.2,
-        "upper": 60.3
-      },
-      "method": "Bootstrap (10,000 iterations, 95% CI)",
-      "reliability": "directional"
-    },
-    {
-      "metric": "sector_growth_rate",
-      "sector": "Pelvic Health",
-      "sampleSize": 1,
-      "pointEstimate": 6.6,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "Bootstrap (10,000 iterations, 95% CI)",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "sector_growth_rate",
-      "sector": "Mental Health",
-      "sampleSize": 3,
-      "pointEstimate": 17.2,
-      "ci95": {
-        "lower": 15.1,
-        "upper": 28.1
-      },
-      "method": "Bootstrap (10,000 iterations, 95% CI)",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "sector_growth_rate",
-      "sector": "Wearables",
-      "sampleSize": 2,
-      "pointEstimate": 20.6,
-      "ci95": {
-        "lower": 16.9,
-        "upper": 24.3
-      },
-      "method": "Bootstrap (10,000 iterations, 95% CI)",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "sector_growth_rate",
-      "sector": "Reproductive Health",
-      "sampleSize": 1,
-      "pointEstimate": 540,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "Bootstrap (10,000 iterations, 95% CI)",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "sector_growth_rate",
-      "sector": "Maternal Health",
-      "sampleSize": 1,
-      "pointEstimate": 25.4,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "Bootstrap (10,000 iterations, 95% CI)",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Teladoc",
-      "sampleSize": 1,
-      "pointEstimate": 1.32,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Ro",
-      "sampleSize": 2,
-      "pointEstimate": 1.35,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "directional"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "23andMe",
-      "sampleSize": 1,
-      "pointEstimate": 1,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Hologic",
-      "sampleSize": 9,
-      "pointEstimate": 1.47,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "reliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "CooperSurgical (CooperCompanies)",
-      "sampleSize": 3,
-      "pointEstimate": 1.45,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "directional"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Organon (via Merck spinoff)",
-      "sampleSize": 1,
-      "pointEstimate": 9.6,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Organon",
-      "sampleSize": 2,
-      "pointEstimate": 1.42,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "directional"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Vitrolife",
-      "sampleSize": 1,
-      "pointEstimate": 1.32,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Gedeon Richter",
-      "sampleSize": 1,
-      "pointEstimate": 1.5,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "LabCorp",
-      "sampleSize": 1,
-      "pointEstimate": 1.32,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Exact Sciences",
-      "sampleSize": 3,
-      "pointEstimate": 1.26,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "directional"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Roche",
-      "sampleSize": 2,
-      "pointEstimate": 1.3,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "directional"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Medtronic",
-      "sampleSize": 1,
-      "pointEstimate": 1.4,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Boston Scientific",
-      "sampleSize": 1,
-      "pointEstimate": 1.53,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Illumina",
-      "sampleSize": 1,
-      "pointEstimate": 1.23,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Astorg",
-      "sampleSize": 1,
-      "pointEstimate": 1.28,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Laborie Medical Technologies",
-      "sampleSize": 1,
-      "pointEstimate": 1.34,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Coloplast",
-      "sampleSize": 1,
-      "pointEstimate": 1.45,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Sumitovant Biopharma (Sumitomo Pharma)",
-      "sampleSize": 1,
-      "pointEstimate": 1.21,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Myriad Genetics",
-      "sampleSize": 3,
-      "pointEstimate": 1.47,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "directional"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Natera",
-      "sampleSize": 1,
-      "pointEstimate": 1.31,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Mayne Pharma",
-      "sampleSize": 1,
-      "pointEstimate": 1.53,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Pfizer",
-      "sampleSize": 1,
-      "pointEstimate": 1.13,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Siemens Healthineers",
-      "sampleSize": 1,
-      "pointEstimate": 1.09,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Gilead Sciences",
-      "sampleSize": 1,
-      "pointEstimate": 1.17,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "PerkinElmer (Revvity)",
-      "sampleSize": 1,
-      "pointEstimate": 1.3,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Abbott Laboratories",
-      "sampleSize": 1,
-      "pointEstimate": 1.13,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Bayer",
-      "sampleSize": 1,
-      "pointEstimate": 1.42,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Astellas Pharma",
-      "sampleSize": 1,
-      "pointEstimate": 1.4,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "KKR",
-      "sampleSize": 1,
-      "pointEstimate": 1.25,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "BPEA EQT",
-      "sampleSize": 1,
-      "pointEstimate": 1.31,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "Hims & Hers Health",
-      "sampleSize": 1,
-      "pointEstimate": 27.14,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
-    },
-    {
-      "metric": "acquirer_premium",
-      "acquirer": "KKR (via IVI-RMA)",
-      "sampleSize": 1,
-      "pointEstimate": 1.33,
-      "ci95": {
-        "lower": null,
-        "upper": null
-      },
-      "method": "CI not computed — raw per-deal premiums needed. Run compute-acquirer-premiums with raw output.",
-      "reliability": "unreliable"
+      "metricId": "sector.moic.median",
+      "scope": "All sectors",
+      "label": "Median sector MOIC",
+      "definition": "Deal value divided by total capital raised (money-on-invested-capital); not a revenue multiple.",
+      "estimate": {
+        "kind": "sufficient",
+        "value": 7.2727272727272725,
+        "sampleSize": 7,
+        "disclosedFraction": 1,
+        "confidenceInterval": [
+          2.542372881355932,
+          27.142857142857142
+        ],
+        "selectionCaveat": "Disclosed-price deals are a non-random subsample (100% of n=7 sector deals). Selection bias may inflate medians; Heckman correction not applied.",
+        "lineage": {
+          "metricId": "sector.moic.median",
+          "estimator": "gatedMedian",
+          "inputs": [
+            {
+              "table": "acquisitions",
+              "id": "deal1"
+            },
+            {
+              "table": "acquisitions",
+              "id": "deal2"
+            },
+            {
+              "table": "acquisitions",
+              "id": "deal3"
+            },
+            {
+              "table": "acquisitions",
+              "id": "deal4"
+            },
+            {
+              "table": "acquisitions",
+              "id": "deal11"
+            },
+            {
+              "table": "acquisitions",
+              "id": "deal14"
+            },
+            {
+              "table": "acquisitions",
+              "id": "deal57"
+            }
+          ],
+          "supporting": [
+            {
+              "table": "companies",
+              "id": "c23"
+            },
+            {
+              "table": "companies",
+              "id": "c1"
+            },
+            {
+              "table": "companies",
+              "id": "c12"
+            },
+            {
+              "table": "companies",
+              "id": "c13"
+            },
+            {
+              "table": "companies",
+              "id": "c28"
+            },
+            {
+              "table": "companies",
+              "id": "c31"
+            },
+            {
+              "table": "companies",
+              "id": "c74"
+            }
+          ],
+          "sources": [
+            {
+              "kind": "prose",
+              "rawCitation": "SEC 8-K filing, July 2020"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "SEC 8-K filing (Teladoc, Oct 2020)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Livongo.com / Teladoc press release"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Crunchbase - crunchbase.com/organization/livongo-health"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Press reports (Fierce Healthcare, May 2021)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Crunchbase - crunchbase.com/organization/modern-fertility"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "TechCrunch - acquisition coverage (May 2021)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Company website - modernfertility.com"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Press reports (TechCrunch, December 2021)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Nurx.com - company website (now Ro)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "TechCrunch - Ro acquisition (Dec 2021)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Crunchbase - crunchbase.com/organization/nurx"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "SEC EDGAR EX-99.1 (23andMe–Lemonaid merger agreement, Oct 22, 2021); Globe Newswire closing release (Nov 1, 2021)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "SEC EDGAR EX-99.1 — 23andMe/Lemonaid merger agreement (Oct 22, 2021)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Globe Newswire — acquisition closing (Nov 1, 2021)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Crunchbase - crunchbase.com/organization/lemonaid-health"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Company website - lemonaidhealth.com"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "CooperCompanies investor relations — Globe Newswire (Nov 10, 2021)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "CooperCompanies investor relations - press release (Nov 10, 2021)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Globe Newswire - acquisition announcement"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Organon.com press release (Mar 30, 2021); Business Wire"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Organon.com - press release (Mar 30, 2021)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Business Wire - Merck acquisition on behalf of Organon spinoff"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Crunchbase - crunchbase.com/organization/alydia-health"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Organon press release - acquisition announcement, 2021"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Hims & Hers investor relations (June 24, 2021); Business Wire (July 7, 2021)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Hims & Hers investor relations press release (June 24, 2021)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Business Wire - acquisition completion (July 7, 2021)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "MobiHealthNews coverage (June 2021)"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Crunchbase - crunchbase.com/organization/apostrophe"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "TechCrunch - Hims & Hers acquisition coverage, 2021"
+            },
+            {
+              "kind": "prose",
+              "rawCitation": "Company website - apostrophe.com"
+            }
+          ],
+          "n": 7,
+          "originalInputCount": 59,
+          "excluded": [
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal5"
+              },
+              "reason": "value_undisclosed",
+              "field": "dealValue",
+              "evaluatedCount": 59
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal6"
+              },
+              "reason": "value_undisclosed",
+              "field": "dealValue",
+              "evaluatedCount": 59
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal12"
+              },
+              "reason": "value_undisclosed",
+              "field": "dealValue",
+              "evaluatedCount": 59
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal13"
+              },
+              "reason": "value_undisclosed",
+              "field": "dealValue",
+              "evaluatedCount": 59
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal18"
+              },
+              "reason": "value_undisclosed",
+              "field": "dealValue",
+              "evaluatedCount": 59
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal31"
+              },
+              "reason": "value_undisclosed",
+              "field": "dealValue",
+              "evaluatedCount": 59
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal47"
+              },
+              "reason": "value_undisclosed",
+              "field": "dealValue",
+              "evaluatedCount": 59
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal50"
+              },
+              "reason": "value_undisclosed",
+              "field": "dealValue",
+              "evaluatedCount": 59
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal59"
+              },
+              "reason": "value_undisclosed",
+              "field": "dealValue",
+              "evaluatedCount": 59
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal7"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal8"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal9"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal10"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal15"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal16"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal17"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal19"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal20"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal21"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal22"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal23"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal24"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal25"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal26"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal27"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal28"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal29"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal30"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal32"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal33"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal34"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal35"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal36"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal37"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal38"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal39"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal40"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal41"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal42"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal43"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal44"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal45"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal46"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal48"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal49"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal51"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal52"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal53"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal54"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal55"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal56"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal58"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 50
+            }
+          ],
+          "missingness": [
+            {
+              "field": "dealValue",
+              "missing": 9,
+              "total": 59
+            },
+            {
+              "field": "totalFunding",
+              "missing": 43,
+              "total": 50
+            }
+          ],
+          "datasetVersion": "v8",
+          "computedAt": "2026-07-06T00:00:00.000Z"
+        }
+      }
     }
   ],
-  "legend": {
-    "reliable": "n≥10 — 95% CI is meaningful",
-    "directional": "n=5-9 — CI is wide, treat as directional only",
-    "unreliable": "n<5 — CI is not meaningful, do not cite"
-  }
+  "withheld": [
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=7 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 7,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 43
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 9
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 9,
+            "total": 59
+          },
+          {
+            "field": "totalFunding",
+            "missing": 43,
+            "total": 50
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=7 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 7,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 43
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 9
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 9,
+            "total": 59
+          },
+          {
+            "field": "totalFunding",
+            "missing": 43,
+            "total": 50
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=1 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 1,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 5
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 47
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 6
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 6,
+            "total": 12
+          },
+          {
+            "field": "totalFunding",
+            "missing": 5,
+            "total": 6
+          }
+        ],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=1 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 1,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 5
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 47
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 6
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 6,
+            "total": 12
+          },
+          {
+            "field": "totalFunding",
+            "missing": 5,
+            "total": 6
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=1 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 1,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 5
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 47
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 6
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 6,
+            "total": 12
+          },
+          {
+            "field": "totalFunding",
+            "missing": 5,
+            "total": 6
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=3 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 3,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 56
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=3 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 3,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 56
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=3 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 3,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 56
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 2
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 56
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 1
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 1,
+            "total": 3
+          },
+          {
+            "field": "totalFunding",
+            "missing": 2,
+            "total": 2
+          }
+        ],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 2
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 56
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 1
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 1,
+            "total": 3
+          },
+          {
+            "field": "totalFunding",
+            "missing": 2,
+            "total": 2
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 2
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 56
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 1
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 1,
+            "total": 3
+          },
+          {
+            "field": "totalFunding",
+            "missing": 2,
+            "total": 2
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=1 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 1,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 58
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=1 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 1,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 58
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=1 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 1,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 58
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 7
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 52
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 7,
+            "total": 7
+          }
+        ],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 7
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 52
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 7,
+            "total": 7
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 7
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 52
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 7,
+            "total": 7
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 5
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 54
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 5,
+            "total": 5
+          }
+        ],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 5
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 54
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 5,
+            "total": 5
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 5
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 54
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 5,
+            "total": 5
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=1 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 1,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 3
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 55
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 3,
+            "total": 4
+          }
+        ],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=1 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 1,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 3
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 55
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 3,
+            "total": 4
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=1 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 1,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 3
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 55
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 3,
+            "total": 4
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=1 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 1,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 57
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 1
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 1,
+            "total": 2
+          }
+        ],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=1 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 1,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 57
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 1
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 1,
+            "total": 2
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=1 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 1,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 57
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 1
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 1,
+            "total": 2
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 11
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 48
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 11,
+            "total": 11
+          }
+        ],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 11
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 48
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 11,
+            "total": 11
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 11
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 48
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 11,
+            "total": 11
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 1
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 58
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 1,
+            "total": 1
+          }
+        ],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 1
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 58
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 1,
+            "total": 1
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 1
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 58
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 1,
+            "total": 1
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 6
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 53
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 6,
+            "total": 6
+          }
+        ],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 6
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 53
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 6,
+            "total": 6
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 6
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 53
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 6,
+            "total": 6
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 2
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 56
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 1
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 1,
+            "total": 3
+          },
+          {
+            "field": "totalFunding",
+            "missing": 2,
+            "total": 2
+          }
+        ],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 2
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 56
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 1
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 1,
+            "total": 3
+          },
+          {
+            "field": "totalFunding",
+            "missing": 2,
+            "total": 2
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 2
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 56
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 1
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 1,
+            "total": 3
+          },
+          {
+            "field": "totalFunding",
+            "missing": 2,
+            "total": 2
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 1
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 58
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 1,
+            "total": 1
+          }
+        ],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 1
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 58
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 1,
+            "total": 1
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 1
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 58
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 1,
+            "total": 1
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<5",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
+          }
+        ],
+        "missingness": [],
+        "suppression": "n<10",
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
+    }
+  ]
 }

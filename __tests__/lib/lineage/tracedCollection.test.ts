@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { fromRecords } from "@/lib/lineage";
+import { fromRecords, summarizeLineage } from "@/lib/lineage";
 
 interface Company {
   id: string;
@@ -47,6 +47,22 @@ describe("traced lineage collections", () => {
       kind: "prose",
       rawCitation: "shared source",
     });
+  });
+
+  it("derives supporting records from surviving rows", () => {
+    const result = fromRecords("acquisitions", [
+      { id: "d1", targetId: "c1", dealValue: 10 },
+      { id: "d2", targetId: "c2", dealValue: 20 },
+    ])
+      .join("companies", "company", companies, (deal) => deal.targetId)
+      .exclude((deal) => deal.id === "d2", "out_of_scope")
+      .map((deal) => deal.dealValue!)
+      .estimate("sector.moic.median");
+
+    expect(result.lineage.n).toBe(1);
+    expect(result.lineage.supporting).toEqual([
+      { table: "companies", id: "c1" },
+    ]);
   });
 
   it("records unmatched join rows as exclusions", () => {
@@ -116,6 +132,27 @@ describe("traced lineage collections", () => {
       .estimate("sector.moic.median");
     expect(large.kind).toBe("sufficient");
     expect(large.sampleSize).toBe(5);
+  });
+
+  it("summarizes withheld lineage without record-level references", () => {
+    const estimate = fromRecords("acquisitions", [
+      { id: "d1", dealValue: 1 },
+      { id: "d2", dealValue: 2 },
+    ])
+      .exclude((deal) => deal.id === "d1", "value_undisclosed", "dealValue")
+      .map((deal) => deal.dealValue!)
+      .estimate("sector.moic.median");
+
+    const summary = summarizeLineage(estimate.lineage);
+    expect(summary).toEqual(expect.objectContaining({
+      n: 1,
+      originalInputCount: 2,
+      excluded: [{ reason: "value_undisclosed", count: 1 }],
+      missingness: [{ field: "dealValue", missing: 1, total: 2 }],
+    }));
+    expect(summary).not.toHaveProperty("inputs");
+    expect(summary).not.toHaveProperty("sources");
+    expect(summary).not.toHaveProperty("supporting");
   });
 
   it("fails loudly for an unregistered metric", () => {

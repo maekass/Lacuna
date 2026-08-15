@@ -50,6 +50,23 @@ export interface Missingness {
   readonly total: number;
 }
 
+export interface ExclusionSummary {
+  readonly reason: string;
+  readonly count: number;
+}
+
+export interface LineageSummary {
+  readonly metricId: string;
+  readonly estimator: string;
+  readonly n: number;
+  readonly originalInputCount: number;
+  readonly excluded: readonly ExclusionSummary[];
+  readonly missingness: readonly Missingness[];
+  readonly suppression?: string;
+  readonly datasetVersion?: string;
+  readonly computedAt: string;
+}
+
 export interface Lineage {
   readonly metricId: string;
   readonly estimator: string;
@@ -93,6 +110,7 @@ export type TracedRecord<T> = {
   readonly ref: RecordRef;
   readonly value: T;
   readonly sources: readonly SourceRef[];
+  readonly supporting: readonly RecordRef[];
 };
 
 export type QuantValueWithLineage<T extends number = number> = QuantValue<T> & {

@@ -1,215 +1,222 @@
 #!/usr/bin/env npx tsx
 
-/**
- * Deal Premium Analysis Script
- *
- * Computes actual acquirer premiums from verified M&A deals.
- * Premium = dealValue / target.lastKnownValuation (or totalFunding as fallback)
- *
- * Replaces hardcoded ACQUIRER_PREMIUMS (1.35x healthcare, 1.25x pharma, etc.)
- * with real premiums computed from verified transactions.
- *
- * Output: src/data/computed-acquirer-premiums.json
- *
- * Usage: npx tsx scripts/compute-acquirer-premiums.ts
- */
-
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from "node:fs";
+import {
+  fromRecords,
+  getMetricDeclaration,
+  type LineageOptions,
+  type LineageSummary,
+  summarizeLineage,
+  type TracedValue,
+} from "../src/lib/lineage";
+import { isSufficient } from "../src/lib/quant/estimators";
+import type {
+  VerifiedAcquisition,
+  VerifiedCompany,
+  VerifiedDataset,
+} from "../src/lib/data/datasetSchema";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
+import { withoutLineage, writeSlimArtifact } from "./slimArtifacts";
 
-interface Company {
-  id: string;
-  name: string;
-  sector: string;
-  lastKnownValuation?: number;
-  totalFunding?: number;
-}
-
-interface Acquisition {
-  id: string;
-  targetId: string;
-  targetName: string;
-  acquirerName: string;
-  acquirerId?: string;
-  dealValue?: number;
-  dealValueNote?: string;
-  source?: string;
-  announcedDate?: string;
-  dealType?: string;
-  dealStructure?: string;
-  preDealValuation?: number;
-}
-
-interface AcquirerPremium {
-  acquirerName: string;
-  deals: number;
-  avgPremium: number | null;
-  medianPremium: number | null;
-  minPremium: number | null;
-  maxPremium: number | null;
-  sectors: string[];
-  sources: string[];
-  method: string;
-}
-
-function median(values: number[]): number {
-  if (values.length === 0) return NaN;
-  const sorted = [...values].sort((a, b) => a - b);
-  const mid = Math.floor(sorted.length / 2);
-  return sorted.length % 2 === 0
-    ? (sorted[mid - 1] + sorted[mid]) / 2
-    : sorted[mid];
-}
-
-// Main
 const dataset = JSON.parse(
   readFileSync("src/data/dataset.verified.json", "utf-8"),
-);
-const companies: Company[] = dataset.companies || [];
-const acquisitions: Acquisition[] = dataset.acquisitions || [];
+) as VerifiedDataset;
+const options: LineageOptions = {
+  datasetVersion: dataset.provenance.datasetVersion,
+  computedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
+};
 
-const companyMap = new Map<string, Company>();
-for (const c of companies) companyMap.set(c.id, c);
+type JoinedDeal = VerifiedAcquisition & { readonly company: VerifiedCompany };
 
-// Group deals by acquirer
-const acquirerDeals = new Map<string, Acquisition[]>();
-for (const deal of acquisitions) {
-  if (!deal.dealValue) continue;
-  const key = deal.acquirerName;
-  if (!acquirerDeals.has(key)) acquirerDeals.set(key, []);
-  acquirerDeals.get(key)!.push(deal);
+interface PremiumMetricOutput {
+  readonly metricId: string;
+  readonly label: string;
+  readonly definition: string;
+  readonly unit: string;
+  readonly estimate: TracedValue;
 }
 
-const results: AcquirerPremium[] = [];
+interface AcquirerPremiumOutput {
+  readonly acquirerName: string;
+  readonly metricId: string;
+  readonly estimate: TracedValue;
+}
 
-for (const [acquirerName, deals] of acquirerDeals) {
-  const premiums: number[] = [];
-  const sectors: string[] = [];
-  const sources: string[] = [];
+interface WithheldMetric {
+  readonly metricId: string;
+  readonly reason: string;
+  readonly lineage: LineageSummary;
+}
 
-  for (const deal of deals) {
-    const target = companyMap.get(deal.targetId);
-    if (!target) continue;
+const base = fromRecords(
+  "acquisitions",
+  dataset.acquisitions,
+  options,
+).join(
+  "companies",
+  "company",
+  dataset.companies,
+  (deal) => deal.targetId,
+);
 
-    // Premium = dealValue / preDealValuation (preferred) or dealValue / lastKnownValuation or dealValue / totalFunding (fallback)
-    const baseline = deal.preDealValuation ?? target.lastKnownValuation ??
-      target.totalFunding;
-    if (!baseline || baseline <= 0) continue;
+const denominatorFields = {
+  "acquirer.premium.preDealValuation": (deal: JoinedDeal) =>
+    deal.preDealValuation,
+  "acquirer.premium.lastKnownValuation": (deal: JoinedDeal) =>
+    deal.company.lastKnownValuation,
+  "acquirer.premium.totalFunding": (deal: JoinedDeal) =>
+    deal.company.totalFunding,
+} as const;
 
-    const premium = deal.dealValue! / baseline;
-    premiums.push(premium);
+type PremiumMetricId = keyof typeof denominatorFields;
 
-    if (target.sector && !sectors.includes(target.sector)) {
-      sectors.push(target.sector);
-    }
-    if (deal.source && !sources.includes(deal.source)) {
-      sources.push(deal.source);
-    }
-  }
-
-  results.push({
-    acquirerName,
-    deals: deals.length,
-    avgPremium: premiums.length > 0
-      ? Number(
-        (premiums.reduce((a, b) => a + b, 0) / premiums.length).toFixed(2),
-      )
-      : null,
-    medianPremium: premiums.length > 0
-      ? Number(median(premiums).toFixed(2))
-      : null,
-    minPremium: premiums.length > 0
-      ? Number(Math.min(...premiums).toFixed(2))
-      : null,
-    maxPremium: premiums.length > 0
-      ? Number(Math.max(...premiums).toFixed(2))
-      : null,
-    sectors,
-    sources,
-    method:
-      "Premium = dealValue / preDealValuation (preferred, from SEC filings & press), or dealValue / lastKnownValuation, or dealValue / totalFunding as last resort.",
+function denominatorCollection(metricId: PremiumMetricId) {
+  return eligibleCollection(metricId).map((deal) => {
+    const getDenominator = denominatorFields[metricId];
+    return deal.dealValue! / getDenominator(deal)!;
   });
 }
 
-// Also compute by acquirer type (healthcare, tech, pharma, retail)
-// Classify acquirers based on name patterns
-function classifyAcquirer(name: string): string {
-  const lower = name.toLowerCase();
-  if (
-    lower.includes("pharma") || lower.includes("pfizer") ||
-    lower.includes("novartis") || lower.includes("roche") ||
-    lower.includes("johnson") || lower.includes("merck")
-  ) return "pharma";
-  if (
-    lower.includes("tech") || lower.includes("google") ||
-    lower.includes("apple") || lower.includes("microsoft") ||
-    lower.includes("amazon") || lower.includes("meta")
-  ) return "tech";
-  if (
-    lower.includes("health") || lower.includes("medical") ||
-    lower.includes("clinic") || lower.includes("hospital") ||
-    lower.includes("care")
-  ) return "healthcare";
-  if (
-    lower.includes("retail") || lower.includes("walmart") ||
-    lower.includes("target") || lower.includes("cvs")
-  ) return "retail";
-  return "other";
+function eligibleCollection(
+  metricId: PremiumMetricId,
+  acquirerName?: string,
+) {
+  const getDenominator = denominatorFields[metricId];
+  return base
+    .exclude(
+      (deal) => deal.dealValue === undefined || deal.dealValue <= 0,
+      "value_undisclosed",
+      "dealValue",
+    )
+    .exclude(
+      (deal) => {
+        const denominator = getDenominator(deal);
+        return denominator === undefined || denominator <= 0;
+      },
+      metricId === "acquirer.premium.preDealValuation"
+        ? "pre_deal_valuation_unresearched"
+        : metricId === "acquirer.premium.lastKnownValuation"
+        ? "last_known_valuation_unresearched"
+        : "funding_unresearched",
+      metricId === "acquirer.premium.preDealValuation"
+        ? "preDealValuation"
+        : metricId === "acquirer.premium.lastKnownValuation"
+        ? "lastKnownValuation"
+        : "totalFunding",
+    )
+    .exclude(
+      (deal) =>
+        acquirerName !== undefined &&
+        deal.acquirerName !== acquirerName,
+      "other_acquirer",
+    );
 }
 
-const typeGroups = new Map<string, number[]>();
-for (const r of results) {
-  if (r.avgPremium === null) continue;
-  const type = classifyAcquirer(r.acquirerName);
-  if (!typeGroups.has(type)) typeGroups.set(type, []);
-  typeGroups.get(type)!.push(r.avgPremium);
+function estimate(
+  collection: ReturnType<typeof denominatorCollection>,
+  metricId: PremiumMetricId,
+  withheld: WithheldMetric[],
+): TracedValue | undefined {
+  const result = collection.estimate(metricId);
+  if (!isSufficient(result)) {
+    withheld.push({
+      metricId,
+      reason: result.message,
+      lineage: summarizeLineage(result.lineage),
+    });
+    return undefined;
+  }
+  return result;
 }
 
-const acquirerTypePremiums: Record<
-  string,
-  { avgPremium: number; sampleSize: number }
-> = {};
-for (const [type, premiums] of typeGroups) {
-  acquirerTypePremiums[type] = {
-    avgPremium: Number(
-      (premiums.reduce((a, b) => a + b, 0) / premiums.length).toFixed(2),
-    ),
-    sampleSize: premiums.length,
-  };
+const withheld: WithheldMetric[] = [];
+const premiumMetrics: Record<string, PremiumMetricOutput> = {};
+for (const metricId of Object.keys(denominatorFields) as PremiumMetricId[]) {
+  const result = estimate(
+    denominatorCollection(metricId),
+    metricId,
+    withheld,
+  );
+  if (result) {
+    const declaration = getMetricDeclaration(metricId);
+    premiumMetrics[metricId] = {
+      metricId,
+      label: declaration.label,
+      definition: declaration.definition,
+      unit: declaration.unit,
+      estimate: result,
+    };
+  }
+}
+
+const acquirerPremiums: AcquirerPremiumOutput[] = [];
+const acquirerNames = [
+  ...new Set(dataset.acquisitions.map((deal) => deal.acquirerName)),
+];
+for (const metricId of Object.keys(denominatorFields) as PremiumMetricId[]) {
+  const getDenominator = denominatorFields[metricId];
+  for (const acquirerName of acquirerNames) {
+    const collection = eligibleCollection(metricId, acquirerName).map(
+      (deal) => deal.dealValue! / getDenominator(deal)!,
+    );
+    const result = collection.estimate(metricId);
+    if (!isSufficient(result)) {
+      if (collection.n > 0) {
+        withheld.push({
+          metricId,
+          reason:
+            `Acquirer ${acquirerName} has n=${collection.n}; aggregate withheld below the registry minimum`,
+          lineage: summarizeLineage(result.lineage),
+        });
+      }
+      continue;
+    }
+    acquirerPremiums.push({
+      acquirerName,
+      metricId,
+      estimate: result,
+    });
+  }
 }
 
 const output = {
-  generatedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
-  source: "Lacuna verified dataset (n=59 acquisitions)",
-  acquirerPremiums: results,
-  acquirerTypePremiums,
-  method:
-    "Premium = dealValue / lastKnownValuation (preferred) or dealValue / totalFunding (fallback). lastKnownValuation is the most recent pre-acquisition valuation from verified sources.",
-  warning:
-    "Premiums computed from totalFunding baseline are overestimates (funding ≠ valuation). Replace with pre-deal valuation when available. Small-n acquirers (n=1) have no statistical significance.",
+  generatedAt: options.computedAt,
+  datasetVersion: options.datasetVersion,
+  source: "Lacuna verified dataset (src/data/dataset.verified.json)",
+  premiumMetrics,
+  acquirerPremiums,
+  withheld,
 };
 
 writeFileSync(
   "src/data/computed-acquirer-premiums.json",
   JSON.stringify(output, null, 2) + "\n",
 );
+writeSlimArtifact(
+  "computed-acquirer-premiums.slim.json",
+  output,
+  [
+    ...Object.values(premiumMetrics).map((metric) => ({
+      metricId: metric.metricId,
+      label: metric.label,
+      definition: metric.definition,
+      unit: metric.unit,
+      estimate: withoutLineage(metric.estimate) as Record<string, unknown>,
+      n: metric.estimate.sampleSize,
+    })),
+    ...withheld.map((entry) => ({
+      metricId: entry.metricId,
+      label: entry.metricId,
+      definition: entry.metricId,
+      unit: "x",
+      n: entry.lineage.n,
+      withheldReason: entry.reason,
+    })),
+  ],
+);
 
 console.log(
-  "✅ Acquirer premiums written to src/data/computed-acquirer-premiums.json\n",
+  `✅ Computed ${
+    Object.keys(premiumMetrics).length
+  } premium metrics; withheld ${withheld.length} metrics`,
 );
-console.log(
-  `Acquirers with computed premiums: ${
-    results.filter((r) => r.avgPremium !== null).length
-  }/${results.length}\n`,
-);
-
-for (const r of results.filter((r) => r.avgPremium !== null)) {
-  console.log(
-    `  ${r.acquirerName}: avg=${r.avgPremium}x, median=${r.medianPremium}x, n=${r.deals}`,
-  );
-}
-
-console.log("\nBy acquirer type:");
-for (const [type, data] of Object.entries(acquirerTypePremiums)) {
-  console.log(`  ${type}: ${data.avgPremium}x (n=${data.sampleSize})`);
-}

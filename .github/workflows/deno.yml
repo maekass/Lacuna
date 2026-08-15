@@ -110,6 +110,9 @@ jobs:
       - name: Verify computed artifacts are current
         run: npm run verify:computed
 
+      - name: Verify provenance census
+        run: npm run gate:provenance
+
       - name: Infrastructure check
         run: npm run infra:check
 
