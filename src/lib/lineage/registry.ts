@@ -8,6 +8,8 @@ export type MetricEstimator =
   | "bcaP75"
   | "gatedMean";
 
+export const METRIC_REPRODUCTION_SEED = 42;
+
 export interface MetricDeclaration {
   readonly id: string;
   readonly label: string;
@@ -113,8 +115,9 @@ export function getMetricDeclaration(metricId: string): MetricDeclaration {
 export function estimateRegisteredMetric(
   declaration: MetricDeclaration,
   values: number[],
+  seed = METRIC_REPRODUCTION_SEED,
 ): QuantValue<number> {
-  const options = { minSampleSize: declaration.minN };
+  const options = { minSampleSize: declaration.minN, seed };
   switch (declaration.estimator) {
     case "gatedMedian":
       return gatedMedian(values, options);

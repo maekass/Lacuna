@@ -35,6 +35,183 @@
             "total": 50
           }
         ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal1"
+            },
+            "value": 57.916666666666664,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal1"
+                },
+                "field": "dealValue",
+                "value": 13900
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c23"
+                },
+                "field": "totalFunding",
+                "value": 240
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal2"
+            },
+            "value": 1.4516129032258065,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal2"
+                },
+                "field": "dealValue",
+                "value": 225
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c1"
+                },
+                "field": "totalFunding",
+                "value": 155
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal3"
+            },
+            "value": 2.542372881355932,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal3"
+                },
+                "field": "dealValue",
+                "value": 300
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c12"
+                },
+                "field": "totalFunding",
+                "value": 118
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal4"
+            },
+            "value": 7.2727272727272725,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal4"
+                },
+                "field": "dealValue",
+                "value": 400
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c13"
+                },
+                "field": "totalFunding",
+                "value": 55
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal11"
+            },
+            "value": 6.4,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal11"
+                },
+                "field": "dealValue",
+                "value": 1600
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c28"
+                },
+                "field": "totalFunding",
+                "value": 250
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal14"
+            },
+            "value": 9.6,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal14"
+                },
+                "field": "dealValue",
+                "value": 240
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c31"
+                },
+                "field": "totalFunding",
+                "value": 25
+              }
+            ]
+          },
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal57"
+            },
+            "value": 27.142857142857142,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal57"
+                },
+                "field": "dealValue",
+                "value": 190
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c74"
+                },
+                "field": "totalFunding",
+                "value": 7
+              }
+            ]
+          }
+        ],
         "datasetVersion": "v8",
         "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
         "computedAt": "2026-07-06T00:00:00.000Z"
