@@ -126,6 +126,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "fast-check": "^4.3.0",
     "husky": "^9.1.7",
+    "image-size": "file:vendor/image-size",
     "msw": "^2.7.3",
     "pg-mem": "^3.0.5",
     "storybook": "^9.1.20",
@@ -138,6 +139,7 @@
     "form-data": "^4.0.6",
     "postcss": "8.5.23",
     "sharp": "^0.35.0",
-    "nanoid": "3.3.18"
+    "nanoid": "3.3.18",
+    "image-size": "$image-size"
   }
 }
