@@ -12,6 +12,7 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "vendor/**",
   ]),
   {
     files: ["src/lib/data/lacunaDataset/**/*.{ts,tsx}"],
