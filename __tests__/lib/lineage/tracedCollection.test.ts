@@ -12,6 +12,20 @@ const companies: Company[] = [
 ];
 
 describe("traced lineage collections", () => {
+  it("carries dataset identity through estimates", () => {
+    const result = fromRecords(
+      "acquisitions",
+      [{ id: "d1", dealValue: 10 }],
+      { datasetVersion: "v8", datasetHash: "a".repeat(64) },
+    )
+      .map((deal) => deal.dealValue!)
+      .estimate("sector.moic.median");
+
+    expect(result.lineage.datasetVersion).toBe("v8");
+    expect(result.lineage.datasetHash).toBe("a".repeat(64));
+    expect(summarizeLineage(result.lineage).datasetHash).toBe("a".repeat(64));
+  });
+
   it("unions records and sources across a join", () => {
     const result = fromRecords("acquisitions", [
       { id: "d1", targetId: "c1", dealValue: 10, sources: ["deal source"] },

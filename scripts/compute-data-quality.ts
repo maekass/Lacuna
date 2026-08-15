@@ -16,6 +16,8 @@
 
 import { readFileSync, writeFileSync } from "fs";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
+import { hashDataset } from "../src/lib/lineage/datasetHash";
+import { parseVerifiedDataset } from "../src/lib/data/datasetSchema";
 
 interface SourceQuality {
   level: "A" | "B" | "C" | "D" | "F";
@@ -259,6 +261,7 @@ const acquisitionGrades = acquisitionScores.reduce((acc, s) => {
 
 const output = {
   generatedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
+  datasetHash: hashDataset(parseVerifiedDataset(dataset)).fullHash,
   source: "Lacuna verified dataset (src/data/dataset.verified.json)",
   grading: {
     A: "90-100: SEC filing or equivalent primary source, all fields populated",

@@ -1,5 +1,6 @@
 import type { IngestRunStatus } from "@/lib/ingestion/ingestRunState";
 import { generatedAtFromProvenance } from "./computedArtifactMeta";
+import { hashDataset } from "@/lib/lineage/datasetHash";
 import type { VerifiedDataset } from "./datasetTypes";
 import {
   computeDisclosureStats,
@@ -23,6 +24,7 @@ export interface DatasetSummary {
   provenance: {
     lastUpdated: string;
     datasetVersion?: string;
+    datasetHash?: string;
   };
   headline: HeadlineStats;
   disclosure: DisclosureStats;
@@ -40,12 +42,15 @@ export function buildDatasetSummary(
     secIngestStatus: null,
   },
 ): DatasetSummary {
+  const datasetHash = dataset.provenance.datasetHash ??
+    hashDataset(dataset).fullHash;
   return {
     generatedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
     model: DATASET_SUMMARY_MODEL,
     provenance: {
       lastUpdated: dataset.provenance.lastUpdated,
       datasetVersion: dataset.provenance.datasetVersion,
+      datasetHash,
     },
     headline: computeHeadlineStats(dataset),
     disclosure: computeDisclosureStats(dataset),

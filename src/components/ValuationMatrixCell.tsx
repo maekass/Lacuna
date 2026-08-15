@@ -38,6 +38,7 @@ function metricFromEstimate(estimate: TracedValue): MetricProvenance {
       missingness: estimate.lineage.missingness,
       suppression: estimate.lineage.suppression,
       datasetVersion: estimate.lineage.datasetVersion,
+      datasetHash: estimate.lineage.datasetHash,
       computedAt: estimate.lineage.computedAt,
     },
   };

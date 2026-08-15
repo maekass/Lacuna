@@ -17,6 +17,8 @@
 
 import { readFileSync, writeFileSync } from "fs";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
+import { hashDataset } from "../src/lib/lineage/datasetHash";
+import { parseVerifiedDataset } from "../src/lib/data/datasetSchema";
 
 interface Company {
   id: string;
@@ -234,6 +236,7 @@ for (const [sector, rates] of sectorMap) {
 
 const output = {
   generatedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
+  datasetHash: hashDataset(parseVerifiedDataset(dataset)).fullHash,
   source:
     "Lacuna verified dataset + Rock Health 2024 Digital Health Funding Report",
   companies: results,
