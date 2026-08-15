@@ -101,6 +101,7 @@ function makeLineage(
     missingness: missingnessFor(state.excluded),
     suppression,
     datasetVersion: state.options.datasetVersion,
+    datasetHash: state.options.datasetHash,
     computedAt: state.options.computedAt ?? new Date().toISOString(),
   };
 }
@@ -121,6 +122,7 @@ export function summarizeLineage(lineage: Lineage): LineageSummary {
     missingness: lineage.missingness,
     suppression: lineage.suppression,
     datasetVersion: lineage.datasetVersion,
+    datasetHash: lineage.datasetHash,
     computedAt: lineage.computedAt,
   };
 }

@@ -2,13 +2,20 @@ import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
+import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
+import { hashDataset } from "@/lib/lineage/datasetHash";
 
 const ROOT = path.resolve(__dirname, "../..");
 const ARTIFACTS = [
   "src/data/computed-benchmarks.json",
+  "src/data/computed-benchmarks.slim.json",
+  "src/data/computed-growth-rates.json",
   "src/data/computed-acquirer-premiums.json",
+  "src/data/computed-acquirer-premiums.slim.json",
   "src/data/computed-confidence-intervals.json",
   "src/data/computed-sector-correlations.json",
+  "src/data/computed-data-quality-scores.json",
+  "src/data/computed-dataset-summary.json",
 ];
 
 function readArtifact<T>(file: string): T {
@@ -16,6 +23,20 @@ function readArtifact<T>(file: string): T {
 }
 
 describe("lineage-backed computed artifacts", () => {
+  it("records a canonical dataset hash in every lineage artifact", () => {
+    const expected = hashDataset(getStaticVerifiedDataset()).fullHash;
+    for (const file of ARTIFACTS) {
+      const artifact = readArtifact<{
+        datasetHash?: unknown;
+        provenance?: { datasetHash?: unknown };
+      }>(file);
+      expect(
+        artifact.datasetHash ?? artifact.provenance?.datasetHash,
+        file,
+      ).toBe(expected);
+    }
+  });
+
   it("records suppressed benchmark metrics with lineage", () => {
     const artifact = readArtifact<{
       benchmarks: Array<{ medianMoic?: unknown }>;

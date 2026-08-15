@@ -64,6 +64,7 @@ export interface LineageSummary {
   readonly missingness: readonly Missingness[];
   readonly suppression?: string;
   readonly datasetVersion?: string;
+  readonly datasetHash?: string;
   readonly computedAt: string;
 }
 
@@ -79,6 +80,7 @@ export interface Lineage {
   readonly missingness: readonly Missingness[];
   readonly suppression?: string;
   readonly datasetVersion?: string;
+  readonly datasetHash?: string;
   readonly computedAt: string;
 }
 
@@ -96,6 +98,7 @@ export type TracedValue<T extends number = number> =
 
 export interface LineageOptions {
   readonly datasetVersion?: string;
+  readonly datasetHash?: string;
   readonly computedAt?: string;
 }
 
