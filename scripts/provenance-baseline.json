@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "total": 1054,
+  "total": 1056,
   "covered": 7,
-  "exempt": 0,
+  "exempt": 2,
   "uncovered": 1047,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
@@ -3388,6 +3388,14 @@
     {
       "file": "src/components/EvidenceMaturityDashboard.tsx",
       "functionName": "EvidenceMaturityDashboard",
+      "expression": "apiState.failures",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.failures",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
       "expression": "apiState.progress",
       "kind": "numeric-jsx",
       "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.progress",
@@ -3416,6 +3424,14 @@
       "kind": "numeric-jsx",
       "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.total#2",
       "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
+      "expression": "apiState.total",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.total#3",
+      "class": "exempt"
     },
     {
       "file": "src/components/EvidenceMaturityDashboard.tsx",
