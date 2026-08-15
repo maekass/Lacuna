@@ -292,8 +292,8 @@ Use after features land:
 
 - Fix all Deno lint violations repo-wide
 - Add Jest for `src/lib/**` when you add `npm test`
-- Configure Datadog secrets (`DD_API_KEY`, `DD_APP_KEY`) or disable synthetics
-  workflow on forks
+- Configure Datadog secrets (`DD_API_KEY`, `DD_APP_KEY`); the workflow skips
+  (green) when those secrets are unset
 - Run Lighthouse on Vercel preview; optimize ForceNetwork bundle
 
 ---
@@ -337,7 +337,7 @@ npm run build        # production build check
 | Workflow                 | What it does                                     |
 | ------------------------ | ------------------------------------------------ |
 | `deno.yml`               | `deno lint` + `deno test` — fix lint before push |
-| `datadog-synthetics.yml` | Requires `DD_API_KEY` / `DD_APP_KEY` secrets     |
+| `datadog-synthetics.yml` | Skips unless `DD_API_KEY` / `DD_APP_KEY` are set |
 
 Common Deno failures:
 

@@ -258,8 +258,9 @@ npm run lint && npm test && npm run build && npm run validate:dataset
 Branch protection (optional): `./scripts/configure-branch-protection.sh` —
 requires `gh` admin on the repo.
 
-Datadog synthetics: `.github/workflows/datadog-synthetics.yml` — manual
-`workflow_dispatch` until `DD_*` secrets exist.
+Datadog synthetics: `.github/workflows/datadog-synthetics.yml` — daily cron plus
+`workflow_dispatch`. The job skips (green) until `DD_API_KEY` / `DD_APP_KEY`
+exist; it does not fail the schedule.
 
 ## SEC ingest
 
@@ -268,15 +269,15 @@ Full behavior: [SEC_INGESTION.md](./SEC_INGESTION.md). Candidates land in
 
 ## Troubleshooting
 
-| Symptom               | Check                                                                                                 |
-| --------------------- | ----------------------------------------------------------------------------------------------------- |
-| `/api/health` 401     | Vercel Deployment Protection — bypass header or exempt liveness; see [MONITORING.md](./MONITORING.md) |
-| `/api/health` 503     | `npm run validate:dataset`; if `db` mode, `npm run db:import`                                         |
-| Cron 401              | `CRON_SECRET` matches Vercel env                                                                      |
-| Cron 503 SEC          | `SEC_EDGAR_USER_AGENT` set                                                                            |
-| Ingest status empty   | `DATABASE_URL` + migrations 003                                                                       |
-| `ENOTFOUND` on Neon   | Stale `DATABASE_URL` on Vercel — `npm run db:restore -- --url "…"` then update Vercel env             |
-| DB SSL errors locally | `PGSSLMODE=disable` in `.env.local` (remove for Neon)                                                 |
+| Symptom                 | Check                                                                                                                                                           |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/api/health` 401       | Vercel Deployment Protection — bypass header or exempt liveness; see [MONITORING.md](./MONITORING.md)                                                           |
+| `/api/health/ready` 503 | Dataset invalid, or `LACUNA_DATA_MODE=db` with a down database. Static mode still reports a stale `DATABASE_URL` under `checks.database` without failing ready. |
+| Cron 401                | `CRON_SECRET` matches Vercel env                                                                                                                                |
+| Cron 503 SEC            | `SEC_EDGAR_USER_AGENT` set                                                                                                                                      |
+| Ingest status empty     | `DATABASE_URL` + migrations 003                                                                                                                                 |
+| `ENOTFOUND` on Neon     | Stale `DATABASE_URL` on Vercel — remove it if you are on static mode, or `npm run db:restore -- --url "…"` then update Vercel env                               |
+| DB SSL errors locally   | `PGSSLMODE=disable` in `.env.local` (remove for Neon)                                                                                                           |
 
 ## Related docs
 
