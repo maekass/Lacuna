@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "total": 1055,
-  "covered": 7,
+  "total": 1056,
+  "covered": 8,
   "exempt": 2,
   "uncovered": 1046,
   "perFileUncovered": {
@@ -3256,6 +3256,14 @@
       "kind": "formatting-call",
       "key": "src/components/DealReviewQueue.tsx::PendingDealCard::formatDealValue(deal.dealValueMillions)",
       "class": "uncovered"
+    },
+    {
+      "file": "src/components/DisclosedEstimandNote.tsx",
+      "functionName": "DisclosedEstimandNote",
+      "expression": "rate.toFixed(1)",
+      "kind": "formatting-call",
+      "key": "src/components/DisclosedEstimandNote.tsx::DisclosedEstimandNote::rate.toFixed(1)",
+      "class": "covered"
     },
     {
       "file": "src/components/DiscreteSources.tsx",

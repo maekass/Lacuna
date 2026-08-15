@@ -7,6 +7,7 @@ import {
   formatDisclosedValueBillions,
   headlineStatsToTiles,
 } from "@/lib/data/computeHeadlineStats";
+import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 
 describe("countUniqueSourceCitations", () => {
   it("counts distinct company and deal sources (success)", () => {
@@ -50,8 +51,25 @@ describe("computeHeadlineStats", () => {
     expect(tiles).toHaveLength(4);
     expect(tiles[0]?.label).toBe("Companies in our network");
     expect(tiles[1]?.value).toBe(stats.verifiedDeals.toString());
+    expect(tiles[2]?.label).toBe("WH disclosed value (completed)");
     expect(tiles[3]?.label).toBe("Public sources cited");
     expect(tiles[3]?.value).toBe(stats.uniqueSourceCitations.toString());
     expect(tiles[0]?.model.module).toContain("computeHeadlineStats");
+    expect(stats.estimand).toBe("disclosed_only_observed_sum");
+  });
+
+  it("preserves all-scope semantics for the published disclosed-value fields", () => {
+    const dataset = getStaticVerifiedDataset();
+    const stats = computeHeadlineStatsFromDataset(dataset);
+    const allScopeMillions = dataset.acquisitions.reduce(
+      (sum, deal) => sum + (deal.dealValue ?? 0),
+      0,
+    );
+
+    expect(stats.disclosedValueMillions).toBe(allScopeMillions);
+    expect(stats.disclosedValueMillions).toBe(140254);
+    expect(stats.disclosedValueBillionsLabel).toBe("$140.3B");
+    expect(stats.disclosedValueMillionsWh).toBe(22104);
+    expect(stats.disclosedValueBillionsLabelWh).toBe("$22.1B");
   });
 });
