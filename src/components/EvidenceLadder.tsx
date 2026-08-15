@@ -67,7 +67,9 @@ export default function EvidenceLadder(
                   rel="noopener noreferrer"
                   className="mt-1 inline-block text-xs font-medium underline underline-offset-2"
                 >
-                  Open source
+                  {run.urlKind === "edgar_locator"
+                    ? "SEC EDGAR filings (ticker locator)"
+                    : "Open source"}
                 </a>
               )
               : null}

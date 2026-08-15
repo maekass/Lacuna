@@ -25,15 +25,18 @@ export async function generateMetadata(
     return { title: "Deal not found · Lacuna" };
   }
   const acq = deal.acquisition;
+  const valueBit = typeof acq.dealValue === "number"
+    ? ` $${acq.dealValue}M disclosed.`
+    : " Value undisclosed.";
+  const description =
+    `Verified women's health ${acq.dealType}: ${acq.targetName} → ${acq.acquirerName}, announced ${acq.announcedDate}.${valueBit} Sources and limitations from public filings.`;
   return {
     title: `${acq.targetName} → ${acq.acquirerName} · Lacuna`,
-    description:
-      `Verified women's health M&A: ${acq.dealType}, announced ${acq.announcedDate}. Sources and limitations from public filings.`,
+    description,
     alternates: { canonical: `/deals/${id}` },
     openGraph: {
       title: `${acq.targetName} → ${acq.acquirerName}`,
-      description:
-        `Verified women's health M&A: ${acq.dealType}, announced ${acq.announcedDate}.`,
+      description,
       type: "article",
     },
   };

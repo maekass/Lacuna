@@ -9,33 +9,45 @@ interface DealDetailActionsProps {
   downloadName: string;
 }
 
+type CopyStatus = "idle" | "ok" | "err";
+
+function copyLabel(status: CopyStatus, idle: string): string {
+  if (status === "ok") return "Copied";
+  if (status === "err") return "Copy failed";
+  return idle;
+}
+
 export default function DealDetailActions({
   targetId,
   briefMarkdown,
   downloadName,
 }: DealDetailActionsProps) {
-  const [copyStatus, setCopyStatus] = useState<"idle" | "ok" | "err">("idle");
+  const [linkStatus, setLinkStatus] = useState<CopyStatus>("idle");
+  const [briefStatus, setBriefStatus] = useState<CopyStatus>("idle");
 
-  const flash = useCallback((ok: boolean) => {
-    setCopyStatus(ok ? "ok" : "err");
-    setTimeout(() => setCopyStatus("idle"), 2000);
-  }, []);
+  const flash = useCallback(
+    (setter: (status: CopyStatus) => void, ok: boolean) => {
+      setter(ok ? "ok" : "err");
+      setTimeout(() => setter("idle"), 2000);
+    },
+    [],
+  );
 
   const copyLink = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
-      flash(true);
+      flash(setLinkStatus, true);
     } catch {
-      flash(false);
+      flash(setLinkStatus, false);
     }
   }, [flash]);
 
   const copyBrief = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(briefMarkdown);
-      flash(true);
+      flash(setBriefStatus, true);
     } catch {
-      flash(false);
+      flash(setBriefStatus, false);
     }
   }, [briefMarkdown, flash]);
 
@@ -51,12 +63,6 @@ export default function DealDetailActions({
     URL.revokeObjectURL(url);
   }, [briefMarkdown, downloadName]);
 
-  const copyLabel = copyStatus === "ok"
-    ? "Copied"
-    : copyStatus === "err"
-    ? "Copy failed"
-    : "Copy link";
-
   return (
     <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
       <button
@@ -64,14 +70,14 @@ export default function DealDetailActions({
         onClick={() => void copyLink()}
         className="min-h-10 w-full rounded-md border border-lacuna-lavender/50 px-3 py-2.5 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20 sm:w-auto sm:py-1.5"
       >
-        {copyLabel}
+        {copyLabel(linkStatus, "Copy link")}
       </button>
       <button
         type="button"
         onClick={() => void copyBrief()}
         className="min-h-10 w-full rounded-md border border-lacuna-lavender/50 px-3 py-2.5 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20 sm:w-auto sm:py-1.5"
       >
-        Copy brief
+        {copyLabel(briefStatus, "Copy brief")}
       </button>
       <button
         type="button"

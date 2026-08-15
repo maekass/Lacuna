@@ -1,3 +1,4 @@
+import { formatDealDate } from "./formatDealDate";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import type { ComparableDealSummary } from "./dealTypes";
 
@@ -60,6 +61,7 @@ function toSummary(
     targetName: row.targetName,
     acquirerName: row.acquirerName,
     announcedDate: row.announcedDate,
+    announcedLabel: formatDealDate(row.announcedDate),
     dealValue: row.dealValue,
     dealType: row.dealType,
     sector,

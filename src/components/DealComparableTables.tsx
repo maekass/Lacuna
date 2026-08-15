@@ -58,7 +58,7 @@ function DealTable<T extends ComparableDealSummary>({
                   {row.acquirerName}
                 </td>
                 <td className="px-3 py-2 text-lacuna-blue/80">
-                  {row.announcedDate}
+                  {row.announcedLabel}
                 </td>
                 <td className="px-3 py-2 text-lacuna-blue/80">
                   {typeof row.dealValue === "number"
@@ -144,7 +144,7 @@ export default function DealComparableTables({
         : null}
       <DealTable
         title={`Other verified deals by ${acquirerName}`}
-        caption="Acquirer program history — not automatically valuation peers."
+        caption="Acquirer program history not already listed as a valuation peer or adjacency row."
         rows={acquirerDeals}
         extraHeader="Sector"
         extraCell={(row) => row.sector}

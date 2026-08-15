@@ -1,5 +1,12 @@
+export type SourceUrlKind = "direct" | "edgar_locator";
+
 const URL_IN_TEXT = /https?:\/\/[^\s)]+/i;
 const SEC_PATTERN = /\b(8-k|10-k|10-q|sec edgar|s-4|merger proxy|form 8)\b/i;
+
+/** True when the URL is an EDGAR company browse, not a specific accession. */
+export function isEdgarLocatorUrl(url: string): boolean {
+  return url.includes("browse-edgar");
+}
 
 /**
  * Locator for a citation. Never invents a filing accession — only extracts an

@@ -1,3 +1,4 @@
+import DealCloseTimeline from "@/components/DealCloseTimeline";
 import DealComparableTables from "@/components/DealComparableTables";
 import DealDetailActions from "@/components/DealDetailActions";
 import DealEconomicsCard from "@/components/DealEconomicsCard";
@@ -62,7 +63,9 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
         </h1>
         <p className="mt-2 text-sm leading-relaxed text-lacuna-blue sm:text-base">
           {acq.dealType}
+          {acq.dealStructure ? ` · ${acq.dealStructure}` : ""}
           {deal.acquirer.ticker ? ` · ${deal.acquirer.ticker}` : ""}
+          {` · announced ${view.announcedLabel}`}
         </p>
         <DealDetailActions
           targetId={deal.target.id}
@@ -75,7 +78,9 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
         />
       </header>
 
-      <MotionSection className="mb-10 grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3">
+      <DealCloseTimeline view={view} />
+
+      <MotionSection className="mb-10 mt-6 grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3">
         <DealEconomicsCard view={view} />
         <div className="rounded-xl border border-lacuna-lavender/40 bg-white/90 p-4 sm:p-5">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-lacuna-plum/80">
@@ -170,25 +175,25 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
             href="/research#clinical-trials"
             className="rounded-full border border-lacuna-lavender/50 px-3 py-1 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20"
           >
-            Clinical trials · {deal.target.name}
+            Clinical trials workspace
+          </Link>
+          <Link
+            href="/research#patient-empowerment"
+            className="rounded-full border border-lacuna-lavender/50 px-3 py-1 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20"
+          >
+            Patient empowerment research
           </Link>
           <Link
             href="/research#health-equity"
             className="rounded-full border border-lacuna-lavender/50 px-3 py-1 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20"
           >
-            Health equity · {deal.target.sector}
+            Health equity markers
           </Link>
           <Link
             href="/methods#causal-dag"
             className="rounded-full border border-lacuna-lavender/50 px-3 py-1 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20"
           >
             Methods &amp; limitations
-          </Link>
-          <Link
-            href="/intelligence#reimbursement"
-            className="rounded-full border border-lacuna-lavender/50 px-3 py-1 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20"
-          >
-            Reimbursement intelligence
           </Link>
         </div>
       </MotionSection>

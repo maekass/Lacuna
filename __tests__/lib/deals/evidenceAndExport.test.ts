@@ -7,7 +7,8 @@ import {
   getDealDetailView,
 } from "@/lib/deals";
 import { closeDurationDays, premiumPercent } from "@/lib/deals/dealTiming";
-import { inferSourceUrl } from "@/lib/deals/inferSourceUrl";
+import { inferSourceUrl, isEdgarLocatorUrl } from "@/lib/deals/inferSourceUrl";
+import { formatDealDate } from "@/lib/deals/formatDealDate";
 
 describe("evidence ladder", () => {
   const dataset = getStaticVerifiedDataset();
@@ -24,6 +25,7 @@ describe("evidence ladder", () => {
     const filing = ladder.runs.find((r) => r.tier === "primary");
     expect(filing?.url).toContain("sec.gov");
     expect(filing?.url).toContain("HOLX");
+    expect(filing?.urlKind).toBe("edgar_locator");
   });
 
   it("does not treat two press wires as dual-source", () => {
@@ -63,6 +65,12 @@ describe("deal timing and source locators", () => {
     expect(url).toContain("sec.gov");
     expect(url).toContain("HOLX");
     expect(url).toContain("8-K");
+    expect(isEdgarLocatorUrl(url!)).toBe(true);
+  });
+
+  it("formats verified ISO dates on the UTC calendar", () => {
+    expect(formatDealDate("2021-01-05")).toBe("Jan 5, 2021");
+    expect(formatDealDate("2021-02-22")).toBe("Feb 22, 2021");
   });
 });
 
@@ -100,5 +108,17 @@ describe("getDealDetailView", () => {
     expect(
       view?.adjacencyNotPeers.some((c) => c.targetName === "Immunomedics"),
     ).toBe(true);
+    expect(view?.announcedLabel).toBe("Jan 5, 2021");
+    expect(view?.closedLabel).toBe("Feb 22, 2021");
+    const peerIds = new Set(view!.comparables.map((c) => c.id));
+    const adjacencyIds = new Set(view!.adjacencyNotPeers.map((c) => c.id));
+    expect(
+      view!.acquirerDeals.every((c) =>
+        !peerIds.has(c.id) && !adjacencyIds.has(c.id)
+      ),
+    ).toBe(true);
+    expect(
+      view!.acquirerDeals.some((c) => c.targetName === "Endomagnetics"),
+    ).toBe(false);
   });
 });

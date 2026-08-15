@@ -1,3 +1,4 @@
+import { formatDealDate } from "./formatDealDate";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import { buildPatientEmpowermentSnapshot } from "@/lib/research/patientEmpowermentPipeline";
 import { formatDealBrief } from "@/lib/gamma/formatDealBrief";
@@ -26,6 +27,8 @@ export interface DealDetailView {
   acquirerDeals: ComparableDealSummary[];
   empowerment: DealEmpowermentContext;
   closeDays: number | null;
+  announcedLabel: string;
+  closedLabel: string | null;
   premiumMultiple: number | null;
   premiumPercent: number | null;
   briefMarkdown: string;
@@ -43,7 +46,11 @@ export function getDealDetailView(
   if (!deal) return null;
 
   const { peers, adjacencyNotPeers } = listComparableDealSets(dataset, dealId);
-  const acquirerDeals = listAcquirerDeals(dataset, dealId);
+  const shownIds = new Set([
+    ...peers.map((row) => row.id),
+    ...adjacencyNotPeers.map((row) => row.id),
+  ]);
+  const acquirerDeals = listAcquirerDeals(dataset, dealId, 5, shownIds);
   const ladder = buildEvidenceLadder(deal);
   const snapshot = buildPatientEmpowermentSnapshot(dataset);
   const closeDays = closeDurationDays(
@@ -60,6 +67,10 @@ export function getDealDetailView(
     acquirerDeals,
     empowerment: empowermentContextForDeal(deal, snapshot),
     closeDays,
+    announcedLabel: formatDealDate(deal.acquisition.announcedDate),
+    closedLabel: deal.acquisition.closedDate
+      ? formatDealDate(deal.acquisition.closedDate)
+      : null,
     premiumMultiple: multiple,
     premiumPercent: multiple === null ? null : premiumPercent(multiple),
     briefMarkdown: formatDealBrief(deal, peers, {

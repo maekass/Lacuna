@@ -1,5 +1,9 @@
 import type { DealDetail } from "./dealTypes";
-import { inferSourceUrl } from "./inferSourceUrl";
+import {
+  inferSourceUrl,
+  isEdgarLocatorUrl,
+  type SourceUrlKind,
+} from "./inferSourceUrl";
 
 export type EvidenceTier = "primary" | "secondary" | "tertiary" | "unknown";
 
@@ -8,6 +12,7 @@ export interface EvidenceRun {
   label: string;
   citation: string;
   url?: string;
+  urlKind?: SourceUrlKind;
 }
 
 export interface EvidenceLadderResult {
@@ -85,11 +90,15 @@ export function buildEvidenceLadder(deal: DealDetail): EvidenceLadderResult {
     if (!key || seen.has(key)) return;
     seen.add(key);
     const tier = classifyCitation(citation);
+    const url = inferSourceUrl(citation, ticker);
     runs.push({
       tier,
       label: tierLabel(tier),
       citation,
-      url: inferSourceUrl(citation, ticker),
+      url,
+      urlKind: url
+        ? (isEdgarLocatorUrl(url) ? "edgar_locator" : "direct")
+        : undefined,
     });
   }
 
