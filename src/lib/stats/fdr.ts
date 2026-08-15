@@ -50,7 +50,7 @@ export function benjaminiHochberg(
   return indexed.map((t, i) => ({
     label: t.label,
     pValue: t.pValue,
-    pAdjusted: Math.round(adjusted[i] * 10000) / 10000,
+    pAdjusted: adjusted[i],
     significant: adjusted[i] <= q,
     rank: i + 1,
   })).sort((a, b) => a.rank - b.rank);
@@ -82,7 +82,7 @@ export function holmBonferroni(
   return indexed.map((t, i) => ({
     label: t.label,
     pValue: t.pValue,
-    pAdjusted: Math.round(adjusted[i] * 10000) / 10000,
+    pAdjusted: adjusted[i],
     significant: adjusted[i] <= alpha,
     rank: i + 1,
   }));

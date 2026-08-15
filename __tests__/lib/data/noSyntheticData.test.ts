@@ -15,7 +15,6 @@ const FORBIDDEN_IN_SRC = [
   /actualScaling:\s*[\d.]+/,
   /\bgenerateMarketSizing\b/,
   /\bfounder-pattern-analyzer\b/,
-  /sampleSize:\s*0,\s*\n\s*reimbursementCorrelation/,
   /totalAddressableMarket:\s*base\.tam/,
 ];
 

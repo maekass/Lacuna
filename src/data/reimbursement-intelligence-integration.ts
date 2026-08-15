@@ -36,11 +36,11 @@ export interface ReimbursementAnalysisResult {
     estimatedInsuranceRevenue: number;
   };
   valuation: {
-    baseMultiple: number;
-    adjustedMultiple: number;
-    impliedValuation: number;
-    valuationRange: { low: number; high: number };
-    reimbursementPremium: number;
+    baseMultiple: number | null;
+    adjustedMultiple: number | null;
+    impliedValuation: number | null;
+    valuationRange: { low: number | null; high: number | null };
+    reimbursementPremium: number | null;
     confidence: "high" | "medium" | "low";
   };
   sectorBenchmark: {
@@ -312,7 +312,10 @@ export class ReimbursementIntelligenceIntegration {
       }
     }
 
-    if (valuation.reimbursementPremium > 1.4) {
+    if (
+      valuation.reimbursementPremium !== null &&
+      valuation.reimbursementPremium > 1.4
+    ) {
       insights.push(
         `Strong reimbursement profile commands ${
           ((valuation.reimbursementPremium - 1) * 100).toFixed(0)
@@ -367,11 +370,16 @@ export class ReimbursementIntelligenceIntegration {
         ).length,
     };
 
-    const avgMultiple =
-      analyses.reduce((sum, a) => sum + a.valuation.adjustedMultiple, 0) /
-      analyses.length;
+    const multiples = analyses
+      .map((analysis) => analysis.valuation.adjustedMultiple)
+      .filter((value): value is number => value !== null);
+    const avgMultiple = multiples.length > 0
+      ? multiples.reduce((sum, value) => sum + value, 0) / multiples.length
+      : 0;
 
-    const premiums = analyses.map((a) => a.valuation.reimbursementPremium);
+    const premiums = analyses
+      .map((analysis) => analysis.valuation.reimbursementPremium)
+      .filter((value): value is number => value !== null);
 
     const sectorDist: Record<string, number> = {};
     analyses.forEach((a) => {
@@ -383,8 +391,8 @@ export class ReimbursementIntelligenceIntegration {
       ...businessModels,
       avgValuationMultiple: avgMultiple,
       reimbursementPremiumRange: {
-        min: Math.min(...premiums),
-        max: Math.max(...premiums),
+        min: premiums.length > 0 ? Math.min(...premiums) : 0,
+        max: premiums.length > 0 ? Math.max(...premiums) : 0,
       },
       sectorDistribution: sectorDist,
     };

@@ -98,7 +98,11 @@ describe("runSecIngest", () => {
 
   it("scans dataset tickers and classifies filings in dry run (success)", async () => {
     const { runSecIngest } = await import("@/lib/ingestion/secIngestPipeline");
-    const result = await runSecIngest({ dryRun: true, datasetPath });
+    const result = await runSecIngest({
+      dryRun: true,
+      datasetPath,
+      forceKeywordOnly: true,
+    });
 
     expect(result.scannedTickers).toBeGreaterThan(0);
     expect(result.parsedFilings).toHaveLength(1);
@@ -116,6 +120,7 @@ describe("runSecIngest", () => {
       dryRun: true,
       datasetPath,
       extraTickers: ["ZZZZ"],
+      forceKeywordOnly: true,
     });
 
     const [tickers] = mockScan.mock.calls[0];
@@ -127,7 +132,7 @@ describe("runSecIngest", () => {
   it("syncs classified deals when DATABASE_URL is set (success)", async () => {
     vi.stubEnv("DATABASE_URL", "postgresql://user:pass@localhost:5432/lacuna");
     const { runSecIngest } = await import("@/lib/ingestion/secIngestPipeline");
-    const result = await runSecIngest({ datasetPath });
+    const result = await runSecIngest({ datasetPath, forceKeywordOnly: true });
 
     expect(mockSync).toHaveBeenCalledOnce();
     expect(result.sync).toEqual({
@@ -150,6 +155,7 @@ describe("runSecIngest", () => {
     await runSecIngest({
       datasetPath,
       dryRun: false,
+      forceKeywordOnly: true,
     });
 
     expect(mockSync).not.toHaveBeenCalled();
@@ -168,7 +174,11 @@ describe("runSecIngest", () => {
     ]);
 
     const { runSecIngest } = await import("@/lib/ingestion/secIngestPipeline");
-    const result = await runSecIngest({ dryRun: true, datasetPath });
+    const result = await runSecIngest({
+      dryRun: true,
+      datasetPath,
+      forceKeywordOnly: true,
+    });
 
     expect(result.classified[0].womensHealthRelevant).toBe(false);
     expect(result.classified[0].status).toBe("pending_review");

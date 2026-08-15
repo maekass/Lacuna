@@ -1,205 +1,42 @@
 {
   "generatedAt": "2026-07-06T00:00:00.000Z",
-  "source": "Lacuna verified dataset (n=59 acquisitions) + CMS CPT code sector mapping",
-  "overallCorrelation": {
-    "correlation": -0.256,
-    "sampleSize": 7,
-    "method": "Pearson(hasCPTCode, dealValue/totalFunding) across all sectors"
-  },
-  "sectors": [
+  "datasetVersion": "v8",
+  "source": "Lacuna verified dataset (src/data/dataset.verified.json)",
+  "sectors": [],
+  "withheld": [
     {
-      "sector": "Fertility",
-      "correlation": null,
-      "sampleSize": 1,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "General Wellness",
-      "correlation": null,
-      "sampleSize": 3,
-      "method": "Pearson(hasCPTCode, dealValue/totalFunding) from verified acquisitions",
-      "source": "Lacuna verified dataset + CMS CPT code mapping (cms-reimbursement-connector.ts)",
-      "warning": "Small sample (n<5) — treat as directional only"
-    },
-    {
-      "sector": "Pelvic Health",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Mental Health",
-      "correlation": null,
-      "sampleSize": 1,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Wearables",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Breast Health",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Gynecological Surgery",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Reproductive Health",
-      "correlation": null,
-      "sampleSize": 1,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Maternal Health",
-      "correlation": null,
-      "sampleSize": 1,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Diagnostics",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Contraception",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Precision Medicine",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Menopause",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Dermatology",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Sexual Wellness",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Consumer",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Medical Device",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Digital Health",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Therapeutics",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Tech Bio",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Diagnostic",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Biotech",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Reproductive",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
-    },
-    {
-      "sector": "Wellness",
-      "correlation": null,
-      "sampleSize": 0,
-      "method": "Insufficient data (n<2) for correlation",
-      "source": "Lacuna verified dataset",
-      "warning": "Sample too small for meaningful correlation"
+      "metricId": "sector.correlation.pearson",
+      "reason": "Withheld: Pearson correlation used sectors as observations and the deal-level version has only the same 7 usable pairs; no honest registered estimator exists.",
+      "lineage": {
+        "metricId": "sector.correlation.pearson",
+        "estimator": "not-computed",
+        "n": 7,
+        "originalInputCount": 59,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 43
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 9
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 9,
+            "total": 59
+          },
+          {
+            "field": "totalFunding",
+            "missing": 43,
+            "total": 50
+          }
+        ],
+        "datasetVersion": "v8",
+        "computedAt": "2026-07-06T00:00:00.000Z"
+      }
     }
-  ],
-  "method": "Binary CPT code presence (1=has CPT codes, 0=no CPT codes) correlated with deal multiple (dealValue/totalFunding). CPT presence derived from cms-reimbursement-connector.ts sector mapping.",
-  "warning": "Binary CPT presence is a coarse proxy. For precise correlation, use per-company CPT code status when available. Small-n sectors (n<5) produce unreliable correlations."
+  ]
 }

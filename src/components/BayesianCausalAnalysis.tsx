@@ -1,7 +1,7 @@
 /**
  * Bayesian Causal Analysis Dashboard
  *
- * Small-sample causal inference with defaults derived from the verified dataset.
+ * Illustrative small-sample causal inference demonstrator.
  */
 "use client";
 
@@ -104,8 +104,17 @@ export default function BayesianCausalAnalysis() {
       {/* Header */}
       <AnalysisPanelHeader
         title="Bayesian Causal Inference"
-        subtitle="Small Sample Analysis | Main Effects Only | Pre-Registered Hypotheses"
+        subtitle="Illustrative Method Demonstrator | Main Effects Only | Pre-Registered Hypotheses"
       />
+      <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+        <p className="text-sm text-blue-800">
+          <strong>Illustrative inputs only:</strong>{" "}
+          the editable estimate, standard error, and prior settings below are
+          not Lacuna estimates and are not calculated from the verified dataset.
+          Adjust them to explore the method; no causal claim is made about
+          Lacuna.
+        </p>
+      </div>
 
       {/* Input Controls */}
       <div className="bg-lacuna-surface-muted p-4 rounded-lg space-y-4">
@@ -471,58 +480,10 @@ export default function BayesianCausalAnalysis() {
                     </span>
                   </div>
 
-                  {result.result && (
-                    <div className="mt-3 pt-3 border-t border-lacuna-border-subtle grid grid-cols-3 gap-4 text-center">
-                      <div>
-                        <div
-                          className="text-lg font-light"
-                          style={displayFont}
-                        >
-                          {result.result.posteriorMean.toFixed(3)}
-                        </div>
-                        <div className="text-xs text-lacuna-text-muted">
-                          Posterior Mean
-                        </div>
-                      </div>
-                      <div>
-                        <div
-                          className={`text-lg font-light ${
-                            getProbabilityColor(
-                              result.result.probabilityPositive,
-                              result.hypothesis.direction === "positive"
-                                ? "positive"
-                                : "negative",
-                            )
-                          }`}
-                        >
-                          {result.hypothesis.direction === "positive"
-                            ? (result.result.probabilityPositive * 100).toFixed(
-                              0,
-                            )
-                            : (result.result.probabilityNegative * 100).toFixed(
-                              0,
-                            )}%
-                        </div>
-                        <div className="text-xs text-lacuna-text-muted">
-                          P(Hypothesis)
-                        </div>
-                      </div>
-                      <div>
-                        <div
-                          className="text-lg font-light"
-                          style={{
-                            fontFamily: DISPLAY_FONT,
-                            color: "#5D4E6D",
-                          }}
-                        >
-                          {result.result.bayesFactor.toFixed(1)}
-                        </div>
-                        <div className="text-xs text-lacuna-text-muted">
-                          Bayes Factor
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  <p className="mt-3 text-xs text-lacuna-text-muted">
+                    Registration records the expected direction only. Evidence
+                    is not computed without observed outcome data.
+                  </p>
 
                   <p className="text-xs text-lacuna-text-muted mt-2">
                     {result.note}

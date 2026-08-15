@@ -72,7 +72,9 @@
     "build-storybook": "storybook build",
     "test:e2e": "playwright test",
     "test:e2e:smoke": "playwright test e2e/deploy-smoke.spec.ts",
-    "eval:llm": "tsx scripts/eval-llm.ts"
+    "eval:llm": "tsx scripts/eval-llm.ts",
+    "ai:models:sync": "tsx scripts/sync-ai-models.ts",
+    "gate:provenance": "tsx scripts/provenance-gate.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.67",
@@ -100,6 +102,7 @@
     "lucide-react": "^1.17.0",
     "next": "16.2.12",
     "pg": "^8.16.0",
+    "qrcode.react": "^4.2.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "simple-statistics": "^7.8.9",

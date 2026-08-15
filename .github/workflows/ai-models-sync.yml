@@ -1,0 +1,77 @@
+name: Daily AI model metadata sync
+
+# Keeps pricing, context window, and knowledge cutoff current in
+# src/data/ai-models.snapshot.json so LLM cost accounting does not drift.
+on:
+  schedule:
+    - cron: "15 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: ai-models-sync
+  cancel-in-progress: false
+
+jobs:
+  ai-models-sync:
+    runs-on: ubuntu-latest
+    env:
+      SYNC_BRANCH: chore/ai-models-sync
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Sync gateway model metadata
+        env:
+          AI_GATEWAY_API_KEY: ${{ secrets.AI_GATEWAY_API_KEY }}
+        run: npm run ai:models:sync
+
+      - name: Check for metadata changes
+        id: changed
+        run: |
+          if git diff --quiet src/data/ai-models.snapshot.json; then
+            echo "Model metadata unchanged."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Pushes made with GITHUB_TOKEN do not trigger workflow runs, so the
+      # catalog guard is run here rather than relying on CI for the branch.
+      - name: Verify snapshot
+        if: steps.changed.outputs.changed == 'true'
+        run: |
+          npx vitest run __tests__/lib/ai/modelCatalog.test.ts
+          npm run typecheck
+
+      - name: Open pull request with refreshed metadata
+        if: steps.changed.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$SYNC_BRANCH" || true
+          git checkout -B "$SYNC_BRANCH"
+          git add src/data/ai-models.snapshot.json
+          git commit -m "chore: sync AI model metadata snapshot"
+          git push --force-with-lease origin "$SYNC_BRANCH"
+          if [ -z "$(gh pr list --head "$SYNC_BRANCH" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --head "$SYNC_BRANCH" \
+              --base "${{ github.event.repository.default_branch }}" \
+              --title "chore: sync AI model metadata snapshot" \
+              --body "Automated refresh of \`src/data/ai-models.snapshot.json\` from the Vercel AI Gateway model directory. Review the pricing and knowledge-cutoff diff before merging."
+          fi

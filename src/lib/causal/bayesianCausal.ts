@@ -19,6 +19,9 @@
  * - Wager & Athey (2018): Causal forests (but noting limitations)
  */
 
+import { createSeededRng, shuffle } from "@/lib/stats/random";
+import { normalCdf } from "@/lib/stats/primitives";
+
 export interface BayesianCausalConfig {
   nObservations: number;
   nTreatments: number;
@@ -101,8 +104,8 @@ export function bayesianEstimate(
 
   // Probability of positive/negative effect
   const sd = Math.sqrt(posteriorVariance);
-  const probabilityPositive = 1 - normalCDF(0, posteriorMean, sd);
-  const probabilityNegative = normalCDF(0, posteriorMean, sd);
+  const probabilityPositive = 1 - normalCdf((0 - posteriorMean) / sd);
+  const probabilityNegative = normalCdf((0 - posteriorMean) / sd);
 
   // Bayes factor (approximate, for effect vs no effect)
   // BF10 = P(data|H1) / P(data|H0)
@@ -137,33 +140,6 @@ export function bayesianEstimate(
 /**
  * Normal cumulative distribution function
  */
-function normalCDF(x: number, mean: number, sd: number): number {
-  const z = (x - mean) / (sd * Math.sqrt(2));
-  return 0.5 * (1 + erf(z));
-}
-
-/**
- * Error function approximation
- */
-function erf(x: number): number {
-  // Abramowitz and Stegun approximation
-  const sign = x >= 0 ? 1 : -1;
-  x = Math.abs(x);
-
-  const a1 = 0.254829592;
-  const a2 = -0.284496736;
-  const a3 = 1.421413741;
-  const a4 = -1.453152027;
-  const a5 = 1.061405429;
-  const p = 0.3275911;
-
-  const t = 1 / (1 + p * x);
-  const y = 1 -
-    (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
-
-  return sign * y;
-}
-
 /**
  * Calculate Bayes Factor (H1: effect exists vs H0: no effect)
  */
@@ -259,7 +235,7 @@ export interface CrossFittingResult {
   selectionSet: number[]; // Indices for model selection
   inferenceSet: number[]; // Indices for final inference
   modelSelected: string[]; // Variables selected
-  finalEstimate: BayesianEstimate;
+  finalEstimate: BayesianEstimate | null;
   isReliable: boolean;
   warning: string;
 }
@@ -275,7 +251,7 @@ export function crossFittingAnalysis(
       selectionSet: [],
       inferenceSet: allData.map((_, i) => i),
       modelSelected: ["main_effect_only"], // No selection possible
-      finalEstimate: null as unknown as BayesianEstimate,
+      finalEstimate: null,
       isReliable: false,
       warning:
         `n=${nTotal} insufficient for cross-fitting. Using all data for single estimate with strong priors.`,
@@ -287,7 +263,7 @@ export function crossFittingAnalysis(
   const indices = Array.from({ length: nTotal }, (_, i) => i);
 
   // Shuffle deterministically (Fisher-Yates with seed)
-  const shuffled = seededShuffle(indices, 42);
+  const shuffled = shuffle(indices, createSeededRng(42));
 
   const selectionSet = shuffled.slice(0, splitPoint);
   const inferenceSet = shuffled.slice(splitPoint);
@@ -296,33 +272,12 @@ export function crossFittingAnalysis(
     selectionSet,
     inferenceSet,
     modelSelected: ["selected_on_" + selectionSet.length + "_obs"],
-    finalEstimate: null as unknown as BayesianEstimate,
+    finalEstimate: null,
     isReliable: inferenceSet.length >= 10,
     warning: inferenceSet.length < 10
       ? `Inference set only ${inferenceSet.length} obs - results uncertain`
       : "Cross-fitting valid",
   };
-}
-
-/**
- * Deterministic shuffle for reproducibility
- */
-function seededShuffle(array: number[], seed: number): number[] {
-  const result = [...array];
-  let currentSeed = seed;
-
-  // Simple LCG for reproducibility
-  const random = () => {
-    currentSeed = (currentSeed * 1664525 + 1013904223) % 4294967296;
-    return currentSeed / 4294967296;
-  };
-
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-
-  return result;
 }
 
 /**
@@ -371,19 +326,12 @@ export function smallSampleCausalAnalysis(
       };
     }
 
-    // Simulate hypothesis test with strong regularization
-    const simEstimate = h.expectedEffect * 0.5; // Shrink toward null
-    const simSE = mleStandardError * 1.5; // Inflate uncertainty
-
-    const result = bayesianEstimate(simEstimate, simSE ** 2, config);
-
     return {
       hypothesis: h,
-      result,
-      status: "tested" as const,
-      note: result.probabilityPositive > 0.8 || result.probabilityNegative > 0.8
-        ? "Evidence supports pre-registered hypothesis"
-        : "Inconclusive evidence for pre-registered hypothesis",
+      result: null,
+      status: "not_applicable" as const,
+      note:
+        "Pre-registered direction recorded; no hypothesis result is computed without observed outcome data",
     };
   });
 
