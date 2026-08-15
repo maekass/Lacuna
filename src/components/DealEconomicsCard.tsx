@@ -1,3 +1,5 @@
+"use client";
+
 import Metric from "@/components/Metric";
 import {
   CLOSE_DAYS_MODEL,
