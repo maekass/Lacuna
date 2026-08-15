@@ -2,6 +2,8 @@ import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
+import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
+import { hashDataset } from "@/lib/lineage/datasetHash";
 
 const ROOT = path.resolve(__dirname, "../..");
 const ARTIFACTS = [
@@ -22,6 +24,7 @@ function readArtifact<T>(file: string): T {
 
 describe("lineage-backed computed artifacts", () => {
   it("records a canonical dataset hash in every lineage artifact", () => {
+    const expected = hashDataset(getStaticVerifiedDataset()).fullHash;
     for (const file of ARTIFACTS) {
       const artifact = readArtifact<{
         datasetHash?: unknown;
@@ -30,7 +33,7 @@ describe("lineage-backed computed artifacts", () => {
       expect(
         artifact.datasetHash ?? artifact.provenance?.datasetHash,
         file,
-      ).toMatch(/^[0-9a-f]{64}$/);
+      ).toBe(expected);
     }
   });
 
