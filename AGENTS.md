@@ -112,3 +112,34 @@ Postgres: `docker compose up -d`. Deploy smoke: `GET /api/health/ready`.
 ## Security
 
 No secrets in git; validate API inputs; parameterized queries when DB is added.
+
+## Cursor Cloud specific instructions
+
+Scope: the primary product is the **Next.js app at the repo root** (deployed to
+Vercel). It runs standalone off the static verified dataset
+(`LACUNA_DATA_MODE=static`, the default) — **no Postgres/ClickHouse/python-api/
+dotnet-api needed** to develop, test, or run it. Everything under `services/`
+and `ml/` is optional/self-hosted and out of scope for normal app work.
+
+- **Node 24 is required** (`engines.node: 24.x`, `.nvmrc` = 24). The Cloud VM's
+  default `node` on `PATH` (`/exec-daemon/node`) is v22 and must not be touched.
+  The update script and `~/.bashrc` select Node 24 via `nvm use 24`; if a shell
+  ever reports v22, run `nvm use 24` (it prepends Node 24 ahead of the daemon
+  node). Confirm with `node --version` → `v24.x`.
+- Run/lint/test/build (all standard, see `package.json`):
+  - Dev server: `npm run dev` → http://localhost:3000 (Turbopack, ~fast start).
+  - Lint: `npm run lint` · Types: `npm run typecheck`.
+  - Deno (CI-parity, downloaded on demand via `npx deno@2.1.4`):
+    `npm run deno:fmt:check` and `npm run deno:lint`.
+  - Tests: `npm test` (Vitest; ~646 tests). No DB/network needed — external
+    calls (SEC/ClinicalTrials.gov) are mocked; a logged `SEC API 403` line in
+    test output is an expected mocked failure, not a real error.
+  - Dataset guard: `npm run validate:dataset` (also runs inside `npm run build`;
+    "Validation passed with warnings" is a pass).
+- Build note: plain `npm run build` runs `validate:dataset` then `next build`.
+  CI/Vercel and the Husky pre-push hook use `build:ci`/`start:ci` which pin
+  `LACUNA_DATA_MODE=static` — prefer those to avoid db-mode `.env.local`
+  surprises. Husky pre-commit auto-runs `deno fmt` and re-stages files.
+- Optional integrations degrade gracefully: AI endpoints (`/api/ai/*`) return
+  `503` without `AI_GATEWAY_API_KEY`/`OPENAI_API_KEY`; the live trials panel
+  needs outbound internet. None of these block the core app.
