@@ -26,8 +26,13 @@ export {
 export type { EvidenceLadderResult, EvidenceTier } from "./evidenceLadder";
 export { getDealDetailView } from "./getDealDetailView";
 export type { DealDetailView } from "./getDealDetailView";
-export { sourcedDistinctLastKnownValuation } from "./sourcedLastKnownValuation";
+export {
+  sourcedDistinctLastKnownValuation,
+  sourcedLastKnownValuationForCompany,
+} from "./sourcedLastKnownValuation";
 export type {
+  CompanyValuationRecord,
+  DealPrintRecord,
   LastKnownValuationInput,
   SourcedLastKnownValuation,
 } from "./sourcedLastKnownValuation";

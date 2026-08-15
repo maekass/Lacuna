@@ -1,8 +1,9 @@
 /**
  * Target-company `lastKnownValuation` is often a copy of the acquisition
- * print (Biotheranostics $230M). Deal pages must not show that as a second
- * price. A figure is displayable only when it is sourced and distinct from
- * prices already on the dossier — never as a silent TAM-style fallback.
+ * print (Biotheranostics $230M). Deal pages and company views must not show
+ * that as a second price. A figure is displayable only when it is sourced
+ * and distinct from prices already on the dossier — never as a silent
+ * TAM-style fallback.
  */
 
 export interface SourcedLastKnownValuation {
@@ -13,6 +14,18 @@ export interface SourcedLastKnownValuation {
 export interface LastKnownValuationInput {
   readonly lastKnownValuation?: number;
   readonly valuationSource?: string;
+  readonly dealValue?: number;
+  readonly preDealValuation?: number;
+}
+
+export interface CompanyValuationRecord {
+  readonly id: string;
+  readonly lastKnownValuation?: number;
+  readonly valuationSource?: string;
+}
+
+export interface DealPrintRecord {
+  readonly targetId: string;
   readonly dealValue?: number;
   readonly preDealValuation?: number;
 }
@@ -36,4 +49,21 @@ export function sourcedDistinctLastKnownValuation(
   if (isSamePrint(value, input.dealValue)) return null;
   if (isSamePrint(value, input.preDealValuation)) return null;
   return { value, source };
+}
+
+/**
+ * Company-row lastKnownValuation for display. Hidden when it copies a
+ * matching acquisition print (Biotheranostics $230M) or lacks valuationSource.
+ */
+export function sourcedLastKnownValuationForCompany(
+  company: CompanyValuationRecord,
+  acquisitions: readonly DealPrintRecord[],
+): SourcedLastKnownValuation | null {
+  const deal = acquisitions.find((row) => row.targetId === company.id);
+  return sourcedDistinctLastKnownValuation({
+    lastKnownValuation: company.lastKnownValuation,
+    valuationSource: company.valuationSource,
+    dealValue: deal?.dealValue,
+    preDealValuation: deal?.preDealValuation,
+  });
 }

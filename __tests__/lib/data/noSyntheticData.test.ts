@@ -97,6 +97,19 @@ describe("no synthetic M&A demo data in src/", () => {
     expect(page).not.toMatch(/deal\.target\.lastKnownValuation/);
     expect(page).toMatch(/targetLastKnownValuation/);
   });
+
+  it("does not map lastKnownValuation onto revenue as a TAM fallback", () => {
+    const mapper = readFileSync(
+      path.join(SRC_ROOT, "lib/data/companyProfileMapper.ts"),
+      "utf8",
+    );
+    expect(mapper).not.toMatch(/revenue:\s*company\.lastKnownValuation/);
+    const reimbursement = readFileSync(
+      path.join(SRC_ROOT, "components/ReimbursementIntelligenceDashboard.tsx"),
+      "utf8",
+    );
+    expect(reimbursement).not.toMatch(/revenue:\s*company\.lastKnownValuation/);
+  });
 });
 
 describe("test fixtures use verified JSON slice", () => {

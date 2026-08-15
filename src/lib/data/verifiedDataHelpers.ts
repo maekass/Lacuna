@@ -1,5 +1,6 @@
 import type { VerifiedDataset } from "./datasetTypes";
 import { type EvidenceClass, isEvidenceClass } from "../evidence";
+import { sourcedLastKnownValuationForCompany } from "@/lib/deals/sourcedLastKnownValuation";
 
 export interface VerifiedCompanyView {
   readonly id: string;
@@ -30,6 +31,7 @@ export interface VerifiedAcquisitionView {
   readonly dealType: string;
   readonly strategicRationale: string;
   readonly source: string;
+  readonly preDealValuation?: number;
 }
 
 export interface VerifiedAcquirerView {
@@ -52,6 +54,7 @@ export interface VerifiedDerivedData {
     sector: string;
     stage: string;
     valuation: number;
+    valuationSource?: string;
   }>;
   getVerifiedNetworkLinks: () => Array<{
     source: string;
@@ -96,14 +99,21 @@ export function buildVerifiedDerivedData(
     verifiedAcquirers,
     dataProvenance,
     getVerifiedNetworkNodes: () => [
-      ...verifiedCompanies.map((c) => ({
-        id: c.id,
-        name: c.name,
-        type: "target" as const,
-        sector: c.sector,
-        stage: c.stage,
-        valuation: c.lastKnownValuation ?? -1,
-      })),
+      ...verifiedCompanies.map((c) => {
+        const sourced = sourcedLastKnownValuationForCompany(
+          c,
+          verifiedAcquisitions,
+        );
+        return {
+          id: c.id,
+          name: c.name,
+          type: "target" as const,
+          sector: c.sector,
+          stage: c.stage,
+          valuation: sourced?.value ?? -1,
+          valuationSource: sourced?.source,
+        };
+      }),
       ...verifiedAcquirers.map((a) => ({
         id: a.id,
         name: a.name,

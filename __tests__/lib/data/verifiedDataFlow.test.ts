@@ -20,6 +20,16 @@ describe("companyProfileMapper", () => {
     const profile = mapVerifiedCompanyToProfile(withFunding!);
     expect(profile.fundingTotal).toBe(withFunding!.totalFunding);
     expect(profile.foundingDate).toBe(`${withFunding!.founded}-01-01`);
+    expect(profile.revenue).toBeUndefined();
+  });
+
+  it("does not treat Biotheranostics deal print as revenue", () => {
+    const biotheranostics = derived.verifiedCompanies.find(
+      (c) => c.name === "Biotheranostics",
+    );
+    expect(biotheranostics?.lastKnownValuation).toBe(230);
+    const profile = mapVerifiedCompanyToProfile(biotheranostics!);
+    expect(profile.revenue).toBeUndefined();
   });
 
   it("excludes acquired targets from active company list", () => {
