@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "total": 1053,
+  "total": 1051,
   "covered": 15,
   "exempt": 2,
-  "uncovered": 1036,
+  "uncovered": 1034,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
     "src/app/sections/ConsumerHealthPage.tsx": 7,
@@ -50,7 +50,7 @@
     "src/components/ExportToGamma.tsx": 5,
     "src/components/FairnessAuditV2.tsx": 46,
     "src/components/FairnessLimitations.tsx": 11,
-    "src/components/ForceNetwork.tsx": 4,
+    "src/components/ForceNetwork.tsx": 3,
     "src/components/FounderCharacteristics.tsx": 33,
     "src/components/FundingEventsPanel.tsx": 5,
     "src/components/GenderInferenceQuality.tsx": 26,
@@ -78,7 +78,7 @@
     "src/components/RhCapitalPortfolioContext.tsx": 4,
     "src/components/SensitivityAnalysis.tsx": 16,
     "src/components/SpaceWhResearchGapsPanel.tsx": 5,
-    "src/components/StrategicPositioningMap.tsx": 62,
+    "src/components/StrategicPositioningMap.tsx": 61,
     "src/components/SurvivalCurve.tsx": 18,
     "src/components/SystemHealthDashboard.tsx": 3,
     "src/components/TemporalValidation.tsx": 3,
@@ -4185,14 +4185,6 @@
       "class": "uncovered"
     },
     {
-      "file": "src/components/ForceNetwork.tsx",
-      "functionName": "formatNodeValuation",
-      "expression": "(valuation / 1000).toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/ForceNetwork.tsx::formatNodeValuation::(valuation / 1000).toFixed(1)",
-      "class": "uncovered"
-    },
-    {
       "file": "src/components/FounderCharacteristics.tsx",
       "functionName": "FounderCharacteristics",
       "expression": "((menLed.length / companies.length) * 100).toFixed(0)",
@@ -6862,14 +6854,6 @@
       "expression": "hoveredCompany && hoveredCompany.id !== company.id ? 0.4 : 1",
       "kind": "numeric-jsx",
       "key": "src/components/StrategicPositioningMap.tsx::StrategicPositioningMap::hoveredCompany && hoveredCompany.id !== company.id ? 0.4 : 1",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/StrategicPositioningMap.tsx",
-      "functionName": "StrategicPositioningMap",
-      "expression": "hoveredCompany.lastKnownValuation",
-      "kind": "numeric-jsx",
-      "key": "src/components/StrategicPositioningMap.tsx::StrategicPositioningMap::hoveredCompany.lastKnownValuation",
       "class": "uncovered"
     },
     {

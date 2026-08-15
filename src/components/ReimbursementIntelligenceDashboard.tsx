@@ -56,7 +56,6 @@ export default function ReimbursementIntelligenceDashboard() {
         name: company.name,
         productDescription: company.description ?? "",
         sector: mapToStandardSector(company.sector),
-        revenue: company.lastKnownValuation,
       }));
 
       const results = reimbursementIntelligence.analyzeCompanies(

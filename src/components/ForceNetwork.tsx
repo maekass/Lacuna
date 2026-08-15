@@ -5,6 +5,7 @@ import * as d3 from "d3";
 import { motion } from "framer-motion";
 import AcquirerProfile from "@/components/AcquirerProfile";
 import ChartTooltip from "@/components/ui/ChartTooltip";
+import DealTargetLastKnownValuation from "@/components/DealTargetLastKnownValuation";
 import { INVESTOR_PORTFOLIOS, type PortfolioKey } from "@/lib/data/portfolios";
 
 interface Node extends d3.SimulationNodeDatum {
@@ -14,6 +15,7 @@ interface Node extends d3.SimulationNodeDatum {
   sector: string;
   stage: string;
   valuation: number;
+  valuationSource?: string;
 }
 
 interface Link {
@@ -47,13 +49,6 @@ function layoutValuation(valuation: number): number {
 
 function layoutDealValue(value: number): number {
   return value < 0 ? 30 : value;
-}
-
-function formatNodeValuation(valuation: number): string | null {
-  if (valuation < 0) return null;
-  if (valuation > 1000) return `$${(valuation / 1000).toFixed(1)}B`;
-  if (valuation > 0) return `$${valuation}M`;
-  return null;
 }
 
 const sectorColors: Record<string, string> = {
@@ -729,20 +724,32 @@ export default function ForceNetwork(
                   <span className="text-lacuna-text-muted">Stage:</span>{" "}
                   {selectedNode.stage}
                 </p>
-                {selectedNode.valuation < 0 && selectedNode.type === "target"
+                {selectedNode.type === "target" &&
+                    selectedNode.valuationSource &&
+                    selectedNode.valuation >= 0
                   ? (
                     <p>
-                      <span className="text-lacuna-text-muted">Valuation:</span>
-                      {" "}
-                      Undisclosed
+                      <span className="text-lacuna-text-muted">
+                        Valuation:
+                      </span>{" "}
+                      <DealTargetLastKnownValuation
+                        compact
+                        valuation={{
+                          value: selectedNode.valuation,
+                          source: selectedNode.valuationSource,
+                        }}
+                      />
+                      {` · ${selectedNode.valuationSource}`}
                     </p>
                   )
-                  : formatNodeValuation(selectedNode.valuation)
+                  : selectedNode.valuation < 0 &&
+                      selectedNode.type === "target"
                   ? (
                     <p>
-                      <span className="text-lacuna-text-muted">Valuation:</span>
-                      {" "}
-                      {formatNodeValuation(selectedNode.valuation)}
+                      <span className="text-lacuna-text-muted">
+                        Valuation:
+                      </span>{" "}
+                      Undisclosed
                     </p>
                   )
                   : null}

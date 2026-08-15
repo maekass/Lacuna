@@ -22,6 +22,9 @@ describe("buildVerifiedDerivedData", () => {
     expect(
       nodes.some((n) => n.id === "acquirer-hologic" && n.type === "acquirer"),
     ).toBe(true);
+    const biotheranostics = nodes.find((n) => n.id === "c24");
+    expect(biotheranostics?.valuation).toBe(-1);
+    expect(biotheranostics?.valuationSource).toBeUndefined();
   });
 
   it("getVerifiedNetworkLinks marks undisclosed deal value with -1 sentinel (edge)", () => {

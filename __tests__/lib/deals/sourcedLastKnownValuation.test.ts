@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { sourcedDistinctLastKnownValuation } from "@/lib/deals/sourcedLastKnownValuation";
+import { minimalVerifiedDataset } from "../../helpers/fixtures";
+import {
+  sourcedDistinctLastKnownValuation,
+  sourcedLastKnownValuationForCompany,
+} from "@/lib/deals/sourcedLastKnownValuation";
 
 describe("sourcedDistinctLastKnownValuation", () => {
   it("hides Biotheranostics when lastKnownValuation copies the $230M deal print", () => {
@@ -39,6 +43,34 @@ describe("sourcedDistinctLastKnownValuation", () => {
         "Total company value ~$5.3B fully diluted; Roche paid ~$2.4B for remaining shares",
       dealValue: 2400,
     })).toEqual({
+      value: 5300,
+      source:
+        "Total company value ~$5.3B fully diluted; Roche paid ~$2.4B for remaining shares",
+    });
+  });
+});
+
+describe("sourcedLastKnownValuationForCompany", () => {
+  it("hides Biotheranostics $230M when it copies the verified deal print", () => {
+    const company = minimalVerifiedDataset.companies.find((c) =>
+      c.id === "c24"
+    );
+    expect(company?.lastKnownValuation).toBe(230);
+    expect(
+      sourcedLastKnownValuationForCompany(
+        company!,
+        minimalVerifiedDataset.acquisitions,
+      ),
+    ).toBeNull();
+  });
+
+  it("returns a sourced figure when it is distinct from the deal print", () => {
+    expect(sourcedLastKnownValuationForCompany({
+      id: "c21",
+      lastKnownValuation: 5300,
+      valuationSource:
+        "Total company value ~$5.3B fully diluted; Roche paid ~$2.4B for remaining shares",
+    }, [{ targetId: "c21", dealValue: 2400 }])).toEqual({
       value: 5300,
       source:
         "Total company value ~$5.3B fully diluted; Roche paid ~$2.4B for remaining shares",

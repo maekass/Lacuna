@@ -3,9 +3,11 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import DealTargetLastKnownValuation from "@/components/DealTargetLastKnownValuation";
 import { INVESTOR_PORTFOLIOS, type PortfolioKey } from "@/lib/data/portfolios";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
+import { sourcedLastKnownValuationForCompany } from "@/lib/deals/sourcedLastKnownValuation";
 
 const CURRENT_YEAR = 2026;
 type MatchMode = "single" | PortfolioKey;
@@ -99,7 +101,7 @@ function sharedFactorsAgainstCentroid(
 }
 
 export default function CompanySimilarity() {
-  const { verifiedCompanies } = useVerifiedDataset();
+  const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
   const sectors = useMemo(
     () => Array.from(new Set(verifiedCompanies.map((c) => c.sector))).sort(),
     [verifiedCompanies],
@@ -223,6 +225,9 @@ export default function CompanySimilarity() {
   }, [companyVectors, portfolioNameSet, sectors]);
 
   const selected = companyVectorMap.get(selectedCompany)?.company;
+  const selectedSourced = selected
+    ? sourcedLastKnownValuationForCompany(selected, verifiedAcquisitions)
+    : null;
   const activeResults = mode === "single"
     ? similarities
     : portfolioMatches.matches;
@@ -307,8 +312,17 @@ export default function CompanySimilarity() {
           </p>
           <p className="text-sm text-lacuna-text-muted">
             {selected.sector} · {selected.stage}
-            {selected.lastKnownValuation &&
-              ` · $${selected.lastKnownValuation}M valuation`}
+            {selectedSourced
+              ? (
+                <>
+                  {" · "}
+                  <DealTargetLastKnownValuation
+                    compact
+                    valuation={selectedSourced}
+                  />
+                </>
+              )
+              : null}
             {selected.totalFunding && ` · $${selected.totalFunding}M raised`}
           </p>
         </div>

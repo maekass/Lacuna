@@ -27,6 +27,8 @@ import {
 } from "@/lib/network/strategicPositioningHelpers";
 import { displayFont, LABEL_FONT, labelFont } from "@/lib/theme/typography";
 import MetricTile from "@/components/ui/MetricTile";
+import DealTargetLastKnownValuation from "@/components/DealTargetLastKnownValuation";
+import { sourcedLastKnownValuationForCompany } from "@/lib/deals/sourcedLastKnownValuation";
 
 interface StrategicPositioningMapProps {
   result: StrategicPositioningResult;
@@ -35,7 +37,7 @@ interface StrategicPositioningMapProps {
 export default function StrategicPositioningMap(
   { result }: StrategicPositioningMapProps,
 ) {
-  const { verifiedCompanies } = useVerifiedDataset();
+  const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
   const [hoveredCompany, setHoveredCompany] = useState<CompanyPosition | null>(
     null,
   );
@@ -119,11 +121,27 @@ export default function StrategicPositioningMap(
   const xScale = (x: number) => margin.left + (x * innerWidth);
   const yScale = (y: number) => margin.top + innerHeight - (y * innerHeight);
 
-  // Dot size based on valuation when available
+  // Dot size based on sourced company valuation — never the deal print.
   const dotSize = (company: CompanyPosition) => {
-    const valuation = company.lastKnownValuation ?? 0;
+    const sourced = sourcedLastKnownValuationForCompany(
+      company,
+      verifiedAcquisitions,
+    );
+    const valuation = sourced?.value ?? 0;
     return 9 + Math.min(Math.sqrt(Math.max(valuation, 0)) / 3, 10);
   };
+  const hoveredSourced = hoveredCompany
+    ? sourcedLastKnownValuationForCompany(
+      hoveredCompany,
+      verifiedAcquisitions,
+    )
+    : null;
+  const selectedSourced = selectedCompany
+    ? sourcedLastKnownValuationForCompany(
+      selectedCompany,
+      verifiedAcquisitions,
+    )
+    : null;
 
   return (
     <motion.div
@@ -411,9 +429,17 @@ export default function StrategicPositioningMap(
               <div className="text-xs text-lacuna-text-muted mt-2 space-y-0.5">
                 <div>Stage: {hoveredCompany.stage}</div>
                 <div>Pillar: {hoveredCompany.pillar ?? "Not mapped"}</div>
-                {typeof hoveredCompany.lastKnownValuation === "number" && (
-                  <div>Valuation: ${hoveredCompany.lastKnownValuation}M</div>
-                )}
+                {hoveredSourced
+                  ? (
+                    <div>
+                      Valuation:{" "}
+                      <DealTargetLastKnownValuation
+                        compact
+                        valuation={hoveredSourced}
+                      />
+                    </div>
+                  )
+                  : null}
               </div>
             </div>
           )}
@@ -479,13 +505,14 @@ export default function StrategicPositioningMap(
               label="Stage"
             />
             <MetricTile
-              value={
-                <>
-                  {typeof selectedCompany.lastKnownValuation === "number"
-                    ? `$${selectedCompany.lastKnownValuation}M`
-                    : "N/A"}
-                </>
-              }
+              value={selectedSourced
+                ? (
+                  <DealTargetLastKnownValuation
+                    compact
+                    valuation={selectedSourced}
+                  />
+                )
+                : <>Insufficient disclosed data</>}
               label="Valuation"
             />
           </div>
