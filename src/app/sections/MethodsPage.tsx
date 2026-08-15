@@ -30,7 +30,19 @@ export default function MethodsPage() {
         <DatasetCoverageFootnote className="mt-3 rounded-lg border border-lacuna-lavender/40 bg-lacuna-lavender/15 px-3 py-2 text-xs text-lacuna-blue" />
         <p className="mt-2 text-xs text-lacuna-blue/80">
           Scores and models here are exploratory heuristics — not validated for
-          investment decisions.
+          investment decisions. Disclosed-value headlines use the{" "}
+          <code className="text-[11px]">disclosed_only_observed_sum</code>{" "}
+          estimand from <code className="text-[11px]">lacunaDataset</code>
+          ; see{" "}
+          <a
+            href="https://github.com/maekass/Lacuna/blob/main/docs/LIMITATIONS.md"
+            className="underline underline-offset-2"
+            target="_blank"
+            rel="noreferrer"
+          >
+            LIMITATIONS.md
+          </a>
+          .
         </p>
       </header>
 
