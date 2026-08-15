@@ -1,6 +1,5 @@
 import { formatDealDate } from "./formatDealDate";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
-import { buildPatientEmpowermentSnapshot } from "@/lib/research/patientEmpowermentPipeline";
 import { formatDealBrief } from "@/lib/gamma/formatDealBrief";
 import type { DealEmpowermentContext } from "./empowermentContextForDeal";
 import { empowermentContextForDeal } from "./empowermentContextForDeal";
@@ -53,12 +52,12 @@ export function getDealDetailView(
   ]);
   const acquirerDeals = listAcquirerDeals(dataset, dealId, 5, shownIds);
   const ladder = buildEvidenceLadder(deal);
-  const snapshot = buildPatientEmpowermentSnapshot(dataset);
   const closeDays = closeDurationDays(
     deal.acquisition.announcedDate,
     deal.acquisition.closedDate,
   );
   const multiple = premiumMultiple(deal.acquisition);
+  const empowerment = empowermentContextForDeal(deal, dataset);
 
   return {
     deal,
@@ -66,7 +65,7 @@ export function getDealDetailView(
     comparables: peers,
     adjacencyNotPeers,
     acquirerDeals,
-    empowerment: empowermentContextForDeal(deal, snapshot),
+    empowerment,
     closeDays,
     announcedLabel: formatDealDate(deal.acquisition.announcedDate),
     closedLabel: deal.acquisition.closedDate
@@ -78,6 +77,9 @@ export function getDealDetailView(
       adjacencyNotPeers,
       closeDays,
       premiumMultiple: multiple,
+      targetSources: deal.target.sources,
+      empowerment,
+      disclaimer: dataset.provenance.disclaimer,
     }),
     provenanceLine: [
       `Curated verified dataset${
@@ -87,7 +89,7 @@ export function getDealDetailView(
       }`,
       `updated ${dataset.provenance.lastUpdated}`,
       `${ladder.runs.length} citations on this deal`,
-      "not live market data",
+      dataset.provenance.disclaimer,
     ].join(" · "),
   };
 }

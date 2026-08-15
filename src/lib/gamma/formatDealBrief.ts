@@ -1,6 +1,7 @@
 import type { AdjacentNonPeer } from "@/lib/deals/listComparableDeals";
 import type { ComparableDealSummary } from "@/lib/deals/dealTypes";
 import type { DealDetail } from "@/lib/deals/dealTypes";
+import type { DealEmpowermentContext } from "@/lib/deals/empowermentContextForDeal";
 import { buildEvidenceLadder } from "@/lib/deals/evidenceLadder";
 import { premiumPercent } from "@/lib/deals/dealTiming";
 
@@ -8,6 +9,9 @@ export interface DealBriefExtras {
   adjacencyNotPeers?: AdjacentNonPeer[];
   closeDays?: number | null;
   premiumMultiple?: number | null;
+  targetSources?: readonly string[];
+  empowerment?: DealEmpowermentContext;
+  disclaimer?: string;
 }
 
 function formatMillions(value?: number): string {
@@ -65,6 +69,10 @@ export function formatDealBrief(
   if (deal.target.description) {
     lines.push("## Target");
     lines.push(deal.target.description);
+    const sources = extras.targetSources ?? deal.target.sources ?? [];
+    for (const source of sources) {
+      lines.push(`- ${source}`);
+    }
     lines.push("");
   }
 
@@ -116,9 +124,19 @@ export function formatDealBrief(
     lines.push("");
   }
 
+  const empowerment = extras.empowerment;
+  if (empowerment?.matchedDimensions.length) {
+    lines.push("## Cited empowerment gaps (HLTH 2022, curated mapping)");
+    for (const row of empowerment.matchedDimensions) {
+      lines.push(`- ${row.label}: ${row.citedValue}`);
+    }
+    lines.push("");
+  }
+
   lines.push("---");
+  if (extras.disclaimer) lines.push(extras.disclaimer);
   lines.push(
-    "Source: Lacuna verified dataset. Educational use only — not investment advice.",
+    "Educational use only — not investment advice.",
   );
 
   return lines.join("\n");

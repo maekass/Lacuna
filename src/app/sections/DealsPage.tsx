@@ -24,7 +24,6 @@ import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { useDashboardData } from "@/lib/data/useDashboardData";
 import { empowermentContextForDeal } from "@/lib/deals/empowermentContextForDeal";
 import { getFeaturedDeal } from "@/lib/deals/getFeaturedDeal";
-import { buildPatientEmpowermentSnapshot } from "@/lib/research/patientEmpowermentPipeline";
 
 const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
@@ -48,8 +47,7 @@ export default function DealsPage() {
     };
     const deal = getFeaturedDeal(dataset);
     if (!deal) return null;
-    const snapshot = buildPatientEmpowermentSnapshot(dataset);
-    return empowermentContextForDeal(deal, snapshot);
+    return empowermentContextForDeal(deal, dataset);
   }, [
     verifiedCompanies,
     verifiedAcquirers,
@@ -83,7 +81,7 @@ export default function DealsPage() {
             <div className="mt-4">
               <SectionHeader
                 title="Featured deal — empowerment context"
-                description="HLTH/Outcomes4Me 2022 baseline dimensions crosswalked to the pinned featured deal target (affinity-based, not live outcomes)."
+                description="HLTH/Outcomes4Me 2022 cited survey items mapped to the featured deal by analyst curation — not live outcomes or keyword affinity."
               />
               <DealEmpowermentContext context={featuredEmpowerment} />
             </div>

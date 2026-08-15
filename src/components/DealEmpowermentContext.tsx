@@ -50,11 +50,11 @@ export default function DealEmpowermentContext({
       <ul className="mt-2 space-y-1.5">
         {context.matchedDimensions.slice(0, 4).map((match) => (
           <li
-            key={match.dimension.metric.id}
+            key={match.metricId}
             className="flex justify-between gap-3 rounded border border-lacuna-lavender/25 bg-white/70 px-2 py-1"
           >
             <span>
-              {match.dimension.metric.label}
+              {match.label}
               {match.sourceTier
                 ? (
                   <span className="text-lacuna-blue/60">

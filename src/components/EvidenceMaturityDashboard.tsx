@@ -151,7 +151,7 @@ export default function EvidenceMaturityDashboard() {
       const fda = apiState.fdaResults.get(target?.name || "");
 
       const resolved = resolveEvidenceInputs(
-        target?.evidenceClass ?? "care_delivery",
+        target?.evidenceClass,
         ctg,
         fda,
       );

@@ -1,9 +1,5 @@
 import type { VerifiedDataset } from "./datasetTypes";
-import {
-  classifyEvidence,
-  type EvidenceClass,
-  isEvidenceClass,
-} from "../evidence";
+import { type EvidenceClass, isEvidenceClass } from "../evidence";
 
 export interface VerifiedCompanyView {
   readonly id: string;
@@ -17,8 +13,8 @@ export interface VerifiedCompanyView {
   readonly valuationSource?: string;
   readonly totalFunding?: number;
   readonly sources: readonly string[];
-  /** Evidence taxonomy: stored value when valid, else derived by the classifier. */
-  readonly evidenceClass: EvidenceClass;
+  /** Stored taxonomy class only — omitted when the verified row has none. */
+  readonly evidenceClass?: EvidenceClass;
 }
 
 export interface VerifiedAcquisitionView {
@@ -78,7 +74,7 @@ export function buildVerifiedDerivedData(
     sources: c.sources ?? [],
     evidenceClass: isEvidenceClass(c.evidenceClass)
       ? c.evidenceClass
-      : classifyEvidence(c),
+      : undefined,
   }));
 
   const verifiedAcquisitions: VerifiedAcquisitionView[] = dataset.acquisitions
