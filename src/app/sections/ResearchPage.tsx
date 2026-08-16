@@ -55,7 +55,7 @@ export default function ResearchPage({
         </div>
         <SectionHeader
           title="Gap valuation model"
-          description="US GBD 2021 burden × VC deployed — WEF-aligned for CVD/metabolic ($10M / $4M), Rock Health / PitchBook elsewhere. Cardiovascular and metabolic areas now in gap scoring. Heuristic — not financial advice."
+          description="US GBD 2021 burden × VC deployed — WEF-aligned for CVD/metabolic. Dollar output is the verified-dataset stage funding median only; editorial Rock Health / PitchBook medians and gap multipliers are not used as a price."
         />
         <BurdenCapitalGapValuation />
       </MotionSection>

@@ -114,8 +114,17 @@ Those scores must **not** feed:
 - Valuation peers (`listComparableDeals`)
 - Dual-source badges (`buildEvidenceLadder.hasDualSource`)
 
+**Also withheld (not synthetic substitutes):**
+
+- Clinical-trial ML percentages while `trainingSource` is `synthetic_seed`
+- TAM penetration / sector-multiple / R&D-cost valuation methods
+- Uncalibrated 35% acquisition base rate
+- Editorial Rock Health / PitchBook stage medians as deal prices
+- Affinity-adjusted “fair value” and bidding-war premiums
+
 Deal dossiers may show analyst-curated HLTH mappings (`curated` only). They must
 not run the research pipeline's sector/keyword affinity join, and
 research/affinity citation strings never count toward dual-source corroboration.
 Burden–capital gap scores stay on `/research` — they do not decorate
-deal-workspace valuation matrices or dossier comps.
+deal-workspace valuation matrices or dossier comps. Dollar output on that panel
+is the verified-dataset stage funding median only.

@@ -28,18 +28,11 @@ function makeCompany(overrides: Partial<QuantCompany> = {}): QuantCompany {
 describe("ValuationEngine", () => {
   const engine = new ValuationEngine();
 
-  it("does not throw and returns a finite consensus (regression: percentile crash)", () => {
+  it("does not invent TAM or sector-multiple consensus without verified comparables", () => {
     const result = engine.valuateCompany(makeCompany({ annualRevenue: 10 }));
-    expect(isSufficient(result.consensus)).toBe(true);
-    const consensus = numericOrNull(result.consensus);
-    expect(consensus).not.toBeNull();
-    expect(Number.isFinite(consensus)).toBe(true);
-    expect(consensus!).toBeGreaterThan(0);
-    if (isSufficient(result.consensus)) {
-      expect(result.consensus.confidenceInterval.every(Number.isFinite)).toBe(
-        true,
-      );
-    }
+    expect(result.recommendation).toBe("INSUFFICIENT DATA");
+    expect(numericOrNull(result.consensus)).toBeNull();
+    expect(isSufficient(result.consensus)).toBe(false);
   });
 
   it("returns INSUFFICIENT DATA (not NaN) when no inputs are present", () => {
@@ -50,25 +43,24 @@ describe("ValuationEngine", () => {
     expect(numericOrNull(result.consensus)).toBeNull();
   });
 
-  it("applies a configurable Africa discount", () => {
+  it("does not apply an invented Africa geographic discount", () => {
     const base = numericOrNull(
       engine.valuateCompany(makeCompany({ annualRevenue: 10 })).consensus,
     );
-    const discounted = numericOrNull(
+    const africa = numericOrNull(
       engine.valuateCompany(
         makeCompany({ annualRevenue: 10, geographicFocus: ["Africa"] }),
       ).consensus,
     );
-    expect(discounted).not.toBeNull();
-    expect(base).not.toBeNull();
-    expect(discounted!).toBeLessThan(base!);
+    expect(base).toBeNull();
+    expect(africa).toBeNull();
   });
 });
 
 describe("AcquisitionPredictor", () => {
   const predictor = new AcquisitionPredictor();
 
-  it("keeps probability within [0.05, 0.95] and varies by company quality", () => {
+  it("withholds probability without calibrated dataset exit rates", () => {
     const strong = numericOrNull(
       predictor.predictAcquisition(
         makeCompany({ clinicalStage: "fda_approved", geographicFocus: ["US"] }),
@@ -83,30 +75,26 @@ describe("AcquisitionPredictor", () => {
       ).probability,
     );
 
-    for (const p of [strong, weak]) {
-      expect(p).not.toBeNull();
-      expect(p!).toBeGreaterThanOrEqual(0.05);
-      expect(p!).toBeLessThanOrEqual(0.95);
-    }
-    expect(strong!).toBeGreaterThan(weak!);
+    expect(strong).toBeNull();
+    expect(weak).toBeNull();
   });
 });
 
 describe("HealthImpactModeler", () => {
   const modeler = new HealthImpactModeler();
 
-  it("keeps lives-saved finite and below total global maternal deaths", () => {
+  it("withholds invented population/mortality lives-saved priors", () => {
     const impact = modeler.modelImpact(
       makeCompany({ geographicFocus: ["Africa"] }),
     );
-    expect(Number.isFinite(impact.cumulativeLivesSaved)).toBe(true);
-    expect(impact.cumulativeLivesSaved).toBeGreaterThanOrEqual(0);
-    expect(impact.cumulativeLivesSaved).toBeLessThan(287_000 * 5);
+    expect(impact.cumulativeLivesSaved).toBe(0);
+    expect(impact.annualLivesSaved).toEqual([]);
+    expect(impact.assumptions[0]).toMatch(/Insufficient disclosed data/);
   });
 });
 
 describe("PortfolioOptimizer", () => {
-  it("produces a bundle when multiple valuation methods provide estimates", () => {
+  it("does not build a bundle from invented TAM or sector-multiple methods", () => {
     const candidates: QuantCompany[] = [
       makeCompany({
         id: "a",
@@ -134,10 +122,8 @@ describe("PortfolioOptimizer", () => {
       }),
     ];
     const result = new PortfolioOptimizer().optimizePortfolio(candidates, 500);
-    expect(result.companies.length).toBeGreaterThan(1);
-    expect(new Set(result.companies.map((company) => company.roi)).size)
-      .toBeGreaterThan(1);
-    expect(numericOrNull(result.expectedROI)).not.toBeNull();
+    expect(result.companies).toHaveLength(0);
+    expect(numericOrNull(result.expectedROI)).toBeNull();
   });
 
   it("does not fabricate portfolio ROI from point-only valuations", () => {

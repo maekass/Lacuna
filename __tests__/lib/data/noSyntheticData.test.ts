@@ -216,6 +216,39 @@ describe("no synthetic M&A demo data in src/", () => {
     expect(similarity).toMatch(/Sector overlap/);
     expect(similarity).toMatch(/not a valuation peer set/);
   });
+
+  it("withholds invented TAM multiples, editorial stage medians, and synthetic ML scores", () => {
+    const engine = readFileSync(
+      path.join(SRC_ROOT, "lib/quant/valuationEngine.ts"),
+      "utf8",
+    );
+    expect(engine).not.toMatch(/TAM_PENETRATION/);
+    expect(engine).toMatch(/HEURISTIC_WITHHELD/);
+    const gap = readFileSync(
+      path.join(SRC_ROOT, "lib/valuation/burdenCapitalGap.ts"),
+      "utf8",
+    );
+    expect(gap).not.toMatch(/STAGE_MEDIANS_M/);
+    expect(gap).toMatch(/return null/);
+    const acquirer = readFileSync(
+      path.join(SRC_ROOT, "data/acquirer-prediction-engine.ts"),
+      "utf8",
+    );
+    expect(acquirer).not.toMatch(
+      /estimatedBiddingWarPremium = competitiveThreatLevel/,
+    );
+    expect(acquirer).toMatch(/estimatedBiddingWarPremium: null/);
+    const tracker = readFileSync(
+      path.join(SRC_ROOT, "components/ClinicalTrialTracker.tsx"),
+      "utf8",
+    );
+    expect(tracker).toMatch(/areClinicalTrialMlScoresReleased/);
+    const predictor = readFileSync(
+      path.join(SRC_ROOT, "lib/quant/predictionEngines.ts"),
+      "utf8",
+    );
+    expect(predictor).not.toMatch(/UNCALIBRATED_BASE_RATE/);
+  });
 });
 
 describe("test fixtures use verified JSON slice", () => {

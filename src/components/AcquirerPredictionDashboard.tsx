@@ -193,22 +193,18 @@ export default function AcquirerPredictionDashboard() {
               </div>
               <div className="text-center">
                 <div className="text-lg font-semibold text-lacuna-plum">
-                  {selectedAnalysis.fairValueEstimate
-                    ? formatCurrency(selectedAnalysis.fairValueEstimate.median)
-                    : "—"}
+                  —
                 </div>
                 <div className="text-xs text-lacuna-text-muted">
-                  Affinity value (heuristic)
+                  Deal dollars not modeled
                 </div>
               </div>
               <div className="text-center">
                 <div className="text-lg font-semibold text-orange-600">
-                  {selectedAnalysis.estimatedBiddingWarPremium > 0
-                    ? `+${selectedAnalysis.estimatedBiddingWarPremium}%`
-                    : "None"}
+                  —
                 </div>
                 <div className="text-xs text-lacuna-text-muted">
-                  Affinity premium (heuristic)
+                  No invented premium
                 </div>
               </div>
             </div>
@@ -221,7 +217,7 @@ export default function AcquirerPredictionDashboard() {
                 <div className="text-xs text-green-600">
                   Match Score: {selectedAnalysis.topMatches[0].matchScore}/100
                   {selectedAnalysis.topMatches[0].estimatedValue
-                    ? ` • Estimated Value: ${
+                    ? ` • Dataset median: ${
                       formatCurrency(
                         selectedAnalysis.topMatches[0].estimatedValue.median,
                       )
@@ -239,8 +235,8 @@ export default function AcquirerPredictionDashboard() {
                   topAcquirer: selectedAnalysis.topMatches[0]?.acquirer.name ||
                     "N/A",
                   matchScore: selectedAnalysis.topMatches[0]?.matchScore || 0,
-                  estimatedValue: selectedAnalysis.fairValueEstimate?.median ??
-                    0,
+                  estimatedValue: selectedAnalysis.topMatches[0]
+                    ?.estimatedValue?.median ?? 0,
                   competitiveThreat: selectedAnalysis.competitiveThreatLevel,
                 }}
               />
@@ -331,7 +327,7 @@ export default function AcquirerPredictionDashboard() {
                           : "—"}
                       </div>
                       <div className="text-xs text-lacuna-text-muted">
-                        Estimated Value
+                        Dataset median
                       </div>
                     </div>
                   </div>
@@ -353,14 +349,13 @@ export default function AcquirerPredictionDashboard() {
 
           <div className="bg-white rounded-lg shadow p-6">
             <h4 className="font-semibold text-lacuna-plum mb-3">
-              Exit Timeline Estimate
+              Exit timeline (qualitative)
             </h4>
             <div className="flex items-center gap-4">
-              <div className="text-3xl font-bold text-lacuna-plum">
-                {selectedAnalysis.timelineEstimate.months}
-              </div>
               <div className="text-sm text-lacuna-blue">
-                months estimated to exit
+                {selectedAnalysis.timelineEstimate.months != null
+                  ? `${selectedAnalysis.timelineEstimate.months} months estimated to exit`
+                  : "Insufficient disclosed data — stage-month priors are not used."}
               </div>
             </div>
 
@@ -440,7 +435,7 @@ export default function AcquirerPredictionDashboard() {
                     Affinity
                   </th>
                   <th className="px-4 py-2 text-right text-xs font-semibold">
-                    Affinity value
+                    Dataset median
                   </th>
                   <th className="px-4 py-2 text-center text-xs font-semibold">
                     Interest Level
@@ -467,8 +462,10 @@ export default function AcquirerPredictionDashboard() {
                       {analysis.topMatches[0]?.matchScore || 0}
                     </td>
                     <td className="px-4 py-3 text-right font-medium">
-                      {analysis.fairValueEstimate
-                        ? formatCurrency(analysis.fairValueEstimate.median)
+                      {analysis.topMatches[0]?.estimatedValue
+                        ? formatCurrency(
+                          analysis.topMatches[0].estimatedValue.median,
+                        )
                         : "—"}
                     </td>
                     <td className="px-4 py-3 text-center">

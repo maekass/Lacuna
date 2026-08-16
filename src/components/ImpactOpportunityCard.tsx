@@ -321,7 +321,7 @@ export default function ImpactOpportunityCard() {
             >
               {oais.components.addressablePopScore}M
             </div>
-            <span className="text-xs text-green-600">✓ Measured</span>
+            <span className="text-xs text-lacuna-blue/70">Cited</span>
           </div>
 
           <div className="bg-lacuna-surface-muted p-3 rounded-lg">
@@ -337,7 +337,7 @@ export default function ImpactOpportunityCard() {
             >
               {(oais.components.penetrationGapScore * 100).toFixed(0)}%
             </div>
-            <span className="text-xs text-green-600">✓ Measured</span>
+            <span className="text-xs text-lacuna-blue/70">Cited</span>
           </div>
 
           <div className="bg-lacuna-surface-muted p-3 rounded-lg">
@@ -401,7 +401,7 @@ export default function ImpactOpportunityCard() {
             >
               -{(oais.components.marketSaturationPenalty * 100).toFixed(0)}%
             </div>
-            <span className="text-xs text-green-600">✓ Measured</span>
+            <span className="text-xs text-lacuna-blue/70">Cited</span>
           </div>
         </div>
       </div>
@@ -412,7 +412,7 @@ export default function ImpactOpportunityCard() {
           className="font-medium text-green-800 mb-4"
           style={labelFontUppercase}
         >
-          ✓ What We CAN Reliably Measure (Tier 1)
+          ✓ What We CAN Cite (Tier 1)
         </h4>
         <div className="space-y-3">
           <div className="bg-white p-3 rounded border border-green-100">
@@ -420,8 +420,8 @@ export default function ImpactOpportunityCard() {
               <span className="font-medium text-sm">
                 Addressable Population
               </span>
-              <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded">
-                MEASURED
+              <span className="text-xs text-lacuna-blue/70 bg-lacuna-pink/10 px-2 py-1 rounded">
+                CITED
               </span>
             </div>
             <p className="text-xs text-lacuna-text-secondary mt-1">
@@ -440,8 +440,8 @@ export default function ImpactOpportunityCard() {
               <span className="font-medium text-sm">
                 Market Penetration Gap
               </span>
-              <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded">
-                MEASURED PROXY
+              <span className="text-xs text-amber-700 bg-amber-50 px-2 py-1 rounded">
+                CITED PROXY
               </span>
             </div>
             <p className="text-xs text-lacuna-text-secondary mt-1">

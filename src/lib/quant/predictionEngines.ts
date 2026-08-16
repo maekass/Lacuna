@@ -12,14 +12,7 @@ import {
   sufficient,
 } from "./estimators";
 import { acquisitionModelCaveats, portfolioCaveats } from "./presentation";
-import {
-  classifyValuationType,
-  DRIVER_WEIGHTS,
-  EXIT_MULTIPLE_BY_STAGE,
-  IMPACT_ASSUMPTIONS,
-  UNCALIBRATED_BASE_RATE,
-  yearFiveIndex,
-} from "./priors";
+import { classifyValuationType, DRIVER_WEIGHTS } from "./priors";
 import type {
   AcquisitionPredictionResult,
   HealthImpactProjection,
@@ -92,11 +85,11 @@ export class AcquisitionPredictor {
       return missingInput("No empirical priors for exit-rate CI");
     }
     const sectorPrior = getSectorPrior(this.priors, company.sector);
-    if (!sectorPrior || sectorPrior.companyCount === 0) {
-      return this.priors.overallExitRateEstimate;
+    const sectorRate = sectorPrior?.sectorExitRateEstimate;
+    if (sectorRate && isSufficient(sectorRate)) {
+      return sectorRate;
     }
-    return sectorPrior.sectorExitRateEstimate ??
-      this.priors.overallExitRateEstimate;
+    return this.priors.overallExitRateEstimate;
   }
 
   predictAcquisition(company: QuantCompany): AcquisitionPredictionResult {
@@ -115,22 +108,17 @@ export class AcquisitionPredictor {
     ) / 10;
 
     const exitRate = this.sectorExitRate(company);
-    let baseRate = isSufficient(exitRate)
-      ? exitRate.value
-      : UNCALIBRATED_BASE_RATE;
-
-    if (this.priors && isSufficient(exitRate)) {
-      const sectorPrior = getSectorPrior(this.priors, company.sector);
-      if (sectorPrior && this.priors.dealCount > 0) {
-        const sectorShare = sectorPrior.dealCount / this.priors.dealCount;
-        baseRate *= Math.min(1.2, Math.max(0.8, sectorShare * 5));
-      }
-    }
-
-    const raw = Math.min(0.95, Math.max(0.05, weightedScore * baseRate));
-
     let probability: QuantValue<number>;
     if (isSufficient(exitRate)) {
+      let baseRate = exitRate.value;
+      if (this.priors && this.priors.dealCount > 0) {
+        const sectorPrior = getSectorPrior(this.priors, company.sector);
+        if (sectorPrior) {
+          const sectorShare = sectorPrior.dealCount / this.priors.dealCount;
+          baseRate *= Math.min(1.2, Math.max(0.8, sectorShare * 5));
+        }
+      }
+      const raw = Math.min(0.95, Math.max(0.05, weightedScore * baseRate));
       const lo = Math.min(
         0.95,
         Math.max(0.05, exitRate.confidenceInterval[0] * weightedScore),
@@ -147,9 +135,8 @@ export class AcquisitionPredictor {
         selectionCaveat: exitRate.selectionCaveat,
       });
     } else {
-      probability = pointEstimate(
-        raw,
-        "Un-calibrated base rate — BCa unavailable",
+      probability = missingInput(
+        "Insufficient disclosed data — uncalibrated exit-rate priors are not used",
       );
     }
 
@@ -183,77 +170,15 @@ export class AcquisitionPredictor {
 }
 
 export class HealthImpactModeler {
-  private modelSCurveAdoption(
-    yearsOut: number,
-    inflectionPoint = 2.0,
-    maxAdoption = 0.5,
-  ): number[] {
-    return Array.from({ length: yearsOut }, (_, i) => {
-      const year = i + 1;
-      const x = (year - inflectionPoint) / 1.5;
-      return maxAdoption / (1 + Math.exp(-x));
-    });
-  }
-
-  private adjustAdoptionForGeography(
-    baseCurve: number[],
-    geographicFocus: QuantCompany["geographicFocus"],
-  ): number[] {
-    if (geographicFocus.includes("Africa")) {
-      return baseCurve.map((a) => a * IMPACT_ASSUMPTIONS.africaAdoptionFactor);
-    }
-    return baseCurve;
-  }
-
-  private effectToMortalityReduction(effectSize: number): number {
-    const raw = Math.max(0, effectSize) * 0.15;
-    return Math.min(IMPACT_ASSUMPTIONS.maxMortalityReduction, raw);
-  }
-
-  modelImpact(company: QuantCompany): HealthImpactProjection {
-    const { yearsOut, annualTestingRate } = IMPACT_ASSUMPTIONS;
-    const isAfrica = company.geographicFocus.includes("Africa");
-    const effectSize = company.clinicalEfficacy?.effectSize ?? 0.5;
-    const mortalityReduction = this.effectToMortalityReduction(effectSize);
-    const targetPopulation = isAfrica
-      ? IMPACT_ASSUMPTIONS.population.africa
-      : IMPACT_ASSUMPTIONS.population.other;
-    const baselineMortalityRate = isAfrica
-      ? IMPACT_ASSUMPTIONS.baselineMortalityRate.africa
-      : IMPACT_ASSUMPTIONS.baselineMortalityRate.other;
-
-    const adoptionCurve = this.adjustAdoptionForGeography(
-      this.modelSCurveAdoption(yearsOut),
-      company.geographicFocus,
-    );
-
-    const annualLivesSaved = adoptionCurve.map((adoption) =>
-      adoption * targetPopulation * annualTestingRate * baselineMortalityRate *
-      mortalityReduction
-    );
-    const cumulativeLivesSaved = annualLivesSaved.reduce((s, a) => s + a, 0);
-
-    const africaShare = isAfrica ? 0.3 : 0.0;
-    const revenueProjection = adoptionCurve.map((adoption) => {
-      const volume = adoption * targetPopulation * annualTestingRate;
-      const revenue =
-        volume * (1 - africaShare) * IMPACT_ASSUMPTIONS.testPriceUS +
-        volume * africaShare * IMPACT_ASSUMPTIONS.testPriceAfrica;
-      return revenue / 1e6;
-    });
-
+  modelImpact(_company: QuantCompany): HealthImpactProjection {
     return {
-      annualLivesSaved,
-      cumulativeLivesSaved,
-      costPerLifeSaved: cumulativeLivesSaved > 0
-        ? 1e6 / (cumulativeLivesSaved / yearsOut)
-        : Infinity,
-      revenueProjection,
-      adoptionCurve,
+      annualLivesSaved: [],
+      cumulativeLivesSaved: 0,
+      costPerLifeSaved: Infinity,
+      revenueProjection: [],
+      adoptionCurve: [],
       assumptions: [
-        "Illustrative scenario — not a forecast.",
-        `At-risk population ${(targetPopulation / 1e6).toFixed(0)}M.`,
-        "Effect size mapped to capped mortality-reduction fraction.",
+        "Insufficient disclosed data — invented population, mortality, and price priors are not used.",
       ],
     };
   }
@@ -276,8 +201,7 @@ export class PortfolioOptimizer {
         predictor.predictAcquisition(company).probability,
       ) ?? 0;
       const acquisitionPrice = numericOrNull(valuation.consensus) ?? 0;
-      const exitMultiple = EXIT_MULTIPLE_BY_STAGE[company.clinicalStage];
-      const projectedExitValue = acquisitionPrice * exitMultiple;
+      const projectedExitValue = acquisitionPrice;
       const roi = acquisitionPrice > 0
         ? (projectedExitValue - acquisitionPrice) / acquisitionPrice
         : 0;
@@ -288,7 +212,7 @@ export class PortfolioOptimizer {
         projectedExitValue,
         acquisitionProbability: prob,
         projectedLivesSaved: impact.cumulativeLivesSaved,
-        projectedRevenue: impact.revenueProjection[yearFiveIndex] ?? 0,
+        projectedRevenue: 0,
         roi,
         riskAdjustedRoi: roi * prob,
       };

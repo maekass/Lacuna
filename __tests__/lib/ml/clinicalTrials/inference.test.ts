@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { scoreTfidfLogistic } from "@/lib/ml/clinicalTrials/inference";
 import {
+  areClinicalTrialMlScoresReleased,
   getClinicalTrialsTrainingSource,
   isCompletionProxyAvailable,
   scoreClinicalTrial,
@@ -84,5 +85,11 @@ describe("clinicalTrials ML inference", () => {
     expect(getClinicalTrialsTrainingSource()).toMatch(
       /synthetic_seed|ctgov_live|ctgov_cached/,
     );
+  });
+
+  it("does not release synthetic_seed scores to production UI", () => {
+    if (getClinicalTrialsTrainingSource() === "synthetic_seed") {
+      expect(areClinicalTrialMlScoresReleased()).toBe(false);
+    }
   });
 });
