@@ -64,8 +64,10 @@ flowchart LR
   json --> app[App / deal spine]
 ```
 
-Trials (CT.gov), NIH grants, and web enrichment **enrich** deal pages — they do
-not silently add rows to `acquisitions[]`.
+Trials (CT.gov), NIH grants, and web enrichment **enrich** research and
+company-name lookup surfaces — they do not silently add rows to
+`acquisitions[]`, and they do not appear on `/deals/[id]` until keyed to
+`targetId` with a public NCT or CPT citation.
 
 ---
 
@@ -141,8 +143,9 @@ confirmed deals.
 - Auto-promote from LLM classification alone
 - NIH / PubMed as deal discovery (grants ≠ acquisitions)
 
-NIH / CT.gov stay on **deal detail enrichment** (deal spine Phase 11 links), not
-universe expansion.
+NIH / CT.gov stay on **`/research` and `GET /api/enrichment/company`**
+(name-search enrichment), not universe expansion and not `/deals/[id]` until a
+reviewer keys an NCT or CPT citation to `targetId`.
 
 ---
 

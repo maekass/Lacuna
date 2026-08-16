@@ -166,6 +166,10 @@ describe("getDealDetailView", () => {
       ),
     ).toBe(true);
     expect(view?.empowerment.hasDirectMatch).toBe(true);
+    expect(view?.regulatoryCitations).toEqual([]);
+    expect(view?.briefMarkdown).not.toMatch(
+      /ClinicalTrials\.gov|openFDA|CPT /,
+    );
   });
 
   it("shows lastKnownValuation only when it is sourced and distinct from deal price", () => {

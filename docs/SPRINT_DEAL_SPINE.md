@@ -210,11 +210,11 @@ Extend `formatLacunaForGamma` later; keep deal brief separate for clarity.
 
 **Audience:** Interdisciplinary glue
 
-| Bridge              | Scope (MVP)                                                                       |
-| ------------------- | --------------------------------------------------------------------------------- |
-| Deal → Research     | Link to `/research#clinical-trials` with prefilled search = target sector keyword |
-| Deal → Methods      | Link to limitations / Bayesian panel with `?context=deal` (optional copy only)    |
-| Deal → Intelligence | Link to reimbursement section if sector matches                                   |
+| Bridge              | Scope (MVP)                                                                                                                              |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Deal → Research     | Out of scope on `/deals/[id]` until an NCT/CPT citation is keyed to `targetId`. Live trial / FDA / CMS name search stays on `/research`. |
+| Deal → Methods      | Link to limitations / Bayesian panel with `?context=deal` (optional copy only)                                                           |
+| Deal → Intelligence | Out of scope on `/deals/[id]` until a CPT citation is keyed to `targetId`.                                                               |
 
 No new APIs required for MVP — deep links only.
 
