@@ -11,6 +11,7 @@ import { CitedSourceFooter } from "@/components/research/CitedSourceFooter";
 import GapAnalystPanel from "@/components/research/GapAnalystPanel";
 import { GapDistributionChart } from "@/components/research/GapDistributionChart";
 import { GapIndexBar } from "@/components/research/GapIndexBar";
+import HeuristicTierBadge from "@/components/research/HeuristicTierBadge";
 import { ResearchMethodologyDrawer } from "@/components/research/ResearchMethodologyDrawer";
 import { ResearchStatTile } from "@/components/research/ResearchStatTile";
 import verifiedDataset from "@/data/dataset.verified.json";
@@ -28,15 +29,9 @@ import {
 } from "@/lib/research/patientEmpowermentPipeline";
 import {
   EMPOWERMENT_DATA_TIER_LABELS,
+  EMPOWERMENT_MATCH_TIER_LABELS,
   EMPOWERMENT_SOURCE_TIER_LABELS,
-  type EmpowermentMatchTier,
 } from "@/lib/research/patientEmpowermentTaxonomy";
-
-const MATCH_TIER_LABELS: Record<EmpowermentMatchTier, string> = {
-  curated: "Curated analyst mapping",
-  sector: "Sector overlap",
-  keyword: "Description keyword",
-};
 
 const SUGGESTED_QUESTIONS = [
   "Where is gap index high but portfolio coverage low?",
@@ -96,7 +91,10 @@ function DimensionRow({ view }: { view: GapDimensionView }) {
         <p className="text-xs font-medium text-lacuna-plum">{metric.label}</p>
         <p className="mt-0.5 text-[10px] text-lacuna-blue/70">
           Cited: {metric.citedValue} ·{" "}
-          {EMPOWERMENT_DATA_TIER_LABELS[metric.dataTier]}
+          <HeuristicTierBadge
+            tier={metric.dataTier}
+            label={EMPOWERMENT_DATA_TIER_LABELS[metric.dataTier]}
+          />
         </p>
       </td>
       <td className="p-2 align-top">
@@ -114,7 +112,15 @@ function DimensionRow({ view }: { view: GapDimensionView }) {
                 <li key={c.id}>
                   {c.name}{" "}
                   <span className="text-lacuna-blue/60" title={c.matchNote}>
-                    ({MATCH_TIER_LABELS[c.matchTier]}
+                    (
+                    {c.matchTier === "curated"
+                      ? EMPOWERMENT_MATCH_TIER_LABELS[c.matchTier]
+                      : (
+                        <HeuristicTierBadge
+                          tier="heuristic_affinity"
+                          label={EMPOWERMENT_MATCH_TIER_LABELS[c.matchTier]}
+                        />
+                      )}
                     {c.sourceTier
                       ? ` · ${EMPOWERMENT_SOURCE_TIER_LABELS[c.sourceTier]}`
                       : ""}
@@ -223,8 +229,14 @@ export default function PatientEmpowermentPanel({
             </h3>
             <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/80">
               Lacuna crosswalks cited HLTH/Outcomes4Me gaps to the verified
-              portfolio — we do not measure live patient empowerment.
+              portfolio — we do not measure live patient empowerment. Sector and
+              keyword joins stay labeled affinity and do not feed deal
+              economics, comps, or dual-source badges.
             </p>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              <HeuristicTierBadge tier="cited_survey_2022" />
+              <HeuristicTierBadge tier="heuristic_affinity" />
+            </div>
           </div>
         </ModelProvenanceHint>
 

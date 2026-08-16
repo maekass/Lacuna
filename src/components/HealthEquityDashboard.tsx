@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import PatientEmpowermentInsight from "@/components/PatientEmpowermentInsight";
+import HeuristicTierBadge from "@/components/research/HeuristicTierBadge";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { EPIDEMIOLOGY_DATABASE } from "@/lib/impact/oaisCalculator";
 import {
@@ -10,11 +11,6 @@ import {
   type HealthEquityDataTier,
   type HealthEquityFocusArea,
 } from "@/lib/impact/healthEquityFocusAreas";
-
-const tierBadgeStyles: Record<HealthEquityDataTier, string> = {
-  cited_epidemiology: "bg-emerald-50 text-emerald-800 border-emerald-200",
-  illustrative_static: "bg-amber-50 text-amber-900 border-amber-200",
-};
 
 const tierLabels: Record<HealthEquityDataTier, string> = {
   cited_epidemiology: "Cited epidemiology (static)",
@@ -196,13 +192,10 @@ function FocusAreaCard({
           <h4 className="text-base font-semibold text-lacuna-text-primary">
             {area.title}
           </h4>
-          <span
-            className={`text-[11px] font-medium px-2 py-0.5 rounded-full border ${
-              tierBadgeStyles[area.dataTier]
-            }`}
-          >
-            {tierLabels[area.dataTier]}
-          </span>
+          <HeuristicTierBadge
+            tier={area.dataTier}
+            label={tierLabels[area.dataTier]}
+          />
         </div>
       </button>
 
@@ -614,7 +607,10 @@ export default function HealthEquityDashboard() {
               >
                 <td className="p-2 text-lacuna-text-primary">{area.title}</td>
                 <td className="p-2 text-lacuna-text-secondary">
-                  {tierLabels[area.dataTier]}
+                  <HeuristicTierBadge
+                    tier={area.dataTier}
+                    label={tierLabels[area.dataTier]}
+                  />
                 </td>
                 <td className="p-2 text-right text-lacuna-text-secondary">
                   {area.verifiedCompanies.length}

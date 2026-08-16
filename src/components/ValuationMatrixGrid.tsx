@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import ValuationMatrixCell, {
   type ValuationMatrixCellData,
 } from "@/components/ValuationMatrixCell";
-import { gapScoreForSector } from "@/lib/valuation/burdenCapitalGap";
 
 function colorFor(cell: ValuationMatrixCellData, max: number): string {
   if (cell.estimate.kind === "insufficient") return "#f8fafc";
@@ -47,16 +46,6 @@ export default function ValuationMatrixGrid({
               <span className="mt-1 inline-block rounded-full bg-amber-50 px-2 py-0.5 text-[10px] text-amber-700">
                 {momentum[sector]}
               </span>
-              {(() => {
-                const gap = gapScoreForSector(sector);
-                return gap === null
-                  ? null
-                  : (
-                    <span className="mt-1 block text-[9px] text-lacuna-text-muted">
-                      gap {gap.toFixed(0)}
-                    </span>
-                  );
-              })()}
             </div>
           ))}
         </div>

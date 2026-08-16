@@ -140,6 +140,9 @@ describe("no synthetic M&A demo data in src/", () => {
       "lib/deals/dealMetricModels.ts",
       "lib/deals/getDealDetailView.ts",
       "lib/gamma/formatDealBrief.ts",
+      "components/ValuationMatrix.tsx",
+      "components/ValuationMatrixGrid.tsx",
+      "components/QuantValuationPanel.tsx",
     ];
     const forbidden = [
       /patientEmpowermentPipeline/,
@@ -152,6 +155,7 @@ describe("no synthetic M&A demo data in src/", () => {
       /selectVerifiedComparables/,
       /analyzeCompetitiveDynamics/,
       /heuristicProvenance/,
+      /gapScoreForSector/,
     ];
     const violations: string[] = [];
     for (const relative of files) {
@@ -176,6 +180,16 @@ describe("no synthetic M&A demo data in src/", () => {
       "utf8",
     );
     expect(reimbursement).not.toMatch(/revenue:\s*company\.lastKnownValuation/);
+  });
+
+  it("deals-page similarity does not use research affinity language", () => {
+    const similarity = readFileSync(
+      path.join(SRC_ROOT, "components/CompanySimilarity.tsx"),
+      "utf8",
+    );
+    expect(similarity).not.toMatch(/Sector affinity/);
+    expect(similarity).toMatch(/Sector overlap/);
+    expect(similarity).toMatch(/not a valuation peer set/);
   });
 });
 
