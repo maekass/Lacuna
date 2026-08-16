@@ -56,8 +56,10 @@ describe("no synthetic M&A demo data in src/", () => {
   it("deal dossier does not import keyword classifiers or invented TAM panels", () => {
     const files = [
       "app/sections/DealDetailPage.tsx",
+      "app/(product)/deals/[id]/page.tsx",
       "lib/deals/getDealDetailView.ts",
       "lib/deals/empowermentContextForDeal.ts",
+      "lib/deals/keyedRegulatoryCitations.ts",
       "lib/gamma/formatDealBrief.ts",
       "app/sections/DealsPage.tsx",
       "components/DealEmpowermentContext.tsx",
@@ -71,6 +73,19 @@ describe("no synthetic M&A demo data in src/", () => {
       /\bPipelineStatusStrip\b/,
       /\bbuildPatientEmpowermentSnapshot\b/,
       /\bmatchKeywords\b/,
+      /\benrichCompanyFromPublicApis\b/,
+      /\bfetchClinicalTrialsGov\b/,
+      /\bfetchOpenFda\b/,
+      /\/api\/clinical-trials/,
+      /\/api\/evidence\/clinical-trials/,
+      /\/api\/evidence\/fda/,
+      /\/api\/enrichment\/company/,
+      /\bClinicalTrialTracker\b/,
+      /\bEvidenceMaturityDashboard\b/,
+      /\bclinicaltrials-mcp-connector\b/,
+      /\bopenfda-mcp-connector\b/,
+      /\bcms-reimbursement-connector\b/,
+      /\bcmsUtilizationProvider\b/,
     ];
     const violations: string[] = [];
     for (const relative of files) {
@@ -82,6 +97,21 @@ describe("no synthetic M&A demo data in src/", () => {
       }
     }
     expect(violations).toEqual([]);
+  });
+
+  it("deal dossier does not render live ClinicalTrials/FDA/CMS name search", () => {
+    const page = readFileSync(
+      path.join(SRC_ROOT, "app/sections/DealDetailPage.tsx"),
+      "utf8",
+    );
+    expect(page).not.toMatch(/ClinicalTrials|openFDA|\/api\/enrichment/);
+    expect(page).not.toMatch(/cmsUtilization|cms-reimbursement/);
+    const view = readFileSync(
+      path.join(SRC_ROOT, "lib/deals/getDealDetailView.ts"),
+      "utf8",
+    );
+    expect(view).toMatch(/keyedRegulatoryCitationsForTarget/);
+    expect(view).not.toMatch(/enrichCompanyFromPublicApis/);
   });
 
   it("deal economics never fall back to lastKnownValuation as a second price", () => {

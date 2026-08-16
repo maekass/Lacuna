@@ -21,6 +21,10 @@ import {
   sourcedDistinctLastKnownValuation,
   type SourcedLastKnownValuation,
 } from "./sourcedLastKnownValuation";
+import {
+  keyedRegulatoryCitationsForTarget,
+  type KeyedRegulatoryCitation,
+} from "./keyedRegulatoryCitations";
 
 export interface DealDetailView {
   deal: DealDetail;
@@ -36,6 +40,11 @@ export interface DealDetailView {
   premiumPercent: number | null;
   /** Distinct sourced company valuation — null when it duplicates deal price. */
   targetLastKnownValuation: SourcedLastKnownValuation | null;
+  /**
+   * ClinicalTrials/FDA/CMS rows keyed to `targetId` with a public NCT/CPT
+   * citation. Empty until curated — never a live company-name search.
+   */
+  regulatoryCitations: KeyedRegulatoryCitation[];
   briefMarkdown: string;
   provenanceLine: string;
 }
@@ -86,6 +95,7 @@ export function getDealDetailView(
     premiumMultiple: multiple,
     premiumPercent: multiple === null ? null : premiumPercent(multiple),
     targetLastKnownValuation,
+    regulatoryCitations: keyedRegulatoryCitationsForTarget(deal.target.id),
     briefMarkdown: formatDealBrief(deal, peers, {
       adjacencyNotPeers,
       closeDays,

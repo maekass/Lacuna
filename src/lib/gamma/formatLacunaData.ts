@@ -49,7 +49,7 @@ export function formatLacunaForGamma(
   sections.push("# Women's Health M&A Intelligence Report");
   sections.push("");
   sections.push(
-    "Source: Lacuna — verified public filings (SEC EDGAR, press releases, ClinicalTrials.gov)",
+    "Source: Lacuna — verified public filings (SEC EDGAR, press releases, investor relations)",
   );
   sections.push(
     `Dataset: ${dataset.acquisitions.length} acquisitions · ${dataset.companies.length} companies · ${dataset.acquirers.length} acquirers`,

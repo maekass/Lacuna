@@ -13,7 +13,7 @@ funding, and company enrichment. Nothing auto-merges into
 | SEC 8-K Item 2.01     | `npm run sec:ingest`                                   | `lacuna_deals` (Postgres)                      |
 | SEC EFTS 8-K search   | `npm run sec:search-ma`                                | `staging/sec_ma_efts_hits.json`                |
 | SEC Form D (Reg D)    | `npm run sec:ingest-form-d`                            | `lacuna_funding_events` (Postgres)             |
-| Company enrichment    | `GET /api/enrichment/company?name=Hologic`             | CT.gov + openFDA + NIH RePORTER                |
+| Company enrichment    | `GET /api/enrichment/company?name=Hologic`             | CT.gov + openFDA + NIH RePORTER — **not** `/deals/[id]` until keyed to `targetId` with a public NCT/CPT citation |
 | Free API batch        | `npm run download:free-apis`                           | `data/exports/free-apis/<timestamp>/`          |
 
 ### Environment

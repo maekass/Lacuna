@@ -35,8 +35,21 @@ only**. Pair with [DATA_CURATION_CHECKLIST.md](./DATA_CURATION_CHECKLIST.md) and
 ### NIH / PubMed as deal discovery
 
 - **Forbidden:** Create acquisition rows from grants or papers.
-- **Allowed:** Company/deal page enrichment (grants, literature context) with
-  disclaimer: _not M&A evidence_.
+- **Allowed:** Company/research enrichment (grants, literature, name-search
+  trials) with disclaimer: _not M&A evidence_.
+- **Forbidden on `/deals/[id]`:** Live ClinicalTrials.gov / openFDA / CMS
+  search by company name. Those APIs are enrichment. Show them on a deal
+  dossier only when a reviewer has keyed the row to `targetId` with a
+  public NCT or CPT citation (`keyedRegulatoryCitationsForTarget`).
+
+### ClinicalTrials / FDA / CMS on deal pages
+
+- **Forbidden:** Hydrate `/deals/[id]` from `/api/enrichment/company`,
+  `/api/clinical-trials`, `/api/evidence/clinical-trials`, or
+  `/api/evidence/fda` using the target or acquirer name.
+- **Allowed later:** A curated `KeyedRegulatoryCitation` with `targetId` +
+  NCT (`clinicaltrials.gov/study/NCT…`) or CPT/HCPCS (`cms.gov` /
+  `*.cms.gov`). Until that catalog has rows, the dossier omits the panel.
 
 ### Crunchbase as universe expansion
 
@@ -74,8 +87,9 @@ New data source?
 
 | Surface                     | Data tier                                     |
 | --------------------------- | --------------------------------------------- |
-| `/deals/[id]`               | Verified only                                 |
+| `/deals/[id]`               | Verified M&A + target-keyed citations only    |
 | `/deals/staging/[dealId]`   | Staging candidate                             |
 | `/deals#review` M&A tab     | `lacuna_deals`                                |
 | `/deals#review` Funding tab | `lacuna_funding_events`                       |
+| `/research` trial / FDA / CMS panels | Name-search enrichment — not verified M&A |
 | Company enrichment panels   | Context only — does not increment deal counts |
