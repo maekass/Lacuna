@@ -22,7 +22,9 @@ export default function IntelligencePage() {
           Intelligence workspace
         </h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
-          Reimbursement context, acquirer fit scores, and export tools.
+          Reimbursement context, acquirer affinity scores, and export tools. Fit
+          scores stay labeled affinity — they do not feed deal economics,
+          valuation peers, or dual-source badges.
         </p>
       </header>
 
@@ -52,7 +54,7 @@ export default function IntelligencePage() {
       <MotionSection id="acquirer-prediction" delay={0.05} className={SECTION}>
         <SectionHeader
           title="Strategic acquirer fit (descriptive)"
-          description="Rule-based match scores from verified deal history and stated acquirer profiles — not a trained prediction model. Optional LLM blurbs are exploratory copy, not validated research."
+          description="Rule-based affinity scores from verified deal history and stated acquirer profiles — not a trained prediction model, deal premium, or valuation peer set. Optional LLM blurbs are exploratory copy, not validated research."
         />
         <AcquirerPredictionDashboard />
       </MotionSection>

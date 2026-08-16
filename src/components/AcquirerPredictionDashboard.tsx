@@ -8,10 +8,12 @@
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import HeuristicTierBadge from "@/components/research/HeuristicTierBadge";
 import {
   analyzeCompetitiveDynamics,
   type ComparableDeal,
 } from "@/data/acquirer-prediction-engine";
+import { RESEARCH_HEURISTIC_DISCLAIMER } from "@/lib/research/heuristicProvenance";
 import { buildAcquirerProfilesFromVerified } from "@/lib/data/buildAcquirerProfilesFromVerified";
 import {
   filterActiveVerifiedCompanies,
@@ -112,11 +114,14 @@ export default function AcquirerPredictionDashboard() {
   return (
     <div className="space-y-6">
       <CuratedDatasetBanner />
-      <p className="text-xs text-lacuna-text-muted">
-        {empiricalPriors.derivationNote} Acquirer profiles built from{" "}
-        {verifiedAcquirers.length} verified acquirers and{" "}
-        {verifiedAcquisitions.length} deals.
-      </p>
+      <div className="flex flex-wrap items-center gap-2">
+        <HeuristicTierBadge tier="affinity" />
+        <p className="text-xs text-lacuna-text-muted">
+          {empiricalPriors.derivationNote} Acquirer profiles built from{" "}
+          {verifiedAcquirers.length} verified acquirers and{" "}
+          {verifiedAcquisitions.length} deals. {RESEARCH_HEURISTIC_DISCLAIMER}
+        </p>
+      </div>
 
       {/* Company Selector */}
       <div className="bg-white rounded-lg shadow p-4">
@@ -169,7 +174,9 @@ export default function AcquirerPredictionDashboard() {
                 <div className="text-2xl font-bold text-lacuna-plum">
                   {Math.round(selectedAnalysis.winProbability * 100)}%
                 </div>
-                <div className="text-xs text-lacuna-blue">Win Probability</div>
+                <div className="text-xs text-lacuna-blue">
+                  Affinity win rate
+                </div>
               </div>
             </div>
 
@@ -191,7 +198,7 @@ export default function AcquirerPredictionDashboard() {
                     : "—"}
                 </div>
                 <div className="text-xs text-lacuna-text-muted">
-                  Estimated Fair Value
+                  Affinity value (heuristic)
                 </div>
               </div>
               <div className="text-center">
@@ -201,7 +208,7 @@ export default function AcquirerPredictionDashboard() {
                     : "None"}
                 </div>
                 <div className="text-xs text-lacuna-text-muted">
-                  Potential Premium
+                  Affinity premium (heuristic)
                 </div>
               </div>
             </div>
@@ -279,7 +286,7 @@ export default function AcquirerPredictionDashboard() {
                           {match.matchScore}
                         </div>
                         <div className="text-xs text-lacuna-text-muted">
-                          Match Score
+                          Affinity score
                         </div>
                       </div>
                       <span
@@ -379,8 +386,12 @@ export default function AcquirerPredictionDashboard() {
 
           <div className="bg-white rounded-lg shadow p-6">
             <h4 className="font-semibold text-lacuna-plum mb-3">
-              Recent Sector Comparables
+              Sector affinity (verified deals)
             </h4>
+            <p className="mb-3 text-xs text-lacuna-blue/80">
+              Same-sector verified deals for affinity context — not dossier
+              valuation peers or dual-source evidence.
+            </p>
             <div className="space-y-2">
               {selectedAnalysis.sectorComparables.slice(0, 3).map((deal, i) => (
                 <div
@@ -426,10 +437,10 @@ export default function AcquirerPredictionDashboard() {
                     Top Acquirer
                   </th>
                   <th className="px-4 py-2 text-center text-xs font-semibold">
-                    Match
+                    Affinity
                   </th>
                   <th className="px-4 py-2 text-right text-xs font-semibold">
-                    Est. Value
+                    Affinity value
                   </th>
                   <th className="px-4 py-2 text-center text-xs font-semibold">
                     Interest Level

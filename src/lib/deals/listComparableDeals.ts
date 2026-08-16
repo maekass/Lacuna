@@ -89,6 +89,7 @@ function peerScore(
  * Valuation peers require a disclosed value inside 0.25×–4× of the reference.
  * Same-sector outliers (e.g. a $21B ADC takeout next to a $230M diagnostic)
  * are returned separately as clinical adjacency — not valuation peers.
+ * Research/intelligence affinity scores must not be consulted.
  */
 export function listComparableDealSets(
   dataset: VerifiedDataset,

@@ -72,10 +72,30 @@ New data source?
 
 ## UI surfaces
 
-| Surface                     | Data tier                                     |
-| --------------------------- | --------------------------------------------- |
-| `/deals/[id]`               | Verified only                                 |
-| `/deals/staging/[dealId]`   | Staging candidate                             |
-| `/deals#review` M&A tab     | `lacuna_deals`                                |
-| `/deals#review` Funding tab | `lacuna_funding_events`                       |
-| Company enrichment panels   | Context only — does not increment deal counts |
+| Surface                     | Data tier                                      |
+| --------------------------- | ---------------------------------------------- |
+| `/deals/[id]`               | Verified only                                  |
+| `/deals/staging/[dealId]`   | Staging candidate                              |
+| `/deals#review` M&A tab     | `lacuna_deals`                                 |
+| `/deals#review` Funding tab | `lacuna_funding_events`                        |
+| `/research`                 | Cited research + labeled affinity heuristics   |
+| `/intelligence`             | Verified context + labeled affinity heuristics |
+| Company enrichment panels   | Context only — does not increment deal counts  |
+
+---
+
+## Research / intelligence heuristics
+
+`/research` and `/intelligence` may keep heuristic joins (sector overlap,
+keyword affinity, acquirer-fit scores, commercialization readiness). Those rows
+**must** stay labeled `cited_*` or `affinity` (including `heuristic_affinity`).
+
+They **must not** feed:
+
+- **Deal economics** — `DealEconomicsCard`, premiums, disclosed `dealValue`
+- **Valuation peers** — `listComparableDealSets` / dossier comps
+- **Dual-source badges** — `buildEvidenceLadder.hasDualSource`
+
+Cited external research (WEF, HLTH, CDC, AOA Dx) keeps `cited_*` provenance and
+stays separate from `dataset.verified.json`. Affinity scores are descriptive
+workspace context only. CI guard: `__tests__/lib/data/noSyntheticData.test.ts`.

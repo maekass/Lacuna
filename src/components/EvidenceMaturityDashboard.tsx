@@ -315,8 +315,9 @@ export default function EvidenceMaturityDashboard() {
             Evidence Maturity Scoring
           </h3>
           <p className="text-sm text-lacuna-blue">
-            How strong is the clinical and regulatory evidence behind each
-            acquisition?
+            Descriptive affinity scores from public trial/FDA metadata on
+            verified companies — not a dual-source badge or deal-economics
+            input.
           </p>
         </div>
         <div className="flex items-center gap-2">

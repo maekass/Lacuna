@@ -38,7 +38,10 @@ export default function ResearchPage({
         </h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
           Clinical trials, evidence maturity, genomics, health equity, and
-          patient empowerment baselines — public data, cited.
+          patient empowerment baselines — public data labeled{" "}
+          <code className="text-xs">cited_*</code>{" "}
+          or affinity. Heuristic crosswalks stay here; they do not feed deal
+          economics, comps, or dual-source badges.
         </p>
       </header>
 
