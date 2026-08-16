@@ -37,4 +37,19 @@ describe("reviewAuditLog", () => {
       "INSERT INTO review_audit_log",
     );
   });
+
+  it("swallows insert failures in tryLogReviewAction (error)", async () => {
+    mockQuery.mockRejectedValueOnce(new Error("relation missing"));
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    const { tryLogReviewAction } = await import(
+      "@/lib/ingestion/reviewAuditLog"
+    );
+    await expect(tryLogReviewAction({
+      action: "session_start",
+      actorId: "github:maekass",
+      actorMethod: "github",
+    })).resolves.toBeUndefined();
+    expect(errorSpy).toHaveBeenCalled();
+    errorSpy.mockRestore();
+  });
 });

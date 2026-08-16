@@ -52,18 +52,25 @@ export function parseReviewTokenFromCookie(
   return match ? decodeURIComponent(match[1]) : null;
 }
 
+/** True when the actor may approve, reject, import, or promote. */
+export function isWriteCapableReviewActor(
+  actor: ReviewActor | null | undefined,
+): boolean {
+  return Boolean(actor) && actor?.id !== PUBLIC_REVIEW_ACTOR_ID;
+}
+
+function publicReviewActor(): ReviewActor {
+  return {
+    id: PUBLIC_REVIEW_ACTOR_ID,
+    method: "dev",
+    label: "Public review UI",
+  };
+}
+
 /** Resolve reviewer identity from request (signed session, legacy cookie, or bearer). */
 export function getReviewActor(request: Request): ReviewActor | null {
   if (!isProductionEnv()) {
     return { id: "dev:local", method: "dev", label: "Local dev" };
-  }
-
-  if (isPublicReviewUiEnabled()) {
-    return {
-      id: PUBLIC_REVIEW_ACTOR_ID,
-      method: "dev",
-      label: "Public review UI",
-    };
   }
 
   const session = parseSessionFromCookie(request.headers.get("cookie"));
@@ -93,6 +100,11 @@ export function getReviewActor(request: Request): ReviewActor | null {
       method: "api_key",
       label: "API key (session)",
     };
+  }
+
+  // Demo browsing only — never override a signed-in reviewer.
+  if (isPublicReviewUiEnabled()) {
+    return publicReviewActor();
   }
 
   return null;

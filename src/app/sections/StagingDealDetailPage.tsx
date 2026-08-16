@@ -325,6 +325,8 @@ export default function StagingDealDetailPage(
 
   return (
     <div className="space-y-6 sm:space-y-8">
+      <ReviewAccessGate onUnlocked={() => setAuthRetry((n) => n + 1)} />
+
       <div className="rounded-xl border-2 border-amber-300 bg-amber-50 px-4 py-3">
         <p className="text-xs font-bold uppercase tracking-wide text-amber-900">
           Candidate · not verified

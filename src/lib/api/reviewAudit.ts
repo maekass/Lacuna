@@ -1,8 +1,11 @@
 import { logReviewAction } from "@/lib/ingestion/reviewAuditLog";
 import type { ReviewAuditAction } from "@/lib/ingestion/reviewAuditLog";
-import { getReviewActor } from "@/lib/infra/reviewAuth";
+import {
+  getReviewActor,
+  isWriteCapableReviewActor,
+} from "@/lib/infra/reviewAuth";
 
-/** Log a review action when an authenticated actor is present. */
+/** Log a review action when a write-capable reviewer is present. */
 export async function auditReviewRequest(
   request: Request,
   input: {
@@ -12,7 +15,7 @@ export async function auditReviewRequest(
   },
 ): Promise<void> {
   const actor = getReviewActor(request);
-  if (!actor) return;
+  if (!isWriteCapableReviewActor(actor) || !actor) return;
 
   await logReviewAction({
     dealId: input.dealId,

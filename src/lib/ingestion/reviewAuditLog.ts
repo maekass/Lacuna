@@ -72,6 +72,17 @@ export async function logReviewAction(
   return mapRow(row);
 }
 
+/** Best-effort audit insert — sign-in must not fail if the log table is down. */
+export async function tryLogReviewAction(
+  input: ReviewAuditLogInput,
+): Promise<void> {
+  try {
+    await logReviewAction(input);
+  } catch (error) {
+    console.error("review audit log failed:", error);
+  }
+}
+
 function auditParams(input: ReviewAuditLogInput): unknown[] {
   return [
     input.dealId ?? null,
