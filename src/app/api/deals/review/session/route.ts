@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { logReviewAction } from "@/lib/ingestion/reviewAuditLog";
+import { tryLogReviewAction } from "@/lib/ingestion/reviewAuditLog";
 import {
   apiKeySessionSubject,
   clearReviewSessionCookies,
   getReviewActor,
   isGitHubReviewSignInAvailable,
   isReviewTokenAuthorized,
+  isWriteCapableReviewActor,
   setReviewSessionCookie,
 } from "@/lib/infra/reviewAuth";
 
@@ -13,25 +14,24 @@ interface SessionBody {
   token?: string;
 }
 
+function sessionPayload(request: Request) {
+  const actor = getReviewActor(request);
+  const authenticated = isWriteCapableReviewActor(actor);
+  return {
+    ok: true,
+    authenticated,
+    readOnly: Boolean(actor) && !authenticated,
+    actor: actor ?? undefined,
+    githubSignInAvailable: isGitHubReviewSignInAvailable(),
+  };
+}
+
 /**
- * Review session: GET current actor, POST API-key sign-in (signed cookie),
- * DELETE sign-out.
+ * Review session probe. Always 200 so the gate can render GitHub sign-in
+ * when the caller is signed out.
  */
 export function GET(request: Request) {
-  const actor = getReviewActor(request);
-  if (!actor) {
-    return NextResponse.json({ ok: false, authenticated: false }, {
-      status: 401,
-      headers: { "cache-control": "no-store" },
-    });
-  }
-
-  return NextResponse.json({
-    ok: true,
-    authenticated: true,
-    actor,
-    githubSignInAvailable: isGitHubReviewSignInAvailable(),
-  }, {
+  return NextResponse.json(sessionPayload(request), {
     headers: { "cache-control": "no-store" },
   });
 }
@@ -74,6 +74,8 @@ export async function POST(request: Request) {
   const response = NextResponse.json({
     ok: true,
     probe: "review-session",
+    authenticated: true,
+    readOnly: false,
     actor: {
       id: subject,
       method: "api_key",
@@ -83,7 +85,7 @@ export async function POST(request: Request) {
   });
   setReviewSessionCookie(response, { sub: "review", method: "api_key" });
 
-  await logReviewAction({
+  await tryLogReviewAction({
     action: "session_start",
     actorId: subject,
     actorMethod: "api_key",
@@ -99,8 +101,8 @@ export async function DELETE(request: Request) {
   const response = NextResponse.json({ ok: true });
   clearReviewSessionCookies(response);
 
-  if (actor) {
-    await logReviewAction({
+  if (isWriteCapableReviewActor(actor) && actor) {
+    await tryLogReviewAction({
       action: "session_end",
       actorId: actor.id,
       actorMethod: actor.method,
