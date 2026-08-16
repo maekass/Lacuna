@@ -86,7 +86,7 @@ export function isKeyedRegulatoryCitation(
 /**
  * Human-curated NCT/CPT citations keyed to a verified company id.
  * Empty until a reviewer attaches a public registry or fee-schedule URL.
- * Do not populate from `/api/enrichment/company` or other name searches.
+ * Do not populate from company-name enrichment APIs or other name searches.
  */
 export const KEYED_REGULATORY_CITATIONS: readonly KeyedRegulatoryCitation[] =
   [];

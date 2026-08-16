@@ -144,8 +144,8 @@ confirmed deals.
 - NIH / PubMed as deal discovery (grants ≠ acquisitions)
 
 NIH / CT.gov stay on **`/research` and `GET /api/enrichment/company`**
-(name-search enrichment), not universe expansion and not `/deals/[id]` until
-a reviewer keys an NCT or CPT citation to `targetId`.
+(name-search enrichment), not universe expansion and not `/deals/[id]` until a
+reviewer keys an NCT or CPT citation to `targetId`.
 
 ---
 

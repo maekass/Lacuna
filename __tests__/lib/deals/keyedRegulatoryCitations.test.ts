@@ -6,8 +6,8 @@ import {
   isPublicCptCitation,
   isPublicNctCitation,
   KEYED_REGULATORY_CITATIONS,
-  keyedRegulatoryCitationsForTarget,
   type KeyedRegulatoryCitation,
+  keyedRegulatoryCitationsForTarget,
 } from "@/lib/deals";
 
 const VALID_NCT: KeyedRegulatoryCitation = {
@@ -24,8 +24,7 @@ const VALID_CPT: KeyedRegulatoryCitation = {
   source: "cms",
   codeKind: "cpt",
   code: "77067",
-  citationUrl:
-    "https://www.cms.gov/medicare/payment/fee-schedules/physician",
+  citationUrl: "https://www.cms.gov/medicare/payment/fee-schedules/physician",
 };
 
 describe("keyed regulatory citations", () => {

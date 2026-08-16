@@ -22,8 +22,8 @@ import {
   type SourcedLastKnownValuation,
 } from "./sourcedLastKnownValuation";
 import {
-  keyedRegulatoryCitationsForTarget,
   type KeyedRegulatoryCitation,
+  keyedRegulatoryCitationsForTarget,
 } from "./keyedRegulatoryCitations";
 
 export interface DealDetailView {

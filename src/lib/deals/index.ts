@@ -49,8 +49,8 @@ export {
   isKeyedRegulatoryCitation,
   isPublicCptCitation,
   isPublicNctCitation,
-  keyedRegulatoryCitationsForTarget,
   KEYED_REGULATORY_CITATIONS,
+  keyedRegulatoryCitationsForTarget,
 } from "./keyedRegulatoryCitations";
 export type {
   KeyedRegulatoryCitation,
