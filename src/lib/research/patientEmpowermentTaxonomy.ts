@@ -97,6 +97,16 @@ export function isEvidenceBackedLink(link: {
 /** Portfolio join tier — curated mappings beat sector/keyword heuristics. */
 export type EmpowermentMatchTier = "curated" | "sector" | "keyword";
 
+/** UI labels — sector/keyword stays affinity, never a deal-comp or dual-source badge. */
+export const EMPOWERMENT_MATCH_TIER_LABELS: Record<
+  EmpowermentMatchTier,
+  string
+> = {
+  curated: "Curated analyst mapping",
+  sector: "Affinity (sector)",
+  keyword: "Affinity (keyword)",
+};
+
 const MATCH_TIER_RANK: Record<EmpowermentMatchTier, number> = {
   curated: 3,
   sector: 2,

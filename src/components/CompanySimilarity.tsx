@@ -76,7 +76,7 @@ function cosineSimilarity(a: readonly number[], b: readonly number[]): number {
 
 function featureDimensionLabels(sectors: string[]): string[] {
   return [
-    ...sectors.map((sector) => `Sector affinity (${sector})`),
+    ...sectors.map((sector) => `Sector overlap (${sector})`),
     "Valuation profile",
     "Funding profile",
     "Company age",
@@ -246,7 +246,8 @@ export default function CompanySimilarity() {
           </h3>
           <p className="text-sm text-lacuna-text-muted">
             Cosine similarity over verified features (sector, valuation,
-            funding, age, stage)
+            funding, age, stage) — not a valuation peer set or dual-source
+            badge.
           </p>
         </div>
         <div className="flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full">

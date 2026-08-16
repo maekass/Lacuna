@@ -98,11 +98,15 @@ diligence-ready.
 
 ## Evidence tiers (UI)
 
-| Tier                 | Meaning                                          |
-| -------------------- | ------------------------------------------------ |
-| `cited_survey_2022`  | Rate quoted from HLTH/Outcomes4Me report         |
-| `derived_static`     | Gap index derived from cited rate + polarity     |
-| `heuristic_affinity` | Portfolio crosswalk (sector / keyword / curated) |
+| Tier                 | Meaning                                                |
+| -------------------- | ------------------------------------------------------ |
+| `cited_survey_2022`  | Rate quoted from HLTH/Outcomes4Me report               |
+| `derived_static`     | Gap index derived from cited rate + polarity           |
+| `heuristic_affinity` | Portfolio crosswalk (sector / keyword) — research only |
+
+Sector/keyword affinity stays on `/research`. It does not feed deal economics,
+valuation peers, or dual-source badges. Deal dossiers use analyst-curated
+mappings only.
 
 ## API
 

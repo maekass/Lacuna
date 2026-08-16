@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useReducer, useState } from "react";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import HeuristicTierBadge from "@/components/research/HeuristicTierBadge";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import {
   computeEvidenceMaturity,
@@ -314,6 +315,9 @@ export default function EvidenceMaturityDashboard() {
           <h3 className="text-lg font-semibold text-lacuna-plum">
             Evidence Maturity Scoring
           </h3>
+          <div className="mt-1 mb-1">
+            <HeuristicTierBadge tier="affinity" />
+          </div>
           <p className="text-sm text-lacuna-blue">
             Descriptive affinity scores from public trial/FDA metadata on
             verified companies — not a dual-source badge or deal-economics

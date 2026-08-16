@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo } from "react";
+import HeuristicTierBadge from "@/components/research/HeuristicTierBadge";
 import verifiedDataset from "@/data/dataset.verified.json";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import { buildPatientEmpowermentSnapshot } from "@/lib/research/patientEmpowermentPipeline";
@@ -60,8 +61,8 @@ export default function PatientEmpowermentInsight({
       className={`group block rounded-xl border border-lacuna-lavender/40 bg-lacuna-lavender/15 p-4 transition-shadow hover:shadow-sm ${className}`}
     >
       <div className="flex items-start gap-3">
-        <span className="shrink-0 text-sm font-medium text-lacuna-plum">
-          Context
+        <span className="shrink-0">
+          <HeuristicTierBadge tier="cited_survey_2022" />
         </span>
         <div className="min-w-0 flex-1">
           <p className="text-sm text-lacuna-blue">

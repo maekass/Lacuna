@@ -1,14 +1,20 @@
-import {
-  AFFINITY_TIER_LABELS,
-  type AffinityProvenanceTier,
-  isCitedOrAffinityTier,
-} from "@/lib/research/heuristicProvenance";
+import { labelResearchContextTier } from "@/lib/research/heuristicProvenance";
 
 const CITED_CLASS = "border-emerald-200 bg-emerald-50 text-emerald-800";
 const AFFINITY_CLASS = "border-sky-200 bg-sky-50 text-sky-800";
+const CONTEXT_CLASS = "border-amber-200 bg-amber-50 text-amber-900";
+
+function styleForTier(tier: string): string {
+  if (tier.startsWith("cited_")) return CITED_CLASS;
+  if (tier === "illustrative_static" || tier === "derived_static") {
+    return CONTEXT_CLASS;
+  }
+  return AFFINITY_CLASS;
+}
 
 /**
- * Compact cited_* / affinity label for research and intelligence panels.
+ * Compact cited_* / affinity / honest-context label for research and
+ * intelligence panels. Not a dual-source or deal-economics badge.
  */
 export default function HeuristicTierBadge({
   tier,
@@ -17,15 +23,8 @@ export default function HeuristicTierBadge({
   tier: string;
   label?: string;
 }) {
-  const text = label ??
-    (tier in AFFINITY_TIER_LABELS
-      ? AFFINITY_TIER_LABELS[tier as AffinityProvenanceTier]
-      : tier.startsWith("cited_")
-      ? `Cited (${tier.replace(/^cited_/, "").replace(/_/g, " ")})`
-      : tier);
-  const style = isCitedOrAffinityTier(tier) && tier.startsWith("cited_")
-    ? CITED_CLASS
-    : AFFINITY_CLASS;
+  const text = label ?? labelResearchContextTier(tier);
+  const style = styleForTier(tier);
 
   return (
     <span
