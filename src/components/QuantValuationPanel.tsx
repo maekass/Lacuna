@@ -34,7 +34,7 @@ interface Row {
   modelEstimate: number | null;
   /** True when the estimate includes the verified comparable-deals anchor. */
   hasComparableAnchor: boolean;
-  acquisitionProbability: number;
+  acquisitionProbability: number | null;
   topDriver: string;
 }
 
@@ -85,7 +85,7 @@ export default function QuantValuationPanel() {
             ? modelEstimate
             : null,
           hasComparableAnchor,
-          acquisitionProbability: numericOrNull(prediction.probability) ?? 0,
+          acquisitionProbability: numericOrNull(prediction.probability),
           topDriver: DRIVER_LABELS[topDriver],
         };
       },
@@ -211,7 +211,9 @@ export default function QuantValuationPanel() {
                     )}
                 </td>
                 <td className="py-2 px-3 text-right text-lacuna-plum">
-                  {(row.acquisitionProbability * 100).toFixed(0)}%
+                  {row.acquisitionProbability != null
+                    ? `${(row.acquisitionProbability * 100).toFixed(0)}%`
+                    : "—"}
                 </td>
                 <td className="py-2 pl-3 text-lacuna-blue/80">
                   {row.topDriver}
@@ -233,8 +235,9 @@ export default function QuantValuationPanel() {
       )}
 
       <p className="mt-4 text-xs text-lacuna-blue/60 leading-relaxed">
-        Model estimate is a confidence-weighted blend of revenue, EBITDA, TAM,
-        R&amp;D-cost, and comparable-deals methods. The{" "}
+        Model estimate uses verified comparable-deals anchors only. Invented
+        TAM, revenue/EBITDA multiple, and R&amp;D-cost methods are withheld. The
+        {" "}
         <span className="text-emerald-600">●</span>{" "}
         marker means the estimate includes an anchor from verified sector deals
         (median exit/funding multiples or median disclosed deal values).

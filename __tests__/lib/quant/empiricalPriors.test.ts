@@ -223,12 +223,11 @@ describe("AcquisitionPredictor with empirical priors", () => {
     const pEmpirical = numericOrNull(
       withPriors.predictAcquisition(company).probability,
     );
-    const pHeuristic = numericOrNull(
+    const pWithoutPriors = numericOrNull(
       withoutPriors.predictAcquisition(company).probability,
     );
     expect(pEmpirical).not.toBeNull();
-    expect(pHeuristic).not.toBeNull();
-    expect(pEmpirical!).toBeLessThan(pHeuristic!);
+    expect(pWithoutPriors).toBeNull();
   });
 
   it("keeps probability bounded in [0.05, 0.95] with priors", () => {

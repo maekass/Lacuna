@@ -4,6 +4,7 @@ import { useEffect, useReducer } from "react";
 import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
 import { DOMESTIC_TRIAL_PRESETS } from "@/lib/research/institutionPresets";
 import {
+  areClinicalTrialMlScoresReleased,
   CLINICAL_TRIALS_ML_MODEL,
   getClinicalTrialsTrainingSource,
   isCompletionProxyAvailable,
@@ -171,9 +172,12 @@ export default function ClinicalTrialTracker() {
           </h3>
           <ModelProvenanceHint model={CLINICAL_TRIALS_ML_MODEL}>
             <p className="text-sm text-lacuna-blue cursor-help">
-              Live data from ClinicalTrials.gov · WH relevance
-              {isCompletionProxyAvailable() ? " + completion proxy" : ""} (
-              {getClinicalTrialsTrainingSource()})
+              Live data from ClinicalTrials.gov
+              {areClinicalTrialMlScoresReleased()
+                ? ` · WH relevance${
+                  isCompletionProxyAvailable() ? " + completion proxy" : ""
+                } (${getClinicalTrialsTrainingSource()})`
+                : " · model scores withheld until training is live CT.gov data (not synthetic_seed)"}
             </p>
           </ModelProvenanceHint>
         </div>
@@ -341,17 +345,19 @@ export default function ClinicalTrialTracker() {
               Recent trials
             </p>
             {trials.slice(0, 8).map((trial) => {
-              const scores = scoreClinicalTrial({
-                title: trial.title,
-                condition: trial.condition,
-                sponsor: trial.sponsor,
-                interventions: trial.interventions,
-                phase: trial.phase,
-                status: trial.status,
-                enrollment: trial.enrollment,
-              });
-              const whScore = scores.whRelevance;
-              const completion = scores.completionProxy;
+              const scores = areClinicalTrialMlScoresReleased()
+                ? scoreClinicalTrial({
+                  title: trial.title,
+                  condition: trial.condition,
+                  sponsor: trial.sponsor,
+                  interventions: trial.interventions,
+                  phase: trial.phase,
+                  status: trial.status,
+                  enrollment: trial.enrollment,
+                })
+                : null;
+              const whScore = scores?.whRelevance;
+              const completion = scores?.completionProxy;
               return (
                 <div
                   key={trial.nctId}
@@ -368,18 +374,22 @@ export default function ClinicalTrialTracker() {
                       </p>
                     </div>
                     <div className="flex items-center gap-2 shrink-0 mt-1 sm:mt-0 flex-wrap justify-end">
-                      <span
-                        className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
-                          whScore.label
-                            ? "bg-lacuna-pink/20 text-lacuna-plum border border-lacuna-pink/40"
-                            : "bg-lacuna-surface-subtle text-lacuna-text-secondary"
-                        }`}
-                        title={`WH relevance ${
-                          Math.round(whScore.probability * 100)
-                        }%`}
-                      >
-                        WH {Math.round(whScore.probability * 100)}%
-                      </span>
+                      {whScore
+                        ? (
+                          <span
+                            className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
+                              whScore.label
+                                ? "bg-lacuna-pink/20 text-lacuna-plum border border-lacuna-pink/40"
+                                : "bg-lacuna-surface-subtle text-lacuna-text-secondary"
+                            }`}
+                            title={`WH relevance ${
+                              Math.round(whScore.probability * 100)
+                            }%`}
+                          >
+                            WH {Math.round(whScore.probability * 100)}%
+                          </span>
+                        )
+                        : null}
                       {completion != null && (
                         <span
                           className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-sky-50 text-sky-800 border border-sky-200"

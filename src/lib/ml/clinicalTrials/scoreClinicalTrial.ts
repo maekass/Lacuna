@@ -60,6 +60,16 @@ export function getClinicalTrialsTrainingSource(): string {
   return modelCard.trainingSource ?? "unknown";
 }
 
+const RELEASED_TRAINING_SOURCES = new Set(["ctgov_live", "ctgov_cached"]);
+
+/**
+ * Synthetic-seed artifacts are CI/offline fallbacks. Do not render model
+ * percentages in production UI until training is live ClinicalTrials.gov data.
+ */
+export function areClinicalTrialMlScoresReleased(): boolean {
+  return RELEASED_TRAINING_SOURCES.has(getClinicalTrialsTrainingSource());
+}
+
 export function getWhRelevanceModelMetrics(): Readonly<Record<string, number>> {
   return modelCard.models.whRelevance.metrics;
 }

@@ -71,9 +71,9 @@ export interface CompetitiveAnalysis {
   predictedWinner?: AcquirerProfile;
   winProbability: number;
   competitiveThreatLevel: "high" | "medium" | "low";
-  estimatedBiddingWarPremium: number; // percentage
+  estimatedBiddingWarPremium: number | null;
   fairValueEstimate: { min: number; max: number; median: number } | null;
-  timelineEstimate: { months: number; triggers: string[] };
+  timelineEstimate: { months: number | null; triggers: string[] };
   sectorComparables: ComparableDeal[];
 }
 
@@ -259,7 +259,7 @@ interface CompanyValueEstimate {
   rationale: string;
 }
 
-/** Derive a company value ($M) from empirical priors, then heuristic fallback. */
+/** Derive a company value ($M) from empirical priors only. */
 function deriveCompanyValueEstimate(
   company: CompanyProfile,
   empiricalPriors?: EmpiricalPriors,
@@ -308,32 +308,22 @@ function deriveCompanyValueEstimate(
   return null;
 }
 
+/** Dataset-derived comparable median only — no match-score or premium markup. */
 function estimateValue(
   company: CompanyProfile,
-  acquirer: AcquirerProfile,
-  matchScore: number,
+  _acquirer: AcquirerProfile,
+  _matchScore: number,
   empiricalPriors?: EmpiricalPriors,
 ): { min: number; max: number; median: number; rationale?: string } | null {
   const base = deriveCompanyValueEstimate(company, empiricalPriors);
   if (!base) return null;
 
-  const qualityAdjustment = (matchScore - 50) / 100;
-  const adjustedValue = base.medianM * (1 + qualityAdjustment * 0.25);
-  const strategicPremium = matchScore > 75
-    ? 1.15
-    : matchScore > 60
-    ? 1.08
-    : 1.0;
-
-  const median = adjustedValue * strategicPremium;
-  const min = median * 0.7;
-  const max = median * 1.4;
-
+  const median = Math.round(base.medianM);
   return {
-    min: Math.round(min),
-    max: Math.round(max),
-    median: Math.round(median),
-    rationale: `${base.rationale}; adjusted for ${matchScore}% strategic fit`,
+    min: median,
+    max: median,
+    median,
+    rationale: base.rationale,
   };
 }
 
@@ -417,25 +407,10 @@ export function analyzeCompetitiveDynamics(
     ? "medium"
     : "low";
 
-  // Estimate bidding war premium
-  const estimatedBiddingWarPremium = competitiveThreatLevel === "high"
-    ? 25
-    : competitiveThreatLevel === "medium"
-    ? 15
-    : 0;
-
-  // Fair value estimate (average of top 3 with disclosed comparables)
-  const top3Values = topMatches
-    .map((m) => m.estimatedValue?.median)
-    .filter((v): v is number => typeof v === "number");
-  const fairValueMedian = top3Values.length > 0
-    ? top3Values.reduce((a, b) => a + b, 0) / top3Values.length
-    : null;
-
-  // Timeline estimate
+  // Invented bidding-war premiums and affinity-adjusted "fair value" are not
+  // deal economics. Keep verified sector comparables only.
   const timelineEstimate = estimateTimeline(company, topMatches[0]);
 
-  // Filter verified comparables to this sector — no fabricated deals
   const sectorComparables = verifiedComparables.filter((d) =>
     areSectorsRelated(d.sector, company.sector)
   );
@@ -446,14 +421,8 @@ export function analyzeCompetitiveDynamics(
     predictedWinner,
     winProbability,
     competitiveThreatLevel,
-    estimatedBiddingWarPremium,
-    fairValueEstimate: fairValueMedian !== null
-      ? {
-        min: Math.round(fairValueMedian * 0.75),
-        max: Math.round(fairValueMedian * 1.35),
-        median: Math.round(fairValueMedian),
-      }
-      : null,
+    estimatedBiddingWarPremium: null,
+    fairValueEstimate: null,
     timelineEstimate,
     sectorComparables,
   };
@@ -461,16 +430,8 @@ export function analyzeCompetitiveDynamics(
 
 function estimateTimeline(
   company: CompanyProfile,
-  topMatch: AcquirerMatch,
-): { months: number; triggers: string[] } {
-  const baseMonths = company.stage === "seed"
-    ? 36
-    : company.stage === "series_a"
-    ? 24
-    : company.stage === "series_b"
-    ? 18
-    : 12;
-
+  _topMatch: AcquirerMatch,
+): { months: number | null; triggers: string[] } {
   const triggers: string[] = [];
 
   if (company.fdaStatus === "pending") triggers.push("FDA approval/clearance");
@@ -478,11 +439,11 @@ function estimateTimeline(
     triggers.push("Positive trial results");
   }
   if (company.stage === "series_b") triggers.push("Series C funding");
-  if (topMatch.likelihood === "high") {
+  if (_topMatch.likelihood === "high") {
     triggers.push("Strategic acquirer approach");
   }
 
-  return { months: baseMonths, triggers };
+  return { months: null, triggers };
 }
 
 // Helper functions

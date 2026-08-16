@@ -7,8 +7,8 @@
  * historically correlates with higher exit multiples for early movers.
  *
  * This is a heuristic scoring model built from published epidemiological data.
- * Valuation ranges are illustrative multipliers on comparable deal data —
- * NOT financial advice.
+ * Dollar output is the verified-dataset stage funding median only — gap scores
+ * are not applied as a price. NOT financial advice.
  */
 
 // ─── Citation registry ────────────────────────────────────────────────────────
@@ -727,24 +727,8 @@ export interface ValuationFactor {
   note: string;
 }
 
-// Stage-level comparable medians from Rock Health / PitchBook women's health 2019-2024
-const STAGE_MEDIANS_M: Record<FundingStage, number> = {
-  "Pre-Seed": 8,
-  Seed: 18,
-  "Series A": 65,
-  "Series B": 200,
-  "Series C": 580,
-  "Series D+": 1_400,
-};
-
-const STAGE_RANGES: Record<FundingStage, [number, number]> = {
-  "Pre-Seed": [3, 20],
-  Seed: [8, 45],
-  "Series A": [30, 150],
-  "Series B": [80, 450],
-  "Series C": [200, 1_200],
-  "Series D+": [500, 4_000],
-};
+// Stage editorial medians / ranges removed — dollar output requires a
+// verified-dataset stage median. Gap scores remain descriptive.
 
 const EVIDENCE_SCORE: Record<ClinicalEvidence, number> = {
   none: -1,
@@ -758,21 +742,18 @@ const EVIDENCE_SCORE: Record<ClinicalEvidence, number> = {
 export function valuateInvestment(
   inputs: ValuationInputs,
   gapMetrics: GapMetrics[],
-  /** Dataset-derived stage medians (total funding raised by stage). When
-   * present, these replace the editorial STAGE_MEDIANS_M for the selected stage. */
+  /** Dataset-derived stage medians (total funding raised by stage). Required
+   * for any dollar output — editorial Rock Health / PitchBook medians are not
+   * substituted. */
   datasetStageMedians?: Partial<Record<FundingStage, number>>,
-): ValuationOutput {
+): ValuationOutput | null {
   const metrics = gapMetrics.find((m) => m.areaKey === inputs.areaKey);
   if (!metrics) throw new Error(`Unknown area key: ${inputs.areaKey}`);
 
   const datasetMedian = datasetStageMedians?.[inputs.stage];
-  const stageComparableM = datasetMedian ?? STAGE_MEDIANS_M[inputs.stage];
-  const isDatasetDerived = datasetMedian !== undefined;
-  const [rangeLow, rangeHigh] = STAGE_RANGES[inputs.stage];
+  if (datasetMedian === undefined) return null;
 
-  // ── Gap multiplier ────────────────────────────────────────────────────────
-  // gapScore 1-100 → multiplier 0.80–1.60
-  const gapMultiplier = 0.8 + (metrics.gapScore / 100) * 0.8;
+  const stageComparableM = datasetMedian;
 
   const gapSignal: ValuationOutput["gapSignal"] = metrics.gapScore >= 65
     ? "Significant"
@@ -862,17 +843,6 @@ export function valuateInvestment(
     },
   ];
 
-  // ── Aggregate adjustment ──────────────────────────────────────────────────
-  const totalFactorScore = factors.reduce((s, f) => s + f.score, 0);
-  const factorAdj = Math.max(-1, Math.min(1, totalFactorScore / 6)) * 0.4;
-
-  const midM = stageComparableM * gapMultiplier * (1 + factorAdj);
-
-  // Range based on stage spread; floor low end so it never rounds to 0
-  const spread = rangeHigh / rangeLow;
-  const lowM = Math.max(1, midM / Math.sqrt(spread) * 0.9);
-  const highM = midM * Math.sqrt(spread) * 1.1;
-
   const citationIds = [
     ...new Set([
       ...metrics.area.citationIds,
@@ -881,28 +851,38 @@ export function valuateInvestment(
     ]),
   ];
 
+  const medianM = Math.round(stageComparableM);
+
   return {
-    lowM: Math.round(lowM),
-    midM: Math.round(midM),
-    highM: Math.round(highM),
-    gapMultiplier,
+    lowM: medianM,
+    midM: medianM,
+    highM: medianM,
+    gapMultiplier: 1,
     gapSignal,
-    stageComparableM,
+    stageComparableM: medianM,
     factors,
     citationIds,
     methodology:
-      (isDatasetDerived
-        ? "Stage comparable median (dataset-derived: median total funding raised by stage from verified companies)"
-        : "Stage comparable median (Rock Health⁵ / PitchBook⁶ 2019-2024 editorial estimate)") +
-      " × burden-capital gap multiplier × factor adjustments. " +
-      "Disease burden from GBD 2021¹ and CDC WONDER 2022². " +
-      "Heuristic only — not a financial model or investment advice.",
-    whocea: computeWHOCEA(
-      inputs.totalFundingRaisedM,
-      inputs.stage,
-      inputs.hasReimbursement,
-      metrics.area,
-    ),
+      "Stage comparable is the verified-dataset median total funding raised by stage. " +
+      "Gap scores and factor notes stay descriptive — they are not applied as a price, " +
+      "premium, or TAM multiple. Disease burden from GBD 2021 and CDC WONDER 2022. " +
+      "Not a financial model or investment advice.",
+    whocea: withheldWHOCEA(metrics.area),
+  };
+}
+
+function withheldWHOCEA(area: BurdenArea): WHOCEAEstimate {
+  return {
+    gdpPerCapita: GDP_PER_CAPITA_US_2023,
+    illustrativeCostPerDALY: null,
+    category: "Insufficient data",
+    thresholdContext:
+      "Insufficient disclosed data — invented stage-penetration and program-cost priors are not used.",
+    dalysAvertedEstimate: null,
+    effectivePenetration: 0,
+    payerCoverageFactor: 0,
+    programCostM: 0,
+    providerGapNote: area.providerGapNote,
   };
 }
 
@@ -911,130 +891,16 @@ export function valuateInvestment(
 const GDP_PER_CAPITA_US_2023 = 76_330; // World Bank 2023
 
 /**
- * Stage-adjusted base market penetration.
- * Proxy for how much of the addressable DALY burden a company at this stage
- * will realistically reach over a 10-year horizon.
- * Earlier-stage companies are further from market; penetration scales with
- * commercial maturity. Conservative estimates — actual penetration is
- * condition- and intervention-specific.
- */
-const STAGE_BASE_PENETRATION: Record<FundingStage, number> = {
-  "Pre-Seed": 0.003, // 0.3% — concept stage, no market presence
-  "Seed": 0.008, // 0.8% — early pilots / limited geography
-  "Series A": 0.020, // 2.0% — early commercial launch
-  "Series B": 0.045, // 4.5% — scaling commercial operations
-  "Series C": 0.080, // 8.0% — established market presence
-  "Series D+": 0.120, // 12% — market-leader territory
-};
-
-/**
- * Program cost multiplier: implementation at scale costs more than R&D
- * investment alone. Accounts for commercial infrastructure, provider education,
- * real-world evidence generation, and health-system integration.
- * Source: Drummond et al. "Methods for Economic Evaluation of Health Care
- * Programmes" (4th ed., OUP 2015), Ch. 3 on program vs. trial costs.
- */
-const PROGRAM_COST_MULTIPLIER: Record<FundingStage, number> = {
-  "Pre-Seed": 1.2,
-  "Seed": 1.5,
-  "Series A": 1.8,
-  "Series B": 2.3,
-  "Series C": 2.8,
-  "Series D+": 3.2,
-};
-
-/**
- * Compute an illustrative WHO cost-effectiveness estimate.
- *
- * Cost per DALY averted = program cost / (annual DALYs × effective penetration × years).
- *
- * Three adjustments make this more defensible than a flat penetration assumption:
- *  1. Stage-adjusted base penetration — earlier stage → lower reach.
- *  2. Payer coverage factor — without reimbursement, effective reach is limited
- *     to cash-pay patients (often <20% of the addressable population).
- *  3. Program cost multiplier — implementation cost exceeds R&D investment,
- *     especially at later stages where commercial scale-up is required.
- *
- * All figures remain illustrative. Actual impact requires trial-level efficacy,
- * real-world adoption data, and counterfactual access estimates.
+ * WHO-CHOICE cost-effectiveness is withheld: stage-penetration and program-cost
+ * priors are not disclosed measurements.
  */
 export function computeWHOCEA(
-  investmentM: number,
-  stage: FundingStage,
-  hasReimbursement: boolean,
+  _investmentM: number,
+  _stage: FundingStage,
+  _hasReimbursement: boolean,
   area: BurdenArea,
 ): WHOCEAEstimate {
-  const insufficientData: WHOCEAEstimate = {
-    gdpPerCapita: GDP_PER_CAPITA_US_2023,
-    illustrativeCostPerDALY: null,
-    category: "Insufficient data",
-    thresholdContext: "Enter an investment amount to see a WHO CEA comparison.",
-    dalysAvertedEstimate: null,
-    effectivePenetration: 0,
-    payerCoverageFactor: 0,
-    programCostM: 0,
-    providerGapNote: area.providerGapNote,
-  };
-
-  if (investmentM <= 0 || area.dalyThousandsPerYear <= 0) {
-    return insufficientData;
-  }
-
-  // Payer coverage factor:
-  //   With reimbursement: boost penetration up to 1.5× (payer covers cost,
-  //   providers are reimbursed to offer it → broader adoption).
-  //   Without reimbursement: penetration limited by cash-pay capacity;
-  //   scales with sector payer coverage but capped at 0.6 to reflect
-  //   the real-world barrier of out-of-pocket cost.
-  const payerCoverageFactor = hasReimbursement
-    ? Math.min(1.5, 1.0 + (area.payerCoveragePercent / 100) * 0.5)
-    : Math.max(0.10, (area.payerCoveragePercent / 100) * 0.55);
-
-  const stagePenetration = STAGE_BASE_PENETRATION[stage];
-  const effectivePenetration = stagePenetration * payerCoverageFactor;
-
-  // DALYs averted over 10-year horizon
-  const YEARS = 10;
-  const dalysAverted = area.dalyThousandsPerYear * 1_000 *
-    effectivePenetration * YEARS;
-
-  // Program cost: R&D investment × stage-specific scale-up multiplier
-  const programCostM = investmentM * PROGRAM_COST_MULTIPLIER[stage];
-  const costUSD = programCostM * 1_000_000;
-
-  const costPerDALY = costUSD / dalysAverted;
-
-  const category: WHOCEAEstimate["category"] =
-    costPerDALY < GDP_PER_CAPITA_US_2023
-      ? "Very cost-effective"
-      : costPerDALY < GDP_PER_CAPITA_US_2023 * 3
-      ? "Cost-effective"
-      : "Not cost-effective";
-
-  const fmt = (n: number) => `$${Math.round(n).toLocaleString()}`;
-  const thresholdContext = category === "Very cost-effective"
-    ? `${fmt(costPerDALY)}/DALY averted — below 1× US GDP/capita (${
-      fmt(GDP_PER_CAPITA_US_2023)
-    }). WHO-CHOICE: Very cost-effective.`
-    : category === "Cost-effective"
-    ? `${fmt(costPerDALY)}/DALY averted — 1–3× US GDP/capita (${
-      fmt(GDP_PER_CAPITA_US_2023)
-    }–${fmt(GDP_PER_CAPITA_US_2023 * 3)}). WHO-CHOICE: Cost-effective.`
-    : `${fmt(costPerDALY)}/DALY averted — above 3× US GDP/capita (${
-      fmt(GDP_PER_CAPITA_US_2023 * 3)
-    }). WHO-CHOICE: Not cost-effective at this threshold.`;
-
-  return {
-    gdpPerCapita: GDP_PER_CAPITA_US_2023,
-    illustrativeCostPerDALY: Math.round(costPerDALY),
-    category,
-    thresholdContext,
-    dalysAvertedEstimate: Math.round(dalysAverted),
-    effectivePenetration,
-    payerCoverageFactor,
-    programCostM,
-    providerGapNote: area.providerGapNote,
-  };
+  return withheldWHOCEA(area);
 }
 
 /** Format dollar amounts for display */

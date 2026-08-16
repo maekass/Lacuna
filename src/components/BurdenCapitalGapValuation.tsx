@@ -460,6 +460,22 @@ export default function BurdenCapitalGapValuation() {
             </div>
           )}
 
+          {!valuation.error && !result && (
+            <div
+              role="status"
+              className="rounded-xl border border-lacuna-lavender/40 bg-lacuna-pink/5 p-5"
+            >
+              <h3 className="text-sm font-semibold text-lacuna-plum">
+                Insufficient disclosed data
+              </h3>
+              <p className="mt-1 text-xs text-lacuna-blue/80">
+                No verified-dataset funding median at this stage. Editorial Rock
+                Health / PitchBook stage medians are not substituted, and gap
+                scores are not applied as a price.
+              </p>
+            </div>
+          )}
+
           {/* Valuation output */}
           {result && (
             <AnimatePresence mode="wait">
@@ -472,12 +488,12 @@ export default function BurdenCapitalGapValuation() {
                 className="rounded-xl border border-lacuna-pink/30 bg-white p-5 shadow-sm"
               >
                 <h3 className="mb-1 text-sm font-semibold text-lacuna-plum">
-                  Estimated valuation range
+                  Dataset stage funding median
                 </h3>
                 <p className="mb-4 text-xs text-lacuna-blue/70">
-                  Stage comparable ×{" "}
-                  {result.gapMultiplier.toFixed(2)}× gap multiplier × factor
-                  adjustments
+                  Verified-dataset median total funding at this stage — not a
+                  gap-adjusted exit price, TAM multiple, or editorial PitchBook
+                  range.
                 </p>
 
                 {/* Range display */}
@@ -514,12 +530,9 @@ export default function BurdenCapitalGapValuation() {
 
                 {/* Stage anchor */}
                 <div className="mb-4 rounded-lg bg-lacuna-pink/8 px-3 py-2 text-xs text-lacuna-blue">
-                  Stage comparable (median):{" "}
-                  {formatValuation(result.stageComparableM)} →{" "}
-                  <span className="font-medium text-lacuna-plum">
-                    {result.gapMultiplier.toFixed(2)}× gap premium
-                  </span>{" "}
-                  → {formatValuation(result.midM)} mid-point
+                  Stage comparable (median total funding):{" "}
+                  {formatValuation(result.stageComparableM)}. Gap scores below
+                  stay descriptive and are not applied as a premium.
                 </div>
 
                 {/* Factor breakdown */}
