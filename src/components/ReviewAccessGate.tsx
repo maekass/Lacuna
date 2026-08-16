@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { consumeReviewAuthErrorFromLocation } from "@/lib/infra/reviewAuthError";
 import { reportWarning } from "@/lib/observability/reportError";
 
@@ -39,19 +39,13 @@ export default function ReviewAccessGate({
   const [status, setStatus] = useState<GateStatus>("loading");
   const [actor, setActor] = useState<SessionActor | null>(null);
   const [readOnly, setReadOnly] = useState(false);
-  const onUnlockedRef = useRef(onUnlocked);
-  onUnlockedRef.current = onUnlocked;
 
-  const applySession = useCallback((
-    body: SessionResponse,
-    notifyUnlock = false,
-  ) => {
+  const applySession = useCallback((body: SessionResponse) => {
     setGithubAvailable(body.githubSignInAvailable === true);
     setReadOnly(body.readOnly === true);
     if (body.authenticated) {
       setActor(body.actor ?? { label: "Reviewer", method: "github" });
       setStatus("signed_in");
-      if (notifyUnlock) onUnlockedRef.current?.();
       return;
     }
     setActor(null);
@@ -59,11 +53,10 @@ export default function ReviewAccessGate({
   }, []);
 
   useEffect(() => {
-    const oauthError = consumeReviewAuthErrorFromLocation();
-    if (oauthError) setError(oauthError);
-
     let cancelled = false;
     async function probeSession() {
+      const oauthError = consumeReviewAuthErrorFromLocation();
+      if (oauthError && !cancelled) setError(oauthError);
       try {
         const response = await fetch("/api/deals/review/session");
         if (!response.ok && response.status !== 401) {
@@ -104,13 +97,14 @@ export default function ReviewAccessGate({
         return;
       }
       setToken("");
-      applySession(body, true);
+      applySession(body);
+      onUnlocked?.();
     } catch {
       setError("Could not unlock review tools.");
     } finally {
       setBusy(false);
     }
-  }, [token, applySession]);
+  }, [token, applySession, onUnlocked]);
 
   const handleSignOut = useCallback(async () => {
     setBusy(true);

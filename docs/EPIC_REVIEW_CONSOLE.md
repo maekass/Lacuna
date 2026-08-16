@@ -225,8 +225,8 @@ npm run validate:dataset
 **Closes:** [#100](https://github.com/maekass/Lacuna/issues/100)
 
 **Status:** ✅ shipped (GitHub OAuth + signed session + `review_audit_log`).
-Follow-up: session probe advertises GitHub sign-in while signed out; public
-demo stays read-only unless a signed reviewer is present.
+Follow-up: session probe advertises GitHub sign-in while signed out; public demo
+stays read-only unless a signed reviewer is present.
 
 **Changes:**
 

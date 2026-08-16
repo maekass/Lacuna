@@ -40,6 +40,7 @@ describe("reviewAuditLog", () => {
 
   it("swallows insert failures in tryLogReviewAction (error)", async () => {
     mockQuery.mockRejectedValueOnce(new Error("relation missing"));
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     const { tryLogReviewAction } = await import(
       "@/lib/ingestion/reviewAuditLog"
     );
@@ -48,5 +49,7 @@ describe("reviewAuditLog", () => {
       actorId: "github:maekass",
       actorMethod: "github",
     })).resolves.toBeUndefined();
+    expect(errorSpy).toHaveBeenCalled();
+    errorSpy.mockRestore();
   });
 });
