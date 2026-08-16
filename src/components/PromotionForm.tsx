@@ -72,11 +72,10 @@ export default function PromotionForm({
         </FieldLabel>
         <textarea
           id="strategicRationale"
-          rows={3}
           value={value.strategicRationale ?? ""}
           onChange={(e) => update({ strategicRationale: e.target.value })}
           placeholder="One sentence from primary source language"
-          className="mt-1 w-full rounded-md border border-lacuna-lavender/50 px-3 py-2 text-sm"
+          className="mt-1 min-h-[4.5rem] w-full rounded-md border border-lacuna-lavender/50 px-3 py-2 text-sm"
         />
         <p className="mt-1 text-[11px] leading-relaxed text-lacuna-blue/70">
           Curated copy that lands in verified JSON. Do not replace with an LLM
