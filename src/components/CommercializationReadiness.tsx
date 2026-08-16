@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
 import { useWatchlist } from "@/lib/data/WatchlistContext";
+import HeuristicTierBadge from "@/components/research/HeuristicTierBadge";
 import Card from "@/components/ui/Card";
 import { Bookmark, BookmarkCheck, FileText } from "lucide-react";
 
@@ -126,11 +127,12 @@ export default function CommercializationReadiness() {
           <h3 className="flex items-center gap-2 text-base font-semibold">
             <FileText className="h-4 w-4" />
             Commercialization Readiness (Researcher View)
+            <HeuristicTierBadge tier="affinity" />
           </h3>
           <p className="text-sm text-slate-500 mt-1">
-            Scored by evidence maturity, reimbursement pathway clarity, and
-            acquirer sector activity — for researchers evaluating spin-out or
-            venture opportunities. Not investment advice.
+            Affinity scores from stage, sector, and keyword overlap — for
+            researchers evaluating spin-out or venture opportunities. Not deal
+            economics, valuation peers, or investment advice.
           </p>
         </div>
         <div className="p-6 space-y-4">

@@ -85,7 +85,10 @@ Promotion must not invent sector, HQ, or founded year — see
 When verified data is insufficient, show empty state / “insufficient disclosed
 data” — never silently substitute PitchBook/Rock Health rule-of-thumb values.
 Cited external research datasets (WEF, HLTH survey, payer benchmarks) must keep
-`cited_*` provenance and stay separate from `dataset.verified.json`.
+`cited_*` provenance and stay separate from `dataset.verified.json`. Research
+and intelligence pages may keep heuristics when labeled `cited_*` or `affinity`;
+those scores must not feed deal economics, valuation peers, or dual-source
+badges.
 
 CI guard: `__tests__/lib/data/noSyntheticData.test.ts`.
 

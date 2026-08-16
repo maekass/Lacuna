@@ -128,6 +128,43 @@ describe("no synthetic M&A demo data in src/", () => {
     expect(page).toMatch(/targetLastKnownValuation/);
   });
 
+  it("deal economics, comps, and dual-source do not import research heuristics", () => {
+    const files = [
+      "components/DealEconomicsCard.tsx",
+      "components/DealComparableTables.tsx",
+      "components/EvidenceLadder.tsx",
+      "lib/deals/evidenceLadder.ts",
+      "lib/deals/listComparableDeals.ts",
+      "lib/deals/listAcquirerDeals.ts",
+      "lib/deals/dealTiming.ts",
+      "lib/deals/dealMetricModels.ts",
+      "lib/deals/getDealDetailView.ts",
+      "lib/gamma/formatDealBrief.ts",
+    ];
+    const forbidden = [
+      /patientEmpowermentPipeline/,
+      /buildPatientEmpowermentSnapshot/,
+      /acquirer-prediction-engine/,
+      /cms-reimbursement-connector/,
+      /burdenCapitalGap/,
+      /classifyEvidence/,
+      /matchKeywords/,
+      /selectVerifiedComparables/,
+      /analyzeCompetitiveDynamics/,
+      /heuristicProvenance/,
+    ];
+    const violations: string[] = [];
+    for (const relative of files) {
+      const content = readFileSync(path.join(SRC_ROOT, relative), "utf8");
+      for (const pattern of forbidden) {
+        if (pattern.test(content)) {
+          violations.push(`${relative} matched ${pattern}`);
+        }
+      }
+    }
+    expect(violations).toEqual([]);
+  });
+
   it("does not map lastKnownValuation onto revenue as a TAM fallback", () => {
     const mapper = readFileSync(
       path.join(SRC_ROOT, "lib/data/companyProfileMapper.ts"),
