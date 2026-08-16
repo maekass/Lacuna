@@ -84,14 +84,10 @@ export default function CandidateImportPanel({
         — never auto-merges to verified JSON.
       </p>
 
-      {needsAuth
-        ? (
-          <ReviewAccessGate
-            className="mt-4"
-            onUnlocked={() => setNeedsAuth(false)}
-          />
-        )
-        : null}
+      <ReviewAccessGate
+        className="mt-4"
+        onUnlocked={() => setNeedsAuth(false)}
+      />
 
       <div className="mt-4 flex flex-wrap gap-3">
         <label className="cursor-pointer rounded-md border border-lacuna-lavender/50 px-3 py-1.5 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20">

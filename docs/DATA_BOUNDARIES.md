@@ -88,11 +88,34 @@ New data source?
 
 ## UI surfaces
 
-| Surface                              | Data tier                                     |
-| ------------------------------------ | --------------------------------------------- |
-| `/deals/[id]`                        | Verified M&A + target-keyed citations only    |
-| `/deals/staging/[dealId]`            | Staging candidate                             |
-| `/deals#review` M&A tab              | `lacuna_deals`                                |
-| `/deals#review` Funding tab          | `lacuna_funding_events`                       |
-| `/research` trial / FDA / CMS panels | Name-search enrichment — not verified M&A     |
-| Company enrichment panels            | Context only — does not increment deal counts |
+| Surface                              | Data tier                                         |
+| ------------------------------------ | ------------------------------------------------- |
+| `/deals/[id]`                        | Verified M&A + target-keyed citations only        |
+| `/deals/staging/[dealId]`            | Staging candidate                                 |
+| `/deals#review` M&A tab              | `lacuna_deals`                                    |
+| `/deals#review` Funding tab          | `lacuna_funding_events`                           |
+| `/research` trial / FDA / CMS panels | Name-search enrichment — not verified M&A         |
+| `/research` cited / affinity panels  | `cited_*` / `affinity` heuristics — research only |
+| `/intelligence` fit / reimbursement  | Affinity scores — not deal premiums or comps      |
+| Company enrichment panels            | Context only — does not increment deal counts     |
+
+---
+
+## Research and intelligence heuristics
+
+`/research` and `/intelligence` may keep heuristic joins (sector/keyword
+affinity, acquirer-fit scores, commercialization readiness, evidence-maturity
+scores) when every row is labeled **`cited_*`** or **`affinity`** (or honest
+`illustrative_static` / `derived_static` context).
+
+Those scores must **not** feed:
+
+- Deal economics (`DealEconomicsCard`, premiums, disclosed value)
+- Valuation peers (`listComparableDeals`)
+- Dual-source badges (`buildEvidenceLadder.hasDualSource`)
+
+Deal dossiers may show analyst-curated HLTH mappings (`curated` only). They must
+not run the research pipeline's sector/keyword affinity join, and
+research/affinity citation strings never count toward dual-source corroboration.
+Burden–capital gap scores stay on `/research` — they do not decorate
+deal-workspace valuation matrices or dossier comps.

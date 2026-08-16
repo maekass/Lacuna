@@ -5,12 +5,11 @@ audited.
 
 ## Tasks
 
-- [ ] Pick auth model: GitHub OAuth allowlist | Clerk `reviewer` | Vercel
-      password + flag
-- [ ] Server-side session replaces raw-key cookie as primary path
-- [ ] `ReviewAccessGate` → sign-in flow
-- [ ] `review_audit_log` migration (deal_id, action, actor, at)
-- [ ] `docs/REVIEW_CONSOLE.md` env matrix
+- [x] Pick auth model: GitHub OAuth allowlist (API key remains CLI fallback)
+- [x] Server-side session replaces raw-key cookie as primary path
+- [x] `ReviewAccessGate` → sign-in flow
+- [x] `review_audit_log` migration (deal_id, action, actor, at)
+- [x] `docs/REVIEW_CONSOLE.md` env matrix
 
 ## Acceptance criteria
 

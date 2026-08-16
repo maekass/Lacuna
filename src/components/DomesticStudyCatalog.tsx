@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import HeuristicTierBadge from "@/components/research/HeuristicTierBadge";
 import type { DomesticInstitution } from "@/lib/research/domesticStudyCatalog";
 
 interface StudyRow {
@@ -84,7 +85,8 @@ export default function DomesticStudyCatalog() {
       </h3>
       <p className="text-sm text-lacuna-blue mb-4">
         Cited US cohort sizes from NIH, Harvard affiliates, and MIT/Broad —
-        PCOS, BRCA, sickle cell, lupus, and population genomics.
+        PCOS, BRCA, sickle cell, lupus, and population genomics. Rows stay
+        labeled cited_* or illustrative context — not deal comps.
       </p>
 
       <div className="flex flex-wrap gap-2 mb-4">
@@ -173,9 +175,12 @@ export default function DomesticStudyCatalog() {
                       {study.conditions.slice(0, 3).join(", ")}
                     </p>
                   </div>
-                  <span className="shrink-0 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 text-[11px] font-medium">
-                    n={study.sampleSize.toLocaleString()}
-                  </span>
+                  <div className="flex shrink-0 flex-col items-end gap-1">
+                    <HeuristicTierBadge tier={study.dataTier} />
+                    <span className="rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 text-[11px] font-medium">
+                      n={study.sampleSize.toLocaleString()}
+                    </span>
+                  </div>
                 </div>
                 <p className="text-[11px] text-lacuna-blue/70 mt-2">
                   {study.sampleSizeNote}
