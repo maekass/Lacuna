@@ -51,18 +51,18 @@ provenance `notes[]`.
 
 ### `acquisitions[]`
 
-| Field                        | Required                | Rule                                                     |
-| ---------------------------- | ----------------------- | -------------------------------------------------------- |
-| `id`                         | Yes                     | Stable slug (`deal7`)                                    |
-| `targetId`, `acquirerId`     | Yes                     | Must resolve to `companies` or `acquirers`               |
-| `targetName`, `acquirerName` | Yes                     | Denormalized for export/display                          |
-| `announcedDate`              | Yes                     | ISO date; match primary source                           |
-| `closedDate`                 | Optional                | Omit if unknown                                          |
-| `dealType`                   | Yes                     | `Acquisition` \| `Strategic Investment` \| `Partnership` |
-| `source`                     | Yes                     | Best single citation (filing > PR > press)               |
-| `strategicRationale`         | Yes                     | One sentence from primary source language                |
-| `dealValue`                  | Optional                | **Only if disclosed** in A/B source                      |
-| `dealValueNote`              | If no value or estimate | Required when `dealValue` omitted or estimated           |
+| Field                        | Required                | Rule                                                                      |
+| ---------------------------- | ----------------------- | ------------------------------------------------------------------------- |
+| `id`                         | Yes                     | Stable slug (`deal7`)                                                     |
+| `targetId`, `acquirerId`     | Yes                     | Must resolve to `companies` or `acquirers`                                |
+| `targetName`, `acquirerName` | Yes                     | Denormalized for export/display                                           |
+| `announcedDate`              | Yes                     | ISO date; match primary source                                            |
+| `closedDate`                 | Optional                | Omit if unknown                                                           |
+| `dealType`                   | Yes                     | `Acquisition` \| `Strategic Investment` \| `Partnership`                  |
+| `source`                     | Yes                     | Best single citation (filing > PR > press)                                |
+| `strategicRationale`         | Yes                     | One sentence from primary source language — not an LLM summary of the 8-K |
+| `dealValue`                  | Optional                | **Only if disclosed** in A/B source                                       |
+| `dealValueNote`              | If no value or estimate | Required when `dealValue` omitted or estimated                            |
 
 ## Evidence grades (internal)
 

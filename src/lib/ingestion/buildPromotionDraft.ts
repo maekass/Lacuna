@@ -17,6 +17,8 @@ export interface ReviewerPromotionFields {
   acquirerSector?: string | null;
   acquirerHq?: string | null;
   secondarySourceUrl?: string | null;
+  /** Curated one-sentence copy for verified JSON — never an 8-K LLM summary. */
+  strategicRationale?: string | null;
 }
 
 export interface BuildPromotionDraftOptions {
@@ -102,10 +104,15 @@ function buildCompanySources(
   return sources;
 }
 
-function buildStrategicRationale(deal: PendingDealRecord): string {
-  const excerpt = deal.item201Excerpt?.trim();
-  if (excerpt) return excerpt.slice(0, 500);
-  return `Acquisition disclosed in SEC Item 2.01 filing (${deal.secAccession}).`;
+/**
+ * Strategic rationale is reviewer-curated copy for verified JSON.
+ * Do not fill from Item 2.01 excerpts or LLM summaries of the 8-K.
+ */
+function resolveStrategicRationale(
+  reviewerFields?: ReviewerPromotionFields,
+): string | null {
+  const fromReviewer = reviewerFields?.strategicRationale?.trim();
+  return fromReviewer || null;
 }
 
 function resolveCompanyDescription(
@@ -121,7 +128,8 @@ function resolveCompanyDescription(
 
 /**
  * List reviewer fields still required before a promotion draft can be built.
- * Does not invent sector, HQ, or founded year from keywords.
+ * Does not invent sector, HQ, founded year, or strategic rationale from
+ * keywords or 8-K excerpts.
  */
 export function listPromotionMissingFields(
   options: BuildPromotionDraftOptions,
@@ -171,6 +179,10 @@ export function listPromotionMissingFields(
   if (!existingAcquirerId) {
     if (!reviewer.acquirerSector?.trim()) missing.push("acquirer.sector");
     if (!reviewer.acquirerHq?.trim()) missing.push("acquirer.hq");
+  }
+
+  if (!resolveStrategicRationale(reviewer)) {
+    missing.push("acquisition.strategicRationale");
   }
 
   return missing;
@@ -251,7 +263,7 @@ export function buildPromotionDraft(
     closedDate: deal.closedDate ?? undefined,
     dealType: deal.dealStructure?.trim() || "Acquisition",
     source: deal.filingUrl,
-    strategicRationale: buildStrategicRationale(deal),
+    strategicRationale: resolveStrategicRationale(reviewer)!,
     ...(deal.dealValueMillions !== null
       ? { dealValue: deal.dealValueMillions }
       : {}),

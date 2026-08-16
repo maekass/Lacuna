@@ -45,6 +45,7 @@ function initialReviewerFields(
     companyStage: null,
     acquirerSector: null,
     acquirerHq: null,
+    strategicRationale: null,
   };
 }
 

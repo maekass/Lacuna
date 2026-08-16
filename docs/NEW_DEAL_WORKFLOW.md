@@ -168,9 +168,10 @@ curated release.
 
 Set `LACUNA_AUTO_PROMOTE=true` to promote on Approve via the review API.
 Auto-promote still requires **reviewer-attested** profile fields (sector, HQ,
-founded year, secondary source) — see
+founded year, secondary source, strategic rationale) — see
 [DATA_BOUNDARIES.md](./DATA_BOUNDARIES.md). Keyword or LLM classification alone
-never satisfies promotion gates.
+never satisfies promotion gates. `strategicRationale` is curated copy from
+primary source language — not an LLM summary of the 8-K.
 
 ---
 

@@ -57,6 +57,7 @@ describe("promotion checklist", () => {
     state.secondary = true;
     state["profile-attestation"] = true;
     state["classification-attestation"] = true;
+    state["rationale-attestation"] = true;
     expect(allChecksPassed(state, items)).toBe(true);
   });
 

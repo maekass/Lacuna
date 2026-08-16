@@ -53,6 +53,8 @@ function reviewerFields(
     companyFounded: 2018,
     acquirerSector: "Healthcare",
     acquirerHq: "San Francisco, CA",
+    strategicRationale:
+      "Added a fertility platform to Example Health's women's health offering.",
     ...overrides,
   };
 }
@@ -75,6 +77,9 @@ describe("buildPromotionDraft", () => {
     expect(draft?.acquirer?.name).toBe("Example Health Corp");
     expect(draft?.acquirer?.hq).toBe("San Francisco, CA");
     expect(draft?.company?.sources).toHaveLength(2);
+    expect(draft?.acquisition.strategicRationale).toBe(
+      "Added a fertility platform to Example Health's women's health offering.",
+    );
   });
 
   it("does not invent sector or HQ without reviewer attestation", async () => {
@@ -90,6 +95,7 @@ describe("buildPromotionDraft", () => {
     expect(missing).toContain("company.sources.secondary");
     expect(missing).toContain("acquirer.sector");
     expect(missing).toContain("acquirer.hq");
+    expect(missing).toContain("acquisition.strategicRationale");
 
     const { draft } = buildPromotionDraft({
       dataset,
@@ -140,5 +146,34 @@ describe("buildPromotionDraft", () => {
     const report = validateVerifiedDataset(next);
     expect(report.ok).toBe(true);
     expect(next.acquisitions.some((row) => row.id === "deal60")).toBe(true);
+  });
+
+  it("uses reviewer-curated rationale, not the 8-K Item 2.01 excerpt", async () => {
+    const dataset = await getCachedStaticVerifiedDataset();
+    const excerpt = "women's health fertility platform acquisition";
+    const curated =
+      "Added a fertility platform to Example Health's women's health offering.";
+    const { draft, missingFields } = buildPromotionDraft({
+      dataset,
+      deal: makeDeal({ item201Excerpt: excerpt }),
+      reviewerFields: reviewerFields({ strategicRationale: curated }),
+    });
+
+    expect(missingFields).toEqual([]);
+    expect(draft?.acquisition.strategicRationale).toBe(curated);
+    expect(draft?.acquisition.strategicRationale).not.toBe(excerpt);
+  });
+
+  it("does not promote an 8-K excerpt as strategicRationale", async () => {
+    const dataset = await getCachedStaticVerifiedDataset();
+    const excerpt = "women's health fertility platform acquisition";
+    const { draft, missingFields } = buildPromotionDraft({
+      dataset,
+      deal: makeDeal({ item201Excerpt: excerpt }),
+      reviewerFields: reviewerFields({ strategicRationale: null }),
+    });
+
+    expect(draft).toBeNull();
+    expect(missingFields).toContain("acquisition.strategicRationale");
   });
 });

@@ -47,10 +47,15 @@ describe("parseReviewerPromotionBody", () => {
         companySector: "Fertility",
         companyHq: "Boston, MA",
         companyFounded: 2018,
+        strategicRationale:
+          "Added a fertility platform to Example Health's women's health offering.",
       },
     });
     expect(parsed?.reviewerFields.companySector).toBe("Fertility");
     expect(parsed?.reviewerFields.companyFounded).toBe(2018);
+    expect(parsed?.reviewerFields.strategicRationale).toContain(
+      "fertility platform",
+    );
   });
 });
 
@@ -75,6 +80,7 @@ describe("buildPromotionPreview", () => {
     });
     expect(preview.ready).toBe(false);
     expect(preview.missingFields).toContain("company.sector");
+    expect(preview.missingFields).toContain("acquisition.strategicRationale");
     expect(preview.diff).toBeNull();
   });
 
@@ -90,10 +96,18 @@ describe("buildPromotionPreview", () => {
         acquirerSector: "Healthcare",
         acquirerHq: "San Francisco, CA",
         secondarySourceUrl: "https://www.businesswire.com/news/home/example",
+        strategicRationale:
+          "Added a fertility platform to Example Health's women's health offering.",
       },
     });
     expect(preview.ready).toBe(true);
     expect(preview.diff?.acquisitions.action).toBe("add");
     expect(preview.diff?.companies?.action).toBe("add");
+    expect(preview.draft?.acquisition.strategicRationale).toContain(
+      "fertility platform",
+    );
+    expect(preview.draft?.acquisition.strategicRationale).not.toBe(
+      "women's health fertility platform acquisition",
+    );
   });
 });

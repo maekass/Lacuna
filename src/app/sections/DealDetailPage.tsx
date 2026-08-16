@@ -152,6 +152,9 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
             <h2 className="text-lg font-semibold text-lacuna-plum">
               Why this buyer
             </h2>
+            <p className="mt-1 text-[11px] font-medium uppercase tracking-wide text-lacuna-blue/70">
+              Curated copy from the verified dataset — not an 8-K LLM summary
+            </p>
             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-lacuna-blue">
               {acq.strategicRationale}
             </p>

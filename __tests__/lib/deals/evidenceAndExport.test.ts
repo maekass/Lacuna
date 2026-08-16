@@ -124,6 +124,10 @@ describe("formatDealBrief", () => {
     expect(brief).toContain("Close speed: 48 days");
     expect(brief).toContain("Immunomedics");
     expect(brief).toContain("clinical adjacency");
+    expect(brief).toContain(
+      "Entry into oncology growth market — Breast Cancer Index",
+    );
+    expect(brief).toContain("not an 8-K LLM summary");
     expect(brief).not.toMatch(/Last known valuation/);
     const peerBlock = brief.split("## Same-sector adjacency")[0];
     expect(peerBlock).not.toMatch(/Immunomedics → Gilead/);
@@ -160,6 +164,13 @@ describe("getDealDetailView", () => {
     ).toBe(false);
     expect(view?.provenanceLine).toContain("verified dataset");
     expect(view?.provenanceLine).toContain("Verify independently");
+    expect(view?.deal.acquisition.strategicRationale).toBe(
+      dataset.acquisitions.find((row) => row.id === FEATURED_DEAL_ID)
+        ?.strategicRationale,
+    );
+    expect(view?.deal.acquisition.strategicRationale).toContain(
+      "Breast Cancer Index",
+    );
     expect(
       view?.empowerment.matchedDimensions.every((m) =>
         m.targetMatchTier === "curated"

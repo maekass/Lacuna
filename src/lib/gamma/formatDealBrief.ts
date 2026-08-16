@@ -88,6 +88,9 @@ export function formatDealBrief(
 
   if (acq.strategicRationale) {
     lines.push("## Strategic rationale");
+    lines.push(
+      "Curated copy from the verified dataset — not an 8-K LLM summary.",
+    );
     lines.push(acq.strategicRationale);
     lines.push("");
   }
