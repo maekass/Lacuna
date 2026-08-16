@@ -12,6 +12,8 @@ export const PROMOTION_MISSING_FIELD_LABELS: Record<string, string> = {
     "Secondary source URL (independent corroboration)",
   "acquirer.sector": "Acquirer sector (reviewer attested)",
   "acquirer.hq": "Acquirer HQ (reviewer attested)",
+  "acquisition.strategicRationale":
+    "Strategic rationale (curated copy from primary source language)",
 };
 
 export function labelPromotionMissingField(field: string): string {

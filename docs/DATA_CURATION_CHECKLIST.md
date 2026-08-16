@@ -60,7 +60,7 @@ provenance `notes[]`.
 | `closedDate`                 | Optional                | Omit if unknown                                          |
 | `dealType`                   | Yes                     | `Acquisition` \| `Strategic Investment` \| `Partnership` |
 | `source`                     | Yes                     | Best single citation (filing > PR > press)               |
-| `strategicRationale`         | Yes                     | One sentence from primary source language                |
+| `strategicRationale`         | Yes                     | One sentence from primary source language — not an LLM summary of the 8-K |
 | `dealValue`                  | Optional                | **Only if disclosed** in A/B source                      |
 | `dealValueNote`              | If no value or estimate | Required when `dealValue` omitted or estimated           |
 

@@ -71,6 +71,10 @@ describe("no synthetic M&A demo data in src/", () => {
       /\bPipelineStatusStrip\b/,
       /\bbuildPatientEmpowermentSnapshot\b/,
       /\bmatchKeywords\b/,
+      /\bgenerateText\b/,
+      /\bgenerateObject\b/,
+      /\bgenerateAcquisitionInsights\b/,
+      /\bitem201Excerpt\b/,
     ];
     const violations: string[] = [];
     for (const relative of files) {
@@ -96,6 +100,27 @@ describe("no synthetic M&A demo data in src/", () => {
     );
     expect(page).not.toMatch(/deal\.target\.lastKnownValuation/);
     expect(page).toMatch(/targetLastKnownValuation/);
+  });
+
+  it("deal dossier leaves strategicRationale as curated JSON copy", () => {
+    const page = readFileSync(
+      path.join(SRC_ROOT, "app/sections/DealDetailPage.tsx"),
+      "utf8",
+    );
+    expect(page).toMatch(/acq\.strategicRationale/);
+    expect(page).toMatch(/Curated copy from the verified dataset/);
+    expect(page).toMatch(/not an 8-K LLM summary/);
+    const draft = readFileSync(
+      path.join(SRC_ROOT, "lib/ingestion/buildPromotionDraft.ts"),
+      "utf8",
+    );
+    expect(draft).not.toMatch(
+      /strategicRationale:\s*buildStrategicRationale\(deal\)/,
+    );
+    expect(draft).toMatch(/resolveStrategicRationale\(reviewer\)/);
+    expect(draft).not.toMatch(
+      /item201Excerpt[\s\S]{0,80}strategicRationale/,
+    );
   });
 
   it("does not map lastKnownValuation onto revenue as a TAM fallback", () => {

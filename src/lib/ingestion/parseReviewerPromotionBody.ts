@@ -66,6 +66,11 @@ export function parseReviewerPromotionBody(
     reviewerFields.secondarySourceUrl = secondarySourceUrl;
   }
 
+  const strategicRationale = readOptionalString(fields.strategicRationale);
+  if (strategicRationale !== undefined) {
+    reviewerFields.strategicRationale = strategicRationale;
+  }
+
   const approveFirst = record.approveFirst === true;
 
   return { reviewerFields, approveFirst };

@@ -28,8 +28,11 @@ only**. Pair with [DATA_CURATION_CHECKLIST.md](./DATA_CURATION_CHECKLIST.md) and
 ### Auto-promote on LLM classification alone
 
 - **Forbidden:** Merge because a model classified “M&A” or “women’s health.”
-- **Allowed:** LLM for triage, field suggestions, dossier pre-fill. Human
-  submits promotion form; `LACUNA_AUTO_PROMOTE` only after explicit `approved` +
+- **Forbidden:** Replace `strategicRationale` with an LLM summary of the 8-K.
+  That field is curated copy from primary source language and lands in
+  `dataset.verified.json` as written.
+- **Allowed:** LLM for triage and other field suggestions. Human submits
+  promotion form; `LACUNA_AUTO_PROMOTE` only after explicit `approved` +
   checklist.
 
 ### NIH / PubMed as deal discovery

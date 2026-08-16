@@ -66,6 +66,24 @@ export default function PromotionForm({
         />
       </div>
 
+      <div>
+        <FieldLabel htmlFor="strategicRationale">
+          Strategic rationale
+        </FieldLabel>
+        <textarea
+          id="strategicRationale"
+          rows={3}
+          value={value.strategicRationale ?? ""}
+          onChange={(e) => update({ strategicRationale: e.target.value })}
+          placeholder="One sentence from primary source language"
+          className="mt-1 w-full rounded-md border border-lacuna-lavender/50 px-3 py-2 text-sm"
+        />
+        <p className="mt-1 text-[11px] leading-relaxed text-lacuna-blue/70">
+          Curated copy that lands in verified JSON. Do not replace with an LLM
+          summary of the 8-K.
+        </p>
+      </div>
+
       {needsNewCompany
         ? (
           <div className="grid gap-4 sm:grid-cols-2">

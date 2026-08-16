@@ -83,6 +83,13 @@ export function getPromotionCheckItems(
       hint: "ML or keyword classification does not replace dual-source review.",
       autoPass: false,
     },
+    {
+      id: "rationale-attestation",
+      label: "Strategic rationale is curated copy",
+      hint:
+        "One sentence from primary source language — not an LLM summary of the 8-K.",
+      autoPass: false,
+    },
   ];
 }
 
