@@ -9,6 +9,7 @@ import {
 import { closeDurationDays, premiumPercent } from "@/lib/deals/dealTiming";
 import { inferSourceUrl, isEdgarLocatorUrl } from "@/lib/deals/inferSourceUrl";
 import { formatDealDate } from "@/lib/deals/formatDealDate";
+import { isResearchHeuristicCitation } from "@/lib/deals/researchHeuristicCitation";
 
 describe("evidence ladder", () => {
   const dataset = getStaticVerifiedDataset();
@@ -28,6 +29,25 @@ describe("evidence ladder", () => {
     expect(filing?.urlKind).toBe("edgar_locator");
   });
 
+  it("does not let research affinity citations create dual-source", () => {
+    expect(deal).not.toBeNull();
+    const mixed = {
+      ...deal!,
+      acquisition: {
+        ...deal!.acquisition,
+        source:
+          "Hologic 8-K filing, SEC EDGAR; keyword affinity crosswalk (HLTH 2022)",
+        preDealValuationSource: undefined,
+      },
+    };
+    const ladder = buildEvidenceLadder(mixed);
+    expect(ladder.primaryCount).toBe(1);
+    expect(ladder.hasDualSource).toBe(false);
+    expect(ladder.limitations.some((line) => /affinity/.test(line))).toBe(
+      true,
+    );
+  });
+
   it("does not treat two press wires as dual-source", () => {
     expect(deal).not.toBeNull();
     const pressOnlyDeal = {
@@ -44,6 +64,18 @@ describe("evidence ladder", () => {
     expect(ladder.primaryCount).toBe(0);
     expect(ladder.hasDualSource).toBe(false);
     expect(ladder.pressOnly).toBe(true);
+  });
+});
+
+describe("research heuristic citations", () => {
+  it("recognizes cited_* / affinity copy and ignores deal filings", () => {
+    expect(isResearchHeuristicCitation("keyword affinity crosswalk")).toBe(
+      true,
+    );
+    expect(isResearchHeuristicCitation("cited_survey_2022 HLTH baseline"))
+      .toBe(true);
+    expect(isResearchHeuristicCitation("Hologic 8-K filing, SEC EDGAR"))
+      .toBe(false);
   });
 });
 
@@ -145,6 +177,10 @@ describe("getDealDetailView", () => {
       ),
     ).toBe(true);
     expect(view?.empowerment.hasDirectMatch).toBe(true);
+    expect(view?.regulatoryCitations).toEqual([]);
+    expect(view?.briefMarkdown).not.toMatch(
+      /ClinicalTrials\.gov|openFDA|CPT /,
+    );
   });
 
   it("shows lastKnownValuation only when it is sourced and distinct from deal price", () => {

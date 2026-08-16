@@ -4,6 +4,7 @@ import {
   isEdgarLocatorUrl,
   type SourceUrlKind,
 } from "./inferSourceUrl";
+import { isResearchHeuristicCitation } from "./researchHeuristicCitation";
 
 export type EvidenceTier = "primary" | "secondary" | "tertiary" | "unknown";
 
@@ -64,13 +65,17 @@ function citationKey(text: string): string {
 
 /**
  * Dual-source means a primary filing plus an independent press/IR or trade citation.
- * Two wires of the same announcement do not qualify.
+ * Two wires of the same announcement do not qualify. Research/affinity
+ * citations never count.
  */
 export function hasPrimaryAndIndependent(
   runs: readonly EvidenceRun[],
 ): boolean {
-  const hasPrimary = runs.some((r) => r.tier === "primary");
-  const hasIndependent = runs.some((r) =>
+  const qualifying = runs.filter((r) =>
+    !isResearchHeuristicCitation(r.citation)
+  );
+  const hasPrimary = qualifying.some((r) => r.tier === "primary");
+  const hasIndependent = qualifying.some((r) =>
     r.tier === "secondary" || r.tier === "tertiary"
   );
   return hasPrimary && hasIndependent;
@@ -84,11 +89,16 @@ export function buildEvidenceLadder(deal: DealDetail): EvidenceLadderResult {
   const ticker = deal.acquirer.ticker;
   const seen = new Set<string>();
   const runs: EvidenceRun[] = [];
+  let omittedHeuristicCount = 0;
 
   function pushCitation(citation: string): void {
     const key = citationKey(citation);
     if (!key || seen.has(key)) return;
     seen.add(key);
+    if (isResearchHeuristicCitation(citation)) {
+      omittedHeuristicCount += 1;
+      return;
+    }
     const tier = classifyCitation(citation);
     const url = inferSourceUrl(citation, ticker);
     runs.push({
@@ -124,6 +134,12 @@ export function buildEvidenceLadder(deal: DealDetail): EvidenceLadderResult {
 
   const priceDisclosed = typeof acq.dealValue === "number";
   const limitations: string[] = [];
+
+  if (omittedHeuristicCount > 0) {
+    limitations.push(
+      "Research/affinity citations are labeled cited_* or affinity and do not count toward dual-source corroboration.",
+    );
+  }
 
   if (pressOnly) {
     limitations.push(

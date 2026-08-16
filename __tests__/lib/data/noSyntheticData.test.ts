@@ -56,8 +56,10 @@ describe("no synthetic M&A demo data in src/", () => {
   it("deal dossier does not import keyword classifiers or invented TAM panels", () => {
     const files = [
       "app/sections/DealDetailPage.tsx",
+      "app/(product)/deals/[id]/page.tsx",
       "lib/deals/getDealDetailView.ts",
       "lib/deals/empowermentContextForDeal.ts",
+      "lib/deals/keyedRegulatoryCitations.ts",
       "lib/gamma/formatDealBrief.ts",
       "app/sections/DealsPage.tsx",
       "components/DealEmpowermentContext.tsx",
@@ -75,6 +77,19 @@ describe("no synthetic M&A demo data in src/", () => {
       /\bgenerateObject\b/,
       /\bgenerateAcquisitionInsights\b/,
       /\bitem201Excerpt\b/,
+      /\benrichCompanyFromPublicApis\b/,
+      /\bfetchClinicalTrialsGov\b/,
+      /\bfetchOpenFda\b/,
+      /\/api\/clinical-trials/,
+      /\/api\/evidence\/clinical-trials/,
+      /\/api\/evidence\/fda/,
+      /\/api\/enrichment\/company/,
+      /\bClinicalTrialTracker\b/,
+      /\bEvidenceMaturityDashboard\b/,
+      /\bclinicaltrials-mcp-connector\b/,
+      /\bopenfda-mcp-connector\b/,
+      /\bcms-reimbursement-connector\b/,
+      /\bcmsUtilizationProvider\b/,
     ];
     const violations: string[] = [];
     for (const relative of files) {
@@ -86,6 +101,21 @@ describe("no synthetic M&A demo data in src/", () => {
       }
     }
     expect(violations).toEqual([]);
+  });
+
+  it("deal dossier does not render live ClinicalTrials/FDA/CMS name search", () => {
+    const page = readFileSync(
+      path.join(SRC_ROOT, "app/sections/DealDetailPage.tsx"),
+      "utf8",
+    );
+    expect(page).not.toMatch(/ClinicalTrials|openFDA|\/api\/enrichment/);
+    expect(page).not.toMatch(/cmsUtilization|cms-reimbursement/);
+    const view = readFileSync(
+      path.join(SRC_ROOT, "lib/deals/getDealDetailView.ts"),
+      "utf8",
+    );
+    expect(view).toMatch(/keyedRegulatoryCitationsForTarget/);
+    expect(view).not.toMatch(/enrichCompanyFromPublicApis/);
   });
 
   it("deal economics never fall back to lastKnownValuation as a second price", () => {
@@ -121,6 +151,43 @@ describe("no synthetic M&A demo data in src/", () => {
     expect(draft).not.toMatch(
       /item201Excerpt[\s\S]{0,80}strategicRationale/,
     );
+  });
+
+  it("deal economics, comps, and dual-source do not import research heuristics", () => {
+    const files = [
+      "components/DealEconomicsCard.tsx",
+      "components/DealComparableTables.tsx",
+      "components/EvidenceLadder.tsx",
+      "lib/deals/evidenceLadder.ts",
+      "lib/deals/listComparableDeals.ts",
+      "lib/deals/listAcquirerDeals.ts",
+      "lib/deals/dealTiming.ts",
+      "lib/deals/dealMetricModels.ts",
+      "lib/deals/getDealDetailView.ts",
+      "lib/gamma/formatDealBrief.ts",
+    ];
+    const forbidden = [
+      /patientEmpowermentPipeline/,
+      /buildPatientEmpowermentSnapshot/,
+      /acquirer-prediction-engine/,
+      /cms-reimbursement-connector/,
+      /burdenCapitalGap/,
+      /classifyEvidence/,
+      /matchKeywords/,
+      /selectVerifiedComparables/,
+      /analyzeCompetitiveDynamics/,
+      /heuristicProvenance/,
+    ];
+    const violations: string[] = [];
+    for (const relative of files) {
+      const content = readFileSync(path.join(SRC_ROOT, relative), "utf8");
+      for (const pattern of forbidden) {
+        if (pattern.test(content)) {
+          violations.push(`${relative} matched ${pattern}`);
+        }
+      }
+    }
+    expect(violations).toEqual([]);
   });
 
   it("does not map lastKnownValuation onto revenue as a TAM fallback", () => {

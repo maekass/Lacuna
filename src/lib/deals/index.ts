@@ -45,3 +45,15 @@ export type {
   DealEmpowermentDimensionMatch,
   DealEmpowermentScopeAlignment,
 } from "./empowermentContextForDeal";
+export {
+  isKeyedRegulatoryCitation,
+  isPublicCptCitation,
+  isPublicNctCitation,
+  KEYED_REGULATORY_CITATIONS,
+  keyedRegulatoryCitationsForTarget,
+} from "./keyedRegulatoryCitations";
+export type {
+  KeyedRegulatoryCitation,
+  RegulatoryCitationSource,
+  RegulatoryCodeKind,
+} from "./keyedRegulatoryCitations";
