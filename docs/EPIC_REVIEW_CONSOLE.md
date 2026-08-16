@@ -224,8 +224,9 @@ npm run validate:dataset
 
 **Closes:** [#100](https://github.com/maekass/Lacuna/issues/100)
 
-**Status:** 🚧 on pathway branch (stack with E4 via
-`npm run review-console:stack -- ship --phase E5`)
+**Status:** ✅ shipped (GitHub OAuth + signed session + `review_audit_log`).
+Follow-up: session probe advertises GitHub sign-in while signed out; public
+demo stays read-only unless a signed reviewer is present.
 
 **Changes:**
 
@@ -331,7 +332,7 @@ flowchart TD
 - [ ] Promotion requires explicit reviewer fields; preview shows JSON diff
 - [ ] Single Review Console at `/deals#review`
 - [ ] Enrich improves keyword-only rows without auto-merge
-- [ ] Production auth without shared secrets in UI
+- [x] Production auth without shared secrets in UI
 - [ ] Hub shows verified vs candidate counts honestly
 - [ ] Post-promote links to verified deal spine
 - [ ] `DATA_BOUNDARIES.md` linked from agent rules

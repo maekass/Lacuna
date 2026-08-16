@@ -28,7 +28,6 @@ export default function FundingEventsPanel({
   const [reviewableTotal, setReviewableTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [needsAuth, setNeedsAuth] = useState(false);
   const [refreshToken, setRefreshToken] = useState(0);
 
   useEffect(() => {
@@ -45,18 +44,15 @@ export default function FundingEventsPanel({
           setItems([]);
           setReviewableTotal(0);
           if (response.status === 401) {
-            setNeedsAuth(true);
             setError(null);
             return;
           }
-          setNeedsAuth(false);
           setError(
             body.error ??
               "Funding queue unavailable (run sec:ingest-form-d with DATABASE_URL).",
           );
           return;
         }
-        setNeedsAuth(false);
         setItems(body.items ?? []);
         setReviewableTotal(body.meta?.reviewableTotal ?? 0);
       } catch {
@@ -109,14 +105,10 @@ export default function FundingEventsPanel({
           : `${reviewableTotal} pending funding event(s) · CLI: npm run sec:ingest-form-d`}
       </p>
 
-      {needsAuth
-        ? (
-          <ReviewAccessGate
-            className="mt-3"
-            onUnlocked={() => setRefreshToken((n) => n + 1)}
-          />
-        )
-        : null}
+      <ReviewAccessGate
+        className="mt-3"
+        onUnlocked={() => setRefreshToken((n) => n + 1)}
+      />
 
       {error
         ? (

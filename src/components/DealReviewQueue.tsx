@@ -276,14 +276,13 @@ export default function DealReviewQueue({
           } awaiting review`}
       </p>
 
-      {needsAuth
-        ? (
-          <ReviewAccessGate
-            className="mt-3"
-            onUnlocked={() => setRefreshToken((n) => n + 1)}
-          />
-        )
-        : null}
+      <ReviewAccessGate
+        className="mt-3"
+        onUnlocked={() => {
+          setNeedsAuth(false);
+          setRefreshToken((n) => n + 1);
+        }}
+      />
 
       {error
         ? (

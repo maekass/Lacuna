@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { consumeReviewAuthErrorFromLocation } from "@/lib/infra/reviewAuthError";
 import { reportWarning } from "@/lib/observability/reportError";
 
 interface ReviewAccessGateProps {
@@ -9,13 +10,21 @@ interface ReviewAccessGateProps {
   className?: string;
 }
 
+interface SessionActor {
+  label: string;
+  method: string;
+}
+
 interface SessionResponse {
   ok?: boolean;
   authenticated?: boolean;
+  readOnly?: boolean;
   githubSignInAvailable?: boolean;
-  actor?: { label: string; method: string };
+  actor?: SessionActor;
   error?: string;
 }
+
+type GateStatus = "loading" | "signed_in" | "signed_out";
 
 /** Production sign-in for deal-review APIs (GitHub OAuth primary, API key fallback). */
 export default function ReviewAccessGate({
@@ -27,23 +36,45 @@ export default function ReviewAccessGate({
   const [error, setError] = useState<string | null>(null);
   const [githubAvailable, setGithubAvailable] = useState(false);
   const [showApiKey, setShowApiKey] = useState(false);
+  const [status, setStatus] = useState<GateStatus>("loading");
+  const [actor, setActor] = useState<SessionActor | null>(null);
+  const [readOnly, setReadOnly] = useState(false);
+  const onUnlockedRef = useRef(onUnlocked);
+  onUnlockedRef.current = onUnlocked;
+
+  const applySession = useCallback((
+    body: SessionResponse,
+    notifyUnlock = false,
+  ) => {
+    setGithubAvailable(body.githubSignInAvailable === true);
+    setReadOnly(body.readOnly === true);
+    if (body.authenticated) {
+      setActor(body.actor ?? { label: "Reviewer", method: "github" });
+      setStatus("signed_in");
+      if (notifyUnlock) onUnlockedRef.current?.();
+      return;
+    }
+    setActor(null);
+    setStatus("signed_out");
+  }, []);
 
   useEffect(() => {
+    const oauthError = consumeReviewAuthErrorFromLocation();
+    if (oauthError) setError(oauthError);
+
     let cancelled = false;
     async function probeSession() {
       try {
         const response = await fetch("/api/deals/review/session");
-        // 401 is the normal signed-out case; anything else is a real failure.
         if (!response.ok && response.status !== 401) {
           throw new Error(`Session probe failed: ${response.status}`);
         }
         const body = await response.json() as SessionResponse;
         if (cancelled) return;
-        setGithubAvailable(body.githubSignInAvailable === true);
-        if (body.authenticated) onUnlocked?.();
+        applySession(body);
       } catch (probeError) {
-        // Gate stays visible, but the sign-in options shown may be wrong.
         if (cancelled) return;
+        setStatus("signed_out");
         setError(
           `Could not check review session (${
             reportWarning("reviewGate.sessionProbe", probeError)
@@ -55,7 +86,7 @@ export default function ReviewAccessGate({
     return () => {
       cancelled = true;
     };
-  }, [onUnlocked]);
+  }, [applySession]);
 
   const handleUnlock = useCallback(async () => {
     if (!token.trim()) return;
@@ -73,20 +104,69 @@ export default function ReviewAccessGate({
         return;
       }
       setToken("");
-      onUnlocked?.();
+      applySession(body, true);
     } catch {
       setError("Could not unlock review tools.");
     } finally {
       setBusy(false);
     }
-  }, [token, onUnlocked]);
+  }, [token, applySession]);
+
+  const handleSignOut = useCallback(async () => {
+    setBusy(true);
+    try {
+      await fetch("/api/deals/review/session", { method: "DELETE" });
+      setStatus("signed_out");
+      setActor(null);
+      setReadOnly(false);
+      onUnlocked?.();
+    } catch {
+      setError("Could not sign out.");
+    } finally {
+      setBusy(false);
+    }
+  }, [onUnlocked]);
+
+  if (status === "loading") {
+    return (
+      <p className={`text-xs text-lacuna-blue/70 ${className}`}>
+        Checking review session…
+      </p>
+    );
+  }
+
+  if (status === "signed_in" && actor) {
+    if (actor.method === "dev") {
+      return null;
+    }
+    return (
+      <div
+        className={`flex flex-wrap items-center justify-between gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-2 ${className}`}
+      >
+        <p className="text-xs text-emerald-950">
+          Signed in as <span className="font-medium">{actor.label}</span>
+          {actor.method === "github" ? " via GitHub" : ""}
+        </p>
+        <button
+          type="button"
+          onClick={() => void handleSignOut()}
+          disabled={busy}
+          className="text-xs font-medium text-lacuna-plum underline underline-offset-2 disabled:opacity-50"
+        >
+          Sign out
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div
       className={`rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 ${className}`}
     >
       <p className="text-sm font-medium text-amber-950">
-        Review tools require authentication in production
+        {readOnly
+          ? "Demo review is read-only — sign in to approve or promote"
+          : "Review tools require authentication in production"}
       </p>
       <p className="mt-1 text-xs text-amber-900/80">
         Sign in with an allowlisted GitHub account, or use an API key for

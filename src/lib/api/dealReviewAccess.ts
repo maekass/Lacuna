@@ -3,8 +3,7 @@ import { NextResponse } from "next/server";
 import {
   getReviewActor,
   isDealReviewAuthConfigured,
-  isPublicReviewUiEnabled,
-  PUBLIC_REVIEW_ACTOR_ID,
+  isWriteCapableReviewActor,
 } from "@/lib/infra/reviewAuth";
 
 const READ_ONLY_METHODS = new Set(["GET", "HEAD", "OPTIONS"]);
@@ -43,10 +42,9 @@ export function guardDealReviewRequest(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  // Demo mode signs nobody in — keep it read-only so anonymous callers cannot
-  // approve, import, or promote staging candidates.
+  // Public demo may browse the queue; writes still need a signed reviewer.
   if (
-    isPublicReviewUiEnabled() && actor.id === PUBLIC_REVIEW_ACTOR_ID &&
+    !isWriteCapableReviewActor(actor) &&
     !READ_ONLY_METHODS.has(request.method.toUpperCase())
   ) {
     return NextResponse.json(

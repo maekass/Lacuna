@@ -64,8 +64,13 @@ LIMIT 50;
 | ------------------------------------------- | ---------------------------------------- |
 | `GET /api/deals/review/github`              | Public (starts OAuth)                    |
 | `GET /api/deals/review/github/callback`     | Public (sets session)                    |
-| `GET/POST/DELETE /api/deals/review/session` | Session probe / API key / sign-out       |
-| `/api/deals/pending/*`                      | Signed session, Bearer, or legacy cookie |
+| `GET/POST/DELETE /api/deals/review/session` | Session probe (always 200) / API key / sign-out |
+| `/api/deals/pending/*`                      | Signed session, Bearer, or legacy cookie        |
+
+`GET /api/deals/review/session` returns `authenticated`, `readOnly`, and
+`githubSignInAvailable` so the review gate can show GitHub sign-in before a
+session exists. Public demo (`LACUNA_REVIEW_UI_PUBLIC=true`) is read-only
+until a signed GitHub or API-key reviewer is present.
 
 ## Related docs
 

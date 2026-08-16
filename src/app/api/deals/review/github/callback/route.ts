@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { logReviewAction } from "@/lib/ingestion/reviewAuditLog";
+import { tryLogReviewAction } from "@/lib/ingestion/reviewAuditLog";
 import {
   exchangeGitHubOAuthCode,
   GITHUB_OAUTH_STATE_COOKIE,
@@ -60,7 +60,7 @@ export async function GET(request: Request) {
       maxAge: 0,
     });
 
-    await logReviewAction({
+    await tryLogReviewAction({
       action: "session_start",
       actorId: `github:${login}`,
       actorMethod: "github",
