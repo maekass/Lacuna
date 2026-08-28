@@ -189,14 +189,14 @@ schedule `/api/health/ready` (deploy smoke / manual only).
 
 API routes use Redis-backed rate limiting via
 [Upstash Redis](https://upstash.com/). Without Redis, rate limiting falls back
-to a capped in-memory map (max 10k buckets, expired keys pruned on access,
-LRU eviction at the cap). Limits are still per serverless instance.
+to a capped in-memory map (max 10k buckets, expired keys pruned on access, LRU
+eviction at the cap). Limits are still per serverless instance.
 
 When Redis is configured but errors, `RATE_LIMIT_FAIL_MODE` controls the path:
 `closed` (default) denies the request; `open` uses the in-memory fallback.
 Patient-data and AI routes go through `src/lib/api/rateLimitGuard.ts` and
-therefore fail closed unless the env var is set to `open`. Both fallbacks
-emit `reportWarning`.
+therefore fail closed unless the env var is set to `open`. Both fallbacks emit
+`reportWarning`.
 
 ### Setup Upstash Redis (production)
 
@@ -239,10 +239,10 @@ TTL. Redis errors: `RATE_LIMIT_FAIL_MODE=closed` (default) or `open`.
 
 ### Troubleshooting
 
-| Symptom                 | Check                                                                 |
-| ----------------------- | --------------------------------------------------------------------- |
-| Rate limits not shared  | Verify `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` set    |
-| Redis connection errors | Check Upstash dashboard for database status                           |
+| Symptom                 | Check                                                                                             |
+| ----------------------- | ------------------------------------------------------------------------------------------------- |
+| Rate limits not shared  | Verify `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` set                                |
+| Redis connection errors | Check Upstash dashboard for database status                                                       |
 | Fallback to in-memory   | Expected when Redis env vars missing; Redis errors fail closed unless `RATE_LIMIT_FAIL_MODE=open` |
 
 ## Vercel deploy
