@@ -18,6 +18,8 @@ describe("health API", () => {
     expect(body.probe).toBe("live");
     expect(body.version).toBe(packageJson.version);
     expect(body.checks).toBeUndefined();
+    expect(typeof body.droppedAuditEvents).toBe("number");
+    expect(body.droppedAuditEvents).toBeGreaterThanOrEqual(0);
   });
 
   it("readiness returns dataset counts in static mode (success)", async () => {

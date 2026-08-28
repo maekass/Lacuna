@@ -1,7 +1,21 @@
+/**
+ * Audit-trail failure modes — an access decision must never be silently unaudited.
+ *
+ * - `clickhouseClient` is null (lazy init skipped: no CLICKHOUSE_URL / not injected):
+ *   skip ClickHouse; fall back to Postgres `query()` when DATABASE_URL is set.
+ * - ClickHouse `insert` throws: `reportWarning`, then the same Postgres fallback.
+ * - Postgres unset or `query` throws: `writeAuditEvent` returns false.
+ *   Privileged access (authorized / identifiers / raw) is denied with 503 + `reportError`.
+ *   Anonymous/redacted reads proceed and increment `droppedAuditEvents` on GET /api/health.
+ * - Neither sink configured (console-only): stdout audit only; no 503; counter unchanged.
+ */
 import process from "node:process";
 import { createHash } from "node:crypto";
 import { type ClickHouseClient, createClient } from "@clickhouse/client";
 import { query } from "@/lib/data/dbClient";
+import {
+  incrementDroppedAuditCount,
+} from "@/lib/compliance/droppedAuditCounter";
 import { reportError, reportWarning } from "@/lib/observability/reportError";
 import type {
   PatientDataAccessLevel,
@@ -80,7 +94,7 @@ export function sanitizeAuditResource(resource: string): string {
 /**
  * Persist audit row to ClickHouse when CLICKHOUSE_URL is configured,
  * falling back to Postgres when DATABASE_URL is set.
- * Returns false when no sink is available (console-only deployments).
+ * Returns false when no sink accepted the write.
  */
 export async function writeAuditEvent(
   event: Omit<AuditEventRow, "actor_hash"> & { actor: string },
@@ -94,7 +108,6 @@ export async function writeAuditEvent(
     mode: event.mode,
   };
 
-  // Try ClickHouse first (preferred for high-volume analytics)
   const chClient = getAuditClient();
   if (chClient) {
     try {
@@ -111,7 +124,6 @@ export async function writeAuditEvent(
     }
   }
 
-  // Fall back to Postgres
   if (isPostgresConfigured()) {
     try {
       await query(
@@ -135,6 +147,16 @@ export async function writeAuditEvent(
         detail: "Postgres audit write failed",
       });
     }
+  }
+
+  const attempted = Boolean(chClient) || isPostgresConfigured();
+  if (attempted) {
+    incrementDroppedAuditCount();
+    reportError(
+      "audit.dropped",
+      new Error("Audit event dropped: every configured sink failed"),
+      { action: row.action, resource: row.resource, mode: row.mode },
+    );
   }
 
   return false;

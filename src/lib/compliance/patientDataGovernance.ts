@@ -76,10 +76,20 @@ function effectiveMode(request: Request): PatientDataAccessMode {
   return configured;
 }
 
+/** True when the decision covers PHI identifiers, raw VCF, or an authorized session. */
+export function isPrivilegedPatientDataAccess(
+  level: PatientDataAccessLevel,
+  mode: PatientDataAccessMode,
+): boolean {
+  return mode === "authorized" ||
+    level === "read_identifiers" ||
+    level === "download_raw";
+}
+
 /** Log access attempts — ClickHouse when configured; stdout always for SIEM tailing. */
-export function auditPatientDataAccess(
+export async function auditPatientDataAccess(
   event: Omit<PatientDataAuditEvent, "timestamp">,
-): void {
+): Promise<boolean> {
   const record: PatientDataAuditEvent = {
     ...event,
     timestamp: new Date().toISOString(),
@@ -92,43 +102,64 @@ export function auditPatientDataAccess(
     }),
   );
 
-  void (async () => {
-    try {
-      const persisted = await writeAuditEvent({
-        timestamp: record.timestamp,
-        action: record.action,
-        resource: record.resource,
-        actor: record.actor,
-        allowed: record.allowed ? 1 : 0,
-        mode: record.mode,
-      });
-      // A configured sink that persists nothing means audit rows are being
-      // dropped — that is a compliance failure, not a console-only deployment.
-      if (!persisted && isAuditSinkConfigured()) {
-        reportError(
-          "patient-data-audit",
-          new Error("Audit event dropped: every configured sink failed"),
-          { action: record.action, resource: record.resource },
-        );
-      }
-    } catch (error) {
-      reportError("patient-data-audit", error, {
-        action: record.action,
-        resource: record.resource,
-      });
+  try {
+    const persisted = await writeAuditEvent({
+      timestamp: record.timestamp,
+      action: record.action,
+      resource: record.resource,
+      actor: record.actor,
+      allowed: record.allowed ? 1 : 0,
+      mode: record.mode,
+    });
+    // A configured sink that persists nothing means audit rows are being
+    // dropped — that is a compliance failure, not a console-only deployment.
+    if (!persisted && isAuditSinkConfigured()) {
+      reportError(
+        "patient-data-audit",
+        new Error("Audit event dropped: every configured sink failed"),
+        { action: record.action, resource: record.resource },
+      );
     }
-  })();
+    return persisted;
+  } catch (error) {
+    reportError("patient-data-audit", error, {
+      action: record.action,
+      resource: record.resource,
+    });
+    return false;
+  }
+}
+
+function auditUnavailableResponse(
+  mode: PatientDataAccessMode,
+  level: PatientDataAccessLevel,
+): NextResponse {
+  return NextResponse.json(
+    {
+      error: "Audit trail unavailable",
+      mode,
+      requiredLevel: level,
+      hint:
+        "Privileged patient-data access is denied when neither ClickHouse nor Postgres can persist the access decision.",
+      docs: "docs/PATIENT_DATA_GOVERNANCE.md",
+    },
+    {
+      status: 503,
+      headers: { "cache-control": "no-store" },
+    },
+  );
 }
 
 /**
  * Gate genomics handlers by HIPAA minimum-necessary tier.
  * Returns a NextResponse when access must be denied.
+ * Privileged access blocks with 503 when the audit write cannot be persisted.
  */
-export function requirePatientDataAccess(
+export async function requirePatientDataAccess(
   request: Request,
   level: PatientDataAccessLevel,
   resource: string,
-): NextResponse | null {
+): Promise<NextResponse | null> {
   const mode = effectiveMode(request);
   const required = MINIMUM_LEVEL[level];
   const actor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
@@ -136,13 +167,25 @@ export function requirePatientDataAccess(
     "unknown";
 
   const allowed = modeSatisfies(mode, required);
-  auditPatientDataAccess({
+  const persisted = await auditPatientDataAccess({
     action: level,
     resource,
     actor,
     allowed,
     mode,
   });
+
+  if (
+    !persisted && isAuditSinkConfigured() &&
+    isPrivilegedPatientDataAccess(level, mode)
+  ) {
+    reportError(
+      "patient-data-audit",
+      new Error("Privileged access denied: audit trail unavailable"),
+      { action: level, resource, mode },
+    );
+    return auditUnavailableResponse(mode, level);
+  }
 
   if (allowed) return null;
 
