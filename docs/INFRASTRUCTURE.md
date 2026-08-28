@@ -91,6 +91,7 @@ Copy [`.env.example`](../.env.example) to `.env.local`. Production checklist:
 | `CLICKHOUSE_URL`             | Required when variant store enabled                                                            |
 | `UPSTASH_REDIS_REST_URL`     | Optional — Redis-backed rate limiting (production recommended)                                 |
 | `UPSTASH_REDIS_REST_TOKEN`   | Required when `UPSTASH_REDIS_REST_URL` set                                                     |
+| `RATE_LIMIT_FAIL_MODE`       | `closed` (default) deny on Redis errors; `open` falls back to capped in-memory buckets         |
 
 AI and Sentry: [INFERENCE.md](./INFERENCE.md),
 [PRODUCTION_SETUP.md](./PRODUCTION_SETUP.md).
@@ -188,7 +189,14 @@ schedule `/api/health/ready` (deploy smoke / manual only).
 
 API routes use Redis-backed rate limiting via
 [Upstash Redis](https://upstash.com/). Without Redis, rate limiting falls back
-to in-memory (non-durable across serverless instances).
+to a capped in-memory map (max 10k buckets, expired keys pruned on access,
+LRU eviction at the cap). Limits are still per serverless instance.
+
+When Redis is configured but errors, `RATE_LIMIT_FAIL_MODE` controls the path:
+`closed` (default) denies the request; `open` uses the in-memory fallback.
+Patient-data and AI routes go through `src/lib/api/rateLimitGuard.ts` and
+therefore fail closed unless the env var is set to `open`. Both fallbacks
+emit `reportWarning`.
 
 ### Setup Upstash Redis (production)
 
@@ -227,7 +235,7 @@ Current limits (per IP, per minute):
 | `/api/export/deals.csv`         | 10    | 60s    |
 
 Limits are enforced in `src/lib/api/rateLimit.ts`. Redis keys auto-expire using
-TTL.
+TTL. Redis errors: `RATE_LIMIT_FAIL_MODE=closed` (default) or `open`.
 
 ### Troubleshooting
 
@@ -235,7 +243,7 @@ TTL.
 | ----------------------- | --------------------------------------------------------------------- |
 | Rate limits not shared  | Verify `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` set    |
 | Redis connection errors | Check Upstash dashboard for database status                           |
-| Fallback to in-memory   | Expected when Redis env vars missing (console warns on Redis failure) |
+| Fallback to in-memory   | Expected when Redis env vars missing; Redis errors fail closed unless `RATE_LIMIT_FAIL_MODE=open` |
 
 ## Vercel deploy
 
