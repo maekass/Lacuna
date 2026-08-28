@@ -1,4 +1,5 @@
 import { Pool } from "pg";
+import { resolvePgSslConfig } from "../../src/lib/data/dbClient";
 
 export interface DatabaseUrlMeta {
   host: string;
@@ -68,9 +69,7 @@ export async function pingDatabase(
     connectionString,
     max: 1,
     connectionTimeoutMillis: 10_000,
-    ssl: process.env.PGSSLMODE === "disable"
-      ? undefined
-      : { rejectUnauthorized: false },
+    ssl: resolvePgSslConfig(),
   });
 
   try {
