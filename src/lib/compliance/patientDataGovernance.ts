@@ -1,5 +1,6 @@
 import process from "node:process";
 import { NextResponse } from "next/server";
+import { resolveClientIp } from "@/lib/api/requestIdentity";
 import {
   isAuditSinkConfigured,
   writeAuditEvent,
@@ -131,9 +132,7 @@ export function requirePatientDataAccess(
 ): NextResponse | null {
   const mode = effectiveMode(request);
   const required = MINIMUM_LEVEL[level];
-  const actor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-    request.headers.get("x-real-ip")?.trim() ??
-    "unknown";
+  const actor = resolveClientIp(request);
 
   const allowed = modeSatisfies(mode, required);
   auditPatientDataAccess({
