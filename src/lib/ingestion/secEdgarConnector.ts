@@ -1,3 +1,4 @@
+import { htmlToPlainText } from "@/lib/ingestion/htmlToPlainText";
 import {
   alertApiFailure,
   alertFetchSkipped,
@@ -217,22 +218,7 @@ export async function fetchFilingText(filingUrl: string): Promise<string> {
     throw new Error(`SEC filing fetch failed: ${response.status} ${filingUrl}`);
   }
   const raw = await response.text();
-  return stripHtml(raw);
-}
-
-function stripHtml(html: string): string {
-  return html
-    .replace(/<script\b[\s\S]*?<\/script(?:\s+[^>]*)?>/gi, " ")
-    .replace(/<style\b[\s\S]*?<\/style(?:\s+[^>]*)?>/gi, " ")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/&nbsp;/gi, " ")
-    .replace(/&amp;/gi, "&")
-    .replace(
-      /&#(\d+);/g,
-      (_, code: string) => String.fromCharCode(Number(code)),
-    )
-    .replace(/\s+/g, " ")
-    .trim();
+  return htmlToPlainText(raw);
 }
 
 const ITEM_201_PATTERN =

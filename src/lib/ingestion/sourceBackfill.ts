@@ -7,6 +7,7 @@ import type {
   VerifiedAcquisition,
   VerifiedDataset,
 } from "@/lib/data/datasetSchema";
+import { htmlToPlainText } from "@/lib/ingestion/htmlToPlainText";
 
 const EFTS_URL = "https://efts.sec.gov/LATEST/search-index";
 const SEC_TICKERS_URL = "https://www.sec.gov/files/company_tickers.json";
@@ -217,42 +218,6 @@ function normalizeSearchText(text: string): string {
     .replace(/[^\p{L}\p{N}]+/gu, " ")
     .replace(/\s+/g, " ")
     .trim();
-}
-
-function stripHtml(text: string): string {
-  const namedEntities: Readonly<Record<string, string>> = {
-    amp: "&",
-    bull: "•",
-    gt: ">",
-    ldquo: "“",
-    lpar: "(",
-    lsquo: "‘",
-    lt: "<",
-    nbsp: " ",
-    ndash: "–",
-    quot: '"',
-    rdquo: "”",
-    reg: "®",
-    rsquo: "’",
-    sect: "§",
-  };
-  return text
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/giu, " ")
-    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/giu, " ")
-    .replace(/<[^>]*>/gu, " ")
-    .replace(
-      /&([a-z]+);/giu,
-      (entity, name: string) =>
-        namedEntities[name.toLocaleLowerCase()] ?? entity,
-    )
-    .replace(
-      /&#(\d+);/gu,
-      (_, value: string) => String.fromCodePoint(Number(value)),
-    )
-    .replace(
-      /&#x([0-9a-f]+);/giu,
-      (_, value: string) => String.fromCodePoint(Number.parseInt(value, 16)),
-    );
 }
 
 function normalizeSearchTextWithMap(
@@ -736,7 +701,7 @@ async function evaluateDeal(
   for (const candidate of candidates) {
     try {
       const textEntry = await cache.get(candidate.fullTextUrl, "text/html");
-      const filingText = stripHtml(assertResponse(textEntry));
+      const filingText = htmlToPlainText(assertResponse(textEntry));
       evaluated.push(
         evaluateCandidate(
           candidate,
