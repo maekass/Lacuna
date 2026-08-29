@@ -18,7 +18,7 @@ export async function GET(request: Request, context: RouteContext) {
   const disabled = requireVariantStore();
   if (disabled) return disabled;
 
-  const accessDenied = requirePatientDataAccess(
+  const accessDenied = await requirePatientDataAccess(
     request,
     "download_raw",
     "genomics/callsets/object",

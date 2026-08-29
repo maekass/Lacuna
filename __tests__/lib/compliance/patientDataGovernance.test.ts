@@ -39,12 +39,12 @@ describe("patientDataGovernance", () => {
     expect(getPatientDataAccessMode()).toBe("de_identified");
   });
 
-  it("blocks raw VCF download in de_identified mode (error)", () => {
+  it("blocks raw VCF download in de_identified mode (error)", async () => {
     process.env.LACUNA_PATIENT_DATA_MODE = "de_identified";
     const request = new Request(
       "http://localhost/api/genomics/callsets/x/object",
     );
-    const denied = requirePatientDataAccess(
+    const denied = await requirePatientDataAccess(
       request,
       "download_raw",
       "genomics/callsets/object",
@@ -52,15 +52,19 @@ describe("patientDataGovernance", () => {
     expect(denied?.status).toBe(403);
   });
 
-  it("allows variant summaries in de_identified mode (success)", () => {
+  it("allows variant summaries in de_identified mode (success)", async () => {
     process.env.LACUNA_PATIENT_DATA_MODE = "de_identified";
     const request = new Request("http://localhost/api/genomics/variants");
     expect(
-      requirePatientDataAccess(request, "read_summary", "genomics/variants"),
+      await requirePatientDataAccess(
+        request,
+        "read_summary",
+        "genomics/variants",
+      ),
     ).toBeNull();
   });
 
-  it("authorizes bearer token for raw download when configured (success)", () => {
+  it("authorizes bearer token for raw download when configured (success)", async () => {
     process.env.LACUNA_PATIENT_DATA_MODE = "authorized";
     process.env.LACUNA_PATIENT_DATA_API_KEY = "test-secret-key";
     const request = new Request(
@@ -71,7 +75,7 @@ describe("patientDataGovernance", () => {
     );
     expect(isPatientDataAuthorized(request)).toBe(true);
     expect(
-      requirePatientDataAccess(
+      await requirePatientDataAccess(
         request,
         "download_raw",
         "genomics/callsets/object",
@@ -110,16 +114,15 @@ describe("patientDataGovernance", () => {
     expect(requireIngestConsentRef("lacuna-infra-seed")).toBeNull();
   });
 
-  it("auditPatientDataAccess dispatches async sink without blocking (success)", async () => {
+  it("auditPatientDataAccess persists through the audit sink (success)", async () => {
     vi.mocked(writeAuditEvent).mockClear();
-    auditPatientDataAccess({
+    await auditPatientDataAccess({
       action: "read_summary",
       resource: "genomics/variants",
       actor: "127.0.0.1",
       allowed: true,
       mode: "de_identified",
     });
-    await Promise.resolve();
     expect(writeAuditEvent).toHaveBeenCalledWith(
       expect.objectContaining({
         action: "read_summary",
@@ -138,14 +141,14 @@ describe("patientDataGovernance", () => {
     vi.mocked(writeAuditEvent).mockResolvedValueOnce(false);
     vi.mocked(isAuditSinkConfigured).mockReturnValueOnce(true);
 
-    auditPatientDataAccess({
+    await auditPatientDataAccess({
       action: "download_raw",
       resource: "genomics/callsets/object",
       actor: "127.0.0.1",
       allowed: true,
       mode: "authorized",
     });
-    await vi.waitFor(() => expect(consoleError).toHaveBeenCalled());
+    expect(consoleError).toHaveBeenCalled();
 
     expect(consoleError.mock.calls[0]?.[0]).toContain("patient-data-audit");
   });
@@ -158,15 +161,13 @@ describe("patientDataGovernance", () => {
     vi.mocked(writeAuditEvent).mockResolvedValueOnce(false);
     vi.mocked(isAuditSinkConfigured).mockReturnValueOnce(false);
 
-    auditPatientDataAccess({
+    await auditPatientDataAccess({
       action: "read_summary",
       resource: "genomics/variants",
       actor: "127.0.0.1",
       allowed: true,
       mode: "de_identified",
     });
-    await Promise.resolve();
-    await Promise.resolve();
 
     expect(consoleError).not.toHaveBeenCalled();
   });
