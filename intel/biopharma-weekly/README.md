@@ -23,3 +23,21 @@ Auto-maintained by a scheduled Perplexity Computer task, Fridays 5:00 PM ET.
 | status                                        | upcoming / approved / CRL / positive / negative / delayed / withdrawn                     |
 | source_url                                    | primary source                                                                            |
 | notes                                         | context, spillover effects                                                                |
+
+## Maintenance
+
+Sweep `catalysts.csv` for duplicates, schema issues, stale upcoming rows, and
+sort order:
+
+```sh
+npm run sweep:catalysts          # report
+npm run sweep:catalysts:check    # CI: fail on duplicates or schema violations
+npm run sweep:catalysts:fix      # drop duplicate rows, sort by catalyst_date
+```
+
+`--check` treats stale `upcoming` rows and unsorted `catalyst_date` as warnings
+only — the weekly automation appends unsorted rows and resolves stale ones on
+its own cadence. Duplicates (company + drug + event_type) and schema violations
+(ISO dates, event_type, status, `https://` source_url) fail the check. `--fix`
+keeps the duplicate with the latest `date_added` (ties keep the last occurrence)
+and stable-sorts by `catalyst_date`.
