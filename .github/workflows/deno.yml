@@ -105,7 +105,7 @@ jobs:
         run: npm run validate:empowerment
 
       - name: Sweep catalyst watchlist
-        run: npm run sweep:catalysts:check
+        run: npm run intel:sweep:check
 
       - name: Recompute quantitative artifacts
         run: npm run compute:all
