@@ -12,7 +12,7 @@ export async function GET(request: Request) {
   const disabled = requireVariantStore();
   if (disabled) return disabled;
 
-  const accessDenied = requirePatientDataAccess(
+  const accessDenied = await requirePatientDataAccess(
     request,
     "read_summary",
     "genomics/variants",

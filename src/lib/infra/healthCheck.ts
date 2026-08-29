@@ -4,6 +4,7 @@ import { getDataMode } from "@/lib/data/datasetProvider";
 import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 import { isVariantStoreEnabled } from "@/lib/genomics/variantStoreConfig";
 import { pingClickHouse } from "@/lib/genomics/clickhouseClient";
+import { getDroppedAuditCount } from "@/lib/compliance/droppedAuditCounter";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import { validateVerifiedDataset } from "@/lib/data/validateVerifiedDataset";
 
@@ -33,6 +34,8 @@ export interface LivenessPayload {
   dataMode: "static" | "db";
   timestamp: string;
   buildSha: string | null;
+  droppedAuditEvents: number;
+  droppedAuditEventsScope: "process";
 }
 
 export interface VariantStoreHealth {
@@ -167,6 +170,8 @@ export function runLivenessCheck(): LivenessPayload {
     dataMode: getDataMode(),
     timestamp: new Date().toISOString(),
     buildSha: process.env.VERCEL_GIT_COMMIT_SHA?.trim() ?? null,
+    droppedAuditEvents: getDroppedAuditCount(),
+    droppedAuditEventsScope: "process",
   };
 }
 
