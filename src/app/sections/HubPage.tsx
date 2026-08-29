@@ -17,7 +17,7 @@ import {
   getDealVelocityTopSector,
   VALUATION_DISPARITY_MODEL,
 } from "@/lib/fairness/headlineStat";
-import { FEATURED_DEAL_ID } from "@/lib/deals";
+import { FEATURED_DEAL_ID } from "@/lib/deals/dealTypes";
 import { WORKSPACES } from "@/lib/navigation/workspaces";
 
 const CURRENT_YEAR = new Date().getFullYear();
