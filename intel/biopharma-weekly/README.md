@@ -23,3 +23,13 @@ Auto-maintained by a scheduled Perplexity Computer task, Fridays 5:00 PM ET.
 | status                                        | upcoming / approved / CRL / positive / negative / delayed / withdrawn                     |
 | source_url                                    | primary source                                                                            |
 | notes                                         | context, spillover effects                                                                |
+
+## Sweeps
+
+`npm run intel:sweep` reports on the watchlist; `intel:sweep:check` (run in CI)
+fails on duplicate rows (company + drug + event_type) or schema violations
+(invalid dates, unknown event_type/status, non-https source_url). Stale
+`upcoming` rows with past dates and unsorted files are warnings only, since the
+weekly automation appends unsorted and resolves stale rows on its own cadence.
+`npm run intel:sweep:fix` dedupes (keeping the latest date_added) and sorts by
+catalyst_date.
