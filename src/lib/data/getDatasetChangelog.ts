@@ -6,6 +6,8 @@ import {
   type TierCoverageCounts,
 } from "@/lib/data/datasetCoverage";
 
+export { mergeChangelogWithCandidates } from "@/lib/data/datasetCoverage";
+
 export interface DatasetChangelog {
   currentDealCount: number;
   priorDealCount: number;
@@ -17,22 +19,6 @@ export interface DatasetChangelog {
   /** Tier 2 staging rows — null until Postgres metrics load. */
   candidateCount: number | null;
   coverageLabel: string;
-}
-
-/** Attach Tier 2 candidate count to a verified-only changelog snapshot. */
-export function mergeChangelogWithCandidates(
-  changelog: DatasetChangelog,
-  candidateCount: number | null,
-): DatasetChangelog {
-  const counts: TierCoverageCounts = {
-    verifiedDealCount: changelog.currentDealCount,
-    stagingCandidateCount: candidateCount,
-  };
-  return {
-    ...changelog,
-    candidateCount,
-    coverageLabel: formatTierCoverageLabel(counts),
-  };
 }
 
 /**

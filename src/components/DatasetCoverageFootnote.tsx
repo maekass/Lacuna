@@ -1,17 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
-import { formatTierCoverageDefinition } from "@/lib/data/datasetCoverage";
+import { useMemo } from "react";
 import {
-  getDatasetChangelog,
+  formatTierCoverageDefinition,
   mergeChangelogWithCandidates,
-} from "@/lib/data/getDatasetChangelog";
-import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
+} from "@/lib/data/datasetCoverage";
+import type { DatasetChangelog } from "@/lib/data/getDatasetChangelog";
 import { usePendingQueueMetrics } from "@/lib/hooks/usePendingQueueMetrics";
 
 interface DatasetCoverageFootnoteProps {
+  /** Mode-aware changelog from getVerifiedDataset() on the server. */
+  changelog: DatasetChangelog;
   className?: string;
   /** Methods page: full Tier 1 / Tier 2 definitions. Hub: compact counts only. */
   variant?: "compact" | "methods";
@@ -20,14 +20,11 @@ interface DatasetCoverageFootnoteProps {
 
 /** Honest Tier 1 vs Tier 2 counts for hub and methods footnotes. */
 export default function DatasetCoverageFootnote({
+  changelog: baseChangelog,
   className = "",
   variant = "methods",
   reviewHref = "/deals#review",
 }: DatasetCoverageFootnoteProps) {
-  const baseChangelog = useMemo(
-    () => getDatasetChangelog(getStaticVerifiedDataset()),
-    [],
-  );
   const { metrics, unavailable } = usePendingQueueMetrics();
   const candidateCount = metrics?.stagingCandidateCount ?? null;
 

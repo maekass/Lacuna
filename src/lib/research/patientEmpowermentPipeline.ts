@@ -125,6 +125,41 @@ export interface PatientEmpowermentSnapshot {
   disclaimer: string;
 }
 
+/** Serializable teaser for client insight cards — no verified JSON payload. */
+export interface PatientEmpowermentInsightData {
+  readonly surveyRespondents: number;
+  readonly maxGapMetricLabel: string;
+  readonly maxGapIndexPct: number;
+  readonly weightedBurdenIndexPct: number;
+  readonly medianGapIndexPct: number;
+  readonly criticalMetricCount: number;
+  readonly curatedLinkCount: number;
+  readonly evidenceBackedLinkCount: number;
+  readonly topPriorityLabel?: string;
+  readonly topPriorityScore?: number;
+  readonly highestGapPrerequisiteId: EmpowermentPrerequisiteId;
+}
+
+/** Project a snapshot down to the hub/equity teaser fields. */
+export function toPatientEmpowermentInsightData(
+  snapshot: PatientEmpowermentSnapshot,
+): PatientEmpowermentInsightData {
+  const top = snapshot.priorityRankings[0];
+  return {
+    surveyRespondents: snapshot.headline.surveyRespondents,
+    maxGapMetricLabel: snapshot.summary.maxGapMetricLabel,
+    maxGapIndexPct: snapshot.summary.maxGapIndexPct,
+    weightedBurdenIndexPct: snapshot.summary.weightedBurdenIndexPct,
+    medianGapIndexPct: snapshot.summary.medianGapIndexPct,
+    criticalMetricCount: snapshot.summary.criticalMetricCount,
+    curatedLinkCount: snapshot.summary.curatedLinkCount,
+    evidenceBackedLinkCount: snapshot.summary.evidenceBackedLinkCount,
+    topPriorityLabel: top?.metric.label,
+    topPriorityScore: top?.priorityScore,
+    highestGapPrerequisiteId: snapshot.summary.highestGapPrerequisiteId,
+  };
+}
+
 interface CompanyMatchState {
   tier: EmpowermentMatchTier;
   note?: string;

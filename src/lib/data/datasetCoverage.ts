@@ -34,6 +34,32 @@ export function formatTierCoverageLabel(counts: TierCoverageCounts): string {
   return `${verified} · ${staging}`;
 }
 
+/**
+ * Attach Tier 2 candidate count to a verified-only changelog snapshot.
+ * Lives here (not getDatasetChangelog) so client footnotes can merge live
+ * queue metrics without importing computed-dataset-summary.json.
+ */
+export function mergeChangelogWithCandidates<
+  T extends {
+    currentDealCount: number;
+    candidateCount: number | null;
+    coverageLabel: string;
+  },
+>(
+  changelog: T,
+  candidateCount: number | null,
+): T {
+  const counts: TierCoverageCounts = {
+    verifiedDealCount: changelog.currentDealCount,
+    stagingCandidateCount: candidateCount,
+  };
+  return {
+    ...changelog,
+    candidateCount,
+    coverageLabel: formatTierCoverageLabel(counts),
+  };
+}
+
 export interface VerifiedGrowthDelta {
   added: number;
   priorSnapshotDate: string;

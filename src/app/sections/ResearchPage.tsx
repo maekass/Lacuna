@@ -19,16 +19,21 @@ import SpaceWhResearchGapsPanel from "@/components/SpaceWhResearchGapsPanel";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 
-import type { PatientEmpowermentSnapshot } from "@/lib/research/patientEmpowermentPipeline";
+import type {
+  PatientEmpowermentInsightData,
+  PatientEmpowermentSnapshot,
+} from "@/lib/research/patientEmpowermentPipeline";
 
 const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
 interface ResearchPageProps {
   empowermentSnapshot?: PatientEmpowermentSnapshot;
+  empowermentInsight?: PatientEmpowermentInsightData;
 }
 
 export default function ResearchPage({
   empowermentSnapshot,
+  empowermentInsight,
 }: ResearchPageProps) {
   return (
     <div>
@@ -124,7 +129,7 @@ export default function ResearchPage({
           title="Genetic Markers & Health Equity"
           description="Maternal mortality, PCOS, hereditary breast cancer, sickle cell, lupus, and Lynch syndrome — with disparities that disproportionately affect Black women in the verified portfolio."
         />
-        <HealthEquityDashboard />
+        <HealthEquityDashboard empowermentInsight={empowermentInsight} />
       </MotionSection>
 
       <MotionSection id="impact-assessment" delay={0.2} className={SECTION}>

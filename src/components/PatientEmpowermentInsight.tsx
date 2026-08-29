@@ -1,31 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
 import HeuristicTierBadge from "@/components/research/HeuristicTierBadge";
-import verifiedDataset from "@/data/dataset.verified.json";
-import type { VerifiedDataset } from "@/lib/data/datasetTypes";
-import { buildPatientEmpowermentSnapshot } from "@/lib/research/patientEmpowermentPipeline";
+import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentPipeline";
 import { EMPOWERMENT_PREREQUISITE_LABELS } from "@/lib/research/patientEmpowermentTaxonomy";
 
 interface PatientEmpowermentInsightProps {
+  /** Slim teaser from getVerifiedDataset() → buildPatientEmpowermentSnapshot on the server. */
+  data: PatientEmpowermentInsightData;
   variant?: "card" | "inline";
   className?: string;
 }
 
 /** Cross-workspace teaser from empowerment pipeline summary. */
 export default function PatientEmpowermentInsight({
+  data,
   variant = "card",
   className = "",
 }: PatientEmpowermentInsightProps) {
-  const snapshot = useMemo(
-    () => buildPatientEmpowermentSnapshot(verifiedDataset as VerifiedDataset),
-    [],
-  );
-  const { summary, headline } = snapshot;
-  const topPriority = snapshot.priorityRankings[0];
   const weakestPrereq = EMPOWERMENT_PREREQUISITE_LABELS[
-    summary.highestGapPrerequisiteId
+    data.highestGapPrerequisiteId
   ];
 
   if (variant === "inline") {
@@ -35,15 +29,14 @@ export default function PatientEmpowermentInsight({
       >
         <p className="font-medium text-lacuna-plum">
           HLTH 2022 breast cancer baseline (n=
-          {headline.surveyRespondents.toLocaleString()})
+          {data.surveyRespondents.toLocaleString()})
         </p>
         <p className="mt-1 text-lacuna-blue/80">
-          Report: {summary.maxGapMetricLabel} (index{" "}
-          {summary.maxGapIndexPct}). Weighted burden{" "}
-          {summary.weightedBurdenIndexPct}/100 · {summary.criticalMetricCount}
-          {" "}
-          critical gaps. Crosswalk: {summary.curatedLinkCount} curated ·{" "}
-          {summary.evidenceBackedLinkCount} evidence-backed.
+          Report: {data.maxGapMetricLabel} (index{" "}
+          {data.maxGapIndexPct}). Weighted burden{" "}
+          {data.weightedBurdenIndexPct}/100 · {data.criticalMetricCount}{" "}
+          critical gaps. Crosswalk: {data.curatedLinkCount} curated ·{" "}
+          {data.evidenceBackedLinkCount} evidence-backed.
         </p>
         <Link
           href="/research#patient-empowerment"
@@ -67,14 +60,13 @@ export default function PatientEmpowermentInsight({
         <div className="min-w-0 flex-1">
           <p className="text-sm text-lacuna-blue">
             HLTH/Outcomes4Me 2022 (breast cancer, n=
-            {headline.surveyRespondents.toLocaleString()}): max gap{" "}
-            {summary.maxGapIndexPct}/100 ({summary.maxGapMetricLabel
+            {data.surveyRespondents.toLocaleString()}): max gap{" "}
+            {data.maxGapIndexPct}/100 ({data.maxGapMetricLabel
               .toLowerCase()}). Weighted burden{" "}
-            {summary.weightedBurdenIndexPct}/100 · median{" "}
-            {summary.medianGapIndexPct}/100 · {summary.criticalMetricCount}{" "}
-            critical. Top priority: {topPriority?.metric.label.toLowerCase()}
-            {" "}
-            ( score {topPriority?.priorityScore}). Weakest prerequisite:{" "}
+            {data.weightedBurdenIndexPct}/100 · median{" "}
+            {data.medianGapIndexPct}/100 · {data.criticalMetricCount}{" "}
+            critical. Top priority: {data.topPriorityLabel?.toLowerCase()}{" "}
+            ( score {data.topPriorityScore}). Weakest prerequisite:{" "}
             {weakestPrereq.toLowerCase()}.
           </p>
           <p className="mt-2 text-xs text-lacuna-plum/70 group-hover:text-lacuna-blue">

@@ -5,6 +5,7 @@ import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import PatientEmpowermentInsight from "@/components/PatientEmpowermentInsight";
 import HeuristicTierBadge from "@/components/research/HeuristicTierBadge";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentPipeline";
 import { EPIDEMIOLOGY_DATABASE } from "@/lib/impact/oaisCalculator";
 import {
   HEALTH_EQUITY_FOCUS_AREAS,
@@ -172,11 +173,13 @@ function FocusAreaCard({
   area,
   active,
   highlightedCompanyId,
+  empowermentInsight,
   onSelect,
 }: {
   area: FocusAreaView;
   active: boolean;
   highlightedCompanyId: string;
+  empowermentInsight?: PatientEmpowermentInsightData;
   onSelect: () => void;
 }) {
   return (
@@ -220,8 +223,14 @@ function FocusAreaCard({
         <p className="text-lacuna-text-muted mt-2">Source: {area.source}</p>
       </div>
 
-      {area.id === "breast-cancer-genetics"
-        ? <PatientEmpowermentInsight variant="inline" className="mt-1" />
+      {area.id === "breast-cancer-genetics" && empowermentInsight
+        ? (
+          <PatientEmpowermentInsight
+            data={empowermentInsight}
+            variant="inline"
+            className="mt-1"
+          />
+        )
         : null}
 
       <div className="border-t border-lacuna-border-subtle pt-3">
@@ -253,7 +262,11 @@ function FocusAreaCard({
   );
 }
 
-export default function HealthEquityDashboard() {
+export default function HealthEquityDashboard({
+  empowermentInsight,
+}: {
+  empowermentInsight?: PatientEmpowermentInsightData;
+}) {
   const { verifiedCompanies, verifiedAcquisitions, dataProvenance } =
     useVerifiedDataset();
   const lastUpdated = dataProvenance.lastUpdated || "—";
@@ -567,6 +580,7 @@ export default function HealthEquityDashboard() {
                 area={area}
                 active={focusFilter === area.id}
                 highlightedCompanyId={highlightCompanyId}
+                empowermentInsight={empowermentInsight}
                 onSelect={() =>
                   setFocusFilter((
                     current,
