@@ -5850,97 +5850,97 @@
     {
       "file": "src/components/PatientEmpowermentInsight.tsx",
       "functionName": "PatientEmpowermentInsight",
-      "expression": "headline.surveyRespondents.toLocaleString()",
+      "expression": "data.criticalMetricCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::data.criticalMetricCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "data.criticalMetricCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::data.criticalMetricCount#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "data.curatedLinkCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::data.curatedLinkCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "data.evidenceBackedLinkCount",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::data.evidenceBackedLinkCount",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "data.maxGapIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::data.maxGapIndexPct",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "data.maxGapIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::data.maxGapIndexPct#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "data.medianGapIndexPct",
+      "kind": "numeric-jsx",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::data.medianGapIndexPct",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/PatientEmpowermentInsight.tsx",
+      "functionName": "PatientEmpowermentInsight",
+      "expression": "data.surveyRespondents.toLocaleString()",
       "kind": "formatting-call",
-      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::headline.surveyRespondents.toLocaleString()",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::data.surveyRespondents.toLocaleString()",
       "class": "uncovered"
     },
     {
       "file": "src/components/PatientEmpowermentInsight.tsx",
       "functionName": "PatientEmpowermentInsight",
-      "expression": "headline.surveyRespondents.toLocaleString()",
+      "expression": "data.surveyRespondents.toLocaleString()",
       "kind": "formatting-call",
-      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::headline.surveyRespondents.toLocaleString()#2",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::data.surveyRespondents.toLocaleString()#2",
       "class": "uncovered"
     },
     {
       "file": "src/components/PatientEmpowermentInsight.tsx",
       "functionName": "PatientEmpowermentInsight",
-      "expression": "summary.criticalMetricCount",
+      "expression": "data.topPriorityScore",
       "kind": "numeric-jsx",
-      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.criticalMetricCount",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::data.topPriorityScore",
       "class": "uncovered"
     },
     {
       "file": "src/components/PatientEmpowermentInsight.tsx",
       "functionName": "PatientEmpowermentInsight",
-      "expression": "summary.criticalMetricCount",
+      "expression": "data.weightedBurdenIndexPct",
       "kind": "numeric-jsx",
-      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.criticalMetricCount#2",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::data.weightedBurdenIndexPct",
       "class": "uncovered"
     },
     {
       "file": "src/components/PatientEmpowermentInsight.tsx",
       "functionName": "PatientEmpowermentInsight",
-      "expression": "summary.curatedLinkCount",
+      "expression": "data.weightedBurdenIndexPct",
       "kind": "numeric-jsx",
-      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.curatedLinkCount",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/PatientEmpowermentInsight.tsx",
-      "functionName": "PatientEmpowermentInsight",
-      "expression": "summary.evidenceBackedLinkCount",
-      "kind": "numeric-jsx",
-      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.evidenceBackedLinkCount",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/PatientEmpowermentInsight.tsx",
-      "functionName": "PatientEmpowermentInsight",
-      "expression": "summary.maxGapIndexPct",
-      "kind": "numeric-jsx",
-      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.maxGapIndexPct",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/PatientEmpowermentInsight.tsx",
-      "functionName": "PatientEmpowermentInsight",
-      "expression": "summary.maxGapIndexPct",
-      "kind": "numeric-jsx",
-      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.maxGapIndexPct#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/PatientEmpowermentInsight.tsx",
-      "functionName": "PatientEmpowermentInsight",
-      "expression": "summary.medianGapIndexPct",
-      "kind": "numeric-jsx",
-      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.medianGapIndexPct",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/PatientEmpowermentInsight.tsx",
-      "functionName": "PatientEmpowermentInsight",
-      "expression": "summary.weightedBurdenIndexPct",
-      "kind": "numeric-jsx",
-      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.weightedBurdenIndexPct",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/PatientEmpowermentInsight.tsx",
-      "functionName": "PatientEmpowermentInsight",
-      "expression": "summary.weightedBurdenIndexPct",
-      "kind": "numeric-jsx",
-      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::summary.weightedBurdenIndexPct#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/PatientEmpowermentInsight.tsx",
-      "functionName": "PatientEmpowermentInsight",
-      "expression": "topPriority?.priorityScore",
-      "kind": "numeric-jsx",
-      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::topPriority?.priorityScore",
+      "key": "src/components/PatientEmpowermentInsight.tsx::PatientEmpowermentInsight::data.weightedBurdenIndexPct#2",
       "class": "uncovered"
     },
     {
