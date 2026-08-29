@@ -359,6 +359,14 @@ describe("prompts > sanitizeLLMOutput", () => {
     expect(clean).toContain("...");
     expect(warnings.some((w) => w.includes("truncated"))).toBe(true);
   });
+
+  it("strips unmatched markdown delimiters in linear time", () => {
+    const payload = "*".repeat(20_000);
+    const started = Date.now();
+    const { clean } = sanitizeLLMOutput(payload);
+    expect(Date.now() - started).toBeLessThan(250);
+    expect(clean.length).toBeLessThanOrEqual(2000);
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -410,5 +418,16 @@ describe("prompts > validatePromptTemplate", () => {
     expect(valid).toBe(false);
     expect(issues.some((i) => i.includes("exceeds"))).toBe(true);
     expect(issues.some((i) => i.includes("Unresolved"))).toBe(false);
+  });
+
+  it("scans DATA: plus newlines in linear time", () => {
+    const payload = `DATA:${
+      "\n".repeat(20_000)
+    }TASK: Analyze this women's health dataset.`;
+    const started = Date.now();
+    const { valid, issues } = validatePromptTemplate(payload);
+    expect(Date.now() - started).toBeLessThan(250);
+    expect(valid).toBe(false);
+    expect(issues.some((i) => i.includes("Empty DATA"))).toBe(true);
   });
 });

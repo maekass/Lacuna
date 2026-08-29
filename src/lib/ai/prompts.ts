@@ -356,6 +356,37 @@ const HALLUCINATION_PATTERNS = [
   /\b(?:announced|closed|completed)\s+(?:on|in)\s+(?:January|February|March|April|May|June|July|August|September|October|November|December)\b/i,
 ] as const;
 
+/**
+ * Strip one inline wrap (`**bold**`, `*italic*`, `` `code` ``) without regex.
+ * `.+?` between delimiters is polynomial on long unmatched runs (CodeQL
+ * js/polynomial-redos). Stays on one line to match JS `.` (no newlines).
+ */
+function stripInlineWrap(text: string, delimiter: string): string {
+  const out: string[] = [];
+  const delimLen = delimiter.length;
+  let index = 0;
+  while (index < text.length) {
+    const start = text.indexOf(delimiter, index);
+    if (start < 0) {
+      out.push(text.slice(index));
+      break;
+    }
+    out.push(text.slice(index, start));
+    const after = start + delimLen;
+    const newline = text.indexOf("\n", after);
+    const lineEnd = newline < 0 ? text.length : newline;
+    const end = text.indexOf(delimiter, after);
+    if (end < 0 || end > lineEnd || end === after) {
+      out.push(delimiter);
+      index = after;
+      continue;
+    }
+    out.push(text.slice(after, end));
+    index = end + delimLen;
+  }
+  return out.join("");
+}
+
 /** Sanitize LLM output — strip markdown, detect potential hallucinations, apply disclaimer. */
 export function sanitizeLLMOutput(text: string): {
   clean: string;
@@ -364,11 +395,13 @@ export function sanitizeLLMOutput(text: string): {
   const warnings: string[] = [];
 
   // Strip markdown formatting
-  let clean = text
-    .replace(/^#{1,6}\s+/gm, "")
-    .replace(/\*\*(.+?)\*\*/g, "$1")
-    .replace(/\*(.+?)\*/g, "$1")
-    .replace(/`(.+?)`/g, "$1")
+  let clean = stripInlineWrap(
+    stripInlineWrap(
+      stripInlineWrap(text.replace(/^#{1,6}\s+/gm, ""), "**"),
+      "*",
+    ),
+    "`",
+  )
     .replace(/^\s*[-*+]\s+/gm, "")
     .replace(/^\s*\d+\.\s+/gm, "")
     .replace(/\n{3,}/g, "\n\n")
@@ -399,6 +432,38 @@ export function sanitizeLLMOutput(text: string): {
  */
 const UNRESOLVED_TEMPLATE_RE = /\$\{[^{}\n]+\}/g;
 
+/**
+ * `DATA:` followed by a blank line. `/DATA:\s*\n\s*\n/` is polynomial because
+ * `\s` includes newlines that the `\n` atoms also match (CodeQL js/polynomial-redos).
+ */
+function hasEmptyDataSection(template: string): boolean {
+  let searchFrom = 0;
+  while (searchFrom < template.length) {
+    const idx = template.indexOf("DATA:", searchFrom);
+    if (idx < 0) return false;
+    if (emptyDataFollows(template, idx + 5)) return true;
+    searchFrom = idx + 5;
+  }
+  return false;
+}
+
+function emptyDataFollows(template: string, start: number): boolean {
+  let newlines = 0;
+  for (let i = start; i < template.length; i++) {
+    const c = template[i];
+    if (c === "\n") {
+      newlines += 1;
+      if (newlines >= 2) return true;
+      continue;
+    }
+    if (c === " " || c === "\t" || c === "\r" || c === "\f" || c === "\v") {
+      continue;
+    }
+    return false;
+  }
+  return false;
+}
+
 /** Validate that a prompt string does not contain empty template variables. */
 export function validatePromptTemplate(template: string): {
   valid: boolean;
@@ -413,8 +478,7 @@ export function validatePromptTemplate(template: string): {
     );
   }
 
-  // Check for empty DATA sections
-  if (/DATA:\s*\n\s*\n/.test(template)) {
+  if (hasEmptyDataSection(template)) {
     issues.push("Empty DATA section in prompt");
   }
 

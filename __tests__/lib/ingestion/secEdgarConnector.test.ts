@@ -43,6 +43,13 @@ describe("secEdgarConnector", () => {
     expect(section).not.toContain("Item 2.02");
   });
 
+  it("extractItem201Section skips Item 2.01 without a heading in linear time", () => {
+    const text = `Item 2.01 ${"a".repeat(20_000)}`;
+    const started = Date.now();
+    expect(extractItem201Section(text)).toBeUndefined();
+    expect(Date.now() - started).toBeLessThan(250);
+  });
+
   it("parseItem201 extracts target and value when present (success)", () => {
     const text = `
       Item 2.01 Completion of Acquisition or Disposition of Assets.
