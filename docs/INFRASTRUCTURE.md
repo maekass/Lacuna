@@ -192,6 +192,9 @@ API routes use Redis-backed rate limiting via
 to a capped in-memory map (max 10k buckets, expired keys pruned on access, LRU
 eviction at the cap). Limits are still per serverless instance.
 
+Per-IP keys come from `src/lib/api/requestIdentity.ts` (trusted proxy hops —
+not the leftmost `X-Forwarded-For` value). See `TRUSTED_PROXY_HOPS`.
+
 When Redis is configured but errors, `RATE_LIMIT_FAIL_MODE` controls the path:
 `closed` (default) denies the request; `open` uses the in-memory fallback.
 Patient-data and AI routes go through `src/lib/api/rateLimitGuard.ts` and

@@ -305,6 +305,7 @@ describe("rateLimit", () => {
 describe("enforceRateLimit", () => {
   beforeEach(() => {
     vi.spyOn(console, "warn").mockImplementation(() => {});
+    vi.stubEnv("TRUSTED_PROXY_HOPS", "1");
   });
 
   afterEach(() => {
@@ -313,6 +314,7 @@ describe("enforceRateLimit", () => {
     __testing__().resetRedisClient();
     __testing__().resetUnconfiguredWarning();
     delete process.env.RATE_LIMIT_FAIL_MODE;
+    vi.unstubAllEnvs();
     vi.restoreAllMocks();
   });
 
