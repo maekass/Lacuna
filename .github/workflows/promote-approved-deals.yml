@@ -35,17 +35,27 @@ jobs:
           PGSSLMODE: disable
         run: npm run db:migrate
 
+      # Pass workflow inputs via env, never interpolate into `run:` (CodeQL
+      # actions/code-injection — a crafted deal_id can break out of the script).
       - name: Promote approved deals
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           PGSSLMODE: disable
           LACUNA_PROMOTE_TARGET: json
+          DEAL_ID: ${{ inputs.deal_id }}
+        shell: bash
         run: |
-          if [ -n "${{ inputs.deal_id }}" ]; then
-            npm run deals:promote-approved -- --deal-id="${{ inputs.deal_id }}"
-          else
+          set -euo pipefail
+          if [[ -z "${DEAL_ID}" ]]; then
             npm run deals:promote-approved
+            exit 0
           fi
+          # Staging deal_ids are `sec-{cik}-{accession}` (see buildDealId).
+          if [[ ! "${DEAL_ID}" =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ ]]; then
+            echo "Invalid deal_id; expected sec-{cik}-{accession}."
+            exit 1
+          fi
+          npm run deals:promote-approved -- --deal-id="${DEAL_ID}"
 
       - name: Recompute quantitative artifacts
         run: npm run compute:all
