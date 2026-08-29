@@ -60,7 +60,35 @@ function getAuditClient(): ClickHouseClient | null {
 }
 
 function isPostgresConfigured(): boolean {
-  return !!process.env.DATABASE_URL;
+  return !!process.env.DATABASE_URL?.trim();
+}
+
+/** Map HIPAA access level onto `006_audit_events` action CHECK values. */
+function toPostgresAction(
+  action: PatientDataAccessLevel,
+): "read" | "export" | "query" {
+  if (action === "download_raw") return "export";
+  if (action === "read_identifiers") return "query";
+  return "read";
+}
+
+/** Map route keys onto `006_audit_events` resource_type CHECK values. */
+function toPostgresResourceType(
+  resource: string,
+): "callset" | "variant" | "vcf_object" | "query_result" {
+  if (/callsets\/object|\bobject\b/i.test(resource)) return "vcf_object";
+  if (/callset/i.test(resource)) return "callset";
+  if (/variant/i.test(resource)) return "variant";
+  return "query_result";
+}
+
+/** Map governance mode onto `006_audit_events` mode CHECK values. */
+function toPostgresMode(
+  mode: PatientDataAccessMode,
+): "production" | "development" | "test" {
+  if (mode === "authorized") return "production";
+  if (mode === "blocked") return "test";
+  return "development";
 }
 
 /** True when at least one durable audit sink is configured for this deployment. */
@@ -129,16 +157,21 @@ export async function writeAuditEvent(
       await query(
         `INSERT INTO audit_events (
           timestamp, action, resource_type, resource_hash,
-          actor_ip_hash, allowed, mode
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+          actor_ip_hash, allowed, mode, metadata
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
         [
           row.timestamp,
-          row.action,
-          "audit_event",
+          toPostgresAction(row.action),
+          toPostgresResourceType(row.resource),
           row.resource,
           row.actor_hash,
           row.allowed === 1,
-          row.mode,
+          toPostgresMode(row.mode),
+          {
+            action: row.action,
+            mode: row.mode,
+            resource: row.resource,
+          },
         ],
       );
       return true;

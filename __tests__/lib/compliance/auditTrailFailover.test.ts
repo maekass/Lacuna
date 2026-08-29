@@ -72,7 +72,39 @@ describe("audit trail failover", () => {
 
     expect(ok).toBe(true);
     expect(query).toHaveBeenCalledOnce();
+    const params = vi.mocked(query).mock.calls[0]?.[1] as unknown[];
+    // 006_audit_events CHECK: action, resource_type, mode
+    expect(params[1]).toBe("read");
+    expect(params[2]).toBe("variant");
+    expect(params[6]).toBe("development");
+    expect(params[7]).toEqual(
+      expect.objectContaining({
+        action: "read_summary",
+        mode: "de_identified",
+      }),
+    );
     expect(getDroppedAuditCount()).toBe(0);
+  });
+
+  it("maps privileged HIPAA fields onto Postgres CHECK values (success)", async () => {
+    process.env.DATABASE_URL = "postgresql://localhost/lacuna";
+    setAuditClickHouseClient(failingClickHouse());
+    vi.mocked(query).mockResolvedValue([]);
+
+    const ok = await writeAuditEvent({
+      timestamp: "2026-06-09T12:00:00.000Z",
+      action: "download_raw",
+      resource: "genomics/callsets/object",
+      actor: "198.51.100.4",
+      allowed: 1,
+      mode: "authorized",
+    });
+
+    expect(ok).toBe(true);
+    const params = vi.mocked(query).mock.calls[0]?.[1] as unknown[];
+    expect(params[1]).toBe("export");
+    expect(params[2]).toBe("vcf_object");
+    expect(params[6]).toBe("production");
   });
 
   it("denies privileged access with 503 when both sinks are down (error)", async () => {
