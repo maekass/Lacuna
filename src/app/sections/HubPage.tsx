@@ -9,15 +9,15 @@ import PipelineStatusStrip from "@/components/PipelineStatusStrip";
 import MotionSection from "@/components/ui/MotionSection";
 import StatTile from "@/components/ui/StatTile";
 import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
-import { getDatasetChangelog } from "@/lib/data/getDatasetChangelog";
-import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
+import type { DatasetChangelog } from "@/lib/data/datasetCoverage";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentInsightTypes";
 import { useDashboardData } from "@/lib/data/useDashboardData";
 import {
   getDealVelocityTopSector,
   VALUATION_DISPARITY_MODEL,
 } from "@/lib/fairness/headlineStat";
-import { FEATURED_DEAL_ID } from "@/lib/deals";
+import { FEATURED_DEAL_ID } from "@/lib/deals/dealTypes";
 import { WORKSPACES } from "@/lib/navigation/workspaces";
 
 const CURRENT_YEAR = new Date().getFullYear();
@@ -33,7 +33,15 @@ function formatValuationGap(percentDiff: number): string {
   return `${percentDiff.toFixed(0)}% above`;
 }
 
-export default function HubPage() {
+interface HubPageProps {
+  changelog: DatasetChangelog;
+  empowermentInsight: PatientEmpowermentInsightData;
+}
+
+export default function HubPage({
+  changelog,
+  empowermentInsight,
+}: HubPageProps) {
   const { verifiedAcquisitions, verifiedCompanies } = useVerifiedDataset();
   const { valuationDisparity, headlineStats } = useDashboardData();
   const dealVelocityTopSector = useMemo(
@@ -46,10 +54,6 @@ export default function HubPage() {
     [verifiedAcquisitions, verifiedCompanies],
   );
   const [methodologyOpen, setMethodologyOpen] = useState(false);
-  const changelog = useMemo(
-    () => getDatasetChangelog(getStaticVerifiedDataset()),
-    [],
-  );
 
   return (
     <div id="top">
@@ -65,7 +69,10 @@ export default function HubPage() {
             analytics from public sources.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-lacuna-blue/80">
-            <DatasetCoverageFootnote variant="compact" />{" "}
+            <DatasetCoverageFootnote
+              changelog={changelog}
+              variant="compact"
+            />{" "}
             — SEC EDGAR ingest · HIPAA/GDPR genomics layer · descriptive
             analytics only. Not PitchBook, not live market feeds, and not
             investment advice.
@@ -211,7 +218,10 @@ export default function HubPage() {
         : null}
 
       <MotionSection delay={0.13} className="mb-10">
-        <PatientEmpowermentInsight className="mb-4" />
+        <PatientEmpowermentInsight
+          data={empowermentInsight}
+          className="mb-4"
+        />
         {dealVelocityTopSector !== null
           ? (
             <div className="mb-4 rounded-xl border border-lacuna-lavender/40 bg-lacuna-lavender/20 p-4">

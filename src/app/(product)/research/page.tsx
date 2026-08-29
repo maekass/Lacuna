@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import ResearchPage from "@/app/sections/ResearchPage";
 import { getVerifiedDataset } from "@/lib/data/datasetProvider";
-import { buildPatientEmpowermentSnapshot } from "@/lib/research/patientEmpowermentPipeline";
+import {
+  buildPatientEmpowermentSnapshot,
+  toPatientEmpowermentInsightData,
+} from "@/lib/research/patientEmpowermentPipeline";
 
 export const revalidate = 86_400;
 
@@ -15,5 +18,13 @@ export const metadata: Metadata = {
 export default async function Page() {
   const dataset = await getVerifiedDataset();
   const empowermentSnapshot = buildPatientEmpowermentSnapshot(dataset);
-  return <ResearchPage empowermentSnapshot={empowermentSnapshot} />;
+  const empowermentInsight = toPatientEmpowermentInsightData(
+    empowermentSnapshot,
+  );
+  return (
+    <ResearchPage
+      empowermentSnapshot={empowermentSnapshot}
+      empowermentInsight={empowermentInsight}
+    />
+  );
 }

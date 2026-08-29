@@ -47,6 +47,60 @@ const eslintConfig = defineConfig([
       ],
     },
   },
+  {
+    name: "lacuna/client-no-static-verified-dataset",
+    // Client-component surfaces (`"use client"`). Server pages/layouts under
+    // src/app/(product) may still import staticDataset for build-time paths.
+    files: [
+      "src/components/**/*.{ts,tsx}",
+      "src/app/sections/**/*.{ts,tsx}",
+      "src/app/lazyDashboard.tsx",
+      "src/lib/data/VerifiedDatasetContext.tsx",
+      "src/lib/data/useDashboardData.ts",
+      "src/lib/data/WatchlistContext.tsx",
+    ],
+    ignores: [
+      // Follow-up PR: remaining client JSON imports of dataset.verified.json
+      "src/components/PatientEmpowermentPanel.tsx",
+      "src/components/SpaceWhResearchGapsPanel.tsx",
+    ],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "@/data/dataset.verified.json",
+              message:
+                "Client components must not import the verified dataset JSON. " +
+                "Load it with getVerifiedDataset() in a server component or route " +
+                "handler and pass props (or use VerifiedDatasetProvider).",
+            },
+            {
+              name: "@/lib/data/staticDataset",
+              message:
+                "getStaticVerifiedDataset() is static-mode only and ships JSON in the " +
+                "client bundle. Use getVerifiedDataset() on the server and pass props.",
+            },
+            {
+              name: "@/data/verifiedData",
+              message:
+                "@/data/verifiedData eagerly loads the static dataset. Pass verified " +
+                "rows via props or useVerifiedDataset().",
+            },
+          ],
+          patterns: [
+            {
+              group: ["**/dataset.verified.json"],
+              message:
+                "Client components must not import dataset.verified.json. " +
+                "Use getVerifiedDataset() in a server component and pass props.",
+            },
+          ],
+        },
+      ],
+    },
+  },
 ]);
 
 export default eslintConfig;

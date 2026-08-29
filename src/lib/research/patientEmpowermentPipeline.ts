@@ -21,6 +21,7 @@ import {
   meanRounded,
   median,
 } from "@/lib/research/patientEmpowermentScoring";
+import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentInsightTypes";
 import {
   bestMatchTier,
   EMPOWERMENT_PHASE_LABELS,
@@ -33,6 +34,8 @@ import {
   type EmpowermentSourceTier,
   isEvidenceBackedLink,
 } from "@/lib/research/patientEmpowermentTaxonomy";
+
+export type { PatientEmpowermentInsightData };
 
 export interface LinkedCompany {
   id: string;
@@ -123,6 +126,26 @@ export interface PatientEmpowermentSnapshot {
   phaseSummary: PhaseGapRow[];
   summary: EmpowermentPipelineSummary;
   disclaimer: string;
+}
+
+/** Project a snapshot down to the hub/equity teaser fields. */
+export function toPatientEmpowermentInsightData(
+  snapshot: PatientEmpowermentSnapshot,
+): PatientEmpowermentInsightData {
+  const top = snapshot.priorityRankings[0];
+  return {
+    surveyRespondents: snapshot.headline.surveyRespondents,
+    maxGapMetricLabel: snapshot.summary.maxGapMetricLabel,
+    maxGapIndexPct: snapshot.summary.maxGapIndexPct,
+    weightedBurdenIndexPct: snapshot.summary.weightedBurdenIndexPct,
+    medianGapIndexPct: snapshot.summary.medianGapIndexPct,
+    criticalMetricCount: snapshot.summary.criticalMetricCount,
+    curatedLinkCount: snapshot.summary.curatedLinkCount,
+    evidenceBackedLinkCount: snapshot.summary.evidenceBackedLinkCount,
+    topPriorityLabel: top?.metric.label,
+    topPriorityScore: top?.priorityScore,
+    highestGapPrerequisiteId: snapshot.summary.highestGapPrerequisiteId,
+  };
 }
 
 interface CompanyMatchState {

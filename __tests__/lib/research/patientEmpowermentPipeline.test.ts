@@ -22,6 +22,7 @@ import {
   exportEmpowermentCrosswalkCsv,
   listEmpowermentComparableCompanyIds,
   scoreGapDimension,
+  toPatientEmpowermentInsightData,
 } from "@/lib/research/patientEmpowermentPipeline";
 
 const dataset = verifiedDataset as VerifiedDataset;
@@ -49,6 +50,20 @@ describe("patientEmpowermentPipeline", () => {
     expect(summary.maxGapMetricLabel.length).toBeGreaterThan(5);
     expect(summary.meanHighSeverityGapIndexPct).toBeGreaterThan(
       summary.meanGapIndexPct,
+    );
+  });
+
+  it("projects a slim insight payload from the snapshot", () => {
+    const snapshot = buildPatientEmpowermentSnapshot(dataset);
+    const insight = toPatientEmpowermentInsightData(snapshot);
+    expect(insight.surveyRespondents).toBe(snapshot.headline.surveyRespondents);
+    expect(insight.maxGapIndexPct).toBe(snapshot.summary.maxGapIndexPct);
+    expect(insight.maxGapMetricLabel).toBe(snapshot.summary.maxGapMetricLabel);
+    expect(insight.highestGapPrerequisiteId).toBe(
+      snapshot.summary.highestGapPrerequisiteId,
+    );
+    expect(insight.topPriorityLabel).toBe(
+      snapshot.priorityRankings[0]?.metric.label,
     );
   });
 
