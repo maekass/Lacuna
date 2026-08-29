@@ -3,6 +3,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Pool } from "pg";
+import { resolvePgSslConfig } from "../src/lib/data/dbClient";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const migrationsDir = join(__dirname, "../db/migrations");
@@ -27,9 +28,7 @@ async function main() {
 
   const pool = new Pool({
     connectionString: url,
-    ssl: process.env.PGSSLMODE === "disable"
-      ? undefined
-      : { rejectUnauthorized: false },
+    ssl: resolvePgSslConfig(),
   });
 
   try {

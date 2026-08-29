@@ -1,9 +1,13 @@
 import process from "node:process";
+import { readFileSync } from "node:fs";
+import type { ConnectionOptions } from "node:tls";
 import { Pool, type QueryResultRow } from "pg";
-import { reportError } from "@/lib/observability/reportError";
+import { reportError, reportWarning } from "@/lib/observability/reportError";
 
 let pool: Pool | undefined;
 let poolOverride: Pool | undefined;
+
+const INLINE_PEM_MARKER = "-----BEGIN ";
 
 /** Inject an in-memory pool (pg-mem) for integration tests. */
 export function setPoolForTests(testPool: Pool | undefined): void {
@@ -18,6 +22,41 @@ function getDatabaseUrl(): string {
   return url;
 }
 
+function readSslRootCert(raw: string): string {
+  const trimmed = raw.trim();
+  if (trimmed.includes(INLINE_PEM_MARKER)) {
+    return trimmed.includes("\\n") ? trimmed.replace(/\\n/g, "\n") : trimmed;
+  }
+  return readFileSync(trimmed, "utf8");
+}
+
+/**
+ * Resolve `pg` Pool `ssl` from env. Default verifies server certificates.
+ * `PGSSLMODE=disable` turns TLS off (local Docker). `PGSSLROOTCERT` is a file
+ * path or inline PEM. `PGSSL_ALLOW_UNVERIFIED=true` is an explicit MITM-prone
+ * escape hatch and logs a warning.
+ */
+export function resolvePgSslConfig(): ConnectionOptions | undefined {
+  if (process.env.PGSSLMODE === "disable") {
+    return undefined;
+  }
+
+  if (process.env.PGSSL_ALLOW_UNVERIFIED === "true") {
+    reportWarning(
+      "db.ssl",
+      "PGSSL_ALLOW_UNVERIFIED=true disables TLS certificate verification (MITM-able)",
+    );
+    return { rejectUnauthorized: false };
+  }
+
+  const rawCa = process.env.PGSSLROOTCERT?.trim();
+  if (rawCa) {
+    return { rejectUnauthorized: true, ca: readSslRootCert(rawCa) };
+  }
+
+  return { rejectUnauthorized: true };
+}
+
 function getPool(): Pool {
   if (poolOverride) {
     return poolOverride;
@@ -27,9 +66,7 @@ function getPool(): Pool {
       connectionString: getDatabaseUrl(),
       max: Number(process.env.PG_POOL_MAX ?? 3),
       idleTimeoutMillis: 10_000,
-      ssl: process.env.PGSSLMODE === "disable"
-        ? undefined
-        : { rejectUnauthorized: false },
+      ssl: resolvePgSslConfig(),
     });
   }
   return pool;
