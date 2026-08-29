@@ -104,6 +104,9 @@ jobs:
       - name: Validate patient empowerment catalog
         run: npm run validate:empowerment
 
+      - name: Sweep catalyst watchlist
+        run: npm run intel:sweep:check
+
       - name: Recompute quantitative artifacts
         run: npm run compute:all
 
