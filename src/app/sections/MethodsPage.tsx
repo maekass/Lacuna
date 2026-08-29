@@ -11,10 +11,15 @@ import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import DatasetCoverageFootnote from "@/components/DatasetCoverageFootnote";
 import { useDashboardData } from "@/lib/data/useDashboardData";
+import type { DatasetChangelog } from "@/lib/data/datasetCoverage";
 
 const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
-export default function MethodsPage() {
+interface MethodsPageProps {
+  changelog: DatasetChangelog;
+}
+
+export default function MethodsPage({ changelog }: MethodsPageProps) {
   const { verifiedAcquisitions } = useDashboardData();
 
   return (
@@ -27,7 +32,10 @@ export default function MethodsPage() {
           Causal framing, Bayesian small-n, temporal patterns, and sensitivity
           analysis.
         </p>
-        <DatasetCoverageFootnote className="mt-3 rounded-lg border border-lacuna-lavender/40 bg-lacuna-lavender/15 px-3 py-2 text-xs text-lacuna-blue" />
+        <DatasetCoverageFootnote
+          changelog={changelog}
+          className="mt-3 rounded-lg border border-lacuna-lavender/40 bg-lacuna-lavender/15 px-3 py-2 text-xs text-lacuna-blue"
+        />
         <p className="mt-2 text-xs text-lacuna-blue/80">
           Scores and models here are exploratory heuristics — not validated for
           investment decisions. Disclosed-value headlines use the{" "}

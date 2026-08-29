@@ -13,6 +13,19 @@ export interface TierCoverageCounts {
   stagingCandidateCount: number | null;
 }
 
+export interface DatasetChangelog {
+  currentDealCount: number;
+  priorDealCount: number;
+  dealsAddedSinceSnapshot: number;
+  currentLastUpdated: string;
+  priorLastUpdated: string;
+  hasNewDeals: boolean;
+  label: string;
+  /** Tier 2 staging rows — null until Postgres metrics load. */
+  candidateCount: number | null;
+  coverageLabel: string;
+}
+
 /** Singular/plural without external deps. */
 export function pluralize(
   count: number,
@@ -32,6 +45,32 @@ export function formatTierCoverageLabel(counts: TierCoverageCounts): string {
     pluralize(counts.stagingCandidateCount, "candidate")
   }`;
   return `${verified} · ${staging}`;
+}
+
+/**
+ * Attach Tier 2 candidate count to a verified-only changelog snapshot.
+ * Lives here (not getDatasetChangelog) so client footnotes can merge live
+ * queue metrics without importing computed-dataset-summary.json.
+ */
+export function mergeChangelogWithCandidates<
+  T extends {
+    currentDealCount: number;
+    candidateCount: number | null;
+    coverageLabel: string;
+  },
+>(
+  changelog: T,
+  candidateCount: number | null,
+): T {
+  const counts: TierCoverageCounts = {
+    verifiedDealCount: changelog.currentDealCount,
+    stagingCandidateCount: candidateCount,
+  };
+  return {
+    ...changelog,
+    candidateCount,
+    coverageLabel: formatTierCoverageLabel(counts),
+  };
 }
 
 export interface VerifiedGrowthDelta {

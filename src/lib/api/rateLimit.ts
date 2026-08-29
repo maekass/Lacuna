@@ -290,16 +290,7 @@ function rateLimitInMemory(input: {
   };
 }
 
-/**
- * Best-effort client identity from proxy headers. Values are caller-controlled
- * and must not be stored without the in-memory bucket cap.
- */
-export function getClientIp(request?: Request): string {
-  if (!request) return "unknown";
-  const xff = request.headers.get("x-forwarded-for");
-  if (xff) return xff.split(",")[0]?.trim() || "unknown";
-  return request.headers.get("x-real-ip")?.trim() || "unknown";
-}
+export { getClientIp, resolveClientIp } from "@/lib/api/requestIdentity";
 
 // Export for testing
 export function __testing__() {

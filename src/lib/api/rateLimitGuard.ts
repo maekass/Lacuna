@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
-import {
-  getClientIp,
-  getRateLimitFailMode,
-  rateLimit,
-} from "@/lib/api/rateLimit";
+import { getRateLimitFailMode, rateLimit } from "@/lib/api/rateLimit";
+import { resolveClientIp } from "@/lib/api/requestIdentity";
 
 interface RateLimitGuardInput {
   /** Bucket prefix; the caller IP is appended automatically. */
@@ -24,7 +21,7 @@ export async function enforceRateLimit(
   { key, limit, windowMs }: RateLimitGuardInput,
 ): Promise<NextResponse | null> {
   const bucket = await rateLimit({
-    key: `${key}:${getClientIp(request)}`,
+    key: `${key}:${resolveClientIp(request)}`,
     limit,
     windowMs,
     failMode: getRateLimitFailMode(),
