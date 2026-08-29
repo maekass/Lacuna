@@ -157,6 +157,36 @@ describe("sweep-watchlist", () => {
     expect(() => toRows(parseCsv(ragged))).toThrow(/expected 11 fields/);
   });
 
+  it("drops a trailing empty line", () => {
+    const rows = toRows([[...HEADER], Object.values(makeRow({})), [""]]);
+    expect(rows).toHaveLength(1);
+    expect(rows[0].company).toBe("Novo Nordisk");
+  });
+
+  it("does not flag same-day upcoming rows as stale", () => {
+    const report = runSweeps([
+      makeRow({ catalyst_date: "2026-08-29", status: "upcoming" }),
+    ], TODAY);
+    expect(report.stale).toHaveLength(0);
+  });
+
+  it("applyFixes does not rewrite stale or schema-invalid fields", () => {
+    const stale = makeRow({
+      catalyst_date: "2026-01-01",
+      status: "upcoming",
+      source_url: "ftp://example.com",
+    });
+    expect(applyFixes([stale])).toEqual([stale]);
+  });
+
+  it("applyFixes keeps the last occurrence on date_added ties", () => {
+    const rows = [
+      makeRow({ date_added: "2026-08-28", notes: "first" }),
+      makeRow({ date_added: "2026-08-28", notes: "tie-last" }),
+    ];
+    expect(applyFixes(rows).map((r) => r.notes)).toEqual(["tie-last"]);
+  });
+
   it("parses RFC 4180 CRLF rows with escaped quotes", () => {
     const text = [
       "a,b,c",
