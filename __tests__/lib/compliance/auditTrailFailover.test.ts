@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { createClient } from "@clickhouse/client";
 import { query } from "@/lib/data/dbClient";
 import { GET as getLive } from "@/app/api/health/route";
 import {
@@ -14,6 +15,11 @@ import { requirePatientDataAccess } from "@/lib/compliance/patientDataGovernance
 vi.mock("@/lib/data/dbClient", () => ({
   query: vi.fn(),
 }));
+
+vi.mock("@clickhouse/client", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@clickhouse/client")>();
+  return { ...actual, createClient: vi.fn() };
+});
 
 const ENV_KEYS = [
   "DATABASE_URL",
@@ -44,6 +50,7 @@ describe("audit trail failover", () => {
     resetDroppedAuditCount();
     setAuditClickHouseClient(null);
     vi.mocked(query).mockReset();
+    vi.mocked(createClient).mockReset();
     vi.spyOn(console, "info").mockImplementation(() => {});
     vi.spyOn(console, "warn").mockImplementation(() => {});
     vi.spyOn(console, "error").mockImplementation(() => {});
@@ -173,5 +180,42 @@ describe("audit trail failover", () => {
     expect(response.status).toBe(200);
     expect(body.droppedAuditEvents).toBe(1);
     expect(body.droppedAuditEventsScope).toBe("process");
+  });
+
+  it("increments dropped-audit count when CLICKHOUSE_URL is malformed and Postgres is unset (error)", async () => {
+    process.env.CLICKHOUSE_URL = "not-a-valid-url";
+
+    const ok = await writeAuditEvent({
+      timestamp: "2026-06-09T12:00:00.000Z",
+      action: "read_summary",
+      resource: "genomics/variants",
+      actor: "198.51.100.4",
+      allowed: 1,
+      mode: "de_identified",
+    });
+
+    expect(ok).toBe(false);
+    expect(query).not.toHaveBeenCalled();
+    expect(getDroppedAuditCount()).toBe(1);
+  });
+
+  it("increments dropped-audit count when createClient throws and Postgres is unset (error)", async () => {
+    process.env.CLICKHOUSE_URL = "https://clickhouse.invalid:8443";
+    vi.mocked(createClient).mockImplementation(() => {
+      throw new Error("ClickHouse client init failed");
+    });
+
+    const ok = await writeAuditEvent({
+      timestamp: "2026-06-09T12:00:00.000Z",
+      action: "read_summary",
+      resource: "genomics/variants",
+      actor: "198.51.100.4",
+      allowed: 1,
+      mode: "de_identified",
+    });
+
+    expect(ok).toBe(false);
+    expect(query).not.toHaveBeenCalled();
+    expect(getDroppedAuditCount()).toBe(1);
   });
 });

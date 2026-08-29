@@ -5,7 +5,8 @@
  *   skip ClickHouse; fall back to Postgres `query()` when DATABASE_URL is set.
  * - ClickHouse `insert` or client init throws: `reportWarning`, then the same Postgres fallback.
  *   Malformed `CLICKHOUSE_URL` (missing http/https) skips ClickHouse instead of throwing.
- * - Postgres unset or `query` throws: `writeAuditEvent` returns false.
+ * - Postgres unset or `query` throws, or ClickHouse is configured but yields no client:
+ *   `writeAuditEvent` returns false and increments `droppedAuditEvents` on GET /api/health.
  *   Privileged access (authorized / identifiers / raw) is denied with 503 + `reportError`.
  *   Anonymous/redacted reads proceed and increment `droppedAuditEvents` on GET /api/health.
  * - Neither sink configured (console-only): stdout audit only; no 503; counter unchanged.
@@ -197,7 +198,7 @@ export async function writeAuditEvent(
     }
   }
 
-  const attempted = Boolean(chClient) || isPostgresConfigured();
+  const attempted = isAuditSinkConfigured();
   if (attempted) {
     incrementDroppedAuditCount();
     reportError(
