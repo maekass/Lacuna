@@ -1,3 +1,12 @@
+/**
+ * Sweep the biopharma weekly catalyst watchlist CSV.
+ *
+ * Usage:
+ *   npx tsx scripts/sweep-watchlist.ts
+ *   npx tsx scripts/sweep-watchlist.ts --check
+ *   npx tsx scripts/sweep-watchlist.ts --fix
+ *   npx tsx scripts/sweep-watchlist.ts --file path.csv
+ */
 import process from "node:process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
