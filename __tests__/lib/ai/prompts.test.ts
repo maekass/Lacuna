@@ -401,4 +401,14 @@ describe("prompts > validatePromptTemplate", () => {
     expect(valid).toBe(false);
     expect(issues.some((i) => i.includes("exceeds"))).toBe(true);
   });
+
+  it("scans nested ${{ payloads in linear time", () => {
+    const payload = "${{".repeat(20_000);
+    const started = Date.now();
+    const { valid, issues } = validatePromptTemplate(payload);
+    expect(Date.now() - started).toBeLessThan(250);
+    expect(valid).toBe(false);
+    expect(issues.some((i) => i.includes("exceeds"))).toBe(true);
+    expect(issues.some((i) => i.includes("Unresolved"))).toBe(false);
+  });
 });
