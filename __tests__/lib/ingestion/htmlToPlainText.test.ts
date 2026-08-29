@@ -65,4 +65,28 @@ describe("htmlToPlainText", () => {
       "value < $50 million and p < 0.05",
     );
   });
+
+  it("keeps text after an unterminated script tag", () => {
+    expect(
+      htmlToPlainText(
+        "<script>var x=1;Item 2.01 Completion of Acquisition of Assets",
+      ),
+    ).toContain("Item 2.01 Completion of Acquisition of Assets");
+  });
+
+  it("keeps text after an unterminated style tag", () => {
+    expect(
+      htmlToPlainText(
+        "<style>body{}Item 2.01 Completion of Acquisition",
+      ),
+    ).toContain("Item 2.01 Completion of Acquisition");
+  });
+
+  it("scans a large unterminated script in linear time", () => {
+    const html = `<script>${"x".repeat(80_000)} still visible`;
+    const started = Date.now();
+    const text = htmlToPlainText(html);
+    expect(Date.now() - started).toBeLessThan(250);
+    expect(text).toContain("still visible");
+  });
 });

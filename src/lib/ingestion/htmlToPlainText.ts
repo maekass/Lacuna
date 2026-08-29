@@ -48,7 +48,13 @@ export function htmlToPlainText(html: string): string {
   while (index < length) {
     if (skipUntil) {
       const end = findEndTag(html, index, skipUntil);
-      if (end < 0) break;
+      if (end < 0) {
+        // Unterminated script/style is common in SEC HTML. Aborting here
+        // dropped every subsequent token (including Item 2.01). Resume as
+        // text from the current index; the opener was already consumed.
+        skipUntil = null;
+        continue;
+      }
       chunks.push(" ");
       index = end;
       skipUntil = null;
