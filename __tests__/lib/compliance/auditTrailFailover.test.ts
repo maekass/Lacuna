@@ -76,13 +76,35 @@ describe("audit trail failover", () => {
     // 006_audit_events CHECK: action, resource_type, mode
     expect(params[1]).toBe("read");
     expect(params[2]).toBe("variant");
+    expect(params[3]).toMatch(/^[a-f0-9]{64}$/);
+    expect(params[3]).not.toBe("genomics/variants");
     expect(params[6]).toBe("development");
     expect(params[7]).toEqual(
       expect.objectContaining({
         action: "read_summary",
         mode: "de_identified",
+        resource_hash: params[3],
       }),
     );
+    expect(getDroppedAuditCount()).toBe(0);
+  });
+
+  it("falls back to Postgres when CLICKHOUSE_URL is malformed (error)", async () => {
+    process.env.DATABASE_URL = "postgresql://localhost/lacuna";
+    process.env.CLICKHOUSE_URL = "not-a-valid-url";
+    vi.mocked(query).mockResolvedValue([]);
+
+    const ok = await writeAuditEvent({
+      timestamp: "2026-06-09T12:00:00.000Z",
+      action: "read_summary",
+      resource: "genomics/variants",
+      actor: "198.51.100.4",
+      allowed: 1,
+      mode: "de_identified",
+    });
+
+    expect(ok).toBe(true);
+    expect(query).toHaveBeenCalledOnce();
     expect(getDroppedAuditCount()).toBe(0);
   });
 
@@ -104,6 +126,7 @@ describe("audit trail failover", () => {
     const params = vi.mocked(query).mock.calls[0]?.[1] as unknown[];
     expect(params[1]).toBe("export");
     expect(params[2]).toBe("vcf_object");
+    expect(params[3]).toMatch(/^[a-f0-9]{64}$/);
     expect(params[6]).toBe("production");
   });
 
@@ -143,8 +166,12 @@ describe("audit trail failover", () => {
     expect(getDroppedAuditCount()).toBe(1);
 
     const response = await getLive();
-    const body = await response.json() as { droppedAuditEvents?: number };
+    const body = await response.json() as {
+      droppedAuditEvents?: number;
+      droppedAuditEventsScope?: string;
+    };
     expect(response.status).toBe(200);
     expect(body.droppedAuditEvents).toBe(1);
+    expect(body.droppedAuditEventsScope).toBe("process");
   });
 });

@@ -35,6 +35,7 @@ export interface LivenessPayload {
   timestamp: string;
   buildSha: string | null;
   droppedAuditEvents: number;
+  droppedAuditEventsScope: "process";
 }
 
 export interface VariantStoreHealth {
@@ -170,6 +171,7 @@ export function runLivenessCheck(): LivenessPayload {
     timestamp: new Date().toISOString(),
     buildSha: process.env.VERCEL_GIT_COMMIT_SHA?.trim() ?? null,
     droppedAuditEvents: getDroppedAuditCount(),
+    droppedAuditEventsScope: "process",
   };
 }
 

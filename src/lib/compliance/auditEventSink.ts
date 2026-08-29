@@ -3,7 +3,8 @@
  *
  * - `clickhouseClient` is null (lazy init skipped: no CLICKHOUSE_URL / not injected):
  *   skip ClickHouse; fall back to Postgres `query()` when DATABASE_URL is set.
- * - ClickHouse `insert` throws: `reportWarning`, then the same Postgres fallback.
+ * - ClickHouse `insert` or client init throws: `reportWarning`, then the same Postgres fallback.
+ *   Malformed `CLICKHOUSE_URL` (missing http/https) skips ClickHouse instead of throwing.
  * - Postgres unset or `query` throws: `writeAuditEvent` returns false.
  *   Privileged access (authorized / identifiers / raw) is denied with 503 + `reportError`.
  *   Anonymous/redacted reads proceed and increment `droppedAuditEvents` on GET /api/health.
@@ -45,7 +46,10 @@ export function setAuditClickHouseClient(
 }
 
 function getClickHouseUrl(): string | null {
-  return process.env.CLICKHOUSE_URL?.trim() || null;
+  const url = process.env.CLICKHOUSE_URL?.trim() || null;
+  if (!url) return null;
+  if (!/^https?:\/\//i.test(url)) return null;
+  return url;
 }
 
 function getAuditClient(): ClickHouseClient | null {
@@ -54,9 +58,17 @@ function getAuditClient(): ClickHouseClient | null {
   const url = getClickHouseUrl();
   if (!url) return null;
 
-  const database = process.env.CLICKHOUSE_DATABASE?.trim() || "lacuna";
-  clickhouseClient = createClient({ url, database });
-  return clickhouseClient;
+  try {
+    const database = process.env.CLICKHOUSE_DATABASE?.trim() || "lacuna";
+    clickhouseClient = createClient({ url, database });
+    return clickhouseClient;
+  } catch (err) {
+    reportWarning("audit.clickhouse", err, {
+      detail: "ClickHouse client init failed, trying Postgres",
+    });
+    clickhouseClient = null;
+    return null;
+  }
 }
 
 function isPostgresConfigured(): boolean {
@@ -93,7 +105,9 @@ function toPostgresMode(
 
 /** True when at least one durable audit sink is configured for this deployment. */
 export function isAuditSinkConfigured(): boolean {
-  return !!clickhouseClient || !!getClickHouseUrl() || isPostgresConfigured();
+  return !!clickhouseClient ||
+    !!process.env.CLICKHOUSE_URL?.trim() ||
+    isPostgresConfigured();
 }
 
 /** SHA-256 hash of client IP — never store raw IPs in audit rows. */
@@ -136,20 +150,21 @@ export async function writeAuditEvent(
     mode: event.mode,
   };
 
-  const chClient = getAuditClient();
-  if (chClient) {
-    try {
+  let chClient: ClickHouseClient | null = null;
+  try {
+    chClient = getAuditClient();
+    if (chClient) {
       await chClient.insert({
         table: "audit_events",
         values: [row],
         format: "JSONEachRow",
       });
       return true;
-    } catch (err) {
-      reportWarning("audit.clickhouse", err, {
-        detail: "ClickHouse audit write failed, trying Postgres",
-      });
     }
+  } catch (err) {
+    reportWarning("audit.clickhouse", err, {
+      detail: "ClickHouse audit write failed, trying Postgres",
+    });
   }
 
   if (isPostgresConfigured()) {
@@ -163,14 +178,14 @@ export async function writeAuditEvent(
           row.timestamp,
           toPostgresAction(row.action),
           toPostgresResourceType(row.resource),
-          row.resource,
+          hashAuditActor(row.resource),
           row.actor_hash,
           row.allowed === 1,
           toPostgresMode(row.mode),
           {
             action: row.action,
             mode: row.mode,
-            resource: row.resource,
+            resource_hash: hashAuditActor(row.resource),
           },
         ],
       );

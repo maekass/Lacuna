@@ -1,6 +1,8 @@
 /**
  * Process-local count of patient-data audit rows that no durable sink accepted.
- * Surfaced on GET /api/health as `droppedAuditEvents`.
+ * Surfaced on GET /api/health as `droppedAuditEvents` with
+ * `droppedAuditEventsScope: "process"` — Vercel instances do not share this
+ * counter; a liveness replica may report 0 after another instance dropped a row.
  */
 
 let droppedAuditCount = 0;
