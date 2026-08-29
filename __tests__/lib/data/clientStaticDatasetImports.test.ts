@@ -94,7 +94,7 @@ describe("client components do not import the static verified dataset", () => {
     expect(methodsPage).toMatch(/getVerifiedDataset/);
     expect(footnote).toMatch(/changelog:/);
     expect(footnote).not.toMatch(/staticDataset/);
-    expect(insight).toMatch(/PatientEmpowermentInsightData/);
+    expect(insight).toMatch(/patientEmpowermentInsightTypes/);
     expect(insight).not.toMatch(/dataset\.verified\.json/);
     expect(hub).not.toMatch(/getStaticVerifiedDataset/);
     expect(hub).not.toMatch(/getDatasetChangelog\(/);

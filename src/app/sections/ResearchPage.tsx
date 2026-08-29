@@ -19,10 +19,8 @@ import SpaceWhResearchGapsPanel from "@/components/SpaceWhResearchGapsPanel";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 
-import type {
-  PatientEmpowermentInsightData,
-  PatientEmpowermentSnapshot,
-} from "@/lib/research/patientEmpowermentPipeline";
+import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentInsightTypes";
+import type { PatientEmpowermentSnapshot } from "@/lib/research/patientEmpowermentPipeline";
 
 const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 

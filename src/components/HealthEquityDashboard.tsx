@@ -5,7 +5,7 @@ import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import PatientEmpowermentInsight from "@/components/PatientEmpowermentInsight";
 import HeuristicTierBadge from "@/components/research/HeuristicTierBadge";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
-import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentPipeline";
+import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentInsightTypes";
 import { EPIDEMIOLOGY_DATABASE } from "@/lib/impact/oaisCalculator";
 import {
   HEALTH_EQUITY_FOCUS_AREAS,

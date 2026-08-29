@@ -13,6 +13,19 @@ export interface TierCoverageCounts {
   stagingCandidateCount: number | null;
 }
 
+export interface DatasetChangelog {
+  currentDealCount: number;
+  priorDealCount: number;
+  dealsAddedSinceSnapshot: number;
+  currentLastUpdated: string;
+  priorLastUpdated: string;
+  hasNewDeals: boolean;
+  label: string;
+  /** Tier 2 staging rows — null until Postgres metrics load. */
+  candidateCount: number | null;
+  coverageLabel: string;
+}
+
 /** Singular/plural without external deps. */
 export function pluralize(
   count: number,

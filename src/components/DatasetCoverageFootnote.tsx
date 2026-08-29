@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useMemo } from "react";
 import {
+  type DatasetChangelog,
   formatTierCoverageDefinition,
   mergeChangelogWithCandidates,
 } from "@/lib/data/datasetCoverage";
-import type { DatasetChangelog } from "@/lib/data/getDatasetChangelog";
 import { usePendingQueueMetrics } from "@/lib/hooks/usePendingQueueMetrics";
 
 interface DatasetCoverageFootnoteProps {

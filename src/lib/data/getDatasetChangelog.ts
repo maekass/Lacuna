@@ -1,25 +1,14 @@
 import type { VerifiedDataset } from "./datasetTypes";
 import computedSummary from "@/data/computed-dataset-summary.json";
 import {
+  type DatasetChangelog,
   formatTierCoverageLabel,
   formatVerifiedGrowthLabel,
   type TierCoverageCounts,
 } from "@/lib/data/datasetCoverage";
 
+export type { DatasetChangelog };
 export { mergeChangelogWithCandidates } from "@/lib/data/datasetCoverage";
-
-export interface DatasetChangelog {
-  currentDealCount: number;
-  priorDealCount: number;
-  dealsAddedSinceSnapshot: number;
-  currentLastUpdated: string;
-  priorLastUpdated: string;
-  hasNewDeals: boolean;
-  label: string;
-  /** Tier 2 staging rows — null until Postgres metrics load. */
-  candidateCount: number | null;
-  coverageLabel: string;
-}
 
 /**
  * Compares live verified dataset against the last computed snapshot for hub/methods footnotes.

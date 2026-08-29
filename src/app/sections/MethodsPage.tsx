@@ -11,7 +11,7 @@ import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import DatasetCoverageFootnote from "@/components/DatasetCoverageFootnote";
 import { useDashboardData } from "@/lib/data/useDashboardData";
-import type { DatasetChangelog } from "@/lib/data/getDatasetChangelog";
+import type { DatasetChangelog } from "@/lib/data/datasetCoverage";
 
 const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 

@@ -9,9 +9,9 @@ import PipelineStatusStrip from "@/components/PipelineStatusStrip";
 import MotionSection from "@/components/ui/MotionSection";
 import StatTile from "@/components/ui/StatTile";
 import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
-import type { DatasetChangelog } from "@/lib/data/getDatasetChangelog";
+import type { DatasetChangelog } from "@/lib/data/datasetCoverage";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
-import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentPipeline";
+import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentInsightTypes";
 import { useDashboardData } from "@/lib/data/useDashboardData";
 import {
   getDealVelocityTopSector,

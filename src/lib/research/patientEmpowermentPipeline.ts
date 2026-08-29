@@ -21,6 +21,7 @@ import {
   meanRounded,
   median,
 } from "@/lib/research/patientEmpowermentScoring";
+import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentInsightTypes";
 import {
   bestMatchTier,
   EMPOWERMENT_PHASE_LABELS,
@@ -33,6 +34,8 @@ import {
   type EmpowermentSourceTier,
   isEvidenceBackedLink,
 } from "@/lib/research/patientEmpowermentTaxonomy";
+
+export type { PatientEmpowermentInsightData };
 
 export interface LinkedCompany {
   id: string;
@@ -123,21 +126,6 @@ export interface PatientEmpowermentSnapshot {
   phaseSummary: PhaseGapRow[];
   summary: EmpowermentPipelineSummary;
   disclaimer: string;
-}
-
-/** Serializable teaser for client insight cards — no verified JSON payload. */
-export interface PatientEmpowermentInsightData {
-  readonly surveyRespondents: number;
-  readonly maxGapMetricLabel: string;
-  readonly maxGapIndexPct: number;
-  readonly weightedBurdenIndexPct: number;
-  readonly medianGapIndexPct: number;
-  readonly criticalMetricCount: number;
-  readonly curatedLinkCount: number;
-  readonly evidenceBackedLinkCount: number;
-  readonly topPriorityLabel?: string;
-  readonly topPriorityScore?: number;
-  readonly highestGapPrerequisiteId: EmpowermentPrerequisiteId;
 }
 
 /** Project a snapshot down to the hub/equity teaser fields. */

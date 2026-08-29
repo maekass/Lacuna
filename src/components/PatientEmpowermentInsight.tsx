@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import HeuristicTierBadge from "@/components/research/HeuristicTierBadge";
-import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentPipeline";
+import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentInsightTypes";
 import { EMPOWERMENT_PREREQUISITE_LABELS } from "@/lib/research/patientEmpowermentTaxonomy";
 
 interface PatientEmpowermentInsightProps {
