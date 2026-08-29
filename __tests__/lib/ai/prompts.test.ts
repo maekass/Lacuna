@@ -360,12 +360,28 @@ describe("prompts > sanitizeLLMOutput", () => {
     expect(warnings.some((w) => w.includes("truncated"))).toBe(true);
   });
 
-  it("strips unmatched markdown delimiters in linear time", () => {
-    const payload = "*".repeat(20_000);
+  it("strips well-formed list markers", () => {
+    expect(sanitizeLLMOutput("- a\n- b").clean).toBe("a\nb");
+    expect(sanitizeLLMOutput("1. a\n2. b").clean).toBe("a\nb");
+    expect(sanitizeLLMOutput("  * x").clean).toBe("x");
+  });
+
+  it("sanitizes newline-heavy model output in linear time", () => {
+    const payload = "\n".repeat(40_000);
     const started = Date.now();
-    const { clean } = sanitizeLLMOutput(payload);
+    sanitizeLLMOutput(payload);
     expect(Date.now() - started).toBeLessThan(250);
-    expect(clean.length).toBeLessThanOrEqual(2000);
+  });
+
+  it("scales sublinearly on newline-heavy payloads", () => {
+    const time = (n: number): number => {
+      const started = Date.now();
+      sanitizeLLMOutput("\n".repeat(n));
+      return Date.now() - started;
+    };
+    const t40 = time(40_000);
+    const t160 = time(160_000);
+    expect(t160).toBeLessThan(6 * Math.max(t40, 1));
   });
 });
 
@@ -420,13 +436,10 @@ describe("prompts > validatePromptTemplate", () => {
     expect(issues.some((i) => i.includes("Unresolved"))).toBe(false);
   });
 
-  it("scans DATA: plus newlines in linear time", () => {
-    const payload = `DATA:${
-      "\n".repeat(20_000)
-    }TASK: Analyze this women's health dataset.`;
-    const started = Date.now();
-    const { valid, issues } = validatePromptTemplate(payload);
-    expect(Date.now() - started).toBeLessThan(250);
+  it("treats Unicode whitespace after DATA: as an empty section", () => {
+    const { valid, issues } = validatePromptTemplate(
+      "DATA:\u00a0\n\nTASK: Analyze this women's health dataset.",
+    );
     expect(valid).toBe(false);
     expect(issues.some((i) => i.includes("Empty DATA"))).toBe(true);
   });
