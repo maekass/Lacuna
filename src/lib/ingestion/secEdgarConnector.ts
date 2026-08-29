@@ -221,23 +221,32 @@ export async function fetchFilingText(filingUrl: string): Promise<string> {
   return htmlToPlainText(raw);
 }
 
-const ITEM_201_PATTERN =
-  /item\s*2\.01[\s\S]*?(completion of acquisition|disposition of assets|acquisition or disposition)/i;
+const ITEM_201_ITEM = /item\s*2\.01/i;
+const ITEM_201_HEADING =
+  /completion of acquisition|disposition of assets|acquisition or disposition/i;
 
 const ITEM_END_PATTERN = /item\s*2\.0[2-9]|item\s*[3-9]\./i;
 
 /**
  * Heuristic Item 2.01 extraction — not XBRL-grade; many filings use varied formatting.
+ * Find the item header and heading with separate linear scans. A single
+ * `item 2.01[\s\S]*?(heading)` regex is polynomial on long filings that never
+ * contain the heading (CodeQL js/polynomial-redos).
  */
 export function extractItem201Section(text: string): string | undefined {
-  const match = text.match(ITEM_201_PATTERN);
-  if (!match) return undefined;
+  const itemMatch = ITEM_201_ITEM.exec(text);
+  if (!itemMatch || itemMatch.index === undefined) return undefined;
 
-  const startIdx = match.index ?? 0;
-  const rest = text.slice(startIdx);
-  const endMatch = rest.slice(match[0].length).match(ITEM_END_PATTERN);
+  const startIdx = itemMatch.index;
+  const fromItem = text.slice(startIdx);
+  const headingMatch = ITEM_201_HEADING.exec(fromItem);
+  if (!headingMatch || headingMatch.index === undefined) return undefined;
+
+  const afterHeading = headingMatch.index + headingMatch[0].length;
+  const rest = fromItem.slice(afterHeading);
+  const endMatch = ITEM_END_PATTERN.exec(rest);
   const endIdx = endMatch?.index !== undefined
-    ? startIdx + match[0].length + endMatch.index
+    ? startIdx + afterHeading + endMatch.index
     : startIdx + 8000;
   return text.slice(startIdx, Math.min(endIdx, startIdx + 12000)).trim();
 }
