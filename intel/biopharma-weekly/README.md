@@ -27,9 +27,9 @@ Auto-maintained by a scheduled Perplexity Computer task, Fridays 5:00 PM ET.
 ## Sweeps
 
 `npm run intel:sweep` reports on the watchlist; `intel:sweep:check` (run in CI)
-fails on duplicate rows (company + drug + event_type) or schema violations
-(ISO dates, unknown event_type/status, non-https source_url). Stale `upcoming`
-rows with past dates and unsorted files are warnings only, since the weekly
+fails on duplicate rows (company + drug + event_type) or schema violations (ISO
+dates, unknown event_type/status, non-https source_url). Stale `upcoming` rows
+with past dates and unsorted files are warnings only, since the weekly
 automation appends unsorted and resolves stale rows on its own cadence.
 `npm run intel:sweep:fix` drops duplicates (keeping the latest `date_added`;
 ties keep the last occurrence) and stable-sorts by `catalyst_date`.
