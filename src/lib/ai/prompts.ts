@@ -393,6 +393,12 @@ export function sanitizeLLMOutput(text: string): {
   return { clean, warnings };
 }
 
+/**
+ * `${name}` placeholders. `[^{}\n]+` is linear-time; `[^}]+` is polynomial on
+ * strings of `${{` with no closing `}` (CodeQL js/polynomial-redos).
+ */
+const UNRESOLVED_TEMPLATE_RE = /\$\{[^{}\n]+\}/g;
+
 /** Validate that a prompt string does not contain empty template variables. */
 export function validatePromptTemplate(template: string): {
   valid: boolean;
@@ -400,8 +406,7 @@ export function validatePromptTemplate(template: string): {
 } {
   const issues: string[] = [];
 
-  // Check for unresolved template literals
-  const unresolved = template.match(/\$\{[^}]+\}/g);
+  const unresolved = template.match(UNRESOLVED_TEMPLATE_RE);
   if (unresolved) {
     issues.push(
       `Unresolved template variables: ${unresolved.join(", ")}`,
