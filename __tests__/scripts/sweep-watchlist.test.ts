@@ -67,7 +67,29 @@ describe("sweep-watchlist", () => {
     expect(report.stale[0].row.catalyst_date).toBe("2026-08-15");
   });
 
-  it("detects duplicates on (company, drug, event_type), case-insensitively", () => {
+  it("keeps distinct catalyst dates for the same company/drug/event_type", () => {
+    const rows = [
+      makeRow({
+        catalyst_date: "2026-09-01",
+        notes: "2026-09-01/first PDUFA",
+      }),
+      makeRow({
+        catalyst_date: "2027-03-15",
+        notes: "2027-03-15/resubmission PDUFA",
+      }),
+    ];
+    const report = runSweeps(rows, TODAY);
+    expect(report.dupes).toHaveLength(0);
+    expect(report.repeatedEvent).toHaveLength(1);
+    const fixed = applyFixes(rows);
+    expect(fixed).toHaveLength(2);
+    expect(fixed.map((r) => r.notes).sort()).toEqual([
+      "2026-09-01/first PDUFA",
+      "2027-03-15/resubmission PDUFA",
+    ]);
+  });
+
+  it("detects duplicates on (company, drug, event_type, catalyst_date), case-insensitively", () => {
     const rows = [
       makeRow({}),
       makeRow({ company: " novo nordisk ", drug: "MIM8 (DENECIMIG)" }),
@@ -246,7 +268,11 @@ describe("main CLI", () => {
         catalyst_date: "2026-09-01",
         notes: "earlier",
       }),
-      makeRow({ date_added: "2026-08-28", notes: "dupe-keep" }),
+      makeRow({
+        date_added: "2026-08-28",
+        catalyst_date: "2026-10-01",
+        notes: "dupe-keep",
+      }),
     ]);
     expect(main(["--fix", "--file", file])).toBe(0);
     const fixed = toRows(parseCsv(readFileSync(file, "utf8")));
@@ -267,5 +293,55 @@ describe("main CLI", () => {
     );
     expect(stdout).toMatch(/Lacuna catalyst watchlist sweep/);
     expect(stdout).not.toMatch(/Sweep check FAILED/);
+  });
+
+  it("--fix is a byte-level no-op on a clean CRLF file", () => {
+    const rows = [
+      makeRow({ catalyst_date: "2026-09-01", drug: "alpha" }),
+      makeRow({ catalyst_date: "2026-10-01", drug: "beta" }),
+    ];
+    const dir = mkdtempSync(path.join(tmpdir(), "intel-sweep-"));
+    tempDirs.push(dir);
+    const file = path.join(dir, "catalysts.csv");
+    writeFileSync(file, serializeCsv(fromRows(rows), "\r\n"));
+    const before = readFileSync(file);
+    expect(main(["--fix", "--file", file])).toBe(0);
+    expect(readFileSync(file).equals(before)).toBe(true);
+  });
+
+  it("--json output round-trips SweepReport fields", () => {
+    const rows = [
+      makeRow({ catalyst_date: "2099-01-01" }),
+      makeRow({ catalyst_date: "2099-06-01" }),
+    ];
+    const file = writeWatchlist(rows);
+    const jsonPath = path.join(path.dirname(file), "sweep.json");
+    expect(main(["--file", file, "--json", jsonPath])).toBe(0);
+    const parsed = JSON.parse(readFileSync(jsonPath, "utf8")) as Record<
+      string,
+      unknown
+    >;
+    const today = new Date().toISOString().slice(0, 10);
+    const report = runSweeps(rows, today);
+    const { ranAt, rowCount, exitCode, ...rest } = parsed;
+    expect(rest).toEqual(report);
+    expect(rowCount).toBe(2);
+    expect(exitCode).toBe(0);
+    expect(typeof ranAt).toBe("string");
+  });
+
+  it("rejects --check combined with --fix", () => {
+    expect(main(["--check", "--fix"])).toBe(1);
+    expect(vi.mocked(console.error).mock.calls.flat().join("\n")).toMatch(
+      /Cannot combine --check and --fix/,
+    );
+  });
+
+  it("prints the missing --file path without throwing", () => {
+    const missing = path.join(tmpdir(), "missing-catalysts-xyz.csv");
+    expect(main(["--check", "--file", missing])).toBe(1);
+    expect(vi.mocked(console.error).mock.calls.flat().join("\n")).toContain(
+      missing,
+    );
   });
 });
