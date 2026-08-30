@@ -394,16 +394,22 @@ export function sanitizeLLMOutput(text: string): {
 } {
   const warnings: string[] = [];
 
-  // Strip markdown formatting
+  // Bound before any regex work. The 2000-character truncation later in this
+  // function (prompts.ts display cap) does not protect these scans: they run
+  // first, on the untruncated provider payload from assessLlmOutput.
+  const bounded = text.length > 20_000 ? text.slice(0, 20_000) : text;
+
+  // Strip markdown formatting. `#{1,6}` must match before `\s+`, so this
+  // cannot consume a run of newlines the way `^\s*[-*+]` does under `/m`.
   let clean = stripInlineWrap(
     stripInlineWrap(
-      stripInlineWrap(text.replace(/^#{1,6}\s+/gm, ""), "**"),
+      stripInlineWrap(bounded.replace(/^#{1,6}\s+/gm, ""), "**"),
       "*",
     ),
     "`",
   )
-    .replace(/^\s*[-*+]\s+/gm, "")
-    .replace(/^\s*\d+\.\s+/gm, "")
+    .replace(/^[ \t]*[-*+][ \t]+/gm, "")
+    .replace(/^[ \t]*\d+\.[ \t]+/gm, "")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 
@@ -456,7 +462,8 @@ function emptyDataFollows(template: string, start: number): boolean {
       if (newlines >= 2) return true;
       continue;
     }
-    if (c === " " || c === "\t" || c === "\r" || c === "\f" || c === "\v") {
+    // One-char `/\s/` is linear and matches JS whitespace (\u00a0, \u2028, BOM).
+    if (/\s/.test(c)) {
       continue;
     }
     return false;
