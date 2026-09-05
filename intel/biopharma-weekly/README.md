@@ -6,8 +6,11 @@ Auto-maintained by a scheduled Perplexity Computer task, Fridays 5:00 PM ET.
 
 - `catalysts.csv` — rolling watchlist of upcoming catalysts and decision dates
   (PDUFA dates, advisory committee meetings, CHMP opinions, major readouts,
-  guidance changes). Updated weekly: new catalysts appended, outcomes recorded
-  in `status`, stale rows pruned.
+  guidance changes). Source of truth. Updated weekly: new catalysts appended,
+  outcomes recorded in `status`, stale rows pruned. Sorted by `catalyst_date` as
+  of the 2026-09-04 update.
+- `catalysts.xlsx` — formatted workbook of the same 46 rows (frozen header,
+  status colors, source hyperlinks). Keep in lockstep with the CSV.
 - `briefs/YYYY-MM-DD.md` — weekly one-page "What moved biopharma this week"
   briefs: top 3 events, companies and drug classes affected, 30-day downstream
   watchlist.
