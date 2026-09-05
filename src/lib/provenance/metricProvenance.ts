@@ -22,6 +22,8 @@ export interface ProxyMetric {
   readonly value: number | null;
   readonly model: ModelProvenance;
   readonly caveat?: string;
+  readonly sampleSize?: number;
+  readonly confidenceInterval?: readonly [number, number];
 }
 
 export interface AssumptionMetric {
@@ -29,6 +31,8 @@ export interface AssumptionMetric {
   readonly value: number | null;
   readonly model: ModelProvenance;
   readonly caveat?: string;
+  readonly sampleSize?: number;
+  readonly confidenceInterval?: readonly [number, number];
 }
 
 export interface ArtifactMetric {

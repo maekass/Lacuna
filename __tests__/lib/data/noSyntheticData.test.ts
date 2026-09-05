@@ -251,6 +251,19 @@ describe("no synthetic M&A demo data in src/", () => {
   });
 });
 
+describe("DataPipelineStatus is not fabricated", () => {
+  it("contains no hardcoded durations, error counts, or 0.7× heuristics", () => {
+    const source = readFileSync(
+      path.join(SRC_ROOT, "components/DataPipelineStatus.tsx"),
+      "utf8",
+    );
+    expect(source).not.toMatch(/durationMs:\s*\d+/);
+    expect(source).not.toMatch(/errorCount:\s*[1-9]/);
+    expect(source).not.toMatch(/\*\s*0\.\d/);
+    expect(source).not.toMatch(/Success Rate/);
+  });
+});
+
 describe("test fixtures use verified JSON slice", () => {
   it("minimalVerifiedDataset references real verified company names", async () => {
     const { minimalVerifiedDataset } = await import("../../helpers/fixtures");

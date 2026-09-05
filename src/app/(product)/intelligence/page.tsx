@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import IntelligencePage from "@/app/sections/IntelligencePage";
+import DataPipelineStatus from "@/components/DataPipelineStatus";
 
 export const revalidate = 86_400;
 
@@ -11,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <IntelligencePage />;
+  return <IntelligencePage pipelinePanel={<DataPipelineStatus />} />;
 }

@@ -19,6 +19,8 @@
 
 import { writeFileSync } from "fs";
 
+export type CmsProvenanceKind = "api" | "hardcoded_fallback";
+
 interface CptUtilization {
   cptCode: string;
   description: string | null;
@@ -28,6 +30,19 @@ interface CptUtilization {
   avgMedicarePayment: number | null;
   source: string;
   fetchedAt: string;
+  provenanceKind: CmsProvenanceKind;
+  pufDataYear: number | "unknown";
+  roundingGrid: number | null;
+}
+
+const CMS_FALLBACK_SOURCE =
+  "in-repo fallback table (see scripts/fetch-cms-utilization.ts:167); not retrieved from data.cms.gov";
+
+function roundingGridFor(value: number | null): number | null {
+  if (value === null) return null;
+  if (value === 0) return 0;
+  const exp = Math.floor(Math.log10(Math.abs(value))) - 1;
+  return 10 ** Math.max(exp, 0);
 }
 
 interface SectorUtilization {
@@ -110,6 +125,14 @@ async function fetchCptUtilization(
         source:
           `CMS Medicare Provider Utilization PUF (data.cms.gov, dataset: ${datasetId})`,
         fetchedAt: new Date().toISOString(),
+        provenanceKind: "api",
+        pufDataYear: 2023,
+        roundingGrid: roundingGridFor(
+          parseInt(
+            row.TOTAL_SERVICES || row.SRVC_CNT || row.BENE_DAY_CNT ||
+              row.Total_Services || "0",
+          ) || null,
+        ),
       };
     } catch (err) {
       // Try next dataset ID
@@ -141,6 +164,11 @@ async function fetchCptUtilization(
             parseFloat(row.AVERAGE_MEDICARE_PAYMENT_AMT || "0") || null,
           source: "CMS Data Catalog Search (data.cms.gov)",
           fetchedAt: new Date().toISOString(),
+          provenanceKind: "api",
+          pufDataYear: 2023,
+          roundingGrid: roundingGridFor(
+            parseInt(row.TOTAL_SERVICES || row.SRVC_CNT || "0") || null,
+          ),
         };
       }
     }
@@ -401,9 +429,11 @@ function getCmsPufFallback(cptCode: string): CptUtilization | null {
     uniqueBeneficiaries: null,
     avgSubmittedCharge: null,
     avgMedicarePayment: fallback.avgPayment,
-    source:
-      "CMS Medicare Physician & Other Practitioners PUF (published statistics, cms.gov)",
+    source: CMS_FALLBACK_SOURCE,
     fetchedAt: new Date().toISOString(),
+    provenanceKind: "hardcoded_fallback",
+    pufDataYear: "unknown",
+    roundingGrid: roundingGridFor(fallback.services),
   };
 }
 
@@ -416,6 +446,10 @@ async function main() {
     cptCode: string;
     totalServices: number | null;
     avgMedicarePayment: number | null;
+    provenanceKind: CmsProvenanceKind;
+    pufDataYear: number | "unknown";
+    fetchedAt: string;
+    roundingGrid: number | null;
   }> = [];
 
   for (const [sector, codes] of Object.entries(SECTOR_CPT_CODES)) {
@@ -434,6 +468,10 @@ async function main() {
           cptCode: code,
           totalServices: util.totalServices,
           avgMedicarePayment: util.avgMedicarePayment,
+          provenanceKind: util.provenanceKind,
+          pufDataYear: util.pufDataYear,
+          fetchedAt: util.fetchedAt,
+          roundingGrid: util.roundingGrid,
         });
         console.log(
           `    CPT ${code}: ${util.totalServices} services/yr, $${util.avgMedicarePayment}/service (API)`,
@@ -448,6 +486,10 @@ async function main() {
             cptCode: code,
             totalServices: fallback.totalServices,
             avgMedicarePayment: fallback.avgMedicarePayment,
+            provenanceKind: fallback.provenanceKind,
+            pufDataYear: fallback.pufDataYear,
+            fetchedAt: fallback.fetchedAt,
+            roundingGrid: fallback.roundingGrid,
           });
           console.log(
             `    CPT ${code}: ${fallback.totalServices} services/yr, $${fallback.avgMedicarePayment}/service (PUF fallback)`,
@@ -475,6 +517,9 @@ async function main() {
       ? Number((totalServices * avgPayment / 1_000_000).toFixed(2)) // in millions
       : null;
 
+    const sectorUsedFallback = utilizationRecords.some((r) =>
+      r.provenanceKind === "hardcoded_fallback"
+    );
     sectorResults.push({
       sector,
       cptCodes: codes,
@@ -484,16 +529,23 @@ async function main() {
         ? Number(avgPayment.toFixed(2))
         : null,
       estimatedAnnualReimbursement: totalReimbursement,
-      source:
-        "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      source: sectorUsedFallback
+        ? CMS_FALLBACK_SOURCE
+        : "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
       method:
         "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume.",
     });
   }
 
+  const anyFallback = utilizationByCptCode.some((row) =>
+    row.provenanceKind === "hardcoded_fallback"
+  );
   const output = {
     generatedAt: new Date().toISOString(),
-    source:
+    source: anyFallback
+      ? CMS_FALLBACK_SOURCE
+      : "CMS Medicare Provider Utilization and Payment Data (https://data.cms.gov)",
+    intendedSource:
       "CMS Medicare Provider Utilization and Payment Data (https://data.cms.gov)",
     apiEndpoint: CMS_API_BASE,
     sectors: sectorResults,

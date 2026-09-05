@@ -99,4 +99,17 @@ describe("client components do not import the static verified dataset", () => {
     expect(hub).not.toMatch(/getStaticVerifiedDataset/);
     expect(hub).not.toMatch(/getDatasetChangelog\(/);
   });
+
+  it("does not import computed-data-quality-scores from client surfaces", () => {
+    const files = walk(SRC_ROOT);
+    const violations: string[] = [];
+    for (const file of files) {
+      const content = readFileSync(file, "utf8");
+      if (!isUseClient(content)) continue;
+      if (content.includes("computed-data-quality-scores")) {
+        violations.push(path.relative(REPO_ROOT, file));
+      }
+    }
+    expect(violations).toEqual([]);
+  });
 });

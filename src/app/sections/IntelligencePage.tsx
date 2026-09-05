@@ -3,7 +3,6 @@
 import {
   AcquirerPredictionDashboard,
   DataExport,
-  DataPipelineStatus,
   DeveloperTools,
   InvestmentGradeReimbursementIntel,
   SystemHealthDashboard,
@@ -11,10 +10,18 @@ import {
 import ExportToGamma from "@/components/ExportToGamma";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
+import type { ReactNode } from "react";
 
 const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
-export default function IntelligencePage() {
+interface IntelligencePageProps {
+  /** Server-rendered pipeline panel driven by committed artifacts. */
+  pipelinePanel: ReactNode;
+}
+
+export default function IntelligencePage(
+  { pipelinePanel }: IntelligencePageProps,
+) {
   return (
     <div>
       <header className="mb-10">
@@ -35,7 +42,7 @@ export default function IntelligencePage() {
         />
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <SystemHealthDashboard />
-          <DataPipelineStatus />
+          {pipelinePanel}
         </div>
       </MotionSection>
 

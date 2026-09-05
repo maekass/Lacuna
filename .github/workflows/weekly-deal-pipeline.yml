@@ -28,13 +28,11 @@ jobs:
       - name: Migrate Postgres
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          PGSSLMODE: disable
         run: npm run db:migrate
 
       - name: SEC ingest + hands-off promote
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          PGSSLMODE: disable
           SEC_EDGAR_USER_AGENT: ${{ secrets.SEC_EDGAR_USER_AGENT }}
           LACUNA_HANDS_OFF_INGEST: "true"
           LACUNA_AUTO_APPROVE_CONFIDENCE: high

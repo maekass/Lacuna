@@ -9,6 +9,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import CmsUtilizationFallbackNotice from "@/components/CmsUtilizationFallbackNotice";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import {
@@ -126,6 +127,7 @@ export default function ReimbursementIntelligenceDashboard() {
   return (
     <div className="space-y-6">
       <CuratedDatasetBanner />
+      <CmsUtilizationFallbackNotice />
       {/* Overview Stats */}
       {stats && (
         <motion.div
