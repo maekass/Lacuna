@@ -6,6 +6,7 @@ import {
   ValuationMatrix,
 } from "@/app/lazyDashboard";
 import DataCoverageCard from "@/components/DataCoverageCard";
+import DataQualityVisibility from "@/components/DataQualityVisibility";
 import DatasetScopeBanner from "@/components/DatasetScopeBanner";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -82,6 +83,9 @@ export default function ConsumerHealthPage() {
 
       <MotionSection id="coverage" delay={0.05} className={SECTION}>
         <DataCoverageCard />
+        <div className="mt-4">
+          <DataQualityVisibility compact />
+        </div>
       </MotionSection>
 
       <MotionSection id="network" delay={0.08} className={SECTION}>

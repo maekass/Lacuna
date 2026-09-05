@@ -16,6 +16,7 @@ const ARTIFACTS = [
   "src/data/computed-sector-correlations.json",
   "src/data/computed-data-quality-scores.json",
   "src/data/computed-dataset-summary.json",
+  "src/data/computed-quality-visibility.json",
 ];
 
 function readArtifact<T>(file: string): T {

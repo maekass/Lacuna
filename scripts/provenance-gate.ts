@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import process from "node:process";
 import ts from "typescript";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
@@ -369,12 +370,37 @@ export function ratchetFailure(
   return summarizeFailure(fresh, baseline);
 }
 
+function writeCiAnnotations(census: ProvenanceCensus): void {
+  const rate = census.total > 0
+    ? ((census.uncovered / census.total) * 100).toFixed(1)
+    : "0.0";
+  const lines = [
+    "<!-- lacuna-provenance-census -->",
+    "## Provenance census",
+    "",
+    `| Covered | Exempt | Uncovered | Total |`,
+    `| ---: | ---: | ---: | ---: |`,
+    `| ${census.covered} | ${census.exempt} | ${census.uncovered} | ${census.total} |`,
+    "",
+    `${census.uncovered}/${census.total} numeric render sites (${rate}%) have no \`<Metric>\` affordance.`,
+    "",
+  ];
+  const summaryPath = process.env.GITHUB_STEP_SUMMARY;
+  if (summaryPath) {
+    fs.appendFileSync(summaryPath, `${lines.join("\n")}\n`);
+  }
+  console.log(
+    `::warning title=Display provenance::${census.uncovered}/${census.total} numeric render sites (${rate}%) have no <Metric> affordance.`,
+  );
+}
+
 if (process.argv[1]?.endsWith("provenance-gate.ts")) {
   try {
     const result = runGate(process.argv.includes("--record"));
     console.log(
       `Provenance census: total=${result.total} covered=${result.covered} exempt=${result.exempt} uncovered=${result.uncovered}`,
     );
+    writeCiAnnotations(result);
   } catch (error) {
     console.error(error instanceof Error ? error.message : error);
     process.exitCode = 1;

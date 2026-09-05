@@ -3,11 +3,11 @@
 import { useMemo } from "react";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import {
+  CoverageRateTiles,
   CoverageStatBox,
   EffectiveNBadge,
 } from "@/components/DataCoverageStatBoxes";
 import DisclosedEstimandNote from "@/components/DisclosedEstimandNote";
-import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import {
   computeDisclosureStats,
@@ -111,42 +111,13 @@ export default function DataCoverageCard() {
 
       <DisclosedEstimandNote />
 
-      <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
-        <ModelProvenanceHint model={COVERAGE_STAT_MODELS.valuationCoverage}>
-          <div className="cursor-help rounded-md bg-lacuna-pink/10 border border-lacuna-lavender/30 px-3 py-2">
-            <span className="text-lacuna-blue">Valuation coverage</span>
-            <p className="font-semibold text-lacuna-plum mt-0.5">
-              {stats.companiesWithValuation}/{stats.companiesTotal} companies (
-              {(stats.valuationRate * 100).toFixed(0)}%)
-            </p>
-          </div>
-        </ModelProvenanceHint>
-        <ModelProvenanceHint model={COVERAGE_STAT_MODELS.disclosureRate}>
-          <div className="cursor-help rounded-md bg-lacuna-pink/10 border border-lacuna-lavender/30 px-3 py-2">
-            <span className="text-lacuna-blue">Price disclosure rate</span>
-            <p className="font-semibold text-lacuna-plum mt-0.5">
-              {(stats.disclosureRate * 100).toFixed(0)}% ({stats
-                .dealsWithValueNote} with notes)
-            </p>
-          </div>
-        </ModelProvenanceHint>
-        <div className="rounded-md bg-lacuna-pink/10 border border-lacuna-lavender/30 px-3 py-2">
-          <span className="text-lacuna-blue">Deal years</span>
-          <p className="font-semibold text-lacuna-plum mt-0.5">
-            {yearCounts.length > 0
-              ? `${yearCounts[0].year}–${
-                yearCounts[yearCounts.length - 1].year
-              }`
-              : "—"}
-          </p>
-        </div>
-        <div className="rounded-md bg-lacuna-pink/10 border border-lacuna-lavender/30 px-3 py-2">
-          <span className="text-lacuna-blue">Sectors with deals</span>
-          <p className="font-semibold text-lacuna-plum mt-0.5">
-            {sectorsWithDeals.length}
-          </p>
-        </div>
-      </div>
+      <CoverageRateTiles
+        stats={stats}
+        yearRange={yearCounts.length > 0
+          ? `${yearCounts[0].year}–${yearCounts[yearCounts.length - 1].year}`
+          : "—"}
+        sectorsWithDeals={sectorsWithDeals.length}
+      />
 
       <div className="mt-6">
         <p className="text-xs font-medium text-lacuna-text-secondary mb-2">

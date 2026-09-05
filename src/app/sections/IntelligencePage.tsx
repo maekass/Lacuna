@@ -31,7 +31,7 @@ export default function IntelligencePage() {
       <MotionSection id="system-health" className={SECTION}>
         <SectionHeader
           title="System Health & Monitoring"
-          description="Real-time API health checks, latency tracking, and service availability monitoring for production deployments."
+          description="Live API checks plus the measurement-layer census: quality grades, withheld metrics, vintage gaps, and display provenance."
         />
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <SystemHealthDashboard />

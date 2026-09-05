@@ -215,4 +215,10 @@ export const COVERAGE_STAT_MODELS = {
     definition:
       "Tiered sample-size badges from deal/node/disclosed-price counts (methodology thresholds).",
   },
+  sectorsWithDeals: {
+    module: COVERAGE_MODULE,
+    exportName: "computeSectorDealCounts",
+    definition:
+      "Count of target sectors that have at least one verified acquisition.",
+  },
 } as const satisfies Record<string, ModelProvenance>;
