@@ -132,4 +132,38 @@ describe("validateVerifiedDataset", () => {
       true,
     );
   });
+
+  it("errors when a pre-deal mark is after announcement (error)", () => {
+    const late = structuredClone(minimalVerifiedDataset);
+    late.acquisitions[0].preDealValuation = 100;
+    late.acquisitions[0].preDealValuationDate = "2022-01-01";
+    late.acquisitions[0].preDealValuationDatePrecision = "year";
+    late.acquisitions[0].announcedDate = "2021-01-05";
+    const report = validateVerifiedDataset(late);
+    expect(
+      report.errors.some((e) => e.code === "deal.preDealValuationDateOrder"),
+    ).toBe(true);
+  });
+
+  it("errors when a year-only source keeps a non-year precision (error)", () => {
+    const yearOnly = structuredClone(minimalVerifiedDataset);
+    yearOnly.acquisitions[0].preDealValuation = 100;
+    yearOnly.acquisitions[0].preDealValuationDate = "2020-01-01";
+    yearOnly.acquisitions[0].preDealValuationDatePrecision = "day";
+    yearOnly.acquisitions[0].preDealValuationSource =
+      "Company press release — acquisition coverage, 2020";
+    const report = validateVerifiedDataset(yearOnly);
+    expect(
+      report.errors.some((e) =>
+        e.code === "deal.preDealValuationDatePrecision"
+      ),
+    ).toBe(true);
+  });
+
+  it("accepts the verified dataset after valuation-date backfill (success)", () => {
+    const report = validateVerifiedDataset(full);
+    expect(
+      report.errors.filter((e) => e.code.startsWith("deal.preDealValuation")),
+    ).toEqual([]);
+  });
 });

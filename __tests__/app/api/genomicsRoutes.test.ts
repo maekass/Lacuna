@@ -86,4 +86,22 @@ describe("genomics API", () => {
     expect(body.variants).toHaveLength(1);
     expect(body.variants[0].geneSymbol).toBe("BRCA1");
   });
+
+  it("rate-limits before writing a patient-data audit (success)", async () => {
+    const files = [
+      "src/app/api/genomics/variants/route.ts",
+      "src/app/api/genomics/callsets/route.ts",
+      "src/app/api/genomics/callsets/[callsetId]/object/route.ts",
+    ];
+    const { readFileSync } = await import("node:fs");
+    const { resolve } = await import("node:path");
+    for (const relative of files) {
+      const source = readFileSync(resolve(process.cwd(), relative), "utf8");
+      const rateLimitAt = source.indexOf("enforceRateLimit");
+      const auditAt = source.indexOf("requirePatientDataAccess");
+      expect(rateLimitAt).toBeGreaterThan(-1);
+      expect(auditAt).toBeGreaterThan(-1);
+      expect(rateLimitAt).toBeLessThan(auditAt);
+    }
+  });
 });

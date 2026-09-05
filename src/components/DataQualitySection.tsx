@@ -1,5 +1,6 @@
 import Card from "@/components/ui/Card";
 import DataQualityWeakestTable from "@/components/DataQualityWeakestTable";
+import QualityTrend from "@/components/QualityTrend";
 import { buildDataQualityView } from "@/lib/data/dataQualityView";
 
 const GRADE_BAR_COLOR: Record<string, string> = {
@@ -75,6 +76,8 @@ export default function DataQualitySection() {
           </p>
         </Card>
       </div>
+
+      <QualityTrend />
 
       <Card className="mb-6">
         <h3 className="text-sm font-semibold uppercase tracking-wide text-lacuna-blue">

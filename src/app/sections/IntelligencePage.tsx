@@ -17,10 +17,12 @@ const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 interface IntelligencePageProps {
   /** Server-rendered pipeline panel driven by committed artifacts. */
   pipelinePanel: ReactNode;
+  /** Server-rendered catalyst CSV table — no client dataset import. */
+  catalystWatchlist?: ReactNode;
 }
 
 export default function IntelligencePage(
-  { pipelinePanel }: IntelligencePageProps,
+  { pipelinePanel, catalystWatchlist }: IntelligencePageProps,
 ) {
   return (
     <div>
@@ -57,6 +59,18 @@ export default function IntelligencePage(
         />
         <InvestmentGradeReimbursementIntel />
       </MotionSection>
+
+      {catalystWatchlist
+        ? (
+          <MotionSection id="catalyst-watchlist" className={SECTION}>
+            <SectionHeader
+              title="Catalyst watchlist"
+              description="Weekly biopharma calendar joined to Lacuna's verified acquirer and company ids. Dates are scheduled PDUFA/readout marks with an actual date when the decision already happened."
+            />
+            {catalystWatchlist}
+          </MotionSection>
+        )
+        : null}
 
       <MotionSection id="acquirer-prediction" delay={0.05} className={SECTION}>
         <SectionHeader

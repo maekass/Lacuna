@@ -3,6 +3,16 @@
   "description": "Offline sklearn models on ClinicalTrials.gov: WH relevance + completion proxy (COMPLETED vs stopped). Descriptive only.",
   "trainingSource": "synthetic_seed",
   "recordCount": 1200,
+  "exportGate": {
+    "version": "conjunction-v1",
+    "requires": [
+      "roc_auc_ci_lower > 0.55",
+      "accuracy > majority_baseline_accuracy",
+      "brier < base_rate_brier"
+    ],
+    "committedCompletionPasses": false,
+    "reason": "Committed completion-proxy-v2 accuracy 0.568 is at or below the majority baseline 0.614. Artifact was exported under the former AUC-only gate (roc_auc 0.626). Scores stay withheld while trainingSource is synthetic_seed."
+  },
   "models": {
     "whRelevance": {
       "artifact": "wh-relevance-v1.json",

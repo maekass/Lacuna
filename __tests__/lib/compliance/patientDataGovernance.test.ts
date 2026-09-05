@@ -23,6 +23,7 @@ const ENV_KEYS = [
   "LACUNA_PATIENT_DATA_MODE",
   "LACUNA_PATIENT_DATA_API_KEY",
   "LACUNA_INGEST_CONSENT_REF",
+  "LACUNA_ALLOW_UNAUDITED_PHI",
 ] as const;
 
 function clearEnv(): void {
@@ -32,6 +33,8 @@ function clearEnv(): void {
 describe("patientDataGovernance", () => {
   afterEach(() => {
     clearEnv();
+    vi.mocked(isAuditSinkConfigured).mockReturnValue(false);
+    vi.mocked(writeAuditEvent).mockResolvedValue(true);
   });
 
   it("defaults to de_identified when mode unset (success)", () => {
@@ -67,6 +70,8 @@ describe("patientDataGovernance", () => {
   it("authorizes bearer token for raw download when configured (success)", async () => {
     process.env.LACUNA_PATIENT_DATA_MODE = "authorized";
     process.env.LACUNA_PATIENT_DATA_API_KEY = "test-secret-key";
+    vi.mocked(isAuditSinkConfigured).mockReturnValue(true);
+    vi.mocked(writeAuditEvent).mockResolvedValue(true);
     const request = new Request(
       "http://localhost/api/genomics/callsets/x/object",
       {
@@ -81,6 +86,47 @@ describe("patientDataGovernance", () => {
         "genomics/callsets/object",
       ),
     ).toBeNull();
+  });
+
+  it("denies privileged access when no audit sink is configured (error)", async () => {
+    process.env.LACUNA_PATIENT_DATA_MODE = "authorized";
+    process.env.LACUNA_PATIENT_DATA_API_KEY = "test-secret-key";
+    vi.mocked(isAuditSinkConfigured).mockReturnValue(false);
+    const request = new Request(
+      "http://localhost/api/genomics/callsets/x/object",
+      {
+        headers: { Authorization: "Bearer test-secret-key" },
+      },
+    );
+    const denied = await requirePatientDataAccess(
+      request,
+      "download_raw",
+      "genomics/callsets/object",
+    );
+    expect(denied?.status).toBe(503);
+  });
+
+  it("allows privileged access without a sink only when unaudited PHI is opted in (edge)", async () => {
+    process.env.LACUNA_PATIENT_DATA_MODE = "authorized";
+    process.env.LACUNA_PATIENT_DATA_API_KEY = "test-secret-key";
+    process.env.LACUNA_ALLOW_UNAUDITED_PHI = "1";
+    vi.mocked(isAuditSinkConfigured).mockReturnValue(false);
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const request = new Request(
+      "http://localhost/api/genomics/callsets/x/object",
+      {
+        headers: { Authorization: "Bearer test-secret-key" },
+      },
+    );
+    expect(
+      await requirePatientDataAccess(
+        request,
+        "download_raw",
+        "genomics/callsets/object",
+      ),
+    ).toBeNull();
+    expect(warn).toHaveBeenCalled();
+    warn.mockRestore();
   });
 
   it("redacts sample identifiers in de_identified responses (success)", () => {

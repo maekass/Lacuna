@@ -98,6 +98,9 @@ jobs:
       - name: ESLint
         run: npm run lint
 
+      - name: Compliance lint
+        run: npm run compliance:lint
+
       - name: Validate verified dataset
         run: npm run validate:dataset
 
@@ -115,6 +118,9 @@ jobs:
 
       - name: Verify provenance census
         run: npm run gate:provenance
+
+      - name: Quality-history ratchet
+        run: npm run gate:quality-history
 
       - name: Infrastructure check
         run: npm run infra:check

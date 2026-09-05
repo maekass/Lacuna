@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   dataset-summary:
@@ -32,3 +32,41 @@ jobs:
 
       - name: Verify computed artifacts match model
         run: npm run verify:computed
+
+      - name: Append quality history
+        run: npm run quality-history:append
+
+      - name: Quality-history ratchet
+        run: npm run gate:quality-history
+
+      - name: Refresh payer-ops citation reachability
+        id: payer_ops_fetch
+        continue-on-error: true
+        run: |
+          npm run payer-ops:benchmarks:fetch
+          echo "::warning::payer-ops:benchmarks:fetch completed; treat unreachable sources as warnings, never a required check."
+
+      - name: Payer-ops fetch summary
+        if: always()
+        run: |
+          {
+            echo "## Payer-ops citation fetch"
+            echo ""
+            echo "| Step | Outcome |"
+            echo "| --- | --- |"
+            echo "| payer-ops:benchmarks:fetch | ${{ steps.payer_ops_fetch.outcome }} |"
+            echo ""
+            echo "Link-rot probes are advisory. A failed fetch must not block the workflow."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit quality history
+        run: |
+          git add data/quality-history.jsonl
+          if git diff --cached --quiet; then
+            echo "No quality-history changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: append quality-history JSONL [skip ci]"
+          git push

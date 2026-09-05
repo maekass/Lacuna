@@ -13,6 +13,8 @@ import type {
   TfidfLogisticArtifact,
   TrialScoreInput,
 } from "@/lib/ml/clinicalTrials/types";
+import completionProxyArtifact from "@/data/ml/clinical-trials/completion-proxy-v2.json";
+import parityFixtures from "./parityFixtures.json";
 
 describe("clinicalTrials ML inference", () => {
   const whTrial: TrialScoreInput = {
@@ -82,14 +84,28 @@ describe("clinicalTrials ML inference", () => {
   });
 
   it("exposes training source from model card", () => {
-    expect(getClinicalTrialsTrainingSource()).toMatch(
-      /synthetic_seed|ctgov_live|ctgov_cached/,
-    );
+    expect(getClinicalTrialsTrainingSource()).toBe("synthetic_seed");
   });
 
   it("does not release synthetic_seed scores to production UI", () => {
-    if (getClinicalTrialsTrainingSource() === "synthetic_seed") {
-      expect(areClinicalTrialMlScoresReleased()).toBe(false);
+    expect(areClinicalTrialMlScoresReleased()).toBe(false);
+  });
+
+  it("matches sklearn parity fixtures within 1e-6", () => {
+    const artifacts: Record<string, TfidfLogisticArtifact> = {
+      "wh-relevance-v1": WH_RELEVANCE_MODEL,
+      "completion-proxy-v2": completionProxyArtifact as TfidfLogisticArtifact,
+    };
+    expect(parityFixtures.cases.length).toBeGreaterThan(0);
+    for (const fixture of parityFixtures.cases) {
+      const scored = scoreTfidfLogistic(
+        artifacts[fixture.model],
+        fixture.input as TrialScoreInput,
+      );
+      expect(
+        Math.abs(scored.probability - fixture.probability),
+        fixture.id,
+      ).toBeLessThan(parityFixtures.tolerance);
     }
   });
 });

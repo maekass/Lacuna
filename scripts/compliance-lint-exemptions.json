@@ -1,0 +1,16 @@
+[
+  {
+    "file": "src/data/rhCapitalPortfolio.ts",
+    "line": 78,
+    "rule": "R3: No MNPI",
+    "reason": "\"Femtech Insider\" is a named trade publication, not a reference to material non-public information.",
+    "addedAt": "2026-09-05"
+  },
+  {
+    "file": "src/lib/stats/specialFunctions.ts",
+    "line": 28,
+    "rule": "R5: No PII",
+    "reason": "Lanczos approximation constant 2.5066282746310005 matches the 16-digit card regex; it is not a PAN.",
+    "addedAt": "2026-09-05"
+  }
+]

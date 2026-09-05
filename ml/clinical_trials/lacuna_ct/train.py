@@ -9,6 +9,7 @@ import numpy as np
 from scipy.sparse import hstack
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
+from sklearn.calibration import calibration_curve
 from sklearn.metrics import (
     accuracy_score,
     brier_score_loss,
@@ -35,8 +36,63 @@ from lacuna_ct.fetch_training_data import (
     save_records,
 )
 
-EXPORT_AUC_GATE = 0.55
+EXPORT_AUC_CI_LOWER_MIN = 0.55
 COMPLETION_MODEL_ID = "completion-proxy-v2"
+BOOTSTRAP_RESAMPLES = 2000
+
+
+def bootstrap_auc_ci(
+    y_true: np.ndarray,
+    probs: np.ndarray,
+    *,
+    n: int = BOOTSTRAP_RESAMPLES,
+    seed: int = 42,
+) -> tuple[float, float]:
+    rng = np.random.default_rng(seed)
+    scores: list[float] = []
+    for _ in range(n):
+        idx = rng.integers(0, len(y_true), len(y_true))
+        if len(np.unique(y_true[idx])) < 2:
+            continue
+        scores.append(float(roc_auc_score(y_true[idx], probs[idx])))
+    if not scores:
+        return 0.0, 0.0
+    lo, hi = np.percentile(scores, [2.5, 97.5])
+    return float(lo), float(hi)
+
+
+def calibration_points(
+    y_true: np.ndarray,
+    probs: np.ndarray,
+    n_bins: int = 10,
+) -> dict[str, list[float]]:
+    frac_pos, mean_pred = calibration_curve(
+        y_true, probs, n_bins=n_bins, strategy="uniform"
+    )
+    return {
+        "fraction_of_positives": [float(x) for x in frac_pos],
+        "mean_predicted_probability": [float(x) for x in mean_pred],
+    }
+
+
+def passes_export_gate(metrics: dict) -> tuple[bool, str]:
+    """Honest conjunction: CI-lower AUC, beat majority, beat base-rate Brier."""
+    if float(metrics.get("roc_auc_ci_lower", 0.0)) <= EXPORT_AUC_CI_LOWER_MIN:
+        return False, (
+            f"roc_auc_ci_lower={metrics.get('roc_auc_ci_lower')} "
+            f"<= {EXPORT_AUC_CI_LOWER_MIN}"
+        )
+    majority = float(metrics.get("majority_baseline_accuracy", 1.0))
+    if float(metrics.get("accuracy", 0.0)) <= majority:
+        return False, (
+            f"accuracy={metrics.get('accuracy')} <= majority baseline {majority}"
+        )
+    base_brier = float(metrics.get("base_rate_brier", 0.0))
+    if float(metrics.get("brier", 1.0)) >= base_brier:
+        return False, (
+            f"brier={metrics.get('brier')} >= base-rate Brier {base_brier}"
+        )
+    return True, "ok"
 
 
 def repo_root() -> Path:
@@ -139,6 +195,8 @@ def train_hybrid_completion(
     preds = (probs >= 0.5).astype(int)
 
     majority = max(np.mean(y_test == 0), np.mean(y_test == 1))
+    base_rate = float(np.mean(y_test))
+    auc_ci = bootstrap_auc_ci(y_test, probs)
     metrics = {
         "n_total": len(labeled),
         "n_train": int(len(train_idx)),
@@ -148,9 +206,16 @@ def train_hybrid_completion(
         "recall": float(recall_score(y_test, preds, zero_division=0)),
         "f1": float(f1_score(y_test, preds, zero_division=0)),
         "roc_auc": float(roc_auc_score(y_test, probs)),
+        "roc_auc_ci_lower": auc_ci[0],
+        "roc_auc_ci_upper": auc_ci[1],
         "brier": float(brier_score_loss(y_test, probs)),
         "majority_baseline_accuracy": float(majority),
+        "base_rate_brier": float(base_rate * (1.0 - base_rate)),
     }
+    gate_pass, gate_reason = passes_export_gate(metrics)
+    metrics["passes_export_gate"] = 1 if gate_pass else 0
+    print(f"Completion export gate: {gate_reason}")
+    print(json.dumps(calibration_points(y_test, probs), indent=2))
 
     artifact = export_hybrid_from_fitted(
         model_id=COMPLETION_MODEL_ID,
@@ -211,19 +276,20 @@ def main() -> None:
     hybrid = train_hybrid_completion(records)
     if hybrid:
         completion_artifact, completion_metrics = hybrid
-        if completion_metrics["roc_auc"] >= EXPORT_AUC_GATE:
+        gate_pass, gate_reason = passes_export_gate(completion_metrics)
+        if gate_pass:
             comp_path = write_artifact(
                 completion_artifact,
                 root,
                 "src/data/ml/clinical-trials/completion-proxy-v2.json",
             )
             print(f"Wrote completion proxy model → {comp_path}")
-            print(json.dumps(completion_metrics, indent=2))
         else:
             print(
-                f"Skipped completion export (roc_auc={completion_metrics['roc_auc']:.3f} < {EXPORT_AUC_GATE})",
+                "Skipped completion export — conjunction gate failed: "
+                f"{gate_reason}. Keeping the last committed artifact."
             )
-            completion_metrics = None
+        print(json.dumps(completion_metrics, indent=2))
     else:
         labeled_n = sum(1 for r in records if r.label_completed is not None)
         print(f"Skipped completion model (n={labeled_n} labeled trials)")

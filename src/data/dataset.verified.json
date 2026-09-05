@@ -1,6 +1,6 @@
 {
   "provenance": {
-    "lastUpdated": "2026-07-06",
+    "lastUpdated": "2026-09-05",
     "datasetVersion": "v8",
     "sources": [
       "SEC EDGAR filings (acquisitions, 8-K/10-K)",
@@ -58,7 +58,8 @@
       "Dataset v5 expands to 58 acquisitions with menopause therapeutics (Bayer/KaNDy, Astellas/Ogeda), large-cap diagnostics (Hologic/Gen-Probe $3.7B), global fertility clinic consolidation (KKR/IVI-RMA $3.25B, BPEA EQT/Indira IVF $657M, IVI-RMA/Eugin NA), and women's health-focused acquirer expansions (Organon/Dermavant $1.2B, Hims & Hers/Apostrophe)",
       "2026-06-11: Added 14 Amboy Street Ventures portfolio companies with press-verified founding, stage, and funding data (totalFunding omitted where no source states a total), plus the Gennev / Unified Women's Healthcare acquisition (2022, terms not disclosed).",
       "2026-07-02: Corrected deal4 (Lemonaid Health acquired by 23andMe for $400M per SEC filing, not Amazon). Added disclosed deal values for Alydia Health ($240M), Apostrophe (~$190M), and cited pre-deal valuations for Maven/Kindbody strategic investments.",
-      "2026-07-06: Dual-scope dataset — medicine & biotech (default product) and consumer health (separate /consumer workspace). Full catalog retained; each workspace filters in memory."
+      "2026-07-06: Dual-scope dataset — medicine & biotech (default product) and consumer health (separate /consumer workspace). Full catalog retained; each workspace filters in memory.",
+      "preDealValuationDatePrecision backfilled from cited sources; 10 post-announcement placeholder dates reset to announcement-year January 1 at year precision."
     ],
     "purpose": "Educational demonstration dataset for portfolio project. Not for commercial investment decisions.",
     "disclaimer": "Data compiled from public sources for educational visualization. Verify independently before any commercial use."
@@ -2947,7 +2948,8 @@
       "preDealValuation": 10500,
       "preDealValuationSource": "NASDAQ market capitalization, July 2020 (pre-merger announcement)",
       "preDealValuationDate": "2020-07-01",
-      "computedPremium": 1.32
+      "computedPremium": 1.32,
+      "preDealValuationDatePrecision": "month"
     },
     {
       "id": "deal2",
@@ -2965,8 +2967,9 @@
       "dealStructure": "Cash",
       "preDealValuation": 150,
       "preDealValuationSource": "TechCrunch — Series B funding coverage, 2020",
-      "preDealValuationDate": "2020-06-01",
-      "computedPremium": 1.5
+      "preDealValuationDate": "2020-01-01",
+      "computedPremium": 1.5,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal3",
@@ -2985,7 +2988,8 @@
       "preDealValuation": 250,
       "preDealValuationSource": "Axios — Nurx funding coverage, 2021",
       "preDealValuationDate": "2021-01-01",
-      "computedPremium": 1.2
+      "computedPremium": 1.2,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal4",
@@ -3016,7 +3020,8 @@
       "dealStructure": "Strategic Investment",
       "preDealValuation": 1000,
       "preDealValuationSource": "TechCrunch / Maven Clinic press release — Series D at $1B+ valuation, Aug 2021",
-      "preDealValuationDate": "2021-08-17"
+      "preDealValuationDate": "2021-08-17",
+      "preDealValuationDatePrecision": "day"
     },
     {
       "id": "deal6",
@@ -3032,7 +3037,8 @@
       "dealStructure": "Strategic Investment",
       "preDealValuation": 1800,
       "preDealValuationSource": "Kindbody press release — $100M financing at $1.8B valuation, Mar 2023",
-      "preDealValuationDate": "2023-03-02"
+      "preDealValuationDate": "2023-03-02",
+      "preDealValuationDatePrecision": "day"
     },
     {
       "id": "deal7",
@@ -3051,7 +3057,8 @@
       "preDealValuation": 170,
       "preDealValuationSource": "Hologic 8-K filing, SEC EDGAR — implied pre-deal valuation",
       "preDealValuationDate": "2021-01-01",
-      "computedPremium": 1.35
+      "computedPremium": 1.35,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal8",
@@ -3070,7 +3077,9 @@
       "preDealValuation": 200,
       "preDealValuationSource": "Fierce Healthcare — acquisition coverage, 2024",
       "preDealValuationDate": "2024-01-01",
-      "computedPremium": 1.55
+      "computedPremium": 1.55,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal9",
@@ -3089,7 +3098,8 @@
       "preDealValuation": 220,
       "preDealValuationSource": "Hologic press release — acquisition announcement, 2024",
       "preDealValuationDate": "2024-01-01",
-      "computedPremium": 1.59
+      "computedPremium": 1.59,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal10",
@@ -3108,7 +3118,9 @@
       "preDealValuation": 100,
       "preDealValuationSource": "Cooper Companies 10-K filing, SEC EDGAR — ORIGIO acquisition",
       "preDealValuationDate": "2012-01-01",
-      "computedPremium": 1.47
+      "computedPremium": 1.47,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal11",
@@ -3126,8 +3138,10 @@
       "dealStructure": "Cash",
       "preDealValuation": 1200,
       "preDealValuationSource": "CooperSurgical press release — acquisition coverage, 2022",
-      "preDealValuationDate": "2022-01-01",
-      "computedPremium": 1.33
+      "preDealValuationDate": "2021-01-01",
+      "computedPremium": 1.33,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal12",
@@ -3188,7 +3202,8 @@
       "preDealValuation": 50,
       "preDealValuationSource": "Organon press release — Forendo Pharma acquisition, 2021",
       "preDealValuationDate": "2021-01-01",
-      "computedPremium": 1.5
+      "computedPremium": 1.5,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal16",
@@ -3207,7 +3222,9 @@
       "preDealValuation": 1100,
       "preDealValuationSource": "Vitrolife press release — Igenomix acquisition, 2021",
       "preDealValuationDate": "2021-01-01",
-      "computedPremium": 1.32
+      "computedPremium": 1.32,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal17",
@@ -3226,7 +3243,8 @@
       "preDealValuation": 130,
       "preDealValuationSource": "Gedeon Richter press release — Estetra acquisition, 2024",
       "preDealValuationDate": "2024-01-01",
-      "computedPremium": 1.5
+      "computedPremium": 1.5,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal18",
@@ -3258,7 +3276,8 @@
       "preDealValuation": 280,
       "preDealValuationSource": "LabCorp 8-K filing, SEC EDGAR — Sequenom acquisition",
       "preDealValuationDate": "2016-01-01",
-      "computedPremium": 1.32
+      "computedPremium": 1.32,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal20",
@@ -3277,7 +3296,9 @@
       "preDealValuation": 2400,
       "preDealValuationSource": "Exact Sciences 8-K filing, SEC EDGAR — Genomic Health acquisition",
       "preDealValuationDate": "2019-01-01",
-      "computedPremium": 1.17
+      "computedPremium": 1.17,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal21",
@@ -3296,7 +3317,9 @@
       "preDealValuation": 1800,
       "preDealValuationSource": "Roche 8-K filing, SEC EDGAR — Foundation Medicine acquisition",
       "preDealValuationDate": "2018-01-01",
-      "computedPremium": 1.33
+      "computedPremium": 1.33,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal22",
@@ -3315,7 +3338,9 @@
       "preDealValuation": 1500,
       "preDealValuationSource": "Roche press release — Flatiron Health acquisition, 2018",
       "preDealValuationDate": "2018-01-01",
-      "computedPremium": 1.27
+      "computedPremium": 1.27,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal23",
@@ -3334,7 +3359,8 @@
       "preDealValuation": 55,
       "preDealValuationSource": "Hologic press release — Acessa Health acquisition, 2020",
       "preDealValuationDate": "2020-01-01",
-      "computedPremium": 1.45
+      "computedPremium": 1.45,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal24",
@@ -3353,7 +3379,9 @@
       "preDealValuation": 100,
       "preDealValuationSource": "Hologic press release — Bolder Surgical acquisition, 2021",
       "preDealValuationDate": "2021-01-01",
-      "computedPremium": 1.6
+      "computedPremium": 1.6,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal25",
@@ -3372,7 +3400,8 @@
       "preDealValuation": 80,
       "preDealValuationSource": "Hologic 8-K filing, SEC EDGAR — Focal Therapeutics acquisition",
       "preDealValuationDate": "2018-01-01",
-      "computedPremium": 1.56
+      "computedPremium": 1.56,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal26",
@@ -3391,7 +3420,8 @@
       "preDealValuation": 65,
       "preDealValuationSource": "Cooper Companies press release — obp Surgical acquisition, 2024",
       "preDealValuationDate": "2024-01-01",
-      "computedPremium": 1.54
+      "computedPremium": 1.54,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal27",
@@ -3410,7 +3440,8 @@
       "preDealValuation": 250,
       "preDealValuationSource": "Medtronic 8-K filing, SEC EDGAR — Truclear acquisition",
       "preDealValuationDate": "2016-01-01",
-      "computedPremium": 1.4
+      "computedPremium": 1.4,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal28",
@@ -3429,7 +3460,8 @@
       "preDealValuation": 180,
       "preDealValuationSource": "Boston Scientific 8-K filing, SEC EDGAR — nVision Medical acquisition",
       "preDealValuationDate": "2018-01-01",
-      "computedPremium": 1.53
+      "computedPremium": 1.53,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal29",
@@ -3447,8 +3479,10 @@
       "dealStructure": "Cash + Stock",
       "preDealValuation": 6500,
       "preDealValuationSource": "Illumina 8-K filing, SEC EDGAR — GRAIL acquisition announcement",
-      "preDealValuationDate": "2021-01-01",
-      "computedPremium": 1.23
+      "preDealValuationDate": "2020-01-01",
+      "computedPremium": 1.23,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal30",
@@ -3467,7 +3501,8 @@
       "preDealValuation": 220,
       "preDealValuationSource": "Astorg press release — Hamilton Thorne acquisition, 2024",
       "preDealValuationDate": "2024-01-01",
-      "computedPremium": 1.28
+      "computedPremium": 1.28,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal31",
@@ -3499,8 +3534,9 @@
       "dealStructure": "Cash",
       "preDealValuation": 160,
       "preDealValuationSource": "Laborie Medical Technologies press release — Cogentix acquisition, 2019",
-      "preDealValuationDate": "2019-01-01",
-      "computedPremium": 1.34
+      "preDealValuationDate": "2018-01-01",
+      "computedPremium": 1.34,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal33",
@@ -3519,7 +3555,9 @@
       "preDealValuation": 100,
       "preDealValuationSource": "Coloplast press release — Nine Continents Medical acquisition, 2020",
       "preDealValuationDate": "2020-01-01",
-      "computedPremium": 1.45
+      "computedPremium": 1.45,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal34",
@@ -3537,8 +3575,10 @@
       "dealStructure": "Cash + Stock",
       "preDealValuation": 2400,
       "preDealValuationSource": "Sumitovant press release — Myovant Sciences acquisition, 2023 (NYSE:MYOV market cap)",
-      "preDealValuationDate": "2023-01-01",
-      "computedPremium": 1.21
+      "preDealValuationDate": "2022-01-01",
+      "computedPremium": 1.21,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal35",
@@ -3557,7 +3597,8 @@
       "preDealValuation": 250,
       "preDealValuationSource": "Myriad Genetics 8-K filing, SEC EDGAR — Counsyl acquisition",
       "preDealValuationDate": "2018-01-01",
-      "computedPremium": 1.5
+      "computedPremium": 1.5,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal36",
@@ -3576,7 +3617,8 @@
       "preDealValuation": 45,
       "preDealValuationSource": "Myriad Genetics press release — Gateway Genomics acquisition, 2022",
       "preDealValuationDate": "2022-01-01",
-      "computedPremium": 1.5
+      "computedPremium": 1.5,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal37",
@@ -3595,7 +3637,8 @@
       "preDealValuation": 40,
       "preDealValuationSource": "Natera 8-K filing, SEC EDGAR — Invitae asset acquisition",
       "preDealValuationDate": "2024-01-01",
-      "computedPremium": 1.31
+      "computedPremium": 1.31,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal38",
@@ -3613,8 +3656,10 @@
       "dealStructure": "Cash (license/asset)",
       "preDealValuation": 100,
       "preDealValuationSource": "Mayne Pharma press release — TherapeuticsMD acquisition, 2023",
-      "preDealValuationDate": "2023-01-01",
-      "computedPremium": 1.53
+      "preDealValuationDate": "2022-01-01",
+      "computedPremium": 1.53,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal39",
@@ -3633,7 +3678,9 @@
       "preDealValuation": 38000,
       "preDealValuationSource": "Pfizer 8-K filing, SEC EDGAR — Seagen acquisition (NASDAQ:SGEN market cap)",
       "preDealValuationDate": "2023-01-01",
-      "computedPremium": 1.13
+      "computedPremium": 1.13,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal40",
@@ -3651,8 +3698,10 @@
       "dealStructure": "Cash + Stock",
       "preDealValuation": 15000,
       "preDealValuationSource": "Siemens Healthineers press release — Varian acquisition (NYSE:VAR market cap)",
-      "preDealValuationDate": "2021-01-01",
-      "computedPremium": 1.09
+      "preDealValuationDate": "2020-01-01",
+      "computedPremium": 1.09,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal41",
@@ -3671,7 +3720,9 @@
       "preDealValuation": 18000,
       "preDealValuationSource": "Gilead Sciences 8-K filing, SEC EDGAR — Immunomedics acquisition (NASDAQ:IMMU)",
       "preDealValuationDate": "2020-01-01",
-      "computedPremium": 1.17
+      "computedPremium": 1.17,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal42",
@@ -3689,8 +3740,10 @@
       "dealStructure": "Cash + Stock",
       "preDealValuation": 1700,
       "preDealValuationSource": "Exact Sciences press release — Thrive Earlier Detection acquisition, 2021",
-      "preDealValuationDate": "2021-01-01",
-      "computedPremium": 1.26
+      "preDealValuationDate": "2020-01-01",
+      "computedPremium": 1.26,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal43",
@@ -3709,7 +3762,8 @@
       "preDealValuation": 140,
       "preDealValuationSource": "Exact Sciences press release — PreventionGenetics acquisition, 2022",
       "preDealValuationDate": "2022-01-01",
-      "computedPremium": 1.36
+      "computedPremium": 1.36,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal44",
@@ -3728,7 +3782,9 @@
       "preDealValuation": 1000,
       "preDealValuationSource": "PerkinElmer 8-K filing, SEC EDGAR — EUROIMMUN acquisition",
       "preDealValuationDate": "2017-01-01",
-      "computedPremium": 1.3
+      "computedPremium": 1.3,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal45",
@@ -3747,7 +3803,8 @@
       "preDealValuation": 55,
       "preDealValuationSource": "Hologic press release — Faxitron Bioptics acquisition, 2018",
       "preDealValuationDate": "2018-01-01",
-      "computedPremium": 1.55
+      "computedPremium": 1.55,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal46",
@@ -3766,7 +3823,8 @@
       "preDealValuation": 60,
       "preDealValuationSource": "Hologic press release — SuperSonic Imagine acquisition, 2019",
       "preDealValuationDate": "2019-01-01",
-      "computedPremium": 1.42
+      "computedPremium": 1.42,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal47",
@@ -3799,7 +3857,8 @@
       "preDealValuation": 40,
       "preDealValuationSource": "Myriad Genetics press release — Sividon Diagnostics acquisition, 2016",
       "preDealValuationDate": "2016-01-01",
-      "computedPremium": 1.4
+      "computedPremium": 1.4,
+      "preDealValuationDatePrecision": "year"
     },
     {
       "id": "deal49",
@@ -3817,8 +3876,10 @@
       "dealStructure": "Cash + Stock",
       "preDealValuation": 4700,
       "preDealValuationSource": "Abbott 8-K filing, SEC EDGAR — Alere acquisition (NYSE:ALR market cap)",
-      "preDealValuationDate": "2017-01-01",
-      "computedPremium": 1.13
+      "preDealValuationDate": "2016-01-01",
+      "computedPremium": 1.13,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal50",
@@ -3851,7 +3912,9 @@
       "preDealValuation": 3200,
       "preDealValuationSource": "Hologic 8-K filing, SEC EDGAR — Gen-Probe acquisition (NASDAQ:GPRO)",
       "preDealValuationDate": "2012-01-01",
-      "computedPremium": 1.16
+      "computedPremium": 1.16,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal52",
@@ -3871,7 +3934,9 @@
       "preDealValuation": 300,
       "preDealValuationSource": "Bayer press release — KaNDy Therapeutics acquisition, 2020",
       "preDealValuationDate": "2020-01-01",
-      "computedPremium": 1.42
+      "computedPremium": 1.42,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal53",
@@ -3891,7 +3956,9 @@
       "preDealValuation": 400,
       "preDealValuationSource": "Astellas press release — Ogeda SA acquisition, 2017",
       "preDealValuationDate": "2017-01-01",
-      "computedPremium": 1.4
+      "computedPremium": 1.4,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal54",
@@ -3911,7 +3978,9 @@
       "preDealValuation": 900,
       "preDealValuationSource": "Organon press release — Dermavant Sciences acquisition, 2024",
       "preDealValuationDate": "2024-01-01",
-      "computedPremium": 1.33
+      "computedPremium": 1.33,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal55",
@@ -3929,8 +3998,10 @@
       "strategicRationale": "Created world's largest fertility services group by combining IVI-RMA with KKR's prior GeneraLife acquisition; 75+ clinics in 9 countries",
       "preDealValuation": 2600,
       "preDealValuationSource": "KKR press release — IVI-RMA Global acquisition, 2023",
-      "preDealValuationDate": "2023-01-01",
-      "computedPremium": 1.25
+      "preDealValuationDate": "2022-01-01",
+      "computedPremium": 1.25,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal56",
@@ -3949,7 +4020,9 @@
       "preDealValuation": 500,
       "preDealValuationSource": "BPEA EQT press release — Indira IVF acquisition, 2023",
       "preDealValuationDate": "2023-01-01",
-      "computedPremium": 1.31
+      "computedPremium": 1.31,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal57",
@@ -3982,8 +4055,10 @@
       "strategicRationale": "Added Boston IVF (Harvard-affiliated, 13 labs) and TRIO (Toronto) to IVI-RMA network, consolidating North American fertility market leadership",
       "preDealValuation": 400,
       "preDealValuationSource": "IVI-RMA Global press release — Eugin Group acquisition, 2024",
-      "preDealValuationDate": "2024-01-01",
-      "computedPremium": 1.33
+      "preDealValuationDate": "2023-01-01",
+      "computedPremium": 1.33,
+      "preDealValuationDatePrecision": "year",
+      "preDealValuationRoundingGridM": 100
     },
     {
       "id": "deal59",

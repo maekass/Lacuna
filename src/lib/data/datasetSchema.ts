@@ -66,6 +66,9 @@ export const acquisitionSchema = z.object({
   preDealValuation: optionalNumber,
   preDealValuationSource: optionalString,
   preDealValuationDate: isoDateSchema.optional(),
+  preDealValuationDatePrecision: z.enum(["day", "month", "quarter", "year"])
+    .optional(),
+  preDealValuationRoundingGridM: optionalNumber,
   computedPremium: optionalNumber,
 });
 
