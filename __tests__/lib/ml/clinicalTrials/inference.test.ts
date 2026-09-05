@@ -91,6 +91,11 @@ describe("clinicalTrials ML inference", () => {
     expect(areClinicalTrialMlScoresReleased()).toBe(false);
   });
 
+  it("does not enable the rejected completion proxy", () => {
+    expect(isCompletionProxyAvailable()).toBe(false);
+    expect(scoreClinicalTrial(whTrial).completionProxy).toBeNull();
+  });
+
   it("matches sklearn parity fixtures within 1e-6", () => {
     const artifacts: Record<string, TfidfLogisticArtifact> = {
       "wh-relevance-v1": WH_RELEVANCE_MODEL,

@@ -273,6 +273,8 @@ def main() -> None:
     print(json.dumps(wh_metrics, indent=2))
 
     completion_metrics = None
+    gate_pass = False
+    gate_reason = "Completion model was not trained."
     hybrid = train_hybrid_completion(records)
     if hybrid:
         completion_artifact, completion_metrics = hybrid
@@ -302,9 +304,30 @@ def main() -> None:
         ),
         "trainingSource": training_source,
         "recordCount": len(records),
+        "exportGate": {
+            "version": "conjunction-v1",
+            "requires": [
+                "roc_auc_ci_lower > 0.55",
+                "accuracy > majority_baseline_accuracy",
+                "brier < base_rate_brier",
+            ],
+            "committedCompletionPasses": bool(gate_pass),
+            "reason": gate_reason,
+        },
         "models": {
             "whRelevance": {"artifact": "wh-relevance-v1.json", "metrics": wh_metrics},
-            "completionProxy": completion_metrics,
+            # Non-null completionProxy enables TypeScript serving. Rejected
+            # runs store metrics on completionProxyRejected only.
+            "completionProxy": (
+                {"artifact": "completion-proxy-v2.json", "metrics": completion_metrics}
+                if gate_pass and completion_metrics
+                else None
+            ),
+            "completionProxyRejected": (
+                None
+                if gate_pass or completion_metrics is None
+                else {"metrics": completion_metrics, "reason": gate_reason}
+            ),
         },
     }
     card_path = write_artifact(
