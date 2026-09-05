@@ -28,6 +28,18 @@ describe("buildPipelineHealthView", () => {
     expect(view.secIngestLabel).not.toMatch(/%/);
   });
 
+  it("uses live ingest overrides instead of the static artifact", () => {
+    const view = buildPipelineHealthView(new Date("2026-09-05T00:00:00Z"), {
+      pipelines: {
+        secIngestLastRunAt: "2026-09-04T12:00:00.000Z",
+        secIngestStatus: "success",
+      },
+    });
+    expect(view.secIngestConfigured).toBe(true);
+    expect(view.secIngestLabel).toMatch(/success/);
+    expect(view.secIngestLabel).toMatch(/2026-09-04T12:00:00.000Z/);
+  });
+
   it("computes dataset age from provenance.lastUpdated", () => {
     const dataset = JSON.parse(
       readFileSync(

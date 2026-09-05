@@ -5,6 +5,7 @@
 
 import qualityScores from "@/data/computed-data-quality-scores.json";
 import datasetSummary from "@/data/computed-dataset-summary.json";
+import type { DatasetPipelineStatus } from "@/lib/data/buildDatasetSummary";
 import provenanceBaseline from "../../../scripts/provenance-baseline.json";
 
 export interface PipelineHealthView {
@@ -55,19 +56,26 @@ function datasetAgeDays(lastUpdated: string, now = new Date()): number {
   return Math.max(0, Math.floor(ms / 86_400_000));
 }
 
+export interface PipelineHealthOverrides {
+  readonly pipelines?: DatasetPipelineStatus;
+}
+
 /**
  * Build the pipeline-health panel from hash-verified artifacts.
  * `secIngestLastRunAt` is null in static mode — rendered as not configured.
+ * DB mode may pass live ingest state from `loadSummaryPipelines`.
  */
 export function buildPipelineHealthView(
   now = new Date(),
+  overrides: PipelineHealthOverrides = {},
 ): PipelineHealthView {
   const quality = qualityScores as QualitySummary;
   const summary = datasetSummary as DatasetSummaryShape;
   const provenance = provenanceBaseline as ProvenanceBaselineShape;
   const lastUpdated = summary.provenance.lastUpdated;
   const ageDays = datasetAgeDays(lastUpdated, now);
-  const secConfigured = summary.pipelines.secIngestLastRunAt !== null;
+  const pipelines = overrides.pipelines ?? summary.pipelines;
+  const secConfigured = pipelines.secIngestLastRunAt !== null;
   const coveragePct = provenance.total > 0
     ? ((provenance.covered / provenance.total) * 100).toFixed(1)
     : "0.0";
@@ -88,8 +96,8 @@ export function buildPipelineHealthView(
       `${provenance.covered} / ${provenance.total} (${coveragePct}%)`,
     secIngestLabel: secConfigured
       ? `${
-        summary.pipelines.secIngestStatus ?? "unknown"
-      } · last run ${summary.pipelines.secIngestLastRunAt}`
+        pipelines.secIngestStatus ?? "unknown"
+      } · last run ${pipelines.secIngestLastRunAt}`
       : "Not configured (static dataset)",
     secIngestConfigured: secConfigured,
   };
