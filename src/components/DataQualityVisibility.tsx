@@ -218,7 +218,9 @@ export default function DataQualityVisibility({
           census.datasetHash.slice(0, 12)
         } · ${census.generatedAt}${
           quality.lowGradeCompanies.length + quality.lowGradeDeals.length > 0
-            ? ` · ${quality.lowGradeCompanies.length} companies and ${quality.lowGradeDeals.length} deals graded D/F`
+            ? ` · ${quality.lowGradeCompanies.length} companies and ${quality.lowGradeDeals.length} deal${
+              quality.lowGradeDeals.length === 1 ? "" : "s"
+            } graded D/F`
             : ""
         }`}
       </p>
