@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "total": 1036,
+  "total": 1035,
   "covered": 19,
   "exempt": 2,
-  "uncovered": 1015,
+  "uncovered": 1014,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
-    "src/app/sections/ConsumerHealthPage.tsx": 7,
+    "src/app/sections/ConsumerHealthPage.tsx": 6,
     "src/app/sections/DealDetailPage.tsx": 5,
     "src/app/sections/DealsPage.tsx": 12,
     "src/app/sections/HubPage.tsx": 15,
@@ -181,14 +181,6 @@
       "expression": "0.03",
       "kind": "numeric-jsx",
       "key": "src/app/sections/ConsumerHealthPage.tsx::ConsumerHealthPage::0.03",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/app/sections/ConsumerHealthPage.tsx",
-      "functionName": "ConsumerHealthPage",
-      "expression": "0.05",
-      "kind": "numeric-jsx",
-      "key": "src/app/sections/ConsumerHealthPage.tsx::ConsumerHealthPage::0.05",
       "class": "uncovered"
     },
     {
