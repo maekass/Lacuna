@@ -24,7 +24,7 @@ export default function DataPipelineStatus({
           </h3>
           <p className="text-sm text-lacuna-blue">
             Counts and grades from verified artifacts — no fabricated latency or
-            success rate.
+            invented completion percentages.
           </p>
         </div>
 
