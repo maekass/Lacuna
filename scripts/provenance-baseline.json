@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "total": 1044,
-  "covered": 15,
+  "total": 1035,
+  "covered": 19,
   "exempt": 2,
-  "uncovered": 1027,
+  "uncovered": 1014,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
-    "src/app/sections/ConsumerHealthPage.tsx": 7,
+    "src/app/sections/ConsumerHealthPage.tsx": 6,
     "src/app/sections/DealDetailPage.tsx": 5,
     "src/app/sections/DealsPage.tsx": 12,
     "src/app/sections/HubPage.tsx": 15,
@@ -32,11 +32,11 @@
     "src/components/CompanySimilarity.tsx": 5,
     "src/components/CompetitiveAnalysisDashboard.tsx": 33,
     "src/components/CuratedDatasetBanner.tsx": 1,
-    "src/components/DataCoverageCard.tsx": 19,
+    "src/components/DataCoverageCard.tsx": 14,
     "src/components/DataExport.tsx": 8,
     "src/components/DataIngestPanel.tsx": 5,
-    "src/components/DataPipelineStatus.tsx": 8,
     "src/components/DataProvenanceBanner.tsx": 1,
+    "src/components/DataQualityVisibility.tsx": 1,
     "src/components/DatasetCoverageFootnote.tsx": 1,
     "src/components/DatasetScopeBanner.tsx": 2,
     "src/components/DealFlowChart.tsx": 22,
@@ -181,14 +181,6 @@
       "expression": "0.03",
       "kind": "numeric-jsx",
       "key": "src/app/sections/ConsumerHealthPage.tsx::ConsumerHealthPage::0.03",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/app/sections/ConsumerHealthPage.tsx",
-      "functionName": "ConsumerHealthPage",
-      "expression": "0.05",
-      "kind": "numeric-jsx",
-      "key": "src/app/sections/ConsumerHealthPage.tsx::ConsumerHealthPage::0.05",
       "class": "uncovered"
     },
     {
@@ -2594,22 +2586,6 @@
     {
       "file": "src/components/DataCoverageCard.tsx",
       "functionName": "DataCoverageCard",
-      "expression": "(stats.disclosureRate * 100).toFixed(0)",
-      "kind": "formatting-call",
-      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::(stats.disclosureRate * 100).toFixed(0)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DataCoverageCard.tsx",
-      "functionName": "DataCoverageCard",
-      "expression": "(stats.valuationRate * 100).toFixed(0)",
-      "kind": "formatting-call",
-      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::(stats.valuationRate * 100).toFixed(0)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DataCoverageCard.tsx",
-      "functionName": "DataCoverageCard",
       "expression": "dataProvenance.sources.length - 5",
       "kind": "numeric-jsx",
       "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::dataProvenance.sources.length - 5",
@@ -2690,30 +2666,6 @@
     {
       "file": "src/components/DataCoverageCard.tsx",
       "functionName": "DataCoverageCard",
-      "expression": "stats .dealsWithValueNote",
-      "kind": "numeric-jsx",
-      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::stats .dealsWithValueNote",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DataCoverageCard.tsx",
-      "functionName": "DataCoverageCard",
-      "expression": "stats.companiesTotal",
-      "kind": "numeric-jsx",
-      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::stats.companiesTotal",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DataCoverageCard.tsx",
-      "functionName": "DataCoverageCard",
-      "expression": "stats.companiesWithValuation",
-      "kind": "numeric-jsx",
-      "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::stats.companiesWithValuation",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DataCoverageCard.tsx",
-      "functionName": "DataCoverageCard",
       "expression": "undisclosed",
       "kind": "numeric-jsx",
       "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::undisclosed",
@@ -2742,6 +2694,22 @@
       "kind": "numeric-jsx",
       "key": "src/components/DataCoverageCard.tsx::DataCoverageCard::zeroDealSectorCount",
       "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataCoverageStatBoxes.tsx",
+      "functionName": "CoverageRateTiles",
+      "expression": "(rate * 100).toFixed(0)",
+      "kind": "formatting-call",
+      "key": "src/components/DataCoverageStatBoxes.tsx::CoverageRateTiles::(rate * 100).toFixed(0)",
+      "class": "covered"
+    },
+    {
+      "file": "src/components/DataCoverageStatBoxes.tsx",
+      "functionName": "CoverageRateTiles",
+      "expression": "(rate * 100).toFixed(0)",
+      "kind": "formatting-call",
+      "key": "src/components/DataCoverageStatBoxes.tsx::CoverageRateTiles::(rate * 100).toFixed(0)#2",
+      "class": "covered"
     },
     {
       "file": "src/components/DataExport.tsx",
@@ -2848,75 +2816,35 @@
       "class": "uncovered"
     },
     {
-      "file": "src/components/DataPipelineStatus.tsx",
-      "functionName": "DataPipelineStatus",
-      "expression": "(stats.avgDuration / 1000).toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/DataPipelineStatus.tsx::DataPipelineStatus::(stats.avgDuration / 1000).toFixed(1)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DataPipelineStatus.tsx",
-      "functionName": "DataPipelineStatus",
-      "expression": "idx + 1",
-      "kind": "numeric-jsx",
-      "key": "src/components/DataPipelineStatus.tsx::DataPipelineStatus::idx + 1",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DataPipelineStatus.tsx",
-      "functionName": "DataPipelineStatus",
-      "expression": "stage.durationMs",
-      "kind": "numeric-jsx",
-      "key": "src/components/DataPipelineStatus.tsx::DataPipelineStatus::stage.durationMs",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DataPipelineStatus.tsx",
-      "functionName": "DataPipelineStatus",
-      "expression": "stage.errorCount",
-      "kind": "numeric-jsx",
-      "key": "src/components/DataPipelineStatus.tsx::DataPipelineStatus::stage.errorCount",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DataPipelineStatus.tsx",
-      "functionName": "DataPipelineStatus",
-      "expression": "stage.recordCount.toLocaleString()",
-      "kind": "formatting-call",
-      "key": "src/components/DataPipelineStatus.tsx::DataPipelineStatus::stage.recordCount.toLocaleString()",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DataPipelineStatus.tsx",
-      "functionName": "DataPipelineStatus",
-      "expression": "stats.totalErrors",
-      "kind": "numeric-jsx",
-      "key": "src/components/DataPipelineStatus.tsx::DataPipelineStatus::stats.totalErrors",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DataPipelineStatus.tsx",
-      "functionName": "DataPipelineStatus",
-      "expression": "stats.totalProcessed.toLocaleString()",
-      "kind": "formatting-call",
-      "key": "src/components/DataPipelineStatus.tsx::DataPipelineStatus::stats.totalProcessed.toLocaleString()",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/DataPipelineStatus.tsx",
-      "functionName": "usePipelineStatus",
-      "expression": "((totalProcessed - totalErrors) / totalProcessed * 100).toFixed(2)",
-      "kind": "formatting-call",
-      "key": "src/components/DataPipelineStatus.tsx::usePipelineStatus::((totalProcessed - totalErrors) / totalProcessed * 100).toFixed(2)",
-      "class": "uncovered"
-    },
-    {
       "file": "src/components/DataProvenanceBanner.tsx",
       "functionName": "DataProvenanceBanner",
       "expression": "verifiedAcquisitions.length",
       "kind": "numeric-jsx",
       "key": "src/components/DataProvenanceBanner.tsx::DataProvenanceBanner::verifiedAcquisitions.length",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/DataQualityVisibility.tsx",
+      "functionName": "DataQualityVisibility",
+      "expression": "score.toFixed(1)",
+      "kind": "formatting-call",
+      "key": "src/components/DataQualityVisibility.tsx::DataQualityVisibility::score.toFixed(1)",
+      "class": "covered"
+    },
+    {
+      "file": "src/components/DataQualityVisibility.tsx",
+      "functionName": "DataQualityVisibility",
+      "expression": "score.toFixed(1)",
+      "kind": "formatting-call",
+      "key": "src/components/DataQualityVisibility.tsx::DataQualityVisibility::score.toFixed(1)#2",
+      "class": "covered"
+    },
+    {
+      "file": "src/components/DataQualityVisibility.tsx",
+      "functionName": "pct",
+      "expression": "(rate * 100).toFixed(1)",
+      "kind": "formatting-call",
+      "key": "src/components/DataQualityVisibility.tsx::pct::(rate * 100).toFixed(1)",
       "class": "uncovered"
     },
     {

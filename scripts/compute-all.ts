@@ -24,6 +24,7 @@ const STEPS = [
   "scripts/compute-data-quality.ts",
   "scripts/compute-confidence-intervals.ts",
   "scripts/compute-dataset-summary.ts",
+  "scripts/compute-quality-visibility.ts",
 ] as const;
 
 function runStep(scriptPath: string): void {
