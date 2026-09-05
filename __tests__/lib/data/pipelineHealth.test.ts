@@ -29,8 +29,17 @@ describe("buildPipelineHealthView", () => {
   });
 
   it("computes dataset age from provenance.lastUpdated", () => {
-    const view = buildPipelineHealthView(new Date("2026-07-08T00:00:00Z"));
-    expect(view.lastUpdated).toBe("2026-07-06");
+    const dataset = JSON.parse(
+      readFileSync(
+        path.join(repoRoot, "src/data/dataset.verified.json"),
+        "utf8",
+      ),
+    ) as { provenance: { lastUpdated: string } };
+    const lastUpdated = dataset.provenance.lastUpdated;
+    const now = new Date(`${lastUpdated}T00:00:00Z`);
+    now.setUTCDate(now.getUTCDate() + 2);
+    const view = buildPipelineHealthView(now);
+    expect(view.lastUpdated).toBe(lastUpdated);
     expect(view.datasetAgeDaysLabel).toBe("2 days since last update");
   });
 });
