@@ -18,11 +18,10 @@ import {
 interface QualityArtifact {
   readonly datasetHash?: string;
   readonly generatedAt?: string;
-  readonly summary: QualityHistoryRow["companies"] extends infer _ ? {
-      readonly companies: QualityHistoryRow["companies"];
-      readonly acquisitions: QualityHistoryRow["acquisitions"];
-    }
-    : never;
+  readonly summary: {
+    readonly companies: QualityHistoryRow["companies"];
+    readonly acquisitions: QualityHistoryRow["acquisitions"];
+  };
 }
 
 interface SummaryArtifact {

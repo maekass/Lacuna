@@ -87,13 +87,13 @@ export default function CatalystWatchlistSection() {
     <section id="catalyst-watchlist" className="space-y-4">
       <Card>
         <h3 className="text-sm font-semibold uppercase tracking-wide text-lacuna-blue">
-          Women's-health relevant
+          Women&apos;s-health relevant
         </h3>
         <p className="mt-1 mb-3 text-xs text-lacuna-blue/80">
           {view.whCountLabel} of {view.rowCountLabel}{" "}
-          weekly catalysts are tagged women's-health relevant. The current feed
-          is general biopharma; Lacuna IDs are filled only when the company is
-          already in the verified universe.
+          weekly catalysts are tagged women&apos;s-health relevant. The current
+          feed is general biopharma; Lacuna IDs are filled only when the company
+          is already in the verified universe.
         </p>
         <CatalystTable
           rows={view.womensHealthRows}
