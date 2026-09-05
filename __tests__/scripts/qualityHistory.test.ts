@@ -102,8 +102,39 @@ describe("quality history ledger", () => {
         category: "dataset-expansion",
         reason: "   ",
         addedAt: "2026-09-05",
+        fromDatasetHash: "abc",
+        toDatasetHash: "abc",
       }])
     ).toThrow(/reason/);
+  });
+
+  it("rejects an unscoped exemption that omits dataset hashes", () => {
+    expect(() =>
+      qualityRatchetFailure(row(), row(), [{
+        category: "dataset-expansion",
+        reason: "Would otherwise disable every future ratchet.",
+        addedAt: "2026-09-05",
+        fromDatasetHash: "",
+        toDatasetHash: "",
+      }])
+    ).toThrow(/fromDatasetHash/);
+  });
+
+  it("does not let a score exemption waive an uncovered-site increase", () => {
+    const failure = qualityRatchetFailure(
+      row({
+        provenance: { total: 1000, covered: 16, exempt: 10, uncovered: 980 },
+      }),
+      row(),
+      [{
+        category: "dataset-expansion",
+        reason: "Score-only exemption must not cover provenance growth.",
+        addedAt: "2026-09-05",
+        fromDatasetHash: "abc",
+        toDatasetHash: "abc",
+      }],
+    );
+    expect(failure).toMatch(/Uncovered/);
   });
 
   it("assembles a row from committed artifacts", () => {

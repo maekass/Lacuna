@@ -76,9 +76,23 @@ export interface QualityHistoryExemption {
   readonly category: string;
   readonly reason: string;
   readonly addedAt: string;
-  readonly fromDatasetHash?: string;
-  readonly toDatasetHash?: string;
+  readonly fromDatasetHash: string;
+  readonly toDatasetHash: string;
 }
+
+const SCORE_DROP_CATEGORIES = new Set([
+  "dataset-expansion",
+  "scoring-model",
+  "disclosure-mix",
+  "backfill-correction",
+]);
+
+const UNCOVERED_CATEGORIES = new Set([
+  "provenance-census",
+  "backfill-correction",
+]);
+
+type RatchetCheck = "company-score" | "provenance-uncovered";
 
 interface QualityArtifact {
   readonly datasetHash?: string;
@@ -281,12 +295,14 @@ export function validateQualityExemptions(
     if (
       !QUALITY_RATCHET_CATEGORIES.has(exemption.category) ||
       !exemption.reason.trim() ||
-      !exemption.addedAt.trim()
+      !exemption.addedAt.trim() ||
+      !exemption.fromDatasetHash?.trim() ||
+      !exemption.toDatasetHash?.trim()
     ) {
       throw new Error(
         `Invalid quality-history exemption ${
           JSON.stringify(exemption)
-        }: categorized reason and addedAt are required.`,
+        }: categorized reason, addedAt, fromDatasetHash, and toDatasetHash are required.`,
       );
     }
     const key = `${exemption.category}::${exemption.fromDatasetHash ?? ""}::${
@@ -303,13 +319,15 @@ function exemptionCovers(
   exemptions: readonly QualityHistoryExemption[],
   previous: QualityHistoryRow,
   current: QualityHistoryRow,
+  check: RatchetCheck,
 ): boolean {
+  const allowed = check === "company-score"
+    ? SCORE_DROP_CATEGORIES
+    : UNCOVERED_CATEGORIES;
   return exemptions.some((exemption) => {
-    const fromOk = !exemption.fromDatasetHash ||
-      exemption.fromDatasetHash === previous.datasetHash;
-    const toOk = !exemption.toDatasetHash ||
+    if (!allowed.has(exemption.category)) return false;
+    return exemption.fromDatasetHash === previous.datasetHash &&
       exemption.toDatasetHash === current.datasetHash;
-    return fromOk && toOk;
   });
 }
 
@@ -324,12 +342,15 @@ export function qualityRatchetFailure(
 ): string | null {
   if (!previous) return null;
   validateQualityExemptions(exemptions);
-  if (exemptionCovers(exemptions, previous, current)) return null;
 
   const scoreDrop = previous.companies.avgScore - current.companies.avgScore;
   const uncoveredUp =
     current.provenance.uncovered > previous.provenance.uncovered;
-  if (scoreDrop <= 2 && !uncoveredUp) return null;
+  const scoreOk = scoreDrop <= 2 ||
+    exemptionCovers(exemptions, previous, current, "company-score");
+  const uncoveredOk = !uncoveredUp ||
+    exemptionCovers(exemptions, previous, current, "provenance-uncovered");
+  if (scoreOk && uncoveredOk) return null;
 
   const lines = [
     "Quality-history ratchet failed.",
