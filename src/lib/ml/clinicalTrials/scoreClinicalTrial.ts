@@ -76,18 +76,22 @@ export function getWhRelevanceModelMetrics(): Readonly<Record<string, number>> {
   return modelCard.models.whRelevance.metrics;
 }
 
+function completionMetricsFromCard(
+  served: unknown,
+): Readonly<Record<string, number>> | null {
+  if (!served || typeof served !== "object") return null;
+  const record = served as Record<string, unknown>;
+  if (record.metrics && typeof record.metrics === "object") {
+    return record.metrics as Readonly<Record<string, number>>;
+  }
+  return served as Readonly<Record<string, number>>;
+}
+
 export function getCompletionProxyMetrics():
   | Readonly<Record<string, number>>
   | null {
   if (!completionEnabled) return null;
-  const served = modelCard.models.completionProxy;
-  if (!served || typeof served !== "object") return null;
-  if (
-    "metrics" in served && served.metrics && typeof served.metrics === "object"
-  ) {
-    return served.metrics;
-  }
-  return served as Readonly<Record<string, number>>;
+  return completionMetricsFromCard(modelCard.models.completionProxy);
 }
 
 export function isCompletionProxyAvailable(): boolean {
