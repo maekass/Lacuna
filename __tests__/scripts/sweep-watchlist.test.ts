@@ -375,6 +375,14 @@ describe("main CLI", () => {
     ).toBe(true);
   });
 
+  it("keeps the checked-in catalysts.csv sorted by scheduled_date", () => {
+    const rows = toRows(parseCsv(readFileSync(REAL_CSV, "utf8")));
+    const report = runSweeps(rows, "2026-09-05");
+    expect(report.unsorted).toBe(false);
+    expect(report.dupes).toEqual([]);
+    expect(report.schemaErrors).toEqual([]);
+  });
+
   it("accepts the checked-in catalysts.csv under --check", () => {
     const stdout = execFileSync(
       process.execPath,
