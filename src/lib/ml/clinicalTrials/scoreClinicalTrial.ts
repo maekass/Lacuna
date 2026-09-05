@@ -82,7 +82,9 @@ export function getCompletionProxyMetrics():
   if (!completionEnabled) return null;
   const served = modelCard.models.completionProxy;
   if (!served || typeof served !== "object") return null;
-  if ("metrics" in served && served.metrics && typeof served.metrics === "object") {
+  if (
+    "metrics" in served && served.metrics && typeof served.metrics === "object"
+  ) {
     return served.metrics;
   }
   return served as Readonly<Record<string, number>>;

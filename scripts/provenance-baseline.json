@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "total": 1037,
-  "covered": 16,
+  "total": 1036,
+  "covered": 20,
   "exempt": 2,
-  "uncovered": 1019,
+  "uncovered": 1014,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
     "src/app/sections/ConsumerHealthPage.tsx": 6,

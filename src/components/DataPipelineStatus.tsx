@@ -96,16 +96,15 @@ export default function DataPipelineStatus({
 
         <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-3">
           <p className="text-xs text-slate-600">
-            Dataset version {health.datasetVersion}. Grades and coverage come
-            from{" "}
+            Dataset version{" "}
+            {health.datasetVersion}. Grades and coverage come from{" "}
             <code className="text-[11px]">
               computed-data-quality-scores.json
             </code>{" "}
-            and <code className="text-[11px]">provenance-baseline.json</code>,
-            hash-verified on every push. SEC ingest uses live
-            {" "}
-            <code className="text-[11px]">loadSummaryPipelines</code>{" "}
-            when{" "}
+            and{" "}
+            <code className="text-[11px]">provenance-baseline.json</code>,
+            hash-verified on every push. SEC ingest uses live{" "}
+            <code className="text-[11px]">loadSummaryPipelines</code> when{" "}
             <code className="text-[11px]">LACUNA_DATA_MODE=db</code>
             .
           </p>
