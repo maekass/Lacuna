@@ -68,8 +68,16 @@ export function redactDatabaseUrl(connectionString: string): string {
 export async function pingDatabase(
   connectionString: string,
 ): Promise<DatabasePingResult> {
-  assertRemotePostgresTlsEnabled(connectionString);
   const started = Date.now();
+  try {
+    assertRemotePostgresTlsEnabled(connectionString);
+  } catch (error) {
+    return {
+      ok: false,
+      latencyMs: Date.now() - started,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
   const pool = new Pool({
     connectionString,
     max: 1,
