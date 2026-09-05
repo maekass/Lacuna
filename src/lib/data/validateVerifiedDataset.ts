@@ -25,6 +25,14 @@ export interface ValidationReport {
 }
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+const MONTH_OR_QUARTER =
+  /\b(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?|q[1-4])\b/i;
+
+function namesOnlyAYear(source: string | undefined): boolean {
+  if (!source?.trim()) return false;
+  const hasYear = /\b(?:19|20)\d{2}\b/.test(source);
+  return hasYear && !MONTH_OR_QUARTER.test(source);
+}
 
 function push(
   list: ValidationIssue[],
@@ -174,6 +182,29 @@ export function validateVerifiedDataset(
         severity: "warning",
         message:
           `Deal "${d.id}" has dealValue but no dealValueNote — cite filing or press basis`,
+        entity: d.id,
+      });
+    }
+    if (d.preDealValuationDate && d.preDealValuationDate > d.announcedDate) {
+      push(errors, {
+        code: "deal.preDealValuationDateOrder",
+        severity: "error",
+        message:
+          `Deal "${d.id}" preDealValuationDate ${d.preDealValuationDate} is after announcedDate ${d.announcedDate}`,
+        entity: d.id,
+      });
+    }
+    const yearOnlySource = namesOnlyAYear(d.preDealValuationSource);
+    if (
+      d.preDealValuationDate?.endsWith("-01-01") &&
+      yearOnlySource &&
+      d.preDealValuationDatePrecision !== "year"
+    ) {
+      push(errors, {
+        code: "deal.preDealValuationDatePrecision",
+        severity: "error",
+        message:
+          `Deal "${d.id}" pre-deal mark is ${d.preDealValuationDate} and the source names only a year — set preDealValuationDatePrecision to "year"`,
         entity: d.id,
       });
     }

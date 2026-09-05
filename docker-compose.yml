@@ -1,4 +1,5 @@
 # Local Postgres + ClickHouse for db mode and variant call-set catalog.
+# PGSSLMODE=disable is localhost-only (see .env.example); never set it in CI.
 # Start: docker compose up -d
 # Then: cp .env.example .env.local && npm run db:migrate && npm run db:import
 # Variant store: docker compose --profile genomics up -d

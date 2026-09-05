@@ -18,19 +18,19 @@ export async function GET(request: Request, context: RouteContext) {
   const disabled = requireVariantStore();
   if (disabled) return disabled;
 
-  const accessDenied = await requirePatientDataAccess(
-    request,
-    "download_raw",
-    "genomics/callsets/object",
-  );
-  if (accessDenied) return accessDenied;
-
   const limited = await enforceRateLimit(request, {
     key: "genomics-object",
     limit: 30,
     windowMs: 60_000,
   });
   if (limited) return limited;
+
+  const accessDenied = await requirePatientDataAccess(
+    request,
+    "download_raw",
+    "genomics/callsets/object",
+  );
+  if (accessDenied) return accessDenied;
 
   try {
     const { callsetId } = await context.params;

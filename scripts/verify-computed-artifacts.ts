@@ -9,7 +9,7 @@
 
 import process from "node:process";
 import { execSync } from "node:child_process";
-import { dirname, join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
 import { hashDataset } from "../src/lib/lineage/datasetHash";
@@ -59,7 +59,36 @@ export function verifyArtifactDatasetHashes(
   }
 }
 
+const CMS_FALLBACK_KIND = "hardcoded_fallback";
+
+export function assertCmsUtilizationSourceHonest(artifactPath: string): void {
+  const artifact = JSON.parse(readFileSync(artifactPath, "utf8")) as {
+    source?: unknown;
+    utilizationByCptCode?: Array<{ provenanceKind?: unknown }>;
+  };
+  const source = typeof artifact.source === "string" ? artifact.source : "";
+  const rows = artifact.utilizationByCptCode ?? [];
+  const hasFallback = rows.some((row) =>
+    row.provenanceKind === CMS_FALLBACK_KIND
+  );
+  const claimsCmsApi = /data\.cms\.gov/i.test(source) &&
+    !/not retrieved from/i.test(source);
+  if (hasFallback && claimsCmsApi) {
+    throw new Error(
+      `${artifactPath} labels source as data.cms.gov while one or more CPT rows are ${CMS_FALLBACK_KIND}.`,
+    );
+  }
+}
+
 function main() {
+  const cmsPath = join(repoRoot, "src/data/computed-cms-utilization.json");
+  try {
+    assertCmsUtilizationSourceHonest(cmsPath);
+  } catch (error) {
+    console.error(`\n❌ ${(error as Error).message}`);
+    process.exit(1);
+  }
+
   const datasetHash = hashDataset(getStaticVerifiedDataset()).fullHash;
   try {
     verifyArtifactDatasetHashes(
@@ -89,4 +118,9 @@ function main() {
   }
 }
 
-main();
+if (
+  process.argv[1] &&
+  fileURLToPath(import.meta.url) === resolve(process.argv[1])
+) {
+  main();
+}

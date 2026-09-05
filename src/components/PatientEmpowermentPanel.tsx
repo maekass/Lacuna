@@ -14,14 +14,11 @@ import { GapIndexBar } from "@/components/research/GapIndexBar";
 import HeuristicTierBadge from "@/components/research/HeuristicTierBadge";
 import { ResearchMethodologyDrawer } from "@/components/research/ResearchMethodologyDrawer";
 import { ResearchStatTile } from "@/components/research/ResearchStatTile";
-import verifiedDataset from "@/data/dataset.verified.json";
 import {
   PATIENT_EMPOWERMENT_MODEL,
   PATIENT_EMPOWERMENT_SOURCES,
 } from "@/data/patientEmpowermentReport";
-import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import {
-  buildPatientEmpowermentSnapshot,
   exportEmpowermentCrosswalkCsv,
   type GapDimensionView,
   type PatientEmpowermentSnapshot,
@@ -171,17 +168,13 @@ function DimensionRow({ view }: { view: GapDimensionView }) {
 }
 
 interface PatientEmpowermentPanelProps {
-  snapshot?: PatientEmpowermentSnapshot;
+  snapshot: PatientEmpowermentSnapshot;
 }
 
 export default function PatientEmpowermentPanel({
-  snapshot: snapshotProp,
+  snapshot,
 }: PatientEmpowermentPanelProps) {
-  const fallbackSnapshot = useMemo(
-    () => buildPatientEmpowermentSnapshot(verifiedDataset as VerifiedDataset),
-    [],
-  );
-  const data = snapshotProp ?? fallbackSnapshot;
+  const data = snapshot;
   const {
     headline,
     summary,

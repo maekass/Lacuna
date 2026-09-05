@@ -24,6 +24,10 @@ LACUNA_PATIENT_DATA_API_KEY=<rotate-regularly>
 
 # Required before non-demo VCF ingest (GDPR lawful basis / HIPAA authorization)
 LACUNA_INGEST_CONSENT_REF=IRB-2024-001
+
+# Privileged access fails closed without ClickHouse or Postgres audit.
+# Opt out only for local demos — never on a shared host.
+# LACUNA_ALLOW_UNAUDITED_PHI=1
 ```
 
 | Mode            | Variant API | Sample IDs | Raw VCF presign  |
@@ -39,6 +43,10 @@ LACUNA_INGEST_CONSENT_REF=IRB-2024-001
   authorized
 - `GET /api/genomics/callsets/{id}/object` — **403** unless `authorized` +
   Bearer token
+- Genomics handlers apply the IP rate limit **before** the audit write
+- Privileged allow decisions return **503** when no durable audit sink is
+  configured (unless `LACUNA_ALLOW_UNAUDITED_PHI=1`) or when every configured
+  sink fails to persist. Denied de-identified downloads stay **403**.
 - `GET /api/genomics/markers` — static disease-marker catalog (no PHI)
 
 All genomics reads emit `[patient-data-audit]` JSON logs. When `CLICKHOUSE_URL`

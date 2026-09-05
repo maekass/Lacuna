@@ -17,12 +17,17 @@ predictors.
 
 - **Label:** `COMPLETED` vs stopped early (`TERMINATED`, `WITHDRAWN`,
   `SUSPENDED`) — operational status, **not** primary-endpoint success
-- **Features:** same text fields + phase, log₁₀(enrollment), intervention count,
-  has-results flag
+- **Features (new trains):** text + `phase_num` + `enrollment_log10`. The
+  committed `completion-proxy-v2` artifact still serves four numeric features
+  (`intervention_count`, `has_results_flag` included) via name mapping.
 - **Model:** hybrid TF-IDF + numeric logistic regression
-- **Export gate:** hold-out ROC-AUC ≥ 0.55 (below gate → artifact omitted, UI
-  hidden)
-- **UI:** Complete % badge when exported; metrics panel on Research page
+- **Export gate (conjunction):** bootstrap 95% AUC CI lower bound > 0.55 **and**
+  accuracy > majority-class baseline **and** Brier < base-rate Brier. The
+  committed seed artifact fails the conjunction (accuracy 0.568 ≤ majority
+  0.614) — it was exported under the former AUC-only gate. UI still withholds
+  percentages while `trainingSource` is `synthetic_seed`.
+- **UI:** Complete % badge only when scores are released; metrics panel on
+  Research page
 
 ## Training
 
@@ -50,14 +55,15 @@ npm run ml:ct:train
 
 ## Artifacts
 
-| File                                                   | Purpose                             |
-| ------------------------------------------------------ | ----------------------------------- |
-| `src/data/ml/clinical-trials/wh-relevance-v1.json`     | WH relevance weights + vocabulary   |
-| `src/data/ml/clinical-trials/completion-proxy-v2.json` | Completion proxy (when gate passes) |
-| `src/data/ml/clinical-trials/model-card.json`          | Metrics, training source, version   |
-| `ml/clinical_trials/data/training_seed.json`           | Synthetic fallback (committed)      |
-| `ml/clinical_trials/data/cached_training.json`         | Live ingest cache (gitignored)      |
-| `ml/clinical_trials/data/llm_corpus.jsonl`             | LLM training export (gitignored)    |
+| File                                                   | Purpose                                                |
+| ------------------------------------------------------ | ------------------------------------------------------ |
+| `src/data/ml/clinical-trials/wh-relevance-v1.json`     | WH relevance weights + vocabulary                      |
+| `src/data/ml/clinical-trials/completion-proxy-v2.json` | Completion proxy (when gate passes)                    |
+| `src/data/ml/clinical-trials/model-card.json`          | Metrics, training source, version, export-gate honesty |
+| `__tests__/lib/ml/clinicalTrials/parityFixtures.json`  | sklearn vs TS probabilities (`                         |
+| `ml/clinical_trials/data/training_seed.json`           | Synthetic fallback (committed)                         |
+| `ml/clinical_trials/data/cached_training.json`         | Live ingest cache (gitignored)                         |
+| `ml/clinical_trials/data/llm_corpus.jsonl`             | LLM training export (gitignored)                       |
 
 Commit `src/data/ml/clinical-trials/*` after retraining. Bump `model-card.json`
 `version` when metrics change materially.

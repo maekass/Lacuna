@@ -19,6 +19,10 @@ describe("quality visibility CI wiring", () => {
     expect(ci).toContain("Comment quality census on PR");
     expect(daily).toContain("report:quality");
     expect(daily).toContain("actions/upload-artifact@v4");
+    expect(daily.indexOf("payer-ops:benchmarks:fetch")).toBeLessThan(
+      daily.indexOf("quality-history:append"),
+    );
+    expect(daily).toContain("src/data/payer-ops-benchmarks.snapshot.json");
 
     const report = readFileSync(
       path.join(ROOT, "scripts/report-quality-visibility.ts"),

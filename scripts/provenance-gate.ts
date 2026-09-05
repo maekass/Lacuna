@@ -311,6 +311,46 @@ function sourceOptions(): CensusOptions {
   };
 }
 
+function writeStepSummary(markdown: string): void {
+  const summaryPath = process.env.GITHUB_STEP_SUMMARY;
+  if (!summaryPath) return;
+  fs.appendFileSync(
+    summaryPath,
+    markdown.endsWith("\n") ? markdown : `${markdown}\n`,
+  );
+}
+
+/** Covered/total delta for Actions job summaries — success and failure. */
+export function formatProvenanceStepSummary(
+  fresh: ProvenanceCensus,
+  baseline?: ProvenanceCensus,
+): string {
+  const coveredDelta = baseline ? fresh.covered - baseline.covered : 0;
+  const uncoveredDelta = baseline ? fresh.uncovered - baseline.uncovered : 0;
+  const sign = (
+    value: number,
+  ): string => (value > 0 ? `+${value}` : `${value}`);
+  return [
+    "## Provenance census",
+    "",
+    `| Class | Current | Baseline | Δ |`,
+    `| --- | --- | --- | --- |`,
+    `| Covered | ${fresh.covered} | ${baseline?.covered ?? "—"} | ${
+      baseline ? sign(coveredDelta) : "—"
+    } |`,
+    `| Exempt | ${fresh.exempt} | ${baseline?.exempt ?? "—"} | ${
+      baseline ? sign(fresh.exempt - baseline.exempt) : "—"
+    } |`,
+    `| Uncovered | ${fresh.uncovered} | ${baseline?.uncovered ?? "—"} | ${
+      baseline ? sign(uncoveredDelta) : "—"
+    } |`,
+    `| Total | ${fresh.total} | ${baseline?.total ?? "—"} | ${
+      baseline ? sign(fresh.total - baseline.total) : "—"
+    } |`,
+    "",
+  ].join("\n");
+}
+
 function summarizeFailure(
   fresh: ProvenanceCensus,
   baseline: ProvenanceCensus,
@@ -350,9 +390,11 @@ export function runGate(record = false): ProvenanceCensus {
   const fresh = collectCensus(sourceOptions());
   if (record) {
     fs.writeFileSync(baselinePath, stableJson(fresh));
+    writeStepSummary(formatProvenanceStepSummary(fresh));
     return fresh;
   }
   const baseline = readJson<ProvenanceCensus>(baselinePath);
+  writeStepSummary(formatProvenanceStepSummary(fresh, baseline));
   const failure = ratchetFailure(fresh, baseline);
   if (failure) {
     throw new Error(failure);

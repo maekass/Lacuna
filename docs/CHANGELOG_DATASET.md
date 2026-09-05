@@ -9,8 +9,13 @@ Compared against `src/data/computed-dataset-summary.json`:
 | Field           | Baseline value |
 | --------------- | -------------- |
 | Verified deals  | 59             |
-| Last updated    | 2026-07-02     |
+| Last updated    | 2026-09-05     |
 | Dataset version | v7             |
+
+2026-09-05 — pre-deal valuation as-of backfill: impossible mark dates reset to
+the announced year, year-only sources forced to `YYYY-01-01` +
+`preDealValuationDatePrecision: "year"`, and rounding-grid annotations where the
+cited mark is a round $100M increment. No new deals.
 
 Live count comes from `dataset.verified.json` → `provenance.lastUpdated`.
 

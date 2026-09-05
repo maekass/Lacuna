@@ -4,15 +4,12 @@
  * Gap matrix + pipeline chips + LLM analyst for space-linked women's health research.
  */
 
-import { useMemo } from "react";
 import GapAnalystPanel from "@/components/research/GapAnalystPanel";
 import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
 import { SPACE_WH_RESEARCH_MODEL } from "@/data/spaceWhResearchAssets";
-import verifiedDataset from "@/data/dataset.verified.json";
-import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import {
-  buildTrialToTransactionSnapshot,
   type PipelineAssetView,
+  type TrialToTransactionSnapshot,
 } from "@/lib/research/trialToTransactionPipeline";
 import {
   PIPELINE_STAGE_LABELS,
@@ -132,15 +129,13 @@ const SUGGESTED_QUESTIONS = [
   "How does fertility research compare to osteoporosis?",
 ] as const;
 
-export default function SpaceWhResearchGapsPanel() {
-  const snapshot = useMemo(
-    () =>
-      buildTrialToTransactionSnapshot(
-        verifiedDataset as VerifiedDataset,
-      ),
-    [],
-  );
+interface SpaceWhResearchGapsPanelProps {
+  snapshot: TrialToTransactionSnapshot;
+}
 
+export default function SpaceWhResearchGapsPanel({
+  snapshot,
+}: SpaceWhResearchGapsPanelProps) {
   const maxStageCount = Math.max(
     ...PIPELINE_STAGE_ORDER.map((s) => snapshot.summary.stageCounts[s]),
     1,

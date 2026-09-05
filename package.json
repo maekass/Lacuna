@@ -12,6 +12,7 @@
     "start": "next start",
     "start:ci": "LACUNA_DATA_MODE=static next start",
     "lint": "eslint",
+    "compliance:lint": "tsx scripts/compliance-lint.ts",
     "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
     "prepare": "husky",
     "deno:lint": "npx --yes deno@2.1.4 lint src scripts",
@@ -37,6 +38,7 @@
     "ml:ct:seed": "PYTHONPATH=ml/clinical_trials python3 ml/clinical_trials/scripts/generate_seed.py",
     "ml:ct:ingest": "PYTHONPATH=ml/clinical_trials python3 ml/clinical_trials/scripts/ingest_ctgov.py --all-queries",
     "ml:ct:train": "PYTHONPATH=ml/clinical_trials python3 ml/clinical_trials/scripts/train_all.py",
+    "ml:ct:parity": "PYTHONPATH=ml/clinical_trials python3 ml/clinical_trials/scripts/export_parity_fixtures.py",
     "ml:ct:corpus": "PYTHONPATH=ml/clinical_trials python3 ml/clinical_trials/scripts/export_llm_corpus.py",
     "verify:computed": "tsx scripts/verify-computed-artifacts.ts",
     "reproduce": "tsx scripts/reproduce-metric.ts",
@@ -81,7 +83,10 @@
     "test:e2e:smoke": "playwright test e2e/deploy-smoke.spec.ts",
     "eval:llm": "tsx scripts/eval-llm.ts",
     "ai:models:sync": "tsx scripts/sync-ai-models.ts",
-    "gate:provenance": "tsx scripts/provenance-gate.ts"
+    "gate:provenance": "tsx scripts/provenance-gate.ts",
+    "quality-history:append": "tsx scripts/append-quality-history.ts",
+    "quality-history:backfill": "tsx scripts/backfill-quality-history.ts",
+    "gate:quality-history": "tsx scripts/quality-history-gate.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.67",

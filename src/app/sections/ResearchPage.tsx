@@ -21,17 +21,20 @@ import SectionHeader from "@/components/ui/SectionHeader";
 
 import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentInsightTypes";
 import type { PatientEmpowermentSnapshot } from "@/lib/research/patientEmpowermentPipeline";
+import type { TrialToTransactionSnapshot } from "@/lib/research/trialToTransactionPipeline";
 
 const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
 interface ResearchPageProps {
-  empowermentSnapshot?: PatientEmpowermentSnapshot;
+  empowermentSnapshot: PatientEmpowermentSnapshot;
   empowermentInsight?: PatientEmpowermentInsightData;
+  spaceWhSnapshot: TrialToTransactionSnapshot;
 }
 
 export default function ResearchPage({
   empowermentSnapshot,
   empowermentInsight,
+  spaceWhSnapshot,
 }: ResearchPageProps) {
   return (
     <div>
@@ -84,7 +87,7 @@ export default function ResearchPage({
           title="Space research → trial → transaction"
           description="Space-linked women's health assets scored on a fixed pipeline (research signal → space validation → Earth trial → company → verified M&A). Gap matrix and LLM analyst expose where research never becomes a deal."
         />
-        <SpaceWhResearchGapsPanel />
+        <SpaceWhResearchGapsPanel snapshot={spaceWhSnapshot} />
       </MotionSection>
 
       <MotionSection id="clinical-trials" delay={0.05} className={SECTION}>

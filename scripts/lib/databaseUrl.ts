@@ -1,5 +1,9 @@
 import { Pool } from "pg";
 import { resolvePgSslConfig } from "../../src/lib/data/dbClient";
+import {
+  assertRemotePostgresTlsEnabled,
+  isLocalPostgresHost,
+} from "../../src/lib/data/pgSslPolicy";
 
 export interface DatabaseUrlMeta {
   host: string;
@@ -34,7 +38,7 @@ export function parseDatabaseUrl(
       database: url.pathname.replace(/^\//, "") || "postgres",
       user: decodeURIComponent(url.username),
       hasPassword: url.password.length > 0,
-      isLocalhost: host === "localhost" || host === "127.0.0.1",
+      isLocalhost: isLocalPostgresHost(host),
       isNeon: host.includes(".neon.tech"),
       isPooledNeon: host.includes("-pooler") && host.includes(".neon.tech"),
       sslmode: url.searchParams.get("sslmode"),
@@ -65,6 +69,15 @@ export async function pingDatabase(
   connectionString: string,
 ): Promise<DatabasePingResult> {
   const started = Date.now();
+  try {
+    assertRemotePostgresTlsEnabled(connectionString);
+  } catch (error) {
+    return {
+      ok: false,
+      latencyMs: Date.now() - started,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
   const pool = new Pool({
     connectionString,
     max: 1,
@@ -127,9 +140,9 @@ export function suggestFix(
       "Neon: enable Connection pooling in the Connect dialog (hostname should include -pooler).",
     );
   }
-  if (meta?.isNeon && process.env.PGSSLMODE === "disable") {
+  if (process.env.PGSSLMODE === "disable" && meta && !meta.isLocalhost) {
     tips.push(
-      "Remove PGSSLMODE=disable from .env.local when using Neon (SSL is required).",
+      `PGSSLMODE=disable is refused for remote host ${meta.host}. Unset PGSSLMODE so TLS is verified.`,
     );
   }
   return tips;
