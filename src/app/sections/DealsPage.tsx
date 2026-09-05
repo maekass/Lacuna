@@ -75,7 +75,7 @@ export default function DealsPage() {
         />
       </MotionSection>
 
-      <MotionSection id="data-coverage" className={SECTION}>
+      <MotionSection id="data-coverage" immediate className={SECTION}>
         <DataCoverageCard />
         <div className="mt-4">
           <DataQualityVisibility compact />

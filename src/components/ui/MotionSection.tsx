@@ -8,6 +8,8 @@ interface MotionSectionProps {
   className?: string;
   delay?: number;
   children: ReactNode;
+  /** Paint immediately — no whileInView hide. Use for above-the-fold census. */
+  immediate?: boolean;
 }
 
 /**
@@ -18,10 +20,11 @@ export default function MotionSection({
   className = "",
   delay = 0,
   children,
+  immediate = false,
 }: MotionSectionProps) {
   const reduceMotion = useReducedMotion();
 
-  if (reduceMotion) {
+  if (reduceMotion || immediate) {
     return (
       <section id={id} className={className}>
         {children}

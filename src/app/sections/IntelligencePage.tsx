@@ -28,7 +28,7 @@ export default function IntelligencePage() {
         </p>
       </header>
 
-      <MotionSection id="system-health" className={SECTION}>
+      <MotionSection id="system-health" immediate className={SECTION}>
         <SectionHeader
           title="System Health & Monitoring"
           description="Live API checks plus the measurement-layer census: quality grades, withheld metrics, vintage gaps, and display provenance."

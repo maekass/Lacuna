@@ -81,7 +81,7 @@ export default function ConsumerHealthPage() {
         )
         : null}
 
-      <MotionSection id="coverage" delay={0.05} className={SECTION}>
+      <MotionSection id="coverage" immediate className={SECTION}>
         <DataCoverageCard />
         <div className="mt-4">
           <DataQualityVisibility compact />

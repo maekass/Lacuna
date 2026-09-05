@@ -22,6 +22,13 @@ test.describe("measurement layer visibility", () => {
     await expect(
       page.getByRole("button", { name: "Why this number: Withheld metrics" }),
     ).toContainText("214");
+    const layerOpacity = await page
+      .getByRole("heading", { name: /Measurement layer/i })
+      .evaluate((el) => {
+        const section = el.closest("section");
+        return section ? getComputedStyle(section).opacity : "";
+      });
+    expect(layerOpacity).toBe("1");
   });
 
   test("deals and consumer show the census under coverage", async ({ page }) => {

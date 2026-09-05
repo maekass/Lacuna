@@ -311,4 +311,12 @@ body {
   .depth-card:hover {
     transform: none;
   }
+
+  /* Keep census/coverage sections readable if a motion wrapper is still present. */
+  section[id="system-health"],
+  section[id="data-coverage"],
+  section[id="coverage"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
