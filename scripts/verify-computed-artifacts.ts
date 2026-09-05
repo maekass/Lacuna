@@ -29,6 +29,7 @@ export const DATASET_COMPUTED_ARTIFACTS = [
   "src/data/computed-data-quality-scores.json",
   "src/data/computed-confidence-intervals.json",
   "src/data/computed-dataset-summary.json",
+  "src/data/computed-quality-visibility.json",
 ] as const;
 
 function recordedDatasetHash(path: string): string | undefined {

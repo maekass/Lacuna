@@ -33,12 +33,6 @@ jobs:
       - name: Verify computed artifacts match model
         run: npm run verify:computed
 
-      - name: Append quality history
-        run: npm run quality-history:append
-
-      - name: Quality-history ratchet
-        run: npm run gate:quality-history
-
       - name: Refresh payer-ops citation reachability
         id: payer_ops_fetch
         continue-on-error: true
@@ -59,11 +53,32 @@ jobs:
             echo "Link-rot probes are advisory. A failed fetch must not block the workflow."
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Commit quality history
+      - name: Append quality history
+        run: npm run quality-history:append
+
+      - name: Quality-history ratchet
+        run: npm run gate:quality-history
+
+      - name: Quality visibility report
+        if: always()
+        run: npm run report:quality
+
+      - name: Upload quality artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-visibility-daily
+          path: |
+            src/data/computed-quality-visibility.json
+            src/data/computed-data-quality-scores.json
+            quality-visibility-report.md
+          if-no-files-found: warn
+
+      - name: Commit quality history and payer-ops snapshot
         run: |
-          git add data/quality-history.jsonl
+          git add data/quality-history.jsonl src/data/payer-ops-benchmarks.snapshot.json
           if git diff --cached --quiet; then
-            echo "No quality-history changes to commit."
+            echo "No quality-history or payer-ops snapshot changes to commit."
             exit 0
           fi
           git config user.name "github-actions[bot]"

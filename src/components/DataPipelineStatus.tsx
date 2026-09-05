@@ -1,12 +1,19 @@
+import DataQualityVisibility from "@/components/DataQualityVisibility";
 import Card from "@/components/ui/Card";
+import type { DatasetPipelineStatus } from "@/lib/data/buildDatasetSummary";
 import { buildPipelineHealthView } from "@/lib/data/pipelineHealth";
 
 /**
- * Pipeline health from committed, hash-verified artifacts.
- * Static mode has no live SEC ingest — that absence is rendered, not filled in.
+ * Pipeline health from committed, hash-verified artifacts, plus the
+ * measurement-layer census. Static mode has no live SEC ingest — that
+ * absence is rendered, not filled in.
  */
-export default function DataPipelineStatus() {
-  const health = buildPipelineHealthView();
+export default function DataPipelineStatus({
+  pipelines,
+}: {
+  pipelines?: DatasetPipelineStatus;
+}) {
+  const health = buildPipelineHealthView(new Date(), { pipelines });
 
   return (
     <div className="space-y-4">
@@ -89,17 +96,23 @@ export default function DataPipelineStatus() {
 
         <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-3">
           <p className="text-xs text-slate-600">
-            Dataset version{" "}
-            {health.datasetVersion}. Grades and coverage come from{" "}
+            Dataset version {health.datasetVersion}. Grades and coverage come
+            from{" "}
             <code className="text-[11px]">
               computed-data-quality-scores.json
             </code>{" "}
-            and{" "}
-            <code className="text-[11px]">provenance-baseline.json</code>,
-            hash-verified on every push.
+            and <code className="text-[11px]">provenance-baseline.json</code>,
+            hash-verified on every push. SEC ingest uses live
+            {" "}
+            <code className="text-[11px]">loadSummaryPipelines</code>{" "}
+            when{" "}
+            <code className="text-[11px]">LACUNA_DATA_MODE=db</code>
+            .
           </p>
         </div>
       </Card>
+
+      <DataQualityVisibility />
     </div>
   );
 }

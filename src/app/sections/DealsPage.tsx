@@ -15,6 +15,7 @@ import {
   WhiteSpaceAnalysis,
 } from "@/app/lazyDashboard";
 import DataCoverageCard from "@/components/DataCoverageCard";
+import DataQualityVisibility from "@/components/DataQualityVisibility";
 import DatasetScopeBanner from "@/components/DatasetScopeBanner";
 import DealEmpowermentContext from "@/components/DealEmpowermentContext";
 import ReviewConsole from "@/components/ReviewConsole";
@@ -74,8 +75,11 @@ export default function DealsPage() {
         />
       </MotionSection>
 
-      <MotionSection id="data-coverage" className={SECTION}>
+      <MotionSection id="data-coverage" immediate className={SECTION}>
         <DataCoverageCard />
+        <div className="mt-4">
+          <DataQualityVisibility compact />
+        </div>
         {featuredEmpowerment
           ? (
             <div className="mt-4">

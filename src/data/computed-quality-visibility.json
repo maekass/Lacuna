@@ -1,0 +1,564 @@
+{
+  "generatedAt": "2026-07-06T00:00:00.000Z",
+  "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
+  "datasetVersion": "v8",
+  "source": "Lacuna measurement-layer census (quality scores, gated metrics, vintage, display provenance)",
+  "quality": {
+    "companies": {
+      "total": 150,
+      "grades": {
+        "A": 14,
+        "B": 31,
+        "C": 43,
+        "D": 59,
+        "F": 3
+      },
+      "avgScore": 64.3
+    },
+    "acquisitions": {
+      "total": 59,
+      "grades": {
+        "A": 20,
+        "B": 26,
+        "C": 12,
+        "D": 0,
+        "F": 1
+      },
+      "avgScore": 83.1
+    },
+    "grading": {
+      "A": "90-100: SEC filing or equivalent primary source, all fields populated",
+      "B": "75-89: Reputable press source, most fields populated",
+      "C": "60-74: Company press release or partial data",
+      "D": "40-59: Data aggregator only (Crunchbase, etc.), incomplete",
+      "F": "0-39: No source or unverified"
+    },
+    "lowGradeCompanies": [
+      {
+        "id": "c137",
+        "label": "Bloomlife",
+        "grade": "F",
+        "score": 32
+      },
+      {
+        "id": "c145",
+        "label": "Ocon Med",
+        "grade": "F",
+        "score": 32
+      },
+      {
+        "id": "c147",
+        "label": "Raydiant Oximetry",
+        "grade": "F",
+        "score": 32
+      },
+      {
+        "id": "c91",
+        "label": "Aria CV",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c93",
+        "label": "b.well",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c94",
+        "label": "Bone Health Technologies",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c95",
+        "label": "Bowe Glow, Inc",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c96",
+        "label": "Cat Health",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c97",
+        "label": "Chronicle Bio",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c98",
+        "label": "Clear Gene",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c99",
+        "label": "E-Lovu Health",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c101",
+        "label": "FemDx Medsystems",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c102",
+        "label": "Frontier Bio",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c105",
+        "label": "Harmony Nutrition",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c107",
+        "label": "Inherent Biosciences",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c108",
+        "label": "Joylux",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c110",
+        "label": "L-Nutra",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c109",
+        "label": "Lighthouse Pharma",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c112",
+        "label": "Madorra",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c115",
+        "label": "Mercy Bio",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c117",
+        "label": "Nalu Bio",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c118",
+        "label": "Nest Collaborative",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c119",
+        "label": "Neuspera",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c120",
+        "label": "NowDx",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c121",
+        "label": "Proov (portfolio)",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c123",
+        "label": "Rosy Wellness",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c124",
+        "label": "Sana Health",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c125",
+        "label": "Simple HealthKit",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c127",
+        "label": "Solace Therapeutics",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c128",
+        "label": "Toi Labs",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c129",
+        "label": "Veana Therapeutics",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c135",
+        "label": "X-Therma",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c132",
+        "label": "Xandar Kardian",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c133",
+        "label": "xCures",
+        "grade": "D",
+        "score": 41
+      },
+      {
+        "id": "c139",
+        "label": "Cayaba Care",
+        "grade": "D",
+        "score": 45
+      },
+      {
+        "id": "c142",
+        "label": "Eli Health",
+        "grade": "D",
+        "score": 45
+      },
+      {
+        "id": "c146",
+        "label": "Planera",
+        "grade": "D",
+        "score": 45
+      },
+      {
+        "id": "c148",
+        "label": "Seven Starling",
+        "grade": "D",
+        "score": 45
+      },
+      {
+        "id": "c149",
+        "label": "Twenty Eight Health",
+        "grade": "D",
+        "score": 45
+      },
+      {
+        "id": "c20",
+        "label": "Bloomi",
+        "grade": "D",
+        "score": 50
+      },
+      {
+        "id": "c22",
+        "label": "Ovubrush",
+        "grade": "D",
+        "score": 50
+      },
+      {
+        "id": "c11",
+        "label": "Proov",
+        "grade": "D",
+        "score": 50
+      },
+      {
+        "id": "c88",
+        "label": "Aunt Flow",
+        "grade": "D",
+        "score": 54
+      },
+      {
+        "id": "c140",
+        "label": "Cirqle",
+        "grade": "D",
+        "score": 54
+      },
+      {
+        "id": "c144",
+        "label": "Novocuff",
+        "grade": "D",
+        "score": 54
+      },
+      {
+        "id": "c90",
+        "label": "Apollo Neuroscience",
+        "grade": "D",
+        "score": 56
+      },
+      {
+        "id": "c92",
+        "label": "Attn: Grace",
+        "grade": "D",
+        "score": 56
+      },
+      {
+        "id": "c100",
+        "label": "Everly Health",
+        "grade": "D",
+        "score": 56
+      },
+      {
+        "id": "c103",
+        "label": "Future Family",
+        "grade": "D",
+        "score": 56
+      },
+      {
+        "id": "c104",
+        "label": "Gameto",
+        "grade": "D",
+        "score": 56
+      },
+      {
+        "id": "c106",
+        "label": "Hera Biotech",
+        "grade": "D",
+        "score": 56
+      },
+      {
+        "id": "c111",
+        "label": "Madison Reed",
+        "grade": "D",
+        "score": 56
+      },
+      {
+        "id": "c113",
+        "label": "Maude",
+        "grade": "D",
+        "score": 56
+      },
+      {
+        "id": "c114",
+        "label": "Maven Clinic (portfolio)",
+        "grade": "D",
+        "score": 56
+      },
+      {
+        "id": "c116",
+        "label": "Mirvie",
+        "grade": "D",
+        "score": 56
+      },
+      {
+        "id": "c122",
+        "label": "Rebundle",
+        "grade": "D",
+        "score": 56
+      },
+      {
+        "id": "c126",
+        "label": "Siren",
+        "grade": "D",
+        "score": 56
+      },
+      {
+        "id": "c130",
+        "label": "Wellth",
+        "grade": "D",
+        "score": 56
+      },
+      {
+        "id": "c131",
+        "label": "Willow",
+        "grade": "D",
+        "score": 56
+      },
+      {
+        "id": "c134",
+        "label": "YourChoice Therapeutics",
+        "grade": "D",
+        "score": 56
+      },
+      {
+        "id": "c48",
+        "label": "eFertility (STB Zorg)",
+        "grade": "D",
+        "score": 57
+      },
+      {
+        "id": "c30",
+        "label": "ZyMōt Fertility",
+        "grade": "D",
+        "score": 57
+      }
+    ],
+    "lowGradeDeals": [
+      {
+        "id": "deal5",
+        "label": "Maven Clinic → Teladoc",
+        "grade": "F",
+        "score": 38
+      }
+    ]
+  },
+  "metrics": {
+    "published": 7,
+    "withheld": 214,
+    "registered": 221,
+    "withheldRate": 0.9683257918552036,
+    "publishedWithFullProvenance": 7,
+    "publishedMetrics": [
+      {
+        "metricId": "sector.moic.median",
+        "scope": "All sectors",
+        "label": "Median sector MOIC",
+        "hasUnit": true,
+        "hasDefinition": true,
+        "hasN": true,
+        "hasBootstrapCi": true,
+        "hasLineage": true
+      },
+      {
+        "metricId": "acquirer.premium.preDealValuation",
+        "scope": "all acquirers",
+        "label": "Acquirer premium over pre-deal valuation",
+        "hasUnit": true,
+        "hasDefinition": true,
+        "hasN": true,
+        "hasBootstrapCi": true,
+        "hasLineage": true
+      },
+      {
+        "metricId": "acquirer.premium.lastKnownValuation",
+        "scope": "all acquirers",
+        "label": "Acquirer premium over last-known valuation",
+        "hasUnit": true,
+        "hasDefinition": true,
+        "hasN": true,
+        "hasBootstrapCi": true,
+        "hasLineage": true
+      },
+      {
+        "metricId": "acquirer.premium.totalFunding",
+        "scope": "all acquirers",
+        "label": "Acquirer premium over total funding",
+        "hasUnit": true,
+        "hasDefinition": true,
+        "hasN": true,
+        "hasBootstrapCi": true,
+        "hasLineage": true
+      },
+      {
+        "metricId": "acquirer.premium.preDealValuation",
+        "scope": "Hologic",
+        "label": "Acquirer premium over pre-deal valuation",
+        "hasUnit": true,
+        "hasDefinition": true,
+        "hasN": true,
+        "hasBootstrapCi": true,
+        "hasLineage": true
+      },
+      {
+        "metricId": "acquirer.premium.lastKnownValuation",
+        "scope": "Hologic",
+        "label": "Acquirer premium over last-known valuation",
+        "hasUnit": true,
+        "hasDefinition": true,
+        "hasN": true,
+        "hasBootstrapCi": true,
+        "hasLineage": true
+      },
+      {
+        "metricId": "sector.moic.median",
+        "scope": "All sectors",
+        "label": "Median sector MOIC",
+        "hasUnit": true,
+        "hasDefinition": true,
+        "hasN": true,
+        "hasBootstrapCi": true,
+        "hasLineage": true
+      }
+    ]
+  },
+  "vintage": {
+    "definition": "Dedicated as-of for the record's primary economic number. lastKnownValuation and totalFunding have no as-of field. dealValue's announcedDate is an event date, not a value vintage. Only preDealValuationDate counts when the primary number is preDealValuation.",
+    "recordsInScope": 209,
+    "primaryNumbers": 135,
+    "dedicatedAsOf": 2,
+    "missingDedicatedAsOf": 133,
+    "missingDedicatedAsOfRate": 0.9851851851851852,
+    "companyPrimary": {
+      "total": 83,
+      "withDedicatedAsOf": 0
+    },
+    "dealValues": {
+      "total": 50,
+      "withEventDate": 50,
+      "withValueAsOf": 0
+    },
+    "preDealValuations": {
+      "total": 49,
+      "withDedicatedAsOf": 49
+    }
+  },
+  "premiums": {
+    "computed": 47,
+    "reproducible": 47
+  },
+  "displayProvenance": {
+    "total": 1035,
+    "covered": 19,
+    "exempt": 2,
+    "uncovered": 1014,
+    "uncoveredRate": 0.9797101449275363,
+    "topUncoveredFiles": [
+      {
+        "file": "src/components/NetworkAnalysisHonest.tsx",
+        "count": 90
+      },
+      {
+        "file": "src/components/WhiteSpaceAnalysis.tsx",
+        "count": 86
+      },
+      {
+        "file": "src/components/StrategicPositioningMap.tsx",
+        "count": 61
+      },
+      {
+        "file": "src/app/sections/PayerOpsPage.tsx",
+        "count": 49
+      },
+      {
+        "file": "src/components/FairnessAuditV2.tsx",
+        "count": 46
+      },
+      {
+        "file": "src/components/CompetitiveAnalysisDashboard.tsx",
+        "count": 33
+      },
+      {
+        "file": "src/components/FounderCharacteristics.tsx",
+        "count": 33
+      },
+      {
+        "file": "src/components/BayesianCausalAnalysis.tsx",
+        "count": 26
+      }
+    ]
+  }
+}
