@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-10T00:00:00.000Z",
-  "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
+  "generatedAt": "2026-09-05T00:00:00.000Z",
+  "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
   "source": "Lacuna verified dataset + validated SEC annual revenue artifact",
   "evidenceStatus": "withheld_pending_regeneration",
-  "reason": "Legacy growth rates annualized total funding into valuation or deal value and included unsupported stage benchmark CAGRs. Those values are not comparable operating measures and were removed. The corrected generator publishes only like-for-like SEC revenue CAGR.",
+  "reason": "SEC revenue evidence is currently withheld pending identity-validated regeneration. Financing-derived and valuation-derived rates are not substituted for operating growth.",
   "companies": [],
   "sectorMedians": {},
-  "method": "No company growth rate is published in this placeholder artifact. Run the corrected SEC revenue ingestion, then scripts/compute-growth-rates.ts.",
+  "method": "No company growth rate is published until the corrected SEC revenue artifact contains comparable annual operating revenue observations.",
   "warning": "Missing operating data remains missing; financing and valuation changes are not substituted for revenue growth."
 }
