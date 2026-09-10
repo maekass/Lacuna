@@ -9,7 +9,8 @@
  *   `writeAuditEvent` returns false and increments `droppedAuditEvents` on GET /api/health.
  *   Privileged access (authorized / identifiers / raw) is denied with 503 + `reportError`.
  *   Anonymous/redacted reads proceed and increment `droppedAuditEvents` on GET /api/health.
- * - Neither sink configured (console-only): stdout audit only; no 503; counter unchanged.
+ * - Neither sink configured (console-only): privileged access is denied with 503
+ *   unless `LACUNA_ALLOW_UNAUDITED_PHI=1`. Dropped-audit counter stays unchanged.
  */
 import process from "node:process";
 import { createHash } from "node:crypto";

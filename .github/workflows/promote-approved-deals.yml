@@ -32,7 +32,6 @@ jobs:
       - name: Migrate Postgres
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          PGSSLMODE: disable
         run: npm run db:migrate
 
       # Pass workflow inputs via env, never interpolate into `run:` (CodeQL
@@ -40,7 +39,6 @@ jobs:
       - name: Promote approved deals
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          PGSSLMODE: disable
           LACUNA_PROMOTE_TARGET: json
           DEAL_ID: ${{ inputs.deal_id }}
         shell: bash

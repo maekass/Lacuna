@@ -6,6 +6,8 @@ type RawAcquisition = VerifiedDataset["acquisitions"][number] & {
   preDealValuation?: number;
   preDealValuationSource?: string;
   preDealValuationDate?: string;
+  preDealValuationDatePrecision?: "day" | "month" | "quarter" | "year";
+  preDealValuationRoundingGridM?: number;
   computedPremium?: number;
 };
 
@@ -20,6 +22,8 @@ export function toDealAcquisitionDetail(
     preDealValuation: raw.preDealValuation,
     preDealValuationSource: raw.preDealValuationSource,
     preDealValuationDate: raw.preDealValuationDate,
+    preDealValuationDatePrecision: raw.preDealValuationDatePrecision,
+    preDealValuationRoundingGridM: raw.preDealValuationRoundingGridM,
     computedPremium: raw.computedPremium,
   };
 }

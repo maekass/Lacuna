@@ -5,17 +5,26 @@ import type {
 } from "./types";
 import { trialNumericFeatures, trialTextCorpus } from "./types";
 
-const TOKEN_PATTERN = /\b[a-z0-9']+\b/g;
+/** sklearn TfidfVectorizer default: `(?u)\\b\\w\\w+\\b` after lowercasing. */
+const TOKEN_PATTERN = /[a-z0-9_]{2,}/g;
 
 function tokenize(text: string): string[] {
-  const normalized = text.toLowerCase();
-  return normalized.match(TOKEN_PATTERN) ?? [];
+  return text.toLowerCase().match(TOKEN_PATTERN) ?? [];
 }
 
-function termFrequency(tokens: string[]): Map<string, number> {
+/** Unigrams plus consecutive bigrams, matching `ngram_range=(1, 2)`. */
+export function ngrams(tokens: readonly string[]): string[] {
+  const terms = [...tokens];
+  for (let i = 0; i < tokens.length - 1; i++) {
+    terms.push(`${tokens[i]} ${tokens[i + 1]}`);
+  }
+  return terms;
+}
+
+function termFrequency(terms: readonly string[]): Map<string, number> {
   const tf = new Map<string, number>();
-  for (const token of tokens) {
-    tf.set(token, (tf.get(token) ?? 0) + 1);
+  for (const term of terms) {
+    tf.set(term, (tf.get(term) ?? 0) + 1);
   }
   return tf;
 }
@@ -26,6 +35,20 @@ function buildVocabIndex(vocabulary: readonly string[]): Map<string, number> {
     if (term) index.set(term, idx);
   });
   return index;
+}
+
+function l2Normalize(values: Map<number, number>): Map<number, number> {
+  let sumSquares = 0;
+  for (const value of values.values()) {
+    sumSquares += value * value;
+  }
+  const norm = Math.sqrt(sumSquares);
+  if (norm === 0) return values;
+  const next = new Map<number, number>();
+  for (const [idx, value] of values) {
+    next.set(idx, value / norm);
+  }
+  return next;
 }
 
 function scaleNumeric(
@@ -39,26 +62,48 @@ function scaleNumeric(
   });
 }
 
+function numericForArtifact(
+  artifact: TfidfLogisticArtifact,
+  input: TrialScoreInput,
+): number[] {
+  const all = trialNumericFeatures(input);
+  const names = artifact.numericFeatureNames;
+  if (!names || names.length === 0) return all;
+  const byName: Record<string, number> = {
+    phase_num: all[0] ?? 0,
+    enrollment_log10: all[1] ?? 0,
+    intervention_count: all[2] ?? 0,
+    has_results_flag: all[3] ?? 0,
+  };
+  return names.map((name) => byName[name] ?? 0);
+}
+
 /**
- * Score text (+ optional numeric features) with an exported TF-IDF + logistic model.
+ * Score text (+ optional numeric features) with an exported TF-IDF + logistic
+ * model. Matches sklearn `TfidfVectorizer(ngram_range=(1,2), sublinear_tf=False,
+ * norm="l2")` then `LogisticRegression.predict_proba`.
  */
 export function scoreTfidfLogistic(
   artifact: TfidfLogisticArtifact,
   input: TrialScoreInput,
   threshold = 0.5,
 ): TrialModelScore {
-  const corpus = trialTextCorpus(input);
-  const tokens = tokenize(corpus);
-  const tf = termFrequency(tokens);
+  const tokens = tokenize(trialTextCorpus(input));
+  const tf = termFrequency(ngrams(tokens));
   const vocabIndex = buildVocabIndex(artifact.vocabulary);
 
-  let logit = artifact.intercept;
+  const raw = new Map<number, number>();
   for (const [term, count] of tf) {
     const idx = vocabIndex.get(term);
     if (idx === undefined) continue;
     const idf = artifact.idf[idx] ?? 0;
-    const tfidf = (1 + Math.log(count)) * idf;
-    logit += (artifact.coefficients[idx] ?? 0) * tfidf;
+    raw.set(idx, count * idf);
+  }
+  const normalized = l2Normalize(raw);
+
+  let logit = artifact.intercept;
+  for (const [idx, value] of normalized) {
+    logit += (artifact.coefficients[idx] ?? 0) * value;
   }
 
   if (
@@ -67,7 +112,7 @@ export function scoreTfidfLogistic(
     artifact.numericScales
   ) {
     const numeric = scaleNumeric(
-      trialNumericFeatures(input),
+      numericForArtifact(artifact, input),
       artifact.numericMeans,
       artifact.numericScales,
     );

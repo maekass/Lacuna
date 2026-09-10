@@ -172,6 +172,27 @@ describe("dbClient", () => {
     expect(mocks.mockPoolQuery).not.toHaveBeenCalled();
     expect(mocks.lastPoolConfig).toBeUndefined();
   });
+
+  it("throws when PGSSLMODE=disable targets a remote host", async () => {
+    vi.stubEnv(
+      "DATABASE_URL",
+      "postgresql://user:pass@db.example.com:5432/lacuna",
+    );
+    vi.stubEnv("PGSSLMODE", "disable");
+    const { query, closePool } = await import("@/lib/data/dbClient");
+    await closePool();
+    await expect(query("SELECT 1")).rejects.toThrow(
+      /PGSSLMODE=disable is not allowed for remote host db\.example\.com/,
+    );
+  });
+
+  it("allows PGSSLMODE=disable on localhost", async () => {
+    vi.stubEnv("DATABASE_URL", "postgresql://user:pass@localhost:5432/lacuna");
+    vi.stubEnv("PGSSLMODE", "disable");
+    const { query, closePool } = await import("@/lib/data/dbClient");
+    await closePool();
+    await expect(query("SELECT 1")).resolves.toEqual([{ id: 1 }]);
+  });
 });
 
 describe("resolvePgSslConfig", () => {

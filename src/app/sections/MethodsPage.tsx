@@ -12,14 +12,19 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import DatasetCoverageFootnote from "@/components/DatasetCoverageFootnote";
 import { useDashboardData } from "@/lib/data/useDashboardData";
 import type { DatasetChangelog } from "@/lib/data/datasetCoverage";
+import type { ReactNode } from "react";
 
 const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
 interface MethodsPageProps {
   changelog: DatasetChangelog;
+  /** Server-rendered quality census — must not import quality JSON here. */
+  dataQuality?: ReactNode;
 }
 
-export default function MethodsPage({ changelog }: MethodsPageProps) {
+export default function MethodsPage(
+  { changelog, dataQuality }: MethodsPageProps,
+) {
   const { verifiedAcquisitions } = useDashboardData();
 
   return (
@@ -53,6 +58,8 @@ export default function MethodsPage({ changelog }: MethodsPageProps) {
           .
         </p>
       </header>
+
+      {dataQuality}
 
       <MotionSection id="causal-dag" className={SECTION}>
         <SectionHeader

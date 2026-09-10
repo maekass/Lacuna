@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-06T00:00:00.000Z",
+  "generatedAt": "2026-09-05T00:00:00.000Z",
   "datasetVersion": "v8",
-  "datasetHash": "31f76ab6822c4b84967398b9d74bca328fb6fc15558e361a6f26a333e10683d6",
+  "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
   "metrics": [
     {
       "metricId": "acquirer.premium.preDealValuation",
@@ -17,7 +17,7 @@
           1.3181818181818181,
           1.4
         ],
-        "selectionCaveat": "Disclosed-price deals are a non-random subsample (100% of n=47 sector deals). Selection bias may inflate medians; Heckman correction not applied."
+        "selectionCaveat": "Disclosed-price deals are a non-random subsample (100% of n=47 sector deals). Selection bias may inflate medians; Heckman correction not applied. 46 of 49 cited pre-deal marks are year-precision as-of dates."
       },
       "n": 47
     },

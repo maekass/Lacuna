@@ -237,6 +237,29 @@ for (const metricId of Object.keys(denominatorFields) as PremiumMetricId[]) {
   }
 }
 
+const yearPrecisionMarks =
+  dataset.acquisitions.filter((deal) =>
+    deal.preDealValuation != null &&
+    deal.preDealValuationDatePrecision === "year"
+  ).length;
+const preDealMarks =
+  dataset.acquisitions.filter((deal) => deal.preDealValuation != null).length;
+const yearPrecisionNote =
+  `${yearPrecisionMarks} of ${preDealMarks} cited pre-deal marks are year-precision as-of dates.`;
+
+const preDealMetric = premiumMetrics["acquirer.premium.preDealValuation"];
+if (preDealMetric) {
+  premiumMetrics["acquirer.premium.preDealValuation"] = {
+    ...preDealMetric,
+    estimate: {
+      ...preDealMetric.estimate,
+      selectionCaveat: preDealMetric.estimate.selectionCaveat
+        ? `${preDealMetric.estimate.selectionCaveat} ${yearPrecisionNote}`
+        : yearPrecisionNote,
+    },
+  };
+}
+
 const output = {
   generatedAt: options.computedAt,
   datasetVersion: options.datasetVersion,

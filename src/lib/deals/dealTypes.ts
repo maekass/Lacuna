@@ -12,6 +12,8 @@ export interface DealAcquisitionExtras {
   preDealValuation?: number;
   preDealValuationSource?: string;
   preDealValuationDate?: string;
+  preDealValuationDatePrecision?: "day" | "month" | "quarter" | "year";
+  preDealValuationRoundingGridM?: number;
   computedPremium?: number;
 }
 

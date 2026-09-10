@@ -5,11 +5,7 @@ import { describe, expect, it } from "vitest";
 const SRC_ROOT = path.resolve(__dirname, "../../../src");
 const REPO_ROOT = path.resolve(__dirname, "../../..");
 
-/** Remaining client JSON importers — convert in a follow-up PR. */
-const ALLOWLIST = new Set([
-  "src/components/PatientEmpowermentPanel.tsx",
-  "src/components/SpaceWhResearchGapsPanel.tsx",
-]);
+const ALLOWLIST = new Set<string>();
 
 const FORBIDDEN_IMPORTS = [
   /from\s+["']@\/data\/dataset\.verified\.json["']/,
@@ -60,11 +56,23 @@ describe("client components do not import the static verified dataset", () => {
     expect(violations).toEqual([]);
   });
 
-  it("allowlisted follow-up files still import the JSON (so the list stays honest)", () => {
-    for (const relative of ALLOWLIST) {
-      const content = readFileSync(path.join(REPO_ROOT, relative), "utf8");
-      expect(content).toMatch(/dataset\.verified\.json/);
-    }
+  it("client research panels do not import the verified dataset JSON", () => {
+    const empowerment = readFileSync(
+      path.join(SRC_ROOT, "components/PatientEmpowermentPanel.tsx"),
+      "utf8",
+    );
+    const spaceWh = readFileSync(
+      path.join(SRC_ROOT, "components/SpaceWhResearchGapsPanel.tsx"),
+      "utf8",
+    );
+    const researchPage = readFileSync(
+      path.join(SRC_ROOT, "app/(product)/research/page.tsx"),
+      "utf8",
+    );
+    expect(empowerment).not.toMatch(/dataset\.verified\.json/);
+    expect(spaceWh).not.toMatch(/dataset\.verified\.json/);
+    expect(researchPage).toMatch(/buildTrialToTransactionSnapshot/);
+    expect(researchPage).toMatch(/getVerifiedDataset/);
   });
 
   it("converted hub surfaces receive mode-aware data from getVerifiedDataset()", () => {
@@ -98,5 +106,18 @@ describe("client components do not import the static verified dataset", () => {
     expect(insight).not.toMatch(/dataset\.verified\.json/);
     expect(hub).not.toMatch(/getStaticVerifiedDataset/);
     expect(hub).not.toMatch(/getDatasetChangelog\(/);
+  });
+
+  it("does not import computed-data-quality-scores from client surfaces", () => {
+    const files = walk(SRC_ROOT);
+    const violations: string[] = [];
+    for (const file of files) {
+      const content = readFileSync(file, "utf8");
+      if (!isUseClient(content)) continue;
+      if (content.includes("computed-data-quality-scores")) {
+        violations.push(path.relative(REPO_ROOT, file));
+      }
+    }
+    expect(violations).toEqual([]);
   });
 });

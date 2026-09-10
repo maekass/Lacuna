@@ -5,10 +5,10 @@ models.
 
 ## Models
 
-| Model                   | Task                                                                         | Status                                                    |
-| ----------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------- |
-| **wh-relevance-v1**     | Women's health trial relevance (title + condition + interventions + sponsor) | Shipped                                                   |
-| **termination-risk-v1** | Terminated/withdrawn vs active/completed proxy                               | Experimental — only exported when hold-out ROC-AUC ≥ 0.55 |
+| Model                   | Task                                                                         | Status                                                                                |
+| ----------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| **wh-relevance-v1**     | Women's health trial relevance (title + condition + interventions + sponsor) | Shipped (scores withheld in UI while `trainingSource` is `synthetic_seed`)            |
+| **completion-proxy-v2** | COMPLETED vs stopped early — operational status, not endpoint success        | Artifact committed; new trains must pass the conjunction export gate before overwrite |
 
 Inference runs in the **Next.js app** via exported JSON artifacts in
 `src/data/ml/clinical-trials/` (TF-IDF + logistic — no Python at runtime).

@@ -12,19 +12,19 @@ export async function GET(request: Request) {
   const disabled = requireVariantStore();
   if (disabled) return disabled;
 
-  const accessDenied = await requirePatientDataAccess(
-    request,
-    "read_summary",
-    "genomics/variants",
-  );
-  if (accessDenied) return accessDenied;
-
   const limited = await enforceRateLimit(request, {
     key: "genomics-variants",
     limit: 120,
     windowMs: 60_000,
   });
   if (limited) return limited;
+
+  const accessDenied = await requirePatientDataAccess(
+    request,
+    "read_summary",
+    "genomics/variants",
+  );
+  if (accessDenied) return accessDenied;
 
   try {
     const url = new URL(request.url);

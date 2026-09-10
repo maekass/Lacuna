@@ -20,16 +20,34 @@ interface SectorUtilizationRow {
   avgServicesPerCode: number | null;
 }
 
+export type CmsRowProvenanceKind = "api" | "hardcoded_fallback";
+
 interface CptUtilizationRow {
   sector: string;
   cptCode: string;
   totalServices?: number | null;
   avgMedicarePayment?: number | null;
+  provenanceKind?: CmsRowProvenanceKind;
+  pufDataYear?: number | "unknown";
+  fetchedAt?: string;
+  roundingGrid?: number | null;
 }
 
 interface ComputedCmsUtilizationFile {
+  source?: string;
+  intendedSource?: string;
+  generatedAt?: string;
   sectors: SectorUtilizationRow[];
   utilizationByCptCode: CptUtilizationRow[];
+}
+
+export interface CmsUtilizationProvenance {
+  readonly source: string;
+  readonly intendedSource: string | null;
+  readonly generatedAt: string | null;
+  readonly allHardcodedFallback: boolean;
+  readonly fallbackRowCount: number;
+  readonly rowCount: number;
 }
 
 function normalizeSectorKey(sector: string): string {
@@ -145,4 +163,28 @@ export function estimateAnnualReimbursementFromCodes(
  */
 export function getSectorAvgServicesPerCode(sector: string): number | null {
   return utilizationIndex.bySectorKey.get(normalizeSectorKey(sector)) ?? null;
+}
+
+/**
+ * Artifact-level provenance. All current CPT rows are in-repo fallback
+ * constants — callers must disclose that, not label the file as a CMS pull.
+ */
+export function getCmsUtilizationProvenance(): CmsUtilizationProvenance {
+  const raw = computedCmsUtilization as ComputedCmsUtilizationFile;
+  const rows = raw.utilizationByCptCode ?? [];
+  const fallbackRowCount =
+    rows.filter((row) => row.provenanceKind === "hardcoded_fallback").length;
+  return {
+    source: raw.source ?? "",
+    intendedSource: raw.intendedSource ?? null,
+    generatedAt: raw.generatedAt ?? null,
+    allHardcodedFallback: rows.length > 0 && fallbackRowCount === rows.length,
+    fallbackRowCount,
+    rowCount: rows.length,
+  };
+}
+
+/** True when any CPT row is the in-script fallback table. */
+export function isCmsUtilizationHardcodedFallback(): boolean {
+  return getCmsUtilizationProvenance().fallbackRowCount > 0;
 }

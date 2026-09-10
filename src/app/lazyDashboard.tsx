@@ -286,12 +286,6 @@ export const SystemHealthDashboard = dynamic(
     loading: sectionFallback("h-80 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },
 );
-export const DataPipelineStatus = dynamic(
-  () => import("@/components/DataPipelineStatus"),
-  {
-    loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
-  },
-);
 export const DeveloperTools = dynamic(
   () => import("@/components/DeveloperTools"),
   {

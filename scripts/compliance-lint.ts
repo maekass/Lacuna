@@ -22,14 +22,30 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import process from "node:process";
 import { extname, join } from "path";
+import { dirname } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const SRC_DIR = "src";
-const violations: {
+const __dirname = dirname(fileURLToPath(import.meta.url));
+export const COMPLIANCE_EXEMPTIONS_PATH = join(
+  __dirname,
+  "compliance-lint-exemptions.json",
+);
+
+export interface ComplianceViolation {
   file: string;
   line: number;
   rule: string;
   message: string;
-}[] = [];
+}
+
+export interface ComplianceExemption {
+  file: string;
+  line: number;
+  rule: string;
+  reason: string;
+  addedAt: string;
+}
 
 const RULES = {
   // SEC violations
@@ -87,7 +103,11 @@ function walkDir(dir: string, exts: string[]): string[] {
   return results;
 }
 
-function lintFile(path: string, content: string) {
+function lintFile(
+  path: string,
+  content: string,
+  violations: ComplianceViolation[],
+) {
   const lines = content.split("\n");
 
   for (let i = 0; i < lines.length; i++) {
@@ -235,7 +255,7 @@ function lintFile(path: string, content: string) {
   }
 }
 
-function checkDisclaimers() {
+function checkDisclaimers(violations: ComplianceViolation[]) {
   for (const file of DISCLAIMER_FILES) {
     if (!existsSync(file)) continue;
     const content = readFileSync(file, "utf-8");
@@ -254,7 +274,7 @@ function checkDisclaimers() {
   }
 }
 
-function checkCitations() {
+function checkCitations(violations: ComplianceViolation[]) {
   const datasetPath = "src/data/dataset.verified.json";
   if (!existsSync(datasetPath)) return;
   try {
@@ -285,27 +305,111 @@ function checkCitations() {
   }
 }
 
-// Main
-console.log("🔍 Running SEC, Penal Code & IP Law Compliance Lint...\n");
-
-const files = walkDir(SRC_DIR, [".ts", ".tsx", ".js", ".jsx"]);
-for (const file of files) {
-  const content = readFileSync(file, "utf-8");
-  lintFile(file, content);
+function exemptionKey(entry: {
+  file: string;
+  line: number;
+  rule: string;
+}): string {
+  return `${entry.file}::${entry.line}::${entry.rule}`;
 }
 
-checkDisclaimers();
-checkCitations();
+export function loadComplianceExemptions(
+  filePath = COMPLIANCE_EXEMPTIONS_PATH,
+): ComplianceExemption[] {
+  if (!existsSync(filePath)) return [];
+  return JSON.parse(readFileSync(filePath, "utf-8")) as ComplianceExemption[];
+}
 
-if (violations.length === 0) {
-  console.log("✅ All compliance checks passed — no violations found.");
-  process.exit(0);
-} else {
-  console.log(`❌ ${violations.length} compliance violation(s) found:\n`);
-  for (const v of violations) {
+export function validateComplianceExemptions(
+  exemptions: readonly ComplianceExemption[],
+  violations: readonly ComplianceViolation[],
+): string[] {
+  const errors: string[] = [];
+  const violationKeys = new Set(violations.map(exemptionKey));
+  for (const exemption of exemptions) {
+    if (!exemption.reason?.trim() || !exemption.addedAt?.trim()) {
+      errors.push(
+        `Exemption ${
+          exemptionKey(exemption)
+        } is missing a written reason or addedAt.`,
+      );
+    }
+    if (!violationKeys.has(exemptionKey(exemption))) {
+      errors.push(
+        `Stale compliance exemption ${
+          exemptionKey(exemption)
+        } — line no longer matches a violation.`,
+      );
+    }
+  }
+  return errors;
+}
+
+export function collectComplianceViolations(): ComplianceViolation[] {
+  const violations: ComplianceViolation[] = [];
+  const files = walkDir(SRC_DIR, [".ts", ".tsx", ".js", ".jsx"]);
+  for (const file of files) {
+    const content = readFileSync(file, "utf-8");
+    lintFile(file, content, violations);
+  }
+  checkDisclaimers(violations);
+  checkCitations(violations);
+  return violations;
+}
+
+export function applyComplianceExemptions(
+  violations: readonly ComplianceViolation[],
+  exemptions: readonly ComplianceExemption[],
+): ComplianceViolation[] {
+  const exempted = new Set(exemptions.map(exemptionKey));
+  return violations.filter((violation) =>
+    !exempted.has(exemptionKey(violation))
+  );
+}
+
+export function runComplianceLint(): {
+  raw: ComplianceViolation[];
+  remaining: ComplianceViolation[];
+  exemptionErrors: string[];
+} {
+  const raw = collectComplianceViolations();
+  const exemptions = loadComplianceExemptions();
+  const exemptionErrors = validateComplianceExemptions(exemptions, raw);
+  return {
+    raw,
+    remaining: applyComplianceExemptions(raw, exemptions),
+    exemptionErrors,
+  };
+}
+
+export function main(): number {
+  console.log("🔍 Running SEC, Penal Code & IP Law Compliance Lint...\n");
+  const { remaining, exemptionErrors } = runComplianceLint();
+  if (exemptionErrors.length > 0) {
+    console.log(
+      `❌ ${exemptionErrors.length} compliance exemption error(s):\n`,
+    );
+    for (const error of exemptionErrors) {
+      console.log(`  ${error}\n`);
+    }
+    return 1;
+  }
+  if (remaining.length === 0) {
+    console.log("✅ All compliance checks passed — no violations found.");
+    return 0;
+  }
+  console.log(`❌ ${remaining.length} compliance violation(s) found:\n`);
+  for (const v of remaining) {
     console.log(`  ${v.rule}`);
     console.log(`  📁 ${v.file}:${v.line}`);
     console.log(`  ⚠️  ${v.message}\n`);
   }
-  process.exit(1);
+  return 1;
+}
+
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
+  process.exitCode = main();
 }

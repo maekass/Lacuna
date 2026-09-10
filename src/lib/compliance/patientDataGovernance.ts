@@ -151,19 +151,39 @@ function auditUnavailableResponse(
   );
 }
 
+let loggedUnauditedPhiOptOut = false;
+
+/** True when an operator explicitly opted out of durable PHI audit. */
+export function isUnauditedPhiAllowed(): boolean {
+  return process.env.LACUNA_ALLOW_UNAUDITED_PHI === "1";
+}
+
+function logUnauditedPhiOptOutOnce(): void {
+  if (loggedUnauditedPhiOptOut || !isUnauditedPhiAllowed()) return;
+  loggedUnauditedPhiOptOut = true;
+  console.warn(
+    "[patient-data-audit] LACUNA_ALLOW_UNAUDITED_PHI=1: privileged patient-data access is allowed without a durable audit sink. Default is deny.",
+  );
+}
+
 /**
  * Gate genomics handlers by HIPAA minimum-necessary tier.
  * Returns a NextResponse when access must be denied.
- * Privileged access blocks with 503 when the audit write cannot be persisted.
+ * Privileged access blocks with 503 when no durable audit sink is configured,
+ * unless `LACUNA_ALLOW_UNAUDITED_PHI=1`.
  */
 export async function requirePatientDataAccess(
   request: Request,
   level: PatientDataAccessLevel,
   resource: string,
 ): Promise<NextResponse | null> {
+  logUnauditedPhiOptOutOnce();
+
   const mode = effectiveMode(request);
   const required = MINIMUM_LEVEL[level];
   const actor = resolveClientIp(request);
+  const privileged = isPrivilegedPatientDataAccess(level, mode);
+  const sinkConfigured = isAuditSinkConfigured();
 
   const allowed = modeSatisfies(mode, required);
   const persisted = await auditPatientDataAccess({
@@ -175,9 +195,17 @@ export async function requirePatientDataAccess(
   });
 
   if (
-    !persisted && isAuditSinkConfigured() &&
-    isPrivilegedPatientDataAccess(level, mode)
+    allowed && privileged && !sinkConfigured && !isUnauditedPhiAllowed()
   ) {
+    reportError(
+      "patient-data-audit",
+      new Error("Privileged access denied: no durable audit sink configured"),
+      { action: level, resource, mode },
+    );
+    return auditUnavailableResponse(mode, level);
+  }
+
+  if (allowed && privileged && sinkConfigured && !persisted) {
     reportError(
       "patient-data-audit",
       new Error("Privileged access denied: audit trail unavailable"),

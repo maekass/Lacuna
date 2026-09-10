@@ -59,11 +59,7 @@ const eslintConfig = defineConfig([
       "src/lib/data/useDashboardData.ts",
       "src/lib/data/WatchlistContext.tsx",
     ],
-    ignores: [
-      // Follow-up PR: remaining client JSON imports of dataset.verified.json
-      "src/components/PatientEmpowermentPanel.tsx",
-      "src/components/SpaceWhResearchGapsPanel.tsx",
-    ],
+    ignores: [],
     rules: {
       "no-restricted-imports": [
         "error",

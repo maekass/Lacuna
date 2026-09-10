@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-06-27T18:13:23.054Z",
-  "source": "CMS Medicare Provider Utilization and Payment Data (https://data.cms.gov)",
+  "source": "in-repo fallback table (see scripts/fetch-cms-utilization.ts:167); not retrieved from data.cms.gov",
   "apiEndpoint": "https://data.cms.gov/data-api/v1/dataset",
   "sectors": [
     {
@@ -15,7 +15,7 @@
       "avgServicesPerCode": 14375,
       "avgPaymentPerService": 302.5,
       "estimatedAnnualReimbursement": 17.39,
-      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "source": "in-repo fallback table (see scripts/fetch-cms-utilization.ts:167); not retrieved from data.cms.gov",
       "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
     },
     {
@@ -31,7 +31,7 @@
       "avgServicesPerCode": 241400,
       "avgPaymentPerService": 1502,
       "estimatedAnnualReimbursement": 1812.91,
-      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "source": "in-repo fallback table (see scripts/fetch-cms-utilization.ts:167); not retrieved from data.cms.gov",
       "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
     },
     {
@@ -47,7 +47,7 @@
       "avgServicesPerCode": 645000,
       "avgPaymentPerService": 141,
       "estimatedAnnualReimbursement": 454.73,
-      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "source": "in-repo fallback table (see scripts/fetch-cms-utilization.ts:167); not retrieved from data.cms.gov",
       "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
     },
     {
@@ -63,7 +63,7 @@
       "avgServicesPerCode": 199000,
       "avgPaymentPerService": 304,
       "estimatedAnnualReimbursement": 302.48,
-      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "source": "in-repo fallback table (see scripts/fetch-cms-utilization.ts:167); not retrieved from data.cms.gov",
       "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
     },
     {
@@ -78,7 +78,7 @@
       "avgServicesPerCode": 79500,
       "avgPaymentPerService": 1792.5,
       "estimatedAnnualReimbursement": 570.01,
-      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "source": "in-repo fallback table (see scripts/fetch-cms-utilization.ts:167); not retrieved from data.cms.gov",
       "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
     },
     {
@@ -93,7 +93,7 @@
       "avgServicesPerCode": 4075000,
       "avgPaymentPerService": 74,
       "estimatedAnnualReimbursement": 1206.2,
-      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "source": "in-repo fallback table (see scripts/fetch-cms-utilization.ts:167); not retrieved from data.cms.gov",
       "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
     },
     {
@@ -108,7 +108,7 @@
       "avgServicesPerCode": 68750,
       "avgPaymentPerService": 475,
       "estimatedAnnualReimbursement": 130.63,
-      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "source": "in-repo fallback table (see scripts/fetch-cms-utilization.ts:167); not retrieved from data.cms.gov",
       "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
     },
     {
@@ -123,7 +123,7 @@
       "avgServicesPerCode": 3235750,
       "avgPaymentPerService": 562.5,
       "estimatedAnnualReimbursement": 7280.44,
-      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "source": "in-repo fallback table (see scripts/fetch-cms-utilization.ts:167); not retrieved from data.cms.gov",
       "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
     },
     {
@@ -138,7 +138,7 @@
       "avgServicesPerCode": 450000,
       "avgPaymentPerService": 42.5,
       "estimatedAnnualReimbursement": 76.5,
-      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "source": "in-repo fallback table (see scripts/fetch-cms-utilization.ts:167); not retrieved from data.cms.gov",
       "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
     },
     {
@@ -153,7 +153,7 @@
       "avgServicesPerCode": 55000,
       "avgPaymentPerService": 48.75,
       "estimatedAnnualReimbursement": 10.72,
-      "source": "CMS Medicare Provider Utilization and Payment Data (data.cms.gov)",
+      "source": "in-repo fallback table (see scripts/fetch-cms-utilization.ts:167); not retrieved from data.cms.gov",
       "method": "Total annual services summed across CPT codes × average Medicare payment per service. Data from CMS Public Use Files — represents Medicare volume only, not all-payer volume."
     }
   ],
@@ -162,262 +162,435 @@
       "sector": "fertility",
       "cptCode": "58321",
       "totalServices": 15000,
-      "avgMedicarePayment": 185
+      "avgMedicarePayment": 185,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "fertility",
       "cptCode": "58322",
       "totalServices": 12000,
-      "avgMedicarePayment": 200
+      "avgMedicarePayment": 200,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "fertility",
       "cptCode": "58970",
       "totalServices": 8500,
-      "avgMedicarePayment": 650
+      "avgMedicarePayment": 650,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 100
     },
     {
       "sector": "fertility",
       "cptCode": "89250",
       "totalServices": 22000,
-      "avgMedicarePayment": 175
+      "avgMedicarePayment": 175,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "maternal_health",
       "cptCode": "59400",
       "totalServices": 180000,
-      "avgMedicarePayment": 2100
+      "avgMedicarePayment": 2100,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "maternal_health",
       "cptCode": "59510",
       "totalServices": 45000,
-      "avgMedicarePayment": 2400
+      "avgMedicarePayment": 2400,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "maternal_health",
       "cptCode": "59618",
       "totalServices": 12000,
-      "avgMedicarePayment": 2600
+      "avgMedicarePayment": 2600,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "maternal_health",
       "cptCode": "76801",
       "totalServices": 320000,
-      "avgMedicarePayment": 220
+      "avgMedicarePayment": 220,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "maternal_health",
       "cptCode": "76805",
       "totalServices": 650000,
-      "avgMedicarePayment": 190
+      "avgMedicarePayment": 190,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "mental_health",
       "cptCode": "90791",
       "totalServices": 850000,
-      "avgMedicarePayment": 175
+      "avgMedicarePayment": 175,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "mental_health",
       "cptCode": "90834",
       "totalServices": 1200000,
-      "avgMedicarePayment": 95
+      "avgMedicarePayment": 95,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 100000
     },
     {
       "sector": "mental_health",
       "cptCode": "90837",
       "totalServices": 950000,
-      "avgMedicarePayment": 140
+      "avgMedicarePayment": 140,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "mental_health",
       "cptCode": "96116",
       "totalServices": 45000,
-      "avgMedicarePayment": 280
+      "avgMedicarePayment": 280,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "mental_health",
       "cptCode": "96127",
       "totalServices": 180000,
-      "avgMedicarePayment": 15
+      "avgMedicarePayment": 15,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "gynecology",
       "cptCode": "57420",
       "totalServices": 85000,
-      "avgMedicarePayment": 120
+      "avgMedicarePayment": 120,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "gynecology",
       "cptCode": "57421",
       "totalServices": 65000,
-      "avgMedicarePayment": 180
+      "avgMedicarePayment": 180,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "gynecology",
       "cptCode": "58100",
       "totalServices": 450000,
-      "avgMedicarePayment": 150
+      "avgMedicarePayment": 150,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "gynecology",
       "cptCode": "58300",
       "totalServices": 75000,
-      "avgMedicarePayment": 220
+      "avgMedicarePayment": 220,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "gynecology",
       "cptCode": "58558",
       "totalServices": 320000,
-      "avgMedicarePayment": 850
+      "avgMedicarePayment": 850,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "pelvic_health",
       "cptCode": "51741",
       "totalServices": 95000,
-      "avgMedicarePayment": 95
+      "avgMedicarePayment": 95,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "pelvic_health",
       "cptCode": "51798",
       "totalServices": 180000,
-      "avgMedicarePayment": 75
+      "avgMedicarePayment": 75,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "pelvic_health",
       "cptCode": "57288",
       "totalServices": 28000,
-      "avgMedicarePayment": 3200
+      "avgMedicarePayment": 3200,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "pelvic_health",
       "cptCode": "57289",
       "totalServices": 15000,
-      "avgMedicarePayment": 3800
+      "avgMedicarePayment": 3800,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "menopause",
       "cptCode": "99213",
       "totalServices": 8500000,
-      "avgMedicarePayment": 92
+      "avgMedicarePayment": 92,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 100000
     },
     {
       "sector": "menopause",
       "cptCode": "99214",
       "totalServices": 6500000,
-      "avgMedicarePayment": 131
+      "avgMedicarePayment": 131,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 100000
     },
     {
       "sector": "menopause",
       "cptCode": "84443",
       "totalServices": 850000,
-      "avgMedicarePayment": 28
+      "avgMedicarePayment": 28,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "menopause",
       "cptCode": "82671",
       "totalServices": 450000,
-      "avgMedicarePayment": 45
+      "avgMedicarePayment": 45,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "contraception",
       "cptCode": "58300",
       "totalServices": 75000,
-      "avgMedicarePayment": 220
+      "avgMedicarePayment": 220,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "contraception",
       "cptCode": "58301",
       "totalServices": 35000,
-      "avgMedicarePayment": 180
+      "avgMedicarePayment": 180,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "contraception",
       "cptCode": "J7300",
       "totalServices": 120000,
-      "avgMedicarePayment": 850
+      "avgMedicarePayment": 850,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "contraception",
       "cptCode": "J7302",
       "totalServices": 45000,
-      "avgMedicarePayment": 650
+      "avgMedicarePayment": 650,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "breast_health",
       "cptCode": "77067",
       "totalServices": 12000000,
-      "avgMedicarePayment": 140
+      "avgMedicarePayment": 140,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000000
     },
     {
       "sector": "breast_health",
       "cptCode": "77063",
       "totalServices": 850000,
-      "avgMedicarePayment": 60
+      "avgMedicarePayment": 60,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "breast_health",
       "cptCode": "19101",
       "totalServices": 65000,
-      "avgMedicarePayment": 850
+      "avgMedicarePayment": 850,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "breast_health",
       "cptCode": "38525",
       "totalServices": 28000,
-      "avgMedicarePayment": 1200
+      "avgMedicarePayment": 1200,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "wearable_monitoring",
       "cptCode": "99453",
       "totalServices": 450000,
-      "avgMedicarePayment": 20
+      "avgMedicarePayment": 20,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "wearable_monitoring",
       "cptCode": "99454",
       "totalServices": 850000,
-      "avgMedicarePayment": 55
+      "avgMedicarePayment": 55,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "wearable_monitoring",
       "cptCode": "99457",
       "totalServices": 320000,
-      "avgMedicarePayment": 50
+      "avgMedicarePayment": 50,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "wearable_monitoring",
       "cptCode": "99458",
       "totalServices": 180000,
-      "avgMedicarePayment": 45
+      "avgMedicarePayment": 45,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 10000
     },
     {
       "sector": "digital_therapeutics",
       "cptCode": "98960",
       "totalServices": 25000,
-      "avgMedicarePayment": 75
+      "avgMedicarePayment": 75,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "digital_therapeutics",
       "cptCode": "99421",
       "totalServices": 85000,
-      "avgMedicarePayment": 25
+      "avgMedicarePayment": 25,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "digital_therapeutics",
       "cptCode": "99422",
       "totalServices": 65000,
-      "avgMedicarePayment": 40
+      "avgMedicarePayment": 40,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     },
     {
       "sector": "digital_therapeutics",
       "cptCode": "99423",
       "totalServices": 45000,
-      "avgMedicarePayment": 55
+      "avgMedicarePayment": 55,
+      "provenanceKind": "hardcoded_fallback",
+      "pufDataYear": "unknown",
+      "fetchedAt": "2026-06-27T18:13:23.054Z",
+      "roundingGrid": 1000
     }
   ],
   "method": "Annual utilization = sum of total services per CPT code from CMS PUF. Estimated reimbursement = total services × average Medicare payment. Medicare-only volume — all-payer volume would be higher.",
   "disclaimer": "Utilization data represents Medicare fee-for-service only. Commercial payer volume is typically 2-4x higher. Use CMS National Health Expenditure Data for all-payer estimates.",
-  "replaces": "This data replaces the hardcoded '100 annual uses per code' assumption in fetch-cms-rates.ts"
+  "replaces": "This data replaces the hardcoded '100 annual uses per code' assumption in fetch-cms-rates.ts",
+  "intendedSource": "CMS Medicare Provider Utilization and Payment Data (https://data.cms.gov)"
 }

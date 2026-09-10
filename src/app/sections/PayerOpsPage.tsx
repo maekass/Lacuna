@@ -97,7 +97,11 @@ function useAnimatedNumber(target: number, duration: number): number {
   return value;
 }
 
-export default function PayerOpsPage() {
+export default function PayerOpsPage({
+  sourcesLastVerified,
+}: {
+  sourcesLastVerified?: string;
+}) {
   const [segment, setSegment] = useState<SegmentKey>("commercial");
   const [compareAll, setCompareAll] = useState(false);
   const [customizeInputs, setCustomizeInputs] = useState(false);
@@ -225,6 +229,13 @@ export default function PayerOpsPage() {
           prior-authorization and claims-administration friction without
           weakening oversight.
         </p>
+        {sourcesLastVerified
+          ? (
+            <p className="mt-3 text-xs text-lacuna-blue/80">
+              Sources last verified {sourcesLastVerified}
+            </p>
+          )
+          : null}
         <div className="mt-6 flex flex-wrap gap-3">
           {[
             "Prior auth",
