@@ -1,123 +1,83 @@
 #!/usr/bin/env npx tsx
 
 /**
- * Data Quality Scorer
+ * Data quality scorer.
  *
- * Rates every data point in the verified dataset on provenance strength.
- * Scores each company and acquisition on:
- *  - Source quality (SEC filing > press release > Crunchbase > none)
- *  - Data completeness (how many fields are populated)
- *  - Verifiability (can the source be independently checked?)
- *
- * Output: src/data/computed-data-quality-scores.json
- *
- * Usage: npx tsx scripts/compute-data-quality.ts
+ * MeshIC rule: provenance strength and record completeness are separate axes.
+ * A complete row cannot become primary-source evidence merely because more
+ * fields are populated.
  */
 
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 import { hashDataset } from "../src/lib/lineage/datasetHash";
 import { parseVerifiedDataset } from "../src/lib/data/datasetSchema";
 
+type EvidenceGrade = "A" | "B" | "C" | "D" | "F";
+
 interface SourceQuality {
-  level: "A" | "B" | "C" | "D" | "F";
+  level: EvidenceGrade;
   description: string;
   score: number;
 }
 
 function scoreSource(source?: string): SourceQuality {
-  if (!source) {
-    return { level: "F", description: "No source provided", score: 0 };
+  if (!source?.trim()) {
+    return { level: "F", description: "No resolvable source provided", score: 0 };
   }
-
   const lower = source.toLowerCase();
 
-  // Level A: Primary government filings
   if (
-    lower.includes("sec") || lower.includes("edgar") || lower.includes("8-k") ||
-    lower.includes("10-k") || lower.includes("s-4") || lower.includes("s-1")
+    lower.includes("sec.gov") || lower.includes("sec edgar") ||
+    lower.includes("8-k") || lower.includes("10-k") ||
+    lower.includes("defm14a") || lower.includes("s-4") || lower.includes("s-1") ||
+    lower.includes("stock exchange filing")
   ) {
-    return {
-      level: "A",
-      description: "SEC filing (primary government source)",
-      score: 100,
-    };
+    return { level: "A", description: "Primary regulatory/government filing", score: 100 };
   }
 
-  // Level B: Reputable press / trade publications
   if (
+    lower.includes("investor relations") || lower.includes("company press release") ||
+    lower.includes("company announcement") || lower.includes("business wire") ||
+    lower.includes("pr newswire") || lower.includes("globe newswire")
+  ) {
+    return { level: "B", description: "Named first-party corporate disclosure", score: 80 };
+  }
+
+  if (
+    lower.includes("reuters") || lower.includes("bloomberg") ||
+    lower.includes("wsj") || lower.includes("ft.com") ||
     lower.includes("techcrunch") || lower.includes("fierce healthcare") ||
-    lower.includes("stat news") || lower.includes("reuters") ||
-    lower.includes("bloomberg") || lower.includes("wsj") ||
-    lower.includes("ft.com") || lower.includes("endpoints") ||
-    lower.includes("axios")
+    lower.includes("stat news") || lower.includes("endpoints") ||
+    lower.includes("axios") || lower.includes("forbes")
   ) {
-    return {
-      level: "B",
-      description: "Reputable press/trade publication",
-      score: 80,
-    };
+    return { level: "C", description: "Independent press/trade source", score: 65 };
   }
 
-  // Level C: Company announcement / press release
-  if (
-    lower.includes("press release") || lower.includes("company announcement") ||
-    lower.includes("pr newswire") || lower.includes("business wire")
-  ) {
-    return { level: "C", description: "Company press release", score: 65 };
-  }
-
-  // Level D: Aggregators (Crunchbase, PitchBook summaries)
   if (
     lower.includes("crunchbase") || lower.includes("pitchbook") ||
-    lower.includes("cb insights") || lower.includes("tracxn")
+    lower.includes("cb insights") || lower.includes("tracxn") ||
+    lower.includes("linkedin")
   ) {
-    return {
-      level: "D",
-      description: "Data aggregator (secondary)",
-      score: 50,
-    };
+    return { level: "D", description: "Aggregator/profile/discovery source", score: 40 };
   }
 
-  // Level F: Unknown or no source
-  return { level: "F", description: "Unverified or unknown source", score: 20 };
+  return { level: "F", description: "Unclassified or non-resolvable citation", score: 20 };
 }
 
-function scoreCompleteness(
-  fields: Record<string, unknown>,
-  requiredFields: string[],
-): number {
-  const populated =
-    requiredFields.filter((f) =>
-      fields[f] !== undefined && fields[f] !== null && fields[f] !== ""
-    ).length;
-  return (populated / requiredFields.length) * 100;
+function bestSource(sources: readonly string[]): SourceQuality {
+  if (sources.length === 0) return scoreSource(undefined);
+  return sources.map(scoreSource).reduce((best, current) =>
+    current.score > best.score ? current : best
+  );
 }
 
-interface CompanyRecord {
-  id: string;
-  name: string;
-  sector: string;
-  stage?: string;
-  founded?: number;
-  hq?: string;
-  description?: string;
-  lastKnownValuation?: number;
-  valuationSource?: string;
-  totalFunding?: number;
-  sources?: string[];
-}
-
-interface AcquisitionRecord {
-  id: string;
-  targetId: string;
-  targetName: string;
-  acquirerName: string;
-  dealValue?: number;
-  announcedDate?: string;
-  closedDate?: string;
-  source?: string;
-  dealType?: string;
+function scoreCompleteness(fields: Record<string, unknown>, required: readonly string[]): number {
+  const populated = required.filter((field) => {
+    const value = fields[field];
+    return value !== undefined && value !== null && value !== "";
+  }).length;
+  return Math.round((populated / required.length) * 100);
 }
 
 interface EntityScore {
@@ -126,166 +86,134 @@ interface EntityScore {
   sector?: string;
   target?: string;
   acquirer?: string;
-  sourceQuality: string;
+  sourceQuality: EvidenceGrade;
+  /** Backward-compatible public evidence grade. */
+  grade: EvidenceGrade;
   sourceDescription: string;
   completeness: number;
+  evidenceScore: number;
+  /** Utility/completeness score; never upgrades `grade`. */
+  overallScore: number;
+  recordUtilityScore: number;
   hasValuation?: boolean;
   hasFunding?: boolean;
-  hasSource: boolean;
   hasDealValue?: boolean;
-  overallScore: number;
-  grade: string;
+  hasSource: boolean;
 }
 
-// Main
-const dataset = JSON.parse(
-  readFileSync("src/data/dataset.verified.json", "utf-8"),
-);
-const companies: CompanyRecord[] = dataset.companies || [];
-const acquisitions: AcquisitionRecord[] = dataset.acquisitions || [];
+const dataset = JSON.parse(readFileSync("src/data/dataset.verified.json", "utf-8"));
+const companies = dataset.companies ?? [];
+const acquisitions = dataset.acquisitions ?? [];
 
-const companyScores: EntityScore[] = [];
 const companyFields = [
-  "id",
-  "name",
-  "sector",
-  "stage",
-  "founded",
-  "hq",
-  "description",
-  "lastKnownValuation",
-  "valuationSource",
-  "totalFunding",
-  "sources",
-];
+  "id", "name", "sector", "stage", "founded", "hq", "description",
+  "lastKnownValuation", "valuationSource", "totalFunding", "sources",
+] as const;
 
-for (const company of companies) {
-  const sourceQuality = company.sources?.length > 0
-    ? company.sources.map(scoreSource).reduce(
-      (best: SourceQuality, s: SourceQuality) =>
-        s.score > best.score ? s : best,
-      scoreSource(company.sources[0]),
-    )
-    : scoreSource(undefined);
-
+const companyScores: EntityScore[] = companies.map((company: Record<string, unknown> & {
+  id: string;
+  name: string;
+  sector: string;
+  sources?: string[];
+  lastKnownValuation?: number;
+  totalFunding?: number;
+}) => {
+  const sourceQuality = bestSource(company.sources ?? []);
   const completeness = scoreCompleteness(company, companyFields);
-  const hasValuation = company.lastKnownValuation !== undefined &&
-    company.lastKnownValuation !== null;
-  const hasFunding = company.totalFunding !== undefined &&
-    company.totalFunding !== null;
-  const hasSource = company.sources?.length > 0;
-
-  const overallScore = Math.round(
-    (sourceQuality.score * 0.5) + (completeness * 0.3) +
-      ((hasValuation ? 100 : 0) * 0.1) + ((hasFunding ? 100 : 0) * 0.1),
+  const hasValuation = company.lastKnownValuation != null;
+  const hasFunding = company.totalFunding != null;
+  const utility = Math.round(
+    sourceQuality.score * 0.45 + completeness * 0.35 +
+    (hasValuation ? 10 : 0) + (hasFunding ? 10 : 0),
   );
 
-  companyScores.push({
+  return {
     id: company.id,
     name: company.name,
     sector: company.sector,
     sourceQuality: sourceQuality.level,
+    grade: sourceQuality.level,
     sourceDescription: sourceQuality.description,
-    completeness: Number(completeness.toFixed(0)),
+    completeness,
+    evidenceScore: sourceQuality.score,
+    overallScore: utility,
+    recordUtilityScore: utility,
     hasValuation,
     hasFunding,
-    hasSource,
-    overallScore,
-    grade: overallScore >= 90
-      ? "A"
-      : overallScore >= 75
-      ? "B"
-      : overallScore >= 60
-      ? "C"
-      : overallScore >= 40
-      ? "D"
-      : "F",
-  });
-}
+    hasSource: (company.sources?.length ?? 0) > 0,
+  };
+});
 
-const acquisitionScores: EntityScore[] = [];
 const acquisitionFields = [
-  "id",
-  "targetId",
-  "acquirerName",
-  "targetName",
-  "dealValue",
-  "announcedDate",
-  "closedDate",
-  "source",
-  "dealType",
-];
+  "id", "targetId", "acquirerName", "targetName", "dealValue",
+  "announcedDate", "closedDate", "source", "dealType",
+] as const;
 
-for (const deal of acquisitions) {
+const acquisitionScores: EntityScore[] = acquisitions.map((deal: Record<string, unknown> & {
+  id: string;
+  targetName: string;
+  acquirerName: string;
+  source?: string;
+  dealValue?: number;
+}) => {
   const sourceQuality = scoreSource(deal.source);
   const completeness = scoreCompleteness(deal, acquisitionFields);
-  const hasDealValue = deal.dealValue !== undefined && deal.dealValue !== null;
-  const hasSource = !!deal.source;
-
-  const overallScore = Math.round(
-    (sourceQuality.score * 0.5) + (completeness * 0.3) +
-      ((hasDealValue ? 100 : 0) * 0.15) + ((hasSource ? 100 : 0) * 0.05),
+  const hasDealValue = deal.dealValue != null;
+  const utility = Math.round(
+    sourceQuality.score * 0.55 + completeness * 0.35 +
+    (hasDealValue ? 10 : 0),
   );
 
-  acquisitionScores.push({
+  return {
     id: deal.id,
     target: deal.targetName,
     acquirer: deal.acquirerName,
     sourceQuality: sourceQuality.level,
+    grade: sourceQuality.level,
     sourceDescription: sourceQuality.description,
-    completeness: Number(completeness.toFixed(0)),
+    completeness,
+    evidenceScore: sourceQuality.score,
+    overallScore: utility,
+    recordUtilityScore: utility,
     hasDealValue,
-    hasSource,
-    overallScore,
-    grade: overallScore >= 90
-      ? "A"
-      : overallScore >= 75
-      ? "B"
-      : overallScore >= 60
-      ? "C"
-      : overallScore >= 40
-      ? "D"
-      : "F",
-  });
+    hasSource: Boolean(deal.source?.trim()),
+  };
+});
+
+function gradeCounts(rows: readonly EntityScore[]): Record<string, number> {
+  return rows.reduce<Record<string, number>>((counts, row) => {
+    counts[row.grade] = (counts[row.grade] ?? 0) + 1;
+    return counts;
+  }, {});
 }
 
-// Summary stats
-const companyGrades = companyScores.reduce((acc, s) => {
-  acc[s.grade] = (acc[s.grade] || 0) + 1;
-  return acc;
-}, {} as Record<string, number>);
-const acquisitionGrades = acquisitionScores.reduce((acc, s) => {
-  acc[s.grade] = (acc[s.grade] || 0) + 1;
-  return acc;
-}, {} as Record<string, number>);
+function averageUtility(rows: readonly EntityScore[]): number {
+  if (rows.length === 0) return 0;
+  return Number((rows.reduce((sum, row) => sum + row.recordUtilityScore, 0) / rows.length).toFixed(1));
+}
 
 const output = {
   generatedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
   datasetHash: hashDataset(parseVerifiedDataset(dataset)).fullHash,
   source: "Lacuna verified dataset (src/data/dataset.verified.json)",
   grading: {
-    A: "90-100: SEC filing or equivalent primary source, all fields populated",
-    B: "75-89: Reputable press source, most fields populated",
-    C: "60-74: Company press release or partial data",
-    D: "40-59: Data aggregator only (Crunchbase, etc.), incomplete",
-    F: "0-39: No source or unverified",
+    A: "Primary regulatory/government filing",
+    B: "Named first-party corporate disclosure",
+    C: "Independent reputable press/trade source",
+    D: "Aggregator/profile/discovery source",
+    F: "Missing, non-resolvable, or unclassified source",
   },
+  scoringNote: "grade/sourceQuality represents evidence provenance only. overallScore/recordUtilityScore combines evidence strength and completeness for workflow prioritization and must not be interpreted as provenance grade.",
   summary: {
     companies: {
       total: companyScores.length,
-      grades: companyGrades,
-      avgScore: Number(
-        (companyScores.reduce((sum, s) => sum + s.overallScore, 0) /
-          companyScores.length).toFixed(1),
-      ),
+      grades: gradeCounts(companyScores),
+      avgScore: averageUtility(companyScores),
     },
     acquisitions: {
       total: acquisitionScores.length,
-      grades: acquisitionGrades,
-      avgScore: Number(
-        (acquisitionScores.reduce((sum, s) => sum + s.overallScore, 0) /
-          acquisitionScores.length).toFixed(1),
-      ),
+      grades: gradeCounts(acquisitionScores),
+      avgScore: averageUtility(acquisitionScores),
     },
   },
   companies: companyScores,
@@ -297,48 +225,5 @@ writeFileSync(
   JSON.stringify(output, null, 2) + "\n",
 );
 
-console.log(
-  "✅ Data quality scores written to src/data/computed-data-quality-scores.json\n",
-);
-
-console.log("Company grades:");
-for (const grade of ["A", "B", "C", "D", "F"]) {
-  console.log(`  ${grade}: ${companyGrades[grade] || 0}`);
-}
-console.log(`  Average score: ${output.summary.companies.avgScore}\n`);
-
-console.log("Acquisition grades:");
-for (const grade of ["A", "B", "C", "D", "F"]) {
-  console.log(`  ${grade}: ${acquisitionGrades[grade] || 0}`);
-}
-console.log(`  Average score: ${output.summary.acquisitions.avgScore}\n`);
-
-// Flag low-quality data
-const lowQualityCompanies = companyScores.filter((s) =>
-  s.grade === "D" || s.grade === "F"
-);
-const lowQualityDeals = acquisitionScores.filter((s) =>
-  s.grade === "D" || s.grade === "F"
-);
-
-if (lowQualityCompanies.length > 0) {
-  console.log(
-    `⚠️  ${lowQualityCompanies.length} companies with D/F grade (need better sourcing):`,
-  );
-  lowQualityCompanies.slice(0, 10).forEach((c) =>
-    console.log(
-      `    ${c.name} (${c.sector}): grade=${c.grade}, score=${c.overallScore}`,
-    )
-  );
-}
-
-if (lowQualityDeals.length > 0) {
-  console.log(
-    `\n⚠️  ${lowQualityDeals.length} acquisitions with D/F grade (need better sourcing):`,
-  );
-  lowQualityDeals.slice(0, 10).forEach((d) =>
-    console.log(
-      `    ${d.target} → ${d.acquirer}: grade=${d.grade}, score=${d.overallScore}`,
-    )
-  );
-}
+console.log("✅ Data quality scores written with evidence grade separated from record utility.");
+console.log(`Companies: ${companyScores.length}; acquisitions: ${acquisitionScores.length}`);
