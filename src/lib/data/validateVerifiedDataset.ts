@@ -25,18 +25,35 @@ export interface ValidationReport {
 }
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+const YEAR = /\b(?:19|20)\d{2}\b/;
+const URL = /https?:\/\/[^\s]+/i;
 
-function push(
-  list: ValidationIssue[],
-  issue: ValidationIssue,
-): void {
+function push(list: ValidationIssue[], issue: ValidationIssue): void {
   list.push(issue);
 }
 
-/** Validate verified dataset integrity, provenance, and disclosure hygiene. */
-export function validateVerifiedDataset(
-  dataset: VerifiedDataset,
-): ValidationReport {
+function sourceIsResolvable(source: string): boolean {
+  const value = source.trim().toLowerCase();
+  if (URL.test(source)) return true;
+  // Filing identifiers can be resolvable without embedding a full URL.
+  return value.includes("sec edgar") || value.includes("accession") ||
+    value.includes("10-k") || value.includes("8-k") ||
+    value.includes("defm14a") || value.includes("s-4") ||
+    value.includes("stock exchange filing");
+}
+
+function extractDomain(source: string): string | null {
+  const match = source.match(URL);
+  if (!match) return null;
+  try {
+    return new URL(match[0]).hostname.replace(/^www\./, "").toLowerCase();
+  } catch {
+    return null;
+  }
+}
+
+/** Validate verified dataset integrity, provenance, disclosure and evidence hygiene. */
+export function validateVerifiedDataset(dataset: VerifiedDataset): ValidationReport {
   const errors: ValidationIssue[] = [];
   const warnings: ValidationIssue[] = [];
 
@@ -45,10 +62,7 @@ export function validateVerifiedDataset(
   const acquirerOrCompanyIds = new Set([...companyIds, ...acquirerIds]);
   const dealIds = new Set<string>();
 
-  if (
-    !dataset.provenance.lastUpdated ||
-    !ISO_DATE.test(dataset.provenance.lastUpdated)
-  ) {
+  if (!dataset.provenance.lastUpdated || !ISO_DATE.test(dataset.provenance.lastUpdated)) {
     push(errors, {
       code: "provenance.lastUpdated",
       severity: "error",
@@ -75,24 +89,54 @@ export function validateVerifiedDataset(
       push(errors, {
         code: "company.required",
         severity: "error",
-        message: `Company missing id, name, or sector`,
+        message: "Company missing id, name, or sector",
         entity: c.id ?? c.name,
       });
     }
-    if ((c.sources ?? []).length < 2) {
+
+    const sources = c.sources ?? [];
+    if (sources.length < 2) {
       push(warnings, {
         code: "company.singleSource",
         severity: "warning",
-        message:
-          `Company "${c.name}" has fewer than 2 sources (dual-attestation recommended)`,
+        message: `Company "${c.name}" has fewer than 2 sources (dual-attestation recommended)`,
         entity: c.id,
       });
     }
+
+    const unresolvable = sources.filter((source) => !sourceIsResolvable(source));
+    if (unresolvable.length > 0) {
+      push(warnings, {
+        code: "company.nonResolvableSource",
+        severity: "warning",
+        message: `Company "${c.name}" has ${unresolvable.length}/${sources.length} source citation(s) without a canonical URL or filing identifier`,
+        entity: c.id,
+      });
+    }
+
+    const domains = sources.map(extractDomain).filter((value): value is string => value !== null);
+    if (sources.length >= 2 && domains.length >= 2 && new Set(domains).size === 1) {
+      push(warnings, {
+        code: "company.nonIndependentSources",
+        severity: "warning",
+        message: `Company "${c.name}" cites multiple URLs from only one domain; dual attestation should use independent evidence when policy requires it`,
+        entity: c.id,
+      });
+    }
+
     if (c.lastKnownValuation != null && !c.valuationSource?.trim()) {
       push(warnings, {
         code: "company.valuationSource",
         severity: "warning",
         message: `Company "${c.name}" has valuation without valuationSource`,
+        entity: c.id,
+      });
+    }
+    if (c.lastKnownValuation != null && c.valuationSource?.trim() && !YEAR.test(c.valuationSource)) {
+      push(warnings, {
+        code: "company.valuationVintage",
+        severity: "warning",
+        message: `Company "${c.name}" has a valuation source without an explicit year; store a dedicated as-of date when the schema supports it`,
         entity: c.id,
       });
     }
@@ -129,8 +173,7 @@ export function validateVerifiedDataset(
       push(errors, {
         code: "deal.targetFk",
         severity: "error",
-        message:
-          `Deal "${d.id}" targetId "${d.targetId}" not found in companies`,
+        message: `Deal "${d.id}" targetId "${d.targetId}" not found in companies`,
         entity: d.id,
       });
     }
@@ -138,19 +181,18 @@ export function validateVerifiedDataset(
       push(errors, {
         code: "deal.acquirerFk",
         severity: "error",
-        message:
-          `Deal "${d.id}" acquirerId "${d.acquirerId}" not in companies or acquirers`,
+        message: `Deal "${d.id}" acquirerId "${d.acquirerId}" not in companies or acquirers`,
         entity: d.id,
       });
     } else if (!acquirerIds.has(d.acquirerId)) {
       push(warnings, {
         code: "deal.corporateAcquirer",
         severity: "warning",
-        message:
-          `Deal "${d.id}" acquirerId "${d.acquirerId}" resolves to a company row, not acquirers[] — document entity resolution`,
+        message: `Deal "${d.id}" acquirerId "${d.acquirerId}" resolves to a company row, not acquirers[] — document entity resolution`,
         entity: d.id,
       });
     }
+
     if (!d.source?.trim()) {
       push(errors, {
         code: "deal.source",
@@ -158,13 +200,20 @@ export function validateVerifiedDataset(
         message: `Deal "${d.id}" missing source`,
         entity: d.id,
       });
+    } else if (!sourceIsResolvable(d.source)) {
+      push(warnings, {
+        code: "deal.nonResolvableSource",
+        severity: "warning",
+        message: `Deal "${d.id}" source is not a canonical URL or filing identifier`,
+        entity: d.id,
+      });
     }
+
     if (d.dealValue == null && !d.dealValueNote?.trim()) {
       push(warnings, {
         code: "deal.undisclosedNote",
         severity: "warning",
-        message:
-          `Deal "${d.id}" has no dealValue and no dealValueNote — add explicit undisclosed rationale`,
+        message: `Deal "${d.id}" has no dealValue and no dealValueNote — add explicit undisclosed rationale`,
         entity: d.id,
       });
     }
@@ -172,8 +221,7 @@ export function validateVerifiedDataset(
       push(warnings, {
         code: "deal.disclosedNote",
         severity: "warning",
-        message:
-          `Deal "${d.id}" has dealValue but no dealValueNote — cite filing or press basis`,
+        message: `Deal "${d.id}" has dealValue but no dealValueNote — cite filing or press basis`,
         entity: d.id,
       });
     }
@@ -184,9 +232,7 @@ export function validateVerifiedDataset(
     push(warnings, {
       code: "stats.lowDisclosure",
       severity: "warning",
-      message: `Only ${
-        (stats.disclosureRate * 100).toFixed(0)
-      }% of deals have disclosed prices — price analytics remain underpowered`,
+      message: `Only ${(stats.disclosureRate * 100).toFixed(0)}% of deals have disclosed prices — price analytics remain underpowered`,
     });
   }
 
@@ -196,8 +242,7 @@ export function validateVerifiedDataset(
       push(warnings, {
         code: "stats.sectorNoDeals",
         severity: "warning",
-        message:
-          `Sector "${row.sector}" has ${row.companies} companies but 0 verified deals`,
+        message: `Sector "${row.sector}" has ${row.companies} companies but 0 verified deals`,
       });
     }
   }
