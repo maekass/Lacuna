@@ -1,37 +1,35 @@
 /**
- * Impact Opportunity Card
+ * Impact Opportunity Research Card
  *
- * Displays company opportunity assessment with OAIS score
- * and explicit confidence level indicators
+ * MeshIC policy: the legacy OAIS 0–10 score is intentionally withheld from the
+ * product surface until its proxy weights and thresholds are calibrated against
+ * observed outcomes. We keep the underlying cited/proxy inputs visible so the
+ * framework remains useful as a diligence worksheet without presenting an
+ * unvalidated composite as decision-grade evidence.
  */
 
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
-import {
-  calculateOAIS,
-  type ClinicalStageProxy,
-  EPIDEMIOLOGY_DATABASE,
-  MARKET_PENETRATION_DATA,
-  type OAISInputs,
-  UNMEASURABLE_FACTORS,
-} from "@/lib/impact/oaisCalculator";
+import AnalysisPanelHeader from "@/components/ui/AnalysisPanelHeader";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import {
+  EPIDEMIOLOGY_DATABASE,
+  MARKET_PENETRATION_DATA,
+  UNMEASURABLE_FACTORS,
+} from "@/lib/impact/oaisCalculator";
+import {
   displayFont,
-  LABEL_FONT,
   labelFont,
   labelFontUppercase,
 } from "@/lib/theme/typography";
-import AnalysisPanelHeader from "@/components/ui/AnalysisPanelHeader";
 
 interface CompanyProfile {
+  id: string;
   name: string;
   sector: string;
   verifiedStage: string;
-  clinicalStage: ClinicalStageProxy["stage"];
   likelyAcquirer: string | null;
   competitors: number;
 }
@@ -41,28 +39,19 @@ function mapSectorToEpidemiology(sector: string) {
     sector === "Fertility" || sector === "Reproductive Health" ||
     sector === "Contraception"
   ) {
-    return EPIDEMIOLOGY_DATABASE.find((e) =>
-      e.condition.includes("Fertility")
-    ) ?? null;
+    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes("Fertility")) ?? null;
   }
   if (sector === "Mental Health") {
-    return EPIDEMIOLOGY_DATABASE.find((e) =>
-      e.condition.includes("Postpartum")
-    ) ?? null;
+    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes("Postpartum")) ?? null;
   }
   if (sector === "Pelvic Health" || sector === "Gynecological Surgery") {
-    return EPIDEMIOLOGY_DATABASE.find((e) =>
-      e.condition.includes("Fibroids")
-    ) ?? null;
+    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes("Fibroids")) ?? null;
   }
   if (sector === "Breast Health" || sector === "Precision Medicine") {
-    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes("Breast")) ??
-      null;
+    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes("Breast")) ?? null;
   }
   if (sector === "Maternal Health") {
-    return EPIDEMIOLOGY_DATABASE.find((e) =>
-      e.condition.includes("Maternal")
-    ) ?? null;
+    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes("Maternal")) ?? null;
   }
   return null;
 }
@@ -75,581 +64,180 @@ function mapSectorToPenetration(sector: string) {
   };
   const category = categoryBySector[sector];
   if (!category) return null;
-  return MARKET_PENETRATION_DATA.find((m) => m.category === category) ?? null;
-}
-
-function mapVerifiedStage(stage: string): ClinicalStageProxy["stage"] {
-  const s = stage.toLowerCase();
-  if (s.includes("acquired") || s.includes("public")) return "post_rct";
-  if (s.includes("seed")) return "pilot";
-  if (s.includes("series")) return "clinical_validation";
-  return "clinical_validation";
+  return MARKET_PENETRATION_DATA.find((row) => row.category === category) ?? null;
 }
 
 export default function ImpactOpportunityCard() {
   const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
-  const exampleCompanies = useMemo<CompanyProfile[]>(
-    () =>
-      verifiedCompanies.map((c) => {
-        const deal = verifiedAcquisitions.find((d) => d.targetId === c.id);
-        const competitors = verifiedCompanies.filter(
-          (other) => other.sector === c.sector && other.id !== c.id,
-        ).length;
-        return {
-          name: c.name,
-          sector: c.sector,
-          verifiedStage: c.stage,
-          clinicalStage: mapVerifiedStage(c.stage),
-          likelyAcquirer: deal?.acquirerName ?? null,
-          competitors,
-        };
-      }),
+
+  const companies = useMemo<CompanyProfile[]>(
+    () => verifiedCompanies.map((company) => {
+      const deal = verifiedAcquisitions.find((row) => row.targetId === company.id);
+      const competitors = verifiedCompanies.filter(
+        (other) => other.sector === company.sector && other.id !== company.id,
+      ).length;
+      return {
+        id: company.id,
+        name: company.name,
+        sector: company.sector,
+        verifiedStage: company.stage,
+        likelyAcquirer: deal?.acquirerName ?? null,
+        competitors,
+      };
+    }),
     [verifiedCompanies, verifiedAcquisitions],
   );
 
   const [selectedCompany, setSelectedCompany] = useState(0);
-  const [showTransparency, setShowTransparency] = useState(false);
+  const company = companies[selectedCompany] ?? companies[0];
 
-  const company = exampleCompanies[selectedCompany] ?? exampleCompanies[0];
+  if (!company) {
+    return (
+      <div className="space-y-4">
+        <CuratedDatasetBanner />
+        <AnalysisPanelHeader title="Opportunity Research" />
+        <div className="bg-white border border-lacuna-border rounded-lg p-6 text-sm text-lacuna-text-secondary">
+          No verified companies available.
+        </div>
+      </div>
+    );
+  }
 
-  const epiData = company ? mapSectorToEpidemiology(company.sector) : null;
-  const penetrationData = company
-    ? mapSectorToPenetration(company.sector)
-    : null;
-
+  const epiData = mapSectorToEpidemiology(company.sector);
+  const penetrationData = mapSectorToPenetration(company.sector);
   const estimatedPenetration = epiData && penetrationData
     ? Math.min(
       1,
-      (penetrationData.activeUserEstimate.low +
-        penetrationData.activeUserEstimate.high) /
-        2 /
+      ((penetrationData.activeUserEstimate.low + penetrationData.activeUserEstimate.high) / 2) /
         epiData.addressablePopulation.pointEstimate,
     )
     : null;
 
-  const oais = company && epiData && estimatedPenetration != null
-    ? calculateOAIS(
-      {
-        condition: company.sector,
-        addressablePopulation: epiData.addressablePopulation.pointEstimate,
-        currentPenetration: estimatedPenetration,
-        clinicalStage: company.clinicalStage,
-        founderPriorExits: 0,
-        founderFDAExperience: false,
-        acquirerScalingMultiplier: 1,
-        competitorCount: company.competitors,
-      } satisfies OAISInputs,
-    )
-    : null;
-
-  if (exampleCompanies.length === 0) {
-    return (
-      <div className="bg-white border border-lacuna-border rounded-lg p-6 text-sm text-lacuna-text-secondary">
-        <CuratedDatasetBanner className="mb-4" />
-        No verified companies available for OAIS illustration.
-      </div>
-    );
-  }
-
-  if (
-    !company || !oais || !epiData || estimatedPenetration == null ||
-    !penetrationData
-  ) {
-    return (
-      <div className="space-y-4">
-        <CuratedDatasetBanner />
-        <AnalysisPanelHeader title="Opportunity-Adjusted Impact Score (OAIS)" />
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-900">
-          OAIS requires cited epidemiology and market penetration data for the
-          company&apos;s sector.
-          <strong>{company?.name ?? "This company"}</strong>{" "}
-          ({company?.sector ?? "unknown sector"}) does not have a mapped Tier-1
-          panel — no score is computed rather than using invented inputs.
-        </div>
-      </div>
-    );
-  }
-
-  const getScoreInterpretation = (score: number): string => {
-    if (score >= 7) return "High Opportunity";
-    if (score >= 4) return "Moderate Opportunity";
-    return "Limited Opportunity";
-  };
-
-  const getConfidenceBadge = (
-    level: string,
-  ): { color: string; text: string } => {
-    switch (level) {
-      case "high":
-        return {
-          color: "bg-green-100 text-green-700",
-          text: "High Confidence",
-        };
-      case "medium":
-        return {
-          color: "bg-yellow-100 text-yellow-700",
-          text: "Medium Confidence",
-        };
-      default:
-        return {
-          color: "bg-orange-100 text-orange-700",
-          text: "Low Confidence",
-        };
-    }
-  };
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="space-y-6"
-    >
+    <div className="space-y-6">
       <CuratedDatasetBanner />
-      {/* Header */}
       <AnalysisPanelHeader
-        title="Opportunity-Adjusted Impact Score (OAIS)"
-        subtitle="Defensible Health Impact Assessment | Honest About What We Can Measure"
+        title="Opportunity Research"
+        subtitle="OAIS composite score withheld pending outcome calibration"
       />
 
-      {/* Company Selector */}
+      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-900">
+        <strong>Research-only framework.</strong>{" "}
+        Lacuna previously combined epidemiology, penetration, stage, founder and
+        scaling proxies into a 0–10 OAIS score. That composite is intentionally
+        not displayed because its weights and thresholds have not been validated
+        against observed investment or health outcomes. Inputs remain visible
+        below for diligence; they should not be collapsed into a decision score.
+      </div>
+
       <div className="flex flex-wrap gap-2">
-        {exampleCompanies.map((c, i) => (
+        {companies.map((row, index) => (
           <button
-            key={i}
-            onClick={() => setSelectedCompany(i)}
+            key={row.id}
+            onClick={() => setSelectedCompany(index)}
             className={`px-4 py-2 rounded-lg text-sm transition-colors ${
-              selectedCompany === i
+              selectedCompany === index
                 ? "bg-[#5D4E6D] text-white"
-                : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-subtle"
+                : "bg-lacuna-surface-subtle text-lacuna-text-primary hover:bg-lacuna-surface-muted"
             }`}
             style={labelFont}
           >
-            {c.name}
+            {row.name}
           </button>
         ))}
       </div>
 
-      {/* Main Score Card */}
-      <div className="bg-white border border-lacuna-border rounded-lg p-6">
-        <div className="flex items-start justify-between mb-6">
-          <div>
-            <h4
-              className="font-medium text-lg"
-              style={displayFont}
-            >
-              {company.name}
-            </h4>
-            <p className="text-sm text-lacuna-text-muted">
-              Sector: {company.sector}
-            </p>
-          </div>
-          <div className="text-right">
-            <span
-              className={`px-3 py-1 rounded text-xs font-medium ${
-                getConfidenceBadge(oais.confidenceLevel).color
-              }`}
-            >
-              {getConfidenceBadge(oais.confidenceLevel).text}
-            </span>
-          </div>
+      <div className="bg-white border border-lacuna-border rounded-lg p-6 space-y-5">
+        <div>
+          <h4 className="font-medium text-lg" style={displayFont}>{company.name}</h4>
+          <p className="text-sm text-lacuna-text-muted">
+            {company.sector} · {company.verifiedStage}
+          </p>
         </div>
 
-        {/* Score Display */}
-        <div className="flex items-center gap-6 mb-6">
-          <div className="relative w-32 h-32">
-            <svg
-              viewBox="0 0 100 100"
-              className="w-full h-full transform -rotate-90"
-            >
-              <circle
-                cx="50"
-                cy="50"
-                r="45"
-                fill="none"
-                stroke="#e5e7eb"
-                strokeWidth="8"
-              />
-              <circle
-                cx="50"
-                cy="50"
-                r="45"
-                fill="none"
-                stroke={oais.score >= 7
-                  ? "#22c55e"
-                  : oais.score >= 4
-                  ? "#eab308"
-                  : "#f97316"}
-                strokeWidth="8"
-                strokeDasharray={`${oais.score * 28.3} 283`}
-                strokeLinecap="round"
-              />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span
-                className="text-3xl font-light"
-                style={displayFont}
-              >
-                {oais.score.toFixed(1)}
-              </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-lacuna-surface-muted p-4 rounded-lg">
+            <div className="text-xs text-lacuna-text-muted uppercase" style={labelFont}>
+              Addressable population
             </div>
-          </div>
-          <div>
-            <p
-              className="font-medium"
-              style={labelFontUppercase}
-            >
-              {getScoreInterpretation(oais.score)}
-            </p>
-            <p className="text-sm text-lacuna-text-secondary mt-1 max-w-md">
-              {oais.interpretation}
-            </p>
-          </div>
-        </div>
-
-        {/* Component Breakdown */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <div className="bg-lacuna-surface-muted p-3 rounded-lg">
-            <div
-              className="text-xs text-lacuna-text-muted uppercase"
-              style={labelFont}
-            >
-              Addressable Population
-            </div>
-            <div
-              className="text-lg font-light mt-1"
-              style={displayFont}
-            >
-              {oais.components.addressablePopScore}M
-            </div>
-            <span className="text-xs text-lacuna-blue/70">Cited</span>
-          </div>
-
-          <div className="bg-lacuna-surface-muted p-3 rounded-lg">
-            <div
-              className="text-xs text-lacuna-text-muted uppercase"
-              style={labelFont}
-            >
-              Penetration Gap
-            </div>
-            <div
-              className="text-lg font-light mt-1"
-              style={displayFont}
-            >
-              {(oais.components.penetrationGapScore * 100).toFixed(0)}%
-            </div>
-            <span className="text-xs text-lacuna-blue/70">Cited</span>
-          </div>
-
-          <div className="bg-lacuna-surface-muted p-3 rounded-lg">
-            <div
-              className="text-xs text-lacuna-text-muted uppercase"
-              style={labelFont}
-            >
-              Stage Credibility
-            </div>
-            <div
-              className="text-lg font-light mt-1"
-              style={displayFont}
-            >
-              {(oais.components.stageCredibilityScore * 100).toFixed(0)}%
-            </div>
-            <span className="text-xs text-yellow-600">~ Proxy</span>
-          </div>
-
-          <div className="bg-lacuna-surface-muted p-3 rounded-lg">
-            <div
-              className="text-xs text-lacuna-text-muted uppercase"
-              style={labelFont}
-            >
-              Founder Quality
-            </div>
-            <div
-              className="text-lg font-light mt-1"
-              style={displayFont}
-            >
-              {(oais.components.founderQualityScore * 100).toFixed(0)}%
-            </div>
-            <span className="text-xs text-yellow-600">~ Proxy</span>
-          </div>
-
-          <div className="bg-lacuna-surface-muted p-3 rounded-lg">
-            <div
-              className="text-xs text-lacuna-text-muted uppercase"
-              style={labelFont}
-            >
-              Scaling Likely
-            </div>
-            <div
-              className="text-lg font-light mt-1"
-              style={displayFont}
-            >
-              {oais.components.scalingLikelihoodScore.toFixed(1)}×
-            </div>
-            <span className="text-xs text-yellow-600">~ Proxy</span>
-          </div>
-
-          <div className="bg-lacuna-surface-muted p-3 rounded-lg">
-            <div
-              className="text-xs text-lacuna-text-muted uppercase"
-              style={labelFont}
-            >
-              Saturation Penalty
-            </div>
-            <div
-              className="text-lg font-light mt-1"
-              style={displayFont}
-            >
-              -{(oais.components.marketSaturationPenalty * 100).toFixed(0)}%
-            </div>
-            <span className="text-xs text-lacuna-blue/70">Cited</span>
-          </div>
-        </div>
-      </div>
-
-      {/* What We Can Measure */}
-      <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-        <h4
-          className="font-medium text-green-800 mb-4"
-          style={labelFontUppercase}
-        >
-          ✓ What We CAN Cite (Tier 1)
-        </h4>
-        <div className="space-y-3">
-          <div className="bg-white p-3 rounded border border-green-100">
-            <div className="flex items-center justify-between">
-              <span className="font-medium text-sm">
-                Addressable Population
-              </span>
-              <span className="text-xs text-lacuna-blue/70 bg-lacuna-pink/10 px-2 py-1 rounded">
-                CITED
-              </span>
-            </div>
-            <p className="text-xs text-lacuna-text-secondary mt-1">
-              {epiData.condition}:{" "}
-              {epiData.addressablePopulation.pointEstimate}M women [95% CI:{" "}
-              {epiData.addressablePopulation.lowerBound}-{epiData
-                .addressablePopulation.upperBound}M]
-            </p>
-            <p className="text-xs text-lacuna-text-muted mt-1">
-              Source: {epiData.source}
-            </p>
-          </div>
-
-          <div className="bg-white p-3 rounded border border-green-100">
-            <div className="flex items-center justify-between">
-              <span className="font-medium text-sm">
-                Market Penetration Gap
-              </span>
-              <span className="text-xs text-amber-700 bg-amber-50 px-2 py-1 rounded">
-                CITED PROXY
-              </span>
-            </div>
-            <p className="text-xs text-lacuna-text-secondary mt-1">
-              Current penetration: ~{(estimatedPenetration * 100).toFixed(0)}% |
-              Gap: ~
-              {((1 - estimatedPenetration) * 100).toFixed(0)}% unmet need
-            </p>
-            <p className="text-xs text-lacuna-text-muted mt-1">
-              Source: {penetrationData.dataSource}
-            </p>
-            <p className="text-xs text-amber-600 mt-1">
-              {penetrationData.transparencyNote}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* What We Can Proxy */}
-      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-        <h4
-          className="font-medium text-yellow-800 mb-4"
-          style={labelFontUppercase}
-        >
-          ~ What We CAN Proxy (Tier 2 - Medium Confidence)
-        </h4>
-        <div className="space-y-3">
-          <div className="bg-white p-3 rounded border border-yellow-100">
-            <div className="flex items-center justify-between">
-              <span className="font-medium text-sm">
-                Clinical Stage Credibility
-              </span>
-              <span className="text-xs text-yellow-600 bg-yellow-50 px-2 py-1 rounded">
-                PROXY
-              </span>
-            </div>
-            <p className="text-xs text-lacuna-text-secondary mt-1">
-              Verified stage: {company.verifiedStage} | Proxy stage:{" "}
-              {company.clinicalStage.replace("_", " ")}
-            </p>
-            <p className="text-xs text-lacuna-text-muted mt-1">
-              Proxy for: Clinical efficacy (unknown for most pre-acquisition
-              companies)
-            </p>
-          </div>
-
-          <div className="bg-white p-3 rounded border border-yellow-100">
-            <div className="flex items-center justify-between">
-              <span className="font-medium text-sm">
-                Founder Quality Signals
-              </span>
-              <span className="text-xs text-yellow-600 bg-yellow-50 px-2 py-1 rounded">
-                PROXY
-              </span>
-            </div>
-            <p className="text-xs text-lacuna-text-secondary mt-1">
-              Not in verified dataset — founder exits and FDA experience are
-              unmeasured; OAIS uses neutral defaults (0 exits, no FDA flag).
-            </p>
-          </div>
-
-          <div className="bg-white p-3 rounded border border-yellow-100">
-            <div className="flex items-center justify-between">
-              <span className="font-medium text-sm">
-                Likely Acquirer Track Record
-              </span>
-              <span className="text-xs text-yellow-600 bg-yellow-50 px-2 py-1 rounded">
-                PROXY
-              </span>
-            </div>
-            <p className="text-xs text-lacuna-text-secondary mt-1">
-              {company.likelyAcquirer
-                ? `Verified acquirer: ${company.likelyAcquirer}`
-                : "No verified acquirer on record — scaling multiplier held at neutral 1.0×"}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Transparency Toggle */}
-      <div className="bg-lacuna-surface-muted rounded-lg">
-        <button
-          onClick={() => setShowTransparency(!showTransparency)}
-          className="w-full px-6 py-4 flex items-center justify-between text-left"
-        >
-          <span
-            className="font-medium"
-            style={{
-              fontFamily: LABEL_FONT,
-              textTransform: "uppercase",
-              letterSpacing: "0.1em",
-            }}
-          >
-            Complete Transparency Report
-          </span>
-          <span className="text-2xl">{showTransparency ? "−" : "+"}</span>
-        </button>
-
-        {showTransparency && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            className="px-6 pb-6"
-          >
-            <div className="bg-white p-4 rounded border border-lacuna-border">
-              <h5
-                className="font-medium mb-3"
-                style={displayFont}
-              >
-                Critical Transparency Statements
-              </h5>
-              <ol className="text-sm space-y-2 text-lacuna-text-primary list-decimal list-inside">
-                <li>
-                  <strong>Patient volume per company is unknown.</strong>{" "}
-                  We proxy with addressable population × penetration gap. This
-                  overestimates if company has {"<"}1% market share.
-                </li>
-                <li>
-                  <strong>Post-acquisition scaling is assumed</strong>{" "}
-                  from acquirer track record, not measured. Past performance ≠
-                  future results.
-                </li>
-                <li>
-                  <strong>Clinical efficacy is unknown</strong>{" "}
-                  for most pre-acquisition companies. We use stage as proxy, but
-                  stage ≠ efficacy.
-                </li>
-                <li>
-                  <strong>
-                    This framework captures opportunity, not guaranteed impact.
-                  </strong>
-                  Real impact depends on execution (unobservable
-                  pre-acquisition).
-                </li>
-                <li>
-                  <strong>
-                    OAIS scores are NOT comparable across conditions
-                  </strong>{" "}
-                  with different epidemiology data quality.
-                </li>
-              </ol>
-
-              <h5
-                className="font-medium mt-5 mb-2 text-sm text-lacuna-text-secondary"
-                style={{
-                  fontFamily: LABEL_FONT,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.05em",
-                }}
-              >
-                What we cannot measure directly
-              </h5>
-              <ul className="text-sm space-y-1.5 text-lacuna-text-secondary list-disc list-inside">
-                {UNMEASURABLE_FACTORS.slice(0, 3).map((factor, i) => (
-                  <li key={i}>
-                    <strong className="text-lacuna-text-primary">
-                      {factor.factor}
-                    </strong>{" "}
-                    — {factor.why}.{" "}
-                    <span className="text-lacuna-text-muted italic">
-                      Proxy: {factor.proxyUsed}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-4 p-3 bg-amber-50 rounded border border-amber-200">
-                <p className="text-sm text-amber-800">
-                  <strong>Bottom Line:</strong>{" "}
-                  Use OAIS for portfolio prioritization and opportunity sizing,
-                  not for impact attribution or DALY calculations. We measure
-                  strategic opportunity magnitude, not health outcomes achieved.
+            {epiData ? (
+              <>
+                <div className="text-xl font-light mt-1" style={displayFont}>
+                  {epiData.addressablePopulation.pointEstimate}M
+                </div>
+                <p className="text-xs text-lacuna-text-secondary mt-2">
+                  Range: {epiData.addressablePopulation.lowerBound}–{epiData.addressablePopulation.upperBound}M
                 </p>
-              </div>
+                <p className="text-xs text-lacuna-text-muted mt-2">Source: {epiData.source}</p>
+              </>
+            ) : (
+              <p className="text-sm text-lacuna-text-secondary mt-2">No mapped cited epidemiology input.</p>
+            )}
+          </div>
+
+          <div className="bg-lacuna-surface-muted p-4 rounded-lg">
+            <div className="text-xs text-lacuna-text-muted uppercase" style={labelFont}>
+              Penetration proxy
             </div>
-          </motion.div>
-        )}
+            {penetrationData && estimatedPenetration !== null ? (
+              <>
+                <div className="text-xl font-light mt-1" style={displayFont}>
+                  ~{(estimatedPenetration * 100).toFixed(0)}%
+                </div>
+                <p className="text-xs text-amber-700 mt-2">
+                  Proxy, not direct market penetration. {penetrationData.transparencyNote}
+                </p>
+                <p className="text-xs text-lacuna-text-muted mt-2">Source: {penetrationData.dataSource}</p>
+              </>
+            ) : (
+              <p className="text-sm text-lacuna-text-secondary mt-2">No mapped penetration proxy.</p>
+            )}
+          </div>
+
+          <div className="bg-lacuna-surface-muted p-4 rounded-lg">
+            <div className="text-xs text-lacuna-text-muted uppercase" style={labelFont}>
+              Verified market context
+            </div>
+            <div className="text-xl font-light mt-1" style={displayFont}>{company.competitors}</div>
+            <p className="text-xs text-lacuna-text-secondary mt-2">
+              Other verified Lacuna companies in the same sector. This is dataset coverage, not total market competitor count.
+            </p>
+          </div>
+
+          <div className="bg-lacuna-surface-muted p-4 rounded-lg">
+            <div className="text-xs text-lacuna-text-muted uppercase" style={labelFont}>
+              Acquisition context
+            </div>
+            <div className="text-lg font-light mt-1" style={displayFont}>
+              {company.likelyAcquirer ?? "No verified acquirer"}
+            </div>
+            <p className="text-xs text-lacuna-text-secondary mt-2">
+              Historical verified relationship only; not a prediction of future acquisition.
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Bottom Line */}
-      <div className="bg-gradient-to-r from-[#E8B4B8] via-[#B8A9C9] to-[#4A5D8A] p-6 rounded-lg text-white">
-        <h4
-          className="font-medium mb-3"
-          style={{
-            fontFamily: LABEL_FONT,
-            textTransform: "uppercase",
-            letterSpacing: "0.1em",
-          }}
-        >
-          OAIS Interpretation Summary
+      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+        <h4 className="font-medium text-yellow-900 mb-3" style={labelFontUppercase}>
+          Unmeasured / proxy-dependent factors
         </h4>
-        <p className="text-sm leading-relaxed">
-          <strong>{company.name}</strong>: OAIS ={" "}
-          {oais.score.toFixed(1)}/10 [{getConfidenceBadge(oais.confidenceLevel)
-            .text}]. Addresses {oais.components.addressablePopScore}M women with
-          {" "}
-          {((oais.components.penetrationGapScore) * 100).toFixed(0)}%
-          penetration gap. Stage credibility{" "}
-          {(oais.components.stageCredibilityScore * 100).toFixed(0)}%. Likely
-          acquirer:{" "}
-          {company.likelyAcquirer ?? "not in verified dataset"}. Competitors in
-          sector (verified): {company.competitors}.
-          {oais.score >= 7
-            ? "Strong opportunity for impact at scale."
-            : oais.score >= 4
-            ? "Moderate opportunity; consider as part of portfolio."
-            : "Limited opportunity; may be strategic tuck-in only."}
-        </p>
+        <ul className="space-y-2 text-sm text-yellow-950">
+          {UNMEASURABLE_FACTORS.map((factor) => (
+            <li key={factor.factor}>
+              <strong>{factor.factor}:</strong> {factor.why} Proxy limitation: {factor.proxyLimitation}
+            </li>
+          ))}
+        </ul>
       </div>
-    </motion.div>
+
+      <div className="bg-lacuna-surface-muted border border-lacuna-border rounded-lg p-4 text-sm text-lacuna-text-secondary">
+        <strong>Promotion gate:</strong>{" "}
+        a composite opportunity score should return only after its component
+        definitions are source-resolved, confidence is computed from actual
+        evidence classes, and thresholds are calibrated on held-out or observed
+        outcomes. Until then, disagreement and missingness remain visible.
+      </div>
+    </div>
   );
 }
