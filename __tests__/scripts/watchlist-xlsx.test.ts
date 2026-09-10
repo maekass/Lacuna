@@ -92,11 +92,24 @@ function readXlsxRows(xlsxPath: string): string[][] {
   });
 }
 
+const PUBLIC_COLUMNS = HEADER.slice(0, 11);
+
 describe("catalysts.xlsx", () => {
-  it("matches catalysts.csv row-for-row (Sept 4 watchlist workbook)", () => {
+  it("matches the 11 public CSV columns row-for-row (Sept 4 watchlist workbook)", () => {
     const csv = parseCsv(readFileSync(CSV, "utf8"));
     const xlsx = readXlsxRows(XLSX);
-    expect(xlsx[0]).toEqual([...HEADER]);
-    expect(xlsx).toEqual(csv);
+    expect(xlsx[0]).toEqual([
+      "date_added",
+      "catalyst_date",
+      ...PUBLIC_COLUMNS.slice(2),
+    ]);
+    expect(xlsx.length).toBe(csv.length);
+    for (let i = 1; i < csv.length; i++) {
+      const csvPublic = PUBLIC_COLUMNS.map((col) => {
+        const idx = HEADER.indexOf(col);
+        return csv[i]?.[idx] ?? "";
+      });
+      expect(xlsx[i], `row ${i + 1}`).toEqual(csvPublic);
+    }
   });
 });

@@ -1,0 +1,74 @@
+{
+  "generatedBy": "ml/clinical_trials/scripts/export_parity_fixtures.py",
+  "tolerance": 1e-06,
+  "cases": [
+    {
+      "id": "wh-endometriosis",
+      "model": "wh-relevance-v1",
+      "input": {
+        "title": "Phase 2 Study of LP-101 for Endometriosis Pain",
+        "condition": "Endometriosis",
+        "sponsor": "Gynecology Pharma",
+        "interventions": [
+          "LP-101",
+          "placebo"
+        ],
+        "phase": "PHASE2",
+        "status": "RECRUITING",
+        "enrollment": 240,
+        "hasResults": false
+      },
+      "probability": 0.9073146183300939
+    },
+    {
+      "id": "wh-diabetes",
+      "model": "wh-relevance-v1",
+      "input": {
+        "title": "Phase 3 Metformin for Type 2 Diabetes",
+        "condition": "Type 2 Diabetes Mellitus",
+        "sponsor": "Metabolic Pharma",
+        "interventions": [
+          "Metformin"
+        ],
+        "phase": "PHASE3",
+        "status": "COMPLETED",
+        "enrollment": 800,
+        "hasResults": true
+      },
+      "probability": 0.10431914524725487
+    },
+    {
+      "id": "completion-endometriosis",
+      "model": "completion-proxy-v2",
+      "input": {
+        "title": "Phase 2 Study of LP-101 for Endometriosis Pain",
+        "condition": "Endometriosis",
+        "sponsor": "Gynecology Pharma",
+        "interventions": [
+          "LP-101",
+          "placebo"
+        ],
+        "phase": "PHASE2",
+        "status": "RECRUITING",
+        "enrollment": 240,
+        "hasResults": false
+      },
+      "probability": 0.39029170884632086
+    },
+    {
+      "id": "completion-empty-text",
+      "model": "completion-proxy-v2",
+      "input": {
+        "title": "",
+        "condition": "",
+        "sponsor": "",
+        "interventions": [],
+        "phase": "PHASE1",
+        "status": "COMPLETED",
+        "enrollment": 10,
+        "hasResults": false
+      },
+      "probability": 0.619960859784136
+    }
+  ]
+}

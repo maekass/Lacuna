@@ -5,6 +5,7 @@ import {
   buildPatientEmpowermentSnapshot,
   toPatientEmpowermentInsightData,
 } from "@/lib/research/patientEmpowermentPipeline";
+import { buildTrialToTransactionSnapshot } from "@/lib/research/trialToTransactionPipeline";
 
 export const revalidate = 86_400;
 
@@ -21,10 +22,12 @@ export default async function Page() {
   const empowermentInsight = toPatientEmpowermentInsightData(
     empowermentSnapshot,
   );
+  const spaceWhSnapshot = buildTrialToTransactionSnapshot(dataset);
   return (
     <ResearchPage
       empowermentSnapshot={empowermentSnapshot}
       empowermentInsight={empowermentInsight}
+      spaceWhSnapshot={spaceWhSnapshot}
     />
   );
 }

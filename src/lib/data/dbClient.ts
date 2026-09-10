@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import type { ConnectionOptions } from "node:tls";
 import { Pool, type QueryResultRow } from "pg";
 import { reportError, reportWarning } from "@/lib/observability/reportError";
+import { assertRemotePostgresTlsEnabled } from "@/lib/data/pgSslPolicy";
 
 let pool: Pool | undefined;
 let poolOverride: Pool | undefined;
@@ -62,6 +63,7 @@ function getPool(): Pool {
     return poolOverride;
   }
   if (!pool) {
+    assertRemotePostgresTlsEnabled(getDatabaseUrl());
     pool = new Pool({
       connectionString: getDatabaseUrl(),
       max: Number(process.env.PG_POOL_MAX ?? 3),

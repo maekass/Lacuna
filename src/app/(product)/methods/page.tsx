@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import MethodsPage from "@/app/sections/MethodsPage";
+import DataQualitySection from "@/components/DataQualitySection";
 import { getVerifiedDataset } from "@/lib/data/datasetProvider";
 import { getDatasetChangelog } from "@/lib/data/getDatasetChangelog";
 
@@ -15,5 +16,7 @@ export const metadata: Metadata = {
 export default async function Page() {
   const dataset = await getVerifiedDataset();
   const changelog = getDatasetChangelog(dataset);
-  return <MethodsPage changelog={changelog} />;
+  return (
+    <MethodsPage changelog={changelog} dataQuality={<DataQualitySection />} />
+  );
 }

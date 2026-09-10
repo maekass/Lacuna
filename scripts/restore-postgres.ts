@@ -114,7 +114,7 @@ function applyDatabaseUrl(databaseUrl: string): void {
   const meta = parseDatabaseUrl(databaseUrl);
   if (meta?.isNeon) {
     removeEnvLocalKey("PGSSLMODE");
-    process.env.PGSSLMODE = undefined;
+    delete process.env.PGSSLMODE;
   } else if (meta?.isLocalhost && !process.env.PGSSLMODE) {
     upsertEnvLocal("PGSSLMODE", "disable");
     process.env.PGSSLMODE = "disable";

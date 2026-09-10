@@ -21,7 +21,7 @@ export const PRE_DEAL_VALUATION_MODEL: ModelProvenance = {
   module: "src/data/dataset.verified.json",
   exportName: "acquisitions.preDealValuation",
   definition:
-    "Cited pre-deal valuation in USD millions on the verified acquisition row, with preDealValuationSource.",
+    "Cited pre-deal valuation in USD millions on the verified acquisition row, with preDealValuationSource, as-of date, and date precision.",
 };
 
 /** Percent premium vs cited pre-deal valuation. */

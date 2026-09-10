@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Metric from "@/components/Metric";
+import { buildAcquirerDealValueView } from "@/lib/data/acquirerDealValueMetric";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 
 interface AcquirerProfileProps {
@@ -40,12 +42,17 @@ export default function AcquirerProfile(
     ),
   ];
   const disclosedValues = deals
-    .map((deal) => deal.dealValue)
-    .filter((dealValue): dealValue is number => typeof dealValue === "number");
-  const averageDealValue = disclosedValues.length > 0
-    ? disclosedValues.reduce((sum, value) => sum + value, 0) /
-      disclosedValues.length
-    : null;
+    .filter((deal): deal is typeof deal & { dealValue: number } =>
+      typeof deal.dealValue === "number"
+    )
+    .map((deal) => ({
+      dealValue: deal.dealValue,
+      announcedDate: deal.announcedDate,
+    }));
+  const dealValueView = buildAcquirerDealValueView(
+    deals.length,
+    disclosedValues,
+  );
   const mostRecentDealDate = deals.length > 0
     ? [...deals].sort((a, b) =>
       new Date(b.announcedDate).getTime() - new Date(a.announcedDate).getTime()
@@ -85,17 +92,19 @@ export default function AcquirerProfile(
                 Deals
               </p>
               <p className="mt-1 font-semibold text-lacuna-plum">
-                {deals.length}
+                {dealValueView.trackedDealsLabel}
               </p>
             </div>
             <div className="rounded-xl bg-lacuna-pink/10 p-3">
               <p className="text-xs uppercase tracking-wide text-lacuna-blue/70">
-                Avg. Deal Value
+                {dealValueView.populationLabel}
               </p>
               <p className="mt-1 font-semibold text-lacuna-plum">
-                {averageDealValue === null
-                  ? "Undisclosed"
-                  : `$${averageDealValue.toFixed(1)}M`}
+                <Metric
+                  label={dealValueView.populationLabel}
+                  provenance={dealValueView.provenance}
+                  formatValue={(value) => `$${value.toFixed(1)}M`}
+                />
               </p>
             </div>
             <div className="rounded-xl bg-lacuna-pink/10 p-3 col-span-2">

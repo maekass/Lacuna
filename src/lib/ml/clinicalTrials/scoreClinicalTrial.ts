@@ -10,7 +10,9 @@ import type {
 
 export const WH_RELEVANCE_MODEL = whRelevanceArtifact as TfidfLogisticArtifact;
 
-const completionEnabled = modelCard.models.completionProxy != null;
+const completionEnabled =
+  modelCard.exportGate.committedCompletionPasses === true &&
+  modelCard.models.completionProxy != null;
 
 const COMPLETION_PROXY_MODEL = completionEnabled
   ? (completionProxyArtifact as TfidfLogisticArtifact)
@@ -74,11 +76,22 @@ export function getWhRelevanceModelMetrics(): Readonly<Record<string, number>> {
   return modelCard.models.whRelevance.metrics;
 }
 
+function completionMetricsFromCard(
+  served: unknown,
+): Readonly<Record<string, number>> | null {
+  if (!served || typeof served !== "object") return null;
+  const record = served as Record<string, unknown>;
+  if (record.metrics && typeof record.metrics === "object") {
+    return record.metrics as Readonly<Record<string, number>>;
+  }
+  return served as Readonly<Record<string, number>>;
+}
+
 export function getCompletionProxyMetrics():
   | Readonly<Record<string, number>>
   | null {
-  const m = modelCard.models.completionProxy;
-  return m && typeof m === "object" ? m : null;
+  if (!completionEnabled) return null;
+  return completionMetricsFromCard(modelCard.models.completionProxy);
 }
 
 export function isCompletionProxyAvailable(): boolean {

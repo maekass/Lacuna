@@ -3,7 +3,6 @@
 import {
   AcquirerPredictionDashboard,
   DataExport,
-  DataPipelineStatus,
   DeveloperTools,
   InvestmentGradeReimbursementIntel,
   SystemHealthDashboard,
@@ -11,10 +10,20 @@ import {
 import ExportToGamma from "@/components/ExportToGamma";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
+import type { ReactNode } from "react";
 
 const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
-export default function IntelligencePage() {
+interface IntelligencePageProps {
+  /** Server-rendered pipeline panel driven by committed artifacts. */
+  pipelinePanel: ReactNode;
+  /** Server-rendered catalyst CSV table — no client dataset import. */
+  catalystWatchlist?: ReactNode;
+}
+
+export default function IntelligencePage(
+  { pipelinePanel, catalystWatchlist }: IntelligencePageProps,
+) {
   return (
     <div>
       <header className="mb-10">
@@ -35,7 +44,7 @@ export default function IntelligencePage() {
         />
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <SystemHealthDashboard />
-          <DataPipelineStatus />
+          {pipelinePanel}
         </div>
       </MotionSection>
 
@@ -50,6 +59,18 @@ export default function IntelligencePage() {
         />
         <InvestmentGradeReimbursementIntel />
       </MotionSection>
+
+      {catalystWatchlist
+        ? (
+          <MotionSection id="catalyst-watchlist" className={SECTION}>
+            <SectionHeader
+              title="Catalyst watchlist"
+              description="Weekly biopharma calendar joined to Lacuna's verified acquirer and company ids. Dates are scheduled PDUFA/readout marks with an actual date when the decision already happened."
+            />
+            {catalystWatchlist}
+          </MotionSection>
+        )
+        : null}
 
       <MotionSection id="acquirer-prediction" delay={0.05} className={SECTION}>
         <SectionHeader

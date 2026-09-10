@@ -11,6 +11,21 @@ import type { DealDetailView } from "@/lib/deals";
 
 const metricClass = "align-baseline font-semibold text-lacuna-plum";
 
+function preDealAsOfLabel(
+  date: string,
+  precision?: "day" | "month" | "quarter" | "year",
+): string {
+  if (precision === "year") return `${date.slice(0, 4)}, year precision`;
+  if (precision === "quarter") return `${date.slice(0, 7)}, quarter precision`;
+  if (precision === "month") return `${date.slice(0, 7)}, month precision`;
+  if (precision === "day") return `${date}, day precision`;
+  return date;
+}
+
+function roundingGridLabel(gridM: number): string {
+  return ` · rounding grid ±$${gridM}M`;
+}
+
 /** Price and premium for a deal dossier (one grid cell). */
 export default function DealEconomicsCard({ view }: { view: DealDetailView }) {
   const acq = view.deal.acquisition;
@@ -91,6 +106,17 @@ export default function DealEconomicsCard({ view }: { view: DealDetailView }) {
               }}
               formatValue={(millions) => `~$${millions.toLocaleString()}M`}
             />
+            {acq.preDealValuationDate
+              ? ` · pre-deal mark: ${
+                preDealAsOfLabel(
+                  acq.preDealValuationDate,
+                  acq.preDealValuationDatePrecision,
+                )
+              }`
+              : ""}
+            {typeof acq.preDealValuationRoundingGridM === "number"
+              ? roundingGridLabel(acq.preDealValuationRoundingGridM)
+              : ""}
             {acq.preDealValuationSource
               ? ` · ${acq.preDealValuationSource}`
               : ""}

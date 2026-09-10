@@ -9,8 +9,15 @@ test.describe("measurement layer visibility", () => {
     await expect(page.getByText(/Published/)).toBeVisible();
     await expect(page.getByText(/Withheld/)).toBeVisible();
     await expect(page.getByText(/computedPremium/i)).toBeVisible();
-    await expect(page.getByText("SEC EDGAR Ingest")).toHaveCount(0);
+    await expect(
+      page.getByRole("heading", { name: /Data Pipeline Status/i }),
+    ).toBeVisible();
+    await expect(page.getByText(/Not configured \(static dataset\)/i))
+      .toBeVisible();
     await expect(page.getByText("Avg Stage Duration")).toHaveCount(0);
+    await expect(page.getByText("Success Rate", { exact: true })).toHaveCount(
+      0,
+    );
     const published = page.getByRole("button", {
       name: "Why this number: Published gated metrics",
     });
@@ -31,6 +38,13 @@ test.describe("measurement layer visibility", () => {
     expect(layerOpacity).toBe("1");
   });
 
+  test("methods leads with the weakest quality grades", async ({ page }) => {
+    await page.goto("/methods#data-quality");
+    await expect(page.getByText(/62 of 150/i)).toBeVisible();
+    await expect(page.getByText(/41\.3%/)).toBeVisible();
+    await expect(page.getByText(/D or F/i)).toBeVisible();
+  });
+
   test("deals and consumer show the census under coverage", async ({ page }) => {
     await page.goto("/deals");
     await expect(
@@ -46,6 +60,9 @@ test.describe("measurement layer visibility", () => {
     await expect(companies).toHaveAttribute(
       "data-provenance-class",
       "assumption",
+    );
+    await expect(page.getByText("Success Rate", { exact: true })).toHaveCount(
+      0,
     );
 
     await page.goto("/consumer");
