@@ -3,13 +3,8 @@
 /**
  * MeshIC data integrity gate.
  *
- * This is intentionally independent of the normal dataset schema validator.
  * Schema-valid data can still be decision-invalid when entity identity,
- * arithmetic, vintage, or metric semantics are wrong.
- *
- * Usage:
- *   npx tsx scripts/meshic-data-gate.ts
- *   npx tsx scripts/meshic-data-gate.ts --strict
+ * arithmetic, vintage, provenance class, or metric semantics are wrong.
  */
 
 import { existsSync, readFileSync } from "node:fs";
@@ -21,7 +16,6 @@ interface Finding {
 }
 
 interface VerifiedDataset {
-  companies: Array<{ id: string; name: string }>;
   acquisitions: Array<{
     id: string;
     targetId: string;
@@ -48,6 +42,7 @@ function acquisitionYearByTarget(dataset: VerifiedDataset): Map<string, number> 
 
 function secRevenueFindings(dataset: VerifiedDataset): Finding[] {
   const artifact = readJson<{
+    evidenceStatus?: string;
     records?: Array<{
       companyId: string;
       companyName: string;
@@ -65,7 +60,7 @@ function secRevenueFindings(dataset: VerifiedDataset): Finding[] {
       findings.push({
         severity: "RED",
         code: "sec.postAcquisitionStandaloneRevenue",
-        message: `${row.companyName} has FY${row.fiscalYear} standalone revenue after acquisition year ${acquiredYear} (CIK ${row.cik}). Regenerate after registrant validation.`,
+        message: `${row.companyName} has FY${row.fiscalYear} standalone revenue after acquisition year ${acquiredYear} (CIK ${row.cik}).`,
       });
     }
   }
@@ -76,7 +71,6 @@ function cmsReimbursementFindings(): Finding[] {
   const artifact = readJson<{
     sectors?: Array<{
       sector: string;
-      cptCodes: string[];
       estimatedAnnualReimbursement: number | null;
     }>;
     utilizationByCptCode?: Array<{
@@ -84,43 +78,52 @@ function cmsReimbursementFindings(): Finding[] {
       cptCode: string;
       totalServices: number | null;
       avgMedicarePayment: number | null;
+      provenanceKind?: string;
     }>;
   }>("src/data/computed-cms-utilization.json");
   if (!artifact?.sectors || !artifact.utilizationByCptCode) return [];
 
+  const allFallback = artifact.utilizationByCptCode.length > 0 &&
+    artifact.utilizationByCptCode.every((row) => row.provenanceKind === "hardcoded_fallback");
   const findings: Finding[] = [];
+
   for (const sector of artifact.sectors) {
     if (sector.estimatedAnnualReimbursement == null) continue;
     const rows = artifact.utilizationByCptCode.filter((row) =>
-      row.sector === sector.sector && row.totalServices != null &&
-      row.avgMedicarePayment != null
+      row.sector === sector.sector && row.totalServices != null && row.avgMedicarePayment != null
     );
     if (rows.length === 0) continue;
 
-    const correct = rows.reduce(
+    const weighted = rows.reduce(
       (sum, row) => sum + row.totalServices! * row.avgMedicarePayment!,
       0,
     ) / 1_000_000;
-    const delta = Math.abs(correct - sector.estimatedAnnualReimbursement);
-    const tolerance = Math.max(0.01, correct * 0.001);
+    const delta = Math.abs(weighted - sector.estimatedAnnualReimbursement);
+    const tolerance = Math.max(0.01, weighted * 0.001);
     if (delta > tolerance) {
       findings.push({
-        severity: "RED",
-        code: "cms.unweightedReimbursement",
-        message: `${sector.sector}: committed $${sector.estimatedAnnualReimbursement.toFixed(2)}M vs volume-weighted $${correct.toFixed(2)}M. Use sum(services_i × payment_i).`,
+        severity: allFallback ? "AMBER" : "RED",
+        code: allFallback
+          ? "cms.legacyFallbackArithmetic"
+          : "cms.unweightedReimbursement",
+        message: `${sector.sector}: committed $${sector.estimatedAnnualReimbursement.toFixed(2)}M vs volume-weighted $${weighted.toFixed(2)}M. ${allFallback ? "Artifact is explicitly hardcoded/research-only; regenerate from verified aggregate input before decision use." : "Decision-grade artifact must use sum(services_i × payment_i)."}`,
       });
     }
+  }
+
+  if (allFallback) {
+    findings.push({
+      severity: "AMBER",
+      code: "cms.hardcodedFallbackResearchOnly",
+      message: "All CMS utilization rows are hardcoded fallback observations with unknown PUF vintage. Treat as research-only and exclude from investment valuation/market-size conclusions.",
+    });
   }
   return findings;
 }
 
 function growthSemanticFindings(): Finding[] {
   const artifact = readJson<{
-    companies?: Array<{
-      companyName: string;
-      method: string;
-      confidence: string;
-    }>;
+    companies?: Array<{ companyName: string; method: string; confidence: string }>;
   }>("src/data/computed-growth-rates.json");
   if (!artifact?.companies) return [];
 
@@ -128,47 +131,33 @@ function growthSemanticFindings(): Finding[] {
     /CAGR\(totalFunding\s*→\s*(dealValue|lastKnownValuation)/.test(row.method)
   );
   if (bad.length === 0) return [];
-  const high = bad.filter((row) => row.confidence === "high").length;
   return [{
     severity: "RED",
     code: "growth.semanticMismatch",
-    message: `${bad.length} rows annualize totalFunding→valuation/dealValue and label the result CAGR; ${high} are marked high confidence. These are not operating/revenue growth rates.`,
+    message: `${bad.length} rows annualize totalFunding→valuation/dealValue and label the result CAGR. These are not operating growth rates.`,
   }];
 }
 
 function qualityGradeFindings(): Finding[] {
   const artifact = readJson<{
-    companies?: Array<{
-      name: string;
-      sourceQuality: string;
-      grade: string;
-      overallScore: number;
-    }>;
+    companies?: Array<{ sourceQuality: string; grade: string }>;
   }>("src/data/computed-data-quality-scores.json");
   if (!artifact?.companies) return [];
-
-  const upgraded = artifact.companies.filter((row) =>
-    row.grade === "A" && row.sourceQuality !== "A"
-  );
+  const upgraded = artifact.companies.filter((row) => row.grade === "A" && row.sourceQuality !== "A");
   if (upgraded.length === 0) return [];
   return [{
     severity: "AMBER",
     code: "quality.completenessUpgradesEvidence",
-    message: `${upgraded.length} company records receive composite grade A without source-quality A. Split evidence grade from completeness/record utility.`,
+    message: `${upgraded.length} company records have composite grade A without source-quality A. Composite quality must not be presented as provenance strength.`,
   }];
 }
 
 function vintageFindings(): Finding[] {
   const artifact = readJson<{
-    vintage?: {
-      primaryNumbers?: number;
-      missingDedicatedAsOf?: number;
-      missingDedicatedAsOfRate?: number;
-    };
+    vintage?: { primaryNumbers?: number; missingDedicatedAsOf?: number; missingDedicatedAsOfRate?: number };
   }>("src/data/computed-quality-visibility.json");
   const vintage = artifact?.vintage;
-  if (!vintage || !vintage.primaryNumbers) return [];
-  if (!vintage.missingDedicatedAsOf) return [];
+  if (!vintage?.primaryNumbers || !vintage.missingDedicatedAsOf) return [];
   return [{
     severity: "AMBER",
     code: "vintage.missingAsOf",
@@ -187,11 +176,6 @@ function main() {
     ...qualityGradeFindings(),
     ...vintageFindings(),
   ];
-
-  if (findings.length === 0) {
-    console.log("MeshIC data gate: no findings.");
-    return;
-  }
 
   console.log(`MeshIC data gate: ${findings.length} finding(s)`);
   for (const finding of findings) {
