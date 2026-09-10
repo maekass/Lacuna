@@ -26,7 +26,7 @@ export interface ValidationReport {
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 const YEAR = /\b(?:19|20)\d{2}\b/;
-const URL = /https?:\/\/[^\s]+/i;
+const URL_RE = /https?:\/\/[^\s]+/i;
 
 function push(list: ValidationIssue[], issue: ValidationIssue): void {
   list.push(issue);
@@ -34,7 +34,7 @@ function push(list: ValidationIssue[], issue: ValidationIssue): void {
 
 function sourceIsResolvable(source: string): boolean {
   const value = source.trim().toLowerCase();
-  if (URL.test(source)) return true;
+  if (URL_RE.test(source)) return true;
   // Filing identifiers can be resolvable without embedding a full URL.
   return value.includes("sec edgar") || value.includes("accession") ||
     value.includes("10-k") || value.includes("8-k") ||
@@ -43,7 +43,7 @@ function sourceIsResolvable(source: string): boolean {
 }
 
 function extractDomain(source: string): string | null {
-  const match = source.match(URL);
+  const match = source.match(URL_RE);
   if (!match) return null;
   try {
     return new URL(match[0]).hostname.replace(/^www\./, "").toLowerCase();
