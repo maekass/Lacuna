@@ -27,6 +27,21 @@ jobs:
             const token = await core.getIDToken('https://api.anthropic.com');
             core.setSecret(token);
             core.exportVariable('JWT', token);
+            const payload = JSON.parse(
+              Buffer.from(token.split('.')[1], 'base64url').toString('utf8'),
+            );
+            core.info('OIDC claims for federation-rule matching:');
+            core.info(JSON.stringify({
+              iss: payload.iss,
+              sub: payload.sub,
+              aud: payload.aud,
+              repository: payload.repository,
+              repository_owner: payload.repository_owner,
+              ref: payload.ref,
+              event_name: payload.event_name,
+              workflow: payload.workflow,
+              workflow_ref: payload.workflow_ref,
+            }, null, 2));
 
       - name: Exchange for an Anthropic access token
         run: |
@@ -50,5 +65,7 @@ jobs:
           ACCESS_TOKEN="$(echo "$RESPONSE" | jq -r '.access_token // empty')"
           if [ -z "$ACCESS_TOKEN" ]; then
             echo "Anthropic WIF token exchange failed."
+            echo "Compare the OIDC claims from the previous step with the federation rule match block."
+            echo "The deny reason is on the rule's authentication history in Claude Console (the API always returns Authentication failed)."
             exit 1
           fi
