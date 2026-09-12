@@ -1,0 +1,54 @@
+# Anthropic Workload Identity Federation connection test.
+# Exchanges this job's GitHub OIDC JWT for a short-lived Anthropic access token.
+# Docs: https://platform.claude.com/docs/en/manage-claude/wif-providers/github-actions
+name: anthropic-wif-test
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  call-claude:
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_FEDERATION_RULE_ID: fdrl_011bajAWCQPkMXKCSpgzLs7h
+      ANTHROPIC_ORGANIZATION_ID: 40d95d9a-5888-4305-9419-ab5b907d352f
+      ANTHROPIC_SERVICE_ACCOUNT_ID: svac_01Q8SjmgZfrZGWYZHZyi8mgk
+      ANTHROPIC_WORKSPACE_ID: wrkspc_01J24cWokxC6ywpmkTBBgLJT
+    steps:
+      - name: Fetch GitHub OIDC token
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const token = await core.getIDToken('https://api.anthropic.com');
+            core.setSecret(token);
+            core.exportVariable('JWT', token);
+
+      - name: Exchange for an Anthropic access token
+        run: |
+          RESPONSE="$(
+            curl -sS https://api.anthropic.com/v1/oauth/token \
+              -H "content-type: application/json" \
+              --data @- <<JSON
+          {
+            "grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer",
+            "assertion": "$JWT",
+            "federation_rule_id": "$ANTHROPIC_FEDERATION_RULE_ID",
+            "organization_id": "$ANTHROPIC_ORGANIZATION_ID",
+            "service_account_id": "$ANTHROPIC_SERVICE_ACCOUNT_ID",
+            "workspace_id": "$ANTHROPIC_WORKSPACE_ID"
+          }
+          JSON
+          )"
+
+          echo "$RESPONSE" | jq 'with_entries(if (.key | test("token$")) then .value = "<redacted>" else . end)'
+
+          ACCESS_TOKEN="$(echo "$RESPONSE" | jq -r '.access_token // empty')"
+          if [ -z "$ACCESS_TOKEN" ]; then
+            echo "Anthropic WIF token exchange failed."
+            exit 1
+          fi
