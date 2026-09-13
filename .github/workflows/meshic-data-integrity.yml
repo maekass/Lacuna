@@ -1,0 +1,35 @@
+name: MeshIC Data Integrity
+
+on:
+  pull_request:
+    paths:
+      - "src/data/**"
+      - "src/lib/data/**"
+      - "src/lib/impact/**"
+      - "src/lib/lineage/**"
+      - "scripts/**"
+      - "staging/**"
+      - ".github/workflows/meshic-data-integrity.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  evidence-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Schema and evidence hygiene
+        run: npm run validate:dataset
+
+      - name: MeshIC strict data gate
+        run: npx tsx scripts/meshic-data-gate.ts --strict

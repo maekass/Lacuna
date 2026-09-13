@@ -25,15 +25,16 @@ export default function DataQualitySection() {
           Data quality we already compute
         </h2>
         <p className="mt-2 max-w-3xl leading-relaxed text-lacuna-blue">
-          {view.weakCompanyLead}. These grades are produced and hash-verified on
-          every push; this page is the first place they are shown.
+          {view.weakCompanyLead}. These are composite record-quality grades, not
+          standalone evidence/provenance grades: source quality contributes to
+          the score, but completeness and field availability also affect it.
         </p>
       </div>
 
       <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="bg-rose-50">
           <p className="text-xs uppercase tracking-wide text-rose-800">
-            Company source score
+            Company record-quality score
           </p>
           <p className="mt-1 text-3xl font-bold text-rose-900">
             {view.companiesAvgScoreLabel}
@@ -44,7 +45,7 @@ export default function DataQualitySection() {
         </Card>
         <Card className="bg-emerald-50">
           <p className="text-xs uppercase tracking-wide text-emerald-800">
-            Deal source score
+            Deal record-quality score
           </p>
           <p className="mt-1 text-3xl font-bold text-emerald-900">
             {view.dealsAvgScoreLabel}
@@ -81,10 +82,12 @@ export default function DataQualitySection() {
 
       <Card className="mb-6">
         <h3 className="text-sm font-semibold uppercase tracking-wide text-lacuna-blue">
-          A–F source grades
+          A–F composite record-quality grades
         </h3>
         <p className="mt-1 text-xs text-lacuna-blue/80">
-          Rubric ships with the artifact. Coverage vs {view.coverageDetail}.
+          The current artifact blends source strength with completeness and
+          field availability. It must not be read as an SEC-to-unverified
+          evidence ladder. Coverage vs {view.coverageDetail}.
         </p>
         <div className="mt-4 space-y-3">
           {view.gradeBars.map((bar) => (
@@ -157,7 +160,8 @@ export default function DataQualitySection() {
           Weakest company records ({view.weakCompanyCountLabel})
         </h3>
         <p className="mt-1 mb-3 text-xs text-lacuna-blue/80">
-          D and F grades — aggregator-only or unverified sourcing.
+          D/F here means low composite record quality. Inspect the underlying
+          source tier separately before making an evidence judgment.
         </p>
         <DataQualityWeakestTable rows={view.weakCompanies} />
       </Card>

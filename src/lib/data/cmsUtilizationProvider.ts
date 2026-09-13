@@ -7,7 +7,7 @@
 
 import computedCmsUtilization from "@/data/computed-cms-utilization.json";
 
-export type CmsUtilizationSource = "cpt" | "sector" | "portfolio_median";
+export type CmsUtilizationSource = "cpt" | "sector" | "withheld";
 
 export interface AnnualUsesResolution {
   annualUses: number;
@@ -57,11 +57,11 @@ function normalizeSectorKey(sector: string): string {
 interface CmsUtilizationIndex {
   byCptCode: Map<string, number>;
   bySectorKey: Map<string, number>;
-  portfolioMedian: number;
+  portfolioMedian: number | null;
 }
 
-function median(values: number[]): number {
-  if (values.length === 0) return 100;
+function median(values: number[]): number | null {
+  if (values.length === 0) return null;
   const sorted = [...values].sort((a, b) => a - b);
   const mid = Math.floor(sorted.length / 2);
   return sorted.length % 2 === 0
@@ -113,7 +113,7 @@ const utilizationIndex: CmsUtilizationIndex = loadCmsUtilizationIndex();
  * Replaces the former flat default of 100.
  */
 export function getPortfolioMedianAnnualUsesPerCode(): number {
-  return utilizationIndex.portfolioMedian;
+  return utilizationIndex.portfolioMedian ?? 0;
 }
 
 /** @deprecated Use resolveAnnualUsesPerCode — kept for importers expecting a scalar default. */
@@ -140,20 +140,33 @@ export function resolveAnnualUsesPerCode(
   }
 
   return {
-    annualUses: utilizationIndex.portfolioMedian,
-    source: "portfolio_median",
+    annualUses: 0,
+    source: "withheld",
   };
 }
 
+function decisionGradeUsesForCode(cptCode: string): number | null {
+  const row = (computedCmsUtilization as ComputedCmsUtilizationFile)
+    .utilizationByCptCode
+    .find((candidate) => candidate.cptCode === cptCode);
+  if (!row) return null;
+  if (row.provenanceKind === "hardcoded_fallback") return null;
+  if (row.totalServices === null || row.totalServices === undefined) {
+    return null;
+  }
+  return row.totalServices;
+}
+
 /**
- * Estimate annual Medicare reimbursement for matched CPT codes using
- * sourced utilization volumes × Medicare rates.
+ * Estimate annual Medicare reimbursement from decision-grade utilization only.
+ * Hardcoded fallback rows and unknown CPT codes contribute nothing.
  */
 export function estimateAnnualReimbursementFromCodes(
   codes: Array<{ code: string; medicareRate: number }>,
 ): number {
   return codes.reduce((sum, entry) => {
-    const uses = resolveAnnualUsesPerCode(entry.code).annualUses;
+    const uses = decisionGradeUsesForCode(entry.code);
+    if (uses === null) return sum;
     return sum + entry.medicareRate * uses;
   }, 0);
 }
