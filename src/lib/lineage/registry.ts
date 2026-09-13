@@ -21,16 +21,21 @@ export interface MetricDeclaration {
 }
 
 export const METRIC_REGISTRY = {
+  // Internal IDs retain `moic` for artifact/backward compatibility. The public
+  // label deliberately does not: deal value / total company capital raised is
+  // not fund-level MOIC because it does not use an investor's cost basis or
+  // ownership-at-exit proceeds.
   "sector.moic.median": {
     id: "sector.moic.median",
-    label: "Median sector MOIC",
+    label: "Median exit-value / capital-raised ratio",
     definition:
-      "Deal value divided by total capital raised (money-on-invested-capital); not a revenue multiple.",
+      "Deal value divided by the target company's total disclosed capital raised. This is a descriptive capital-efficiency ratio, not fund or investment MOIC and not a revenue multiple.",
     unit: "x",
     estimator: "gatedMedian",
     minN: 5,
     caveats: [
-      "Uses disclosed positive deal values and total capital raised.",
+      "Uses disclosed positive deal values and total disclosed company capital raised.",
+      "Does not represent an investor's cost basis, ownership percentage, proceeds, dilution, or realized return.",
       "Disclosed-price deals are a non-random subsample.",
     ],
   },
@@ -49,23 +54,29 @@ export const METRIC_REGISTRY = {
   },
   "sector.moic.p25": {
     id: "sector.moic.p25",
-    label: "25th percentile sector MOIC",
+    label: "25th percentile exit-value / capital-raised ratio",
     definition:
-      "25th percentile of deal value divided by total capital raised (money-on-invested-capital).",
+      "25th percentile of deal value divided by the target company's total disclosed capital raised; not fund or investment MOIC.",
     unit: "x",
     estimator: "bcaP25",
     minN: 10,
-    caveats: ["Quartiles are suppressed below n=10."],
+    caveats: [
+      "Quartiles are suppressed below n=10.",
+      "Does not represent investor-level returns.",
+    ],
   },
   "sector.moic.p75": {
     id: "sector.moic.p75",
-    label: "75th percentile sector MOIC",
+    label: "75th percentile exit-value / capital-raised ratio",
     definition:
-      "75th percentile of deal value divided by total capital raised (money-on-invested-capital).",
+      "75th percentile of deal value divided by the target company's total disclosed capital raised; not fund or investment MOIC.",
     unit: "x",
     estimator: "bcaP75",
     minN: 10,
-    caveats: ["Quartiles are suppressed below n=10."],
+    caveats: [
+      "Quartiles are suppressed below n=10.",
+      "Does not represent investor-level returns.",
+    ],
   },
   "acquirer.premium.preDealValuation": {
     id: "acquirer.premium.preDealValuation",
@@ -91,13 +102,15 @@ export const METRIC_REGISTRY = {
   },
   "acquirer.premium.totalFunding": {
     id: "acquirer.premium.totalFunding",
-    label: "Acquirer premium over total funding",
-    definition: "Deal value divided by the target's total capital raised.",
+    label: "Deal value / total capital raised",
+    definition:
+      "Deal value divided by the target's total disclosed capital raised. This is not a valuation premium in the conventional sense and not investor MOIC.",
     unit: "x",
     estimator: "gatedMedian",
     minN: 5,
     caveats: [
       "This denominator is not pooled with other premium denominators.",
+      "Total capital raised is not a pre-deal valuation or investor cost basis.",
     ],
   },
 } as const satisfies Record<string, MetricDeclaration>;
