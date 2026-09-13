@@ -1,0 +1,80 @@
+# Anthropic Workload Identity Federation connection test.
+# Exchanges this job's GitHub OIDC JWT for a short-lived Anthropic access token.
+# Docs: https://platform.claude.com/docs/en/manage-claude/wif-providers/github-actions
+#
+# Only main (and workflow_dispatch on main) may request id-token: write.
+# The Claude Console wizard default pins subject_prefix to
+# repo:maekass/Lacuna:ref:refs/heads/main — feature-branch subs 401.
+name: anthropic-wif-test
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  call-claude:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    env:
+      ANTHROPIC_FEDERATION_RULE_ID: fdrl_011bajAWCQPkMXKCSpgzLs7h
+      ANTHROPIC_ORGANIZATION_ID: 40d95d9a-5888-4305-9419-ab5b907d352f
+      ANTHROPIC_SERVICE_ACCOUNT_ID: svac_01Q8SjmgZfrZGWYZHZyi8mgk
+      ANTHROPIC_WORKSPACE_ID: wrkspc_01J24cWokxC6ywpmkTBBgLJT
+    steps:
+      - name: Fetch GitHub OIDC token
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const token = await core.getIDToken('https://api.anthropic.com');
+            core.setSecret(token);
+            core.exportVariable('JWT', token);
+            const payload = JSON.parse(
+              Buffer.from(token.split('.')[1], 'base64url').toString('utf8'),
+            );
+            core.info('OIDC claims for federation-rule matching:');
+            core.info(JSON.stringify({
+              iss: payload.iss,
+              sub: payload.sub,
+              aud: payload.aud,
+              repository: payload.repository,
+              repository_owner: payload.repository_owner,
+              ref: payload.ref,
+              event_name: payload.event_name,
+              workflow: payload.workflow,
+              workflow_ref: payload.workflow_ref,
+            }, null, 2));
+
+      - name: Exchange for an Anthropic access token
+        run: |
+          RESPONSE="$(
+            curl -sS https://api.anthropic.com/v1/oauth/token \
+              -H "content-type: application/json" \
+              --data @- <<JSON
+          {
+            "grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer",
+            "assertion": "$JWT",
+            "federation_rule_id": "$ANTHROPIC_FEDERATION_RULE_ID",
+            "organization_id": "$ANTHROPIC_ORGANIZATION_ID",
+            "service_account_id": "$ANTHROPIC_SERVICE_ACCOUNT_ID",
+            "workspace_id": "$ANTHROPIC_WORKSPACE_ID"
+          }
+          JSON
+          )"
+
+          echo "$RESPONSE" | jq 'with_entries(if (.key | test("token$")) then .value = "<redacted>" else . end)'
+
+          ACCESS_TOKEN="$(echo "$RESPONSE" | jq -r '.access_token // empty')"
+          if [ -z "$ACCESS_TOKEN" ]; then
+            echo "Anthropic WIF token exchange failed."
+            echo "Compare the OIDC claims from the previous step with the federation rule match block."
+            echo "The deny reason is on the rule's authentication history in Claude Console (the API always returns Authentication failed)."
+            exit 1
+          fi

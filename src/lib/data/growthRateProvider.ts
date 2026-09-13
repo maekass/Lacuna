@@ -1,17 +1,20 @@
 /**
- * Growth rate lookup from computed CAGR artifacts.
+ * Growth rate lookup from computed operating-growth artifacts.
  *
- * Primary source: `scripts/compute-growth-rates.ts` →
- * `src/data/computed-growth-rates.json`
+ * MeshIC rule: no financing-derived or valuation-derived rate is substituted
+ * for operating growth. When no comparable revenue series exists, resolution
+ * returns NaN with source="withheld"; downstream threshold comparisons then
+ * apply no growth premium/discount instead of inventing a neutral rate.
  */
 
 import computedGrowthRates from "@/data/computed-growth-rates.json";
 
-export type GrowthRateConfidence = "high" | "medium" | "low";
+export type GrowthRateConfidence = "high" | "medium" | "low" | "none";
+export type GrowthRateSource = "company" | "sector" | "withheld";
 
 export interface GrowthRateResolution {
   growthRate: number;
-  source: "company" | "sector" | "portfolio_median";
+  source: GrowthRateSource;
   confidence: GrowthRateConfidence;
 }
 
@@ -20,25 +23,24 @@ interface CompanyGrowthRow {
   companyName: string;
   sector: string;
   cagr: number | null;
-  confidence: GrowthRateConfidence | "none";
+  confidence: GrowthRateConfidence;
 }
 
 interface SectorMedianRow {
-  medianCAGR: number;
+  medianCAGR: number | null;
   sampleSize: number;
-  confidence: string;
+  confidence: GrowthRateConfidence | string;
 }
 
 interface ComputedGrowthRatesFile {
-  companies: CompanyGrowthRow[];
-  sectorMedians: Record<string, SectorMedianRow>;
+  companies?: CompanyGrowthRow[];
+  sectorMedians?: Record<string, SectorMedianRow>;
 }
 
 function normalizeSectorKey(sector: string): string {
   return sector.toLowerCase().replace(/[^a-z0-9]+/g, "_");
 }
 
-/** Maps UI / connector sector slugs to normalized keys in sectorMedians. */
 const SECTOR_ALIASES: Record<string, string> = {
   digital_therapeutics: "digital_health",
   wearable_monitoring: "wearables",
@@ -49,46 +51,26 @@ const SECTOR_ALIASES: Record<string, string> = {
   diagnostic: "diagnostic",
 };
 
-interface GrowthRateIndex {
-  byCompanyId: Map<string, CompanyGrowthRow>;
-  bySectorKey: Map<string, SectorMedianRow>;
-  portfolioMedian: number;
-}
-
-function median(values: number[]): number {
-  if (values.length === 0) return 0;
-  const sorted = [...values].sort((a, b) => a - b);
-  const mid = Math.floor(sorted.length / 2);
-  return sorted.length % 2 === 0
-    ? (sorted[mid - 1] + sorted[mid]) / 2
-    : sorted[mid];
-}
-
-function loadGrowthRateIndex(): GrowthRateIndex {
-  const raw = computedGrowthRates as ComputedGrowthRatesFile;
-
-  const byCompanyId = new Map<string, CompanyGrowthRow>();
-  for (const row of raw.companies) {
-    byCompanyId.set(row.companyId, row);
-  }
-
-  const bySectorKey = new Map<string, SectorMedianRow>();
-  for (const [sectorName, stat] of Object.entries(raw.sectorMedians ?? {})) {
-    bySectorKey.set(normalizeSectorKey(sectorName), stat);
-  }
-
-  const portfolioMedian = median(
-    Object.values(raw.sectorMedians ?? {}).map((s) => s.medianCAGR),
-  );
-
-  return { byCompanyId, bySectorKey, portfolioMedian };
-}
-
-const growthIndex: GrowthRateIndex = loadGrowthRateIndex();
+const raw = computedGrowthRates as ComputedGrowthRatesFile;
+const companyRows = raw.companies ?? [];
+const sectorRows = raw.sectorMedians ?? {};
+const byCompanyId = new Map(companyRows.map((row) => [row.companyId, row]));
+const bySectorKey = new Map(
+  Object.entries(sectorRows).map((
+    [sector, row],
+  ) => [normalizeSectorKey(sector), row]),
+);
 
 function toConfidence(value: string | undefined): GrowthRateConfidence {
-  if (value === "high" || value === "medium" || value === "low") return value;
-  return "low";
+  if (
+    value === "high" || value === "medium" || value === "low" ||
+    value === "none"
+  ) return value;
+  return "none";
+}
+
+function finiteRate(value: number | null | undefined): number | null {
+  return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
 
 function resolveSectorKey(sector: string): string {
@@ -96,56 +78,44 @@ function resolveSectorKey(sector: string): string {
   return SECTOR_ALIASES[normalized] ?? normalized;
 }
 
-/**
- * Look up a company-specific CAGR from computed growth rates.
- */
 export function getCompanyGrowthRate(companyId: string): number | null {
-  const row = growthIndex.byCompanyId.get(companyId);
-  if (!row || row.cagr === null) return null;
-  return row.cagr;
+  return finiteRate(byCompanyId.get(companyId)?.cagr);
 }
 
-/**
- * Look up sector median CAGR from computed growth rates.
- */
 export function getSectorGrowthRate(sector: string): number | null {
-  const stat = growthIndex.bySectorKey.get(resolveSectorKey(sector));
-  return stat?.medianCAGR ?? null;
+  return finiteRate(bySectorKey.get(resolveSectorKey(sector))?.medianCAGR);
 }
 
 /**
- * Resolve growth rate: company-specific CAGR when available, else sector median,
- * else portfolio-wide sector median from computed JSON.
+ * Resolve only observed/comparable operating growth. NaN is an explicit
+ * unavailable sentinel kept for backward compatibility with number-typed
+ * valuation inputs; it intentionally fails all >/< growth adjustment checks.
  */
 export function resolveGrowthRate(input: {
   sector: string;
   companyId?: string;
 }): GrowthRateResolution {
   if (input.companyId) {
-    const row = growthIndex.byCompanyId.get(input.companyId);
-    if (row?.cagr !== null && row?.cagr !== undefined) {
+    const row = byCompanyId.get(input.companyId);
+    const rate = finiteRate(row?.cagr);
+    if (rate !== null) {
       return {
-        growthRate: row.cagr,
+        growthRate: rate,
         source: "company",
-        confidence: row.confidence === "none" ? "low" : row.confidence,
+        confidence: toConfidence(row?.confidence),
       };
     }
   }
 
-  const sectorStat = growthIndex.bySectorKey.get(
-    resolveSectorKey(input.sector),
-  );
-  if (sectorStat) {
+  const sector = bySectorKey.get(resolveSectorKey(input.sector));
+  const sectorRate = finiteRate(sector?.medianCAGR);
+  if (sectorRate !== null) {
     return {
-      growthRate: sectorStat.medianCAGR,
+      growthRate: sectorRate,
       source: "sector",
-      confidence: toConfidence(sectorStat.confidence),
+      confidence: toConfidence(sector?.confidence),
     };
   }
 
-  return {
-    growthRate: growthIndex.portfolioMedian,
-    source: "portfolio_median",
-    confidence: "low",
-  };
+  return { growthRate: Number.NaN, source: "withheld", confidence: "none" };
 }

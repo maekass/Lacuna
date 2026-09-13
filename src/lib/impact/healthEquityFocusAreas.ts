@@ -1,7 +1,9 @@
 /**
  * Genetic-marker focus areas for health-equity framing.
- * Epidemiology rows reuse citations from EPIDEMIOLOGY_DATABASE where available.
- * Portfolio overlap is computed at runtime from the verified company list.
+ *
+ * MeshIC policy: disparity claims keep the population, outcome and denominator
+ * explicit. A mortality ratio must not be combined with a preventability
+ * statistic from a different surveillance construct as if they were one metric.
  */
 
 export type HealthEquityDataTier = "cited_epidemiology" | "illustrative_static";
@@ -15,9 +17,7 @@ export interface HealthEquityFocusArea {
   source: string;
   sourceYear?: number;
   relatedSectors: readonly string[];
-  /** Primary gene symbols for variant-store cross-reference */
   markerGenes: readonly string[];
-  /** Matches `condition` in EPIDEMIOLOGY_DATABASE when cited_epidemiology */
   epidemiologyCondition?: string;
 }
 
@@ -26,28 +26,28 @@ export const HEALTH_EQUITY_FOCUS_AREAS: readonly HealthEquityFocusArea[] = [
     id: "maternal-mortality",
     title: "Maternal mortality prevention",
     summary:
-      "Severe maternal morbidity and mortality disproportionately affect Black women (3.4x higher death rate). Remote monitoring, culturally competent care models, and early-warning systems are priority investment areas.",
+      "Maternal mortality remains substantially higher for Black women in the United States. Remote monitoring, access, quality-improvement and early-warning approaches are relevant diligence themes, but clinical benefit must be evaluated separately from the disparity statistic.",
     disparityLabel:
-      "Black women: 3.4x higher maternal mortality vs white women; 80% of deaths preventable (CDC 2024; NIHB 2023)",
+      "2024 maternal mortality: Black women 44.8 vs White women 14.2 deaths per 100,000 live births (~3.2×). Separately, CDC MMRC review of 2017–2019 pregnancy-related deaths found >80% preventable.",
     dataTier: "cited_epidemiology",
     source:
-      "CDC Pregnancy Mortality Surveillance System (2024); NIH IMPROVE Initiative; NIHB maternal health report (2023)",
-    sourceYear: 2024,
+      "CDC/NCHS Maternal Mortality Rates in the United States, 2024 (published Mar 2026); CDC Maternal Mortality Review Committees, 2017–2019 preventability analysis",
+    sourceYear: 2026,
     relatedSectors: ["Maternal Health", "Diagnostics", "Wearables"],
     markerGenes: ["FLT1", "ERAP2", "INHBA"],
-    epidemiologyCondition: "Severe Maternal Morbidity",
+    epidemiologyCondition: "Maternal Health Complications",
   },
   {
     id: "pcos-genetics",
     title: "PCOS genetic markers",
     summary:
-      "Polygenic and rare-variant signals (DENND1A, FSHR, LHCGR) underpin PCOS susceptibility — relevant to diagnostics and reproductive-health M&A.",
+      "Polygenic and rare-variant signals (DENND1A, FSHR, LHCGR) are studied in PCOS susceptibility and may be relevant to diagnostics and reproductive-health research; gene association is not itself clinical utility.",
     disparityLabel:
-      "5M+ US women affected; cardiometabolic comorbidity burden is high (WHO 2026; CDC 2024)",
+      "CDC describes PCOS as affecting as many as 5 million US women; prevalence estimates vary by diagnostic criteria and population.",
     dataTier: "cited_epidemiology",
     source:
-      "WHO Fact Sheet on PCOS (Jan 2026); NICHD PCOS Patient Survey (2024)",
-    sourceYear: 2026,
+      "CDC, Diabetes and Polycystic Ovary Syndrome (PCOS), May 2024; WHO PCOS fact sheet for global prevalence context",
+    sourceYear: 2024,
     relatedSectors: ["Diagnostics", "Reproductive Health", "Fertility"],
     markerGenes: ["DENND1A", "FSHR", "LHCGR", "INSR"],
     epidemiologyCondition: "PCOS (Polycystic Ovary Syndrome)",
@@ -56,12 +56,12 @@ export const HEALTH_EQUITY_FOCUS_AREAS: readonly HealthEquityFocusArea[] = [
     id: "breast-cancer-genetics",
     title: "Hereditary breast & ovarian cancer markers",
     summary:
-      "BRCA1/2, PALB2, and CHEK2 pathogenic variants drive HBOC risk; genomic profiling companies dominate precision-oncology deal flow.",
+      "BRCA1/2, PALB2, and CHEK2 pathogenic variants are established hereditary-cancer risk markers. Genomic profiling is relevant to precision-oncology diligence, while access and outcome disparities should remain separately sourced claims.",
     disparityLabel:
-      "Black women: 38% higher breast cancer mortality; 37% not offered genetic testing vs NCCN (ACS 2025; HLTH/Outcomes4Me 2022)",
+      "Black women have 38% higher breast-cancer mortality than White women despite lower incidence (ACS Breast Cancer Statistics 2024 / Black cancer statistics 2025).",
     dataTier: "cited_epidemiology",
     source:
-      "ACS Breast Cancer Facts & Figures 2024-2025; HLTH Foundation State of Patient Empowerment (2022); ACS Cancer Statistics for Black People (Feb 2025)",
+      "American Cancer Society, Breast Cancer Facts & Figures 2024–2025; Cancer Statistics for African American/Black People, 2025",
     sourceYear: 2025,
     relatedSectors: ["Breast Health", "Precision Medicine", "Diagnostics"],
     markerGenes: ["BRCA1", "BRCA2", "PALB2", "CHEK2", "TP53"],
@@ -71,12 +71,12 @@ export const HEALTH_EQUITY_FOCUS_AREAS: readonly HealthEquityFocusArea[] = [
     id: "sickle-cell-genetics",
     title: "Sickle cell disease (HBB)",
     summary:
-      "HBB hemoglobin variants cause sickle cell disease and trait — a core gene-therapy and newborn-screening investment theme with stark racial disparities.",
+      "HBB variants cause sickle cell disease and trait, making the condition relevant to gene-therapy, diagnostics and newborn-screening diligence; population burden and therapeutic value remain separate questions.",
     disparityLabel:
-      "1 in 365 Black/African American births with SCD; 1 in 13 carry sickle cell trait (CDC 2024)",
+      "CDC reports SCD occurs in about 1 in 365 Black or African American births and sickle-cell trait in about 1 in 13 Black or African American babies.",
     dataTier: "cited_epidemiology",
     source:
-      "CDC Sickle Cell Data Collection program (2024); NHLBI SCD guidelines",
+      "CDC Sickle Cell Disease data and surveillance; NHLBI sickle cell resources",
     sourceYear: 2024,
     relatedSectors: ["Diagnostics", "Precision Medicine"],
     markerGenes: ["HBB", "HBA1", "HBA2"],
@@ -86,13 +86,13 @@ export const HEALTH_EQUITY_FOCUS_AREAS: readonly HealthEquityFocusArea[] = [
     id: "lupus-genetics",
     title: "Lupus / SLE genetic susceptibility",
     summary:
-      "HLA and interferon-pathway variants (STAT4, IRF5) contribute to lupus risk; Black women face earlier onset and higher organ damage.",
+      "HLA and interferon-pathway variants including STAT4 and IRF5 contribute to lupus susceptibility research. Genetic association should not be presented as a stand-alone diagnostic or investment moat.",
     disparityLabel:
-      "Black women diagnosed younger with higher mortality vs white women (LFA 2024; ACR disparities reviews)",
+      "Lupus Foundation of America reports earlier disease, greater complications and higher mortality among several racial and ethnic minority groups; Black women are disproportionately affected.",
     dataTier: "cited_epidemiology",
     source:
-      "Lupus Foundation of America; ACR lupus disparities literature (2024)",
-    sourceYear: 2024,
+      "Lupus Foundation of America, Lupus Facts and Statistics and Health Disparities in Lupus",
+    sourceYear: 2025,
     relatedSectors: ["Diagnostics", "Precision Medicine"],
     markerGenes: ["HLA-DRB1", "STAT4", "IRF5", "TNFSF4"],
     epidemiologyCondition: "Systemic Lupus Erythematosus",
@@ -101,12 +101,12 @@ export const HEALTH_EQUITY_FOCUS_AREAS: readonly HealthEquityFocusArea[] = [
     id: "lynch-hereditary-cancer",
     title: "Lynch syndrome & multi-gene panels",
     summary:
-      "Mismatch-repair genes (MLH1, MSH2, MSH6, PMS2) link endometrial and colorectal cancer risk — multi-gene panels overlap breast-health diagnostics.",
+      "Mismatch-repair genes (MLH1, MSH2, MSH6, PMS2) are associated with Lynch syndrome and increased endometrial and colorectal cancer risk. Access-equity framing requires separately sourced utilization data.",
     disparityLabel:
-      "Under-testing in underserved populations delays cascade screening and prevention",
+      "Access and cascade-screening equity are research questions here; no quantitative disparity is promoted without a field-level citation.",
     dataTier: "illustrative_static",
     source:
-      "Illustrative framing — NCCN Lynch guidelines; equity gap cited in ACMG access literature",
+      "Illustrative research framing — use NCCN/ACMG sources before promoting a quantitative access claim",
     relatedSectors: ["Diagnostics", "Precision Medicine", "Breast Health"],
     markerGenes: ["MLH1", "MSH2", "MSH6", "PMS2"],
   },

@@ -426,7 +426,7 @@
       {
         "metricId": "sector.moic.median",
         "scope": "All sectors",
-        "label": "Median sector MOIC",
+        "label": "Median exit-value / capital-raised ratio",
         "hasUnit": true,
         "hasDefinition": true,
         "hasN": true,
@@ -456,7 +456,7 @@
       {
         "metricId": "acquirer.premium.totalFunding",
         "scope": "all acquirers",
-        "label": "Acquirer premium over total funding",
+        "label": "Deal value / total capital raised",
         "hasUnit": true,
         "hasDefinition": true,
         "hasN": true,
@@ -486,7 +486,7 @@
       {
         "metricId": "sector.moic.median",
         "scope": "All sectors",
-        "label": "Median sector MOIC",
+        "label": "Median exit-value / capital-raised ratio",
         "hasUnit": true,
         "hasDefinition": true,
         "hasN": true,
@@ -521,11 +521,11 @@
     "reproducible": 47
   },
   "displayProvenance": {
-    "total": 1036,
+    "total": 1022,
     "covered": 20,
     "exempt": 2,
-    "uncovered": 1014,
-    "uncoveredRate": 0.9787644787644788,
+    "uncovered": 1000,
+    "uncoveredRate": 0.9784735812133072,
     "topUncoveredFiles": [
       {
         "file": "src/components/NetworkAnalysisHonest.tsx",
