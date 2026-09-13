@@ -24,10 +24,11 @@ descriptive analytics.
 **Site split:** Product stays on **Vercel** (this repo). **Framer**
 ([framer.com](https://www.framer.com)) is for brand + narrative only (hero,
 methodology story, hiring/portfolio), with one primary CTA into the live app —
-not for hosting analytics. Build kit:
-[framer/BUILD_GUIDE.md](framer/BUILD_GUIDE.md). See
-[docs/SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md). (Do not confuse with
-**Framer Motion** in `package.json`.)
+not for hosting analytics. There is **no `framer/` directory in this repo**.
+Webflow was evaluated and rejected. See
+[docs/SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md) and
+[docs/MARKETING_SURFACE_DECISION.md](docs/MARKETING_SURFACE_DECISION.md). (Do
+not confuse with **Framer Motion** in `package.json`.)
 
 This is portfolio/educational code. Be honest about data limits (curated static
 dataset, partial price disclosure, methodology in `docs/`).
