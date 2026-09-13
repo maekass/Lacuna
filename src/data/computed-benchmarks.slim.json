@@ -6,8 +6,8 @@
     {
       "metricId": "sector.moic.median",
       "scope": "All sectors",
-      "label": "Median sector MOIC",
-      "definition": "Deal value divided by total capital raised (money-on-invested-capital); not a revenue multiple.",
+      "label": "Median exit-value / capital-raised ratio",
+      "definition": "Deal value divided by the target company's total disclosed capital raised. This is a descriptive capital-efficiency ratio, not fund or investment MOIC and not a revenue multiple.",
       "unit": "x",
       "estimate": {
         "kind": "sufficient",
@@ -29,7 +29,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 1,
-      "withheldReason": "n=1 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=1 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -38,7 +38,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 1,
-      "withheldReason": "n=1 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=1 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -47,7 +47,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 1,
-      "withheldReason": "n=1 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=1 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -56,7 +56,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 3,
-      "withheldReason": "n=3 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=3 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -65,7 +65,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 3,
-      "withheldReason": "n=3 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=3 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -74,7 +74,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 3,
-      "withheldReason": "n=3 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=3 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -83,7 +83,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -92,7 +92,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -101,7 +101,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -110,7 +110,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 1,
-      "withheldReason": "n=1 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=1 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -119,7 +119,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 1,
-      "withheldReason": "n=1 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=1 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -128,7 +128,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 1,
-      "withheldReason": "n=1 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=1 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -137,7 +137,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -146,7 +146,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -155,7 +155,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -164,7 +164,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -173,7 +173,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -182,7 +182,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -191,7 +191,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -200,7 +200,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -209,7 +209,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -218,7 +218,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 1,
-      "withheldReason": "n=1 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=1 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -227,7 +227,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 1,
-      "withheldReason": "n=1 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=1 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -236,7 +236,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 1,
-      "withheldReason": "n=1 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=1 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -245,7 +245,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 1,
-      "withheldReason": "n=1 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=1 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -254,7 +254,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 1,
-      "withheldReason": "n=1 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=1 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -263,7 +263,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 1,
-      "withheldReason": "n=1 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=1 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -272,7 +272,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -281,7 +281,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -290,7 +290,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -299,7 +299,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -308,7 +308,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -317,7 +317,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -326,7 +326,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -335,7 +335,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -344,7 +344,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -353,7 +353,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -362,7 +362,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -371,7 +371,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -380,7 +380,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -389,7 +389,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -398,7 +398,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -407,7 +407,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -416,7 +416,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -425,7 +425,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -434,7 +434,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -443,7 +443,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -452,7 +452,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -461,7 +461,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -470,7 +470,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -479,7 +479,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -488,7 +488,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -497,7 +497,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -506,7 +506,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -515,7 +515,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -524,7 +524,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -533,7 +533,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -542,7 +542,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -551,7 +551,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -560,7 +560,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -569,7 +569,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -578,7 +578,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -587,7 +587,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -596,7 +596,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -605,7 +605,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -614,7 +614,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -623,7 +623,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -632,7 +632,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -641,7 +641,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.median",
@@ -650,7 +650,7 @@
       "definition": "sector.moic.median",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 5 for Median sector MOIC"
+      "withheldReason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -659,7 +659,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -668,7 +668,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 0,
-      "withheldReason": "n=0 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p25",
@@ -677,7 +677,7 @@
       "definition": "sector.moic.p25",
       "unit": "x",
       "n": 7,
-      "withheldReason": "n=7 below minimum 10 for 25th percentile sector MOIC"
+      "withheldReason": "n=7 below minimum 10 for 25th percentile exit-value / capital-raised ratio"
     },
     {
       "metricId": "sector.moic.p75",
@@ -686,7 +686,7 @@
       "definition": "sector.moic.p75",
       "unit": "x",
       "n": 7,
-      "withheldReason": "n=7 below minimum 10 for 75th percentile sector MOIC"
+      "withheldReason": "n=7 below minimum 10 for 75th percentile exit-value / capital-raised ratio"
     }
   ]
 }

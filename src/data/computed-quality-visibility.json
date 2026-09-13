@@ -426,7 +426,7 @@
       {
         "metricId": "sector.moic.median",
         "scope": "All sectors",
-        "label": "Median sector MOIC",
+        "label": "Median exit-value / capital-raised ratio",
         "hasUnit": true,
         "hasDefinition": true,
         "hasN": true,
@@ -456,7 +456,7 @@
       {
         "metricId": "acquirer.premium.totalFunding",
         "scope": "all acquirers",
-        "label": "Acquirer premium over total funding",
+        "label": "Deal value / total capital raised",
         "hasUnit": true,
         "hasDefinition": true,
         "hasN": true,
@@ -486,7 +486,7 @@
       {
         "metricId": "sector.moic.median",
         "scope": "All sectors",
-        "label": "Median sector MOIC",
+        "label": "Median exit-value / capital-raised ratio",
         "hasUnit": true,
         "hasDefinition": true,
         "hasN": true,
