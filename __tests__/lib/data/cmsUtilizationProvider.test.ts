@@ -25,16 +25,16 @@ describe("cmsUtilizationProvider", () => {
     expect(sectorUses).toBe(14375);
   });
 
-  it("falls back to portfolio median for unknown CPT (edge)", () => {
+  it("withholds unknown CPT codes instead of inventing a portfolio median", () => {
     const resolved = resolveAnnualUsesPerCode("99999");
-    expect(resolved.source).toBe("portfolio_median");
-    expect(resolved.annualUses).toBe(getPortfolioMedianAnnualUsesPerCode());
+    expect(resolved.source).toBe("withheld");
+    expect(resolved.annualUses).toBe(0);
   });
 
-  it("estimates annual reimbursement from rate × utilization (success)", () => {
+  it("does not feed hardcoded CMS utilization into decision reimbursement", () => {
     const total = estimateAnnualReimbursementFromCodes([
       { code: "58321", medicareRate: 185 },
     ]);
-    expect(total).toBe(15000 * 185);
+    expect(total).toBe(0);
   });
 });

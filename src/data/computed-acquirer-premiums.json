@@ -4792,8 +4792,8 @@
     },
     "acquirer.premium.totalFunding": {
       "metricId": "acquirer.premium.totalFunding",
-      "label": "Acquirer premium over total funding",
-      "definition": "Deal value divided by the target's total capital raised.",
+      "label": "Deal value / total capital raised",
+      "definition": "Deal value divided by the target's total disclosed capital raised. This is not a valuation premium in the conventional sense and not investor MOIC.",
       "unit": "x",
       "estimate": {
         "kind": "sufficient",

@@ -14,10 +14,15 @@ export default function CmsUtilizationFallbackNotice() {
       role="status"
       className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-950"
     >
-      CMS utilization figures are an in-repo hardcoded fallback ({provenance
+      <strong>Research-only utilization context — not decision-grade.</strong>
+      {" "}
+      These CMS utilization figures are an in-repo hardcoded fallback
+      ({provenance
         .fallbackRowCount} of {provenance.rowCount}{" "}
-      CPT rows), not a live data.cms.gov pull. PUF data year is unknown.
-      Intended source: {provenance.intendedSource ?? "CMS PUF"}.
+      CPT rows), not a reproducible data.cms.gov aggregate. PUF data year is
+      unknown, so these values must not be used for investment valuation,
+      market-size, or reimbursement conclusions. Intended source:{" "}
+      {provenance.intendedSource ?? "CMS PUF"}.
     </p>
   );
 }

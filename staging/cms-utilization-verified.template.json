@@ -1,0 +1,16 @@
+{
+  "source": "CMS",
+  "observations": [
+    {
+      "sector": "maternal_health",
+      "cptCode": "59400",
+      "totalServices": 0,
+      "avgMedicarePayment": 0,
+      "dataYear": 2025,
+      "datasetId": "REPLACE_WITH_CMS_DATASET_ID",
+      "sourceUrl": "https://data.cms.gov/REPLACE_WITH_EXACT_SOURCE",
+      "retrievedAt": "2026-09-10T00:00:00.000Z",
+      "aggregationMethod": "Describe exactly how provider/service rows were filtered and aggregated to the national code-level observation. Do not use a single provider row as a national total."
+    }
+  ]
+}

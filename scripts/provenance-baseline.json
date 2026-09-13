@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "total": 1036,
+  "total": 1022,
   "covered": 20,
   "exempt": 2,
-  "uncovered": 1014,
+  "uncovered": 1000,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
     "src/app/sections/ConsumerHealthPage.tsx": 6,
@@ -55,7 +55,7 @@
     "src/components/FundingEventsPanel.tsx": 5,
     "src/components/GenderInferenceQuality.tsx": 26,
     "src/components/HealthEquityDashboard.tsx": 9,
-    "src/components/ImpactOpportunityCard.tsx": 19,
+    "src/components/ImpactOpportunityCard.tsx": 5,
     "src/components/InvestmentGradeReimbursementIntel.tsx": 5,
     "src/components/KeyboardShortcuts.tsx": 1,
     "src/components/layout/GlobalProvenanceBar.tsx": 1,
@@ -4666,65 +4666,9 @@
     {
       "file": "src/components/ImpactOpportunityCard.tsx",
       "functionName": "ImpactOpportunityCard",
-      "expression": "((1 - estimatedPenetration) * 100).toFixed(0)",
-      "kind": "formatting-call",
-      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::((1 - estimatedPenetration) * 100).toFixed(0)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ImpactOpportunityCard.tsx",
-      "functionName": "ImpactOpportunityCard",
-      "expression": "((oais.components.penetrationGapScore) * 100).toFixed(0)",
-      "kind": "formatting-call",
-      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::((oais.components.penetrationGapScore) * 100).toFixed(0)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ImpactOpportunityCard.tsx",
-      "functionName": "ImpactOpportunityCard",
       "expression": "(estimatedPenetration * 100).toFixed(0)",
       "kind": "formatting-call",
       "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::(estimatedPenetration * 100).toFixed(0)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ImpactOpportunityCard.tsx",
-      "functionName": "ImpactOpportunityCard",
-      "expression": "(oais.components.founderQualityScore * 100).toFixed(0)",
-      "kind": "formatting-call",
-      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::(oais.components.founderQualityScore * 100).toFixed(0)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ImpactOpportunityCard.tsx",
-      "functionName": "ImpactOpportunityCard",
-      "expression": "(oais.components.marketSaturationPenalty * 100).toFixed(0)",
-      "kind": "formatting-call",
-      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::(oais.components.marketSaturationPenalty * 100).toFixed(0)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ImpactOpportunityCard.tsx",
-      "functionName": "ImpactOpportunityCard",
-      "expression": "(oais.components.penetrationGapScore * 100).toFixed(0)",
-      "kind": "formatting-call",
-      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::(oais.components.penetrationGapScore * 100).toFixed(0)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ImpactOpportunityCard.tsx",
-      "functionName": "ImpactOpportunityCard",
-      "expression": "(oais.components.stageCredibilityScore * 100).toFixed(0)",
-      "kind": "formatting-call",
-      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::(oais.components.stageCredibilityScore * 100).toFixed(0)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ImpactOpportunityCard.tsx",
-      "functionName": "ImpactOpportunityCard",
-      "expression": "(oais.components.stageCredibilityScore * 100).toFixed(0)",
-      "kind": "formatting-call",
-      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::(oais.components.stageCredibilityScore * 100).toFixed(0)#2",
       "class": "uncovered"
     },
     {
@@ -4757,62 +4701,6 @@
       "expression": "epiData.addressablePopulation.pointEstimate",
       "kind": "numeric-jsx",
       "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::epiData.addressablePopulation.pointEstimate",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ImpactOpportunityCard.tsx",
-      "functionName": "ImpactOpportunityCard",
-      "expression": "i",
-      "kind": "numeric-jsx",
-      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::i",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ImpactOpportunityCard.tsx",
-      "functionName": "ImpactOpportunityCard",
-      "expression": "i",
-      "kind": "numeric-jsx",
-      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::i#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ImpactOpportunityCard.tsx",
-      "functionName": "ImpactOpportunityCard",
-      "expression": "oais.components.addressablePopScore",
-      "kind": "numeric-jsx",
-      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::oais.components.addressablePopScore",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ImpactOpportunityCard.tsx",
-      "functionName": "ImpactOpportunityCard",
-      "expression": "oais.components.addressablePopScore",
-      "kind": "numeric-jsx",
-      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::oais.components.addressablePopScore#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ImpactOpportunityCard.tsx",
-      "functionName": "ImpactOpportunityCard",
-      "expression": "oais.components.scalingLikelihoodScore.toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::oais.components.scalingLikelihoodScore.toFixed(1)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ImpactOpportunityCard.tsx",
-      "functionName": "ImpactOpportunityCard",
-      "expression": "oais.score.toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::oais.score.toFixed(1)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ImpactOpportunityCard.tsx",
-      "functionName": "ImpactOpportunityCard",
-      "expression": "oais.score.toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/ImpactOpportunityCard.tsx::ImpactOpportunityCard::oais.score.toFixed(1)#2",
       "class": "uncovered"
     },
     {

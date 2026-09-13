@@ -6,8 +6,8 @@
   "benchmarks": [
     {
       "sector": "All sectors",
-      "label": "Median sector MOIC",
-      "definition": "Deal value divided by total capital raised (money-on-invested-capital); not a revenue multiple.",
+      "label": "Median exit-value / capital-raised ratio",
+      "definition": "Deal value divided by the target company's total disclosed capital raised. This is a descriptive capital-efficiency ratio, not fund or investment MOIC and not a revenue multiple.",
       "unit": "x",
       "medianMoic": {
         "kind": "sufficient",
@@ -885,7 +885,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Fertility",
-      "reason": "n=1 below minimum 5 for Median sector MOIC",
+      "reason": "n=1 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -953,7 +953,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Fertility",
-      "reason": "n=1 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=1 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -1021,7 +1021,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Fertility",
-      "reason": "n=1 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=1 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -1089,7 +1089,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "General Wellness",
-      "reason": "n=3 below minimum 5 for Median sector MOIC",
+      "reason": "n=3 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -1188,7 +1188,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "General Wellness",
-      "reason": "n=3 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=3 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -1287,7 +1287,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "General Wellness",
-      "reason": "n=3 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=3 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -1386,7 +1386,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Pelvic Health",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -1428,7 +1428,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Pelvic Health",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -1470,7 +1470,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Pelvic Health",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -1512,7 +1512,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Mental Health",
-      "reason": "n=1 below minimum 5 for Median sector MOIC",
+      "reason": "n=1 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -1561,7 +1561,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Mental Health",
-      "reason": "n=1 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=1 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -1610,7 +1610,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Mental Health",
-      "reason": "n=1 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=1 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -1659,7 +1659,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Wearables",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -1682,7 +1682,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Wearables",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -1705,7 +1705,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Wearables",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -1728,7 +1728,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Breast Health",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -1761,7 +1761,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Breast Health",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -1794,7 +1794,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Breast Health",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -1827,7 +1827,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Gynecological Surgery",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -1860,7 +1860,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Gynecological Surgery",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -1893,7 +1893,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Gynecological Surgery",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -1926,7 +1926,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Reproductive Health",
-      "reason": "n=1 below minimum 5 for Median sector MOIC",
+      "reason": "n=1 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -1985,7 +1985,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Reproductive Health",
-      "reason": "n=1 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=1 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -2044,7 +2044,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Reproductive Health",
-      "reason": "n=1 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=1 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -2103,7 +2103,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Maternal Health",
-      "reason": "n=1 below minimum 5 for Median sector MOIC",
+      "reason": "n=1 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -2162,7 +2162,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Maternal Health",
-      "reason": "n=1 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=1 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -2221,7 +2221,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Maternal Health",
-      "reason": "n=1 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=1 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -2280,7 +2280,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Diagnostics",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -2313,7 +2313,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Diagnostics",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -2346,7 +2346,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Diagnostics",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -2379,7 +2379,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Contraception",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -2412,7 +2412,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Contraception",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -2445,7 +2445,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Contraception",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -2478,7 +2478,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Precision Medicine",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -2511,7 +2511,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Precision Medicine",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -2544,7 +2544,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Precision Medicine",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -2577,7 +2577,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Menopause",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -2619,7 +2619,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Menopause",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -2661,7 +2661,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Menopause",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -2703,7 +2703,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Dermatology",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -2736,7 +2736,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Dermatology",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -2769,7 +2769,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Dermatology",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -2802,7 +2802,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Sexual Wellness",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -2825,7 +2825,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Sexual Wellness",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -2848,7 +2848,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Sexual Wellness",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -2871,7 +2871,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Consumer",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -2894,7 +2894,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Consumer",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -2917,7 +2917,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Consumer",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -2940,7 +2940,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Medical Device",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -2963,7 +2963,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Medical Device",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -2986,7 +2986,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Medical Device",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -3009,7 +3009,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Digital Health",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -3032,7 +3032,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Digital Health",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -3055,7 +3055,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Digital Health",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -3078,7 +3078,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Therapeutics",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -3101,7 +3101,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Therapeutics",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -3124,7 +3124,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Therapeutics",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -3147,7 +3147,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Tech Bio",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -3170,7 +3170,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Tech Bio",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -3193,7 +3193,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Tech Bio",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -3216,7 +3216,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Diagnostic",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -3239,7 +3239,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Diagnostic",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -3262,7 +3262,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Diagnostic",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -3285,7 +3285,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Biotech",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -3308,7 +3308,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Biotech",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -3331,7 +3331,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Biotech",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -3354,7 +3354,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Reproductive",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -3377,7 +3377,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Reproductive",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -3400,7 +3400,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Reproductive",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -3423,7 +3423,7 @@
     {
       "metricId": "sector.moic.median",
       "scope": "Wellness",
-      "reason": "n=0 below minimum 5 for Median sector MOIC",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
@@ -3446,7 +3446,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "Wellness",
-      "reason": "n=0 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -3469,7 +3469,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "Wellness",
-      "reason": "n=0 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
@@ -3492,7 +3492,7 @@
     {
       "metricId": "sector.moic.p25",
       "scope": "All sectors",
-      "reason": "n=7 below minimum 10 for 25th percentile sector MOIC",
+      "reason": "n=7 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
@@ -3706,7 +3706,7 @@
     {
       "metricId": "sector.moic.p75",
       "scope": "All sectors",
-      "reason": "n=7 below minimum 10 for 75th percentile sector MOIC",
+      "reason": "n=7 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
