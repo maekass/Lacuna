@@ -25,9 +25,9 @@ export default function DataQualitySection() {
           Data quality we already compute
         </h2>
         <p className="mt-2 max-w-3xl leading-relaxed text-lacuna-blue">
-          {view.weakCompanyLead}. These are composite record-quality grades,
-          not standalone evidence/provenance grades: source quality contributes
-          to the score, but completeness and field availability also affect it.
+          {view.weakCompanyLead}. These are composite record-quality grades, not
+          standalone evidence/provenance grades: source quality contributes to
+          the score, but completeness and field availability also affect it.
         </p>
       </div>
 

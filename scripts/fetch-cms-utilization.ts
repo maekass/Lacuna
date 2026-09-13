@@ -17,6 +17,7 @@
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { z } from "zod";
+import { selectLatestVintageObservations } from "../src/lib/data/cmsObservationVintage";
 
 const SECTOR_CPT_CODES: Record<string, string[]> = {
   fertility: ["58321", "58322", "58970", "89250"],
@@ -55,7 +56,9 @@ const OUTPUT_PATH = "src/data/computed-cms-utilization.json";
 
 function loadVerifiedObservations(): VerifiedObservation[] {
   if (!existsSync(INPUT_PATH)) {
-    console.warn(`⚠️ ${INPUT_PATH} not found; CMS utilization will be withheld.`);
+    console.warn(
+      `⚠️ ${INPUT_PATH} not found; CMS utilization will be withheld.`,
+    );
     return [];
   }
   const parsed = verifiedInputSchema.parse(
@@ -89,8 +92,24 @@ function buildSector(
     };
   }
 
-  const totalServices = rows.reduce((sum, row) => sum + row.totalServices, 0);
-  const weightedReimbursement = rows.reduce(
+  const selected = selectLatestVintageObservations(rows);
+  const vintageRows = selected.rows;
+  if (selected.droppedOlderYearCount > 0) {
+    console.warn(
+      `${sector}: ignored ${selected.droppedOlderYearCount} older-year CMS observation(s); using ${selected.vintage} only.`,
+    );
+  }
+  if (selected.droppedDuplicateCodeCount > 0) {
+    console.warn(
+      `${sector}: ignored ${selected.droppedDuplicateCodeCount} duplicate CPT observation(s) in ${selected.vintage}.`,
+    );
+  }
+
+  const totalServices = vintageRows.reduce(
+    (sum, row) => sum + row.totalServices,
+    0,
+  );
+  const weightedReimbursement = vintageRows.reduce(
     (sum, row) => sum + row.totalServices * row.avgMedicarePayment,
     0,
   );
@@ -102,7 +121,7 @@ function buildSector(
     sector,
     cptCodes: codes,
     totalAnnualServices: totalServices,
-    avgServicesPerCode: Number((totalServices / rows.length).toFixed(2)),
+    avgServicesPerCode: Number((totalServices / vintageRows.length).toFixed(2)),
     avgPaymentPerService: weightedAvgPayment === null
       ? null
       : Number(weightedAvgPayment.toFixed(2)),
@@ -111,11 +130,11 @@ function buildSector(
     ),
     source: "CMS verified aggregate observations",
     method:
-      "Estimated reimbursement = sum over CPT/HCPCS observations of totalServices × avgMedicarePayment. No simple-average payment multiplication is used.",
+      "Estimated reimbursement = sum over the latest dataYear of CPT/HCPCS observations of totalServices × avgMedicarePayment. Older years and duplicate codes in that vintage are not added into the annual total.",
     evidenceStatus: "verified_aggregate" as const,
-    dataYears: [...new Set(rows.map((row) => row.dataYear))].sort(),
-    sourceUrls: [...new Set(rows.map((row) => row.sourceUrl))],
-    datasetIds: [...new Set(rows.map((row) => row.datasetId))],
+    dataYears: selected.vintage === null ? [] : [selected.vintage],
+    sourceUrls: [...new Set(vintageRows.map((row) => row.sourceUrl))],
+    datasetIds: [...new Set(vintageRows.map((row) => row.datasetId))],
   };
 }
 
@@ -131,7 +150,9 @@ function main() {
   const filtered = observations.filter((row) => {
     const allowed = allowedPairs.has(`${row.sector}:${row.cptCode}`);
     if (!allowed) {
-      console.warn(`Ignoring unexpected CMS observation ${row.sector}:${row.cptCode}`);
+      console.warn(
+        `Ignoring unexpected CMS observation ${row.sector}:${row.cptCode}`,
+      );
     }
     return allowed;
   });
@@ -142,7 +163,8 @@ function main() {
 
   const output = {
     generatedAt: new Date().toISOString(),
-    source: "CMS Medicare Public Use File / data.cms.gov — curated aggregate input only",
+    source:
+      "CMS Medicare Public Use File / data.cms.gov — curated aggregate input only",
     inputPath: INPUT_PATH,
     evidenceStatus: filtered.length > 0 ? "partial_or_complete" : "withheld",
     sectors,

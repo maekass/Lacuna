@@ -29,7 +29,9 @@ function readJson<T>(path: string): T | null {
   return JSON.parse(readFileSync(path, "utf8")) as T;
 }
 
-function acquisitionYearByTarget(dataset: VerifiedDataset): Map<string, number> {
+function acquisitionYearByTarget(
+  dataset: VerifiedDataset,
+): Map<string, number> {
   const map = new Map<string, number>();
   for (const deal of dataset.acquisitions) {
     const year = Number.parseInt(deal.announcedDate.slice(0, 4), 10);
@@ -60,7 +62,8 @@ function secRevenueFindings(dataset: VerifiedDataset): Finding[] {
       findings.push({
         severity: "RED",
         code: "sec.postAcquisitionStandaloneRevenue",
-        message: `${row.companyName} has FY${row.fiscalYear} standalone revenue after acquisition year ${acquiredYear} (CIK ${row.cik}).`,
+        message:
+          `${row.companyName} has FY${row.fiscalYear} standalone revenue after acquisition year ${acquiredYear} (CIK ${row.cik}).`,
       });
     }
   }
@@ -84,13 +87,16 @@ function cmsReimbursementFindings(): Finding[] {
   if (!artifact?.sectors || !artifact.utilizationByCptCode) return [];
 
   const allFallback = artifact.utilizationByCptCode.length > 0 &&
-    artifact.utilizationByCptCode.every((row) => row.provenanceKind === "hardcoded_fallback");
+    artifact.utilizationByCptCode.every((row) =>
+      row.provenanceKind === "hardcoded_fallback"
+    );
   const findings: Finding[] = [];
 
   for (const sector of artifact.sectors) {
     if (sector.estimatedAnnualReimbursement == null) continue;
     const rows = artifact.utilizationByCptCode.filter((row) =>
-      row.sector === sector.sector && row.totalServices != null && row.avgMedicarePayment != null
+      row.sector === sector.sector && row.totalServices != null &&
+      row.avgMedicarePayment != null
     );
     if (rows.length === 0) continue;
 
@@ -106,7 +112,13 @@ function cmsReimbursementFindings(): Finding[] {
         code: allFallback
           ? "cms.legacyFallbackArithmetic"
           : "cms.unweightedReimbursement",
-        message: `${sector.sector}: committed $${sector.estimatedAnnualReimbursement.toFixed(2)}M vs volume-weighted $${weighted.toFixed(2)}M. ${allFallback ? "Artifact is explicitly hardcoded/research-only; regenerate from verified aggregate input before decision use." : "Decision-grade artifact must use sum(services_i × payment_i)."}`,
+        message: `${sector.sector}: committed $${
+          sector.estimatedAnnualReimbursement.toFixed(2)
+        }M vs volume-weighted $${weighted.toFixed(2)}M. ${
+          allFallback
+            ? "Artifact is explicitly hardcoded/research-only; regenerate from verified aggregate input before decision use."
+            : "Decision-grade artifact must use sum(services_i × payment_i)."
+        }`,
       });
     }
   }
@@ -115,16 +127,35 @@ function cmsReimbursementFindings(): Finding[] {
     findings.push({
       severity: "AMBER",
       code: "cms.hardcodedFallbackResearchOnly",
-      message: "All CMS utilization rows are hardcoded fallback observations with unknown PUF vintage. Treat as research-only and exclude from investment valuation/market-size conclusions.",
+      message:
+        "All CMS utilization rows are hardcoded fallback observations with unknown PUF vintage. Treat as research-only and exclude from investment valuation/market-size conclusions.",
     });
   }
   return findings;
 }
 
 function growthSemanticFindings(): Finding[] {
+  const sec = readJson<{
+    evidenceStatus?: string;
+    records?: unknown[];
+  }>("src/data/computed-sec-revenue.json");
   const artifact = readJson<{
-    companies?: Array<{ companyName: string; method: string; confidence: string }>;
+    evidenceStatus?: string;
+    companies?: Array<
+      { companyName: string; method: string; confidence: string }
+    >;
   }>("src/data/computed-growth-rates.json");
+  if (
+    artifact?.evidenceStatus === "derived_from_validated_operating_revenue" &&
+    (sec?.evidenceStatus?.startsWith("withheld") || !sec?.records?.length)
+  ) {
+    return [{
+      severity: "RED",
+      code: "growth.validatedEmptiness",
+      message:
+        "Growth artifact is labeled derived_from_validated_operating_revenue while SEC revenue is withheld or empty.",
+    }];
+  }
   if (!artifact?.companies) return [];
 
   const bad = artifact.companies.filter((row) =>
@@ -134,7 +165,8 @@ function growthSemanticFindings(): Finding[] {
   return [{
     severity: "RED",
     code: "growth.semanticMismatch",
-    message: `${bad.length} rows annualize totalFunding→valuation/dealValue and label the result CAGR. These are not operating growth rates.`,
+    message:
+      `${bad.length} rows annualize totalFunding→valuation/dealValue and label the result CAGR. These are not operating growth rates.`,
   }];
 }
 
@@ -143,25 +175,35 @@ function qualityGradeFindings(): Finding[] {
     companies?: Array<{ sourceQuality: string; grade: string }>;
   }>("src/data/computed-data-quality-scores.json");
   if (!artifact?.companies) return [];
-  const upgraded = artifact.companies.filter((row) => row.grade === "A" && row.sourceQuality !== "A");
+  const upgraded = artifact.companies.filter((row) =>
+    row.grade === "A" && row.sourceQuality !== "A"
+  );
   if (upgraded.length === 0) return [];
   return [{
     severity: "AMBER",
     code: "quality.completenessUpgradesEvidence",
-    message: `${upgraded.length} company records have composite grade A without source-quality A. Composite quality must not be presented as provenance strength.`,
+    message:
+      `${upgraded.length} company records have composite grade A without source-quality A. Composite quality must not be presented as provenance strength.`,
   }];
 }
 
 function vintageFindings(): Finding[] {
   const artifact = readJson<{
-    vintage?: { primaryNumbers?: number; missingDedicatedAsOf?: number; missingDedicatedAsOfRate?: number };
+    vintage?: {
+      primaryNumbers?: number;
+      missingDedicatedAsOf?: number;
+      missingDedicatedAsOfRate?: number;
+    };
   }>("src/data/computed-quality-visibility.json");
   const vintage = artifact?.vintage;
   if (!vintage?.primaryNumbers || !vintage.missingDedicatedAsOf) return [];
   return [{
     severity: "AMBER",
     code: "vintage.missingAsOf",
-    message: `${vintage.missingDedicatedAsOf}/${vintage.primaryNumbers} primary economic numbers lack a dedicated as-of date (${((vintage.missingDedicatedAsOfRate ?? 0) * 100).toFixed(1)}%).`,
+    message:
+      `${vintage.missingDedicatedAsOf}/${vintage.primaryNumbers} primary economic numbers lack a dedicated as-of date (${
+        ((vintage.missingDedicatedAsOfRate ?? 0) * 100).toFixed(1)
+      }%).`,
   }];
 }
 

@@ -10,7 +10,7 @@
 import computedGrowthRates from "@/data/computed-growth-rates.json";
 
 export type GrowthRateConfidence = "high" | "medium" | "low" | "none";
-export type GrowthRateSource = "company" | "sector" | "portfolio_median" | "withheld";
+export type GrowthRateSource = "company" | "sector" | "withheld";
 
 export interface GrowthRateResolution {
   growthRate: number;
@@ -56,11 +56,16 @@ const companyRows = raw.companies ?? [];
 const sectorRows = raw.sectorMedians ?? {};
 const byCompanyId = new Map(companyRows.map((row) => [row.companyId, row]));
 const bySectorKey = new Map(
-  Object.entries(sectorRows).map(([sector, row]) => [normalizeSectorKey(sector), row]),
+  Object.entries(sectorRows).map((
+    [sector, row],
+  ) => [normalizeSectorKey(sector), row]),
 );
 
 function toConfidence(value: string | undefined): GrowthRateConfidence {
-  if (value === "high" || value === "medium" || value === "low" || value === "none") return value;
+  if (
+    value === "high" || value === "medium" || value === "low" ||
+    value === "none"
+  ) return value;
   return "none";
 }
 
@@ -110,18 +115,6 @@ export function resolveGrowthRate(input: {
       source: "sector",
       confidence: toConfidence(sector?.confidence),
     };
-  }
-
-  const availableSectorRates = Object.values(sectorRows)
-    .map((row) => finiteRate(row.medianCAGR))
-    .filter((value): value is number => value !== null)
-    .sort((a, b) => a - b);
-  if (availableSectorRates.length >= 3) {
-    const mid = Math.floor(availableSectorRates.length / 2);
-    const median = availableSectorRates.length % 2 === 0
-      ? (availableSectorRates[mid - 1]! + availableSectorRates[mid]!) / 2
-      : availableSectorRates[mid]!;
-    return { growthRate: median, source: "portfolio_median", confidence: "low" };
   }
 
   return { growthRate: Number.NaN, source: "withheld", confidence: "none" };

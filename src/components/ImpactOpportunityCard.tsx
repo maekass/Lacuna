@@ -39,19 +39,28 @@ function mapSectorToEpidemiology(sector: string) {
     sector === "Fertility" || sector === "Reproductive Health" ||
     sector === "Contraception"
   ) {
-    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes("Fertility")) ?? null;
+    return EPIDEMIOLOGY_DATABASE.find((e) =>
+      e.condition.includes("Fertility")
+    ) ?? null;
   }
   if (sector === "Mental Health") {
-    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes("Postpartum")) ?? null;
+    return EPIDEMIOLOGY_DATABASE.find((e) =>
+      e.condition.includes("Postpartum")
+    ) ?? null;
   }
   if (sector === "Pelvic Health" || sector === "Gynecological Surgery") {
-    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes("Fibroids")) ?? null;
+    return EPIDEMIOLOGY_DATABASE.find((e) =>
+      e.condition.includes("Fibroids")
+    ) ?? null;
   }
   if (sector === "Breast Health" || sector === "Precision Medicine") {
-    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes("Breast")) ?? null;
+    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes("Breast")) ??
+      null;
   }
   if (sector === "Maternal Health") {
-    return EPIDEMIOLOGY_DATABASE.find((e) => e.condition.includes("Maternal")) ?? null;
+    return EPIDEMIOLOGY_DATABASE.find((e) =>
+      e.condition.includes("Maternal")
+    ) ?? null;
   }
   return null;
 }
@@ -64,27 +73,31 @@ function mapSectorToPenetration(sector: string) {
   };
   const category = categoryBySector[sector];
   if (!category) return null;
-  return MARKET_PENETRATION_DATA.find((row) => row.category === category) ?? null;
+  return MARKET_PENETRATION_DATA.find((row) => row.category === category) ??
+    null;
 }
 
 export default function ImpactOpportunityCard() {
   const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
 
   const companies = useMemo<CompanyProfile[]>(
-    () => verifiedCompanies.map((company) => {
-      const deal = verifiedAcquisitions.find((row) => row.targetId === company.id);
-      const competitors = verifiedCompanies.filter(
-        (other) => other.sector === company.sector && other.id !== company.id,
-      ).length;
-      return {
-        id: company.id,
-        name: company.name,
-        sector: company.sector,
-        verifiedStage: company.stage,
-        likelyAcquirer: deal?.acquirerName ?? null,
-        competitors,
-      };
-    }),
+    () =>
+      verifiedCompanies.map((company) => {
+        const deal = verifiedAcquisitions.find((row) =>
+          row.targetId === company.id
+        );
+        const competitors = verifiedCompanies.filter(
+          (other) => other.sector === company.sector && other.id !== company.id,
+        ).length;
+        return {
+          id: company.id,
+          name: company.name,
+          sector: company.sector,
+          verifiedStage: company.stage,
+          likelyAcquirer: deal?.acquirerName ?? null,
+          competitors,
+        };
+      }),
     [verifiedCompanies, verifiedAcquisitions],
   );
 
@@ -108,7 +121,8 @@ export default function ImpactOpportunityCard() {
   const estimatedPenetration = epiData && penetrationData
     ? Math.min(
       1,
-      ((penetrationData.activeUserEstimate.low + penetrationData.activeUserEstimate.high) / 2) /
+      ((penetrationData.activeUserEstimate.low +
+        penetrationData.activeUserEstimate.high) / 2) /
         epiData.addressablePopulation.pointEstimate,
     )
     : null;
@@ -149,7 +163,9 @@ export default function ImpactOpportunityCard() {
 
       <div className="bg-white border border-lacuna-border rounded-lg p-6 space-y-5">
         <div>
-          <h4 className="font-medium text-lg" style={displayFont}>{company.name}</h4>
+          <h4 className="font-medium text-lg" style={displayFont}>
+            {company.name}
+          </h4>
           <p className="text-sm text-lacuna-text-muted">
             {company.sector} · {company.verifiedStage}
           </p>
@@ -157,75 +173,110 @@ export default function ImpactOpportunityCard() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-lacuna-surface-muted p-4 rounded-lg">
-            <div className="text-xs text-lacuna-text-muted uppercase" style={labelFont}>
+            <div
+              className="text-xs text-lacuna-text-muted uppercase"
+              style={labelFont}
+            >
               Addressable population
             </div>
-            {epiData ? (
-              <>
-                <div className="text-xl font-light mt-1" style={displayFont}>
-                  {epiData.addressablePopulation.pointEstimate}M
-                </div>
-                <p className="text-xs text-lacuna-text-secondary mt-2">
-                  Range: {epiData.addressablePopulation.lowerBound}–{epiData.addressablePopulation.upperBound}M
+            {epiData
+              ? (
+                <>
+                  <div className="text-xl font-light mt-1" style={displayFont}>
+                    {epiData.addressablePopulation.pointEstimate}M
+                  </div>
+                  <p className="text-xs text-lacuna-text-secondary mt-2">
+                    Range: {epiData.addressablePopulation.lowerBound}–{epiData
+                      .addressablePopulation.upperBound}M
+                  </p>
+                  <p className="text-xs text-lacuna-text-muted mt-2">
+                    Source: {epiData.source}
+                  </p>
+                </>
+              )
+              : (
+                <p className="text-sm text-lacuna-text-secondary mt-2">
+                  No mapped cited epidemiology input.
                 </p>
-                <p className="text-xs text-lacuna-text-muted mt-2">Source: {epiData.source}</p>
-              </>
-            ) : (
-              <p className="text-sm text-lacuna-text-secondary mt-2">No mapped cited epidemiology input.</p>
-            )}
+              )}
           </div>
 
           <div className="bg-lacuna-surface-muted p-4 rounded-lg">
-            <div className="text-xs text-lacuna-text-muted uppercase" style={labelFont}>
+            <div
+              className="text-xs text-lacuna-text-muted uppercase"
+              style={labelFont}
+            >
               Penetration proxy
             </div>
-            {penetrationData && estimatedPenetration !== null ? (
-              <>
-                <div className="text-xl font-light mt-1" style={displayFont}>
-                  ~{(estimatedPenetration * 100).toFixed(0)}%
-                </div>
-                <p className="text-xs text-amber-700 mt-2">
-                  Proxy, not direct market penetration. {penetrationData.transparencyNote}
+            {penetrationData && estimatedPenetration !== null
+              ? (
+                <>
+                  <div className="text-xl font-light mt-1" style={displayFont}>
+                    ~{(estimatedPenetration * 100).toFixed(0)}%
+                  </div>
+                  <p className="text-xs text-amber-700 mt-2">
+                    Proxy, not direct market penetration.{" "}
+                    {penetrationData.transparencyNote}
+                  </p>
+                  <p className="text-xs text-lacuna-text-muted mt-2">
+                    Source: {penetrationData.dataSource}
+                  </p>
+                </>
+              )
+              : (
+                <p className="text-sm text-lacuna-text-secondary mt-2">
+                  No mapped penetration proxy.
                 </p>
-                <p className="text-xs text-lacuna-text-muted mt-2">Source: {penetrationData.dataSource}</p>
-              </>
-            ) : (
-              <p className="text-sm text-lacuna-text-secondary mt-2">No mapped penetration proxy.</p>
-            )}
+              )}
           </div>
 
           <div className="bg-lacuna-surface-muted p-4 rounded-lg">
-            <div className="text-xs text-lacuna-text-muted uppercase" style={labelFont}>
+            <div
+              className="text-xs text-lacuna-text-muted uppercase"
+              style={labelFont}
+            >
               Verified market context
             </div>
-            <div className="text-xl font-light mt-1" style={displayFont}>{company.competitors}</div>
+            <div className="text-xl font-light mt-1" style={displayFont}>
+              {company.competitors}
+            </div>
             <p className="text-xs text-lacuna-text-secondary mt-2">
-              Other verified Lacuna companies in the same sector. This is dataset coverage, not total market competitor count.
+              Other verified Lacuna companies in the same sector. This is
+              dataset coverage, not total market competitor count.
             </p>
           </div>
 
           <div className="bg-lacuna-surface-muted p-4 rounded-lg">
-            <div className="text-xs text-lacuna-text-muted uppercase" style={labelFont}>
+            <div
+              className="text-xs text-lacuna-text-muted uppercase"
+              style={labelFont}
+            >
               Acquisition context
             </div>
             <div className="text-lg font-light mt-1" style={displayFont}>
               {company.likelyAcquirer ?? "No verified acquirer"}
             </div>
             <p className="text-xs text-lacuna-text-secondary mt-2">
-              Historical verified relationship only; not a prediction of future acquisition.
+              Historical verified relationship only; not a prediction of future
+              acquisition.
             </p>
           </div>
         </div>
       </div>
 
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-        <h4 className="font-medium text-yellow-900 mb-3" style={labelFontUppercase}>
+        <h4
+          className="font-medium text-yellow-900 mb-3"
+          style={labelFontUppercase}
+        >
           Unmeasured / proxy-dependent factors
         </h4>
         <ul className="space-y-2 text-sm text-yellow-950">
           {UNMEASURABLE_FACTORS.map((factor) => (
             <li key={factor.factor}>
-              <strong>{factor.factor}:</strong> {factor.why} Proxy limitation: {factor.proxyLimitation}
+              <strong>{factor.factor}:</strong> {factor.why} Proxy limitation:
+              {" "}
+              {factor.proxyLimitation}
             </li>
           ))}
         </ul>

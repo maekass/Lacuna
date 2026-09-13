@@ -184,7 +184,10 @@ export default function BayesianCausalAnalysis() {
             >
               {analysis.mainEffects.posteriorMean.toFixed(3)}
             </div>
-            <div className="text-xs text-lacuna-text-muted uppercase tracking-wider" style={labelFont}>
+            <div
+              className="text-xs text-lacuna-text-muted uppercase tracking-wider"
+              style={labelFont}
+            >
               Posterior Mean
             </div>
           </div>
@@ -197,7 +200,10 @@ export default function BayesianCausalAnalysis() {
               [{analysis.mainEffects.credibleInterval[0].toFixed(3)},{" "}
               {analysis.mainEffects.credibleInterval[1].toFixed(3)}]
             </div>
-            <div className="text-xs text-lacuna-text-muted uppercase tracking-wider" style={labelFont}>
+            <div
+              className="text-xs text-lacuna-text-muted uppercase tracking-wider"
+              style={labelFont}
+            >
               95% Credible Interval
             </div>
           </div>
@@ -205,13 +211,19 @@ export default function BayesianCausalAnalysis() {
           <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
             <div
               className={`text-2xl font-light mb-1 ${
-                getProbabilityColor(analysis.mainEffects.probabilityPositive, "positive")
+                getProbabilityColor(
+                  analysis.mainEffects.probabilityPositive,
+                  "positive",
+                )
               }`}
               style={displayFont}
             >
               {(analysis.mainEffects.probabilityPositive * 100).toFixed(1)}%
             </div>
-            <div className="text-xs text-lacuna-text-muted uppercase tracking-wider" style={labelFont}>
+            <div
+              className="text-xs text-lacuna-text-muted uppercase tracking-wider"
+              style={labelFont}
+            >
               P(Effect &gt; 0)
             </div>
           </div>
@@ -230,7 +242,10 @@ export default function BayesianCausalAnalysis() {
             >
               {analysis.mainEffects.bayesFactor.toFixed(1)}
             </div>
-            <div className="text-xs text-lacuna-text-muted uppercase tracking-wider" style={labelFont}>
+            <div
+              className="text-xs text-lacuna-text-muted uppercase tracking-wider"
+              style={labelFont}
+            >
               Bayes Factor
             </div>
           </div>
@@ -253,12 +268,14 @@ export default function BayesianCausalAnalysis() {
                 (analysis.mainEffects.probabilityNegative * 100).toFixed(1)
               }%). `}
             A Bayes factor of {analysis.mainEffects.bayesFactor.toFixed(1)}{" "}
-            would ordinarily be described as {analysis.mainEffects.bayesFactor > 10
+            would ordinarily be described as{" "}
+            {analysis.mainEffects.bayesFactor > 10
               ? "strong"
               : analysis.mainEffects.bayesFactor > 3
               ? "moderate"
-              : "weak"} evidence for an effect under this illustrative model;
-            it is not evidence about a Lacuna causal effect.
+              : "weak"}{" "}
+            evidence for an effect under this illustrative model; it is not
+            evidence about a Lacuna causal effect.
           </p>
           <p className="text-xs text-lacuna-text-muted mt-2">
             Prior influence:{" "}
@@ -301,40 +318,64 @@ export default function BayesianCausalAnalysis() {
               demonstration inputs, the E-value describes the association an
               unmeasured confounder would need with both the exposure and
               outcome to explain away the illustrative posterior mean. Effect
-              scale: Cohen&apos;s <em>d</em> → approximate RR. This is not an
-              empirical sensitivity analysis of a Lacuna treatment effect.
+              scale: Cohen&apos;s <em>d</em>{" "}
+              → approximate RR. This is not an empirical sensitivity analysis of
+              a Lacuna treatment effect.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
-                <div className="text-3xl font-light mb-1" style={{ fontFamily: DISPLAY_FONT, color: colour }}>
+                <div
+                  className="text-3xl font-light mb-1"
+                  style={{ fontFamily: DISPLAY_FONT, color: colour }}
+                >
                   {ev.evalue.toFixed(2)}
                 </div>
-                <div className="text-xs text-lacuna-text-muted uppercase tracking-wider">E-Value (point)</div>
+                <div className="text-xs text-lacuna-text-muted uppercase tracking-wider">
+                  E-Value (point)
+                </div>
               </div>
               <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
-                <div className="text-3xl font-light mb-1" style={{ fontFamily: DISPLAY_FONT, color: "#4A5D8A" }}>
+                <div
+                  className="text-3xl font-light mb-1"
+                  style={{ fontFamily: DISPLAY_FONT, color: "#4A5D8A" }}
+                >
                   {ev.evalueCI?.toFixed(2) ?? "—"}
                 </div>
-                <div className="text-xs text-lacuna-text-muted uppercase tracking-wider">E-Value (CI bound)</div>
+                <div className="text-xs text-lacuna-text-muted uppercase tracking-wider">
+                  E-Value (CI bound)
+                </div>
               </div>
               <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
-                <div className="text-3xl font-light mb-1" style={{ fontFamily: DISPLAY_FONT, color: "#5D4E6D" }}>
+                <div
+                  className="text-3xl font-light mb-1"
+                  style={{ fontFamily: DISPLAY_FONT, color: "#5D4E6D" }}
+                >
                   {ev.rr.toFixed(2)}
                 </div>
-                <div className="text-xs text-lacuna-text-muted uppercase tracking-wider">Approx. RR used</div>
+                <div className="text-xs text-lacuna-text-muted uppercase tracking-wider">
+                  Approx. RR used
+                </div>
               </div>
               <div className="text-center p-4 bg-lacuna-surface-muted rounded-lg">
-                <div className="text-lg font-light mb-1 leading-snug" style={{ fontFamily: DISPLAY_FONT, color: colour }}>
-                  {ev.robustness.charAt(0).toUpperCase() + ev.robustness.slice(1)}
+                <div
+                  className="text-lg font-light mb-1 leading-snug"
+                  style={{ fontFamily: DISPLAY_FONT, color: colour }}
+                >
+                  {ev.robustness.charAt(0).toUpperCase() +
+                    ev.robustness.slice(1)}
                 </div>
-                <div className="text-xs text-lacuna-text-muted uppercase tracking-wider">Illustrative robustness tier</div>
+                <div className="text-xs text-lacuna-text-muted uppercase tracking-wider">
+                  Illustrative robustness tier
+                </div>
               </div>
             </div>
             <div className="mt-4 p-3 bg-lacuna-surface-muted rounded-lg">
               <p className="text-xs text-lacuna-text-primary leading-relaxed">
                 Demonstration output: {ev.interpretation}
               </p>
-              <p className="text-[11px] text-lacuna-text-muted mt-2 italic">{ev.methodNote}</p>
+              <p className="text-[11px] text-lacuna-text-muted mt-2 italic">
+                {ev.methodNote}
+              </p>
             </div>
           </div>
         );
@@ -348,12 +389,17 @@ export default function BayesianCausalAnalysis() {
           <div>
             <span
               className="font-medium"
-              style={{ fontFamily: LABEL_FONT, textTransform: "uppercase", letterSpacing: "0.1em" }}
+              style={{
+                fontFamily: LABEL_FONT,
+                textTransform: "uppercase",
+                letterSpacing: "0.1em",
+              }}
             >
               Pre-Registered Hypotheses
             </span>
             <span className="text-xs text-lacuna-text-muted ml-2">
-              ({PRE_REGISTERED_HYPOTHESES.length} hypotheses specified before data analysis)
+              ({PRE_REGISTERED_HYPOTHESES.length}{" "}
+              hypotheses specified before data analysis)
             </span>
           </div>
           <span className="text-2xl">{showPreRegistration ? "−" : "+"}</span>
@@ -367,23 +413,35 @@ export default function BayesianCausalAnalysis() {
           >
             <div className="bg-green-50 border-l-4 border-green-500 p-3 mb-4 rounded-r">
               <p className="text-sm text-green-800">
-                <strong>✓ Hypotheses registered in the demonstrator:</strong>{" "}
+                <strong>✓ Hypotheses registered in the demonstrator:</strong>
+                {" "}
                 Timestamp: {PRE_REGISTERED_HYPOTHESES[0].timestamp}
               </p>
             </div>
 
             <div className="space-y-3">
               {analysis.preRegisteredResults.map((result) => (
-                <div key={result.hypothesis.id} className="border border-lacuna-border rounded-lg p-4">
+                <div
+                  key={result.hypothesis.id}
+                  className="border border-lacuna-border rounded-lg p-4"
+                >
                   <div className="flex items-start justify-between">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-mono bg-lacuna-surface-subtle px-2 py-0.5 rounded">{result.hypothesis.id}</span>
-                        <span className="font-medium">{result.hypothesis.name}</span>
+                        <span className="text-xs font-mono bg-lacuna-surface-subtle px-2 py-0.5 rounded">
+                          {result.hypothesis.id}
+                        </span>
+                        <span className="font-medium">
+                          {result.hypothesis.name}
+                        </span>
                       </div>
-                      <p className="text-sm text-lacuna-text-secondary mt-1">{result.hypothesis.description}</p>
+                      <p className="text-sm text-lacuna-text-secondary mt-1">
+                        {result.hypothesis.description}
+                      </p>
                       <p className="text-xs text-lacuna-text-muted mt-1">
-                        Expected: {result.hypothesis.expectedEffect > 0 ? "+" : ""}{result.hypothesis.expectedEffect}
+                        Expected:{" "}
+                        {result.hypothesis.expectedEffect > 0 ? "+" : ""}
+                        {result.hypothesis.expectedEffect}
                         ({result.hypothesis.direction})
                       </p>
                     </div>
@@ -398,9 +456,12 @@ export default function BayesianCausalAnalysis() {
                     </span>
                   </div>
                   <p className="mt-3 text-xs text-lacuna-text-muted">
-                    Registration records the expected direction only. Evidence is not computed without observed outcome data.
+                    Registration records the expected direction only. Evidence
+                    is not computed without observed outcome data.
                   </p>
-                  <p className="text-xs text-lacuna-text-muted mt-2">{result.note}</p>
+                  <p className="text-xs text-lacuna-text-muted mt-2">
+                    {result.note}
+                  </p>
                 </div>
               ))}
             </div>
@@ -409,7 +470,10 @@ export default function BayesianCausalAnalysis() {
       </div>
 
       <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-        <h4 className="font-medium text-red-800 mb-2" style={labelFontUppercase}>
+        <h4
+          className="font-medium text-red-800 mb-2"
+          style={labelFontUppercase}
+        >
           Limitations & Warnings
         </h4>
         <ul className="space-y-1 text-sm text-red-700">
@@ -429,7 +493,11 @@ export default function BayesianCausalAnalysis() {
         >
           <span
             className="font-medium"
-            style={{ fontFamily: LABEL_FONT, textTransform: "uppercase", letterSpacing: "0.1em" }}
+            style={{
+              fontFamily: LABEL_FONT,
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+            }}
           >
             Transparency: What We Cannot Claim
           </span>
@@ -452,7 +520,11 @@ export default function BayesianCausalAnalysis() {
       <div className="bg-gradient-to-r from-[#E8B4B8] via-[#B8A9C9] to-[#4A5D8A] p-6 rounded-lg text-white">
         <h4
           className="font-medium mb-3"
-          style={{ fontFamily: LABEL_FONT, textTransform: "uppercase", letterSpacing: "0.1em" }}
+          style={{
+            fontFamily: LABEL_FONT,
+            textTransform: "uppercase",
+            letterSpacing: "0.1em",
+          }}
         >
           Recommendations
         </h4>
@@ -475,12 +547,17 @@ export default function BayesianCausalAnalysis() {
           <ul className="ml-4 space-y-1">
             <li>• Required: n≥200 | We have: n={inputs.sampleSize} ❌</li>
             <li>• Required: Power ≥80% for HTEs | We have: Power ≈20% ❌</li>
-            <li>• Required: Multiple validation splits | We have: Cannot split ❌</li>
-            <li>• Required: Stable CATE estimates | We have: High variance ❌</li>
+            <li>
+              • Required: Multiple validation splits | We have: Cannot split ❌
+            </li>
+            <li>
+              • Required: Stable CATE estimates | We have: High variance ❌
+            </li>
           </ul>
           <p className="mt-2 text-white">
             <strong>Instead:</strong>{" "}
-            Bayesian main-effects method demonstration with explicit limitations; no empirical causal claim is made.
+            Bayesian main-effects method demonstration with explicit
+            limitations; no empirical causal claim is made.
           </p>
         </div>
       </div>
