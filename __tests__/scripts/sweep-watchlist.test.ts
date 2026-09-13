@@ -5,8 +5,10 @@ import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   applyFixes,
+  DATE_BASES,
   fromRows,
   HEADER,
+  loadSweepLookups,
   main,
   parseCsv,
   runSweeps,
@@ -351,28 +353,50 @@ describe("main CLI", () => {
     expect(fixed.map((r) => r.notes)).toEqual(["earlier", "dupe-keep"]);
   });
 
-  it("checked-in watchlist uses the 19-column header and only three id links", () => {
+  // Invariants, deliberately not a snapshot of the file's current contents.
+  // The previous version of this test pinned the checked-in CSV to 46 rows: it
+  // required every row to be womens_health_relevant="false", the id links to be
+  // exactly {acquirer-roche, acquirer-jnj, c46}, and every upcoming PDUFA row to
+  // be date_basis="third_party_calendar". That made a correct weekly append fail
+  // CI, and the first assertion directly contradicted runSweeps, which warns
+  // when a weekly batch contains zero women's-health-relevant rows. It also
+  // forced worse provenance: a PDUFA date taken from the sponsor's own release is
+  // company_guidance, which is stronger than a third-party calendar.
+  it("checked-in watchlist satisfies the 19-column schema invariants", () => {
     const rows = toRows(parseCsv(readFileSync(REAL_CSV, "utf8")));
+    const lookups = loadSweepLookups();
     expect(HEADER).toHaveLength(19);
-    expect(rows.every((row) => row.womens_health_relevant === "false")).toBe(
-      true,
-    );
-    const linked = rows.filter((row) =>
-      row.lacuna_acquirer_id || row.lacuna_company_id
-    );
-    const ids = new Set(
-      linked.flatMap((row) =>
-        [row.lacuna_acquirer_id, row.lacuna_company_id].filter(Boolean)
-      ),
-    );
-    expect(ids).toEqual(
-      new Set(["acquirer-roche", "acquirer-jnj", "c46"]),
-    );
-    expect(
-      rows.filter((row) =>
-        row.event_type === "PDUFA" && row.status === "upcoming"
-      ).every((row) => row.date_basis === "third_party_calendar"),
-    ).toBe(true);
+    expect(rows.length).toBeGreaterThan(0);
+
+    for (const row of rows) {
+      expect(["", "true", "false"]).toContain(row.womens_health_relevant);
+    }
+
+    // A row claiming women's-health relevance must say which sector it sits in,
+    // so it can be joined to the verified company set rather than floating free.
+    for (const row of rows) {
+      if (row.womens_health_relevant !== "true") continue;
+      expect(row.lacuna_sector).not.toBe("");
+      expect(lookups.sectors.has(row.lacuna_sector)).toBe(true);
+    }
+
+    // Every id link must resolve against the verified dataset.
+    for (const row of rows) {
+      if (row.lacuna_acquirer_id) {
+        expect(lookups.acquirerIds.has(row.lacuna_acquirer_id)).toBe(true);
+      }
+      if (row.lacuna_company_id) {
+        expect(lookups.companyIds.has(row.lacuna_company_id)).toBe(true);
+      }
+    }
+
+    // Every unresolved PDUFA must declare where its date came from, so a guessed
+    // date cannot masquerade as a sourced one.
+    for (const row of rows) {
+      if (row.event_type !== "PDUFA" || row.status !== "upcoming") continue;
+      expect(DATE_BASES as readonly string[]).toContain(row.date_basis);
+      expect(row.source_url.startsWith("https://")).toBe(true);
+    }
   });
 
   it("keeps the checked-in catalysts.csv sorted by scheduled_date", () => {
