@@ -84,8 +84,9 @@ on global health diplomacy (Aug 2024).
 
 **Deployment:** The analytics product runs on **Vercel** (this repo). A separate
 **Framer** site is for brand and narrative only, with one primary CTA into the
-live demo — see [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md) and the
-[framer/](framer/) build kit.
+live demo — see [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md). Webflow was
+evaluated and rejected:
+[MARKETING_SURFACE_DECISION.md](docs/MARKETING_SURFACE_DECISION.md).
 
 ---
 
@@ -403,7 +404,7 @@ Manual verification — no synthetic `maDeals`. Workflow:
 | [PRODUCTION_SETUP.md](docs/PRODUCTION_SETUP.md)                         | Vercel env vars and migrations                              |
 | [SEC_INGESTION.md](docs/SEC_INGESTION.md)                               | SEC EDGAR cron pipeline                                     |
 | [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md)                       | Vercel product vs Framer marketing (no analytics in Framer) |
-| [framer/BUILD_GUIDE.md](framer/BUILD_GUIDE.md)                          | Framer marketing site — copy, tokens, HTML prototype        |
+| [MARKETING_SURFACE_DECISION.md](docs/MARKETING_SURFACE_DECISION.md)     | Why Framer stays and Webflow was not adopted                |
 | [AGENTS.md](AGENTS.md)                                                  | Contributor conventions                                     |
 
 ---
