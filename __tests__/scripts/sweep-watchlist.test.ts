@@ -7,6 +7,7 @@ import {
   applyFixes,
   fromRows,
   HEADER,
+  loadSweepLookups,
   main,
   parseCsv,
   runSweeps,
@@ -351,23 +352,31 @@ describe("main CLI", () => {
     expect(fixed.map((r) => r.notes)).toEqual(["earlier", "dupe-keep"]);
   });
 
-  it("checked-in watchlist uses the 19-column header and only three id links", () => {
+  it("checked-in watchlist satisfies the 19-column schema invariants", () => {
     const rows = toRows(parseCsv(readFileSync(REAL_CSV, "utf8")));
+    const lookups = loadSweepLookups();
     expect(HEADER).toHaveLength(19);
-    expect(rows.every((row) => row.womens_health_relevant === "false")).toBe(
-      true,
-    );
-    const linked = rows.filter((row) =>
-      row.lacuna_acquirer_id || row.lacuna_company_id
-    );
-    const ids = new Set(
-      linked.flatMap((row) =>
-        [row.lacuna_acquirer_id, row.lacuna_company_id].filter(Boolean)
-      ),
-    );
-    expect(ids).toEqual(
-      new Set(["acquirer-roche", "acquirer-jnj", "c46"]),
-    );
+    expect(rows.length).toBeGreaterThan(0);
+
+    for (const row of rows) {
+      expect(["", "true", "false"]).toContain(row.womens_health_relevant);
+    }
+
+    for (const row of rows) {
+      if (row.womens_health_relevant !== "true") continue;
+      expect(row.lacuna_sector).not.toBe("");
+      expect(lookups.sectors.has(row.lacuna_sector)).toBe(true);
+    }
+
+    for (const row of rows) {
+      if (row.lacuna_acquirer_id) {
+        expect(lookups.acquirerIds.has(row.lacuna_acquirer_id)).toBe(true);
+      }
+      if (row.lacuna_company_id) {
+        expect(lookups.companyIds.has(row.lacuna_company_id)).toBe(true);
+      }
+    }
+
     expect(
       rows.filter((row) =>
         row.event_type === "PDUFA" && row.status === "upcoming"
