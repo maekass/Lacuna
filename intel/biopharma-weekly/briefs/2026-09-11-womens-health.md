@@ -20,9 +20,9 @@ research papers, and philanthropy are not M&A.
 | Prenatal acetaminophen ovarian-volume study         | Brief only                                                                     | Epidemiology. Current clinical guidance is unchanged.               |
 | Spain RFEF × Tambre fertility benefit               | Brief only                                                                     | Workplace benefit, not an acquisition or partnership row.           |
 
-AbbVie and Johnson & Johnson already sit in the verified acquirer table
-(`acquirer-jnj`). AstraZeneca does not. GRAIL (`c46`) remains the in-universe
-diagnostics watch for the September 23 Galleri AdComm.
+Johnson & Johnson already sits in the verified acquirer table (`acquirer-jnj`).
+AbbVie and AstraZeneca do not. GRAIL (`c46`) remains the in-universe diagnostics
+watch for the September 23 Galleri AdComm.
 
 ## The three events that mattered
 
