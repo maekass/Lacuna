@@ -14,7 +14,9 @@ Auto-maintained by a scheduled Perplexity Computer task, Fridays 5:00 PM ET.
   = CSV `scheduled_date`). Keep those 11 columns in lockstep with the CSV.
 - `briefs/YYYY-MM-DD.md` — weekly one-page "What moved biopharma this week"
   briefs: top 3 events, companies and drug classes affected, 30-day downstream
-  watchlist.
+  watchlist. Women's-health companion briefs use
+  `briefs/YYYY-MM-DD-womens-health.md` and do not merge into
+  `dataset.verified.json`.
 
 ## CSV schema
 
