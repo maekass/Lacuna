@@ -5,9 +5,10 @@ import {
 } from "../../../src/lib/biopharma/diligenceModel";
 import { renderDossierReport } from "../../../src/lib/biopharma/dossierReport";
 
-// Arithmetic fixture only; no values here are company data or product defaults.
+// Arithmetic fixture only; the placeholder Statista URL is not a real record.
+// No values here are company data or product defaults.
 const citation = {
-  url: "https://clinicaltrials.gov/study/NCT00000001",
+  url: "https://www.statista.com/statistics/0000000/test-fixture",
   title: "Test fixture",
   accessedAt: "2026-09-17",
   locator: "Study record",
@@ -28,8 +29,10 @@ const assumed = (value: number) => ({
 
 function fixture() {
   return {
+    dataSourcePolicy: "statista_only",
     company: "Fixture company",
     ticker: "TEST",
+    issuerEvidence: citation,
     asOf: "2026-09-17",
     valuationYear: 2026,
     discountRate: assumed(0.1),
@@ -108,6 +111,46 @@ describe("biopharma diligence", () => {
     expect(() => calculateDossier(dangling)).toThrow(/unknown asset/);
   });
 
+  it("rejects non-Statista citations in every data layer", () => {
+    const wrong = {
+      ...citation,
+      url: "https://clinicaltrials.gov/study/NCT00000001",
+    };
+    const dossier = fixture();
+    dossier.assets[0]!.forecast[0]!.eligiblePatients = {
+      ...assumed(100),
+      evidence: [wrong],
+    };
+    expect(() => calculateDossier(dossier)).toThrow();
+
+    const clinical = fixture();
+    clinical.assets[0]!.clinicalEvidence = [wrong];
+    expect(() => calculateDossier(clinical)).toThrow();
+
+    const catalyst = fixture();
+    catalyst.catalysts[0]!.source = wrong;
+    expect(() => calculateDossier(catalyst)).toThrow();
+
+    const thesis = fixture();
+    thesis.thesis.evidenceForDifference = [wrong];
+    expect(() => calculateDossier(thesis)).toThrow();
+
+    const issuer = fixture();
+    issuer.issuerEvidence = wrong;
+    expect(() => calculateDossier(issuer)).toThrow();
+
+    const spoof = fixture();
+    spoof.issuerEvidence = {
+      ...citation,
+      url: "https://www.statista.com.evil.example/statistics/123",
+    };
+    expect(() => calculateDossier(spoof)).toThrow();
+
+    const homepage = fixture();
+    homepage.issuerEvidence = { ...citation, url: "https://statista.com/" };
+    expect(() => calculateDossier(homepage)).toThrow();
+  });
+
   it("changes only the selected asset in the sensitivity grid", () => {
     const cases = sensitivity(fixture(), "a-1", [0, 0.5], [1]);
     expect(cases).toHaveLength(2);
@@ -119,7 +162,7 @@ describe("biopharma diligence", () => {
     );
   });
 
-  it("renders all four analyst artifacts with a primary evidence link", () => {
+  it("renders all four analyst artifacts with a Statista link", () => {
     const report = renderDossierReport(fixture());
     expect(report).toContain("Clinical pipeline and catalysts");
     expect(report).toContain("Drug revenue forecast");

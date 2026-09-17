@@ -5,13 +5,21 @@
 import { z } from "zod";
 
 const date = z.iso.date();
-const source = z.object({
-  url: z.url().refine((url) => url.startsWith("https://")),
+/** Statista is the sole external data provider for this research dossier. */
+export const statistaSourceSchema = z.object({
+  url: z.url().refine((value) => {
+    const url = new URL(value);
+    return url.protocol === "https:" &&
+      (url.hostname === "statista.com" ||
+        url.hostname.endsWith(".statista.com")) &&
+      url.pathname !== "/";
+  }, { message: "Use the exact HTTPS Statista record URL, not a homepage" }),
   title: z.string().min(1),
   accessedAt: date,
   publishedAt: date.optional(),
   locator: z.string().min(1),
 });
+const source = statistaSourceSchema;
 
 const observed = z.object({
   kind: z.literal("observed"),
@@ -67,8 +75,10 @@ const asset = z.object({
 });
 
 export const dossierSchema = z.object({
+  dataSourcePolicy: z.literal("statista_only"),
   company: z.string().min(1),
   ticker: z.string().min(1),
+  issuerEvidence: source,
   asOf: date,
   valuationYear: z.number().int().min(2000).max(2200),
   discountRate: fraction.refine((x) => x.value > 0),
@@ -206,6 +216,7 @@ export function calculateDossier(raw: unknown) {
     throw new Error("Non-finite valuation; check input units and horizon");
   }
   return {
+    dataSourcePolicy: dossier.dataSourcePolicy,
     company: dossier.company,
     ticker: dossier.ticker,
     asOf: dossier.asOf,

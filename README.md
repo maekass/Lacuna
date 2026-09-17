@@ -204,7 +204,7 @@ Late-stage labels).
 
 ## AI & biotech diligence best practices
 
-For a source-gated, company-by-company clinical pipeline, drug revenue, rNPV,
+For a Statista-only, source-gated clinical pipeline, drug revenue, rNPV,
 catalysts, and investment thesis workflow, see
 [Biopharma diligence workbook](docs/BIOPHARMA_DILIGENCE.md). This research
 module has no prefilled company valuation and remains separate from M&A data.

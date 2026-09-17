@@ -15,7 +15,7 @@ export function renderDossierReport(raw: unknown): string {
   const lines = [
     `# ${cell(result.company)} (${cell(result.ticker)}) — research draft`,
     "",
-    `As of ${result.asOf}. USD throughout. Analyst assumptions require specialist review; separate from verified M&A data.`,
+    `As of ${result.asOf}. USD throughout. Statista-only data policy; analyst assumptions require specialist review. Separate from verified M&A data.`,
     "",
     "## Clinical pipeline and catalysts",
     "",
@@ -109,7 +109,7 @@ export function renderDossierReport(raw: unknown): string {
     "",
     `Author: ${dossier.thesis.author}. Reviewer: ${dossier.thesis.reviewedBy}.`,
     "",
-    "## Primary evidence ledger",
+    "## Statista evidence ledger",
     "",
     ...dossier.assets.flatMap((a) => [
       `### ${cell(a.drug)} / ${cell(a.indication)}`,
