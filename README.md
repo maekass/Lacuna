@@ -204,6 +204,11 @@ Late-stage labels).
 
 ## AI & biotech diligence best practices
 
+For a source-gated, company-by-company clinical pipeline, drug revenue, rNPV,
+catalysts, and investment thesis workflow, see
+[Biopharma diligence workbook](docs/BIOPHARMA_DILIGENCE.md). This research
+module has no prefilled company valuation and remains separate from M&A data.
+
 Python and AI in biotech investing emphasize **modular pipelines**, **source
 tracing**, and **rigorous testing** — not black-box financial outputs. Lacuna
 implements these principles for women's health M&A diligence
