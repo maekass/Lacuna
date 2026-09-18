@@ -1,9 +1,9 @@
 # What moved women's health this week — September 11, 2026
 
-This brief is the women's-health companion to the biopharma weekly. It is
-**intel and watchlist context**, not a verified-dataset release. Nothing here is
-merged into `dataset.verified.json`. Funding rounds, grants, product shipments,
-research papers, and philanthropy are not M&A.
+This brief is the women's-health companion to [2026-09-11.md](./2026-09-11.md).
+It is **intel and watchlist context**, not a verified-dataset release. Nothing
+here is merged into `dataset.verified.json`. Funding rounds, grants, product
+shipments, research papers, and philanthropy are not M&A.
 
 ## How this week updates Lacuna
 
