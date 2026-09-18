@@ -1,6 +1,8 @@
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 const runQuarantineMl = process.env.RUN_QUARANTINE_ML === "1";
 
 export default defineConfig({
@@ -14,7 +16,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(dirname, "./src"),
     },
   },
 });
