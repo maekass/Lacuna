@@ -62,13 +62,15 @@ export default function ReimbursementEvidencePanel() {
         <div className="rounded-lg border border-lacuna-lavender/40 p-3">
           <dt className="text-xs uppercase text-lacuna-blue/70">Sources</dt>
           <dd className="font-medium text-lacuna-plum">
-            {ledger.sources.length}
+            {ledger.sources.length === 0 ? "none" : `${ledger.sources.length}`}
           </dd>
         </div>
         <div className="rounded-lg border border-lacuna-lavender/40 p-3">
           <dt className="text-xs uppercase text-lacuna-blue/70">Rate rows</dt>
           <dd className="font-medium text-lacuna-plum">
-            {ledger.codeRates.length}
+            {ledger.codeRates.length === 0
+              ? "none"
+              : `${ledger.codeRates.length}`}
           </dd>
         </div>
       </dl>
@@ -80,7 +82,7 @@ export default function ReimbursementEvidencePanel() {
             className="rounded-lg border border-lacuna-lavender/40 p-3"
           >
             <p className="text-xs font-semibold uppercase tracking-wide text-lacuna-plum/80">
-              {hop.sequence}. {HOP_LABELS[hop.kind]} · {hop.status}
+              {`${hop.sequence}. ${HOP_LABELS[hop.kind]} · ${hop.status}`}
             </p>
             <p className="mt-1 text-sm text-lacuna-blue">{hop.question}</p>
           </li>
