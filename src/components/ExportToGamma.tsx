@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useReducer, useState } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import {
   ExportScope,
@@ -71,23 +71,27 @@ const EXPORT_OPTIONS = [
   { value: "pdf", label: "PDF" },
 ] as const;
 
+const GAMMA_KEY_STORAGE = "lacuna_gamma_key";
+
 export default function ExportToGamma() {
   const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
   const dataset = useVerifiedDataset();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [apiKey, setApiKey] = useState(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("lacuna_gamma_key") || "";
-    }
-    return "";
-  });
+  const [apiKey, setApiKey] = useState("");
   const [format, setFormat] = useState<"presentation" | "document" | "webpage">(
     "presentation",
   );
   const [scope, setScope] = useState<ExportScope>("full");
   const [exportAs, setExportAs] = useState<"" | "pptx" | "pdf">("");
-  const [saveKey, setSaveKey] = useState(true);
+
+  useEffect(() => {
+    try {
+      localStorage.removeItem(GAMMA_KEY_STORAGE);
+    } catch {
+      // Private browsing can throw on storage access.
+    }
+  }, []);
 
   const [state, dispatch] = useReducer(generationReducer, {
     status: "idle",
@@ -157,10 +161,6 @@ export default function ExportToGamma() {
 
     dispatch({ type: "SUBMIT_START" });
 
-    if (saveKey) {
-      localStorage.setItem("lacuna_gamma_key", apiKey);
-    }
-
     const rawDataset = {
       companies: dataset.verifiedCompanies.map((c) => ({
         ...c,
@@ -218,7 +218,6 @@ export default function ExportToGamma() {
     }
   }, [
     apiKey,
-    saveKey,
     format,
     scope,
     exportAs,
@@ -291,28 +290,18 @@ export default function ExportToGamma() {
                 Get key →
               </a>
             </label>
-            <div className="flex gap-2">
-              <input
-                type="password"
-                value={apiKey}
-                onChange={(e) =>
-                  setApiKey(e.target.value)}
-                placeholder="gma_..."
-                className="flex-1 px-3 py-2 text-sm border border-lacuna-lavender/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-300 bg-white"
-              />
-              <label className="flex items-center gap-1.5 text-xs text-lacuna-blue whitespace-nowrap">
-                <input
-                  type="checkbox"
-                  checked={saveKey}
-                  onChange={(e) => setSaveKey(e.target.checked)}
-                  className="rounded border-lacuna-lavender/50"
-                />
-                Remember
-              </label>
-            </div>
+            <input
+              type="password"
+              value={apiKey}
+              onChange={(e) =>
+                setApiKey(e.target.value)}
+              placeholder="gma_..."
+              autoComplete="off"
+              className="w-full px-3 py-2 text-sm border border-lacuna-lavender/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-300 bg-white"
+            />
             <p className="mt-1 text-[11px] text-lacuna-blue/60">
-              Requires Gamma Pro, Ultra, Teams, or Business plan. Key stored in
-              browser only.
+              Requires Gamma Pro, Ultra, Teams, or Business plan. The key stays
+              in this tab only and is not written to disk.
             </p>
           </div>
 
