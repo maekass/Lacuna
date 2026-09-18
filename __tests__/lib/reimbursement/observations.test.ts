@@ -45,6 +45,7 @@ function ledgerWithRate(
         economicUnit: "fee_schedule_payment",
         payer: "Medicare PFS",
         dataYear: 2026,
+        locality: "00",
         placeOfService: "non_facility",
         codeSystem: "HCPCS",
         codes: ["SA051"],
@@ -69,6 +70,7 @@ function ledgerWithRate(
         codeSystem: "HCPCS",
         dataYear: 2026,
         payer: "Medicare PFS",
+        locality: "00",
         placeOfService: "non_facility",
         workRvu: 0.5,
         practiceExpenseRvu: 1.2,
@@ -94,6 +96,7 @@ describe("CMS observation normalization", () => {
       code: "SA051",
       codeSystem: "HCPCS",
       dataYear: 2026,
+      ruleCycle: "2026-final-rule",
       payer: "Medicare PFS",
       placeOfService: "non_facility",
       workRvu: null,
@@ -109,6 +112,24 @@ describe("CMS observation normalization", () => {
     expect(result.observation.missingFields).toEqual(
       expect.arrayContaining(["workRvu", "paymentAmount"]),
     );
+  });
+
+  it("preserves rule-cycle provenance on a successful normalize", () => {
+    const result = normalizeCmsObservation({
+      code: "SA051",
+      codeSystem: "HCPCS",
+      dataYear: 2026,
+      ruleCycle: "2026-final-rule",
+      payer: "Medicare PFS",
+      placeOfService: "non_facility",
+      sourceId: "artifact:cms:hcpcs-public",
+      observedAt: now,
+    });
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.observation.ruleCycle).toBe("2026-final-rule");
+    expect(result.observation.presentFields).toContain("ruleCycle");
   });
 
   it("rejects a missing vintage instead of inventing a year", () => {
@@ -210,6 +231,58 @@ describe("code/year/setting consistency", () => {
     const issues = validateObservationConsistency(ledger);
     expect(issues.some((issue) => issue.code === "payment_unit_mismatch"))
       .toBe(true);
+  });
+
+  it("does not let an uncited locality-specific rate publish a national claim", () => {
+    const ledger = ledgerWithRate({
+      id: "rate:sa051-uncited",
+      sourceId: "source:other",
+      paymentAmount: 50,
+    });
+    ledger.sources = [
+      ...ledger.sources,
+      {
+        id: "source:other",
+        title: "Other CMS file",
+        publisher: "Centers for Medicare & Medicaid Services",
+        url: "https://www.cms.gov/other",
+        accessedAt: now,
+        sourceType: "primary",
+      },
+    ];
+    const issues = validateObservationConsistency(ledger);
+    expect(issues.some((issue) => issue.code === "no_applicable_rate")).toBe(
+      true,
+    );
+  });
+
+  it("requires an explicit locality on fee-schedule claims", () => {
+    const ledger = ledgerWithRate();
+    ledger.claims[0] = {
+      ...ledger.claims[0],
+      locality: undefined,
+    };
+    const issues = validateObservationConsistency(ledger);
+    expect(issues.some((issue) => issue.code === "missing_claim_locality"))
+      .toBe(true);
+  });
+
+  it("accepts RVU-only evidence without a conversion factor", () => {
+    const ledger = ledgerWithRate({
+      conversionFactor: undefined,
+      workGpci: undefined,
+      practiceExpenseGpci: undefined,
+      malpracticeGpci: undefined,
+      paymentAmount: undefined,
+    });
+    ledger.claims[0] = {
+      ...ledger.claims[0],
+      economicUnit: "rvu",
+    };
+    const issues = validateObservationConsistency(ledger);
+    expect(issues.some((issue) => issue.code === "missing_conversion_factor"))
+      .toBe(false);
+    expect(issues).toEqual([]);
   });
 
   it("accepts a sourced paymentAmount without RVU or GPCI inputs", () => {

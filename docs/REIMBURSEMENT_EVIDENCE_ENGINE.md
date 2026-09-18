@@ -94,7 +94,9 @@ Required sidecar fields:
 - null for missing RVU / GPCI / payment fields — never coerced to zero
 - calculated fee-schedule payments need work/PE/MP RVUs, GPCIs, and a conversion
   factor; missing GPCIs are not assumed to be 1.0
-- a rate applies only when code, payer, vintage, and setting match the claim
+- a rate applies only when the claim cites its source and code, payer, vintage,
+  locality, and setting match
+- fee-schedule claims require an explicit locality (national rows use `00`)
 
 Parquet batches point at `output.parquetPath`; JSON batches inline
 `observations`. Unknown `sourceArtifactId` values fail closed.

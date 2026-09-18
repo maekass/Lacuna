@@ -66,6 +66,15 @@ function approvedLedger(): EvidenceLedger {
     codeRates: [],
     reviews: [
       {
+        id: "review:source",
+        claimId: baseClaim.id,
+        reviewerRole: "source_reviewer",
+        fromStatus: "machine_proposed",
+        toStatus: "source_verified",
+        decision: "approve",
+        reviewedAt: now,
+      },
+      {
         id: "review:specialist",
         claimId: baseClaim.id,
         reviewerRole: "coding_reimbursement_specialist",
@@ -327,6 +336,60 @@ describe("ledger validation and publication gates", () => {
     expect(validateReviewChain(ledger.claims[0], ledger.reviews)).toEqual([]);
   });
 
+  it("rejects an approved chain that never recorded source verification", () => {
+    const ledger = approvedLedger();
+    ledger.reviews = ledger.reviews.filter(
+      (review) => review.reviewerRole !== "source_reviewer",
+    );
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(
+      result.issues.some((issue) => issue.code === "missing_source_review"),
+    ).toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+  });
+
+  it("rejects a specialist review dated after the policy approval it supports", () => {
+    const ledger = approvedLedger();
+    ledger.reviews = ledger.reviews.map((review) => {
+      if (review.reviewerRole === "coding_reimbursement_specialist") {
+        return { ...review, reviewedAt: "2026-09-17T06:00:00.000Z" };
+      }
+      if (review.reviewerRole === "policy_reviewer") {
+        return { ...review, reviewedAt: "2026-09-17T05:00:00.000Z" };
+      }
+      return review;
+    });
+
+    expect(
+      validateReviewChain(ledger.claims[0], ledger.reviews).some((issue) =>
+        issue.code === "review_chain_chronology"
+      ),
+    ).toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+  });
+
+  it("keeps a prior insufficient-evidence attempt from blocking a later approval", () => {
+    const ledger = approvedLedger();
+    ledger.reviews = [
+      {
+        id: "review:insufficient",
+        claimId: baseClaim.id,
+        reviewerRole: "source_reviewer",
+        fromStatus: "machine_proposed",
+        toStatus: "insufficient_evidence",
+        decision: "needs_more_evidence",
+        reviewedAt: "2026-09-17T04:00:00.000Z",
+      },
+      ...ledger.reviews,
+    ];
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(true);
+  });
+
   it("does not publish a fee-schedule claim that has no reproducible rate", () => {
     const ledger = approvedLedger();
     ledger.claims[0] = {
@@ -335,6 +398,7 @@ describe("ledger validation and publication gates", () => {
       economicUnit: "fee_schedule_payment",
       payer: "Medicare PFS",
       dataYear: 2026,
+      locality: "00",
       placeOfService: "non_facility",
       codeSystem: "HCPCS",
       codes: ["SA051"],

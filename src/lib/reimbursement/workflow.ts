@@ -10,6 +10,18 @@ export type WorkflowActor = ReviewerRole | "machine";
 
 const terminalStatuses = new Set<EvidenceStatus>(["rejected", "superseded"]);
 
+const historicalBranchStatuses = new Set<EvidenceStatus>([
+  "insufficient_evidence",
+  "rejected",
+  "superseded",
+]);
+
+const sourceOriginRequiredStatuses = new Set<EvidenceStatus>([
+  "specialist_reviewed",
+  "approved",
+  "published",
+]);
+
 const allowedTransitions: Record<EvidenceStatus, readonly EvidenceStatus[]> = {
   machine_proposed: ["source_verified", "rejected", "insufficient_evidence"],
   source_verified: [
@@ -198,6 +210,41 @@ function reconstructReviewPath(
   return { ordered, leftover: [...remaining] };
 }
 
+/**
+ * Prior insufficient_evidence / rejected / superseded attempts stay in the
+ * ledger as audit history. They are not gaps on a later active path.
+ */
+function leftoverAfterHistoricalBranches(
+  leftover: ReviewDecision[],
+): ReviewDecision[] {
+  const remaining = new Set(leftover);
+  const terminals = leftover
+    .filter((review) => historicalBranchStatuses.has(review.toStatus))
+    .sort(compareReviewsNewestFirst);
+
+  for (const terminal of terminals) {
+    if (!remaining.has(terminal)) continue;
+    const { ordered } = reconstructReviewPath(terminal.toStatus, [
+      ...remaining,
+    ]);
+    for (const review of ordered) remaining.delete(review);
+  }
+
+  return [...remaining];
+}
+
+function hasSourceOrigin(ordered: readonly ReviewDecision[]): boolean {
+  const first = ordered[0];
+  return Boolean(
+    first &&
+      first.fromStatus === "machine_proposed" &&
+      first.toStatus === "source_verified" &&
+      first.decision === "approve" &&
+      (first.reviewerRole === "source_reviewer" ||
+        first.reviewerRole === "admin"),
+  );
+}
+
 export function validateReviewChain(
   claim: ReimbursementClaim,
   reviews: readonly ReviewDecision[],
@@ -232,7 +279,7 @@ export function validateReviewChain(
     }
   }
 
-  for (const review of leftover) {
+  for (const review of leftoverAfterHistoricalBranches(leftover)) {
     issues.push({
       code: "review_chain_gap",
       message:
@@ -240,11 +287,34 @@ export function validateReviewChain(
     });
   }
 
+  for (let index = 0; index < ordered.length - 1; index++) {
+    const current = ordered[index];
+    const next = ordered[index + 1];
+    if (!current || !next) continue;
+    if (Date.parse(next.reviewedAt) < Date.parse(current.reviewedAt)) {
+      issues.push({
+        code: "review_chain_chronology",
+        message:
+          `Review ${next.id} at ${next.reviewedAt} precedes prerequisite ${current.id} at ${current.reviewedAt}. Equal timestamps stay ordered by workflow status, then review id.`,
+      });
+    }
+  }
+
   const last = ordered[ordered.length - 1];
   if (!last || last.toStatus !== claim.status) {
     issues.push({
       code: "review_chain_status_mismatch",
       message: `Review chain does not reach claim status ${claim.status}.`,
+    });
+  }
+
+  if (
+    sourceOriginRequiredStatuses.has(claim.status) && !hasSourceOrigin(ordered)
+  ) {
+    issues.push({
+      code: "missing_source_review",
+      message:
+        `${claim.status} requires a recorded machine_proposed → source_verified review by a source reviewer or admin.`,
     });
   }
 

@@ -44,6 +44,7 @@ export interface NormalizedCmsObservation {
   code: string;
   codeSystem: CodeRateObservation["codeSystem"];
   dataYear: number;
+  ruleCycle?: string;
   payer: string;
   locality?: string;
   placeOfService: string;
@@ -168,6 +169,7 @@ export function normalizeCmsObservation(
     codeSystem: raw.codeSystem,
     dataYear: raw.dataYear as number,
     payer: raw.payer.trim(),
+    ...(raw.ruleCycle?.trim() ? { ruleCycle: raw.ruleCycle.trim() } : {}),
     ...(raw.locality?.trim() ? { locality: raw.locality.trim() } : {}),
     placeOfService: raw.placeOfService.trim(),
     sourceId: raw.sourceId,
@@ -175,6 +177,9 @@ export function normalizeCmsObservation(
     presentFields,
     missingFields,
   };
+
+  if (observation.ruleCycle) presentFields.push("ruleCycle");
+  if (observation.locality) presentFields.push("locality");
 
   for (const field of optionalNumericFields) {
     const value = raw[field];
@@ -237,6 +242,8 @@ export function matchingRates(
     ) {
       return false;
     }
+    if (claim.locality && rate.locality !== claim.locality) return false;
+    if (!claim.sourceIds.includes(rate.sourceId)) return false;
     return true;
   });
 }
@@ -281,18 +288,6 @@ export function validateObservationConsistency(
           "Code-rate observation has neither RVU components nor a payment amount. Missing is not zero.",
       });
     }
-    if (
-      rate.paymentAmount === undefined &&
-      hasRvu &&
-      rate.conversionFactor === undefined
-    ) {
-      issues.push({
-        code: "missing_conversion_factor",
-        path: `codeRates.${rate.id}.conversionFactor`,
-        message:
-          "RVU components without a conversion factor cannot produce a fee-schedule payment.",
-      });
-    }
   }
 
   for (const claim of ledger.claims) {
@@ -330,6 +325,15 @@ export function validateObservationConsistency(
       }
     }
 
+    if (claim.economicUnit === "fee_schedule_payment" && !claim.locality) {
+      issues.push({
+        code: "missing_claim_locality",
+        path: `claims.${claim.id}.locality`,
+        message:
+          "fee_schedule_payment claims require an explicit locality. National rows use locality 00; missing is not national.",
+      });
+    }
+
     const rates = matchingRates(claim, ledger);
     const needsApplicableRate = Boolean(
       claim.economicUnit && PAYMENT_UNITS.has(claim.economicUnit) &&
@@ -340,7 +344,7 @@ export function validateObservationConsistency(
         code: "no_applicable_rate",
         path: `claims.${claim.id}`,
         message:
-          "No code-rate observation matches this claim's code, payer, vintage, and setting. Unrelated rows are not alternatives.",
+          "No code-rate observation matches this claim's cited source, code, payer, vintage, locality, and setting. Unrelated rows are not alternatives.",
       });
     }
 
