@@ -3,8 +3,10 @@
 /**
  * Reimbursement Intelligence Dashboard
  *
- * Integrated dashboard that connects the BusinessModelClassifier
- * with Lacuna's actual company dataset for real-time analysis.
+ * ⚠️ ILLUSTRATIVE HEURISTIC — not mounted on `/intelligence`.
+ * The live Intelligence reimbursement section is
+ * `InvestmentGradeReimbursementIntel` (verified deals only).
+ * See `docs/REIMBURSEMENT_AUDIT.md`.
  */
 
 import React, { useEffect, useMemo, useState } from "react";

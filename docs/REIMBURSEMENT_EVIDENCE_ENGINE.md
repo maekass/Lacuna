@@ -73,7 +73,25 @@ Goal: reproduce public reimbursement evidence reliably.
 - canonical source manifest
 - normalized public reimbursement observations
 - deterministic validation checks
-- first evidence-ledger seed records
+- Python + DuckDB / Parquet ingestion contract into the TypeScript app
+- CPT licensing boundary (code numbers and Lacuna labels only unless licensed)
+- first evidence-ledger seed records (investigation targets, not conclusions)
+
+## Ingestion contract
+
+Tabular CMS files are processed outside the Next.js runtime. A Python + DuckDB
+producer writes Parquet (or JSON) that `src/lib/reimbursement/ingestion.ts`
+validates before any row enters the evidence ledger.
+
+Required sidecar fields:
+
+- `contractVersion` (`1.0.0`)
+- `sourceManifest` (provenance, storage policy, redistribution)
+- explicit `dataYear` vintage on every observation
+- null for missing RVU / payment fields — never coerced to zero
+
+Parquet batches point at `output.parquetPath`; JSON batches inline
+`observations`. Unknown `sourceArtifactId` values fail closed.
 
 ## Phase 2 — Evidence intelligence
 

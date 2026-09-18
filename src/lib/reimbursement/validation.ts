@@ -5,6 +5,7 @@ import {
   type ReimbursementClaim,
   type ReimbursementSource,
 } from "./schema";
+import { validateObservationConsistency } from "./observations";
 
 const reviewRequiredStatuses = new Set<EvidenceStatus>([
   "specialist_reviewed",
@@ -267,6 +268,8 @@ export function validateEvidenceLedger(input: unknown): LedgerValidationResult {
       });
     }
   }
+
+  issues.push(...validateObservationConsistency(ledger));
 
   return {
     ok: issues.length === 0,

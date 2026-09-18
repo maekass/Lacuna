@@ -107,3 +107,22 @@ The repository's legal license is authoritative. This architecture document does
 not modify it. The current `LICENSE` should be reviewed separately before a
 commercial deployment, particularly its Licensor placeholders and automatic
 Change License date.
+
+## CPT and HCPCS content rights
+
+Phase 1 stores only:
+
+- code **numbers** (for example `99213` or `SA051`);
+- Lacuna-authored plain-language issue titles and claim statements;
+- public CMS payment-mechanics fields and HCPCS Level II public-file metadata.
+
+Phase 1 does **not** republish:
+
+- AMA CPT long or short descriptors;
+- CPT codebook instructional notes;
+- licensed CPT relative-value editorial text.
+
+HCPCS Level II public files may be linked with provenance. CPT descriptors
+require an AMA license before they are copied into distributable datasets. Until
+that license is recorded on the source artifact, keep `storagePolicy` at
+`link_only` / `metadata_only` and never mark AMA material `full_text_allowed`.
