@@ -5,6 +5,7 @@ import {
   DataExport,
   DeveloperTools,
   InvestmentGradeReimbursementIntel,
+  ReimbursementEvidencePanel,
   SystemHealthDashboard,
 } from "@/app/lazyDashboard";
 import ExportToGamma from "@/components/ExportToGamma";
@@ -55,9 +56,12 @@ export default function IntelligencePage(
       >
         <SectionHeader
           title="Reimbursement & Commercial Due Diligence"
-          description="Verified deal context by sector from the curated dataset — no invented TAM, payer mix, or keyword risk scores."
+          description="Verified deal context by sector from the curated dataset — no invented TAM, payer mix, or keyword risk scores. The SA051 card is an investigation target, not a payment conclusion."
         />
-        <InvestmentGradeReimbursementIntel />
+        <div className="space-y-6">
+          <ReimbursementEvidencePanel />
+          <InvestmentGradeReimbursementIntel />
+        </div>
       </MotionSection>
 
       {catalystWatchlist

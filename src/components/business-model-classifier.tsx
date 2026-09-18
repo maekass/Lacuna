@@ -3,8 +3,9 @@
 /**
  * Business Model Classifier Component
  *
- * Visualizes reimbursement status and valuation impact for Lacuna companies.
- * Provides interactive classification and comparison tools.
+ * ⚠️ ILLUSTRATIVE HEURISTIC — not mounted on `/intelligence`.
+ * CPT-presence premiums from ValuationPremiumCalculator are not
+ * decision-grade. See `docs/REIMBURSEMENT_AUDIT.md`.
  */
 
 import React, { useMemo, useState } from "react";
@@ -167,6 +168,14 @@ export const BusinessModelClassifier: React.FC<BusinessModelClassifierProps> = (
   return (
     <div className={`bg-white rounded-lg shadow-lg p-6 ${className}`}>
       <CuratedDatasetBanner className="mb-4" />
+      <p
+        role="status"
+        className="mb-4 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-950"
+      >
+        <strong>Illustrative heuristic — not decision-grade.</strong>{" "}
+        This classifier is not mounted on Intelligence. Keyword CPT-presence
+        premiums are never treated as measured data.
+      </p>
       <h2 className="text-xl font-bold mb-4 text-purple-900">
         Business Model & Reimbursement Classifier
       </h2>
