@@ -24,6 +24,7 @@
     "validate:empowerment": "tsx scripts/validate-empowerment.ts",
     "intel:sweep": "tsx scripts/sweep-watchlist.ts",
     "intel:sweep:check": "tsx scripts/sweep-watchlist.ts --check",
+    "biopharma:model": "tsx scripts/model-biopharma-dossier.ts",
     "intel:sweep:fix": "tsx scripts/sweep-watchlist.ts --fix",
     "compute:dataset-summary": "tsx scripts/compute-dataset-summary.ts",
     "compute:benchmarks": "tsx scripts/compute-benchmarks.ts",
