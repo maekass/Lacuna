@@ -258,6 +258,12 @@ export const InvestmentGradeReimbursementIntel = dynamic(
     ),
   },
 );
+export const ReimbursementEvidencePanel = dynamic(
+  () => import("@/components/ReimbursementEvidencePanel"),
+  {
+    loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
+  },
+);
 export const BusinessModelClassifier = dynamic(
   () => import("@/components/business-model-classifier"),
   { loading: sectionFallback() },
