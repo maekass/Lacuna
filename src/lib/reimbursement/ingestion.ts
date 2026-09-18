@@ -64,13 +64,8 @@ export const ingestedObservationBatchSchema = z.object({
     });
   }
 
-  if (batch.output.format === "json" && batch.observations.length === 0) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "JSON batches must include observation rows.",
-      path: ["observations"],
-    });
-  }
+  // Empty JSON observations are allowed: a catalog-only sidecar may register
+  // public sources without asserting rate rows. Missing is not zero.
 });
 
 export type IngestedRateRow = z.infer<typeof ingestedRateRowSchema>;
@@ -137,7 +132,8 @@ function mapManifestIssues(
  * is copied into the reimbursement evidence ledger.
  *
  * Parquet files stay outside the Next.js runtime: the sidecar JSON carries
- * the contract, source manifest, and `parquetPath`. JSON batches inline rows.
+ * the contract, source manifest, and `parquetPath`. JSON batches may inline
+ * rows or stay empty as a catalog-only provenance document.
  */
 export function validateIngestedObservationBatch(
   input: unknown,

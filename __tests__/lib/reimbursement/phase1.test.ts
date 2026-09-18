@@ -1,16 +1,25 @@
+import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
+import { GET } from "@/app/api/reimbursement/evidence/route";
 import { reimbursementEvidencePrototype } from "@/data/reimbursement-evidence-prototype";
 import { isDecisionGradeReimbursementPremium } from "@/data/valuation-premium-calculator";
 import {
   REIMBURSEMENT_SCHEMA_VERSION,
   validateEvidenceLedger,
 } from "@/lib/reimbursement/evidence";
+import { validateIngestedObservationBatch } from "@/lib/reimbursement/ingestion";
+import {
+  ledgerHasEconomicAssertions,
+  SA051_LINEAGE_ORDER,
+  validateSa051LineageShape,
+} from "@/lib/reimbursement/lineage";
 import {
   calculatePhysicianFeeSchedulePayment,
   comparePaymentScenarios,
 } from "@/lib/reimbursement/payment";
+import { isLedgerPublishable } from "@/lib/reimbursement/validation";
 
 const baseline = {
   code: "99213",
@@ -37,11 +46,27 @@ describe("SA051 prototype ledger", () => {
     expect(reimbursementEvidencePrototype.issues[0]?.id).toBe(
       "issue:sa051-lineage",
     );
-    expect(reimbursementEvidencePrototype.claims[0]?.status).toBe(
-      "machine_proposed",
-    );
-    expect(reimbursementEvidencePrototype.claims[0]?.sourceIds).toEqual([]);
+    expect(
+      reimbursementEvidencePrototype.claims.every((claim) =>
+        claim.status === "machine_proposed" && claim.sourceIds.length === 0
+      ),
+    ).toBe(true);
     expect(reimbursementEvidencePrototype.codeRates).toEqual([]);
+    expect(isLedgerPublishable(reimbursementEvidencePrototype)).toBe(false);
+    expect(ledgerHasEconomicAssertions(reimbursementEvidencePrototype)).toBe(
+      false,
+    );
+    expect(
+      validateSa051LineageShape(
+        reimbursementEvidencePrototype,
+        "issue:sa051-lineage",
+      ),
+    ).toEqual([]);
+    expect(
+      [...reimbursementEvidencePrototype.lineageHops]
+        .sort((a, b) => a.sequence - b.sequence)
+        .map((hop) => hop.kind),
+    ).toEqual([...SA051_LINEAGE_ORDER]);
   });
 });
 
@@ -81,5 +106,52 @@ describe("evidence engine isolation", () => {
     }
     expect(violations).toEqual([]);
     expect(isDecisionGradeReimbursementPremium(1.8)).toBe(false);
+  });
+
+  it("keeps Intelligence on the investigation panel, not the heuristic dashboard", () => {
+    const page = readFileSync(
+      path.join(process.cwd(), "src/app/sections/IntelligencePage.tsx"),
+      "utf8",
+    );
+    expect(page).toMatch(/ReimbursementEvidencePanel/);
+    expect(page).not.toMatch(/ReimbursementIntelligenceDashboard/);
+    expect(page).not.toMatch(/valuation-premium-calculator/);
+  });
+});
+
+describe("read-only evidence API", () => {
+  it("returns the unpublished SA051 seed", async () => {
+    const response = GET();
+    expect(response.status).toBe(200);
+    const body = await response.json() as {
+      publishable: boolean;
+      hasEconomicAssertions: boolean;
+      validation: { ok: boolean };
+      ledger: { issues: Array<{ id: string }> };
+    };
+    expect(body.validation.ok).toBe(true);
+    expect(body.publishable).toBe(false);
+    expect(body.hasEconomicAssertions).toBe(false);
+    expect(body.ledger.issues[0]?.id).toBe("issue:sa051-lineage");
+  });
+});
+
+describe("Python ingestion sidecar", () => {
+  it("emits a catalog-only batch the TypeScript contract accepts", () => {
+    const raw = execFileSync(
+      "python3",
+      [
+        path.resolve(
+          process.cwd(),
+          "scripts/reimbursement/ingestion_contract.py",
+        ),
+        "--emit-example",
+      ],
+      { encoding: "utf8" },
+    );
+    const batch = JSON.parse(raw) as unknown;
+    const result = validateIngestedObservationBatch(batch);
+    expect(result.ok).toBe(true);
+    expect(result.observations).toEqual([]);
   });
 });

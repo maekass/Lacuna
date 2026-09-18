@@ -71,6 +71,22 @@ export const reviewerRoleSchema = z.enum([
   "admin",
 ]);
 
+export const lineageHopKindSchema = z.enum([
+  "source",
+  "pe_input",
+  "affected_services",
+  "pe_rvu",
+  "payment_mechanics",
+  "utilization",
+]);
+
+export const lineageHopStatusSchema = z.enum([
+  "open",
+  "insufficient_evidence",
+  "source_verified",
+  "closed",
+]);
+
 export const reimbursementSourceSchema = z.object({
   id: idSchema,
   title: z.string().trim().min(1),
@@ -177,6 +193,17 @@ export const reimbursementIssueSchema = z.object({
   updatedAt: isoTimestampSchema,
 });
 
+export const reimbursementLineageHopSchema = z.object({
+  id: idSchema,
+  issueId: idSchema,
+  sequence: z.number().int().min(1),
+  kind: lineageHopKindSchema,
+  question: z.string().trim().min(1),
+  status: lineageHopStatusSchema,
+  claimId: idSchema.optional(),
+  notes: z.string().trim().min(1).optional(),
+});
+
 export const evidenceLedgerSchema = z.object({
   schemaVersion: z.literal(REIMBURSEMENT_SCHEMA_VERSION),
   issues: z.array(reimbursementIssueSchema),
@@ -184,6 +211,7 @@ export const evidenceLedgerSchema = z.object({
   sources: z.array(reimbursementSourceSchema),
   codeRates: z.array(codeRateObservationSchema),
   reviews: z.array(reviewDecisionSchema),
+  lineageHops: z.array(reimbursementLineageHopSchema).default([]),
 });
 
 export type EvidenceStatus = z.infer<typeof evidenceStatusSchema>;
@@ -192,9 +220,14 @@ export type ClaimKind = z.infer<typeof claimKindSchema>;
 export type EconomicUnit = z.infer<typeof economicUnitSchema>;
 export type CodeSystem = z.infer<typeof codeSystemSchema>;
 export type ReviewerRole = z.infer<typeof reviewerRoleSchema>;
+export type LineageHopKind = z.infer<typeof lineageHopKindSchema>;
+export type LineageHopStatus = z.infer<typeof lineageHopStatusSchema>;
 export type ReimbursementSource = z.infer<typeof reimbursementSourceSchema>;
 export type ReimbursementClaim = z.infer<typeof reimbursementClaimSchema>;
 export type CodeRateObservation = z.infer<typeof codeRateObservationSchema>;
 export type ReviewDecision = z.infer<typeof reviewDecisionSchema>;
 export type ReimbursementIssue = z.infer<typeof reimbursementIssueSchema>;
+export type ReimbursementLineageHop = z.infer<
+  typeof reimbursementLineageHopSchema
+>;
 export type EvidenceLedger = z.infer<typeof evidenceLedgerSchema>;

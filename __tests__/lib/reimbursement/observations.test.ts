@@ -80,6 +80,7 @@ function ledgerWithRate(
       },
     ],
     reviews: [],
+    lineageHops: [],
   };
 }
 
@@ -194,6 +195,20 @@ describe("Python/DuckDB ingestion contract", () => {
     expect(result.ok).toBe(false);
     expect(result.issues.some((issue) => issue.path.includes("parquetPath")))
       .toBe(true);
+  });
+
+  it("accepts a catalog-only JSON batch with no rate rows", () => {
+    const result = validateIngestedObservationBatch({
+      contractVersion: REIMBURSEMENT_INGESTION_CONTRACT_VERSION,
+      producedAt: now,
+      producer: { runtime: "python-duckdb", name: "cms-pfs-loader" },
+      sourceManifest: reimbursementSourceManifestPrototype,
+      output: { format: "json" },
+      observations: [],
+    });
+
+    expect(result.ok).toBe(true);
+    expect(result.observations).toEqual([]);
   });
 
   it("rejects observations that point at an unknown source artifact", () => {

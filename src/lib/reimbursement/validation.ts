@@ -91,6 +91,74 @@ export function validateClaimForApproval(
   return errors;
 }
 
+/**
+ * True when every claim on the ledger is publishable. Empty ledgers are not.
+ */
+export function isLedgerPublishable(ledger: EvidenceLedger): boolean {
+  if (ledger.claims.length === 0) return false;
+  return ledger.claims.every((claim) => isClaimPublishable(claim, ledger));
+}
+
+function validateLineageHops(ledger: EvidenceLedger): LedgerValidationIssue[] {
+  const issues: LedgerValidationIssue[] = [];
+  const issueById = new Map(ledger.issues.map((issue) => [issue.id, issue]));
+  const claimById = new Map(ledger.claims.map((claim) => [claim.id, claim]));
+  const hopsByIssue = new Map<string, typeof ledger.lineageHops>();
+
+  for (const hop of ledger.lineageHops) {
+    if (!issueById.has(hop.issueId)) {
+      issues.push({
+        code: "unknown_lineage_issue",
+        path: `lineageHops.${hop.id}.issueId`,
+        message: `Lineage hop references unknown issue ${hop.issueId}.`,
+      });
+    }
+    if (hop.claimId) {
+      const claim = claimById.get(hop.claimId);
+      if (!claim) {
+        issues.push({
+          code: "unknown_lineage_claim",
+          path: `lineageHops.${hop.id}.claimId`,
+          message: `Lineage hop references unknown claim ${hop.claimId}.`,
+        });
+      } else if (claim.issueId !== hop.issueId) {
+        issues.push({
+          code: "lineage_claim_mismatch",
+          path: `lineageHops.${hop.id}.claimId`,
+          message:
+            `Lineage hop claim ${hop.claimId} belongs to issue ${claim.issueId}, not ${hop.issueId}.`,
+        });
+      }
+    }
+    if (hop.status === "closed" && !hop.claimId) {
+      issues.push({
+        code: "closed_hop_missing_claim",
+        path: `lineageHops.${hop.id}.claimId`,
+        message: "Closed lineage hops must point at a reviewed claim.",
+      });
+    }
+    const existing = hopsByIssue.get(hop.issueId) ?? [];
+    existing.push(hop);
+    hopsByIssue.set(hop.issueId, existing);
+  }
+
+  for (const [issueId, hops] of hopsByIssue) {
+    const sorted = [...hops].sort((a, b) => a.sequence - b.sequence);
+    for (const [index, hop] of sorted.entries()) {
+      if (hop.sequence !== index + 1) {
+        issues.push({
+          code: "lineage_sequence_gap",
+          path: `lineageHops.${hop.id}.sequence`,
+          message:
+            `Issue ${issueId} lineage sequences must be contiguous from 1.`,
+        });
+      }
+    }
+  }
+
+  return issues;
+}
+
 export function isClaimPublishable(
   claim: ReimbursementClaim,
   ledger: EvidenceLedger,
@@ -148,6 +216,7 @@ export function validateEvidenceLedger(input: unknown): LedgerValidationResult {
     ["sources", ledger.sources],
     ["codeRates", ledger.codeRates],
     ["reviews", ledger.reviews],
+    ["lineageHops", ledger.lineageHops],
   ];
   for (const [collectionName, rows] of collections) {
     for (const duplicate of duplicateIds(rows)) {
@@ -270,6 +339,7 @@ export function validateEvidenceLedger(input: unknown): LedgerValidationResult {
   }
 
   issues.push(...validateObservationConsistency(ledger));
+  issues.push(...validateLineageHops(ledger));
 
   return {
     ok: issues.length === 0,

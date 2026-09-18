@@ -76,6 +76,9 @@ Goal: reproduce public reimbursement evidence reliably.
 - Python + DuckDB / Parquet ingestion contract into the TypeScript app
 - CPT licensing boundary (code numbers and Lacuna labels only unless licensed)
 - first evidence-ledger seed records (investigation targets, not conclusions)
+- CPT licensing boundary (code numbers and Lacuna labels only unless licensed)
+- Python sidecar example at `scripts/reimbursement/ingestion_contract.py`
+- read-only Intelligence investigation card (`publishable: false`)
 
 ## Ingestion contract
 

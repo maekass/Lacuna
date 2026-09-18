@@ -83,6 +83,7 @@ function approvedLedger(): EvidenceLedger {
         reviewedAt: now,
       },
     ],
+    lineageHops: [],
   };
 }
 
@@ -227,6 +228,26 @@ describe("ledger validation and publication gates", () => {
     expect(result.ok).toBe(false);
     expect(
       result.issues.some((issue) => issue.code === "missing_specialist_review"),
+    ).toBe(true);
+  });
+
+  it("rejects a closed lineage hop that does not point at a claim", () => {
+    const ledger = approvedLedger();
+    ledger.lineageHops = [
+      {
+        id: "hop:orphan",
+        issueId: "issue:test",
+        sequence: 1,
+        kind: "source",
+        question: "Which source controls this claim?",
+        status: "closed",
+      },
+    ];
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(
+      result.issues.some((issue) => issue.code === "closed_hop_missing_claim"),
     ).toBe(true);
   });
 });

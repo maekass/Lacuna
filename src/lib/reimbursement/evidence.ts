@@ -6,9 +6,12 @@ export {
   evidenceLedgerSchema,
   evidenceStatusSchema,
   evidenceStrengthSchema,
+  lineageHopKindSchema,
+  lineageHopStatusSchema,
   REIMBURSEMENT_SCHEMA_VERSION,
   reimbursementClaimSchema,
   reimbursementIssueSchema,
+  reimbursementLineageHopSchema,
   reimbursementSourceSchema,
   reviewDecisionSchema,
   reviewerRoleSchema,
@@ -24,8 +27,11 @@ export type {
   EvidenceLedger,
   EvidenceStatus,
   EvidenceStrength,
+  LineageHopKind,
+  LineageHopStatus,
   ReimbursementClaim,
   ReimbursementIssue,
+  ReimbursementLineageHop,
   ReimbursementSource,
   ReviewDecision,
   ReviewerRole,
@@ -45,6 +51,7 @@ export type {
 
 export {
   isClaimPublishable,
+  isLedgerPublishable,
   validateClaimForApproval,
   validateEvidenceLedger,
 } from "./validation";
@@ -92,3 +99,10 @@ export type {
   IngestedObservationBatch,
   IngestionValidationResult,
 } from "./ingestion";
+
+export {
+  ledgerHasEconomicAssertions,
+  SA051_LINEAGE_ORDER,
+  validateSa051LineageShape,
+} from "./lineage";
+export type { LineageShapeIssue } from "./lineage";
