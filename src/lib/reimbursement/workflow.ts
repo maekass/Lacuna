@@ -67,7 +67,9 @@ export interface TransitionCheck {
   reasons: string[];
 }
 
-export function getAllowedTargets(status: EvidenceStatus): readonly EvidenceStatus[] {
+export function getAllowedTargets(
+  status: EvidenceStatus,
+): readonly EvidenceStatus[] {
   return allowedTransitions[status];
 }
 
@@ -95,7 +97,9 @@ export function canTransitionEvidenceStatus(
   }
 
   if (actor === "machine" && to !== "machine_proposed") {
-    reasons.push("Machine actors may only create or reopen machine_proposed evidence.");
+    reasons.push(
+      "Machine actors may only create or reopen machine_proposed evidence.",
+    );
   }
 
   return { ok: reasons.length === 0, reasons };

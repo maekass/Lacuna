@@ -69,7 +69,10 @@ export function calculatePhysicianFeeSchedulePayment(
   input: PhysicianFeeSchedulePaymentInput,
 ): PhysicianFeeSchedulePaymentResult {
   if (!input.code.trim()) throw new Error("code is required.");
-  if (!Number.isInteger(input.dataYear) || input.dataYear < 2000 || input.dataYear > 2100) {
+  if (
+    !Number.isInteger(input.dataYear) || input.dataYear < 2000 ||
+    input.dataYear > 2100
+  ) {
     throw new Error("dataYear must be an integer between 2000 and 2100.");
   }
   if (!input.locality.trim()) throw new Error("locality is required.");
@@ -83,11 +86,11 @@ export function calculatePhysicianFeeSchedulePayment(
   assertFinitePositive("conversionFactor", input.conversionFactor);
 
   const workComponent = input.workRvu * input.workGpci;
-  const practiceExpenseComponent =
-    input.practiceExpenseRvu * input.practiceExpenseGpci;
+  const practiceExpenseComponent = input.practiceExpenseRvu *
+    input.practiceExpenseGpci;
   const malpracticeComponent = input.malpracticeRvu * input.malpracticeGpci;
-  const geographicallyAdjustedRvu =
-    workComponent + practiceExpenseComponent + malpracticeComponent;
+  const geographicallyAdjustedRvu = workComponent + practiceExpenseComponent +
+    malpracticeComponent;
   const paymentUnrounded = geographicallyAdjustedRvu * input.conversionFactor;
 
   return {

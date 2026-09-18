@@ -1,5 +1,4 @@
 export {
-  REIMBURSEMENT_SCHEMA_VERSION,
   claimKindSchema,
   codeRateObservationSchema,
   codeSystemSchema,
@@ -7,6 +6,7 @@ export {
   evidenceLedgerSchema,
   evidenceStatusSchema,
   evidenceStrengthSchema,
+  REIMBURSEMENT_SCHEMA_VERSION,
   reimbursementClaimSchema,
   reimbursementIssueSchema,
   reimbursementSourceSchema,

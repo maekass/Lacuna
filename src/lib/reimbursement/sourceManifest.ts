@@ -140,7 +140,9 @@ export function validateReimbursementSourceManifest(
     seen.add(artifact.id);
   }
 
-  const issues: SourceManifestValidationIssue[] = [...duplicateIds].map((id) => ({
+  const issues: SourceManifestValidationIssue[] = [...duplicateIds].map((
+    id,
+  ) => ({
     code: "duplicate_id",
     path: "artifacts",
     message: `Duplicate source artifact id: ${id}.`,

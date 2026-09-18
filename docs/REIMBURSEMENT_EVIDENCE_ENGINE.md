@@ -2,17 +2,24 @@
 
 ## Purpose
 
-Extend Lacuna's existing reimbursement work with a source-traceable, reviewable evidence layer for women's-health policy and payment questions.
+Extend Lacuna's existing reimbursement work with a source-traceable, reviewable
+evidence layer for women's-health policy and payment questions.
 
-This layer is intentionally separate from the older illustrative reimbursement-premium logic. It does **not** infer valuation premiums from code presence, and it does **not** treat fuzzy product-to-code matches as decision-grade evidence.
+This layer is intentionally separate from the older illustrative
+reimbursement-premium logic. It does **not** infer valuation premiums from code
+presence, and it does **not** treat fuzzy product-to-code matches as
+decision-grade evidence.
 
 ## Product thesis
 
-The existing product already supports reimbursement context and public-source intelligence. The next layer should make each reimbursement claim auditable across the full chain:
+The existing product already supports reimbursement context and public-source
+intelligence. The next layer should make each reimbursement claim auditable
+across the full chain:
 
 `source document -> issue -> claim -> code/input lineage -> payment mechanics -> reviewer state -> action -> next rule cycle`
 
-AI may propose candidate extractions or contradictions. Structured source records, deterministic payment logic, and human review remain authoritative.
+AI may propose candidate extractions or contradictions. Structured source
+records, deterministic payment logic, and human review remain authoritative.
 
 ## Evidence states
 
@@ -35,7 +42,8 @@ The first domain model lives in `src/lib/reimbursement/evidence.ts`.
 - `ReimbursementIssue` — business/policy question being investigated
 - `ReimbursementClaim` — atomic statement with explicit source and economic unit
 - `ReimbursementSource` — source metadata and locator
-- `CodeRateObservation` — code-level valuation/payment observation by year, payer, locality, and setting
+- `CodeRateObservation` — code-level valuation/payment observation by year,
+  payer, locality, and setting
 - `ReviewDecision` — human review state and disposition
 
 ## Phase 1 — Foundation
@@ -69,7 +77,8 @@ Goal: reproduce public reimbursement evidence reliably.
 
 ## Phase 2 — Evidence intelligence
 
-Goal: link each finding to a source, code/input, rule cycle, and reviewer decision.
+Goal: link each finding to a source, code/input, rule cycle, and reviewer
+decision.
 
 ### Capabilities
 
@@ -94,7 +103,8 @@ Not permitted:
 - directly approve or publish claims
 - invent missing reimbursement inputs
 - collapse different economic units into one "gap"
-- calculate practice-level losses without explicit utilization and payment assumptions
+- calculate practice-level losses without explicit utilization and payment
+  assumptions
 
 ## Phase 3 — Product integration
 
@@ -111,7 +121,8 @@ Potential outputs:
 
 ## First issues to trace
 
-Start with a small number of live reimbursement questions rather than a broad platform rewrite.
+Start with a small number of live reimbursement questions rather than a broad
+platform rewrite.
 
 Suggested sequence:
 
@@ -128,17 +139,21 @@ These are investigation targets, not pre-validated conclusions.
 Initial implementation should stay lightweight:
 
 - TypeScript domain model inside Lacuna
-- Python + DuckDB / Parquet for source ingestion and reproducible analysis where tabular CMS files are easier to process outside the web runtime
+- Python + DuckDB / Parquet for source ingestion and reproducible analysis where
+  tabular CMS files are easier to process outside the web runtime
 - PostgreSQL / Supabase only when persistence and reviewer workflow justify it
 - GitHub Actions for scheduled ingestion / QA
 - optional semantic retrieval only where exact source lookup is insufficient
 
 ## Migration note
 
-The existing `docs/REIMBURSEMENT_INTELLIGENCE.md` and related code contain illustrative business-model and valuation-premium assumptions. Before those outputs are used in decision-grade workflows, they should be audited and either:
+The existing `docs/REIMBURSEMENT_INTELLIGENCE.md` and related code contain
+illustrative business-model and valuation-premium assumptions. Before those
+outputs are used in decision-grade workflows, they should be audited and either:
 
 1. replaced with source-supported observations,
 2. clearly isolated as illustrative heuristics, or
 3. removed from the production intelligence path.
 
-The evidence engine should become the authoritative reimbursement layer over time.
+The evidence engine should become the authoritative reimbursement layer over
+time.

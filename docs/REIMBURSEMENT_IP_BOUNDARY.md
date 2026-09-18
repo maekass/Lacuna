@@ -75,8 +75,8 @@ Until a separate deployment is intentionally created:
 4. Generic improvements are implemented in the core first.
 5. Customer-specific behavior is supplied later through configuration or an
    adapter interface.
-6. Public-source examples are labeled as fixtures or investigation targets
-   until validated through the evidence workflow.
+6. Public-source examples are labeled as fixtures or investigation targets until
+   validated through the evidence workflow.
 
 ## Data and content rights
 

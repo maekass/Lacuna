@@ -1,6 +1,6 @@
 import {
-  evidenceLedgerSchema,
   type EvidenceLedger,
+  evidenceLedgerSchema,
   type EvidenceStatus,
   type ReimbursementClaim,
   type ReimbursementSource,
@@ -35,7 +35,7 @@ export interface LedgerValidationResult {
   ledger?: EvidenceLedger;
 }
 
-function duplicateIds<T extends { id: string }>(rows: T[]): string[] {
+function duplicateIds(rows: readonly { id: string }[]): string[] {
   const seen = new Set<string>();
   const duplicates = new Set<string>();
   for (const row of rows) {
@@ -62,7 +62,9 @@ export function validateClaimForApproval(
   const errors: string[] = [];
 
   if (!claim.statement.trim()) errors.push("Claim statement is required.");
-  if (claim.sourceIds.length === 0) errors.push("At least one source is required.");
+  if (claim.sourceIds.length === 0) {
+    errors.push("At least one source is required.");
+  }
 
   const unknownSources = claim.sourceIds.filter(
     (sourceId) => !sourcesById.has(sourceId),
@@ -94,10 +96,14 @@ export function isClaimPublishable(
 ): boolean {
   if (!approvalRequiredStatuses.has(claim.status)) return false;
 
-  const sourcesById = new Map(ledger.sources.map((source) => [source.id, source]));
+  const sourcesById = new Map(
+    ledger.sources.map((source) => [source.id, source]),
+  );
   if (validateClaimForApproval(claim, sourcesById).length > 0) return false;
 
-  const reviews = ledger.reviews.filter((review) => review.claimId === claim.id);
+  const reviews = ledger.reviews.filter((review) =>
+    review.claimId === claim.id
+  );
   const hasSpecialistReview = reviews.some(
     (review) =>
       review.reviewerRole === "coding_reimbursement_specialist" &&
@@ -135,13 +141,14 @@ export function validateEvidenceLedger(input: unknown): LedgerValidationResult {
   const ledger = parsed.data;
   const issues: LedgerValidationIssue[] = [];
 
-  for (const [collectionName, rows] of [
+  const collections: Array<[string, readonly { id: string }[]]> = [
     ["issues", ledger.issues],
     ["claims", ledger.claims],
     ["sources", ledger.sources],
     ["codeRates", ledger.codeRates],
     ["reviews", ledger.reviews],
-  ] as const) {
+  ];
+  for (const [collectionName, rows] of collections) {
     for (const duplicate of duplicateIds(rows)) {
       issues.push({
         code: "duplicate_id",
@@ -153,7 +160,9 @@ export function validateEvidenceLedger(input: unknown): LedgerValidationResult {
 
   const issueById = new Map(ledger.issues.map((issue) => [issue.id, issue]));
   const claimById = new Map(ledger.claims.map((claim) => [claim.id, claim]));
-  const sourceById = new Map(ledger.sources.map((source) => [source.id, source]));
+  const sourceById = new Map(
+    ledger.sources.map((source) => [source.id, source]),
+  );
 
   for (const claim of ledger.claims) {
     if (!issueById.has(claim.issueId)) {
@@ -231,7 +240,8 @@ export function validateEvidenceLedger(input: unknown): LedgerValidationResult {
         issues.push({
           code: "claim_issue_mismatch",
           path: `issues.${issue.id}.claimIds`,
-          message: `Claim ${claimId} belongs to issue ${claim.issueId}, not ${issue.id}.`,
+          message:
+            `Claim ${claimId} belongs to issue ${claim.issueId}, not ${issue.id}.`,
         });
       }
     }
@@ -242,7 +252,8 @@ export function validateEvidenceLedger(input: unknown): LedgerValidationResult {
       issues.push({
         code: "unknown_rate_source",
         path: `codeRates.${rate.id}.sourceId`,
-        message: `Code-rate observation references unknown source ${rate.sourceId}.`,
+        message:
+          `Code-rate observation references unknown source ${rate.sourceId}.`,
       });
     }
   }

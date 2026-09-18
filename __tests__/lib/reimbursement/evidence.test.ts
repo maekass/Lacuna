@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
-  REIMBURSEMENT_SCHEMA_VERSION,
-  evidenceLedgerSchema,
-  reimbursementClaimSchema,
   type EvidenceLedger,
+  evidenceLedgerSchema,
+  REIMBURSEMENT_SCHEMA_VERSION,
   type ReimbursementClaim,
+  reimbursementClaimSchema,
   type ReimbursementSource,
 } from "@/lib/reimbursement/schema";
 import {
@@ -204,6 +204,17 @@ describe("ledger validation and publication gates", () => {
       ),
     ).toBe(true);
     expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+  });
+
+  it("rejects duplicate ids inside a ledger collection", () => {
+    const ledger = approvedLedger();
+    ledger.claims = [ledger.claims[0], { ...ledger.claims[0] }];
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((issue) => issue.code === "duplicate_id")).toBe(
+      true,
+    );
   });
 
   it("requires a specialist review before approved evidence can validate", () => {
