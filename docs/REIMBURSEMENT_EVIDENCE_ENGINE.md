@@ -91,7 +91,10 @@ Required sidecar fields:
 - `contractVersion` (`1.0.0`)
 - `sourceManifest` (provenance, storage policy, redistribution)
 - explicit `dataYear` vintage on every observation
-- null for missing RVU / payment fields — never coerced to zero
+- null for missing RVU / GPCI / payment fields — never coerced to zero
+- calculated fee-schedule payments need work/PE/MP RVUs, GPCIs, and a conversion
+  factor; missing GPCIs are not assumed to be 1.0
+- a rate applies only when code, payer, vintage, and setting match the claim
 
 Parquet batches point at `output.parquetPath`; JSON batches inline
 `observations`. Unknown `sourceArtifactId` values fail closed.

@@ -104,6 +104,9 @@ def validate_batch(batch: dict[str, Any]) -> list[str]:
             "workRvu",
             "practiceExpenseRvu",
             "malpracticeRvu",
+            "workGpci",
+            "practiceExpenseGpci",
+            "malpracticeGpci",
             "conversionFactor",
             "paymentAmount",
         ):

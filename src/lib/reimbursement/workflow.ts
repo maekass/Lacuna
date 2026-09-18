@@ -1,6 +1,7 @@
 import type {
   EvidenceStatus,
   ReimbursementClaim,
+  ReimbursementSource,
   ReviewDecision,
   ReviewerRole,
 } from "./schema";
@@ -127,11 +128,142 @@ export interface TransitionClaimInput {
   reviewId: string;
   reviewedAt: string;
   note?: string;
+  sourcesById?: ReadonlyMap<string, ReimbursementSource>;
+}
+
+export interface ReviewChainIssue {
+  code: string;
+  message: string;
 }
 
 export interface TransitionClaimResult {
   claim: ReimbursementClaim;
   review: ReviewDecision | null;
+}
+
+function assertSourceVerifiedPreconditions(
+  claim: ReimbursementClaim,
+  sourcesById?: ReadonlyMap<string, ReimbursementSource>,
+): void {
+  if (claim.sourceIds.length === 0) {
+    throw new Error("source_verified requires at least one attached source.");
+  }
+  if (!sourcesById) return;
+  const unknown = claim.sourceIds.filter((sourceId) =>
+    !sourcesById.has(sourceId)
+  );
+  if (unknown.length > 0) {
+    throw new Error(
+      `source_verified references unknown source IDs: ${unknown.join(", ")}.`,
+    );
+  }
+}
+
+/**
+ * Reconstruct a claim's ordered review history. Adjacent hops must be legal
+ * for the recorded actor, and the last hop must land on the claim status.
+ */
+function compareReviewsNewestFirst(
+  a: ReviewDecision,
+  b: ReviewDecision,
+): number {
+  const time = Date.parse(b.reviewedAt) - Date.parse(a.reviewedAt);
+  if (time !== 0) return time;
+  return b.id.localeCompare(a.id);
+}
+
+/**
+ * Walk backward from the claim's current status so equal timestamps do not
+ * reverse a legal specialist → policy chain.
+ */
+function reconstructReviewPath(
+  claimStatus: EvidenceStatus,
+  reviews: readonly ReviewDecision[],
+): { ordered: ReviewDecision[]; leftover: ReviewDecision[] } {
+  const remaining = new Set(reviews);
+  const ordered: ReviewDecision[] = [];
+  let currentTo: EvidenceStatus = claimStatus;
+
+  while (remaining.size > 0) {
+    const candidates = [...remaining]
+      .filter((review) => review.toStatus === currentTo)
+      .sort(compareReviewsNewestFirst);
+    const picked = candidates[0];
+    if (!picked) break;
+    ordered.unshift(picked);
+    remaining.delete(picked);
+    currentTo = picked.fromStatus;
+  }
+
+  return { ordered, leftover: [...remaining] };
+}
+
+export function validateReviewChain(
+  claim: ReimbursementClaim,
+  reviews: readonly ReviewDecision[],
+): ReviewChainIssue[] {
+  const claimReviews = reviews.filter((review) => review.claimId === claim.id);
+  if (claimReviews.length === 0) return [];
+
+  const issues: ReviewChainIssue[] = [];
+  const { ordered, leftover } = reconstructReviewPath(
+    claim.status,
+    claimReviews,
+  );
+
+  for (const review of claimReviews) {
+    const check = canTransitionEvidenceStatus(
+      review.fromStatus,
+      review.toStatus,
+      review.reviewerRole,
+    );
+    if (!check.ok) {
+      issues.push({
+        code: "illegal_review_transition",
+        message: `Review ${review.id}: ${check.reasons.join(" ")}`,
+      });
+    }
+    if (review.decision !== decisionForTarget(review.toStatus)) {
+      issues.push({
+        code: "review_decision_mismatch",
+        message:
+          `Review ${review.id} decision ${review.decision} does not match target ${review.toStatus}.`,
+      });
+    }
+  }
+
+  for (const review of leftover) {
+    issues.push({
+      code: "review_chain_gap",
+      message:
+        `Review ${review.id} is not on the contiguous path that ends at ${claim.status}.`,
+    });
+  }
+
+  const last = ordered[ordered.length - 1];
+  if (!last || last.toStatus !== claim.status) {
+    issues.push({
+      code: "review_chain_status_mismatch",
+      message: `Review chain does not reach claim status ${claim.status}.`,
+    });
+  }
+
+  if (claim.status === "published") {
+    const publishedHop = ordered.find((review) =>
+      review.fromStatus === "approved" &&
+      review.toStatus === "published" &&
+      review.decision === "approve"
+    );
+    if (!publishedHop) {
+      issues.push({
+        code: "missing_publish_transition",
+        message:
+          "published claims require an explicit approved → published review.",
+      });
+    }
+  }
+
+  return issues;
 }
 
 /**
@@ -145,10 +277,15 @@ export function transitionClaim({
   reviewId,
   reviewedAt,
   note,
+  sourcesById,
 }: TransitionClaimInput): TransitionClaimResult {
   const check = canTransitionEvidenceStatus(claim.status, to, actor);
   if (!check.ok) {
     throw new Error(check.reasons.join(" "));
+  }
+
+  if (to === "source_verified") {
+    assertSourceVerifiedPreconditions(claim, sourcesById);
   }
 
   const updatedClaim: ReimbursementClaim = {

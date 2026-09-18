@@ -41,8 +41,10 @@ export {
   canTransitionEvidenceStatus,
   getAllowedTargets,
   transitionClaim,
+  validateReviewChain,
 } from "./workflow";
 export type {
+  ReviewChainIssue,
   TransitionCheck,
   TransitionClaimInput,
   TransitionClaimResult,
@@ -81,7 +83,9 @@ export type {
 } from "./sourceManifest";
 
 export {
+  matchingRates,
   normalizeCmsObservation,
+  rateSupportsFeeSchedulePayment,
   rejectMissingAsZero,
   validateObservationConsistency,
 } from "./observations";

@@ -43,6 +43,7 @@ function ledgerWithRate(
         status: "machine_proposed",
         sourceIds: ["source:cms"],
         economicUnit: "fee_schedule_payment",
+        payer: "Medicare PFS",
         dataYear: 2026,
         placeOfService: "non_facility",
         codeSystem: "HCPCS",
@@ -72,6 +73,9 @@ function ledgerWithRate(
         workRvu: 0.5,
         practiceExpenseRvu: 1.2,
         malpracticeRvu: 0.1,
+        workGpci: 1,
+        practiceExpenseGpci: 1,
+        malpracticeGpci: 1,
         conversionFactor: 32.74,
         sourceId: "source:cms",
         status: "source_verified",
@@ -137,20 +141,90 @@ describe("code/year/setting consistency", () => {
     expect(result.ok).toBe(true);
   });
 
-  it("flags a claim vintage that does not match the code-rate year", () => {
+  it("keeps an unrelated historical vintage from invalidating a matched claim", () => {
+    const ledger = ledgerWithRate();
+    const currentRate = ledger.codeRates[0];
+    if (!currentRate) throw new Error("expected fixture rate");
+    ledger.codeRates = [
+      ...ledger.codeRates,
+      {
+        ...currentRate,
+        id: "rate:sa051-2025",
+        dataYear: 2025,
+      },
+    ];
+    const issues = validateObservationConsistency(ledger);
+    expect(issues).toEqual([]);
+  });
+
+  it("treats a wrong-year-only rate as no applicable observation", () => {
     const ledger = ledgerWithRate({ dataYear: 2025 });
     const issues = validateObservationConsistency(ledger);
+    expect(issues.some((issue) => issue.code === "no_applicable_rate")).toBe(
+      true,
+    );
     expect(issues.some((issue) => issue.code === "vintage_mismatch")).toBe(
+      false,
+    );
+  });
+
+  it("treats a wrong-setting-only rate as no applicable observation", () => {
+    const ledger = ledgerWithRate({ placeOfService: "facility" });
+    const issues = validateObservationConsistency(ledger);
+    expect(issues.some((issue) => issue.code === "no_applicable_rate")).toBe(
+      true,
+    );
+    expect(issues.some((issue) => issue.code === "setting_mismatch")).toBe(
+      false,
+    );
+  });
+
+  it("does not let a Medicare rate support a Medicaid payment claim", () => {
+    const ledger = ledgerWithRate();
+    ledger.claims[0] = {
+      ...ledger.claims[0],
+      payer: "Medicaid",
+    };
+    const issues = validateObservationConsistency(ledger);
+    expect(issues.some((issue) => issue.code === "no_applicable_rate")).toBe(
       true,
     );
   });
 
-  it("flags a claim setting that does not match the code-rate setting", () => {
-    const ledger = ledgerWithRate({ placeOfService: "facility" });
+  it("rejects a fee-schedule claim with no matching rate", () => {
+    const ledger = ledgerWithRate();
+    ledger.codeRates = [];
     const issues = validateObservationConsistency(ledger);
-    expect(issues.some((issue) => issue.code === "setting_mismatch")).toBe(
+    expect(issues.some((issue) => issue.code === "no_applicable_rate")).toBe(
       true,
     );
+  });
+
+  it("rejects a calculated payment that is missing GPCIs", () => {
+    const ledger = ledgerWithRate({
+      workGpci: undefined,
+      practiceExpenseGpci: undefined,
+      malpracticeGpci: undefined,
+      paymentAmount: undefined,
+    });
+    const issues = validateObservationConsistency(ledger);
+    expect(issues.some((issue) => issue.code === "payment_unit_mismatch"))
+      .toBe(true);
+  });
+
+  it("accepts a sourced paymentAmount without RVU or GPCI inputs", () => {
+    const ledger = ledgerWithRate({
+      workRvu: undefined,
+      practiceExpenseRvu: undefined,
+      malpracticeRvu: undefined,
+      workGpci: undefined,
+      practiceExpenseGpci: undefined,
+      malpracticeGpci: undefined,
+      conversionFactor: undefined,
+      paymentAmount: 41.12,
+    });
+    const issues = validateObservationConsistency(ledger);
+    expect(issues).toEqual([]);
   });
 });
 

@@ -10,6 +10,7 @@ import {
 import {
   canTransitionEvidenceStatus,
   transitionClaim,
+  validateReviewChain,
 } from "@/lib/reimbursement/workflow";
 import {
   isClaimPublishable,
@@ -229,6 +230,121 @@ describe("ledger validation and publication gates", () => {
     expect(
       result.issues.some((issue) => issue.code === "missing_specialist_review"),
     ).toBe(true);
+  });
+
+  it("rejects disconnected reviews that do not form a legal workflow", () => {
+    const ledger = approvedLedger();
+    ledger.reviews = [
+      {
+        id: "review:illegal-specialist",
+        claimId: baseClaim.id,
+        reviewerRole: "coding_reimbursement_specialist",
+        fromStatus: "rejected",
+        toStatus: "specialist_reviewed",
+        decision: "approve",
+        reviewedAt: now,
+      },
+      {
+        id: "review:illegal-policy",
+        claimId: baseClaim.id,
+        reviewerRole: "policy_reviewer",
+        fromStatus: "machine_proposed",
+        toStatus: "approved",
+        decision: "approve",
+        reviewedAt: "2026-09-17T05:31:00.000Z",
+      },
+    ];
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(
+      result.issues.some((issue) => issue.code === "illegal_review_transition"),
+    ).toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+  });
+
+  it("requires an explicit approved-to-published hop before publication", () => {
+    const ledger = approvedLedger();
+    ledger.claims[0] = {
+      ...ledger.claims[0],
+      status: "published",
+    };
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(
+      result.issues.some((issue) =>
+        issue.code === "review_chain_status_mismatch" ||
+        issue.code === "missing_publish_transition"
+      ),
+    ).toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+  });
+
+  it("rejects source-verified claims that have no attached sources", () => {
+    const ledger = approvedLedger();
+    ledger.claims[0] = {
+      ...ledger.claims[0],
+      status: "source_verified",
+      sourceIds: [],
+    };
+    ledger.reviews = [];
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((issue) => issue.code === "missing_source")).toBe(
+      true,
+    );
+  });
+
+  it("does not let a source reviewer verify a claim with empty sourceIds", () => {
+    expect(() =>
+      transitionClaim({
+        claim: { ...baseClaim, sourceIds: [] },
+        to: "source_verified",
+        actor: "source_reviewer",
+        reviewId: "review:empty-source",
+        reviewedAt: now,
+      })
+    ).toThrow(/at least one attached source/);
+  });
+
+  it("rejects source verification against unknown source ids when a map is supplied", () => {
+    expect(() =>
+      transitionClaim({
+        claim: { ...baseClaim, sourceIds: ["source:missing"] },
+        to: "source_verified",
+        actor: "source_reviewer",
+        reviewId: "review:unknown-source",
+        reviewedAt: now,
+        sourcesById: new Map([[primarySource.id, primarySource]]),
+      })
+    ).toThrow(/unknown source IDs/);
+  });
+
+  it("accepts the contiguous source-verified to approved review chain", () => {
+    const ledger = approvedLedger();
+    expect(validateReviewChain(ledger.claims[0], ledger.reviews)).toEqual([]);
+  });
+
+  it("does not publish a fee-schedule claim that has no reproducible rate", () => {
+    const ledger = approvedLedger();
+    ledger.claims[0] = {
+      ...ledger.claims[0],
+      kind: "calculation",
+      economicUnit: "fee_schedule_payment",
+      payer: "Medicare PFS",
+      dataYear: 2026,
+      placeOfService: "non_facility",
+      codeSystem: "HCPCS",
+      codes: ["SA051"],
+    };
+
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((issue) => issue.code === "no_applicable_rate"))
+      .toBe(true);
   });
 
   it("rejects a closed lineage hop that does not point at a claim", () => {

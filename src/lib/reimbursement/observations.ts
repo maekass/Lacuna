@@ -30,6 +30,9 @@ export interface RawCmsRateObservation {
   workRvu?: number | null;
   practiceExpenseRvu?: number | null;
   malpracticeRvu?: number | null;
+  workGpci?: number | null;
+  practiceExpenseGpci?: number | null;
+  malpracticeGpci?: number | null;
   conversionFactor?: number | null;
   paymentAmount?: number | null;
   sourceId: string;
@@ -47,6 +50,9 @@ export interface NormalizedCmsObservation {
   workRvu?: number;
   practiceExpenseRvu?: number;
   malpracticeRvu?: number;
+  workGpci?: number;
+  practiceExpenseGpci?: number;
+  malpracticeGpci?: number;
   conversionFactor?: number;
   paymentAmount?: number;
   sourceId: string;
@@ -74,9 +80,21 @@ const optionalNumericFields = [
   "workRvu",
   "practiceExpenseRvu",
   "malpracticeRvu",
+  "workGpci",
+  "practiceExpenseGpci",
+  "malpracticeGpci",
   "conversionFactor",
   "paymentAmount",
 ] as const;
+
+const POSITIVE_OPTIONAL_FIELDS = new Set<
+  (typeof optionalNumericFields)[number]
+>([
+  "workGpci",
+  "practiceExpenseGpci",
+  "malpracticeGpci",
+  "conversionFactor",
+]);
 
 function isPresentNumber(value: number | null | undefined): value is number {
   return typeof value === "number" && Number.isFinite(value);
@@ -127,10 +145,10 @@ export function normalizeCmsObservation(
         code: "invalid_numeric",
         message: `${field} must be a finite number when present.`,
       });
-    } else if (field === "conversionFactor" && value <= 0) {
+    } else if (POSITIVE_OPTIONAL_FIELDS.has(field) && value <= 0) {
       issues.push({
         code: "invalid_numeric",
-        message: "conversionFactor must be positive when present.",
+        message: `${field} must be positive when present.`,
       });
     } else if (value < 0) {
       issues.push({
@@ -197,15 +215,48 @@ export function rejectMissingAsZero(
   return null;
 }
 
-function matchingRates(
+/**
+ * Rates that share every identifying dimension the claim actually states.
+ * Unrelated vintages, payers, or settings stay out of the applicable set.
+ */
+export function matchingRates(
   claim: ReimbursementClaim,
   ledger: EvidenceLedger,
 ): CodeRateObservation[] {
   const codes = new Set(claim.codes ?? []);
   if (codes.size === 0) return [];
-  return ledger.codeRates.filter((rate) =>
-    codes.has(rate.code) &&
-    (!claim.codeSystem || rate.codeSystem === claim.codeSystem)
+  return ledger.codeRates.filter((rate) => {
+    if (!codes.has(rate.code)) return false;
+    if (claim.codeSystem && rate.codeSystem !== claim.codeSystem) return false;
+    if (claim.payer && rate.payer !== claim.payer) return false;
+    if (claim.dataYear !== undefined && rate.dataYear !== claim.dataYear) {
+      return false;
+    }
+    if (
+      claim.placeOfService && rate.placeOfService !== claim.placeOfService
+    ) {
+      return false;
+    }
+    return true;
+  });
+}
+
+/**
+ * A fee-schedule claim is reproducible only from a sourced payment amount or
+ * the complete RVU × GPCI × conversion-factor set. Missing GPCIs are not 1.0.
+ */
+export function rateSupportsFeeSchedulePayment(
+  rate: CodeRateObservation,
+): boolean {
+  if (rate.paymentAmount !== undefined) return true;
+  return (
+    rate.workRvu !== undefined &&
+    rate.practiceExpenseRvu !== undefined &&
+    rate.malpracticeRvu !== undefined &&
+    rate.workGpci !== undefined &&
+    rate.practiceExpenseGpci !== undefined &&
+    rate.malpracticeGpci !== undefined &&
+    rate.conversionFactor !== undefined
   );
 }
 
@@ -262,50 +313,47 @@ export function validateObservationConsistency(
             `${claim.economicUnit} claims require explicit code identifiers.`,
         });
       }
+      if (!claim.payer) {
+        issues.push({
+          code: "missing_claim_payer",
+          path: `claims.${claim.id}.payer`,
+          message: `${claim.economicUnit} claims require an explicit payer.`,
+        });
+      }
+      if (!claim.placeOfService) {
+        issues.push({
+          code: "missing_claim_setting",
+          path: `claims.${claim.id}.placeOfService`,
+          message:
+            `${claim.economicUnit} claims require an explicit place of service.`,
+        });
+      }
     }
 
     const rates = matchingRates(claim, ledger);
-    if (claim.dataYear !== undefined && rates.length > 0) {
-      const mismatchedYears = rates.filter((rate) =>
-        rate.dataYear !== claim.dataYear
-      );
-      for (const rate of mismatchedYears) {
-        issues.push({
-          code: "vintage_mismatch",
-          path: `claims.${claim.id}.dataYear`,
-          message:
-            `Claim vintage ${claim.dataYear} does not match code-rate ${rate.id} vintage ${rate.dataYear}.`,
-        });
-      }
-    }
-
-    if (claim.placeOfService && rates.length > 0) {
-      const mismatchedSetting = rates.filter((rate) =>
-        rate.placeOfService !== claim.placeOfService
-      );
-      for (const rate of mismatchedSetting) {
-        issues.push({
-          code: "setting_mismatch",
-          path: `claims.${claim.id}.placeOfService`,
-          message:
-            `Claim setting ${claim.placeOfService} does not match code-rate ${rate.id} setting ${rate.placeOfService}.`,
-        });
-      }
+    const needsApplicableRate = Boolean(
+      claim.economicUnit && PAYMENT_UNITS.has(claim.economicUnit) &&
+        claim.codes?.length,
+    );
+    if (needsApplicableRate && rates.length === 0) {
+      issues.push({
+        code: "no_applicable_rate",
+        path: `claims.${claim.id}`,
+        message:
+          "No code-rate observation matches this claim's code, payer, vintage, and setting. Unrelated rows are not alternatives.",
+      });
     }
 
     if (
       claim.economicUnit === "fee_schedule_payment" &&
       rates.length > 0 &&
-      rates.every((rate) =>
-        rate.paymentAmount === undefined &&
-        rate.conversionFactor === undefined
-      )
+      !rates.some(rateSupportsFeeSchedulePayment)
     ) {
       issues.push({
         code: "payment_unit_mismatch",
         path: `claims.${claim.id}.economicUnit`,
         message:
-          "fee_schedule_payment claims require a payment amount or RVU × conversion-factor inputs.",
+          "fee_schedule_payment claims require a matching rate with paymentAmount or complete work/PE/MP RVU, GPCI, and conversion-factor inputs. Missing GPCIs are not 1.0.",
       });
     }
 

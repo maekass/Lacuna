@@ -1,11 +1,23 @@
 import {
+  matchingRates,
+  rateSupportsFeeSchedulePayment,
+  validateObservationConsistency,
+} from "./observations";
+import {
   type EvidenceLedger,
   evidenceLedgerSchema,
   type EvidenceStatus,
   type ReimbursementClaim,
   type ReimbursementSource,
 } from "./schema";
-import { validateObservationConsistency } from "./observations";
+import { validateReviewChain } from "./workflow";
+
+const sourceRequiredStatuses = new Set<EvidenceStatus>([
+  "source_verified",
+  "specialist_reviewed",
+  "approved",
+  "published",
+]);
 
 const reviewRequiredStatuses = new Set<EvidenceStatus>([
   "specialist_reviewed",
@@ -173,6 +185,8 @@ export function isClaimPublishable(
   const reviews = ledger.reviews.filter((review) =>
     review.claimId === claim.id
   );
+  if (validateReviewChain(claim, reviews).length > 0) return false;
+
   const hasSpecialistReview = reviews.some(
     (review) =>
       review.reviewerRole === "coding_reimbursement_specialist" &&
@@ -186,8 +200,14 @@ export function isClaimPublishable(
       (review.toStatus === "approved" || review.toStatus === "published") &&
       review.decision === "approve",
   );
+  if (!hasSpecialistReview || !hasPolicyApproval) return false;
 
-  return hasSpecialistReview && hasPolicyApproval;
+  if (claim.economicUnit === "fee_schedule_payment") {
+    const rates = matchingRates(claim, ledger);
+    if (!rates.some(rateSupportsFeeSchedulePayment)) return false;
+  }
+
+  return true;
 }
 
 /**
@@ -251,6 +271,26 @@ export function validateEvidenceLedger(input: unknown): LedgerValidationResult {
           message: `Claim references unknown source ${sourceId}.`,
         });
       }
+    }
+
+    if (
+      sourceRequiredStatuses.has(claim.status) &&
+      claim.sourceIds.length === 0
+    ) {
+      issues.push({
+        code: "missing_source",
+        path: `claims.${claim.id}.sourceIds`,
+        message: `${claim.status} requires at least one attached source.`,
+      });
+    }
+
+    const reviewIssues = validateReviewChain(claim, ledger.reviews);
+    for (const reviewIssue of reviewIssues) {
+      issues.push({
+        code: reviewIssue.code,
+        path: `claims.${claim.id}.reviews`,
+        message: reviewIssue.message,
+      });
     }
 
     if (reviewRequiredStatuses.has(claim.status)) {
