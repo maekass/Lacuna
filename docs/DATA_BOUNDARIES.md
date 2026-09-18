@@ -96,7 +96,7 @@ New data source?
 | `/deals#review` Funding tab          | `lacuna_funding_events`                           |
 | `/research` trial / FDA / CMS panels | Name-search enrichment — not verified M&A         |
 | `/research` cited / affinity panels  | `cited_*` / `affinity` heuristics — research only |
-| `/intelligence` fit / reimbursement  | Affinity scores — not deal premiums or comps      |
+| `/intelligence` fit / reimbursement  | Affinity scores — not deal premiums or comps. SA051 evidence card is investigation-only. |
 | Company enrichment panels            | Context only — does not increment deal counts     |
 
 ---
@@ -106,7 +106,7 @@ New data source?
 `/research` and `/intelligence` may keep heuristic joins (sector/keyword
 affinity, acquirer-fit scores, commercialization readiness, evidence-maturity
 scores) when every row is labeled **`cited_*`** or **`affinity`** (or honest
-`illustrative_static` / `derived_static` context).
+`illustrative_static` / `derived_static` / `illustrative_heuristic` context).
 
 Those scores must **not** feed:
 
@@ -121,6 +121,10 @@ Those scores must **not** feed:
 - Uncalibrated 35% acquisition base rate
 - Editorial Rock Health / PitchBook stage medians as deal prices
 - Affinity-adjusted “fair value” and bidding-war premiums
+- Keyword CPT-presence valuation premiums (`valuation-premium-calculator`) as
+  measured reimbursement evidence — those stay `illustrative_heuristic`.
+  Source-traceable claims live in `src/lib/reimbursement/` and must pass
+  `source_verified → specialist_reviewed → approved` before publish.
 
 Deal dossiers may show analyst-curated HLTH mappings (`curated` only). They must
 not run the research pipeline's sector/keyword affinity join, and
