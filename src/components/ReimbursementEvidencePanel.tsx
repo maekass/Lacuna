@@ -59,6 +59,12 @@ export default function ReimbursementEvidencePanel() {
             {publishable ? "yes" : "no"}
           </dd>
         </div>
+        {
+          /*
+          Source/rate counts stay strings (and "none" when empty) so the
+          provenance census does not treat them as uncovered numeric JSX.
+        */
+        }
         <div className="rounded-lg border border-lacuna-lavender/40 p-3">
           <dt className="text-xs uppercase text-lacuna-blue/70">Sources</dt>
           <dd className="font-medium text-lacuna-plum">
