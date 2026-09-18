@@ -460,6 +460,54 @@ describe("ledger validation and publication gates", () => {
       .toBe(true);
   });
 
+  it("does not let a leftover rejection hide behind a later approval chain", () => {
+    const ledger = approvedLedger();
+    ledger.reviews = [
+      {
+        id: "review:rejected",
+        claimId: baseClaim.id,
+        reviewerRole: "source_reviewer",
+        fromStatus: "machine_proposed",
+        toStatus: "rejected",
+        decision: "reject",
+        reviewedAt: "2026-09-17T04:00:00.000Z",
+      },
+      ...ledger.reviews,
+    ];
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((issue) => issue.code === "review_chain_gap"))
+      .toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+  });
+
+  it("requires every claim to appear on its owning issue", () => {
+    const ledger = approvedLedger();
+    ledger.issues[0] = {
+      ...ledger.issues[0],
+      claimIds: [],
+    };
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((issue) => issue.code === "claim_not_listed"))
+      .toBe(true);
+  });
+
+  it("rejects duplicate claim ids on an issue", () => {
+    const ledger = approvedLedger();
+    ledger.issues[0] = {
+      ...ledger.issues[0],
+      claimIds: [baseClaim.id, baseClaim.id],
+    };
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((issue) => issue.code === "duplicate_claim_id"))
+      .toBe(true);
+  });
+
   it("rejects a closed lineage hop that does not point at a claim", () => {
     const ledger = approvedLedger();
     ledger.lineageHops = [

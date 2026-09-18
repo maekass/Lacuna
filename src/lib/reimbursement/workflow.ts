@@ -12,8 +12,6 @@ const terminalStatuses = new Set<EvidenceStatus>(["rejected", "superseded"]);
 
 const historicalBranchStatuses = new Set<EvidenceStatus>([
   "insufficient_evidence",
-  "rejected",
-  "superseded",
 ]);
 
 const sourceOriginRequiredStatuses = new Set<EvidenceStatus>([
@@ -211,8 +209,8 @@ function reconstructReviewPath(
 }
 
 /**
- * Prior insufficient_evidence / rejected / superseded attempts stay in the
- * ledger as audit history. They are not gaps on a later active path.
+ * Only insufficient_evidence has a legal reopen path. Rejected and superseded
+ * leftovers stay as gaps because those statuses are terminal.
  */
 function leftoverAfterHistoricalBranches(
   leftover: ReviewDecision[],

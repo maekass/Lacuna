@@ -249,11 +249,19 @@ export function validateEvidenceLedger(input: unknown): LedgerValidationResult {
   );
 
   for (const claim of ledger.claims) {
-    if (!issueById.has(claim.issueId)) {
+    const owningIssue = issueById.get(claim.issueId);
+    if (!owningIssue) {
       issues.push({
         code: "unknown_issue",
         path: `claims.${claim.id}.issueId`,
         message: `Claim references unknown issue ${claim.issueId}.`,
+      });
+    } else if (!owningIssue.claimIds.includes(claim.id)) {
+      issues.push({
+        code: "claim_not_listed",
+        path: `issues.${owningIssue.id}.claimIds`,
+        message:
+          `Claim ${claim.id} belongs to issue ${owningIssue.id} but is missing from claimIds.`,
       });
     }
 
@@ -332,7 +340,16 @@ export function validateEvidenceLedger(input: unknown): LedgerValidationResult {
   }
 
   for (const issue of ledger.issues) {
+    const listedClaimIds = new Set<string>();
     for (const claimId of issue.claimIds) {
+      if (listedClaimIds.has(claimId)) {
+        issues.push({
+          code: "duplicate_claim_id",
+          path: `issues.${issue.id}.claimIds`,
+          message: `Issue ${issue.id} lists claim ${claimId} more than once.`,
+        });
+      }
+      listedClaimIds.add(claimId);
       const claim = claimById.get(claimId);
       if (!claim) {
         issues.push({
