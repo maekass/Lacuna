@@ -7,7 +7,6 @@ import {
   InvestmentGradeReimbursementIntel,
   SystemHealthDashboard,
 } from "@/app/lazyDashboard";
-import ExportToGamma from "@/components/ExportToGamma";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import type { ReactNode } from "react";
@@ -83,12 +82,9 @@ export default function IntelligencePage(
       <MotionSection id="export" delay={0.1} className={SECTION}>
         <SectionHeader
           title="Export & share"
-          description="Generate presentations and download dataset exports in multiple formats for analysis and integration."
+          description="Download the verified dataset in JSON, CSV, or Parquet."
         />
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <ExportToGamma />
-          <DataExport />
-        </div>
+        <DataExport />
       </MotionSection>
 
       <MotionSection id="developer-tools" delay={0.15} className={SECTION}>

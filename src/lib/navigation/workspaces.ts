@@ -102,7 +102,8 @@ export const WORKSPACES: Workspace[] = [
     slug: "intelligence",
     href: "/intelligence",
     label: "Intelligence",
-    description: "Reimbursement context, acquirer fit scores, and deck export.",
+    description:
+      "Reimbursement context, acquirer fit scores, and dataset export.",
     tags: ["reimbursement", "fit scores", "export"],
     sections: [
       { id: "reimbursement-intelligence", label: "Reimbursement" },
