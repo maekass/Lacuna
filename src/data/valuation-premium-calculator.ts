@@ -24,8 +24,9 @@ export const REIMBURSEMENT_PREMIUM_PROVENANCE =
  * CPT-presence valuation premiums from this module are never decision-grade.
  */
 export function isDecisionGradeReimbursementPremium(
-  _value: number | null,
+  value: number | null,
 ): false {
+  void value;
   return false;
 }
 
