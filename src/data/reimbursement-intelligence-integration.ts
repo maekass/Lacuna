@@ -1,8 +1,9 @@
 /**
  * Reimbursement Intelligence Integration
  *
- * Integrates CMS reimbursement data with Lacuna's company database
- * to provide comprehensive reimbursement and valuation analysis.
+ * ⚠️ ILLUSTRATIVE HEURISTIC — not the evidence engine.
+ * Fuzzy product-to-code matches and CPT-presence premiums stay isolated from
+ * decision-grade reimbursement claims. See `docs/REIMBURSEMENT_AUDIT.md`.
  */
 
 import {
@@ -41,6 +42,7 @@ export interface ReimbursementAnalysisResult {
     impliedValuation: number | null;
     valuationRange: { low: number | null; high: number | null };
     reimbursementPremium: number | null;
+    premiumProvenance: "illustrative_heuristic" | "withheld";
     confidence: "high" | "medium" | "low";
   };
   sectorBenchmark: {
@@ -158,6 +160,7 @@ export class ReimbursementIntelligenceIntegration {
         impliedValuation: valuation.impliedValuation,
         valuationRange: { low: valuation.rangeLow, high: valuation.rangeHigh },
         reimbursementPremium: valuation.reimbursementPremium,
+        premiumProvenance: valuation.premiumProvenance,
         confidence: valuation.confidence,
       },
       sectorBenchmark: {

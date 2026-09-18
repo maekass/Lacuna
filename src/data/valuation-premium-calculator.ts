@@ -1,8 +1,11 @@
 /**
  * Valuation Premium Calculator
  *
- * Calculates valuation multiples based on reimbursement status
- * and provides comparable company analysis.
+ * ⚠️ ILLUSTRATIVE HEURISTIC — not decision-grade reimbursement evidence.
+ *
+ * CPT-presence multipliers in this file are keyword rules of thumb. They must
+ * not feed the evidence engine, deal economics, valuation peers, or dual-source
+ * badges. See `docs/REIMBURSEMENT_AUDIT.md` and `src/lib/reimbursement/`.
  */
 
 import {
@@ -12,6 +15,19 @@ import {
 import { resolveGrowthRate } from "@/lib/data/growthRateProvider";
 import { isSufficient, missingInput } from "@/lib/quant/estimators";
 import type { QuantValue } from "@/lib/quant/types";
+
+/** Keyword CPT-presence premiums are illustrative, never measured. */
+export const REIMBURSEMENT_PREMIUM_PROVENANCE =
+  "illustrative_heuristic" as const;
+
+/**
+ * CPT-presence valuation premiums from this module are never decision-grade.
+ */
+export function isDecisionGradeReimbursementPremium(
+  _value: number | null,
+): false {
+  return false;
+}
 
 export interface ValuationInput {
   annualRevenue: number;
@@ -25,6 +41,8 @@ export interface ValuationInput {
 export interface ValuationOutput {
   baseMultiple: number | null;
   reimbursementPremium: number | null;
+  /** Always illustrative when a premium number is present. */
+  premiumProvenance: "illustrative_heuristic" | "withheld";
   adjustedMultiple: number | null;
   impliedValuation: number | null;
   rangeLow: number | null;
@@ -198,6 +216,7 @@ export class ValuationPremiumCalculator {
       return {
         baseMultiple: null,
         reimbursementPremium: null,
+        premiumProvenance: "withheld",
         adjustedMultiple: null,
         impliedValuation: null,
         rangeLow: null,
@@ -225,6 +244,7 @@ export class ValuationPremiumCalculator {
       return {
         baseMultiple: null,
         reimbursementPremium: null,
+        premiumProvenance: "withheld",
         adjustedMultiple: null,
         impliedValuation: null,
         rangeLow: null,
@@ -326,6 +346,7 @@ export class ValuationPremiumCalculator {
     return {
       baseMultiple,
       reimbursementPremium,
+      premiumProvenance: REIMBURSEMENT_PREMIUM_PROVENANCE,
       adjustedMultiple,
       impliedValuation,
       rangeLow,
