@@ -78,43 +78,192 @@ def example_batch() -> dict[str, Any]:
     }
 
 
+ARTIFACT_TYPES = {
+    "cms_pfs_rvu",
+    "cms_pfs_rule",
+    "cms_pfs_fact_sheet",
+    "cms_hcpcs",
+    "cms_utilization",
+    "cms_other",
+    "ama_reference",
+    "peer_reviewed_literature",
+    "other_public_source",
+}
+ARTIFACT_FORMATS = {
+    "csv",
+    "xlsx",
+    "json",
+    "pdf",
+    "html",
+    "txt",
+    "parquet",
+    "other",
+}
+STORAGE_POLICIES = {
+    "link_only",
+    "metadata_only",
+    "local_cache_allowed",
+    "full_text_allowed",
+}
+REDISTRIBUTIONS = {"public", "restricted", "unknown"}
+CODE_SYSTEMS = {"CPT", "HCPCS"}
+POSITIVE_OPTIONAL_FIELDS = {
+    "workGpci",
+    "practiceExpenseGpci",
+    "malpracticeGpci",
+    "conversionFactor",
+}
+NONNEGATIVE_OPTIONAL_FIELDS = {
+    "workRvu",
+    "practiceExpenseRvu",
+    "malpracticeRvu",
+    "paymentAmount",
+}
+
+
+def _is_iso_timestamp(value: Any) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _require_text(value: Any) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
 def validate_batch(batch: dict[str, Any]) -> list[str]:
+    """Mirror the TypeScript sidecar contract. Missing required fields fail."""
     errors: list[str] = []
+    if not isinstance(batch, dict):
+        return ["batch must be an object"]
+
     if batch.get("contractVersion") != CONTRACT_VERSION:
         errors.append("contractVersion must be 1.0.0")
-    producer = batch.get("producer") or {}
+    if not _is_iso_timestamp(batch.get("producedAt")):
+        errors.append("producedAt is required")
+
+    producer = batch.get("producer")
+    if not isinstance(producer, dict):
+        errors.append("producer is required")
+        producer = {}
     if producer.get("runtime") not in {"python-duckdb", "typescript"}:
         errors.append("producer.runtime must be python-duckdb or typescript")
-    manifest = batch.get("sourceManifest") or {}
+    if not _require_text(producer.get("name")):
+        errors.append("producer.name is required")
+
+    manifest = batch.get("sourceManifest")
+    if not isinstance(manifest, dict):
+        errors.append("sourceManifest is required")
+        manifest = {}
     if manifest.get("schemaVersion") != MANIFEST_VERSION:
         errors.append("sourceManifest.schemaVersion must be 1.0.0")
-    artifacts = manifest.get("artifacts") or []
-    artifact_ids = {row.get("id") for row in artifacts}
-    output = batch.get("output") or {}
+    if not _is_iso_timestamp(manifest.get("generatedAt")):
+        errors.append("sourceManifest.generatedAt is required")
+    if not _require_text(manifest.get("generatedBy")):
+        errors.append("sourceManifest.generatedBy is required")
+    artifacts = manifest.get("artifacts")
+    if not isinstance(artifacts, list):
+        errors.append("sourceManifest.artifacts must be an array")
+        artifacts = []
+
+    artifact_ids: set[str] = set()
+    seen_ids: set[str] = set()
+    for index, artifact in enumerate(artifacts):
+        if not isinstance(artifact, dict):
+            errors.append(f"sourceManifest.artifacts.{index} must be an object")
+            continue
+        artifact_id = artifact.get("id")
+        if not _require_text(artifact_id):
+            errors.append(f"sourceManifest.artifacts.{index}.id is required")
+        else:
+            if artifact_id in seen_ids:
+                errors.append(f"duplicate source artifact id: {artifact_id}")
+            seen_ids.add(artifact_id)
+            artifact_ids.add(artifact_id)
+        for field in ("title", "publisher", "sourceUrl", "retrievedAt"):
+            if not _require_text(artifact.get(field)):
+                errors.append(
+                    f"sourceManifest.artifacts.{index}.{field} is required",
+                )
+        if artifact.get("artifactType") not in ARTIFACT_TYPES:
+            errors.append(
+                f"sourceManifest.artifacts.{index}.artifactType is invalid",
+            )
+        if artifact.get("format") not in ARTIFACT_FORMATS:
+            errors.append(f"sourceManifest.artifacts.{index}.format is invalid")
+        if artifact.get("storagePolicy") not in STORAGE_POLICIES:
+            errors.append(
+                f"sourceManifest.artifacts.{index}.storagePolicy is invalid",
+            )
+        if artifact.get("redistribution") not in REDISTRIBUTIONS:
+            errors.append(
+                f"sourceManifest.artifacts.{index}.redistribution is invalid",
+            )
+        if (
+            artifact.get("storagePolicy") == "link_only"
+            and artifact.get("localPath")
+        ):
+            errors.append(
+                f"sourceManifest.artifacts.{index}.localPath is not allowed for link_only",
+            )
+        if (
+            artifact.get("redistribution") == "restricted"
+            and artifact.get("storagePolicy") == "full_text_allowed"
+        ):
+            errors.append(
+                f"sourceManifest.artifacts.{index} restricted artifacts cannot be full_text_allowed",
+            )
+
+    output = batch.get("output")
+    if not isinstance(output, dict):
+        errors.append("output is required")
+        output = {}
+    if output.get("format") not in {"json", "parquet"}:
+        errors.append("output.format must be json or parquet")
     if output.get("format") == "parquet" and not output.get("parquetPath"):
         errors.append("parquet output requires parquetPath")
-    for index, row in enumerate(batch.get("observations") or []):
+
+    observations = batch.get("observations")
+    if observations is None:
+        observations = []
+    if not isinstance(observations, list):
+        errors.append("observations must be an array")
+        return errors
+
+    for index, row in enumerate(observations):
+        if not isinstance(row, dict):
+            errors.append(f"observations.{index} must be an object")
+            continue
         if row.get("sourceArtifactId") not in artifact_ids:
             errors.append(
                 f"observations.{index}.sourceArtifactId is not in the manifest",
             )
-        if row.get("dataYear") is None:
-            errors.append(f"observations.{index}.dataYear is required")
-        for field in (
-            "workRvu",
-            "practiceExpenseRvu",
-            "malpracticeRvu",
-            "workGpci",
-            "practiceExpenseGpci",
-            "malpracticeGpci",
-            "conversionFactor",
-            "paymentAmount",
-        ):
-            if field in row and row[field] is None:
+        for field in ("code", "payer", "placeOfService", "observedAt"):
+            if not _require_text(row.get(field)):
+                errors.append(f"observations.{index}.{field} is required")
+        if row.get("codeSystem") not in CODE_SYSTEMS:
+            errors.append(f"observations.{index}.codeSystem must be CPT or HCPCS")
+        data_year = row.get("dataYear")
+        if not isinstance(data_year, int) or data_year < 2000 or data_year > 2100:
+            errors.append(
+                f"observations.{index}.dataYear is required and must be 2000-2100",
+            )
+        if row.get("missingAsZero"):
+            errors.append(
+                f"observations.{index} must not coerce missing fields to zero",
+            )
+        for field in NONNEGATIVE_OPTIONAL_FIELDS | POSITIVE_OPTIONAL_FIELDS:
+            if field not in row or row[field] is None:
                 continue
-            if row.get("missingAsZero"):
+            value = row[field]
+            if not isinstance(value, (int, float)) or isinstance(value, bool):
+                errors.append(f"observations.{index}.{field} must be a number")
+                continue
+            if field in POSITIVE_OPTIONAL_FIELDS and value <= 0:
                 errors.append(
-                    f"observations.{index}.{field} must not coerce missing to zero",
+                    f"observations.{index}.{field} must be positive when present",
+                )
+            elif field in NONNEGATIVE_OPTIONAL_FIELDS and value < 0:
+                errors.append(
+                    f"observations.{index}.{field} must be nonnegative when present",
                 )
     return errors
 

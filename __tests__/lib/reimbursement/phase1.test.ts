@@ -1,5 +1,6 @@
 import { execFileSync } from "node:child_process";
-import { readdirSync, readFileSync } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { GET } from "@/app/api/reimbursement/evidence/route";
@@ -153,5 +154,33 @@ describe("Python ingestion sidecar", () => {
     const result = validateIngestedObservationBatch(batch);
     expect(result.ok).toBe(true);
     expect(result.observations).toEqual([]);
+  });
+
+  it("rejects an incomplete sidecar in both Python and TypeScript validators", () => {
+    const invalid = {
+      contractVersion: "1.0.0",
+      producer: { runtime: "typescript" },
+      sourceManifest: { schemaVersion: "1.0.0" },
+      output: {},
+      observations: [],
+    };
+    expect(validateIngestedObservationBatch(invalid).ok).toBe(false);
+
+    const tmp = path.join(os.tmpdir(), "reimbursement-invalid-sidecar.json");
+    writeFileSync(tmp, JSON.stringify(invalid));
+    expect(() =>
+      execFileSync(
+        "python3",
+        [
+          path.resolve(
+            process.cwd(),
+            "scripts/reimbursement/ingestion_contract.py",
+          ),
+          "--validate",
+          tmp,
+        ],
+        { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
+      )
+    ).toThrow();
   });
 });

@@ -1,6 +1,5 @@
 import {
-  matchingRates,
-  rateSupportsFeeSchedulePayment,
+  observationIssuesForClaim,
   validateObservationConsistency,
 } from "./observations";
 import {
@@ -202,13 +201,7 @@ export function isClaimPublishable(
   );
   if (!hasSpecialistReview || !hasPolicyApproval) return false;
 
-  if (claim.economicUnit === "fee_schedule_payment") {
-    if (!claim.locality) return false;
-    const rates = matchingRates(claim, ledger);
-    if (!rates.some(rateSupportsFeeSchedulePayment)) return false;
-  }
-
-  return true;
+  return observationIssuesForClaim(claim, ledger).length === 0;
 }
 
 /**

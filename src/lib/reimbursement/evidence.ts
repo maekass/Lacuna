@@ -85,6 +85,7 @@ export type {
 export {
   matchingRates,
   normalizeCmsObservation,
+  observationIssuesForClaim,
   rateSupportsFeeSchedulePayment,
   rejectMissingAsZero,
   validateObservationConsistency,

@@ -381,3 +381,18 @@ export function validateObservationConsistency(
 
   return issues;
 }
+
+/**
+ * Claim-level observation issues used by both ledger validation and
+ * publication. Rate-level issues are excluded so a claim is judged on its
+ * own dimensions and matching rates.
+ */
+export function observationIssuesForClaim(
+  claim: ReimbursementClaim,
+  ledger: EvidenceLedger,
+): ObservationConsistencyIssue[] {
+  const prefix = `claims.${claim.id}`;
+  return validateObservationConsistency(ledger).filter((issue) =>
+    issue.path === prefix || issue.path.startsWith(`${prefix}.`)
+  );
+}

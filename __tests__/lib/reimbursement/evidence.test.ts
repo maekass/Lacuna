@@ -390,6 +390,55 @@ describe("ledger validation and publication gates", () => {
     expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(true);
   });
 
+  it("does not publish unsupported economic units without observation dimensions", () => {
+    const units = [
+      "allowed_amount",
+      "fee_schedule_payment",
+      "reimbursement_per_hour",
+      "modeled_exposure",
+    ] as const;
+
+    for (const economicUnit of units) {
+      const ledger = approvedLedger();
+      ledger.claims[0] = {
+        ...ledger.claims[0],
+        kind: economicUnit === "modeled_exposure"
+          ? "modeled_estimate"
+          : "calculation",
+        economicUnit,
+        ...(economicUnit === "modeled_exposure"
+          ? { assumptions: ["Modeled until utilization is sourced."] }
+          : {}),
+      };
+
+      expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+      expect(validateEvidenceLedger(ledger).ok).toBe(false);
+    }
+  });
+
+  it("accepts a machine-reopened claim that still holds the prior insufficient-evidence review", () => {
+    const ledger = approvedLedger();
+    ledger.claims[0] = {
+      ...ledger.claims[0],
+      status: "machine_proposed",
+    };
+    ledger.reviews = [
+      {
+        id: "review:insufficient",
+        claimId: baseClaim.id,
+        reviewerRole: "source_reviewer",
+        fromStatus: "machine_proposed",
+        toStatus: "insufficient_evidence",
+        decision: "needs_more_evidence",
+        reviewedAt: now,
+      },
+    ];
+
+    expect(validateReviewChain(ledger.claims[0], ledger.reviews)).toEqual([]);
+    expect(validateEvidenceLedger(ledger).ok).toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+  });
+
   it("does not publish a fee-schedule claim that has no reproducible rate", () => {
     const ledger = approvedLedger();
     ledger.claims[0] = {

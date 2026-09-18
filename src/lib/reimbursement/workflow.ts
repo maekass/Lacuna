@@ -279,7 +279,8 @@ export function validateReviewChain(
     }
   }
 
-  for (const review of leftoverAfterHistoricalBranches(leftover)) {
+  const leftoverGaps = leftoverAfterHistoricalBranches(leftover);
+  for (const review of leftoverGaps) {
     issues.push({
       code: "review_chain_gap",
       message:
@@ -300,8 +301,15 @@ export function validateReviewChain(
     }
   }
 
+  const reopenedInitialState = claim.status === "machine_proposed" &&
+    ordered.length === 0 &&
+    leftoverGaps.length === 0;
+
   const last = ordered[ordered.length - 1];
-  if (!last || last.toStatus !== claim.status) {
+  if (
+    !reopenedInitialState &&
+    (!last || last.toStatus !== claim.status)
+  ) {
     issues.push({
       code: "review_chain_status_mismatch",
       message: `Review chain does not reach claim status ${claim.status}.`,
