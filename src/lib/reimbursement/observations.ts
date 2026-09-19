@@ -1,4 +1,3 @@
-import { selectLatestVintageObservations } from "@/lib/data/cmsObservationVintage";
 import type {
   CodeRateObservation,
   EconomicUnit,
@@ -31,6 +30,9 @@ export interface RawCmsRateObservation {
   workRvu?: number | null;
   practiceExpenseRvu?: number | null;
   malpracticeRvu?: number | null;
+  workGpci?: number | null;
+  practiceExpenseGpci?: number | null;
+  malpracticeGpci?: number | null;
   conversionFactor?: number | null;
   paymentAmount?: number | null;
   sourceId: string;
@@ -42,12 +44,16 @@ export interface NormalizedCmsObservation {
   code: string;
   codeSystem: CodeRateObservation["codeSystem"];
   dataYear: number;
+  ruleCycle?: string;
   payer: string;
   locality?: string;
   placeOfService: string;
   workRvu?: number;
   practiceExpenseRvu?: number;
   malpracticeRvu?: number;
+  workGpci?: number;
+  practiceExpenseGpci?: number;
+  malpracticeGpci?: number;
   conversionFactor?: number;
   paymentAmount?: number;
   sourceId: string;
@@ -75,9 +81,21 @@ const optionalNumericFields = [
   "workRvu",
   "practiceExpenseRvu",
   "malpracticeRvu",
+  "workGpci",
+  "practiceExpenseGpci",
+  "malpracticeGpci",
   "conversionFactor",
   "paymentAmount",
 ] as const;
+
+const POSITIVE_OPTIONAL_FIELDS = new Set<
+  (typeof optionalNumericFields)[number]
+>([
+  "workGpci",
+  "practiceExpenseGpci",
+  "malpracticeGpci",
+  "conversionFactor",
+]);
 
 function isPresentNumber(value: number | null | undefined): value is number {
   return typeof value === "number" && Number.isFinite(value);
@@ -128,10 +146,10 @@ export function normalizeCmsObservation(
         code: "invalid_numeric",
         message: `${field} must be a finite number when present.`,
       });
-    } else if (field === "conversionFactor" && value <= 0) {
+    } else if (POSITIVE_OPTIONAL_FIELDS.has(field) && value <= 0) {
       issues.push({
         code: "invalid_numeric",
-        message: "conversionFactor must be positive when present.",
+        message: `${field} must be positive when present.`,
       });
     } else if (value < 0) {
       issues.push({
@@ -151,6 +169,7 @@ export function normalizeCmsObservation(
     codeSystem: raw.codeSystem,
     dataYear: raw.dataYear as number,
     payer: raw.payer.trim(),
+    ...(raw.ruleCycle?.trim() ? { ruleCycle: raw.ruleCycle.trim() } : {}),
     ...(raw.locality?.trim() ? { locality: raw.locality.trim() } : {}),
     placeOfService: raw.placeOfService.trim(),
     sourceId: raw.sourceId,
@@ -158,6 +177,9 @@ export function normalizeCmsObservation(
     presentFields,
     missingFields,
   };
+
+  if (observation.ruleCycle) presentFields.push("ruleCycle");
+  if (observation.locality) presentFields.push("locality");
 
   for (const field of optionalNumericFields) {
     const value = raw[field];
@@ -198,65 +220,50 @@ export function rejectMissingAsZero(
   return null;
 }
 
-export interface VintageAwareRateRow {
-  code: string;
-  dataYear: number;
-}
-
 /**
- * Keep one CMS vintage, then one row per code. Does not sum years.
+ * Rates that share every identifying dimension the claim actually states.
+ * Unrelated vintages, payers, or settings stay out of the applicable set.
  */
-export function selectLatestVintageRates<T extends VintageAwareRateRow>(
-  rows: T[],
-): {
-  vintage: number | null;
-  rows: T[];
-  droppedOlderYearCount: number;
-  droppedDuplicateCodeCount: number;
-} {
-  const selected = selectLatestVintageObservations(
-    rows.map((row) => ({ cptCode: row.code, dataYear: row.dataYear })),
-  );
-  if (selected.vintage === null) {
-    return {
-      vintage: null,
-      rows: [],
-      droppedOlderYearCount: 0,
-      droppedDuplicateCodeCount: 0,
-    };
-  }
-
-  const vintage = selected.vintage;
-  const latest = rows.filter((row) => row.dataYear === vintage);
-  const seen = new Set<string>();
-  const out: T[] = [];
-  let droppedDuplicateCodeCount = 0;
-  for (const row of latest) {
-    if (seen.has(row.code)) {
-      droppedDuplicateCodeCount += 1;
-      continue;
-    }
-    seen.add(row.code);
-    out.push(row);
-  }
-
-  return {
-    vintage,
-    rows: out,
-    droppedOlderYearCount: selected.droppedOlderYearCount,
-    droppedDuplicateCodeCount,
-  };
-}
-
-function matchingRates(
+export function matchingRates(
   claim: ReimbursementClaim,
   ledger: EvidenceLedger,
 ): CodeRateObservation[] {
   const codes = new Set(claim.codes ?? []);
   if (codes.size === 0) return [];
-  return ledger.codeRates.filter((rate) =>
-    codes.has(rate.code) &&
-    (!claim.codeSystem || rate.codeSystem === claim.codeSystem)
+  return ledger.codeRates.filter((rate) => {
+    if (!codes.has(rate.code)) return false;
+    if (claim.codeSystem && rate.codeSystem !== claim.codeSystem) return false;
+    if (claim.payer && rate.payer !== claim.payer) return false;
+    if (claim.dataYear !== undefined && rate.dataYear !== claim.dataYear) {
+      return false;
+    }
+    if (
+      claim.placeOfService && rate.placeOfService !== claim.placeOfService
+    ) {
+      return false;
+    }
+    if (claim.locality && rate.locality !== claim.locality) return false;
+    if (!claim.sourceIds.includes(rate.sourceId)) return false;
+    return true;
+  });
+}
+
+/**
+ * A fee-schedule claim is reproducible only from a sourced payment amount or
+ * the complete RVU × GPCI × conversion-factor set. Missing GPCIs are not 1.0.
+ */
+export function rateSupportsFeeSchedulePayment(
+  rate: CodeRateObservation,
+): boolean {
+  if (rate.paymentAmount !== undefined) return true;
+  return (
+    rate.workRvu !== undefined &&
+    rate.practiceExpenseRvu !== undefined &&
+    rate.malpracticeRvu !== undefined &&
+    rate.workGpci !== undefined &&
+    rate.practiceExpenseGpci !== undefined &&
+    rate.malpracticeGpci !== undefined &&
+    rate.conversionFactor !== undefined
   );
 }
 
@@ -281,18 +288,6 @@ export function validateObservationConsistency(
           "Code-rate observation has neither RVU components nor a payment amount. Missing is not zero.",
       });
     }
-    if (
-      rate.paymentAmount === undefined &&
-      hasRvu &&
-      rate.conversionFactor === undefined
-    ) {
-      issues.push({
-        code: "missing_conversion_factor",
-        path: `codeRates.${rate.id}.conversionFactor`,
-        message:
-          "RVU components without a conversion factor cannot produce a fee-schedule payment.",
-      });
-    }
   }
 
   for (const claim of ledger.claims) {
@@ -313,50 +308,56 @@ export function validateObservationConsistency(
             `${claim.economicUnit} claims require explicit code identifiers.`,
         });
       }
+      if (!claim.payer) {
+        issues.push({
+          code: "missing_claim_payer",
+          path: `claims.${claim.id}.payer`,
+          message: `${claim.economicUnit} claims require an explicit payer.`,
+        });
+      }
+      if (!claim.placeOfService) {
+        issues.push({
+          code: "missing_claim_setting",
+          path: `claims.${claim.id}.placeOfService`,
+          message:
+            `${claim.economicUnit} claims require an explicit place of service.`,
+        });
+      }
+    }
+
+    if (claim.economicUnit === "fee_schedule_payment" && !claim.locality) {
+      issues.push({
+        code: "missing_claim_locality",
+        path: `claims.${claim.id}.locality`,
+        message:
+          "fee_schedule_payment claims require an explicit locality. National rows use locality 00; missing is not national.",
+      });
     }
 
     const rates = matchingRates(claim, ledger);
-    if (claim.dataYear !== undefined && rates.length > 0) {
-      const mismatchedYears = rates.filter((rate) =>
-        rate.dataYear !== claim.dataYear
-      );
-      for (const rate of mismatchedYears) {
-        issues.push({
-          code: "vintage_mismatch",
-          path: `claims.${claim.id}.dataYear`,
-          message:
-            `Claim vintage ${claim.dataYear} does not match code-rate ${rate.id} vintage ${rate.dataYear}.`,
-        });
-      }
-    }
-
-    if (claim.placeOfService && rates.length > 0) {
-      const mismatchedSetting = rates.filter((rate) =>
-        rate.placeOfService !== claim.placeOfService
-      );
-      for (const rate of mismatchedSetting) {
-        issues.push({
-          code: "setting_mismatch",
-          path: `claims.${claim.id}.placeOfService`,
-          message:
-            `Claim setting ${claim.placeOfService} does not match code-rate ${rate.id} setting ${rate.placeOfService}.`,
-        });
-      }
+    const needsApplicableRate = Boolean(
+      claim.economicUnit && PAYMENT_UNITS.has(claim.economicUnit) &&
+        claim.codes?.length,
+    );
+    if (needsApplicableRate && rates.length === 0) {
+      issues.push({
+        code: "no_applicable_rate",
+        path: `claims.${claim.id}`,
+        message:
+          "No code-rate observation matches this claim's cited source, code, payer, vintage, locality, and setting. Unrelated rows are not alternatives.",
+      });
     }
 
     if (
       claim.economicUnit === "fee_schedule_payment" &&
       rates.length > 0 &&
-      rates.every((rate) =>
-        rate.paymentAmount === undefined &&
-        rate.conversionFactor === undefined
-      )
+      !rates.some(rateSupportsFeeSchedulePayment)
     ) {
       issues.push({
         code: "payment_unit_mismatch",
         path: `claims.${claim.id}.economicUnit`,
         message:
-          "fee_schedule_payment claims require a payment amount or RVU × conversion-factor inputs.",
+          "fee_schedule_payment claims require a matching rate with paymentAmount or complete work/PE/MP RVU, GPCI, and conversion-factor inputs. Missing GPCIs are not 1.0.",
       });
     }
 
@@ -379,4 +380,19 @@ export function validateObservationConsistency(
   }
 
   return issues;
+}
+
+/**
+ * Claim-level observation issues used by both ledger validation and
+ * publication. Rate-level issues are excluded so a claim is judged on its
+ * own dimensions and matching rates.
+ */
+export function observationIssuesForClaim(
+  claim: ReimbursementClaim,
+  ledger: EvidenceLedger,
+): ObservationConsistencyIssue[] {
+  const prefix = `claims.${claim.id}`;
+  return validateObservationConsistency(ledger).filter((issue) =>
+    issue.path === prefix || issue.path.startsWith(`${prefix}.`)
+  );
 }

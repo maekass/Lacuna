@@ -37,4 +37,5 @@ Lacuna-authored investigation language.
 
 - Architecture:
   [REIMBURSEMENT_EVIDENCE_ENGINE.md](./REIMBURSEMENT_EVIDENCE_ENGINE.md)
+- IP boundary: [REIMBURSEMENT_IP_BOUNDARY.md](./REIMBURSEMENT_IP_BOUNDARY.md)
 - Source manifest: `src/lib/reimbursement/sourceManifest.ts`

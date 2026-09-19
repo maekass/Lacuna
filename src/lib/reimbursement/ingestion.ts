@@ -35,6 +35,9 @@ export const ingestedRateRowSchema = z.object({
   workRvu: z.number().nonnegative().nullable().optional(),
   practiceExpenseRvu: z.number().nonnegative().nullable().optional(),
   malpracticeRvu: z.number().nonnegative().nullable().optional(),
+  workGpci: z.number().positive().nullable().optional(),
+  practiceExpenseGpci: z.number().positive().nullable().optional(),
+  malpracticeGpci: z.number().positive().nullable().optional(),
   conversionFactor: z.number().positive().nullable().optional(),
   paymentAmount: z.number().nonnegative().nullable().optional(),
   sourceArtifactId: z.string().trim().min(1),
@@ -63,6 +66,9 @@ export const ingestedObservationBatchSchema = z.object({
       path: ["output", "parquetPath"],
     });
   }
+
+  // Empty JSON observations are allowed: a catalog-only sidecar may register
+  // public sources without asserting rate rows. Missing is not zero.
 });
 
 export type IngestedRateRow = z.infer<typeof ingestedRateRowSchema>;
@@ -96,6 +102,9 @@ function toRawObservation(row: IngestedRateRow): RawCmsRateObservation {
     workRvu: row.workRvu,
     practiceExpenseRvu: row.practiceExpenseRvu,
     malpracticeRvu: row.malpracticeRvu,
+    workGpci: row.workGpci,
+    practiceExpenseGpci: row.practiceExpenseGpci,
+    malpracticeGpci: row.malpracticeGpci,
     conversionFactor: row.conversionFactor,
     paymentAmount: row.paymentAmount,
     sourceId: row.sourceArtifactId,
@@ -129,9 +138,8 @@ function mapManifestIssues(
  * is copied into the reimbursement evidence ledger.
  *
  * Parquet files stay outside the Next.js runtime: the sidecar JSON carries
- * the contract, source manifest, and `parquetPath`. JSON batches inline rows.
- * An empty `observations` array is valid — Phase 1 may catalog sources
- * without asserting rates.
+ * the contract, source manifest, and `parquetPath`. JSON batches may inline
+ * rows or stay empty as a catalog-only provenance document.
  */
 export function validateIngestedObservationBatch(
   input: unknown,

@@ -76,23 +76,14 @@ export const reimbursementSourceArtifactSchema = z.object({
     });
   }
 
-  if (artifact.storagePolicy === "link_only" && artifact.localPath) {
+  if (
+    artifact.storagePolicy === "link_only" &&
+    artifact.localPath
+  ) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       message: "link_only artifacts must not declare a localPath.",
       path: ["localPath"],
-    });
-  }
-
-  if (
-    artifact.artifactType === "ama_reference" &&
-    artifact.storagePolicy === "full_text_allowed"
-  ) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message:
-        "AMA/CPT artifacts cannot be full_text_allowed unless a recorded license note is present and storage is not the public default.",
-      path: ["storagePolicy"],
     });
   }
 });

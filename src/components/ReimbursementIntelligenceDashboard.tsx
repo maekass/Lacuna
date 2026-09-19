@@ -5,8 +5,7 @@
  *
  * ⚠️ ILLUSTRATIVE HEURISTIC — not mounted on `/intelligence`.
  * The live Intelligence reimbursement section is
- * `InvestmentGradeReimbursementIntel` (verified deals) plus
- * `ReimbursementEvidencePanel` (SA051 investigation).
+ * `InvestmentGradeReimbursementIntel` (verified deals only).
  * See `docs/REIMBURSEMENT_AUDIT.md`.
  */
 
@@ -130,14 +129,6 @@ export default function ReimbursementIntelligenceDashboard() {
   return (
     <div className="space-y-6">
       <CuratedDatasetBanner />
-      <p
-        role="status"
-        className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-950"
-      >
-        <strong>Illustrative heuristic — not decision-grade.</strong>{" "}
-        CPT-presence valuation premiums in this unused dashboard must not be
-        published as measured reimbursement evidence.
-      </p>
       <CmsUtilizationFallbackNotice />
       {/* Overview Stats */}
       {stats && (

@@ -6,25 +6,24 @@ from decision-grade evidence.
 
 ## Decision-grade path (evidence engine)
 
-| Path                                            | Role                                                      |
-| ----------------------------------------------- | --------------------------------------------------------- |
-| `src/lib/reimbursement/schema.ts`               | Canonical issue / claim / source / rate / review contract |
-| `src/lib/reimbursement/workflow.ts`             | `source_verified → specialist_reviewed → approved`        |
-| `src/lib/reimbursement/validation.ts`           | Ledger integrity and publishability gates                 |
-| `src/lib/reimbursement/observations.ts`         | Vintage-aware CMS normalization; missing ≠ 0              |
-| `src/lib/reimbursement/payment.ts`              | Deterministic PFS formula from explicit inputs            |
-| `src/lib/reimbursement/sourceManifest.ts`       | Public-source ingestion provenance                        |
-| `src/lib/reimbursement/ingestion.ts`            | Python + DuckDB / Parquet → TypeScript contract           |
-| `src/lib/reimbursement/lineage.ts`              | SA051 hop-order checks; no economics on investigation     |
-| `src/data/reimbursement-evidence-sa051.ts`      | SA051 investigation target (no economics)                 |
-| `src/data/reimbursement-source-manifest.ts`     | Public CMS catalog URLs only                              |
-| `scripts/reimbursement/ingestion_contract.py`   | Python sidecar producer for the TypeScript adapter        |
-| `src/app/api/reimbursement/evidence/route.ts`   | Read-only ledger + publishability status                  |
-| `src/components/ReimbursementEvidencePanel.tsx` | Investigation card on `/intelligence`                     |
+| Path                                                  | Role                                                      |
+| ----------------------------------------------------- | --------------------------------------------------------- |
+| `src/lib/reimbursement/schema.ts`                     | Canonical issue / claim / source / rate / review contract |
+| `src/lib/reimbursement/workflow.ts`                   | `source_verified → specialist_reviewed → approved`        |
+| `src/lib/reimbursement/validation.ts`                 | Ledger integrity and publishability gates                 |
+| `src/lib/reimbursement/observations.ts`               | Vintage-aware CMS normalization; missing ≠ 0              |
+| `src/lib/reimbursement/payment.ts`                    | Deterministic PFS formula from explicit inputs            |
+| `src/lib/reimbursement/sourceManifest.ts`             | Public-source ingestion provenance                        |
+| `src/lib/reimbursement/ingestion.ts`                  | Python + DuckDB / Parquet → TypeScript contract           |
+| `src/data/reimbursement-evidence-prototype.ts`        | SA051 investigation target (no economics)                 |
+| `src/data/reimbursement-source-manifest-prototype.ts` | Public CMS catalog URLs only                              |
+| `src/lib/reimbursement/lineage.ts`                    | SA051 hop order; flags economic assertions                |
+| `src/app/api/reimbursement/evidence/route.ts`         | Read-only GET; never publishable for the Phase 1 seed     |
+| `src/components/ReimbursementEvidencePanel.tsx`       | Intelligence investigation card                           |
+| `scripts/reimbursement/ingestion_contract.py`         | Python sidecar example (catalog-only, no rates)           |
 
 The Intelligence workspace already uses `InvestmentGradeReimbursementIntel`,
-which reads verified deals only. The SA051 panel is investigation status, not
-payment.
+which reads verified deals only.
 
 ## Illustrative / heuristic — not decision-grade
 
@@ -43,8 +42,8 @@ not feed published evidence, deal economics, or dual-source badges.
 
 `ReimbursementIntelligenceDashboard` and `BusinessModelClassifier` are exported
 from `src/app/lazyDashboard.tsx` but are **not mounted** on `/intelligence`. The
-live reimbursement section is verified-deal context plus the SA051 investigation
-card.
+live reimbursement section is the SA051 investigation card plus verified-deal
+context. Neither path publishes heuristic premiums.
 
 ## Guardrails encoded in code
 
@@ -53,6 +52,7 @@ card.
 - Keyword CPT-presence premiums return
   `premiumProvenance: "illustrative_heuristic"` and
   `isDecisionGradeReimbursementPremium()` is always false.
-- SA051 is seeded as `machine_proposed` with no sources, rates, or dollar claims
-  until a reviewer attaches a vintage-specific public file.
-- `GET /api/reimbursement/evidence` reports `publishable: false` for the seed.
+- SA051 is seeded as `machine_proposed` with lineage hops but no sources, rates,
+  or dollar claims until a reviewer attaches a vintage-specific public file.
+- CPT descriptors are out of scope until licensed. See
+  [REIMBURSEMENT_CPT_LICENSING.md](./REIMBURSEMENT_CPT_LICENSING.md).

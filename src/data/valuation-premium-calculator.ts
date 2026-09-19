@@ -5,7 +5,8 @@
  *
  * CPT-presence multipliers in this file are keyword rules of thumb. They must
  * not feed the evidence engine, deal economics, valuation peers, or dual-source
- * badges. See `docs/REIMBURSEMENT_AUDIT.md` and `src/lib/reimbursement/`.
+ * badges. See `docs/REIMBURSEMENT_AUDIT.md` and
+ * `src/lib/reimbursement/`.
  */
 
 import {
@@ -24,9 +25,8 @@ export const REIMBURSEMENT_PREMIUM_PROVENANCE =
  * CPT-presence valuation premiums from this module are never decision-grade.
  */
 export function isDecisionGradeReimbursementPremium(
-  value: number | null,
+  _value: number | null,
 ): false {
-  void value;
   return false;
 }
 
