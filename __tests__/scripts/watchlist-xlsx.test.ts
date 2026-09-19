@@ -13,18 +13,32 @@ function unzipText(xlsxPath: string, entry: string): string {
 }
 
 function decodeXml(text: string): string {
-  return text
-    .replaceAll("&amp;", "&")
-    .replaceAll("&lt;", "<")
-    .replaceAll("&gt;", ">")
-    .replaceAll("&quot;", '"')
-    .replaceAll("&apos;", "'")
-    .replaceAll("&#8212;", "—")
-    .replace(/&#(\d+);/g, (_, n: string) => String.fromCharCode(Number(n)))
-    .replace(
-      /&#x([0-9a-fA-F]+);/g,
-      (_, n: string) => String.fromCharCode(Number.parseInt(n, 16)),
-    );
+  return text.replace(
+    /&(#x[0-9a-f]+|#\d+|[a-z]+);/gi,
+    (entity, body: string) => {
+      switch (body.toLowerCase()) {
+        case "amp":
+          return "&";
+        case "lt":
+          return "<";
+        case "gt":
+          return ">";
+        case "quot":
+          return '"';
+        case "apos":
+          return "'";
+        default:
+          break;
+      }
+      if (body.charAt(0) !== "#") return entity;
+      const hex = body.charAt(1) === "x" || body.charAt(1) === "X";
+      const digits = hex ? body.slice(2) : body.slice(1);
+      const code = hex ? Number.parseInt(digits, 16) : Number(digits);
+      if (!Number.isFinite(code) || code < 1) return entity;
+      if (code === 8212) return "—";
+      return String.fromCharCode(code);
+    },
+  );
 }
 
 function colRow(ref: string): [number, number] {

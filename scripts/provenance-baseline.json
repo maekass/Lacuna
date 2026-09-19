@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "total": 1022,
+  "total": 1017,
   "covered": 20,
   "exempt": 2,
-  "uncovered": 1000,
+  "uncovered": 995,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
     "src/app/sections/ConsumerHealthPage.tsx": 6,
@@ -47,7 +47,6 @@
     "src/components/EvidenceMaturityDashboard.tsx": 17,
     "src/components/EvidenceTimeline.tsx": 8,
     "src/components/ExitPredictor.tsx": 13,
-    "src/components/ExportToGamma.tsx": 5,
     "src/components/FairnessAuditV2.tsx": 46,
     "src/components/FairnessLimitations.tsx": 11,
     "src/components/ForceNetwork.tsx": 3,
@@ -3557,46 +3556,6 @@
       "expression": "verifiedCompanies.length",
       "kind": "numeric-jsx",
       "key": "src/components/ExitPredictor.tsx::ExitPredictor::verifiedCompanies.length",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ExportToGamma.tsx",
-      "functionName": "ExportToGamma",
-      "expression": "2",
-      "kind": "numeric-jsx",
-      "key": "src/components/ExportToGamma.tsx::ExportToGamma::2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ExportToGamma.tsx",
-      "functionName": "ExportToGamma",
-      "expression": "2",
-      "kind": "numeric-jsx",
-      "key": "src/components/ExportToGamma.tsx::ExportToGamma::2#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ExportToGamma.tsx",
-      "functionName": "ExportToGamma",
-      "expression": "formatLacunaForGamma(rawDataset, scope)",
-      "kind": "formatting-call",
-      "key": "src/components/ExportToGamma.tsx::ExportToGamma::formatLacunaForGamma(rawDataset, scope)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ExportToGamma.tsx",
-      "functionName": "ExportToGamma",
-      "expression": "verifiedAcquisitions.length",
-      "kind": "numeric-jsx",
-      "key": "src/components/ExportToGamma.tsx::ExportToGamma::verifiedAcquisitions.length",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ExportToGamma.tsx",
-      "functionName": "ExportToGamma",
-      "expression": "verifiedCompanies.length",
-      "kind": "numeric-jsx",
-      "key": "src/components/ExportToGamma.tsx::ExportToGamma::verifiedCompanies.length",
       "class": "uncovered"
     },
     {

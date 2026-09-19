@@ -14,8 +14,7 @@ interface ToolLink {
 const TOOLS: ToolLink[] = [
   {
     name: "API Reference",
-    description:
-      "REST API documentation for dataset access and Gamma integration",
+    description: "REST API documentation for dataset access",
     href: "/api/docs",
     type: "api",
   },
@@ -50,12 +49,6 @@ const TOOLS: ToolLink[] = [
     description: "Methodology and limitations for Exit Predictor scoring",
     href: "https://github.com/maekass/Lacuna/blob/main/docs/MODEL_CARD.md",
     type: "docs",
-  },
-  {
-    name: "Gamma API Docs",
-    description: "External documentation for presentation generation API",
-    href: "https://developers.gamma.app",
-    type: "api",
   },
   {
     name: "ClinicalTrials.gov API",
