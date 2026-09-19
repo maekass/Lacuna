@@ -37,8 +37,7 @@ A model must never write directly to `approved` or `published`.
 
 ## Core entities
 
-Canonical schemas live in `src/lib/reimbursement/schema.ts`. Compat re-exports
-are in `src/lib/reimbursement/evidence.ts`.
+The first domain model lives in `src/lib/reimbursement/evidence.ts`.
 
 - `ReimbursementIssue` — business/policy question being investigated
 - `ReimbursementClaim` — atomic statement with explicit source and economic unit
@@ -77,6 +76,7 @@ Goal: reproduce public reimbursement evidence reliably.
 - Python + DuckDB / Parquet ingestion contract into the TypeScript app
 - CPT licensing boundary (code numbers and Lacuna labels only unless licensed)
 - first evidence-ledger seed records (investigation targets, not conclusions)
+- CPT licensing boundary (code numbers and Lacuna labels only unless licensed)
 - Python sidecar example at `scripts/reimbursement/ingestion_contract.py`
 - read-only Intelligence investigation card (`publishable: false`)
 
@@ -91,7 +91,12 @@ Required sidecar fields:
 - `contractVersion` (`1.0.0`)
 - `sourceManifest` (provenance, storage policy, redistribution)
 - explicit `dataYear` vintage on every observation
-- null for missing RVU / payment fields — never coerced to zero
+- null for missing RVU / GPCI / payment fields — never coerced to zero
+- calculated fee-schedule payments need work/PE/MP RVUs, GPCIs, and a conversion
+  factor; missing GPCIs are not assumed to be 1.0
+- a rate applies only when the claim cites its source and code, payer, vintage,
+  locality, and setting match
+- fee-schedule claims require an explicit locality (national rows use `00`)
 
 Parquet batches point at `output.parquetPath`; JSON batches inline
 `observations`. Unknown `sourceArtifactId` values fail closed.

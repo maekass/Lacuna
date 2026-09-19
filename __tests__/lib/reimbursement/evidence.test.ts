@@ -1,21 +1,23 @@
 import { describe, expect, it } from "vitest";
 import {
   type EvidenceLedger,
+  evidenceLedgerSchema,
   REIMBURSEMENT_SCHEMA_VERSION,
   type ReimbursementClaim,
+  reimbursementClaimSchema,
   type ReimbursementSource,
 } from "@/lib/reimbursement/schema";
 import {
   canTransitionEvidenceStatus,
   transitionClaim,
+  validateReviewChain,
 } from "@/lib/reimbursement/workflow";
 import {
   isClaimPublishable,
-  isLedgerPublishable,
   validateEvidenceLedger,
 } from "@/lib/reimbursement/validation";
 
-const now = "2026-09-18T00:00:00.000Z";
+const now = "2026-09-17T05:30:00.000Z";
 
 const primarySource: ReimbursementSource = {
   id: "source:cms:test",
@@ -64,6 +66,15 @@ function approvedLedger(): EvidenceLedger {
     codeRates: [],
     reviews: [
       {
+        id: "review:source",
+        claimId: baseClaim.id,
+        reviewerRole: "source_reviewer",
+        fromStatus: "machine_proposed",
+        toStatus: "source_verified",
+        decision: "approve",
+        reviewedAt: now,
+      },
+      {
         id: "review:specialist",
         claimId: baseClaim.id,
         reviewerRole: "coding_reimbursement_specialist",
@@ -93,151 +104,427 @@ describe("reimbursement evidence workflow", () => {
       "source_verified",
       "machine",
     );
+
     expect(result.ok).toBe(false);
-    expect(result.reasons.join(" ")).toMatch(/Machine actors/i);
+    expect(result.reasons.join(" ")).toMatch(/Machine actors|not permitted/i);
   });
 
-  it("prevents a machine actor from writing approved or published", () => {
-    const approved = canTransitionEvidenceStatus(
-      "specialist_reviewed",
-      "approved",
-      "machine",
-    );
-    expect(approved.ok).toBe(false);
-
-    const published = canTransitionEvidenceStatus(
-      "approved",
-      "published",
-      "machine",
-    );
-    expect(published.ok).toBe(false);
-  });
-
-  it("requires source_verified before specialist_reviewed", () => {
-    const skip = canTransitionEvidenceStatus(
-      "machine_proposed",
-      "specialist_reviewed",
-      "coding_reimbursement_specialist",
-    );
-    expect(skip.ok).toBe(false);
-
-    const skipApproval = canTransitionEvidenceStatus(
-      "machine_proposed",
-      "approved",
-      "policy_reviewer",
-    );
-    expect(skipApproval.ok).toBe(false);
-
-    const source = canTransitionEvidenceStatus(
+  it("allows a source reviewer to verify machine-proposed evidence", () => {
+    const result = canTransitionEvidenceStatus(
       "machine_proposed",
       "source_verified",
       "source_reviewer",
     );
-    expect(source.ok).toBe(true);
 
-    const specialist = canTransitionEvidenceStatus(
+    expect(result).toEqual({ ok: true, reasons: [] });
+  });
+
+  it("does not allow source-verified evidence to jump directly to approved", () => {
+    const result = canTransitionEvidenceStatus(
       "source_verified",
-      "specialist_reviewed",
-      "coding_reimbursement_specialist",
-    );
-    expect(specialist.ok).toBe(true);
-
-    const approved = canTransitionEvidenceStatus(
-      "specialist_reviewed",
       "approved",
       "policy_reviewer",
     );
-    expect(approved.ok).toBe(true);
-  });
 
-  it("lets a machine reopen insufficient_evidence as machine_proposed", () => {
-    const result = canTransitionEvidenceStatus(
-      "insufficient_evidence",
-      "machine_proposed",
-      "machine",
+    expect(result.ok).toBe(false);
+    expect(result.reasons).toContain(
+      "Transition source_verified -> approved is not allowed.",
     );
-    expect(result.ok).toBe(true);
   });
 
-  it("records a specialist review when transitioning", () => {
-    const verified: ReimbursementClaim = {
+  it("records human review metadata during a valid transition", () => {
+    const sourceVerified: ReimbursementClaim = {
       ...baseClaim,
       status: "source_verified",
     };
+
     const result = transitionClaim({
-      claim: verified,
+      claim: sourceVerified,
       to: "specialist_reviewed",
       actor: "coding_reimbursement_specialist",
-      reviewId: "review:specialist",
+      reviewId: "review:1",
       reviewedAt: now,
-      note: "Source locator checked.",
+      note: "Code and payment-unit interpretation reviewed.",
     });
+
     expect(result.claim.status).toBe("specialist_reviewed");
-    expect(result.review?.reviewerRole).toBe(
-      "coding_reimbursement_specialist",
-    );
-    expect(result.review?.decision).toBe("approve");
+    expect(result.review).toMatchObject({
+      claimId: sourceVerified.id,
+      reviewerRole: "coding_reimbursement_specialist",
+      fromStatus: "source_verified",
+      toStatus: "specialist_reviewed",
+      decision: "approve",
+    });
+  });
+});
+
+describe("reimbursement evidence schema", () => {
+  it("requires explicit assumptions for modeled exposure", () => {
+    const parsed = reimbursementClaimSchema.safeParse({
+      ...baseClaim,
+      kind: "modeled_estimate",
+      economicUnit: "modeled_exposure",
+    });
+
+    expect(parsed.success).toBe(false);
   });
 
-  it("does not treat a machine_proposed claim as publishable", () => {
-    const ledger = approvedLedger();
-    ledger.claims[0] = { ...baseClaim };
-    ledger.issues[0] = { ...ledger.issues[0], status: "machine_proposed" };
-    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
-    expect(isLedgerPublishable(ledger)).toBe(false);
+  it("accepts a versioned, source-linked ledger", () => {
+    expect(evidenceLedgerSchema.safeParse(approvedLedger()).success).toBe(true);
   });
+});
 
-  it("requires specialist and policy reviews before publish", () => {
+describe("ledger validation and publication gates", () => {
+  it("accepts an approved claim with source, specialist review, and policy approval", () => {
     const ledger = approvedLedger();
-    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(true);
-    expect(isLedgerPublishable(ledger)).toBe(true);
-
-    const noPolicy = {
-      ...ledger,
-      reviews: ledger.reviews.filter((review) =>
-        review.reviewerRole !== "policy_reviewer"
-      ),
-    };
-    expect(isClaimPublishable(noPolicy.claims[0], noPolicy)).toBe(false);
-  });
-
-  it("rejects an approved claim that has no authoritative source", () => {
-    const ledger = approvedLedger();
-    ledger.claims[0] = { ...ledger.claims[0], sourceIds: [] };
     const result = validateEvidenceLedger(ledger);
-    expect(result.ok).toBe(false);
-    expect(result.issues.some((issue) => issue.code === "approval_gate"))
-      .toBe(true);
+
+    expect(result.ok).toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(true);
   });
 
-  it("requires explicit assumptions on modeled exposure", () => {
+  it("rejects claims that reference a missing source", () => {
     const ledger = approvedLedger();
     ledger.claims[0] = {
       ...ledger.claims[0],
-      kind: "modeled_estimate",
-      economicUnit: "modeled_exposure",
+      sourceIds: ["source:missing"],
     };
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((issue) => issue.code === "unknown_source")).toBe(
+      true,
+    );
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+  });
+
+  it("does not allow discovery-only evidence to satisfy the approval gate", () => {
+    const ledger = approvedLedger();
+    ledger.sources[0] = {
+      ...ledger.sources[0],
+      sourceType: "discovery_only",
+    };
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(
+      result.issues.some(
+        (issue) =>
+          issue.code === "approval_gate" &&
+          issue.message.includes("non-discovery source"),
+      ),
+    ).toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+  });
+
+  it("rejects duplicate ids inside a ledger collection", () => {
+    const ledger = approvedLedger();
+    ledger.claims = [ledger.claims[0], { ...ledger.claims[0] }];
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((issue) => issue.code === "duplicate_id")).toBe(
+      true,
+    );
+  });
+
+  it("requires a specialist review before approved evidence can validate", () => {
+    const ledger = approvedLedger();
+    ledger.reviews = ledger.reviews.filter(
+      (review) => review.reviewerRole !== "coding_reimbursement_specialist",
+    );
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(
+      result.issues.some((issue) => issue.code === "missing_specialist_review"),
+    ).toBe(true);
+  });
+
+  it("rejects disconnected reviews that do not form a legal workflow", () => {
+    const ledger = approvedLedger();
+    ledger.reviews = [
+      {
+        id: "review:illegal-specialist",
+        claimId: baseClaim.id,
+        reviewerRole: "coding_reimbursement_specialist",
+        fromStatus: "rejected",
+        toStatus: "specialist_reviewed",
+        decision: "approve",
+        reviewedAt: now,
+      },
+      {
+        id: "review:illegal-policy",
+        claimId: baseClaim.id,
+        reviewerRole: "policy_reviewer",
+        fromStatus: "machine_proposed",
+        toStatus: "approved",
+        decision: "approve",
+        reviewedAt: "2026-09-17T05:31:00.000Z",
+      },
+    ];
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(
+      result.issues.some((issue) => issue.code === "illegal_review_transition"),
+    ).toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+  });
+
+  it("requires an explicit approved-to-published hop before publication", () => {
+    const ledger = approvedLedger();
+    ledger.claims[0] = {
+      ...ledger.claims[0],
+      status: "published",
+    };
+
     const result = validateEvidenceLedger(ledger);
     expect(result.ok).toBe(false);
     expect(
       result.issues.some((issue) =>
-        issue.message.toLowerCase().includes("assumptions")
+        issue.code === "review_chain_status_mismatch" ||
+        issue.code === "missing_publish_transition"
       ),
     ).toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
   });
 
-  it("flags duplicate ids within a collection, not across collections", () => {
+  it("rejects source-verified claims that have no attached sources", () => {
     const ledger = approvedLedger();
-    ledger.claims.push({ ...baseClaim, id: ledger.issues[0].id });
-    const mixed = validateEvidenceLedger(ledger);
-    expect(mixed.issues.some((issue) => issue.code === "duplicate_id"))
-      .toBe(false);
+    ledger.claims[0] = {
+      ...ledger.claims[0],
+      status: "source_verified",
+      sourceIds: [],
+    };
+    ledger.reviews = [];
 
-    const sameCollection = approvedLedger();
-    sameCollection.claims.push({ ...baseClaim });
-    const dup = validateEvidenceLedger(sameCollection);
-    expect(dup.issues.some((issue) => issue.code === "duplicate_id")).toBe(
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((issue) => issue.code === "missing_source")).toBe(
       true,
     );
+  });
+
+  it("does not let a source reviewer verify a claim with empty sourceIds", () => {
+    expect(() =>
+      transitionClaim({
+        claim: { ...baseClaim, sourceIds: [] },
+        to: "source_verified",
+        actor: "source_reviewer",
+        reviewId: "review:empty-source",
+        reviewedAt: now,
+      })
+    ).toThrow(/at least one attached source/);
+  });
+
+  it("rejects source verification against unknown source ids when a map is supplied", () => {
+    expect(() =>
+      transitionClaim({
+        claim: { ...baseClaim, sourceIds: ["source:missing"] },
+        to: "source_verified",
+        actor: "source_reviewer",
+        reviewId: "review:unknown-source",
+        reviewedAt: now,
+        sourcesById: new Map([[primarySource.id, primarySource]]),
+      })
+    ).toThrow(/unknown source IDs/);
+  });
+
+  it("accepts the contiguous source-verified to approved review chain", () => {
+    const ledger = approvedLedger();
+    expect(validateReviewChain(ledger.claims[0], ledger.reviews)).toEqual([]);
+  });
+
+  it("rejects an approved chain that never recorded source verification", () => {
+    const ledger = approvedLedger();
+    ledger.reviews = ledger.reviews.filter(
+      (review) => review.reviewerRole !== "source_reviewer",
+    );
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(
+      result.issues.some((issue) => issue.code === "missing_source_review"),
+    ).toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+  });
+
+  it("rejects a specialist review dated after the policy approval it supports", () => {
+    const ledger = approvedLedger();
+    ledger.reviews = ledger.reviews.map((review) => {
+      if (review.reviewerRole === "coding_reimbursement_specialist") {
+        return { ...review, reviewedAt: "2026-09-17T06:00:00.000Z" };
+      }
+      if (review.reviewerRole === "policy_reviewer") {
+        return { ...review, reviewedAt: "2026-09-17T05:00:00.000Z" };
+      }
+      return review;
+    });
+
+    expect(
+      validateReviewChain(ledger.claims[0], ledger.reviews).some((issue) =>
+        issue.code === "review_chain_chronology"
+      ),
+    ).toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+  });
+
+  it("keeps a prior insufficient-evidence attempt from blocking a later approval", () => {
+    const ledger = approvedLedger();
+    ledger.reviews = [
+      {
+        id: "review:insufficient",
+        claimId: baseClaim.id,
+        reviewerRole: "source_reviewer",
+        fromStatus: "machine_proposed",
+        toStatus: "insufficient_evidence",
+        decision: "needs_more_evidence",
+        reviewedAt: "2026-09-17T04:00:00.000Z",
+      },
+      ...ledger.reviews,
+    ];
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(true);
+  });
+
+  it("does not publish unsupported economic units without observation dimensions", () => {
+    const units = [
+      "allowed_amount",
+      "fee_schedule_payment",
+      "reimbursement_per_hour",
+      "modeled_exposure",
+    ] as const;
+
+    for (const economicUnit of units) {
+      const ledger = approvedLedger();
+      ledger.claims[0] = {
+        ...ledger.claims[0],
+        kind: economicUnit === "modeled_exposure"
+          ? "modeled_estimate"
+          : "calculation",
+        economicUnit,
+        ...(economicUnit === "modeled_exposure"
+          ? { assumptions: ["Modeled until utilization is sourced."] }
+          : {}),
+      };
+
+      expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+      expect(validateEvidenceLedger(ledger).ok).toBe(false);
+    }
+  });
+
+  it("accepts a machine-reopened claim that still holds the prior insufficient-evidence review", () => {
+    const ledger = approvedLedger();
+    ledger.claims[0] = {
+      ...ledger.claims[0],
+      status: "machine_proposed",
+    };
+    ledger.reviews = [
+      {
+        id: "review:insufficient",
+        claimId: baseClaim.id,
+        reviewerRole: "source_reviewer",
+        fromStatus: "machine_proposed",
+        toStatus: "insufficient_evidence",
+        decision: "needs_more_evidence",
+        reviewedAt: now,
+      },
+    ];
+
+    expect(validateReviewChain(ledger.claims[0], ledger.reviews)).toEqual([]);
+    expect(validateEvidenceLedger(ledger).ok).toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+  });
+
+  it("does not publish a fee-schedule claim that has no reproducible rate", () => {
+    const ledger = approvedLedger();
+    ledger.claims[0] = {
+      ...ledger.claims[0],
+      kind: "calculation",
+      economicUnit: "fee_schedule_payment",
+      payer: "Medicare PFS",
+      dataYear: 2026,
+      locality: "00",
+      placeOfService: "non_facility",
+      codeSystem: "HCPCS",
+      codes: ["SA051"],
+    };
+
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((issue) => issue.code === "no_applicable_rate"))
+      .toBe(true);
+  });
+
+  it("does not let a leftover rejection hide behind a later approval chain", () => {
+    const ledger = approvedLedger();
+    ledger.reviews = [
+      {
+        id: "review:rejected",
+        claimId: baseClaim.id,
+        reviewerRole: "source_reviewer",
+        fromStatus: "machine_proposed",
+        toStatus: "rejected",
+        decision: "reject",
+        reviewedAt: "2026-09-17T04:00:00.000Z",
+      },
+      ...ledger.reviews,
+    ];
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((issue) => issue.code === "review_chain_gap"))
+      .toBe(true);
+    expect(isClaimPublishable(ledger.claims[0], ledger)).toBe(false);
+  });
+
+  it("requires every claim to appear on its owning issue", () => {
+    const ledger = approvedLedger();
+    ledger.issues[0] = {
+      ...ledger.issues[0],
+      claimIds: [],
+    };
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((issue) => issue.code === "claim_not_listed"))
+      .toBe(true);
+  });
+
+  it("rejects duplicate claim ids on an issue", () => {
+    const ledger = approvedLedger();
+    ledger.issues[0] = {
+      ...ledger.issues[0],
+      claimIds: [baseClaim.id, baseClaim.id],
+    };
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((issue) => issue.code === "duplicate_claim_id"))
+      .toBe(true);
+  });
+
+  it("rejects a closed lineage hop that does not point at a claim", () => {
+    const ledger = approvedLedger();
+    ledger.lineageHops = [
+      {
+        id: "hop:orphan",
+        issueId: "issue:test",
+        sequence: 1,
+        kind: "source",
+        question: "Which source controls this claim?",
+        status: "closed",
+      },
+    ];
+
+    const result = validateEvidenceLedger(ledger);
+    expect(result.ok).toBe(false);
+    expect(
+      result.issues.some((issue) => issue.code === "closed_hop_missing_claim"),
+    ).toBe(true);
   });
 });

@@ -61,6 +61,23 @@ describe("promotion checklist", () => {
     expect(allChecksPassed(state, items)).toBe(true);
   });
 
+  it("does not treat sec.gov as a URL substring or attacker hostname", () => {
+    const pathSpoof = getPromotionCheckItems(
+      mockDeal({
+        filingUrl: "https://evil.example/sec.gov/8-k.htm",
+        item201Excerpt: "",
+      }),
+    );
+    const hostSpoof = getPromotionCheckItems(
+      mockDeal({
+        filingUrl: "https://sec.gov.attacker.example/8-k.htm",
+        item201Excerpt: "",
+      }),
+    );
+    expect(initialCheckState(pathSpoof).primary).toBe(false);
+    expect(initialCheckState(hostSpoof).primary).toBe(false);
+  });
+
   it("does not auto-pass keyword-only staging rows", () => {
     const items = getPromotionCheckItems(
       mockDeal({ parseQuality: "keyword_only", reviewNotes: null }),

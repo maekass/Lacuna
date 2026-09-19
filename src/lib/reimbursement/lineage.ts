@@ -1,8 +1,21 @@
-import {
-  type EvidenceLedger,
-  type LineageHopKind,
-  SA051_LINEAGE_ORDER,
-} from "./schema";
+import type { EvidenceLedger, LineageHopKind } from "./schema";
+
+/**
+ * First investigation target (SA051 / pelvic-exam supply-pack):
+ * source → PE input → affected services → PE RVU → payment mechanics →
+ * utilization question.
+ *
+ * This order is an issue-specific investigation shape, not a required core
+ * enum for every ledger.
+ */
+export const SA051_LINEAGE_ORDER = [
+  "source",
+  "pe_input",
+  "affected_services",
+  "pe_rvu",
+  "payment_mechanics",
+  "utilization",
+] as const satisfies readonly LineageHopKind[];
 
 export interface LineageShapeIssue {
   code: string;
@@ -10,9 +23,8 @@ export interface LineageShapeIssue {
 }
 
 /**
- * Confirm an issue uses the SA051 investigation chain:
- * source → PE input → affected services → PE RVU → payment mechanics →
- * utilization question. Does not assert economics.
+ * Confirm an issue uses the SA051 investigation chain. Does not assert
+ * economics or treat missing hops as zeroed inputs.
  */
 export function validateSa051LineageShape(
   ledger: EvidenceLedger,
@@ -37,8 +49,7 @@ export function validateSa051LineageShape(
     if (hop.kind !== expected) {
       issues.push({
         code: "lineage_kind",
-        message: `Hop ${index + 1} must be ${expected}, found ${hop
-          .kind as LineageHopKind}.`,
+        message: `Hop ${index + 1} must be ${expected}, found ${hop.kind}.`,
       });
     }
     if (hop.sequence !== index + 1) {
@@ -53,10 +64,10 @@ export function validateSa051LineageShape(
 }
 
 /**
- * True when a ledger asserts no payment, RVU, or modeled-exposure numbers.
+ * True when the ledger asserts payment, RVU, or modeled-exposure numbers.
  * Phase 1 seeds must stay investigation-only until sources are attached.
  */
-export function ledgerAssertsUnsupportedEconomics(
+export function ledgerHasEconomicAssertions(
   ledger: EvidenceLedger,
 ): boolean {
   if (ledger.codeRates.length > 0) return true;

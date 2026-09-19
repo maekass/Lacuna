@@ -4,7 +4,7 @@ import Metric from "@/components/Metric";
 import Card from "@/components/ui/Card";
 import { reimbursementEvidenceSa051 } from "@/data/reimbursement-evidence-sa051";
 import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
-import { SA051_LINEAGE_ORDER } from "@/lib/reimbursement/schema";
+import { SA051_LINEAGE_ORDER } from "@/lib/reimbursement/lineage";
 import {
   isLedgerPublishable,
   validateEvidenceLedger,

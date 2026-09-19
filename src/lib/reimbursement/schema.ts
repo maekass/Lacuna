@@ -87,15 +87,6 @@ export const lineageHopStatusSchema = z.enum([
   "closed",
 ]);
 
-export const SA051_LINEAGE_ORDER = [
-  "source",
-  "pe_input",
-  "affected_services",
-  "pe_rvu",
-  "payment_mechanics",
-  "utilization",
-] as const;
-
 export const reimbursementSourceSchema = z.object({
   id: idSchema,
   title: z.string().trim().min(1),
@@ -124,6 +115,7 @@ export const reimbursementClaimSchema = z
     payer: z.string().trim().min(1).optional(),
     dataYear: z.number().int().min(2000).max(2100).optional(),
     ruleCycle: z.string().trim().min(1).optional(),
+    locality: z.string().trim().min(1).optional(),
     placeOfService: z.string().trim().min(1).optional(),
     codeSystem: codeSystemSchema.optional(),
     codes: z.array(z.string().trim().min(1)).optional(),
@@ -162,10 +154,14 @@ export const codeRateObservationSchema = z.object({
   dataYear: z.number().int().min(2000).max(2100),
   payer: z.string().trim().min(1),
   locality: z.string().trim().min(1).optional(),
+  ruleCycle: z.string().trim().min(1).optional(),
   placeOfService: z.string().trim().min(1),
   workRvu: z.number().nonnegative().optional(),
   practiceExpenseRvu: z.number().nonnegative().optional(),
   malpracticeRvu: z.number().nonnegative().optional(),
+  workGpci: z.number().positive().optional(),
+  practiceExpenseGpci: z.number().positive().optional(),
+  malpracticeGpci: z.number().positive().optional(),
   conversionFactor: z.number().positive().optional(),
   paymentAmount: z.number().nonnegative().optional(),
   sourceId: idSchema,

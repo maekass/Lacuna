@@ -1,3 +1,4 @@
+import { urlHostnameMatches } from "@/lib/url/hostnameMatch";
 import type { PendingDealRecord } from "./pendingDeals";
 
 export interface PromotionCheckItem {
@@ -20,7 +21,7 @@ export function getPromotionCheckItems(
   deal: PendingDealRecord,
 ): PromotionCheckItem[] {
   const keywordOnly = isKeywordOnlyStaging(deal);
-  const hasPrimary = deal.filingUrl.includes("sec.gov") ||
+  const hasPrimary = urlHostnameMatches(deal.filingUrl, "sec.gov") ||
     Boolean(deal.item201Excerpt?.trim());
   const hasSecondaryHint = Boolean(
     deal.reviewNotes && deal.reviewNotes.length > 10,

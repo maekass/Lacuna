@@ -18,6 +18,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 import { hashDataset } from "../src/lib/lineage/datasetHash";
 import { parseVerifiedDataset } from "../src/lib/data/datasetSchema";
+import { citationHostnameMatches } from "../src/lib/url/hostnameMatch";
 
 interface SourceQuality {
   level: "A" | "B" | "C" | "D" | "F";
@@ -49,7 +50,8 @@ function scoreSource(source?: string): SourceQuality {
     lower.includes("techcrunch") || lower.includes("fierce healthcare") ||
     lower.includes("stat news") || lower.includes("reuters") ||
     lower.includes("bloomberg") || lower.includes("wsj") ||
-    lower.includes("ft.com") || lower.includes("endpoints") ||
+    citationHostnameMatches(source, "ft.com") ||
+    lower.includes("endpoints") ||
     lower.includes("axios")
   ) {
     return {

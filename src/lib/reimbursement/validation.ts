@@ -1,12 +1,22 @@
 import {
+  observationIssuesForClaim,
+  validateObservationConsistency,
+} from "./observations";
+import {
   type EvidenceLedger,
   evidenceLedgerSchema,
   type EvidenceStatus,
   type ReimbursementClaim,
   type ReimbursementSource,
-  SA051_LINEAGE_ORDER,
 } from "./schema";
-import { validateObservationConsistency } from "./observations";
+import { validateReviewChain } from "./workflow";
+
+const sourceRequiredStatuses = new Set<EvidenceStatus>([
+  "source_verified",
+  "specialist_reviewed",
+  "approved",
+  "published",
+]);
 
 const reviewRequiredStatuses = new Set<EvidenceStatus>([
   "specialist_reviewed",
@@ -57,10 +67,6 @@ function hasAuthoritativeSource(
   });
 }
 
-/**
- * Approval requires sources, an authoritative source type, and modeled
- * estimates to carry explicit assumptions.
- */
 export function validateClaimForApproval(
   claim: ReimbursementClaim,
   sourcesById: Map<string, ReimbursementSource>,
@@ -94,42 +100,6 @@ export function validateClaimForApproval(
   }
 
   return errors;
-}
-
-/**
- * A claim is publishable only after specialist review and policy approval,
- * with sources attached. `machine_proposed` investigation seeds are never
- * publishable.
- */
-export function isClaimPublishable(
-  claim: ReimbursementClaim,
-  ledger: EvidenceLedger,
-): boolean {
-  if (!approvalRequiredStatuses.has(claim.status)) return false;
-
-  const sourcesById = new Map(
-    ledger.sources.map((source) => [source.id, source]),
-  );
-  if (validateClaimForApproval(claim, sourcesById).length > 0) return false;
-
-  const reviews = ledger.reviews.filter((review) =>
-    review.claimId === claim.id
-  );
-  const hasSpecialistReview = reviews.some(
-    (review) =>
-      review.reviewerRole === "coding_reimbursement_specialist" &&
-      review.toStatus === "specialist_reviewed" &&
-      review.decision === "approve",
-  );
-  const hasPolicyApproval = reviews.some(
-    (review) =>
-      (review.reviewerRole === "policy_reviewer" ||
-        review.reviewerRole === "admin") &&
-      (review.toStatus === "approved" || review.toStatus === "published") &&
-      review.decision === "approve",
-  );
-
-  return hasSpecialistReview && hasPolicyApproval;
 }
 
 /**
@@ -195,24 +165,43 @@ function validateLineageHops(ledger: EvidenceLedger): LedgerValidationIssue[] {
         });
       }
     }
-
-    const expected = SA051_LINEAGE_ORDER;
-    if (sorted.length === expected.length) {
-      for (const [index, hop] of sorted.entries()) {
-        if (hop.kind !== expected[index]) {
-          issues.push({
-            code: "lineage_order_mismatch",
-            path: `lineageHops.${hop.id}.kind`,
-            message: `Expected hop ${index + 1} to be ${
-              expected[index]
-            }, found ${hop.kind}.`,
-          });
-        }
-      }
-    }
   }
 
   return issues;
+}
+
+export function isClaimPublishable(
+  claim: ReimbursementClaim,
+  ledger: EvidenceLedger,
+): boolean {
+  if (!approvalRequiredStatuses.has(claim.status)) return false;
+
+  const sourcesById = new Map(
+    ledger.sources.map((source) => [source.id, source]),
+  );
+  if (validateClaimForApproval(claim, sourcesById).length > 0) return false;
+
+  const reviews = ledger.reviews.filter((review) =>
+    review.claimId === claim.id
+  );
+  if (validateReviewChain(claim, reviews).length > 0) return false;
+
+  const hasSpecialistReview = reviews.some(
+    (review) =>
+      review.reviewerRole === "coding_reimbursement_specialist" &&
+      review.toStatus === "specialist_reviewed" &&
+      review.decision === "approve",
+  );
+  const hasPolicyApproval = reviews.some(
+    (review) =>
+      (review.reviewerRole === "policy_reviewer" ||
+        review.reviewerRole === "admin") &&
+      (review.toStatus === "approved" || review.toStatus === "published") &&
+      review.decision === "approve",
+  );
+  if (!hasSpecialistReview || !hasPolicyApproval) return false;
+
+  return observationIssuesForClaim(claim, ledger).length === 0;
 }
 
 /**
@@ -260,11 +249,19 @@ export function validateEvidenceLedger(input: unknown): LedgerValidationResult {
   );
 
   for (const claim of ledger.claims) {
-    if (!issueById.has(claim.issueId)) {
+    const owningIssue = issueById.get(claim.issueId);
+    if (!owningIssue) {
       issues.push({
         code: "unknown_issue",
         path: `claims.${claim.id}.issueId`,
         message: `Claim references unknown issue ${claim.issueId}.`,
+      });
+    } else if (!owningIssue.claimIds.includes(claim.id)) {
+      issues.push({
+        code: "claim_not_listed",
+        path: `issues.${owningIssue.id}.claimIds`,
+        message:
+          `Claim ${claim.id} belongs to issue ${owningIssue.id} but is missing from claimIds.`,
       });
     }
 
@@ -276,6 +273,26 @@ export function validateEvidenceLedger(input: unknown): LedgerValidationResult {
           message: `Claim references unknown source ${sourceId}.`,
         });
       }
+    }
+
+    if (
+      sourceRequiredStatuses.has(claim.status) &&
+      claim.sourceIds.length === 0
+    ) {
+      issues.push({
+        code: "missing_source",
+        path: `claims.${claim.id}.sourceIds`,
+        message: `${claim.status} requires at least one attached source.`,
+      });
+    }
+
+    const reviewIssues = validateReviewChain(claim, ledger.reviews);
+    for (const reviewIssue of reviewIssues) {
+      issues.push({
+        code: reviewIssue.code,
+        path: `claims.${claim.id}.reviews`,
+        message: reviewIssue.message,
+      });
     }
 
     if (reviewRequiredStatuses.has(claim.status)) {
@@ -323,7 +340,16 @@ export function validateEvidenceLedger(input: unknown): LedgerValidationResult {
   }
 
   for (const issue of ledger.issues) {
+    const listedClaimIds = new Set<string>();
     for (const claimId of issue.claimIds) {
+      if (listedClaimIds.has(claimId)) {
+        issues.push({
+          code: "duplicate_claim_id",
+          path: `issues.${issue.id}.claimIds`,
+          message: `Issue ${issue.id} lists claim ${claimId} more than once.`,
+        });
+      }
+      listedClaimIds.add(claimId);
       const claim = claimById.get(claimId);
       if (!claim) {
         issues.push({
@@ -337,23 +363,6 @@ export function validateEvidenceLedger(input: unknown): LedgerValidationResult {
           path: `issues.${issue.id}.claimIds`,
           message:
             `Claim ${claimId} belongs to issue ${claim.issueId}, not ${issue.id}.`,
-        });
-      }
-    }
-
-    if (issue.status === "published" || issue.status === "approved") {
-      const related = ledger.claims.filter((claim) =>
-        claim.issueId === issue.id
-      );
-      if (
-        related.length === 0 ||
-        related.some((claim) => !isClaimPublishable(claim, ledger))
-      ) {
-        issues.push({
-          code: "issue_not_publishable",
-          path: `issues.${issue.id}.status`,
-          message:
-            `${issue.status} issues require every linked claim to be publishable.`,
         });
       }
     }
@@ -380,8 +389,8 @@ export function validateEvidenceLedger(input: unknown): LedgerValidationResult {
     }
   }
 
-  issues.push(...validateLineageHops(ledger));
   issues.push(...validateObservationConsistency(ledger));
+  issues.push(...validateLineageHops(ledger));
 
   return {
     ok: issues.length === 0,

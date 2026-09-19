@@ -3,8 +3,7 @@
 > **Not decision-grade.** This document describes the older illustrative
 > matching and valuation-premium heuristics. Source-traceable reimbursement
 > evidence lives in `docs/REIMBURSEMENT_EVIDENCE_ENGINE.md`. File-by-file status
-> is in `docs/REIMBURSEMENT_AUDIT.md`. CPT republication limits are in
-> `docs/REIMBURSEMENT_CPT_LICENSING.md`.
+> is in `docs/REIMBURSEMENT_AUDIT.md`.
 >
 > The 5.2× / 2.8× / 1.5× table below is an unsupported rule of thumb. It must
 > not be shown as measured data, mixed into deal economics, or published through
