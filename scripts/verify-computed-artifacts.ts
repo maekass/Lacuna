@@ -8,7 +8,7 @@
  */
 
 import process from "node:process";
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
@@ -100,12 +100,13 @@ function main() {
     process.exit(1);
   }
 
-  const paths = DATASET_COMPUTED_ARTIFACTS.map((p) => join(repoRoot, p)).join(
-    " ",
-  );
-
   try {
-    execSync(`git diff --exit-code ${paths}`, {
+    execFileSync("git", [
+      "diff",
+      "--exit-code",
+      "--",
+      ...DATASET_COMPUTED_ARTIFACTS,
+    ], {
       cwd: repoRoot,
       stdio: "inherit",
     });
