@@ -1,13 +1,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { imageSize } from "../../vendor/image-size/dist/index.mjs";
-
-const vendorRoot = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  "../../vendor/image-size",
-);
+import { imageSize } from "image-size";
 
 /** Decode a compact hex payload so Deno fmt does not explode byte lists. */
 function hexBytes(hex: string): Uint8Array {
@@ -40,23 +34,29 @@ const JXL_ZERO_JXLP = hexBytes(
     "00000000 6a786c70",
 );
 
-describe("vendored image-size hang guards", () => {
-  it("is versioned 2.0.3 so audit ranges <=2.0.2 resolve", () => {
+describe("image-size hang guards", () => {
+  it("resolves published 2.0.4+ so audit ranges <=2.0.2 are closed", () => {
     const pkg = JSON.parse(
-      readFileSync(path.join(vendorRoot, "package.json"), "utf8"),
+      readFileSync(
+        path.resolve(process.cwd(), "node_modules/image-size/package.json"),
+        "utf8",
+      ),
     ) as { version: string };
-    expect(pkg.version).toBe("2.0.3");
+    const [major, minor, patch] = pkg.version.split(".").map(Number);
+    expect(major).toBeGreaterThanOrEqual(2);
+    expect(minor).toBeGreaterThanOrEqual(0);
+    expect(patch).toBeGreaterThanOrEqual(4);
   });
 
   it("does not hang on ICNS entry length 0 (GHSA-w3rx-r6r6-pgpr)", () => {
-    expect(() => imageSize(ICNS_ZERO_ENTRY)).not.toThrow();
+    expect(() => imageSize(ICNS_ZERO_ENTRY)).toThrow(/Invalid ICNS/);
   }, 2_000);
 
   it("does not hang on HEIF ispe size 0 (GHSA-5p2g-fcmc-qvqq)", () => {
-    expect(() => imageSize(HEIF_ZERO_ISPE)).not.toThrow();
+    expect(() => imageSize(HEIF_ZERO_ISPE)).toThrow(/Invalid HEIF/);
   }, 2_000);
 
   it("does not hang on JXL jxlp size 0 (GHSA-5p2g-fcmc-qvqq)", () => {
-    expect(() => imageSize(JXL_ZERO_JXLP)).toThrow();
+    expect(() => imageSize(JXL_ZERO_JXLP)).toThrow(/Invalid JXL/);
   }, 2_000);
 });
