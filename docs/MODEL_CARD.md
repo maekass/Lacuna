@@ -109,6 +109,25 @@ results should be interpreted qualitatively.
 
 ---
 
+## Acquisition-time hazard (`src/lib/scoring/hazard.ts`)
+
+**Type**: Descriptive Cox partial-likelihood fit (Breslow ties) on companies
+with a disclosed founded year\
+**Artifact**: `src/data/ml/hazard/acquisition-time-v1.json`\
+**Training**: Offline `ml/hazard` — not imported by the Next.js bundle
+
+Relative hazard is exp(xβ) versus the collapsed non-Fertility / non-Diagnostics
+reference group in this curated sample. Missing founded year is exclusion, not
+imputation. Current stage is unused (acquired labels leak the event). The
+consumer returns `insufficient_disclosed_data` rather than inventing a score.
+Harrell's C is stored on the artifact; values near 0.5 mean the sector dummies
+do not rank event times in this sample.
+
+This is **not** a forecast of future M&A, **not** an acquisition probability,
+and **not** investment advice. See [HAZARD.md](HAZARD.md).
+
+---
+
 ## Citation guidance
 
 If referencing this tool in academic or professional contexts:

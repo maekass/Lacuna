@@ -8,7 +8,7 @@ const runQuarantineMl = process.env.RUN_QUARANTINE_ML === "1";
 export default defineConfig({
   test: {
     environment: "node",
-    include: ["__tests__/**/*.test.ts"],
+    include: ["__tests__/**/*.test.ts", "src/lib/scoring/**/*.test.ts"],
     exclude: runQuarantineMl
       ? []
       : ["__tests__/lib/ml/ensemblePredictor.test.ts"],

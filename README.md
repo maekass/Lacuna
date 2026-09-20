@@ -398,6 +398,7 @@ Manual verification — no synthetic `maDeals`. Workflow:
 | Doc                                                                     | Purpose                                                     |
 | ----------------------------------------------------------------------- | ----------------------------------------------------------- |
 | [MODEL_CARD.md](docs/MODEL_CARD.md)                                     | **Start here** — what each score is and is not              |
+| [HAZARD.md](docs/HAZARD.md)                                             | Descriptive Cox time-to-acquisition (not a forecast)        |
 | [INFERENCE.md](docs/INFERENCE.md)                                       | Server-side LLM (AI Gateway)                                |
 | [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md)           | Schema, validation, staging                                 |
 | [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md) | Graph metrics, small-_n_                                    |
