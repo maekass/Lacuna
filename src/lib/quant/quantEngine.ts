@@ -53,3 +53,16 @@ export {
   HealthImpactModeler,
   PortfolioOptimizer,
 } from "./predictionEngines";
+export {
+  composeAcquisitionIndex,
+  REPORTABLE_RESOLUTION,
+  SECTOR_SHARE_SCALE,
+  sectorShareAdjustment,
+} from "./acquisitionIndex";
+export type { AcquisitionIndexInput } from "./acquisitionIndex";
+export {
+  INDICATOR_BAND_HIGH,
+  INDICATOR_BAND_MODERATE,
+  indicatorBand,
+} from "./indicatorBands";
+export type { IndicatorBand } from "./indicatorBands";
