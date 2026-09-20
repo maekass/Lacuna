@@ -1,17 +1,13 @@
 /**
  * Typed consumer for the committed acquisition-time hazard artifact.
  *
- * Relative hazard is exp(xβ) from a Breslow Cox fit on companies with a
- * disclosed founded year. Missing inputs return insufficient_disclosed_data.
- * This module does not forecast M&A or invent sector/TAM fallbacks.
+ * The fit has an empty design matrix (no sector dummy covariates). Scores
+ * return the Breslow / Nelson–Aalen baseline; relative hazard is 1. Missing
+ * founded year returns insufficient_disclosed_data. This module does not
+ * forecast M&A or invent sector/TAM fallbacks.
  */
 
 import hazardArtifact from "@/data/ml/hazard/acquisition-time-v1.json";
-
-export const HAZARD_FEATURE_LABELS: Readonly<Record<string, string>> = {
-  sector_fertility: "Fertility",
-  sector_diagnostics: "Diagnostics",
-};
 
 export interface HazardCohortMeta {
   readonly n: number;
@@ -81,7 +77,7 @@ export interface HazardScoreOk {
   readonly status: "ok";
   readonly claimClass: "descriptive";
   readonly modelId: string;
-  readonly sector: string;
+  readonly sector: string | null;
   readonly linearPredictor: number;
   readonly relativeHazard: number;
   readonly keptFeatures: readonly string[];
@@ -117,37 +113,6 @@ function insufficient(reason: string): HazardScoreInsufficient {
 }
 
 /**
- * Encode disclosed sector dummies. Unknown sector names map to the reference
- * group (all zeros); a missing sector is handled by the scorer, not here.
- */
-export function encodeHazardFeatures(
-  sector: string,
-  featureNames: readonly string[] = HAZARD_ARTIFACT.featureNames,
-): number[] {
-  return featureNames.map((name) => {
-    const label = HAZARD_FEATURE_LABELS[name];
-    return label && sector === label ? 1 : 0;
-  });
-}
-
-function dot(a: readonly number[], b: readonly number[]): number {
-  const n = Math.min(a.length, b.length);
-  let s = 0;
-  for (let i = 0; i < n; i++) s += a[i] * b[i];
-  return s;
-}
-
-function keptDesign(
-  x: readonly number[],
-  artifact: HazardArtifact,
-): number[] {
-  return artifact.keptFeatureNames.map((name) => {
-    const idx = artifact.featureNames.indexOf(name);
-    return idx >= 0 ? (x[idx] ?? 0) : 0;
-  });
-}
-
-/**
  * Right-continuous step lookup on the Breslow baseline. Returns null when
  * `timeYears` is omitted or the baseline is empty.
  */
@@ -171,13 +136,13 @@ export function lookupBaseline(
 }
 
 /**
- * Score a company against the committed Cox artifact.
+ * Score a company against the committed baseline-only Cox artifact.
  *
- * Relative hazard is versus the collapsed non-Fertility / non-Diagnostics
- * reference group in this curated sample. It is not a probability.
+ * Relative hazard is 1 because there are no covariates. It is not a
+ * probability and not a sector contrast.
  */
 export function scoreHazard(
-  input: HazardScoreInput,
+  input: HazardScoreInput = {},
   artifact: HazardArtifact = HAZARD_ARTIFACT,
 ): HazardScore {
   if (artifact.claimClass !== "descriptive") {
@@ -186,35 +151,28 @@ export function scoreHazard(
   if (!artifact.sufficiency.fits) {
     return insufficient(
       artifact.sufficiency.reason ??
-        "Verified cohort is too small to report relative hazards.",
+        "Verified cohort is too small to report a baseline hazard.",
     );
   }
-  const sector = input.sector?.trim();
-  if (!sector) {
-    return insufficient("Sector is missing from disclosed company fields.");
-  }
-  if (artifact.keptFeatureNames.length === 0) {
-    return insufficient("No sector dummy cleared the event-count floor.");
-  }
-  if (artifact.coefficients.length !== artifact.keptFeatureNames.length) {
+  if (artifact.featureNames.length !== 0 || artifact.keptFeatureNames.length !== 0) {
     return insufficient(
-      "Artifact coefficients are misaligned with kept features.",
+      "Artifact still lists covariates; sector dummy indicators are not used.",
+    );
+  }
+  if (artifact.coefficients.length !== 0 || artifact.hazardRatios.length !== 0) {
+    return insufficient(
+      "Artifact coefficients are misaligned with the empty design matrix.",
     );
   }
 
-  const x = encodeHazardFeatures(sector, artifact.featureNames);
-  const xKept = keptDesign(x, artifact);
-  const linearPredictor = dot(xKept, artifact.coefficients);
-  const relativeHazard = Math.exp(linearPredictor);
-
+  const sector = input.sector?.trim() || null;
   let baselineSurvival: number | null = null;
   let cumulativeHazard: number | null = null;
   if (input.timeYears != null && Number.isFinite(input.timeYears)) {
     const step = lookupBaseline(input.timeYears, artifact.baseline);
     if (step) {
-      const scale = relativeHazard;
-      cumulativeHazard = step.cumulativeHazard * scale;
-      baselineSurvival = Math.exp(-cumulativeHazard);
+      cumulativeHazard = step.cumulativeHazard;
+      baselineSurvival = step.survival;
     }
   }
 
@@ -223,8 +181,8 @@ export function scoreHazard(
     claimClass: "descriptive",
     modelId: artifact.id,
     sector,
-    linearPredictor,
-    relativeHazard,
+    linearPredictor: 0,
+    relativeHazard: 1,
     keptFeatures: artifact.keptFeatureNames,
     disclaimer: artifact.disclaimer,
     concordance: artifact.metrics.concordance,
@@ -233,7 +191,7 @@ export function scoreHazard(
   };
 }
 
-/** Convenience wrapper that only reads `sector` from a verified company row. */
+/** Convenience wrapper that only reads a verified company row. */
 export function scoreVerifiedCompanyHazard(
   company: { readonly sector?: string; readonly founded?: number },
   artifact: HazardArtifact = HAZARD_ARTIFACT,

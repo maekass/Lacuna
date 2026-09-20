@@ -15,15 +15,15 @@ Among rows in `src/data/dataset.verified.json` with a founded year:
 - **Time:** years from founded year to verified acquisition announcement
   (events) or dataset `provenance.lastUpdated` (right-censored independents)
 - **Event:** presence in the verified `acquisitions` array
-- **Covariates:** disclosed sector dummies with enough events (Fertility,
-  Diagnostics vs other). Current `stage` is **not** used — acquired rows are
-  labeled post-outcome ("Acquired by …") and would leak the event.
+- **Covariates:** none. Sector dummy indicators are not used. Current `stage`
+  is also unused — acquired rows are labeled post-outcome ("Acquired by …")
+  and would leak the event. The fit is a Breslow / Nelson–Aalen baseline.
 
 ## Honest limits
 
 - Convenience sample, not a census of women's-health M&A
 - Year-precision times; missing `founded` is exclusion, not imputation
-- Small _n_ per sector; rare sectors collapse to the reference group
+- Small _n_ per sector; no sector contrasts are estimated
 - No TAM/SAM, keyword risk scores, or PitchBook fallbacks
 
 ## Run

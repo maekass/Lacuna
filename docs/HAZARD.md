@@ -6,6 +6,7 @@ among companies in `dataset.verified.json` that disclose a founded year.
 This is **not** a forecast of future M&A, **not** an acquisition probability,
 and **not** investment advice. Missing founded year is exclusion, not
 imputation. Current `stage` is unused because acquired labels leak the event.
+Sector dummy indicators are not used; the design matrix is empty.
 
 | Path                                          | Role                |
 | --------------------------------------------- | ------------------- |

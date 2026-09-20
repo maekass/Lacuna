@@ -76,7 +76,7 @@ def select_feature_mask(
     names: tuple[str, ...],
     min_events: int = MIN_EVENTS_PER_FEATURE,
 ) -> tuple[np.ndarray, tuple[str, ...], tuple[str, ...]]:
-    """Keep dummies that have enough events in the exposed group."""
+    """Keep columns that have enough events in the exposed group."""
     kept: list[int] = []
     dropped: list[str] = []
     for j, name in enumerate(names):
@@ -109,7 +109,7 @@ def fit_cox_ph(
     n_events = int(event.sum())
     notes: list[str] = [
         "Breslow tie handling; no intercept (absorbed into the baseline hazard).",
-        "Coefficients are log hazard ratios vs the collapsed reference group.",
+        "No sector dummy covariates; coefficients are empty by design.",
     ]
 
     mask, kept_names, dropped = select_feature_mask(
@@ -130,7 +130,7 @@ def fit_cox_ph(
             converged=True,
             dropped_features=dropped,
             notes=tuple(
-                notes + ["No sector dummy cleared the event-count floor; baseline only."]
+                notes + ["Empty design matrix; Breslow baseline only."]
             ),
         )
 

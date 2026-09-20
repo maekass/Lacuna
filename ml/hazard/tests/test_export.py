@@ -24,7 +24,7 @@ from lacuna_hazard.pipeline import expand_phases, run_phases
 def _mini_dataset() -> dict:
     companies = []
     acquisitions = []
-    # Enough Fertility and Diagnostics events to keep both dummies.
+    # Enough events to clear the overall floor; no sector dummies are fit.
     for i in range(12):
         companies.append(
             {
@@ -115,6 +115,9 @@ class ExportTests(unittest.TestCase):
         self.assertEqual(artifact["claimClass"], "descriptive")
         self.assertEqual(artifact["modelType"], "cox_ph_breslow")
         self.assertTrue(artifact["sufficiency"]["fits"])
+        self.assertEqual(artifact["featureNames"], [])
+        self.assertEqual(artifact["keptFeatureNames"], [])
+        self.assertEqual(artifact["coefficients"], [])
         self.assertEqual(len(artifact["coefficients"]), len(artifact["keptFeatureNames"]))
 
     def test_dump_roundtrip_ignores_fitted_at(self) -> None:
