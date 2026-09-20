@@ -30,6 +30,7 @@ export class AcquisitionPredictor {
   constructor(private readonly priors?: EmpiricalPriors) {}
 
   private scoreClinicalValidation(company: QuantCompany): number {
+    if (!company.clinicalStage) return 0;
     const stageScores = {
       preclinical: 1,
       phase2: 4,
@@ -112,7 +113,11 @@ export class AcquisitionPredictor {
 
     const exitRate = this.sectorExitRate(company);
     let probability: QuantValue<number>;
-    if (isSufficient(exitRate)) {
+    if (!company.clinicalStage) {
+      probability = missingInput(
+        "Clinical stage unavailable — acquisition outcome labels are not used as a stage proxy",
+      );
+    } else if (isSufficient(exitRate)) {
       let sectorAdjustment = 1;
       if (this.priors && this.priors.dealCount > 0) {
         const sectorPrior = getSectorPrior(this.priors, company.sector);
@@ -157,7 +162,9 @@ export class AcquisitionPredictor {
 
     return {
       probability,
-      timelineMonths: timelineMap[company.clinicalStage],
+      timelineMonths: company.clinicalStage
+        ? timelineMap[company.clinicalStage]
+        : 0,
       driverScores,
       riskFactors,
       modelCaveats: acquisitionModelCaveats(this.priors, exitRate),

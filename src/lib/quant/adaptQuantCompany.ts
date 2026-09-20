@@ -28,12 +28,29 @@ export interface AdaptedQuantCompany {
 }
 
 /**
+ * Strip acquisition-outcome phrases so they cannot be read as a clinical stage.
+ * "Acquired by Ro (2021)" becomes empty; "Private (Series B)" is unchanged.
+ */
+export function stripAcquisitionOutcomeLabel(stage: string): string {
+  return stage
+    .toLowerCase()
+    .replace(/acquired(?:\s+by\s+[^()]+)?(?:\s*\(\d{4}\))?/g, " ")
+    .replace(/[()]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
  * Proxy a clinical stage from a free-form funding-stage string. Funding stage
  * is NOT clinical stage; this is an explicit, coarse approximation.
+ *
+ * Returns null when the only signal is an acquisition outcome. Mapping
+ * `"acquired"` → `fda_approved` was post-outcome leakage (D11).
  */
-function proxyClinicalStage(stage: string): ClinicalStage {
-  const s = stage.toLowerCase();
-  if (s.includes("public") || s.includes("acquired")) return "fda_approved";
+export function proxyClinicalStage(stage: string): ClinicalStage | null {
+  const s = stripAcquisitionOutcomeLabel(stage);
+  if (!s) return null;
+  if (s.includes("public")) return "fda_approved";
   if (/series d|series e|series f|late stage|pre-ipo/.test(s)) {
     return "fda_approved";
   }
@@ -93,12 +110,14 @@ export function adaptQuantCompany(
 ): AdaptedQuantCompany {
   const raisedToDate = view.totalFunding ?? 0;
 
+  const clinicalStage = proxyClinicalStage(view.stage);
+
   const company: QuantCompany = {
     id: view.id,
     name: view.name,
     sector: view.sector,
     fundingStage: view.stage,
-    clinicalStage: proxyClinicalStage(view.stage),
+    ...(clinicalStage ? { clinicalStage } : {}),
     raisedToDate,
     customerCount: 0, // not in verified data — not fabricated
     geographicFocus: inferGeographicFocus(view.hq ?? ""),
@@ -108,7 +127,9 @@ export function adaptQuantCompany(
   };
 
   const proxiedFields = [
-    "clinical stage (proxied from funding stage)",
+    clinicalStage
+      ? "clinical stage (proxied from funding stage)"
+      : "clinical stage withheld — catalog stage is an acquisition outcome",
     "geographic focus (inferred from HQ)",
     "condition (inferred from sector)",
   ];

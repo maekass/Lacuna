@@ -29,7 +29,7 @@ interface Row {
   id: string;
   name: string;
   sector: string;
-  clinicalStageProxy: string;
+  clinicalStageProxy?: string;
   disclosedValuation?: number;
   modelEstimate: number | null;
   /** True when the estimate includes the verified comparable-deals anchor. */
@@ -177,7 +177,14 @@ export default function QuantValuationPanel() {
                 </td>
                 <td className="py-2 px-3 text-lacuna-blue">{row.sector}</td>
                 <td className="py-2 px-3 text-lacuna-blue/80">
-                  {row.clinicalStageProxy}
+                  {row.clinicalStageProxy ?? (
+                    <span
+                      className="text-xs text-lacuna-blue/40"
+                      title="Catalog stage is an acquisition outcome, not a clinical stage"
+                    >
+                      withheld
+                    </span>
+                  )}
                 </td>
                 <td className="py-2 px-3 text-right text-lacuna-blue">
                   {typeof row.disclosedValuation === "number"

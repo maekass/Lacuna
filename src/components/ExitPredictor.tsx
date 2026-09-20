@@ -14,6 +14,7 @@ import type {
   VerifiedAcquisitionView,
   VerifiedDerivedData,
 } from "@/lib/data/verifiedDataHelpers";
+import { factorCoverageScore } from "@/lib/quant/exitFactorCoverage";
 import { indicatorBand } from "@/lib/quant/indicatorBands";
 import type { Company, ExitPrediction } from "@/lib/types";
 
@@ -123,12 +124,27 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
         "Late Stage",
         "Pre-IPO",
       ].includes(company.stage);
-      const inPriorExitSector = acquiredSectors.has(company.sector);
+      const peerAcquired = acquiredCompanies.filter((c) => c.id !== company.id);
+      const peerValuationMedian = getMedian(
+        peerAcquired.map((c) => c.valuation).filter((v): v is number =>
+          typeof v === "number"
+        ),
+        acquiredValuationMedian,
+      );
+      const peerAgeMedian = getMedian(
+        peerAcquired
+          .filter((c) => c.founded !== undefined)
+          .map((c) => CURRENT_YEAR - c.founded!),
+        acquiredAgeMedian,
+      );
+      const inPriorExitSector = peerAcquired.some((c) =>
+        c.sector === company.sector
+      );
       const aboveValuationMedian =
-        (company.valuation ?? 0) >= acquiredValuationMedian;
-      const ageNearPriorMedian = Math.abs(age - acquiredAgeMedian) <= 3;
+        (company.valuation ?? 0) >= peerValuationMedian;
+      const ageNearPriorMedian = Math.abs(age - peerAgeMedian) <= 3;
       const isPublic = company.stage === "Public";
-      const similarPriorExits = acquiredCompanies.filter((c) =>
+      const similarPriorExits = peerAcquired.filter((c) =>
         c.sector === company.sector
       ).length;
 
@@ -176,15 +192,12 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
           sectorAcquirerCounts.get(company.sector),
           overallAcquirerCounts,
         );
-      const confidence = clamp(
-        0.35 +
-          factorDetails.filter((factor) => factor.present && factor.weight > 0)
-              .length * 0.1 +
-          Math.min(similarPriorExits * 0.05, 0.2) +
-          (acquisition ? 0.1 : 0),
-        0.35,
-        0.95,
-      );
+      const confidence = factorCoverageScore({
+        presentPositiveFactorCount: factorDetails.filter((factor) =>
+          factor.present && factor.weight > 0
+        ).length,
+        similarPriorExits,
+      });
 
       return {
         companyId: company.id,
