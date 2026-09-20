@@ -13,7 +13,7 @@ export default function DealKeyedRegulatoryCitations({
   if (citations.length === 0) return null;
 
   return (
-    <MotionSection delay={0.06} className="mb-10">
+    <MotionSection className="mb-10">
       <h2 className="text-lg font-semibold text-lacuna-plum">
         Keyed registry citations
       </h2>
