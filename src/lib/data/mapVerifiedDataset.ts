@@ -1,4 +1,9 @@
 import { parseVerifiedDataset, type VerifiedDataset } from "./datasetSchema";
+import {
+  deriveCatalogEntryReason,
+  deriveFoundedPrecision,
+  deriveOutcomeType,
+} from "./selectionProvenance";
 
 export interface ProvenanceRow {
   last_updated: Date | string;
@@ -72,21 +77,27 @@ function compact<T extends Record<string, unknown>>(obj: T): T {
 }
 
 /** Omit DB import sentinels so optional fields match static JSON absence. */
-function mapCompanyRow(c: CompanyRow) {
-  const founded = c.founded;
+function mapCompanyRow(c: CompanyRow, targetIds: Set<string>) {
+  const founded = c.founded !== 0 ? c.founded : undefined;
   const hq = c.hq;
+  const sources = c.sources ?? [];
+  const isTarget = targetIds.has(c.id);
   return compact({
     id: c.id,
     name: c.name,
     sector: c.sector,
     stage: c.stage,
-    ...(founded !== 0 ? { founded } : {}),
+    ...(founded !== undefined ? { founded } : {}),
+    foundedPrecision: deriveFoundedPrecision(founded),
+    catalogEntryReason: deriveCatalogEntryReason(sources, isTarget),
+    catalogEntryDate: null,
+    outcomeType: deriveOutcomeType(isTarget),
     ...(hq !== "Unknown" ? { hq } : {}),
     ...(c.description ? { description: c.description } : {}),
     lastKnownValuation: toNumber(c.last_known_valuation),
     valuationSource: c.valuation_source ?? undefined,
     totalFunding: toNumber(c.total_funding),
-    sources: c.sources ?? [],
+    sources,
   });
 }
 
@@ -123,6 +134,7 @@ export function mapRowsToVerifiedDataset(
   acquirers: AcquirerRow[],
   acquisitions: AcquisitionRow[],
 ): VerifiedDataset {
+  const targetIds = new Set(acquisitions.map((row) => row.target_id));
   return parseVerifiedDataset({
     provenance: {
       lastUpdated: toIsoDate(provenance.last_updated) ?? "",
@@ -131,7 +143,7 @@ export function mapRowsToVerifiedDataset(
       sources: provenance.sources ?? [],
       notes: provenance.notes ?? [],
     },
-    companies: companies.map(mapCompanyRow),
+    companies: companies.map((row) => mapCompanyRow(row, targetIds)),
     acquirers: acquirers.map(mapAcquirerRow),
     acquisitions: acquisitions.map(mapAcquisitionRow),
   });
