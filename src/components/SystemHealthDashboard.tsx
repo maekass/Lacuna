@@ -30,13 +30,6 @@ const INITIAL_CHECKS: HealthCheck[] = [
     lastChecked: null,
   },
   {
-    name: "Gamma API",
-    endpoint: "/api/gamma/generate",
-    status: "checking",
-    latencyMs: null,
-    lastChecked: null,
-  },
-  {
     name: "ClinicalTrials.gov",
     endpoint: "https://clinicaltrials.gov/api/v2/version",
     status: "checking",
@@ -281,8 +274,7 @@ export default function SystemHealthDashboard() {
           <p className="text-xs text-slate-600">
             <strong>Developer Note:</strong>{" "}
             Health checks run automatically every 60 seconds. ClinicalTrials.gov
-            has a rate limit of 10 requests/second. Gamma API requires valid API
-            key.
+            has a rate limit of 10 requests/second.
           </p>
         </div>
       </Card>

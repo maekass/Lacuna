@@ -24,6 +24,7 @@ describe("heuristicProvenance", () => {
   it("allows illustrative/derived context on research pages", () => {
     expect(isAllowedResearchContextTier("illustrative_static")).toBe(true);
     expect(isAllowedResearchContextTier("derived_static")).toBe(true);
+    expect(isAllowedResearchContextTier("illustrative_heuristic")).toBe(true);
     expect(isAllowedResearchContextTier("dual_source")).toBe(false);
   });
 
@@ -51,6 +52,9 @@ describe("heuristicProvenance", () => {
     );
     expect(labelResearchContextTier("illustrative_static")).toBe(
       "Illustrative context",
+    );
+    expect(labelResearchContextTier("illustrative_heuristic")).toBe(
+      "Illustrative heuristic",
     );
     expect(EMPOWERMENT_MATCH_TIER_LABELS.sector).toMatch(/Affinity/);
     expect(EMPOWERMENT_MATCH_TIER_LABELS.keyword).toMatch(/Affinity/);

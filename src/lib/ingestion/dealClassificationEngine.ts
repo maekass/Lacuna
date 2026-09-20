@@ -161,9 +161,7 @@ export function classifyDealKeywordOnly(
     };
   }
 
-  const hasHighSignal = unique.some((kw) =>
-    HIGH_SIGNAL.has(kw) || HIGH_SIGNAL.has(kw.replace(/y$/, "y"))
-  );
+  const hasHighSignal = unique.some((kw) => HIGH_SIGNAL.has(kw));
   const healthcareSic = input.sicCode?.startsWith("283") === true ||
     input.sicCode?.startsWith("384") === true;
 

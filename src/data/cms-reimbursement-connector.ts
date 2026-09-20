@@ -24,6 +24,11 @@
  *   - Valuation multiples: replace with CB Insights / PitchBook / disclosed-
  *     comparable data
  *
+ * ⚠️ ILLUSTRATIVE HEURISTIC — not the reimbursement evidence engine.
+ * Fuzzy product-to-code matching and local rate snapshots in this file must
+ * not feed published evidence or deal economics. See
+ * `docs/REIMBURSEMENT_AUDIT.md` and `src/lib/reimbursement/`.
+ *
  * Originally added in commit b286c0c (May 2026).
  *
  * Reference URLs:
