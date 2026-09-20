@@ -106,7 +106,7 @@ New data source?
 `/research` and `/intelligence` may keep heuristic joins (sector/keyword
 affinity, acquirer-fit scores, commercialization readiness, evidence-maturity
 scores) when every row is labeled **`cited_*`** or **`affinity`** (or honest
-`illustrative_static` / `derived_static` context).
+`illustrative_static` / `derived_static` / `illustrative_heuristic` context).
 
 Those scores must **not** feed:
 

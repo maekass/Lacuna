@@ -1,7 +1,9 @@
 "use client";
 
+import Metric from "@/components/Metric";
 import Card from "@/components/ui/Card";
-import { reimbursementEvidencePrototype } from "@/data/reimbursement-evidence-prototype";
+import { reimbursementEvidenceSa051 } from "@/data/reimbursement-evidence-sa051";
+import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
 import { SA051_LINEAGE_ORDER } from "@/lib/reimbursement/lineage";
 import {
   isLedgerPublishable,
@@ -17,12 +19,19 @@ const HOP_LABELS: Record<(typeof SA051_LINEAGE_ORDER)[number], string> = {
   utilization: "Utilization question",
 };
 
+const LEDGER_COUNT_MODEL: ModelProvenance = {
+  module: "src/data/reimbursement-evidence-sa051.ts",
+  exportName: "reimbursementEvidenceSa051",
+  definition:
+    "Count of attached sources or rate rows on the SA051 investigation ledger. Zero means none attached yet — not a measured payment or RVU.",
+};
+
 /**
  * Investigation-only SA051 lineage. No rates, premiums, or modeled exposure.
  */
 export default function ReimbursementEvidencePanel() {
-  const validation = validateEvidenceLedger(reimbursementEvidencePrototype);
-  const ledger = validation.ledger ?? reimbursementEvidencePrototype;
+  const validation = validateEvidenceLedger(reimbursementEvidenceSa051);
+  const ledger = validation.ledger ?? reimbursementEvidenceSa051;
   const issue = ledger.issues[0];
   const hops = [...ledger.lineageHops].sort((a, b) => a.sequence - b.sequence);
   const publishable = validation.ok && isLedgerPublishable(ledger);
@@ -59,36 +68,48 @@ export default function ReimbursementEvidencePanel() {
             {publishable ? "yes" : "no"}
           </dd>
         </div>
-        {
-          /*
-          Source/rate counts stay strings (and "none" when empty) so the
-          provenance census does not treat them as uncovered numeric JSX.
-        */
-        }
         <div className="rounded-lg border border-lacuna-lavender/40 p-3">
           <dt className="text-xs uppercase text-lacuna-blue/70">Sources</dt>
           <dd className="font-medium text-lacuna-plum">
-            {ledger.sources.length === 0 ? "none" : `${ledger.sources.length}`}
+            <Metric
+              label="Attached sources"
+              className="font-medium text-lacuna-plum"
+              provenance={{
+                kind: "assumption",
+                value: ledger.sources.length,
+                model: LEDGER_COUNT_MODEL,
+                caveat:
+                  "Investigation catalog count. Zero attached sources is not a $0 payment.",
+              }}
+            />
           </dd>
         </div>
         <div className="rounded-lg border border-lacuna-lavender/40 p-3">
           <dt className="text-xs uppercase text-lacuna-blue/70">Rate rows</dt>
           <dd className="font-medium text-lacuna-plum">
-            {ledger.codeRates.length === 0
-              ? "none"
-              : `${ledger.codeRates.length}`}
+            <Metric
+              label="Attached rate rows"
+              className="font-medium text-lacuna-plum"
+              provenance={{
+                kind: "assumption",
+                value: ledger.codeRates.length,
+                model: LEDGER_COUNT_MODEL,
+                caveat:
+                  "Investigation catalog count. Zero rate rows means none attached, not a zero RVU.",
+              }}
+            />
           </dd>
         </div>
       </dl>
 
-      <ol className="mt-6 space-y-3">
+      <ol className="mt-6 list-decimal space-y-3 pl-5">
         {hops.map((hop) => (
           <li
             key={hop.id}
             className="rounded-lg border border-lacuna-lavender/40 p-3"
           >
             <p className="text-xs font-semibold uppercase tracking-wide text-lacuna-plum/80">
-              {`${hop.sequence}. ${HOP_LABELS[hop.kind]} · ${hop.status}`}
+              {HOP_LABELS[hop.kind]} · {hop.status}
             </p>
             <p className="mt-1 text-sm text-lacuna-blue">{hop.question}</p>
           </li>

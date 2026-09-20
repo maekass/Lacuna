@@ -16,13 +16,14 @@ export type ResearchHeuristicTier =
 
 /**
  * Honest context allowed on `/research` and `/intelligence`.
- * `illustrative_static` / `derived_static` are not heuristics presented as
- * measured deal data.
+ * `illustrative_static` / `derived_static` / `illustrative_heuristic` are not
+ * heuristics presented as measured deal data.
  */
 export type ResearchContextTier =
   | ResearchHeuristicTier
   | "illustrative_static"
-  | "derived_static";
+  | "derived_static"
+  | "illustrative_heuristic";
 
 export const AFFINITY_TIER_LABELS: Record<AffinityProvenanceTier, string> = {
   affinity: "Affinity (heuristic)",
@@ -30,11 +31,12 @@ export const AFFINITY_TIER_LABELS: Record<AffinityProvenanceTier, string> = {
 };
 
 export const CONTEXT_TIER_LABELS: Record<
-  "illustrative_static" | "derived_static",
+  "illustrative_static" | "derived_static" | "illustrative_heuristic",
   string
 > = {
   illustrative_static: "Illustrative context",
   derived_static: "Derived (static)",
+  illustrative_heuristic: "Illustrative heuristic",
 };
 
 export const RESEARCH_HEURISTIC_DISCLAIMER =
@@ -54,7 +56,8 @@ export function isAllowedResearchContextTier(tier: string): boolean {
   return (
     isCitedOrAffinityTier(tier) ||
     tier === "illustrative_static" ||
-    tier === "derived_static"
+    tier === "derived_static" ||
+    tier === "illustrative_heuristic"
   );
 }
 
