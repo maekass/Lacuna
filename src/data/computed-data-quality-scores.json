@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-05T00:00:00.000Z",
-  "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
+  "generatedAt": "2026-09-20T00:00:00.000Z",
+  "datasetHash": "6f5db809ea3e77dffc9ffee92a4c8c612e36e274bff0e7a9542c9c2303adc83f",
   "source": "Lacuna verified dataset (src/data/dataset.verified.json)",
   "grading": {
     "A": "90-100: SEC filing or equivalent primary source, all fields populated",

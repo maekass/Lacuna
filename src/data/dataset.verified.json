@@ -1,7 +1,7 @@
 {
   "provenance": {
-    "lastUpdated": "2026-09-05",
-    "datasetVersion": "v8",
+    "lastUpdated": "2026-09-20",
+    "datasetVersion": "v9",
     "sources": [
       "SEC EDGAR filings (acquisitions, 8-K/10-K)",
       "Crunchbase (funding rounds, where cited)",
@@ -59,7 +59,8 @@
       "2026-06-11: Added 14 Amboy Street Ventures portfolio companies with press-verified founding, stage, and funding data (totalFunding omitted where no source states a total), plus the Gennev / Unified Women's Healthcare acquisition (2022, terms not disclosed).",
       "2026-07-02: Corrected deal4 (Lemonaid Health acquired by 23andMe for $400M per SEC filing, not Amazon). Added disclosed deal values for Alydia Health ($240M), Apostrophe (~$190M), and cited pre-deal valuations for Maven/Kindbody strategic investments.",
       "2026-07-06: Dual-scope dataset — medicine & biotech (default product) and consumer health (separate /consumer workspace). Full catalog retained; each workspace filters in memory.",
-      "preDealValuationDatePrecision backfilled from cited sources; 10 post-announcement placeholder dates reset to announcement-year January 1 at year precision."
+      "preDealValuationDatePrecision backfilled from cited sources; 10 post-announcement placeholder dates reset to announcement-year January 1 at year precision.",
+      "2026-09-20: Added catalogEntryReason, catalogEntryDate, foundedPrecision, and outcomeType. Missing founding years stay absent (foundedPrecision=unknown). Non-acquired outcomes are unknown, not still-private. catalogEntryDate is null where add-date is not recoverable."
     ],
     "purpose": "Educational demonstration dataset for portfolio project. Not for commercial investment decisions.",
     "disclaimer": "Data compiled from public sources for educational visualization. Verify independently before any commercial use."
@@ -81,7 +82,11 @@
         "Crunchbase - crunchbase.com/organization/modern-fertility",
         "TechCrunch - acquisition coverage (May 2021)",
         "Company website - modernfertility.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c2",
@@ -99,7 +104,11 @@
         "Crunchbase - crunchbase.com/organization/ro",
         "Ro.co - press releases",
         "TechCrunch - funding coverage"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c3",
@@ -117,7 +126,11 @@
         "Elvie.com - company website",
         "TechCrunch - Series B (2019)",
         "Crunchbase - crunchbase.com/organization/elvie"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c4",
@@ -135,7 +148,11 @@
         "Mavenclinic.com - company website",
         "TechCrunch - Series D (2021)",
         "Crunchbase - crunchbase.com/organization/maven"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c5",
@@ -152,7 +169,11 @@
         "Crunchbase - crunchbase.com/organization/tia-health",
         "TechCrunch - techcrunch.com/2021/12/15/tia-womens-health",
         "Company website - asktia.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c6",
@@ -170,7 +191,11 @@
         "Get-carrot.com - company website",
         "TechCrunch - Series C (2021)",
         "Crunchbase - crunchbase.com/organization/carrot-fertility"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c7",
@@ -188,7 +213,11 @@
         "Kindbody.com - company website",
         "TechCrunch - Series D (2022)",
         "Crunchbase - crunchbase.com/organization/kindbody"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c8",
@@ -205,7 +234,11 @@
         "Crunchbase - crunchbase.com/organization/parsley-health",
         "Endpoints News - endpointsnews.com/parsley-health-funding",
         "Company website - parsleyhealth.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c9",
@@ -223,7 +256,11 @@
         "Everlywell.com - company website",
         "TechCrunch - funding announcement (2021)",
         "Crunchbase - crunchbase.com/organization/everlywell"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c10",
@@ -239,7 +276,11 @@
         "Avawomen.com - company website",
         "TechCrunch - funding coverage",
         "LinkedIn - company page"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c11",
@@ -256,7 +297,11 @@
         "Crunchbase - crunchbase.com/organization/proov",
         "LinkedIn - company page",
         "Company website - proovtest.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c12",
@@ -274,7 +319,11 @@
         "Nurx.com - company website (now Ro)",
         "TechCrunch - Ro acquisition (Dec 2021)",
         "Crunchbase - crunchbase.com/organization/nurx"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c13",
@@ -293,7 +342,11 @@
         "Globe Newswire — acquisition closing (Nov 1, 2021)",
         "Crunchbase - crunchbase.com/organization/lemonaid-health",
         "Company website - lemonaidhealth.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c14",
@@ -311,7 +364,11 @@
         "Talkspace.com - company website",
         "SEC EDGAR - SPAC filing (2021)",
         "NASDAQ: TALK - public filings"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "sec",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c15",
@@ -329,7 +386,11 @@
         "Calm.com - company website",
         "TechCrunch - funding (2021)",
         "Crunchbase - crunchbase.com/organization/calm"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c16",
@@ -347,7 +408,11 @@
         "Ouraring.com - company website",
         "TechCrunch - Series C (2022)",
         "Crunchbase - crunchbase.com/organization/oura"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c17",
@@ -365,7 +430,11 @@
         "Whoop.com - company website",
         "TechCrunch - Series F (2021)",
         "Crunchbase - crunchbase.com/organization/whoop"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c18",
@@ -382,7 +451,11 @@
         "Crunchbase - crunchbase.com/organization/natural-cycles",
         "TechCrunch - FDA clearance coverage, 2018",
         "Company website - naturalcycles.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c19",
@@ -399,7 +472,11 @@
         "Crunchbase - crunchbase.com/organization/clue-by-biw",
         "TechCrunch - techcrunch.com/clue-period-tracker-funding",
         "Company website - helloclue.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c20",
@@ -415,7 +492,11 @@
         "Company website and public disclosures",
         "Crunchbase - crunchbase.com/organization/bloomi",
         "Company website - thebloomi.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c21",
@@ -432,7 +513,11 @@
         "Company website and public disclosures",
         "Crunchbase - crunchbase.com/organization/novvacup",
         "Company website - novvacup.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c22",
@@ -448,7 +533,11 @@
         "Company website and public disclosures",
         "Crunchbase - crunchbase.com/organization/ovubrush",
         "Company website - ovubrush.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c23",
@@ -466,7 +555,11 @@
         "SEC 8-K filing (Teladoc, Oct 2020)",
         "Livongo.com / Teladoc press release",
         "Crunchbase - crunchbase.com/organization/livongo-health"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c24",
@@ -482,7 +575,11 @@
       "sources": [
         "Hologic investor relations - press release (Jan 5, 2021)",
         "Business Wire - acquisition completion (Feb 22, 2021)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c25",
@@ -498,7 +595,11 @@
       "sources": [
         "Nasdaq press release - Hologic acquisition (Jul 25, 2024)",
         "Endomagnetics company website - endomagnetics.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c26",
@@ -514,7 +615,11 @@
       "sources": [
         "Tracxn - Hologic acquisition list (Oct 14, 2024)",
         "Gynesonics company website - gynesonics.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c27",
@@ -530,7 +635,11 @@
       "sources": [
         "SEC EDGAR - CooperCompanies 10-K (FY2012, acquisition details)",
         "Oslo Stock Exchange - ORIGIO tender offer (Jun 2012)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c28",
@@ -547,7 +656,11 @@
       "sources": [
         "CooperCompanies investor relations - press release (Nov 10, 2021)",
         "Globe Newswire - acquisition announcement"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c29",
@@ -564,7 +677,11 @@
         "Cook Medical company website",
         "Fierce Healthcare - Cook Medical divestiture to CooperSurgical, 2022",
         "Cooper Companies 10-K filing, SEC EDGAR - coopercompanies.com/investors"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c30",
@@ -582,7 +699,11 @@
         "Crunchbase - crunchbase.com/organization/zymot-fertility",
         "CooperSurgical press release - acquisition announcement, 2024",
         "Company website - zymotfertility.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c31",
@@ -600,7 +721,11 @@
         "Business Wire - Merck acquisition on behalf of Organon spinoff",
         "Crunchbase - crunchbase.com/organization/alydia-health",
         "Organon press release - acquisition announcement, 2021"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c32",
@@ -616,7 +741,11 @@
       "sources": [
         "Organon.com - press release (Nov 11, 2021)",
         "Business Wire - acquisition completion (Dec 13, 2021)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c33",
@@ -633,7 +762,11 @@
         "Cision/Vitrolife press release (Jul 8, 2021)",
         "PR Newswire - acquisition completion (Nov 30, 2021)",
         "EQT Group - sale announcement"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c34",
@@ -649,7 +782,11 @@
       "sources": [
         "Gedeon Richter press release (Jun 12, 2024)",
         "Budapest Stock Exchange filing"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c35",
@@ -668,7 +805,11 @@
         "Crunchbase - crunchbase.com/organization/celmatix",
         "Gedeon Richter press release - acquisition announcement, 2026",
         "Company website - celmatix.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c36",
@@ -684,7 +825,11 @@
       "sources": [
         "SEC EDGAR - LabCorp/Sequenom merger filing (Jul 27, 2016)",
         "Business Wire - acquisition announcement"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c37",
@@ -700,7 +845,11 @@
       "sources": [
         "Exact Sciences newsroom - press release (Jul 29, 2019)",
         "SEC EDGAR - merger proxy filing"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c38",
@@ -719,7 +868,11 @@
         "SEC EDGAR - 10-K filing (CIK 0001573773, ticker FMI)",
         "Roche 8-K filing - acquisition announcement, 2018",
         "Company website - foundationmedicine.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c39",
@@ -738,7 +891,11 @@
         "Crunchbase - crunchbase.com/organization/flatiron-health",
         "Roche press release - acquisition announcement, 2018",
         "Company website - flatiron.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c40",
@@ -754,7 +911,11 @@
       "sources": [
         "Business Wire — Hologic press release (Aug 25, 2020)",
         "Hologic investor relations"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c41",
@@ -770,7 +931,11 @@
       "sources": [
         "Nasdaq — Hologic press release (Oct 14, 2021)",
         "SEC EDGAR — Hologic 10-K FY2022 (purchase price allocation)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c42",
@@ -786,7 +951,11 @@
       "sources": [
         "Hologic investor relations press release (Sep 26, 2018)",
         "SEC EDGAR — Hologic 10-K FY2019 (purchase price $120.1M)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c43",
@@ -802,7 +971,11 @@
       "sources": [
         "CooperCompanies investor relations — Globe Newswire (Aug 1, 2024)",
         "SEC EDGAR — CooperCompanies 10-K FY2024"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c44",
@@ -818,7 +991,11 @@
         "Smith & Nephew press release (May 18, 2016)",
         "Medtronic press release (May 18, 2016)",
         "MassDevice deal coverage (Aug 8, 2016 — close confirmed)"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c45",
@@ -834,7 +1011,11 @@
       "sources": [
         "PR Newswire — Boston Scientific press release (Apr 16, 2018)",
         "MassDevice deal coverage ($275M total)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c46",
@@ -851,7 +1032,11 @@
         "Illumina press release (Sep 21, 2020)",
         "SEC EDGAR — Illumina merger filing",
         "GRAIL press release (Aug 18, 2021 — completion)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c47",
@@ -868,7 +1053,11 @@
         "Business Wire — Astorg press release (Dec 2, 2024)",
         "Mergr M&A summary ($388M total)",
         "Weil Gotshal advisory announcement ($282M)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c48",
@@ -885,7 +1074,11 @@
         "Vitrolife investor relations",
         "Vitrolife press release - eFertility acquisition, 2024",
         "Company website - stbzorg.nl"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c49",
@@ -901,7 +1094,11 @@
       "sources": [
         "SEC EDGAR — Cogentix Medical merger filing (Mar 12, 2018)",
         "Laborie Medical press release (Apr 23, 2019 — completion)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c50",
@@ -916,7 +1113,11 @@
       "valuationSource": "Acquisition value $145M upfront + contingent milestones (Coloplast press release, Nov 2020)",
       "sources": [
         "Globe Newswire — Coloplast press release (Nov 3, 2020)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c51",
@@ -933,7 +1134,11 @@
         "Sumitomo Pharma press release (Oct 24, 2022)",
         "PR Newswire — Sumitovant announcement (Oct 2, 2022)",
         "Business Wire — completion announcement (Mar 10, 2023)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c52",
@@ -949,7 +1154,11 @@
       "sources": [
         "Globe Newswire — Myriad Genetics press release (May 28, 2018)",
         "Myriad Genetics investor relations"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c53",
@@ -965,7 +1174,11 @@
       "sources": [
         "Globe Newswire — Myriad Genetics press release (Nov 1, 2022)",
         "Myriad Genetics investor relations"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c54",
@@ -981,7 +1194,11 @@
       "sources": [
         "Business Wire — Natera press release (Jan 22, 2024)",
         "Natera investor relations"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c55",
@@ -997,7 +1214,11 @@
       "sources": [
         "Business Wire — TherapeuticsMD press release (Jan 3, 2023)",
         "SEC EDGAR — TherapeuticsMD 8-K (Dec 30, 2022)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c56",
@@ -1014,7 +1235,11 @@
         "SEC EDGAR — Pfizer 8-K (Mar 13, 2023)",
         "Business Wire — Pfizer/Seagen merger announcement (Mar 13, 2023)",
         "SEC EDGAR — Pfizer 8-K completion (Dec 14, 2023)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c57",
@@ -1031,7 +1256,11 @@
         "Siemens Healthineers press release (Aug 2, 2020)",
         "PR Newswire — Varian merger announcement (Aug 2, 2020)",
         "SEC EDGAR — Varian DFAN14A (Aug 2020)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c58",
@@ -1048,7 +1277,11 @@
         "Business Wire — Gilead/Immunomedics announcement (Sep 13, 2020)",
         "Gilead Sciences press release (Sep 13, 2020)",
         "SEC EDGAR — Immunomedics merger filing"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c59",
@@ -1065,7 +1298,11 @@
         "PR Newswire — Exact Sciences/Thrive announcement (Oct 27, 2020)",
         "PR Newswire — Exact Sciences completion (Jan 5, 2021)",
         "Milwaukee Business Journal (Jan 5, 2021)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c60",
@@ -1082,7 +1319,11 @@
         "PR Newswire — Exact Sciences press release (Jan 9, 2022)",
         "SEC EDGAR — Exact Sciences 8-K (Jan 10, 2022)",
         "Laboratory Economics — deal reporting (Jan 15, 2022)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c61",
@@ -1099,7 +1340,11 @@
         "SEC EDGAR — PerkinElmer 8-K (Jun 16, 2017)",
         "GenomeWeb — deal coverage (Jun 19, 2017)",
         "Revvity (PerkinElmer) investor relations — completion (Dec 19, 2017)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c62",
@@ -1116,7 +1361,11 @@
         "PR Newswire — Hologic press release (Jul 31, 2018)",
         "BioSpace — deal coverage (Jul 31, 2018)",
         "Hologic investor relations — SEC 10-K FY2019"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c63",
@@ -1135,7 +1384,11 @@
         "Euronext Paris — SuperSonic Imagine (EPA: SSI) tender offer",
         "Crunchbase - crunchbase.com/organization/supersonic-imagine",
         "Hologic press release - acquisition announcement, 2019"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c64",
@@ -1155,7 +1408,11 @@
         "Crunchbase - crunchbase.com/organization/ovia-health",
         "LabCorp press release - acquisition announcement, 2021",
         "Company website - oviahealth.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c65",
@@ -1172,7 +1429,11 @@
         "Globe Newswire — Myriad Genetics press release (May 31, 2016)",
         "SEC EDGAR — Myriad Genetics 8-K (May 31, 2016)",
         "GEN News — deal coverage (May 31, 2016)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c66",
@@ -1189,7 +1450,11 @@
         "SEC EDGAR — Abbott/Alere amended merger filing (Apr 14, 2017)",
         "Abbott Mediaroom — merger amendment (Apr 14, 2017)",
         "Abbott Mediaroom — closing confirmation (Sep 29, 2017)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c67",
@@ -1206,7 +1471,11 @@
         "Ethicon/J&J product portfolio documentation",
         "Caldera Medical press release - product line acquisition, 2025",
         "Johnson & Johnson 10-K filing, SEC EDGAR - Ethicon divestiture"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c68",
@@ -1223,7 +1492,11 @@
         "SEC EDGAR - Hologic 8-K/DEFM14A (2012)",
         "Hologic press release (August 1, 2012)",
         "Gen-Probe Incorporated SEC filings"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c69",
@@ -1240,7 +1513,11 @@
         "Business Wire - Bayer acquisition announcement (August 11, 2020)",
         "Business Wire - Bayer completion announcement (September 9, 2020)",
         "Bayer.com media release"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c70",
@@ -1257,7 +1534,11 @@
         "Astellas Pharma press release (May 17, 2017)",
         "PR Newswire - Astellas completes acquisition (May 2017)",
         "Astellas newsroom - newsroom.astellas.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c71",
@@ -1274,7 +1555,11 @@
         "Organon press release (September 18, 2024)",
         "Fierce Pharma coverage (September 18, 2024)",
         "Roivant/Dermavant investor presentation (September 2024)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c72",
@@ -1291,7 +1576,11 @@
         "Axios Pro (April 13, 2022) - deal announcement",
         "Fertility Bridge (January 26, 2023) - deal close confirmation",
         "Spanish CNMC regulatory approval (December 21, 2022)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c73",
@@ -1308,7 +1597,11 @@
         "EQT Group press release (July 28, 2023)",
         "Times of India (July 29, 2023)",
         "Economic Times (July 29, 2023)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c74",
@@ -1328,7 +1621,11 @@
         "Crunchbase - crunchbase.com/organization/apostrophe",
         "TechCrunch - Hims & Hers acquisition coverage, 2021",
         "Company website - apostrophe.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c75",
@@ -1345,7 +1642,11 @@
         "Business Wire - IVI RMA completion announcement (January 31, 2024)",
         "PitchBook (November 2023) - deal reporting",
         "Fresenius SE press release (divestiture)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c76",
@@ -1361,7 +1662,11 @@
         "TechCrunch - $5M seed coverage (July 2021)",
         "Business Wire - $14M Series A announcement (September 2023)",
         "Fierce Healthcare - funding and STI care expansion coverage"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c77",
@@ -1380,7 +1685,11 @@
         "Crunchbase - crunchbase.com/organization/hey-jane",
         "TechCrunch - telehealth abortion care coverage, 2022",
         "Company website - heyjane.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c78",
@@ -1399,7 +1708,11 @@
         "Company website - contraline.com",
         "Crunchbase - crunchbase.com/organization/contraline",
         "Endpoints News - male contraceptive implant coverage, 2023"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c79",
@@ -1416,7 +1729,11 @@
         "GeekWire - acquisition coverage (October 2022)",
         "Business Wire - Unified Women's Healthcare acquisition announcement (October 2022)",
         "Tracxn - funding history ($4.12M over 4 rounds)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": null,
+      "outcomeType": "acquired"
     },
     {
       "id": "c80",
@@ -1432,7 +1749,11 @@
         "PR Newswire - $3.3M seed announcement (October 2021)",
         "Fortune - $16M Series A coverage (November 2024)",
         "Femtech Insider - Series A coverage (November 2024)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c81",
@@ -1448,7 +1769,11 @@
         "TechCrunch - $12M Series A coverage, ~$19M total to date (February 2025)",
         "Business Wire - Series A announcement (February 2025)",
         "Fierce Healthcare - expansion coverage"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c82",
@@ -1463,7 +1788,11 @@
         "TechCrunch - launch coverage (May 2020)",
         "PR Newswire - Series B announcement, amount undisclosed (January 2026)",
         "Femtech Insider - nationwide expansion coverage"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c83",
@@ -1479,7 +1808,11 @@
         "TechCrunch - $7M Series A coverage (September 2022)",
         "BeautyMatter - Series A coverage, $13M total raised (2022)",
         "Wikipedia - Dame Products"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c84",
@@ -1498,7 +1831,11 @@
         "Crunchbase - crunchbase.com/organization/bea-fertility",
         "TechCrunch - at-home insemination kit coverage, 2022",
         "Company website - beafertility.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c85",
@@ -1513,7 +1850,11 @@
       "sources": [
         "PR Newswire - $14M Series A led by GV (January 2024)",
         "PR Newswire - $15M Series A+, total funding over $30M (January 2025)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c86",
@@ -1528,7 +1869,11 @@
         "ArcticStartup - €26.5M Series B coverage",
         "Femtech Insider - Series B second closing, SEK 347M total round",
         "Company website - gesynta.se history page (founded 2017, Karolinska spinout)"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c87",
@@ -1547,7 +1892,11 @@
         "GGBa - CHF 1.6M earlier financing coverage",
         "Crunchbase - crunchbase.com/organization/testmate-health",
         "Company website - testmatehealth.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c88",
@@ -1564,7 +1913,11 @@
         "BeautyMatter - Series A coverage (2022)",
         "Crunchbase - crunchbase.com/organization/aunt-flow",
         "Company website - auntflow.org"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c89",
@@ -1582,7 +1935,11 @@
         "Future FemHealth - seed funding coverage (2025)",
         "Crunchbase - crunchbase.com/organization/juniper-genomics",
         "Company website - junipergenomics.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c90",
@@ -1601,7 +1958,11 @@
         "Crunchbase - crunchbase.com/organization/apollo-neuroscience",
         "TechCrunch - wearable stress management coverage, 2022",
         "Company website - apolloneuro.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c91",
@@ -1619,7 +1980,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/aria-cv",
         "Company website - ariacv.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c92",
@@ -1639,7 +2004,11 @@
         "Crunchbase - crunchbase.com/organization/attn-grace",
         "TechCrunch - bladder leakage products coverage, 2022",
         "Company website - attngrace.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c93",
@@ -1660,7 +2029,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/bwell-connected-health",
         "Company website - bwell.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c94",
@@ -1680,7 +2053,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/bone-health-technologies",
         "Company website - bonehealthtech.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c95",
@@ -1697,7 +2074,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/bowe-glow",
         "Company website - boweglow.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c96",
@@ -1714,7 +2095,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/cat-health",
         "Company website - cathealth.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c97",
@@ -1731,7 +2116,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/chronicle-bio",
         "Company website - chroniclebio.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c98",
@@ -1748,7 +2137,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/clear-gene",
         "Company website - cleargene.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c99",
@@ -1765,7 +2158,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/e-lovu-health",
         "Company website - elovuhealth.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c100",
@@ -1784,7 +2181,11 @@
         "Crunchbase - crunchbase.com/organization/everly-health",
         "TechCrunch - at-home diagnostics coverage, 2021",
         "Company website - everlyhealth.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c101",
@@ -1801,7 +2202,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/femdx-medsystems",
         "Company website - femdx.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c102",
@@ -1818,7 +2223,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/frontier-bio",
         "Company website - frontierbio.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c103",
@@ -1836,7 +2245,11 @@
         "Crunchbase - crunchbase.com/organization/future-family",
         "TechCrunch - fertility financing coverage, 2018",
         "Company website - futurefamily.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c104",
@@ -1855,7 +2268,11 @@
         "Crunchbase - crunchbase.com/organization/gameto",
         "Endpoints News - IVF biotech coverage, 2023",
         "Company website - gameto.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c105",
@@ -1872,7 +2289,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/harmony-nutrition",
         "Company website - harmonynutrition.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c106",
@@ -1891,7 +2312,11 @@
         "Crunchbase - crunchbase.com/organization/hera-biotech",
         "Endpoints News - endometriosis diagnostics coverage, 2024",
         "Company website - herabiotech.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c107",
@@ -1909,7 +2334,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/inherent-biosciences",
         "Company website - inherentbio.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c108",
@@ -1927,7 +2356,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/joylux",
         "Company website - joylux.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c109",
@@ -1947,7 +2380,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/lighthouse-pharma",
         "Company website - lighthousepharma.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c110",
@@ -1965,7 +2402,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/l-nutra",
         "Company website - lnutra.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c111",
@@ -1991,7 +2432,11 @@
         "Crunchbase - crunchbase.com/organization/madison-reed",
         "TechCrunch - hair color startup coverage, 2021",
         "Company website - madison-reed.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c112",
@@ -2009,7 +2454,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/madorra",
         "Company website - madorra.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c113",
@@ -2027,7 +2476,11 @@
         "Crunchbase - crunchbase.com/organization/maude",
         "TechCrunch - sexual wellness brand coverage, 2021",
         "Company website - maude.co"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c114",
@@ -2049,7 +2502,11 @@
         "Crunchbase - crunchbase.com/organization/maven-clinic",
         "TechCrunch - digital health for women coverage, 2022",
         "Company website - mavenclinic.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c115",
@@ -2067,7 +2524,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/mercy-bio",
         "Company website - mercybio.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c116",
@@ -2087,7 +2548,11 @@
         "Crunchbase - crunchbase.com/organization/mirvie",
         "Endpoints News - prenatal screening coverage, 2023",
         "Company website - mirvie.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c117",
@@ -2104,7 +2569,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/nalu-bio",
         "Company website - nalubio.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c118",
@@ -2121,7 +2590,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/nest-collaborative",
         "Company website - nestcollaborative.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c119",
@@ -2138,7 +2611,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/neuspera",
         "Company website - neuspera.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c120",
@@ -2157,7 +2634,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/nowdx",
         "Company website - nowdx.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c121",
@@ -2174,7 +2655,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/proov",
         "Company website - proovtest.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c122",
@@ -2193,7 +2678,11 @@
         "Crunchbase - crunchbase.com/organization/rebundle",
         "TechCrunch - sustainable hair extensions coverage, 2023",
         "Company website - rebundle.co"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c123",
@@ -2210,7 +2699,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/rosy-wellness",
         "Company website - rosywellness.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c124",
@@ -2227,7 +2720,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/sana-health",
         "Company website - sanahealth.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c125",
@@ -2244,7 +2741,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/simple-healthkit",
         "Company website - simplehealthkit.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c126",
@@ -2263,7 +2764,11 @@
         "Crunchbase - crunchbase.com/organization/siren-care",
         "TechCrunch - diabetic sock startup coverage, 2020",
         "Company website - siren.care"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c127",
@@ -2280,7 +2785,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/solace-therapeutics",
         "Company website - solacetx.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c128",
@@ -2297,7 +2806,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/toi-labs",
         "Company website - toilabs.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c129",
@@ -2314,7 +2827,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/veana-therapeutics",
         "Company website - veanatx.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c130",
@@ -2332,7 +2849,11 @@
         "Crunchbase - crunchbase.com/organization/wellth",
         "TechCrunch - medication adherence startup coverage, 2021",
         "Company website - wellthapp.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c131",
@@ -2352,7 +2873,11 @@
         "Crunchbase - crunchbase.com/organization/willow-pump",
         "TechCrunch - breast pump startup coverage, 2021",
         "Company website - willowpump.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c132",
@@ -2370,7 +2895,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/xandar-kardian",
         "Company website - xandarkardian.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c133",
@@ -2387,7 +2916,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/xcures",
         "Company website - xcures.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c134",
@@ -2411,7 +2944,11 @@
         "Crunchbase - crunchbase.com/organization/yourchoice-therapeutics",
         "Endpoints News - male contraceptive coverage, 2023",
         "Company website - yourchoicetx.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c135",
@@ -2428,7 +2965,11 @@
         "Fund portfolio listing (as of 5/31/26)",
         "Crunchbase - crunchbase.com/organization/x-therma",
         "Company website - x-therma.com"
-      ]
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c136",
@@ -2444,7 +2985,11 @@
         "Endpoints News - $17M Series B; $24M total raised (October 2023)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
         "Company website - aoadx.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c137",
@@ -2460,7 +3005,11 @@
         "Femtech Insider - $12.2M Series A (September 2024)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
         "Company website - bloomlife.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c138",
@@ -2476,7 +3025,11 @@
         "Business Wire - more than $35M raised (March 2024)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
         "Company website - cadenceotc.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c139",
@@ -2492,7 +3045,11 @@
         "PRNewswire - $12M Series A; $15M total to date (May 2022)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
         "Company website - cayabacare.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c140",
@@ -2507,7 +3064,11 @@
         "Business Wire - $1.8M pre-seed (August 2019)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
         "Company website - cirqle.bio"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c141",
@@ -2523,7 +3084,11 @@
         "Business Wire - $16M total capital raised (April 2025)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
         "Company website - cofertility.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c142",
@@ -2539,7 +3104,11 @@
         "Eli Health - total capital raised $20M (June 2025)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
         "Company website - eli.health"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c143",
@@ -2555,7 +3124,11 @@
         "Business Wire - $1.3M pre-seed at launch (September 2021)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
         "Company website - meetmae.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c144",
@@ -2570,7 +3143,11 @@
         "Business Wire - $26M Series A + $2M seed (July 2024)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
         "Company website - novocuff.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "press",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c145",
@@ -2585,7 +3162,11 @@
         "PRNewswire - $10M funding round (June 2024)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
         "Company website - oconmed.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c146",
@@ -2601,7 +3182,11 @@
         "PRNewswire - RH Capital $9.5M seed announcement (June 2022)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
         "Company website - planera.care"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c147",
@@ -2616,7 +3201,11 @@
         "GlobeNewswire - $7.5M Series A extension (June 2024)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
         "Company website - raydiantoximetry.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c148",
@@ -2632,7 +3221,11 @@
         "MedCity News - $22M total raised (September 2025)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
         "Company website - sevenstarling.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c149",
@@ -2648,7 +3241,11 @@
         "PRNewswire - $25M total funding (January 2025)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
         "Company website - twentyeighthealth.com"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "unknown",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     },
     {
       "id": "c150",
@@ -2663,7 +3260,11 @@
         "SEC Form D - November 2024 offering",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
         "Company website - vitra.bio"
-      ]
+      ],
+      "foundedPrecision": "year",
+      "catalogEntryReason": "sec",
+      "catalogEntryDate": null,
+      "outcomeType": "unknown"
     }
   ],
   "acquirers": [
