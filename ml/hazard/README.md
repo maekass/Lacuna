@@ -15,9 +15,9 @@ Among rows in `src/data/dataset.verified.json` with a founded year:
 - **Time:** years from founded year to verified acquisition announcement
   (events) or dataset `provenance.lastUpdated` (right-censored independents)
 - **Event:** presence in the verified `acquisitions` array
-- **Covariates:** none. Sector dummy indicators are not used. Current `stage`
-  is also unused — acquired rows are labeled post-outcome ("Acquired by …")
-  and would leak the event. The fit is a Breslow / Nelson–Aalen baseline.
+- **Covariates:** none. Sector dummy indicators are not used. Current `stage` is
+  also unused — acquired rows are labeled post-outcome ("Acquired by …") and
+  would leak the event. The fit is a Breslow / Nelson–Aalen baseline.
 
 ## Honest limits
 

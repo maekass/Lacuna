@@ -154,12 +154,16 @@ export function scoreHazard(
         "Verified cohort is too small to report a baseline hazard.",
     );
   }
-  if (artifact.featureNames.length !== 0 || artifact.keptFeatureNames.length !== 0) {
+  if (
+    artifact.featureNames.length !== 0 || artifact.keptFeatureNames.length !== 0
+  ) {
     return insufficient(
       "Artifact still lists covariates; sector dummy indicators are not used.",
     );
   }
-  if (artifact.coefficients.length !== 0 || artifact.hazardRatios.length !== 0) {
+  if (
+    artifact.coefficients.length !== 0 || artifact.hazardRatios.length !== 0
+  ) {
     return insufficient(
       "Artifact coefficients are misaligned with the empty design matrix.",
     );

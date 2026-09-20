@@ -118,8 +118,8 @@ with a disclosed founded year\
 
 The fit has no covariates: sector dummy indicators are not used, so relative
 hazard is 1 and the artifact is a Breslow / Nelson–Aalen baseline on this
-curated sample. Missing founded year is exclusion, not imputation. Current
-stage is unused (acquired labels leak the event). The consumer returns
+curated sample. Missing founded year is exclusion, not imputation. Current stage
+is unused (acquired labels leak the event). The consumer returns
 `insufficient_disclosed_data` rather than inventing a score.
 
 This is **not** a forecast of future M&A, **not** an acquisition probability,
