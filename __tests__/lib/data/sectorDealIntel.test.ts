@@ -3,6 +3,8 @@ import { applyDatasetScope } from "@/lib/data/medBiotechFilters";
 import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 import {
   buildSectorDealIntel,
+  displaySectorLabel,
+  isPortfolioDiagnosticSector,
   medianDisclosedDealValueM,
   SECTOR_DEAL_TABLE_LIMIT,
   type SectorDealAcquisition,
@@ -187,6 +189,17 @@ describe("buildSectorDealIntel on verified dataset", () => {
     expect(
       scopedFertility.deals.some((d) => d.targetName.includes("Maven")),
     ).toBe(false);
+  });
+
+  it("labels bare Diagnostic as Diagnostic (portfolio), not Diagnostics (success)", () => {
+    expect(displaySectorLabel("Diagnostic")).toBe("Diagnostic (portfolio)");
+    expect(displaySectorLabel("Diagnostic (portfolio)")).toBe(
+      "Diagnostic (portfolio)",
+    );
+    expect(displaySectorLabel("Diagnostics")).toBe("Diagnostics");
+    expect(isPortfolioDiagnosticSector("Diagnostic")).toBe(true);
+    expect(isPortfolioDiagnosticSector("Diagnostic (portfolio)")).toBe(true);
+    expect(isPortfolioDiagnosticSector("Diagnostics")).toBe(false);
   });
 
   it("keeps portfolio Diagnostic companies out of acquired Diagnostics deals (success)", () => {

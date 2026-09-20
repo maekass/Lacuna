@@ -42,6 +42,22 @@ export function sectorKey(sector: string): string {
 }
 
 /**
+ * Chip/heading label. The bare `Diagnostic` taxonomy is the Rock Health
+ * portfolio cohort — never show it as if it were acquired Diagnostics.
+ */
+export function displaySectorLabel(sector: string): string {
+  return sectorKey(sector) === "Diagnostic"
+    ? "Diagnostic (portfolio)"
+    : sectorKey(sector);
+}
+
+/** Portfolio diagnostic companies, not acquired Diagnostics targets. */
+export function isPortfolioDiagnosticSector(sector: string): boolean {
+  const key = sectorKey(sector);
+  return key === "Diagnostic" || key.includes("(portfolio)");
+}
+
+/**
  * Median of disclosed deal values in USD millions.
  * Even-n uses the mean of the two central observations; does not mutate input.
  */

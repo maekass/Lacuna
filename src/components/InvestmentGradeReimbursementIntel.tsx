@@ -5,7 +5,12 @@ import Link from "next/link";
 import Card from "@/components/ui/Card";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
-import { buildSectorDealIntel, sectorKey } from "@/lib/data/sectorDealIntel";
+import {
+  buildSectorDealIntel,
+  displaySectorLabel,
+  isPortfolioDiagnosticSector,
+  sectorKey,
+} from "@/lib/data/sectorDealIntel";
 
 /**
  * Verified competitive context only — no invented TAM, payer mix, or keyword risk scores.
@@ -53,13 +58,13 @@ export default function InvestmentGradeReimbursementIntel() {
               key={sector}
               type="button"
               onClick={() => setSelectedSector(sector)}
-              className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+              className={`rounded-lg px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
                 active?.sector === sector
                   ? "bg-lacuna-plum text-white"
                   : "bg-slate-100 text-slate-700 hover:bg-slate-200"
               }`}
             >
-              {sector}
+              {displaySectorLabel(sector)}
             </button>
           ))}
         </div>
@@ -104,7 +109,7 @@ export default function InvestmentGradeReimbursementIntel() {
                 </div>
               </div>
 
-              {active.sector.includes("(portfolio)")
+              {isPortfolioDiagnosticSector(active.sector)
                 ? (
                   <p className="text-xs text-lacuna-blue/80">
                     Portfolio companies labeled{" "}
