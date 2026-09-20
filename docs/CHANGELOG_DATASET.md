@@ -9,8 +9,8 @@ Compared against `src/data/computed-dataset-summary.json`:
 | Field           | Baseline value |
 | --------------- | -------------- |
 | Verified deals  | 59             |
-| Last updated    | 2026-09-05     |
-| Dataset version | v7             |
+| Last updated    | 2026-09-20     |
+| Dataset version | v8             |
 
 2026-09-05 — pre-deal valuation as-of backfill: impossible mark dates reset to
 the announced year, year-only sources forced to `YYYY-01-01` +
@@ -18,6 +18,12 @@ the announced year, year-only sources forced to `YYYY-01-01` +
 cited mark is a round $100M increment. No new deals.
 
 Live count comes from `dataset.verified.json` → `provenance.lastUpdated`.
+
+2026-09-20 — citation and taxonomy repair (no new deals): 19 identity-checked
+SEC accession URLs appended from `staging/source-backfill`; Teladoc/Livongo
+announcement date corrected to 2020-08-05; Hologic/Biotheranostics 8-K added to
+the deal source; portfolio sector `Diagnostic` renamed `Diagnostic (portfolio)`
+so it is not merged with acquired Diagnostics.
 
 ## Hub strip
 

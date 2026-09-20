@@ -367,7 +367,12 @@ export const BURDEN_AREAS: Record<string, BurdenArea> = {
   },
   breast_health: {
     name: "Breast Health & Oncology",
-    datasetSectors: ["Breast Health", "Diagnostics", "Diagnostic"],
+    datasetSectors: [
+      "Breast Health",
+      "Diagnostics",
+      "Diagnostic",
+      "Diagnostic (portfolio)",
+    ],
     dalyThousandsPerYear: 4_200,
     prevalenceMillion: 4.1,
     annualDeathsThousands: 43.5,

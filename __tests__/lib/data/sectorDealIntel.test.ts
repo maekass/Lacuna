@@ -188,4 +188,23 @@ describe("buildSectorDealIntel on verified dataset", () => {
       scopedFertility.deals.some((d) => d.targetName.includes("Maven")),
     ).toBe(false);
   });
+
+  it("keeps portfolio Diagnostic companies out of acquired Diagnostics deals (success)", () => {
+    const dataset = getStaticVerifiedDataset();
+    const portfolio = buildSectorDealIntel(
+      "Diagnostic (portfolio)",
+      dataset.companies,
+      dataset.acquisitions,
+    );
+    const diagnostics = buildSectorDealIntel(
+      "Diagnostics",
+      dataset.companies,
+      dataset.acquisitions,
+    );
+    expect(portfolio.companyCount).toBe(7);
+    expect(portfolio.dealCount).toBe(0);
+    expect(diagnostics.dealCount).toBe(11);
+    expect(diagnostics.deals.some((d) => d.targetName.includes("Sividon")))
+      .toBe(false);
+  });
 });

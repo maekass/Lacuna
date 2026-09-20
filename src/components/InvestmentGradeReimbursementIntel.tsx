@@ -104,6 +104,20 @@ export default function InvestmentGradeReimbursementIntel() {
                 </div>
               </div>
 
+              {active.sector.includes("(portfolio)")
+                ? (
+                  <p className="text-xs text-lacuna-blue/80">
+                    Portfolio companies labeled{" "}
+                    <strong>Diagnostic (portfolio)</strong>{" "}
+                    (Rock Health / fund listing) stay separate from acquired
+                    {" "}
+                    <strong>Diagnostics</strong>{" "}
+                    targets. Their deal count stays zero — they are not merged
+                    into M&A diagnostics.
+                  </p>
+                )
+                : null}
+
               {active.acquirers.length > 0
                 ? (
                   <p className="text-sm text-lacuna-blue">
