@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { applyDatasetScope } from "@/lib/data/medBiotechFilters";
 import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 import {
   buildSectorDealIntel,
@@ -163,5 +164,28 @@ describe("buildSectorDealIntel on verified dataset", () => {
     expect(breast.companyCount).toBeGreaterThan(0);
     expect(breast.dealCount).toBeGreaterThan(0);
     expect(breast.dealCount).toBeGreaterThanOrEqual(breast.deals.length);
+    expect(breast.deals.some((d) => d.targetName.includes("Sividon"))).toBe(
+      true,
+    );
+  });
+
+  it("keeps care-delivery fertility exits out of default med/biotech scope (edge)", () => {
+    const full = getStaticVerifiedDataset();
+    const scoped = applyDatasetScope(full, "med_biotech");
+    const fullFertility = buildSectorDealIntel(
+      "Fertility",
+      full.companies,
+      full.acquisitions,
+    );
+    const scopedFertility = buildSectorDealIntel(
+      "Fertility",
+      scoped.companies,
+      scoped.acquisitions,
+    );
+    expect(fullFertility.dealCount).toBe(12);
+    expect(scopedFertility.dealCount).toBe(9);
+    expect(
+      scopedFertility.deals.some((d) => d.targetName.includes("Maven")),
+    ).toBe(false);
   });
 });
