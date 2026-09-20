@@ -132,7 +132,7 @@ export default function DealsPage() {
         <ValuationMatrix />
       </MotionSection>
 
-      <MotionSection id="quant-valuation" delay={0.16} className={SECTION}>
+      <MotionSection id="quant-valuation" className={SECTION}>
         <SectionHeader
           title="Quant valuation & similarity index"
           description="Heuristic comparable-deal valuation and a unitless similarity index. Not a probability and not a five-year forecast. Outcome-only stage labels are withheld."
@@ -175,11 +175,7 @@ export default function DealsPage() {
         <ClusteringAnalysis />
       </MotionSection>
 
-      <MotionSection
-        id="similarity-indicators"
-        delay={0.27}
-        className={SECTION}
-      >
+      <MotionSection id="similarity-indicators" className={SECTION}>
         <SectionHeader
           title="Acquisition similarity indicators"
           description="Ordinal bands from disclosed factor co-occurrence. Acquired companies are a historical baseline; membership in the acquisitions array does not raise factor coverage."
