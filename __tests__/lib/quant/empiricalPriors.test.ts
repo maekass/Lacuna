@@ -29,6 +29,10 @@ function makeCompanyView(
     description: "Test diagnostics company",
     totalFunding: 50,
     sources: [],
+    foundedPrecision: "year",
+    catalogEntryReason: "unknown",
+    catalogEntryDate: null,
+    outcomeType: "unknown",
     ...overrides,
   };
 }

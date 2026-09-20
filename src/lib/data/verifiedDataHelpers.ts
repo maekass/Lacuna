@@ -13,10 +13,10 @@ export interface VerifiedCompanyView {
   readonly sector: string;
   readonly stage: string;
   readonly founded?: number;
-  readonly foundedPrecision?: FoundedPrecision;
-  readonly catalogEntryReason?: CatalogEntryReason;
-  readonly catalogEntryDate?: string | null;
-  readonly outcomeType?: OutcomeType;
+  readonly foundedPrecision: FoundedPrecision;
+  readonly catalogEntryReason: CatalogEntryReason;
+  readonly catalogEntryDate: string | null;
+  readonly outcomeType: OutcomeType;
   readonly hq?: string;
   readonly description?: string;
   readonly lastKnownValuation?: number;
