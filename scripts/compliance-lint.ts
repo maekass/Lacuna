@@ -90,10 +90,7 @@ function walkDir(dir: string, exts: string[]): string[] {
     const fullPath = join(dir, entry);
     const stat = statSync(fullPath);
     if (stat.isDirectory()) {
-      if (
-        entry === "node_modules" || entry === "__tests__" ||
-        entry === "_quarantine"
-      ) continue;
+      if (entry === "node_modules" || entry === "__tests__") continue;
       results.push(...walkDir(fullPath, exts));
     } else if (exts.includes(extname(entry))) {
       if (entry.includes(".test.")) continue;

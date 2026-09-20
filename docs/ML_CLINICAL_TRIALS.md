@@ -88,14 +88,14 @@ const scores = scoreClinicalTrial({
 
 ## Relationship to other "models"
 
-| Component                          | Type                                         |
-| ---------------------------------- | -------------------------------------------- |
-| Evidence Maturity Dashboard        | Rule-based (`evidenceMaturityCalculator.ts`) |
-| Exit Predictor                     | Hand-set weights on verified deals           |
-| AI Insights panel                  | External LLM (optional)                      |
-| **Clinical trials ML**             | **Offline sklearn → JSON → TS inference**    |
-| `export_llm_corpus.py`             | Data prep only — not an LLM                  |
-| Quarantined `ensemblePredictor.ts` | Untrained TF.js stub — superseded            |
+| Component                         | Type                                         |
+| --------------------------------- | -------------------------------------------- |
+| Evidence Maturity Dashboard       | Rule-based (`evidenceMaturityCalculator.ts`) |
+| Exit Predictor                    | Hand-set weights on verified deals           |
+| AI Insights panel                 | External LLM (optional)                      |
+| **Clinical trials ML**            | **Offline sklearn → JSON → TS inference**    |
+| `export_llm_corpus.py`            | Data prep only — not an LLM                  |
+| Removed TF.js `ensemblePredictor` | Untrained stub — superseded by this pipeline |
 
 ## Citation guidance
 

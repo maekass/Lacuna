@@ -21,7 +21,7 @@ function walk(dir: string): string[] {
     const full = path.join(dir, entry);
     const stat = statSync(full);
     if (stat.isDirectory()) {
-      if (entry === "_quarantine" || entry === "node_modules") continue;
+      if (entry === "node_modules") continue;
       files.push(...walk(full));
     } else if (/\.(ts|tsx)$/.test(entry)) {
       files.push(full);
