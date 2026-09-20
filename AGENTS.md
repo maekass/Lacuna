@@ -135,7 +135,7 @@ and `ml/` is optional/self-hosted and out of scope for normal app work.
   - Lint: `npm run lint` · Types: `npm run typecheck`.
   - Deno (CI-parity, downloaded on demand via `npx deno@2.1.4`):
     `npm run deno:fmt:check` and `npm run deno:lint`.
-  - Tests: `npm test` (Vitest; ~646 tests). No DB/network needed — external
+  - Tests: `npm test` (Vitest; ~900 tests). No DB/network needed — external
     calls (SEC/ClinicalTrials.gov) are mocked; a logged `SEC API 403` line in
     test output is an expected mocked failure, not a real error.
   - Dataset guard: `npm run validate:dataset` (also runs inside `npm run build`;

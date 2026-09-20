@@ -5,49 +5,7 @@ import Link from "next/link";
 import Card from "@/components/ui/Card";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
-import type { VerifiedAcquisitionView } from "@/lib/data/verifiedDataHelpers";
-
-interface SectorIntel {
-  sector: string;
-  companyCount: number;
-  deals: VerifiedAcquisitionView[];
-  disclosedCount: number;
-  medianDealValueM: number | null;
-  acquirers: string[];
-}
-
-function sectorKey(sector: string): string {
-  return sector.split("/")[0]?.trim() ?? sector;
-}
-
-function buildSectorIntel(
-  sector: string,
-  companies: { sector: string }[],
-  acquisitions: VerifiedAcquisitionView[],
-): SectorIntel {
-  const deals = acquisitions.filter((a) =>
-    a.targetName.toLowerCase().includes(sector.toLowerCase()) ||
-    sector.toLowerCase().includes(
-      a.targetName.toLowerCase().split(" ")[0] ?? "",
-    )
-  );
-  const disclosed = deals
-    .map((d) => d.dealValue)
-    .filter((v): v is number => typeof v === "number");
-  const medianDealValueM = disclosed.length > 0
-    ? disclosed.sort((a, b) => a - b)[Math.floor(disclosed.length / 2)]
-    : null;
-
-  return {
-    sector,
-    companyCount:
-      companies.filter((c) => sectorKey(c.sector) === sector).length,
-    deals: deals.slice(0, 8),
-    disclosedCount: disclosed.length,
-    medianDealValueM,
-    acquirers: [...new Set(deals.map((d) => d.acquirerName))].slice(0, 8),
-  };
-}
+import { buildSectorDealIntel, sectorKey } from "@/lib/data/sectorDealIntel";
 
 /**
  * Verified competitive context only — no invented TAM, payer mix, or keyword risk scores.
@@ -65,7 +23,7 @@ export default function InvestmentGradeReimbursementIntel() {
   const sectorRows = useMemo(
     () =>
       sectors.map((sector) =>
-        buildSectorIntel(sector, verifiedCompanies, verifiedAcquisitions)
+        buildSectorDealIntel(sector, verifiedCompanies, verifiedAcquisitions)
       ),
     [sectors, verifiedCompanies, verifiedAcquisitions],
   );
@@ -84,9 +42,9 @@ export default function InvestmentGradeReimbursementIntel() {
         <p className="mt-1 text-sm text-lacuna-blue">
           Descriptive counts from{" "}
           <code className="text-xs">dataset.verified.json</code>{" "}
-          only. TAM/SAM, reimbursement risk scores, and payer-mix estimates are
-          not shown — they require cited CMS/FDA or third-party market research,
-          not keyword heuristics.
+          only. Deals join on target company id and sector — not name substring.
+          TAM/SAM, reimbursement risk scores, and payer-mix estimates are not
+          shown.
         </p>
 
         <div className="mt-4 flex flex-wrap gap-2">
@@ -123,7 +81,7 @@ export default function InvestmentGradeReimbursementIntel() {
                     Verified deals
                   </p>
                   <p className="text-2xl font-bold text-lacuna-plum">
-                    {active.deals.length}
+                    {active.dealCount}
                   </p>
                 </div>
                 <div className="rounded-lg border border-lacuna-lavender/40 p-3">
@@ -191,6 +149,15 @@ export default function InvestmentGradeReimbursementIntel() {
                         ))}
                       </tbody>
                     </table>
+                    {active.dealCount > active.deals.length
+                      ? (
+                        <p className="border-t border-lacuna-lavender/30 px-3 py-2 text-xs text-lacuna-blue/80">
+                          Showing {active.deals.length} of {active.dealCount}
+                          {" "}
+                          verified deals, newest first.
+                        </p>
+                      )
+                      : null}
                   </div>
                 )
                 : (

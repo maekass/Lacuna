@@ -1,5 +1,5 @@
 <!--
-SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified deals (n=58), clinical trial search, genomics governance, cited analytics. Not live market data or predictive ML.
+SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified deals (n=59), clinical trial search, genomics governance, cited analytics. Not live market data or predictive ML.
 -->
 
 <h1 align="center">Lacuna</h1>
@@ -321,7 +321,7 @@ provenance labels.
 
 Six frameworks with **explicit small-_n_ limits** documented in `docs/` (causal
 DAG, fairness audit, network concentration, etc.). We state what cannot be
-claimed with n≈58 deals — see methodology files linked from the app.
+claimed with n=59 deals — see methodology files linked from the app.
 
 ---
 
