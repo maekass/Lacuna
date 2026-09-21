@@ -66,7 +66,8 @@ function citationKey(text: string): string {
 /**
  * Dual-source means a primary filing plus an independent press/IR or trade citation.
  * Two wires of the same announcement do not qualify. Research/affinity
- * citations never count.
+ * citations never count. Pre-deal market-cap and funding citations
+ * (`preDealValuationSource`) are not acquisition corroboration.
  */
 export function hasPrimaryAndIndependent(
   runs: readonly EvidenceRun[],
@@ -115,9 +116,6 @@ export function buildEvidenceLadder(deal: DealDetail): EvidenceLadderResult {
   for (const part of splitSources(acq.source)) {
     pushCitation(part);
   }
-  if (acq.preDealValuationSource) {
-    pushCitation(acq.preDealValuationSource);
-  }
 
   if (runs.length === 0) {
     runs.push({
@@ -157,12 +155,9 @@ export function buildEvidenceLadder(deal: DealDetail): EvidenceLadderResult {
   } else if (acq.dealValueNote) {
     limitations.push(acq.dealValueNote);
   }
-  if (
-    acq.preDealValuationSource &&
-    !SEC_PATTERN.test(acq.preDealValuationSource)
-  ) {
+  if (acq.preDealValuationSource) {
     limitations.push(
-      `Pre-deal valuation sourced from: ${acq.preDealValuationSource}`,
+      `Pre-deal valuation sourced from: ${acq.preDealValuationSource}. Pre-deal market-cap and funding citations do not corroborate the acquisition.`,
     );
   }
 
