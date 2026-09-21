@@ -204,8 +204,7 @@ See [MODEL_CARD.md](docs/MODEL_CARD.md) for methodology and caveats.
 
 Transparent factor scoring for **non-acquired** companies in the verified set.
 Fixed weights, full disclosure in UI and [MODEL_CARD.md](docs/MODEL_CARD.md).
-Deterministic factor scoring only — not a fitted model. See
-[MODEL_CARD.md](docs/MODEL_CARD.md) for every user-visible label.
+**Not** a predictive model; the untrained TensorFlow.js stub was removed.
 
 ### Company similarity (`CompanySimilarity.tsx`)
 

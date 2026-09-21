@@ -521,11 +521,11 @@
     "reproducible": 47
   },
   "displayProvenance": {
-    "total": 1007,
-    "covered": 20,
+    "total": 1002,
+    "covered": 21,
     "exempt": 2,
-    "uncovered": 985,
-    "uncoveredRate": 0.9781529294935452,
+    "uncovered": 979,
+    "uncoveredRate": 0.9770459081836327,
     "topUncoveredFiles": [
       {
         "file": "src/components/NetworkAnalysisHonest.tsx",
