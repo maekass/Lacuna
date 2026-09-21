@@ -3,12 +3,14 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import Card from "@/components/ui/Card";
+import Metric from "@/components/Metric";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import {
   buildSectorDealIntel,
   displaySectorLabel,
   isPortfolioDiagnosticSector,
+  SECTOR_DEAL_INTEL_MODELS,
   sectorKey,
 } from "@/lib/data/sectorDealIntel";
 
@@ -78,7 +80,15 @@ export default function InvestmentGradeReimbursementIntel() {
                     Companies
                   </p>
                   <p className="text-2xl font-bold text-lacuna-plum">
-                    {active.companyCount}
+                    <Metric
+                      label="Companies in sector"
+                      className="text-2xl font-bold text-lacuna-plum"
+                      provenance={{
+                        kind: "assumption",
+                        value: active.companyCount,
+                        model: SECTOR_DEAL_INTEL_MODELS.companyCount,
+                      }}
+                    />
                   </p>
                 </div>
                 <div className="rounded-lg border border-lacuna-lavender/40 p-3">
@@ -86,7 +96,15 @@ export default function InvestmentGradeReimbursementIntel() {
                     Verified deals
                   </p>
                   <p className="text-2xl font-bold text-lacuna-plum">
-                    {active.dealCount}
+                    <Metric
+                      label="Verified deals in sector"
+                      className="text-2xl font-bold text-lacuna-plum"
+                      provenance={{
+                        kind: "assumption",
+                        value: active.dealCount,
+                        model: SECTOR_DEAL_INTEL_MODELS.dealCount,
+                      }}
+                    />
                   </p>
                 </div>
                 <div className="rounded-lg border border-lacuna-lavender/40 p-3">
@@ -94,7 +112,15 @@ export default function InvestmentGradeReimbursementIntel() {
                     Disclosed values
                   </p>
                   <p className="text-2xl font-bold text-lacuna-plum">
-                    {active.disclosedCount}
+                    <Metric
+                      label="Disclosed deal values in sector"
+                      className="text-2xl font-bold text-lacuna-plum"
+                      provenance={{
+                        kind: "assumption",
+                        value: active.disclosedCount,
+                        model: SECTOR_DEAL_INTEL_MODELS.disclosedCount,
+                      }}
+                    />
                   </p>
                 </div>
                 <div className="rounded-lg border border-lacuna-lavender/40 p-3">
@@ -103,7 +129,18 @@ export default function InvestmentGradeReimbursementIntel() {
                   </p>
                   <p className="text-2xl font-bold text-lacuna-plum">
                     {active.medianDealValueM !== null
-                      ? active.medianDealValueM.toLocaleString()
+                      ? (
+                        <Metric
+                          label="Median disclosed deal value ($M)"
+                          className="text-2xl font-bold text-lacuna-plum"
+                          provenance={{
+                            kind: "assumption",
+                            value: active.medianDealValueM,
+                            model: SECTOR_DEAL_INTEL_MODELS.medianDealValueM,
+                          }}
+                          formatValue={(v) => v.toLocaleString()}
+                        />
+                      )
                       : "—"}
                   </p>
                 </div>
@@ -171,8 +208,26 @@ export default function InvestmentGradeReimbursementIntel() {
                     {active.dealCount > active.deals.length
                       ? (
                         <p className="border-t border-lacuna-lavender/30 px-3 py-2 text-xs text-lacuna-blue/80">
-                          Showing {active.deals.length} of {active.dealCount}
-                          {" "}
+                          Showing{" "}
+                          <Metric
+                            label="Deals shown in table"
+                            className="text-xs text-lacuna-blue/80"
+                            provenance={{
+                              kind: "assumption",
+                              value: active.deals.length,
+                              model: SECTOR_DEAL_INTEL_MODELS.tableShown,
+                            }}
+                          />{" "}
+                          of{" "}
+                          <Metric
+                            label="Verified deals in sector"
+                            className="text-xs text-lacuna-blue/80"
+                            provenance={{
+                              kind: "assumption",
+                              value: active.dealCount,
+                              model: SECTOR_DEAL_INTEL_MODELS.dealCount,
+                            }}
+                          />{" "}
                           verified deals, newest first.
                         </p>
                       )

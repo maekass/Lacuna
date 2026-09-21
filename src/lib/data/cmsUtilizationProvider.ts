@@ -6,6 +6,7 @@
  */
 
 import computedCmsUtilization from "@/data/computed-cms-utilization.json";
+import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
 
 export type CmsUtilizationSource = "cpt" | "sector" | "withheld";
 
@@ -209,3 +210,20 @@ export function getCmsUtilizationProvenance(): CmsUtilizationProvenance {
 export function isCmsUtilizationHardcodedFallback(): boolean {
   return getCmsUtilizationProvenance().fallbackRowCount > 0;
 }
+
+const CMS_UTILIZATION_MODULE = "src/lib/data/cmsUtilizationProvider.ts";
+
+/** Hover provenance for CMS utilization disclosure counts. */
+export const CMS_UTILIZATION_MODELS = {
+  fallbackRowCount: {
+    module: CMS_UTILIZATION_MODULE,
+    exportName: "getCmsUtilizationProvenance",
+    definition:
+      "Count of in-repo hardcoded CMS utilization CPT rows — not a data.cms.gov PUF pull.",
+  },
+  rowCount: {
+    module: CMS_UTILIZATION_MODULE,
+    exportName: "getCmsUtilizationProvenance",
+    definition: "Total CPT rows in computed-cms-utilization.json.",
+  },
+} as const satisfies Record<string, ModelProvenance>;

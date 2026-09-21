@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-09-20T00:00:00.000Z",
-  "datasetHash": "08178999fb63f426c5eef7bc7f9601484a5516954aa19cdb41f8d76723ef4727",
+  "datasetHash": "44a83d570e26430e01da14b58db279e9a1bbf1c4e61e4406be9f571815477b91",
   "source": "Lacuna verified dataset + validated SEC annual revenue artifact",
   "evidenceStatus": "withheld_pending_regeneration",
   "reason": "SEC revenue evidence is currently withheld pending identity-validated regeneration. Financing-derived and valuation-derived rates are not substituted for operating growth.",

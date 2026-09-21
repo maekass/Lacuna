@@ -5,12 +5,33 @@ import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 import { inferSourceUrl } from "@/lib/deals/inferSourceUrl";
 
 const repoRoot = path.resolve(__dirname, "../../..");
-const EDGAR_ARCHIVES = "https://www.sec.gov/Archives/edgar/";
+const EDGAR_HOST = "www.sec.gov";
+const EDGAR_ARCHIVES_PATH = "/Archives/edgar/";
 
 interface BackfillRecord {
   dealId: string;
   status: string;
   ref?: { url?: string } | null;
+}
+
+/** True when source cites an https www.sec.gov /Archives/edgar/ URL. */
+function sourceHasEdgarArchivesUrl(source: string): boolean {
+  const matches = source.match(/https?:\/\/[^\s;]+/gi) ?? [];
+  for (const raw of matches) {
+    try {
+      const url = new URL(raw);
+      if (
+        url.protocol === "https:" &&
+        url.hostname === EDGAR_HOST &&
+        url.pathname.startsWith(EDGAR_ARCHIVES_PATH)
+      ) {
+        return true;
+      }
+    } catch {
+      continue;
+    }
+  }
+  return false;
 }
 
 describe("applied SEC source backfill", () => {
@@ -44,14 +65,14 @@ describe("applied SEC source backfill", () => {
     }
 
     const withArchives = dataset.acquisitions.filter((d) =>
-      d.source.includes(EDGAR_ARCHIVES)
+      sourceHasEdgarArchivesUrl(d.source)
     );
     expect(withArchives).toHaveLength(19);
   });
 
   it("exposes accession or ticker-locator URLs on the evidence ladder, not invented press URLs (success)", () => {
     const livongo = dataset.acquisitions.find((d) => d.id === "deal1");
-    expect(livongo?.source).toContain(EDGAR_ARCHIVES);
+    expect(sourceHasEdgarArchivesUrl(livongo?.source ?? "")).toBe(true);
     expect(livongo?.announcedDate).toBe("2020-08-05");
 
     const hologic = dataset.acquirers.find((a) =>
@@ -60,7 +81,7 @@ describe("applied SEC source backfill", () => {
     const deal7Citation = dataset.acquisitions.find((d) => d.id === "deal7")
       ?.source ?? "";
     expect(deal7Citation).toMatch(/8-K/);
-    expect(deal7Citation).not.toContain(EDGAR_ARCHIVES);
+    expect(sourceHasEdgarArchivesUrl(deal7Citation)).toBe(false);
     const locator = inferSourceUrl(
       deal7Citation.split(";")[0] ?? "",
       hologic?.ticker,

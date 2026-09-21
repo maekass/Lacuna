@@ -1,6 +1,10 @@
 "use client";
 
-import { getCmsUtilizationProvenance } from "@/lib/data/cmsUtilizationProvider";
+import Metric from "@/components/Metric";
+import {
+  CMS_UTILIZATION_MODELS,
+  getCmsUtilizationProvenance,
+} from "@/lib/data/cmsUtilizationProvider";
 
 /** Visible disclosure when CMS utilization is withheld or in-repo fallback. */
 export default function CmsUtilizationFallbackNotice() {
@@ -36,8 +40,26 @@ export default function CmsUtilizationFallbackNotice() {
     >
       <strong>Research-only utilization context — not decision-grade.</strong>
       {" "}
-      These CMS utilization figures are an in-repo hardcoded fallback
-      ({provenance.fallbackRowCount} of {provenance.rowCount}{" "}
+      These CMS utilization figures are an in-repo hardcoded fallback ({" "}
+      <Metric
+        label="Hardcoded CMS CPT rows"
+        className="text-xs text-amber-950"
+        provenance={{
+          kind: "assumption",
+          value: provenance.fallbackRowCount,
+          model: CMS_UTILIZATION_MODELS.fallbackRowCount,
+        }}
+      />{" "}
+      of{" "}
+      <Metric
+        label="CMS utilization CPT rows"
+        className="text-xs text-amber-950"
+        provenance={{
+          kind: "assumption",
+          value: provenance.rowCount,
+          model: CMS_UTILIZATION_MODELS.rowCount,
+        }}
+      />{" "}
       CPT rows), not a reproducible data.cms.gov aggregate. PUF data year is
       unknown, so these values must not be used for investment valuation,
       market-size, or reimbursement conclusions. Intended source:{" "}

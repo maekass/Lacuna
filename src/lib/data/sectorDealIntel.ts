@@ -7,6 +7,8 @@
  * Therapeutics.
  */
 
+import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
+
 export const SECTOR_DEAL_TABLE_LIMIT = 8;
 export const SECTOR_ACQUIRER_LIMIT = 8;
 
@@ -105,3 +107,39 @@ export function buildSectorDealIntel<T extends SectorDealAcquisition>(
     ),
   };
 }
+
+const SECTOR_INTEL_MODULE = "src/lib/data/sectorDealIntel.ts";
+
+/** Hover provenance for Intelligence sector-deal tiles. */
+export const SECTOR_DEAL_INTEL_MODELS = {
+  companyCount: {
+    module: SECTOR_INTEL_MODULE,
+    exportName: "buildSectorDealIntel",
+    definition:
+      "Count of verified companies whose sectorKey matches the selected sector.",
+  },
+  dealCount: {
+    module: SECTOR_INTEL_MODULE,
+    exportName: "buildSectorDealIntel",
+    definition:
+      "Count of verified acquisitions whose targetId is in the selected sector — not the table display cap.",
+  },
+  disclosedCount: {
+    module: SECTOR_INTEL_MODULE,
+    exportName: "buildSectorDealIntel",
+    definition:
+      "Count of sector deals with a numeric dealValue on dataset.verified.json.",
+  },
+  medianDealValueM: {
+    module: SECTOR_INTEL_MODULE,
+    exportName: "medianDisclosedDealValueM",
+    definition:
+      "Median of disclosed dealValue (USD millions) in the selected sector; even-n uses the mean of the two central observations.",
+  },
+  tableShown: {
+    module: SECTOR_INTEL_MODULE,
+    exportName: "buildSectorDealIntel",
+    definition:
+      "Number of newest-first deals rendered in the table (capped at SECTOR_DEAL_TABLE_LIMIT).",
+  },
+} as const satisfies Record<string, ModelProvenance>;
