@@ -1,0 +1,29 @@
+# GitHub repository topics
+#
+# Source of truth for https://github.com/maekass/lacuna/topics
+# GitHub allows at most 20 topics (≤35 characters each). Apply in Settings →
+# General → Topics, or: gh repo edit --add-topic <name>
+#
+# Keep this list honest with MODEL_CARD.md: no TensorFlow.js in the app bundle,
+# and scores are descriptive — not a live predictive M&A product.
+
+black-womens-health
+causal-inference
+clinical-trials
+d3js
+digital-health
+fairness-audit
+femtech
+genetic-markers
+harvard-university
+health-equity
+health-informatics
+health-tech
+impact-investing
+machine-learning
+mae-kass
+network-visualization
+nextjs
+survival-analysis
+womens-health
+mergers-and-acquisitions

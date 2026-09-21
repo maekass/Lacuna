@@ -3,51 +3,16 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import Card from "@/components/ui/Card";
+import Metric from "@/components/Metric";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
-import type { VerifiedAcquisitionView } from "@/lib/data/verifiedDataHelpers";
-
-interface SectorIntel {
-  sector: string;
-  companyCount: number;
-  deals: VerifiedAcquisitionView[];
-  disclosedCount: number;
-  medianDealValueM: number | null;
-  acquirers: string[];
-}
-
-function sectorKey(sector: string): string {
-  return sector.split("/")[0]?.trim() ?? sector;
-}
-
-function buildSectorIntel(
-  sector: string,
-  companies: { sector: string }[],
-  acquisitions: VerifiedAcquisitionView[],
-): SectorIntel {
-  const deals = acquisitions.filter((a) =>
-    a.targetName.toLowerCase().includes(sector.toLowerCase()) ||
-    sector.toLowerCase().includes(
-      a.targetName.toLowerCase().split(" ")[0] ?? "",
-    )
-  );
-  const disclosed = deals
-    .map((d) => d.dealValue)
-    .filter((v): v is number => typeof v === "number");
-  const medianDealValueM = disclosed.length > 0
-    ? disclosed.sort((a, b) => a - b)[Math.floor(disclosed.length / 2)]
-    : null;
-
-  return {
-    sector,
-    companyCount:
-      companies.filter((c) => sectorKey(c.sector) === sector).length,
-    deals: deals.slice(0, 8),
-    disclosedCount: disclosed.length,
-    medianDealValueM,
-    acquirers: [...new Set(deals.map((d) => d.acquirerName))].slice(0, 8),
-  };
-}
+import {
+  buildSectorDealIntel,
+  displaySectorLabel,
+  isPortfolioDiagnosticSector,
+  SECTOR_DEAL_INTEL_MODELS,
+  sectorKey,
+} from "@/lib/data/sectorDealIntel";
 
 /**
  * Verified competitive context only — no invented TAM, payer mix, or keyword risk scores.
@@ -65,7 +30,7 @@ export default function InvestmentGradeReimbursementIntel() {
   const sectorRows = useMemo(
     () =>
       sectors.map((sector) =>
-        buildSectorIntel(sector, verifiedCompanies, verifiedAcquisitions)
+        buildSectorDealIntel(sector, verifiedCompanies, verifiedAcquisitions)
       ),
     [sectors, verifiedCompanies, verifiedAcquisitions],
   );
@@ -84,9 +49,9 @@ export default function InvestmentGradeReimbursementIntel() {
         <p className="mt-1 text-sm text-lacuna-blue">
           Descriptive counts from{" "}
           <code className="text-xs">dataset.verified.json</code>{" "}
-          only. TAM/SAM, reimbursement risk scores, and payer-mix estimates are
-          not shown — they require cited CMS/FDA or third-party market research,
-          not keyword heuristics.
+          only. Deals join on target company id and sector — not name substring.
+          TAM/SAM, reimbursement risk scores, and payer-mix estimates are not
+          shown.
         </p>
 
         <div className="mt-4 flex flex-wrap gap-2">
@@ -95,13 +60,13 @@ export default function InvestmentGradeReimbursementIntel() {
               key={sector}
               type="button"
               onClick={() => setSelectedSector(sector)}
-              className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+              className={`rounded-lg px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
                 active?.sector === sector
                   ? "bg-lacuna-plum text-white"
                   : "bg-slate-100 text-slate-700 hover:bg-slate-200"
               }`}
             >
-              {sector}
+              {displaySectorLabel(sector)}
             </button>
           ))}
         </div>
@@ -115,7 +80,15 @@ export default function InvestmentGradeReimbursementIntel() {
                     Companies
                   </p>
                   <p className="text-2xl font-bold text-lacuna-plum">
-                    {active.companyCount}
+                    <Metric
+                      label="Companies in sector"
+                      className="text-2xl font-bold text-lacuna-plum"
+                      provenance={{
+                        kind: "assumption",
+                        value: active.companyCount,
+                        model: SECTOR_DEAL_INTEL_MODELS.companyCount,
+                      }}
+                    />
                   </p>
                 </div>
                 <div className="rounded-lg border border-lacuna-lavender/40 p-3">
@@ -123,7 +96,15 @@ export default function InvestmentGradeReimbursementIntel() {
                     Verified deals
                   </p>
                   <p className="text-2xl font-bold text-lacuna-plum">
-                    {active.deals.length}
+                    <Metric
+                      label="Verified deals in sector"
+                      className="text-2xl font-bold text-lacuna-plum"
+                      provenance={{
+                        kind: "assumption",
+                        value: active.dealCount,
+                        model: SECTOR_DEAL_INTEL_MODELS.dealCount,
+                      }}
+                    />
                   </p>
                 </div>
                 <div className="rounded-lg border border-lacuna-lavender/40 p-3">
@@ -131,7 +112,15 @@ export default function InvestmentGradeReimbursementIntel() {
                     Disclosed values
                   </p>
                   <p className="text-2xl font-bold text-lacuna-plum">
-                    {active.disclosedCount}
+                    <Metric
+                      label="Disclosed deal values in sector"
+                      className="text-2xl font-bold text-lacuna-plum"
+                      provenance={{
+                        kind: "assumption",
+                        value: active.disclosedCount,
+                        model: SECTOR_DEAL_INTEL_MODELS.disclosedCount,
+                      }}
+                    />
                   </p>
                 </div>
                 <div className="rounded-lg border border-lacuna-lavender/40 p-3">
@@ -140,11 +129,36 @@ export default function InvestmentGradeReimbursementIntel() {
                   </p>
                   <p className="text-2xl font-bold text-lacuna-plum">
                     {active.medianDealValueM !== null
-                      ? active.medianDealValueM.toLocaleString()
+                      ? (
+                        <Metric
+                          label="Median disclosed deal value ($M)"
+                          className="text-2xl font-bold text-lacuna-plum"
+                          provenance={{
+                            kind: "assumption",
+                            value: active.medianDealValueM,
+                            model: SECTOR_DEAL_INTEL_MODELS.medianDealValueM,
+                          }}
+                          formatValue={(v) => v.toLocaleString()}
+                        />
+                      )
                       : "—"}
                   </p>
                 </div>
               </div>
+
+              {isPortfolioDiagnosticSector(active.sector)
+                ? (
+                  <p className="text-xs text-lacuna-blue/80">
+                    Portfolio companies labeled{" "}
+                    <strong>Diagnostic (portfolio)</strong>{" "}
+                    (Rock Health / fund listing) stay separate from acquired
+                    {" "}
+                    <strong>Diagnostics</strong>{" "}
+                    targets. Their deal count stays zero — they are not merged
+                    into M&A diagnostics.
+                  </p>
+                )
+                : null}
 
               {active.acquirers.length > 0
                 ? (
@@ -191,6 +205,33 @@ export default function InvestmentGradeReimbursementIntel() {
                         ))}
                       </tbody>
                     </table>
+                    {active.dealCount > active.deals.length
+                      ? (
+                        <p className="border-t border-lacuna-lavender/30 px-3 py-2 text-xs text-lacuna-blue/80">
+                          Showing{" "}
+                          <Metric
+                            label="Deals shown in table"
+                            className="text-xs text-lacuna-blue/80"
+                            provenance={{
+                              kind: "assumption",
+                              value: active.deals.length,
+                              model: SECTOR_DEAL_INTEL_MODELS.tableShown,
+                            }}
+                          />{" "}
+                          of{" "}
+                          <Metric
+                            label="Verified deals in sector"
+                            className="text-xs text-lacuna-blue/80"
+                            provenance={{
+                              kind: "assumption",
+                              value: active.dealCount,
+                              model: SECTOR_DEAL_INTEL_MODELS.dealCount,
+                            }}
+                          />{" "}
+                          verified deals, newest first.
+                        </p>
+                      )
+                      : null}
                   </div>
                 )
                 : (

@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-09-20T00:00:00.000Z",
-  "datasetHash": "6f5db809ea3e77dffc9ffee92a4c8c612e36e274bff0e7a9542c9c2303adc83f",
+  "datasetHash": "185c97cedaace8a9bc0a5ae65e4a2d62e1c3efed06dc94234e7fca4d06b521b4",
   "datasetVersion": "v9",
   "source": "Lacuna measurement-layer census (quality scores, gated metrics, vintage, display provenance)",
   "quality": {
@@ -18,13 +18,13 @@
     "acquisitions": {
       "total": 59,
       "grades": {
-        "A": 20,
-        "B": 26,
-        "C": 12,
+        "A": 29,
+        "B": 20,
+        "C": 9,
         "D": 0,
         "F": 1
       },
-      "avgScore": 83.1
+      "avgScore": 86.7
     },
     "grading": {
       "A": "90-100: SEC filing or equivalent primary source, all fields populated",
