@@ -27,7 +27,13 @@ describe("datasetProvider", () => {
     vi.stubEnv("LACUNA_DATA_MODE", "static");
     const { getVerifiedDataset } = await import("@/lib/data/datasetProvider");
     const dataset = await getVerifiedDataset();
+    const { getStaticVerifiedDataset } = await import(
+      "@/lib/data/staticDataset"
+    );
     expect(dataset.companies.length).toBeGreaterThan(0);
+    expect(dataset.provenance.lastUpdated).toBe(
+      getStaticVerifiedDataset().provenance.lastUpdated,
+    );
     expect(dataset.provenance.disclaimer.toLowerCase()).toContain(
       "educational",
     );

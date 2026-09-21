@@ -10,6 +10,10 @@ import {
   toRows,
   type WatchlistRow,
 } from "../../../scripts/sweep-watchlist";
+import {
+  type CatalystNctLink,
+  trialLinksForCatalyst,
+} from "./catalystTrialLinks";
 
 export interface CatalystRowView {
   readonly scheduledDate: string;
@@ -24,6 +28,9 @@ export interface CatalystRowView {
   readonly womensHealthRelevant: boolean;
   readonly trackedLabel: string;
   readonly sourceUrl: string;
+  readonly trialLinks: readonly CatalystNctLink[];
+  readonly dealHref: string;
+  readonly dealLabel: string;
 }
 
 export interface CatalystWatchlistView {
@@ -52,6 +59,7 @@ function toView(row: WatchlistRow): CatalystRowView {
     row.lacuna_company_id,
     row.lacuna_sector,
   ].filter(Boolean).join(" · ");
+  const trials = trialLinksForCatalyst(row.company, row.drug);
   return {
     scheduledDate: row.scheduled_date,
     company: row.company,
@@ -65,6 +73,9 @@ function toView(row: WatchlistRow): CatalystRowView {
     womensHealthRelevant: row.womens_health_relevant === "true",
     trackedLabel: tracked,
     sourceUrl: row.source_url,
+    trialLinks: trials?.ncts ?? [],
+    dealHref: trials?.dealHref ?? "",
+    dealLabel: trials?.dealLabel ?? "",
   };
 }
 

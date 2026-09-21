@@ -1,6 +1,6 @@
 {
   "provenance": {
-    "lastUpdated": "2026-09-05",
+    "lastUpdated": "2026-09-20",
     "datasetVersion": "v8",
     "sources": [
       "SEC EDGAR filings (acquisitions, 8-K/10-K)",
@@ -59,7 +59,8 @@
       "2026-06-11: Added 14 Amboy Street Ventures portfolio companies with press-verified founding, stage, and funding data (totalFunding omitted where no source states a total), plus the Gennev / Unified Women's Healthcare acquisition (2022, terms not disclosed).",
       "2026-07-02: Corrected deal4 (Lemonaid Health acquired by 23andMe for $400M per SEC filing, not Amazon). Added disclosed deal values for Alydia Health ($240M), Apostrophe (~$190M), and cited pre-deal valuations for Maven/Kindbody strategic investments.",
       "2026-07-06: Dual-scope dataset — medicine & biotech (default product) and consumer health (separate /consumer workspace). Full catalog retained; each workspace filters in memory.",
-      "preDealValuationDatePrecision backfilled from cited sources; 10 post-announcement placeholder dates reset to announcement-year January 1 at year precision."
+      "preDealValuationDatePrecision backfilled from cited sources; 10 post-announcement placeholder dates reset to announcement-year January 1 at year precision.",
+      "2026-09-20: Corrected Teladoc/Livongo (deal1) announcement to Aug 5, 2020 per Teladoc 8-K and IR release; close remains Oct 30, 2020. Pre-deal NASDAQ market-cap citations are not acquisition dual-source."
     ],
     "purpose": "Educational demonstration dataset for portfolio project. Not for commercial investment decisions.",
     "disclaimer": "Data compiled from public sources for educational visualization. Verify independently before any commercial use."
@@ -460,11 +461,11 @@
       "hq": "Mountain View, CA",
       "description": "Chronic condition management (diabetes, hypertension); large female user base; included for the Teladoc merger reference",
       "lastKnownValuation": 13900,
-      "valuationSource": "Teladoc/Livongo merger close value (Oct 2020) — SEC 8-K",
+      "valuationSource": "Teladoc/Livongo merger close value (Oct 30, 2020) — SEC 8-K",
       "totalFunding": 240,
       "sources": [
-        "SEC 8-K filing (Teladoc, Oct 2020)",
-        "Livongo.com / Teladoc press release",
+        "SEC 8-K filing (Teladoc, Aug 5, 2020 announcement; Oct 30, 2020 close)",
+        "Teladoc Health investor relations press release (Aug 5, 2020)",
         "Crunchbase - crunchbase.com/organization/livongo-health"
       ]
     },
@@ -2937,12 +2938,12 @@
       "acquirerId": "acquirer-teladoc",
       "targetName": "Livongo Health",
       "acquirerName": "Teladoc",
-      "announcedDate": "2020-07-01",
+      "announcedDate": "2020-08-05",
       "closedDate": "2020-10-30",
       "dealValue": 13900,
-      "dealValueNote": "Stock-for-stock merger, SEC filing verified",
+      "dealValueNote": "Close-date disclosed consideration (~$13.9B). Teladoc 8-K (Aug 5, 2020) valued the exchange at $18.5B on Teladoc's Aug 4, 2020 close.",
       "dealType": "Acquisition",
-      "source": "SEC 8-K filing, July 2020",
+      "source": "Teladoc Health 8-K filing, SEC EDGAR (Aug 5, 2020); Teladoc Health investor relations press release (Aug 5, 2020)",
       "strategicRationale": "Combined chronic care management with virtual primary care to create comprehensive digital health platform",
       "dealStructure": "Stock-for-stock merger",
       "preDealValuation": 10500,
@@ -3051,7 +3052,7 @@
       "dealValue": 230,
       "dealValueNote": "~$230M subject to working capital adjustments",
       "dealType": "Acquisition",
-      "source": "Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)",
+      "source": "Hologic 8-K filing, SEC EDGAR (Jan 5, 2021); Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)",
       "strategicRationale": "Entry into oncology growth market — Breast Cancer Index guides post-surgery treatment decisions for breast cancer patients",
       "dealStructure": "Cash",
       "preDealValuation": 170,

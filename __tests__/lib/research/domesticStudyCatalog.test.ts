@@ -45,4 +45,21 @@ describe("DOMESTIC_RESEARCH_STUDIES", () => {
       true,
     );
   });
+
+  it("includes the NCI-MATCH pertuzumab NIH piece from the Sep 18 ingest", () => {
+    const match = DOMESTIC_RESEARCH_STUDIES.find((s) =>
+      s.studyId === "nih-nci-match-j"
+    );
+    expect(match?.institution).toBe("nih");
+    expect(match?.dataTier).toBe("cited_public");
+    expect(match?.sampleSize).toBe(35);
+    const her2 = filterDomesticStudies({
+      condition: "pertuzumab",
+      limit: 10,
+      offset: 0,
+    });
+    expect(her2.studies.some((s) => s.studyId === "nih-nci-match-j")).toBe(
+      true,
+    );
+  });
 });
