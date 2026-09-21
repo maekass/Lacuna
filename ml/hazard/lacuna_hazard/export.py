@@ -63,7 +63,7 @@ def sufficiency(cohort: Cohort, fit: CoxFit) -> dict[str, Any]:
     if not fits:
         reason = (
             f"Only {cohort.n_events} events; need at least "
-            f"{MIN_EVENTS_OVERALL} to report relative hazards."
+            f"{MIN_EVENTS_OVERALL} to report a baseline hazard."
         )
     elif not fit.converged:
         fits = False

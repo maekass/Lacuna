@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import artifactJson from "@/data/ml/hazard/acquisition-time-v1.json";
 import {
-  encodeHazardFeatures,
   HAZARD_ARTIFACT,
   HAZARD_DISCLAIMER,
   type HazardArtifact,
@@ -13,68 +12,43 @@ import {
 const artifact = artifactJson as HazardArtifact;
 
 describe("hazard scoring consumer", () => {
-  it("loads a descriptive Cox artifact", () => {
+  it("loads a descriptive baseline-only Cox artifact", () => {
     expect(HAZARD_ARTIFACT.claimClass).toBe("descriptive");
     expect(HAZARD_ARTIFACT.modelType).toBe("cox_ph_breslow");
     expect(HAZARD_ARTIFACT.id).toBe("acquisition-time-v1");
     expect(HAZARD_DISCLAIMER).toContain("Not a forecast");
-    expect(artifact.coefficients).toHaveLength(
-      artifact.keptFeatureNames.length,
-    );
+    expect(artifact.featureNames).toEqual([]);
+    expect(artifact.keptFeatureNames).toEqual([]);
+    expect(artifact.coefficients).toEqual([]);
+    expect(artifact.hazardRatios).toEqual([]);
     expect(artifact.sufficiency.fits).toBe(true);
+    expect(artifact.metrics.logPartialLikelihood).toBeLessThan(0);
   });
 
-  it("encodes sector dummies against the reference group", () => {
-    expect(
-      encodeHazardFeatures("Fertility", [
-        "sector_fertility",
-        "sector_diagnostics",
-      ]),
-    )
-      .toEqual([1, 0]);
-    expect(
-      encodeHazardFeatures("Diagnostics", [
-        "sector_fertility",
-        "sector_diagnostics",
-      ]),
-    ).toEqual([0, 1]);
-    expect(
-      encodeHazardFeatures("Menopause", [
-        "sector_fertility",
-        "sector_diagnostics",
-      ]),
-    )
-      .toEqual([0, 0]);
-  });
-
-  it("scores relative hazard as exp(xβ) for kept features", () => {
+  it("scores every company at relative hazard 1", () => {
     const fert = scoreHazard({ sector: "Fertility" });
     const dx = scoreHazard({ sector: "Diagnostics" });
     const other = scoreHazard({ sector: "Menopause" });
+    const noSector = scoreHazard({});
     expect(fert.status).toBe("ok");
     expect(dx.status).toBe("ok");
     expect(other.status).toBe("ok");
-    if (fert.status !== "ok" || dx.status !== "ok" || other.status !== "ok") {
+    expect(noSector.status).toBe("ok");
+    if (
+      fert.status !== "ok" ||
+      dx.status !== "ok" ||
+      other.status !== "ok" ||
+      noSector.status !== "ok"
+    ) {
       return;
     }
-    expect(other.relativeHazard).toBeCloseTo(1, 10);
-    expect(other.linearPredictor).toBeCloseTo(0, 10);
-    const fertIdx = artifact.keptFeatureNames.indexOf("sector_fertility");
-    if (fertIdx >= 0) {
-      expect(fert.relativeHazard).toBeCloseTo(
-        Math.exp(artifact.coefficients[fertIdx]),
-        10,
-      );
-    }
+    expect(fert.relativeHazard).toBe(1);
+    expect(dx.relativeHazard).toBe(1);
+    expect(other.relativeHazard).toBe(1);
+    expect(noSector.relativeHazard).toBe(1);
+    expect(fert.linearPredictor).toBe(0);
+    expect(noSector.sector).toBeNull();
     expect(fert.disclaimer).toBe(HAZARD_DISCLAIMER);
-  });
-
-  it("returns insufficient_disclosed_data when sector is missing", () => {
-    const result = scoreHazard({});
-    expect(result.status).toBe("insufficient_disclosed_data");
-    if (result.status === "insufficient_disclosed_data") {
-      expect(result.reason).toMatch(/sector/i);
-    }
   });
 
   it("excludes companies without a founded year", () => {
@@ -101,10 +75,25 @@ describe("hazard scoring consumer", () => {
       sufficiency: {
         ...artifact.sufficiency,
         fits: false,
-        reason: "Only 3 events; need at least 20 to report relative hazards.",
+        reason: "Only 3 events; need at least 20 to report a baseline hazard.",
       },
     };
     const result = scoreHazard({ sector: "Fertility" }, broken);
     expect(result.status).toBe("insufficient_disclosed_data");
+  });
+
+  it("rejects artifacts that still list dummy covariates", () => {
+    const broken: HazardArtifact = {
+      ...artifact,
+      featureNames: ["sector_fertility"],
+      keptFeatureNames: ["sector_fertility"],
+      coefficients: [-0.3],
+      hazardRatios: [0.74],
+    };
+    const result = scoreHazard({}, broken);
+    expect(result.status).toBe("insufficient_disclosed_data");
+    if (result.status === "insufficient_disclosed_data") {
+      expect(result.reason).toMatch(/dummy/i);
+    }
   });
 });

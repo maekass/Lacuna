@@ -116,12 +116,11 @@ with a disclosed founded year\
 **Artifact**: `src/data/ml/hazard/acquisition-time-v1.json`\
 **Training**: Offline `ml/hazard` — not imported by the Next.js bundle
 
-Relative hazard is exp(xβ) versus the collapsed non-Fertility / non-Diagnostics
-reference group in this curated sample. Missing founded year is exclusion, not
-imputation. Current stage is unused (acquired labels leak the event). The
-consumer returns `insufficient_disclosed_data` rather than inventing a score.
-Harrell's C is stored on the artifact; values near 0.5 mean the sector dummies
-do not rank event times in this sample.
+The fit has no covariates: sector dummy indicators are not used, so relative
+hazard is 1 and the artifact is a Breslow / Nelson–Aalen baseline on this
+curated sample. Missing founded year is exclusion, not imputation. Current stage
+is unused (acquired labels leak the event). The consumer returns
+`insufficient_disclosed_data` rather than inventing a score.
 
 This is **not** a forecast of future M&A, **not** an acquisition probability,
 and **not** investment advice. See [HAZARD.md](HAZARD.md).

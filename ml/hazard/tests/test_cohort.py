@@ -92,6 +92,21 @@ class CohortTests(unittest.TestCase):
         self.assertEqual(cohort.n, 0)
         self.assertEqual(cohort.n_nonpositive_time, 1)
 
+    def test_includes_missing_sector_with_empty_design(self) -> None:
+        data = _dataset(
+            companies=[
+                {
+                    "id": "c5",
+                    "name": "NoSector",
+                    "founded": 2019,
+                }
+            ]
+        )
+        cohort = build_cohort(data)
+        self.assertEqual(cohort.n, 1)
+        self.assertEqual(cohort.n_missing_sector, 1)
+        self.assertEqual(cohort.included[0].features, ())
+
 
 if __name__ == "__main__":
     unittest.main()

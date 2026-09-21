@@ -135,20 +135,8 @@ def build_cohort(dataset: Mapping[str, Any]) -> Cohort:
             )
             continue
 
-        if features is None:
+        if not sector.strip():
             n_missing_sector += 1
-            rows.append(
-                CohortRow(
-                    cid,
-                    name,
-                    sector,
-                    time_years,
-                    event,
-                    (),
-                    "missing_sector",
-                )
-            )
-            continue
 
         rows.append(
             CohortRow(
@@ -165,6 +153,7 @@ def build_cohort(dataset: Mapping[str, Any]) -> Cohort:
         "Time origin is 1 January of founded year (year precision).",
         "Independents are right-censored at provenance.lastUpdated.",
         "Stage is not a covariate (acquired labels leak the event).",
+        "No sector dummy covariates; the design matrix is empty.",
     )
     return Cohort(
         rows=tuple(rows),

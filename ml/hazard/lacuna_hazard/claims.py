@@ -7,8 +7,8 @@ from typing import Final
 CLAIM_CLASS: Final[str] = "descriptive"
 
 ALLOWED_CLAIMS: Final[tuple[str, ...]] = (
-    "Relative hazard of a verified acquisition inside this curated sample.",
-    "Descriptive Cox partial-likelihood fit on companies with a disclosed founded year.",
+    "Breslow / Nelson–Aalen baseline of time to a verified acquisition in this curated sample.",
+    "No sector dummy covariates; the design matrix is empty.",
     "Not a forecast of future M&A and not an acquisition probability.",
     "Missing founded year is exclusion, not imputation.",
     "Current stage is unused because acquired labels leak the event.",
@@ -53,6 +53,6 @@ HAZARD_SURFACE_GLOBS: Final[tuple[str, ...]] = (
 )
 
 DISCLAIMER: Final[str] = (
-    "Descriptive relative hazard on Lacuna's curated verified catalog. "
+    "Descriptive time-to-acquisition baseline on Lacuna's curated verified catalog. "
     "Not a forecast, not an acquisition probability, not investment advice."
 )
