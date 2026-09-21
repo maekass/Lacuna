@@ -119,11 +119,19 @@ def fit_cox_ph(
         min_events_per_feature,
     )
     if mask.size == 0:
+        empty = np.zeros((n, 0))
+        _, _, loglik = _partial_likelihood_stats(
+            empty,
+            time,
+            event,
+            np.zeros(0),
+            l2,
+        )
         return CoxFit(
             feature_names=(),
             coefficients=np.zeros(0),
             hazard_ratios=np.zeros(0),
-            log_partial_likelihood=0.0,
+            log_partial_likelihood=float(loglik),
             n=n,
             n_events=n_events,
             n_iter=0,

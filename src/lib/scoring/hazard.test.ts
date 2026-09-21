@@ -22,6 +22,7 @@ describe("hazard scoring consumer", () => {
     expect(artifact.coefficients).toEqual([]);
     expect(artifact.hazardRatios).toEqual([]);
     expect(artifact.sufficiency.fits).toBe(true);
+    expect(artifact.metrics.logPartialLikelihood).toBeLessThan(0);
   });
 
   it("scores every company at relative hazard 1", () => {

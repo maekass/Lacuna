@@ -48,6 +48,8 @@ class CoxTests(unittest.TestCase):
         fit = fit_cox_ph(X, time, event, ("rare",), min_events_per_feature=8)
         self.assertEqual(fit.feature_names, ())
         self.assertEqual(fit.dropped_features, ("rare",))
+        expected = -np.log(4.0) - np.log(3.0) - np.log(2.0)
+        self.assertAlmostEqual(fit.log_partial_likelihood, expected)
 
     def test_concordance_ranks_higher_risk_first(self) -> None:
         risk = np.array([3.0, 1.0, 2.0])
@@ -73,6 +75,15 @@ class CoxTests(unittest.TestCase):
         lp = linear_predictor(X, fit, FEATURE_NAMES)
         self.assertEqual(lp.shape, (3,))
         self.assertTrue(np.allclose(lp, 0.0))
+
+    def test_empty_design_records_breslow_log_partial_likelihood(self) -> None:
+        time = np.array([1.0, 2.0, 3.0, 4.0])
+        event = np.array([1, 0, 1, 0])
+        X = np.zeros((4, 0))
+        fit = fit_cox_ph(X, time, event, ())
+        expected = -np.log(4.0) - np.log(2.0)
+        self.assertAlmostEqual(fit.log_partial_likelihood, expected)
+        self.assertNotEqual(fit.log_partial_likelihood, 0.0)
 
 
 if __name__ == "__main__":
