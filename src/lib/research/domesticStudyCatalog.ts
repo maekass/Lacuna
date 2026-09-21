@@ -45,6 +45,7 @@ export const STUDY_TRIAL_NCT_LINKS: Readonly<
   "harvard-bwh-brca": ["NCT01042379"],
   "harvard-mgh-pcos": ["NCT00176971"],
   "harvard-dfci-tnbc": ["NCT02488967"],
+  "nih-nci-match-j": ["NCT06136897"],
 };
 
 export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
@@ -293,6 +294,28 @@ export const DOMESTIC_RESEARCH_STUDIES: readonly DomesticResearchStudy[] = [
     clinicalTrialsSponsor:
       "National Institute of Arthritis and Musculoskeletal and Skin Diseases",
     variantCallsetId: "nih-lupus-sle-grch38",
+  },
+  {
+    studyId: "nih-nci-match-j",
+    title:
+      "NCI-MATCH Subprotocol J — trastuzumab + pertuzumab in HER2-amplified tumors",
+    institution: "nih",
+    institutionLabel: "NIH NCI",
+    sampleSize: 35,
+    sampleSizeNote:
+      "35 participants actual enrollment on NCT06136897 (ClinicalTrials.gov)",
+    conditions: [
+      "HER2-amplified solid tumors",
+      "Breast cancer",
+      "Pertuzumab",
+    ],
+    markerGenes: ["ERBB2"],
+    geography: "US",
+    dataTier: "cited_public",
+    source:
+      "ClinicalTrials.gov NCT06136897 — NCI-MATCH Subprotocol J (retrieved 2026-09-20)",
+    sourceYear: 2026,
+    clinicalTrialsSponsor: "National Cancer Institute",
   },
 ] as const;
 
