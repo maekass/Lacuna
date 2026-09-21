@@ -93,7 +93,7 @@ export default function ResearchPage({
       <MotionSection id="clinical-trials" delay={0.05} className={SECTION}>
         <SectionHeader
           title="Clinical Trials Worth Watching"
-          description="Live oncology, pelvic health, fibroids, fertility, contraception, maternal health, and sickle cell searches plus a cited domestic sample-size catalog."
+          description="Live oncology, pelvic health, fibroids, fertility, contraception, maternal health, sickle cell, GRAIL MCED, NCI HER2/pertuzumab, and platinum-resistant ovarian searches plus a cited domestic sample-size catalog."
         />
         <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
           <ClinicalTrialTracker />

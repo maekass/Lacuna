@@ -49,6 +49,7 @@ const SECTOR_ALIASES: Record<string, string> = {
   gynecology: "gynecological_surgery",
   diagnostics: "diagnostics",
   diagnostic: "diagnostic",
+  diagnostic_portfolio: "diagnostic_portfolio",
 };
 
 const raw = computedGrowthRates as ComputedGrowthRatesFile;

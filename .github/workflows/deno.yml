@@ -91,11 +91,11 @@ jobs:
         with:
           deno-version: v2.1.4
 
-      - name: Verify formatting
-        run: deno fmt --check
-
       - name: Install deps
         run: npm ci
+
+      - name: Verify formatting
+        run: deno fmt --check
 
       - name: ESLint
         run: npm run lint

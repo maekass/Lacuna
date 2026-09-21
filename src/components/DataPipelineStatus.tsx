@@ -1,6 +1,7 @@
 import DataQualityVisibility from "@/components/DataQualityVisibility";
 import Card from "@/components/ui/Card";
 import type { DatasetPipelineStatus } from "@/lib/data/buildDatasetSummary";
+import { listMeasurementArtifactStatuses } from "@/lib/data/measurementArtifactStatus";
 import { buildPipelineHealthView } from "@/lib/data/pipelineHealth";
 
 /**
@@ -14,6 +15,7 @@ export default function DataPipelineStatus({
   pipelines?: DatasetPipelineStatus;
 }) {
   const health = buildPipelineHealthView(new Date(), { pipelines });
+  const measurementArtifacts = listMeasurementArtifactStatuses();
 
   return (
     <div className="space-y-4">
@@ -92,6 +94,30 @@ export default function DataPipelineStatus({
               </div>
             </div>
           </div>
+          {measurementArtifacts.map((artifact) => (
+            <div
+              key={artifact.id}
+              className="flex items-center justify-between gap-3 rounded-lg bg-lacuna-lavender/5 p-3"
+            >
+              <div>
+                <div className="font-medium text-lacuna-plum">
+                  {artifact.label}
+                </div>
+                <div className="text-xs text-lacuna-blue">
+                  {artifact.statusLabel}
+                </div>
+              </div>
+              <span
+                className={`shrink-0 rounded border px-2 py-1 text-xs font-medium ${
+                  artifact.withheld
+                    ? "border-amber-200 bg-amber-50 text-amber-900"
+                    : "border-emerald-200 bg-emerald-100 text-emerald-800"
+                }`}
+              >
+                {artifact.withheld ? "Withheld" : "Published"}
+              </span>
+            </div>
+          ))}
         </div>
 
         <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-3">

@@ -85,11 +85,28 @@ export function isKeyedRegulatoryCitation(
 
 /**
  * Human-curated NCT/CPT citations keyed to a verified company id.
- * Empty until a reviewer attaches a public registry or fee-schedule URL.
  * Do not populate from company-name enrichment APIs or other name searches.
+ * GRAIL (c46) PATHFINDER / PATHFINDER 2 are the Galleri studies behind the
+ * 23 Sep 2026 Molecular and Clinical Genetics Panel — not a live sponsor search.
  */
-export const KEYED_REGULATORY_CITATIONS: readonly KeyedRegulatoryCitation[] =
-  [];
+export const KEYED_REGULATORY_CITATIONS: readonly KeyedRegulatoryCitation[] = [
+  {
+    targetId: "c46",
+    source: "clinicaltrials.gov",
+    codeKind: "nct",
+    code: "NCT04241796",
+    citationUrl: "https://clinicaltrials.gov/study/NCT04241796",
+    label: "PATHFINDER — Galleri MCED implementation study",
+  },
+  {
+    targetId: "c46",
+    source: "clinicaltrials.gov",
+    codeKind: "nct",
+    code: "NCT05155605",
+    citationUrl: "https://clinicaltrials.gov/study/NCT05155605",
+    label: "PATHFINDER 2 — Galleri MCED confirmatory cohort",
+  },
+];
 
 /**
  * Citations eligible for `/deals/[id]`. Returns [] when none are keyed

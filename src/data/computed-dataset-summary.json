@@ -4,7 +4,7 @@
   "provenance": {
     "lastUpdated": "2026-09-20",
     "datasetVersion": "v9",
-    "datasetHash": "6f5db809ea3e77dffc9ffee92a4c8c612e36e274bff0e7a9542c9c2303adc83f"
+    "datasetHash": "185c97cedaace8a9bc0a5ae65e4a2d62e1c3efed06dc94234e7fca4d06b521b4"
   },
   "headline": {
     "companiesInNetwork": 150,
@@ -21,7 +21,7 @@
     "coverageRate": 0.213768115942029,
     "coverageDenominator": 276,
     "coverageReferenceName": "AOA Dx Follow the Exits (2000–2025)",
-    "uniqueSourceCitations": 465,
+    "uniqueSourceCitations": 467,
     "lastUpdated": "2026-09-20",
     "datasetVersion": "v9"
   },

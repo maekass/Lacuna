@@ -117,6 +117,17 @@ describe("evidence engine isolation", () => {
     expect(page).toMatch(/ReimbursementEvidencePanel/);
     expect(page).not.toMatch(/ReimbursementIntelligenceDashboard/);
     expect(page).not.toMatch(/valuation-premium-calculator/);
+    expect(page).not.toMatch(/cms-reimbursement-connector/);
+    const intel = readFileSync(
+      path.join(
+        process.cwd(),
+        "src/components/InvestmentGradeReimbursementIntel.tsx",
+      ),
+      "utf8",
+    );
+    expect(intel).not.toMatch(/cms-reimbursement-connector/);
+    expect(intel).not.toMatch(/estimatedAnnualReimbursement/);
+    expect(intel).toMatch(/Diagnostic \(portfolio\)/);
   });
 });
 

@@ -85,4 +85,27 @@ export const DOMESTIC_TRIAL_PRESETS: readonly InstitutionTrialPreset[] = [
     condition: "sickle cell anemia hemoglobinopathy",
     description: "NHLBI sickle cell disease and gene therapy trials",
   },
+  {
+    id: "grail-mced",
+    label: "GRAIL Galleri MCED",
+    sponsor: "GRAIL",
+    condition: "multi-cancer early detection Galleri PATHFINDER",
+    description:
+      "GRAIL-sponsored MCED studies behind the 23 Sep 2026 Galleri advisory committee — live registry search, not a verified-deal name scrape",
+  },
+  {
+    id: "nci-her2-pertuzumab",
+    label: "NCI HER2 / pertuzumab",
+    sponsor: "National Cancer Institute",
+    condition: "HER2 pertuzumab trastuzumab MATCH",
+    description:
+      "NCI-sponsored HER2 / pertuzumab trials (including MATCH subprotocol J). NIH piece adjacent to this week's Pebrilzo CHMP — not the biosimilar dossier",
+  },
+  {
+    id: "platinum-resistant-ovarian",
+    label: "Platinum-resistant ovarian",
+    condition: "platinum-resistant ovarian relacorilant senaparib PARP",
+    description:
+      "Live scan for platinum-resistant and maintenance ovarian programs — research enrichment for this week's CHMP ovarian opinions",
+  },
 ] as const;
