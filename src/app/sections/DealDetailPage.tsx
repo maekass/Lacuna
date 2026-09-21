@@ -3,6 +3,7 @@ import DealComparableTables from "@/components/DealComparableTables";
 import DealDetailActions from "@/components/DealDetailActions";
 import DealEconomicsCard from "@/components/DealEconomicsCard";
 import DealEmpowermentContext from "@/components/DealEmpowermentContext";
+import DealKeyedRegulatoryCitations from "@/components/DealKeyedRegulatoryCitations";
 import DealTargetLastKnownValuation from "@/components/DealTargetLastKnownValuation";
 import DealVerifiedProvenance from "@/components/DealVerifiedProvenance";
 import EvidenceLadder from "@/components/EvidenceLadder";
@@ -161,6 +162,8 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
           </MotionSection>
         )
         : null}
+
+      <DealKeyedRegulatoryCitations citations={view.regulatoryCitations} />
 
       <MotionSection delay={0.08} className="mb-10">
         <h2 className="mb-3 text-lg font-semibold text-lacuna-plum">

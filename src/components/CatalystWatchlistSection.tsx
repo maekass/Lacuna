@@ -51,6 +51,16 @@ function CatalystTable({
                 <span className="block text-[11px] text-lacuna-blue/70">
                   {row.drug}
                 </span>
+                {row.dealHref
+                  ? (
+                    <a
+                      href={row.dealHref}
+                      className="mt-0.5 block text-[11px] text-lacuna-plum underline-offset-2 hover:underline"
+                    >
+                      {row.dealLabel || "Verified deal"}
+                    </a>
+                  )
+                  : null}
               </td>
               <td className="px-2 py-2">
                 {row.eventType}
@@ -66,6 +76,24 @@ function CatalystTable({
                   ? (
                     <span className="block text-[11px] text-lacuna-blue/70">
                       {row.trackedLabel}
+                    </span>
+                  )
+                  : null}
+                {row.trialLinks.length > 0
+                  ? (
+                    <span className="mt-1 block space-y-0.5">
+                      {row.trialLinks.map((trial) => (
+                        <a
+                          key={trial.nctId}
+                          href={trial.url}
+                          className="block text-[11px] text-lacuna-plum underline-offset-2 hover:underline"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {trial.nctId}
+                          {trial.nihSponsor ? " · NIH" : ""}
+                        </a>
+                      ))}
                     </span>
                   )
                   : null}

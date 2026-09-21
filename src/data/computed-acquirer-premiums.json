@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-05T00:00:00.000Z",
+  "generatedAt": "2026-09-20T00:00:00.000Z",
   "datasetVersion": "v8",
-  "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
+  "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
   "source": "Lacuna verified dataset (src/data/dataset.verified.json)",
   "premiumMetrics": {
     "acquirer.premium.preDealValuation": {
@@ -405,15 +405,15 @@
           "sources": [
             {
               "kind": "prose",
-              "rawCitation": "SEC 8-K filing, July 2020"
+              "rawCitation": "Teladoc Health 8-K filing, SEC EDGAR (Aug 5, 2020); Teladoc Health investor relations press release (Aug 5, 2020)"
             },
             {
               "kind": "prose",
-              "rawCitation": "SEC 8-K filing (Teladoc, Oct 2020)"
+              "rawCitation": "SEC 8-K filing (Teladoc, Aug 5, 2020 announcement; Oct 30, 2020 close)"
             },
             {
               "kind": "prose",
-              "rawCitation": "Livongo.com / Teladoc press release"
+              "rawCitation": "Teladoc Health investor relations press release (Aug 5, 2020)"
             },
             {
               "kind": "prose",
@@ -453,7 +453,7 @@
             },
             {
               "kind": "prose",
-              "rawCitation": "Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)"
+              "rawCitation": "Hologic 8-K filing, SEC EDGAR (Jan 5, 2021); Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)"
             },
             {
               "kind": "prose",
@@ -2370,8 +2370,8 @@
             }
           ],
           "datasetVersion": "v8",
-          "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-          "computedAt": "2026-09-05T00:00:00.000Z"
+          "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+          "computedAt": "2026-09-20T00:00:00.000Z"
         }
       }
     },
@@ -2784,15 +2784,15 @@
           "sources": [
             {
               "kind": "prose",
-              "rawCitation": "SEC 8-K filing, July 2020"
+              "rawCitation": "Teladoc Health 8-K filing, SEC EDGAR (Aug 5, 2020); Teladoc Health investor relations press release (Aug 5, 2020)"
             },
             {
               "kind": "prose",
-              "rawCitation": "SEC 8-K filing (Teladoc, Oct 2020)"
+              "rawCitation": "SEC 8-K filing (Teladoc, Aug 5, 2020 announcement; Oct 30, 2020 close)"
             },
             {
               "kind": "prose",
-              "rawCitation": "Livongo.com / Teladoc press release"
+              "rawCitation": "Teladoc Health investor relations press release (Aug 5, 2020)"
             },
             {
               "kind": "prose",
@@ -2852,7 +2852,7 @@
             },
             {
               "kind": "prose",
-              "rawCitation": "Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)"
+              "rawCitation": "Hologic 8-K filing, SEC EDGAR (Jan 5, 2021); Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)"
             },
             {
               "kind": "prose",
@@ -4785,8 +4785,8 @@
             }
           ],
           "datasetVersion": "v8",
-          "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-          "computedAt": "2026-09-05T00:00:00.000Z"
+          "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+          "computedAt": "2026-09-20T00:00:00.000Z"
         }
       }
     },
@@ -4871,15 +4871,15 @@
           "sources": [
             {
               "kind": "prose",
-              "rawCitation": "SEC 8-K filing, July 2020"
+              "rawCitation": "Teladoc Health 8-K filing, SEC EDGAR (Aug 5, 2020); Teladoc Health investor relations press release (Aug 5, 2020)"
             },
             {
               "kind": "prose",
-              "rawCitation": "SEC 8-K filing (Teladoc, Oct 2020)"
+              "rawCitation": "SEC 8-K filing (Teladoc, Aug 5, 2020 announcement; Oct 30, 2020 close)"
             },
             {
               "kind": "prose",
-              "rawCitation": "Livongo.com / Teladoc press release"
+              "rawCitation": "Teladoc Health investor relations press release (Aug 5, 2020)"
             },
             {
               "kind": "prose",
@@ -5660,8 +5660,8 @@
             }
           ],
           "datasetVersion": "v8",
-          "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-          "computedAt": "2026-09-05T00:00:00.000Z"
+          "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+          "computedAt": "2026-09-20T00:00:00.000Z"
         }
       }
     }
@@ -5762,7 +5762,7 @@
           "sources": [
             {
               "kind": "prose",
-              "rawCitation": "Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)"
+              "rawCitation": "Hologic 8-K filing, SEC EDGAR (Jan 5, 2021); Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)"
             },
             {
               "kind": "prose",
@@ -6541,8 +6541,8 @@
             }
           ],
           "datasetVersion": "v8",
-          "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-          "computedAt": "2026-09-05T00:00:00.000Z"
+          "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+          "computedAt": "2026-09-20T00:00:00.000Z"
         }
       }
     },
@@ -6641,7 +6641,7 @@
           "sources": [
             {
               "kind": "prose",
-              "rawCitation": "Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)"
+              "rawCitation": "Hologic 8-K filing, SEC EDGAR (Jan 5, 2021); Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)"
             },
             {
               "kind": "prose",
@@ -7419,8 +7419,8 @@
             }
           ],
           "datasetVersion": "v8",
-          "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-          "computedAt": "2026-09-05T00:00:00.000Z"
+          "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+          "computedAt": "2026-09-20T00:00:00.000Z"
         }
       }
     }
@@ -7489,8 +7489,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -7581,8 +7581,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -7698,8 +7698,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -7790,8 +7790,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -7857,8 +7857,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -7924,8 +7924,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -7991,8 +7991,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -8108,8 +8108,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -8200,8 +8200,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -8267,8 +8267,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -8334,8 +8334,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -8401,8 +8401,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -8468,8 +8468,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -8535,8 +8535,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -8602,8 +8602,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -8669,8 +8669,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -8786,8 +8786,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -8853,8 +8853,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -8920,8 +8920,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -8987,8 +8987,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -9054,8 +9054,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -9121,8 +9121,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -9188,8 +9188,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -9255,8 +9255,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -9322,8 +9322,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -9389,8 +9389,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -9456,8 +9456,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -9523,8 +9523,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -9590,8 +9590,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -9657,8 +9657,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -9749,8 +9749,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -9816,8 +9816,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -9933,8 +9933,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -10025,8 +10025,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -10092,8 +10092,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -10159,8 +10159,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -10226,8 +10226,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -10343,8 +10343,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -10435,8 +10435,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -10502,8 +10502,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -10569,8 +10569,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -10636,8 +10636,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -10703,8 +10703,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -10770,8 +10770,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -10837,8 +10837,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -10904,8 +10904,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -11021,8 +11021,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -11088,8 +11088,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -11155,8 +11155,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -11222,8 +11222,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -11289,8 +11289,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -11356,8 +11356,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -11423,8 +11423,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -11490,8 +11490,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -11557,8 +11557,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -11624,8 +11624,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -11691,8 +11691,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -11758,8 +11758,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -11825,8 +11825,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -11892,8 +11892,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -11984,8 +11984,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -12051,8 +12051,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -12118,8 +12118,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -12185,8 +12185,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     },
     {
@@ -12252,8 +12252,8 @@
         ],
         "suppression": "n<5",
         "datasetVersion": "v8",
-        "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
-        "computedAt": "2026-09-05T00:00:00.000Z"
+        "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+        "computedAt": "2026-09-20T00:00:00.000Z"
       }
     }
   ]

@@ -66,7 +66,7 @@ published methodology.
 
 | Claim                   | Reality                                                                                                                                                                                    |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Deal data               | Static `dataset.verified.json` v8 (`provenance.lastUpdated: 2026-09-05`) — dual scope: medicine & biotech (default) + consumer health (`/consumer`); 150 companies, 38 acquirers, 59 deals |
+| Deal data               | Static `dataset.verified.json` v8 (`provenance.lastUpdated: 2026-09-20`) — dual scope: medicine & biotech (default) + consumer health (`/consumer`); 150 companies, 38 acquirers, 59 deals |
 | Scores & "predictors"   | Deterministic rules and small-_n_ statistics — [MODEL_CARD.md](docs/MODEL_CARD.md)                                                                                                         |
 | "ML" / TensorFlow       | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app                                                                                                                  |
 | Server LLM              | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev)                                                                                                    |
@@ -151,7 +151,7 @@ Deals catalog; consumer health is a separate in-memory filter of the same JSON.
   scope
 - **38 named acquirers**, including Hologic, KKR, Pfizer, Gilead, Boston
   Scientific, and others cited in sources
-- Dataset **v8** · `provenance.lastUpdated: 2026-09-05` · 50 of 59 deals
+- Dataset **v8** · `provenance.lastUpdated: 2026-09-20` · 50 of 59 deals
   disclose a price
 - Sources: SEC EDGAR, press releases, investor relations, fund portfolio listing
   (see [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md))
@@ -429,6 +429,7 @@ insufficient, the UI shows an empty state rather than PitchBook-style fallbacks.
 | Doc                                                                     | Purpose                                                      |
 | ----------------------------------------------------------------------- | ------------------------------------------------------------ |
 | [MODEL_CARD.md](docs/MODEL_CARD.md)                                     | **Start here** — what each score is and is not               |
+| [HAZARD.md](docs/HAZARD.md)                                             | Descriptive Cox time-to-acquisition (not a forecast)         |
 | [LIMITATIONS.md](docs/LIMITATIONS.md)                                   | Live disclosed-value bounds pinned to `liveDisclosedStats()` |
 | [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md)                           | What may enter verified JSON vs staging vs enrichment        |
 | [INFERENCE.md](docs/INFERENCE.md)                                       | Server-side LLM (AI Gateway)                                 |
