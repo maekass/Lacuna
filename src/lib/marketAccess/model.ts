@@ -148,7 +148,10 @@ export function compareIntervention(
     totalAnnualBudgetUsd,
     incrementalBudgetUsd,
     incrementalCostPerAdditionalPatientUsd: incrementalPatientsReached > 0
-      ? incrementalBudgetUsd / incrementalPatientsReached
+      ? assertFiniteResult(
+        "incrementalCostPerAdditionalPatientUsd",
+        incrementalBudgetUsd / incrementalPatientsReached,
+      )
       : null,
   };
 }
