@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { Suspense, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   ClusteringAnalysis,
@@ -30,9 +30,26 @@ import { getFeaturedDeal } from "@/lib/deals/getFeaturedDeal";
 
 const SECTION = "mb-16 scroll-mt-20 sm:scroll-mt-28";
 
-export default function DealsPage() {
+function DealsNetworkWithHighlight({
+  nodes,
+  links,
+}: {
+  nodes: ReturnType<typeof useDashboardData>["networkNodes"];
+  links: ReturnType<typeof useDashboardData>["networkLinks"];
+}) {
   const searchParams = useSearchParams();
   const highlightNodeId = searchParams.get("highlight") ?? undefined;
+  return (
+    <ForceNetwork
+      nodes={nodes}
+      links={links}
+      highlightPortfolios={true}
+      highlightNodeId={highlightNodeId}
+    />
+  );
+}
+
+export default function DealsPage() {
   const { networkNodes, networkLinks, dealsByYear } = useDashboardData();
   const {
     verifiedCompanies,
@@ -112,12 +129,20 @@ export default function DealsPage() {
           title="Who's Connected to Whom"
           description="Explore the relationships between acquirers and the women's health companies they've welcomed into their portfolios."
         />
-        <ForceNetwork
-          nodes={networkNodes}
-          links={networkLinks}
-          highlightPortfolios={true}
-          highlightNodeId={highlightNodeId}
-        />
+        <Suspense
+          fallback={
+            <ForceNetwork
+              nodes={networkNodes}
+              links={networkLinks}
+              highlightPortfolios={true}
+            />
+          }
+        >
+          <DealsNetworkWithHighlight
+            nodes={networkNodes}
+            links={networkLinks}
+          />
+        </Suspense>
       </MotionSection>
 
       <MotionSection id="analytics" delay={0.1} className={SECTION}>

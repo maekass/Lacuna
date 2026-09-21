@@ -9,7 +9,7 @@ from `src/app/lazyDashboard.tsx`; mounted on `/deals#quant-valuation` and
 `provenance.datasetVersion`)\
 **Verified acquisitions**: 59 (`headline.verifiedDeals`)\
 **Dataset hash**:
-`6f5db809ea3e77dffc9ffee92a4c8c612e36e274bff0e7a9542c9c2303adc83f`
+`185c97cedaace8a9bc0a5ae65e4a2d62e1c3efed06dc94234e7fca4d06b521b4`
 
 The number **58** in `computed-dataset-summary.json` is
 `disclosure.companiesWithValuation` (the valuation-disclosure count: 58/150). It
@@ -21,7 +21,10 @@ June 2026, conflated the two.
 ## Intended use / Out of scope
 
 **Intended use:** retrieval and ranking of comparable companies for analyst
-review inside this educational catalog.
+review inside this educational catalog. The scores are descriptive of this
+catalog, not a predictive model. With 59 acquisitions total (and a subset
+available as priors for any given candidate), there is insufficient data to
+train, validate, or claim statistical predictive power.
 
 **Out of scope** (do not use the scores for):
 
@@ -173,6 +176,24 @@ stability is low and results should be interpreted qualitatively.
 
 ---
 
+## Acquisition-time hazard (`src/lib/scoring/hazard.ts`)
+
+**Type**: Descriptive Cox partial-likelihood fit (Breslow ties) on companies
+with a disclosed founded year\
+**Artifact**: `src/data/ml/hazard/acquisition-time-v1.json`\
+**Training**: Offline `ml/hazard` — not imported by the Next.js bundle
+
+The fit has no covariates: sector dummy indicators are not used, so relative
+hazard is 1 and the artifact is a Breslow / Nelson–Aalen baseline on this
+curated sample. Missing founded year is exclusion, not imputation. Current stage
+is unused (acquired labels leak the event). The consumer returns
+`insufficient_disclosed_data` rather than inventing a score.
+
+This is **not** a forecast of future M&A, **not** an acquisition probability,
+and **not** investment advice. See [HAZARD.md](HAZARD.md).
+
+---
+
 ## Citation guidance
 
 If referencing this tool in academic or professional contexts:
@@ -180,7 +201,7 @@ If referencing this tool in academic or professional contexts:
 > Kass, M. (2026). _Lacuna: Network Intelligence Platform for Women's Health
 > M&A_. Open-source portfolio project. Acquisition similarity indicators use
 > deterministic factor scoring derived from n=59 verified public-domain
-> acquisitions (dataset v8); no fitted predictive model is employed. The
+> acquisitions (dataset v9); no fitted predictive model is employed. The
 > in-sample catalog share is 59/150; coverage against the AOA Dx Follow the
 > Exits 2000–2025 series is 59/276. https://github.com/maekass/Lacuna
 
