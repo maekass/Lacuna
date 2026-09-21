@@ -60,7 +60,7 @@
       "2026-07-02: Corrected deal4 (Lemonaid Health acquired by 23andMe for $400M per SEC filing, not Amazon). Added disclosed deal values for Alydia Health ($240M), Apostrophe (~$190M), and cited pre-deal valuations for Maven/Kindbody strategic investments.",
       "2026-07-06: Dual-scope dataset — medicine & biotech (default product) and consumer health (separate /consumer workspace). Full catalog retained; each workspace filters in memory.",
       "preDealValuationDatePrecision backfilled from cited sources; 10 post-announcement placeholder dates reset to announcement-year January 1 at year precision.",
-      "2026-09-20: Appended 19 identity-checked SEC accession URLs from source backfill; corrected Teladoc/Livongo announcement to Aug 5, 2020; Hologic/Biotheranostics 8-K listed on the deal source; renamed portfolio sector Diagnostic → Diagnostic (portfolio)."
+      "2026-09-20: Appended 19 identity-checked SEC accession URLs from source backfill; corrected Teladoc/Livongo announcement to Aug 5, 2020 (close remains Oct 30, 2020); Hologic/Biotheranostics 8-K listed on the deal source; renamed portfolio sector Diagnostic → Diagnostic (portfolio). Pre-deal NASDAQ market-cap citations are not acquisition dual-source."
     ],
     "purpose": "Educational demonstration dataset for portfolio project. Not for commercial investment decisions.",
     "disclaimer": "Data compiled from public sources for educational visualization. Verify independently before any commercial use."

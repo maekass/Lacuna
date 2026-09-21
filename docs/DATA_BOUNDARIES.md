@@ -129,6 +129,8 @@ Those scores must **not** feed:
 Deal dossiers may show analyst-curated HLTH mappings (`curated` only). They must
 not run the research pipeline's sector/keyword affinity join, and
 research/affinity citation strings never count toward dual-source corroboration.
+`preDealValuationSource` (market cap, last round, implied mark) is pre-deal
+context only — it does not corroborate that the acquisition occurred.
 Burden–capital gap scores stay on `/research` — they do not decorate
 deal-workspace valuation matrices or dossier comps. Dollar output on that panel
 is the verified-dataset stage funding median only.

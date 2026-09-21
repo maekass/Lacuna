@@ -74,10 +74,26 @@ describe("keyed regulatory citations", () => {
     );
   });
 
-  it("does not attach name-search enrichment to verified deal dossiers", () => {
+  it("keys GRAIL PATHFINDER studies to c46 and leaves other targets empty", () => {
     const dataset = getStaticVerifiedDataset();
-    expect(KEYED_REGULATORY_CITATIONS).toEqual([]);
+    expect(KEYED_REGULATORY_CITATIONS.map((row) => row.targetId)).toEqual([
+      "c46",
+      "c46",
+    ]);
+    const grail = keyedRegulatoryCitationsForTarget("c46");
+    expect(grail.map((row) => row.code)).toEqual([
+      "NCT04241796",
+      "NCT05155605",
+    ]);
+    expect(grail.every((row) => isKeyedRegulatoryCitation(row))).toBe(true);
+    const grailDeal = getDealDetailView(dataset, "deal29");
+    expect(grailDeal?.deal.target.id).toBe("c46");
+    expect(grailDeal?.regulatoryCitations.map((row) => row.code)).toEqual([
+      "NCT04241796",
+      "NCT05155605",
+    ]);
     for (const row of dataset.acquisitions) {
+      if (row.targetId === "c46") continue;
       const view = getDealDetailView(dataset, row.id);
       expect(view?.regulatoryCitations).toEqual([]);
       expect(keyedRegulatoryCitationsForTarget(row.targetId)).toEqual([]);
