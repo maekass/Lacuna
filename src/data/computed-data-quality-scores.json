@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-05T00:00:00.000Z",
-  "datasetHash": "ab5524efb04f6f7c9d5c48d16f6cee810697f7e772a9b7a5c5dbd9104b6b2903",
+  "generatedAt": "2026-09-20T00:00:00.000Z",
+  "datasetHash": "44a83d570e26430e01da14b58db279e9a1bbf1c4e61e4406be9f571815477b91",
   "source": "Lacuna verified dataset (src/data/dataset.verified.json)",
   "grading": {
     "A": "90-100: SEC filing or equivalent primary source, all fields populated",
@@ -24,12 +24,12 @@
     "acquisitions": {
       "total": 59,
       "grades": {
-        "A": 20,
+        "A": 29,
         "F": 1,
-        "C": 12,
-        "B": 26
+        "C": 9,
+        "B": 20
       },
-      "avgScore": 83.1
+      "avgScore": 86.7
     }
   },
   "companies": [
@@ -1297,7 +1297,7 @@
     {
       "id": "c98",
       "name": "Clear Gene",
-      "sector": "Diagnostic",
+      "sector": "Diagnostic (portfolio)",
       "sourceQuality": "D",
       "sourceDescription": "Data aggregator (secondary)",
       "completeness": 55,
@@ -1323,7 +1323,7 @@
     {
       "id": "c100",
       "name": "Everly Health",
-      "sector": "Diagnostic",
+      "sector": "Diagnostic (portfolio)",
       "sourceQuality": "B",
       "sourceDescription": "Reputable press/trade publication",
       "completeness": 55,
@@ -1401,7 +1401,7 @@
     {
       "id": "c106",
       "name": "Hera Biotech",
-      "sector": "Diagnostic",
+      "sector": "Diagnostic (portfolio)",
       "sourceQuality": "B",
       "sourceDescription": "Reputable press/trade publication",
       "completeness": 55,
@@ -1414,7 +1414,7 @@
     {
       "id": "c107",
       "name": "Inherent Biosciences",
-      "sector": "Diagnostic",
+      "sector": "Diagnostic (portfolio)",
       "sourceQuality": "D",
       "sourceDescription": "Data aggregator (secondary)",
       "completeness": 55,
@@ -1518,7 +1518,7 @@
     {
       "id": "c115",
       "name": "Mercy Bio",
-      "sector": "Diagnostic",
+      "sector": "Diagnostic (portfolio)",
       "sourceQuality": "D",
       "sourceDescription": "Data aggregator (secondary)",
       "completeness": 55,
@@ -1531,7 +1531,7 @@
     {
       "id": "c116",
       "name": "Mirvie",
-      "sector": "Diagnostic",
+      "sector": "Diagnostic (portfolio)",
       "sourceQuality": "B",
       "sourceDescription": "Reputable press/trade publication",
       "completeness": 55,
@@ -1583,7 +1583,7 @@
     {
       "id": "c120",
       "name": "NowDx",
-      "sector": "Diagnostic",
+      "sector": "Diagnostic (portfolio)",
       "sourceQuality": "D",
       "sourceDescription": "Data aggregator (secondary)",
       "completeness": 55,
@@ -2061,13 +2061,13 @@
       "id": "deal7",
       "target": "Biotheranostics",
       "acquirer": "Hologic",
-      "sourceQuality": "C",
-      "sourceDescription": "Company press release",
+      "sourceQuality": "A",
+      "sourceDescription": "SEC filing (primary government source)",
       "completeness": 100,
       "hasDealValue": true,
       "hasSource": true,
-      "overallScore": 83,
-      "grade": "B"
+      "overallScore": 100,
+      "grade": "A"
     },
     {
       "id": "deal8",
@@ -2109,25 +2109,25 @@
       "id": "deal11",
       "target": "Generate Life Sciences",
       "acquirer": "CooperSurgical (CooperCompanies)",
-      "sourceQuality": "F",
-      "sourceDescription": "Unverified or unknown source",
+      "sourceQuality": "A",
+      "sourceDescription": "SEC filing (primary government source)",
       "completeness": 100,
       "hasDealValue": true,
       "hasSource": true,
-      "overallScore": 60,
-      "grade": "C"
+      "overallScore": 100,
+      "grade": "A"
     },
     {
       "id": "deal12",
       "target": "Cook Medical Reproductive Health",
       "acquirer": "CooperSurgical (CooperCompanies)",
-      "sourceQuality": "C",
-      "sourceDescription": "Company press release",
+      "sourceQuality": "A",
+      "sourceDescription": "SEC filing (primary government source)",
       "completeness": 89,
       "hasDealValue": false,
       "hasSource": true,
-      "overallScore": 64,
-      "grade": "C"
+      "overallScore": 82,
+      "grade": "B"
     },
     {
       "id": "deal13",
@@ -2145,25 +2145,25 @@
       "id": "deal14",
       "target": "Alydia Health",
       "acquirer": "Organon (via Merck spinoff)",
-      "sourceQuality": "C",
-      "sourceDescription": "Company press release",
+      "sourceQuality": "A",
+      "sourceDescription": "SEC filing (primary government source)",
       "completeness": 100,
       "hasDealValue": true,
       "hasSource": true,
-      "overallScore": 83,
-      "grade": "B"
+      "overallScore": 100,
+      "grade": "A"
     },
     {
       "id": "deal15",
       "target": "Forendo Pharma",
       "acquirer": "Organon",
-      "sourceQuality": "C",
-      "sourceDescription": "Company press release",
+      "sourceQuality": "A",
+      "sourceDescription": "SEC filing (primary government source)",
       "completeness": 100,
       "hasDealValue": true,
       "hasSource": true,
-      "overallScore": 83,
-      "grade": "B"
+      "overallScore": 100,
+      "grade": "A"
     },
     {
       "id": "deal16",
@@ -2313,13 +2313,13 @@
       "id": "deal28",
       "target": "nVision Medical",
       "acquirer": "Boston Scientific",
-      "sourceQuality": "C",
-      "sourceDescription": "Company press release",
+      "sourceQuality": "A",
+      "sourceDescription": "SEC filing (primary government source)",
       "completeness": 100,
       "hasDealValue": true,
       "hasSource": true,
-      "overallScore": 83,
-      "grade": "B"
+      "overallScore": 100,
+      "grade": "A"
     },
     {
       "id": "deal29",
@@ -2397,25 +2397,25 @@
       "id": "deal35",
       "target": "Counsyl",
       "acquirer": "Myriad Genetics",
-      "sourceQuality": "C",
-      "sourceDescription": "Company press release",
+      "sourceQuality": "A",
+      "sourceDescription": "SEC filing (primary government source)",
       "completeness": 100,
       "hasDealValue": true,
       "hasSource": true,
-      "overallScore": 83,
-      "grade": "B"
+      "overallScore": 100,
+      "grade": "A"
     },
     {
       "id": "deal36",
       "target": "Gateway Genomics",
       "acquirer": "Myriad Genetics",
-      "sourceQuality": "C",
-      "sourceDescription": "Company press release",
+      "sourceQuality": "A",
+      "sourceDescription": "SEC filing (primary government source)",
       "completeness": 100,
       "hasDealValue": true,
       "hasSource": true,
-      "overallScore": 83,
-      "grade": "B"
+      "overallScore": 100,
+      "grade": "A"
     },
     {
       "id": "deal37",
@@ -2469,13 +2469,13 @@
       "id": "deal41",
       "target": "Immunomedics",
       "acquirer": "Gilead Sciences",
-      "sourceQuality": "C",
-      "sourceDescription": "Company press release",
+      "sourceQuality": "A",
+      "sourceDescription": "SEC filing (primary government source)",
       "completeness": 100,
       "hasDealValue": true,
       "hasSource": true,
-      "overallScore": 83,
-      "grade": "B"
+      "overallScore": 100,
+      "grade": "A"
     },
     {
       "id": "deal42",
@@ -2541,13 +2541,13 @@
       "id": "deal47",
       "target": "Ovia Health",
       "acquirer": "LabCorp",
-      "sourceQuality": "C",
-      "sourceDescription": "Company press release",
+      "sourceQuality": "A",
+      "sourceDescription": "SEC filing (primary government source)",
       "completeness": 89,
       "hasDealValue": false,
       "hasSource": true,
-      "overallScore": 64,
-      "grade": "C"
+      "overallScore": 82,
+      "grade": "B"
     },
     {
       "id": "deal48",
@@ -2625,13 +2625,13 @@
       "id": "deal54",
       "target": "Dermavant Sciences",
       "acquirer": "Organon",
-      "sourceQuality": "C",
-      "sourceDescription": "Company press release",
+      "sourceQuality": "A",
+      "sourceDescription": "SEC filing (primary government source)",
       "completeness": 100,
       "hasDealValue": true,
       "hasSource": true,
-      "overallScore": 83,
-      "grade": "B"
+      "overallScore": 100,
+      "grade": "A"
     },
     {
       "id": "deal55",

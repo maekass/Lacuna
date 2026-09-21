@@ -17,6 +17,7 @@
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { z } from "zod";
+import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 import { selectLatestVintageObservations } from "../src/lib/data/cmsObservationVintage";
 
 const SECTOR_CPT_CODES: Record<string, string[]> = {
@@ -161,12 +162,21 @@ function main() {
     buildSector(sector, codes, filtered)
   );
 
+  const datasetMeta = JSON.parse(
+    readFileSync("src/data/dataset.verified.json", "utf8"),
+  ) as { provenance?: { lastUpdated?: string } };
   const output = {
-    generatedAt: new Date().toISOString(),
-    source:
-      "CMS Medicare Public Use File / data.cms.gov — curated aggregate input only",
+    generatedAt: generatedAtFromProvenance(
+      datasetMeta.provenance?.lastUpdated ?? "2026-09-20",
+    ),
+    source: filtered.length > 0
+      ? "CMS Medicare Public Use File / data.cms.gov — curated aggregate input only"
+      : "withheld — staging/cms-utilization-verified.json is absent; not retrieved from data.cms.gov",
     inputPath: INPUT_PATH,
     evidenceStatus: filtered.length > 0 ? "partial_or_complete" : "withheld",
+    reason: filtered.length > 0
+      ? undefined
+      : "No verified CMS aggregate observations are committed. Sector reimbursement totals stay null rather than using mean-payment fallback arithmetic.",
     sectors,
     utilizationByCptCode: filtered.map((row) => ({
       sector: row.sector,

@@ -152,7 +152,7 @@ export const fundPortfolioCompanies: readonly PortfolioCompanyEntry[] = [
     initialInvestmentDate: "2025-03-11",
     stage: "Seed",
     focusArea: "Covid-19 and cancer",
-    sector: "Diagnostic",
+    sector: "Diagnostic (portfolio)",
     funds: ["FT3"],
   },
   {
@@ -170,7 +170,7 @@ export const fundPortfolioCompanies: readonly PortfolioCompanyEntry[] = [
     initialInvestmentDate: "2020-11-25",
     stage: "Series D",
     focusArea: "At home Dx testing kits",
-    sector: "Diagnostic",
+    sector: "Diagnostic (portfolio)",
     funds: ["FT2", "AAL"],
   },
   {
@@ -224,7 +224,7 @@ export const fundPortfolioCompanies: readonly PortfolioCompanyEntry[] = [
     initialInvestmentDate: "2024-10-11",
     stage: "Series A",
     focusArea: "Endometriosis",
-    sector: "Diagnostic",
+    sector: "Diagnostic (portfolio)",
     funds: ["FT3", "WH4"],
   },
   {
@@ -233,7 +233,7 @@ export const fundPortfolioCompanies: readonly PortfolioCompanyEntry[] = [
     initialInvestmentDate: "2022-08-22",
     stage: "Series A",
     focusArea: "Fertility",
-    sector: "Diagnostic",
+    sector: "Diagnostic (portfolio)",
     funds: ["FT2", "FT3"],
   },
   {
@@ -315,7 +315,7 @@ export const fundPortfolioCompanies: readonly PortfolioCompanyEntry[] = [
     initialInvestmentDate: "2025-06-05",
     stage: "Series B",
     focusArea: "Ovarian cancer",
-    sector: "Diagnostic",
+    sector: "Diagnostic (portfolio)",
     funds: ["FT3", "SPV"],
   },
   {
@@ -324,7 +324,7 @@ export const fundPortfolioCompanies: readonly PortfolioCompanyEntry[] = [
     initialInvestmentDate: "2025-07-16",
     stage: "Series C",
     focusArea: "Preeclampsia",
-    sector: "Diagnostic",
+    sector: "Diagnostic (portfolio)",
     funds: ["FT3", "RA3", "SPV"],
   },
   {
@@ -360,7 +360,7 @@ export const fundPortfolioCompanies: readonly PortfolioCompanyEntry[] = [
     initialInvestmentDate: "2019-06-25",
     stage: "Series A",
     focusArea: "At home Dx with single drop of blood",
-    sector: "Diagnostic",
+    sector: "Diagnostic (portfolio)",
     funds: ["FT", "FSF", "FT2"],
   },
   {

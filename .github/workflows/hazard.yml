@@ -1,0 +1,62 @@
+name: Hazard scoring
+
+on:
+  pull_request:
+    paths:
+      - "ml/hazard/**"
+      - "scripts/run_hazard.py"
+      - "scripts/check_claim_consistency.py"
+      - "src/lib/scoring/hazard.ts"
+      - "src/lib/scoring/hazard.test.ts"
+      - "src/data/ml/hazard/**"
+      - "docs/HAZARD.md"
+      - ".github/workflows/hazard.yml"
+      - ".github/topics.txt"
+  push:
+    branches: ["main"]
+    paths:
+      - "ml/hazard/**"
+      - "scripts/run_hazard.py"
+      - "scripts/check_claim_consistency.py"
+      - "src/lib/scoring/hazard.ts"
+      - "src/lib/scoring/hazard.test.ts"
+      - "src/data/ml/hazard/**"
+      - "docs/HAZARD.md"
+      - ".github/workflows/hazard.yml"
+      - ".github/topics.txt"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hazard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install hazard dependencies
+        run: pip install -r ml/hazard/requirements.txt
+
+      - name: Self-check suite
+        run: PYTHONPATH=ml/hazard python3 -m unittest discover -s ml/hazard/tests -v
+
+      - name: Fit and verify committed artifact
+        run: PYTHONPATH=ml/hazard python3 scripts/run_hazard.py --phase export --check
+
+      - name: Claim consistency
+        run: PYTHONPATH=ml/hazard python3 scripts/check_claim_consistency.py
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: TypeScript consumer tests
+        run: npx vitest run src/lib/scoring/hazard.test.ts

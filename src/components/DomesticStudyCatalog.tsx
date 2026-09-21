@@ -17,6 +17,7 @@ interface StudyRow {
   dataTier: string;
   source: string;
   variantCallsetId?: string;
+  nctIds?: string[];
 }
 
 interface Stats {
@@ -197,6 +198,26 @@ export default function DomesticStudyCatalog() {
                     </>
                   )}
                 </p>
+                {study.nctIds && study.nctIds.length > 0
+                  ? (
+                    <p className="text-[11px] text-lacuna-blue/70 mt-1">
+                      Registry:{" "}
+                      {study.nctIds.map((nctId, index) => (
+                        <span key={nctId}>
+                          {index > 0 ? " · " : ""}
+                          <a
+                            href={`https://clinicaltrials.gov/study/${nctId}`}
+                            className="text-lacuna-plum underline-offset-2 hover:underline"
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {nctId}
+                          </a>
+                        </span>
+                      ))}
+                    </p>
+                  )
+                  : null}
                 <p className="text-[10px] text-lacuna-blue/50 mt-1">
                   {study.source}
                 </p>

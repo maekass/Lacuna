@@ -2,8 +2,8 @@
 
 **Component**: `ExitPredictor.tsx`\
 **Type**: Deterministic weighted indicator (not a fitted/trained model)\
-**Last updated**: June 2026\
-**Dataset version**: v5 (58 verified acquisitions)
+**Last updated**: September 2026\
+**Dataset version**: v8 (59 verified acquisitions)
 
 ---
 
@@ -11,7 +11,7 @@
 
 This component scores non-acquired companies in the Lacuna dataset on factors
 that co-occurred with prior verified acquisitions. It is a **descriptive tool**,
-not a predictive model. With n=58 acquisitions total (and a subset available as
+not a predictive model. With n=59 acquisitions total (and a subset available as
 "priors" for any given candidate), there is insufficient data to train,
 validate, or claim statistical predictive power.
 
@@ -59,7 +59,7 @@ For each non-acquired company in the verified dataset, the scorer:
 
 | Limitation               | Detail                                                                 |
 | ------------------------ | ---------------------------------------------------------------------- |
-| **Small n**              | n=58 acquisitions total; per-sector n is often 1–3                     |
+| **Small n**              | n=59 acquisitions total; per-sector n is often 1–3                     |
 | **Selection bias**       | Dataset overrepresents well-documented deals with disclosed valuations |
 | **No held-out test set** | Weights not validated against unseen data                              |
 | **Circular priors**      | Median valuation/age derived from the same dataset being scored        |
@@ -109,13 +109,31 @@ results should be interpreted qualitatively.
 
 ---
 
+## Acquisition-time hazard (`src/lib/scoring/hazard.ts`)
+
+**Type**: Descriptive Cox partial-likelihood fit (Breslow ties) on companies
+with a disclosed founded year\
+**Artifact**: `src/data/ml/hazard/acquisition-time-v1.json`\
+**Training**: Offline `ml/hazard` — not imported by the Next.js bundle
+
+The fit has no covariates: sector dummy indicators are not used, so relative
+hazard is 1 and the artifact is a Breslow / Nelson–Aalen baseline on this
+curated sample. Missing founded year is exclusion, not imputation. Current stage
+is unused (acquired labels leak the event). The consumer returns
+`insufficient_disclosed_data` rather than inventing a score.
+
+This is **not** a forecast of future M&A, **not** an acquisition probability,
+and **not** investment advice. See [HAZARD.md](HAZARD.md).
+
+---
+
 ## Citation guidance
 
 If referencing this tool in academic or professional contexts:
 
 > Kass, M. (2026). _Lacuna: Network Intelligence Platform for Women's Health
 > M&A_. Open-source portfolio project. Acquisition likelihood indicators use
-> deterministic factor scoring derived from n=58 verified public-domain
+> deterministic factor scoring derived from n=59 verified public-domain
 > acquisitions; no fitted predictive model is employed.
 > https://github.com/maekass/Lacuna
 

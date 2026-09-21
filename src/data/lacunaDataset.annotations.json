@@ -9,13 +9,13 @@
       "statusHistory": [
         {
           "status": "announced",
-          "statusAsOf": "2020-07-01",
-          "statusSource": "SEC 8-K filing, July 2020"
+          "statusAsOf": "2020-08-05",
+          "statusSource": "Teladoc Health 8-K filing, SEC EDGAR (Aug 5, 2020)"
         },
         {
           "status": "completed",
           "statusAsOf": "2020-10-30",
-          "statusSource": "SEC 8-K filing, July 2020"
+          "statusSource": "Teladoc Health 8-K filing, SEC EDGAR (Oct 30, 2020 close)"
         }
       ]
     },

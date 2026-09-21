@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 import {
   buildEvidenceLadder,
+  CONSUMER_FEATURED_DEAL_ID,
   FEATURED_DEAL_ID,
   getDealById,
   getDealDetailView,
@@ -64,6 +65,31 @@ describe("evidence ladder", () => {
     expect(ladder.primaryCount).toBe(0);
     expect(ladder.hasDualSource).toBe(false);
     expect(ladder.pressOnly).toBe(true);
+  });
+
+  it("does not treat a pre-deal market-cap citation as acquisition corroboration", () => {
+    expect(deal).not.toBeNull();
+    const mixed = {
+      ...deal!,
+      acquisition: {
+        ...deal!.acquisition,
+        source: "Hologic 8-K filing, SEC EDGAR",
+        preDealValuationSource:
+          "NASDAQ market capitalization, July 2020 (pre-merger announcement)",
+      },
+    };
+    const ladder = buildEvidenceLadder(mixed);
+    expect(ladder.runs).toHaveLength(1);
+    expect(ladder.runs[0]?.citation).toContain("8-K");
+    expect(
+      ladder.runs.some((r) => /NASDAQ market capitalization/i.test(r.citation)),
+    ).toBe(false);
+    expect(ladder.hasDualSource).toBe(false);
+    expect(
+      ladder.limitations.some((line) =>
+        /do not corroborate the acquisition/.test(line)
+      ),
+    ).toBe(true);
   });
 });
 
@@ -195,5 +221,24 @@ describe("getDealDetailView", () => {
     expect(foundation?.briefMarkdown).toContain(
       foundation!.targetLastKnownValuation!.source,
     );
+  });
+
+  it("dates Livongo to Teladoc's Aug 5, 2020 announcement 8-K, not a pre-deal market cap", () => {
+    const livongo = getDealById(dataset, CONSUMER_FEATURED_DEAL_ID);
+    expect(livongo?.acquisition.targetName).toBe("Livongo Health");
+    expect(livongo?.acquisition.announcedDate).toBe("2020-08-05");
+    expect(livongo?.acquisition.closedDate).toBe("2020-10-30");
+    expect(livongo?.acquisition.source).toMatch(/Aug 5, 2020/);
+    expect(livongo?.acquisition.source).not.toMatch(/July 2020/);
+    const ladder = buildEvidenceLadder(livongo!);
+    expect(
+      ladder.runs.some((r) => /NASDAQ market capitalization/i.test(r.citation)),
+    ).toBe(false);
+    expect(ladder.primaryCount).toBeGreaterThanOrEqual(1);
+    expect(ladder.hasDualSource).toBe(true);
+    expect(ladder.limitations.some((line) => /NASDAQ/.test(line))).toBe(true);
+    const view = getDealDetailView(dataset, CONSUMER_FEATURED_DEAL_ID);
+    expect(view?.announcedLabel).toBe("Aug 5, 2020");
+    expect(view?.closedLabel).toBe("Oct 30, 2020");
   });
 });

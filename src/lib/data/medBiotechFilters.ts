@@ -17,6 +17,7 @@ const MED_BIOTECH_SECTORS = new Set([
   "Tech Bio",
   "Medical Device",
   "Diagnostic",
+  "Diagnostic (portfolio)",
   "Diagnostics",
   "Precision Medicine",
   "Dermatology",

@@ -1,5 +1,5 @@
 <!--
-SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified deals (n=58), clinical trial search, genomics governance, cited analytics. Not live market data or predictive ML.
+SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified deals (n=59), clinical trial search, genomics governance, cited analytics. Not live market data or predictive ML.
 -->
 
 <h1 align="center">Lacuna</h1>
@@ -9,7 +9,7 @@ SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified de
 </p>
 
 <blockquote align="center">
-  <p><strong>Curated dataset · n=51 med/biotech deals (default) + consumer health workspace · 150 companies total · Not live market data.</strong></p>
+  <p><strong>Curated dataset · 59 verified deals (51 medicine &amp; biotech default + 8 consumer) · 150 companies · 38 acquirers · Not live market data.</strong></p>
 </blockquote>
 
 <p align="center">
@@ -25,7 +25,8 @@ SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified de
 <p align="center">
   <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-16-C8A8E9?style=flat-square&logo=next.js&logoColor=white" alt="Next.js 16"></a>
   <a href="https://react.dev"><img src="https://img.shields.io/badge/React-19-D4A5E0?style=flat-square&logo=react&logoColor=white" alt="React 19"></a>
-  <a href="https://typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-5.0-E8B4D9?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript"></a>
+  <a href="https://typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-5-E8B4D9?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript"></a>
+  <a href="https://nodejs.org"><img src="https://img.shields.io/badge/Node-24-C8A8E9?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node 24"></a>
   <a href="https://d3js.org"><img src="https://img.shields.io/badge/D3.js-v7-C9A0DC?style=flat-square&logo=d3.js&logoColor=white" alt="D3.js v7"></a>
   <a href="docs/MODEL_CARD.md"><img src="https://img.shields.io/badge/Data-verified_JSON-E8B4D9?style=flat-square" alt="Verified JSON dataset"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-BSL_1.1-B19CD9?style=flat-square" alt="BSL 1.1"></a>
@@ -39,6 +40,7 @@ SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified de
 - [Overview](#overview)
 - [What is Lacuna?](#what-is-lacuna)
 - [Live Demo](#live-demo)
+- [Product workspaces](#product-workspaces)
 - [Core Features](#core-features)
 - [Descriptive analytics](#descriptive-analytics-heuristics-not-predictive-ml)
 - [AI & biotech diligence best practices](#ai--biotech-diligence-best-practices)
@@ -58,18 +60,18 @@ SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified de
 ## Overview
 
 **Lacuna** is an **investment research stack** — a diligence infrastructure
-prototype with a curated, source-linked snapshot of women's health M&A (58
+prototype with a curated, source-linked snapshot of women's health M&A (59
 verified deals), rendered as D3 network views and **descriptive** analytics with
 published methodology.
 
-| Claim                   | Reality                                                                                                                                            |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Deal data               | Static `dataset.verified.json` v8 — dual scope: medicine & biotech (default) + consumer health (`/consumer`); 150 companies, 59 deals full catalog |
-| Scores & "predictors"   | Deterministic rules and small-_n_ statistics — [MODEL_CARD.md](docs/MODEL_CARD.md)                                                                 |
-| "ML" / TensorFlow       | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app                                                                          |
-| Server LLM              | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev)                                                            |
-| Clinical trials panel   | Live ClinicalTrials.gov search; **M&A panels** still use the curated dataset                                                                       |
-| Production intelligence | **No** — not PitchBook, not a data SLA, not investment advice                                                                                      |
+| Claim                   | Reality                                                                                                                                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Deal data               | Static `dataset.verified.json` v8 (`provenance.lastUpdated: 2026-09-20`) — dual scope: medicine & biotech (default) + consumer health (`/consumer`); 150 companies, 38 acquirers, 59 deals |
+| Scores & "predictors"   | Deterministic rules and small-_n_ statistics — [MODEL_CARD.md](docs/MODEL_CARD.md)                                                                                                         |
+| "ML" / TensorFlow       | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app                                                                                                                  |
+| Server LLM              | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev)                                                                                                    |
+| Clinical trials panel   | Live ClinicalTrials.gov search; **M&A panels** still use the curated dataset                                                                                                               |
+| Production intelligence | **No** — not PitchBook, not a data SLA, not investment advice                                                                                                                              |
 
 Open source under [BSL 1.1](LICENSE) for corp VC diligence workflows, portfolio
 review, and self-hosted exploration. Commercial competitive products need a
@@ -120,6 +122,22 @@ Every analytical panel in the app shows the provenance line above.
 
 ---
 
+## Product workspaces
+
+The Next.js app is split into workspaces. Medicine & biotech is the default
+Deals catalog; consumer health is a separate in-memory filter of the same JSON.
+
+| Workspace        | Route           | What you get                                                                                          |
+| ---------------- | --------------- | ----------------------------------------------------------------------------------------------------- |
+| **Deals**        | `/deals`        | Network, deal flow, valuation matrix, quant heuristics, acquirer landscape (medicine & biotech scope) |
+| **Consumer**     | `/consumer`     | Wearables, wellness apps, and consumer digital health M&A                                             |
+| **Payer Ops**    | `/payer-ops`    | Prior-auth friction and payer-aligned VC signals computed from the verified catalog                   |
+| **Research**     | `/research`     | Trials search, evidence maturity, health-equity markers, optional genomics browser                    |
+| **Methods**      | `/methods`      | Causal DAG, sensitivity, Bayesian small-_n_ framing                                                   |
+| **Intelligence** | `/intelligence` | Reimbursement context, acquirer fit scores, dataset export                                            |
+
+---
+
 ## Core Features
 
 ### Verified deal explorer
@@ -131,18 +149,23 @@ Every analytical panel in the app shows the provenance line above.
   wellness apps, consumer digital health
 - **46 fund portfolio investments** (c90–c135) — overlays filter by workspace
   scope
-- Acquirers include Hologic, KKR, Pfizer, Gilead, Boston Scientific, and others
-  named in sources
-- Dataset **v8** · `provenance.lastUpdated: 2026-07-06`
+- **38 named acquirers**, including Hologic, KKR, Pfizer, Gilead, Boston
+  Scientific, and others cited in sources
+- Dataset **v8** · `provenance.lastUpdated: 2026-09-20` · 50 of 59 deals
+  disclose a price
 - Sources: SEC EDGAR, press releases, investor relations, fund portfolio listing
   (see [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md))
+
+Headline disclosed-value figures and coverage limits live in
+[LIMITATIONS.md](docs/LIMITATIONS.md) — they are pinned to
+`liveDisclosedStats()`, not invented TAM/SAM.
 
 ### Interactive network (`ForceNetwork.tsx`)
 
 D3 force-directed graph: sector colors, deal-type edges, valuation-scaled nodes.
-Three portfolio overlays are toggleable — **Foreground Capital (FG)**, **Amboy
-Street Ventures (AS)**, and the **Fund Portfolio (FD)** — each with a distinct
-color and pulse-ring badge on matching nodes. Methodology:
+Three portfolio overlays are toggleable — **RH Capital** (Foreground Capital),
+**Amboy Street Ventures**, and **Portfolia** — each with a distinct color and
+pulse-ring badge on matching nodes. Methodology:
 [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md).
 
 ### Deal flow (`DealFlowChart.tsx`)
@@ -155,14 +178,13 @@ synthetic deal generator.
 Sector × stage heatmap using disclosed values only; cells show company counts
 and averages.
 
-### Exit-likelihood leaderboard (`QuantValuationPanel.tsx`)
+### Heuristic valuation panel (`QuantValuationPanel.tsx`)
 
-**New:** Heuristic valuation and exit-likelihood section with:
+Descriptive valuation and exit-likelihood section with:
 
 - **ValuationEngine** — bounded comparable multiples (EV/Revenue, EV/EBITDA)
   with uncertainty disclosures
-- **AcquisitionPredictor** — sector-stage acquisition probability estimates
-  (15/75 coverage noted)
+- **AcquisitionPredictor** — sector-stage heuristics on disclosed fields only
 - **HealthImpactModeler** — lives-saved modeling with Cohen's d bounds (not a
   rate)
 - **PortfolioOptimizer** — stage-varying risk-adjusted ROI optimizer
@@ -175,8 +197,8 @@ See [MODEL_CARD.md](docs/MODEL_CARD.md) for methodology and caveats.
 
 ## Descriptive analytics (heuristics, not predictive ML)
 
-> Curated dataset · n=59 verified deals · 135 companies · Not live market data ·
-> Scores are descriptive, not forecasts.
+> Curated dataset · n=59 verified deals · 150 companies · 38 acquirers · Not
+> live market data · Scores are descriptive, not forecasts.
 
 ### Acquisition likelihood indicators (`ExitPredictor.tsx`)
 
@@ -263,18 +285,19 @@ discipline).
 
 ## Health Equity & Black Women's Health
 
-Descriptive context on disease areas with documented disparities and public
-market-size estimates — for learning, not buy/sell recommendations:
+Descriptive context on disease areas with documented disparities — cited
+epidemiology from the in-app catalog (`HEALTH_EQUITY_FOCUS_AREAS`), **not**
+TAM/SAM or buy/sell recommendations:
 
-| Disease                | Disparity (cited in docs)  | Public market-size estimate |
-| ---------------------- | -------------------------- | --------------------------- |
-| Maternal Health        | Higher mortality disparity | $12B                        |
-| Uterine Fibroids       | High prevalence            | $34B                        |
-| Lupus                  | Higher prevalence          | $8B                         |
-| Sickle Cell Disease    | Population concentration   | $5B                         |
-| Cardiovascular Disease | Higher mortality           | $15B                        |
+| Focus area                         | Cited disparity (in-app)                                                                                     | Source                                                       |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
+| Maternal mortality prevention      | 2024: Black women 44.8 vs White women 14.2 deaths per 100,000 live births (~3.2×)                            | CDC/NCHS Maternal Mortality Rates in the United States, 2024 |
+| Hereditary breast & ovarian cancer | Black women have 38% higher breast-cancer mortality than White women despite lower incidence                 | ACS Breast Cancer Facts & Figures 2024–2025                  |
+| Sickle cell disease (HBB)          | About 1 in 365 Black or African American births; trait about 1 in 13                                         | CDC sickle cell surveillance                                 |
+| Lupus / SLE                        | Earlier disease, greater complications, and higher mortality among several racial and ethnic minority groups | Lupus Foundation of America                                  |
 
 See [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md) for scoring limits.
+Market-size estimates are not mixed into this table.
 
 ---
 
@@ -321,7 +344,7 @@ provenance labels.
 
 Six frameworks with **explicit small-_n_ limits** documented in `docs/` (causal
 DAG, fairness audit, network concentration, etc.). We state what cannot be
-claimed with n≈58 deals — see methodology files linked from the app.
+claimed with n=59 deals — see methodology files linked from the app.
 
 ---
 
@@ -343,7 +366,7 @@ Playfair Display.
 | Layer                                  | Used in production UI                                                        |
 | -------------------------------------- | ---------------------------------------------------------------------------- |
 | Playfair Display (`next/font/google`)  | App-wide Didone serif typography                                             |
-| Next.js 16, React 19, Tailwind v4      | App shell                                                                    |
+| Next.js 16, React 19, Tailwind v4      | App shell (Node **24**)                                                      |
 | D3.js v7, Framer Motion                | Visualization                                                                |
 | simple-statistics                      | Descriptive stats / similarity / quant engine                                |
 | Verified JSON (`getVerifiedDataset()`) | Default data path; static import for Vercel serverless                       |
@@ -353,16 +376,20 @@ Playfair Display.
 | TensorFlow.js                          | Quarantined — devDependency for Vitest only                                  |
 | Deno (CI)                              | `deno fmt` and `deno lint` in GitHub Actions                                 |
 
-**CI Status:** `deno fmt`, `deno lint`, `eslint`, `vitest` (297 tests),
-`next build` + `tsc` all green on main (`c8f2361`).
+**CI:** `npm run lint` · `npm run typecheck` · `npm test` (Vitest) ·
+`npm run deno:fmt:check` · `npm run deno:lint` · `npm run validate:dataset` ·
+`npm run build:ci` (`LACUNA_DATA_MODE=static`).
 
 ---
 
 ## Quick Start
 
+Node **24** is required (see `.nvmrc`).
+
 ```bash
 git clone https://github.com/maekass/Lacuna.git
 cd Lacuna
+nvm use 24   # if the shell is not already on Node 24
 npm install
 npm run dev
 npm run validate:dataset
@@ -391,26 +418,34 @@ Manual verification — no synthetic `maDeals`. Workflow:
 [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md),
 `npm run validate:dataset`, optional `npm run sec:scan`.
 
+Promotion must not invent sector, HQ, or founded year —
+[DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md). When disclosed data is
+insufficient, the UI shows an empty state rather than PitchBook-style fallbacks.
+
 ---
 
 ## Documentation
 
-| Doc                                                                     | Purpose                                                     |
-| ----------------------------------------------------------------------- | ----------------------------------------------------------- |
-| [MODEL_CARD.md](docs/MODEL_CARD.md)                                     | **Start here** — what each score is and is not              |
-| [INFERENCE.md](docs/INFERENCE.md)                                       | Server-side LLM (AI Gateway)                                |
-| [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md)           | Schema, validation, staging                                 |
-| [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md) | Graph metrics, small-_n_                                    |
-| [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md)                         | Health impact scoring limits                                |
-| [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md)                             | CI, Vercel, Postgres, cron, `/api/health`                   |
-| [PERFORMANCE.md](docs/PERFORMANCE.md)                                   | Bundle, caching, probe split, fan-out limits                |
-| [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md)             | ClickHouse + object storage for large VCF catalogs          |
-| [MONITORING.md](docs/MONITORING.md)                                     | Uptime URL: `/api/health` only (not `/ready`)               |
-| [PRODUCTION_SETUP.md](docs/PRODUCTION_SETUP.md)                         | Vercel env vars and migrations                              |
-| [SEC_INGESTION.md](docs/SEC_INGESTION.md)                               | SEC EDGAR cron pipeline                                     |
-| [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md)                       | Vercel product vs Framer marketing (no analytics in Framer) |
-| [MARKETING_SURFACE_DECISION.md](docs/MARKETING_SURFACE_DECISION.md)     | Why Framer stays and Webflow was not adopted                |
-| [AGENTS.md](AGENTS.md)                                                  | Contributor conventions                                     |
+| Doc                                                                     | Purpose                                                      |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------ |
+| [MODEL_CARD.md](docs/MODEL_CARD.md)                                     | **Start here** — what each score is and is not               |
+| [HAZARD.md](docs/HAZARD.md)                                             | Descriptive Cox time-to-acquisition (not a forecast)         |
+| [LIMITATIONS.md](docs/LIMITATIONS.md)                                   | Live disclosed-value bounds pinned to `liveDisclosedStats()` |
+| [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md)                           | What may enter verified JSON vs staging vs enrichment        |
+| [INFERENCE.md](docs/INFERENCE.md)                                       | Server-side LLM (AI Gateway)                                 |
+| [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md)           | Schema, validation, staging                                  |
+| [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md) | Graph metrics, small-_n_                                     |
+| [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md)                         | Health impact scoring limits                                 |
+| [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md)                             | CI, Vercel, Postgres, cron, `/api/health`                    |
+| [PERFORMANCE.md](docs/PERFORMANCE.md)                                   | Bundle, caching, probe split, fan-out limits                 |
+| [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md)             | ClickHouse + object storage for large VCF catalogs           |
+| [MONITORING.md](docs/MONITORING.md)                                     | Uptime URL: `/api/health` only (not `/ready`)                |
+| [PRODUCTION_SETUP.md](docs/PRODUCTION_SETUP.md)                         | Vercel env vars and migrations                               |
+| [SEC_INGESTION.md](docs/SEC_INGESTION.md)                               | SEC EDGAR cron pipeline                                      |
+| [BIOPHARMA_DILIGENCE.md](docs/BIOPHARMA_DILIGENCE.md)                   | Statista-gated biopharma workbook (separate from M&A JSON)   |
+| [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md)                       | Vercel product vs Framer marketing (no analytics in Framer)  |
+| [MARKETING_SURFACE_DECISION.md](docs/MARKETING_SURFACE_DECISION.md)     | Why Framer stays and Webflow was not adopted                 |
+| [AGENTS.md](AGENTS.md)                                                  | Contributor conventions                                      |
 
 ---
 
