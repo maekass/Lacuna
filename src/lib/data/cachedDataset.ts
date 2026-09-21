@@ -1,20 +1,12 @@
-import process from "node:process";
-import { unstable_cache } from "next/cache";
-import { parseStaticVerifiedDatasetJson } from "./staticDataset";
-import staticVerifiedDataset from "@/data/dataset.verified.json";
+import { getStaticVerifiedDataset } from "./staticDataset";
 import type { VerifiedDataset } from "./datasetSchema";
 
-/** Cached static JSON — parse once, fail at build/cache-fill time on schema mismatch. */
+/**
+ * Static mode returns the verified JSON module. A content-less
+ * `unstable_cache` key previously reused a prior build's dataset from
+ * `.next` and served stale `lastUpdated` / deal fields on prerendered
+ * workspace pages.
+ */
 export function getCachedStaticVerifiedDataset(): Promise<VerifiedDataset> {
-  if (process.env.NODE_ENV === "test") {
-    return Promise.resolve(
-      parseStaticVerifiedDatasetJson(staticVerifiedDataset),
-    );
-  }
-  return unstable_cache(
-    () =>
-      Promise.resolve(parseStaticVerifiedDatasetJson(staticVerifiedDataset)),
-    ["lacuna-verified-dataset-static"],
-    { revalidate: 86_400, tags: ["verified-dataset"] },
-  )();
+  return Promise.resolve(getStaticVerifiedDataset());
 }

@@ -9,8 +9,13 @@ Compared against `src/data/computed-dataset-summary.json`:
 | Field           | Baseline value |
 | --------------- | -------------- |
 | Verified deals  | 59             |
-| Last updated    | 2026-09-05     |
-| Dataset version | v7             |
+| Last updated    | 2026-09-20     |
+| Dataset version | v8             |
+
+2026-09-20 — Teladoc/Livongo (`deal1`) announcement corrected to 2020-08-05
+(Teladoc 8-K + IR). Close stays 2020-10-30. Hologic/Biotheranostics (`deal7`)
+acquisition `source` now includes the 8-K so dual-source is not inferred from
+`preDealValuationSource`. No new deals.
 
 2026-09-05 — pre-deal valuation as-of backfill: impossible mark dates reset to
 the announced year, year-only sources forced to `YYYY-01-01` +
