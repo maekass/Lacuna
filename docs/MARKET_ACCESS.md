@@ -2,10 +2,10 @@
 
 **Status:** analytical workbench; no seeded country outputs.
 
-This module extends Lacuna from investment diligence into transparent market-access
-analysis. It is intentionally separate from `dataset.verified.json`: an LMIC
-case is not an M&A record, and market-access assumptions must never alter the
-verified deal dataset.
+This module extends Lacuna from investment diligence into transparent
+market-access analysis. It is intentionally separate from
+`dataset.verified.json`: an LMIC case is not an M&A record, and market-access
+assumptions must never alter the verified deal dataset.
 
 ## Analytical chain
 
@@ -43,8 +43,8 @@ be one of:
 - **assumption** — reviewer-owned analytical assumption with rationale, review
   date, and supporting evidence.
 
-Rate fields are stored from 0 to 1. Currency fields are nominal USD unless a case
-explicitly documents another transformation upstream.
+Rate fields are stored from 0 to 1. Currency fields are nominal USD unless a
+case explicitly documents another transformation upstream.
 
 ## Maternal-anemia template
 

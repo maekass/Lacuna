@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const isoDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+const isoDateSchema = z.iso.date();
 
 export const marketAccessSourceSchema = z.object({
   url: z.url(),
@@ -118,6 +118,13 @@ export const marketAccessCaseSchema = z.object({
       code: z.ZodIssueCode.custom,
       path: ["baseline", "mechanism"],
       message: "Baseline intervention must use status_quo",
+    });
+  }
+  if (value.baseline.targetUptake.value !== value.burden.currentUptake.value) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["baseline", "targetUptake", "value"],
+      message: "Baseline targetUptake must equal burden.currentUptake",
     });
   }
 });

@@ -47,6 +47,13 @@ function assertRate(name: string, value: number): void {
   }
 }
 
+function assertFiniteResult(name: string, value: number): number {
+  if (!Number.isFinite(value)) {
+    throw new Error(`${name} overflowed to a non-finite number`);
+  }
+  return value;
+}
+
 export function calculateDemandFunnel(inputs: DemandInputs): DemandFunnel {
   assertFiniteNonNegative("targetPopulation", inputs.targetPopulation);
   assertRate("prevalence", inputs.prevalence);
@@ -74,11 +81,16 @@ export function annualBudget(
   treatedPatients: number,
   scenario: Pick<
     InterventionInputs,
-    "unitCommodityCostUsd" | "deliveryCostPerPatientUsd" | "fixedImplementationCostUsd"
+    | "unitCommodityCostUsd"
+    | "deliveryCostPerPatientUsd"
+    | "fixedImplementationCostUsd"
   >,
 ): number {
   assertFiniteNonNegative("treatedPatients", treatedPatients);
-  assertFiniteNonNegative("unitCommodityCostUsd", scenario.unitCommodityCostUsd);
+  assertFiniteNonNegative(
+    "unitCommodityCostUsd",
+    scenario.unitCommodityCostUsd,
+  );
   assertFiniteNonNegative(
     "deliveryCostPerPatientUsd",
     scenario.deliveryCostPerPatientUsd,
@@ -88,10 +100,11 @@ export function annualBudget(
     scenario.fixedImplementationCostUsd,
   );
 
-  return (
+  return assertFiniteResult(
+    "annualBudget",
     treatedPatients *
-      (scenario.unitCommodityCostUsd + scenario.deliveryCostPerPatientUsd) +
-    scenario.fixedImplementationCostUsd
+        (scenario.unitCommodityCostUsd + scenario.deliveryCostPerPatientUsd) +
+      scenario.fixedImplementationCostUsd,
   );
 }
 
@@ -104,16 +117,25 @@ export function compareIntervention(
 
   assertRate("baseline.targetUptake", baseline.targetUptake);
   assertRate("intervention.targetUptake", intervention.targetUptake);
+  if (baseline.targetUptake !== demand.currentUptake) {
+    throw new Error(
+      "baseline.targetUptake must equal demand.currentUptake; the status quo has one uptake",
+    );
+  }
 
-  const baselineTreated = funnel.eligiblePopulation * baseline.targetUptake;
+  const baselineTreated = funnel.currentTreatedPatients;
   const treatedPatients = funnel.eligiblePopulation * intervention.targetUptake;
   const incrementalPatientsReached = treatedPatients - baselineTreated;
 
   const baselineBudget = annualBudget(baselineTreated, baseline);
-  const commodityCostUsd =
-    treatedPatients * intervention.unitCommodityCostUsd;
-  const deliveryCostUsd =
-    treatedPatients * intervention.deliveryCostPerPatientUsd;
+  const commodityCostUsd = assertFiniteResult(
+    "commodityCostUsd",
+    treatedPatients * intervention.unitCommodityCostUsd,
+  );
+  const deliveryCostUsd = assertFiniteResult(
+    "deliveryCostUsd",
+    treatedPatients * intervention.deliveryCostPerPatientUsd,
+  );
   const totalAnnualBudgetUsd = annualBudget(treatedPatients, intervention);
   const incrementalBudgetUsd = totalAnnualBudgetUsd - baselineBudget;
 
@@ -125,10 +147,9 @@ export function compareIntervention(
     deliveryCostUsd,
     totalAnnualBudgetUsd,
     incrementalBudgetUsd,
-    incrementalCostPerAdditionalPatientUsd:
-      incrementalPatientsReached > 0
-        ? incrementalBudgetUsd / incrementalPatientsReached
-        : null,
+    incrementalCostPerAdditionalPatientUsd: incrementalPatientsReached > 0
+      ? incrementalBudgetUsd / incrementalPatientsReached
+      : null,
   };
 }
 
@@ -138,9 +159,7 @@ export function rankFrontier(
   interventions: InterventionInputs[],
 ): InterventionResult[] {
   return interventions
-    .map((intervention) =>
-      compareIntervention(demand, baseline, intervention)
-    )
+    .map((intervention) => compareIntervention(demand, baseline, intervention))
     .sort((a, b) => {
       if (a.incrementalPatientsReached !== b.incrementalPatientsReached) {
         return b.incrementalPatientsReached - a.incrementalPatientsReached;
