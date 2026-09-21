@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-09-20T00:00:00.000Z",
-  "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+  "datasetHash": "44a83d570e26430e01da14b58db279e9a1bbf1c4e61e4406be9f571815477b91",
   "datasetVersion": "v8",
   "source": "Lacuna measurement-layer census (quality scores, gated metrics, vintage, display provenance)",
   "quality": {
@@ -18,13 +18,13 @@
     "acquisitions": {
       "total": 59,
       "grades": {
-        "A": 21,
-        "B": 25,
-        "C": 12,
+        "A": 29,
+        "B": 20,
+        "C": 9,
         "D": 0,
         "F": 1
       },
-      "avgScore": 83.4
+      "avgScore": 86.7
     },
     "grading": {
       "A": "90-100: SEC filing or equivalent primary source, all fields populated",
@@ -521,11 +521,11 @@
     "reproducible": 47
   },
   "displayProvenance": {
-    "total": 1017,
-    "covered": 20,
+    "total": 1012,
+    "covered": 21,
     "exempt": 2,
-    "uncovered": 995,
-    "uncoveredRate": 0.9783677482792527,
+    "uncovered": 989,
+    "uncoveredRate": 0.9772727272727273,
     "topUncoveredFiles": [
       {
         "file": "src/components/NetworkAnalysisHonest.tsx",

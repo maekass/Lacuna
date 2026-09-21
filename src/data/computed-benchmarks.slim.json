@@ -1,7 +1,7 @@
 {
   "generatedAt": "2026-09-20T00:00:00.000Z",
   "datasetVersion": "v8",
-  "datasetHash": "f3e67d00ac5f6e9c77bd8237c227019991705c6e1334be707870f4645783e7ee",
+  "datasetHash": "44a83d570e26430e01da14b58db279e9a1bbf1c4e61e4406be9f571815477b91",
   "metrics": [
     {
       "metricId": "sector.moic.median",
@@ -564,7 +564,7 @@
     },
     {
       "metricId": "sector.moic.median",
-      "scope": "Diagnostic",
+      "scope": "Diagnostic (portfolio)",
       "label": "sector.moic.median",
       "definition": "sector.moic.median",
       "unit": "x",
@@ -573,7 +573,7 @@
     },
     {
       "metricId": "sector.moic.p25",
-      "scope": "Diagnostic",
+      "scope": "Diagnostic (portfolio)",
       "label": "sector.moic.p25",
       "definition": "sector.moic.p25",
       "unit": "x",
@@ -582,7 +582,7 @@
     },
     {
       "metricId": "sector.moic.p75",
-      "scope": "Diagnostic",
+      "scope": "Diagnostic (portfolio)",
       "label": "sector.moic.p75",
       "definition": "sector.moic.p75",
       "unit": "x",

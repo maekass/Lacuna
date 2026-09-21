@@ -6,6 +6,7 @@
  */
 
 import computedCmsUtilization from "@/data/computed-cms-utilization.json";
+import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
 
 export type CmsUtilizationSource = "cpt" | "sector" | "withheld";
 
@@ -37,6 +38,7 @@ interface ComputedCmsUtilizationFile {
   source?: string;
   intendedSource?: string;
   generatedAt?: string;
+  evidenceStatus?: string;
   sectors: SectorUtilizationRow[];
   utilizationByCptCode: CptUtilizationRow[];
 }
@@ -45,6 +47,8 @@ export interface CmsUtilizationProvenance {
   readonly source: string;
   readonly intendedSource: string | null;
   readonly generatedAt: string | null;
+  readonly evidenceStatus: string | null;
+  readonly withheld: boolean;
   readonly allHardcodedFallback: boolean;
   readonly fallbackRowCount: number;
   readonly rowCount: number;
@@ -179,18 +183,23 @@ export function getSectorAvgServicesPerCode(sector: string): number | null {
 }
 
 /**
- * Artifact-level provenance. All current CPT rows are in-repo fallback
- * constants — callers must disclose that, not label the file as a CMS pull.
+ * Artifact-level provenance. Fallback rows and withheld-empty files must be
+ * disclosed — never labeled as a live CMS pull.
  */
 export function getCmsUtilizationProvenance(): CmsUtilizationProvenance {
   const raw = computedCmsUtilization as ComputedCmsUtilizationFile;
   const rows = raw.utilizationByCptCode ?? [];
   const fallbackRowCount =
     rows.filter((row) => row.provenanceKind === "hardcoded_fallback").length;
+  const evidenceStatus = raw.evidenceStatus ?? null;
+  const withheld = (evidenceStatus ?? "").startsWith("withheld") ||
+    rows.length === 0;
   return {
     source: raw.source ?? "",
     intendedSource: raw.intendedSource ?? null,
     generatedAt: raw.generatedAt ?? null,
+    evidenceStatus,
+    withheld,
     allHardcodedFallback: rows.length > 0 && fallbackRowCount === rows.length,
     fallbackRowCount,
     rowCount: rows.length,
@@ -201,3 +210,20 @@ export function getCmsUtilizationProvenance(): CmsUtilizationProvenance {
 export function isCmsUtilizationHardcodedFallback(): boolean {
   return getCmsUtilizationProvenance().fallbackRowCount > 0;
 }
+
+const CMS_UTILIZATION_MODULE = "src/lib/data/cmsUtilizationProvider.ts";
+
+/** Hover provenance for CMS utilization disclosure counts. */
+export const CMS_UTILIZATION_MODELS = {
+  fallbackRowCount: {
+    module: CMS_UTILIZATION_MODULE,
+    exportName: "getCmsUtilizationProvenance",
+    definition:
+      "Count of in-repo hardcoded CMS utilization CPT rows — not a data.cms.gov PUF pull.",
+  },
+  rowCount: {
+    module: CMS_UTILIZATION_MODULE,
+    exportName: "getCmsUtilizationProvenance",
+    definition: "Total CPT rows in computed-cms-utilization.json.",
+  },
+} as const satisfies Record<string, ModelProvenance>;
