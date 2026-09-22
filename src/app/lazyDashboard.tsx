@@ -193,8 +193,8 @@ export const CompetitiveAnalysisDashboard = dynamic(
     loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },
 );
-export const CausalInferenceEngine = dynamic(
-  () => import("@/components/CausalInferenceEngine"),
+export const ObservedSectorComposition = dynamic(
+  () => import("@/components/ObservedSectorComposition"),
   {
     loading: sectionFallback("h-80 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },

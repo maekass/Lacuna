@@ -1,6 +1,9 @@
 "use client";
 
-import { CausalInferenceEngine, TemporalValidation } from "@/app/lazyDashboard";
+import {
+  ObservedSectorComposition,
+  TemporalValidation,
+} from "@/app/lazyDashboard";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import DatasetCoverageFootnote from "@/components/DatasetCoverageFootnote";
@@ -55,9 +58,9 @@ export default function MethodsPage(
       <MotionSection id="observed-patterns" className={SECTION}>
         <SectionHeader
           title="Observed sector composition"
-          description="Counts of companies and verified deals by sector. Shares describe this curated set; they are not acquisition probabilities or causal effects."
+          description="Counts of companies and verified deals by sector. Shares describe this curated set."
         />
-        <CausalInferenceEngine />
+        <ObservedSectorComposition />
       </MotionSection>
 
       <MotionSection id="temporal" delay={0.05} className={SECTION}>

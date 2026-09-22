@@ -218,8 +218,8 @@ export default function DealsPage() {
 
       <MotionSection id="survival-analysis" delay={0.30} className={SECTION}>
         <SectionHeader
-          title="Time-to-Acquisition Survival Analysis"
-          description="Kaplan-Meier estimates of how long companies in each sector remain independent — with log-rank test and Greenwood confidence bands."
+          title="Time from founding to announcement"
+          description="Descriptive Kaplan-Meier curves on verified founding years and announcement dates in this curated set. No hypothesis test is published."
         />
         <SurvivalCurve />
       </MotionSection>

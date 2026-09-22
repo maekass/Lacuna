@@ -172,12 +172,12 @@ export default function ClinicalTrialTracker() {
           </h3>
           <ModelProvenanceHint model={CLINICAL_TRIALS_ML_MODEL}>
             <p className="text-sm text-lacuna-blue cursor-help">
-              Live data from ClinicalTrials.gov
+              Live ClinicalTrials.gov registry fields
               {areClinicalTrialMlScoresReleased()
-                ? ` · WH relevance${
-                  isCompletionProxyAvailable() ? " + completion proxy" : ""
-                } (${getClinicalTrialsTrainingSource()})`
-                : " · registry fields only; model scores are not published"}
+                ? ` · model scores from ${getClinicalTrialsTrainingSource()}${
+                  isCompletionProxyAvailable() ? " (completion proxy on)" : ""
+                }`
+                : ". Model scores are not published."}
             </p>
           </ModelProvenanceHint>
         </div>

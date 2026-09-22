@@ -21,15 +21,17 @@ local dev only.
   trial-phase success (`TrialFeatures` → `successProbability`), never fitted,
   and already superseded by `ml/clinical_trials/`.
 - **Public methods UI** — `/methods` shows record-quality grades, sector counts,
-  and announcement-year counts from the verified dataset. The illustrative
-  causal DAG, Bayesian small-n dashboard, and sensitivity sliders are not
-  mounted. Library helpers under `src/lib/causal/` are not a published result.
+  and announcement-year counts from the verified dataset. Causal DAGs, Bayesian
+  small-n dashboards, and sensitivity sliders are not mounted. Library helpers
+  under `src/lib/causal/` are not a published result. The deals page does not
+  publish a log-rank test on time-to-announcement curves.
 
 ## Clinical-trial scores
 
-Offline sklearn artifacts may exist for CI. While `trainingSource` in
-`src/data/ml/clinical-trials/model-card.json` is `synthetic_seed`, the public
-trial tracker and ML panel do not render model percentages. Live
+Offline sklearn artifacts may exist for CI. `publishMetrics` is false and
+`trainingSource` is `synthetic_seed`. The public trial tracker withholds model
+percentages unless `areClinicalTrialMlScoresReleased()` is true, and the
+research note does not render hold-out ROC-AUC, accuracy, or training size. Live
 ClinicalTrials.gov fields (phase, status, enrollment, sponsor) stay.
 
 ## Environment

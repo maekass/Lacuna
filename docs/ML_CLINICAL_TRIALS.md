@@ -25,7 +25,8 @@ predictors.
   accuracy > majority-class baseline **and** Brier < base-rate Brier. The
   committed seed artifact fails the conjunction (accuracy 0.568 ≤ majority
   0.614) — it was exported under the former AUC-only gate. UI still withholds
-  percentages while `trainingSource` is `synthetic_seed`.
+  percentages while `publishMetrics` is false or `trainingSource` is
+  `synthetic_seed`.
 - **UI:** Complete % badge only when scores are released; metrics panel on
   Research page
 

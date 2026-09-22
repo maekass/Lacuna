@@ -1,6 +1,6 @@
 /**
- * Descriptive acquisition patterns from the verified dataset.
- * Panel-style causal models require longitudinal data not present in this release.
+ * Sector counts from the verified dataset.
+ * Shares describe this curated set only.
  */
 
 "use client";
@@ -17,7 +17,7 @@ interface SectorRow {
   rate: number;
 }
 
-export default function CausalInferenceEngine() {
+export default function ObservedSectorComposition() {
   const { verifiedAcquisitions, verifiedCompanies } = useVerifiedDataset();
   const sectorRows = useMemo((): SectorRow[] => {
     const acquiredIds = new Set(verifiedAcquisitions.map((d) => d.targetId));
@@ -56,8 +56,8 @@ export default function CausalInferenceEngine() {
         <p className="text-sm text-lacuna-blue mt-1">
           Counts from {totalDeals}{" "}
           verified transactions in this curated set. A company counted “in
-          verified deals” appears as a target in the public dataset. This is not
-          an acquisition rate for the market and not a causal effect.
+          verified deals” appears as a target in the public dataset. The share
+          is that count divided by companies in the same sector inside this set.
         </p>
       </div>
 
@@ -68,7 +68,7 @@ export default function CausalInferenceEngine() {
               <th className="text-left p-3 font-medium">Sector</th>
               <th className="text-right p-3 font-medium">Companies</th>
               <th className="text-right p-3 font-medium">In verified deals</th>
-              <th className="text-right p-3 font-medium">Share</th>
+              <th className="text-right p-3 font-medium">Share of set</th>
             </tr>
           </thead>
           <tbody>
