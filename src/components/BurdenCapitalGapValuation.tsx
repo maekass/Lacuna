@@ -18,8 +18,7 @@ import {
   type ValuationInputs,
 } from "@/lib/valuation/burdenCapitalGap";
 import { reportWarning } from "@/lib/observability/reportError";
-import { EvidenceContextCard } from "@/components/research/EvidenceContextCard";
-import { BURDEN_CAPITAL_OPPORTUNITY_DISCLOSURE } from "@/lib/research/evidenceBoundaries";
+import { BurdenCapitalOpportunityNote } from "@/components/research/BurdenCapitalOpportunityNote";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
@@ -234,29 +233,7 @@ export default function BurdenCapitalGapValuation() {
         <h3 className="mb-1 text-sm font-semibold text-lacuna-plum">
           Burden–Capital Opportunity Context
         </h3>
-        <p
-          className="mb-3 text-xs leading-relaxed text-lacuna-blue/80"
-          role="note"
-        >
-          {BURDEN_CAPITAL_OPPORTUNITY_DISCLOSURE}
-        </p>
-        <div className="mb-4">
-          <EvidenceContextCard
-            source="World Economic Forum and Boston Consulting Group"
-            title="Women's Health Investment Outlook 2026"
-            publishedDate="2026"
-            scope="women's-health funding and burden context"
-            sourceType="cited external research report"
-            lacunaUse="descriptive research context"
-            prohibitedUses={[
-              "enterprise valuation",
-              "return forecasts",
-              "predictive model inputs",
-            ]}
-            methodologyNote="Population burden and historical funding context already cited on this panel. Dollar output remains the verified-dataset stage funding median. This card records supplied use limits; it does not add verification beyond those citations."
-            sourceUrl="https://reports.weforum.org/docs/WEF_Womens_Health_Investment_Outlook_2026.pdf"
-          />
-        </div>
+        <BurdenCapitalOpportunityNote methodologyNote="Population burden and historical funding context already cited on this panel. Dollar output remains the verified-dataset stage funding median. This card records supplied use limits; it does not add verification beyond those citations." />
         <p className="mb-4 text-xs text-lacuna-blue/80">
           Each bar shows how underfunded a disease area is relative to its
           societal burden (DALYs<CitationMarkers ids={["gbd2021"]} />,

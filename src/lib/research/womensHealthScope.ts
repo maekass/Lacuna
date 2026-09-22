@@ -23,13 +23,14 @@ export interface WomensHealthSourceMetadata {
 
 /**
  * Citation metadata for the relevance vocabulary.
- * `url` stays null until a public link is stored; the local placeholder is
- * not a claim that the report was re-verified in this repository.
+ * The URL is WHAM's January 2026 release page. The local slug is a repo
+ * identifier, not a second verification claim.
  */
 export const WHAM_BUSINESS_CASE_SOURCE: WomensHealthSourceMetadata = {
   label:
     "WHAM, The Business Case for Accelerating Women's Health Investment, January 2026",
-  url: null,
+  url:
+    "https://whamnow.org/news/the-wham-report-womens-health-as-a-catalyst-for-sustainable-healthcare-growth/",
   localSourceMetadata: "local-source:wham-business-case-january-2026",
 };
 

@@ -27,8 +27,7 @@ import {
   formatModelProvenanceLine,
   modelSourceHref,
 } from "@/lib/provenance/modelProvenance";
-import { EvidenceContextCard } from "@/components/research/EvidenceContextCard";
-import { BURDEN_CAPITAL_OPPORTUNITY_DISCLOSURE } from "@/lib/research/evidenceBoundaries";
+import { BurdenCapitalOpportunityNote } from "@/components/research/BurdenCapitalOpportunityNote";
 
 const MARGIN = { top: 28, right: 108, bottom: 52, left: 196 };
 const ROW_HEIGHT = 30;
@@ -261,32 +260,10 @@ export default function BurdenCapitalGap() {
             raised, against the leading cause of death in women — a
             misclassification Lacuna exists to correct.
           </p>
-          <p
-            className="mt-2 text-xs leading-relaxed text-lacuna-blue/80"
-            role="note"
-          >
-            {BURDEN_CAPITAL_OPPORTUNITY_DISCLOSURE}
-          </p>
         </div>
       </ModelProvenanceHint>
 
-      <div className="mb-4">
-        <EvidenceContextCard
-          source="World Economic Forum and Boston Consulting Group"
-          title="Women's Health Investment Outlook 2026"
-          publishedDate="2026"
-          scope="women's-health funding and burden context"
-          sourceType="cited external research report"
-          lacunaUse="descriptive research context"
-          prohibitedUses={[
-            "enterprise valuation",
-            "return forecasts",
-            "predictive model inputs",
-          ]}
-          methodologyNote="Figure 3 funding-event and capital context for 2020–2025, as already cited on this panel. Burden columns stay pending where DALY data is not ingested. This card records supplied use limits; it does not add verification beyond that citation."
-          sourceUrl="https://reports.weforum.org/docs/WEF_Womens_Health_Investment_Outlook_2026.pdf"
-        />
-      </div>
+      <BurdenCapitalOpportunityNote methodologyNote="Figure 3 funding-event and capital context for 2020–2025, as already cited on this panel. Burden columns stay pending where DALY data is not ingested. This card records supplied use limits; it does not add verification beyond that citation." />
 
       <div className="relative w-full overflow-x-auto">
         <svg

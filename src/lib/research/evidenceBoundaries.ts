@@ -19,7 +19,13 @@ export const COMPLEMENTARY_SOURCE_UNIVERSE_NOTE =
 export const DIAGNOSTICS_TOOLS_SECTOR_CONTEXT =
   "Diagnostics and tools can address high-value clinical gaps, but reimbursement, adoption, clinical utility, and commercialization evidence remain key diligence considerations.";
 
-/** Shared SVB H2 2026 citation fields. No URL is stored in this repo. */
+/**
+ * SVB sector-context fields.
+ * The required report title stays H2 2026 with a June 30, 2026 cutoff.
+ * The public Healthcare Investments and Exits landing page currently
+ * published is the H1 2026 edition; State of the Markets H2 2026 is the
+ * page that documents the June 30, 2026 cutoff.
+ */
 export const SVB_H2_2026_SOURCE = {
   source: "SVB",
   title: "Healthcare Investments and Exits H2 2026",
@@ -28,6 +34,30 @@ export const SVB_H2_2026_SOURCE = {
   scope:
     "current sector-level healthcare funding and exit context, time-bound to H1 2026 data",
   sourceType: "cited sector report",
+  sourceUrl:
+    "https://www.svb.com/trends-insights/reports/healthcare-investments-and-exits/h1-2026/",
+} as const;
+
+export const SVB_STATE_OF_THE_MARKETS_H2_2026_URL =
+  "https://www.svb.com/trends-insights/reports/state-of-the-markets-report/";
+
+export const SVB_H2_2026_METHODOLOGY_NOTE =
+  "The public SVB Healthcare Investments and Exits landing page currently published is the H1 2026 edition. The June 30, 2026 data cutoff is documented on SVB's State of the Markets H2 2026 page. Those pages are complementary SVB context, not interchangeable counts or coverage universes.";
+
+export const WEF_BCG_SOURCE = {
+  source: "World Economic Forum and Boston Consulting Group",
+  title: "Women's Health Investment Outlook 2026",
+  publishedDate: "2026",
+  scope: "women's-health funding and burden context",
+  sourceType: "cited external research report",
+  lacunaUse: "descriptive research context",
+  prohibitedUses: [
+    "enterprise valuation",
+    "return forecasts",
+    "predictive model inputs",
+  ],
+  sourceUrl:
+    "https://reports.weforum.org/docs/WEF_Womens_Health_Investment_Outlook_2026.pdf",
 } as const;
 
 export const AOA_DX_EXITS_SOURCE = {

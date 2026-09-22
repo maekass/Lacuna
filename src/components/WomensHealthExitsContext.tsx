@@ -18,6 +18,7 @@ import {
   AOA_DX_EXITS_SOURCE,
   COMPLEMENTARY_SOURCE_UNIVERSE_NOTE,
   LACUNA_CURATED_SAMPLE_SOURCE,
+  SVB_H2_2026_METHODOLOGY_NOTE,
   SVB_H2_2026_SOURCE,
 } from "@/lib/research/evidenceBoundaries";
 
@@ -101,7 +102,7 @@ export default function WomensHealthExitsContext() {
           prohibitedUses={[
             "direct count, value, return, or coverage comparisons with AOA Dx or Lacuna",
           ]}
-          methodologyNote="Report title is H2 2026. The data cutoff supplied for this card is June 30, 2026, so the figures are time-bound to H1 2026. No public URL is stored for this report in Lacuna."
+          methodologyNote={SVB_H2_2026_METHODOLOGY_NOTE}
         />
         <EvidenceContextCard
           {...LACUNA_CURATED_SAMPLE_SOURCE}

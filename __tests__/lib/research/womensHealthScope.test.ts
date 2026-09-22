@@ -4,6 +4,8 @@ import {
   COMPLEMENTARY_SOURCE_UNIVERSE_NOTE,
   DETERMINISTIC_COMPARISON_BOUNDARY,
   DIAGNOSTICS_TOOLS_SECTOR_CONTEXT,
+  SVB_H2_2026_SOURCE,
+  SVB_STATE_OF_THE_MARKETS_H2_2026_URL,
 } from "@/lib/research/evidenceBoundaries";
 import { LACUNA_SAMPLE_BOUNDARY_NOTE } from "@/lib/data/lacunaDataset";
 import {
@@ -38,7 +40,8 @@ describe("womensHealthScope", () => {
       const meta = getWomensHealthRelevanceMeta(relevance);
       expect(meta.shortDefinition).toBe(DEFINITIONS[relevance]);
       expect(meta.sourceLabel).toBe(WHAM_BUSINESS_CASE_SOURCE.label);
-      expect(meta.sourceUrl).toBeNull();
+      expect(meta.sourceUrl).toBe(WHAM_BUSINESS_CASE_SOURCE.url);
+      expect(meta.sourceUrl).toContain("whamnow.org");
       expect(meta.localSourceMetadata).toBe(
         WHAM_BUSINESS_CASE_SOURCE.localSourceMetadata,
       );
@@ -62,6 +65,12 @@ describe("womensHealthScope", () => {
     );
     expect(LACUNA_SAMPLE_BOUNDARY_NOTE).toBe(
       "Lacuna is a curated public-source sample, not a census of women's-health M&A. Coverage varies by sector, geography, disclosure availability, and women's-health scope. Undisclosed transaction values are excluded from disclosed-value totals.",
+    );
+    expect(SVB_H2_2026_SOURCE.sourceUrl).toContain(
+      "healthcare-investments-and-exits",
+    );
+    expect(SVB_STATE_OF_THE_MARKETS_H2_2026_URL).toContain(
+      "state-of-the-markets-report",
     );
   });
 });

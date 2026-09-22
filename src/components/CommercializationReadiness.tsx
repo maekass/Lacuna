@@ -8,6 +8,7 @@ import { EvidenceContextCard } from "@/components/research/EvidenceContextCard";
 import HeuristicTierBadge from "@/components/research/HeuristicTierBadge";
 import {
   DIAGNOSTICS_TOOLS_SECTOR_CONTEXT,
+  SVB_H2_2026_METHODOLOGY_NOTE,
   SVB_H2_2026_SOURCE,
 } from "@/lib/research/evidenceBoundaries";
 import Card from "@/components/ui/Card";
@@ -161,7 +162,7 @@ export default function CommercializationReadiness() {
                   "investment recommendations",
                   "clinical guidance",
                 ]}
-                methodologyNote="Sector-level healthcare funding and exit context only. The report title is H2 2026 and the supplied data cutoff is June 30, 2026. It does not score the companies listed below."
+                methodologyNote={`${SVB_H2_2026_METHODOLOGY_NOTE} It does not score the companies listed below.`}
               />
             </div>
           </div>

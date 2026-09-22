@@ -26,8 +26,7 @@ function ContextField({
   if (!value) return null;
   return (
     <p>
-      <span className="font-medium text-lacuna-plum">{label}:</span>
-      {value}
+      <span className="font-medium text-lacuna-plum">{label}:</span> {value}
     </p>
   );
 }
