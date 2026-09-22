@@ -521,11 +521,11 @@
     "reproducible": 47
   },
   "displayProvenance": {
-    "total": 1002,
+    "total": 930,
     "covered": 21,
     "exempt": 2,
-    "uncovered": 979,
-    "uncoveredRate": 0.9770459081836327,
+    "uncovered": 907,
+    "uncoveredRate": 0.975268817204301,
     "topUncoveredFiles": [
       {
         "file": "src/components/NetworkAnalysisHonest.tsx",
@@ -556,7 +556,7 @@
         "count": 33
       },
       {
-        "file": "src/components/BayesianCausalAnalysis.tsx",
+        "file": "src/components/GenderInferenceQuality.tsx",
         "count": 26
       }
     ]

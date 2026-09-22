@@ -9,7 +9,7 @@
  *   the dataset reference date (2026).
  *
  * Stratified by sector (top 4 by acquisition count).
- * Log-rank test p-value reported with BH correction noted.
+ * Curves describe this curated set. No log-rank test is shown.
  */
 
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -17,7 +17,6 @@ import * as d3 from "d3";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { type KMResult, stratifiedKM } from "@/lib/stats/survival";
-import { benjaminiHochberg } from "@/lib/stats/fdr";
 
 const REFERENCE_YEAR = 2026;
 const MAX_GROUPS = 4;
@@ -29,18 +28,12 @@ const PALETTE = [
   "#10b981", // emerald-500
 ];
 
-function pLabel(p: number): string {
-  if (p < 0.001) return "p < 0.001";
-  if (p < 0.01) return `p = ${p.toFixed(3)}`;
-  return `p = ${p.toFixed(2)}`;
-}
-
 export default function SurvivalCurve() {
   const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
   const svgRef = useRef<SVGSVGElement>(null);
   const [hoveredGroup, setHoveredGroup] = useState<string | null>(null);
 
-  const { kmResults, logRank, topGroups } = useMemo(() => {
+  const { kmResults } = useMemo(() => {
     // Build acquisition lookup: targetId → earliest acquisition year
     const acqYearByTarget = new Map<string, number>();
     for (const acq of verifiedAcquisitions) {
@@ -77,12 +70,12 @@ export default function SurvivalCurve() {
         return { time, event, group: c.sector };
       });
 
-    const { groups, logRank } = stratifiedKM(obs);
+    const { groups } = stratifiedKM(obs);
     // Sort groups to match topSectors order
     const sorted = topSectors.map((s) => groups.find((g) => g.group === s))
       .filter((g): g is KMResult => !!g);
 
-    return { kmResults: sorted, logRank, topGroups: topSectors };
+    return { kmResults: sorted };
   }, [verifiedCompanies, verifiedAcquisitions]);
 
   useEffect(() => {
@@ -242,24 +235,20 @@ export default function SurvivalCurve() {
   const totalN = kmResults.reduce((s, r) => s + r.n, 0);
   const totalEvents = kmResults.reduce((s, r) => s + r.nEvents, 0);
 
-  // BH-correct the log-rank p (single test here; shown for methodological transparency)
-  const logRankCorrected = logRank
-    ? benjaminiHochberg([{ label: "log-rank", pValue: logRank.pValue }])
-    : null;
-
   return (
     <div className="rounded-xl border border-lacuna-lavender/40 bg-white p-6 shadow-sm">
       <CuratedDatasetBanner className="mb-4" />
 
       <div className="mb-4">
         <h3 className="text-lg font-semibold text-lacuna-plum">
-          Time-to-Acquisition Survival Analysis
+          Time from founding to announcement
         </h3>
         <p className="mt-1 text-sm text-lacuna-blue">
-          Kaplan-Meier estimator · origin = founding year · event = acquisition
-          announcement · right-censored at {REFERENCE_YEAR}{" "}
-          for unacquired companies · Greenwood 95% CI bands · tick-marks =
-          censoring times
+          Kaplan-Meier curve on this curated set · origin = founding year ·
+          event = acquisition announcement · companies without an announcement
+          stay in the curve through{" "}
+          {REFERENCE_YEAR}. Shaded bands are Greenwood intervals for these rows.
+          Tick marks are companies still unacquired in the dataset.
         </p>
       </div>
 
@@ -365,40 +354,15 @@ export default function SurvivalCurve() {
               {km.group}
             </span>
             <span className="text-lacuna-blue/60 ml-1">
-              median {km.medianSurvival?.toFixed(1)}y
-              {km.medianCI
-                ? ` (95% CI ${km.medianCI[0].toFixed(1)}–${
-                  isFinite(km.medianCI[1]) ? km.medianCI[1].toFixed(1) : "NR"
-                })`
-                : ""}
+              median {km.medianSurvival?.toFixed(1)}y in this set
             </span>
           </div>
         ))}
-
-        {/* Log-rank */}
-        {logRank && (
-          <div className="text-lacuna-blue/60">
-            Log-rank χ²({logRank.df}) = {logRank.chiSquared.toFixed(2)},{" "}
-            <span
-              className={logRankCorrected?.[0].significant
-                ? "text-lacuna-plum font-medium"
-                : ""}
-            >
-              {pLabel(logRank.pValue)}
-            </span>
-            {logRankCorrected && (
-              <span className="ml-1">
-                (BH adj. p = {logRankCorrected[0].pAdjusted})
-              </span>
-            )}
-          </div>
-        )}
       </div>
 
       <p className="mt-3 text-[11px] text-lacuna-blue/40 leading-relaxed">
-        Interpretation caveat: n is small and sector stratification reduces
-        power further. Log-rank test has low power for early crossings.
-        Greenwood CIs assume independent censoring. Treat as exploratory.
+        These curves count verified companies with a known founding year. They
+        are not a sample of the market, and no hypothesis test is shown.
       </p>
     </div>
   );

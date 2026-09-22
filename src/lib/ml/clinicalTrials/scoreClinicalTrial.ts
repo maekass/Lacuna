@@ -69,7 +69,8 @@ const RELEASED_TRAINING_SOURCES = new Set(["ctgov_live", "ctgov_cached"]);
  * percentages in production UI until training is live ClinicalTrials.gov data.
  */
 export function areClinicalTrialMlScoresReleased(): boolean {
-  return RELEASED_TRAINING_SOURCES.has(getClinicalTrialsTrainingSource());
+  return modelCard.publishMetrics === true &&
+    RELEASED_TRAINING_SOURCES.has(getClinicalTrialsTrainingSource());
 }
 
 export function getWhRelevanceModelMetrics(): Readonly<Record<string, number>> {

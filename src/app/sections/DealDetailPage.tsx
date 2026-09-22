@@ -204,7 +204,7 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
             Verified deals network
           </Link>
           <Link
-            href="/methods#causal-dag"
+            href="/methods#data-quality"
             className="rounded-full border border-lacuna-lavender/50 px-3 py-1 text-xs font-medium text-lacuna-plum hover:bg-lacuna-lavender/20"
           >
             Methods &amp; limitations

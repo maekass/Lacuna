@@ -44,7 +44,7 @@ The product app runs on **Vercel** from this repository. A separate **Framer** s
 | Not a live institutional terminal | Default data is the committed file `src/data/dataset.verified.json` (dataset v9). It is a convenience sample with public citations, not PitchBook, a data SLA, or a census of women’s-health M&A. |
 | Not advice | The app does not provide investment advice, clinical guidance, treatment recommendations, or patient-specific interpretation. |
 | Scores stay descriptive | Exit Similarity Explorer and the comparables panel are hand-weighted indexes on this catalog. They are not predictions, probabilities, forecasts, calibrated models, enterprise valuations, or expected returns. Read [MODEL_CARD.md](docs/MODEL_CARD.md) before citing a number. |
-| No causal claims | Small-sample views on `/methods` document assumptions and sensitivity. They do not identify causal effects, treatment effects, or Bayesian causal estimates that can be acted on. |
+| No causal claims | `/methods` reports record quality, sector counts, and announcement timing. It does not identify causal effects, treatment effects, or Bayesian causal estimates. |
 | Trial models withheld | Offline clinical-trial classifiers exist in the repo. Percentages stay off the public UI while `trainingSource` is `synthetic_seed`. Live trial **search** (ClinicalTrials.gov) is separate and is not a model score. See [ML_CLINICAL_TRIALS.md](docs/ML_CLINICAL_TRIALS.md). |
 | No synthetic rows in the deal product | Public deal counts, networks, and disclosed-value totals come from the verified JSON. Staging, seed files, and illustrative heuristics are not merged into those figures. See [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md). |
 
@@ -60,7 +60,7 @@ When a field is missing, panels show insufficient disclosed data. They do not fi
 | Payer Ops | `/payer-ops` | Prior-authorization and claims-ops context plus venture signals computed from the verified catalog |
 | Research | `/research` | Trial search, evidence-maturity and burden context, health-equity markers, optional genetics browser. Heuristics here are labeled and do not feed deal economics |
 | Intelligence | `/intelligence` | Reimbursement questions, precedent maps, and dataset export. Fit scores are affinity, not premiums or comps |
-| Methods | `/methods` | Small-sample limits, temporal description, and sensitivity. Framing only — see the boundaries table |
+| Methods | `/methods` | Record-quality grades, observed sector composition, and announcement timing on the verified set. This page does not publish causal effects or Bayesian posteriors |
 
 Medicine and biotech is the default Deals scope (51 acquisitions). Consumer health is eight acquisitions in the same file. The catalog also carries fund-portfolio company records used as overlays, not as extra closed acquisitions.
 
@@ -95,6 +95,7 @@ Medicine and biotech is the default Deals scope (51 acquisitions). Consumer heal
 **Checks:** `npm run lint` · `npm run typecheck` · `npm test` · `npm run deno:fmt:check` · `npm run deno:lint` · `npm run validate:dataset` · `npm run build:ci` (`LACUNA_DATA_MODE=static`).
 
 ## Quick start
+
 
 ```bash
 git clone https://github.com/maekass/Lacuna.git
