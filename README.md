@@ -31,68 +31,101 @@ SEO Meta Description: Lacuna — public-source, evidence-aware women's-health M&
 
 ## What Lacuna is
 
-Lacuna is a **public-source, evidence-aware women’s-health M&A and commercialization diligence environment**. It helps a reader explore a curated set of acquisition records, strategic buyer patterns, evidence maturity, clinical-trial and research context, reimbursement and commercialization questions, and the limits of those sources.
+Lacuna is a **public-source, evidence-aware women’s-health M&A and
+commercialization diligence environment**. It helps a reader explore a curated
+set of acquisition records, strategic buyer patterns, evidence maturity,
+clinical-trial and research context, reimbursement and commercialization
+questions, and the limits of those sources.
 
-The product app runs on **Vercel** from this repository. A separate **Framer** site is brand and narrative only, with one call to action into the app — [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md).
+The product app runs on **Vercel** from this repository. A separate **Framer**
+site is brand and narrative only, with one call to action into the app —
+[SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md).
 
 **Live demo:** [lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app)
 
 ## Integrity boundaries
 
-| Boundary | What that means here |
-| --- | --- |
-| Not a live institutional terminal | Default data is the committed file `src/data/dataset.verified.json` (dataset v9). It is a convenience sample with public citations, not PitchBook, a data SLA, or a census of women’s-health M&A. |
-| Not advice | The app does not provide investment advice, clinical guidance, treatment recommendations, or patient-specific interpretation. |
-| Scores stay descriptive | Exit Similarity Explorer and the comparables panel are hand-weighted indexes on this catalog. They are not predictions, probabilities, forecasts, calibrated models, enterprise valuations, or expected returns. Read [MODEL_CARD.md](docs/MODEL_CARD.md) before citing a number. |
-| No causal claims | `/methods` reports record quality, sector counts, and announcement timing. It does not identify causal effects, treatment effects, or Bayesian causal estimates. |
-| Trial models withheld | Offline clinical-trial classifiers exist in the repo. Percentages stay off the public UI while `trainingSource` is `synthetic_seed`. Live trial **search** (ClinicalTrials.gov) is separate and is not a model score. See [ML_CLINICAL_TRIALS.md](docs/ML_CLINICAL_TRIALS.md). |
-| No synthetic rows in the deal product | Public deal counts, networks, and disclosed-value totals come from the verified JSON. Staging, seed files, and illustrative heuristics are not merged into those figures. See [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md). |
+| Boundary                              | What that means here                                                                                                                                                                                                                                                              |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Not a live institutional terminal     | Default data is the committed file `src/data/dataset.verified.json` (dataset v9). It is a convenience sample with public citations, not PitchBook, a data SLA, or a census of women’s-health M&A.                                                                                 |
+| Not advice                            | The app does not provide investment advice, clinical guidance, treatment recommendations, or patient-specific interpretation.                                                                                                                                                     |
+| Scores stay descriptive               | Exit Similarity Explorer and the comparables panel are hand-weighted indexes on this catalog. They are not predictions, probabilities, forecasts, calibrated models, enterprise valuations, or expected returns. Read [MODEL_CARD.md](docs/MODEL_CARD.md) before citing a number. |
+| No causal claims                      | `/methods` reports record quality, sector counts, and announcement timing. It does not identify causal effects, treatment effects, or Bayesian causal estimates.                                                                                                                  |
+| Trial models withheld                 | Offline clinical-trial classifiers exist in the repo. Percentages stay off the public UI while `trainingSource` is `synthetic_seed`. Live trial **search** (ClinicalTrials.gov) is separate and is not a model score. See [ML_CLINICAL_TRIALS.md](docs/ML_CLINICAL_TRIALS.md).    |
+| No synthetic rows in the deal product | Public deal counts, networks, and disclosed-value totals come from the verified JSON. Staging, seed files, and illustrative heuristics are not merged into those figures. See [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md).                                                      |
 
-When a field is missing, panels show insufficient disclosed data. They do not fill gaps with TAM/SAM, sector-multiple fallbacks, or editorial stage medians.
+When a field is missing, panels show insufficient disclosed data. They do not
+fill gaps with TAM/SAM, sector-multiple fallbacks, or editorial stage medians.
 
 ## What you can do in the app
 
-| Workspace | Route | Role |
-| --- | --- | --- |
-| Deals | `/deals` | Source-linked network, announced-year activity, disclosed-value matrix, acquirer patterns, comparable context, similarity bands |
-| Consumer health | `/consumer` | Same catalog, filtered to wearables, wellness apps, and consumer digital health |
-| Deal dossier | `/deals/[id]` | One verified transaction and its citations. Name-search trials, FDA, and CMS results are not attached unless a reviewer has keyed a public NCT or CPT citation |
-| Payer Ops | `/payer-ops` | Prior-authorization and claims-ops context plus venture signals computed from the verified catalog |
-| Research | `/research` | Trial search, evidence-maturity and burden context, health-equity markers, optional genetics browser. Heuristics here are labeled and do not feed deal economics |
-| Intelligence | `/intelligence` | Reimbursement questions, precedent maps, and dataset export. Fit scores are affinity, not premiums or comps |
-| Methods | `/methods` | Record-quality grades, observed sector composition, and announcement timing on the verified set. This page does not publish causal effects or Bayesian posteriors |
+| Workspace       | Route           | Role                                                                                                                                                              |
+| --------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Deals           | `/deals`        | Source-linked network, announced-year activity, disclosed-value matrix, acquirer patterns, comparable context, similarity bands                                   |
+| Consumer health | `/consumer`     | Same catalog, filtered to wearables, wellness apps, and consumer digital health                                                                                   |
+| Deal dossier    | `/deals/[id]`   | One verified transaction and its citations. Name-search trials, FDA, and CMS results are not attached unless a reviewer has keyed a public NCT or CPT citation    |
+| Payer Ops       | `/payer-ops`    | Prior-authorization and claims-ops context plus venture signals computed from the verified catalog                                                                |
+| Research        | `/research`     | Trial search, evidence-maturity and burden context, health-equity markers, optional genetics browser. Heuristics here are labeled and do not feed deal economics  |
+| Intelligence    | `/intelligence` | Reimbursement questions, precedent maps, and dataset export. Fit scores are affinity, not premiums or comps                                                       |
+| Methods         | `/methods`      | Record-quality grades, observed sector composition, and announcement timing on the verified set. This page does not publish causal effects or Bayesian posteriors |
 
-Medicine and biotech is the default Deals scope (51 acquisitions). Consumer health is eight acquisitions in the same file. The catalog also carries fund-portfolio company records used as overlays, not as extra closed acquisitions.
+Medicine and biotech is the default Deals scope (51 acquisitions). Consumer
+health is eight acquisitions in the same file. The catalog also carries
+fund-portfolio company records used as overlays, not as extra closed
+acquisitions.
 
 ## Deal evidence
 
-- **59** acquisition records, **150** companies, **38** acquirers in `dataset.verified.json` v9 (`provenance.lastUpdated: 2026-09-20`).
-- Sources are public: SEC filings, press releases, investor relations, and fund portfolio listings, graded in [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md). Promotion does not invent sector, headquarters, or founded year.
-- Disclosed-value headlines are **sums of observed prices** on completed women’s-health deals that published a number. They are not total market volume. Current pinned figures and the sampling frame are in [LIMITATIONS.md](docs/LIMITATIONS.md). Coverage against an external exit list is an observed ratio, not a capture-recapture estimate.
-- Acquirer panels report counts, sector mix, timing, and disclosed size. They do not infer strategy, synergies, or the next target. See [COMPETITIVE_ANALYSIS_METHODOLOGY.md](docs/COMPETITIVE_ANALYSIS_METHODOLOGY.md).
+- **59** acquisition records, **150** companies, **38** acquirers in
+  `dataset.verified.json` v9 (`provenance.lastUpdated: 2026-09-20`).
+- Sources are public: SEC filings, press releases, investor relations, and fund
+  portfolio listings, graded in
+  [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md). Promotion does
+  not invent sector, headquarters, or founded year.
+- Disclosed-value headlines are **sums of observed prices** on completed
+  women’s-health deals that published a number. They are not total market
+  volume. Current pinned figures and the sampling frame are in
+  [LIMITATIONS.md](docs/LIMITATIONS.md). Coverage against an external exit list
+  is an observed ratio, not a capture-recapture estimate.
+- Acquirer panels report counts, sector mix, timing, and disclosed size. They do
+  not infer strategy, synergies, or the next target. See
+  [COMPETITIVE_ANALYSIS_METHODOLOGY.md](docs/COMPETITIVE_ANALYSIS_METHODOLOGY.md).
 
 ## Research and reimbursement context
 
-**Clinical trials.** `/api/clinical-trials` searches ClinicalTrials.gov. That volume is not deal coverage. Model-derived women’s-health relevance and completion-proxy badges are withheld until training uses live registry labels rather than the synthetic seed artifact.
+**Clinical trials.** `/api/clinical-trials` searches ClinicalTrials.gov. That
+volume is not deal coverage. Model-derived women’s-health relevance and
+completion-proxy badges are withheld until training uses live registry labels
+rather than the synthetic seed artifact.
 
-**Reimbursement.** Source-traceable fee-schedule and coverage questions live under `src/lib/reimbursement/` and ship only after review. Older multiple tables (for example insurance-driven versus consumer-only “premiums”) are unsupported rules of thumb and are not analytical output. See [REIMBURSEMENT_INTELLIGENCE.md](docs/REIMBURSEMENT_INTELLIGENCE.md).
+**Reimbursement.** Source-traceable fee-schedule and coverage questions live
+under `src/lib/reimbursement/` and ship only after review. Older multiple tables
+(for example insurance-driven versus consumer-only “premiums”) are unsupported
+rules of thumb and are not analytical output. See
+[REIMBURSEMENT_INTELLIGENCE.md](docs/REIMBURSEMENT_INTELLIGENCE.md).
 
-**Health equity.** Marker panels cite published disparity statistics (CDC, ACS, and similar). They are context. They are not market sizing or allocation advice.
+**Health equity.** Marker panels cite published disparity statistics (CDC, ACS,
+and similar). They are context. They are not market sizing or allocation advice.
 
-**Narratives.** Optional copy from `POST /api/ai/insights` uses Vercel AI Gateway when a key is configured and returns 503 otherwise. Narrative text does not override dataset fields or heuristic labels. See [INFERENCE.md](docs/INFERENCE.md).
+**Narratives.** Optional copy from `POST /api/ai/insights` uses Vercel AI
+Gateway when a key is configured and returns 503 otherwise. Narrative text does
+not override dataset fields or heuristic labels. See
+[INFERENCE.md](docs/INFERENCE.md).
 
 ## Stack
 
-| Layer | In the public app |
-| --- | --- |
-| Next.js 16, React 19, TypeScript, Tailwind CSS v4 | App shell. Node **24** (`.nvmrc`) |
-| D3.js v7, Framer Motion | Network and charts |
-| `getVerifiedDataset()` | Default path; static JSON on Vercel |
-| simple-statistics | Descriptive summaries, cosine similarity, k-means labels |
-| PostgreSQL | Optional `LACUNA_DATA_MODE=db` — not required to run the demo |
-| ClickHouse variant catalog | Optional and off by default. Not clinical-grade genomics. [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md) |
+| Layer                                             | In the public app                                                                                                     |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Next.js 16, React 19, TypeScript, Tailwind CSS v4 | App shell. Node **24** (`.nvmrc`)                                                                                     |
+| D3.js v7, Framer Motion                           | Network and charts                                                                                                    |
+| `getVerifiedDataset()`                            | Default path; static JSON on Vercel                                                                                   |
+| simple-statistics                                 | Descriptive summaries, cosine similarity, k-means labels                                                              |
+| PostgreSQL                                        | Optional `LACUNA_DATA_MODE=db` — not required to run the demo                                                         |
+| ClickHouse variant catalog                        | Optional and off by default. Not clinical-grade genomics. [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md) |
 
-**Checks:** `npm run lint` · `npm run typecheck` · `npm test` · `npm run deno:fmt:check` · `npm run deno:lint` · `npm run validate:dataset` · `npm run build:ci` (`LACUNA_DATA_MODE=static`).
+**Checks:** `npm run lint` · `npm run typecheck` · `npm test` ·
+`npm run deno:fmt:check` · `npm run deno:lint` · `npm run validate:dataset` ·
+`npm run build:ci` (`LACUNA_DATA_MODE=static`).
 
 ## Quick start
 
@@ -104,23 +137,30 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`. Optional Postgres and the variant store are documented in [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md).
+Open `http://localhost:3000`. Optional Postgres and the variant store are
+documented in [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md).
 
 ## Documentation
 
-| Doc | Use it for |
-| --- | --- |
-| [MODEL_CARD.md](docs/MODEL_CARD.md) | What each on-screen score is |
-| [LIMITATIONS.md](docs/LIMITATIONS.md) | Disclosed-value definition and live totals |
-| [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md) | Verified vs staging vs enrichment |
-| [COMPETITIVE_ANALYSIS_METHODOLOGY.md](docs/COMPETITIVE_ANALYSIS_METHODOLOGY.md) | Observable acquirer facts vs inferred intent |
-| [ML_CLINICAL_TRIALS.md](docs/ML_CLINICAL_TRIALS.md) | Why trial-model percentages are withheld |
-| [REIMBURSEMENT_INTELLIGENCE.md](docs/REIMBURSEMENT_INTELLIGENCE.md) | What must not be published as reimbursement evidence |
-| [INFERENCE.md](docs/INFERENCE.md) | Optional server LLM |
-| [AGENTS.md](AGENTS.md) | Contributor conventions |
+| Doc                                                                             | Use it for                                           |
+| ------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| [MODEL_CARD.md](docs/MODEL_CARD.md)                                             | What each on-screen score is                         |
+| [LIMITATIONS.md](docs/LIMITATIONS.md)                                           | Disclosed-value definition and live totals           |
+| [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md)                                   | Verified vs staging vs enrichment                    |
+| [COMPETITIVE_ANALYSIS_METHODOLOGY.md](docs/COMPETITIVE_ANALYSIS_METHODOLOGY.md) | Observable acquirer facts vs inferred intent         |
+| [ML_CLINICAL_TRIALS.md](docs/ML_CLINICAL_TRIALS.md)                             | Why trial-model percentages are withheld             |
+| [REIMBURSEMENT_INTELLIGENCE.md](docs/REIMBURSEMENT_INTELLIGENCE.md)             | What must not be published as reimbursement evidence |
+| [INFERENCE.md](docs/INFERENCE.md)                                               | Optional server LLM                                  |
+| [AGENTS.md](AGENTS.md)                                                          | Contributor conventions                              |
 
 ## License and author
 
-[BSL 1.1](LICENSE). Research and education use is allowed. A commercial product that competes as women’s-health M&A intelligence needs a separate license ([mps5cy@virginia.edu](mailto:mps5cy@virginia.edu)). The license converts to Apache 2.0 in May 2030.
+[BSL 1.1](LICENSE). Research and education use is allowed. A commercial product
+that competes as women’s-health M&A intelligence needs a separate license
+([mps5cy@virginia.edu](mailto:mps5cy@virginia.edu)). The license converts to
+Apache 2.0 in May 2030.
 
-**[Mae Kass](https://github.com/maekass)** — MS/MPH; PsyD candidate; incoming MBA (2027). Signatory to the [G20 & G7 Health and Development Partnership H20 Call to Action](https://www.icn.ch/sites/default/files/2024-08/H20%20Call%20to%20action%20-%20Final%20version.pdf) (August 2024).
+**[Mae Kass](https://github.com/maekass)** — MS/MPH; PsyD candidate; incoming
+MBA (2027). Signatory to the
+[G20 & G7 Health and Development Partnership H20 Call to Action](https://www.icn.ch/sites/default/files/2024-08/H20%20Call%20to%20action%20-%20Final%20version.pdf)
+(August 2024).
