@@ -1,5 +1,10 @@
 import { z } from "zod";
 import { EVIDENCE_CLASSES } from "../evidence";
+import {
+  CATALOG_ENTRY_REASONS,
+  FOUNDED_PRECISION,
+  OUTCOME_TYPES,
+} from "./selectionProvenance";
 
 const isoDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 
@@ -26,6 +31,10 @@ export const companySchema = z.object({
   sector: z.string().min(1),
   stage: z.string().min(1),
   founded: optionalNumber,
+  foundedPrecision: z.enum(FOUNDED_PRECISION).default("unknown"),
+  catalogEntryReason: z.enum(CATALOG_ENTRY_REASONS).default("unknown"),
+  catalogEntryDate: isoDateSchema.nullable().default(null),
+  outcomeType: z.enum(OUTCOME_TYPES).default("unknown"),
   hq: optionalString,
   description: optionalString,
   lastKnownValuation: optionalNumber,
@@ -35,7 +44,14 @@ export const companySchema = z.object({
   evidenceClass: evidenceClassSchema.optional(),
   portfolioFunds: optionalStringArray,
   portfolioInitialInvestment: optionalString,
-});
+}).refine(
+  (company) =>
+    !(company.founded !== undefined && company.foundedPrecision === "unknown"),
+  {
+    message: "founded is set; foundedPrecision cannot be unknown",
+    path: ["foundedPrecision"],
+  },
+);
 
 export const acquirerSchema = z.object({
   id: z.string().min(1),

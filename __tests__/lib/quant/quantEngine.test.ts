@@ -152,7 +152,7 @@ describe("adaptQuantCompany", () => {
       sources: [],
     });
     expect(adapted.company.raisedToDate).toBe(155);
-    expect(adapted.company.clinicalStage).toBe("fda_approved");
+    expect(adapted.company.clinicalStage).toBeUndefined();
     expect(adapted.company.annualRevenue).toBeUndefined();
     expect(adapted.disclosedValuation).toBe(225);
     expect(adapted.hasValuationInput).toBe(true);

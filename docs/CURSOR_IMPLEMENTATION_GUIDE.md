@@ -103,7 +103,7 @@ Canonical conventions live in **`AGENTS.md`**. Cursor and Windsurf also load:
 - **Next.js 16**, React 19, TypeScript strict
 - **Tailwind v4** (not styled-jsx)
 - **fetch** in API routes (not axios unless you add it deliberately)
-- **D3**, Framer Motion, TensorFlow.js, simple-statistics, ml-matrix
+- **D3**, Framer Motion, simple-statistics (TensorFlow.js experiment removed)
 - **Data:** verified JSON + adapters (`src/lib/data/verifiedDatasetAdapters.ts`)
 
 ### Rules that differ from generic Next.js templates

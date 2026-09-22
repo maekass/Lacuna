@@ -1,7 +1,7 @@
 {
   "generatedAt": "2026-09-20T00:00:00.000Z",
-  "datasetHash": "44a83d570e26430e01da14b58db279e9a1bbf1c4e61e4406be9f571815477b91",
-  "datasetVersion": "v8",
+  "datasetHash": "185c97cedaace8a9bc0a5ae65e4a2d62e1c3efed06dc94234e7fca4d06b521b4",
+  "datasetVersion": "v9",
   "source": "Lacuna measurement-layer census (quality scores, gated metrics, vintage, display provenance)",
   "quality": {
     "companies": {
@@ -521,11 +521,11 @@
     "reproducible": 47
   },
   "displayProvenance": {
-    "total": 1012,
+    "total": 1002,
     "covered": 21,
     "exempt": 2,
-    "uncovered": 989,
-    "uncoveredRate": 0.9772727272727273,
+    "uncovered": 979,
+    "uncoveredRate": 0.9770459081836327,
     "topUncoveredFiles": [
       {
         "file": "src/components/NetworkAnalysisHonest.tsx",
