@@ -69,15 +69,17 @@ fill gaps with TAM/SAM, sector-multiple fallbacks, or editorial stage medians.
 | Intelligence    | `/intelligence` | Reimbursement questions, precedent maps, and dataset export. Fit scores are affinity, not premiums or comps                                                       |
 | Methods         | `/methods`      | Record-quality grades, observed sector composition, and announcement timing on the verified set. This page does not publish causal effects or Bayesian posteriors |
 
-Medicine and biotech is the default Deals scope (51 acquisitions). Consumer
-health is eight acquisitions in the same file. The catalog also carries
-fund-portfolio company records used as overlays, not as extra closed
-acquisitions.
+| Pinned catalog fact                    | Role in the public app                  |
+| -------------------------------------- | --------------------------------------- |
+| **51 medicine & biotech acquisitions** | Default Deals scope                     |
+| **8 consumer health acquisitions**     | `/consumer` filter of the same file     |
+| **46 fund portfolio investments**      | Overlays, not extra closed acquisitions |
+| 50 of 59 deals                         | Rows that disclose a price              |
 
 ## Deal evidence
 
-- **59** acquisition records, **150** companies, **38** acquirers in
-  `dataset.verified.json` v9 (`provenance.lastUpdated: 2026-09-20`).
+- n=59 verified deals · 150 companies · 38 acquirers.
+- `dataset.verified.json` v9 (`provenance.lastUpdated: 2026-09-20`).
 - Sources are public: SEC filings, press releases, investor relations, and fund
   portfolio listings, graded in
   [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md). Promotion does
