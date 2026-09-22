@@ -96,7 +96,6 @@ Medicine and biotech is the default Deals scope (51 acquisitions). Consumer heal
 
 ## Quick start
 
-
 ```bash
 git clone https://github.com/maekass/Lacuna.git
 cd Lacuna
