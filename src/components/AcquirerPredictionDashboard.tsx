@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * Strategic acquirer fit (descriptive) — rule-based matches from verified deals and
- * acquirer profiles derived from the verified dataset. Not a trained model.
+ * Acquirer Fit & Precedent Map — deterministic context engine.
+ * Rule-based matches from verified deals and acquirer profiles. Not a trained model.
  */
 
 import React, { useMemo, useState } from "react";
@@ -14,6 +14,7 @@ import {
   type ComparableDeal,
 } from "@/data/acquirer-prediction-engine";
 import { RESEARCH_HEURISTIC_DISCLAIMER } from "@/lib/research/heuristicProvenance";
+import { DETERMINISTIC_COMPARISON_BOUNDARY } from "@/lib/research/evidenceBoundaries";
 import { buildAcquirerProfilesFromVerified } from "@/lib/data/buildAcquirerProfilesFromVerified";
 import {
   filterActiveVerifiedCompanies,
@@ -117,11 +118,18 @@ export default function AcquirerPredictionDashboard() {
       <div className="flex flex-wrap items-center gap-2">
         <HeuristicTierBadge tier="affinity" />
         <p className="text-xs text-lacuna-text-muted">
-          {empiricalPriors.derivationNote} Acquirer profiles built from{" "}
-          {verifiedAcquirers.length} verified acquirers and{" "}
-          {verifiedAcquisitions.length} deals. {RESEARCH_HEURISTIC_DISCLAIMER}
+          Deterministic context engine. {empiricalPriors.derivationNote}{" "}
+          Acquirer profiles built from {verifiedAcquirers.length}{" "}
+          verified acquirers and {verifiedAcquisitions.length} deals.{" "}
+          {RESEARCH_HEURISTIC_DISCLAIMER}
         </p>
       </div>
+      <p
+        role="note"
+        className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-900"
+      >
+        {DETERMINISTIC_COMPARISON_BOUNDARY}
+      </p>
 
       {/* Company Selector */}
       <div className="bg-white rounded-lg shadow p-4">
@@ -175,7 +183,7 @@ export default function AcquirerPredictionDashboard() {
                   {Math.round(selectedAnalysis.winProbability * 100)}%
                 </div>
                 <div className="text-xs text-lacuna-blue">
-                  Affinity win rate
+                  Historical acquisition-pattern similarity
                 </div>
               </div>
             </div>
@@ -212,7 +220,7 @@ export default function AcquirerPredictionDashboard() {
             {selectedAnalysis.predictedWinner && (
               <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
                 <div className="text-sm font-medium text-green-800">
-                  Most Likely Acquirer: {selectedAnalysis.predictedWinner.name}
+                  Closest precedent: {selectedAnalysis.predictedWinner.name}
                 </div>
                 <div className="text-xs text-green-600">
                   Match Score: {selectedAnalysis.topMatches[0].matchScore}/100

@@ -46,7 +46,8 @@ const TOOLS: ToolLink[] = [
   },
   {
     name: "MODEL_CARD.md",
-    description: "Methodology and limitations for Exit Predictor scoring",
+    description:
+      "Methodology and limitations for Exit Similarity Explorer scoring",
     href: "https://github.com/maekass/Lacuna/blob/main/docs/MODEL_CARD.md",
     type: "docs",
   },

@@ -53,15 +53,15 @@ export default function ResearchPage({
 
       <MotionSection id="burden-capital-gap" className={SECTION}>
         <SectionHeader
-          title="Burden–Capital Gap"
-          description="WEF/BCG Figure 3: capital raised vs. disease burden across women's-health therapeutic areas. Women's health is underfunded relative to burden — widest in conditions outside the traditional bucket (CVD, metabolic). Burden columns pending IHME GBD 2023."
+          title="Burden–Capital Opportunity Context"
+          description="WEF/BCG Figure 3: sourced population burden and historical funding context across women's-health therapeutic areas. A research heuristic for diligence questions — not enterprise value. Widest contrast is outside the traditional bucket (CVD, metabolic). Burden columns pending IHME GBD 2023."
         />
         <div className="mb-8">
           <BurdenCapitalGap />
         </div>
         <SectionHeader
-          title="Gap valuation model"
-          description="US GBD 2021 burden × VC deployed — WEF-aligned for CVD/metabolic. Dollar output is the verified-dataset stage funding median only; editorial Rock Health / PitchBook medians and gap multipliers are not used as a price."
+          title="Stage funding median"
+          description="Burden–Capital Opportunity Context continued: US GBD 2021 burden and historical VC context — WEF-aligned for CVD/metabolic. Dollar output is the verified-dataset stage funding median only; editorial Rock Health / PitchBook medians and gap multipliers are not used as a price."
         />
         <BurdenCapitalGapValuation />
       </MotionSection>

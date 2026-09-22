@@ -75,6 +75,7 @@ export type {
 export {
   aoaDxCoverage,
   coverageAgainstReference,
+  LACUNA_SAMPLE_BOUNDARY_NOTE,
   LACUNA_VERIFIED_FRAME,
   withCoverage,
 } from "./lacunaDataset/samplingFrame";

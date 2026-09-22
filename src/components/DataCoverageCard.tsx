@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import SampleBoundaryNote from "@/components/SampleBoundaryNote";
 import {
   CoverageRateTiles,
   CoverageStatBox,
@@ -85,6 +86,7 @@ export default function DataCoverageCard() {
           Updated {lastUpdated}
         </span>
       </div>
+      <SampleBoundaryNote className="mt-4" />
 
       <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
         <CoverageStatBox

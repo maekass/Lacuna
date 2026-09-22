@@ -8,6 +8,7 @@ import type {
 import { indicatorBand } from "@/lib/quant/indicatorBands";
 import type { Company } from "@/lib/types";
 import type { PredictionRow } from "@/components/ExitPredictor";
+import { DETERMINISTIC_COMPARISON_BOUNDARY } from "@/lib/research/evidenceBoundaries";
 
 export interface PitchBriefProps {
   readonly company: VerifiedCompanyView;
@@ -130,7 +131,7 @@ export default function PitchBrief(
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="rounded-xl border border-lacuna-border bg-lacuna-surface-muted p-4">
               <h5 className="text-sm font-semibold text-lacuna-text-primary">
-                Exit Outlook
+                Exit similarity
               </h5>
               <div className="mt-3 space-y-2 text-sm text-lacuna-text-secondary">
                 <p>
@@ -141,15 +142,21 @@ export default function PitchBrief(
                 </p>
                 <p>
                   <span className="font-medium text-lacuna-text-primary">
-                    Predicted acquirer:
+                    Precedent acquirer:
                   </span>{" "}
                   {prediction.predictedAcquirer}
                 </p>
                 <p>
                   <span className="font-medium text-lacuna-text-primary">
-                    Factor coverage:
+                    Data coverage and assumption completeness:
                   </span>{" "}
                   {getConfidenceLabel(prediction.confidence)}
+                </p>
+                <p
+                  className="text-xs leading-relaxed text-lacuna-text-muted"
+                  role="note"
+                >
+                  {DETERMINISTIC_COMPARISON_BOUNDARY}
                 </p>
               </div>
             </div>

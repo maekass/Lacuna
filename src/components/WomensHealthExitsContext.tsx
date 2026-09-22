@@ -10,8 +10,17 @@ import {
   WOMENS_HEALTH_EXITS_MODEL,
   WOMENS_HEALTH_EXITS_SOURCES,
 } from "@/data/womensHealthExitsResearch";
+import SampleBoundaryNote from "@/components/SampleBoundaryNote";
+import { EvidenceContextCard } from "@/components/research/EvidenceContextCard";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { computeHeadlineStats } from "@/lib/data/computeHeadlineStats";
+import {
+  AOA_DX_EXITS_SOURCE,
+  COMPLEMENTARY_SOURCE_UNIVERSE_NOTE,
+  LACUNA_CURATED_SAMPLE_SOURCE,
+  SVB_H2_2026_METHODOLOGY_NOTE,
+  SVB_H2_2026_SOURCE,
+} from "@/lib/research/evidenceBoundaries";
 
 function StatBox({ value, label }: { value: string; label: string }) {
   return (
@@ -51,6 +60,62 @@ export default function WomensHealthExitsContext() {
           </p>
         </div>
       </ModelProvenanceHint>
+
+      <div
+        className="mb-4 rounded-lg border border-lacuna-lavender/30 bg-lacuna-surface-muted/50 px-4 py-3 text-xs leading-relaxed text-lacuna-blue"
+        role="note"
+      >
+        <p className="font-medium text-lacuna-plum">Source universe</p>
+        <ul className="mt-2 space-y-1.5">
+          <li>
+            <span className="font-medium text-lacuna-plum">AOA Dx:</span>{" "}
+            broad historical women&apos;s-health exit research universe with its
+            own definitions and methods.
+          </li>
+          <li>
+            <span className="font-medium text-lacuna-plum">SVB:</span>{" "}
+            current sector-level healthcare funding and exit context, time-bound
+            to H1 2026 data.
+          </li>
+          <li>
+            <span className="font-medium text-lacuna-plum">Lacuna:</span>{" "}
+            curated public-source M&A sample, not a census.
+          </li>
+        </ul>
+        <p className="mt-2">{COMPLEMENTARY_SOURCE_UNIVERSE_NOTE}</p>
+      </div>
+
+      <SampleBoundaryNote className="mb-4" />
+
+      <div className="mb-4 space-y-2">
+        <EvidenceContextCard
+          {...AOA_DX_EXITS_SOURCE}
+          lacunaUse="complementary exit-landscape context"
+          prohibitedUses={[
+            "direct count, value, return, or coverage comparisons with SVB or Lacuna",
+          ]}
+          methodologyNote="AOA Dx defines its own women's-health exit universe and methods. Lacuna cites the published headline figures and does not re-verify the underlying exit list here."
+        />
+        <EvidenceContextCard
+          {...SVB_H2_2026_SOURCE}
+          lacunaUse="sector-level healthcare funding and exit context"
+          prohibitedUses={[
+            "direct count, value, return, or coverage comparisons with AOA Dx or Lacuna",
+          ]}
+          methodologyNote={SVB_H2_2026_METHODOLOGY_NOTE}
+        />
+        <EvidenceContextCard
+          {...LACUNA_CURATED_SAMPLE_SOURCE}
+          lacunaUse="educational public-source M&A context"
+          prohibitedUses={[
+            "a census of women's-health M&A",
+            "return forecasts",
+            "predictive model inputs",
+          ]}
+          lastReviewed={dataset.dataProvenance.lastUpdated || undefined}
+          methodologyNote="This card points at the curated public-source sample described in the note above. It does not repeat a second coverage census."
+        />
+      </div>
 
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         <StatBox

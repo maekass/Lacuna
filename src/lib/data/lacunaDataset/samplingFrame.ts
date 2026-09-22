@@ -28,6 +28,13 @@ export interface SamplingFrame {
   readonly knownExclusions: readonly KnownExclusion[];
 }
 
+/**
+ * Principal deal and exit interpretation boundary.
+ * One placement per screen — not a repeating card footer.
+ */
+export const LACUNA_SAMPLE_BOUNDARY_NOTE =
+  "Lacuna is a curated public-source sample, not a census of women's-health M&A. Coverage varies by sector, geography, disclosure availability, and women's-health scope. Undisclosed transaction values are excluded from disclosed-value totals.";
+
 /** Lacuna verified-deal convenience sample frame (educational, not a census). */
 export const LACUNA_VERIFIED_FRAME: SamplingFrame = {
   name: "Lacuna verified women's-health M&A convenience sample",
