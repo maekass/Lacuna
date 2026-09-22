@@ -6,6 +6,7 @@ import DealEmpowermentContext from "@/components/DealEmpowermentContext";
 import DealKeyedRegulatoryCitations from "@/components/DealKeyedRegulatoryCitations";
 import DealTargetLastKnownValuation from "@/components/DealTargetLastKnownValuation";
 import DealVerifiedProvenance from "@/components/DealVerifiedProvenance";
+import SampleBoundaryNote from "@/components/SampleBoundaryNote";
 import EvidenceLadder from "@/components/EvidenceLadder";
 import MotionSection from "@/components/ui/MotionSection";
 import type { DealDetailView } from "@/lib/deals";
@@ -212,6 +213,7 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
       </MotionSection>
 
       <MotionSection>
+        <SampleBoundaryNote className="mb-3" />
         <DealVerifiedProvenance line={view.provenanceLine} />
       </MotionSection>
     </div>

@@ -4,7 +4,12 @@ import { useMemo } from "react";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
 import { useWatchlist } from "@/lib/data/WatchlistContext";
+import { EvidenceContextCard } from "@/components/research/EvidenceContextCard";
 import HeuristicTierBadge from "@/components/research/HeuristicTierBadge";
+import {
+  DIAGNOSTICS_TOOLS_SECTOR_CONTEXT,
+  SVB_H2_2026_SOURCE,
+} from "@/lib/research/evidenceBoundaries";
 import Card from "@/components/ui/Card";
 import { Bookmark, BookmarkCheck, FileText } from "lucide-react";
 
@@ -136,6 +141,31 @@ export default function CommercializationReadiness() {
           </p>
         </div>
         <div className="p-6 space-y-4">
+          <div className="rounded-lg border border-lacuna-lavender/40 bg-lacuna-lavender/10 p-3">
+            <p className="text-[11px] font-medium uppercase tracking-wide text-lacuna-text-secondary">
+              Sector context
+            </p>
+            <p className="mt-1 text-xs leading-relaxed text-lacuna-blue">
+              {DIAGNOSTICS_TOOLS_SECTOR_CONTEXT}
+            </p>
+            <p className="mt-1 text-[11px] text-lacuna-blue/80">
+              Sector context for diagnostics and tools — not a company-specific
+              assessment.
+            </p>
+            <div className="mt-2">
+              <EvidenceContextCard
+                {...SVB_H2_2026_SOURCE}
+                lacunaUse="sector context for diagnostics and tools diligence questions"
+                prohibitedUses={[
+                  "company-specific assessment",
+                  "investment recommendations",
+                  "clinical guidance",
+                ]}
+                methodologyNote="Sector-level healthcare funding and exit context only. The report title is H2 2026 and the supplied data cutoff is June 30, 2026. It does not score the companies listed below."
+              />
+            </div>
+          </div>
+
           {maternalHealthCandidates.length > 0 && (
             <div className="mb-4 rounded-lg border border-lacuna-lavender/40 bg-lacuna-lavender/10 p-3">
               <p className="text-sm font-medium text-lacuna-plum">

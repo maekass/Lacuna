@@ -27,6 +27,8 @@ import {
   formatModelProvenanceLine,
   modelSourceHref,
 } from "@/lib/provenance/modelProvenance";
+import { EvidenceContextCard } from "@/components/research/EvidenceContextCard";
+import { BURDEN_CAPITAL_OPPORTUNITY_DISCLOSURE } from "@/lib/research/evidenceBoundaries";
 
 const MARGIN = { top: 28, right: 108, bottom: 52, left: 196 };
 const ROW_HEIGHT = 30;
@@ -248,7 +250,7 @@ export default function BurdenCapitalGap() {
       <ModelProvenanceHint model={BURDEN_CAPITAL_GAP_MODEL}>
         <div className="mb-4 max-w-3xl cursor-help">
           <h3 className="text-sm font-semibold text-lacuna-plum">
-            Burden–Capital Gap (BCG View)
+            Burden–Capital Opportunity Context
           </h3>
           <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/80">
             Capital raised vs. disease burden across women&apos;s-health
@@ -259,8 +261,32 @@ export default function BurdenCapitalGap() {
             raised, against the leading cause of death in women — a
             misclassification Lacuna exists to correct.
           </p>
+          <p
+            className="mt-2 text-xs leading-relaxed text-lacuna-blue/80"
+            role="note"
+          >
+            {BURDEN_CAPITAL_OPPORTUNITY_DISCLOSURE}
+          </p>
         </div>
       </ModelProvenanceHint>
+
+      <div className="mb-4">
+        <EvidenceContextCard
+          source="World Economic Forum and Boston Consulting Group"
+          title="Women's Health Investment Outlook 2026"
+          publishedDate="2026"
+          scope="women's-health funding and burden context"
+          sourceType="cited external research report"
+          lacunaUse="descriptive research context"
+          prohibitedUses={[
+            "enterprise valuation",
+            "return forecasts",
+            "predictive model inputs",
+          ]}
+          methodologyNote="Figure 3 funding-event and capital context for 2020–2025, as already cited on this panel. Burden columns stay pending where DALY data is not ingested. This card records supplied use limits; it does not add verification beyond that citation."
+          sourceUrl="https://reports.weforum.org/docs/WEF_Womens_Health_Investment_Outlook_2026.pdf"
+        />
+      </div>
 
       <div className="relative w-full overflow-x-auto">
         <svg
@@ -344,25 +370,25 @@ export default function BurdenCapitalGap() {
       <ModelProvenanceHint model={BURDEN_CROSSWALK_MODEL}>
         <details className="mt-4 cursor-help rounded-lg border border-lacuna-lavender/30 bg-lacuna-lavender/10 px-4 py-3">
           <summary className="cursor-pointer text-xs font-semibold text-lacuna-plum">
-            Vet vs. gap valuation model ({summary.mapped} aligned ·{" "}
-            {summary.partial} partial · {summary.unmapped} unmapped)
+            Funding crosswalk ({summary.mapped} aligned · {summary.partial}{" "}
+            partial · {summary.unmapped} unmapped)
           </summary>
           <p className="mt-2 text-xs leading-relaxed text-lacuna-blue/80">
             This chart uses WEF/BCG macro funding (2020–2025, all WH-tagged
-            flows). The valuation model below uses US GBD 2021 burden +
-            WEF-aligned VC for cardiovascular ($10M) and metabolic ($4M) areas,
-            plus Rock Health / PitchBook FemTech estimates elsewhere
-            (2019–2024). Capital figures differ by design — they answer
-            different questions.
+            flows). The context view below uses US GBD 2021 burden + WEF-aligned
+            VC for cardiovascular ($10M) and metabolic ($4M) areas, plus Rock
+            Health / PitchBook FemTech estimates elsewhere (2019–2024). Capital
+            figures differ by design — they answer different questions, and
+            neither series is an enterprise value.
           </p>
           <div className="mt-3 overflow-x-auto">
             <table className="w-full min-w-[640px] text-left text-[11px] text-lacuna-blue/80">
               <thead>
                 <tr className="border-b border-lacuna-lavender/30 text-lacuna-plum">
                   <th className="py-1.5 pr-3 font-medium">WEF area</th>
-                  <th className="py-1.5 pr-3 font-medium">Valuation area</th>
+                  <th className="py-1.5 pr-3 font-medium">Crosswalk area</th>
                   <th className="py-1.5 pr-3 font-medium">WEF capital</th>
-                  <th className="py-1.5 pr-3 font-medium">Valuation VC</th>
+                  <th className="py-1.5 pr-3 font-medium">Crosswalk capital</th>
                   <th className="py-1.5 font-medium">Gap score</th>
                 </tr>
               </thead>
@@ -398,7 +424,7 @@ export default function BurdenCapitalGap() {
           </div>
           {orphanValuationAreas.length > 0 && (
             <p className="mt-2 text-[11px] text-lacuna-blue/65">
-              Valuation-only areas (no WEF row):{" "}
+              Crosswalk-only areas (no WEF row):{" "}
               {orphanValuationAreas.join(", ")}.
             </p>
           )}

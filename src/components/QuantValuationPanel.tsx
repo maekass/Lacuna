@@ -12,6 +12,7 @@ import {
   numericOrNull,
   ValuationEngine,
 } from "@/lib/quant/quantEngine";
+import { DETERMINISTIC_COMPARISON_BOUNDARY } from "@/lib/research/evidenceBoundaries";
 
 type DriverKey = keyof ReturnType<
   AcquisitionPredictor["predictAcquisition"]
@@ -114,10 +115,11 @@ export default function QuantValuationPanel() {
       <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
         <div>
           <h3 className="text-lg font-semibold text-lacuna-plum">
-            Quant valuation &amp; similarity index (heuristic)
+            Comparable context &amp; historical acquisition-pattern similarity
           </h3>
           <p className="text-sm text-lacuna-blue">
-            Rule-based valuation and a weighted similarity index — not a trained
+            Deterministic context engine. Rule-based comparable context and a
+            weighted historical acquisition-pattern similarity — not a trained
             model and not investment advice.
           </p>
         </div>
@@ -147,6 +149,13 @@ export default function QuantValuationPanel() {
         framing, not advice.
       </div>
 
+      <p
+        role="note"
+        className="mb-4 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-900"
+      >
+        {DETERMINISTIC_COMPARISON_BOUNDARY}
+      </p>
+
       <div className="overflow-x-auto">
         <table className="w-full text-sm min-w-[780px]">
           <thead>
@@ -159,7 +168,7 @@ export default function QuantValuationPanel() {
                 Heuristic est.
               </th>
               <th className="py-2 px-3 font-medium text-right">
-                Similarity index
+                Historical acquisition-pattern similarity
               </th>
               <th className="py-2 pl-3 font-medium">Top driver</th>
             </tr>
@@ -250,10 +259,11 @@ export default function QuantValuationPanel() {
         <span className="text-emerald-600">●</span>{" "}
         marker means the estimate includes an anchor from verified sector deals
         (median exit/funding multiples or median disclosed deal values).
-        Similarity-index base rate is the dataset&apos;s observed exit share.
-        Driver weights remain heuristic; disclosed valuations are point-in-time
-        public figures. Burden–capital gap scores stay on /research and do not
-        decorate this table. Exploratory framing only.
+        Historical acquisition-pattern similarity uses the dataset&apos;s
+        observed exit share as its base rate. Driver weights remain heuristic;
+        disclosed valuations are point-in-time public figures. Burden–capital
+        gap scores stay on /research and do not decorate this table. Exploratory
+        framing only.
       </p>
     </div>
   );

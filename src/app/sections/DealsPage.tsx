@@ -159,8 +159,8 @@ export default function DealsPage() {
 
       <MotionSection id="quant-valuation" className={SECTION}>
         <SectionHeader
-          title="Quant valuation & similarity index"
-          description="Heuristic comparable-deal valuation and a unitless similarity index. Not a probability and not a five-year forecast. Outcome-only stage labels are withheld."
+          title="Comparable context & historical acquisition-pattern similarity"
+          description="Deterministic context engine. Heuristic comparable context and a unitless historical acquisition-pattern similarity. Not a calibrated probability and not a five-year forecast. Outcome-only stage labels are withheld."
         />
         <QuantValuationPanel />
       </MotionSection>
@@ -202,8 +202,8 @@ export default function DealsPage() {
 
       <MotionSection id="similarity-indicators" className={SECTION}>
         <SectionHeader
-          title="Acquisition similarity indicators"
-          description="Ordinal bands from disclosed factor co-occurrence. Acquired companies are a historical baseline; membership in the acquisitions array does not raise factor coverage."
+          title="Exit Similarity Explorer"
+          description="Deterministic context engine. Ordinal bands from disclosed factor co-occurrence. Acquired companies are a historical baseline; membership in the acquisitions array does not raise data coverage and assumption completeness."
         />
         <ExitPredictor />
       </MotionSection>
