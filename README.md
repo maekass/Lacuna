@@ -1,24 +1,20 @@
 <!--
-SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified deals (n=59), clinical trial search, genomics governance, cited analytics. Not live market data or predictive ML.
+SEO Meta Description: Lacuna — public-source, evidence-aware women's-health M&A and commercialization diligence. Curated deals, trial and reimbursement context, disclosed-data limits. Not a live terminal, forecast, or clinical tool.
 -->
 
 <h1 align="center">Lacuna</h1>
 
 <p align="center">
-  <strong>Women's health M&A diligence stack — verified deals, genomics governance, cited analytics</strong>
+  <strong>Public-source diligence for women’s-health M&amp;A and commercialization</strong>
 </p>
 
 <blockquote align="center">
-  <p><strong>Curated dataset · 59 verified deals (51 medicine &amp; biotech default + 8 consumer) · 150 companies · 38 acquirers · Not live market data.</strong></p>
+  <p><strong>Curated public-source sample · 59 verified deals · 150 companies · 38 acquirers · Not a census, a live terminal, or investment advice.</strong></p>
 </blockquote>
 
 <p align="center">
-  The live app reads <code>src/data/dataset.verified.json</code> by default. Server-side LLM calls use <a href="docs/INFERENCE.md">Vercel AI Gateway</a> only. The untrained TensorFlow.js stub was removed — it predicted trial-phase success, was never fitted, and is superseded by <code>ml/clinical_trials/</code>. See <a href="docs/MODEL_CARD.md">MODEL_CARD.md</a> before citing any score.
-</p>
-
-<p align="center">
   <a href="https://lacuna-maekass.vercel.app">
-    <img src="./public/social-preview.svg" alt="Lacuna — women's health M&A investment research stack with verified deal network visualization" width="100%">
+    <img src="./public/social-preview.svg" alt="Lacuna — women's health M&A diligence with a source-linked deal network" width="100%">
   </a>
 </p>
 
@@ -28,451 +24,103 @@ SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified de
   <a href="https://typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-5-E8B4D9?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript"></a>
   <a href="https://nodejs.org"><img src="https://img.shields.io/badge/Node-24-C8A8E9?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node 24"></a>
   <a href="https://d3js.org"><img src="https://img.shields.io/badge/D3.js-v7-C9A0DC?style=flat-square&logo=d3.js&logoColor=white" alt="D3.js v7"></a>
-  <a href="docs/MODEL_CARD.md"><img src="https://img.shields.io/badge/Data-verified_JSON-E8B4D9?style=flat-square" alt="Verified JSON dataset"></a>
+  <a href="docs/MODEL_CARD.md"><img src="https://img.shields.io/badge/Scores-descriptive_only-E8B4D9?style=flat-square" alt="Descriptive scores only"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-BSL_1.1-B19CD9?style=flat-square" alt="BSL 1.1"></a>
   <a href="https://lacuna-maekass.vercel.app"><img src="https://img.shields.io/badge/Demo-Vercel-C8A2C8?style=flat-square&logo=vercel&logoColor=white" alt="Live demo"></a>
 </p>
 
-<div style="font-family: Didot, 'Bodoni MT', Georgia, 'Playfair Display', 'Times New Roman', serif;">
-
-## Table of Contents
-
-- [Overview](#overview)
-- [What is Lacuna?](#what-is-lacuna)
-- [Live Demo](#live-demo)
-- [Product workspaces](#product-workspaces)
-- [Core Features](#core-features)
-- [Descriptive analytics](#descriptive-analytics-heuristics-not-predictive-ml)
-- [AI & biotech diligence best practices](#ai--biotech-diligence-best-practices)
-- [Health Equity context](#health-equity--black-womens-health)
-- [Clinical Trials](#clinical-trials-integration)
-- [Genomics variant store](#genomics-variant-store-optional)
-- [Academic frameworks](#academic-frameworks)
-- [Typography](#typography)
-- [Technology Stack](#technology-stack)
-- [Quick Start](#quick-start)
-- [Data Curation](#data-curation)
-- [Documentation](#documentation)
-- [License](#license)
-
----
-
-## Overview
-
-**Lacuna** is an **investment research stack** — a diligence infrastructure
-prototype with a curated, source-linked snapshot of women's health M&A (59
-verified deals), rendered as D3 network views and **descriptive** analytics with
-published methodology.
-
-| Claim                   | Reality                                                                                                                                                                                    |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Deal data               | Static `dataset.verified.json` v9 (`provenance.lastUpdated: 2026-09-20`) — dual scope: medicine & biotech (default) + consumer health (`/consumer`); 150 companies, 38 acquirers, 59 deals |
-| Scores & "predictors"   | Deterministic rules and small-_n_ statistics — [MODEL_CARD.md](docs/MODEL_CARD.md)                                                                                                         |
-| "ML" / TensorFlow       | Removed. The untrained TF.js stub predicted trial success, not acquisition, and is superseded by `ml/clinical_trials/`                                                                     |
-| Server LLM              | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev)                                                                                                    |
-| Clinical trials panel   | Live ClinicalTrials.gov search; **M&A panels** still use the curated dataset                                                                                                               |
-| Production intelligence | **No** — not PitchBook, not a data SLA, not investment advice                                                                                                                              |
-
-Open source under [BSL 1.1](LICENSE) for corp VC diligence workflows, portfolio
-review, and self-hosted exploration. Commercial competitive products need a
-separate license — [mps5cy@virginia.edu](mailto:mps5cy@virginia.edu).
-
-Portfolio project by [Mae Kass](https://github.com/maekass) (MS/MPH; PsyD
-candidate; incoming MBA 2027) —
-[signatory](https://www.icn.ch/sites/default/files/2024-08/H20%20Call%20to%20action%20-%20Final%20version.pdf)
-to the G20 & G7 Health and Development Partnership
-[H20 Call to Action](https://www.icn.ch/sites/default/files/2024-08/H20%20Call%20to%20action%20-%20Final%20version.pdf)
-on global health diplomacy (Aug 2024).
-
-**Deployment:** The analytics product runs on **Vercel** (this repo). A separate
-**Framer** site is for brand and narrative only, with one primary CTA into the
-live demo — see [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md). Webflow was
-evaluated and rejected:
-[MARKETING_SURFACE_DECISION.md](docs/MARKETING_SURFACE_DECISION.md).
-
----
-
-## What is Lacuna?
-
-An open-source **diligence prototype** for corporate VC and healthcare investors
-exploring verified women's health / FemTech M&A:
-
-- **D3.js** force-directed acquirer–target graphs
-- **Deal flow & valuation** charts (curated counts and disclosed values)
-- **Descriptive scoring** (factor weights, cosine similarity, k-means — no
-  trained forecast models in the UI)
-- **ClinicalTrials.gov** lookup (live API; separate from deal JSON)
-- **Health-equity context** with cited disparity statistics (descriptive, not
-  allocation advice)
-
-Every analytical panel in the app shows the provenance line above.
-
----
+## What Lacuna is
 
-## Live Demo
-
-**[lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app)**
+Lacuna is a **public-source, evidence-aware women’s-health M&A and commercialization diligence environment**. It helps a reader explore a curated set of acquisition records, strategic buyer patterns, evidence maturity, clinical-trial and research context, reimbursement and commercialization questions, and the limits of those sources.
 
-| Resource        | Link                                                           |
-| --------------- | -------------------------------------------------------------- |
-| **Application** | [lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app) |
-| **Repository**  | [github.com/maekass/Lacuna](https://github.com/maekass/Lacuna) |
-| **Methodology** | [docs/MODEL_CARD.md](docs/MODEL_CARD.md)                       |
-| **License**     | [BSL 1.1](LICENSE) → Apache 2.0 May 2030                       |
+The product app runs on **Vercel** from this repository. A separate **Framer** site is brand and narrative only, with one call to action into the app — [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md).
 
----
+**Live demo:** [lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app)
 
-## Product workspaces
+## Integrity boundaries
 
-The Next.js app is split into workspaces. Medicine & biotech is the default
-Deals catalog; consumer health is a separate in-memory filter of the same JSON.
+| Boundary | What that means here |
+| --- | --- |
+| Not a live institutional terminal | Default data is the committed file `src/data/dataset.verified.json` (dataset v9). It is a convenience sample with public citations, not PitchBook, a data SLA, or a census of women’s-health M&A. |
+| Not advice | The app does not provide investment advice, clinical guidance, treatment recommendations, or patient-specific interpretation. |
+| Scores stay descriptive | Exit Similarity Explorer and the comparables panel are hand-weighted indexes on this catalog. They are not predictions, probabilities, forecasts, calibrated models, enterprise valuations, or expected returns. Read [MODEL_CARD.md](docs/MODEL_CARD.md) before citing a number. |
+| No causal claims | Small-sample views on `/methods` document assumptions and sensitivity. They do not identify causal effects, treatment effects, or Bayesian causal estimates that can be acted on. |
+| Trial models withheld | Offline clinical-trial classifiers exist in the repo. Percentages stay off the public UI while `trainingSource` is `synthetic_seed`. Live trial **search** (ClinicalTrials.gov) is separate and is not a model score. See [ML_CLINICAL_TRIALS.md](docs/ML_CLINICAL_TRIALS.md). |
+| No synthetic rows in the deal product | Public deal counts, networks, and disclosed-value totals come from the verified JSON. Staging, seed files, and illustrative heuristics are not merged into those figures. See [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md). |
 
-| Workspace        | Route           | What you get                                                                                          |
-| ---------------- | --------------- | ----------------------------------------------------------------------------------------------------- |
-| **Deals**        | `/deals`        | Network, deal flow, valuation matrix, quant heuristics, acquirer landscape (medicine & biotech scope) |
-| **Consumer**     | `/consumer`     | Wearables, wellness apps, and consumer digital health M&A                                             |
-| **Payer Ops**    | `/payer-ops`    | Prior-auth friction and payer-aligned VC signals computed from the verified catalog                   |
-| **Research**     | `/research`     | Trials search, evidence maturity, health-equity markers, optional genomics browser                    |
-| **Methods**      | `/methods`      | Causal DAG, sensitivity, Bayesian small-_n_ framing                                                   |
-| **Intelligence** | `/intelligence` | Reimbursement context, acquirer fit scores, dataset export                                            |
+When a field is missing, panels show insufficient disclosed data. They do not fill gaps with TAM/SAM, sector-multiple fallbacks, or editorial stage medians.
 
----
+## What you can do in the app
 
-## Core Features
+| Workspace | Route | Role |
+| --- | --- | --- |
+| Deals | `/deals` | Source-linked network, announced-year activity, disclosed-value matrix, acquirer patterns, comparable context, similarity bands |
+| Consumer health | `/consumer` | Same catalog, filtered to wearables, wellness apps, and consumer digital health |
+| Deal dossier | `/deals/[id]` | One verified transaction and its citations. Name-search trials, FDA, and CMS results are not attached unless a reviewer has keyed a public NCT or CPT citation |
+| Payer Ops | `/payer-ops` | Prior-authorization and claims-ops context plus venture signals computed from the verified catalog |
+| Research | `/research` | Trial search, evidence-maturity and burden context, health-equity markers, optional genetics browser. Heuristics here are labeled and do not feed deal economics |
+| Intelligence | `/intelligence` | Reimbursement questions, precedent maps, and dataset export. Fit scores are affinity, not premiums or comps |
+| Methods | `/methods` | Small-sample limits, temporal description, and sensitivity. Framing only — see the boundaries table |
 
-### Verified deal explorer
+Medicine and biotech is the default Deals scope (51 acquisitions). Consumer health is eight acquisitions in the same file. The catalog also carries fund-portfolio company records used as overlays, not as extra closed acquisitions.
 
-- **51 medicine & biotech acquisitions** (default Deals workspace) — fertility
-  science, oncology, diagnostics, menopause therapeutics, medtech
-- **8 consumer health acquisitions**
-  ([`/consumer`](https://lacuna-maekass.vercel.app/consumer)) — wearables,
-  wellness apps, consumer digital health
-- **46 fund portfolio investments** (c90–c135) — overlays filter by workspace
-  scope
-- **38 named acquirers**, including Hologic, KKR, Pfizer, Gilead, Boston
-  Scientific, and others cited in sources
-- Dataset **v9** · `provenance.lastUpdated: 2026-09-20` · 50 of 59 deals
-  disclose a price
-- Sources: SEC EDGAR, press releases, investor relations, fund portfolio listing
-  (see [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md))
+## Deal evidence
 
-Headline disclosed-value figures and coverage limits live in
-[LIMITATIONS.md](docs/LIMITATIONS.md) — they are pinned to
-`liveDisclosedStats()`, not invented TAM/SAM.
+- **59** acquisition records, **150** companies, **38** acquirers in `dataset.verified.json` v9 (`provenance.lastUpdated: 2026-09-20`).
+- Sources are public: SEC filings, press releases, investor relations, and fund portfolio listings, graded in [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md). Promotion does not invent sector, headquarters, or founded year.
+- Disclosed-value headlines are **sums of observed prices** on completed women’s-health deals that published a number. They are not total market volume. Current pinned figures and the sampling frame are in [LIMITATIONS.md](docs/LIMITATIONS.md). Coverage against an external exit list is an observed ratio, not a capture-recapture estimate.
+- Acquirer panels report counts, sector mix, timing, and disclosed size. They do not infer strategy, synergies, or the next target. See [COMPETITIVE_ANALYSIS_METHODOLOGY.md](docs/COMPETITIVE_ANALYSIS_METHODOLOGY.md).
 
-### Interactive network (`ForceNetwork.tsx`)
+## Research and reimbursement context
 
-D3 force-directed graph: sector colors, deal-type edges, valuation-scaled nodes.
-Three portfolio overlays are toggleable — **RH Capital** (Foreground Capital),
-**Amboy Street Ventures**, and **Portfolia** — each with a distinct color and
-pulse-ring badge on matching nodes. Methodology:
-[NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md).
+**Clinical trials.** `/api/clinical-trials` searches ClinicalTrials.gov. That volume is not deal coverage. Model-derived women’s-health relevance and completion-proxy badges are withheld until training uses live registry labels rather than the synthetic seed artifact.
 
-### Deal flow (`DealFlowChart.tsx`)
+**Reimbursement.** Source-traceable fee-schedule and coverage questions live under `src/lib/reimbursement/` and ship only after review. Older multiple tables (for example insurance-driven versus consumer-only “premiums”) are unsupported rules of thumb and are not analytical output. See [REIMBURSEMENT_INTELLIGENCE.md](docs/REIMBURSEMENT_INTELLIGENCE.md).
 
-Year-over-year counts from verified `announcedDate` — animated bars, no
-synthetic deal generator.
+**Health equity.** Marker panels cite published disparity statistics (CDC, ACS, and similar). They are context. They are not market sizing or allocation advice.
 
-### Valuation matrix (`ValuationMatrix.tsx`)
+**Narratives.** Optional copy from `POST /api/ai/insights` uses Vercel AI Gateway when a key is configured and returns 503 otherwise. Narrative text does not override dataset fields or heuristic labels. See [INFERENCE.md](docs/INFERENCE.md).
 
-Sector × stage heatmap using disclosed values only; cells show company counts
-and averages.
+## Stack
 
-### Heuristic valuation panel (`QuantValuationPanel.tsx`)
+| Layer | In the public app |
+| --- | --- |
+| Next.js 16, React 19, TypeScript, Tailwind CSS v4 | App shell. Node **24** (`.nvmrc`) |
+| D3.js v7, Framer Motion | Network and charts |
+| `getVerifiedDataset()` | Default path; static JSON on Vercel |
+| simple-statistics | Descriptive summaries, cosine similarity, k-means labels |
+| PostgreSQL | Optional `LACUNA_DATA_MODE=db` — not required to run the demo |
+| ClickHouse variant catalog | Optional and off by default. Not clinical-grade genomics. [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md) |
 
-Descriptive valuation and exit-likelihood section with:
+**Checks:** `npm run lint` · `npm run typecheck` · `npm test` · `npm run deno:fmt:check` · `npm run deno:lint` · `npm run validate:dataset` · `npm run build:ci` (`LACUNA_DATA_MODE=static`).
 
-- **ValuationEngine** — bounded comparable multiples (EV/Revenue, EV/EBITDA)
-  with uncertainty disclosures
-- **AcquisitionPredictor** — sector-stage heuristics on disclosed fields only
-- **HealthImpactModeler** — lives-saved modeling with Cohen's d bounds (not a
-  rate)
-- **PortfolioOptimizer** — stage-varying risk-adjusted ROI optimizer
-- **Verified-fields-only adapter** — `adaptQuantCompany` uses only validated
-  dataset fields; absent inputs remain undefined per provenance rules
-
-See [MODEL_CARD.md](docs/MODEL_CARD.md) for methodology and caveats.
-
----
-
-## Descriptive analytics (heuristics, not predictive ML)
-
-> Curated dataset · n=59 verified deals · 150 companies · 38 acquirers · Not
-> live market data · Scores are descriptive, not forecasts.
-
-### Acquisition likelihood indicators (`ExitPredictor.tsx`)
-
-Transparent factor scoring for **non-acquired** companies in the verified set.
-Fixed weights, full disclosure in UI and [MODEL_CARD.md](docs/MODEL_CARD.md).
-**Not** a predictive model; the untrained TensorFlow.js stub was removed.
-
-### Company similarity (`CompanySimilarity.tsx`)
-
-8-D feature vectors, inline cosine similarity — "companies like this" for
-exploration.
-
-### Clustering (`ClusteringAnalysis.tsx`)
-
-k-means on valuation × employees — descriptive segments (Emerging / Growth /
-Late-stage labels).
-
-### Optional server narratives ([INFERENCE.md](docs/INFERENCE.md))
-
-- UI blurbs via `POST /api/ai/insights` → Vercel AI Gateway
-  (`anthropic/claude-sonnet-4` slug).
-- Exploratory copy only — heuristic scores on the curated dataset remain
-  authoritative.
-
----
-
-## AI & biotech diligence best practices
-
-For a Statista-only, source-gated clinical pipeline, drug revenue, rNPV,
-catalysts, and investment thesis workflow, see
-[Biopharma diligence workbook](docs/BIOPHARMA_DILIGENCE.md). This research
-module has no prefilled company valuation and remains separate from M&A data.
-
-Python and AI in biotech investing emphasize **modular pipelines**, **source
-tracing**, and **rigorous testing** — not black-box financial outputs. Lacuna
-implements these principles for women's health M&A diligence
-(TypeScript/Next.js, not Python, but the architecture mirrors the same
-discipline).
-
-### Architectural and data best practices
-
-| Practice                            | Guidance                                                             | Lacuna implementation                                                                                                                                                                                                 |
-| ----------------------------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Modular agentic pipelines**       | Separate agents for trials, filings, news — not one black-box model  | SEC ingestion + deal classification (`dealClassificationEngine.ts`), optional UI narratives (`/api/ai/insights`), deterministic analytics (exit predictor, quant engine) — each with its own module and fallback path |
-| **Data verification & permissions** | Document-level tracing; never trust AI summaries without sources     | `dataset.verified.json` with A–E evidence grades, dual-attestation in [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md), `DataProvenanceBanner`, source citations on every deal                           |
-| **Alternative data integration**    | Patents, conference abstracts, physician sentiment for early signals | SEC EDGAR + press + fund portfolio listings today; patents and abstracts as **discovery-only** (grade D) per curation rules — never sole merge sources                                                                |
-
-### Analytical best practices
-
-| Practice                     | Guidance                                                  | Lacuna implementation                                                                                                                                                          |
-| ---------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Domain AI + general LLMs** | LLMs for synthesis; domain ML for sequences/structure     | LLMs for exploratory copy and SEC women's-health classification only; scoring uses `simple-statistics` heuristics on verified fields — see [MODEL_CARD.md](docs/MODEL_CARD.md) |
-| **Clinical trial modeling**  | Historical trial data for recruitment, approval timelines | Live ClinicalTrials.gov search (`/api/clinical-trials`) — **separate** from curated M&A JSON; no outcome-prediction claims                                                     |
-| **Cash runway & valuation**  | Deterministic pandas/numpy models for capital efficiency  | `ValuationEngine`, `QuantValuationPanel`, `adaptQuantCompany` — bounded multiples and disclosed values only; absent inputs stay undefined                                      |
-
-### Investment risk management
-
-| Practice                        | Guidance                                                         | Lacuna scope                                                                                                                  |
-| ------------------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| **The "30% rule"**              | AI handles ~70% of gathering/hypothesis; humans retain oversight | Staging CSV + manual merge; no auto-merge from SEC scans; heuristic scores are descriptive, not buy/sell signals              |
-| **Platform vs. pipeline focus** | Beware broad "AI for drug discovery" without underlying biology  | Deal-centric women's health M&A — fertility, pelvic health, diagnostics, digital health — not general biotech equity research |
-| **Options & volatility**        | Straddles/strangles around FDA/trial catalysts                   | **Out of scope** — Lacuna is diligence infrastructure, not a trading or portfolio-risk tool                                   |
-
-### How Lacuna maps to common investor questions
-
-| Question                                              | Lacuna answer                                                                                                                                              |
-| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Early-stage startups or large-cap clinical biopharma? | **Deal-centric**, not equity-stage-focused — verified M&A and strategic investments across women's health (digital health, medtech, therapeutics-adjacent) |
-| What data sources?                                    | Curated JSON (SEC, press, IR, fund portfolios); live ClinicalTrials.gov search; optional SEC 8-K ingestion with AI-assisted classification                 |
-| Financial fundamentals or genomic/clinical datasets?  | **M&A fundamentals** — disclosed deal values, acquirer patterns, sector clustering, evidence maturity — not genomic sequence analysis or trial-outcome ML  |
-
-### On-brand extensions (roadmap, not built)
-
-1. **Clinical trial enrichment** — Link portfolio companies to
-   ClinicalTrials.gov NCT IDs (metadata only).
-2. **Cash runway / milestone tracker** — For public acquirers or disclosed
-   funding rounds already in the dataset.
-3. **Modular ingestion agents** — Extend the SEC classifier pattern: filings,
-   press, trial registry — each with provenance tags.
-4. **Alternative data (careful)** — Conference abstracts or patents as discovery
-   (grade D), never sole merge sources.
-
----
-
-## Health Equity & Black Women's Health
-
-Descriptive context on disease areas with documented disparities — cited
-epidemiology from the in-app catalog (`HEALTH_EQUITY_FOCUS_AREAS`), **not**
-TAM/SAM or buy/sell recommendations:
-
-| Focus area                         | Cited disparity (in-app)                                                                                     | Source                                                       |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
-| Maternal mortality prevention      | 2024: Black women 44.8 vs White women 14.2 deaths per 100,000 live births (~3.2×)                            | CDC/NCHS Maternal Mortality Rates in the United States, 2024 |
-| Hereditary breast & ovarian cancer | Black women have 38% higher breast-cancer mortality than White women despite lower incidence                 | ACS Breast Cancer Facts & Figures 2024–2025                  |
-| Sickle cell disease (HBB)          | About 1 in 365 Black or African American births; trait about 1 in 13                                         | CDC sickle cell surveillance                                 |
-| Lupus / SLE                        | Earlier disease, greater complications, and higher mortality among several racial and ethnic minority groups | Lupus Foundation of America                                  |
-
-See [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md) for scoring limits.
-Market-size estimates are not mixed into this table.
-
----
-
-## Clinical Trials Integration
-
-- **Live**: `/api/clinical-trials` → ClinicalTrials.gov API v2 (search, batch
-  lookup)
-- **Curated M&A**: unchanged — still `dataset.verified.json`
-
-Do not conflate live trial search volume with verified deal coverage.
-
----
-
-## Genomics variant store (optional)
-
-Large VCF/gVCF call sets use a **two-tier** layout (off by default on Vercel):
-
-| Tier            | Technology                   | Contents                                       |
-| --------------- | ---------------------------- | ---------------------------------------------- |
-| Object storage  | Local `data/variants/` or S3 | Multi-GB raw VCF blobs                         |
-| Variant catalog | ClickHouse                   | Callset metadata + queryable variant summaries |
-
-- **Dashboard:** `VariantCallsetBrowser` — browse callsets, filter by gene,
-  presigned S3 download when configured
-- **APIs:** `/api/genomics/callsets`, `/api/genomics/variants`,
-  `/api/genomics/callsets/{id}/object`
-- **Ingest:** `npm run clickhouse:ingest-vcf` — stream parser → object storage →
-  batch INSERT
-- **Docs:** [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md)
-
-```bash
-docker compose up -d clickhouse
-# .env.local: LACUNA_VARIANT_STORE=clickhouse, CLICKHOUSE_URL=http://lacuna:lacuna@localhost:8123
-npm run clickhouse:migrate && npm run clickhouse:seed
-npm run dev
-```
-
-Not clinical-grade genomics infrastructure — infrastructure demo with honest
-provenance labels.
-
----
-
-## Academic Frameworks
-
-Six frameworks with **explicit small-_n_ limits** documented in `docs/` (causal
-DAG, fairness audit, network concentration, etc.). We state what cannot be
-claimed with n=59 deals — see methodology files linked from the app.
-
----
-
-## Typography
-
-The live app loads **Playfair Display** (Didone serif) via `next/font/google`
-and applies it app-wide — body copy, headings, and `font-mono` utilities share
-the same family for a high-contrast editorial look.
-
-**GitHub does not load custom web fonts.** This README uses a Didone fallback
-stack (`Didot`, `Bodoni MT`, Georgia) so the page reads closer to the product on
-github.com. Only the [live demo](https://lacuna-maekass.vercel.app) renders true
-Playfair Display.
-
----
-
-## Technology Stack
-
-| Layer                                  | Used in production UI                                                        |
-| -------------------------------------- | ---------------------------------------------------------------------------- |
-| Playfair Display (`next/font/google`)  | App-wide Didone serif typography                                             |
-| Next.js 16, React 19, Tailwind v4      | App shell (Node **24**)                                                      |
-| D3.js v7, Framer Motion                | Visualization                                                                |
-| simple-statistics                      | Descriptive stats / similarity / quant engine                                |
-| Verified JSON (`getVerifiedDataset()`) | Default data path; static import for Vercel serverless                       |
-| PostgreSQL                             | Optional `LACUNA_DATA_MODE=db`                                               |
-| ClickHouse + S3/local object storage   | Optional variant call-set catalog (`LACUNA_VARIANT_STORE=clickhouse`)        |
-| Vercel AI Gateway + AI SDK             | Optional narratives + SEC classification ([INFERENCE.md](docs/INFERENCE.md)) |
-| TensorFlow.js                          | Removed — untrained stub, superseded by `ml/clinical_trials/`                |
-| Deno (CI)                              | `deno fmt` and `deno lint` in GitHub Actions                                 |
-
-**CI:** `npm run lint` · `npm run typecheck` · `npm test` (Vitest) ·
-`npm run deno:fmt:check` · `npm run deno:lint` · `npm run validate:dataset` ·
-`npm run build:ci` (`LACUNA_DATA_MODE=static`).
-
----
-
-## Quick Start
-
-Node **24** is required (see `.nvmrc`).
+## Quick start
 
 ```bash
 git clone https://github.com/maekass/Lacuna.git
 cd Lacuna
-nvm use 24   # if the shell is not already on Node 24
+nvm use 24
 npm install
 npm run dev
-npm run validate:dataset
-npm run infra:check
-npm test
 ```
 
-Open `http://localhost:3000`. Data loads from `src/data/dataset.verified.json`
-unless `LACUNA_DATA_MODE=db` is set **and** Postgres is provisioned.
-
-**Optional local Postgres:** `docker compose up -d` → copy
-[`.env.example`](.env.example) to `.env.local` →
-`npm run db:migrate && npm run db:import`. See
-[INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md).
-
-**Optional variant store:** `docker compose up -d clickhouse` → set
-`LACUNA_VARIANT_STORE=clickhouse` →
-`npm run clickhouse:migrate && npm run clickhouse:seed`. See
-[GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md).
-
----
-
-## Data Curation
-
-Manual verification — no synthetic `maDeals`. Workflow:
-[DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md),
-`npm run validate:dataset`, optional `npm run sec:scan`.
-
-Promotion must not invent sector, HQ, or founded year —
-[DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md). When disclosed data is
-insufficient, the UI shows an empty state rather than PitchBook-style fallbacks.
-
----
+Open `http://localhost:3000`. Optional Postgres and the variant store are documented in [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md).
 
 ## Documentation
 
-| Doc                                                                     | Purpose                                                      |
-| ----------------------------------------------------------------------- | ------------------------------------------------------------ |
-| [MODEL_CARD.md](docs/MODEL_CARD.md)                                     | **Start here** — what each score is and is not               |
-| [HAZARD.md](docs/HAZARD.md)                                             | Descriptive Cox time-to-acquisition (not a forecast)         |
-| [LIMITATIONS.md](docs/LIMITATIONS.md)                                   | Live disclosed-value bounds pinned to `liveDisclosedStats()` |
-| [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md)                           | What may enter verified JSON vs staging vs enrichment        |
-| [INFERENCE.md](docs/INFERENCE.md)                                       | Server-side LLM (AI Gateway)                                 |
-| [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md)           | Schema, validation, staging                                  |
-| [NETWORK_ANALYSIS_METHODOLOGY.md](docs/NETWORK_ANALYSIS_METHODOLOGY.md) | Graph metrics, small-_n_                                     |
-| [OAIS_METHODOLOGY.md](docs/OAIS_METHODOLOGY.md)                         | Health impact scoring limits                                 |
-| [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md)                             | CI, Vercel, Postgres, cron, `/api/health`                    |
-| [PERFORMANCE.md](docs/PERFORMANCE.md)                                   | Bundle, caching, probe split, fan-out limits                 |
-| [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md)             | ClickHouse + object storage for large VCF catalogs           |
-| [MONITORING.md](docs/MONITORING.md)                                     | Uptime URL: `/api/health` only (not `/ready`)                |
-| [PRODUCTION_SETUP.md](docs/PRODUCTION_SETUP.md)                         | Vercel env vars and migrations                               |
-| [SEC_INGESTION.md](docs/SEC_INGESTION.md)                               | SEC EDGAR cron pipeline                                      |
-| [BIOPHARMA_DILIGENCE.md](docs/BIOPHARMA_DILIGENCE.md)                   | Statista-gated biopharma workbook (separate from M&A JSON)   |
-| [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md)                       | Vercel product vs Framer marketing (no analytics in Framer)  |
-| [MARKETING_SURFACE_DECISION.md](docs/MARKETING_SURFACE_DECISION.md)     | Why Framer stays and Webflow was not adopted                 |
-| [AGENTS.md](AGENTS.md)                                                  | Contributor conventions                                      |
+| Doc | Use it for |
+| --- | --- |
+| [MODEL_CARD.md](docs/MODEL_CARD.md) | What each on-screen score is |
+| [LIMITATIONS.md](docs/LIMITATIONS.md) | Disclosed-value definition and live totals |
+| [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md) | Verified vs staging vs enrichment |
+| [COMPETITIVE_ANALYSIS_METHODOLOGY.md](docs/COMPETITIVE_ANALYSIS_METHODOLOGY.md) | Observable acquirer facts vs inferred intent |
+| [ML_CLINICAL_TRIALS.md](docs/ML_CLINICAL_TRIALS.md) | Why trial-model percentages are withheld |
+| [REIMBURSEMENT_INTELLIGENCE.md](docs/REIMBURSEMENT_INTELLIGENCE.md) | What must not be published as reimbursement evidence |
+| [INFERENCE.md](docs/INFERENCE.md) | Optional server LLM |
+| [AGENTS.md](AGENTS.md) | Contributor conventions |
 
----
+## License and author
 
-## License
+[BSL 1.1](LICENSE). Research and education use is allowed. A commercial product that competes as women’s-health M&A intelligence needs a separate license ([mps5cy@virginia.edu](mailto:mps5cy@virginia.edu)). The license converts to Apache 2.0 in May 2030.
 
-[BSL 1.1](LICENSE) — research/education production use allowed; **Competitive
-Offerings** (commercial women's-health M&A intelligence products) require a
-separate agreement. Converts to Apache 2.0 May 2030.
-
-[mps5cy@virginia.edu](mailto:mps5cy@virginia.edu) for commercial licensing.
-
----
-
-## Author
-
-**[Mae Kass](https://github.com/maekass)** — MS/MPH; PsyD candidate; incoming
-MBA (2027). Open investment-research tools for women's health data literacy and
-honest analytics.
-
-Signatory to the
-[G20 & G7 Health and Development Partnership H20 Call to Action](https://www.icn.ch/sites/default/files/2024-08/H20%20Call%20to%20action%20-%20Final%20version.pdf)
-(_The Future of Global Health Diplomacy in a Changing World_, August 2024) —
-advocating for women's, maternal, and child health on the G7/G20 agenda,
-gender-specific health data, and innovative financing for women's health.
-
-<p align="center">
-  <sup>†</sup> <small>Deal counts and acquisition examples shown in-app — including Payer Ops VC signals — are computed from <code>src/data/dataset.verified.json</code> via <code>src/lib/payerOps/vcSignalModel.ts</code> and related model scripts; not synthetic deal data.</small>
-</p>
-
-</div>
+**[Mae Kass](https://github.com/maekass)** — MS/MPH; PsyD candidate; incoming MBA (2027). Signatory to the [G20 & G7 Health and Development Partnership H20 Call to Action](https://www.icn.ch/sites/default/files/2024-08/H20%20Call%20to%20action%20-%20Final%20version.pdf) (August 2024).
