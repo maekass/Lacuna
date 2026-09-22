@@ -96,6 +96,19 @@ export class AcquisitionPredictor {
     return this.priors.overallExitRateEstimate;
   }
 
+  /**
+   * Sector-share adjustment applied uniformly to the exit-rate point estimate
+   * and both interval bounds: `clamp(sectorShare * 5, 0.8, 1.2)`, or 1 when
+   * no sector prior exists.
+   */
+  private sectorMultiplier(company: QuantCompany): number {
+    if (!this.priors || this.priors.dealCount <= 0) return 1;
+    const sectorPrior = getSectorPrior(this.priors, company.sector);
+    if (!sectorPrior) return 1;
+    const sectorShare = sectorPrior.dealCount / this.priors.dealCount;
+    return Math.min(1.2, Math.max(0.8, sectorShare * 5));
+  }
+
   predictAcquisition(company: QuantCompany): AcquisitionPredictionResult {
     const driverScores = {
       clinicalValidation: this.scoreClinicalValidation(company),
