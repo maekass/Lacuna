@@ -1,3 +1,8 @@
+import type {
+  CatalogEntryReason,
+  FoundedPrecision,
+  OutcomeType,
+} from "./selectionProvenance";
 import type { VerifiedDataset } from "./datasetTypes";
 import { type EvidenceClass, isEvidenceClass } from "../evidence";
 import { sourcedLastKnownValuationForCompany } from "@/lib/deals/sourcedLastKnownValuation";
@@ -8,6 +13,10 @@ export interface VerifiedCompanyView {
   readonly sector: string;
   readonly stage: string;
   readonly founded?: number;
+  readonly foundedPrecision: FoundedPrecision;
+  readonly catalogEntryReason: CatalogEntryReason;
+  readonly catalogEntryDate: string | null;
+  readonly outcomeType: OutcomeType;
   readonly hq?: string;
   readonly description?: string;
   readonly lastKnownValuation?: number;

@@ -29,6 +29,10 @@ function makeCompanyView(
     description: "Test diagnostics company",
     totalFunding: 50,
     sources: [],
+    foundedPrecision: "year",
+    catalogEntryReason: "unknown",
+    catalogEntryDate: null,
+    outcomeType: "unknown",
     ...overrides,
   };
 }
@@ -230,23 +234,24 @@ describe("AcquisitionPredictor with empirical priors", () => {
     expect(pWithoutPriors).toBeNull();
   });
 
-  it("keeps probability bounded in [0.05, 0.95] with priors", () => {
+  it("does not manufacture a 5% floor when priors are present", () => {
     const predictor = new AcquisitionPredictor(priors);
-    const p = numericOrNull(
-      predictor.predictAcquisition({
-        id: "q2",
-        name: "EdgeCo",
-        sector: "Diagnostics",
-        fundingStage: "Seed",
-        clinicalStage: "preclinical",
-        raisedToDate: 0,
-        customerCount: 0,
-        geographicFocus: ["Asia"],
-        condition: "pcos",
-      }).probability,
-    );
-    expect(p).not.toBeNull();
-    expect(p!).toBeGreaterThanOrEqual(0.05);
-    expect(p!).toBeLessThanOrEqual(0.95);
+    const result = predictor.predictAcquisition({
+      id: "q2",
+      name: "EdgeCo",
+      sector: "Diagnostics",
+      fundingStage: "Seed",
+      clinicalStage: "preclinical",
+      raisedToDate: 0,
+      customerCount: 0,
+      geographicFocus: ["Asia"],
+      condition: "pcos",
+    }).probability;
+    if (isSufficient(result)) {
+      expect(result.value).toBeGreaterThan(0);
+      expect(result.value).not.toBe(0.05);
+    } else {
+      expect(result.message).toMatch(/reportable resolution|Insufficient/);
+    }
   });
 });

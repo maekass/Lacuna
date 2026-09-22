@@ -10,7 +10,7 @@ Compared against `src/data/computed-dataset-summary.json`:
 | --------------- | -------------- |
 | Verified deals  | 59             |
 | Last updated    | 2026-09-20     |
-| Dataset version | v8             |
+| Dataset version | v9             |
 
 2026-09-20 — Teladoc/Livongo (`deal1`) announcement corrected to 2020-08-05
 (Teladoc 8-K + IR). Close stays 2020-10-30. Hologic/Biotheranostics (`deal7`)

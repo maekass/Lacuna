@@ -2,6 +2,10 @@
  * Acquisition, health-impact, and portfolio engines.
  */
 
+import {
+  composeAcquisitionIndex,
+  sectorShareAdjustment,
+} from "./acquisitionIndex";
 import type { EmpiricalPriors } from "./empiricalPriors";
 import { getSectorPrior } from "./empiricalPriors";
 import {
@@ -9,7 +13,6 @@ import {
   missingInput,
   numericOrNull,
   pointEstimate,
-  sufficient,
 } from "./estimators";
 import { acquisitionModelCaveats, portfolioCaveats } from "./presentation";
 import { classifyValuationType, DRIVER_WEIGHTS } from "./priors";
@@ -27,6 +30,7 @@ export class AcquisitionPredictor {
   constructor(private readonly priors?: EmpiricalPriors) {}
 
   private scoreClinicalValidation(company: QuantCompany): number {
+    if (!company.clinicalStage) return 0;
     const stageScores = {
       preclinical: 1,
       phase2: 4,
@@ -109,28 +113,25 @@ export class AcquisitionPredictor {
 
     const exitRate = this.sectorExitRate(company);
     let probability: QuantValue<number>;
-    if (isSufficient(exitRate)) {
-      let baseRate = exitRate.value;
+    if (!company.clinicalStage) {
+      probability = missingInput(
+        "Clinical stage unavailable — acquisition outcome labels are not used as a stage proxy",
+      );
+    } else if (isSufficient(exitRate)) {
+      let sectorAdjustment = 1;
       if (this.priors && this.priors.dealCount > 0) {
         const sectorPrior = getSectorPrior(this.priors, company.sector);
         if (sectorPrior) {
           const sectorShare = sectorPrior.dealCount / this.priors.dealCount;
-          baseRate *= Math.min(1.2, Math.max(0.8, sectorShare * 5));
+          sectorAdjustment = sectorShareAdjustment(sectorShare);
         }
       }
-      const raw = Math.min(0.95, Math.max(0.05, weightedScore * baseRate));
-      const lo = Math.min(
-        0.95,
-        Math.max(0.05, exitRate.confidenceInterval[0] * weightedScore),
-      );
-      const hi = Math.min(
-        0.95,
-        Math.max(0.05, exitRate.confidenceInterval[1] * weightedScore),
-      );
-      probability = sufficient({
-        value: raw,
+      probability = composeAcquisitionIndex({
+        weightedScore,
+        baseRate: exitRate.value,
+        confidenceInterval: exitRate.confidenceInterval,
+        sectorAdjustment,
         sampleSize: exitRate.sampleSize,
-        confidenceInterval: [lo, hi],
         disclosedFraction: exitRate.disclosedFraction,
         selectionCaveat: exitRate.selectionCaveat,
       });
@@ -161,7 +162,9 @@ export class AcquisitionPredictor {
 
     return {
       probability,
-      timelineMonths: timelineMap[company.clinicalStage],
+      timelineMonths: company.clinicalStage
+        ? timelineMap[company.clinicalStage]
+        : 0,
       driverScores,
       riskFactors,
       modelCaveats: acquisitionModelCaveats(this.priors, exitRate),

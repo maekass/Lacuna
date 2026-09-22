@@ -7,8 +7,10 @@ import {
   CompanySimilarity,
   CompetitiveAnalysisDashboard,
   DealFlowChart,
+  ExitPredictor,
   ForceNetwork,
   NetworkAnalysisHonest,
+  QuantValuationPanel,
   SurvivalCurve,
   ValidationTracker,
   ValuationMatrix,
@@ -155,6 +157,14 @@ export default function DealsPage() {
         <ValuationMatrix />
       </MotionSection>
 
+      <MotionSection id="quant-valuation" className={SECTION}>
+        <SectionHeader
+          title="Quant valuation & similarity index"
+          description="Heuristic comparable-deal valuation and a unitless similarity index. Not a probability and not a five-year forecast. Outcome-only stage labels are withheld."
+        />
+        <QuantValuationPanel />
+      </MotionSection>
+
       <MotionSection id="network-analysis" delay={0.2} className={SECTION}>
         <SectionHeader
           title="A Closer Look at the Network"
@@ -188,6 +198,14 @@ export default function DealsPage() {
           <CompanySimilarity />
         </div>
         <ClusteringAnalysis />
+      </MotionSection>
+
+      <MotionSection id="similarity-indicators" className={SECTION}>
+        <SectionHeader
+          title="Acquisition similarity indicators"
+          description="Ordinal bands from disclosed factor co-occurrence. Acquired companies are a historical baseline; membership in the acquisitions array does not raise factor coverage."
+        />
+        <ExitPredictor />
       </MotionSection>
 
       <MotionSection id="white-space-analysis" delay={0.28} className={SECTION}>

@@ -14,6 +14,10 @@ const clusterable: VerifiedCompanyView[] = [
     lastKnownValuation: 10,
     totalFunding: 5,
     sources: [],
+    foundedPrecision: "year",
+    catalogEntryReason: "unknown",
+    catalogEntryDate: null,
+    outcomeType: "unknown",
   },
   {
     id: "c2",
@@ -26,6 +30,10 @@ const clusterable: VerifiedCompanyView[] = [
     lastKnownValuation: 200,
     totalFunding: 80,
     sources: [],
+    foundedPrecision: "year",
+    catalogEntryReason: "unknown",
+    catalogEntryDate: null,
+    outcomeType: "unknown",
   },
   {
     id: "c3",
@@ -38,6 +46,10 @@ const clusterable: VerifiedCompanyView[] = [
     lastKnownValuation: 2000,
     totalFunding: 500,
     sources: [],
+    foundedPrecision: "year",
+    catalogEntryReason: "unknown",
+    catalogEntryDate: null,
+    outcomeType: "unknown",
   },
 ];
 
@@ -61,6 +73,10 @@ describe("computeCapitalClusters", () => {
         hq: "TX",
         description: "no numbers",
         sources: [],
+        foundedPrecision: "year",
+        catalogEntryReason: "unknown",
+        catalogEntryDate: null,
+        outcomeType: "unknown",
       },
     ];
     const { unclusteredCount } = computeCapitalClusters(mixed);

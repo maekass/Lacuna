@@ -5,6 +5,7 @@ import type {
   VerifiedAcquisitionView,
   VerifiedCompanyView,
 } from "@/lib/data/verifiedDataHelpers";
+import { indicatorBand } from "@/lib/quant/indicatorBands";
 import type { Company } from "@/lib/types";
 import type { PredictionRow } from "@/components/ExitPredictor";
 
@@ -134,9 +135,9 @@ export default function PitchBrief(
               <div className="mt-3 space-y-2 text-sm text-lacuna-text-secondary">
                 <p>
                   <span className="font-medium text-lacuna-text-primary">
-                    Exit probability:
+                    Similarity band:
                   </span>{" "}
-                  {(prediction.exitProbability * 100).toFixed(1)}%
+                  {indicatorBand(prediction.indicatorScore)}
                 </p>
                 <p>
                   <span className="font-medium text-lacuna-text-primary">
@@ -146,10 +147,9 @@ export default function PitchBrief(
                 </p>
                 <p>
                   <span className="font-medium text-lacuna-text-primary">
-                    Confidence level:
+                    Factor coverage:
                   </span>{" "}
-                  {getConfidenceLabel(prediction.confidence)}{" "}
-                  ({(prediction.confidence * 100).toFixed(0)}%)
+                  {getConfidenceLabel(prediction.confidence)}
                 </p>
               </div>
             </div>

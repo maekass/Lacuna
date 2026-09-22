@@ -28,7 +28,8 @@ software that ships, not a slide deck with a build step.
 
 ## Bundle hygiene
 
-- Quarantined TensorFlow tests run only when `RUN_QUARANTINE_ML=1`.
+- The untrained TensorFlow.js stub and its `RUN_QUARANTINE_ML` test branch were
+  removed (superseded by `ml/clinical_trials/`).
 - Removed unused `ml-matrix` dependency (cosine similarity is inline in
   `CompanySimilarity`).
 - D3 force graph debounces resize (150ms) before restarting simulation.

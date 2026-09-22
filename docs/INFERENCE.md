@@ -17,8 +17,9 @@ local dev only.
 
 - **ExitPredictor**, similarity, clustering, valuation matrix — deterministic
   heuristics on `dataset.verified.json` (see [MODEL_CARD.md](./MODEL_CARD.md)).
-- **TensorFlow “ensemble”** — quarantined under `src/lib/ml/_quarantine/`
-  (untrained demo; not imported by the app).
+- **TensorFlow “ensemble”** — removed. It was an untrained TF.js stub predicting
+  trial-phase success (`TrialFeatures` → `successProbability`), never fitted,
+  and already superseded by `ml/clinical_trials/`.
 
 ## Environment
 
