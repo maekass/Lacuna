@@ -52,7 +52,7 @@ Framer marketing site.
 | `/`             | Hub          | Hero, provenance, headline stats, workspace cards |
 | `/deals`        | Deals        | Network, deal flow, matrix, acquirer landscape    |
 | `/research`     | Research     | Trials, evidence, genomics, health equity         |
-| `/methods`      | Methods      | Causal framing, temporal, sensitivity, Bayesian   |
+| `/methods`      | Methods      | Record quality, verified sector counts, timing    |
 | `/intelligence` | Intelligence | Reimbursement, acquirer fit, Gamma export         |
 
 Legacy monolith hash bookmarks (`/#network`, etc.) redirect to the matching
