@@ -18,6 +18,7 @@ import {
   type ValuationInputs,
 } from "@/lib/valuation/burdenCapitalGap";
 import { reportWarning } from "@/lib/observability/reportError";
+import { BurdenCapitalOpportunityNote } from "@/components/research/BurdenCapitalOpportunityNote";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
@@ -230,8 +231,9 @@ export default function BurdenCapitalGapValuation() {
       {/* Gap landscape overview */}
       <div className="rounded-xl border border-lacuna-pink/30 bg-white p-5 shadow-sm">
         <h3 className="mb-1 text-sm font-semibold text-lacuna-plum">
-          Burden-Capital Gap Landscape
+          Burden–Capital Opportunity Context
         </h3>
+        <BurdenCapitalOpportunityNote methodologyNote="Population burden and historical funding context already cited on this panel. Dollar output remains the verified-dataset stage funding median. This card records supplied use limits; it does not add verification beyond those citations." />
         <p className="mb-4 text-xs text-lacuna-blue/80">
           Each bar shows how underfunded a disease area is relative to its
           societal burden (DALYs<CitationMarkers ids={["gbd2021"]} />,
@@ -248,7 +250,7 @@ export default function BurdenCapitalGapValuation() {
         {/* ── Inputs ── */}
         <div className="rounded-xl border border-lacuna-pink/30 bg-white p-5 shadow-sm">
           <h3 className="mb-4 text-sm font-semibold text-lacuna-plum">
-            Investment parameters
+            Context inputs
           </h3>
 
           {/* Therapeutic area */}
@@ -451,11 +453,12 @@ export default function BurdenCapitalGapValuation() {
               className="rounded-xl border border-amber-200 bg-amber-50 p-5"
             >
               <h3 className="text-sm font-semibold text-amber-800">
-                Valuation unavailable
+                Stage funding median unavailable
               </h3>
               <p className="mt-1 text-xs text-amber-700">
-                These inputs could not be valued ({valuation.error}). Adjust the
-                stage or focus area and try again.
+                These inputs could not produce a stage funding median
+                ({valuation
+                  .error}). Adjust the stage or focus area and try again.
               </p>
             </div>
           )}
@@ -537,7 +540,7 @@ export default function BurdenCapitalGapValuation() {
 
                 {/* Factor breakdown */}
                 <h4 className="mb-2 text-xs font-semibold text-lacuna-plum">
-                  Value drivers
+                  Context factors
                 </h4>
                 <div className="space-y-2">
                   {result.factors.map((f) => (

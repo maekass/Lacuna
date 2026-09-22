@@ -91,7 +91,7 @@ const scores = scoreClinicalTrial({
 | Component                         | Type                                         |
 | --------------------------------- | -------------------------------------------- |
 | Evidence Maturity Dashboard       | Rule-based (`evidenceMaturityCalculator.ts`) |
-| Exit Predictor                    | Hand-set weights on verified deals           |
+| Exit Similarity Explorer          | Hand-set weights on verified deals           |
 | AI Insights panel                 | External LLM (optional)                      |
 | **Clinical trials ML**            | **Offline sklearn → JSON → TS inference**    |
 | `export_llm_corpus.py`            | Data prep only — not an LLM                  |

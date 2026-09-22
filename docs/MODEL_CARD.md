@@ -1,4 +1,4 @@
-# Model Card: Acquisition similarity indicators
+# Model Card: Exit Similarity Explorer
 
 **Components**: `ExitPredictor.tsx` and `QuantValuationPanel.tsx` (lazy-loaded
 from `src/app/lazyDashboard.tsx`; mounted on `/deals#quant-valuation` and
@@ -40,17 +40,17 @@ validate, or claim statistical predictive power.
 Every user-visible label that renders these quantities, with file:line against
 this tree:
 
-| Surface                    | String                                                                                   | File:line                                                     |
-| -------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Quant valuation heading    | "Quant valuation & similarity index (heuristic)"                                         | `QuantValuationPanel.tsx:117`                                 |
-| Quant valuation column     | "Heuristic est."                                                                         | `QuantValuationPanel.tsx:159`                                 |
-| Quant valuation column     | "Similarity index"                                                                       | `QuantValuationPanel.tsx:162`                                 |
-| Quant valuation cell       | unitless 0–100 index (`Math.round(similarityIndex * 100)`), no `%`                       | `QuantValuationPanel.tsx:216-218`                             |
-| Quant valuation footer     | "Heuristic estimate uses verified comparable-deals anchors only."                        | `QuantValuationPanel.tsx:240`                                 |
-| ExitPredictor heading      | "Acquisition similarity indicators"                                                      | `ExitPredictor.tsx:350`                                       |
-| ExitPredictor column       | "Similarity band" (Low / Moderate / High)                                                | `ExitPredictor.tsx:558`                                       |
-| ExitPredictor chip         | same ordinal band                                                                        | `ExitPredictor.tsx:481`                                       |
-| ExitPredictor / PitchBrief | "Factor coverage" — High / Medium / Low label of the factor-coverage heuristic, not a CI | `ExitPredictor.tsx:496-500`, `:564`; `PitchBrief.tsx:148-151` |
+| Surface                    | String                                                                                                                              | File                                  |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| Quant panel heading        | "Comparable context & historical acquisition-pattern similarity"                                                                    | `QuantValuationPanel.tsx`             |
+| Quant panel column         | "Heuristic est."                                                                                                                    | `QuantValuationPanel.tsx`             |
+| Quant panel column         | "Historical acquisition-pattern similarity"                                                                                         | `QuantValuationPanel.tsx`             |
+| Quant panel cell           | unitless 0–100 index (`Math.round(similarityIndex * 100)`), no `%`                                                                  | `QuantValuationPanel.tsx`             |
+| Quant panel footer         | "Heuristic estimate uses verified comparable-deals anchors only."                                                                   | `QuantValuationPanel.tsx`             |
+| ExitPredictor heading      | "Exit Similarity Explorer"                                                                                                          | `ExitPredictor.tsx`                   |
+| ExitPredictor column       | "Similarity band" (Low / Moderate / High)                                                                                           | `ExitPredictor.tsx`                   |
+| ExitPredictor chip         | same ordinal band                                                                                                                   | `ExitPredictor.tsx`                   |
+| ExitPredictor / PitchBrief | "Data coverage and assumption completeness" — High / Medium / Low label of the factor-coverage heuristic, not a confidence interval | `ExitPredictor.tsx`, `PitchBrief.tsx` |
 
 Internal code still uses `AcquisitionPredictor.predictAcquisition()`
 (`predictionEngines.ts:99`) and a `probability` field (`types.ts:99`). Those
@@ -88,9 +88,10 @@ confidence interval. It is a factor-coverage heuristic:
 clamped to [0.35, 0.95] (`exitFactorCoverage.ts`). Outcome membership is not an
 input. Peer medians exclude the company being scored.
 
-The UI label is **Factor coverage** and shows only the High / Medium / Low
-mapping from `getConfidenceLabel` (`PitchBrief.tsx:37-41`): High `≥ 0.75`,
-Medium `≥ 0.55`, otherwise Low. No second percentage is rendered.
+The UI label is **Data coverage and assumption completeness** and shows only the
+High / Medium / Low mapping from `getConfidenceLabel` (`PitchBrief.tsx`): High
+`≥ 0.75`, Medium `≥ 0.55`, otherwise Low. No second percentage is rendered. The
+internal field remains `confidence`.
 
 ---
 
@@ -110,9 +111,9 @@ This is a **different** heuristic from Surface 1.
    (`empiricalPriors.ts:180-184` = acquired-in-dataset / companies.length,
    currently 59/150) and a sector-share adjustment (`acquisitionIndex.ts`
    `SECTOR_SHARE_SCALE = 5`, an undocumented heuristic pending derivation).
-3. The product is rendered as a unitless 0–100 similarity index
-   (`QuantValuationPanel.tsx:216-218`). It is **not** a probability and has **no
-   time horizon**.
+3. The product is rendered as a unitless 0–100 historical acquisition-pattern
+   similarity (`QuantValuationPanel.tsx`). It is **not** a probability and has
+   **no time horizon**.
 
 `timelineMonths` (`predictionEngines.ts:139-144`) is a hardcoded per-stage
 lookup (60/48/24/12). It is returned alongside the index and is **never
@@ -199,7 +200,7 @@ and **not** investment advice. See [HAZARD.md](HAZARD.md).
 If referencing this tool in academic or professional contexts:
 
 > Kass, M. (2026). _Lacuna: Network Intelligence Platform for Women's Health
-> M&A_. Open-source portfolio project. Acquisition similarity indicators use
+> M&A_. Open-source portfolio project. The Exit Similarity Explorer uses
 > deterministic factor scoring derived from n=59 verified public-domain
 > acquisitions (dataset v9); no fitted predictive model is employed. The
 > in-sample catalog share is 59/150; coverage against the AOA Dx Follow the

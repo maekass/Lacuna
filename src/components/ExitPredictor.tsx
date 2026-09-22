@@ -17,6 +17,7 @@ import type {
 import { factorCoverageScore } from "@/lib/quant/exitFactorCoverage";
 import { indicatorBand } from "@/lib/quant/indicatorBands";
 import type { Company, ExitPrediction } from "@/lib/types";
+import { DETERMINISTIC_COMPARISON_BOUNDARY } from "@/lib/research/evidenceBoundaries";
 
 export interface PredictionFactor {
   label: string;
@@ -323,8 +324,8 @@ export default function ExitPredictor() {
       "Sector",
       "Stage",
       "Similarity band",
-      "Predicted Acquirer",
-      "Factor coverage",
+      "Precedent acquirer",
+      "Data coverage and assumption completeness",
       "Acquired",
     ];
     const rows = predictions.map((prediction, index) => [
@@ -360,12 +361,12 @@ export default function ExitPredictor() {
       <div className="flex flex-col gap-4 mb-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
           <h3 className="text-lg font-semibold text-lacuna-text-primary">
-            Acquisition similarity indicators
+            Exit Similarity Explorer
           </h3>
           <p className="text-sm text-lacuna-text-muted">
             {mode === "single"
-              ? "Descriptive factor scoring from verified dataset (not a predictive model)"
-              : "Ranked descriptive baseline across all verified companies, including historical acquisitions"}
+              ? "Deterministic context engine — descriptive factor scoring from the verified dataset"
+              : "Deterministic context engine — ranked descriptive baseline across verified companies, including historical acquisitions"}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -435,6 +436,9 @@ export default function ExitPredictor() {
           Weights are fixed and disclosed; there is no fitted model and no
           randomness.
         </p>
+        <p className="mt-2 text-xs leading-relaxed text-amber-900" role="note">
+          {DETERMINISTIC_COMPARISON_BOUNDARY}
+        </p>
       </div>
 
       {mode === "single"
@@ -498,7 +502,7 @@ export default function ExitPredictor() {
                   <div className="grid grid-cols-1 gap-3 text-sm text-lacuna-text-secondary sm:grid-cols-2">
                     <div className="rounded-lg bg-lacuna-surface-muted p-3">
                       <p className="text-xs font-medium uppercase tracking-wide text-lacuna-text-muted">
-                        Predicted acquirer
+                        Precedent acquirer
                       </p>
                       <p className="mt-1 font-medium text-lacuna-text-primary">
                         {selectedPrediction.predictedAcquirer}
@@ -506,7 +510,7 @@ export default function ExitPredictor() {
                     </div>
                     <div className="rounded-lg bg-lacuna-surface-muted p-3">
                       <p className="text-xs font-medium uppercase tracking-wide text-lacuna-text-muted">
-                        Factor coverage
+                        Data coverage and assumption completeness
                       </p>
                       <p className="mt-1 font-medium text-lacuna-text-primary">
                         {getConfidenceLabel(selectedPrediction.confidence)}
@@ -571,10 +575,10 @@ export default function ExitPredictor() {
                     Similarity band
                   </th>
                   <th className="px-4 py-3 text-left font-semibold">
-                    Predicted Acquirer
+                    Precedent acquirer
                   </th>
                   <th className="px-4 py-3 text-left font-semibold">
-                    Factor coverage
+                    Data coverage and assumption completeness
                   </th>
                 </tr>
               </thead>

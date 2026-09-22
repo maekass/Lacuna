@@ -1,5 +1,5 @@
 /**
- * Acquirer Prediction Engine
+ * Deterministic context engine
  *
  * Descriptive acquirer fit scoring from verified deal history and company
  * records. Value estimates use empirical priors from disclosed deal values
