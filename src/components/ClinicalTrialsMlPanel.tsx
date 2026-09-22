@@ -44,9 +44,9 @@ export default function ClinicalTrialsMlPanel() {
       {!released || !wh
         ? (
           <p className="text-sm text-lacuna-blue/80" role="status">
-            Insufficient disclosed training data. Hold-out metrics from a
-            synthetic_seed artifact are not shown. Retrain on live CT.gov labels
-            (`npm run ml:ct:train`) to release scores.
+            Relevance and completion scores are not published. This panel does
+            not show hold-out metrics from the offline training artifact. Trial
+            search below uses live ClinicalTrials.gov fields only.
           </p>
         )
         : (

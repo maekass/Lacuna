@@ -133,7 +133,7 @@ Deals catalog; consumer health is a separate in-memory filter of the same JSON.
 | **Consumer**     | `/consumer`     | Wearables, wellness apps, and consumer digital health M&A                                             |
 | **Payer Ops**    | `/payer-ops`    | Prior-auth friction and payer-aligned VC signals computed from the verified catalog                   |
 | **Research**     | `/research`     | Trials search, evidence maturity, health-equity markers, optional genomics browser                    |
-| **Methods**      | `/methods`      | Causal DAG, sensitivity, Bayesian small-_n_ framing                                                   |
+| **Methods**      | `/methods`      | Record quality, observed sector counts, announcement timing                                           |
 | **Intelligence** | `/intelligence` | Reimbursement context, acquirer fit scores, dataset export                                            |
 
 ---

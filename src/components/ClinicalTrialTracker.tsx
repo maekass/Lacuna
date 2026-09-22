@@ -177,7 +177,7 @@ export default function ClinicalTrialTracker() {
                 ? ` · WH relevance${
                   isCompletionProxyAvailable() ? " + completion proxy" : ""
                 } (${getClinicalTrialsTrainingSource()})`
-                : " · model scores withheld until training is live CT.gov data (not synthetic_seed)"}
+                : " · registry fields only; model scores are not published"}
             </p>
           </ModelProvenanceHint>
         </div>

@@ -54,10 +54,10 @@ export default function CausalInferenceEngine() {
           Observed deal patterns (verified)
         </h2>
         <p className="text-sm text-lacuna-blue mt-1">
-          This view reports counts from {totalDeals}{" "}
-          verified transactions. Causal effect estimates with confidence
-          intervals require a longitudinal panel not included in the public
-          dataset.
+          Counts from {totalDeals}{" "}
+          verified transactions in this curated set. A company counted “in
+          verified deals” appears as a target in the public dataset. This is not
+          an acquisition rate for the market and not a causal effect.
         </p>
       </div>
 

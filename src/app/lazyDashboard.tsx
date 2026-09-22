@@ -193,9 +193,6 @@ export const CompetitiveAnalysisDashboard = dynamic(
     loading: sectionFallback("h-96 animate-pulse rounded-xl bg-lacuna-pink/10"),
   },
 );
-export const CausalDAG = dynamic(() => import("@/components/CausalDAG"), {
-  loading: sectionFallback(),
-});
 export const CausalInferenceEngine = dynamic(
   () => import("@/components/CausalInferenceEngine"),
   {
@@ -204,18 +201,6 @@ export const CausalInferenceEngine = dynamic(
 );
 export const TemporalValidation = dynamic(
   () => import("@/components/TemporalValidation"),
-  {
-    loading: sectionFallback(),
-  },
-);
-export const SensitivityAnalysis = dynamic(
-  () => import("@/components/SensitivityAnalysis"),
-  {
-    loading: sectionFallback(),
-  },
-);
-export const BayesianCausalAnalysis = dynamic(
-  () => import("@/components/BayesianCausalAnalysis"),
   {
     loading: sectionFallback(),
   },

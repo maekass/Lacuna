@@ -20,6 +20,17 @@ local dev only.
 - **TensorFlow “ensemble”** — removed. It was an untrained TF.js stub predicting
   trial-phase success (`TrialFeatures` → `successProbability`), never fitted,
   and already superseded by `ml/clinical_trials/`.
+- **Public methods UI** — `/methods` shows record-quality grades, sector counts,
+  and announcement-year counts from the verified dataset. The illustrative
+  causal DAG, Bayesian small-n dashboard, and sensitivity sliders are not
+  mounted. Library helpers under `src/lib/causal/` are not a published result.
+
+## Clinical-trial scores
+
+Offline sklearn artifacts may exist for CI. While `trainingSource` in
+`src/data/ml/clinical-trials/model-card.json` is `synthetic_seed`, the public
+trial tracker and ML panel do not render model percentages. Live
+ClinicalTrials.gov fields (phase, status, enrollment, sponsor) stay.
 
 ## Environment
 

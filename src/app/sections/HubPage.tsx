@@ -132,7 +132,7 @@ export default function HubPage({
             </p>
           </Link>
           <Link
-            href="/methods#causal-dag"
+            href="/methods#data-quality"
             className="group rounded-xl border border-lacuna-lavender/50 bg-white/90 p-5 shadow-sm transition-shadow hover:shadow-md"
           >
             <p className="text-xs font-semibold uppercase tracking-wide text-lacuna-plum/70">
@@ -142,7 +142,7 @@ export default function HubPage({
               Methods &amp; infrastructure
             </p>
             <p className="mt-1 text-sm text-lacuna-blue">
-              Causal framing, pipeline ops, and honest small-n limits.
+              Record quality, coverage, and observed deal timing.
             </p>
           </Link>
         </div>
