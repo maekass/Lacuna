@@ -4,8 +4,8 @@ import {
   COMPLEMENTARY_SOURCE_UNIVERSE_NOTE,
   DETERMINISTIC_COMPARISON_BOUNDARY,
   DIAGNOSTICS_TOOLS_SECTOR_CONTEXT,
+  SVB_H2_2026_METHODOLOGY_NOTE,
   SVB_H2_2026_SOURCE,
-  SVB_STATE_OF_THE_MARKETS_H2_2026_URL,
 } from "@/lib/research/evidenceBoundaries";
 import { LACUNA_SAMPLE_BOUNDARY_NOTE } from "@/lib/data/lacunaDataset";
 import {
@@ -66,11 +66,17 @@ describe("womensHealthScope", () => {
     expect(LACUNA_SAMPLE_BOUNDARY_NOTE).toBe(
       "Lacuna is a curated public-source sample, not a census of women's-health M&A. Coverage varies by sector, geography, disclosure availability, and women's-health scope. Undisclosed transaction values are excluded from disclosed-value totals.",
     );
-    expect(SVB_H2_2026_SOURCE.sourceUrl).toContain(
-      "healthcare-investments-and-exits",
-    );
-    expect(SVB_STATE_OF_THE_MARKETS_H2_2026_URL).toContain(
-      "state-of-the-markets-report",
+    expect(SVB_H2_2026_SOURCE).toMatchObject({
+      title: "Healthcare Investments and Exits H2 2026",
+      publishedDate: "August 25, 2026",
+      dataCutoff: "June 30, 2026",
+      scope: "US and Europe healthcare venture and exit context",
+      sourceType: "industry market report",
+      sourceUrl:
+        "https://www.svb.com/trends-insights/reports/healthcare-investments-and-exits/",
+    });
+    expect(SVB_H2_2026_METHODOLOGY_NOTE).toBe(
+      "Lacuna’s cited H2 2026 analysis is based on the report published August 25, 2026, with data through June 30, 2026. The public SVB report hub may surface a different edition over time. This source is used only as time-bound sector context, not as a company score, valuation, probability of exit, or investment recommendation.",
     );
   });
 });

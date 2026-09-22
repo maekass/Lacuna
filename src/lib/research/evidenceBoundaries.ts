@@ -21,28 +21,22 @@ export const DIAGNOSTICS_TOOLS_SECTOR_CONTEXT =
 
 /**
  * SVB sector-context fields.
- * The required report title stays H2 2026 with a June 30, 2026 cutoff.
- * The public Healthcare Investments and Exits landing page currently
- * published is the H1 2026 edition; State of the Markets H2 2026 is the
- * page that documents the June 30, 2026 cutoff.
+ * Title stays H2 2026. The public URL is the report hub; the hub may surface
+ * a different edition over time.
  */
 export const SVB_H2_2026_SOURCE = {
   source: "SVB",
   title: "Healthcare Investments and Exits H2 2026",
-  publishedDate: "H2 2026",
+  publishedDate: "August 25, 2026",
   dataCutoff: "June 30, 2026",
-  scope:
-    "current sector-level healthcare funding and exit context, time-bound to H1 2026 data",
-  sourceType: "cited sector report",
+  scope: "US and Europe healthcare venture and exit context",
+  sourceType: "industry market report",
   sourceUrl:
-    "https://www.svb.com/trends-insights/reports/healthcare-investments-and-exits/h1-2026/",
+    "https://www.svb.com/trends-insights/reports/healthcare-investments-and-exits/",
 } as const;
 
-export const SVB_STATE_OF_THE_MARKETS_H2_2026_URL =
-  "https://www.svb.com/trends-insights/reports/state-of-the-markets-report/";
-
 export const SVB_H2_2026_METHODOLOGY_NOTE =
-  "The public SVB Healthcare Investments and Exits landing page currently published is the H1 2026 edition. The June 30, 2026 data cutoff is documented on SVB's State of the Markets H2 2026 page. Those pages are complementary SVB context, not interchangeable counts or coverage universes.";
+  "Lacuna’s cited H2 2026 analysis is based on the report published August 25, 2026, with data through June 30, 2026. The public SVB report hub may surface a different edition over time. This source is used only as time-bound sector context, not as a company score, valuation, probability of exit, or investment recommendation.";
 
 export const WEF_BCG_SOURCE = {
   source: "World Economic Forum and Boston Consulting Group",
