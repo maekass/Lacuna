@@ -12,8 +12,7 @@ export const contentType = OG_CONTENT_TYPE;
 export default function Image() {
   return renderWorkspaceOgImage({
     title: "Methods",
-    subtitle:
-      "Causal DAG · Bayesian inference · Temporal analysis · Sensitivity",
-    tags: ["causal", "bayesian", "temporal"],
+    subtitle: "Record quality · Observed sector counts · Announcement timing",
+    tags: ["quality", "coverage", "timing"],
   });
 }

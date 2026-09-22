@@ -1,6 +1,7 @@
 {
   "version": "clinical-trials-v2",
-  "description": "Offline sklearn models on ClinicalTrials.gov: WH relevance + completion proxy (COMPLETED vs stopped). Descriptive only.",
+  "description": "Offline sklearn models. Committed metrics are from a synthetic seed and must not be rendered in the public UI.",
+  "publishMetrics": false,
   "trainingSource": "synthetic_seed",
   "recordCount": 1200,
   "exportGate": {

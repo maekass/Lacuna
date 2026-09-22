@@ -9,7 +9,7 @@ export const revalidate = 86_400;
 export const metadata: Metadata = {
   title: "Lacuna · Methods",
   description:
-    "Causal DAG, Bayesian small-n analysis, temporal patterns, and sensitivity analysis for women's health M&A research.",
+    "Record-quality grades, observed sector composition, and announcement timing from the verified women's health M&A dataset.",
   alternates: { canonical: "/methods" },
 };
 

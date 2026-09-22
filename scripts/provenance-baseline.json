@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "total": 1002,
+  "total": 930,
   "covered": 21,
   "exempt": 2,
-  "uncovered": 979,
+  "uncovered": 907,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
     "src/app/sections/ConsumerHealthPage.tsx": 6,
@@ -11,20 +11,16 @@
     "src/app/sections/DealsPage.tsx": 12,
     "src/app/sections/HubPage.tsx": 15,
     "src/app/sections/IntelligencePage.tsx": 4,
-    "src/app/sections/MethodsPage.tsx": 4,
+    "src/app/sections/MethodsPage.tsx": 1,
     "src/app/sections/PayerOpsPage.tsx": 49,
     "src/app/sections/ResearchPage.tsx": 10,
     "src/app/sections/StagingDealDetailPage.tsx": 2,
     "src/components/AcquirerPredictionDashboard.tsx": 21,
     "src/components/AIInsightsPanel.tsx": 1,
-    "src/components/BayesianCausalAnalysis.tsx": 26,
     "src/components/BurdenCapitalGap.tsx": 16,
     "src/components/BurdenCapitalGapValuation.tsx": 19,
     "src/components/business-model-classifier.tsx": 18,
     "src/components/CandidateImportPanel.tsx": 4,
-    "src/components/CausalDAG.tsx": 17,
-    "src/components/CausalInferenceEngine.tsx": 4,
-    "src/components/ClinicalTrialsMlPanel.tsx": 3,
     "src/components/ClinicalTrialTracker.tsx": 10,
     "src/components/ClusteringAnalysis.tsx": 6,
     "src/components/CommercializationReadiness.tsx": 8,
@@ -60,6 +56,7 @@
     "src/components/layout/SiteFooter.tsx": 1,
     "src/components/MetricEvidence.tsx": 16,
     "src/components/NetworkAnalysisHonest.tsx": 90,
+    "src/components/ObservedSectorComposition.tsx": 4,
     "src/components/PatientEmpowermentInsight.tsx": 12,
     "src/components/PatientEmpowermentPanel.tsx": 22,
     "src/components/PipelineStatusStrip.tsx": 1,
@@ -74,10 +71,9 @@
     "src/components/research/GapIndexBar.tsx": 4,
     "src/components/ReviewConsole.tsx": 3,
     "src/components/RhCapitalPortfolioContext.tsx": 4,
-    "src/components/SensitivityAnalysis.tsx": 16,
     "src/components/SpaceWhResearchGapsPanel.tsx": 5,
     "src/components/StrategicPositioningMap.tsx": 61,
-    "src/components/SurvivalCurve.tsx": 18,
+    "src/components/SurvivalCurve.tsx": 11,
     "src/components/SystemHealthDashboard.tsx": 3,
     "src/components/TemporalValidation.tsx": 3,
     "src/components/TherapeuticAreaCoveragePanel.tsx": 11,
@@ -515,30 +511,6 @@
       "expression": "0.05",
       "kind": "numeric-jsx",
       "key": "src/app/sections/MethodsPage.tsx::MethodsPage::0.05",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/app/sections/MethodsPage.tsx",
-      "functionName": "MethodsPage",
-      "expression": "0.1",
-      "kind": "numeric-jsx",
-      "key": "src/app/sections/MethodsPage.tsx::MethodsPage::0.1",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/app/sections/MethodsPage.tsx",
-      "functionName": "MethodsPage",
-      "expression": "0.15",
-      "kind": "numeric-jsx",
-      "key": "src/app/sections/MethodsPage.tsx::MethodsPage::0.15",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/app/sections/MethodsPage.tsx",
-      "functionName": "MethodsPage",
-      "expression": "0.2",
-      "kind": "numeric-jsx",
-      "key": "src/app/sections/MethodsPage.tsx::MethodsPage::0.2",
       "class": "uncovered"
     },
     {
@@ -1214,214 +1186,6 @@
       "class": "uncovered"
     },
     {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "(analysis.mainEffects.priorInfluence * 100).toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::(analysis.mainEffects.priorInfluence * 100).toFixed(1)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "(analysis.mainEffects.priorInfluence * 100).toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::(analysis.mainEffects.priorInfluence * 100).toFixed(1)#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "(analysis.mainEffects.probabilityNegative * 100).toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::(analysis.mainEffects.probabilityNegative * 100).toFixed(1)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "(analysis.mainEffects.probabilityNegative * 100).toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::(analysis.mainEffects.probabilityNegative * 100).toFixed(1)#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "(analysis.mainEffects.probabilityPositive * 100).toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::(analysis.mainEffects.probabilityPositive * 100).toFixed(1)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "(analysis.mainEffects.probabilityPositive * 100).toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::(analysis.mainEffects.probabilityPositive * 100).toFixed(1)#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "(analysis.mainEffects.probabilityPositive * 100).toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::(analysis.mainEffects.probabilityPositive * 100).toFixed(1)#3",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "analysis.mainEffects.bayesFactor.toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::analysis.mainEffects.bayesFactor.toFixed(1)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "analysis.mainEffects.bayesFactor.toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::analysis.mainEffects.bayesFactor.toFixed(1)#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "analysis.mainEffects.credibleInterval[0].toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::analysis.mainEffects.credibleInterval[0].toFixed(3)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "analysis.mainEffects.credibleInterval[1].toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::analysis.mainEffects.credibleInterval[1].toFixed(3)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "analysis.mainEffects.posteriorMean.toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::analysis.mainEffects.posteriorMean.toFixed(3)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "ev.evalue.toFixed(2)",
-      "kind": "formatting-call",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::ev.evalue.toFixed(2)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "ev.evalueCI?.toFixed(2)",
-      "kind": "formatting-call",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::ev.evalueCI?.toFixed(2)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "ev.rr.toFixed(2)",
-      "kind": "formatting-call",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::ev.rr.toFixed(2)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "field.min",
-      "kind": "numeric-jsx",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::field.min",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "field.step",
-      "kind": "numeric-jsx",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::field.step",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "index",
-      "kind": "numeric-jsx",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::index",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "index + 1",
-      "kind": "numeric-jsx",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::index + 1",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "index + 1",
-      "kind": "numeric-jsx",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::index + 1#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "index",
-      "kind": "numeric-jsx",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::index#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "inputs.sampleSize",
-      "kind": "numeric-jsx",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::inputs.sampleSize",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "inputs.sampleSize",
-      "kind": "numeric-jsx",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::inputs.sampleSize#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "inputs[field.key as keyof AnalysisInputs]",
-      "kind": "numeric-jsx",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::inputs[field.key as keyof AnalysisInputs]",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "PRE_REGISTERED_HYPOTHESES.length",
-      "kind": "numeric-jsx",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::PRE_REGISTERED_HYPOTHESES.length",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/BayesianCausalAnalysis.tsx",
-      "functionName": "BayesianCausalAnalysis",
-      "expression": "result.hypothesis.expectedEffect",
-      "kind": "numeric-jsx",
-      "key": "src/components/BayesianCausalAnalysis.tsx::BayesianCausalAnalysis::result.hypothesis.expectedEffect",
-      "class": "uncovered"
-    },
-    {
       "file": "src/components/BurdenCapitalGap.tsx",
       "functionName": "BurdenCapitalGap",
       "expression": "BURDEN_CAPITAL_GAP_DATA.find((r) => r.id === \"cardiovascular\") ?.fundingEvents",
@@ -1875,198 +1639,6 @@
       "expression": "result.sync?.updated ?? 0",
       "kind": "numeric-jsx",
       "key": "src/components/CandidateImportPanel.tsx::CandidateImportPanel::result.sync?.updated ?? 0",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "(fromNode.x + toNode.x) / 2",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::(fromNode.x + toNode.x) / 2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "(fromNode.y + toNode.y) / 2 - 10",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::(fromNode.y + toNode.y) / 2 - 10",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "fromNode.x + 60",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::fromNode.x + 60",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "fromNode.y",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::fromNode.y",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "i",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::i",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "i === 0 ? -5 : 14",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::i === 0 ? -5 : 14",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "index",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::index",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "MEASURED_CONFOUNDERS.length",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::MEASURED_CONFOUNDERS.length",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "node.type === \"unmeasured\" ? 0.8 : 1",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::node.type === \"unmeasured\" ? 0.8 : 1",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "node.x",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::node.x",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "node.x - 60",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::node.x - 60",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "node.x",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::node.x#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "node.y",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::node.y",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "node.y - 25",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::node.y - 25",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "toNode.x - 60",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::toNode.x - 60",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "toNode.y",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::toNode.y",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalDAG.tsx",
-      "functionName": "CausalDAG",
-      "expression": "UNMEASURED_CONFOUNDERS.length",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalDAG.tsx::CausalDAG::UNMEASURED_CONFOUNDERS.length",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalInferenceEngine.tsx",
-      "functionName": "CausalInferenceEngine",
-      "expression": "(row.rate * 100).toFixed(0)",
-      "kind": "formatting-call",
-      "key": "src/components/CausalInferenceEngine.tsx::CausalInferenceEngine::(row.rate * 100).toFixed(0)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalInferenceEngine.tsx",
-      "functionName": "CausalInferenceEngine",
-      "expression": "row.acquired",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalInferenceEngine.tsx::CausalInferenceEngine::row.acquired",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalInferenceEngine.tsx",
-      "functionName": "CausalInferenceEngine",
-      "expression": "row.companies",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalInferenceEngine.tsx::CausalInferenceEngine::row.companies",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CausalInferenceEngine.tsx",
-      "functionName": "CausalInferenceEngine",
-      "expression": "totalDeals",
-      "kind": "numeric-jsx",
-      "key": "src/components/CausalInferenceEngine.tsx::CausalInferenceEngine::totalDeals",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ClinicalTrialsMlPanel.tsx",
-      "functionName": "ClinicalTrialsMlPanel",
-      "expression": "(completion.majority_baseline_accuracy * 100) .toFixed(0)",
-      "kind": "formatting-call",
-      "key": "src/components/ClinicalTrialsMlPanel.tsx::ClinicalTrialsMlPanel::(completion.majority_baseline_accuracy * 100) .toFixed(0)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ClinicalTrialsMlPanel.tsx",
-      "functionName": "ClinicalTrialsMlPanel",
-      "expression": "completion.roc_auc?.toFixed(2)",
-      "kind": "formatting-call",
-      "key": "src/components/ClinicalTrialsMlPanel.tsx::ClinicalTrialsMlPanel::completion.roc_auc?.toFixed(2)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ClinicalTrialsMlPanel.tsx",
-      "functionName": "ClinicalTrialsMlPanel",
-      "expression": "wh.roc_auc?.toFixed(2)",
-      "kind": "formatting-call",
-      "key": "src/components/ClinicalTrialsMlPanel.tsx::ClinicalTrialsMlPanel::wh.roc_auc?.toFixed(2)",
       "class": "uncovered"
     },
     {
@@ -5534,6 +5106,38 @@
       "class": "uncovered"
     },
     {
+      "file": "src/components/ObservedSectorComposition.tsx",
+      "functionName": "ObservedSectorComposition",
+      "expression": "(row.rate * 100).toFixed(0)",
+      "kind": "formatting-call",
+      "key": "src/components/ObservedSectorComposition.tsx::ObservedSectorComposition::(row.rate * 100).toFixed(0)",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ObservedSectorComposition.tsx",
+      "functionName": "ObservedSectorComposition",
+      "expression": "row.acquired",
+      "kind": "numeric-jsx",
+      "key": "src/components/ObservedSectorComposition.tsx::ObservedSectorComposition::row.acquired",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ObservedSectorComposition.tsx",
+      "functionName": "ObservedSectorComposition",
+      "expression": "row.companies",
+      "kind": "numeric-jsx",
+      "key": "src/components/ObservedSectorComposition.tsx::ObservedSectorComposition::row.companies",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/ObservedSectorComposition.tsx",
+      "functionName": "ObservedSectorComposition",
+      "expression": "totalDeals",
+      "kind": "numeric-jsx",
+      "key": "src/components/ObservedSectorComposition.tsx::ObservedSectorComposition::totalDeals",
+      "class": "uncovered"
+    },
+    {
       "file": "src/components/PatientEmpowermentInsight.tsx",
       "functionName": "PatientEmpowermentInsight",
       "expression": "data.criticalMetricCount",
@@ -6238,134 +5842,6 @@
       "class": "uncovered"
     },
     {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "(s.bounds.upperBound - s.bounds.lowerBound).toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::(s.bounds.upperBound - s.bounds.lowerBound).toFixed(3)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "field.max",
-      "kind": "numeric-jsx",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::field.max",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "field.min",
-      "kind": "numeric-jsx",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::field.min",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "field.step",
-      "kind": "numeric-jsx",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::field.step",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "index",
-      "kind": "numeric-jsx",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::index",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "index + 1",
-      "kind": "numeric-jsx",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::index + 1",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "inputs[field.key as keyof AnalysisInputs]",
-      "kind": "numeric-jsx",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::inputs[field.key as keyof AnalysisInputs]",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "report.oster.criticalDelta",
-      "kind": "numeric-jsx",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::report.oster.criticalDelta",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "report.oster.delta.toFixed(2)",
-      "kind": "formatting-call",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::report.oster.delta.toFixed(2)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "report.oster.robustnessThreshold",
-      "kind": "numeric-jsx",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::report.oster.robustnessThreshold",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "report.rotnitzky.lowerBound.toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::report.rotnitzky.lowerBound.toFixed(3)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "report.rotnitzky.pointEstimate.toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::report.rotnitzky.pointEstimate.toFixed(3)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "report.rotnitzky.pointEstimate.toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::report.rotnitzky.pointEstimate.toFixed(3)#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "report.rotnitzky.upperBound.toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::report.rotnitzky.upperBound.toFixed(3)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "s.bounds.lowerBound.toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::s.bounds.lowerBound.toFixed(3)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SensitivityAnalysis.tsx",
-      "functionName": "SensitivityAnalysis",
-      "expression": "s.bounds.upperBound.toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/SensitivityAnalysis.tsx::SensitivityAnalysis::s.bounds.upperBound.toFixed(3)",
-      "class": "uncovered"
-    },
-    {
       "file": "src/components/SpaceWhResearchGapsPanel.tsx",
       "functionName": "FunnelBar",
       "expression": "count",
@@ -6895,42 +6371,10 @@
     },
     {
       "file": "src/components/SurvivalCurve.tsx",
-      "functionName": "pLabel",
-      "expression": "p.toFixed(2)",
-      "kind": "formatting-call",
-      "key": "src/components/SurvivalCurve.tsx::pLabel::p.toFixed(2)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SurvivalCurve.tsx",
-      "functionName": "pLabel",
-      "expression": "p.toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/SurvivalCurve.tsx::pLabel::p.toFixed(3)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SurvivalCurve.tsx",
       "functionName": "SurvivalCurve",
       "expression": "d3.format(\".0%\")",
       "kind": "formatting-call",
       "key": "src/components/SurvivalCurve.tsx::SurvivalCurve::d3.format(\".0%\")",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SurvivalCurve.tsx",
-      "functionName": "SurvivalCurve",
-      "expression": "km.medianCI[0].toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/SurvivalCurve.tsx::SurvivalCurve::km.medianCI[0].toFixed(1)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SurvivalCurve.tsx",
-      "functionName": "SurvivalCurve",
-      "expression": "km.medianCI[1].toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/SurvivalCurve.tsx::SurvivalCurve::km.medianCI[1].toFixed(1)",
       "class": "uncovered"
     },
     {
@@ -6955,30 +6399,6 @@
       "expression": "km.nEvents",
       "kind": "numeric-jsx",
       "key": "src/components/SurvivalCurve.tsx::SurvivalCurve::km.nEvents",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SurvivalCurve.tsx",
-      "functionName": "SurvivalCurve",
-      "expression": "logRank.chiSquared.toFixed(2)",
-      "kind": "formatting-call",
-      "key": "src/components/SurvivalCurve.tsx::SurvivalCurve::logRank.chiSquared.toFixed(2)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SurvivalCurve.tsx",
-      "functionName": "SurvivalCurve",
-      "expression": "logRank.df",
-      "kind": "numeric-jsx",
-      "key": "src/components/SurvivalCurve.tsx::SurvivalCurve::logRank.df",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/SurvivalCurve.tsx",
-      "functionName": "SurvivalCurve",
-      "expression": "logRankCorrected[0].pAdjusted",
-      "kind": "numeric-jsx",
-      "key": "src/components/SurvivalCurve.tsx::SurvivalCurve::logRankCorrected[0].pAdjusted",
       "class": "uncovered"
     },
     {

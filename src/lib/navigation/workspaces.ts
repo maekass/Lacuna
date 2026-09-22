@@ -89,14 +89,12 @@ export const WORKSPACES: Workspace[] = [
     href: "/methods",
     label: "Methods",
     description:
-      "Causal framing, temporal patterns, sensitivity, and Bayesian small-n.",
-    tags: ["causal", "bayesian", "temporal"],
+      "Record quality, observed sector composition, and announcement timing.",
+    tags: ["quality", "coverage", "timing"],
     sections: [
-      { id: "causal-dag", label: "DAG" },
-      { id: "causal-engine", label: "Causal" },
+      { id: "data-quality", label: "Quality" },
+      { id: "observed-patterns", label: "Sectors" },
       { id: "temporal", label: "Timeline" },
-      { id: "sensitivity", label: "Sensitivity" },
-      { id: "bayesian-causal", label: "Bayesian" },
     ],
   },
   {
