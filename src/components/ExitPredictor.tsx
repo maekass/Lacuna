@@ -14,6 +14,8 @@ import type {
   VerifiedAcquisitionView,
   VerifiedDerivedData,
 } from "@/lib/data/verifiedDataHelpers";
+import { factorCoverageScore } from "@/lib/quant/exitFactorCoverage";
+import { indicatorBand } from "@/lib/quant/indicatorBands";
 import type { Company, ExitPrediction } from "@/lib/types";
 
 export interface PredictionFactor {
@@ -122,12 +124,27 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
         "Late Stage",
         "Pre-IPO",
       ].includes(company.stage);
-      const inPriorExitSector = acquiredSectors.has(company.sector);
+      const peerAcquired = acquiredCompanies.filter((c) => c.id !== company.id);
+      const peerValuationMedian = getMedian(
+        peerAcquired.map((c) => c.valuation).filter((v): v is number =>
+          typeof v === "number"
+        ),
+        acquiredValuationMedian,
+      );
+      const peerAgeMedian = getMedian(
+        peerAcquired
+          .filter((c) => c.founded !== undefined)
+          .map((c) => CURRENT_YEAR - c.founded!),
+        acquiredAgeMedian,
+      );
+      const inPriorExitSector = peerAcquired.some((c) =>
+        c.sector === company.sector
+      );
       const aboveValuationMedian =
-        (company.valuation ?? 0) >= acquiredValuationMedian;
-      const ageNearPriorMedian = Math.abs(age - acquiredAgeMedian) <= 3;
+        (company.valuation ?? 0) >= peerValuationMedian;
+      const ageNearPriorMedian = Math.abs(age - peerAgeMedian) <= 3;
       const isPublic = company.stage === "Public";
-      const similarPriorExits = acquiredCompanies.filter((c) =>
+      const similarPriorExits = peerAcquired.filter((c) =>
         c.sector === company.sector
       ).length;
 
@@ -175,15 +192,12 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
           sectorAcquirerCounts.get(company.sector),
           overallAcquirerCounts,
         );
-      const confidence = clamp(
-        0.35 +
-          factorDetails.filter((factor) => factor.present && factor.weight > 0)
-              .length * 0.1 +
-          Math.min(similarPriorExits * 0.05, 0.2) +
-          (acquisition ? 0.1 : 0),
-        0.35,
-        0.95,
-      );
+      const confidence = factorCoverageScore({
+        presentPositiveFactorCount: factorDetails.filter((factor) =>
+          factor.present && factor.weight > 0
+        ).length,
+        similarPriorExits,
+      });
 
       return {
         companyId: company.id,
@@ -308,9 +322,9 @@ export default function ExitPredictor() {
       "Company",
       "Sector",
       "Stage",
-      "Exit Probability",
+      "Similarity band",
       "Predicted Acquirer",
-      "Confidence",
+      "Factor coverage",
       "Acquired",
     ];
     const rows = predictions.map((prediction, index) => [
@@ -318,9 +332,9 @@ export default function ExitPredictor() {
       prediction.companyName,
       prediction.sector,
       prediction.stage,
-      (prediction.exitProbability * 100).toFixed(1),
+      indicatorBand(prediction.indicatorScore),
       prediction.predictedAcquirer,
-      (prediction.confidence * 100).toFixed(1),
+      getConfidenceLabel(prediction.confidence),
       prediction.isAcquired ? "Yes" : "No",
     ]);
     const csvString = [header, ...rows]
@@ -331,7 +345,7 @@ export default function ExitPredictor() {
     );
     const link = document.createElement("a");
     link.href = url;
-    link.download = "lacuna-exit-probability-leaderboard.csv";
+    link.download = "lacuna-similarity-band-leaderboard.csv";
     link.click();
     URL.revokeObjectURL(url);
   };
@@ -346,7 +360,7 @@ export default function ExitPredictor() {
       <div className="flex flex-col gap-4 mb-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
           <h3 className="text-lg font-semibold text-lacuna-text-primary">
-            Acquisition Likelihood Indicators
+            Acquisition similarity indicators
           </h3>
           <p className="text-sm text-lacuna-text-muted">
             {mode === "single"
@@ -477,9 +491,7 @@ export default function ExitPredictor() {
                         getScoreColor(selectedPrediction.indicatorScore)
                       }`}
                     >
-                      {(selectedPrediction.exitProbability * 100).toFixed(0)}
-                      {" "}
-                      / 100
+                      {indicatorBand(selectedPrediction.indicatorScore)}
                     </div>
                   </div>
 
@@ -494,11 +506,10 @@ export default function ExitPredictor() {
                     </div>
                     <div className="rounded-lg bg-lacuna-surface-muted p-3">
                       <p className="text-xs font-medium uppercase tracking-wide text-lacuna-text-muted">
-                        Confidence
+                        Factor coverage
                       </p>
                       <p className="mt-1 font-medium text-lacuna-text-primary">
-                        {getConfidenceLabel(selectedPrediction.confidence)}{" "}
-                        ({(selectedPrediction.confidence * 100).toFixed(0)}%)
+                        {getConfidenceLabel(selectedPrediction.confidence)}
                       </p>
                     </div>
                   </div>
@@ -557,13 +568,13 @@ export default function ExitPredictor() {
                   <th className="px-4 py-3 text-left font-semibold">Sector</th>
                   <th className="px-4 py-3 text-left font-semibold">Stage</th>
                   <th className="px-4 py-3 text-left font-semibold">
-                    Exit Probability
+                    Similarity band
                   </th>
                   <th className="px-4 py-3 text-left font-semibold">
                     Predicted Acquirer
                   </th>
                   <th className="px-4 py-3 text-left font-semibold">
-                    Confidence
+                    Factor coverage
                   </th>
                 </tr>
               </thead>
@@ -600,14 +611,12 @@ export default function ExitPredictor() {
                           <div
                             className="h-full rounded-full bg-lacuna-plum"
                             style={{
-                              width: `${
-                                (prediction.exitProbability * 100).toFixed(1)
-                              }%`,
+                              width: `${prediction.indicatorScore * 100}%`,
                             }}
                           />
                         </div>
                         <span className="text-xs font-medium text-lacuna-plum">
-                          {(prediction.exitProbability * 100).toFixed(1)}%
+                          {indicatorBand(prediction.indicatorScore)}
                         </span>
                       </div>
                     </td>
@@ -615,7 +624,7 @@ export default function ExitPredictor() {
                       {prediction.predictedAcquirer}
                     </td>
                     <td className="px-4 py-3 text-lacuna-blue">
-                      {(prediction.confidence * 100).toFixed(0)}%
+                      {getConfidenceLabel(prediction.confidence)}
                     </td>
                   </tr>
                 ))}

@@ -46,6 +46,7 @@ export const WORKSPACES: Workspace[] = [
       { id: "validation-tracker", label: "Outcomes" },
       { id: "white-space-analysis", label: "White space" },
       { id: "descriptive-scoring", label: "Similarity" },
+      { id: "similarity-indicators", label: "Indicators" },
       { id: "survival-analysis", label: "Survival" },
     ],
   },

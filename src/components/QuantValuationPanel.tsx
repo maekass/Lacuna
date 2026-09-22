@@ -29,12 +29,12 @@ interface Row {
   id: string;
   name: string;
   sector: string;
-  clinicalStageProxy: string;
+  clinicalStageProxy?: string;
   disclosedValuation?: number;
   modelEstimate: number | null;
   /** True when the estimate includes the verified comparable-deals anchor. */
   hasComparableAnchor: boolean;
-  acquisitionProbability: number | null;
+  similarityIndex: number | null;
   topDriver: string;
 }
 
@@ -85,7 +85,7 @@ export default function QuantValuationPanel() {
             ? modelEstimate
             : null,
           hasComparableAnchor,
-          acquisitionProbability: numericOrNull(prediction.probability),
+          similarityIndex: numericOrNull(prediction.probability),
           topDriver: DRIVER_LABELS[topDriver],
         };
       },
@@ -114,11 +114,11 @@ export default function QuantValuationPanel() {
       <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
         <div>
           <h3 className="text-lg font-semibold text-lacuna-plum">
-            Quant valuation &amp; exit-likelihood (heuristic)
+            Quant valuation &amp; similarity index (heuristic)
           </h3>
           <p className="text-sm text-lacuna-blue">
-            Rule-based valuation and a weighted exit-likelihood score — not a
-            trained model and not investment advice.
+            Rule-based valuation and a weighted similarity index — not a trained
+            model and not investment advice.
           </p>
         </div>
         <span className="text-xs text-lacuna-blue/80 px-2 py-1 bg-lacuna-pink/10 rounded shrink-0">
@@ -155,9 +155,11 @@ export default function QuantValuationPanel() {
               <th className="py-2 px-3 font-medium">Sector</th>
               <th className="py-2 px-3 font-medium">Stage (proxy)</th>
               <th className="py-2 px-3 font-medium text-right">Disclosed</th>
-              <th className="py-2 px-3 font-medium text-right">Model est.</th>
               <th className="py-2 px-3 font-medium text-right">
-                P(exit&nbsp;5y)
+                Heuristic est.
+              </th>
+              <th className="py-2 px-3 font-medium text-right">
+                Similarity index
               </th>
               <th className="py-2 pl-3 font-medium">Top driver</th>
             </tr>
@@ -175,7 +177,14 @@ export default function QuantValuationPanel() {
                 </td>
                 <td className="py-2 px-3 text-lacuna-blue">{row.sector}</td>
                 <td className="py-2 px-3 text-lacuna-blue/80">
-                  {row.clinicalStageProxy}
+                  {row.clinicalStageProxy ?? (
+                    <span
+                      className="text-xs text-lacuna-blue/40"
+                      title="Catalog stage is an acquisition outcome, not a clinical stage"
+                    >
+                      withheld
+                    </span>
+                  )}
                 </td>
                 <td className="py-2 px-3 text-right text-lacuna-blue">
                   {typeof row.disclosedValuation === "number"
@@ -211,8 +220,8 @@ export default function QuantValuationPanel() {
                     )}
                 </td>
                 <td className="py-2 px-3 text-right text-lacuna-plum">
-                  {row.acquisitionProbability != null
-                    ? `${(row.acquisitionProbability * 100).toFixed(0)}%`
+                  {row.similarityIndex != null
+                    ? Math.round(row.similarityIndex * 100)
                     : "—"}
                 </td>
                 <td className="py-2 pl-3 text-lacuna-blue/80">
@@ -235,13 +244,13 @@ export default function QuantValuationPanel() {
       )}
 
       <p className="mt-4 text-xs text-lacuna-blue/60 leading-relaxed">
-        Model estimate uses verified comparable-deals anchors only. Invented
+        Heuristic estimate uses verified comparable-deals anchors only. Invented
         TAM, revenue/EBITDA multiple, and R&amp;D-cost methods are withheld. The
         {" "}
         <span className="text-emerald-600">●</span>{" "}
         marker means the estimate includes an anchor from verified sector deals
         (median exit/funding multiples or median disclosed deal values).
-        Exit-likelihood base rate is the dataset&apos;s observed exit share.
+        Similarity-index base rate is the dataset&apos;s observed exit share.
         Driver weights remain heuristic; disclosed valuations are point-in-time
         public figures. Burden–capital gap scores stay on /research and do not
         decorate this table. Exploratory framing only.

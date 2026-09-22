@@ -23,7 +23,11 @@ export interface QuantCompany {
   name: string;
   sector: string;
   fundingStage: string;
-  clinicalStage: ClinicalStage;
+  /**
+   * Proxied from a pre-outcome funding-stage string only.
+   * Absent when the catalog stage is an acquisition outcome label.
+   */
+  clinicalStage?: ClinicalStage;
   annualRevenue?: number;
   ebitda?: number;
   raisedToDate: number;

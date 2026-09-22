@@ -13,7 +13,7 @@ SEO Meta Description: Lacuna — women's health M&A diligence stack. Verified de
 </blockquote>
 
 <p align="center">
-  The live app reads <code>src/data/dataset.verified.json</code> by default. Server-side LLM calls use <a href="docs/INFERENCE.md">Vercel AI Gateway</a> only. TensorFlow code is <a href="src/lib/ml/_quarantine/">quarantined</a> (not in the app). See <a href="docs/MODEL_CARD.md">MODEL_CARD.md</a> before citing any score.
+  The live app reads <code>src/data/dataset.verified.json</code> by default. Server-side LLM calls use <a href="docs/INFERENCE.md">Vercel AI Gateway</a> only. The untrained TensorFlow.js stub was removed — it predicted trial-phase success, was never fitted, and is superseded by <code>ml/clinical_trials/</code>. See <a href="docs/MODEL_CARD.md">MODEL_CARD.md</a> before citing any score.
 </p>
 
 <p align="center">
@@ -66,9 +66,9 @@ published methodology.
 
 | Claim                   | Reality                                                                                                                                                                                    |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Deal data               | Static `dataset.verified.json` v8 (`provenance.lastUpdated: 2026-09-20`) — dual scope: medicine & biotech (default) + consumer health (`/consumer`); 150 companies, 38 acquirers, 59 deals |
+| Deal data               | Static `dataset.verified.json` v9 (`provenance.lastUpdated: 2026-09-20`) — dual scope: medicine & biotech (default) + consumer health (`/consumer`); 150 companies, 38 acquirers, 59 deals |
 | Scores & "predictors"   | Deterministic rules and small-_n_ statistics — [MODEL_CARD.md](docs/MODEL_CARD.md)                                                                                                         |
-| "ML" / TensorFlow       | Quarantined under `src/lib/ml/_quarantine/` — **not** imported by the app                                                                                                                  |
+| "ML" / TensorFlow       | Removed. The untrained TF.js stub predicted trial success, not acquisition, and is superseded by `ml/clinical_trials/`                                                                     |
 | Server LLM              | [INFERENCE.md](docs/INFERENCE.md) — Vercel AI Gateway (+ OpenAI fallback for local dev)                                                                                                    |
 | Clinical trials panel   | Live ClinicalTrials.gov search; **M&A panels** still use the curated dataset                                                                                                               |
 | Production intelligence | **No** — not PitchBook, not a data SLA, not investment advice                                                                                                                              |
@@ -151,7 +151,7 @@ Deals catalog; consumer health is a separate in-memory filter of the same JSON.
   scope
 - **38 named acquirers**, including Hologic, KKR, Pfizer, Gilead, Boston
   Scientific, and others cited in sources
-- Dataset **v8** · `provenance.lastUpdated: 2026-09-20` · 50 of 59 deals
+- Dataset **v9** · `provenance.lastUpdated: 2026-09-20` · 50 of 59 deals
   disclose a price
 - Sources: SEC EDGAR, press releases, investor relations, fund portfolio listing
   (see [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md))
@@ -204,7 +204,7 @@ See [MODEL_CARD.md](docs/MODEL_CARD.md) for methodology and caveats.
 
 Transparent factor scoring for **non-acquired** companies in the verified set.
 Fixed weights, full disclosure in UI and [MODEL_CARD.md](docs/MODEL_CARD.md).
-**Not** a predictive model; no TensorFlow.
+**Not** a predictive model; the untrained TensorFlow.js stub was removed.
 
 ### Company similarity (`CompanySimilarity.tsx`)
 
@@ -373,7 +373,7 @@ Playfair Display.
 | PostgreSQL                             | Optional `LACUNA_DATA_MODE=db`                                               |
 | ClickHouse + S3/local object storage   | Optional variant call-set catalog (`LACUNA_VARIANT_STORE=clickhouse`)        |
 | Vercel AI Gateway + AI SDK             | Optional narratives + SEC classification ([INFERENCE.md](docs/INFERENCE.md)) |
-| TensorFlow.js                          | Quarantined — devDependency for Vitest only                                  |
+| TensorFlow.js                          | Removed — untrained stub, superseded by `ml/clinical_trials/`                |
 | Deno (CI)                              | `deno fmt` and `deno lint` in GitHub Actions                                 |
 
 **CI:** `npm run lint` · `npm run typecheck` · `npm test` (Vitest) ·
