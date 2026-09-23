@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "total": 930,
+  "total": 928,
   "covered": 21,
   "exempt": 2,
-  "uncovered": 907,
+  "uncovered": 905,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
     "src/app/sections/ConsumerHealthPage.tsx": 6,
@@ -21,7 +21,7 @@
     "src/components/BurdenCapitalGapValuation.tsx": 19,
     "src/components/business-model-classifier.tsx": 18,
     "src/components/CandidateImportPanel.tsx": 4,
-    "src/components/ClinicalTrialTracker.tsx": 10,
+    "src/components/ClinicalTrialTracker.tsx": 8,
     "src/components/ClusteringAnalysis.tsx": 6,
     "src/components/CommercializationReadiness.tsx": 8,
     "src/components/CompanySimilarity.tsx": 5,
@@ -1663,22 +1663,6 @@
       "expression": "count",
       "kind": "numeric-jsx",
       "key": "src/components/ClinicalTrialTracker.tsx::ClinicalTrialTracker::count#3",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ClinicalTrialTracker.tsx",
-      "functionName": "ClinicalTrialTracker",
-      "expression": "Math.round(completion.probability * 100)",
-      "kind": "numeric-jsx",
-      "key": "src/components/ClinicalTrialTracker.tsx::ClinicalTrialTracker::Math.round(completion.probability * 100)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/ClinicalTrialTracker.tsx",
-      "functionName": "ClinicalTrialTracker",
-      "expression": "Math.round(whScore.probability * 100)",
-      "kind": "numeric-jsx",
-      "key": "src/components/ClinicalTrialTracker.tsx::ClinicalTrialTracker::Math.round(whScore.probability * 100)",
       "class": "uncovered"
     },
     {

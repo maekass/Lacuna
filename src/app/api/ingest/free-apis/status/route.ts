@@ -2,7 +2,7 @@ import process from "node:process";
 import { NextResponse } from "next/server";
 import { readLatestFreeApiExport } from "@/lib/ingestion/freeApi/readLatestExport";
 
-/** Latest on-disk free-API batch export (from `npm run download:free-apis`). */
+/** Latest on-disk free-API batch export. */
 export function GET() {
   const latest = readLatestFreeApiExport();
 
@@ -10,8 +10,8 @@ export function GET() {
     return NextResponse.json({
       ok: true,
       latest: null,
-      message: "No export yet. Run: npm run download:free-apis",
-      cli: "npm run download:free-apis",
+      message: "No export yet.",
+      cli: "download-free-apis",
       docs: "/docs/FREE_API_DOWNLOADS.md",
     });
   }
@@ -28,7 +28,7 @@ export function GET() {
       patentsViewConfigured: latest.manifest.patentsViewConfigured,
       notes: latest.manifest.notes,
     },
-    cli: "npm run download:free-apis",
+    cli: "download-free-apis",
     docs: "/docs/FREE_API_DOWNLOADS.md",
   });
 }

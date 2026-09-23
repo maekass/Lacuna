@@ -78,7 +78,7 @@ export default function ValidationTracker() {
           Verified Acquisition Tracker
         </h3>
         <p className="text-sm tracking-widest text-lacuna-text-muted mt-1 uppercase">
-          Public deal records only — no synthetic post-acquisition outcomes
+          Public deal records only; post-acquisition outcomes are not inferred.
         </p>
       </div>
 

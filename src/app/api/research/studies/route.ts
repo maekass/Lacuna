@@ -86,7 +86,7 @@ export async function GET(request: Request) {
         stats: page.stats,
         dataMode: page.dataMode,
         disclaimer: page.dataMode === "db"
-          ? "Postgres-backed catalog — run npm run db:seed-research after migrate. Not live enrollment."
+          ? "Postgres-backed catalog. Not live enrollment."
           : "Static cited catalog — not live enrollment. See source field per study.",
       },
       {

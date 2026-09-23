@@ -30,7 +30,7 @@ export async function buildSecIngestStatusPayload(): Promise<
     oldestPendingIngestedAt: queue.oldestPendingIngestedAt,
     queue,
     cronPath: "/api/cron/sec-ingest",
-    cli: "npm run sec:ingest",
+    cli: "sec-ingest",
     reviewQueuePath: "/deals#review",
     pendingApiPath: "/api/deals/pending",
   };

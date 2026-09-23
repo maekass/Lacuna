@@ -7,7 +7,7 @@ export function variantStoreDisabledResponse(): NextResponse {
     {
       error: "Variant store disabled",
       hint:
-        "Enable locally: docker compose up -d clickhouse, npm run clickhouse:migrate, set LACUNA_VARIANT_STORE=clickhouse and CLICKHOUSE_URL in .env.local",
+        "Variant catalog is off in this deployment. See GENOMICS_VARIANT_STORE.md for the local ClickHouse setup.",
       docs: "docs/GENOMICS_VARIANT_STORE.md",
     },
     { status: 503 },

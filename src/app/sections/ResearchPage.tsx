@@ -14,7 +14,6 @@ import {
 import PatientEmpowermentPanel from "@/components/PatientEmpowermentPanel";
 import WomensHealthExitsContext from "@/components/WomensHealthExitsContext";
 import RhCapitalPortfolioContext from "@/components/RhCapitalPortfolioContext";
-import ClinicalTrialsMlPanel from "@/components/ClinicalTrialsMlPanel";
 import SpaceWhResearchGapsPanel from "@/components/SpaceWhResearchGapsPanel";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -101,8 +100,10 @@ export default function ResearchPage({
         </div>
         <p className="text-center text-xs text-lacuna-blue/80 mb-6" role="note">
           Trial search is live; cohort sample sizes are static citations.
+          Model-derived trial scores are not displayed because Lacuna does not
+          currently ship a version trained on a documented, versioned
+          ClinicalTrials.gov cohort.
         </p>
-        <ClinicalTrialsMlPanel />
       </MotionSection>
 
       <MotionSection id="evidence-maturity" delay={0.05} className={SECTION}>

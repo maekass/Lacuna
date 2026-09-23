@@ -41,7 +41,9 @@ export async function loadProvenanceRow(): Promise<ProvenanceRow> {
   const provenanceRows = await query<ProvenanceRow>(PROVENANCE_SQL, [1]);
   const provenance = provenanceRows[0];
   if (!provenance) {
-    throw new Error("dataset_provenance row missing — run npm run db:import");
+    throw new Error(
+      "dataset_provenance row missing — import the verified dataset into Postgres",
+    );
   }
   return provenance;
 }

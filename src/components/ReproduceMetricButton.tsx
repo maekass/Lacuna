@@ -29,8 +29,6 @@ export default function ReproduceMetricButton({
   const filename = `lacuna-${
     artifact.metricId.replaceAll(".", "-")
   }${suffix}.json`;
-  const command = `npm run reproduce -- ~/Downloads/${filename}`;
-  const datasetCommand = `${command} --dataset`;
   const download = useCallback(() => {
     const blob = new Blob(
       [JSON.stringify(artifact, null, 2) + "\n"],
@@ -53,12 +51,8 @@ export default function ReproduceMetricButton({
         Reproduce this number
       </button>
       <p className="mt-1 text-xs text-lacuna-text-muted">
-        Downloads a self-contained artifact.
+        Downloads a self-contained artifact for local review.
       </p>
-      <code className="mt-2 block overflow-x-auto text-xs">{command}</code>
-      <code className="block overflow-x-auto text-xs">
-        {datasetCommand}
-      </code>
     </section>
   );
 }
