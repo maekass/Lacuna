@@ -55,7 +55,7 @@ export const CLINICAL_TRIALS_ML_MODEL = {
   module: "src/lib/ml/clinicalTrials/scoreClinicalTrial.ts",
   exportName: "scoreClinicalTrial",
   definition:
-    "Offline sklearn TF-IDF + logistic on ClinicalTrials.gov (WH relevance + optional completion proxy). Retrain: npm run ml:ct:train. Not clinical advice.",
+    "Offline classifier on ClinicalTrials.gov text. Not shown in the public app. Not clinical advice.",
 } as const;
 
 export function getClinicalTrialsTrainingSource(): string {

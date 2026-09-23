@@ -28,9 +28,8 @@ export default function TemporalValidation() {
           Deal announcement timing
         </h2>
         <p className="text-sm text-lacuna-blue mt-1">
-          Counts are from verified press releases and SEC filings in the
-          dataset. Event-study probability curves are not shown because we do
-          not ship a synthetic panel.
+          The view reports verified announcement counts only; Lacuna does not
+          estimate event-study probabilities.
         </p>
       </div>
 

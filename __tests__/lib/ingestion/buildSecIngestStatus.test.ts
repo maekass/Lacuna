@@ -77,7 +77,7 @@ describe("GET /api/ingest/sec/status", () => {
           oldestPendingIngestedAt: null,
         },
         cronPath: "/api/cron/sec-ingest",
-        cli: "npm run sec:ingest",
+        cli: "sec-ingest",
         reviewQueuePath: "/deals#review",
         pendingApiPath: "/api/deals/pending",
       }),

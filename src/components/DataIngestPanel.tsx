@@ -24,14 +24,6 @@ interface FreeApiStatus {
   cli?: string;
 }
 
-function CommandBlock({ command }: { command: string }) {
-  return (
-    <pre className="mt-2 overflow-x-auto rounded-lg bg-lacuna-surface-inverse px-3 py-2 text-xs text-lacuna-text-inverse">
-      {command}
-    </pre>
-  );
-}
-
 export default function DataIngestPanel() {
   const [sec, setSec] = useState<SecIngestStatus | null>(null);
   const [freeApi, setFreeApi] = useState<FreeApiStatus | null>(null);
@@ -141,7 +133,10 @@ export default function DataIngestPanel() {
                       : "No ingest run recorded. Configure DATABASE_URL and run the cron or CLI."}
                   </p>
                 )}
-              <CommandBlock command="npm run sec:ingest" />
+              <p className="mt-2 text-[11px] text-lacuna-blue/60">
+                Operator ingest runs from the repository scripts, not from this
+                page.
+              </p>
               <p className="mt-2 text-[11px] text-lacuna-blue/60">
                 API: <code>/api/ingest/sec/status</code> · Queue:{" "}
                 <code>/api/deals/pending</code>
@@ -194,7 +189,10 @@ export default function DataIngestPanel() {
                     {freeApi?.message ?? "No export on disk yet."}
                   </p>
                 )}
-              <CommandBlock command="npm run download:free-apis" />
+              <p className="mt-2 text-[11px] text-lacuna-blue/60">
+                Batch export is an operator script. This page only shows the
+                latest on-disk status.
+              </p>
               <p className="mt-2 text-[11px] text-lacuna-blue/60">
                 API: <code>/api/ingest/free-apis/status</code>
               </p>
@@ -210,10 +208,9 @@ export default function DataIngestPanel() {
                 <code className="text-[11px]">lacuna_deals</code>{" "}
                 upsert (same review queue).
               </p>
-              <CommandBlock command="npm run sec:ingest-efts" />
               <p className="mt-2 text-[11px] text-lacuna-blue/60">
-                Staging JSON only: <code>npm run sec:search-ma</code>{" "}
-                · Import API: <code>/api/deals/candidates/import</code>
+                Discovery writes a staging queue. Import API:{" "}
+                <code>/api/deals/candidates/import</code>
               </p>
             </section>
           </div>

@@ -100,9 +100,7 @@ export default function FundingEventsPanel({
       </div>
 
       <p className="mt-3 text-xs text-lacuna-blue/80">
-        {loading
-          ? "Loading…"
-          : `${reviewableTotal} pending funding event(s) · CLI: npm run sec:ingest-form-d`}
+        {loading ? "Loading…" : `${reviewableTotal} pending funding event(s)`}
       </p>
 
       <ReviewAccessGate
@@ -168,9 +166,8 @@ export default function FundingEventsPanel({
         : !loading && !error
         ? (
           <p className="mt-4 text-sm text-lacuna-blue/70">
-            No Form D candidates yet. Run{" "}
-            <code className="text-xs">npm run sec:ingest-form-d</code>{" "}
-            with DATABASE_URL configured.
+            No Form D candidates yet. Form D ingest is an operator job and needs
+            a database configured.
           </p>
         )
         : null}

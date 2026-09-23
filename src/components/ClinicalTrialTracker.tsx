@@ -1,15 +1,10 @@
 "use client";
 
 import { useEffect, useReducer } from "react";
-import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
 import { DOMESTIC_TRIAL_PRESETS } from "@/lib/research/institutionPresets";
-import {
-  areClinicalTrialMlScoresReleased,
-  CLINICAL_TRIALS_ML_MODEL,
-  getClinicalTrialsTrainingSource,
-  isCompletionProxyAvailable,
-  scoreClinicalTrial,
-} from "@/lib/ml/clinicalTrials/scoreClinicalTrial";
+
+const TRIAL_SCORE_NOTE =
+  "Model-derived trial scores are not displayed because Lacuna does not currently ship a version trained on a documented, versioned ClinicalTrials.gov cohort.";
 /* ─── types ─── */
 interface Trial {
   nctId: string;
@@ -170,16 +165,9 @@ export default function ClinicalTrialTracker() {
           <h3 className="text-lg font-semibold text-lacuna-plum">
             Clinical Trial Tracker
           </h3>
-          <ModelProvenanceHint model={CLINICAL_TRIALS_ML_MODEL}>
-            <p className="text-sm text-lacuna-blue cursor-help">
-              Live ClinicalTrials.gov registry fields
-              {areClinicalTrialMlScoresReleased()
-                ? ` · model scores from ${getClinicalTrialsTrainingSource()}${
-                  isCompletionProxyAvailable() ? " (completion proxy on)" : ""
-                }`
-                : ". Model scores are not published."}
-            </p>
-          </ModelProvenanceHint>
+          <p className="text-sm text-lacuna-blue">
+            Live ClinicalTrials.gov registry fields. {TRIAL_SCORE_NOTE}
+          </p>
         </div>
         <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0 self-start">
           Live API
@@ -345,19 +333,6 @@ export default function ClinicalTrialTracker() {
               Recent trials
             </p>
             {trials.slice(0, 8).map((trial) => {
-              const scores = areClinicalTrialMlScoresReleased()
-                ? scoreClinicalTrial({
-                  title: trial.title,
-                  condition: trial.condition,
-                  sponsor: trial.sponsor,
-                  interventions: trial.interventions,
-                  phase: trial.phase,
-                  status: trial.status,
-                  enrollment: trial.enrollment,
-                })
-                : null;
-              const whScore = scores?.whRelevance;
-              const completion = scores?.completionProxy;
               return (
                 <div
                   key={trial.nctId}
@@ -374,32 +349,6 @@ export default function ClinicalTrialTracker() {
                       </p>
                     </div>
                     <div className="flex items-center gap-2 shrink-0 mt-1 sm:mt-0 flex-wrap justify-end">
-                      {whScore
-                        ? (
-                          <span
-                            className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
-                              whScore.label
-                                ? "bg-lacuna-pink/20 text-lacuna-plum border border-lacuna-pink/40"
-                                : "bg-lacuna-surface-subtle text-lacuna-text-secondary"
-                            }`}
-                            title={`WH relevance ${
-                              Math.round(whScore.probability * 100)
-                            }%`}
-                          >
-                            WH {Math.round(whScore.probability * 100)}%
-                          </span>
-                        )
-                        : null}
-                      {completion != null && (
-                        <span
-                          className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-sky-50 text-sky-800 border border-sky-200"
-                          title={`Completion proxy ${
-                            Math.round(completion.probability * 100)
-                          }% (COMPLETED vs stopped — not efficacy)`}
-                        >
-                          Complete {Math.round(completion.probability * 100)}%
-                        </span>
-                      )}
                       <span
                         className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
                           STATUS_COLORS[trial.status] || STATUS_COLORS.UNKNOWN

@@ -242,7 +242,10 @@ describe("no synthetic M&A demo data in src/", () => {
       path.join(SRC_ROOT, "components/ClinicalTrialTracker.tsx"),
       "utf8",
     );
-    expect(tracker).toMatch(/areClinicalTrialMlScoresReleased/);
+    expect(tracker).not.toMatch(
+      /scoreClinicalTrial|areClinicalTrialMlScoresReleased/,
+    );
+    expect(tracker).toMatch(/Model-derived trial scores are not displayed/);
     const predictor = readFileSync(
       path.join(SRC_ROOT, "lib/quant/predictionEngines.ts"),
       "utf8",

@@ -74,7 +74,7 @@ console.log(\`\${data.acquisitions.length} verified deals\`);`,
     title: "GraphQL Dataset Summary",
     code: `import httpx
 
-# Local FastAPI sidecar (npm run python-api:dev)
+# Local FastAPI sidecar on port 8000
 response = httpx.post(
     "http://localhost:8000/graphql",
     json={"query": "{ datasetSummary { acquisitionCount } }"},
