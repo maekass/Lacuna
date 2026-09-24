@@ -13,6 +13,10 @@ describe("sourceRegistry", () => {
     const ids = RESEARCH_SOURCES.map((source) => source.id);
     expect(new Set(ids).size).toBe(ids.length);
     expect(ids).toEqual([
+      "hologic-announcement-filing",
+      "hologic-completion-filing",
+      "bci-product-description",
+      "b42-study",
       "wham-business-case-2026",
       "svb-healthcare-investments-exits-h2-2026",
       "aoa-dx-follow-the-exits-2026",
