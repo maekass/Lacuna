@@ -199,7 +199,7 @@ export const EVIDENCE_REPRESENTATION_DIMENSIONS: Record<
     "Sex-disaggregated enrollment",
     "Does reviewed material report enrollment counts or proportions separated by sex?",
     "Reviewed material discloses enrollment separated by sex. Disclosure is not evidence that enrollment was adequate, representative, or equitable.",
-    "Lacuna has not reviewed or located suitable sex-disaggregated enrollment disclosure. Unknown does not prove that such enrollment reporting is absent.",
+    "Lacuna has not reviewed or located suitable sex-disaggregated enrollment disclosure. Unknown is not a finding that such enrollment reporting is absent.",
     ["adequate enrollment", "representativeness"],
   ),
   sex_disaggregated_efficacy: dimension(
@@ -207,7 +207,7 @@ export const EVIDENCE_REPRESENTATION_DIMENSIONS: Record<
     "Sex-disaggregated efficacy",
     "Does reviewed material report efficacy or effectiveness results separated by sex?",
     "Reviewed material discloses an efficacy or effectiveness result separated by sex. Disclosure is not evidence that the result is adequate, favorable, or clinically valid.",
-    "Lacuna has not reviewed or located suitable sex-disaggregated efficacy disclosure. Unknown does not prove that such a result is absent.",
+    "Lacuna has not reviewed or located suitable sex-disaggregated efficacy disclosure. Unknown is not a finding that such a result is absent.",
     ["clinical benefit", "favorable effect"],
   ),
   sex_disaggregated_safety: dimension(
@@ -215,7 +215,7 @@ export const EVIDENCE_REPRESENTATION_DIMENSIONS: Record<
     "Sex-disaggregated safety",
     "Does reviewed material report safety results separated by sex?",
     "Reviewed material discloses a safety result separated by sex. Disclosure is not evidence that the product or intervention is safe.",
-    "Lacuna has not reviewed or located suitable sex-disaggregated safety disclosure. Unknown does not prove that such a result is absent.",
+    "Lacuna has not reviewed or located suitable sex-disaggregated safety disclosure. Unknown is not a finding that such a result is absent.",
     ["absence of harm", "tolerability"],
   ),
   demographic_representation: dimension(
@@ -223,7 +223,7 @@ export const EVIDENCE_REPRESENTATION_DIMENSIONS: Record<
     "Demographic representation",
     "Does reviewed material report demographic composition of the studied population, such as age, race, ethnicity, or geography?",
     "Reviewed material discloses demographic composition. Disclosure is not evidence that the population was representative, fair, or adequate.",
-    "Lacuna has not reviewed or located suitable demographic-composition disclosure. Unknown does not prove that demographic reporting is absent.",
+    "Lacuna has not reviewed or located suitable demographic-composition disclosure. Unknown is not a finding that demographic reporting is absent.",
     ["adequate representation", "generalizability"],
   ),
   external_validation: dimension(
@@ -231,7 +231,7 @@ export const EVIDENCE_REPRESENTATION_DIMENSIONS: Record<
     "External validation",
     "Does reviewed material document validation on data, sites, or people held out from development?",
     "Reviewed material documents an external or held-out validation. Documentation is not a performance guarantee or proof of clinical validity.",
-    "Lacuna has not reviewed or located suitable external-validation documentation. Unknown does not prove that external validation is absent.",
+    "Lacuna has not reviewed or located suitable external-validation documentation. Unknown is not a finding that external validation is absent.",
     ["model-performance guarantee", "generalizability"],
   ),
   prospective_validation: dimension(
@@ -239,7 +239,7 @@ export const EVIDENCE_REPRESENTATION_DIMENSIONS: Record<
     "Prospective validation",
     "Does reviewed material document validation that was specified before the outcome data were analyzed?",
     "Reviewed material documents a prospective validation plan or result. Documentation is not proof of clinical utility or future performance.",
-    "Lacuna has not reviewed or located suitable prospective-validation documentation. Unknown does not prove that prospective validation is absent.",
+    "Lacuna has not reviewed or located suitable prospective-validation documentation. Unknown is not a finding that prospective validation is absent.",
     ["model-performance guarantee", "future performance"],
   ),
   real_world_evidence: dimension(
@@ -247,7 +247,7 @@ export const EVIDENCE_REPRESENTATION_DIMENSIONS: Record<
     "Real-world evidence",
     "Does reviewed material document evidence from routine care, registries, claims, devices, or other non-trial settings?",
     "Reviewed material documents a real-world evidence source. Documentation is not proof of effectiveness, safety, or representativeness.",
-    "Lacuna has not reviewed or located suitable real-world evidence documentation. Unknown does not prove that real-world evidence is absent.",
+    "Lacuna has not reviewed or located suitable real-world evidence documentation. Unknown is not a finding that real-world evidence is absent.",
     ["effectiveness", "causal effect", "representativeness"],
   ),
   intended_use_clarity: dimension(
@@ -255,7 +255,7 @@ export const EVIDENCE_REPRESENTATION_DIMENSIONS: Record<
     "Intended-use clarity",
     "Does reviewed material state who the study, tool, or product is for and what use it is meant to inform?",
     "Reviewed material states an intended use or study purpose. That statement is not a regulatory clearance or permission for patient-level decisions.",
-    "Lacuna has not reviewed or located a suitable intended-use statement. Unknown does not prove that an intended use is undocumented.",
+    "Lacuna has not reviewed or located a suitable intended-use statement. Unknown is not a finding that an intended use is undocumented.",
     [
       "regulatory clearance",
       "patient-level decision support",
@@ -267,7 +267,7 @@ export const EVIDENCE_REPRESENTATION_DIMENSIONS: Record<
     "Data provenance",
     "Does reviewed material describe where the data came from, which population it covers, and how it was selected?",
     "Reviewed material describes data origin and selection. That description is not proof the data are complete, unbiased, or fit for a clinical purpose.",
-    "Lacuna has not reviewed or located a suitable data-provenance description. Unknown does not prove that provenance is undocumented.",
+    "Lacuna has not reviewed or located a suitable data-provenance description. Unknown is not a finding that provenance is undocumented.",
     ["data completeness", "freedom from bias"],
   ),
   subgroup_performance_reporting: dimension(
@@ -275,7 +275,7 @@ export const EVIDENCE_REPRESENTATION_DIMENSIONS: Record<
     "Subgroup performance reporting",
     "Does reviewed material report performance or outcomes for stated subgroups, rather than only an overall result?",
     "Reviewed material discloses subgroup results. Disclosure is not evidence that subgroups were adequately powered, fairly compared, or clinically meaningful.",
-    "Lacuna has not reviewed or located suitable subgroup-performance disclosure. Unknown does not prove that subgroup results are absent.",
+    "Lacuna has not reviewed or located suitable subgroup-performance disclosure. Unknown is not a finding that subgroup results are absent.",
     ["adequate power", "clinically meaningful difference"],
   ),
   regulatory_status: dimension(
@@ -291,7 +291,7 @@ export const EVIDENCE_REPRESENTATION_DIMENSIONS: Record<
     "Reimbursement evidence",
     "Does reviewed material document coverage, coding, payment, or a package assembled for a reimbursement question?",
     "Reviewed material documents reimbursement-related material. Documentation is not proof of coverage, payment, clinical utility, or commercial success.",
-    "Lacuna has not reviewed or located suitable reimbursement documentation. Unknown does not prove that coverage or payment evidence is absent.",
+    "Lacuna has not reviewed or located suitable reimbursement documentation. Unknown is not a finding that coverage or payment evidence is absent.",
     ["coverage determination", "payment", "commercial success"],
   ),
 };
