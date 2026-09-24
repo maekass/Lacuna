@@ -224,14 +224,19 @@ export default function AcquirerPredictionDashboard() {
                   </div>
 
                   <div className="mt-3 flex flex-wrap gap-2">
-                    {match.keyRationale.map((reason, i) => (
-                      <span
-                        key={i}
-                        className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded"
-                      >
-                        {reason}
-                      </span>
-                    ))}
+                    {match.keyRationale
+                      .filter((reason) =>
+                        reason !==
+                          "General strategic interest in healthcare sector"
+                      )
+                      .map((reason) => (
+                        <span
+                          key={reason}
+                          className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded"
+                        >
+                          {reason}
+                        </span>
+                      ))}
                   </div>
                 </div>
               ))}
