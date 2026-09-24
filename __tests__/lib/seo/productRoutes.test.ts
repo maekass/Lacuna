@@ -22,7 +22,8 @@ describe("product sitemap and robots", () => {
     expect(urls).toContain(
       `${SITE_ORIGIN}/deals/${dataset.acquisitions[0]!.id}`,
     );
-    expect(urls).toHaveLength(7 + dataset.acquisitions.length);
+    expect(urls).toContain(`${SITE_ORIGIN}/research/biotheranostics`);
+    expect(urls).toHaveLength(8 + dataset.acquisitions.length);
     expect(urls.some((url) => url.includes("/staging"))).toBe(false);
   });
 

@@ -11,6 +11,7 @@
  * remains for existing UI. Prefer this registry for new source-aware work.
  */
 
+import { BIOTHERANOSTICS_SOURCES } from "./biotheranosticsSources";
 import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 
 export type SourceType =
@@ -100,6 +101,27 @@ function lacunaDatasetPublishedAt(): string {
 }
 
 export const RESEARCH_SOURCES: readonly ResearchSource[] = [
+  ...BIOTHERANOSTICS_SOURCES.map((source): ResearchSource => ({
+    id: source.id,
+    publisher: source.publisher,
+    title: source.title,
+    publishedAt: source.publishedAt ?? "Undated; see access date",
+    sourceUrl: source.url,
+    sourceType: source.id === "b42-study"
+      ? "peer_reviewed"
+      : "company_disclosure",
+    geographicScope: source.id === "b42-study"
+      ? "NSABP B-42 study population; not a global access estimate"
+      : "US issuer disclosures and product context; not a geographic access census",
+    methodologySummary: source.publicationBasis,
+    limitations: [
+      source.relationship,
+      "Bounded dossier; human specialist review pending. Does not establish patient access or a valuation input.",
+    ],
+    approvedUses: ["source_provenance", "editorial_context"],
+    prohibitedUses: [...REPORT_PROHIBITED_USES],
+    lastReviewedAt: source.accessedAt,
+  })),
   {
     id: "wham-business-case-2026",
     publisher: "WHAM",

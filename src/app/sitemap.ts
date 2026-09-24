@@ -1,6 +1,10 @@
 import type { MetadataRoute } from "next";
 import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 import { SITE_ORIGIN } from "@/lib/seo/siteUrl";
+import {
+  BIOTHERANOSTICS_DOSSIER,
+  BIOTHERANOSTICS_DOSSIER_PATH,
+} from "@/lib/research/biotheranosticsDossier";
 
 export const revalidate = 86_400;
 
@@ -37,5 +41,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
+  entries.push({
+    url: new URL(BIOTHERANOSTICS_DOSSIER_PATH, SITE_ORIGIN).href,
+    lastModified: BIOTHERANOSTICS_DOSSIER.checkedAt,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  });
   return entries;
 }
