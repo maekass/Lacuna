@@ -32,7 +32,7 @@ describe("Biotheranostics source contract", () => {
 
   it("does not turn SEC hosting or manufacturer-supported research into independent attestation", () => {
     const filings = BIOTHERANOSTICS_SOURCES.filter((source) =>
-      source.url.includes("sec.gov")
+      new URL(source.url).hostname === "www.sec.gov"
     );
     expect(filings).toHaveLength(2);
     expect(filings.every((source) => source.sourceGroup === "hologic")).toBe(
