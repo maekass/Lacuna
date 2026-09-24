@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "total": 928,
+  "total": 902,
   "covered": 21,
-  "exempt": 2,
-  "uncovered": 905,
+  "exempt": 0,
+  "uncovered": 881,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
     "src/app/sections/ConsumerHealthPage.tsx": 6,
@@ -15,7 +15,7 @@
     "src/app/sections/PayerOpsPage.tsx": 49,
     "src/app/sections/ResearchPage.tsx": 10,
     "src/app/sections/StagingDealDetailPage.tsx": 2,
-    "src/components/AcquirerPredictionDashboard.tsx": 21,
+    "src/components/AcquirerPredictionDashboard.tsx": 12,
     "src/components/AIInsightsPanel.tsx": 1,
     "src/components/BurdenCapitalGap.tsx": 16,
     "src/components/BurdenCapitalGapValuation.tsx": 19,
@@ -23,7 +23,7 @@
     "src/components/CandidateImportPanel.tsx": 4,
     "src/components/ClinicalTrialTracker.tsx": 8,
     "src/components/ClusteringAnalysis.tsx": 6,
-    "src/components/CommercializationReadiness.tsx": 8,
+    "src/components/CommercializationReadiness.tsx": 2,
     "src/components/CompanySimilarity.tsx": 5,
     "src/components/CompetitiveAnalysisDashboard.tsx": 33,
     "src/components/CuratedDatasetBanner.tsx": 1,
@@ -39,7 +39,7 @@
     "src/components/DiscreteSources.tsx": 1,
     "src/components/DomesticStudyCatalog.tsx": 10,
     "src/components/EnrichmentDiffPanel.tsx": 2,
-    "src/components/EvidenceMaturityDashboard.tsx": 17,
+    "src/components/EvidenceMaturityDashboard.tsx": 8,
     "src/components/EvidenceTimeline.tsx": 8,
     "src/components/ExitPredictor.tsx": 6,
     "src/components/FairnessAuditV2.tsx": 46,
@@ -1004,14 +1004,6 @@
     {
       "file": "src/components/AcquirerPredictionDashboard.tsx",
       "functionName": "AcquirerPredictionDashboard",
-      "expression": "analysis.topMatches[0]?.matchScore || 0",
-      "kind": "numeric-jsx",
-      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::analysis.topMatches[0]?.matchScore || 0",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/AcquirerPredictionDashboard.tsx",
-      "functionName": "AcquirerPredictionDashboard",
       "expression": "formatCurrency( analysis.topMatches[0].estimatedValue.median, )",
       "kind": "formatting-call",
       "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::formatCurrency( analysis.topMatches[0].estimatedValue.median, )",
@@ -1031,14 +1023,6 @@
       "expression": "formatCurrency( match.acquirer.typicalDealSize.min, )",
       "kind": "formatting-call",
       "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::formatCurrency( match.acquirer.typicalDealSize.min, )",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/AcquirerPredictionDashboard.tsx",
-      "functionName": "AcquirerPredictionDashboard",
-      "expression": "formatCurrency( selectedAnalysis.topMatches[0].estimatedValue.median, )",
-      "kind": "formatting-call",
-      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::formatCurrency( selectedAnalysis.topMatches[0].estimatedValue.median, )",
       "class": "uncovered"
     },
     {
@@ -1084,65 +1068,9 @@
     {
       "file": "src/components/AcquirerPredictionDashboard.tsx",
       "functionName": "AcquirerPredictionDashboard",
-      "expression": "idx + 1",
-      "kind": "numeric-jsx",
-      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::idx + 1",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/AcquirerPredictionDashboard.tsx",
-      "functionName": "AcquirerPredictionDashboard",
-      "expression": "match.financialFit",
-      "kind": "numeric-jsx",
-      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::match.financialFit",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/AcquirerPredictionDashboard.tsx",
-      "functionName": "AcquirerPredictionDashboard",
-      "expression": "match.marketFit",
-      "kind": "numeric-jsx",
-      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::match.marketFit",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/AcquirerPredictionDashboard.tsx",
-      "functionName": "AcquirerPredictionDashboard",
-      "expression": "match.matchScore",
-      "kind": "numeric-jsx",
-      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::match.matchScore",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/AcquirerPredictionDashboard.tsx",
-      "functionName": "AcquirerPredictionDashboard",
-      "expression": "match.strategicFit",
-      "kind": "numeric-jsx",
-      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::match.strategicFit",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/AcquirerPredictionDashboard.tsx",
-      "functionName": "AcquirerPredictionDashboard",
       "expression": "Math.round(selectedAnalysis.winProbability * 100)",
       "kind": "numeric-jsx",
       "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::Math.round(selectedAnalysis.winProbability * 100)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/AcquirerPredictionDashboard.tsx",
-      "functionName": "AcquirerPredictionDashboard",
-      "expression": "selectedAnalysis.topMatches.filter((m) => m.likelihood === \"high\" ).length",
-      "kind": "numeric-jsx",
-      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::selectedAnalysis.topMatches.filter((m) => m.likelihood === \"high\" ).length",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/AcquirerPredictionDashboard.tsx",
-      "functionName": "AcquirerPredictionDashboard",
-      "expression": "selectedAnalysis.topMatches[0].matchScore",
-      "kind": "numeric-jsx",
-      "key": "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::selectedAnalysis.topMatches[0].matchScore",
       "class": "uncovered"
     },
     {
@@ -1756,22 +1684,6 @@
     {
       "file": "src/components/CommercializationReadiness.tsx",
       "functionName": "CommercializationReadiness",
-      "expression": "i",
-      "kind": "numeric-jsx",
-      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::i",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CommercializationReadiness.tsx",
-      "functionName": "CommercializationReadiness",
-      "expression": "items.filter((i) => i.tags.includes(\"maternal-health\")) .length",
-      "kind": "numeric-jsx",
-      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::items.filter((i) => i.tags.includes(\"maternal-health\")) .length",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CommercializationReadiness.tsx",
-      "functionName": "CommercializationReadiness",
       "expression": "items.length",
       "kind": "numeric-jsx",
       "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::items.length",
@@ -1780,41 +1692,9 @@
     {
       "file": "src/components/CommercializationReadiness.tsx",
       "functionName": "CommercializationReadiness",
-      "expression": "maternalHealthCandidates.length",
+      "expression": "maternalCount",
       "kind": "numeric-jsx",
-      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::maternalHealthCandidates.length",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CommercializationReadiness.tsx",
-      "functionName": "CommercializationReadiness",
-      "expression": "score.acquirerFitScore",
-      "kind": "numeric-jsx",
-      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::score.acquirerFitScore",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CommercializationReadiness.tsx",
-      "functionName": "CommercializationReadiness",
-      "expression": "score.evidenceScore",
-      "kind": "numeric-jsx",
-      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::score.evidenceScore",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CommercializationReadiness.tsx",
-      "functionName": "CommercializationReadiness",
-      "expression": "score.overallScore",
-      "kind": "numeric-jsx",
-      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::score.overallScore",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/CommercializationReadiness.tsx",
-      "functionName": "CommercializationReadiness",
-      "expression": "score.reimbursementScore",
-      "kind": "numeric-jsx",
-      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::score.reimbursementScore",
+      "key": "src/components/CommercializationReadiness.tsx::CommercializationReadiness::maternalCount",
       "class": "uncovered"
     },
     {
@@ -2780,153 +2660,65 @@
     {
       "file": "src/components/EvidenceMaturityDashboard.tsx",
       "functionName": "EvidenceMaturityDashboard",
-      "expression": "(correlation.avgHighEvidence / 1000) .toFixed(1)",
+      "expression": "formatDisclosedValue(row.dealValue)",
       "kind": "formatting-call",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::(correlation.avgHighEvidence / 1000) .toFixed(1)",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::formatDisclosedValue(row.dealValue)",
       "class": "uncovered"
     },
     {
       "file": "src/components/EvidenceMaturityDashboard.tsx",
       "functionName": "EvidenceMaturityDashboard",
-      "expression": "(correlation.avgLowEvidence / 1000).toFixed( 1, )",
+      "expression": "lookups.failures",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::lookups.failures",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
+      "expression": "lookups.progress",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::lookups.progress",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
+      "expression": "lookups.total",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::lookups.total",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
+      "expression": "lookups.total",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::lookups.total#2",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
+      "expression": "row.registry.products",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::row.registry.products",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "EvidenceMaturityDashboard",
+      "expression": "row.registry.trials",
+      "kind": "numeric-jsx",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::row.registry.trials",
+      "class": "uncovered"
+    },
+    {
+      "file": "src/components/EvidenceMaturityDashboard.tsx",
+      "functionName": "formatDisclosedValue",
+      "expression": "(value / 1000).toFixed(1)",
       "kind": "formatting-call",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::(correlation.avgLowEvidence / 1000).toFixed( 1, )",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "(row.dealValue / 1000).toFixed(1)",
-      "kind": "formatting-call",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::(row.dealValue / 1000).toFixed(1)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "apiState.failures",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.failures",
-      "class": "exempt"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "apiState.progress",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.progress",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "apiState.progress",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.progress#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "apiState.total",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.total",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "apiState.total",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.total#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "apiState.total",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::apiState.total#3",
-      "class": "exempt"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "avgScore",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::avgScore",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "baseRows.length",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::baseRows.length",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "correlation.n",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::correlation.n",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "correlation.pearsonR",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::correlation.pearsonR",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "correlation.premiumMultiple",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::correlation.premiumMultiple",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "count",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::count",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "row.evidence.overall",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::row.evidence.overall",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "row.inputs.totalFDAProducts",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::row.inputs.totalFDAProducts",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "row.inputs.totalTrials",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::row.inputs.totalTrials",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/EvidenceMaturityDashboard.tsx",
-      "functionName": "EvidenceMaturityDashboard",
-      "expression": "score",
-      "kind": "numeric-jsx",
-      "key": "src/components/EvidenceMaturityDashboard.tsx::EvidenceMaturityDashboard::score",
+      "key": "src/components/EvidenceMaturityDashboard.tsx::formatDisclosedValue::(value / 1000).toFixed(1)",
       "class": "uncovered"
     },
     {

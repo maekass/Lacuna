@@ -2,10 +2,10 @@ import type { EvidenceClass } from "@/lib/evidence";
 import type { EvidenceInputs } from "@/lib/evidence/evidenceMaturityCalculator";
 
 /**
- * Conservative taxonomy priors for evidence maturity when live CTG/FDA
- * enrichment has not run. Used only when the company has a stored
- * `evidenceClass` — not a substitute for trial/regulatory lookups, and not
- * applied when the class is missing.
+ * Conservative taxonomy priors for offline evidence math when live CTG/FDA
+ * enrichment has not run. A stored evidence class is not a trial count.
+ * Public registry views must not render these priors as recorded trials,
+ * clearances, or clinical validation. Not applied when the class is missing.
  */
 const TAXONOMY_BASELINE: Record<EvidenceClass, EvidenceInputs> = {
   clinical_therapeutic: {
