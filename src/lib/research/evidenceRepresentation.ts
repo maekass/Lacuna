@@ -409,11 +409,13 @@ export function describeEvidenceRepresentation(
     ? dimensionMeta.meaningOfReported
     : status === "unknown"
     ? dimensionMeta.meaningOfUnknown
-    : statusMeta.meaning;
+    : null;
   return {
     dimension: dimensionMeta,
     status: statusMeta,
-    statement: `${detail} ${statusMeta.meaning}`,
+    statement: detail === null
+      ? statusMeta.meaning
+      : `${detail} ${statusMeta.meaning}`,
     useBoundary: EVIDENCE_REPRESENTATION_USE_BOUNDARY,
   };
 }

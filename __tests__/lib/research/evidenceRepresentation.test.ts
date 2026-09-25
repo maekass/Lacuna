@@ -172,5 +172,17 @@ describe("evidenceRepresentation", () => {
       getEvidenceRepresentationDimension("data_provenance").meaningOfUnknown,
     );
     expect(unknown.statement).toContain(UNKNOWN_MEANS_NOT_REVIEWED);
+
+    const notReported = describeEvidenceRepresentation(
+      "regulatory_status",
+      "not-reported",
+    );
+    expect(notReported.statement).toBe(NOT_REPORTED_MEANS_DOCUMENTATION_GAP);
+
+    const notApplicable = describeEvidenceRepresentation(
+      "reimbursement_evidence",
+      "not-applicable",
+    );
+    expect(notApplicable.statement).toBe(NOT_APPLICABLE_MEANS_OUT_OF_SCOPE);
   });
 });
