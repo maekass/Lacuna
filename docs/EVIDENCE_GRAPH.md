@@ -17,8 +17,8 @@ different question:
 > deployment constraint at a particular point in time?
 
 The first vertical slice uses ferric carboxymaltose (Injectafer) because the
-September 2026 FDA safety communication demonstrates the architecture clearly:
-a product can have clinical utility while postmarket evidence introduces a
+September 2026 FDA safety communication demonstrates the architecture clearly: a
+product can have clinical utility while postmarket evidence introduces a
 monitoring requirement that matters for care-pathway design and eventual
 cross-market translation.
 
