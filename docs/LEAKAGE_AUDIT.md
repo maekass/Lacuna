@@ -54,6 +54,24 @@ is already a target. Comparing an unacquired company's valuation to the median
 of acquired peers remains an outcome-selected comparable — documented, not
 removed. The surface is mounted at `/deals#similarity-indicators`.
 
+Age comparables in that surface use the verified acquisition's **announcement
+year minus a year-precision founding year** (`exitAgeAtAnnouncement`). This is
+an integer-year comparison, not an exact birthday-based duration or a claim
+about the closing date. Estimated/missing founding years and missing/invalid
+announcements contribute no age factor; a peer median is unavailable when no
+eligible dated peers remain. Acquired rows use their own event age as the
+comparison age; non-acquired rows use current age only in this descriptive view.
+Neither age nor the other current catalog fields establish historical
+observability for a prospective experiment.
+
+`atDecisionDate` in `src/lib/data/pointInTime.ts` is the field-level admission
+gate for a future dated replay: it requires a source and the **field's own**
+valid as-of date on or before the decision cutoff. It rejects unknown vintages
+and later values explicitly. The catalog does not yet provide these dates for
+most economic fields; the helper does not make current heuristic outputs
+point-in-time valid, and no forecasting path is enabled by this change. Deal
+announcement dates cannot stand in for valuation or funding vintages.
+
 The catalog exit share itself (`empiricalPriors.ts:180-184`) is
 `acquiredInDataset / companies.length`. That is the _target_, not a driver. It
 is listed here only to note that the index multiplies the weighted score by an

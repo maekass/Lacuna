@@ -15,6 +15,7 @@ import type {
   VerifiedDerivedData,
 } from "@/lib/data/verifiedDataHelpers";
 import { factorCoverageScore } from "@/lib/quant/exitFactorCoverage";
+import { exitAgeAtAnnouncement, peerExitAgeMedian } from "@/lib/quant/exitAge";
 import { indicatorBand } from "@/lib/quant/indicatorBands";
 import type { Company, ExitPrediction } from "@/lib/types";
 import { DETERMINISTIC_COMPARISON_BOUNDARY } from "@/lib/research/evidenceBoundaries";
@@ -23,6 +24,7 @@ export interface PredictionFactor {
   label: string;
   present: boolean;
   weight: number;
+  available?: boolean;
 }
 
 export interface PredictionRow extends ExitPrediction {
@@ -36,7 +38,7 @@ export interface PredictionRow extends ExitPrediction {
 
 type PredictorMode = "single" | "leaderboard";
 
-const CURRENT_YEAR = 2026;
+const CURRENT_YEAR = new Date().getUTCFullYear();
 
 function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value));
@@ -64,21 +66,34 @@ function pickLikelyAcquirer(
   return topAcquirer?.[0] ?? "No clear analog";
 }
 
-function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
+export function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
   const analysisCompanies = getVerifiedCompaniesForAnalysis(data);
   const acquiredIds = new Set(data.verifiedAcquisitions.map((a) => a.targetId));
   const acquisitionByTargetId = new Map(
     data.verifiedAcquisitions.map((deal) => [deal.targetId, deal]),
   );
+  const firstAnnouncementByTargetId = new Map<string, string>();
+  for (const deal of data.verifiedAcquisitions) {
+    const previous = firstAnnouncementByTargetId.get(deal.targetId);
+    if (!previous || deal.announcedDate < previous) {
+      firstAnnouncementByTargetId.set(deal.targetId, deal.announcedDate);
+    }
+  }
   const acquiredCompanies = analysisCompanies.filter((company) =>
     acquiredIds.has(company.id)
   );
-  const acquiredSectors = new Set(acquiredCompanies.map((c) => c.sector));
-  const acquiredAgeMedian = getMedian(
-    acquiredCompanies
-      .filter((c) => c.founded !== undefined)
-      .map((c) => CURRENT_YEAR - c.founded!),
-    7,
+  const foundingPrecision = new Map(
+    data.verifiedCompanies.map((c) => [c.id, c.foundedPrecision]),
+  );
+  const exitAgeByTarget = new Map(
+    acquiredCompanies.map((c) => [
+      c.id,
+      exitAgeAtAnnouncement(
+        c.founded,
+        foundingPrecision.get(c.id) ?? "unknown",
+        firstAnnouncementByTargetId.get(c.id),
+      ),
+    ]),
   );
   const acquiredValuationMedian = getMedian(
     acquiredCompanies.map((c) => c.valuation).filter((v): v is number =>
@@ -115,9 +130,12 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
 
   return analysisCompanies
     .map((company) => {
-      const age = company.founded !== undefined
+      const age = acquiredIds.has(company.id)
+        ? exitAgeByTarget.get(company.id) ?? null
+        : foundingPrecision.get(company.id) === "year" &&
+            company.founded !== undefined && company.founded <= CURRENT_YEAR
         ? CURRENT_YEAR - company.founded
-        : 0;
+        : null;
       const isLateStage = [
         "Series C",
         "Series D",
@@ -132,18 +150,15 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
         ),
         acquiredValuationMedian,
       );
-      const peerAgeMedian = getMedian(
-        peerAcquired
-          .filter((c) => c.founded !== undefined)
-          .map((c) => CURRENT_YEAR - c.founded!),
-        acquiredAgeMedian,
-      );
+      const peerAgeMedian = peerExitAgeMedian(exitAgeByTarget, company.id);
       const inPriorExitSector = peerAcquired.some((c) =>
         c.sector === company.sector
       );
       const aboveValuationMedian =
         (company.valuation ?? 0) >= peerValuationMedian;
-      const ageNearPriorMedian = Math.abs(age - peerAgeMedian) <= 3;
+      const ageAvailable = age !== null && peerAgeMedian !== null;
+      const ageNearPriorMedian = ageAvailable &&
+        Math.abs(age - peerAgeMedian) <= 3;
       const isPublic = company.stage === "Public";
       const similarPriorExits = peerAcquired.filter((c) =>
         c.sector === company.sector
@@ -166,9 +181,10 @@ function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
           weight: 0.2,
         },
         {
-          label: "Age within 3 yrs of median prior-exit age",
+          label: "Age within 3 yrs of median age at acquisition announcement",
           present: ageNearPriorMedian,
           weight: 0.15,
+          available: ageAvailable,
         },
         {
           label: "Already public (acquisition less typical path)",
@@ -227,8 +243,8 @@ function toCsvValue(value: string | number) {
 }
 
 /**
- * Derive a deterministic, transparent acquisition likelihood indicator from the
- * verified dataset. This panel is descriptive, not predictive.
+ * Derive a deterministic, descriptive similarity indicator from the verified
+ * dataset. This panel is not a fitted predictive model.
  */
 export default function ExitPredictor() {
   const dataset = useVerifiedDataset();
@@ -529,7 +545,10 @@ export default function ExitPredictor() {
                             ? "text-lacuna-text-primary"
                             : "text-lacuna-text-muted"}
                         >
-                          {f.present ? "●" : "○"} {f.label}
+                          {f.available === false ? "—" : f.present ? "●" : "○"}
+                          {" "}
+                          {f.label}
+                          {f.available === false ? " (unavailable)" : ""}
                         </span>
                         <span
                           className={`font-mono ${
@@ -538,8 +557,12 @@ export default function ExitPredictor() {
                               : "text-lacuna-text-muted"
                           }`}
                         >
-                          {f.weight > 0 ? "+" : ""}
-                          {(f.weight * 100).toFixed(0)}
+                          {f.available === false ? "—" : (
+                            <>
+                              {f.weight > 0 ? "+" : ""}
+                              {(f.weight * 100).toFixed(0)}
+                            </>
+                          )}
                         </span>
                       </div>
                     ))}

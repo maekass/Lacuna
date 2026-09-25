@@ -25,6 +25,10 @@ export interface WomensHealthSourceMetadata {
  * Citation metadata for the relevance vocabulary.
  * The URL is WHAM's January 2026 release page. The local slug is a repo
  * identifier, not a second verification claim.
+ *
+ * Deprecated for new source lookup: the canonical record is
+ * `wham-business-case-2026` in `src/lib/research/sourceRegistry.ts`.
+ * This citation object stays so existing relevance labels keep their copy.
  */
 export const WHAM_BUSINESS_CASE_SOURCE: WomensHealthSourceMetadata = {
   label:

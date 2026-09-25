@@ -11,6 +11,8 @@ import EvidenceLadder from "@/components/EvidenceLadder";
 import MotionSection from "@/components/ui/MotionSection";
 import type { DealDetailView } from "@/lib/deals";
 import Link from "next/link";
+import BiotheranosticsDossierLink from "@/components/BiotheranosticsDossierLink";
+import { BIOTHERANOSTICS_DEAL_ID } from "@/lib/research/biotheranosticsDossier";
 
 const EVIDENCE_CLASS_LABELS: Record<string, string> = {
   diagnostic_genomic: "Diagnostic / genomic",
@@ -80,6 +82,10 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
           )}
         />
       </header>
+
+      {acq.id === BIOTHERANOSTICS_DEAL_ID
+        ? <BiotheranosticsDossierLink />
+        : null}
 
       <DealCloseTimeline view={view} />
 
