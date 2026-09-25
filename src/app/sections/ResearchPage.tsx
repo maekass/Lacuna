@@ -43,8 +43,8 @@ export default function ResearchPage({
           Research workspace
         </h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
-          Clinical trials, evidence maturity, genomics, health equity, and
-          patient empowerment baselines — public data labeled{" "}
+          Clinical trials, registry fields, genomics, health equity, and patient
+          empowerment baselines — public data labeled{" "}
           <code className="text-xs">cited_*</code>{" "}
           or affinity. Heuristic crosswalks stay here; they do not feed deal
           economics, comps, or dual-source badges.
@@ -111,8 +111,8 @@ export default function ResearchPage({
 
       <MotionSection id="evidence-maturity" delay={0.05} className={SECTION}>
         <SectionHeader
-          title="Evidence maturity (descriptive)"
-          description="Trial phase, FDA status, and publication flags scored from public metadata on verified companies — not a validated evidence benchmark."
+          title="Registry fields"
+          description="ClinicalTrials.gov and openFDA fields on verified targets when a lookup returns them. Missing records stay blank. They are not a clinical-validation score."
         />
         <EvidenceMaturityDashboard />
       </MotionSection>
@@ -140,7 +140,7 @@ export default function ResearchPage({
       <MotionSection id="impact-assessment" delay={0.2} className={SECTION}>
         <SectionHeader
           title="Measuring What Matters"
-          description="How much real-world health impact could these acquisitions have? We score each honestly — and tell you what we can't measure, too."
+          description="Cited burden and penetration context beside verified companies. No composite impact score, and no valuation inferred from a gap."
         />
         <ImpactOpportunityCard />
       </MotionSection>
@@ -152,7 +152,7 @@ export default function ResearchPage({
       >
         <SectionHeader
           title="From Lab to Venture"
-          description="For NIH researchers and academic founders evaluating commercialization pathways — evidence maturity, reimbursement readiness, and acquirer sector activity."
+          description="Verified company name, sector, and stage for commercialization context. Report context is not turned into a company score."
         />
         <CommercializationReadiness />
       </MotionSection>
