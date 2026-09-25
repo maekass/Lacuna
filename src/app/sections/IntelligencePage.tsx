@@ -78,7 +78,7 @@ export default function IntelligencePage(
       <MotionSection id="acquirer-prediction" delay={0.05} className={SECTION}>
         <SectionHeader
           title="Acquirer Fit & Precedent Map"
-          description="Deterministic context engine. Rule-based fit from verified deal history and stated acquirer profiles — not a fitted predictive model, deal premium, or valuation peer set. Optional LLM blurbs are exploratory copy, not validated research."
+          description="Verified acquirer profiles and same-sector historical deals beside a company. Historical exits are not an acquisition prediction, and a missing price is not zero."
         />
         <AcquirerPredictionDashboard />
       </MotionSection>

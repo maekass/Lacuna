@@ -79,3 +79,20 @@ export const LACUNA_CURATED_SAMPLE_SOURCE = {
   scope: "curated public-source M&A sample, not a census",
   sourceType: "curated public-source sample",
 } as const;
+
+/**
+ * Public research-intelligence boundaries.
+ * These sentences are the product rule: context stays context.
+ */
+export const RESEARCH_INTEGRITY_PROHIBITIONS = [
+  "Lacuna does not turn report context into a company score.",
+  "Lacuna does not turn a gap into a valuation.",
+  "Lacuna does not turn historical exits into an acquisition prediction.",
+  "Lacuna does not turn research representation into clinical validation.",
+  "Lacuna does not turn a qualitative expert assessment into an objective metric.",
+  "Lacuna does not turn unavailable data into 0.",
+  "Lacuna does not turn unknown into a negative finding.",
+  "Lacuna does not turn a static curated sample into a market census.",
+  "Lacuna does not turn AI opportunity framing into an AI performance claim.",
+  "Lacuna does not turn a polished dashboard into evidence that does not exist.",
+] as const;

@@ -1,27 +1,21 @@
 "use client";
 
-import { useEffect, useMemo, useReducer, useState } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
-import HeuristicTierBadge from "@/components/research/HeuristicTierBadge";
+import ResearchIntegrityNote from "@/components/research/ResearchIntegrityNote";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
-import {
-  computeEvidenceMaturity,
-  type EvidenceInputs,
-  type EvidenceScore,
-} from "@/lib/evidence/evidenceMaturityCalculator";
-import {
-  type EvidenceInputSource,
-  resolveEvidenceInputs,
-} from "@/lib/evidence/staticEvidenceBaseline";
-import {
-  type CompanyEvidence,
-  computeValuationCorrelation,
-  type CorrelationResult,
-} from "@/lib/evidence/valuationCorrelation";
 import { isGenomicsRelevantCompany } from "@/lib/data/genomicsFilters";
 import { reportWarning } from "@/lib/observability/reportError";
 
-/* ─── types ─── */
+interface RegistryRecord {
+  trials: number | null;
+  phase: string | null;
+  hasResults: boolean;
+  clearance: string | null;
+  hasDrug: boolean;
+  products: number | null;
+}
+
 interface CompanyRow {
   id: string;
   name: string;
@@ -29,27 +23,25 @@ interface CompanyRow {
   dealValue: number | undefined;
   dealDate: string;
   acquirerName: string;
-  evidence: EvidenceScore;
-  inputs: EvidenceInputs;
-  inputSource: EvidenceInputSource;
+  registry: RegistryRecord | null;
 }
 
-interface APIState {
+interface LookupState {
   loading: boolean;
   progress: number;
   total: number;
-  results: Map<
+  trials: Map<
     string,
     { trials: number; highestPhase: string; hasResults: boolean }
   >;
-  fdaResults: Map<
+  fda: Map<
     string,
     { clearance: string; hasDrug: boolean; products: number }
   >;
   failures: number;
 }
 
-type APIAction =
+type LookupAction =
   | { type: "START"; total: number }
   | {
     type: "CTG_DONE";
@@ -69,7 +61,7 @@ type APIAction =
   | { type: "FAILED" }
   | { type: "DONE" };
 
-function apiReducer(state: APIState, action: APIAction): APIState {
+function lookupReducer(state: LookupState, action: LookupAction): LookupState {
   switch (action.type) {
     case "START":
       return {
@@ -80,22 +72,22 @@ function apiReducer(state: APIState, action: APIAction): APIState {
         failures: 0,
       };
     case "CTG_DONE": {
-      const results = new Map(state.results);
-      results.set(action.company, {
+      const trials = new Map(state.trials);
+      trials.set(action.company, {
         trials: action.trials,
         highestPhase: action.highestPhase,
         hasResults: action.hasResults,
       });
-      return { ...state, results };
+      return { ...state, trials };
     }
     case "FDA_DONE": {
-      const fdaResults = new Map(state.fdaResults);
-      fdaResults.set(action.company, {
+      const fda = new Map(state.fda);
+      fda.set(action.company, {
         clearance: action.clearance,
         hasDrug: action.hasDrug,
         products: action.products,
       });
-      return { ...state, fdaResults };
+      return { ...state, fda };
     }
     case "TICK":
       return { ...state, progress: state.progress + 1 };
@@ -106,121 +98,103 @@ function apiReducer(state: APIState, action: APIAction): APIState {
   }
 }
 
-const INITIAL_API: APIState = {
+const INITIAL_LOOKUP: LookupState = {
   loading: false,
   progress: 0,
   total: 0,
-  results: new Map(),
-  fdaResults: new Map(),
+  trials: new Map(),
+  fda: new Map(),
   failures: 0,
 };
 
-/* ─── tier badge colors ─── */
-const TIER_STYLES: Record<string, string> = {
-  emerald: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  sky: "bg-sky-50 text-sky-700 border-sky-200",
-  amber: "bg-amber-50 text-amber-700 border-amber-200",
-  orange: "bg-orange-50 text-orange-700 border-orange-200",
-  slate:
-    "bg-lacuna-surface-muted text-lacuna-text-secondary border-lacuna-border",
-};
+function recordedPhase(phase: string | undefined): string | null {
+  if (
+    !phase || phase === "None" || phase === "NA" || phase === "Not Applicable"
+  ) {
+    return null;
+  }
+  return phase.replaceAll("PHASE", "Phase ").replaceAll("_", " ");
+}
 
-const SCORE_BAR_COLORS: Record<string, string> = {
-  emerald: "bg-emerald-500",
-  sky: "bg-sky-500",
-  amber: "bg-amber-500",
-  orange: "bg-orange-500",
-  slate: "bg-lacuna-text-muted",
-};
+function registryFromLookups(
+  ctg:
+    | { trials: number; highestPhase: string; hasResults: boolean }
+    | undefined,
+  fda: { clearance: string; hasDrug: boolean; products: number } | undefined,
+): RegistryRecord | null {
+  if (!ctg && !fda) return null;
+  const record: RegistryRecord = {
+    trials: ctg && ctg.trials > 0 ? ctg.trials : null,
+    phase: recordedPhase(ctg?.highestPhase),
+    hasResults: Boolean(ctg?.hasResults),
+    clearance: fda && fda.clearance && fda.clearance !== "None"
+      ? fda.clearance
+      : null,
+    hasDrug: Boolean(fda?.hasDrug),
+    products: fda && fda.products > 0 ? fda.products : null,
+  };
+  const hasField = record.trials != null || record.phase != null ||
+    record.hasResults || record.clearance != null || record.hasDrug ||
+    record.products != null;
+  return hasField ? record : null;
+}
 
-/* ─── component ─── */
+function formatDisclosedValue(value: number): string {
+  return value >= 1000 ? `$${(value / 1000).toFixed(1)}B` : `$${value}M`;
+}
+
 export default function EvidenceMaturityDashboard() {
   const { verifiedCompanies, verifiedAcquisitions, verifiedAcquirers } =
     useVerifiedDataset();
-  const [apiState, dispatch] = useReducer(apiReducer, INITIAL_API);
+  const [lookups, dispatch] = useReducer(lookupReducer, INITIAL_LOOKUP);
   const [enriched, setEnriched] = useState(false);
-  const [sortBy, setSortBy] = useState<"score" | "value" | "date">("score");
+  const [sortBy, setSortBy] = useState<"value" | "date">("date");
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  /* ─── base rows from static dataset ─── */
-  const baseRows: CompanyRow[] = useMemo(() => {
+  const rows: CompanyRow[] = useMemo(() => {
     return verifiedAcquisitions.map((deal) => {
       const target = verifiedCompanies.find((c) => c.id === deal.targetId);
       const acquirer = verifiedAcquirers.find((a) => a.id === deal.acquirerId);
-
-      const ctg = apiState.results.get(target?.name || "");
-      const fda = apiState.fdaResults.get(target?.name || "");
-
-      const resolved = resolveEvidenceInputs(
-        target?.evidenceClass,
-        ctg,
-        fda,
-      );
-
+      const name = target?.name || deal.targetId;
       return {
         id: deal.id,
-        name: target?.name || deal.targetId,
-        sector: target?.sector || "Unknown",
+        name,
+        sector: target?.sector || "Sector not recorded",
         dealValue: deal.dealValue,
         dealDate: deal.announcedDate,
         acquirerName: acquirer?.name || deal.acquirerId,
-        evidence: computeEvidenceMaturity(resolved.inputs),
-        inputs: resolved.inputs,
-        inputSource: resolved.source,
+        registry: registryFromLookups(
+          lookups.trials.get(name),
+          lookups.fda.get(name),
+        ),
       };
     });
   }, [
     verifiedAcquisitions,
     verifiedCompanies,
     verifiedAcquirers,
-    apiState.results,
-    apiState.fdaResults,
+    lookups.trials,
+    lookups.fda,
   ]);
 
-  const inputSourceMode = useMemo((): EvidenceInputSource => {
-    const modes = new Set(baseRows.map((r) => r.inputSource));
-    if (modes.has("live")) return "live";
-    if (modes.has("taxonomy")) return "taxonomy";
-    return "empty";
-  }, [baseRows]);
-
-  /* ─── sorted rows ─── */
   const sortedRows = useMemo(() => {
-    const rows = [...baseRows];
-    switch (sortBy) {
-      case "score":
-        return rows.sort((a, b) => b.evidence.overall - a.evidence.overall);
-      case "value":
-        return rows.sort((a, b) => (b.dealValue || 0) - (a.dealValue || 0));
-      case "date":
-        return rows.sort((a, b) => b.dealDate.localeCompare(a.dealDate));
+    const next = [...rows];
+    if (sortBy === "value") {
+      next.sort((a, b) => {
+        if (a.dealValue == null && b.dealValue == null) return 0;
+        if (a.dealValue == null) return 1;
+        if (b.dealValue == null) return -1;
+        return b.dealValue - a.dealValue;
+      });
+      return next;
     }
-  }, [baseRows, sortBy]);
+    next.sort((a, b) => b.dealDate.localeCompare(a.dealDate));
+    return next;
+  }, [rows, sortBy]);
 
-  /* ─── correlation ─── */
-  const correlation: CorrelationResult = useMemo(() => {
-    const data: CompanyEvidence[] = baseRows.map((r) => ({
-      companyId: r.id,
-      companyName: r.name,
-      sector: r.sector,
-      evidenceScore: r.evidence.overall,
-      dealValue: r.dealValue,
-      dealDate: r.dealDate,
-    }));
-    return computeValuationCorrelation(data);
-  }, [baseRows]);
+  const recordedCount = rows.filter((row) => row.registry != null).length;
 
-  /* ─── tier distribution ─── */
-  const tierDist = useMemo(() => {
-    const dist: Record<string, number> = {};
-    for (const r of baseRows) {
-      dist[r.evidence.tier] = (dist[r.evidence.tier] || 0) + 1;
-    }
-    return dist;
-  }, [baseRows]);
-
-  /* ─── live enrichment ─── */
-  async function enrichFromAPIs() {
+  const enrichFromAPIs = useCallback(async () => {
     const MAX_ENRICH_COMPANIES = 60;
     const prioritized = [
       ...verifiedCompanies.filter(isGenomicsRelevantCompany),
@@ -244,13 +218,13 @@ export default function EvidenceMaturityDashboard() {
         dispatch({
           type: "CTG_DONE",
           company: name,
-          trials: ctg.totalTrials || 0,
-          highestPhase: ctg.highestPhase || "None",
-          hasResults: ctg.hasPostedResults || false,
+          trials: typeof ctg.totalTrials === "number" ? ctg.totalTrials : 0,
+          highestPhase: typeof ctg.highestPhase === "string"
+            ? ctg.highestPhase
+            : "None",
+          hasResults: Boolean(ctg.hasPostedResults),
         });
       } catch (error) {
-        // Per-company failures degrade the table rather than abort the run,
-        // but the count is surfaced so partial data is never read as complete.
         reportWarning("evidence.enrich.clinicalTrials", error, {
           company: name,
         });
@@ -269,9 +243,13 @@ export default function EvidenceMaturityDashboard() {
         dispatch({
           type: "FDA_DONE",
           company: name,
-          clearance: fda.highestDeviceClearance || "None",
-          hasDrug: fda.hasDrugApproval || false,
-          products: fda.totalProducts || 0,
+          clearance: typeof fda.highestDeviceClearance === "string"
+            ? fda.highestDeviceClearance
+            : "None",
+          hasDrug: Boolean(fda.hasDrugApproval),
+          products: typeof fda.totalProducts === "number"
+            ? fda.totalProducts
+            : 0,
         });
       } catch (error) {
         reportWarning("evidence.enrich.fda", error, { company: name });
@@ -282,245 +260,94 @@ export default function EvidenceMaturityDashboard() {
 
     dispatch({ type: "DONE" });
     setEnriched(true);
-  }
+  }, [verifiedCompanies]);
 
-  /* ─── auto-enrich on mount ─── */
   useEffect(() => {
-    if (!enriched && !apiState.loading && verifiedCompanies.length > 0) {
+    if (!enriched && !lookups.loading && verifiedCompanies.length > 0) {
       const timer = window.setTimeout(() => {
         void enrichFromAPIs();
       }, 0);
       return () => clearTimeout(timer);
     }
-  }, [verifiedCompanies.length, enriched, apiState.loading]);
-
-  const avgScore = baseRows.length > 0
-    ? Math.round(
-      baseRows.reduce((s, r) => s + r.evidence.overall, 0) / baseRows.length,
-    )
-    : 0;
-
-  // Static dataset metadata carries no trial/FDA inputs, so every deal scores
-  // 0 until live enrichment runs — summary stats would read as broken.
-  const allScoresZero = baseRows.length > 0 &&
-    baseRows.every((r) => r.evidence.overall === 0) &&
-    inputSourceMode === "empty";
+  }, [verifiedCompanies.length, enriched, lookups.loading, enrichFromAPIs]);
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-lacuna-lavender/40 p-4 sm:p-6">
       <CuratedDatasetBanner className="mb-4" />
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-5">
         <div>
           <h3 className="text-lg font-semibold text-lacuna-plum">
-            Evidence Maturity Scoring
+            Registry fields on verified targets
           </h3>
-          <div className="mt-1 mb-1">
-            <HeuristicTierBadge tier="affinity" />
-          </div>
-          <p className="text-sm text-lacuna-blue">
-            Descriptive affinity scores from public trial/FDA metadata on
-            verified companies — not a dual-source badge or deal-economics
-            input.
+          <p className="text-sm text-lacuna-blue mt-1">
+            ClinicalTrials.gov and openFDA fields are shown when a lookup
+            returns them. A missing lookup is omitted. It is not a score, a
+            GRADE rating, or a clinical-validation claim.
           </p>
         </div>
         <div className="flex items-center gap-2">
-          {apiState.loading && (
+          {lookups.loading && (
             <span className="text-xs text-lacuna-blue/60">
-              Enriching... {apiState.progress}/{apiState.total}
+              Looking up records... {lookups.progress}/{lookups.total}
             </span>
           )}
-          {!enriched && !apiState.loading && (
+          {!enriched && !lookups.loading && (
             <button
-              onClick={() => enrichFromAPIs()}
+              onClick={() => void enrichFromAPIs()}
               className="px-3 py-1.5 rounded-full text-xs font-medium bg-lacuna-plum text-white hover:bg-lacuna-plum/90 transition-colors"
             >
-              Enrich with Live Data
+              Look up registry records
             </button>
           )}
-          <span
-            className={`px-2.5 py-1 rounded-full text-xs font-medium border shrink-0 ${
-              enriched
-                ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                : "bg-amber-50 text-amber-700 border-amber-200"
-            }`}
-          >
-            {enriched
-              ? "Live Data"
-              : inputSourceMode === "taxonomy"
-              ? "Taxonomy baseline"
-              : apiState.loading
-              ? "Loading..."
-              : "Static"}
-          </span>
         </div>
       </div>
 
-      {/* Partial enrichment must be visible — missing lookups read as low evidence */}
-      {!apiState.loading && apiState.failures > 0 && (
+      <div className="mb-4">
+        <ResearchIntegrityNote />
+      </div>
+
+      {!lookups.loading && lookups.failures > 0 && (
         <div
           role="status"
           className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 mb-6"
         >
           <p className="text-sm text-amber-800 leading-relaxed">
-            <span className="font-medium">Partial enrichment.</span>{" "}
-            {apiState.failures} of {apiState.total}{" "}
-            ClinicalTrials.gov / openFDA lookups failed, so some rows still show
-            static scores. Re-run enrichment to retry.
+            <span className="font-medium">Partial lookup.</span>{" "}
+            {lookups.failures} of {lookups.total}{" "}
+            ClinicalTrials.gov / openFDA lookups failed. Those targets stay
+            blank. A failed lookup is not recorded as zero and is not a negative
+            finding.
           </p>
         </div>
       )}
 
-      {/* Honest zero-state: static metadata yields no differentiating scores */}
-      {allScoresZero && (
+      {recordedCount === 0 && (
         <div className="rounded-lg border border-lacuna-lavender/40 bg-lacuna-lavender/15 px-4 py-3 mb-6">
           <p className="text-sm text-lacuna-blue leading-relaxed">
-            {apiState.loading
-              ? (
-                <>
-                  <span className="font-medium text-lacuna-plum">
-                    Pulling live evidence data&hellip;
-                  </span>{" "}
-                  Fetching trial phases and FDA clearances from
-                  ClinicalTrials.gov and openFDA{" "}
-                  ({apiState.progress}/{apiState.total}{" "}
-                  companies). Scores will appear shortly.
-                </>
-              )
-              : (
-                <>
-                  <span className="font-medium text-lacuna-plum">
-                    No evidence scores yet.
-                  </span>{" "}
-                  No clinical-trial or FDA enrichment is available for these
-                  targets. Use{" "}
-                  <span className="font-medium text-lacuna-plum">
-                    Enrich with Live Data
-                  </span>{" "}
-                  to pull trial phases and clearances from ClinicalTrials.gov
-                  and openFDA.
-                </>
-              )}
+            {lookups.loading
+              ? "Fetching trial and FDA records. Nothing is scored while the lookup runs."
+              : "No trial or FDA record is attached to these targets in the current lookup."}
           </p>
         </div>
       )}
 
-      {/* Summary stats */}
-      {!allScoresZero && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-          <div className="rounded-lg bg-lacuna-pink/10 p-3 text-center">
-            <p className="text-2xl font-bold text-lacuna-plum">{avgScore}</p>
-            <p className="text-xs text-lacuna-blue">Avg Score</p>
-          </div>
-          <div className="rounded-lg bg-lacuna-pink/10 p-3 text-center">
-            <p className="text-2xl font-bold text-lacuna-plum">
-              {baseRows.length}
-            </p>
-            <p className="text-xs text-lacuna-blue">Deals Scored</p>
-          </div>
-          <div className="rounded-lg bg-lacuna-pink/10 p-3 text-center">
-            <p className="text-2xl font-bold text-lacuna-plum">
-              {correlation.n}
-            </p>
-            <p className="text-xs text-lacuna-blue">With Values</p>
-          </div>
-          <div className="rounded-lg bg-lacuna-pink/10 p-3 text-center">
-            <p className="text-2xl font-bold text-lacuna-plum">
-              {correlation.pearsonR}
-            </p>
-            <p className="text-xs text-lacuna-blue">Correlation (r)</p>
-          </div>
-        </div>
-      )}
-
-      {/* Tier distribution */}
-      {!allScoresZero && (
-        <div className="mb-6">
-          <h4 className="text-xs font-semibold text-lacuna-plum uppercase tracking-wide mb-2">
-            Evidence Tier Distribution
-          </h4>
-          <div className="flex gap-2 flex-wrap">
-            {([
-              "Regulatory Validated",
-              "Strong Evidence",
-              "Growing Evidence",
-              "Early Evidence",
-              "Pre-clinical",
-            ] as const).map((t) => {
-              const count = tierDist[t] || 0;
-              if (count === 0) return null;
-              const colors: Record<string, string> = {
-                "Regulatory Validated": "bg-emerald-100 text-emerald-800",
-                "Strong Evidence": "bg-sky-100 text-sky-800",
-                "Growing Evidence": "bg-amber-100 text-amber-800",
-                "Early Evidence": "bg-orange-100 text-orange-800",
-                "Pre-clinical":
-                  "bg-lacuna-surface-subtle text-lacuna-text-primary",
-              };
-              return (
-                <span
-                  key={t}
-                  className={`px-2.5 py-1 rounded-full text-xs font-medium ${
-                    colors[t]
-                  }`}
-                >
-                  {t}: {count}
-                </span>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Valuation correlation insight */}
-      {!allScoresZero && (
-        <div className="rounded-lg bg-lacuna-surface-muted border border-lacuna-border-subtle px-4 py-3 mb-6">
-          <h4 className="text-xs font-semibold text-lacuna-plum uppercase tracking-wide mb-1">
-            Valuation &times; Evidence Correlation
-          </h4>
-          <p className="text-sm text-lacuna-blue leading-relaxed">
-            {correlation.insight}
-          </p>
-          {correlation.n >= 5 && (
-            <div className="flex gap-6 mt-2 text-xs text-lacuna-blue/70">
-              <span>
-                High evidence avg: ${(correlation.avgHighEvidence / 1000)
-                  .toFixed(1)}B
-              </span>
-              <span>
-                Low evidence avg: ${(correlation.avgLowEvidence / 1000).toFixed(
-                  1,
-                )}B
-              </span>
-              <span>Premium: {correlation.premiumMultiple}x</span>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Sort controls */}
       <div className="flex items-center gap-2 mb-4">
         <span className="text-xs text-lacuna-blue/60">Sort by:</span>
-        {(["score", "value", "date"] as const).map((s) => (
+        {(["date", "value"] as const).map((key) => (
           <button
-            key={s}
-            onClick={() => setSortBy(s)}
+            key={key}
+            onClick={() => setSortBy(key)}
             className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
-              sortBy === s
+              sortBy === key
                 ? "bg-lacuna-plum text-white"
                 : "bg-lacuna-lavender/20 text-lacuna-blue hover:bg-lacuna-lavender/40"
             }`}
           >
-            {s === "score"
-              ? "Evidence Score"
-              : s === "value"
-              ? "Deal Value"
-              : "Date"}
+            {key === "value" ? "Disclosed value" : "Announcement date"}
           </button>
         ))}
       </div>
 
-      {/* Company evidence cards */}
       <div className="space-y-2 max-h-[600px] overflow-y-auto">
         {sortedRows.map((row) => {
           const isExpanded = expandedId === row.id;
@@ -531,42 +358,15 @@ export default function EvidenceMaturityDashboard() {
               className="w-full text-left rounded-lg border border-lacuna-lavender/30 hover:border-lacuna-lavender/60 transition-colors"
             >
               <div className="flex items-center gap-3 px-3 py-2.5">
-                {/* Score pill */}
-                <div
-                  className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold shrink-0 ${
-                    SCORE_BAR_COLORS[row.evidence.tierColor] ||
-                    "bg-lacuna-text-muted"
-                  } text-white`}
-                >
-                  {row.evidence.overall}
-                </div>
-
-                {/* Company info */}
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-sm font-medium text-lacuna-plum truncate">
                       {row.name}
                     </span>
-                    <span
-                      className={`px-1.5 py-0.5 rounded text-[10px] font-medium border ${
-                        TIER_STYLES[row.evidence.tierColor] || TIER_STYLES.slate
-                      }`}
-                    >
-                      {row.evidence.tier}
-                    </span>
-                    <span
-                      className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
-                        row.evidence.gradeLevel === "High"
-                          ? "bg-emerald-100 text-emerald-700"
-                          : row.evidence.gradeLevel === "Moderate"
-                          ? "bg-sky-100 text-sky-700"
-                          : row.evidence.gradeLevel === "Low"
-                          ? "bg-amber-100 text-amber-700"
-                          : "bg-slate-100 text-slate-500"
-                      }`}
-                      title={row.evidence.gradeRationale}
-                    >
-                      GRADE: {row.evidence.gradeLevel}
+                    <span className="px-1.5 py-0.5 rounded text-[10px] font-medium border border-lacuna-border text-lacuna-text-secondary">
+                      {row.registry
+                        ? "Registry fields recorded"
+                        : "No registry record"}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-lacuna-blue/60 mt-0.5">
@@ -577,97 +377,62 @@ export default function EvidenceMaturityDashboard() {
                     <span>{row.dealDate.slice(0, 4)}</span>
                   </div>
                 </div>
-
-                {/* Deal value */}
                 <div className="text-right shrink-0">
-                  {row.dealValue
+                  {row.dealValue != null
                     ? (
                       <span className="text-sm font-semibold text-lacuna-plum">
-                        ${row.dealValue >= 1000
-                          ? `${(row.dealValue / 1000).toFixed(1)}B`
-                          : `${row.dealValue}M`}
+                        {formatDisclosedValue(row.dealValue)}
                       </span>
                     )
-                    : <span className="text-xs text-lacuna-blue/40">N/D</span>}
+                    : (
+                      <span className="text-xs text-lacuna-blue/40">
+                        Not disclosed
+                      </span>
+                    )}
                 </div>
-
-                {/* Chevron */}
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 12 12"
-                  fill="none"
-                  className={`shrink-0 text-lacuna-blue/40 transition-transform ${
-                    isExpanded ? "rotate-180" : ""
-                  }`}
-                >
-                  <path
-                    d="M2.5 4.5L6 8l3.5-3.5"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
               </div>
-
-              {/* Expanded detail */}
               {isExpanded && (
-                <div className="px-3 pb-3 border-t border-lacuna-lavender/20 pt-2">
-                  {/* Sub-scores */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
-                    {([
-                      ["Phase", row.evidence.phaseScore],
-                      ["FDA Status", row.evidence.fdaStatusScore],
-                      ["Results", row.evidence.clinicalResultsScore],
-                      ["Publications", row.evidence.publicationScore],
-                    ] as const).map(([label, score]) => (
-                      <div key={label} className="text-center">
-                        <div className="w-full h-1.5 bg-lacuna-surface-subtle rounded-full overflow-hidden mb-1">
-                          <div
-                            className={`h-full rounded-full ${
-                              SCORE_BAR_COLORS[row.evidence.tierColor] ||
-                              "bg-lacuna-text-muted"
-                            }`}
-                            style={{ width: `${score}%` }}
-                          />
-                        </div>
-                        <span className="text-[10px] text-lacuna-blue/60">
-                          {label}: {score}/100
-                        </span>
+                <div className="px-3 pb-3 border-t border-lacuna-lavender/20 pt-2 text-xs text-lacuna-blue">
+                  {row.registry
+                    ? (
+                      <div className="flex flex-wrap gap-2">
+                        {row.registry.trials != null && (
+                          <span>Trials recorded: {row.registry.trials}</span>
+                        )}
+                        {row.registry.phase && (
+                          <span>
+                            Highest phase recorded: {row.registry.phase}
+                          </span>
+                        )}
+                        {row.registry.hasResults && (
+                          <span>Posted results recorded</span>
+                        )}
+                        {row.registry.clearance && (
+                          <span>
+                            FDA clearance recorded: {row.registry.clearance}
+                          </span>
+                        )}
+                        {row.registry.hasDrug && (
+                          <span>Drug approval recorded</span>
+                        )}
+                        {row.registry.products != null && (
+                          <span>
+                            FDA products recorded: {row.registry.products}
+                          </span>
+                        )}
                       </div>
-                    ))}
-                  </div>
-                  {/* Narrative */}
-                  <p className="text-xs text-lacuna-blue leading-relaxed">
-                    {row.evidence.narrative}
-                  </p>
-                  {/* Evidence inputs */}
-                  <div className="flex flex-wrap gap-2 mt-2 text-[10px] text-lacuna-blue/50">
-                    <span>Trials: {row.inputs.totalTrials}</span>
-                    <span>
-                      Phase: {row.inputs.highestPhase.replace("PHASE", "P")}
-                    </span>
-                    <span>FDA: {row.inputs.highestFDAClearance}</span>
-                    <span>Products: {row.inputs.totalFDAProducts}</span>
-                  </div>
+                    )
+                    : (
+                      <p>
+                        No trial or FDA field is recorded for this target. The
+                        blank is not a pre-clinical grade and not a zero.
+                      </p>
+                    )}
                 </div>
               )}
             </button>
           );
         })}
-      </div>
-
-      {/* Methodology note */}
-      <div className="mt-4 pt-3 border-t border-lacuna-border-subtle">
-        <p className="text-[11px] text-lacuna-blue/50 leading-relaxed">
-          Evidence Maturity Score (0&ndash;100) = Phase (30%) + FDA Status (30%)
-          + Clinical Results (20%) + Publication Proxy (20%). Scores enriched
-          live from ClinicalTrials.gov and openFDA APIs. Publication score is
-          estimated from trial maturity since PubMed integration is not yet
-          available. Not investment advice — evidence maturity is one signal
-          among many.
-        </p>
       </div>
     </div>
   );
