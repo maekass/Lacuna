@@ -324,3 +324,18 @@ export function getResearchSourceById(
 ): ResearchSource | undefined {
   return RESEARCH_SOURCES.find((source) => source.id === id);
 }
+
+/**
+ * Stable ids for the reports the claim registry is allowed to cite.
+ * Values match entries in {@link RESEARCH_SOURCES}.
+ */
+export const RESEARCH_SOURCE_IDS = {
+  wham2026: "wham-business-case-2026",
+  svbH22026: "svb-healthcare-investments-exits-h2-2026",
+  aoaDx2026: "aoa-dx-follow-the-exits-2026",
+  camberIef2025: "camber-ief-opportunity-map-progress-2025",
+  luxCapital2025: "lux-ai-womens-health-2025",
+} as const;
+
+export type ResearchSourceId =
+  (typeof RESEARCH_SOURCE_IDS)[keyof typeof RESEARCH_SOURCE_IDS];
