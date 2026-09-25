@@ -20,6 +20,10 @@ export const DIAGNOSTICS_TOOLS_SECTOR_CONTEXT =
   "Diagnostics and tools can address high-value clinical gaps, but reimbursement, adoption, clinical utility, and commercialization evidence remain key diligence considerations.";
 
 /**
+ * Deprecated for new work: structured provenance lives in
+ * `src/lib/research/sourceRegistry.ts`. These objects stay so existing
+ * source cards keep their public copy. Do not delete them in this migration.
+ *
  * SVB sector-context fields.
  * The required report title stays H2 2026 with a June 30, 2026 cutoff.
  * The public Healthcare Investments and Exits landing page currently

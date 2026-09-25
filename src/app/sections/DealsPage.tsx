@@ -23,6 +23,7 @@ import DealEmpowermentContext from "@/components/DealEmpowermentContext";
 import ReviewConsole from "@/components/ReviewConsole";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
+import BiotheranosticsDossierLink from "@/components/BiotheranosticsDossierLink";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { useDashboardData } from "@/lib/data/useDashboardData";
 import { empowermentContextForDeal } from "@/lib/deals/empowermentContextForDeal";
@@ -85,6 +86,8 @@ export default function DealsPage() {
           sources only.
         </p>
       </header>
+
+      <BiotheranosticsDossierLink />
 
       <MotionSection className="mb-8">
         <DatasetScopeBanner

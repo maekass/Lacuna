@@ -17,6 +17,7 @@ import RhCapitalPortfolioContext from "@/components/RhCapitalPortfolioContext";
 import SpaceWhResearchGapsPanel from "@/components/SpaceWhResearchGapsPanel";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
+import BiotheranosticsDossierLink from "@/components/BiotheranosticsDossierLink";
 
 import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentInsightTypes";
 import type { PatientEmpowermentSnapshot } from "@/lib/research/patientEmpowermentPipeline";
@@ -49,6 +50,8 @@ export default function ResearchPage({
           economics, comps, or dual-source badges.
         </p>
       </header>
+
+      <BiotheranosticsDossierLink />
 
       <MotionSection id="burden-capital-gap" className={SECTION}>
         <SectionHeader
