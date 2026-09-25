@@ -128,10 +128,10 @@ snapshots use source publication dates to prevent future-information leakage.
 
 The first vertical slice covers **ferric carboxymaltose (Injectafer)**. It
 preserves the August 2026 FDA supplement adding a boxed warning for symptomatic
-hypophosphatemia and FDA's September 2026 Sentinel statement that serum-phosphate
-testing occurred in **fewer than 20%** of administration episodes. The latter is
-stored as an upper bound (`value: 0.2`, `comparator: "lt"`), not as an exact
-20% rate.
+hypophosphatemia and FDA's September 2026 Sentinel statement that
+serum-phosphate testing occurred in **fewer than 20%** of administration
+episodes. The latter is stored as an upper bound (`value: 0.2`,
+`comparator: "lt"`), not as an exact 20% rate.
 
 The ingestion foundation also includes a typed openFDA device client for 510(k),
 PMA, adverse-event, recall, UDI, and classification endpoints, plus a federal
@@ -155,8 +155,8 @@ and budget-impact workbench.
 | Next.js 16, React 19, TypeScript, Tailwind CSS v4 | App shell. Node **24** (`.nvmrc`)                                                                                     |
 | D3.js v7, Framer Motion                           | Network and charts                                                                                                    |
 | `getVerifiedDataset()`                            | Default path; static JSON on Vercel                                                                                   |
-| US Evidence Graph (`src/lib/evidenceGraph`)        | Point-in-time source-backed research observations; separate from verified M&A JSON                                    |
-| Market access (`src/lib/marketAccess`)             | Deterministic demand funnels and budget-impact scenarios                                                              |
+| US Evidence Graph (`src/lib/evidenceGraph`)       | Point-in-time source-backed research observations; separate from verified M&A JSON                                    |
+| Market access (`src/lib/marketAccess`)            | Deterministic demand funnels and budget-impact scenarios                                                              |
 | simple-statistics                                 | Descriptive summaries, cosine similarity, k-means labels                                                              |
 | PostgreSQL                                        | Optional `LACUNA_DATA_MODE=db` — not required to run the demo                                                         |
 | ClickHouse variant catalog                        | Optional and off by default. Not clinical-grade genomics. [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md) |
@@ -183,7 +183,7 @@ documented in [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md).
 | Doc                                                                             | Use it for                                           |
 | ------------------------------------------------------------------------------- | ---------------------------------------------------- |
 | [MODEL_CARD.md](docs/MODEL_CARD.md)                                             | What each on-screen score is                         |
-| [EVIDENCE_GRAPH.md](docs/EVIDENCE_GRAPH.md)                                     | US evidence contract and translation boundary       |
+| [EVIDENCE_GRAPH.md](docs/EVIDENCE_GRAPH.md)                                     | US evidence contract and translation boundary        |
 | [MARKET_ACCESS.md](docs/MARKET_ACCESS.md)                                       | Demand, budget impact, and publication gate          |
 | [LIMITATIONS.md](docs/LIMITATIONS.md)                                           | Disclosed-value definition and live totals           |
 | [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md)                                   | Verified vs staging vs enrichment                    |
