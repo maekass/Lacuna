@@ -203,7 +203,9 @@ async function main() {
       id.split("/")[0] === missing[0].split("/")[0]
     );
     const replacements = decisions.filter((item) => item.replacement);
-    const canMigrate = replacements.length === missing.length &&
+    const canMigrate = providerSpecific &&
+      missing.every((id) => Object.values(modelRoutes).includes(id)) &&
+      replacements.length === missing.length &&
       replacements.every((item) =>
         item.replacement!.split("/")[0] ===
           replacements[0].replacement!.split("/")[0]
