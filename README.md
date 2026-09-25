@@ -114,6 +114,40 @@ Gateway when a key is configured and returns 503 otherwise. Narrative text does
 not override dataset fields or heuristic labels. See
 [INFERENCE.md](docs/INFERENCE.md).
 
+## US Evidence Graph
+
+The **US Evidence Graph** is a separate research layer for source-linked
+regulatory, surveillance, claims, trial, epidemiology, funding, pricing, and
+workforce observations. It does not merge research observations into
+`dataset.verified.json`.
+
+Each promoted observation preserves its subject and metric, value plus any
+comparator, primary source and locator, geography and population when known,
+point-in-time `asOf` semantics, evidence type, and limitations. Historical
+snapshots use source publication dates to prevent future-information leakage.
+
+The first vertical slice covers **ferric carboxymaltose (Injectafer)**. It
+preserves the August 2026 FDA supplement adding a boxed warning for symptomatic
+hypophosphatemia and FDA's September 2026 Sentinel statement that serum-phosphate
+testing occurred in **fewer than 20%** of administration episodes. The latter is
+stored as an upper bound (`value: 0.2`, `comparator: "lt"`), not as an exact
+20% rate.
+
+The ingestion foundation also includes a typed openFDA device client for 510(k),
+PMA, adverse-event, recall, UDI, and classification endpoints, plus a federal
+source catalog for FDA postmarketing requirements/commitments, CDRH
+real-world-evidence precedents, women-specific devices, and openFDA.
+
+**Translation boundary:** US evidence can generate a deployment question or
+constraint for a target-market case, but it must not silently become a non-US
+parameter. US utilization is not non-US uptake; US reimbursement is not non-US
+price; and US surveillance results require separate applicability evidence
+before translation.
+
+See [EVIDENCE_GRAPH.md](docs/EVIDENCE_GRAPH.md) for the evidence contract and
+[MARKET_ACCESS.md](docs/MARKET_ACCESS.md) for the separate deterministic demand
+and budget-impact workbench.
+
 ## Stack
 
 | Layer                                             | In the public app                                                                                                     |
@@ -121,6 +155,8 @@ not override dataset fields or heuristic labels. See
 | Next.js 16, React 19, TypeScript, Tailwind CSS v4 | App shell. Node **24** (`.nvmrc`)                                                                                     |
 | D3.js v7, Framer Motion                           | Network and charts                                                                                                    |
 | `getVerifiedDataset()`                            | Default path; static JSON on Vercel                                                                                   |
+| US Evidence Graph (`src/lib/evidenceGraph`)        | Point-in-time source-backed research observations; separate from verified M&A JSON                                    |
+| Market access (`src/lib/marketAccess`)             | Deterministic demand funnels and budget-impact scenarios                                                              |
 | simple-statistics                                 | Descriptive summaries, cosine similarity, k-means labels                                                              |
 | PostgreSQL                                        | Optional `LACUNA_DATA_MODE=db` — not required to run the demo                                                         |
 | ClickHouse variant catalog                        | Optional and off by default. Not clinical-grade genomics. [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md) |
@@ -147,6 +183,8 @@ documented in [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md).
 | Doc                                                                             | Use it for                                           |
 | ------------------------------------------------------------------------------- | ---------------------------------------------------- |
 | [MODEL_CARD.md](docs/MODEL_CARD.md)                                             | What each on-screen score is                         |
+| [EVIDENCE_GRAPH.md](docs/EVIDENCE_GRAPH.md)                                     | US evidence contract and translation boundary       |
+| [MARKET_ACCESS.md](docs/MARKET_ACCESS.md)                                       | Demand, budget impact, and publication gate          |
 | [LIMITATIONS.md](docs/LIMITATIONS.md)                                           | Disclosed-value definition and live totals           |
 | [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md)                                   | Verified vs staging vs enrichment                    |
 | [COMPETITIVE_ANALYSIS_METHODOLOGY.md](docs/COMPETITIVE_ANALYSIS_METHODOLOGY.md) | Observable acquirer facts vs inferred intent         |
