@@ -9,7 +9,7 @@ from `src/app/lazyDashboard.tsx`; mounted on `/deals#quant-valuation` and
 `provenance.datasetVersion`)\
 **Verified acquisitions**: 59 (`headline.verifiedDeals`)\
 **Dataset hash**:
-`185c97cedaace8a9bc0a5ae65e4a2d62e1c3efed06dc94234e7fca4d06b521b4`
+`e79ef1cfdc8c2c19b3290ea7eabbb5c5657d0398471013db2ded074be212ddf9`
 
 The number **58** in `computed-dataset-summary.json` is
 `disclosure.companiesWithValuation` (the valuation-disclosure count: 58/150). It

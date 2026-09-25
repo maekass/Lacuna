@@ -50,8 +50,12 @@ export const economicEvidenceLedgerSchema = z.object({
   records: z.array(economicEvidenceRecordSchema),
 });
 
-export type EconomicEvidenceRecord = z.infer<typeof economicEvidenceRecordSchema>;
-export type EconomicEvidenceLedger = z.infer<typeof economicEvidenceLedgerSchema>;
+export type EconomicEvidenceRecord = z.infer<
+  typeof economicEvidenceRecordSchema
+>;
+export type EconomicEvidenceLedger = z.infer<
+  typeof economicEvidenceLedgerSchema
+>;
 
 /** Validate the version-controlled economic evidence ledger. */
 export function parseEconomicEvidenceLedger(
@@ -78,7 +82,9 @@ function currentRecords(
 
   const byCompanyAndField = new Map<string, EconomicEvidenceRecord>();
   for (const record of records) {
-    if (superseded.has(record.id) || record.verificationStatus === "retracted") {
+    if (
+      superseded.has(record.id) || record.verificationStatus === "retracted"
+    ) {
       continue;
     }
     const key = `${record.companyId}:${record.field}`;
@@ -120,9 +126,7 @@ export function economicEvidenceAtDecisionDate(
     asOf: record.publicAsOfDate,
     source: record.sourceCitation,
   }, cutoff);
-  return result.eligible
-    ? { eligible: true, evidence: result.value }
-    : result;
+  return result.eligible ? { eligible: true, evidence: result.value } : result;
 }
 
 /**
