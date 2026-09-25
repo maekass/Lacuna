@@ -8,6 +8,7 @@
 
 import { z } from "zod";
 import snapshot from "@/data/ai-models.snapshot.json";
+import modelRoutes from "@/data/ai-models.routes.json";
 
 export const modelPricingSchema = z.object({
   /** USD per 1M input tokens. */
@@ -46,13 +47,12 @@ export type ModelCatalogSnapshot = z.infer<typeof modelCatalogSnapshotSchema>;
  * model constants in {@link file://./inference.ts}.
  */
 export const TRACKED_MODEL_IDS = [
-  "anthropic/claude-sonnet-4",
-  "openai/gpt-4o-mini",
-  "openai/gpt-5.4-mini",
-  "openai/gpt-5.6-terra",
-  "xai/grok-4.3",
-  "xai/grok-4.5",
-] as const;
+  ...new Set([
+    ...Object.values(modelRoutes),
+    "openai/gpt-4o-mini",
+    "openai/gpt-5.4-mini",
+  ]),
+];
 
 /** Parsed rather than cast: a truncated or malformed snapshot fails loudly. */
 const catalog = modelCatalogSnapshotSchema.parse(snapshot);

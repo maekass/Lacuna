@@ -40,7 +40,7 @@ POST /api/research/space-wh-pipeline/ask
 # body: { "question": "What are the largest commercial gaps?" }
 ```
 
-**Model:** Vercel AI Gateway slug `xai/grok-4.3` (see
+**Model:** Vercel AI Gateway slug `spacexai/grok-4.3` (see
 `SPACE_WH_GAP_GATEWAY_MODEL` in `src/lib/ai/inference.ts`). Direct OpenAI
 fallback: `gpt-4o-mini`.
 
@@ -48,7 +48,7 @@ Without `AI_GATEWAY_API_KEY` / `VERCEL_OIDC_TOKEN` / `OPENAI_API_KEY`, ask
 returns a **deterministic** narrative (no LLM).
 
 Gateway calls use the AI SDK string model id (same pattern as
-`generateText({ model: 'xai/grok-4.3', ... })`), via `generateInferenceText` so
+`generateText({ model: 'spacexai/grok-4.3', ... })`), via `generateInferenceText` so
 prompts stay centralized and tagged `feature:space-wh-gap`.
 
 ## Code

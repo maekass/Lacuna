@@ -16,25 +16,26 @@ import {
 import { openai } from "@ai-sdk/openai";
 import type { z } from "zod";
 import { getModelPricing, type ModelPricing } from "@/lib/ai/modelCatalog";
+import modelRoutes from "@/data/ai-models.routes.json";
 
 /** Gateway slug for optional UI insight narratives. */
-export const INSIGHTS_GATEWAY_MODEL = "anthropic/claude-sonnet-4" as const;
+export const INSIGHTS_GATEWAY_MODEL = modelRoutes.insights;
 export const INSIGHTS_OPENAI_MODEL = "gpt-4o-mini" as const;
 
 /** Gateway slug for space WH gap analyst (Research pipeline Q&A). */
-export const SPACE_WH_GAP_GATEWAY_MODEL = "xai/grok-4.3" as const;
+export const SPACE_WH_GAP_GATEWAY_MODEL = modelRoutes.spaceWhGap;
 export const SPACE_WH_GAP_OPENAI_MODEL = "gpt-4o-mini" as const;
 
 /** Gateway slug for patient empowerment gap analyst. */
-export const EMPOWERMENT_GAP_GATEWAY_MODEL = "xai/grok-4.3" as const;
+export const EMPOWERMENT_GAP_GATEWAY_MODEL = modelRoutes.empowermentGap;
 export const EMPOWERMENT_GAP_OPENAI_MODEL = "gpt-4o-mini" as const;
 
 /** Gateway slug for domestic study discovery (Research catalog expansion). */
-export const STUDY_DISCOVERY_GATEWAY_MODEL = "xai/grok-4.5" as const;
+export const STUDY_DISCOVERY_GATEWAY_MODEL = modelRoutes.studyDiscovery;
 export const STUDY_DISCOVERY_OPENAI_MODEL = "gpt-4o-mini" as const;
 
 /** Gateway slug for SEC 8-K women's-health classification. */
-export const CLASSIFICATION_GATEWAY_MODEL = "openai/gpt-5.6-terra" as const;
+export const CLASSIFICATION_GATEWAY_MODEL = modelRoutes.classification;
 export const CLASSIFICATION_OPENAI_MODEL = "gpt-4o-mini" as const;
 
 export const DEFAULT_INFERENCE_TIMEOUT_MS = 45_000;

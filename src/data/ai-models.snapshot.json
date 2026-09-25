@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-02T01:51:29.146Z",
+  "fetchedAt": "2026-09-25T11:46:38.862Z",
   "source": "https://ai-gateway.vercel.sh/v1/models",
   "models": [
     {
@@ -51,7 +51,7 @@
       }
     },
     {
-      "id": "xai/grok-4.3",
+      "id": "spacexai/grok-4.3",
       "name": "Grok 4.3",
       "knowledgeCutoff": null,
       "contextWindow": 1000000,
@@ -63,7 +63,7 @@
       }
     },
     {
-      "id": "xai/grok-4.5",
+      "id": "spacexai/grok-4.5",
       "name": "Grok 4.5",
       "knowledgeCutoff": null,
       "contextWindow": 500000,

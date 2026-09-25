@@ -255,7 +255,8 @@ export default function SpaceWhResearchGapsPanel({
         description={
           <>
             Grounded only in the pipeline JSON above. Uses Vercel AI Gateway
-            model <code className="text-lacuna-plum">xai/grok-4.3</code>{" "}
+            model <code className="text-lacuna-plum">spacexai/grok-4.3</code>
+            {" "}
             when configured; otherwise a deterministic summary.
           </>
         }
