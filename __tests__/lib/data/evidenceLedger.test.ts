@@ -11,9 +11,11 @@ import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 
 describe("economic evidence ledger", () => {
   it("is the static source for current funding and valuation fields", () => {
-    expect(rawDataset.companies.some((company) =>
-      "totalFunding" in company || "lastKnownValuation" in company
-    )).toBe(false);
+    expect(
+      rawDataset.companies.some((company) =>
+        "totalFunding" in company || "lastKnownValuation" in company
+      ),
+    ).toBe(false);
 
     const ledger = parseEconomicEvidenceLedger(rawLedger);
     expect(ledger.records.length).toBeGreaterThan(0);
@@ -36,7 +38,12 @@ describe("economic evidence ledger", () => {
         purpose: "test",
         disclaimer: "test",
       },
-      companies: [{ id: "c-test", name: "Test", sector: "Test", stage: "Seed" }],
+      companies: [{
+        id: "c-test",
+        name: "Test",
+        sector: "Test",
+        stage: "Seed",
+      }],
       acquirers: [],
       acquisitions: [],
     });
@@ -59,12 +66,19 @@ describe("economic evidence ledger", () => {
       value: 12,
       supersedesId: earlier.id,
     };
-    expect(applyEconomicEvidenceLedger(base, { schemaVersion: "1.0", records: [earlier, corrected] })
-      .companies[0].totalFunding).toBe(12);
-    expect(() => applyEconomicEvidenceLedger(base, {
-      schemaVersion: "1.0",
-      records: [earlier, { ...earlier, id: "c-test:totalFunding:conflict" }],
-    })).toThrow(/More than one current evidence record/);
+    expect(
+      applyEconomicEvidenceLedger(base, {
+        schemaVersion: "1.0",
+        records: [earlier, corrected],
+      })
+        .companies[0].totalFunding,
+    ).toBe(12);
+    expect(() =>
+      applyEconomicEvidenceLedger(base, {
+        schemaVersion: "1.0",
+        records: [earlier, { ...earlier, id: "c-test:totalFunding:conflict" }],
+      })
+    ).toThrow(/More than one current evidence record/);
   });
 
   it("keeps current catalog values out of historical snapshots until their public vintage is captured", () => {

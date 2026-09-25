@@ -88,8 +88,8 @@ in-sample event fraction.
    acquired. Resolving this needs the author's recollection or contemporaneous
    notes — not another code search.
 2. **Vintage of `totalFunding`, `lastKnownValuation`, `stage`, and `sector`.**
-   Funding and valuation now materialize from `evidence.verified.json`, but
-   the initial migrated records preserve their legacy citations with
+   Funding and valuation now materialize from `evidence.verified.json`, but the
+   initial migrated records preserve their legacy citations with
    `publicAsOfDate: null`. They remain unavailable in a point-in-time replay
    until a dated source is backfilled. Stage and sector still have no field
    vintage. A value sitting on an acquired company may be the deal price, a
