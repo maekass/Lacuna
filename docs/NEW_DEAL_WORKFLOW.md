@@ -87,9 +87,6 @@ Before merge, every deal needs:
   "founded": 2018,
   "hq": "Boston, MA",
   "description": "One sentence from website or filing.",
-  "lastKnownValuation": 120,
-  "valuationSource": "Series B press release, March 2024",
-  "totalFunding": 85,
   "sources": [
     "https://www.sec.gov/Archives/edgar/data/.../example-8k.htm",
     "https://www.businesswire.com/news/home/example-press-release"
@@ -97,8 +94,10 @@ Before merge, every deal needs:
 }
 ```
 
-Rules: stable `id` (never reuse), **≥2 `sources[]`**, valuation only with
-`valuationSource`.
+Rules: stable `id` (never reuse), **≥2 `sources[]`**. Add funding and valuation
+only as separate records in `src/data/evidence.verified.json`; each record
+requires its own citation and `publicAsOfDate` (or explicit `null` when the
+historical vintage is unknown).
 
 ### 3b. New acquirer (if not in `companies[]` or `acquirers[]`)
 

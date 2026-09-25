@@ -10,8 +10,8 @@
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
+import { getStaticVerifiedDataset } from "../src/lib/data/staticDataset";
 import { hashDataset } from "../src/lib/lineage/datasetHash";
-import { parseVerifiedDataset } from "../src/lib/data/datasetSchema";
 
 interface Company {
   id: string;
@@ -47,11 +47,9 @@ function computeCagr(
   return Number.isFinite(value) ? value : null;
 }
 
-const dataset = JSON.parse(
-  readFileSync("src/data/dataset.verified.json", "utf-8"),
-);
+const dataset = getStaticVerifiedDataset();
 const companies: Company[] = dataset.companies ?? [];
-const datasetHash = hashDataset(parseVerifiedDataset(dataset)).fullHash;
+const datasetHash = hashDataset(dataset).fullHash;
 const generatedAt = generatedAtFromProvenance(dataset.provenance.lastUpdated);
 const secPath = "src/data/computed-sec-revenue.json";
 const secArtifact = existsSync(secPath)

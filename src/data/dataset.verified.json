@@ -76,9 +76,6 @@
       "founded": 2017,
       "hq": "San Francisco, CA",
       "description": "At-home fertility testing and telehealth",
-      "lastKnownValuation": 225,
-      "valuationSource": "Acquisition value reported in press (est. $150-225M)",
-      "totalFunding": 155,
       "sources": [
         "Crunchbase - crunchbase.com/organization/modern-fertility",
         "TechCrunch - acquisition coverage (May 2021)",
@@ -98,9 +95,6 @@
       "founded": 2017,
       "hq": "New York, NY",
       "description": "Men's and women's health telemedicine platform",
-      "lastKnownValuation": 7000,
-      "valuationSource": "Last funding round valuation (2021), may not reflect current value",
-      "totalFunding": 976,
       "sources": [
         "Crunchbase - crunchbase.com/organization/ro",
         "Ro.co - press releases",
@@ -120,9 +114,6 @@
       "founded": 2013,
       "hq": "London, UK",
       "description": "Connected pelvic floor trainer and breast pump",
-      "lastKnownValuation": 150,
-      "valuationSource": "Press reports from Series B (2019)",
-      "totalFunding": 65,
       "sources": [
         "Elvie.com - company website",
         "TechCrunch - Series B (2019)",
@@ -142,9 +133,6 @@
       "founded": 2014,
       "hq": "New York, NY",
       "description": "Virtual clinic for women's and family health",
-      "lastKnownValuation": 1000,
-      "valuationSource": "Series D at $1B+ valuation (Aug 2021)",
-      "totalFunding": 200,
       "sources": [
         "Mavenclinic.com - company website",
         "TechCrunch - Series D (2021)",
@@ -164,7 +152,6 @@
       "founded": 2017,
       "hq": "New York, NY",
       "description": "Women's health clinic combining physical and virtual care",
-      "valuationSource": "Not publicly disclosed",
       "sources": [
         "Company website and public disclosures",
         "Crunchbase - crunchbase.com/organization/tia-health",
@@ -185,9 +172,6 @@
       "founded": 2016,
       "hq": "San Francisco, CA",
       "description": "Global fertility benefits platform for employers",
-      "lastKnownValuation": 400,
-      "valuationSource": "Series C valuation (2021)",
-      "totalFunding": 99,
       "sources": [
         "Get-carrot.com - company website",
         "TechCrunch - Series C (2021)",
@@ -207,9 +191,6 @@
       "founded": 2018,
       "hq": "New York, NY",
       "description": "Fertility and family-building benefit solution",
-      "lastKnownValuation": 1800,
-      "valuationSource": "$1.8B valuation on Perceptive Advisors financing (Mar 2023)",
-      "totalFunding": 290,
       "sources": [
         "Kindbody.com - company website",
         "TechCrunch - Series D (2022)",
@@ -229,7 +210,6 @@
       "founded": 2016,
       "hq": "New York, NY",
       "description": "Functional medicine for women's health",
-      "valuationSource": "Not publicly disclosed",
       "sources": [
         "Company website and public disclosures",
         "Crunchbase - crunchbase.com/organization/parsley-health",
@@ -250,9 +230,6 @@
       "founded": 2015,
       "hq": "Austin, TX",
       "description": "At-home health testing including women's health panels",
-      "lastKnownValuation": 325,
-      "valuationSource": "Last funding round (2021)",
-      "totalFunding": 256,
       "sources": [
         "Everlywell.com - company website",
         "TechCrunch - funding announcement (2021)",
@@ -272,7 +249,6 @@
       "founded": 2014,
       "hq": "Zurich, Switzerland",
       "description": "Fertility tracking wearable bracelet",
-      "valuationSource": "Not publicly disclosed",
       "sources": [
         "Avawomen.com - company website",
         "TechCrunch - funding coverage",
@@ -292,7 +268,6 @@
       "founded": 2016,
       "hq": "Boulder, CO",
       "description": "At-home progesterone test strips",
-      "valuationSource": "Not publicly disclosed",
       "sources": [
         "Proovtest.com - company website",
         "Crunchbase - crunchbase.com/organization/proov",
@@ -313,9 +288,6 @@
       "founded": 2015,
       "hq": "San Francisco, CA",
       "description": "Telehealth for birth control and women's health",
-      "lastKnownValuation": 300,
-      "valuationSource": "Acquisition value (Ro purchase, 2021) - estimated $300M",
-      "totalFunding": 118,
       "sources": [
         "Nurx.com - company website (now Ro)",
         "TechCrunch - Ro acquisition (Dec 2021)",
@@ -335,9 +307,6 @@
       "founded": 2013,
       "hq": "San Francisco, CA",
       "description": "Telehealth platform with women's health focus",
-      "lastKnownValuation": 400,
-      "valuationSource": "23andMe acquisition price (SEC EX-99.1, Oct 2021)",
-      "totalFunding": 55,
       "sources": [
         "SEC EDGAR EX-99.1 — 23andMe/Lemonaid merger agreement (Oct 22, 2021)",
         "Globe Newswire — acquisition closing (Nov 1, 2021)",
@@ -358,9 +327,6 @@
       "founded": 2012,
       "hq": "New York, NY",
       "description": "Online therapy platform, 70% women users",
-      "lastKnownValuation": 1400,
-      "valuationSource": "Public company (NASDAQ: TALK) - valuation at time of data collection",
-      "totalFunding": 195,
       "sources": [
         "Talkspace.com - company website",
         "SEC EDGAR - SPAC filing (2021)",
@@ -380,9 +346,6 @@
       "founded": 2012,
       "hq": "San Francisco, CA",
       "description": "Meditation and sleep app, 70%+ female user base",
-      "lastKnownValuation": 2000,
-      "valuationSource": "Last funding round (2021)",
-      "totalFunding": 218,
       "sources": [
         "Calm.com - company website",
         "TechCrunch - funding (2021)",
@@ -402,9 +365,6 @@
       "founded": 2013,
       "hq": "Oulu, Finland",
       "description": "Smart ring with women's health tracking features",
-      "lastKnownValuation": 2500,
-      "valuationSource": "Series C valuation (2022)",
-      "totalFunding": 148,
       "sources": [
         "Ouraring.com - company website",
         "TechCrunch - Series C (2022)",
@@ -424,9 +384,6 @@
       "founded": 2012,
       "hq": "Boston, MA",
       "description": "Fitness wearable with menstrual cycle integration",
-      "lastKnownValuation": 3600,
-      "valuationSource": "Series F valuation (2021)",
-      "totalFunding": 405,
       "sources": [
         "Whoop.com - company website",
         "TechCrunch - Series F (2021)",
@@ -446,7 +403,6 @@
       "founded": 2013,
       "hq": "Stockholm, Sweden",
       "description": "FDA-cleared birth control app",
-      "valuationSource": "Not publicly disclosed",
       "sources": [
         "Company website and public disclosures",
         "Crunchbase - crunchbase.com/organization/natural-cycles",
@@ -467,7 +423,6 @@
       "founded": 2012,
       "hq": "Berlin, Germany",
       "description": "Period and fertility tracking app",
-      "valuationSource": "Not publicly disclosed",
       "sources": [
         "Company website and public disclosures",
         "Crunchbase - crunchbase.com/organization/clue-by-biw",
@@ -488,7 +443,6 @@
       "founded": 2018,
       "hq": "Los Angeles, CA",
       "description": "Clean intimate care products",
-      "valuationSource": "Not publicly disclosed",
       "sources": [
         "Company website and public disclosures",
         "Crunchbase - crunchbase.com/organization/bloomi",
@@ -508,8 +462,6 @@
       "founded": 2022,
       "hq": "Baltimore, MD",
       "description": "Multiphasic menstrual cup - Johns Hopkins School of Medicine",
-      "valuationSource": "Student startup - FastForward U Fuel Accelerator, $10K Pitch It On! winner (2022)",
-      "totalFunding": 10,
       "sources": [
         "Company website and public disclosures",
         "Crunchbase - crunchbase.com/organization/novvacup",
@@ -529,7 +481,6 @@
       "founded": 2022,
       "hq": "Baltimore, MD",
       "description": "Saliva-based ovulation tracker via high-tech toothbrush - CBID",
-      "valuationSource": "Student startup - Johns Hopkins Center for Bioengineering Innovation and Design",
       "sources": [
         "Company website and public disclosures",
         "Crunchbase - crunchbase.com/organization/ovubrush",
@@ -549,9 +500,6 @@
       "founded": 2008,
       "hq": "Mountain View, CA",
       "description": "Chronic condition management (diabetes, hypertension); large female user base; included for the Teladoc merger reference",
-      "lastKnownValuation": 13900,
-      "valuationSource": "Teladoc/Livongo merger close value (Oct 30, 2020) — SEC 8-K",
-      "totalFunding": 240,
       "sources": [
         "SEC 8-K filing (Teladoc, Aug 5, 2020 announcement; Oct 30, 2020 close)",
         "Teladoc Health investor relations press release (Aug 5, 2020)",
@@ -571,8 +519,6 @@
       "founded": 2006,
       "hq": "San Diego, CA",
       "description": "Molecular diagnostic tests for breast and metastatic cancers (Breast Cancer Index, CancerTYPE ID)",
-      "lastKnownValuation": 230,
-      "valuationSource": "Acquisition price ~$230M (Hologic press release, Jan 2021)",
       "sources": [
         "Hologic investor relations - press release (Jan 5, 2021)",
         "Business Wire - acquisition completion (Feb 22, 2021)"
@@ -591,8 +537,6 @@
       "founded": 2007,
       "hq": "Cambridge, UK",
       "description": "Magnetic marker and localization technology for breast cancer surgery (Magseed, Sentimag)",
-      "lastKnownValuation": 310,
-      "valuationSource": "Acquisition price ~$310M (Hologic/Nasdaq press release, Jul 2024)",
       "sources": [
         "Nasdaq press release - Hologic acquisition (Jul 25, 2024)",
         "Endomagnetics company website - endomagnetics.com"
@@ -611,8 +555,6 @@
       "founded": 2005,
       "hq": "Redwood City, CA",
       "description": "Minimally invasive treatment for uterine fibroids (Sonata System for transcervical fibroid ablation)",
-      "lastKnownValuation": 350,
-      "valuationSource": "Acquisition price ~$350M (Hologic press release, Oct 2024)",
       "sources": [
         "Tracxn - Hologic acquisition list (Oct 14, 2024)",
         "Gynesonics company website - gynesonics.com"
@@ -631,8 +573,6 @@
       "founded": 2005,
       "hq": "Måløv, Denmark",
       "description": "Global IVF medical device company — culture media, micro-tools, and labware for fertility treatment",
-      "lastKnownValuation": 147,
-      "valuationSource": "Acquisition price ~$147M net of cash (SEC 10-K, CooperCompanies FY2012)",
       "sources": [
         "SEC EDGAR - CooperCompanies 10-K (FY2012, acquisition details)",
         "Oslo Stock Exchange - ORIGIO tender offer (Jun 2012)"
@@ -651,9 +591,6 @@
       "founded": 2020,
       "hq": "Los Angeles, CA",
       "description": "Donor egg and sperm for fertility, cryopreservation services, and newborn stem cell storage (cord blood and tissue)",
-      "lastKnownValuation": 1600,
-      "valuationSource": "Acquisition price ~$1.6B (CooperCompanies press release, Nov 2021)",
-      "totalFunding": 250,
       "sources": [
         "CooperCompanies investor relations - press release (Nov 10, 2021)",
         "Globe Newswire - acquisition announcement"
@@ -672,7 +609,6 @@
       "founded": 1963,
       "hq": "Bloomington, IN",
       "description": "Reproductive health business unit of Cook Medical — IVF catheters, embryo transfer devices, and assisted reproduction products",
-      "valuationSource": "Acquisition terms not publicly disclosed",
       "sources": [
         "CooperCompanies investor relations - press release (Feb 7, 2022)",
         "Cook Medical company website",
@@ -693,7 +629,6 @@
       "founded": 2017,
       "hq": "Gaithersburg, MD",
       "description": "First-of-its-kind sperm separation device using microfluidic technology for IVF",
-      "valuationSource": "Acquisition terms not publicly disclosed",
       "sources": [
         "CooperSurgical press release (Jun 10, 2024)",
         "DxNow/ZyMōt company information",
@@ -715,8 +650,6 @@
       "founded": 2011,
       "hq": "Menlo Park, CA",
       "description": "Medical device company focused on preventing maternal morbidity from postpartum hemorrhage (Jada System)",
-      "totalFunding": 25,
-      "valuationSource": "Organon acquisition up to $240M (press release, Mar 2021)",
       "sources": [
         "Organon.com - press release (Mar 30, 2021)",
         "Business Wire - Merck acquisition on behalf of Organon spinoff",
@@ -737,8 +670,6 @@
       "founded": 2016,
       "hq": "Turku, Finland",
       "description": "Clinical-stage drug development for endometriosis and PCOS — first-in-class HSD17B1 inhibitor (FOR-6219)",
-      "lastKnownValuation": 75,
-      "valuationSource": "$75M upfront + up to $879M in milestones (Organon press release, Dec 2021)",
       "sources": [
         "Organon.com - press release (Nov 11, 2021)",
         "Business Wire - acquisition completion (Dec 13, 2021)"
@@ -757,8 +688,6 @@
       "founded": 2011,
       "hq": "Valencia, Spain",
       "description": "Global leader in reproductive genetic testing services for IVF clinics — preimplantation genetic testing across 26 countries",
-      "lastKnownValuation": 1450,
-      "valuationSource": "Enterprise value ~€1.25B / ~$1.45B (Vitrolife/Cision press release, Jul 2021)",
       "sources": [
         "Cision/Vitrolife press release (Jul 8, 2021)",
         "PR Newswire - acquisition completion (Nov 30, 2021)",
@@ -778,8 +707,6 @@
       "founded": 2012,
       "hq": "Liège, Belgium",
       "description": "Estetrol (E4) platform — native estrogen for contraception (ESTELLE) and menopause (DONESTA), acquired from Mithra Pharmaceuticals",
-      "lastKnownValuation": 195,
-      "valuationSource": "Enterprise value ~€175M / ~$195M including assumed net debt (Gedeon Richter press release, Jun 2024)",
       "sources": [
         "Gedeon Richter press release (Jun 12, 2024)",
         "Budapest Stock Exchange filing"
@@ -798,8 +725,6 @@
       "founded": 2009,
       "hq": "New York, NY",
       "description": "Women's health biotech — oral FSH receptor agonist for fertility, JNK inhibitor for endometriosis, and AMH antibodies for ovarian aging",
-      "totalFunding": 43,
-      "valuationSource": "Upfront payment + development milestones (Gedeon Richter press release, Mar 2026)",
       "sources": [
         "Gedeon Richter press release (Mar 3, 2026)",
         "Budapest Stock Exchange filing",
@@ -821,8 +746,6 @@
       "founded": 2000,
       "hq": "San Diego, CA",
       "description": "Pioneer in non-invasive prenatal testing (NIPT) — MaterniT21 test for fetal chromosomal abnormalities, over 500K tests performed",
-      "lastKnownValuation": 371,
-      "valuationSource": "Total enterprise value ~$371M including net debt (SEC/LabCorp press release, Jul 2016)",
       "sources": [
         "SEC EDGAR - LabCorp/Sequenom merger filing (Jul 27, 2016)",
         "Business Wire - acquisition announcement"
@@ -841,8 +764,6 @@
       "founded": 2000,
       "hq": "Redwood City, CA",
       "description": "Oncotype DX genomic tests for breast, colon, and prostate cancer — used to guide chemotherapy decisions for early-stage breast cancer",
-      "lastKnownValuation": 2800,
-      "valuationSource": "Acquisition value ~$2.8B (Exact Sciences press release, Jul 2019)",
       "sources": [
         "Exact Sciences newsroom - press release (Jul 29, 2019)",
         "SEC EDGAR - merger proxy filing"
@@ -861,8 +782,6 @@
       "founded": 2010,
       "hq": "Cambridge, MA",
       "description": "Comprehensive genomic profiling (CGP) for cancer — FoundationOne tests guide precision treatment including breast and ovarian cancer",
-      "lastKnownValuation": 5300,
-      "valuationSource": "Total company value ~$5.3B fully diluted; Roche paid ~$2.4B for remaining shares (Roche press release, Jun 2018)",
       "sources": [
         "Roche media release (Jun 19, 2018)",
         "Fierce Biotech - deal coverage",
@@ -884,8 +803,6 @@
       "founded": 2012,
       "hq": "New York, NY",
       "description": "Oncology-specific EHR and real-world evidence platform — 265+ community cancer clinics, data includes breast and ovarian cancer outcomes",
-      "lastKnownValuation": 1900,
-      "valuationSource": "Transaction value ~$1.9B fully diluted (Roche press release, Apr 2018)",
       "sources": [
         "Roche media release (Apr 6, 2018)",
         "Flatiron Health company website",
@@ -907,8 +824,6 @@
       "founded": 2005,
       "hq": "Redwood City, CA",
       "description": "Minimally invasive radiofrequency ablation system (Acessa ProVu) for treatment of symptomatic uterine fibroids — alternative to hysterectomy",
-      "lastKnownValuation": 80,
-      "valuationSource": "Acquisition value ~$80M cash + contingent payments (Hologic press release, Aug 2020)",
       "sources": [
         "Business Wire — Hologic press release (Aug 25, 2020)",
         "Hologic investor relations"
@@ -927,8 +842,6 @@
       "founded": 2012,
       "hq": "Louisville, CO",
       "description": "Advanced energy vessel sealing surgical devices (CoolSeal, JustRight) for laparoscopic and open procedures — used in OB/GYN, pediatric surgery",
-      "lastKnownValuation": 160,
-      "valuationSource": "Acquisition value ~$160M (Hologic press release, Oct 2021; SEC 10-K FY2022)",
       "sources": [
         "Nasdaq — Hologic press release (Oct 14, 2021)",
         "SEC EDGAR — Hologic 10-K FY2022 (purchase price allocation)"
@@ -947,8 +860,6 @@
       "founded": 2004,
       "hq": "Aliso Viejo, CA",
       "description": "BioZorb implantable 3D marker for breast conserving surgery (lumpectomy) — marks tumor excision site for monitoring and treatment planning",
-      "lastKnownValuation": 125,
-      "valuationSource": "Acquisition value ~$125M cash (Hologic press release, Sep 2018; SEC 10-K)",
       "sources": [
         "Hologic investor relations press release (Sep 26, 2018)",
         "SEC EDGAR — Hologic 10-K FY2019 (purchase price $120.1M)"
@@ -967,8 +878,6 @@
       "founded": 2018,
       "hq": "San Ramon, CA",
       "description": "Single-use cordless surgical retractors (ONETRAC) with integrated LED light and smoke evacuation — used in gynecological and general surgery",
-      "lastKnownValuation": 100,
-      "valuationSource": "Acquisition value ~$100M (CooperCompanies press release, Aug 2024; SEC 10-K FY2024)",
       "sources": [
         "CooperCompanies investor relations — Globe Newswire (Aug 1, 2024)",
         "SEC EDGAR — CooperCompanies 10-K FY2024"
@@ -986,8 +895,6 @@
       "stage": "Acquired by Medtronic (2016)",
       "hq": "London, UK",
       "description": "TRUCLEAR hysteroscopic tissue resection system for minimally invasive treatment of abnormal uterine bleeding — polyps and fibroids; $56M annual revenue at divestiture",
-      "lastKnownValuation": 350,
-      "valuationSource": "Divestiture price $350M (Smith & Nephew / Medtronic press releases, May 2016)",
       "sources": [
         "Smith & Nephew press release (May 18, 2016)",
         "Medtronic press release (May 18, 2016)",
@@ -1007,8 +914,6 @@
       "founded": 2013,
       "hq": "San Carlos, CA",
       "description": "First FDA-cleared device for collecting cells from fallopian tubes — platform for earlier diagnosis of ovarian cancer; $500M near-term market opportunity estimated",
-      "lastKnownValuation": 275,
-      "valuationSource": "Acquisition value up to $275M ($150M upfront + $125M milestones; Boston Scientific press release, Apr 2018)",
       "sources": [
         "PR Newswire — Boston Scientific press release (Apr 16, 2018)",
         "MassDevice deal coverage ($275M total)"
@@ -1027,8 +932,6 @@
       "founded": 2016,
       "hq": "Menlo Park, CA",
       "description": "Multi-cancer early detection via blood-based screening (Galleri test) — uses cfDNA and machine learning to detect 50+ cancer types including breast and ovarian; spun out of Illumina",
-      "lastKnownValuation": 8000,
-      "valuationSource": "Acquisition value $8B cash + stock (Illumina press release, Sep 2020; completed Aug 2021)",
       "sources": [
         "Illumina press release (Sep 21, 2020)",
         "SEC EDGAR — Illumina merger filing",
@@ -1048,8 +951,6 @@
       "founded": 1988,
       "hq": "Beverly, MA",
       "description": "Precision laser devices, advanced imaging systems, consumables and software for assisted reproductive technology (ART) and IVF labs — products used in 115+ countries",
-      "lastKnownValuation": 282,
-      "valuationSource": "Take-private value C$10.50/share, ~$282M equity (Astorg/Weil press release, Jul 2024; closed Dec 2024)",
       "sources": [
         "Business Wire — Astorg press release (Dec 2, 2024)",
         "Mergr M&A summary ($388M total)",
@@ -1069,7 +970,6 @@
       "founded": 2015,
       "hq": "Breda, Netherlands",
       "description": "IVF clinic management software — eWitness (step-by-step tracking/tracing) and eBase (specialized EMR compatible with hospital systems); leading presence in Netherlands, expanding across Europe",
-      "valuationSource": "Terms not publicly disclosed (Vitrolife/Cision press release, May 2024)",
       "sources": [
         "Cision — Vitrolife press release (May 22, 2024)",
         "Vitrolife investor relations",
@@ -1090,8 +990,6 @@
       "founded": 1997,
       "hq": "Minnetonka, MN",
       "description": "Urogynecology devices — Urgent PC neuromodulation (percutaneous tibial nerve stimulation for overactive bladder) and PrimeSight cystoscopy with EndoSheath protective barrier",
-      "lastKnownValuation": 214,
-      "valuationSource": "Acquisition value ~$214M enterprise value ($3.85/share; Laborie/Cogentix press release, Mar 2018; closed Apr 2019)",
       "sources": [
         "SEC EDGAR — Cogentix Medical merger filing (Mar 12, 2018)",
         "Laborie Medical press release (Apr 23, 2019 — completion)"
@@ -1110,8 +1008,6 @@
       "founded": 2014,
       "hq": "Dayton, OH",
       "description": "Implantable tibial nerve stimulator (ITNS) for overactive bladder — miniaturized, self-powered device placed under local anesthesia; no patient activation or recharging required",
-      "lastKnownValuation": 145,
-      "valuationSource": "Acquisition value $145M upfront + contingent milestones (Coloplast press release, Nov 2020)",
       "sources": [
         "Globe Newswire — Coloplast press release (Nov 3, 2020)"
       ],
@@ -1129,8 +1025,6 @@
       "founded": 2016,
       "hq": "Basel, Switzerland",
       "description": "Women's health and oncology pharma — Myfembree (relugolix combo for uterine fibroids and endometriosis pain) and Orgovyx (prostate cancer); first oral GnRH antagonist combination approved for women's health",
-      "lastKnownValuation": 2900,
-      "valuationSource": "Total company value ~$2.9B fully diluted; $27/share for outstanding minority shares, $1.7B equity (Sumitomo Pharma press release, Oct 2022)",
       "sources": [
         "Sumitomo Pharma press release (Oct 24, 2022)",
         "PR Newswire — Sumitovant announcement (Oct 2, 2022)",
@@ -1150,8 +1044,6 @@
       "founded": 2007,
       "hq": "South San Francisco, CA",
       "description": "Prenatal and carrier genetic screening — Foresight carrier screen and Prequel NIPT (non-invasive prenatal testing); one of largest reproductive genetics labs in US",
-      "lastKnownValuation": 375,
-      "valuationSource": "Acquisition value ~$375M ($225M cash + $150M equity; Myriad Genetics press release, May 2018)",
       "sources": [
         "Globe Newswire — Myriad Genetics press release (May 28, 2018)",
         "Myriad Genetics investor relations"
@@ -1170,8 +1062,6 @@
       "founded": 2016,
       "hq": "San Diego, CA",
       "description": "Consumer genetic testing — SneakPeek early gender DNA test (detects baby gender at 6 weeks with 99% accuracy); 750K+ parents served, 20%+ CAGR",
-      "lastKnownValuation": 67.5,
-      "valuationSource": "Acquisition value $67.5M (Myriad Genetics press release, Nov 2022)",
       "sources": [
         "Globe Newswire — Myriad Genetics press release (Nov 1, 2022)",
         "Myriad Genetics investor relations"
@@ -1190,8 +1080,6 @@
       "founded": 2012,
       "hq": "San Francisco, CA",
       "description": "Non-invasive prenatal screening (NIPS) and carrier screening business — divested reproductive health assets from Invitae's broader genetic testing portfolio",
-      "lastKnownValuation": 52.5,
-      "valuationSource": "Asset acquisition: $10M upfront + up to $42.5M milestones (Natera press release, Jan 2024)",
       "sources": [
         "Business Wire — Natera press release (Jan 22, 2024)",
         "Natera investor relations"
@@ -1210,8 +1098,6 @@
       "founded": 2008,
       "hq": "Boca Raton, FL",
       "description": "Women's health hormone therapy — BIJUVA (bio-identical estradiol/progesterone for menopause), ANNOVERA (contraceptive vaginal ring), IMVEXXY (estradiol vaginal inserts); $153M total consideration",
-      "lastKnownValuation": 153,
-      "valuationSource": "License/asset deal ~$153.1M at closing + up to $30M milestones + royalties (TherapeuticsMD 8-K, Jan 2023)",
       "sources": [
         "Business Wire — TherapeuticsMD press release (Jan 3, 2023)",
         "SEC EDGAR — TherapeuticsMD 8-K (Dec 30, 2022)"
@@ -1230,8 +1116,6 @@
       "founded": 1998,
       "hq": "Bothell, WA",
       "description": "Antibody-drug conjugate (ADC) oncology platform — Adcetris, Padcev, Tukysa (HER2+ breast cancer), and Tivdak (cervical cancer)",
-      "lastKnownValuation": 43000,
-      "valuationSource": "Acquisition price $229/share, ~$43B enterprise value (Pfizer SEC filing, Mar 2023)",
       "sources": [
         "SEC EDGAR — Pfizer 8-K (Mar 13, 2023)",
         "Business Wire — Pfizer/Seagen merger announcement (Mar 13, 2023)",
@@ -1251,8 +1135,6 @@
       "founded": 1948,
       "hq": "Palo Alto, CA",
       "description": "Radiation oncology and cancer treatment systems — linear accelerators, brachytherapy, and treatment planning software for breast, cervical, and other cancers",
-      "lastKnownValuation": 16400,
-      "valuationSource": "Acquisition price $177.50/share, ~$16.4B (Siemens Healthineers press release, Aug 2020)",
       "sources": [
         "Siemens Healthineers press release (Aug 2, 2020)",
         "PR Newswire — Varian merger announcement (Aug 2, 2020)",
@@ -1272,8 +1154,6 @@
       "founded": 1982,
       "hq": "Morris Plains, NJ",
       "description": "Developer of Trodelvy (sacituzumab govitecan), first-in-class Trop-2 ADC for metastatic triple-negative breast cancer (mTNBC)",
-      "lastKnownValuation": 21000,
-      "valuationSource": "Acquisition price $88/share, ~$21B (Gilead Sciences press release, Sep 2020)",
       "sources": [
         "Business Wire — Gilead/Immunomedics announcement (Sep 13, 2020)",
         "Gilead Sciences press release (Sep 13, 2020)",
@@ -1293,8 +1173,6 @@
       "founded": 2019,
       "hq": "Cambridge, MA",
       "description": "Multi-cancer blood test (CancerSEEK) using cfDNA and protein biomarkers to detect multiple cancer types including breast and ovarian",
-      "lastKnownValuation": 2150,
-      "valuationSource": "Acquisition value ~$2.15B cash + stock (Exact Sciences press release, Oct 2020)",
       "sources": [
         "PR Newswire — Exact Sciences/Thrive announcement (Oct 27, 2020)",
         "PR Newswire — Exact Sciences completion (Jan 5, 2021)",
@@ -1314,8 +1192,6 @@
       "founded": 2004,
       "hq": "Marshfield, WI",
       "description": "CLIA-certified genetic testing laboratory — 5,000+ predefined tests for hereditary cancer (BRCA1/2, Lynch syndrome), carrier screening, and whole exome/genome sequencing",
-      "lastKnownValuation": 190,
-      "valuationSource": "Acquisition price ~$190M (Laboratory Economics, Jan 2022)",
       "sources": [
         "PR Newswire — Exact Sciences press release (Jan 9, 2022)",
         "SEC EDGAR — Exact Sciences 8-K (Jan 10, 2022)",
@@ -1335,8 +1211,6 @@
       "founded": 1987,
       "hq": "Lübeck, Germany",
       "description": "Global leader in autoimmune diagnostics — extensive immunology, cell biology, and molecular biology capabilities; reproductive health channel drives into US market",
-      "lastKnownValuation": 1300,
-      "valuationSource": "Acquisition price ~$1.3B cash (PerkinElmer press release, Jun 2017)",
       "sources": [
         "SEC EDGAR — PerkinElmer 8-K (Jun 16, 2017)",
         "GenomeWeb — deal coverage (Jun 19, 2017)",
@@ -1356,8 +1230,6 @@
       "founded": 1992,
       "hq": "Tucson, AZ",
       "description": "Digital specimen radiography, breast lesion localization (LOCalizer), and sentinel lymph node biopsy solutions — VisionCT first 3D breast specimen CT system",
-      "lastKnownValuation": 85,
-      "valuationSource": "Acquisition price ~$85M (Hologic/PR Newswire, Jul 2018)",
       "sources": [
         "PR Newswire — Hologic press release (Jul 31, 2018)",
         "BioSpace — deal coverage (Jul 31, 2018)",
@@ -1377,8 +1249,6 @@
       "founded": 2005,
       "hq": "Aix-en-Provence, France",
       "description": "ShearWave elastography and Aixplorer ultrasound platform for breast cancer diagnosis — non-invasive tissue stiffness measurement for breast lesion characterization",
-      "lastKnownValuation": 85,
-      "valuationSource": "Binding offer ~$85M total (€1.50/share equity + debt payoff; Hologic press release, Jun 2019)",
       "sources": [
         "MassDevice — Hologic/SSI announcement (Jun 21, 2019)",
         "AuntMinnie — Hologic acquires 46% stake (Aug 4, 2019)",
@@ -1400,8 +1270,6 @@
       "founded": 2012,
       "hq": "Boston, MA",
       "description": "Digital health platform for family planning, pregnancy, and parenting — used by millions of women for fertility tracking, prenatal care, and employer health benefits",
-      "totalFunding": 23.4,
-      "valuationSource": "Acquisition terms not publicly disclosed by LabCorp",
       "sources": [
         "Business Wire — LabCorp press release (Aug 12, 2021)",
         "LabCorp investor relations — Ovia Health announcement",
@@ -1424,8 +1292,6 @@
       "founded": 2010,
       "hq": "Cologne, Germany",
       "description": "EndoPredict breast cancer prognostic test — 12-gene RNA expression assay evaluating breast cancer aggressiveness; spun out of Siemens Healthcare Diagnostics",
-      "lastKnownValuation": 56,
-      "valuationSource": "€35M upfront + €15M milestones (~$56M total potential; Myriad Genetics press release, May 2016)",
       "sources": [
         "Globe Newswire — Myriad Genetics press release (May 31, 2016)",
         "SEC EDGAR — Myriad Genetics 8-K (May 31, 2016)",
@@ -1445,8 +1311,6 @@
       "founded": 2001,
       "hq": "Waltham, MA",
       "description": "Global leader in point-of-care diagnostics — rapid tests for cardiometabolic, infectious disease, and toxicology; includes pregnancy and fertility testing portfolio",
-      "lastKnownValuation": 5300,
-      "valuationSource": "Amended acquisition price $51/share, ~$5.3B equity value (Abbott press release, Apr 2017)",
       "sources": [
         "SEC EDGAR — Abbott/Alere amended merger filing (Apr 14, 2017)",
         "Abbott Mediaroom — merger amendment (Apr 14, 2017)",
@@ -1466,7 +1330,6 @@
       "founded": 1998,
       "hq": "Raritan, NJ",
       "description": "GYNECARE TVT family of minimally invasive mesh slings for stress urinary incontinence — TVT, TVT Exact, TVT-O, TVT Abbrevo; gold standard with 20+ years of clinical data",
-      "valuationSource": "Terms not publicly disclosed",
       "sources": [
         "Business Wire — Caldera Medical press release (Mar 20, 2025)",
         "Ethicon/J&J product portfolio documentation",
@@ -1487,8 +1350,6 @@
       "founded": 1988,
       "hq": "San Diego, CA",
       "description": "Leader in molecular diagnostics including HPV/cervical cancer testing and STI screening",
-      "lastKnownValuation": 3700,
-      "valuationSource": "Acquisition price $82.75/share, total ~$3.7B (SEC DEFM14A filing)",
       "sources": [
         "SEC EDGAR - Hologic 8-K/DEFM14A (2012)",
         "Hologic press release (August 1, 2012)",
@@ -1508,8 +1369,6 @@
       "founded": 2017,
       "hq": "Stevenage, UK",
       "description": "Clinical-stage biotech developing NT-814 (elinzanetant) for menopausal vasomotor symptoms",
-      "lastKnownValuation": 425,
-      "valuationSource": "Upfront consideration $425M; up to $450M milestones (Bayer press release)",
       "sources": [
         "Business Wire - Bayer acquisition announcement (August 11, 2020)",
         "Business Wire - Bayer completion announcement (September 9, 2020)",
@@ -1529,8 +1388,6 @@
       "founded": 1999,
       "hq": "Gosselies, Belgium",
       "description": "Drug discovery company developing fezolinetant for menopausal vasomotor symptoms; formerly Euroscreen SA",
-      "lastKnownValuation": 560,
-      "valuationSource": "EUR 500M upfront + up to EUR 300M milestones (Astellas press release); ~$560M USD at 2017 rates",
       "sources": [
         "Astellas Pharma press release (May 17, 2017)",
         "PR Newswire - Astellas completes acquisition (May 2017)",
@@ -1550,8 +1407,6 @@
       "founded": 2016,
       "hq": "Basel, Switzerland",
       "description": "Immuno-dermatology subsidiary of Roivant; VTAMA cream for plaque psoriasis and atopic dermatitis — women disproportionately affected",
-      "lastKnownValuation": 1200,
-      "valuationSource": "$175M upfront + $75M milestone + $950M commercial milestones; total up to $1.2B (Organon press release)",
       "sources": [
         "Organon press release (September 18, 2024)",
         "Fierce Pharma coverage (September 18, 2024)",
@@ -1571,8 +1426,6 @@
       "founded": 1990,
       "hq": "Valencia, Spain",
       "description": "World's largest fertility clinic network; 75+ clinics and 28 labs in 9 countries; formed from 2017 merger of Spain's IVI and US-based RMANJ",
-      "lastKnownValuation": 3250,
-      "valuationSource": "~€3B ($3.25B) for 80% stake (Axios, Fertility Bridge, Cinco Dias)",
       "sources": [
         "Axios Pro (April 13, 2022) - deal announcement",
         "Fertility Bridge (January 26, 2023) - deal close confirmation",
@@ -1592,8 +1445,6 @@
       "founded": 1988,
       "hq": "Udaipur, India",
       "description": "India's largest chain of fertility clinics; 115+ centers; 125,000+ successful pregnancies; top 5 globally by annual IVF cycles",
-      "lastKnownValuation": 1100,
-      "valuationSource": "Valued at Rs 9,000 crore (~$1.1B) enterprise value; BPEA EQT paid ~$657M for 60% stake (Times of India, Economic Times)",
       "sources": [
         "EQT Group press release (July 28, 2023)",
         "Times of India (July 29, 2023)",
@@ -1613,8 +1464,6 @@
       "founded": 2014,
       "hq": "San Francisco, CA",
       "description": "Teledermatology platform with personalized treatment plans and compounding pharmacy; majority female user base",
-      "valuationSource": "Hims & Hers acquisition up to ~$190M (investor relations, July 2021)",
-      "totalFunding": 7,
       "sources": [
         "Hims & Hers investor relations press release (June 24, 2021)",
         "Business Wire - acquisition completion (July 7, 2021)",
@@ -1637,8 +1486,6 @@
       "founded": 1999,
       "hq": "Barcelona, Spain",
       "description": "Global fertility network including Boston IVF and TRIO (Toronto); 13 labs and 32 satellite offices in North America",
-      "lastKnownValuation": 534,
-      "valuationSource": "KKR/IVI-RMA and GED Capital acquired Eugin from Fresenius for €494M (~$534M) (PitchBook, Business Wire)",
       "sources": [
         "Business Wire - IVI RMA completion announcement (January 31, 2024)",
         "PitchBook (November 2023) - deal reporting",
@@ -1658,7 +1505,6 @@
       "founded": 2021,
       "hq": "New York, NY",
       "description": "At-home vaginal microbiome testing with metagenomic sequencing and precision treatment",
-      "totalFunding": 19,
       "sources": [
         "TechCrunch - $5M seed coverage (July 2021)",
         "Business Wire - $14M Series A announcement (September 2023)",
@@ -1678,7 +1524,6 @@
       "founded": 2021,
       "hq": "New York, NY",
       "description": "Telehealth medication abortion and reproductive care provider",
-      "totalFunding": 9.7,
       "sources": [
         "Fortune - $6.1M raise coverage (October 2022)",
         "Hey Jane founder post, Medium - total equity raised $9.7M (October 2022)",
@@ -1701,7 +1546,6 @@
       "founded": 2015,
       "hq": "Charlottesville, VA",
       "description": "Developing ADAM, a long-acting non-hormonal reversible male contraceptive implant; $92.5M Series B (2026)",
-      "totalFunding": 127,
       "sources": [
         "MedCity News - fundraising total $127M (June 2026)",
         "Business Wire - $92.5M Series B announcement (June 2026)",
@@ -1724,8 +1568,6 @@
       "founded": 2016,
       "hq": "Seattle, WA",
       "description": "Virtual menopause and perimenopause clinic with OB-GYN and dietitian network",
-      "valuationSource": "Acquisition terms not disclosed (Unified Women's Healthcare press release, Oct 2022)",
-      "totalFunding": 4.5,
       "sources": [
         "GeekWire - acquisition coverage (October 2022)",
         "Business Wire - Unified Women's Healthcare acquisition announcement (October 2022)",
@@ -1745,7 +1587,6 @@
       "founded": 2021,
       "hq": "New York, NY",
       "description": "Telehealth menopause care and hormone therapy platform for women over 40",
-      "totalFunding": 19.3,
       "sources": [
         "PR Newswire - $3.3M seed announcement (October 2021)",
         "Fortune - $16M Series A coverage (November 2024)",
@@ -1765,7 +1606,6 @@
       "founded": 2022,
       "hq": "San Francisco, CA",
       "description": "Midwife-led hybrid maternity clinics with continuous patient monitoring",
-      "totalFunding": 19,
       "sources": [
         "TechCrunch - $12M Series A coverage, ~$19M total to date (February 2025)",
         "Business Wire - Series A announcement (February 2025)",
@@ -1804,7 +1644,6 @@
       "founded": 2014,
       "hq": "Brooklyn, NY",
       "description": "Sexual wellness products and education brand",
-      "totalFunding": 13,
       "sources": [
         "TechCrunch - $7M Series A coverage (September 2022)",
         "BeautyMatter - Series A coverage, $13M total raised (2022)",
@@ -1824,7 +1663,6 @@
       "founded": 2020,
       "hq": "London, UK",
       "description": "At-home intracervical insemination (ICI) fertility treatment kits",
-      "totalFunding": 4.3,
       "sources": [
         "EU-Startups - €2.9M raise, €3.8M total coverage (July 2023)",
         "UKTN - £800K pre-launch raise coverage (April 2021)",
@@ -1847,7 +1685,6 @@
       "founded": 2018,
       "hq": "Boston, MA",
       "description": "In-licenses and commercializes fertility medications for North America",
-      "totalFunding": 30,
       "sources": [
         "PR Newswire - $14M Series A led by GV (January 2024)",
         "PR Newswire - $15M Series A+, total funding over $30M (January 2025)"
@@ -1885,7 +1722,6 @@
       "founded": 2021,
       "hq": "Lausanne, Switzerland",
       "description": "At-home rapid molecular STI test, starting with chlamydia and gonorrhea; $6M seed",
-      "totalFunding": 6,
       "sources": [
         "PRNewswire - $6M seed announcement (May 2024)",
         "Startupticker.ch - $6M seed coverage (May 2024)",
@@ -1929,7 +1765,6 @@
       "founded": 2020,
       "hq": "Toronto, Canada",
       "description": "Whole-genome and transcriptome embryo screening for IVF",
-      "totalFunding": 4.6,
       "sources": [
         "GenomeWeb - $4.6M seed launch coverage (June 2025)",
         "Femtech Insider - seed round coverage (2025)",
@@ -2981,7 +2816,6 @@
       "founded": 2020,
       "hq": "Denver, CO",
       "description": "Glycolipid biomarker diagnostics for early ovarian cancer detection",
-      "totalFunding": 24,
       "sources": [
         "Endpoints News - $17M Series B; $24M total raised (October 2023)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
@@ -3021,7 +2855,6 @@
       "founded": 2021,
       "hq": "San Francisco, CA",
       "description": "Over-the-counter birth control pill developer for accessible contraception",
-      "totalFunding": 35,
       "sources": [
         "Business Wire - more than $35M raised (March 2024)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
@@ -3041,7 +2874,6 @@
       "founded": 2020,
       "hq": "Philadelphia, PA",
       "description": "Home-based maternity care for underserved populations",
-      "totalFunding": 15,
       "sources": [
         "PRNewswire - $12M Series A; $15M total to date (May 2022)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
@@ -3080,7 +2912,6 @@
       "founded": 2022,
       "hq": "Los Angeles, CA",
       "description": "Family-building platform with egg freezing and donor matching",
-      "totalFunding": 16,
       "sources": [
         "Business Wire - $16M total capital raised (April 2025)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
@@ -3100,7 +2931,6 @@
       "founded": 2018,
       "hq": "Montreal, Canada",
       "description": "At-home saliva hormone monitoring with real-time insights",
-      "totalFunding": 20,
       "sources": [
         "Eli Health - total capital raised $20M (June 2025)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
@@ -3120,7 +2950,6 @@
       "founded": 2021,
       "hq": "New York, NY",
       "description": "Digital-first maternal health platform for Black women through pregnancy and postpartum",
-      "totalFunding": 1.3,
       "sources": [
         "Business Wire - $1.3M pre-seed at launch (September 2021)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
@@ -3178,7 +3007,6 @@
       "founded": 2020,
       "hq": "London, UK",
       "description": "Certified flushable, biodegradable sanitary pads",
-      "totalFunding": 9.5,
       "sources": [
         "PRNewswire - RH Capital $9.5M seed announcement (June 2022)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
@@ -3217,7 +3045,6 @@
       "founded": 2019,
       "hq": "New York, NY",
       "description": "Insurance-covered perinatal mental health therapy and community support",
-      "totalFunding": 22,
       "sources": [
         "MedCity News - $22M total raised (September 2025)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
@@ -3237,7 +3064,6 @@
       "founded": 2018,
       "hq": "New York, NY",
       "description": "Telehealth and online pharmacy for sexual and reproductive health equity",
-      "totalFunding": 25,
       "sources": [
         "PRNewswire - $25M total funding (January 2025)",
         "RH Capital portfolio - rhcapital.vc/portfolio/",
