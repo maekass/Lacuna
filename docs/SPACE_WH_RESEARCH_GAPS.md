@@ -48,8 +48,9 @@ Without `AI_GATEWAY_API_KEY` / `VERCEL_OIDC_TOKEN` / `OPENAI_API_KEY`, ask
 returns a **deterministic** narrative (no LLM).
 
 Gateway calls use the AI SDK string model id (same pattern as
-`generateText({ model: 'spacexai/grok-4.3', ... })`), via `generateInferenceText` so
-prompts stay centralized and tagged `feature:space-wh-gap`.
+`generateText({ model: 'spacexai/grok-4.3', ... })`), via
+`generateInferenceText` so prompts stay centralized and tagged
+`feature:space-wh-gap`.
 
 ## Code
 
