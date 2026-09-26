@@ -1,7 +1,7 @@
 {
   "generatedAt": "2026-09-20T00:00:00.000Z",
-  "datasetHash": "185c97cedaace8a9bc0a5ae65e4a2d62e1c3efed06dc94234e7fca4d06b521b4",
-  "source": "Lacuna verified dataset (src/data/dataset.verified.json)",
+  "datasetHash": "e79ef1cfdc8c2c19b3290ea7eabbb5c5657d0398471013db2ded074be212ddf9",
+  "source": "Lacuna verified catalog + economic evidence ledger",
   "grading": {
     "A": "90-100: SEC filing or equivalent primary source, all fields populated",
     "B": "75-89: Reputable press source, most fields populated",
@@ -14,12 +14,12 @@
       "total": 150,
       "grades": {
         "A": 14,
-        "C": 43,
+        "C": 45,
         "D": 59,
-        "B": 31,
+        "B": 29,
         "F": 3
       },
-      "avgScore": 64.3
+      "avgScore": 63.9
     },
     "acquisitions": {
       "total": 59,
@@ -91,11 +91,11 @@
       "sector": "General Wellness",
       "sourceQuality": "B",
       "sourceDescription": "Reputable press/trade publication",
-      "completeness": 82,
+      "completeness": 73,
       "hasValuation": false,
       "hasFunding": false,
       "hasSource": true,
-      "overallScore": 65,
+      "overallScore": 62,
       "grade": "C"
     },
     {
@@ -130,11 +130,11 @@
       "sector": "General Wellness",
       "sourceQuality": "B",
       "sourceDescription": "Reputable press/trade publication",
-      "completeness": 82,
+      "completeness": 73,
       "hasValuation": false,
       "hasFunding": false,
       "hasSource": true,
-      "overallScore": 65,
+      "overallScore": 62,
       "grade": "C"
     },
     {
@@ -156,11 +156,11 @@
       "sector": "Fertility",
       "sourceQuality": "B",
       "sourceDescription": "Reputable press/trade publication",
-      "completeness": 82,
+      "completeness": 73,
       "hasValuation": false,
       "hasFunding": false,
       "hasSource": true,
-      "overallScore": 65,
+      "overallScore": 62,
       "grade": "C"
     },
     {
@@ -169,11 +169,11 @@
       "sector": "Fertility",
       "sourceQuality": "D",
       "sourceDescription": "Data aggregator (secondary)",
-      "completeness": 82,
+      "completeness": 73,
       "hasValuation": false,
       "hasFunding": false,
       "hasSource": true,
-      "overallScore": 50,
+      "overallScore": 47,
       "grade": "D"
     },
     {
@@ -260,11 +260,11 @@
       "sector": "Fertility",
       "sourceQuality": "B",
       "sourceDescription": "Reputable press/trade publication",
-      "completeness": 82,
+      "completeness": 73,
       "hasValuation": false,
       "hasFunding": false,
       "hasSource": true,
-      "overallScore": 65,
+      "overallScore": 62,
       "grade": "C"
     },
     {
@@ -273,11 +273,11 @@
       "sector": "Fertility",
       "sourceQuality": "B",
       "sourceDescription": "Reputable press/trade publication",
-      "completeness": 82,
+      "completeness": 73,
       "hasValuation": false,
       "hasFunding": false,
       "hasSource": true,
-      "overallScore": 65,
+      "overallScore": 62,
       "grade": "C"
     },
     {
@@ -286,11 +286,11 @@
       "sector": "Pelvic Health",
       "sourceQuality": "D",
       "sourceDescription": "Data aggregator (secondary)",
-      "completeness": 82,
+      "completeness": 73,
       "hasValuation": false,
       "hasFunding": false,
       "hasSource": true,
-      "overallScore": 50,
+      "overallScore": 47,
       "grade": "D"
     },
     {
@@ -299,11 +299,11 @@
       "sector": "Pelvic Health",
       "sourceQuality": "D",
       "sourceDescription": "Data aggregator (secondary)",
-      "completeness": 91,
+      "completeness": 82,
       "hasValuation": false,
       "hasFunding": true,
       "hasSource": true,
-      "overallScore": 62,
+      "overallScore": 60,
       "grade": "C"
     },
     {
@@ -312,11 +312,11 @@
       "sector": "Fertility",
       "sourceQuality": "D",
       "sourceDescription": "Data aggregator (secondary)",
-      "completeness": 82,
+      "completeness": 73,
       "hasValuation": false,
       "hasFunding": false,
       "hasSource": true,
-      "overallScore": 50,
+      "overallScore": 47,
       "grade": "D"
     },
     {
@@ -403,12 +403,12 @@
       "sector": "Fertility",
       "sourceQuality": "A",
       "sourceDescription": "SEC filing (primary government source)",
-      "completeness": 82,
+      "completeness": 73,
       "hasValuation": false,
       "hasFunding": false,
       "hasSource": true,
-      "overallScore": 75,
-      "grade": "B"
+      "overallScore": 72,
+      "grade": "C"
     },
     {
       "id": "c30",
@@ -416,11 +416,11 @@
       "sector": "Fertility",
       "sourceQuality": "C",
       "sourceDescription": "Company press release",
-      "completeness": 82,
+      "completeness": 73,
       "hasValuation": false,
       "hasFunding": false,
       "hasSource": true,
-      "overallScore": 57,
+      "overallScore": 54,
       "grade": "D"
     },
     {
@@ -429,11 +429,11 @@
       "sector": "Maternal Health",
       "sourceQuality": "C",
       "sourceDescription": "Company press release",
-      "completeness": 91,
+      "completeness": 82,
       "hasValuation": false,
       "hasFunding": true,
       "hasSource": true,
-      "overallScore": 70,
+      "overallScore": 67,
       "grade": "C"
     },
     {
@@ -481,11 +481,11 @@
       "sector": "Fertility",
       "sourceQuality": "C",
       "sourceDescription": "Company press release",
-      "completeness": 91,
+      "completeness": 82,
       "hasValuation": false,
       "hasFunding": true,
       "hasSource": true,
-      "overallScore": 70,
+      "overallScore": 67,
       "grade": "C"
     },
     {
@@ -650,11 +650,11 @@
       "sector": "Fertility",
       "sourceQuality": "C",
       "sourceDescription": "Company press release",
-      "completeness": 82,
+      "completeness": 73,
       "hasValuation": false,
       "hasFunding": false,
       "hasSource": true,
-      "overallScore": 57,
+      "overallScore": 54,
       "grade": "D"
     },
     {
@@ -858,11 +858,11 @@
       "sector": "Maternal Health",
       "sourceQuality": "C",
       "sourceDescription": "Company press release",
-      "completeness": 91,
+      "completeness": 82,
       "hasValuation": false,
       "hasFunding": true,
       "hasSource": true,
-      "overallScore": 70,
+      "overallScore": 67,
       "grade": "C"
     },
     {
@@ -897,12 +897,12 @@
       "sector": "Pelvic Health",
       "sourceQuality": "A",
       "sourceDescription": "SEC filing (primary government source)",
-      "completeness": 82,
+      "completeness": 73,
       "hasValuation": false,
       "hasFunding": false,
       "hasSource": true,
-      "overallScore": 75,
-      "grade": "B"
+      "overallScore": 72,
+      "grade": "C"
     },
     {
       "id": "c68",
@@ -988,11 +988,11 @@
       "sector": "General Wellness",
       "sourceQuality": "B",
       "sourceDescription": "Reputable press/trade publication",
-      "completeness": 91,
+      "completeness": 82,
       "hasValuation": false,
       "hasFunding": true,
       "hasSource": true,
-      "overallScore": 77,
+      "overallScore": 75,
       "grade": "B"
     },
     {
@@ -1053,11 +1053,11 @@
       "sector": "Menopause",
       "sourceQuality": "C",
       "sourceDescription": "Company press release",
-      "completeness": 91,
+      "completeness": 82,
       "hasValuation": false,
       "hasFunding": true,
       "hasSource": true,
-      "overallScore": 70,
+      "overallScore": 67,
       "grade": "C"
     },
     {

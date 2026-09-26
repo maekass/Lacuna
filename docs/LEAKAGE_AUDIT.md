@@ -88,9 +88,12 @@ in-sample event fraction.
    acquired. Resolving this needs the author's recollection or contemporaneous
    notes — not another code search.
 2. **Vintage of `totalFunding`, `lastKnownValuation`, `stage`, and `sector`.**
-   There is no `asOfDate` on those fields (`datasetSchema.ts` `companySchema`).
-   A value sitting on an acquired company may be the deal price, a post-deal
-   stage string, or a pre-deal figure; the JSON does not say.
+   Funding and valuation now materialize from `evidence.verified.json`, but the
+   initial migrated records preserve their legacy citations with
+   `publicAsOfDate: null`. They remain unavailable in a point-in-time replay
+   until a dated source is backfilled. Stage and sector still have no field
+   vintage. A value sitting on an acquired company may be the deal price, a
+   post-deal stage string, or a pre-deal figure; the catalog alone does not say.
 3. **Dead branches.** `clinicalEfficacy` and `teamMetrics` never arrive from the
    verified adapter. Their cut points cannot be checked against outcomes because
    they never run. That is not evidence they are clean.

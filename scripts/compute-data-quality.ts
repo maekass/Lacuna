@@ -14,10 +14,10 @@
  * Usage: npx tsx scripts/compute-data-quality.ts
  */
 
-import { readFileSync, writeFileSync } from "fs";
+import { writeFileSync } from "fs";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
+import { getStaticVerifiedDataset } from "../src/lib/data/staticDataset";
 import { hashDataset } from "../src/lib/lineage/datasetHash";
-import { parseVerifiedDataset } from "../src/lib/data/datasetSchema";
 import { citationHostnameMatches } from "../src/lib/url/hostnameMatch";
 
 interface SourceQuality {
@@ -140,9 +140,7 @@ interface EntityScore {
 }
 
 // Main
-const dataset = JSON.parse(
-  readFileSync("src/data/dataset.verified.json", "utf-8"),
-);
+const dataset = getStaticVerifiedDataset();
 const companies: CompanyRecord[] = dataset.companies || [];
 const acquisitions: AcquisitionRecord[] = dataset.acquisitions || [];
 
@@ -263,8 +261,8 @@ const acquisitionGrades = acquisitionScores.reduce((acc, s) => {
 
 const output = {
   generatedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
-  datasetHash: hashDataset(parseVerifiedDataset(dataset)).fullHash,
-  source: "Lacuna verified dataset (src/data/dataset.verified.json)",
+  datasetHash: hashDataset(dataset).fullHash,
+  source: "Lacuna verified catalog + economic evidence ledger",
   grading: {
     A: "90-100: SEC filing or equivalent primary source, all fields populated",
     B: "75-89: Reputable press source, most fields populated",
