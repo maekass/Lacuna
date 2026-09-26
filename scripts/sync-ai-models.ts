@@ -5,8 +5,7 @@
  * facts stay current instead of drifting against hardcoded constants.
  *
  * Usage: npm run ai:models:sync
- * Auth is optional — the directory endpoint answers unauthenticated; the key is
- * used when present so the request is attributed to the team.
+ * The directory endpoint is public; never send inference credentials to it.
  *
  * The snapshot is rewritten only when model metadata actually changed, so
  * `fetchedAt` does not churn the file (and the daily workflow) every run.
@@ -16,6 +15,8 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import process from "node:process";
 import { z } from "zod";
+import modelRoutes from "../src/data/ai-models.routes.json";
+import { assessMissingModels } from "./ai-model-sync-policy";
 import {
   type CatalogModel,
   type ModelCatalogSnapshot,
@@ -26,6 +27,8 @@ import {
 
 const MODELS_ENDPOINT = "https://ai-gateway.vercel.sh/v1/models";
 const OUT_PATH = join(process.cwd(), "src/data/ai-models.snapshot.json");
+const ROUTES_PATH = join(process.cwd(), "src/data/ai-models.routes.json");
+const REPORT_PATH = join(process.cwd(), "ai-model-sync-diagnostic.json");
 
 /** Gateway prices are per-token decimal strings. */
 const priceSchema = z.coerce.number().nonnegative();
@@ -78,9 +81,7 @@ function toCatalogModel(model: GatewayModel): CatalogModel {
 }
 
 async function fetchGatewayModels(): Promise<GatewayModel[]> {
-  const apiKey = process.env.AI_GATEWAY_API_KEY?.trim();
   const res = await fetch(MODELS_ENDPOINT, {
-    headers: apiKey ? { Authorization: `Bearer ${apiKey}` } : {},
     signal: AbortSignal.timeout(30_000),
   });
   if (!res.ok) {
@@ -98,7 +99,75 @@ function readExistingSnapshot(): ModelCatalogSnapshot | null {
 }
 
 async function main() {
-  const gatewayModels = await fetchGatewayModels();
+  let gatewayModels: GatewayModel[];
+  try {
+    gatewayModels = await fetchGatewayModels();
+  } catch (error) {
+    writeFileSync(
+      REPORT_PATH,
+      `${
+        JSON.stringify(
+          {
+            classification: "gateway_unavailable",
+            error: error instanceof Error ? error.message : String(error),
+            snapshotPreserved: true,
+            authentication: "not_assessed_public_directory",
+          },
+          null,
+          2,
+        )
+      }\n`,
+    );
+    throw error;
+  }
+  if (gatewayModels.length < TRACKED_MODEL_IDS.length) {
+    writeFileSync(
+      REPORT_PATH,
+      `${
+        JSON.stringify(
+          {
+            classification: "incomplete_directory",
+            directoryCount: gatewayModels.length,
+            snapshotPreserved: true,
+          },
+          null,
+          2,
+        )
+      }\n`,
+    );
+    throw new Error("Gateway directory is incomplete; snapshot preserved.");
+  }
+  if (
+    TRACKED_MODEL_IDS.some((id) =>
+      !gatewayModels.some((model) => model.id === id)
+    )
+  ) {
+    try {
+      const retry = await fetchGatewayModels();
+      if (
+        TRACKED_MODEL_IDS.every((id) => retry.some((model) => model.id === id))
+      ) {
+        gatewayModels = retry;
+        writeFileSync(
+          REPORT_PATH,
+          `${
+            JSON.stringify(
+              {
+                classification: "transient_directory_gap",
+                action: "retried_successfully",
+                authentication: "not_assessed_public_directory",
+              },
+              null,
+              2,
+            )
+          }\n`,
+        );
+        console.warn(
+          "Gateway directory gap resolved on retry; continuing sync.",
+        );
+      }
+    } catch { /* The later diagnosis will hold the snapshot. */ }
+  }
   const byId = new Map(gatewayModels.map((model) => [model.id, model]));
 
   const models: CatalogModel[] = [];
@@ -118,17 +187,78 @@ async function main() {
     );
   }
 
+  const previous = readExistingSnapshot();
   if (missing.length > 0) {
-    console.error(
-      `${missing.length} tracked model(s) absent from the gateway directory: ${
-        missing.join(", ")
+    let second: GatewayModel[] = [];
+    try {
+      second = await fetchGatewayModels();
+    } catch { /* Inconclusive: hold the previous snapshot. */ }
+    const decisions = assessMissingModels(
+      missing,
+      gatewayModels,
+      second,
+      previous?.models ?? [],
+    );
+    const providerSpecific = missing.every((id) =>
+      id.split("/")[0] === missing[0].split("/")[0]
+    );
+    const replacements = decisions.filter((item) => item.replacement);
+    const canMigrate = providerSpecific &&
+      missing.every((id) => Object.values(modelRoutes).includes(id)) &&
+      replacements.length === missing.length &&
+      replacements.every((item) =>
+        item.replacement!.split("/")[0] ===
+          replacements[0].replacement!.split("/")[0]
+      );
+    writeFileSync(
+      REPORT_PATH,
+      `${
+        JSON.stringify(
+          {
+            classification: canMigrate
+              ? "confirmed_provider_rename"
+              : "directory_gap_requires_review",
+            providerSpecific,
+            firstDirectoryCount: gatewayModels.length,
+            secondDirectoryCount: second.length,
+            authentication: "not_assessed_public_directory",
+            decisions,
+            snapshotPreserved: !canMigrate,
+            note:
+              "Directory absence alone does not establish deprecation or runtime availability.",
+          },
+          null,
+          2,
+        )
+      }\n`,
+    );
+    if (!canMigrate) {
+      console.error(
+        "Model directory inconclusive; see ai-model-sync-diagnostic.json",
+      );
+      process.exitCode = 1;
+      return;
+    }
+    const migrations = new Map(
+      replacements.map((item) => [item.id, item.replacement!]),
+    );
+    const routes = Object.fromEntries(
+      Object.entries(modelRoutes).map(([key, id]) => [
+        key,
+        migrations.get(id) ?? id,
+      ]),
+    );
+    // Only rewrite the routing manifest and snapshot; a PR review controls deployment.
+    writeFileSync(ROUTES_PATH, `${JSON.stringify(routes, null, 2)}\n`);
+    for (const id of missing) {
+      models.push(toCatalogModel(byId.get(migrations.get(id)!)!));
+    }
+    console.log(
+      `Confirmed provider rename: ${
+        [...migrations].map(([a, b]) => `${a} -> ${b}`).join(", ")
       }`,
     );
-    process.exitCode = 1;
-    return;
   }
-
-  const previous = readExistingSnapshot();
   if (
     previous?.source === MODELS_ENDPOINT &&
     JSON.stringify(previous.models) === JSON.stringify(models)

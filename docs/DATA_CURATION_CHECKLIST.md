@@ -1,7 +1,8 @@
 # Data curation checklist
 
-Use this before merging any row into `src/data/dataset.verified.json`. Staging
-candidates live in `staging/deals_candidates.csv` (copy from
+Use this before merging any row into `src/data/dataset.verified.json` or
+`src/data/evidence.verified.json`. Staging candidates live in
+`staging/deals_candidates.csv` (copy from
 `staging/deals_candidates.template.csv`). **Never auto-merge** from SEC scans or
 CSV imports.
 
@@ -22,19 +23,42 @@ CSV imports.
 
 ### `companies[]`
 
-| Field                | Required     | Rule                                                                         |
-| -------------------- | ------------ | ---------------------------------------------------------------------------- |
-| `id`                 | Yes          | Stable slug (`c1`, `c23`); never reuse after publish                         |
-| `name`               | Yes          | Legal or brand name at time of curation                                      |
-| `sector`             | Yes          | One of: Fertility, Mental Health, General Wellness, Wearables, Pelvic Health |
-| `stage`              | Yes          | Verifiable label (funding round, acquired, public)                           |
-| `founded`            | Yes          | Integer year                                                                 |
-| `hq`                 | Yes          | City, region/country                                                         |
-| `description`        | Yes          | One sentence from website or filing                                          |
-| `sources[]`          | Yes          | **≥2 URLs or citations** per company                                         |
-| `lastKnownValuation` | Optional     | Only with `valuationSource`                                                  |
-| `valuationSource`    | If valuation | Round, merger, or market cap basis + date                                    |
-| `totalFunding`       | Optional     | Crunchbase/press OK with `sources[]`                                         |
+| Field           | Required | Rule                                                                                                    |
+| --------------- | -------- | ------------------------------------------------------------------------------------------------------- |
+| `id`            | Yes      | Stable slug (`c1`, `c23`); never reuse after publish                                                    |
+| `name`          | Yes      | Legal or brand name at time of curation                                                                 |
+| `sector`        | Yes      | One of: Fertility, Mental Health, General Wellness, Wearables, Pelvic Health                            |
+| `stage`         | Yes      | Verifiable label (funding round, acquired, public)                                                      |
+| `founded`       | Yes      | Integer year                                                                                            |
+| `hq`            | Yes      | City, region/country                                                                                    |
+| `description`   | Yes      | One sentence from website or filing                                                                     |
+| `sources[]`     | Yes      | **≥2 URLs or citations** per company                                                                    |
+| Economic values | N/A      | Do not add `lastKnownValuation`, `valuationSource`, or `totalFunding` here; add a ledger record instead |
+
+### `evidence.verified.json` economic records
+
+`evidence.verified.json` is the canonical static source for current funding and
+valuation fields. A correction adds a new record with `supersedesId`; do not
+overwrite or delete the earlier evidence row. `publicAsOfDate: null` means the
+value may appear in the current descriptive catalog but is **not** eligible for
+a dated replay.
+
+```json
+{
+  "id": "c136:totalFunding:v1",
+  "companyId": "c136",
+  "field": "totalFunding",
+  "value": 85,
+  "unit": "USD_M",
+  "sourceCitation": "Company Series B press release",
+  "sourceUrl": "https://example.com/series-b",
+  "effectiveDate": "2024-03-12",
+  "publicAsOfDate": "2024-03-12",
+  "datePrecision": "day",
+  "verificationStatus": "verified",
+  "recordedAt": "2026-09-25"
+}
+```
 
 ### `acquirers[]`
 

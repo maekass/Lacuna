@@ -1,6 +1,6 @@
 #!/usr/bin/env npx tsx
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
   fromRecords,
@@ -12,20 +12,15 @@ import {
 } from "../src/lib/lineage";
 import { hashDataset } from "../src/lib/lineage/datasetHash";
 import { isSufficient } from "../src/lib/quant/estimators";
-import {
-  parseVerifiedDataset,
-  type VerifiedDataset,
-} from "../src/lib/data/datasetSchema";
+import { getStaticVerifiedDataset } from "../src/lib/data/staticDataset";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 import { withoutLineage, writeSlimArtifact } from "./slimArtifacts";
 
 const ROOT = resolve(__dirname, "..");
-const dataset = JSON.parse(
-  readFileSync(resolve(ROOT, "src/data/dataset.verified.json"), "utf-8"),
-) as VerifiedDataset;
+const dataset = getStaticVerifiedDataset();
 const options: LineageOptions = {
   datasetVersion: dataset.provenance.datasetVersion,
-  datasetHash: hashDataset(parseVerifiedDataset(dataset)).fullHash,
+  datasetHash: hashDataset(dataset).fullHash,
   computedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
 };
 
@@ -158,8 +153,8 @@ const output = {
   generatedAt: options.computedAt,
   datasetVersion: options.datasetVersion,
   datasetHash: options.datasetHash ??
-    hashDataset(parseVerifiedDataset(dataset)).fullHash,
-  source: "Lacuna verified dataset (src/data/dataset.verified.json)",
+    hashDataset(dataset).fullHash,
+  source: "Lacuna verified catalog + economic evidence ledger",
   benchmarks,
   withheld,
 };
