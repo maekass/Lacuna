@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { atDecisionDate } from "./pointInTime";
+import { inspectLedgerRecords } from "./ledgerStructure";
+import { atDecisionDate, isCalendarDay } from "./pointInTime";
 import type { VerifiedDataset } from "./datasetSchema";
 
 const isoDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
@@ -67,35 +68,46 @@ export function parseEconomicEvidenceLedger(
 function currentRecords(
   records: readonly EconomicEvidenceRecord[],
 ): Map<string, EconomicEvidenceRecord> {
-  const ids = new Set(records.map((record) => record.id));
-  const superseded = new Set<string>();
-  for (const record of records) {
-    if (record.supersedesId) {
-      if (!ids.has(record.supersedesId)) {
-        throw new Error(
-          `Evidence record ${record.id} supersedes missing record ${record.supersedesId}`,
-        );
-      }
-      superseded.add(record.supersedesId);
-    }
+  const { issues, active } = inspectLedgerRecords(records);
+  if (issues.length > 0) {
+    throw new Error(issues[0].why);
   }
+  return active;
+}
 
-  const byCompanyAndField = new Map<string, EconomicEvidenceRecord>();
-  for (const record of records) {
-    if (
-      superseded.has(record.id) || record.verificationStatus === "retracted"
-    ) {
-      continue;
-    }
-    const key = `${record.companyId}:${record.field}`;
-    if (byCompanyAndField.has(key)) {
-      throw new Error(
-        `More than one current evidence record for ${key}; add supersedesId rather than silently choosing one`,
-      );
-    }
-    byCompanyAndField.set(key, record);
+export type EconomicReplayBlockReason =
+  | "missing-provenance"
+  | "imprecise-date"
+  | "invalid-date";
+
+/**
+ * Why a single economic record cannot enter a dated replay.
+ * Null means the record is structurally eligible; the cutoff is separate.
+ * A missing publicAsOfDate is not inferred and is not treated as zero.
+ */
+export function economicReplayBlockReason(
+  record: EconomicEvidenceRecord,
+): EconomicReplayBlockReason | null {
+  if (!record.publicAsOfDate || !record.sourceCitation.trim()) {
+    return "missing-provenance";
   }
-  return byCompanyAndField;
+  if (record.datePrecision !== "day") return "imprecise-date";
+  if (
+    !isCalendarDay(record.publicAsOfDate) ||
+    !isCalendarDay(record.recordedAt)
+  ) {
+    return "invalid-date";
+  }
+  if (record.effectiveDate && !isCalendarDay(record.effectiveDate)) {
+    return "invalid-date";
+  }
+  if (record.publicAsOfDate > record.recordedAt) return "invalid-date";
+  if (
+    record.effectiveDate && record.publicAsOfDate < record.effectiveDate
+  ) {
+    return "invalid-date";
+  }
+  return null;
 }
 
 export type EconomicEvidenceDecisionResult =
@@ -105,6 +117,7 @@ export type EconomicEvidenceDecisionResult =
     reason:
       | "missing-evidence"
       | "missing-provenance"
+      | "imprecise-date"
       | "invalid-date"
       | "after-cutoff";
   };
@@ -121,6 +134,8 @@ export function economicEvidenceAtDecisionDate(
 ): EconomicEvidenceDecisionResult {
   const record = currentRecords(ledger.records).get(`${companyId}:${field}`);
   if (!record) return { eligible: false, reason: "missing-evidence" };
+  const blocked = economicReplayBlockReason(record);
+  if (blocked) return { eligible: false, reason: blocked };
   const result = atDecisionDate({
     value: record,
     asOf: record.publicAsOfDate,

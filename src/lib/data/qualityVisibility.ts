@@ -8,6 +8,7 @@
 
 import { getMetricDeclaration } from "@/lib/lineage";
 import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
+import type { ReplayProvenanceCensus } from "./replayProvenance";
 
 export type QualityGrade = "A" | "B" | "C" | "D" | "F";
 
@@ -110,6 +111,10 @@ export interface QualityVisibilityArtifact {
   readonly vintage: VintageCensus;
   readonly premiums: PremiumReproducibility;
   readonly displayProvenance: DisplayProvenanceCensus;
+  /** Active economic rows that may enter a dated replay. Missing dates stay missing. */
+  readonly replay: ReplayProvenanceCensus;
+  /** Hash of the compute sources that produced this census. */
+  readonly computationLineageHash: string;
 }
 
 export interface VintageRecordInput {
@@ -474,7 +479,8 @@ function gradeCells(grades: GradeCounts): string {
 export function formatQualityVisibilityMarkdown(
   artifact: QualityVisibilityArtifact,
 ): string {
-  const { quality, metrics, vintage, premiums, displayProvenance } = artifact;
+  const { quality, metrics, vintage, premiums, displayProvenance, replay } =
+    artifact;
   const topFiles = displayProvenance.topUncoveredFiles
     .map((row) => `| \`${row.file}\` | ${row.count} |`)
     .join("\n");
@@ -526,6 +532,31 @@ export function formatQualityVisibilityMarkdown(
     `- Deal values: ${vintage.dealValues.withValueAsOf}/${vintage.dealValues.total} have a value vintage (${vintage.dealValues.withEventDate} have announcement date only)`,
     `- Pre-deal valuations: ${vintage.preDealValuations.withDedicatedAsOf}/${vintage.preDealValuations.total} have \`preDealValuationDate\``,
     "",
+    "## Historical replay provenance",
+    "",
+    replay.definition,
+    "",
+    replay.note,
+    "",
+    `- Active economic records: **${replay.economicRecords}**`,
+    `- Eligible for historical replay: **${replay.historicalReplayEligible}** (${
+      pct(replay.historicalReplayEligibleRate)
+    })`,
+    `- Current-only because publicAsOfDate is missing: **${replay.currentOnlyMissingPublicAsOf}** (${
+      pct(replay.currentOnlyMissingPublicAsOfRate)
+    })`,
+    `- Other replay-ineligible records: **${replay.otherReplayIneligible}**`,
+    "",
+    "| Field | Records | Replay-eligible | Current-only (no public as-of) |",
+    "| --- | ---: | ---: | ---: |",
+    ...replay.byField.map((row) =>
+      `| ${row.field} | ${row.records} | ${row.historicalReplayEligible} (${
+        pct(row.historicalReplayEligibleRate)
+      }) | ${row.currentOnlyMissingPublicAsOf} (${
+        pct(row.currentOnlyMissingPublicAsOfRate)
+      }) |`
+    ),
+    "",
     "## Display provenance",
     "",
     `- Covered: **${displayProvenance.covered}** · exempt: **${displayProvenance.exempt}** · uncovered: **${displayProvenance.uncovered} / ${displayProvenance.total}** (${
@@ -570,6 +601,12 @@ export const QUALITY_VISIBILITY_MODELS = {
     module: "src/lib/data/qualityVisibility.ts",
     exportName: "computeVintageCensus",
     definition: VINTAGE_DEFINITION,
+  },
+  historicalReplayEligible: {
+    module: "src/lib/data/replayProvenance.ts",
+    exportName: "computeReplayProvenanceCensus",
+    definition:
+      "Active economic ledger rows with a day-precision publicAsOfDate that can enter historical replay. Rows missing publicAsOfDate are current-catalog only and are not a backfill target.",
   },
   displayUncovered: {
     module: "src/lib/data/qualityVisibility.ts",

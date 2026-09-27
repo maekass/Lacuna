@@ -1,13 +1,23 @@
 #!/usr/bin/env npx tsx
 
 /**
- * MeshIC data integrity gate.
+ * MeshIC provenance and historical-replay gate.
  *
- * Schema-valid data can still be decision-invalid when entity identity,
- * arithmetic, vintage, provenance class, or metric semantics are wrong.
+ * Can this change introduce a factual claim, current metric, or historical
+ * as-of result that is unsupported, internally inconsistent, stale, or
+ * misleadingly precise?
+ *
+ * `--strict` fails on blocking findings only. Reported provenance gaps stay
+ * visible and do not fail the gate. This process does not write files,
+ * promote data, or call a model.
  */
 
 import { existsSync, readFileSync } from "node:fs";
+import { collectProvenanceGateFindings } from "../src/lib/data/meshicGate";
+import {
+  findingCount,
+  type MeshicFinding,
+} from "../src/lib/data/meshicFindings";
 
 interface Finding {
   severity: "RED" | "AMBER";
@@ -207,26 +217,94 @@ function vintageFindings(): Finding[] {
   }];
 }
 
+const LEGACY_CONTEXT: Record<
+  string,
+  { location: string; remediation: string }
+> = {
+  "sec.postAcquisitionStandaloneRevenue": {
+    location: "src/data/computed-sec-revenue.json",
+    remediation:
+      "Drop post-acquisition standalone revenue or correct the issuer CIK mapping. Do not keep another registrant's facts on the target.",
+  },
+  "cms.legacyFallbackArithmetic": {
+    location: "src/data/computed-cms-utilization.json",
+    remediation:
+      "Treat the hardcoded fallback as research-only. Regenerate from verified aggregate input before any decision use.",
+  },
+  "cms.unweightedReimbursement": {
+    location: "src/data/computed-cms-utilization.json",
+    remediation:
+      "Recompute sector reimbursement as the sum of services times payment. Do not multiply total services by a simple mean.",
+  },
+  "cms.hardcodedFallbackResearchOnly": {
+    location: "src/data/computed-cms-utilization.json",
+    remediation:
+      "Keep the research-only label. Do not use these rows for valuation or market-size claims.",
+  },
+  "growth.validatedEmptiness": {
+    location: "src/data/computed-growth-rates.json",
+    remediation:
+      "Do not label growth as derived from validated operating revenue while SEC revenue is withheld or empty.",
+  },
+  "growth.semanticMismatch": {
+    location: "src/data/computed-growth-rates.json",
+    remediation:
+      "Remove or relabel rows that annualize totalFunding into valuation or deal value. They are not operating CAGR.",
+  },
+  "quality.completenessUpgradesEvidence": {
+    location: "src/data/computed-data-quality-scores.json",
+    remediation:
+      "Do not present composite grade A as provenance strength when source quality is lower.",
+  },
+  "vintage.missingAsOf": {
+    location: "src/data/computed-quality-visibility.json",
+    remediation:
+      "Report the missing dedicated as-of dates. Do not fill them with guessed vintages or deal announcement dates.",
+  },
+};
+
+function legacyFinding(finding: Finding): MeshicFinding {
+  const context = LEGACY_CONTEXT[finding.code];
+  return {
+    disposition: finding.severity === "RED" ? "blocking" : "gap",
+    rule: finding.code,
+    location: context?.location ?? "src/data",
+    why: finding.message,
+    remediation: context?.remediation ??
+      "Fix the named evidence defect. Do not silence the check or invent a source.",
+  };
+}
+
+function printFinding(finding: MeshicFinding): void {
+  const label = finding.disposition === "blocking" ? "BLOCKING" : "GAP";
+  console.log(`[${label}] ${finding.rule}`);
+  console.log(`  location: ${finding.location}`);
+  console.log(`  why: ${finding.why}`);
+  console.log(`  remediation: ${finding.remediation}`);
+}
+
 function main() {
   const dataset = readJson<VerifiedDataset>("src/data/dataset.verified.json");
   if (!dataset) throw new Error("Missing src/data/dataset.verified.json");
 
   const findings = [
-    ...secRevenueFindings(dataset),
-    ...cmsReimbursementFindings(),
-    ...growthSemanticFindings(),
-    ...qualityGradeFindings(),
-    ...vintageFindings(),
+    ...secRevenueFindings(dataset).map(legacyFinding),
+    ...cmsReimbursementFindings().map(legacyFinding),
+    ...growthSemanticFindings().map(legacyFinding),
+    ...qualityGradeFindings().map(legacyFinding),
+    ...vintageFindings().map(legacyFinding),
+    ...collectProvenanceGateFindings(process.cwd()),
   ];
 
-  console.log(`MeshIC data gate: ${findings.length} finding(s)`);
-  for (const finding of findings) {
-    console.log(`[${finding.severity}] ${finding.code}: ${finding.message}`);
-  }
+  const blocking = findingCount(findings, "blocking");
+  const gaps = findingCount(findings, "gap");
+  console.log(
+    `MeshIC data gate: ${findings.length} finding(s), ${blocking} blocking, ${gaps} provenance gap(s)`,
+  );
+  for (const finding of findings) printFinding(finding);
 
-  const red = findings.filter((finding) => finding.severity === "RED");
-  if (process.argv.includes("--strict") && red.length > 0) {
-    console.error(`\nStrict gate failed: ${red.length} RED finding(s).`);
+  if (process.argv.includes("--strict") && blocking > 0) {
+    console.error(`\nStrict gate failed: ${blocking} blocking finding(s).`);
     process.exitCode = 1;
   }
 }

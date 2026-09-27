@@ -2,7 +2,8 @@
   "generatedAt": "2026-09-20T00:00:00.000Z",
   "datasetHash": "e79ef1cfdc8c2c19b3290ea7eabbb5c5657d0398471013db2ded074be212ddf9",
   "datasetVersion": "v9",
-  "source": "Lacuna measurement-layer census (quality scores, gated metrics, vintage, display provenance)",
+  "computationLineageHash": "bbea98b4958abf613b49ee5f25e0d57e1d72131df2fa5d29221606185f861299",
+  "source": "Lacuna measurement-layer census (quality scores, gated metrics, vintage, replay provenance, display provenance)",
   "quality": {
     "companies": {
       "total": 150,
@@ -558,6 +559,34 @@
       {
         "file": "src/components/GenderInferenceQuality.tsx",
         "count": 26
+      }
+    ]
+  },
+  "replay": {
+    "definition": "Active economic ledger rows (not retracted, not superseded) that can enter a historical replay. Eligibility requires a real day-precision publicAsOfDate on or before recordedAt, a non-empty citation, and publicAsOfDate on or after effectiveDate when both exist. A missing publicAsOfDate is current-catalog only.",
+    "note": "A missing publicAsOfDate means the record is current-catalog only. Do not infer a date from a deal announcement, close, or filing year, and do not treat the gap as zero. Backfill only when a source shows the fact was publicly knowable on that date.",
+    "economicRecords": 98,
+    "historicalReplayEligible": 0,
+    "historicalReplayEligibleRate": 0,
+    "currentOnlyMissingPublicAsOf": 98,
+    "currentOnlyMissingPublicAsOfRate": 1,
+    "otherReplayIneligible": 0,
+    "byField": [
+      {
+        "field": "totalFunding",
+        "records": 40,
+        "historicalReplayEligible": 0,
+        "historicalReplayEligibleRate": 0,
+        "currentOnlyMissingPublicAsOf": 40,
+        "currentOnlyMissingPublicAsOfRate": 1
+      },
+      {
+        "field": "lastKnownValuation",
+        "records": 58,
+        "historicalReplayEligible": 0,
+        "historicalReplayEligibleRate": 0,
+        "currentOnlyMissingPublicAsOf": 58,
+        "currentOnlyMissingPublicAsOfRate": 1
       }
     ]
   }

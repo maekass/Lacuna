@@ -14,6 +14,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 import { buildQualityLayerSummary } from "../src/lib/data/dataQualityScores";
+import { parseEconomicEvidenceLedger } from "../src/lib/data/evidenceLedger";
 import {
   computeMetricPublicationCensus,
   computeVintageCensus,
@@ -21,7 +22,9 @@ import {
   type QualityVisibilityArtifact,
   summarizeDisplayProvenance,
 } from "../src/lib/data/qualityVisibility";
+import { computeReplayProvenanceCensus } from "../src/lib/data/replayProvenance";
 import { getStaticVerifiedDataset } from "../src/lib/data/staticDataset";
+import { hashComputationLineage } from "../src/lib/lineage/computationLineage";
 import { hashDataset } from "../src/lib/lineage/datasetHash";
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -56,12 +59,16 @@ function main(): void {
     perFileUncovered: Record<string, number>;
   }>("scripts/provenance-baseline.json");
 
+  const ledger = parseEconomicEvidenceLedger(readJson(
+    "src/data/evidence.verified.json",
+  ));
   const output: QualityVisibilityArtifact = {
     generatedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
     datasetHash: hashDataset(dataset).fullHash,
     datasetVersion: dataset.provenance.datasetVersion,
+    computationLineageHash: hashComputationLineage(repoRoot),
     source:
-      "Lacuna measurement-layer census (quality scores, gated metrics, vintage, display provenance)",
+      "Lacuna measurement-layer census (quality scores, gated metrics, vintage, replay provenance, display provenance)",
     quality: buildQualityLayerSummary(),
     metrics: computeMetricPublicationCensus({
       benchmarks,
@@ -72,6 +79,7 @@ function main(): void {
     vintage: computeVintageCensus(dataset),
     premiums: countReproduciblePremiums(dataset.acquisitions),
     displayProvenance: summarizeDisplayProvenance(baseline),
+    replay: computeReplayProvenanceCensus(ledger.records),
   };
 
   const dest = join(repoRoot, "src/data/computed-quality-visibility.json");
@@ -80,7 +88,7 @@ function main(): void {
   console.log(
     `   published=${output.metrics.published} withheld=${output.metrics.withheld} vintageMissing=${
       (output.vintage.missingDedicatedAsOfRate * 100).toFixed(1)
-    }% uncovered=${output.displayProvenance.uncovered}/${output.displayProvenance.total}`,
+    }% replayEligible=${output.replay.historicalReplayEligible}/${output.replay.economicRecords} currentOnly=${output.replay.currentOnlyMissingPublicAsOf} uncovered=${output.displayProvenance.uncovered}/${output.displayProvenance.total}`,
   );
 }
 

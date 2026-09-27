@@ -5,10 +5,28 @@ on:
     paths:
       - "src/data/**"
       - "src/lib/data/**"
-      - "src/lib/impact/**"
+      - "src/lib/evidence/**"
       - "src/lib/lineage/**"
+      - "src/lib/impact/**"
+      - "src/lib/quant/**"
+      - "src/lib/scoring/**"
+      - "src/lib/deals/**"
+      - "src/components/ExitPredictor.tsx"
+      - "src/components/PitchBrief.tsx"
+      - "src/components/QuantValuationPanel.tsx"
+      - "src/components/AcquirerPredictionDashboard.tsx"
+      - "src/components/CompanySimilarity.tsx"
+      - "src/components/DataQualityVisibility.tsx"
       - "scripts/**"
       - "staging/**"
+      - "docs/DATA_CURATION_CHECKLIST.md"
+      - "docs/DATA_BOUNDARIES.md"
+      - "docs/LEAKAGE_AUDIT.md"
+      - "docs/MESHIC_DATA_AUDIT.md"
+      - "docs/NEW_DEAL_WORKFLOW.md"
+      - "docs/EVIDENCE_GRAPH.md"
+      - "docs/INFERENCE.md"
+      - "docs/LIMITATIONS.md"
       - ".github/workflows/meshic-data-integrity.yml"
   workflow_dispatch:
 
@@ -31,5 +49,8 @@ jobs:
       - name: Schema and evidence hygiene
         run: npm run validate:dataset
 
-      - name: MeshIC strict data gate
+      - name: MeshIC strict provenance and historical-replay gate
         run: npx tsx scripts/meshic-data-gate.ts --strict
+
+      - name: Computed artifact lineage
+        run: npm run verify:computed
