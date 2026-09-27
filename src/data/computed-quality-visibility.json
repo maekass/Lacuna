@@ -516,6 +516,28 @@
       "withDedicatedAsOf": 49
     }
   },
+  "economicReplay": {
+    "note": "Missing publicAsOfDate means the fact is current-catalog only. Do not invent a publication date to raise the historical-replay share.",
+    "activeRecords": 98,
+    "replayEligible": 0,
+    "replayEligibleRate": 0,
+    "currentOnlyMissingPublicAsOf": 98,
+    "currentOnlyRate": 1,
+    "byField": [
+      {
+        "field": "totalFunding",
+        "active": 40,
+        "replayEligible": 0,
+        "currentOnlyMissingPublicAsOf": 40
+      },
+      {
+        "field": "lastKnownValuation",
+        "active": 58,
+        "replayEligible": 0,
+        "currentOnlyMissingPublicAsOf": 58
+      }
+    ]
+  },
   "premiums": {
     "computed": 47,
     "reproducible": 47

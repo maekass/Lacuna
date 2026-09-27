@@ -7,7 +7,22 @@
  * arithmetic, vintage, provenance class, or metric semantics are wrong.
  */
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { join, relative } from "node:path";
+import {
+  assessArtifactLineage,
+  assessClaimLanguage,
+  assessLedgerIntegrity,
+  assessMaterialization,
+  assessRawDatasetImports,
+  assessReplaySafety,
+  formatMeshicFinding,
+  type MeshicFinding,
+  type SourceFile,
+} from "../src/lib/data/meshicIntegrity";
+import { getStaticVerifiedDataset } from "../src/lib/data/staticDataset";
+import { hashDataset } from "../src/lib/lineage/datasetHash";
+import { DATASET_COMPUTED_ARTIFACTS } from "./verify-computed-artifacts";
 
 interface Finding {
   severity: "RED" | "AMBER";
@@ -207,26 +222,107 @@ function vintageFindings(): Finding[] {
   }];
 }
 
+function walkSources(root: string): SourceFile[] {
+  if (!existsSync(root)) return [];
+  const files: SourceFile[] = [];
+  for (const entry of readdirSync(root)) {
+    const full = join(root, entry);
+    const stat = statSync(full);
+    if (stat.isDirectory()) {
+      if (entry === "node_modules" || entry === "__tests__") continue;
+      files.push(...walkSources(full));
+    } else if (/\.(ts|tsx)$/.test(entry)) {
+      files.push({
+        path: relative(process.cwd(), full).replaceAll("\\", "/"),
+        text: readFileSync(full, "utf8"),
+      });
+    }
+  }
+  return files;
+}
+
+function provenanceFindings(): MeshicFinding[] {
+  const raw = readJson<{
+    companies: Array<Record<string, unknown> & { id: string }>;
+  }>("src/data/dataset.verified.json");
+  const ledger = readJson<unknown>("src/data/evidence.verified.json");
+  if (!raw || !ledger) {
+    return [{
+      severity: "RED",
+      blocking: true,
+      rule: "ledger.schema",
+      code: "ledger.missingFile",
+      path: "src/data",
+      why: "dataset.verified.json or evidence.verified.json is missing.",
+      remediation: "Restore both version-controlled data files.",
+    }];
+  }
+  const companyIds = new Set(raw.companies.map((company) => company.id));
+  const materialized = getStaticVerifiedDataset();
+  const ledgerRecords = (ledger as { records?: never }).records;
+  const hash = hashDataset(materialized).fullHash;
+  const artifacts = DATASET_COMPUTED_ARTIFACTS.map((path) => {
+    const artifact = readJson<{
+      datasetHash?: string;
+      provenance?: { datasetHash?: string };
+    }>(path);
+    return {
+      path,
+      datasetHash: artifact?.datasetHash ?? artifact?.provenance?.datasetHash,
+    };
+  });
+  const sources = [
+    ...walkSources("src/lib"),
+    ...walkSources("src/components"),
+    ...walkSources("src/app"),
+    ...walkSources("scripts"),
+  ];
+  return [
+    ...assessLedgerIntegrity(ledger, companyIds),
+    ...assessMaterialization({
+      rawCompanies: raw.companies,
+      materializedCompanies: materialized.companies,
+      records: Array.isArray(ledgerRecords) ? ledgerRecords : [],
+    }),
+    ...assessReplaySafety(sources),
+    ...assessRawDatasetImports(sources),
+    ...assessArtifactLineage(artifacts, hash),
+    ...assessClaimLanguage(sources),
+  ];
+}
+
 function main() {
   const dataset = readJson<VerifiedDataset>("src/data/dataset.verified.json");
   if (!dataset) throw new Error("Missing src/data/dataset.verified.json");
 
-  const findings = [
+  const legacy = [
     ...secRevenueFindings(dataset),
     ...cmsReimbursementFindings(),
     ...growthSemanticFindings(),
     ...qualityGradeFindings(),
     ...vintageFindings(),
-  ];
+  ].map((item): MeshicFinding => ({
+    severity: item.severity,
+    blocking: item.severity === "RED",
+    rule: item.code,
+    code: item.code,
+    path: "src/data",
+    why: item.message,
+    remediation: item.severity === "RED"
+      ? "Correct the artifact or its label before merging."
+      : "Report the gap. Do not invent a vintage or upgrade a grade to clear it.",
+  }));
+
+  const findings = [...legacy, ...provenanceFindings()];
 
   console.log(`MeshIC data gate: ${findings.length} finding(s)`);
-  for (const finding of findings) {
-    console.log(`[${finding.severity}] ${finding.code}: ${finding.message}`);
+  for (const item of findings) {
+    console.log(formatMeshicFinding(item));
   }
 
-  const red = findings.filter((finding) => finding.severity === "RED");
+  const red = findings.filter((item) => item.blocking);
   if (process.argv.includes("--strict") && red.length > 0) {
-    console.error(`\nStrict gate failed: ${red.length} RED finding(s).`);
+    console.error(`\nStrict gate failed: ${red.length} blocking finding(s).`);
     process.exitCode = 1;
   }
 }

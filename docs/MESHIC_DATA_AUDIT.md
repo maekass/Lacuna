@@ -6,6 +6,27 @@ This audit applies a decision-grade evidence lens to Lacuna: provenance
 strength, field-level sourceability, vintage, calculation semantics, model
 uncertainty, and escalation to human/primary-source diligence.
 
+## Pull-request gate
+
+`.github/workflows/meshic-data-integrity.yml` runs
+`scripts/meshic-data-gate.ts --strict` on data, ledger, lineage, similarity, and
+claim-doc changes. It is read-only: no commits, no promotion, no LLM calls, no
+production secrets.
+
+Blocking failures include a schema-invalid ledger, duplicate or cyclic
+supersession, two active values for one economic field, a materialized funding
+or valuation figure that does not trace to one active record, deal dates used as
+funding or valuation vintages, dated code that reads raw current economic fields
+or coerces a missing value to zero, metric code importing
+`dataset.verified.json` directly, stale computed-artifact hashes, and
+user-facing copy that calls descriptive similarity a prediction, probability,
+forecast, likely exit, or guaranteed outcome.
+
+Missing `publicAsOfDate` stays a non-blocking provenance gap. The
+quality-visibility census reports how many active economic records are
+replay-eligible versus current-only. Do not invent a publication date to change
+that share. Citation-only records without a URL are reported, not rejected.
+
 ## P0 — block from investment inference until remediated
 
 1. **SEC revenue ingestion** — `scripts/fetch-sec-revenue.ts` contains incorrect
