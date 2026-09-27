@@ -96,8 +96,11 @@ Before merge, every deal needs:
 
 Rules: stable `id` (never reuse), **≥2 `sources[]`**. Add funding and valuation
 only as separate records in `src/data/evidence.verified.json`; each record
-requires its own citation and `publicAsOfDate` (or explicit `null` when the
-historical vintage is unknown).
+requires its own citation, `valueBasis`, and `publicAsOfDate` (or explicit
+`null` when the citation does not date the figure). A month or year in the
+citation is stored as the last day of that window. Do not copy `announcedDate`
+onto the ledger unless a source line already states that day. Changing `value`
+appends a new row with `supersedesId`.
 
 ### 3b. New acquirer (if not in `companies[]` or `acquirers[]`)
 

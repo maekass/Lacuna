@@ -4,12 +4,19 @@ import {
   applyEconomicEvidenceLedger,
   parseEconomicEvidenceLedger,
 } from "./evidenceLedger";
+import { assertEconomicEvidenceIntegrity } from "./evidenceLedgerIntegrity";
 import { parseVerifiedDataset, type VerifiedDataset } from "./datasetSchema";
 
-/** Parsed once at module load — schema mismatch fails build/import, not a live request. */
+const staticLedger = parseEconomicEvidenceLedger(
+  staticEconomicEvidenceLedger,
+);
+const staticParsed = parseVerifiedDataset(staticVerifiedDataset);
+assertEconomicEvidenceIntegrity(staticLedger, staticParsed);
+
+/** Parsed once at module load — schema or ledger mismatch fails build/import. */
 const parsedStaticDataset: VerifiedDataset = applyEconomicEvidenceLedger(
-  parseVerifiedDataset(staticVerifiedDataset),
-  parseEconomicEvidenceLedger(staticEconomicEvidenceLedger),
+  staticParsed,
+  staticLedger,
 );
 
 /** Synchronous static dataset for client bundles and build-time fallbacks. */
@@ -19,8 +26,8 @@ export function getStaticVerifiedDataset(): VerifiedDataset {
 
 /** Parse and validate raw JSON — used by scripts and tests. */
 export function parseStaticVerifiedDatasetJson(raw: unknown): VerifiedDataset {
-  return applyEconomicEvidenceLedger(
-    parseVerifiedDataset(raw),
-    parseEconomicEvidenceLedger(staticEconomicEvidenceLedger),
-  );
+  const dataset = parseVerifiedDataset(raw);
+  const ledger = parseEconomicEvidenceLedger(staticEconomicEvidenceLedger);
+  assertEconomicEvidenceIntegrity(ledger, dataset);
+  return applyEconomicEvidenceLedger(dataset, ledger);
 }
