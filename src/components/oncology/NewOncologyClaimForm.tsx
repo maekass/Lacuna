@@ -75,7 +75,7 @@ export default function NewOncologyClaimForm() {
             <textarea
               required
               className="mt-1 w-full rounded border px-2 py-1"
-              rows={4}
+              rows="4"
               value={exactClaim}
               onChange={(event) => setExactClaim(event.target.value)}
             />
