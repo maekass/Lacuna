@@ -9,23 +9,123 @@ uncertainty, and escalation to human/primary-source diligence.
 ## Pull-request gate
 
 `.github/workflows/meshic-data-integrity.yml` runs
-`scripts/meshic-data-gate.ts --strict` on data, ledger, lineage, similarity, and
-claim-doc changes. It is read-only: no commits, no promotion, no LLM calls, no
-production secrets.
+`scripts/meshic-data-gate.ts --strict` and `npm run verify:computed` on data,
+ledger, lineage, similarity, and claim-doc changes. The job is read-only:
+`contents: read`, no commit, no promotion, no LLM call, no production secret.
 
-Blocking failures include a schema-invalid ledger, duplicate or cyclic
-supersession, two active values for one economic field, a materialized funding
-or valuation figure that does not trace to one active record, deal dates used as
-funding or valuation vintages, dated code that reads raw current economic fields
-or coerces a missing value to zero, metric code importing
-`dataset.verified.json` directly, stale computed-artifact hashes, and
-user-facing copy that calls descriptive similarity a prediction, probability,
-forecast, likely exit, or guaranteed outcome.
+Lacuna stays a descriptive evidence and similarity tool. The gate asks whether a
+pull request can introduce a factual claim, a current metric, or a historical
+as-of result that is unsupported, inconsistent, stale, or misleadingly precise.
 
-Missing `publicAsOfDate` stays a non-blocking provenance gap. The
-quality-visibility census reports how many active economic records are
-replay-eligible versus current-only. Do not invent a publication date to change
-that share. Citation-only records without a URL are reported, not rejected.
+Three dates stay distinct:
+
+| Name             | Question it answers                    |
+| ---------------- | -------------------------------------- |
+| Source citation  | Where did the claim come from?         |
+| `effectiveDate`  | When did the underlying value apply?   |
+| `publicAsOfDate` | When was that value publicly knowable? |
+
+A citation does not prove knowability. A deal announcement date is not a funding
+or valuation vintage. `publicAsOfDate: null` keeps the fact in the current
+catalog and out of historical replay.
+
+### What a clean current-only record looks like
+
+This is valid. The strict gate does not fail it, and nobody should invent a
+publication day to make it replay-eligible.
+
+```json
+{
+  "id": "c1:totalFunding:v1",
+  "companyId": "c1",
+  "field": "totalFunding",
+  "value": 155,
+  "unit": "USD_M",
+  "sourceCitation": "Crunchbase - crunchbase.com/organization/modern-fertility",
+  "effectiveDate": null,
+  "publicAsOfDate": null,
+  "datePrecision": "unknown",
+  "verificationStatus": "reported",
+  "recordedAt": "2026-09-20"
+}
+```
+
+A correction appends a successor. It does not edit `v1`:
+
+```json
+{
+  "id": "c1:totalFunding:v2",
+  "companyId": "c1",
+  "field": "totalFunding",
+  "value": 160,
+  "unit": "USD_M",
+  "sourceCitation": "Company Series C release",
+  "effectiveDate": "2024-03-12",
+  "publicAsOfDate": "2024-03-12",
+  "datePrecision": "day",
+  "verificationStatus": "verified",
+  "recordedAt": "2026-09-25",
+  "supersedesId": "c1:totalFunding:v1"
+}
+```
+
+After that append, only `v2` is active. Replay on `2021-05-18` still cannot use
+`v1`, because its `publicAsOfDate` is null. Replay on `2024-03-12` can use `v2`.
+
+### Blocking versus reported
+
+Each line from `scripts/meshic-data-gate.ts` names the rule, the path, why it
+failed, and the smallest safe fix.
+
+Blocking (strict mode exits 1):
+
+```text
+[RED] ledger.supersession (blocking integrity failure) c-test:totalFunding: More than one active record (c-test:totalFunding:v1, c-test:totalFunding:conflict). Remediation: Append one successor with supersedesId. Do not leave two live values.
+[RED] replay.dealDateSubstitution (blocking integrity failure) src/lib/data/example.ts: A deal announcement or close date is assigned as a funding or valuation vintage. Remediation: Leave publicAsOfDate null until the economic source has its own publication date.
+[RED] claim.predicted (blocking integrity failure) src/components/ExitPredictor.tsx: User-facing text says "Predicted". Remediation: Reframe as precedent, similarity, or a descriptive heuristic.
+```
+
+Reported, and not a reason to backfill dates (strict mode exits 0):
+
+```text
+[AMBER] ledger.provenance (non-blocking provenance gap) evidence.verified.json: 98 non-retracted records have a citation and no source URL. Remediation: Backfill a resolvable URL when one exists. A citation alone is allowed and is not historical-replay proof.
+[AMBER] replay.coercion (non-blocking provenance gap) src/lib/quant/adaptQuantCompany.ts: A current descriptive path coerces a missing economic value. This is not a historical replay, but zero is not a disclosed fact.
+```
+
+### Census on the current ledger
+
+`src/data/computed-quality-visibility.json` → `economicReplay`, regenerated from
+the materialized dataset and `evidence.verified.json`:
+
+| Field                    | Active | Replay-eligible | Current-only (`publicAsOfDate` missing) |
+| ------------------------ | -----: | --------------: | --------------------------------------: |
+| `totalFunding`           |     40 |               0 |                                      40 |
+| `lastKnownValuation`     |     58 |               0 |                                      58 |
+| **All economic records** | **98** |      **0 (0%)** |                           **98 (100%)** |
+
+The report text states: missing `publicAsOfDate` means the fact is
+current-catalog only. Do not invent a publication date to raise the
+historical-replay share.
+
+### What the workflow fails closed
+
+- Malformed ledger JSON, duplicate ids, unknown companies, invalid dates, a
+  public-as-of date after `recordedAt`, or a date finer than its stated
+  precision.
+- Orphaned `supersedesId`, a supersession cycle, two active values for one
+  company and field, or an active row that supersedes a retracted row.
+- A materialized funding or valuation figure that does not trace to exactly one
+  active ledger record, or those fields copied onto a raw company row.
+- Dated code that reads the current economic field, substitutes an acquisition
+  date, or coerces a missing value to zero.
+- App or `scripts/compute-*` imports of `dataset.verified.json` other than
+  `src/lib/data/staticDataset.ts`.
+- Computed artifacts whose `datasetHash` is not the materialized dataset hash.
+- User-facing copy that calls this surface a prediction, probability, odds,
+  forecast, likely exit, or guaranteed outcome. Phrases such as "not a forecast"
+  pass. Any other allowance must be an entry in
+  `src/lib/data/meshicClaimExceptions.ts`, and the tests require that phrase to
+  remain in the file.
 
 ## P0 — block from investment inference until remediated
 
