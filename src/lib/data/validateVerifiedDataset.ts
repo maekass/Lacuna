@@ -5,7 +5,6 @@ import {
   computeYearDealCounts,
   type DisclosureStats,
   type SectorDealCount,
-  type YearDealCount,
 } from "./datasetCoverageStats";
 
 export interface ValidationIssue {

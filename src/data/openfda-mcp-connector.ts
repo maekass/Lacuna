@@ -68,24 +68,6 @@ export const PRODUCT_CLASS_SCORES: Record<ProductClass, number> = {
   "UNCLASSIFIED": 40,
 };
 
-const WOMENS_HEALTH_INDICATIONS = [
-  "contraception",
-  "fertility",
-  "pregnancy",
-  "maternal",
-  "gynecology",
-  "menopause",
-  "breast",
-  "ovarian",
-  "cervical",
-  "uterine",
-  "pelvic",
-  "menstrual",
-  "obstetric",
-  "prenatal",
-  "postpartum",
-];
-
 export class OpenFDAClient {
   private baseUrl = "https://api.fda.gov";
 
