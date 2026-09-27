@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   BurdenCapitalGap,
   BurdenCapitalGapValuation,
@@ -52,6 +53,16 @@ export default function ResearchPage({
       </header>
 
       <BiotheranosticsDossierLink />
+      <p className="mb-8 text-sm text-lacuna-blue">
+        <Link
+          className="font-semibold text-lacuna-plum underline"
+          href="/research/oncology/claim-integrity"
+        >
+          Oncology Claim-Integrity Monitor
+        </Link>{" "}
+        compares dated public claims with cited evidence. It is separate from
+        valuation and prediction panels.
+      </p>
 
       <MotionSection id="burden-capital-gap" className={SECTION}>
         <SectionHeader
