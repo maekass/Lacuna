@@ -38,10 +38,34 @@ CSV imports.
 ### `evidence.verified.json` economic records
 
 `evidence.verified.json` is the canonical static source for current funding and
-valuation fields. A correction adds a new record with `supersedesId`; do not
-overwrite or delete the earlier evidence row. `publicAsOfDate: null` means the
+valuation fields. A **value** correction adds a new record with `supersedesId`;
+do not overwrite or delete the earlier row's number. Filling a null vintage,
+`valueBasis`, or `sourceUrl` on an unchanged value updates that same row.
+
+`publicAsOfDate` is the first day the figure is known to have been public. When
+the citation only names a month or year, store the last calendar day of that
+window (`effectiveDate` is the first day). A month may be sharpened to a day
+only when that day is already written in the company's `sources[]` or in the
+matching deal's `source` / `dealValueNote`. Do not copy
+`acquisitions.announcedDate` onto the ledger. `publicAsOfDate: null` means the
 value may appear in the current descriptive catalog but is **not** eligible for
-a dated replay.
+a dated replay. Keep null for an unquoted FX conversion and for a figure no
+company source states (`valueBasis` `unquoted_fx` or `unstated_conflict`).
+
+A `totalFunding` citation that does not state the total (`locator_only`) cannot
+keep a `publicAsOfDate`. An acquisition filing's date is not a funding vintage
+unless that filing states the funding total. When no company source states the
+stored total — including when the only nearby number is deal consideration, a
+milestone, or trailing revenue — set `valueBasis` to `unstated_conflict` and
+leave the vintage null. Do not overwrite the stored dollars; append a new row
+with `supersedesId` only when the number itself changes.
+
+`valueBasis` is required. It records whether the number is a stated point, an
+approximation, the high end of a range, a floor (`at_least`), a ceiling
+(`up_to`), upfront cash, a fully diluted total, enterprise value, equity value,
+a partial stake, or a sum of cited rounds. The citation has to state the figure
+those labels describe. `npm run validate:dataset` checks the static ledger
+against those rules.
 
 ```json
 {
@@ -50,7 +74,8 @@ a dated replay.
   "field": "totalFunding",
   "value": 85,
   "unit": "USD_M",
-  "sourceCitation": "Company Series B press release",
+  "valueBasis": "stated",
+  "sourceCitation": "Company Series B press release, $85M (Mar 12, 2024)",
   "sourceUrl": "https://example.com/series-b",
   "effectiveDate": "2024-03-12",
   "publicAsOfDate": "2024-03-12",
