@@ -14,7 +14,7 @@ export interface PitchBriefProps {
   readonly company: VerifiedCompanyView;
   readonly prediction: PredictionRow;
   readonly comparableExits: readonly VerifiedAcquisitionView[];
-  readonly marketPosition: "Emerging" | "Growth" | "Late-stage";
+  readonly marketPosition: "Emerging" | "Growth" | "Late-stage" | "Unspecified";
   readonly portfolioFits: readonly PortfolioFit[];
   readonly onClose: () => void;
 }
@@ -26,16 +26,34 @@ function formatDealValue(value?: number) {
   return `$${value.toFixed(1)}M`;
 }
 
-function formatDealDate(value: string) {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
-  return date.toLocaleDateString("en-US", {
+/**
+ * Format an ISO calendar date without parsing it as a local timestamp.
+ * A year-only value is returned unchanged so it is not shown as January 1.
+ */
+export function formatDealDate(value: string): string {
+  const match = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(value.trim());
+  if (!match) return value;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = match[3] === undefined ? undefined : Number(match[3]);
+  if (month < 1 || month > 12) return value;
+  if (day !== undefined && (day < 1 || day > 31)) return value;
+  const stamp = new Date(Date.UTC(year, month - 1, day ?? 1));
+  if (Number.isNaN(stamp.getTime())) return value;
+  if (stamp.getUTCMonth() !== month - 1) return value;
+  if (day !== undefined && stamp.getUTCDate() !== day) return value;
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: "UTC",
     year: "numeric",
     month: "short",
-  });
+    ...(day !== undefined ? { day: "numeric" as const } : {}),
+  }).format(stamp);
 }
 
-/** Maps a model confidence score to a coarse High / Medium / Low label. */
+/**
+ * Coarse High / Medium / Low label for factor-coverage completeness.
+ * This is not a statistical confidence interval or an exit probability.
+ */
 export function getConfidenceLabel(confidence: number) {
   if (confidence >= 0.75) return "High";
   if (confidence >= 0.55) return "Medium";
@@ -45,7 +63,8 @@ export function getConfidenceLabel(confidence: number) {
 /** Buckets a funding stage into the cluster labels used by the brief. */
 export function getMarketPosition(
   stage: Company["stage"],
-): "Emerging" | "Growth" | "Late-stage" {
+): "Emerging" | "Growth" | "Late-stage" | "Unspecified" {
+  if (stage === "Unspecified") return "Unspecified";
   if (stage === "Seed" || stage === "Series A") return "Emerging";
   if (stage === "Series B" || stage === "Series C") return "Growth";
   return "Late-stage";
@@ -101,6 +120,7 @@ export default function PitchBrief(
               <button
                 type="button"
                 onClick={onClose}
+                aria-label="Close pitch brief"
                 className="rounded-full border border-lacuna-border px-3 py-1 text-lg leading-none text-lacuna-text-muted transition-colors hover:bg-lacuna-surface-muted hover:text-lacuna-text-primary"
               >
                 ×

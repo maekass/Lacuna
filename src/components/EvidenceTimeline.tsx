@@ -10,10 +10,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import * as d3 from "d3";
-import {
-  EvidenceMaturityScore,
-  TimelineInsight,
-} from "@/data/evidence-maturity-calculator";
+import { EvidenceMaturityScore } from "@/data/evidence-maturity-calculator";
 import { CompanyTrialProfile } from "@/data/clinicaltrials-mcp-connector";
 import { CompanyFDAProfile } from "@/data/openfda-mcp-connector";
 

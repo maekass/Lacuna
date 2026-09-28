@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { inspectLedgerRecords } from "./ledgerStructure";
-import { atDecisionDate, isCalendarDay } from "./pointInTime";
+import { atDecisionDate } from "./pointInTime";
 import type { VerifiedDataset } from "./datasetSchema";
 
 const isoDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
@@ -27,6 +26,30 @@ export const ECONOMIC_EVIDENCE_FIELDS = [
 
 export type EconomicEvidenceField = (typeof ECONOMIC_EVIDENCE_FIELDS)[number];
 
+/**
+ * What the stored millions figure is, in the citation's own words.
+ * `stated` is a single point the citation quotes. Other bases keep the
+ * number but stop it from being read as an exact whole-company price.
+ */
+export const ECONOMIC_VALUE_BASES = [
+  "stated",
+  "approximate",
+  "range_high",
+  "at_least",
+  "up_to",
+  "upfront",
+  "fully_diluted",
+  "enterprise_value",
+  "equity_value",
+  "stake",
+  "sum_of_cited_rounds",
+  "unquoted_fx",
+  "unstated_conflict",
+  "locator_only",
+] as const;
+
+export type EconomicValueBasis = (typeof ECONOMIC_VALUE_BASES)[number];
+
 const economicEvidenceRecordSchema = z.object({
   id: z.string().min(1),
   companyId: z.string().min(1),
@@ -34,15 +57,30 @@ const economicEvidenceRecordSchema = z.object({
   value: z.number().finite().nonnegative(),
   /** Values are stored in millions of US dollars, matching the legacy dataset contract. */
   unit: z.literal("USD_M"),
+  /**
+   * Machine-readable reading of `value`. Omitted only on hand-built fixtures;
+   * the static ledger must set it on every row.
+   */
+  valueBasis: z.enum(ECONOMIC_VALUE_BASES).optional(),
   /** Source locator/citation; not necessarily a resolvable URL in the legacy catalog. */
   sourceCitation: z.string().min(1),
   sourceUrl: z.string().url().optional(),
+  /**
+   * Earliest day of the cited disclosure window.
+   * Equal to `publicAsOfDate` when `datePrecision` is `day`.
+   */
   effectiveDate: isoDateSchema.nullable(),
+  /**
+   * First day the figure is known to have been public.
+   * Month and year precision use the last calendar day of that window so a
+   * dated replay cannot admit the value before the cited period ends.
+   * Null means the citation does not date this figure.
+   */
   publicAsOfDate: isoDateSchema.nullable(),
   datePrecision: z.enum(EVIDENCE_DATE_PRECISIONS),
   verificationStatus: z.enum(EVIDENCE_VERIFICATION_STATUSES),
   recordedAt: isoDateSchema,
-  /** A correction adds a record; it does not edit the earlier evidence row. */
+  /** A value correction adds a record; it does not edit the earlier row's value. */
   supersedesId: z.string().min(1).optional(),
 });
 
@@ -68,46 +106,35 @@ export function parseEconomicEvidenceLedger(
 function currentRecords(
   records: readonly EconomicEvidenceRecord[],
 ): Map<string, EconomicEvidenceRecord> {
-  const { issues, active } = inspectLedgerRecords(records);
-  if (issues.length > 0) {
-    throw new Error(issues[0].why);
+  const ids = new Set(records.map((record) => record.id));
+  const superseded = new Set<string>();
+  for (const record of records) {
+    if (record.supersedesId) {
+      if (!ids.has(record.supersedesId)) {
+        throw new Error(
+          `Evidence record ${record.id} supersedes missing record ${record.supersedesId}`,
+        );
+      }
+      superseded.add(record.supersedesId);
+    }
   }
-  return active;
-}
 
-export type EconomicReplayBlockReason =
-  | "missing-provenance"
-  | "imprecise-date"
-  | "invalid-date";
-
-/**
- * Why a single economic record cannot enter a dated replay.
- * Null means the record is structurally eligible; the cutoff is separate.
- * A missing publicAsOfDate is not inferred and is not treated as zero.
- */
-export function economicReplayBlockReason(
-  record: EconomicEvidenceRecord,
-): EconomicReplayBlockReason | null {
-  if (!record.publicAsOfDate || !record.sourceCitation.trim()) {
-    return "missing-provenance";
+  const byCompanyAndField = new Map<string, EconomicEvidenceRecord>();
+  for (const record of records) {
+    if (
+      superseded.has(record.id) || record.verificationStatus === "retracted"
+    ) {
+      continue;
+    }
+    const key = `${record.companyId}:${record.field}`;
+    if (byCompanyAndField.has(key)) {
+      throw new Error(
+        `More than one current evidence record for ${key}; add supersedesId rather than silently choosing one`,
+      );
+    }
+    byCompanyAndField.set(key, record);
   }
-  if (record.datePrecision !== "day") return "imprecise-date";
-  if (
-    !isCalendarDay(record.publicAsOfDate) ||
-    !isCalendarDay(record.recordedAt)
-  ) {
-    return "invalid-date";
-  }
-  if (record.effectiveDate && !isCalendarDay(record.effectiveDate)) {
-    return "invalid-date";
-  }
-  if (record.publicAsOfDate > record.recordedAt) return "invalid-date";
-  if (
-    record.effectiveDate && record.publicAsOfDate < record.effectiveDate
-  ) {
-    return "invalid-date";
-  }
-  return null;
+  return byCompanyAndField;
 }
 
 export type EconomicEvidenceDecisionResult =
@@ -117,7 +144,6 @@ export type EconomicEvidenceDecisionResult =
     reason:
       | "missing-evidence"
       | "missing-provenance"
-      | "imprecise-date"
       | "invalid-date"
       | "after-cutoff";
   };
@@ -134,8 +160,6 @@ export function economicEvidenceAtDecisionDate(
 ): EconomicEvidenceDecisionResult {
   const record = currentRecords(ledger.records).get(`${companyId}:${field}`);
   if (!record) return { eligible: false, reason: "missing-evidence" };
-  const blocked = economicReplayBlockReason(record);
-  if (blocked) return { eligible: false, reason: blocked };
   const result = atDecisionDate({
     value: record,
     asOf: record.publicAsOfDate,
@@ -170,12 +194,7 @@ export function applyEconomicEvidenceLedger(
       const valuation = records.get(`${company.id}:lastKnownValuation`);
       return {
         ...company,
-        ...(funding
-          ? {
-            totalFunding: funding.value,
-            fundingSource: funding.sourceCitation,
-          }
-          : {}),
+        ...(funding ? { totalFunding: funding.value } : {}),
         ...(valuation
           ? {
             lastKnownValuation: valuation.value,

@@ -1,23 +1,28 @@
 #!/usr/bin/env npx tsx
 
 /**
- * MeshIC provenance and historical-replay gate.
+ * MeshIC data integrity gate.
  *
- * Can this change introduce a factual claim, current metric, or historical
- * as-of result that is unsupported, internally inconsistent, stale, or
- * misleadingly precise?
- *
- * `--strict` fails on blocking findings only. Reported provenance gaps stay
- * visible and do not fail the gate. This process does not write files,
- * promote data, or call a model.
+ * Schema-valid data can still be decision-invalid when entity identity,
+ * arithmetic, vintage, provenance class, or metric semantics are wrong.
  */
 
-import { existsSync, readFileSync } from "node:fs";
-import { collectProvenanceGateFindings } from "../src/lib/data/meshicGate";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { join, relative } from "node:path";
 import {
-  findingCount,
+  assessArtifactLineage,
+  assessClaimLanguage,
+  assessLedgerIntegrity,
+  assessMaterialization,
+  assessRawDatasetImports,
+  assessReplaySafety,
+  formatMeshicFinding,
   type MeshicFinding,
-} from "../src/lib/data/meshicFindings";
+  type SourceFile,
+} from "../src/lib/data/meshicIntegrity";
+import { getStaticVerifiedDataset } from "../src/lib/data/staticDataset";
+import { hashDataset } from "../src/lib/lineage/datasetHash";
+import { DATASET_COMPUTED_ARTIFACTS } from "./verify-computed-artifacts";
 
 interface Finding {
   severity: "RED" | "AMBER";
@@ -190,7 +195,7 @@ function qualityGradeFindings(): Finding[] {
   );
   if (upgraded.length === 0) return [];
   return [{
-    severity: "AMBER",
+    severity: "RED",
     code: "quality.completenessUpgradesEvidence",
     message:
       `${upgraded.length} company records have composite grade A without source-quality A. Composite quality must not be presented as provenance strength.`,
@@ -217,94 +222,107 @@ function vintageFindings(): Finding[] {
   }];
 }
 
-const LEGACY_CONTEXT: Record<
-  string,
-  { location: string; remediation: string }
-> = {
-  "sec.postAcquisitionStandaloneRevenue": {
-    location: "src/data/computed-sec-revenue.json",
-    remediation:
-      "Drop post-acquisition standalone revenue or correct the issuer CIK mapping. Do not keep another registrant's facts on the target.",
-  },
-  "cms.legacyFallbackArithmetic": {
-    location: "src/data/computed-cms-utilization.json",
-    remediation:
-      "Treat the hardcoded fallback as research-only. Regenerate from verified aggregate input before any decision use.",
-  },
-  "cms.unweightedReimbursement": {
-    location: "src/data/computed-cms-utilization.json",
-    remediation:
-      "Recompute sector reimbursement as the sum of services times payment. Do not multiply total services by a simple mean.",
-  },
-  "cms.hardcodedFallbackResearchOnly": {
-    location: "src/data/computed-cms-utilization.json",
-    remediation:
-      "Keep the research-only label. Do not use these rows for valuation or market-size claims.",
-  },
-  "growth.validatedEmptiness": {
-    location: "src/data/computed-growth-rates.json",
-    remediation:
-      "Do not label growth as derived from validated operating revenue while SEC revenue is withheld or empty.",
-  },
-  "growth.semanticMismatch": {
-    location: "src/data/computed-growth-rates.json",
-    remediation:
-      "Remove or relabel rows that annualize totalFunding into valuation or deal value. They are not operating CAGR.",
-  },
-  "quality.completenessUpgradesEvidence": {
-    location: "src/data/computed-data-quality-scores.json",
-    remediation:
-      "Do not present composite grade A as provenance strength when source quality is lower.",
-  },
-  "vintage.missingAsOf": {
-    location: "src/data/computed-quality-visibility.json",
-    remediation:
-      "Report the missing dedicated as-of dates. Do not fill them with guessed vintages or deal announcement dates.",
-  },
-};
-
-function legacyFinding(finding: Finding): MeshicFinding {
-  const context = LEGACY_CONTEXT[finding.code];
-  return {
-    disposition: finding.severity === "RED" ? "blocking" : "gap",
-    rule: finding.code,
-    location: context?.location ?? "src/data",
-    why: finding.message,
-    remediation: context?.remediation ??
-      "Fix the named evidence defect. Do not silence the check or invent a source.",
-  };
+function walkSources(root: string): SourceFile[] {
+  if (!existsSync(root)) return [];
+  const files: SourceFile[] = [];
+  for (const entry of readdirSync(root)) {
+    const full = join(root, entry);
+    const stat = statSync(full);
+    if (stat.isDirectory()) {
+      if (entry === "node_modules" || entry === "__tests__") continue;
+      files.push(...walkSources(full));
+    } else if (/\.(ts|tsx)$/.test(entry)) {
+      files.push({
+        path: relative(process.cwd(), full).replaceAll("\\", "/"),
+        text: readFileSync(full, "utf8"),
+      });
+    }
+  }
+  return files;
 }
 
-function printFinding(finding: MeshicFinding): void {
-  const label = finding.disposition === "blocking" ? "BLOCKING" : "GAP";
-  console.log(`[${label}] ${finding.rule}`);
-  console.log(`  location: ${finding.location}`);
-  console.log(`  why: ${finding.why}`);
-  console.log(`  remediation: ${finding.remediation}`);
+function provenanceFindings(): MeshicFinding[] {
+  const raw = readJson<{
+    companies: Array<Record<string, unknown> & { id: string }>;
+  }>("src/data/dataset.verified.json");
+  const ledger = readJson<unknown>("src/data/evidence.verified.json");
+  if (!raw || !ledger) {
+    return [{
+      severity: "RED",
+      blocking: true,
+      rule: "ledger.schema",
+      code: "ledger.missingFile",
+      path: "src/data",
+      why: "dataset.verified.json or evidence.verified.json is missing.",
+      remediation: "Restore both version-controlled data files.",
+    }];
+  }
+  const companyIds = new Set(raw.companies.map((company) => company.id));
+  const materialized = getStaticVerifiedDataset();
+  const ledgerRecords = (ledger as { records?: never }).records;
+  const hash = hashDataset(materialized).fullHash;
+  const artifacts = DATASET_COMPUTED_ARTIFACTS.map((path) => {
+    const artifact = readJson<{
+      datasetHash?: string;
+      provenance?: { datasetHash?: string };
+    }>(path);
+    return {
+      path,
+      datasetHash: artifact?.datasetHash ?? artifact?.provenance?.datasetHash,
+    };
+  });
+  const sources = [
+    ...walkSources("src/lib"),
+    ...walkSources("src/components"),
+    ...walkSources("src/app"),
+    ...walkSources("scripts"),
+  ];
+  return [
+    ...assessLedgerIntegrity(ledger, companyIds),
+    ...assessMaterialization({
+      rawCompanies: raw.companies,
+      materializedCompanies: materialized.companies,
+      records: Array.isArray(ledgerRecords) ? ledgerRecords : [],
+    }),
+    ...assessReplaySafety(sources),
+    ...assessRawDatasetImports(sources),
+    ...assessArtifactLineage(artifacts, hash),
+    ...assessClaimLanguage(sources),
+  ];
 }
 
 function main() {
   const dataset = readJson<VerifiedDataset>("src/data/dataset.verified.json");
   if (!dataset) throw new Error("Missing src/data/dataset.verified.json");
 
-  const findings = [
-    ...secRevenueFindings(dataset).map(legacyFinding),
-    ...cmsReimbursementFindings().map(legacyFinding),
-    ...growthSemanticFindings().map(legacyFinding),
-    ...qualityGradeFindings().map(legacyFinding),
-    ...vintageFindings().map(legacyFinding),
-    ...collectProvenanceGateFindings(process.cwd()),
-  ];
+  const legacy = [
+    ...secRevenueFindings(dataset),
+    ...cmsReimbursementFindings(),
+    ...growthSemanticFindings(),
+    ...qualityGradeFindings(),
+    ...vintageFindings(),
+  ].map((item): MeshicFinding => ({
+    severity: item.severity,
+    blocking: item.severity === "RED",
+    rule: item.code,
+    code: item.code,
+    path: "src/data",
+    why: item.message,
+    remediation: item.severity === "RED"
+      ? "Correct the artifact or its label before merging."
+      : "Report the gap. Do not invent a vintage or upgrade a grade to clear it.",
+  }));
 
-  const blocking = findingCount(findings, "blocking");
-  const gaps = findingCount(findings, "gap");
-  console.log(
-    `MeshIC data gate: ${findings.length} finding(s), ${blocking} blocking, ${gaps} provenance gap(s)`,
-  );
-  for (const finding of findings) printFinding(finding);
+  const findings = [...legacy, ...provenanceFindings()];
 
-  if (process.argv.includes("--strict") && blocking > 0) {
-    console.error(`\nStrict gate failed: ${blocking} blocking finding(s).`);
+  console.log(`MeshIC data gate: ${findings.length} finding(s)`);
+  for (const item of findings) {
+    console.log(formatMeshicFinding(item));
+  }
+
+  const red = findings.filter((item) => item.blocking);
+  if (process.argv.includes("--strict") && red.length > 0) {
+    console.error(`\nStrict gate failed: ${red.length} blocking finding(s).`);
     process.exitCode = 1;
   }
 }

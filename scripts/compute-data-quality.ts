@@ -16,10 +16,6 @@
 
 import { writeFileSync } from "fs";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
-import {
-  capGradeAtSourceQuality,
-  type QualityGrade,
-} from "../src/lib/data/qualityVisibility";
 import { getStaticVerifiedDataset } from "../src/lib/data/staticDataset";
 import { hashDataset } from "../src/lib/lineage/datasetHash";
 import { citationHostnameMatches } from "../src/lib/url/hostnameMatch";
@@ -28,6 +24,24 @@ interface SourceQuality {
   level: "A" | "B" | "C" | "D" | "F";
   description: string;
   score: number;
+}
+
+const GRADE_RANK = { A: 4, B: 3, C: 2, D: 1, F: 0 } as const;
+
+function gradeFromScore(score: number): SourceQuality["level"] {
+  if (score >= 90) return "A";
+  if (score >= 75) return "B";
+  if (score >= 60) return "C";
+  if (score >= 40) return "D";
+  return "F";
+}
+
+/** Completeness must not promote a record above its source-quality letter. */
+function capGradeAtSource(
+  composite: SourceQuality["level"],
+  source: SourceQuality["level"],
+): SourceQuality["level"] {
+  return GRADE_RANK[composite] > GRADE_RANK[source] ? source : composite;
 }
 
 function scoreSource(source?: string): SourceQuality {
@@ -87,14 +101,6 @@ function scoreSource(source?: string): SourceQuality {
 
   // Level F: Unknown or no source
   return { level: "F", description: "Unverified or unknown source", score: 20 };
-}
-
-function letterGrade(score: number): QualityGrade {
-  if (score >= 90) return "A";
-  if (score >= 75) return "B";
-  if (score >= 60) return "C";
-  if (score >= 40) return "D";
-  return "F";
 }
 
 function scoreCompleteness(
@@ -203,10 +209,7 @@ for (const company of companies) {
     hasFunding,
     hasSource,
     overallScore,
-    grade: capGradeAtSourceQuality(
-      letterGrade(overallScore),
-      sourceQuality.level,
-    ),
+    grade: capGradeAtSource(gradeFromScore(overallScore), sourceQuality.level),
   });
 }
 
@@ -244,10 +247,7 @@ for (const deal of acquisitions) {
     hasDealValue,
     hasSource,
     overallScore,
-    grade: capGradeAtSourceQuality(
-      letterGrade(overallScore),
-      sourceQuality.level,
-    ),
+    grade: capGradeAtSource(gradeFromScore(overallScore), sourceQuality.level),
   });
 }
 
@@ -266,11 +266,11 @@ const output = {
   datasetHash: hashDataset(dataset).fullHash,
   source: "Lacuna verified catalog + economic evidence ledger",
   grading: {
-    A: "Source quality A and composite 90-100. Completeness cannot raise a weaker source to A.",
-    B: "Source quality at least B. Composite 75-89, or a higher composite capped at the source letter.",
-    C: "Source quality at least C. Composite 60-74, or a higher composite capped at the source letter.",
-    D: "Source quality at least D. Composite 40-59, or a higher composite capped at the source letter.",
-    F: "No usable source, or composite below 40.",
+    A: "90-100: SEC filing or equivalent primary source, all fields populated",
+    B: "75-89: Reputable press source, most fields populated",
+    C: "60-74: Company press release or partial data",
+    D: "40-59: Data aggregator only (Crunchbase, etc.), incomplete",
+    F: "0-39: No source or unverified",
   },
   summary: {
     companies: {

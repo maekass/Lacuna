@@ -34,33 +34,21 @@ export function valuationCaveats(priors?: EmpiricalPriors): string[] {
       `Disclosed-price fraction (all deals): ${
         (disclosedFrac * 100).toFixed(0)
       }% — non-random subsample.`,
-      "Africa-focus discount is a placeholder, not empirically validated.",
+      "No geographic haircut is applied. An Africa HQ is not a valuation discount.",
     ];
   }
   return [
     "Heuristic multiples, not a calibrated comparable-company set.",
-    "Africa-focus discount is a placeholder, not empirically validated.",
+    "No geographic haircut is applied. An Africa HQ is not a valuation discount.",
   ];
 }
 
 export function buildRecommendation(
-  company: QuantCompany,
+  _company: QuantCompany,
   consensus: QuantValue<number>,
 ): string {
   if (!isSufficient(consensus)) return "INSUFFICIENT DATA";
-
-  let recommendation = "FAIR VALUE";
-  if (
-    company.geographicFocus.includes("Africa") &&
-    company.clinicalStage === "phase3"
-  ) {
-    recommendation =
-      "LIKELY UNDERVALUED (Africa discount may not be justified at Phase 3)";
-  }
-  if (company.clinicalStage === "fda_approved" && consensus.value < 50) {
-    recommendation = "STRONG BUY (FDA approved below $50M)";
-  }
-  return recommendation;
+  return "DESCRIPTIVE HEURISTIC ONLY";
 }
 
 export function assembleValuationSummary(

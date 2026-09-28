@@ -30,10 +30,6 @@ export interface QuantCompany {
   clinicalStage?: ClinicalStage;
   annualRevenue?: number;
   ebitda?: number;
-  /**
-   * Disclosed funding in USD millions. Omitted when the catalog has no figure.
-   * A missing value is not zero.
-   */
   raisedToDate?: number;
   customerCount: number;
   targetMarketSize?: number;

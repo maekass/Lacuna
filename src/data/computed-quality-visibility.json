@@ -1,9 +1,8 @@
 {
   "generatedAt": "2026-09-20T00:00:00.000Z",
-  "datasetHash": "1cd37bd7fabff38b6b036fdf9f7e5df38838cc7ad0d0b37893423c1467231c0f",
+  "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
   "datasetVersion": "v9",
-  "computationLineageHash": "bfc5145e83d96f63b780ac39313aeb71852e2bb0eaef65050035a2aad5124a6d",
-  "source": "Lacuna measurement-layer census (quality scores, gated metrics, vintage, replay provenance, display provenance)",
+  "source": "Lacuna measurement-layer census (quality scores, gated metrics, vintage, display provenance)",
   "quality": {
     "companies": {
       "total": 150,
@@ -28,11 +27,11 @@
       "avgScore": 86.7
     },
     "grading": {
-      "A": "Source quality A and composite 90-100. Completeness cannot raise a weaker source to A.",
-      "B": "Source quality at least B. Composite 75-89, or a higher composite capped at the source letter.",
-      "C": "Source quality at least C. Composite 60-74, or a higher composite capped at the source letter.",
-      "D": "Source quality at least D. Composite 40-59, or a higher composite capped at the source letter.",
-      "F": "No usable source, or composite below 40."
+      "A": "90-100: SEC filing or equivalent primary source, all fields populated",
+      "B": "75-89: Reputable press source, most fields populated",
+      "C": "60-74: Company press release or partial data",
+      "D": "40-59: Data aggregator only (Crunchbase, etc.), incomplete",
+      "F": "0-39: No source or unverified"
     },
     "lowGradeCompanies": [
       {
@@ -548,12 +547,12 @@
     "definition": "Dedicated as-of for the record's primary economic number. lastKnownValuation and totalFunding have no as-of field. dealValue's announcedDate is an event date, not a value vintage. Only preDealValuationDate counts when the primary number is preDealValuation.",
     "recordsInScope": 209,
     "primaryNumbers": 135,
-    "dedicatedAsOf": 2,
-    "missingDedicatedAsOf": 133,
-    "missingDedicatedAsOfRate": 0.9851851851851852,
+    "dedicatedAsOf": 69,
+    "missingDedicatedAsOf": 66,
+    "missingDedicatedAsOfRate": 0.4888888888888889,
     "companyPrimary": {
       "total": 83,
-      "withDedicatedAsOf": 0
+      "withDedicatedAsOf": 67
     },
     "dealValues": {
       "total": 50,
@@ -565,16 +564,38 @@
       "withDedicatedAsOf": 49
     }
   },
+  "economicReplay": {
+    "note": "Missing publicAsOfDate means the fact is current-catalog only. Do not invent a publication date to raise the historical-replay share.",
+    "activeRecords": 98,
+    "replayEligible": 44,
+    "replayEligibleRate": 0.4489795918367347,
+    "currentOnlyMissingPublicAsOf": 31,
+    "currentOnlyRate": 0.3163265306122449,
+    "byField": [
+      {
+        "field": "totalFunding",
+        "active": 40,
+        "replayEligible": 0,
+        "currentOnlyMissingPublicAsOf": 22
+      },
+      {
+        "field": "lastKnownValuation",
+        "active": 58,
+        "replayEligible": 44,
+        "currentOnlyMissingPublicAsOf": 9
+      }
+    ]
+  },
   "premiums": {
     "computed": 47,
     "reproducible": 47
   },
   "displayProvenance": {
-    "total": 900,
+    "total": 899,
     "covered": 21,
-    "exempt": 0,
-    "uncovered": 879,
-    "uncoveredRate": 0.9766666666666667,
+    "exempt": 2,
+    "uncovered": 876,
+    "uncoveredRate": 0.9744160177975528,
     "topUncoveredFiles": [
       {
         "file": "src/components/NetworkAnalysisHonest.tsx",
@@ -607,34 +628,6 @@
       {
         "file": "src/components/GenderInferenceQuality.tsx",
         "count": 26
-      }
-    ]
-  },
-  "replay": {
-    "definition": "Active economic ledger rows (not retracted, not superseded) that can enter a historical replay. Eligibility requires a real day-precision publicAsOfDate on or before recordedAt, a non-empty citation, and publicAsOfDate on or after effectiveDate when both exist. A missing publicAsOfDate is current-catalog only.",
-    "note": "A missing publicAsOfDate means the record is current-catalog only. Do not infer a date from a deal announcement, close, or filing year, and do not treat the gap as zero. Backfill only when a source shows the fact was publicly knowable on that date.",
-    "economicRecords": 98,
-    "historicalReplayEligible": 0,
-    "historicalReplayEligibleRate": 0,
-    "currentOnlyMissingPublicAsOf": 98,
-    "currentOnlyMissingPublicAsOfRate": 1,
-    "otherReplayIneligible": 0,
-    "byField": [
-      {
-        "field": "totalFunding",
-        "records": 40,
-        "historicalReplayEligible": 0,
-        "historicalReplayEligibleRate": 0,
-        "currentOnlyMissingPublicAsOf": 40,
-        "currentOnlyMissingPublicAsOfRate": 1
-      },
-      {
-        "field": "lastKnownValuation",
-        "records": 58,
-        "historicalReplayEligible": 0,
-        "historicalReplayEligibleRate": 0,
-        "currentOnlyMissingPublicAsOf": 58,
-        "currentOnlyMissingPublicAsOfRate": 1
       }
     ]
   }

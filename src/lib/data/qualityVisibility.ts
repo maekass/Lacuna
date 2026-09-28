@@ -8,24 +8,8 @@
 
 import { getMetricDeclaration } from "@/lib/lineage";
 import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
-import type { ReplayProvenanceCensus } from "./replayProvenance";
 
 export type QualityGrade = "A" | "B" | "C" | "D" | "F";
-
-const GRADE_RANK: readonly QualityGrade[] = ["F", "D", "C", "B", "A"];
-
-/**
- * Completeness and coverage cannot outrank the source.
- * A composite A on a weaker citation stays at that citation's letter.
- */
-export function capGradeAtSourceQuality(
-  composite: QualityGrade,
-  sourceQuality: QualityGrade,
-): QualityGrade {
-  return GRADE_RANK.indexOf(composite) > GRADE_RANK.indexOf(sourceQuality)
-    ? sourceQuality
-    : composite;
-}
 
 export interface GradeCounts {
   readonly A: number;
@@ -116,6 +100,23 @@ export interface DisplayProvenanceCensus {
   readonly topUncoveredFiles: readonly DisplayProvenanceFileCount[];
 }
 
+export interface EconomicReplayFieldDebt {
+  readonly field: "totalFunding" | "lastKnownValuation";
+  readonly active: number;
+  readonly replayEligible: number;
+  readonly currentOnlyMissingPublicAsOf: number;
+}
+
+export interface EconomicReplayCensus {
+  readonly note: string;
+  readonly activeRecords: number;
+  readonly replayEligible: number;
+  readonly replayEligibleRate: number;
+  readonly currentOnlyMissingPublicAsOf: number;
+  readonly currentOnlyRate: number;
+  readonly byField: readonly EconomicReplayFieldDebt[];
+}
+
 export interface QualityVisibilityArtifact {
   readonly generatedAt: string;
   readonly datasetHash: string;
@@ -124,16 +125,14 @@ export interface QualityVisibilityArtifact {
   readonly quality: QualityLayerSummary;
   readonly metrics: MetricPublicationCensus;
   readonly vintage: VintageCensus;
+  readonly economicReplay?: EconomicReplayCensus;
   readonly premiums: PremiumReproducibility;
   readonly displayProvenance: DisplayProvenanceCensus;
-  /** Active economic rows that may enter a dated replay. Missing dates stay missing. */
-  readonly replay: ReplayProvenanceCensus;
-  /** Hash of the compute sources that produced this census. */
-  readonly computationLineageHash: string;
 }
 
 export interface VintageRecordInput {
   readonly companies: ReadonlyArray<{
+    readonly id?: string;
     readonly lastKnownValuation?: number;
     readonly totalFunding?: number;
   }>;
@@ -260,10 +259,40 @@ function dealPrimaryField(
  */
 export function computeVintageCensus(
   dataset: VintageRecordInput,
+  evidenceRecords: readonly {
+    readonly companyId?: string;
+    readonly field?: string;
+    readonly publicAsOfDate?: string | null;
+    readonly id?: string;
+    readonly verificationStatus?: string | null;
+    readonly supersedesId?: string | null;
+  }[] = [],
 ): VintageCensus {
+  const superseded = new Set(
+    evidenceRecords.flatMap((record) =>
+      record.supersedesId ? [record.supersedesId] : []
+    ),
+  );
+  const datedKeys = new Set(
+    evidenceRecords.filter((record) =>
+      record.id &&
+      !superseded.has(record.id) &&
+      record.verificationStatus !== "retracted" &&
+      typeof record.publicAsOfDate === "string" &&
+      record.companyId &&
+      record.field
+    ).map((record) => `${record.companyId}:${record.field}`),
+  );
   let companyPrimary = 0;
+  let companyDated = 0;
   for (const company of dataset.companies) {
-    if (companyPrimaryField(company)) companyPrimary += 1;
+    const field = companyPrimaryField(company);
+    if (!field) continue;
+    companyPrimary += 1;
+    const id = "id" in company && typeof company.id === "string"
+      ? company.id
+      : undefined;
+    if (id && datedKeys.has(`${id}:${field}`)) companyDated += 1;
   }
 
   let dealValueTotal = 0;
@@ -291,6 +320,7 @@ export function computeVintageCensus(
   }
 
   primaryNumbers += companyPrimary;
+  dedicatedAsOf += companyDated;
   const recordsInScope = dataset.companies.length +
     dataset.acquisitions.length;
   const missingDedicatedAsOf = primaryNumbers - dedicatedAsOf;
@@ -304,7 +334,7 @@ export function computeVintageCensus(
     missingDedicatedAsOfRate: primaryNumbers > 0
       ? missingDedicatedAsOf / primaryNumbers
       : 0,
-    companyPrimary: { total: companyPrimary, withDedicatedAsOf: 0 },
+    companyPrimary: { total: companyPrimary, withDedicatedAsOf: companyDated },
     dealValues: {
       total: dealValueTotal,
       withEventDate: dealValueEventDate,
@@ -341,6 +371,78 @@ export function countReproduciblePremiums(
     if (Math.abs(expected - deal.computedPremium) < 1e-9) reproducible += 1;
   }
   return { computed, reproducible };
+}
+
+const REPLAY_CENSUS_NOTE =
+  "Missing publicAsOfDate means the fact is current-catalog only. Do not invent a publication date to raise the historical-replay share.";
+
+function validReplayDay(value: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) &&
+    date.toISOString().slice(0, 10) === value;
+}
+
+/**
+ * Count active economic evidence that can be replayed versus current-only
+ * because publication timing was never captured.
+ */
+export function computeEconomicReplayCensus(
+  records: readonly {
+    readonly id: string;
+    readonly field: "totalFunding" | "lastKnownValuation";
+    readonly sourceCitation?: string | null;
+    readonly publicAsOfDate?: string | null;
+    readonly datePrecision?: string | null;
+    readonly verificationStatus?: string | null;
+    readonly supersedesId?: string | null;
+  }[],
+): EconomicReplayCensus {
+  const superseded = new Set<string>();
+  for (const record of records) {
+    if (record.supersedesId) superseded.add(record.supersedesId);
+  }
+  const active = records.filter((record) =>
+    !superseded.has(record.id) && record.verificationStatus !== "retracted"
+  );
+  const fields = ["totalFunding", "lastKnownValuation"] as const;
+  const byField = fields.map((field) => {
+    const rows = active.filter((record) => record.field === field);
+    const replayEligible = rows.filter((record) =>
+      record.datePrecision === "day" &&
+      typeof record.publicAsOfDate === "string" &&
+      validReplayDay(record.publicAsOfDate) &&
+      Boolean(record.sourceCitation?.trim())
+    ).length;
+    const currentOnlyMissingPublicAsOf = rows.filter((record) =>
+      record.publicAsOfDate == null
+    ).length;
+    return {
+      field,
+      active: rows.length,
+      replayEligible,
+      currentOnlyMissingPublicAsOf,
+    };
+  });
+  const replayEligible = byField.reduce(
+    (sum, row) => sum + row.replayEligible,
+    0,
+  );
+  const currentOnlyMissingPublicAsOf = byField.reduce(
+    (sum, row) => sum + row.currentOnlyMissingPublicAsOf,
+    0,
+  );
+  return {
+    note: REPLAY_CENSUS_NOTE,
+    activeRecords: active.length,
+    replayEligible,
+    replayEligibleRate: active.length > 0 ? replayEligible / active.length : 0,
+    currentOnlyMissingPublicAsOf,
+    currentOnlyRate: active.length > 0
+      ? currentOnlyMissingPublicAsOf / active.length
+      : 0,
+    byField,
+  };
 }
 
 function registryMeta(metricId: string | undefined): {
@@ -494,8 +596,7 @@ function gradeCells(grades: GradeCounts): string {
 export function formatQualityVisibilityMarkdown(
   artifact: QualityVisibilityArtifact,
 ): string {
-  const { quality, metrics, vintage, premiums, displayProvenance, replay } =
-    artifact;
+  const { quality, metrics, vintage, premiums, displayProvenance } = artifact;
   const topFiles = displayProvenance.topUncoveredFiles
     .map((row) => `| \`${row.file}\` | ${row.count} |`)
     .join("\n");
@@ -547,31 +648,25 @@ export function formatQualityVisibilityMarkdown(
     `- Deal values: ${vintage.dealValues.withValueAsOf}/${vintage.dealValues.total} have a value vintage (${vintage.dealValues.withEventDate} have announcement date only)`,
     `- Pre-deal valuations: ${vintage.preDealValuations.withDedicatedAsOf}/${vintage.preDealValuations.total} have \`preDealValuationDate\``,
     "",
-    "## Historical replay provenance",
-    "",
-    replay.definition,
-    "",
-    replay.note,
-    "",
-    `- Active economic records: **${replay.economicRecords}**`,
-    `- Eligible for historical replay: **${replay.historicalReplayEligible}** (${
-      pct(replay.historicalReplayEligibleRate)
-    })`,
-    `- Current-only because publicAsOfDate is missing: **${replay.currentOnlyMissingPublicAsOf}** (${
-      pct(replay.currentOnlyMissingPublicAsOfRate)
-    })`,
-    `- Other replay-ineligible records: **${replay.otherReplayIneligible}**`,
-    "",
-    "| Field | Records | Replay-eligible | Current-only (no public as-of) |",
-    "| --- | ---: | ---: | ---: |",
-    ...replay.byField.map((row) =>
-      `| ${row.field} | ${row.records} | ${row.historicalReplayEligible} (${
-        pct(row.historicalReplayEligibleRate)
-      }) | ${row.currentOnlyMissingPublicAsOf} (${
-        pct(row.currentOnlyMissingPublicAsOfRate)
-      }) |`
-    ),
-    "",
+    ...(artifact.economicReplay
+      ? [
+        "## Historical replay eligibility",
+        "",
+        artifact.economicReplay.note,
+        "",
+        `- Active economic records: **${artifact.economicReplay.activeRecords}**`,
+        `- Replay-eligible (day-precision publicAsOfDate): **${artifact.economicReplay.replayEligible}** (${
+          pct(artifact.economicReplay.replayEligibleRate)
+        })`,
+        `- Current-only because publicAsOfDate is missing: **${artifact.economicReplay.currentOnlyMissingPublicAsOf}** (${
+          pct(artifact.economicReplay.currentOnlyRate)
+        })`,
+        ...artifact.economicReplay.byField.map((row) =>
+          `- ${row.field}: ${row.replayEligible}/${row.active} replay-eligible; ${row.currentOnlyMissingPublicAsOf} missing publicAsOfDate`
+        ),
+        "",
+      ]
+      : []),
     "## Display provenance",
     "",
     `- Covered: **${displayProvenance.covered}** · exempt: **${displayProvenance.exempt}** · uncovered: **${displayProvenance.uncovered} / ${displayProvenance.total}** (${
@@ -617,11 +712,11 @@ export const QUALITY_VISIBILITY_MODELS = {
     exportName: "computeVintageCensus",
     definition: VINTAGE_DEFINITION,
   },
-  historicalReplayEligible: {
-    module: "src/lib/data/replayProvenance.ts",
-    exportName: "computeReplayProvenanceCensus",
+  economicReplayEligibleRate: {
+    module: "src/lib/data/qualityVisibility.ts",
+    exportName: "computeEconomicReplayCensus",
     definition:
-      "Active economic ledger rows with a day-precision publicAsOfDate that can enter historical replay. Rows missing publicAsOfDate are current-catalog only and are not a backfill target.",
+      "Share of active economic evidence records with a valid day-precision publicAsOfDate. Null publicAsOfDate is current-only and must not be backfilled with an invented date.",
   },
   displayUncovered: {
     module: "src/lib/data/qualityVisibility.ts",

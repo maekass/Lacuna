@@ -69,10 +69,18 @@ export function normalizeSectorBucket(sector: string): string {
   return "other";
 }
 
+/**
+ * Whole-year span from a year-precision founding year to the announcement
+ * calendar year. The ISO date is not parsed as a local timestamp, so a
+ * year-only or January 1 date cannot shift into the previous year.
+ */
 function yearsBetween(foundedYear: number, isoDate: string): number | null {
-  const announced = new Date(isoDate);
-  if (Number.isNaN(announced.getTime()) || foundedYear <= 1900) return null;
-  const years = announced.getFullYear() - foundedYear;
+  if (!Number.isInteger(foundedYear) || foundedYear <= 1900) return null;
+  const yearMatch = /^(\d{4})/.exec(isoDate);
+  if (!yearMatch) return null;
+  const announcedYear = Number(yearMatch[1]);
+  if (!Number.isInteger(announcedYear)) return null;
+  const years = announcedYear - foundedYear;
   return years >= 0 && years < 60 ? years : null;
 }
 
@@ -112,7 +120,9 @@ export function deriveEmpiricalPriors(
       ) {
         multiples.push(deal.dealValue / target.totalFunding);
       }
-      if (target?.founded !== undefined) {
+      if (
+        target?.foundedPrecision === "year" && target.founded !== undefined
+      ) {
         const yrs = yearsBetween(target.founded, deal.announcedDate);
         if (yrs !== null) yearsToExit.push(yrs);
       }
@@ -231,7 +241,7 @@ function normalizeFundingStage(stage: string): FundingStageKey | null {
   if (s.includes("pre-seed") || s.includes("pre seed")) return "Pre-Seed";
   if (
     s.includes("series d") || s.includes("series e") ||
-    s.includes("series f") ||
+    s.includes("series f") || s.includes("series g") ||
     s.includes("late stage") || s.includes("pre-ipo")
   ) return "Series D+";
   if (s.includes("series c")) return "Series C";

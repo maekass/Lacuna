@@ -108,7 +108,9 @@ function proxyCondition(sector: string): MaternalCondition {
 export function adaptQuantCompany(
   view: VerifiedCompanyView,
 ): AdaptedQuantCompany {
-  const raisedToDate = view.totalFunding;
+  const raisedToDate = typeof view.totalFunding === "number"
+    ? view.totalFunding
+    : undefined;
 
   const clinicalStage = proxyClinicalStage(view.stage);
 
@@ -118,7 +120,7 @@ export function adaptQuantCompany(
     sector: view.sector,
     fundingStage: view.stage,
     ...(clinicalStage ? { clinicalStage } : {}),
-    ...(typeof raisedToDate === "number" ? { raisedToDate } : {}),
+    ...(raisedToDate === undefined ? {} : { raisedToDate }),
     customerCount: 0, // not in verified data — not fabricated
     geographicFocus: inferGeographicFocus(view.hq ?? ""),
     condition: proxyCondition(view.sector),
@@ -133,7 +135,7 @@ export function adaptQuantCompany(
     "geographic focus (inferred from HQ)",
     "condition (inferred from sector)",
   ];
-  if (typeof raisedToDate !== "number") {
+  if (raisedToDate === undefined) {
     proxiedFields.push("no disclosed funding — valuation cannot be anchored");
   }
 
