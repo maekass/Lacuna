@@ -21,6 +21,7 @@ function record(overrides: Partial<LedgerRecord> = {}): LedgerRecord {
     field: "totalFunding",
     value: 10,
     unit: "USD_M",
+    valueBasis: "stated",
     sourceCitation: "Company release",
     effectiveDate: "2020-01-01",
     publicAsOfDate: null,
@@ -104,6 +105,25 @@ describe("MeshIC ledger integrity", () => {
     );
     expect(missing.filter((item) => item.blocking).map((item) => item.code))
       .toEqual(["ledger.missingPublicAsOf", "ledger.citationWithoutUrl"]);
+  });
+
+  it("rejects dated locator-only evidence for any economic field", () => {
+    const findings = assessLedgerIntegrity(
+      ledger([
+        record({
+          id: "c-test:lastKnownValuation:v1",
+          field: "lastKnownValuation",
+          valueBasis: "locator_only",
+          effectiveDate: "2021-01-01",
+          publicAsOfDate: "2021-12-31",
+          datePrecision: "year",
+        }),
+      ]),
+      companies,
+    );
+    expect(findings.some((item) => item.code === "ledger.locatorOnlyDated")).toBe(
+      true,
+    );
   });
 
   it("rejects an active record that supersedes a retracted row", () => {
