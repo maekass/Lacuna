@@ -17,6 +17,7 @@ const LEDGER_OWNED_COMPANY_FIELDS = [
   "totalFunding",
   "lastKnownValuation",
   "valuationSource",
+  "fundingSource",
 ] as const;
 
 const ECONOMIC_FIELDS = ["totalFunding", "lastKnownValuation"] as const;

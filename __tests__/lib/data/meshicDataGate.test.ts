@@ -493,6 +493,7 @@ describe("MeshIC lineage, claims, and the live catalog", () => {
       company.id === "c1"
     );
     expect(modern?.totalFunding).toBe(155);
+    expect(modern?.fundingSource).toMatch(/Crunchbase/);
     expect(economicEvidenceAtDecisionDate(
       ledger,
       "c1",
@@ -514,6 +515,12 @@ describe("MeshIC lineage, claims, and the live catalog", () => {
         finding.disposition === "gap"
       ),
     ).toBe(true);
+    expect(
+      findings.some((finding) =>
+        finding.rule === "replay.descriptiveZeroCoercion" ||
+        finding.rule === "display.economicFactWithoutProvenance"
+      ),
+    ).toBe(false);
     expect(
       rawDataset.companies.some((company) =>
         "totalFunding" in company || "lastKnownValuation" in company

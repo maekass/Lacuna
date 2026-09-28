@@ -47,10 +47,16 @@ export class AcquisitionPredictor {
 
   private scoreMarketTiming(company: QuantCompany): number {
     let score = 5;
-    if (company.raisedToDate < 10) score += 1;
-    if (company.raisedToDate > 50) score -= 2;
+    if (company.raisedToDate != null && company.raisedToDate < 10) {
+      score += 1;
+    }
+    if (company.raisedToDate != null && company.raisedToDate > 50) {
+      score -= 2;
+    }
     if (company.annualRevenue && company.annualRevenue > 10) score += 2;
-    if ((company.targetMarketSize ?? 0) > 1000) score += 2;
+    if (
+      company.targetMarketSize != null && company.targetMarketSize > 1000
+    ) score += 2;
     if (company.geographicFocus.length > 2) score += 1;
     return Math.max(1, Math.min(score, 10));
   }
@@ -210,33 +216,39 @@ export class PortfolioOptimizer {
     const predictor = new AcquisitionPredictor();
     const impactModeler = new HealthImpactModeler();
 
-    const scoredCompanies: ScoredQuantCompany[] = candidates.map((company) => {
-      const valuation = valuationEngine.valuateCompany(company);
-      const impact = impactModeler.modelImpact(company);
-      const prob = numericOrNull(
-        predictor.predictAcquisition(company).probability,
-      ) ?? 0;
-      const acquisitionPrice = numericOrNull(valuation.consensus) ?? 0;
-      const projectedExitValue = acquisitionPrice;
-      const roi = acquisitionPrice > 0
-        ? (projectedExitValue - acquisitionPrice) / acquisitionPrice
-        : 0;
+    const scoredCompanies: ScoredQuantCompany[] = candidates.flatMap(
+      (company) => {
+        const valuation = valuationEngine.valuateCompany(company);
+        const impact = impactModeler.modelImpact(company);
+        const probability = numericOrNull(
+          predictor.predictAcquisition(company).probability,
+        );
+        const acquisitionPrice = numericOrNull(valuation.consensus);
+        if (
+          probability == null || acquisitionPrice == null ||
+          acquisitionPrice <= 0
+        ) {
+          return [];
+        }
+        const projectedExitValue = acquisitionPrice;
+        const roi = (projectedExitValue - acquisitionPrice) / acquisitionPrice;
 
-      return {
-        ...company,
-        acquisitionPrice,
-        projectedExitValue,
-        acquisitionProbability: prob,
-        projectedLivesSaved: impact.cumulativeLivesSaved,
-        projectedRevenue: 0,
-        roi,
-        riskAdjustedRoi: roi * prob,
-      };
-    });
+        return [{
+          ...company,
+          acquisitionPrice,
+          projectedExitValue,
+          acquisitionProbability: probability,
+          projectedLivesSaved: impact.cumulativeLivesSaved,
+          projectedRevenue: 0,
+          roi,
+          riskAdjustedRoi: roi * probability,
+        }];
+      },
+    );
 
     const sorted = [...scoredCompanies].sort((a, b) =>
-      (b.riskAdjustedRoi / (b.acquisitionPrice || 1)) -
-      (a.riskAdjustedRoi / (a.acquisitionPrice || 1))
+      (b.riskAdjustedRoi / b.acquisitionPrice) -
+      (a.riskAdjustedRoi / a.acquisitionPrice)
     );
 
     const portfolio: ScoredQuantCompany[] = [];
@@ -245,7 +257,7 @@ export class PortfolioOptimizer {
     const conditionsUsed = new Set<QuantCompany["condition"]>();
 
     for (const company of sorted) {
-      const price = company.acquisitionPrice || 0;
+      const price = company.acquisitionPrice;
       if (price <= 0) continue;
       if (conditionsUsed.has(company.condition)) continue;
       if (price > remainingBudget) continue;

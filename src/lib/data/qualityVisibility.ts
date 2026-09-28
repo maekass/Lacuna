@@ -12,6 +12,21 @@ import type { ReplayProvenanceCensus } from "./replayProvenance";
 
 export type QualityGrade = "A" | "B" | "C" | "D" | "F";
 
+const GRADE_RANK: readonly QualityGrade[] = ["F", "D", "C", "B", "A"];
+
+/**
+ * Completeness and coverage cannot outrank the source.
+ * A composite A on a weaker citation stays at that citation's letter.
+ */
+export function capGradeAtSourceQuality(
+  composite: QualityGrade,
+  sourceQuality: QualityGrade,
+): QualityGrade {
+  return GRADE_RANK.indexOf(composite) > GRADE_RANK.indexOf(sourceQuality)
+    ? sourceQuality
+    : composite;
+}
+
 export interface GradeCounts {
   readonly A: number;
   readonly B: number;

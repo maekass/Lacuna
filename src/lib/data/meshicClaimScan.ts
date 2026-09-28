@@ -322,7 +322,7 @@ const ECONOMIC_DISPLAY: Array<{ field: RegExp; provenance: RegExp }> = [
   {
     field: /\b(?:totalFunding|totalFundingM)\b/,
     provenance:
-      /sourceCitation|fundingSource|provenance|<Metric|valuationSource/,
+      /sourceCitation|fundingSource|provenance|<Metric|valuationSource|\.sources\b|primarySourceUrl/,
   },
   {
     field: /\b(?:lastKnownValuation|lastKnownValuationM)\b/,

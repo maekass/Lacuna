@@ -324,7 +324,10 @@ export default function CompanySimilarity() {
                 </>
               )
               : null}
-            {selected.totalFunding && ` · $${selected.totalFunding}M raised`}
+            {typeof selected.totalFunding === "number" &&
+                selected.fundingSource
+              ? ` · $${selected.totalFunding}M raised · ${selected.fundingSource}`
+              : null}
           </p>
         </div>
       )}

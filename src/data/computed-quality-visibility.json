@@ -1,38 +1,38 @@
 {
   "generatedAt": "2026-09-20T00:00:00.000Z",
-  "datasetHash": "e79ef1cfdc8c2c19b3290ea7eabbb5c5657d0398471013db2ded074be212ddf9",
+  "datasetHash": "1cd37bd7fabff38b6b036fdf9f7e5df38838cc7ad0d0b37893423c1467231c0f",
   "datasetVersion": "v9",
-  "computationLineageHash": "bbea98b4958abf613b49ee5f25e0d57e1d72131df2fa5d29221606185f861299",
+  "computationLineageHash": "bfc5145e83d96f63b780ac39313aeb71852e2bb0eaef65050035a2aad5124a6d",
   "source": "Lacuna measurement-layer census (quality scores, gated metrics, vintage, replay provenance, display provenance)",
   "quality": {
     "companies": {
       "total": 150,
       "grades": {
-        "A": 14,
-        "B": 29,
-        "C": 45,
-        "D": 59,
-        "F": 3
+        "A": 3,
+        "B": 39,
+        "C": 42,
+        "D": 58,
+        "F": 8
       },
       "avgScore": 63.9
     },
     "acquisitions": {
       "total": 59,
       "grades": {
-        "A": 29,
-        "B": 20,
-        "C": 9,
-        "D": 0,
-        "F": 1
+        "A": 26,
+        "B": 5,
+        "C": 23,
+        "D": 1,
+        "F": 4
       },
       "avgScore": 86.7
     },
     "grading": {
-      "A": "90-100: SEC filing or equivalent primary source, all fields populated",
-      "B": "75-89: Reputable press source, most fields populated",
-      "C": "60-74: Company press release or partial data",
-      "D": "40-59: Data aggregator only (Crunchbase, etc.), incomplete",
-      "F": "0-39: No source or unverified"
+      "A": "Source quality A and composite 90-100. Completeness cannot raise a weaker source to A.",
+      "B": "Source quality at least B. Composite 75-89, or a higher composite capped at the source letter.",
+      "C": "Source quality at least C. Composite 60-74, or a higher composite capped at the source letter.",
+      "D": "Source quality at least D. Composite 40-59, or a higher composite capped at the source letter.",
+      "F": "No usable source, or composite below 40."
     },
     "lowGradeCompanies": [
       {
@@ -242,31 +242,31 @@
       {
         "id": "c139",
         "label": "Cayaba Care",
-        "grade": "D",
+        "grade": "F",
         "score": 45
       },
       {
         "id": "c142",
         "label": "Eli Health",
-        "grade": "D",
+        "grade": "F",
         "score": 45
       },
       {
         "id": "c146",
         "label": "Planera",
-        "grade": "D",
+        "grade": "F",
         "score": 45
       },
       {
         "id": "c148",
         "label": "Seven Starling",
-        "grade": "D",
+        "grade": "F",
         "score": 45
       },
       {
         "id": "c149",
         "label": "Twenty Eight Health",
-        "grade": "D",
+        "grade": "F",
         "score": 45
       },
       {
@@ -406,6 +406,30 @@
         "label": "YourChoice Therapeutics",
         "grade": "D",
         "score": 56
+      },
+      {
+        "id": "c89",
+        "label": "Juniper Genomics",
+        "grade": "D",
+        "score": 60
+      },
+      {
+        "id": "c21",
+        "label": "NovvaCup",
+        "grade": "D",
+        "score": 60
+      },
+      {
+        "id": "c87",
+        "label": "Testmate Health",
+        "grade": "D",
+        "score": 60
+      },
+      {
+        "id": "c26",
+        "label": "Gynesonics",
+        "grade": "D",
+        "score": 62
       }
     ],
     "lowGradeDeals": [
@@ -414,6 +438,30 @@
         "label": "Maven Clinic → Teladoc",
         "grade": "F",
         "score": 38
+      },
+      {
+        "id": "deal22",
+        "label": "Flatiron Health → Roche",
+        "grade": "F",
+        "score": 60
+      },
+      {
+        "id": "deal21",
+        "label": "Foundation Medicine → Roche",
+        "grade": "F",
+        "score": 60
+      },
+      {
+        "id": "deal46",
+        "label": "SuperSonic Imagine → Hologic",
+        "grade": "F",
+        "score": 60
+      },
+      {
+        "id": "deal9",
+        "label": "Gynesonics → Hologic",
+        "grade": "D",
+        "score": 75
       }
     ]
   },

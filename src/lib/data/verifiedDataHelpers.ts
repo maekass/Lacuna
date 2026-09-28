@@ -22,6 +22,8 @@ export interface VerifiedCompanyView {
   readonly lastKnownValuation?: number;
   readonly valuationSource?: string;
   readonly totalFunding?: number;
+  /** Citation for `totalFunding`, copied from the active ledger row. */
+  readonly fundingSource?: string;
   readonly sources: readonly string[];
   /** Stored taxonomy class only — omitted when the verified row has none. */
   readonly evidenceClass?: EvidenceClass;

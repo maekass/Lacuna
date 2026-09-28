@@ -90,7 +90,14 @@ export default function RhCapitalPortfolioContext() {
                 </td>
                 <td className="py-2 pr-3">{company.focusArea}</td>
                 <td className="py-2 pr-3">
-                  {formatFunding(company.totalFundingM)}
+                  {company.totalFundingM == null ? "—" : (
+                    <span>
+                      {formatFunding(company.totalFundingM)}
+                      <span className="mt-0.5 block text-[10px] text-lacuna-text-muted">
+                        {company.sources[0] ?? company.primarySourceUrl}
+                      </span>
+                    </span>
+                  )}
                 </td>
                 <td className="py-2">
                   {company.exit != null

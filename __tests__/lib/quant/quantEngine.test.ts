@@ -170,6 +170,6 @@ describe("adaptQuantCompany", () => {
       sources: [],
     });
     expect(adapted.hasValuationInput).toBe(false);
-    expect(adapted.company.raisedToDate).toBe(0);
+    expect(adapted.company.raisedToDate).toBeUndefined();
   });
 });

@@ -170,7 +170,12 @@ export function applyEconomicEvidenceLedger(
       const valuation = records.get(`${company.id}:lastKnownValuation`);
       return {
         ...company,
-        ...(funding ? { totalFunding: funding.value } : {}),
+        ...(funding
+          ? {
+            totalFunding: funding.value,
+            fundingSource: funding.sourceCitation,
+          }
+          : {}),
         ...(valuation
           ? {
             lastKnownValuation: valuation.value,

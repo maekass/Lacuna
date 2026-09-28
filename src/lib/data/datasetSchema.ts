@@ -40,6 +40,8 @@ export const companySchema = z.object({
   lastKnownValuation: optionalNumber,
   valuationSource: optionalString,
   totalFunding: optionalNumber,
+  /** Ledger citation for totalFunding. Materialized; not stored on the raw company row. */
+  fundingSource: optionalString,
   sources: optionalStringArray,
   evidenceClass: evidenceClassSchema.optional(),
   portfolioFunds: optionalStringArray,
