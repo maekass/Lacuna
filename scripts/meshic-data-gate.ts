@@ -213,7 +213,7 @@ function vintageFindings(): Finding[] {
   const vintage = artifact?.vintage;
   if (!vintage?.primaryNumbers || !vintage.missingDedicatedAsOf) return [];
   return [{
-    severity: "RED",
+    severity: "AMBER",
     code: "vintage.missingAsOf",
     message:
       `${vintage.missingDedicatedAsOf}/${vintage.primaryNumbers} primary economic numbers lack a dedicated as-of date (${
