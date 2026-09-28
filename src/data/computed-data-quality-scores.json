@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-09-20T00:00:00.000Z",
-  "datasetHash": "e79ef1cfdc8c2c19b3290ea7eabbb5c5657d0398471013db2ded074be212ddf9",
+  "datasetHash": "7f8daa69ae2c7153710d5df3a4192b498421cba9dffce7e3089ac6433da6a063",
   "source": "Lacuna verified catalog + economic evidence ledger",
   "grading": {
     "A": "90-100: SEC filing or equivalent primary source, all fields populated",
@@ -13,22 +13,21 @@
     "companies": {
       "total": 150,
       "grades": {
-        "B": 39,
-        "C": 42,
-        "D": 58,
-        "A": 3,
-        "F": 8
+        "A": 14,
+        "C": 45,
+        "D": 59,
+        "B": 29,
+        "F": 3
       },
       "avgScore": 63.9
     },
     "acquisitions": {
       "total": 59,
       "grades": {
-        "A": 26,
-        "B": 5,
-        "F": 4,
-        "C": 23,
-        "D": 1
+        "A": 29,
+        "F": 1,
+        "C": 9,
+        "B": 20
       },
       "avgScore": 86.7
     }
@@ -45,7 +44,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 90,
-      "grade": "B"
+      "grade": "A"
     },
     {
       "id": "c2",
@@ -58,7 +57,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 90,
-      "grade": "B"
+      "grade": "A"
     },
     {
       "id": "c3",
@@ -71,7 +70,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 90,
-      "grade": "B"
+      "grade": "A"
     },
     {
       "id": "c4",
@@ -84,7 +83,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 90,
-      "grade": "B"
+      "grade": "A"
     },
     {
       "id": "c5",
@@ -110,7 +109,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 90,
-      "grade": "B"
+      "grade": "A"
     },
     {
       "id": "c7",
@@ -123,7 +122,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 90,
-      "grade": "B"
+      "grade": "A"
     },
     {
       "id": "c8",
@@ -149,7 +148,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 90,
-      "grade": "B"
+      "grade": "A"
     },
     {
       "id": "c10",
@@ -188,7 +187,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 90,
-      "grade": "B"
+      "grade": "A"
     },
     {
       "id": "c13",
@@ -227,7 +226,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 90,
-      "grade": "B"
+      "grade": "A"
     },
     {
       "id": "c16",
@@ -240,7 +239,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 90,
-      "grade": "B"
+      "grade": "A"
     },
     {
       "id": "c17",
@@ -253,7 +252,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 90,
-      "grade": "B"
+      "grade": "A"
     },
     {
       "id": "c18",
@@ -305,7 +304,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 60,
-      "grade": "D"
+      "grade": "C"
     },
     {
       "id": "c22",
@@ -370,7 +369,7 @@
       "hasFunding": false,
       "hasSource": true,
       "overallScore": 62,
-      "grade": "D"
+      "grade": "C"
     },
     {
       "id": "c27",
@@ -396,7 +395,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "c29",
@@ -1163,7 +1162,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 60,
-      "grade": "D"
+      "grade": "C"
     },
     {
       "id": "c88",
@@ -1189,7 +1188,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 60,
-      "grade": "D"
+      "grade": "C"
     },
     {
       "id": "c90",
@@ -1839,7 +1838,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 45,
-      "grade": "F"
+      "grade": "D"
     },
     {
       "id": "c140",
@@ -1878,7 +1877,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 45,
-      "grade": "F"
+      "grade": "D"
     },
     {
       "id": "c143",
@@ -1930,7 +1929,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 45,
-      "grade": "F"
+      "grade": "D"
     },
     {
       "id": "c147",
@@ -1956,7 +1955,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 45,
-      "grade": "F"
+      "grade": "D"
     },
     {
       "id": "c149",
@@ -1969,7 +1968,7 @@
       "hasFunding": true,
       "hasSource": true,
       "overallScore": 45,
-      "grade": "F"
+      "grade": "D"
     },
     {
       "id": "c150",
@@ -2008,7 +2007,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 90,
-      "grade": "B"
+      "grade": "A"
     },
     {
       "id": "deal3",
@@ -2020,7 +2019,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 90,
-      "grade": "B"
+      "grade": "A"
     },
     {
       "id": "deal4",
@@ -2080,7 +2079,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal9",
@@ -2092,7 +2091,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 75,
-      "grade": "D"
+      "grade": "B"
     },
     {
       "id": "deal10",
@@ -2176,7 +2175,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal17",
@@ -2188,7 +2187,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal18",
@@ -2236,7 +2235,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 60,
-      "grade": "F"
+      "grade": "C"
     },
     {
       "id": "deal22",
@@ -2248,7 +2247,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 60,
-      "grade": "F"
+      "grade": "C"
     },
     {
       "id": "deal23",
@@ -2260,7 +2259,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal24",
@@ -2308,7 +2307,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal28",
@@ -2344,7 +2343,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal31",
@@ -2380,7 +2379,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal34",
@@ -2392,7 +2391,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal35",
@@ -2428,7 +2427,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal38",
@@ -2464,7 +2463,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal41",
@@ -2488,7 +2487,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal43",
@@ -2524,7 +2523,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal46",
@@ -2536,7 +2535,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 60,
-      "grade": "F"
+      "grade": "C"
     },
     {
       "id": "deal47",
@@ -2608,7 +2607,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal53",
@@ -2620,7 +2619,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal54",
@@ -2644,7 +2643,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 90,
-      "grade": "B"
+      "grade": "A"
     },
     {
       "id": "deal56",
@@ -2656,7 +2655,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal57",
@@ -2668,7 +2667,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal58",
@@ -2680,7 +2679,7 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 83,
-      "grade": "C"
+      "grade": "B"
     },
     {
       "id": "deal59",
