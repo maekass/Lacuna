@@ -485,8 +485,11 @@ describe("MeshIC lineage, claims, and the live catalog", () => {
     const staticDataset = getStaticVerifiedDataset();
     const census = computeReplayProvenanceCensus(ledger.records);
     expect(census.economicRecords).toBeGreaterThan(0);
-    expect(census.historicalReplayEligible).toBe(0);
-    expect(census.currentOnlyMissingPublicAsOf).toBe(census.economicRecords);
+    expect(census.historicalReplayEligible).toBeGreaterThan(0);
+    expect(census.currentOnlyMissingPublicAsOf).toBeGreaterThan(0);
+    expect(census.currentOnlyMissingPublicAsOf).toBeLessThan(
+      census.economicRecords,
+    );
     expect(census.note).toMatch(/Do not infer a date/);
 
     const modern = staticDataset.companies.find((company) =>
