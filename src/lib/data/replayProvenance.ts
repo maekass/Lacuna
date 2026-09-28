@@ -49,7 +49,9 @@ function validReplayDay(value: string): boolean {
     date.toISOString().slice(0, 10) === value;
 }
 
-function economicReplayBlockReason(record: EconomicEvidenceRecord): string | null {
+function economicReplayBlockReason(
+  record: EconomicEvidenceRecord,
+): string | null {
   if (!record.sourceCitation?.trim()) return "missing-citation";
   if (record.datePrecision !== "day") return "non-day-precision";
   if (!record.publicAsOfDate || !validReplayDay(record.publicAsOfDate)) {
