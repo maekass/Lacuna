@@ -70,7 +70,12 @@ function main(): void {
       confidenceIntervals,
       correlations,
     }),
-    vintage: computeVintageCensus(dataset),
+    vintage: computeVintageCensus(
+      dataset,
+      readJson<{
+        records: Parameters<typeof computeVintageCensus>[1];
+      }>("src/data/evidence.verified.json").records ?? [],
+    ),
     economicReplay: computeEconomicReplayCensus(
       readJson<{
         records: Parameters<typeof computeEconomicReplayCensus>[0];

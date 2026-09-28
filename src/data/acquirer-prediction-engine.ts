@@ -18,7 +18,7 @@ export interface CompanyProfile {
   capabilities: string[];
   technology: string[];
   revenue?: number;
-  fundingTotal: number;
+  fundingTotal?: number;
   employeeCount?: number;
   foundingDate: string;
   keyCustomers?: string[];
@@ -266,11 +266,13 @@ function deriveCompanyValueEstimate(
 ): CompanyValueEstimate | null {
   const bucket = normalizeSectorBucket(company.sector);
   const sectorPrior = empiricalPriors?.sectorPriors.get(bucket);
-  const fundingM = company.fundingTotal / 1_000_000;
+  const fundingM = typeof company.fundingTotal === "number"
+    ? company.fundingTotal / 1_000_000
+    : undefined;
 
   const fundingMultiple = sectorPrior?.medianFundingMultipleEstimate;
   if (
-    fundingM > 0 &&
+    typeof fundingM === "number" && fundingM > 0 &&
     fundingMultiple &&
     isSufficient(fundingMultiple)
   ) {

@@ -87,7 +87,9 @@ export function mapVerifiedCompanyToProfile(
     stage: mapVerifiedStageToEngineStage(company.stage),
     capabilities: capabilities.length > 0 ? capabilities : [],
     technology: technology.length > 0 ? technology : [],
-    fundingTotal: company.totalFunding ?? 0,
+    ...(typeof company.totalFunding === "number"
+      ? { fundingTotal: company.totalFunding }
+      : {}),
     foundingDate: company.founded ? `${company.founded}-01-01` : "2018-01-01",
     // lastKnownValuation is not revenue — never a silent TAM fallback.
   };

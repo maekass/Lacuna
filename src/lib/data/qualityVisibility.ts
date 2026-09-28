@@ -132,6 +132,7 @@ export interface QualityVisibilityArtifact {
 
 export interface VintageRecordInput {
   readonly companies: ReadonlyArray<{
+    readonly id?: string;
     readonly lastKnownValuation?: number;
     readonly totalFunding?: number;
   }>;
@@ -258,10 +259,40 @@ function dealPrimaryField(
  */
 export function computeVintageCensus(
   dataset: VintageRecordInput,
+  evidenceRecords: readonly {
+    readonly companyId?: string;
+    readonly field?: string;
+    readonly publicAsOfDate?: string | null;
+    readonly id?: string;
+    readonly verificationStatus?: string | null;
+    readonly supersedesId?: string | null;
+  }[] = [],
 ): VintageCensus {
+  const superseded = new Set(
+    evidenceRecords.flatMap((record) =>
+      record.supersedesId ? [record.supersedesId] : []
+    ),
+  );
+  const datedKeys = new Set(
+    evidenceRecords.filter((record) =>
+      record.id &&
+      !superseded.has(record.id) &&
+      record.verificationStatus !== "retracted" &&
+      typeof record.publicAsOfDate === "string" &&
+      record.companyId &&
+      record.field
+    ).map((record) => `${record.companyId}:${record.field}`),
+  );
   let companyPrimary = 0;
+  let companyDated = 0;
   for (const company of dataset.companies) {
-    if (companyPrimaryField(company)) companyPrimary += 1;
+    const field = companyPrimaryField(company);
+    if (!field) continue;
+    companyPrimary += 1;
+    const id = "id" in company && typeof company.id === "string"
+      ? company.id
+      : undefined;
+    if (id && datedKeys.has(`${id}:${field}`)) companyDated += 1;
   }
 
   let dealValueTotal = 0;
@@ -289,6 +320,7 @@ export function computeVintageCensus(
   }
 
   primaryNumbers += companyPrimary;
+  dedicatedAsOf += companyDated;
   const recordsInScope = dataset.companies.length +
     dataset.acquisitions.length;
   const missingDedicatedAsOf = primaryNumbers - dedicatedAsOf;
@@ -302,7 +334,7 @@ export function computeVintageCensus(
     missingDedicatedAsOfRate: primaryNumbers > 0
       ? missingDedicatedAsOf / primaryNumbers
       : 0,
-    companyPrimary: { total: companyPrimary, withDedicatedAsOf: 0 },
+    companyPrimary: { total: companyPrimary, withDedicatedAsOf: companyDated },
     dealValues: {
       total: dealValueTotal,
       withEventDate: dealValueEventDate,
