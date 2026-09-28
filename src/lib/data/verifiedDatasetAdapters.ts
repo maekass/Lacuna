@@ -11,18 +11,38 @@ import type {
   AcquisitionRecord,
 } from "@/lib/competitive/acquirerAnalysis";
 
+/**
+ * Map a catalog stage string onto the explorer's stage buckets.
+ * An acquisition or license outcome is not a funding stage. Unrecognized
+ * labels stay Unspecified — they are not stored as Series B.
+ */
 function mapStage(stage: string): Company["stage"] {
-  const s = stage.toLowerCase();
+  const s = stage.toLowerCase()
+    .replace(
+      /majority stake acquired(?:\s+by\s+[^()]*)?(?:\s*\([^)]*\))?/g,
+      " ",
+    )
+    .replace(/assets acquired(?:\s+by\s+[^()]*)?(?:\s*\([^)]*\))?/g, " ")
+    .replace(/acquired(?:\s+by\s+[^()]*)?(?:\s*\([^)]*\))?/g, " ")
+    .replace(/products licensed(?:\s+to\s+[^()]*)?(?:\s*\([^)]*\))?/g, " ")
+    .replace(/[()]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!s || s === "private") return "Unspecified";
   if (s.includes("series a")) return "Series A";
   if (s.includes("series b")) return "Series B";
   if (s.includes("series c")) return "Series C";
   if (s.includes("series d")) return "Series D";
   if (s.includes("series f")) return "Series F";
+  if (
+    s.includes("series e") || s.includes("series g") ||
+    s.includes("late") || s.includes("pre-ipo")
+  ) {
+    return "Late Stage";
+  }
   if (s.includes("public")) return "Public";
-  if (s.includes("acquired")) return "Late Stage";
-  if (s.includes("late")) return "Late Stage";
   if (s.includes("seed")) return "Seed";
-  return "Series B";
+  return "Unspecified";
 }
 
 function mapDealType(dealType: string): Acquisition["dealType"] {
@@ -46,7 +66,6 @@ export function getVerifiedCompaniesForAnalysis(
     stage: mapStage(c.stage),
     founded: c.founded,
     valuation: c.lastKnownValuation,
-    employees: 0,
     hq: c.hq,
     description: c.description,
   }));
