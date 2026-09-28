@@ -53,9 +53,9 @@
       "unit": "USD_M",
       "valueBasis": "locator_only",
       "sourceCitation": "Last funding round valuation (2021), may not reflect current value",
-      "effectiveDate": "2021-01-01",
-      "publicAsOfDate": "2021-12-31",
-      "datePrecision": "year",
+      "effectiveDate": null,
+      "publicAsOfDate": null,
+      "datePrecision": "unknown",
       "verificationStatus": "reported",
       "recordedAt": "2026-09-20"
     },
@@ -71,7 +71,8 @@
       "publicAsOfDate": null,
       "datePrecision": "unknown",
       "verificationStatus": "reported",
-      "recordedAt": "2026-09-20"
+      "recordedAt": "2026-09-20",
+      "sourceUrl": "https://elvie.com"
     },
     {
       "id": "c3:lastKnownValuation:v1",
@@ -81,9 +82,9 @@
       "unit": "USD_M",
       "valueBasis": "locator_only",
       "sourceCitation": "Press reports from Series B (2019)",
-      "effectiveDate": "2019-01-01",
-      "publicAsOfDate": "2019-12-31",
-      "datePrecision": "year",
+      "effectiveDate": null,
+      "publicAsOfDate": null,
+      "datePrecision": "unknown",
       "verificationStatus": "reported",
       "recordedAt": "2026-09-20"
     },
@@ -99,7 +100,8 @@
       "publicAsOfDate": null,
       "datePrecision": "unknown",
       "verificationStatus": "reported",
-      "recordedAt": "2026-09-20"
+      "recordedAt": "2026-09-20",
+      "sourceUrl": "https://mavenclinic.com"
     },
     {
       "id": "c4:lastKnownValuation:v1",
@@ -127,7 +129,8 @@
       "publicAsOfDate": null,
       "datePrecision": "unknown",
       "verificationStatus": "reported",
-      "recordedAt": "2026-09-20"
+      "recordedAt": "2026-09-20",
+      "sourceUrl": "https://get-carrot.com"
     },
     {
       "id": "c6:lastKnownValuation:v1",
@@ -137,9 +140,9 @@
       "unit": "USD_M",
       "valueBasis": "locator_only",
       "sourceCitation": "Series C valuation (2021)",
-      "effectiveDate": "2021-01-01",
-      "publicAsOfDate": "2021-12-31",
-      "datePrecision": "year",
+      "effectiveDate": null,
+      "publicAsOfDate": null,
+      "datePrecision": "unknown",
       "verificationStatus": "reported",
       "recordedAt": "2026-09-20"
     },
@@ -155,7 +158,8 @@
       "publicAsOfDate": null,
       "datePrecision": "unknown",
       "verificationStatus": "reported",
-      "recordedAt": "2026-09-20"
+      "recordedAt": "2026-09-20",
+      "sourceUrl": "https://kindbody.com"
     },
     {
       "id": "c7:lastKnownValuation:v1",
@@ -183,7 +187,8 @@
       "publicAsOfDate": null,
       "datePrecision": "unknown",
       "verificationStatus": "reported",
-      "recordedAt": "2026-09-20"
+      "recordedAt": "2026-09-20",
+      "sourceUrl": "https://everlywell.com"
     },
     {
       "id": "c9:lastKnownValuation:v1",
@@ -193,9 +198,9 @@
       "unit": "USD_M",
       "valueBasis": "locator_only",
       "sourceCitation": "Last funding round (2021)",
-      "effectiveDate": "2021-01-01",
-      "publicAsOfDate": "2021-12-31",
-      "datePrecision": "year",
+      "effectiveDate": null,
+      "publicAsOfDate": null,
+      "datePrecision": "unknown",
       "verificationStatus": "reported",
       "recordedAt": "2026-09-20"
     },
@@ -211,7 +216,8 @@
       "publicAsOfDate": null,
       "datePrecision": "unknown",
       "verificationStatus": "reported",
-      "recordedAt": "2026-09-20"
+      "recordedAt": "2026-09-20",
+      "sourceUrl": "https://nurx.com"
     },
     {
       "id": "c12:lastKnownValuation:v1",
@@ -267,7 +273,8 @@
       "publicAsOfDate": null,
       "datePrecision": "unknown",
       "verificationStatus": "reported",
-      "recordedAt": "2026-09-20"
+      "recordedAt": "2026-09-20",
+      "sourceUrl": "https://talkspace.com"
     },
     {
       "id": "c14:lastKnownValuation:v1",
@@ -295,7 +302,8 @@
       "publicAsOfDate": null,
       "datePrecision": "unknown",
       "verificationStatus": "reported",
-      "recordedAt": "2026-09-20"
+      "recordedAt": "2026-09-20",
+      "sourceUrl": "https://calm.com"
     },
     {
       "id": "c15:lastKnownValuation:v1",
@@ -305,9 +313,9 @@
       "unit": "USD_M",
       "valueBasis": "locator_only",
       "sourceCitation": "Last funding round (2021)",
-      "effectiveDate": "2021-01-01",
-      "publicAsOfDate": "2021-12-31",
-      "datePrecision": "year",
+      "effectiveDate": null,
+      "publicAsOfDate": null,
+      "datePrecision": "unknown",
       "verificationStatus": "reported",
       "recordedAt": "2026-09-20"
     },
@@ -323,7 +331,8 @@
       "publicAsOfDate": null,
       "datePrecision": "unknown",
       "verificationStatus": "reported",
-      "recordedAt": "2026-09-20"
+      "recordedAt": "2026-09-20",
+      "sourceUrl": "https://ouraring.com"
     },
     {
       "id": "c16:lastKnownValuation:v1",
@@ -333,9 +342,9 @@
       "unit": "USD_M",
       "valueBasis": "locator_only",
       "sourceCitation": "Series C valuation (2022)",
-      "effectiveDate": "2022-01-01",
-      "publicAsOfDate": "2022-12-31",
-      "datePrecision": "year",
+      "effectiveDate": null,
+      "publicAsOfDate": null,
+      "datePrecision": "unknown",
       "verificationStatus": "reported",
       "recordedAt": "2026-09-20"
     },
@@ -351,7 +360,8 @@
       "publicAsOfDate": null,
       "datePrecision": "unknown",
       "verificationStatus": "reported",
-      "recordedAt": "2026-09-20"
+      "recordedAt": "2026-09-20",
+      "sourceUrl": "https://whoop.com"
     },
     {
       "id": "c17:lastKnownValuation:v1",
@@ -361,9 +371,9 @@
       "unit": "USD_M",
       "valueBasis": "locator_only",
       "sourceCitation": "Series F valuation (2021)",
-      "effectiveDate": "2021-01-01",
-      "publicAsOfDate": "2021-12-31",
-      "datePrecision": "year",
+      "effectiveDate": null,
+      "publicAsOfDate": null,
+      "datePrecision": "unknown",
       "verificationStatus": "reported",
       "recordedAt": "2026-09-20"
     },
@@ -401,11 +411,11 @@
       "field": "lastKnownValuation",
       "value": 13900,
       "unit": "USD_M",
-      "valueBasis": "approximate",
-      "sourceCitation": "Close-date disclosed consideration (~$13.9B) at the Oct 30, 2020 close — Teladoc SEC 8-K",
-      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1477449/000110465920090575/tm2026658d1_8k.htm",
-      "effectiveDate": "2020-10-30",
-      "publicAsOfDate": "2020-10-30",
+      "valueBasis": "stated",
+      "sourceCitation": "Teladoc Health Form 10-K (filed Mar 1, 2021) reports total consideration for Livongo of $13,938.0M.",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1477449/000155837021002118/tdoc-20201231x10k.htm",
+      "effectiveDate": "2021-03-01",
+      "publicAsOfDate": "2021-03-01",
       "datePrecision": "day",
       "verificationStatus": "reported",
       "recordedAt": "2026-09-20"
@@ -506,7 +516,8 @@
       "publicAsOfDate": null,
       "datePrecision": "unknown",
       "verificationStatus": "reported",
-      "recordedAt": "2026-09-20"
+      "recordedAt": "2026-09-20",
+      "sourceUrl": "https://organon.com"
     },
     {
       "id": "c32:lastKnownValuation:v1",

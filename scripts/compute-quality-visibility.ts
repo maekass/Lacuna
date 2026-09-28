@@ -15,6 +15,7 @@ import { fileURLToPath } from "node:url";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 import { buildQualityLayerSummary } from "../src/lib/data/dataQualityScores";
 import {
+  computeEconomicReplayCensus,
   computeMetricPublicationCensus,
   computeVintageCensus,
   countReproduciblePremiums,
@@ -69,7 +70,17 @@ function main(): void {
       confidenceIntervals,
       correlations,
     }),
-    vintage: computeVintageCensus(dataset),
+    vintage: computeVintageCensus(
+      dataset,
+      readJson<{
+        records: Parameters<typeof computeVintageCensus>[1];
+      }>("src/data/evidence.verified.json").records ?? [],
+    ),
+    economicReplay: computeEconomicReplayCensus(
+      readJson<{
+        records: Parameters<typeof computeEconomicReplayCensus>[0];
+      }>("src/data/evidence.verified.json").records,
+    ),
     premiums: countReproduciblePremiums(dataset.acquisitions),
     displayProvenance: summarizeDisplayProvenance(baseline),
   };

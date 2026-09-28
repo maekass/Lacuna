@@ -118,6 +118,12 @@ describe("economic evidence ledger", () => {
       "c23",
       "lastKnownValuation",
       "2020-10-30",
+    )).toEqual({ eligible: false, reason: "after-cutoff" });
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c23",
+      "lastKnownValuation",
+      "2021-03-01",
     )).toMatchObject({ eligible: true, evidence: { value: 13900 } });
 
     expect(economicEvidenceAtDecisionDate(

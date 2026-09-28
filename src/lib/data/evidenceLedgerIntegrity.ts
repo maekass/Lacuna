@@ -380,7 +380,11 @@ export function inferEconomicDisclosure(
   basis: EconomicValueBasis,
   prose: readonly string[] = [],
 ): EconomicDisclosure {
-  if (basis === "unquoted_fx" || basis === "unstated_conflict") {
+  if (
+    basis === "locator_only" ||
+    basis === "unquoted_fx" ||
+    basis === "unstated_conflict"
+  ) {
     return unknownDisclosure();
   }
   const part = choosePart(citation, basis);
@@ -661,16 +665,17 @@ export function validateEconomicEvidenceLedger(
         entity: record.id,
       });
     }
-    // A locator that does not quote the funding total cannot date that total.
+    // A locator-only citation does not substantiate the stored economic value,
+    // so it cannot supply a historical replay vintage for any economic field.
     if (
-      record.field === "totalFunding" &&
       record.valueBasis === "locator_only" &&
-      record.publicAsOfDate
+      (record.effectiveDate || record.publicAsOfDate ||
+        record.datePrecision !== "unknown")
     ) {
       issues.push({
-        code: "funding-locator-dated",
+        code: "locator-dated",
         message:
-          `Funding evidence ${record.id} does not quote its total, so ${record.publicAsOfDate} cannot be its vintage`,
+          `Locator-only evidence ${record.id} cannot carry an effective/public date`,
         entity: record.id,
       });
     }

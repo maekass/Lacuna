@@ -54,6 +54,7 @@ export class ValuationEngine {
     if (
       prior.medianFundingMultipleEstimate &&
       isSufficient(prior.medianFundingMultipleEstimate) &&
+      typeof company.raisedToDate === "number" &&
       company.raisedToDate > 0
     ) {
       const anchor = scaleQuantValue(
