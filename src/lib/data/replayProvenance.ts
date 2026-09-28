@@ -2,7 +2,6 @@ import {
   ECONOMIC_EVIDENCE_FIELDS,
   type EconomicEvidenceField,
   type EconomicEvidenceRecord,
-  economicReplayBlockReason,
 } from "./evidenceLedger";
 import { inspectLedgerRecords } from "./ledgerStructure";
 
@@ -41,6 +40,26 @@ function rate(part: number, total: number): number {
 
 function isMissingPublicAsOf(record: EconomicEvidenceRecord): boolean {
   return record.publicAsOfDate == null || record.publicAsOfDate.trim() === "";
+}
+
+function validReplayDay(value: string): boolean {
+  if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) &&
+    date.toISOString().slice(0, 10) === value;
+}
+
+function economicReplayBlockReason(record: EconomicEvidenceRecord): string | null {
+  if (!record.sourceCitation?.trim()) return "missing-citation";
+  if (record.datePrecision !== "day") return "non-day-precision";
+  if (!record.publicAsOfDate || !validReplayDay(record.publicAsOfDate)) {
+    return "missing-or-invalid-public-as-of";
+  }
+  if (record.effectiveDate && record.publicAsOfDate < record.effectiveDate) {
+    return "public-before-effective";
+  }
+  if (record.publicAsOfDate > record.recordedAt) return "public-after-recorded";
+  return null;
 }
 
 function fieldDebt(
