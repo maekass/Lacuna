@@ -13,14 +13,6 @@ interface HealthCheck {
   error?: string;
 }
 
-interface RateLimitStatus {
-  service: string;
-  limit: number;
-  remaining: number;
-  resetAt: Date | null;
-  window: string;
-}
-
 const INITIAL_CHECKS: HealthCheck[] = [
   {
     name: "Dataset API",

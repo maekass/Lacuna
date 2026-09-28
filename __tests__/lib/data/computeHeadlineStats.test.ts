@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { minimalVerifiedDataset } from "../../helpers/fixtures";
 import {
-  computeHeadlineStats,
   computeHeadlineStatsFromDataset,
   countUniqueSourceCitations,
   formatDisclosedValueBillions,

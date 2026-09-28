@@ -181,12 +181,7 @@ export function calculateMatchScore(
   else likelihood = "low";
 
   // Generate rationale
-  const keyRationale = generateRationale(
-    company,
-    acquirer,
-    strategicFit,
-    marketFit,
-  );
+  const keyRationale = generateRationale(company, acquirer, strategicFit);
 
   return {
     acquirer,
@@ -374,7 +369,6 @@ function generateRationale(
   company: CompanyProfile,
   acquirer: AcquirerProfile,
   strategicFit: number,
-  _marketFit: number,
 ): string[] {
   const rationale: string[] = [];
 

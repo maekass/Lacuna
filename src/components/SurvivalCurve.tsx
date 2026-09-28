@@ -44,7 +44,7 @@ export default function SurvivalCurve() {
 
     // Count acquisitions per sector to pick top groups
     const sectorAcqCount: Record<string, number> = {};
-    for (const [targetId, _] of acqYearByTarget) {
+    for (const [targetId] of acqYearByTarget) {
       const company = verifiedCompanies.find((c) => c.id === targetId);
       if (!company) continue;
       sectorAcqCount[company.sector] = (sectorAcqCount[company.sector] ?? 0) +
