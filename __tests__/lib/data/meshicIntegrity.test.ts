@@ -109,7 +109,6 @@ describe("MeshIC ledger integrity", () => {
       .toEqual(["ledger.missingPublicAsOf", "ledger.citationWithoutUrl"]);
   });
 
-
   it("accepts period-end public dates for coarse precision", () => {
     const findings = assessLedgerIntegrity(
       ledger([
