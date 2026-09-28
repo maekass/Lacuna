@@ -60,6 +60,7 @@ export function mapVerifiedStageToEngineStage(
     normalized.includes("series e") ||
     normalized.includes("series f") ||
     normalized.includes("series g") ||
+    normalized.includes("pre-ipo") ||
     normalized.includes("late")
   ) {
     return "late_stage";

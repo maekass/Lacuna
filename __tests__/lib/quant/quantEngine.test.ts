@@ -61,6 +61,28 @@ describe("ValuationEngine", () => {
       .toBe(1);
   });
 
+  it("uses an explicit Africa multiplier only for companies focused on Africa", () => {
+    expect(
+      geographicMultiplier(
+        makeCompany({
+          geographicFocus: ["US"],
+          africaDiscountMultiplier: 0.7,
+        }),
+      ),
+    ).toBe(1);
+    expect(
+      geographicMultiplier(
+        makeCompany({
+          geographicFocus: ["Africa"],
+          africaDiscountMultiplier: 0.7,
+        }),
+      ),
+    ).toBe(0.7);
+    expect(
+      geographicMultiplier(makeCompany({ geographicFocus: ["Africa"] })),
+    ).toBe(1);
+  });
+
   it("does not haircut an Africa HQ when a verified funding anchor exists", () => {
     const sector: SectorPrior = {
       sector: "diagnostics",

@@ -66,7 +66,7 @@ export interface AcquirerMatch {
   matchScore: number; // 0-100
   likelihood: "high" | "medium" | "low";
   strategicFit: number; // 0-100
-  culturalFit: number; // 0-100
+  culturalFit: number | null; // Null when company stage is unknown.
   /** Null when deal size or a value estimate is unavailable. */
   financialFit: number | null;
   marketFit: number; // 0-100
@@ -109,9 +109,9 @@ export const STRATEGIC_ACQUIRERS: AcquirerProfile[] = [];
 
 /**
  * Hand-set weights. They are not learned from outcomes.
- * Financial fit is omitted — not scored as a neutral 50 — when disclosed
- * deal size or a value estimate is unavailable. Remaining weights are
- * renormalized so the omission is not a zero.
+ * Cultural fit is omitted for unknown company stages, and financial fit is
+ * omitted when disclosed deal size or a value estimate is unavailable. The
+ * remaining weights are renormalized so omissions are not scored as zeroes.
  */
 const MATCH_WEIGHTS = {
   strategic: 0.35,
@@ -157,7 +157,9 @@ export function calculateMatchScore(
 
   const matchScore = weightedMatch([
     { score: strategicFit, weight: MATCH_WEIGHTS.strategic },
-    { score: culturalFit, weight: MATCH_WEIGHTS.cultural },
+    ...(culturalFit === null
+      ? []
+      : [{ score: culturalFit, weight: MATCH_WEIGHTS.cultural }]),
     ...(financialFit === null
       ? []
       : [{ score: financialFit, weight: MATCH_WEIGHTS.financial }]),
@@ -238,7 +240,9 @@ function calculateStrategicFit(
 function calculateCulturalFit(
   company: CompanyProfile,
   acquirer: AcquirerProfile,
-): number {
+): number | null {
+  if (company.stage === "unknown") return null;
+
   // Early stage companies prefer hands-off acquirers
   const stagePrefersHandsOff = ["seed", "series_a"].includes(company.stage);
   const acquirerIsHandsOff = acquirer.integrationStyle === "hands_off";

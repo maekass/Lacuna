@@ -77,14 +77,11 @@ export function classifyValuationType(sector: string): ValuationType {
   return "femtech";
 }
 
-/**
- * Geographic haircut. HQ in Africa is not evidence for a valuation discount.
- * The historical 0.65 placeholder is not applied. A multiplier is used only
- * when the company record carries an explicit finite value above zero.
- */
+/** Apply a positive finite explicit multiplier only to companies focused on Africa. */
 export function geographicMultiplier(company: QuantCompany): number {
   const explicit = company.africaDiscountMultiplier;
   if (
+    company.geographicFocus.includes("Africa") &&
     typeof explicit === "number" && Number.isFinite(explicit) && explicit > 0
   ) {
     return explicit;

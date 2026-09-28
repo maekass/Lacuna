@@ -31,6 +31,59 @@ describe("acquirer profile integrity", () => {
     expect(mapVerifiedStageToEngineStage("Private (Series G)")).toBe(
       "late_stage",
     );
+    expect(mapVerifiedStageToEngineStage("Pre-IPO")).toBe("late_stage");
+  });
+
+  it("omits cultural fit for unknown stages and renormalizes the overlap index", () => {
+    const acquirer: AcquirerProfile = {
+      id: "a",
+      name: "Platform Buyer",
+      type: "strategic_healthcare",
+      acquisitionHistory: [],
+      sectorFocus: ["fertility"],
+      stagePreference: ["series_a"],
+      typicalDealSize: null,
+      recentActivity: "low",
+      strategicPriorities: [],
+      integrationStyle: "platform",
+    };
+    const company: CompanyProfile = {
+      id: "c",
+      name: "Company",
+      sector: "fertility",
+      stage: "unknown",
+      capabilities: [],
+      technology: [],
+      foundingYear: null,
+    };
+    const unknownStage = calculateMatchScore(company, acquirer);
+    const knownStage = calculateMatchScore(
+      { ...company, stage: "series_a" },
+      acquirer,
+    );
+
+    expect(unknownStage.culturalFit).toBeNull();
+    expect(unknownStage.financialFit).toBeNull();
+    expect(knownStage.culturalFit).toBe(40);
+    expect(knownStage.financialFit).toBeNull();
+    expect(unknownStage.matchScore).toBe(
+      Math.round(
+        (
+          unknownStage.strategicFit * 0.35 +
+          unknownStage.marketFit * 0.25
+        ) / (0.35 + 0.25),
+      ),
+    );
+    expect(knownStage.matchScore).toBe(
+      Math.round(
+        (
+          knownStage.strategicFit * 0.35 +
+          (knownStage.culturalFit ?? 0) * 0.15 +
+          knownStage.marketFit * 0.25
+        ) / (0.35 + 0.15 + 0.25),
+      ),
+    );
+    expect(unknownStage.matchScore).not.toBe(knownStage.matchScore);
   });
 
   it("keeps funding totals in USD millions when estimating context value", () => {
