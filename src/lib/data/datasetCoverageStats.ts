@@ -1,5 +1,6 @@
 /** Minimal shape for coverage stats — works with raw JSON or derived views. */
 import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
+import { calendarYear } from "@/lib/format/calendarDate";
 
 export interface CoverageDatasetInput {
   companies: ReadonlyArray<{
@@ -130,7 +131,8 @@ export function computeYearDealCounts(
 ): YearDealCount[] {
   const byYear = new Map<number, { count: number; disclosedPrices: number }>();
   for (const d of dataset.acquisitions) {
-    const year = new Date(d.announcedDate).getFullYear();
+    const year = calendarYear(d.announcedDate);
+    if (year === null) continue;
     const row = byYear.get(year) ?? { count: 0, disclosedPrices: 0 };
     row.count += 1;
     if (typeof d.dealValue === "number") row.disclosedPrices += 1;

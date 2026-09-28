@@ -9,6 +9,7 @@ import { clampInt } from "@/lib/api/pageParams";
 import { guardedUpstreamFetch } from "@/lib/api/guardedFetch";
 import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
 import { fetchWithTimeout } from "@/lib/api/fetchWithTimeout";
+import { reportedEnrollment } from "@/lib/research/trialEnrollment";
 import {
   CTG_API_BASE,
   CTG_STUDY_FIELDS,
@@ -68,7 +69,7 @@ export interface ClinicalTrial {
   status: string;
   condition: string;
   sponsor: string;
-  enrollment: number;
+  enrollment: number | null;
   startDate: string;
   completionDate?: string;
   locations: string[];
@@ -131,7 +132,7 @@ export async function GET(request: NextRequest) {
           status: status.overallStatus || "Unknown",
           condition: (protocol.conditionsModule?.conditions || []).join(", "),
           sponsor: sponsor.leadSponsor?.name || "Unknown",
-          enrollment: design.enrollmentInfo?.count || 0,
+          enrollment: reportedEnrollment(design.enrollmentInfo?.count),
           startDate: status.startDateStruct?.date || "",
           completionDate: status.completionDateStruct?.date,
           locations: (contacts.locations || []).map((loc) =>

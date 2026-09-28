@@ -6,6 +6,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { clampInt } from "@/lib/api/pageParams";
 import { guardedUpstreamFetch } from "@/lib/api/guardedFetch";
+import {
+  reportedEnrollment,
+  summarizeEnrollment,
+} from "@/lib/research/trialEnrollment";
 
 const CTG_API = "https://clinicaltrials.gov/api/v2";
 
@@ -39,12 +43,13 @@ export interface CompanyTrialSummary {
   statusBreakdown: Record<string, number>;
   hasPostedResults: boolean;
   totalEnrollment: number;
+  enrollmentReportedTrials: number;
   trials: Array<{
     nctId: string;
     title: string;
     phase: string;
     status: string;
-    enrollment: number;
+    enrollment: number | null;
     conditions: string[];
     primaryCompletionDate?: string;
     hasResults: boolean;
@@ -86,7 +91,6 @@ export async function GET(request: NextRequest) {
     const phaseBreakdown: Record<string, number> = {};
     const statusBreakdown: Record<string, number> = {};
     let hasPostedResults = false;
-    let totalEnrollment = 0;
 
     const trials = studies.map((s) => {
       const proto = s.protocolSection || {};
@@ -94,12 +98,11 @@ export async function GET(request: NextRequest) {
       const statusMod = proto.statusModule || {};
       const phase = design.phases?.[0] || "Not Applicable";
       const status = statusMod.overallStatus || "Unknown";
-      const enrollment = design.enrollmentInfo?.count || 0;
+      const enrollment = reportedEnrollment(design.enrollmentInfo?.count);
       const studyHasResults = s.hasResults ?? false;
 
       phaseBreakdown[phase] = (phaseBreakdown[phase] || 0) + 1;
       statusBreakdown[status] = (statusBreakdown[status] || 0) + 1;
-      totalEnrollment += enrollment;
       if (studyHasResults) hasPostedResults = true;
 
       return {
@@ -113,6 +116,7 @@ export async function GET(request: NextRequest) {
         hasResults: studyHasResults,
       };
     });
+    const enrollmentSummary = summarizeEnrollment(trials);
 
     const phaseOrder = ["PHASE3", "PHASE2", "PHASE1", "EARLY_PHASE1", "NA"];
     const highestPhase = phaseOrder.find((p) => phaseBreakdown[p]) || "None";
@@ -124,7 +128,8 @@ export async function GET(request: NextRequest) {
       phaseBreakdown,
       statusBreakdown,
       hasPostedResults,
-      totalEnrollment,
+      totalEnrollment: enrollmentSummary.total,
+      enrollmentReportedTrials: enrollmentSummary.reportedTrials,
       trials,
     };
 
