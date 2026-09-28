@@ -65,6 +65,29 @@ describe("clinical-trials API", () => {
       expect(mockFetch).toHaveBeenCalledOnce();
     });
 
+    it("keeps missing enrollment unreported (edge)", async () => {
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            studies: [{
+              protocolSection: {
+                identificationModule: { nctId: "NCT0002" },
+                designModule: {},
+              },
+            }],
+          }),
+      });
+
+      const request = new NextRequest(
+        "http://localhost/api/clinical-trials",
+      );
+      const response = await GET(request);
+      const body = await response.json();
+
+      expect(body.trials[0].enrollment).toBeNull();
+    });
+
     it("returns 502 when upstream API fails (error)", async () => {
       mockFetch.mockResolvedValue({ ok: false, status: 503 });
 

@@ -20,6 +20,7 @@ import {
 } from "@/lib/competitive/acquirerAnalysis";
 import { getVerifiedCompetitiveAnalysisData } from "@/lib/data/verifiedDatasetAdapters";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import { calendarYear } from "@/lib/format/calendarDate";
 import {
   DISPLAY_FONT,
   displayFont,
@@ -40,11 +41,14 @@ export default function CompetitiveAnalysisDashboard() {
   );
   const externalEvents = useMemo<ExternalEvent[]>(
     () =>
-      dataset.verifiedAcquisitions.map((d) => ({
-        year: new Date(d.announcedDate).getFullYear(),
-        type: "strategy_announcement" as const,
-        description: `${d.acquirerName} — ${d.targetName} (${d.dealType})`,
-      })),
+      dataset.verifiedAcquisitions.flatMap((d) => {
+        const year = calendarYear(d.announcedDate);
+        return year === null ? [] : [{
+          year,
+          type: "strategy_announcement" as const,
+          description: `${d.acquirerName} — ${d.targetName} (${d.dealType})`,
+        }];
+      }),
     [dataset.verifiedAcquisitions],
   );
 
