@@ -26,24 +26,45 @@ export function mapVerifiedSectorToEngineSector(sector: string): string {
   return "digital_health";
 }
 
-/** Map verified stage strings to acquirer-engine stage keys. */
+/**
+ * Map a verified stage string onto engine stage keys.
+ * Outcome-only labels ("Acquired by …") are not a funding stage.
+ * Unrecognized labels are `unknown`, not a default Series A.
+ */
 export function mapVerifiedStageToEngineStage(
   stage: string,
 ): CompanyProfile["stage"] {
-  const normalized = stage.toLowerCase();
+  const normalized = stage.toLowerCase()
+    .replace(
+      /majority stake acquired(?:\s+by\s+[^()]*)?(?:\s*\([^)]*\))?/g,
+      " ",
+    )
+    .replace(/assets acquired(?:\s+by\s+[^()]*)?(?:\s*\([^)]*\))?/g, " ")
+    .replace(/acquired(?:\s+by\s+[^()]*)?(?:\s*\([^)]*\))?/g, " ")
+    .replace(/products licensed(?:\s+to\s+[^()]*)?(?:\s*\([^)]*\))?/g, " ")
+    .replace(/[()]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!normalized || normalized === "private") return "unknown";
   if (normalized.includes("seed")) return "seed";
-  if (normalized.includes("series a") || normalized === "a") return "series_a";
-  if (normalized.includes("series b") || normalized === "b") return "series_b";
+  if (normalized.includes("series a")) return "series_a";
+  if (normalized.includes("series b")) return "series_b";
   if (
     normalized.includes("series c") ||
     normalized.includes("series d") ||
-    normalized.includes("growth") ||
-    normalized.includes("acquired")
+    normalized.includes("growth")
   ) {
     return "growth";
   }
-  if (normalized.includes("late")) return "late_stage";
-  return "series_a";
+  if (
+    normalized.includes("series e") ||
+    normalized.includes("series f") ||
+    normalized.includes("series g") ||
+    normalized.includes("late")
+  ) {
+    return "late_stage";
+  }
+  return "unknown";
 }
 
 function extractCapabilities(description: string): string[] {
@@ -87,8 +108,13 @@ export function mapVerifiedCompanyToProfile(
     stage: mapVerifiedStageToEngineStage(company.stage),
     capabilities: capabilities.length > 0 ? capabilities : [],
     technology: technology.length > 0 ? technology : [],
-    fundingTotal: company.totalFunding ?? 0,
-    foundingDate: company.founded ? `${company.founded}-01-01` : "2018-01-01",
+    ...(typeof company.totalFunding === "number"
+      ? { fundingTotal: company.totalFunding }
+      : {}),
+    foundingYear: company.foundedPrecision === "year" &&
+        typeof company.founded === "number"
+      ? company.founded
+      : null,
     // lastKnownValuation is not revenue — never a silent TAM fallback.
   };
 }

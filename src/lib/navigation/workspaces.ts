@@ -102,8 +102,8 @@ export const WORKSPACES: Workspace[] = [
     href: "/intelligence",
     label: "Intelligence",
     description:
-      "Reimbursement context, acquirer fit scores, and dataset export.",
-    tags: ["reimbursement", "fit scores", "export"],
+      "Reimbursement context, historical acquirer-profile overlap, and dataset export.",
+    tags: ["reimbursement", "overlap", "export"],
     sections: [
       { id: "reimbursement-intelligence", label: "Reimbursement" },
       { id: "acquirer-prediction", label: "Precedent map" },

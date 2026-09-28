@@ -8,70 +8,30 @@ import { INVESTOR_PORTFOLIOS, type PortfolioKey } from "@/lib/data/portfolios";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
 import { sourcedLastKnownValuationForCompany } from "@/lib/deals/sourcedLastKnownValuation";
+import {
+  buildObservedFeatures,
+  observedCentroid,
+  type ObservedFeature,
+  pairwiseCosine,
+  sharedObservedFactors,
+} from "@/lib/similarity/observedFeatureSimilarity";
 
-const CURRENT_YEAR = 2026;
 type MatchMode = "single" | PortfolioKey;
 
-interface FeatureVector {
-  readonly values: readonly number[];
-  readonly hasValuation: boolean;
-  readonly hasFunding: boolean;
-}
+const NOT_A_VALUATION_PEER_SET = "not a valuation peer set";
 
 interface SimilarityResult {
   readonly company: VerifiedCompanyView;
-  readonly similarity: number;
+  readonly similarity: number | null;
   readonly sharedFactors: string[];
   readonly dataCompleteness: number;
 }
 
-function buildFeatureVector(
-  company: VerifiedCompanyView,
-  sectors: string[],
-): FeatureVector {
-  const sectorOneHot = sectors.map((s) => (company.sector === s ? 1 : 0));
-  const hasValuation = typeof company.lastKnownValuation === "number";
-  const hasFunding = typeof company.totalFunding === "number";
-
-  const logVal = hasValuation
-    ? Math.log10((company.lastKnownValuation as number) + 1) / 4
-    : 0;
-  const logFund = hasFunding
-    ? Math.log10((company.totalFunding as number) + 1) / 3
-    : 0;
-  const ageNorm = company.founded !== undefined
-    ? Math.min(1, (CURRENT_YEAR - company.founded) / 15)
-    : 0;
-  const isLateStage =
-    /Series C|Series D|Series E|Series F|Late Stage|Pre-IPO/i.test(
-        company.stage,
-      )
-      ? 1
-      : 0;
-  const isPublic = /Public/i.test(company.stage) ? 1 : 0;
-  const isAcquired = /Acquired/i.test(company.stage) ? 1 : 0;
-
-  return {
-    values: [
-      ...sectorOneHot,
-      logVal,
-      logFund,
-      ageNorm,
-      isLateStage,
-      isPublic,
-      isAcquired,
-    ],
-    hasValuation,
-    hasFunding,
-  };
-}
-
-function cosineSimilarity(a: readonly number[], b: readonly number[]): number {
-  const dot = a.reduce((sum, v, i) => sum + v * b[i], 0);
-  const magA = Math.sqrt(a.reduce((sum, v) => sum + v * v, 0));
-  const magB = Math.sqrt(b.reduce((sum, v) => sum + v * v, 0));
-  const denom = magA * magB;
-  return denom === 0 ? 0 : dot / denom;
+interface CompanyVector {
+  readonly company: VerifiedCompanyView;
+  readonly features: readonly ObservedFeature[];
+  readonly hasValuation: boolean;
+  readonly hasFunding: boolean;
 }
 
 function featureDimensionLabels(sectors: string[]): string[] {
@@ -86,18 +46,25 @@ function featureDimensionLabels(sectors: string[]): string[] {
   ];
 }
 
-function sharedFactorsAgainstCentroid(
-  values: readonly number[],
-  centroid: readonly number[],
-  sectors: string[],
-): string[] {
-  const labels = featureDimensionLabels(sectors);
-  return labels.filter((_, index) => {
-    const centroidValue = centroid[index] ?? 0;
-    if (centroidValue <= 0) return false;
-    return Math.abs((values[index] ?? 0) - centroidValue) <=
-      centroidValue * 0.2;
-  });
+function compareSimilarity(a: SimilarityResult, b: SimilarityResult): number {
+  if (a.similarity === null && b.similarity === null) {
+    return a.company.name.localeCompare(b.company.name);
+  }
+  if (a.similarity === null) return 1;
+  if (b.similarity === null) return -1;
+  if (b.similarity !== a.similarity) return b.similarity - a.similarity;
+  return a.company.name.localeCompare(b.company.name);
+}
+
+function sameCalendarYear(
+  left: VerifiedCompanyView,
+  right: VerifiedCompanyView,
+): boolean {
+  return left.foundedPrecision === "year" &&
+    right.foundedPrecision === "year" &&
+    left.founded !== undefined &&
+    right.founded !== undefined &&
+    Math.abs(left.founded - right.founded) <= 2;
 }
 
 export default function CompanySimilarity() {
@@ -117,13 +84,16 @@ export default function CompanySimilarity() {
     () => new Set<string>(activePortfolio?.companies ?? []),
     [activePortfolio],
   );
-  const companyVectors = useMemo(
+  const asOfYear = new Date().getUTCFullYear();
+  const companyVectors = useMemo<CompanyVector[]>(
     () =>
       verifiedCompanies.map((company) => ({
         company,
-        vector: buildFeatureVector(company, sectors),
+        features: buildObservedFeatures(company, sectors, asOfYear),
+        hasValuation: typeof company.lastKnownValuation === "number",
+        hasFunding: typeof company.totalFunding === "number",
       })),
-    [verifiedCompanies, sectors],
+    [asOfYear, verifiedCompanies, sectors],
   );
   const companyVectorMap = useMemo(
     () => new Map(companyVectors.map((entry) => [entry.company.id, entry])),
@@ -136,11 +106,8 @@ export default function CompanySimilarity() {
 
     return companyVectors
       .filter(({ company }) => company.id !== selectedCompany)
-      .map(({ company, vector }) => {
-        const similarity = cosineSimilarity(
-          targetEntry.vector.values,
-          vector.values,
-        );
+      .map(({ company, features, hasValuation, hasFunding }) => {
+        const similarity = pairwiseCosine(targetEntry.features, features);
 
         const shared: string[] = [];
         if (company.sector === targetEntry.company.sector) {
@@ -149,7 +116,11 @@ export default function CompanySimilarity() {
         if (company.stage === targetEntry.company.stage) {
           shared.push(`Same stage`);
         }
-        if (targetEntry.vector.hasValuation && vector.hasValuation) {
+        if (
+          targetEntry.hasValuation && hasValuation &&
+          targetEntry.company.lastKnownValuation! > 0 &&
+          company.lastKnownValuation! > 0
+        ) {
           const ratio = Math.max(
             targetEntry.company.lastKnownValuation!,
             company.lastKnownValuation!,
@@ -160,23 +131,18 @@ export default function CompanySimilarity() {
             );
           if (ratio < 2) shared.push("Valuation within 2×");
         }
-        if (
-          company.founded !== undefined &&
-          targetEntry.company.founded !== undefined &&
-          Math.abs(company.founded - targetEntry.company.founded) <= 2
-        ) {
-          shared.push("Founded within 2 yrs");
+        if (sameCalendarYear(company, targetEntry.company)) {
+          shared.push("Founded within 2 yrs (year precision)");
         }
 
         return {
           company,
-          similarity: isNaN(similarity) ? 0 : similarity,
+          similarity,
           sharedFactors: shared,
-          dataCompleteness: (vector.hasValuation ? 1 : 0) +
-            (vector.hasFunding ? 1 : 0),
+          dataCompleteness: (hasValuation ? 1 : 0) + (hasFunding ? 1 : 0),
         };
       })
-      .sort((a, b) => b.similarity - a.similarity)
+      .sort(compareSimilarity)
       .slice(0, 5);
   }, [selectedCompany, companyVectorMap, companyVectors]);
 
@@ -192,30 +158,20 @@ export default function CompanySimilarity() {
       };
     }
 
-    const centroid = portfolioEntries[0].vector.values.map((_, index) =>
-      portfolioEntries.reduce(
-        (sum, entry) => sum + entry.vector.values[index],
-        0,
-      ) / portfolioEntries.length
+    const centroid = observedCentroid(
+      portfolioEntries.map((entry) => entry.features),
     );
+    const labels = featureDimensionLabels(sectors);
 
     const matches = companyVectors
       .filter(({ company }) => !portfolioNameSet.has(company.name))
-      .map(({ company, vector }) => {
-        const similarity = cosineSimilarity(vector.values, centroid);
-        return {
-          company,
-          similarity: isNaN(similarity) ? 0 : similarity,
-          sharedFactors: sharedFactorsAgainstCentroid(
-            vector.values,
-            centroid,
-            sectors,
-          ),
-          dataCompleteness: (vector.hasValuation ? 1 : 0) +
-            (vector.hasFunding ? 1 : 0),
-        };
-      })
-      .sort((a, b) => b.similarity - a.similarity)
+      .map(({ company, features, hasValuation, hasFunding }) => ({
+        company,
+        similarity: pairwiseCosine(features, centroid),
+        sharedFactors: sharedObservedFactors(features, centroid, labels),
+        dataCompleteness: (hasValuation ? 1 : 0) + (hasFunding ? 1 : 0),
+      }))
+      .sort(compareSimilarity)
       .slice(0, 10);
 
     return {
@@ -245,8 +201,9 @@ export default function CompanySimilarity() {
             Company Similarity Engine
           </h3>
           <p className="text-sm text-lacuna-text-muted">
-            Cosine similarity over verified features (sector, valuation,
-            funding, age, stage) — not a valuation peer set or dual-source
+            Descriptive similarity index over verified features (sector,
+            valuation, funding, year-precision age, stage). This is{" "}
+            {NOT_A_VALUATION_PEER_SET}, not a probability, and not a dual-source
             badge.
           </p>
         </div>
@@ -406,10 +363,30 @@ export default function CompanySimilarity() {
               </div>
             </div>
             <div className="text-right">
-              <div className="text-lg font-bold text-pink-600">
-                {(result.similarity * 100).toFixed(0)}%
-              </div>
-              <div className="text-xs text-lacuna-text-muted">similarity</div>
+              {result.similarity === null
+                ? (
+                  <>
+                    <div className="text-sm font-semibold text-lacuna-text-muted">
+                      —
+                    </div>
+                    <div className="text-xs text-lacuna-text-muted">
+                      insufficient overlap
+                    </div>
+                  </>
+                )
+                : (
+                  <>
+                    <div
+                      className="text-lg font-bold text-pink-600"
+                      title="Unitless 0–100 descriptive similarity index. Not a probability."
+                    >
+                      {Math.round(result.similarity * 100)}
+                    </div>
+                    <div className="text-xs text-lacuna-text-muted">
+                      descriptive index
+                    </div>
+                  </>
+                )}
             </div>
           </motion.div>
         ))}
@@ -424,11 +401,12 @@ export default function CompanySimilarity() {
 
       <div className="mt-4 pt-4 border-t border-lacuna-border-subtle">
         <p className="text-xs text-lacuna-text-muted leading-relaxed">
-          Feature vector: {sectors.length}{" "}
-          sector one-hot dims + log(valuation) + log(funding) + normalized age +
-          stage flags. Cosine similarity. Companies with undisclosed financials
-          default to 0 on those dims (penalizes match) — flagged as
-          &quot;partial data&quot;.
+          Cosine similarity uses only features both companies observed.
+          Undisclosed valuation, undisclosed funding, and founding years that
+          are not year-precision are excluded — not filled with zero. Age is
+          whole years in the current catalog view, not a known day and not age
+          at exit. The 0–100 index is not a probability. Partial data means a
+          financial field was left out of that comparison.
         </p>
       </div>
     </motion.div>

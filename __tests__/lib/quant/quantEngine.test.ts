@@ -9,6 +9,9 @@ import {
   ValuationEngine,
 } from "@/lib/quant/quantEngine";
 import { adaptQuantCompany } from "@/lib/quant/adaptQuantCompany";
+import { geographicMultiplier } from "@/lib/quant/priors";
+import { missingInput, sufficient } from "@/lib/quant/estimators";
+import type { EmpiricalPriors, SectorPrior } from "@/lib/quant/empiricalPriors";
 
 function makeCompany(overrides: Partial<QuantCompany> = {}): QuantCompany {
   return {
@@ -54,6 +57,54 @@ describe("ValuationEngine", () => {
     );
     expect(base).toBeNull();
     expect(africa).toBeNull();
+    expect(geographicMultiplier(makeCompany({ geographicFocus: ["Africa"] })))
+      .toBe(1);
+  });
+
+  it("does not haircut an Africa HQ when a verified funding anchor exists", () => {
+    const sector: SectorPrior = {
+      sector: "diagnostics",
+      dealCount: 4,
+      disclosedDealCount: 4,
+      disclosedFraction: 1,
+      selectionCaveat: "test",
+      companyCount: 4,
+      acquiredInSector: 1,
+      medianDealValueEstimate: missingInput("none"),
+      medianFundingMultipleEstimate: sufficient({
+        value: 2,
+        sampleSize: 4,
+        confidenceInterval: [1.5, 2.5],
+      }),
+      sectorExitRateEstimate: missingInput("none"),
+    };
+    const priors: EmpiricalPriors = {
+      overallExitRateEstimate: missingInput("none"),
+      companyCount: 4,
+      dealCount: 4,
+      disclosedDealCount: 4,
+      disclosedFraction: 1,
+      selectionCaveat: "test",
+      medianDealValueAllEstimate: missingInput("none"),
+      medianFundingMultipleAllEstimate: missingInput("none"),
+      sectorPriors: new Map([["diagnostics", sector]]),
+      derivationNote: "test",
+    };
+    const anchored = new ValuationEngine(priors);
+    const us = numericOrNull(
+      anchored.valuateCompany(makeCompany({ raisedToDate: 20 })).consensus,
+    );
+    const africa = numericOrNull(
+      anchored.valuateCompany(
+        makeCompany({ raisedToDate: 20, geographicFocus: ["Africa"] }),
+      ).consensus,
+    );
+    expect(us).toBe(40);
+    expect(africa).toBe(us);
+    expect(
+      anchored.valuateCompany(makeCompany({ raisedToDate: 20 }))
+        .recommendation,
+    ).toBe("DESCRIPTIVE HEURISTIC ONLY");
   });
 });
 
