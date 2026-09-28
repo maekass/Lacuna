@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { atDecisionDate } from "./pointInTime";
+import { atDecisionDate, isCalendarDay } from "./pointInTime";
+import { inspectLedgerRecords } from "./ledgerStructure";
 import type { VerifiedDataset } from "./datasetSchema";
 
 const isoDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
@@ -106,35 +107,12 @@ export function parseEconomicEvidenceLedger(
 function currentRecords(
   records: readonly EconomicEvidenceRecord[],
 ): Map<string, EconomicEvidenceRecord> {
-  const ids = new Set(records.map((record) => record.id));
-  const superseded = new Set<string>();
-  for (const record of records) {
-    if (record.supersedesId) {
-      if (!ids.has(record.supersedesId)) {
-        throw new Error(
-          `Evidence record ${record.id} supersedes missing record ${record.supersedesId}`,
-        );
-      }
-      superseded.add(record.supersedesId);
-    }
+  const inspection = inspectLedgerRecords(records);
+  const blocking = inspection.issues[0];
+  if (blocking) {
+    throw new Error(`${blocking.rule}: ${blocking.why}`);
   }
-
-  const byCompanyAndField = new Map<string, EconomicEvidenceRecord>();
-  for (const record of records) {
-    if (
-      superseded.has(record.id) || record.verificationStatus === "retracted"
-    ) {
-      continue;
-    }
-    const key = `${record.companyId}:${record.field}`;
-    if (byCompanyAndField.has(key)) {
-      throw new Error(
-        `More than one current evidence record for ${key}; add supersedesId rather than silently choosing one`,
-      );
-    }
-    byCompanyAndField.set(key, record);
-  }
-  return byCompanyAndField;
+  return inspection.active;
 }
 
 export type EconomicEvidenceDecisionResult =
@@ -160,6 +138,18 @@ export function economicEvidenceAtDecisionDate(
 ): EconomicEvidenceDecisionResult {
   const record = currentRecords(ledger.records).get(`${companyId}:${field}`);
   if (!record) return { eligible: false, reason: "missing-evidence" };
+  if (
+    record.datePrecision !== "day" ||
+    !record.publicAsOfDate ||
+    !isCalendarDay(record.publicAsOfDate) ||
+    !isCalendarDay(record.recordedAt) ||
+    record.publicAsOfDate > record.recordedAt ||
+    (record.effectiveDate != null &&
+      (!isCalendarDay(record.effectiveDate) ||
+        record.publicAsOfDate < record.effectiveDate))
+  ) {
+    return { eligible: false, reason: "invalid-date" };
+  }
   const result = atDecisionDate({
     value: record,
     asOf: record.publicAsOfDate,
