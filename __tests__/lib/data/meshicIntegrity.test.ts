@@ -49,7 +49,8 @@ describe("MeshIC ledger integrity", () => {
       ledger([earlier, corrected]),
       companies,
     );
-    expect(findings.filter((item) => item.blocking)).toEqual([]);
+    expect(findings.filter((item) => item.blocking).map((item) => item.code))
+      .toEqual(["ledger.citationWithoutUrl"]);
     expect(computeEconomicReplayCensus([earlier, corrected])).toMatchObject({
       activeRecords: 1,
       replayEligible: 1,
@@ -101,7 +102,8 @@ describe("MeshIC ledger integrity", () => {
       ledger([record({ publicAsOfDate: null })]),
       companies,
     );
-    expect(missing.filter((item) => item.blocking)).toEqual([]);
+    expect(missing.filter((item) => item.blocking).map((item) => item.code))
+      .toEqual(["ledger.missingPublicAsOf", "ledger.citationWithoutUrl"]);
   });
 
   it("rejects an active record that supersedes a retracted row", () => {
@@ -157,7 +159,7 @@ describe("MeshIC materialization, replay, lineage, and claims", () => {
       text: "const raisedToDate = view.totalFunding ?? 0;",
     }]);
     expect(descriptive).toMatchObject([{
-      blocking: false,
+      blocking: true,
       code: "descriptive.missingCoerced",
     }]);
 

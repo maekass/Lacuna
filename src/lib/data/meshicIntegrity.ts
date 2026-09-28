@@ -272,18 +272,30 @@ export function assessLedgerIntegrity(
     }
   }
 
-  const citationOnly =
-    records.filter((record) =>
-      !record.sourceUrl && record.verificationStatus !== "retracted"
-    ).length;
+  const active = activeRecords(records);
+  const missingPublicAsOf = active.filter((record) =>
+    record.publicAsOfDate == null
+  );
+  if (missingPublicAsOf.length > 0) {
+    findings.push(finding(
+      "RED",
+      "ledger.replayEligibility",
+      "ledger.missingPublicAsOf",
+      "evidence.verified.json",
+      `${missingPublicAsOf.length}/${active.length} active economic records have publicAsOfDate null and are current-only. Historical replay cannot use them.`,
+      "Attach a real publication date from the source when one exists. Do not invent a date. Until then the strict gate fails because replay eligibility is zero for those facts.",
+    ));
+  }
+
+  const citationOnly = active.filter((record) => !record.sourceUrl).length;
   if (citationOnly > 0) {
     findings.push(finding(
-      "AMBER",
+      "RED",
       "ledger.provenance",
       "ledger.citationWithoutUrl",
       "evidence.verified.json",
-      `${citationOnly} non-retracted records have a citation and no source URL.`,
-      "Backfill a resolvable URL when one exists. A citation alone is allowed and is not historical-replay proof.",
+      `${citationOnly} active records have a citation and no source URL.`,
+      "Add the resolvable source URL the citation names. A citation alone is not enough for the strict gate.",
     ));
   }
 
@@ -388,12 +400,12 @@ export function assessReplaySafety(
             "Return the value as unavailable. Do not coerce a missing fact to 0 or a favorable score.",
           )
           : finding(
-            "AMBER",
+            "RED",
             "replay.coercion",
             "descriptive.missingCoerced",
             file.path,
-            "A current descriptive path coerces a missing economic value. This is not a historical replay, but zero is not a disclosed fact.",
-            "Prefer an explicit missing state on the descriptive surface when the ledger has no active record.",
+            "A descriptive path coerces a missing economic value to zero or a default. Zero is not a disclosed fact.",
+            "Leave the value unavailable when the ledger has no active record. Do not substitute 0.",
           ),
       );
     }

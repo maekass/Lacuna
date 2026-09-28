@@ -31,8 +31,10 @@ catalog and out of historical replay.
 
 ### What a clean current-only record looks like
 
-This is valid. The strict gate does not fail it, and nobody should invent a
-publication day to make it replay-eligible.
+This record is structurally valid, and it is still a strict-gate failure:
+`publicAsOfDate` is null and there is no source URL. Do not invent either value
+to turn the check green. Add the real URL and publication day, or leave the pull
+request blocked.
 
 ```json
 {
@@ -85,11 +87,14 @@ Blocking (strict mode exits 1):
 [RED] claim.predicted (blocking integrity failure) src/components/ExitPredictor.tsx: User-facing text says "Predicted". Remediation: Reframe as precedent, similarity, or a descriptive heuristic.
 ```
 
-Reported, and not a reason to backfill dates (strict mode exits 0):
+These also fail `--strict`. They are not cleared by inventing a date or a URL:
 
 ```text
-[AMBER] ledger.provenance (non-blocking provenance gap) evidence.verified.json: 98 non-retracted records have a citation and no source URL. Remediation: Backfill a resolvable URL when one exists. A citation alone is allowed and is not historical-replay proof.
-[AMBER] replay.coercion (non-blocking provenance gap) src/lib/quant/adaptQuantCompany.ts: A current descriptive path coerces a missing economic value. This is not a historical replay, but zero is not a disclosed fact.
+[RED] quality.completenessUpgradesEvidence (blocking integrity failure) src/data: 11 company records have composite grade A without source-quality A.
+[RED] vintage.missingAsOf (blocking integrity failure) src/data: 133/135 primary economic numbers lack a dedicated as-of date (98.5%).
+[RED] ledger.citationWithoutUrl (blocking integrity failure) evidence.verified.json: 98 active records have a citation and no source URL.
+[RED] replay.coercion (blocking integrity failure) src/lib/quant/adaptQuantCompany.ts: A descriptive path coerces a missing economic value to zero or a default.
+[RED] ledger.replayEligibility (blocking integrity failure) evidence.verified.json: 98/98 active economic records have publicAsOfDate null and are current-only.
 ```
 
 ### Census on the current ledger

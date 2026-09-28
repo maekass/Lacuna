@@ -195,7 +195,7 @@ function qualityGradeFindings(): Finding[] {
   );
   if (upgraded.length === 0) return [];
   return [{
-    severity: "AMBER",
+    severity: "RED",
     code: "quality.completenessUpgradesEvidence",
     message:
       `${upgraded.length} company records have composite grade A without source-quality A. Composite quality must not be presented as provenance strength.`,
@@ -213,7 +213,7 @@ function vintageFindings(): Finding[] {
   const vintage = artifact?.vintage;
   if (!vintage?.primaryNumbers || !vintage.missingDedicatedAsOf) return [];
   return [{
-    severity: "AMBER",
+    severity: "RED",
     code: "vintage.missingAsOf",
     message:
       `${vintage.missingDedicatedAsOf}/${vintage.primaryNumbers} primary economic numbers lack a dedicated as-of date (${
