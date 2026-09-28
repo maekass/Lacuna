@@ -246,8 +246,8 @@ export default function CompanySimilarity() {
           </h3>
           <p className="text-sm text-lacuna-text-muted">
             Cosine similarity over verified features (sector, valuation,
-            funding, age, stage) — not a valuation peer set or dual-source
-            badge.
+            funding, age, stage) — not an acquisition prediction or investment
+            recommendation, and not a valuation peer set or dual-source badge.
           </p>
         </div>
         <div className="flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full">

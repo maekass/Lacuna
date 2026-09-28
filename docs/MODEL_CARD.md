@@ -160,8 +160,9 @@ a heuristic, not a fitted model.
 Each company is represented as an 8-dimensional vector encoding sector, stage,
 valuation tier, age, and funding characteristics. Similarity is computed via
 cosine distance. This is a **retrieval/comparison tool**, not a classification
-or prediction model. No training occurs; the feature encoding is manually
-defined.
+or prediction model, and not an investment recommendation. No training occurs;
+the feature encoding is manually defined. The therapeutics ontology is not an
+input.
 
 ---
 
@@ -172,8 +173,9 @@ defined.
 **Library**: `simple-statistics`
 
 Clusters are labeled Emerging / Growth / Late-stage based on centroid position.
-Labels are descriptive post-hoc assignments, not predicted classes. Cluster
-stability is low and results should be interpreted qualitatively.
+Labels are descriptive post-hoc assignments, not predicted classes and not an
+investment recommendation. Cluster stability is low and results should be
+interpreted qualitatively. The therapeutics ontology is not an input.
 
 ---
 

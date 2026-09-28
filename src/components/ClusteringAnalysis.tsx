@@ -43,8 +43,8 @@ export default function ClusteringAnalysis() {
           <strong>Small-sample caveat:</strong>{" "}
           Cluster boundaries with n &lt; 25 companies are sensitive to
           individual data points. Use these groupings descriptively, not as
-          definitive market segments. Initial centroids are fixed for
-          reproducibility.
+          definitive market segments. This clustering is not an investment
+          recommendation. Initial centroids are fixed for reproducibility.
         </p>
       </div>
 

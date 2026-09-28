@@ -1,0 +1,221 @@
+{
+  "hasResults": true,
+  "protocolSection": {
+    "identificationModule": {
+      "nctId": "NCT05101317",
+      "orgStudyIdInfo": {
+        "id": "HMI-115EM201"
+      },
+      "organization": {
+        "fullName": "Hope Medicine (Nanjing) Co., Ltd",
+        "class": "INDUSTRY"
+      },
+      "briefTitle": "A Study to Assess the Efficacy and Safety of HMI-115 in Subjects With Endometriosis-Associated Pain",
+      "officialTitle": "A Randomized, Multicenter, Double-Blind, Placebo-Controlled Phase 2 Study to Evaluate the Safety and Efficacy of HMI-115 in Women With Moderate to Severe Endometriosis-Associated Pain Over a 12-Week Treatment Period"
+    },
+    "statusModule": {
+      "statusVerifiedDate": "2026-01",
+      "overallStatus": "COMPLETED",
+      "expandedAccessInfo": {
+        "hasExpandedAccess": false
+      },
+      "startDateStruct": {
+        "date": "2021-10-11",
+        "type": "ACTUAL"
+      },
+      "primaryCompletionDateStruct": {
+        "date": "2024-09-26",
+        "type": "ACTUAL"
+      },
+      "completionDateStruct": {
+        "date": "2025-03-19",
+        "type": "ACTUAL"
+      },
+      "studyFirstSubmitDate": "2021-10-09",
+      "studyFirstSubmitQcDate": "2021-10-29",
+      "studyFirstPostDateStruct": {
+        "date": "2021-11-01",
+        "type": "ACTUAL"
+      },
+      "resultsFirstSubmitDate": "2025-09-25",
+      "resultsFirstSubmitQcDate": "2025-11-03",
+      "resultsFirstPostDateStruct": {
+        "date": "2025-11-18",
+        "type": "ACTUAL"
+      },
+      "lastUpdateSubmitDate": "2026-01-03",
+      "lastUpdatePostDateStruct": {
+        "date": "2026-01-21",
+        "type": "ACTUAL"
+      }
+    },
+    "sponsorCollaboratorsModule": {
+      "responsibleParty": {
+        "type": "SPONSOR"
+      },
+      "leadSponsor": {
+        "name": "Hope Medicine (Nanjing) Co., Ltd",
+        "class": "INDUSTRY"
+      }
+    },
+    "descriptionModule": {
+      "briefSummary": "This study is designed to evaluate the safety and efficacy of HMI-115 compared to placebo over a 12 weeks period on subjects with moderate to severe endometriosis-associated pain."
+    },
+    "conditionsModule": {
+      "conditions": [
+        "Endometriosis"
+      ]
+    },
+    "designModule": {
+      "studyType": "INTERVENTIONAL",
+      "phases": [
+        "PHASE2"
+      ],
+      "designInfo": {
+        "allocation": "RANDOMIZED",
+        "interventionModel": "PARALLEL",
+        "primaryPurpose": "TREATMENT",
+        "maskingInfo": {
+          "masking": "QUADRUPLE",
+          "whoMasked": [
+            "PARTICIPANT",
+            "CARE_PROVIDER",
+            "INVESTIGATOR",
+            "OUTCOMES_ASSESSOR"
+          ]
+        }
+      },
+      "enrollmentInfo": {
+        "count": 142,
+        "type": "ACTUAL"
+      }
+    },
+    "armsInterventionsModule": {
+      "armGroups": [
+        {
+          "label": "HMI-115 60mg",
+          "type": "EXPERIMENTAL",
+          "description": "Once Every 2 weeks, subcutaneously injection",
+          "interventionNames": [
+            "Drug: HMI-115"
+          ]
+        },
+        {
+          "label": "HMI-115 120mg",
+          "type": "EXPERIMENTAL",
+          "description": "Once Every 2 weeks, subcutaneously injection",
+          "interventionNames": [
+            "Drug: HMI-115"
+          ]
+        },
+        {
+          "label": "HMI-115 240mg",
+          "type": "EXPERIMENTAL",
+          "description": "Once Every 2 weeks, subcutaneously injection",
+          "interventionNames": [
+            "Drug: HMI-115"
+          ]
+        },
+        {
+          "label": "Placebo",
+          "type": "PLACEBO_COMPARATOR",
+          "description": "Once Every 2 weeks, subcutaneously injection",
+          "interventionNames": [
+            "Drug: Placebo"
+          ]
+        }
+      ],
+      "interventions": [
+        {
+          "type": "DRUG",
+          "name": "HMI-115",
+          "description": "HMI-115 is human monoclonal antibody",
+          "armGroupLabels": [
+            "HMI-115 120mg",
+            "HMI-115 240mg",
+            "HMI-115 60mg"
+          ]
+        },
+        {
+          "type": "DRUG",
+          "name": "Placebo",
+          "description": "Placebo",
+          "armGroupLabels": [
+            "Placebo"
+          ]
+        }
+      ]
+    },
+    "outcomesModule": {
+      "primaryOutcomes": [
+        {
+          "measure": "Change in Dysmenorrhea (DYS) Measured by Numeric Rating Scale (NRS) From Baseline to Week 12 (Percentage Change)",
+          "description": "The Numeric Rating Scale for dysmenorrhea ranges from 0 (no pain) to 10 (severe pain). Higher scores mean a worse outcome.",
+          "timeFrame": "Baseline, Week 12"
+        },
+        {
+          "measure": "Change in Dysmenorrhea (DYS) Measured by Numeric Rating Scale (NRS) From Baseline to Week 12\uff08Absolute Score Change\uff09",
+          "description": "The Numeric Rating Scale for dysmenorrhea ranges from 0 (no pain) to 10 (severe pain). Higher scores mean a worse outcome.",
+          "timeFrame": "Baseline, Week 12"
+        }
+      ],
+      "secondaryOutcomes": [
+        {
+          "measure": "Change in Dysmenorrhea (DYS) Measured by Numeric Rating Scale(NRS) From Baseline to Week 24 (Percentage Change)",
+          "description": "The Numeric Rating Scale for dysmenorrhea ranges from 0 (no pain) to 10 (severe pain). Higher scores mean a worse outcome.",
+          "timeFrame": "Baseline, Week 24"
+        },
+        {
+          "measure": "Change in Non-menstrual Pelvic Pain (NMPP) Measured by Numeric Rating Scale (NRS) From Baseline to Week 12 and 24 (Percentage Change)",
+          "description": "The Numeric Rating Scale for non-menstrual pelvic pain (NMPP) ranges 0 (no pain) to 10 (severe pain). Higher scores mean a worse outcome.",
+          "timeFrame": "Baseline, week 12 and 24"
+        },
+        {
+          "measure": "Change in Dyspareunia (DYSP) Measured by NRS From Baseline to Week 12 and 24 (Percentage Change)",
+          "description": "The Numering Rating Score for dyspareunia ranges from 0 (no pain) to 10 (severe pain). Higher scores mean a worse outcome.",
+          "timeFrame": "Baseline, week 12 and 24"
+        },
+        {
+          "measure": "Change From Baseline (CFB) in the Monthly Mean Endometriosis Daily Impact Pain Scale for DYS, NMPP and DYSP",
+          "description": "Endometriosis Daily Impact Pain Scale ranges from 0 (none) to 3 (severe) as recorded in a daily electronic diary. The higher scores mean worse outcome.",
+          "timeFrame": "Baseline, week 12 and 24"
+        },
+        {
+          "measure": "Change From Baseline (CFB) by Visit in Permitted Rescue Medication Use",
+          "description": "Assessment was based on average pill counts at each apecific period od days",
+          "timeFrame": "Baseline, week 12 and 24"
+        },
+        {
+          "measure": "Change in Menstrual Period Heaviness (Bleeding) From Baseline by Visit",
+          "description": "Assessment was based on tampons or pads used. 0 means no bleeding, 4 means heavy bleeding. Higher score means more bleeding.",
+          "timeFrame": "Baseline, week 12 and 24"
+        },
+        {
+          "measure": "Change in Dysmenorrhea(DYS) Measured by Numeric Rating Scale (NRS) From Baseline to Week 24 (Absolute Score Change)",
+          "description": "The Numeric Rating Scale for dysmenorrhea ranges from 0 (no pain) to 10 (severe pain). Higher scores mean a worse outcome.",
+          "timeFrame": "Baseline, Week 24"
+        },
+        {
+          "measure": "Change in Non-menstrual Pelvic Pain (NMPP) Measured by Numeric Rating Scale (NRS) From Baseline to Week 12 and 24 (Absolute Score Change)",
+          "description": "The Numeric Rating Scale (NRS) for non-menstrual pelvic pain (NMPP) ranges 0 (no pain) to 10 (severe pain). Higher scores mean a worse outcome.",
+          "timeFrame": "Baseline, Week12, Week24"
+        },
+        {
+          "measure": "Change in Dyspareunia (DYSP) Measured by Numering Rating Score(NRS) From Baseline to Week 12 and 24 (Absolute Score Change)",
+          "description": "The Numering Rating Score(NRS) for dyspareunia(DYSP) ranges from 0 (no pain) to 10 (severe pain). Higher scores mean a worse outcome.",
+          "timeFrame": "Baseline, Week12, Week24"
+        }
+      ]
+    },
+    "eligibilityModule": {
+      "eligibilityCriteria": "Inclusion Criteria:\n\n1. Pre-menopausal female subjects, between 18 and 49 years of age, inclusive, at the time of signing informed consent.\n2. Subject must have a clinical diagnosis of endometriosis (laparoscopy or laparotomy) as documented by medical records within 10 years before screening.\n3. Subject must have a Composite Pelvic Signs and Symptoms Score total score of \u2265 6 with a score of at least 2 for DYS and at least 2 for NMPP at screening.\n4. Subject agrees not to participate in another interventional study while participating in the present study.\n\nExclusion Criteria:\n\n1. Subject is pregnant or breastfeeding or is planning a pregnancy during the study period.\n2. Subject has chronic pelvic pain that is not caused by endometriosis or has any other chronic pain syndrome or other chronic therapy, or that would interfere with the assessment of endometriosis-related pain\n3. Subject has clinically significant gynecologic condition other than endometriosis\n4. Subject has previous history of a severe, life-threatening or other significant sensitivity to any opioids or non-steroidal anti inflammatory drugs (NSAIDS) or any contraindication to their use such as gastrointestinal ulcer or bleeding\n5. Subject has history of hysterectomy and/or bilateral oophorectomy\n6. Subjects with past or present pituitary tumor growth\n7. Subjects has a history of osteoporosis or other metabolic bone disease",
+      "healthyVolunteers": false,
+      "sex": "FEMALE",
+      "minimumAge": "18 Years",
+      "maximumAge": "49 Years",
+      "stdAges": [
+        "ADULT"
+      ]
+    }
+  }
+}

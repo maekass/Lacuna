@@ -134,3 +134,16 @@ context only — it does not corroborate that the acquisition occurred.
 Burden–capital gap scores stay on `/research` — they do not decorate
 deal-workspace valuation matrices or dossier comps. Dollar output on that panel
 is the verified-dataset stage funding median only.
+
+---
+
+## Therapeutics graph
+
+`src/data/therapeutics/` is a separate reference graph. It does not add rows to
+`dataset.verified.json` and it does not feed deal economics, valuation peers, or
+dual-source badges.
+
+Observed, derived, and proxy claims stay on sourced fields. Analyst assumptions
+live only on `InvestmentThesis`. The first vertical is endometriosis. It is a
+curated demonstration, not a comprehensive therapeutics database. See
+[THERAPEUTICS_ONTOLOGY.md](THERAPEUTICS_ONTOLOGY.md).

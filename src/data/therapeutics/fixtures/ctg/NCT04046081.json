@@ -1,0 +1,178 @@
+{
+  "hasResults": false,
+  "protocolSection": {
+    "identificationModule": {
+      "nctId": "NCT04046081",
+      "orgStudyIdInfo": {
+        "id": "AC18127"
+      },
+      "organization": {
+        "fullName": "University of Edinburgh",
+        "class": "OTHER"
+      },
+      "briefTitle": "A Clinical Trial to Evaluate Dichloroacetate (DCA) as a Treatment for Endometriosis-associated Pain",
+      "officialTitle": "A Single-arm Open Label Exploratory Clinical Trial to Evaluate Dichloroacetate (DCA) as a Possible Treatment for Endometriosis-associated Pain",
+      "acronym": "EPiC"
+    },
+    "statusModule": {
+      "statusVerifiedDate": "2024-06",
+      "overallStatus": "COMPLETED",
+      "expandedAccessInfo": {
+        "hasExpandedAccess": false
+      },
+      "startDateStruct": {
+        "date": "2019-11-19",
+        "type": "ACTUAL"
+      },
+      "primaryCompletionDateStruct": {
+        "date": "2021-09-30",
+        "type": "ACTUAL"
+      },
+      "completionDateStruct": {
+        "date": "2021-09-30",
+        "type": "ACTUAL"
+      },
+      "studyFirstSubmitDate": "2019-07-31",
+      "studyFirstSubmitQcDate": "2019-08-02",
+      "studyFirstPostDateStruct": {
+        "date": "2019-08-06",
+        "type": "ACTUAL"
+      },
+      "lastUpdateSubmitDate": "2024-06-11",
+      "lastUpdatePostDateStruct": {
+        "date": "2024-06-13",
+        "type": "ACTUAL"
+      }
+    },
+    "sponsorCollaboratorsModule": {
+      "responsibleParty": {
+        "type": "SPONSOR"
+      },
+      "leadSponsor": {
+        "name": "University of Edinburgh",
+        "class": "OTHER"
+      },
+      "collaborators": [
+        {
+          "name": "University of Nottingham",
+          "class": "OTHER"
+        },
+        {
+          "name": "Ferring Pharmaceuticals",
+          "class": "INDUSTRY"
+        },
+        {
+          "name": "University of Birmingham",
+          "class": "OTHER"
+        }
+      ]
+    },
+    "descriptionModule": {
+      "briefSummary": "This is a single-arm open label exploratory clinical trial to evaluate dichloroacetate (DCA) as a possible treatment for treatment of endometriosis-associated pain",
+      "detailedDescription": "Endometriosis is a chronic condition usually affecting women throughout their reproductive lives. It is defined as a growth of endometrial-like tissue (womb lining) outside the uterus (womb) and is associated with chronic pelvic pain that can be frequent and severe, resulting in tiredness, lower quality of life and difficulties in getting pregnant. Current treatments are unsatisfactory and there is an unmet need for new medical treatment for endometriosis. Research findings from our laboratory have shown that women with endometriosis have more lactate in their pelvis. In laboratory models of endometriosis, we have tested dichloroacetate (DCA), a compound used to treat metabolic disorders in children. Our results showed that DCA could stop the growth and survival of endometriosis cells and reduce lactate production. In our study we plan to investigate if we can we can recruit and retain women into a trial using this treatment. We will recruit 30 women aged 18 or over, with pelvic pain and a diagnosis of endometriosis within the last three years. Participants will complete informed consent, be willing to comply with the treatment and use contraception throughout the trial. We will recruit patients over six months at Royal Infirmary of Edinburgh. Women who consent will take a daily dose of DCA capsules for 12 weeks."
+    },
+    "conditionsModule": {
+      "conditions": [
+        "Endometriosis"
+      ],
+      "keywords": [
+        "Endometriosis",
+        "Dichloroacetate"
+      ]
+    },
+    "designModule": {
+      "studyType": "INTERVENTIONAL",
+      "phases": [
+        "NA"
+      ],
+      "designInfo": {
+        "allocation": "NA",
+        "interventionModel": "SINGLE_GROUP",
+        "primaryPurpose": "OTHER",
+        "maskingInfo": {
+          "masking": "NONE"
+        }
+      },
+      "enrollmentInfo": {
+        "count": 30,
+        "type": "ACTUAL"
+      }
+    },
+    "armsInterventionsModule": {
+      "armGroups": [
+        {
+          "label": "Dichloroacetate",
+          "type": "OTHER",
+          "description": "Open label study",
+          "interventionNames": [
+            "Drug: Dichloroacetate"
+          ]
+        }
+      ],
+      "interventions": [
+        {
+          "type": "DRUG",
+          "name": "Dichloroacetate",
+          "description": "6.25 mg/kg BD for 6 weeks increasing to 12.5 mg/kg BD for 6 weeks",
+          "armGroupLabels": [
+            "Dichloroacetate"
+          ],
+          "otherNames": [
+            "DCA"
+          ]
+        }
+      ]
+    },
+    "outcomesModule": {
+      "primaryOutcomes": [
+        {
+          "measure": "To determine whether it is possible to achieve acceptable recruitment and retention rates within defined inclusion/exclusion criteria.",
+          "description": "The proportion of screened women who are eligible for the trial determined from the screening logs",
+          "timeFrame": "Screening"
+        },
+        {
+          "measure": "To determine whether it is possible to achieve acceptable recruitment and retention rates within defined inclusion/exclusion criteria.",
+          "description": "The proportion of eligible patients recruited to the study recorded on the screening logs",
+          "timeFrame": "Screening"
+        },
+        {
+          "measure": "To determine whether it is possible to achieve acceptable recruitment and retention rates within defined inclusion/exclusion criteria.",
+          "description": "The proportion of recruited patients who answer their average NRS scores at visits 3 and 5, complete the assessment tools (questionnaires) and attend for designated blood testing",
+          "timeFrame": "Throughout the treatment (Week 1- 12)"
+        }
+      ],
+      "secondaryOutcomes": [
+        {
+          "measure": "To determine the acceptability to patients of the proposed methods of recruitment, treatment, questionnaires and follow up.",
+          "description": "Assessed by acceptability questionnaire at the end of study asking questions about participants' satisfaction with the methods of recruitment, treatment, questionnaires and follow up",
+          "timeFrame": "Week 16"
+        },
+        {
+          "measure": "To assess whether dichloroacetate is well-tolerated in women with endometriosis.",
+          "description": "Self-reported side effects during and after the treatment",
+          "timeFrame": "Throughout the treatment up to week 16"
+        },
+        {
+          "measure": "To determine participants' compliance with treatment and to assess the tools used to measure it.",
+          "description": "Assessed by self-report using treatment diaries to measure number of doses taken",
+          "timeFrame": "Throughout the treatment (Week 1- 12)"
+        },
+        {
+          "measure": "To determine participants' compliance with treatment and to assess the tools used to measure it.",
+          "description": "Assessed by measuring levels of systemic dichloroacetate from blood samples using mass spectrometry",
+          "timeFrame": "Throughout the treatment (Week 1- 12)"
+        }
+      ]
+    },
+    "eligibilityModule": {
+      "eligibilityCriteria": "Inclusion Criteria:\n\n* Women aged 18 or over\n* Weight between 50 and 100kg\n* Pre-menopausal\n* Superficial peritoneal endometriosis (ASRM Stage I or II) at laparoscopy, performed within the last three years (and \\>2 weeks from surgery)\n* Pelvic pain for longer than six months\n* Average pain score of \u2265 4 over the four weeks prior to treatment\n* Willing to comply with the treatment\n* Willing to use contraception throughout the trial\n* Willing and able to complete informed consent\n\nExclusion Criteria:\n\n* Evidence of ovarian endometrioma or deep endometriosis (based upon current surgical staging or most recent imaging)\n* Women who are pregnant or actively trying to get pregnant\n* Known allergy or hypersensitivity to any excipient of DCA\n* Breastfeeding\n* Clinical evidence of pre-existing neuropathy\n* Diabetes\n* History of liver disease\n* History of kidney disease\n* Taking part in a CTIMP or other interventional non-CTIMP studies\n* Patient on combination antiretroviral therapy\n* History of malabsorption syndrome or substantial amount of small bowels or stomach removed",
+      "healthyVolunteers": false,
+      "sex": "FEMALE",
+      "minimumAge": "18 Years",
+      "stdAges": [
+        "ADULT",
+        "OLDER_ADULT"
+      ]
+    }
+  }
+}

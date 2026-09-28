@@ -11,7 +11,12 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/deals/staging", "/deals/staging/", "/api/"],
+      disallow: [
+        "/deals/staging",
+        "/deals/staging/",
+        "/api/",
+        "/therapeutics",
+      ],
     },
     sitemap: new URL("/sitemap.xml", SITE_ORIGIN).href,
     host: SITE_ORIGIN,
