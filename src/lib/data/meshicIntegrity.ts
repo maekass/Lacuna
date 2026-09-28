@@ -22,6 +22,7 @@ export interface LedgerRecord {
   field: string;
   value: number;
   unit: string;
+  valueBasis: string;
   sourceCitation: string;
   sourceUrl?: string;
   effectiveDate: string | null;
@@ -158,6 +159,22 @@ export function assessLedgerIntegrity(
           "Use YYYY-MM-DD for a real day, or null when the date is unknown.",
         ));
       }
+    }
+
+    if (
+      record.valueBasis === "locator_only" &&
+      (record.effectiveDate != null ||
+        record.publicAsOfDate != null ||
+        record.datePrecision !== "unknown")
+    ) {
+      findings.push(finding(
+        "RED",
+        "ledger.replayEligibility",
+        "ledger.locatorOnlyDated",
+        path,
+        "A locator_only record carries a date even though its citation does not substantiate the stored economic value at that date.",
+        "Set effectiveDate and publicAsOfDate to null and datePrecision to unknown until a source explicitly supports the value and its publication timing.",
+      ));
     }
 
     if (
