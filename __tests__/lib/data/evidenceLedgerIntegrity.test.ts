@@ -228,10 +228,10 @@ describe("economic evidence ledger integrity", () => {
     });
     expect(byId.get("c23:lastKnownValuation:v1")).toMatchObject({
       value: 13900,
-      valueBasis: "approximate",
-      publicAsOfDate: "2020-10-30",
+      valueBasis: "stated",
+      publicAsOfDate: "2021-03-01",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1477449/000110465920090575/tm2026658d1_8k.htm",
+        "https://www.sec.gov/Archives/edgar/data/1477449/000155837021002118/tdoc-20201231x10k.htm",
     });
     expect(byId.get("c68:lastKnownValuation:v1")?.publicAsOfDate).toBe(
       "2012-08-01",
