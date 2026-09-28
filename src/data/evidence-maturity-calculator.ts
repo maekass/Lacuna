@@ -10,15 +10,10 @@
 
 import {
   ClinicalTrial,
-  CompanyTrialProfile,
   PHASE_SCORES,
   TrialPhase,
 } from "./clinicaltrials-mcp-connector";
-import {
-  CompanyFDAProfile,
-  FDA_CLEARANCE_SCORES,
-  FDAProduct,
-} from "./openfda-mcp-connector";
+import { FDA_CLEARANCE_SCORES, FDAProduct } from "./openfda-mcp-connector";
 
 export interface EvidenceMaturityInput {
   companyId: string;
@@ -78,35 +73,6 @@ export interface TimelineInsight {
   description: string;
   impact: "positive" | "neutral" | "negative";
 }
-
-// Flagship journals for publication scoring
-const FLAGSHIP_JOURNALS = [
-  "JAMA",
-  "New England Journal of Medicine",
-  "NEJM",
-  "The Lancet",
-  "Lancet",
-  "Nature Medicine",
-  "Nature",
-  "Cell",
-  "Science",
-  "British Medical Journal",
-  "BMJ",
-  "The BMJ",
-  "Annals of Internal Medicine",
-  "Journal of Clinical Oncology",
-  "Obstetrics & Gynecology",
-  "Green Journal",
-  "American Journal of Obstetrics & Gynecology",
-  "AJOG",
-  "Fertility and Sterility",
-  "F&S",
-  "Human Reproduction",
-  "HR",
-  "Contraception",
-  "Menopause",
-  "BJOG: An International Journal of Obstetrics & Gynaecology",
-];
 
 /**
  * Calculate comprehensive evidence maturity score

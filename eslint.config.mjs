@@ -48,6 +48,19 @@ const eslintConfig = defineConfig([
     },
   },
   {
+    name: "lacuna/unused-vars",
+    rules: {
+      "@typescript-eslint/no-unused-vars": ["warn", {
+        args: "after-used",
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_",
+        destructuredArrayIgnorePattern: "^_",
+        ignoreRestSiblings: true,
+      }],
+    },
+  },
+  {
     name: "lacuna/client-no-static-verified-dataset",
     // Client-component surfaces (`"use client"`). Server pages/layouts under
     // src/app/(product) may still import staticDataset for build-time paths.

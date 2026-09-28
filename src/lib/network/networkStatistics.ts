@@ -318,7 +318,7 @@ export function averageShortestPath(
       });
     }
 
-    distances.forEach((d, _) => {
+    distances.forEach((d) => {
       if (d > 0) {
         pathLengths.push(d);
         if (d > diameter) diameter = d;

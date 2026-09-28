@@ -1,15 +1,7 @@
 import { NextResponse } from "next/server";
 import { enforceRateLimit } from "@/lib/api/rateLimitGuard";
+import { csvEscape } from "@/lib/api/csvEscape";
 import { getVerifiedDataset } from "@/lib/data/datasetProvider";
-
-function csvEscape(value: string) {
-  const raw = value ?? "";
-  // CSV injection hardening for spreadsheet apps (Excel/Sheets).
-  const needsNeutralize = /^[=+\-@]/.test(raw);
-  const safe = needsNeutralize ? `'${raw}` : raw;
-  const escaped = safe.replace(/"/g, '""');
-  return `"${escaped}"`;
-}
 
 export async function GET(request: Request) {
   const limited = await enforceRateLimit(request, {
