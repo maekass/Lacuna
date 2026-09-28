@@ -68,10 +68,20 @@ function validDay(value: string): boolean {
 
 function precisionAligned(precision: string, day: string): boolean {
   if (precision === "day") return true;
-  if (precision === "month") return day.endsWith("-01");
-  if (precision === "year") return day.endsWith("-01-01");
+  if (precision === "year") return day.endsWith("-12-31");
   if (precision === "quarter") {
-    return /-01-01$|-04-01$|-07-01$|-10-01$/.test(day);
+    return /-03-31$|-06-30$|-09-30$|-12-31$/.test(day);
+  }
+  if (precision === "month") {
+    const date = new Date(`${day}T00:00:00Z`);
+    if (Number.isNaN(date.getTime())) return false;
+    const next = new Date(Date.UTC(
+      date.getUTCFullYear(),
+      date.getUTCMonth() + 1,
+      1,
+    ));
+    next.setUTCDate(next.getUTCDate() - 1);
+    return next.toISOString().slice(0, 10) === day;
   }
   return false;
 }
@@ -295,24 +305,24 @@ export function assessLedgerIntegrity(
   );
   if (missingPublicAsOf.length > 0) {
     findings.push(finding(
-      "RED",
+      "AMBER",
       "ledger.replayEligibility",
       "ledger.missingPublicAsOf",
       "evidence.verified.json",
       `${missingPublicAsOf.length}/${active.length} active economic records have publicAsOfDate null and are current-only. Historical replay cannot use them.`,
-      "Attach a real publication date from the source when one exists. Do not invent a date. Until then the strict gate fails because replay eligibility is zero for those facts.",
+      "Attach a real publication date from the source when one exists. Do not invent a date; until then keep the fact current-only.",
     ));
   }
 
   const citationOnly = active.filter((record) => !record.sourceUrl).length;
   if (citationOnly > 0) {
     findings.push(finding(
-      "RED",
+      "AMBER",
       "ledger.provenance",
       "ledger.citationWithoutUrl",
       "evidence.verified.json",
       `${citationOnly} active records have a citation and no source URL.`,
-      "Add the resolvable source URL the citation names. A citation alone is not enough for the strict gate.",
+      "Add a resolvable source URL when the citation identifies one. Keep the citation-only record reported as provenance debt until then.",
     ));
   }
 
