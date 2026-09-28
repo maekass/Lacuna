@@ -136,6 +136,10 @@ and `ml/` is optional/self-hosted and out of scope for normal app work.
   The update script and `~/.bashrc` select Node 24 via `nvm use 24`; if a shell
   ever reports v22, run `nvm use 24` (it prepends Node 24 ahead of the daemon
   node). Confirm with `node --version` → `v24.x`.
+- **Always install dependencies before lint, typecheck, test, or build.** The
+  cloud image can boot without `node_modules`. From the repo root, with Node 24
+  on `PATH`, run `npm ci` (lockfile install). Do this even when an earlier step
+  in the same task already inspected the tree.
 - Run/lint/test/build (all standard, see `package.json`):
   - Dev server: `npm run dev` → http://localhost:3000 (Turbopack, ~fast start).
   - Lint: `npm run lint` · Types: `npm run typecheck`.

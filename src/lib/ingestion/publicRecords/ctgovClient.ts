@@ -2,8 +2,6 @@
  * Shared ClinicalTrials.gov API client settings (server routes + ingestion).
  */
 
-import process from "node:process";
-
 export const CTG_API_BASE = "https://clinicaltrials.gov/api/v2";
 
 export const CTG_USER_AGENT =
