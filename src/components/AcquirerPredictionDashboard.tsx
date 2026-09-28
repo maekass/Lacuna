@@ -8,6 +8,7 @@
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import Metric from "@/components/Metric";
 import {
   analyzeCompetitiveDynamics,
   type ComparableDeal,
@@ -168,12 +169,23 @@ export default function AcquirerPredictionDashboard() {
                 </p>
               </div>
               <div className="text-right">
-                <div
+                <Metric
+                  label="Descriptive overlap index"
                   className="text-2xl font-bold text-lacuna-plum"
-                  title="Unitless 0–100 overlap index from the top historical profile. Not a probability of acquisition."
-                >
-                  {Math.round(selectedAnalysis.overlapIndex * 100)}
-                </div>
+                  formatValue={(value) => String(Math.round(value))}
+                  provenance={{
+                    kind: "assumption",
+                    value: selectedAnalysis.overlapIndex * 100,
+                    model: {
+                      module: "src/data/acquirer-prediction-engine.ts",
+                      exportName: "analyzeCompetitiveDynamics",
+                      definition:
+                        "Top verified acquirer-profile match score scaled to a unitless 0–100 overlap index.",
+                    },
+                    caveat:
+                      "Historical profile overlap only; not a probability of acquisition.",
+                  }}
+                />
                 <div className="text-xs text-lacuna-blue">
                   Descriptive overlap index
                 </div>

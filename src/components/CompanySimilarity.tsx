@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import DealTargetLastKnownValuation from "@/components/DealTargetLastKnownValuation";
+import Metric from "@/components/Metric";
 import { INVESTOR_PORTFOLIOS, type PortfolioKey } from "@/lib/data/portfolios";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
@@ -376,12 +377,24 @@ export default function CompanySimilarity() {
                 )
                 : (
                   <>
-                    <div
+                    <Metric
+                      label="Descriptive similarity index"
                       className="text-lg font-bold text-pink-600"
-                      title="Unitless 0–100 descriptive similarity index. Not a probability."
-                    >
-                      {Math.round(result.similarity * 100)}
-                    </div>
+                      formatValue={(value) => String(Math.round(value))}
+                      provenance={{
+                        kind: "assumption",
+                        value: result.similarity * 100,
+                        model: {
+                          module:
+                            "src/lib/similarity/observedFeatureSimilarity.ts",
+                          exportName: "pairwiseCosine",
+                          definition:
+                            "Cosine similarity over features observed by both companies, scaled to a unitless 0–100 index.",
+                        },
+                        caveat:
+                          "Shared observed features only; not a probability or valuation peer set.",
+                      }}
+                    />
                     <div className="text-xs text-lacuna-text-muted">
                       descriptive index
                     </div>
