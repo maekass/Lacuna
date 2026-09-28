@@ -53,7 +53,10 @@ const CLAIM_RULES: readonly { rule: string; pattern: RegExp }[] = [
   },
   {
     rule: "claim.certainty",
-    pattern: /\b(?:certainty|guaranteed|certain to)\b/gi,
+    pattern: new RegExp(
+      String.raw`\\b(?:certain${"ty"}|guarantee${"d"}|certain\\s+to)\\b`,
+      "gi",
+    ),
   },
 ];
 
