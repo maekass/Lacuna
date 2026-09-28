@@ -198,7 +198,7 @@ describe("quality visibility census", () => {
     expect(markdown).toContain("Vintage");
     expect(markdown).toContain("Display provenance");
     expect(markdown).toContain("Quality grades");
-    expect(markdown).toContain("Historical replay provenance");
+    expect(markdown).toContain("Historical replay eligibility");
     expect(markdown).toContain("Do not infer a date");
   });
 
