@@ -661,6 +661,19 @@ export function validateEconomicEvidenceLedger(
         entity: record.id,
       });
     }
+    // A locator that does not quote the funding total cannot date that total.
+    if (
+      record.field === "totalFunding" &&
+      record.valueBasis === "locator_only" &&
+      record.publicAsOfDate
+    ) {
+      issues.push({
+        code: "funding-locator-dated",
+        message:
+          `Funding evidence ${record.id} does not quote its total, so ${record.publicAsOfDate} cannot be its vintage`,
+        entity: record.id,
+      });
+    }
   }
 
   return issues;

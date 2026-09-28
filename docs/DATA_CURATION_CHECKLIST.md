@@ -52,6 +52,14 @@ value may appear in the current descriptive catalog but is **not** eligible for
 a dated replay. Keep null for an unquoted FX conversion and for a figure no
 company source states (`valueBasis` `unquoted_fx` or `unstated_conflict`).
 
+A `totalFunding` citation that does not state the total (`locator_only`) cannot
+keep a `publicAsOfDate`. An acquisition filing's date is not a funding vintage
+unless that filing states the funding total. When no company source states the
+stored total — including when the only nearby number is deal consideration, a
+milestone, or trailing revenue — set `valueBasis` to `unstated_conflict` and
+leave the vintage null. Do not overwrite the stored dollars; append a new row
+with `supersedesId` only when the number itself changes.
+
 `valueBasis` is required. It records whether the number is a stated point, an
 approximation, the high end of a range, a floor (`at_least`), a ceiling
 (`up_to`), upfront cash, a fully diluted total, enterprise value, equity value,

@@ -29,7 +29,8 @@ describe("economic evidence ledger integrity", () => {
     expect(byId.get("c1:lastKnownValuation:v1")).toMatchObject({
       value: 225,
       valueBasis: "range_high",
-      publicAsOfDate: null,
+      effectiveDate: "2021-05-01",
+      publicAsOfDate: "2021-05-31",
     });
     expect(byId.get("c4:lastKnownValuation:v1")).toMatchObject({
       value: 1000,
@@ -69,7 +70,7 @@ describe("economic evidence ledger integrity", () => {
     expect(byId.get("c73:lastKnownValuation:v1")).toMatchObject({
       value: 1100,
       valueBasis: "enterprise_value",
-      publicAsOfDate: null,
+      publicAsOfDate: "2023-07-29",
     });
     expect(byId.get("c76:totalFunding:v1")).toMatchObject({
       value: 19,
@@ -192,5 +193,89 @@ describe("economic evidence ledger integrity", () => {
       dataset,
     );
     expect(issues.some((issue) => issue.code === "disclosure")).toBe(true);
+  });
+
+  it("does not lend an acquisition filing date to a funding total the filing does not state (success)", () => {
+    const byId = new Map(ledger.records.map((record) => [record.id, record]));
+    const undatedFunding = [
+      "c13:totalFunding:v1",
+      "c23:totalFunding:v1",
+      "c28:totalFunding:v1",
+      "c31:totalFunding:v1",
+      "c35:totalFunding:v1",
+      "c64:totalFunding:v1",
+      "c74:totalFunding:v1",
+    ];
+    for (const id of undatedFunding) {
+      expect(byId.get(id), id).toMatchObject({
+        valueBasis: "unstated_conflict",
+        datePrecision: "unknown",
+        publicAsOfDate: null,
+      });
+    }
+    expect(byId.get("c13:lastKnownValuation:v1")).toMatchObject({
+      value: 400,
+      valueBasis: "stated",
+      publicAsOfDate: "2021-10-22",
+    });
+    expect(byId.get("c23:lastKnownValuation:v1")).toMatchObject({
+      value: 13900,
+      valueBasis: "approximate",
+      publicAsOfDate: "2020-10-30",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1477449/000110465920090575/tm2026658d1_8k.htm",
+    });
+    expect(byId.get("c68:lastKnownValuation:v1")?.publicAsOfDate).toBe(
+      "2012-08-01",
+    );
+    expect(byId.get("c69:lastKnownValuation:v1")?.publicAsOfDate).toBe(
+      "2020-08-11",
+    );
+    expect(byId.get("c75:lastKnownValuation:v1")?.publicAsOfDate).toBe(
+      "2024-01-31",
+    );
+  });
+
+  it("rejects a dated funding locator that never quotes the total (error)", () => {
+    const dataset = parseVerifiedDataset({
+      provenance: {
+        lastUpdated: "2026-09-20",
+        sources: ["test"],
+        notes: [],
+        purpose: "test",
+        disclaimer: "test",
+      },
+      companies: [{
+        id: "c-test",
+        name: "Test",
+        sector: "Test",
+        stage: "Seed",
+      }],
+      acquirers: [],
+      acquisitions: [],
+    });
+    const issues = validateEconomicEvidenceLedger(
+      parseEconomicEvidenceLedger({
+        schemaVersion: "1.0",
+        records: [{
+          id: "c-test:totalFunding:v1",
+          companyId: "c-test",
+          field: "totalFunding",
+          value: 25,
+          unit: "USD_M",
+          valueBasis: "locator_only",
+          sourceCitation: "Acquirer press release (Mar 30, 2021)",
+          effectiveDate: "2021-03-30",
+          publicAsOfDate: "2021-03-30",
+          datePrecision: "day",
+          verificationStatus: "reported",
+          recordedAt: "2026-09-20",
+        }],
+      }),
+      dataset,
+    );
+    expect(issues.some((issue) => issue.code === "funding-locator-dated")).toBe(
+      true,
+    );
   });
 });

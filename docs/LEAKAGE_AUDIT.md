@@ -95,9 +95,12 @@ in-sample event fraction.
    `acquisitions.announcedDate` is not copied onto the ledger. Rows whose
    citation does not date the figure — including unquoted currency conversions
    and totals no company source states — keep `publicAsOfDate: null` and fail
-   closed. Stage and sector still have no field vintage. A value sitting on an
-   acquired company may be the deal price, a post-deal stage string, or a
-   pre-deal figure; `valueBasis` records which of those the citation describes.
+   closed. A funding total the citation does not quote also stays null, even
+   when the locator is a dated acquisition filing: that filing's date is not
+   evidence the funding figure was public. Stage and sector still have no field
+   vintage. A value sitting on an acquired company may be the deal price, a
+   post-deal stage string, or a pre-deal figure; `valueBasis` records which of
+   those the citation describes.
 3. **Dead branches.** `clinicalEfficacy` and `teamMetrics` never arrive from the
    verified adapter. Their cut points cannot be checked against outcomes because
    they never run. That is not evidence they are clean.

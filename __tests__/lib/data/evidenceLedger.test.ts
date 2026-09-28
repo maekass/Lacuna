@@ -151,5 +151,30 @@ describe("economic evidence ledger", () => {
       "totalFunding",
       "2023-07-31",
     )).toEqual({ eligible: false, reason: "missing-provenance" });
+
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c23",
+      "totalFunding",
+      "2020-10-30",
+    )).toEqual({ eligible: false, reason: "missing-provenance" });
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c13",
+      "totalFunding",
+      "2021-10-22",
+    )).toEqual({ eligible: false, reason: "missing-provenance" });
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c13",
+      "lastKnownValuation",
+      "2021-10-21",
+    )).toEqual({ eligible: false, reason: "after-cutoff" });
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c13",
+      "lastKnownValuation",
+      "2021-10-22",
+    )).toMatchObject({ eligible: true, evidence: { value: 400 } });
   });
 });
