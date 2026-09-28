@@ -31,9 +31,9 @@ export default function IntelligencePage(
           Intelligence workspace
         </h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
-          Reimbursement context, acquirer affinity scores, and export tools. Fit
-          scores stay labeled affinity — they do not feed deal economics,
-          valuation peers, or dual-source badges.
+          Reimbursement context, historical acquirer-profile overlap, and export
+          tools. Overlap indexes are descriptive heuristics — they do not feed
+          deal economics, valuation peers, or dual-source badges.
         </p>
       </header>
 

@@ -14,7 +14,8 @@ describe("verifiedDatasetAdapters", () => {
   it("getVerifiedCompaniesForAnalysis maps company fields (success)", () => {
     const companies = getVerifiedCompaniesForAnalysis(derived);
     expect(companies[0].id).toBe("c24");
-    expect(companies[0].employees).toBe(0);
+    expect(companies[0].employees).toBeUndefined();
+    expect(companies[0].stage).toBe("Unspecified");
     expect(companies[0].valuation).toBe(230);
   });
 

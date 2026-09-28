@@ -45,6 +45,7 @@ const EXEMPTION_CATEGORIES = new Set([
   "chart-axis",
   "record-id",
   "dataset-metadata",
+  "ui-control",
   "ui-count",
 ]);
 

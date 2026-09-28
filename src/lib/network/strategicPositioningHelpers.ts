@@ -76,14 +76,20 @@ export function hashString(value: string) {
   return hash;
 }
 
-/** Maps a free-form stage string to a y-axis position (0–1). */
-export function getStagePosition(stage: string) {
+/**
+ * Maps a free-form stage string to a y-axis position (0–1).
+ * Returns null when the label is not a recognized funding stage.
+ * Outcome-only labels are not placed at a midpoint.
+ */
+export function getStagePosition(stage: string): number | null {
   if (/public/i.test(stage)) return 0.95;
   if (/pre-ipo/i.test(stage)) return 0.86;
-  if (/series d|series e|series f|late stage/i.test(stage)) return 0.76;
+  if (/series d|series e|series f|series g|late stage/i.test(stage)) {
+    return 0.76;
+  }
   if (/series c/i.test(stage)) return 0.62;
   if (/series b/i.test(stage)) return 0.48;
   if (/series a/i.test(stage)) return 0.34;
   if (/seed|pre-seed/i.test(stage)) return 0.18;
-  return 0.52;
+  return null;
 }

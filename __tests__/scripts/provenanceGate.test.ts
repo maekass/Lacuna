@@ -64,6 +64,17 @@ describe("provenance census", () => {
       .toThrow("key, supported category, and reason are required");
   });
 
+  it("accepts UI-control exemptions for non-metric accessibility attributes", () => {
+    expect(() =>
+      validateExemptions([{
+        key:
+          "src/components/AcquirerPredictionDashboard.tsx::AcquirerPredictionDashboard::0",
+        category: "ui-control",
+        reason: "Keyboard focus setting, not a displayed metric.",
+      }])
+    ).not.toThrow();
+  });
+
   it("distinguishes regressions from stale improvements", () => {
     const baseline: ProvenanceCensus = {
       version: 1,

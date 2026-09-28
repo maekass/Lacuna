@@ -8,6 +8,7 @@
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import Metric from "@/components/Metric";
 import {
   analyzeCompetitiveDynamics,
   type ComparableDeal,
@@ -126,6 +127,7 @@ export default function AcquirerPredictionDashboard() {
           {companyProfiles.map((company) => (
             <button
               key={company.id}
+              type="button"
               onClick={() =>
                 setSelectedCompany(
                   company.id === selectedCompany ? null : company.id,
@@ -161,23 +163,40 @@ export default function AcquirerPredictionDashboard() {
                 </h3>
                 <p className="text-sm text-lacuna-blue">
                   {selectedAnalysis.company.sector.replace(/_/g, " ")} •{" "}
-                  {selectedAnalysis.company.stage.replace(/_/g, " ")}
+                  {selectedAnalysis.company.stage === "unknown"
+                    ? "stage not recorded"
+                    : selectedAnalysis.company.stage.replace(/_/g, " ")}
                 </p>
               </div>
               <div className="text-right">
-                <div className="text-2xl font-bold text-lacuna-plum">
-                  {Math.round(selectedAnalysis.winProbability * 100)}%
-                </div>
+                <Metric
+                  label="Descriptive overlap index"
+                  className="text-2xl font-bold text-lacuna-plum"
+                  formatValue={(value) => String(Math.round(value))}
+                  provenance={{
+                    kind: "assumption",
+                    value: selectedAnalysis.overlapIndex * 100,
+                    model: {
+                      module: "src/data/acquirer-prediction-engine.ts",
+                      exportName: "analyzeCompetitiveDynamics",
+                      definition:
+                        "Top verified acquirer-profile match score scaled to a unitless 0–100 overlap index.",
+                    },
+                    caveat:
+                      "Historical profile overlap only; not a probability of acquisition.",
+                  }}
+                />
                 <div className="text-xs text-lacuna-blue">
-                  Historical acquisition-pattern similarity
+                  Descriptive overlap index
                 </div>
               </div>
             </div>
 
             <p className="mt-4 text-xs text-lacuna-text-muted">
-              Profiles below are historical overlap context. They are not ranked
-              by an acquisition likelihood, and a missing disclosed value is
-              left blank.
+              Profiles below are historical overlap context. The index is not an
+              acquisition probability. A missing disclosed value is left blank.
+              Funding and valuation figures are the current catalog view;
+              records without a public as-of date are not a historical replay.
             </p>
           </div>
 
@@ -201,23 +220,29 @@ export default function AcquirerPredictionDashboard() {
                           {match.acquirer.name}
                         </div>
                         <div className="text-xs text-lacuna-blue">
-                          {match.acquirer.type.replace(/_/g, " ")} • Deal size:
-                          {" "}
-                          {formatCurrency(
-                            match.acquirer.typicalDealSize.min,
-                          )}-{formatCurrency(
-                            match.acquirer.typicalDealSize.max,
-                          )}
+                          {match.acquirer.type.replace(/_/g, " ")}
+                          {" • "}
+                          {match.acquirer.typicalDealSize
+                            ? (
+                              <>
+                                Disclosed deal-size range: {formatCurrency(
+                                  match.acquirer.typicalDealSize.min,
+                                )}-{formatCurrency(
+                                  match.acquirer.typicalDealSize.max,
+                                )}
+                              </>
+                            )
+                            : "Disclosed deal size not available"}
                         </div>
                       </div>
                     </div>
                     {match.estimatedValue && (
-                      <div className="text-right">
+                      <div className="max-w-xs text-right">
                         <div className="text-sm font-semibold text-lacuna-plum">
                           {formatCurrency(match.estimatedValue.median)}
                         </div>
                         <div className="text-xs text-lacuna-text-muted">
-                          Disclosed median
+                          {match.valueRationale}
                         </div>
                       </div>
                     )}
@@ -306,7 +331,7 @@ export default function AcquirerPredictionDashboard() {
                     Profile overlap
                   </th>
                   <th className="px-4 py-2 text-right text-xs font-semibold">
-                    Disclosed median
+                    Context figure
                   </th>
                 </tr>
               </thead>
@@ -314,8 +339,17 @@ export default function AcquirerPredictionDashboard() {
                 {analyses.map(({ profile, analysis }) => (
                   <tr
                     key={profile.id}
-                    className="hover:bg-lacuna-surface-muted cursor-pointer"
+                    tabIndex={0}
+                    role="button"
+                    aria-label={`Analyze ${profile.name}`}
+                    className="cursor-pointer hover:bg-lacuna-surface-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-lacuna-plum"
                     onClick={() => setSelectedCompany(profile.id)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        setSelectedCompany(profile.id);
+                      }
+                    }}
                   >
                     <td className="px-4 py-3 font-medium text-lacuna-plum">
                       {profile.name}
