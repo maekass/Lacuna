@@ -410,7 +410,6 @@ export class CMSReimbursementConnector {
           productName,
           productDescription,
           code,
-          sector,
         );
 
         if (confidence > 0.3) { // Threshold for relevance
@@ -496,7 +495,6 @@ export class CMSReimbursementConnector {
     productName: string,
     productDescription: string,
     cptCode: CPTCode,
-    sector: string,
   ): number {
     let score = 0;
     const productText = `${productName} ${productDescription || ""}`
@@ -538,7 +536,7 @@ export class CMSReimbursementConnector {
       diagnostic: ["ultrasound", "imaging", "diagnostic", "screening", "test"],
     };
 
-    for (const [key, keywords] of Object.entries(sectorKeywords)) {
+    for (const keywords of Object.values(sectorKeywords)) {
       if (
         keywords.some((k) => productText.includes(k)) &&
         keywords.some((k) => codeDesc.includes(k))

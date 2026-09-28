@@ -36,12 +36,6 @@ interface ForceNetworkProps {
   highlightNodeId?: string;
 }
 
-import {
-  LACUNA_PALETTE,
-  LACUNA_SECTOR_COLORS,
-  LACUNA_SEMANTIC,
-} from "@/lib/theme/palette";
-
 /** Undisclosed valuations/deal values use -1 in the dataset adapter. */
 function layoutValuation(valuation: number): number {
   return valuation < 0 ? 40 : valuation;
@@ -110,10 +104,8 @@ export default function ForceNetwork(
   const [isTransitioning, setIsTransitioning] = useState<PortfolioKey | null>(
     null,
   );
-  const [isLoading, setIsLoading] = useState(false);
-  const [focusedPortfolio, setFocusedPortfolio] = useState<PortfolioKey | null>(
-    null,
-  );
+  const [isLoading] = useState(false);
+  const [, setFocusedPortfolio] = useState<PortfolioKey | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const matchingNodeIds = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();

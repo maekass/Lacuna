@@ -172,7 +172,7 @@ describe("SEC ingest contract (msw fixtures)", () => {
     );
     expect(totalRows.rows[0]?.count).toBe(classified.length);
 
-    const second = await syncDealsToDatabase(classified);
+    await syncDealsToDatabase(classified);
     const afterSecond = await reviewableCount();
     expect(afterSecond).toBe(afterFirst);
 
