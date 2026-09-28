@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils/cn";
-import { displayFont, labelFont } from "@/lib/theme/typography";
+import { displayFont, labelFontUppercase } from "@/lib/theme/typography";
 
 interface MetricTileProps {
   value: ReactNode;
@@ -31,8 +31,8 @@ export default function MetricTile({
         {value}
       </div>
       <div
-        className="text-xs text-lacuna-text-muted uppercase mt-1"
-        style={labelFont}
+        className="text-xs text-lacuna-text-muted mt-1"
+        style={labelFontUppercase}
       >
         {label}
       </div>

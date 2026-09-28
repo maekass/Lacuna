@@ -42,12 +42,16 @@ export default function AppShell({ children }: AppShellProps) {
                   className="group flex shrink-0 items-center gap-2 sm:gap-3"
                 >
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg lacuna-gradient transition-transform group-hover:scale-105">
-                    <span className="text-lg font-bold text-white">L</span>
+                    <span className="font-display text-xl font-semibold leading-none text-white">
+                      L
+                    </span>
                   </div>
                   <div>
-                    <p className="text-xl font-bold text-lacuna-plum">Lacuna</p>
-                    <p className="text-xs text-lacuna-blue">
-                      Women&apos;s Health M&amp;A · Diligence Stack
+                    <p className="font-script text-[1.85rem] leading-none text-lacuna-plum">
+                      Lacuna
+                    </p>
+                    <p className="lacuna-kicker mt-1 text-[10px] text-lacuna-blue">
+                      Women&apos;s Health M&amp;A
                     </p>
                   </div>
                 </Link>

@@ -90,7 +90,7 @@ export default function SectionNav({ sections }: SectionNavProps) {
           aria-label="Page sections"
           className="sticky top-20 max-h-[calc(100vh-8rem)] overflow-y-auto rounded-xl border border-lacuna-lavender/30 bg-lacuna-surface/80 p-3 backdrop-blur-sm"
         >
-          <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-wider text-lacuna-blue/70">
+          <p className="lacuna-kicker mb-2 px-2 text-[10px] text-lacuna-blue/70">
             On this page
           </p>
           {list()}

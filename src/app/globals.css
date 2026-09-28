@@ -158,8 +158,13 @@ textarea:focus-visible {
   --color-lacuna-chart-axis: var(--lacuna-chart-axis);
   --color-lacuna-chart-accent: var(--lacuna-chart-accent);
   --color-lacuna-chart-secondary: var(--lacuna-chart-secondary);
-  --font-sans: var(--font-playfair);
-  --font-mono: var(--font-playfair);
+  --font-sans: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  --font-display: var(--font-bodoni), "Bodoni Moda", Didot, serif;
+  --font-script: var(--font-parisienne), Parisienne, "Segoe Script", cursive;
+  --font-elegant: var(--font-ovo), Ovo, Georgia, serif;
+  --font-label: var(--font-jost), Jost, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, Consolas, monospace;
 }
 
 body {
@@ -172,27 +177,43 @@ body {
   );
   background-attachment: fixed;
   color: var(--foreground);
-  font-family:
-    var(--font-playfair),
-    "Didot",
-    "Bodoni MT",
-    "Playfair Display",
-    Georgia,
-    "Times New Roman",
-    serif;
+  font-family: var(--font-sans);
 }
 
-/* Didone serif hierarchy — weight/size/tracking only */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  nav,
+  button,
+  input,
+  select,
+  textarea,
+  label,
+  th {
+    font-family: var(--font-label);
+  }
+}
+
+/* Poster pairing: tracked caps under script and Didone lines. */
+.lacuna-kicker,
 .lacuna-eyebrow {
-  font-family: inherit;
+  font-family: var(--font-label);
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.18em;
 }
 
 .lacuna-eyebrow-wide {
-  font-family: inherit;
+  font-family: var(--font-label);
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.22em;
 }
 
 .lacuna-gradient {
