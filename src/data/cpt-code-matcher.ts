@@ -5,11 +5,7 @@
  * to relevant CPT/HCPCS codes with confidence scoring.
  */
 
-import {
-  cmsConnector,
-  CPTCode,
-  MatchedCode,
-} from "./cms-reimbursement-connector";
+import { cmsConnector, CPTCode } from "./cms-reimbursement-connector";
 
 // Levenshtein distance for string similarity
 function levenshteinDistance(str1: string, str2: string): number {
@@ -140,7 +136,7 @@ export class CPTCodeMatcher {
     const scoredCodes: MatchResult[] = [];
 
     for (const code of allCodes) {
-      const result = this.calculateMatch(searchTerms, code, sector);
+      const result = this.calculateMatch(searchTerms, code);
 
       if (result.confidence >= threshold) {
         scoredCodes.push(result);
@@ -220,7 +216,6 @@ export class CPTCodeMatcher {
   private calculateMatch(
     searchTerms: string[],
     code: CPTCode,
-    sector: string,
   ): MatchResult {
     const codeDesc = code.description.toLowerCase();
 

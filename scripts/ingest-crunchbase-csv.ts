@@ -253,7 +253,7 @@ function main() {
 
       // Try fuzzy match
       if (!matched) {
-        for (const [key, company] of companyByName) {
+        for (const company of companyByName.values()) {
           if (fuzzyMatch(csvName, company.name)) {
             matched = company;
             matchMethod = "fuzzy";

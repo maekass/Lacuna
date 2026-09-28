@@ -7,6 +7,7 @@ import type { ValuationMatrixCellData } from "@/components/ValuationMatrixCell";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import type { TracedValue } from "@/lib/lineage";
 import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
+import { calendarYear } from "@/lib/format/calendarDate";
 import {
   buildValuationMatrixEstimate,
   type CanonicalStage,
@@ -70,7 +71,8 @@ export default function ValuationMatrix() {
       (counts, deal) => {
         const target = byId.get(deal.targetId);
         if (!target) return counts;
-        const year = new Date(deal.announcedDate).getFullYear();
+        const year = calendarYear(deal.announcedDate);
+        if (year === null) return counts;
         const sectorCounts = counts[target.sector] ??
           (counts[target.sector] = {});
         sectorCounts[year] = (sectorCounts[year] ?? 0) + 1;
