@@ -14,6 +14,7 @@ import {
   numericOrNull,
   pointEstimate,
 } from "./estimators";
+import { type ExitRateBasis, indexExitRate } from "./leaveOneOutExitRate";
 import { acquisitionModelCaveats, portfolioCaveats } from "./presentation";
 import { classifyValuationType, DRIVER_WEIGHTS } from "./priors";
 import type {
@@ -84,16 +85,23 @@ export class AcquisitionPredictor {
     return score;
   }
 
-  private sectorExitRate(company: QuantCompany): QuantValue<number> {
+  /**
+   * Leave-one-out exit share for a catalog company. The in-sample sector or
+   * overall share is used only when the company is outside the catalog or
+   * membership was not recorded, and that case stays labeled `in_sample`.
+   */
+  private indexBaseRate(company: QuantCompany): {
+    rate: QuantValue<number>;
+    basis: ExitRateBasis;
+  } {
     if (!this.priors) {
-      return missingInput("No empirical priors for exit-rate CI");
+      return {
+        basis: "in_sample",
+        rate: missingInput("No empirical priors for exit-rate CI"),
+      };
     }
-    const sectorPrior = getSectorPrior(this.priors, company.sector);
-    const sectorRate = sectorPrior?.sectorExitRateEstimate;
-    if (sectorRate && isSufficient(sectorRate)) {
-      return sectorRate;
-    }
-    return this.priors.overallExitRateEstimate;
+    const result = indexExitRate(this.priors, company);
+    return { rate: result.rate, basis: result.basis };
   }
 
   /**
@@ -124,7 +132,7 @@ export class AcquisitionPredictor {
       0,
     ) / 10;
 
-    const exitRate = this.sectorExitRate(company);
+    const { rate: exitRate, basis } = this.indexBaseRate(company);
     let probability: QuantValue<number>;
     if (!company.clinicalStage) {
       probability = missingInput(
@@ -180,7 +188,7 @@ export class AcquisitionPredictor {
         : 0,
       driverScores,
       riskFactors,
-      modelCaveats: acquisitionModelCaveats(this.priors, exitRate),
+      modelCaveats: acquisitionModelCaveats(this.priors, exitRate, basis),
     };
   }
 }

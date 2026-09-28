@@ -36,7 +36,21 @@ export interface SectorPrior {
 }
 
 export interface EmpiricalPriors {
+  /**
+   * In-sample catalog share: acquired companies / companies in the catalog.
+   * Includes the company being scored. The acquisition index does not use
+   * this value as that company's base rate.
+   */
   overallExitRateEstimate: QuantValue<number>;
+  /** Numerator of {@link overallExitRateEstimate}. */
+  acquiredCompanyCount?: number;
+  /** Ids in the catalog denominator. Required for leave-one-out. */
+  catalogCompanyIds?: ReadonlySet<string>;
+  /**
+   * Ids in the acquired numerator: a verified deal target, or a stage
+   * string that contains "acquired". Same predicate as the in-sample share.
+   */
+  acquiredCompanyIds?: ReadonlySet<string>;
   companyCount: number;
   dealCount: number;
   disclosedDealCount: number;
@@ -161,10 +175,16 @@ export function deriveEmpiricalPriors(
     });
   }
 
-  const acquiredInDataset =
-    companies.filter((c) =>
-      acquiredTargetIds.has(c.id) || c.stage.toLowerCase().includes("acquired")
-    ).length;
+  const acquiredCompanyIds = new Set(
+    companies
+      .filter((c) =>
+        acquiredTargetIds.has(c.id) ||
+        c.stage.toLowerCase().includes("acquired")
+      )
+      .map((c) => c.id),
+  );
+  const catalogCompanyIds = new Set(companies.map((c) => c.id));
+  const acquiredInDataset = acquiredCompanyIds.size;
 
   const disclosedDealCount =
     acquisitions.filter((d) =>
@@ -182,6 +202,9 @@ export function deriveEmpiricalPriors(
       companies.length,
       { minSampleSize: MIN_SECTOR_SAMPLE },
     ),
+    acquiredCompanyCount: acquiredInDataset,
+    catalogCompanyIds,
+    acquiredCompanyIds,
     companyCount: companies.length,
     dealCount: acquisitions.length,
     disclosedDealCount,
