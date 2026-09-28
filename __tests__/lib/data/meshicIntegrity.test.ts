@@ -50,7 +50,8 @@ describe("MeshIC ledger integrity", () => {
       ledger([earlier, corrected]),
       companies,
     );
-    expect(findings.filter((item) => item.blocking).map((item) => item.code))
+    expect(findings.filter((item) => item.blocking)).toEqual([]);
+    expect(findings.filter((item) => !item.blocking).map((item) => item.code))
       .toEqual(["ledger.citationWithoutUrl"]);
     expect(computeEconomicReplayCensus([earlier, corrected])).toMatchObject({
       activeRecords: 1,
@@ -103,8 +104,25 @@ describe("MeshIC ledger integrity", () => {
       ledger([record({ publicAsOfDate: null })]),
       companies,
     );
-    expect(missing.filter((item) => item.blocking).map((item) => item.code))
+    expect(missing.filter((item) => item.blocking)).toEqual([]);
+    expect(missing.filter((item) => !item.blocking).map((item) => item.code))
       .toEqual(["ledger.missingPublicAsOf", "ledger.citationWithoutUrl"]);
+  });
+
+
+  it("accepts period-end public dates for coarse precision", () => {
+    const findings = assessLedgerIntegrity(
+      ledger([
+        record({
+          effectiveDate: "2024-03-01",
+          publicAsOfDate: "2024-03-31",
+          datePrecision: "month",
+          sourceUrl: "https://example.com/source",
+        }),
+      ]),
+      companies,
+    );
+    expect(findings.filter((item) => item.blocking)).toEqual([]);
   });
 
   it("rejects dated locator-only evidence for any economic field", () => {
@@ -121,9 +139,10 @@ describe("MeshIC ledger integrity", () => {
       ]),
       companies,
     );
-    expect(findings.some((item) => item.code === "ledger.locatorOnlyDated")).toBe(
-      true,
-    );
+    expect(findings.some((item) => item.code === "ledger.locatorOnlyDated"))
+      .toBe(
+        true,
+      );
   });
 
   it("rejects an active record that supersedes a retracted row", () => {
