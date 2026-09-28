@@ -119,6 +119,8 @@ function main() {
     instructions:
       "Open each searchUrl in Crunchbase Pro, find the correct company, export as CSV to data/crunchbase-exports/",
     companies: companyUrls,
+    allCompaniesSearchUrl,
+    advancedSearchUrl,
     sectorBatches: Array.from(bySector.entries()).map(([sector, entries]) => ({
       sector,
       count: entries.length,

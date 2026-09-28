@@ -90,12 +90,19 @@ separately.
    acquired. Resolving this needs the author's recollection or contemporaneous
    notes — not another code search.
 2. **Vintage of `totalFunding`, `lastKnownValuation`, `stage`, and `sector`.**
-   Funding and valuation now materialize from `evidence.verified.json`, but the
-   initial migrated records preserve their legacy citations with
-   `publicAsOfDate: null`. They remain unavailable in a point-in-time replay
-   until a dated source is backfilled. Stage and sector still have no field
+   Funding and valuation materialize from `evidence.verified.json`. A row can
+   enter a dated replay only when `publicAsOfDate` is set. That date is the last
+   day of the window named in the citation, or the exact day when the citation
+   or another verified source line for the same figure already states it.
+   `acquisitions.announcedDate` is not copied onto the ledger. Rows whose
+   citation does not date the figure — including unquoted currency conversions
+   and totals no company source states — keep `publicAsOfDate: null` and fail
+   closed. A funding total the citation does not quote also stays null, even
+   when the locator is a dated acquisition filing: that filing's date is not
+   evidence the funding figure was public. Stage and sector still have no field
    vintage. A value sitting on an acquired company may be the deal price, a
-   post-deal stage string, or a pre-deal figure; the catalog alone does not say.
+   post-deal stage string, or a pre-deal figure; `valueBasis` records which of
+   those the citation describes.
 3. **Dead branches.** `clinicalEfficacy` and `teamMetrics` never arrive from the
    verified adapter. Their cut points cannot be checked against outcomes because
    they never run. That is not evidence they are clean.

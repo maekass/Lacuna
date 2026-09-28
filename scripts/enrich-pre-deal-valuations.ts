@@ -37,16 +37,6 @@ interface Acquisition {
   computedPremium?: number;
 }
 
-interface Company {
-  id: string;
-  name: string;
-  sector: string;
-  lastKnownValuation?: number;
-  valuationSource?: string;
-  totalFunding?: number;
-  sources?: string[];
-}
-
 interface PreDealValuation {
   acquisitionId: string;
   targetName: string;
