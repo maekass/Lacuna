@@ -169,8 +169,9 @@ log funding, and year-precision age. Cosine similarity uses only dimensions both
 sides observed. Undisclosed valuation, undisclosed funding, and founding years
 that are not year-precision are excluded, not filled with zero. The panel shows
 a unitless 0–100 descriptive index, not a percentage probability. This is a
-**retrieval/comparison tool**, not a classification or prediction model. No
-training occurs; the feature encoding is manually defined.
+**retrieval/comparison tool**, not a classification or prediction model, and not
+an investment recommendation. No training occurs; the feature encoding is
+manually defined. The therapeutics ontology is not an input.
 
 ---
 
@@ -181,8 +182,9 @@ training occurs; the feature encoding is manually defined.
 **Library**: `simple-statistics`
 
 Clusters are labeled Emerging / Growth / Late-stage based on centroid position.
-Labels are descriptive post-hoc assignments, not predicted classes. Cluster
-stability is low and results should be interpreted qualitatively.
+Labels are descriptive post-hoc assignments, not predicted classes and not an
+investment recommendation. Cluster stability is low and results should be
+interpreted qualitatively. The therapeutics ontology is not an input.
 
 ---
 

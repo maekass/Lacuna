@@ -1,0 +1,725 @@
+{
+  "hasResults": true,
+  "protocolSection": {
+    "identificationModule": {
+      "nctId": "NCT01620528",
+      "orgStudyIdInfo": {
+        "id": "M12-665"
+      },
+      "organization": {
+        "fullName": "AbbVie",
+        "class": "INDUSTRY"
+      },
+      "briefTitle": "A Clinical Study to Evaluate the Safety and Efficacy of Elagolix in Subjects With Moderate to Severe Endometriosis-Associated Pain",
+      "officialTitle": "A Randomized, Double-Blind, Placebo-Controlled Study to Evaluate the Safety and Efficacy of Elagolix in Subjects With Moderate to Severe Endometriosis-Associated Pain",
+      "acronym": "ELARIS EM-I"
+    },
+    "statusModule": {
+      "statusVerifiedDate": "2017-03",
+      "overallStatus": "COMPLETED",
+      "expandedAccessInfo": {
+        "hasExpandedAccess": false
+      },
+      "startDateStruct": {
+        "date": "2012-05-22"
+      },
+      "primaryCompletionDateStruct": {
+        "date": "2014-11-14",
+        "type": "ACTUAL"
+      },
+      "completionDateStruct": {
+        "date": "2015-09-28",
+        "type": "ACTUAL"
+      },
+      "studyFirstSubmitDate": "2012-05-15",
+      "studyFirstSubmitQcDate": "2012-06-13",
+      "studyFirstPostDateStruct": {
+        "date": "2012-06-15",
+        "type": "ESTIMATED"
+      },
+      "resultsFirstSubmitDate": "2018-08-09",
+      "resultsFirstSubmitQcDate": "2018-09-14",
+      "resultsFirstPostDateStruct": {
+        "date": "2018-09-18",
+        "type": "ACTUAL"
+      },
+      "dispFirstSubmitDate": "2015-11-13",
+      "dispFirstSubmitQcDate": "2015-11-13",
+      "dispFirstPostDateStruct": {
+        "date": "2015-12-10",
+        "type": "ESTIMATED"
+      },
+      "lastUpdateSubmitDate": "2018-09-14",
+      "lastUpdatePostDateStruct": {
+        "date": "2018-09-18",
+        "type": "ACTUAL"
+      }
+    },
+    "sponsorCollaboratorsModule": {
+      "responsibleParty": {
+        "type": "SPONSOR"
+      },
+      "leadSponsor": {
+        "name": "AbbVie (prior sponsor, Abbott)",
+        "class": "INDUSTRY"
+      }
+    },
+    "descriptionModule": {
+      "briefSummary": "A randomized study evaluating the safety and efficacy of elagolix in the management of moderate to severe endometriosis-associated pain in adult premenopausal female participants."
+    },
+    "conditionsModule": {
+      "conditions": [
+        "Endometriosis"
+      ],
+      "keywords": [
+        "Gonadotropin-Releasing Hormone Antagonist",
+        "Endometriosis associated pain",
+        "Dysmenorrhea (DYS)",
+        "Non-Menstrual Pelvic Pain (NMPP)",
+        "Elagolix"
+      ]
+    },
+    "designModule": {
+      "studyType": "INTERVENTIONAL",
+      "phases": [
+        "PHASE3"
+      ],
+      "designInfo": {
+        "allocation": "RANDOMIZED",
+        "interventionModel": "PARALLEL",
+        "primaryPurpose": "TREATMENT",
+        "maskingInfo": {
+          "masking": "QUADRUPLE",
+          "whoMasked": [
+            "PARTICIPANT",
+            "CARE_PROVIDER",
+            "INVESTIGATOR",
+            "OUTCOMES_ASSESSOR"
+          ]
+        }
+      },
+      "enrollmentInfo": {
+        "count": 872,
+        "type": "ACTUAL"
+      }
+    },
+    "armsInterventionsModule": {
+      "armGroups": [
+        {
+          "label": "Elagolix 150 mg QD",
+          "type": "EXPERIMENTAL",
+          "description": "Elagolix 150 mg once daily (QD) for the 6-month Treatment Period",
+          "interventionNames": [
+            "Drug: elagolix"
+          ]
+        },
+        {
+          "label": "Elagolix 200 mg BID",
+          "type": "EXPERIMENTAL",
+          "description": "Elagolix 200 mg twice daily (BID) for the 6-month Treatment Period",
+          "interventionNames": [
+            "Drug: elagolix"
+          ]
+        },
+        {
+          "label": "Placebo",
+          "type": "PLACEBO_COMPARATOR",
+          "description": "Placebo BID for the 6-month Treatment Period",
+          "interventionNames": [
+            "Other: placebo"
+          ]
+        }
+      ],
+      "interventions": [
+        {
+          "type": "DRUG",
+          "name": "elagolix",
+          "description": "oral tablet",
+          "armGroupLabels": [
+            "Elagolix 150 mg QD",
+            "Elagolix 200 mg BID"
+          ],
+          "otherNames": [
+            "ABT-620, elagolix sodium"
+          ]
+        },
+        {
+          "type": "OTHER",
+          "name": "placebo",
+          "description": "oral tablet",
+          "armGroupLabels": [
+            "Placebo"
+          ]
+        }
+      ]
+    },
+    "outcomesModule": {
+      "primaryOutcomes": [
+        {
+          "measure": "Percentage of Responders at Month 3 Based on Daily Assessment of Dysmenorrhea (DYS)",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 3 of the Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 3 Based on Daily Assessment of Non-Menstrual Pelvic Pain (NMPP)",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 3 of Treatment Period"
+        }
+      ],
+      "secondaryOutcomes": [
+        {
+          "measure": "Change From Baseline to Month 3 in Numeric Rating Scale (NRS) Scores",
+          "description": "The NRS for overall endometriosis-associated pain ranges 0 (none) to 10 (worst pain ever).",
+          "timeFrame": "Baseline, Month 3 of the Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 6 in DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 6 in NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 3 in Analgesic Use Across Both Classes of Rescue Analgesics",
+          "description": "Permitted rescue medications included the nonsteroidal anti-inflammatory drug naproxen (500 mg), the narcotic analgesics 5 mg hydrocodone + 300 or 325 mg acetaminophen, and 30 mg codeine + 300 mg acetaminophen. Assessment was based on average pill counts.",
+          "timeFrame": "Baseline, Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 6 in Analgesic Use Across Both Classes of Rescue Analgesics",
+          "description": "Permitted rescue medications included the nonsteroidal anti-inflammatory drug naproxen (500 mg), the narcotic analgesics 5 mg hydrocodone + 300 or 325 mg acetaminophen and 30 mg codeine + 300 mg acetaminophen. Assessment was based on average pill counts.",
+          "timeFrame": "Baseline, Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 3 in Dyspareunia (DYSP)",
+          "description": "The DYSP pain scale ranges from 0 (absent) to 3 (severe).",
+          "timeFrame": "Baseline, Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 3 in Use of Narcotic Class of Medication (Opioids)",
+          "description": "Permitted rescue narcotic analgesics included 5 mg hydrocodone + 300 or 325 mg acetaminophen and 30 mg codeine + 300 mg acetaminophen. Assessment was based on average pill counts.",
+          "timeFrame": "Baseline, Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 1 Based on Daily Assessment of DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 1 of the Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 2 Based on Daily Assessment of DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 2 of the Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 4 Based on Daily Assessment of DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 4 of the Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 5 Based on Daily Assessment of DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 5 of the Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 6 Based on Daily Assessment of DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 6 of the Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 1 Based on Daily Assessment of NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 2 Based on Daily Assessment of NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 2 of Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 4 Based on Daily Assessment of NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 4 of Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 5 Based on Daily Assessment of NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 5 of Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 6 Based on Daily Assessment of NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 1 for DYSP",
+          "description": "The DYSP pain scale ranged from 0 (absent) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 1 of the Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 2 for DYSP",
+          "description": "The DYSP pain scale ranged from 0 (absent) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 2 of the Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 4 for DYSP",
+          "description": "The DYSP pain scale ranged from 0 (absent) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 4 of the Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 5 for DYSP",
+          "description": "The DYSP pain scale ranged from 0 (absent) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 5 of the Treatment Period"
+        },
+        {
+          "measure": "Percentage of Responders at Month 6 for DYSP",
+          "description": "The DYSP pain scale ranged from 0 (absent) to 3 (severe). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "At Month 6 of the Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 1 in Mean Pain Score for DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 2 in Mean Pain Score for DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 2 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 3 in Mean Pain Score for DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 4 in Mean Pain Score for DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 4 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 5 in Mean Pain Score for DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 5 of Treatment Period"
+        },
+        {
+          "measure": "Percent Change From Baseline to Month 1 in Mean Pain Score for DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Percent Change From Baseline to Month 2 in Mean Pain Score for DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 2 of Treatment Period"
+        },
+        {
+          "measure": "Percent Change From Baseline to Month 3 in Mean Pain Score for DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Percent Change From Baseline to Month 4 in Mean Pain Score for DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 4 of Treatment Period"
+        },
+        {
+          "measure": "Percent Change From Baseline to Month 5 in Mean Pain Score for DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 5 of Treatment Period"
+        },
+        {
+          "measure": "Percent Change From Baseline to Month 6 in Mean Pain Score for DYS",
+          "description": "The DYS pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 1 in Mean Pain Score for NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 2 in Mean Pain Score for NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 2 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 3 in Mean Pain Score for NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 4 in Mean Pain Score for NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 4 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 5 in Mean Pain Score for NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 5 of Treatment Period"
+        },
+        {
+          "measure": "Percent Change From Baseline to Month 1 in Mean Pain Score for NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Percent Change From Baseline to Month 2 in Mean Pain Score for NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 2 of Treatment Period"
+        },
+        {
+          "measure": "Percent Change From Baseline to Month 3 in Mean Pain Score for NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Percent Change From Baseline to Month 4 in Mean Pain Score for NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 4 of Treatment Period"
+        },
+        {
+          "measure": "Percent Change From Baseline to Month 5 in Mean Pain Score for NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 5 of Treatment Period"
+        },
+        {
+          "measure": "Percent Change From Baseline to Month 6 in Mean Pain Score for NMPP",
+          "description": "The NMPP pain scale ranges from 0 (none) to 3 (severe).",
+          "timeFrame": "Baseline, Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 1 in Mean Pain Score of DYSP",
+          "description": "The DYSP pain scale ranged from 0 (absent) to 3 (severe).",
+          "timeFrame": "Baseline, Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 2 in Mean Pain Score of DYSP",
+          "description": "The DYSP pain scale ranged from 0 (absent) to 3 (severe).",
+          "timeFrame": "Baseline, Month 2 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 4 in Mean Pain Score of DYSP",
+          "description": "The DYSP pain scale ranged from 0 (absent) to 3 (severe).",
+          "timeFrame": "Baseline, Month 4 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 5 in Mean Pain Score of DYSP",
+          "description": "The DYSP pain scale ranged from 0 (absent) to 3 (severe).",
+          "timeFrame": "Baseline, Month 5 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 6 in Mean Pain Score of DYSP",
+          "description": "The DYSP pain scale ranged from 0 (absent) to 3 (severe).",
+          "timeFrame": "Baseline, Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 1 in Analgesic Use Across Both Classes of Rescue Analgesics",
+          "description": "Permitted rescue medications included the nonsteroidal anti-inflammatory drug naproxen (500 mg), the narcotic analgesics 5 mg hydrocodone + 300 or 325 mg acetaminophen, and 30 mg codeine + 300 mg acetaminophen. Assessment was based on average pill counts.",
+          "timeFrame": "Baseline, Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 2 in Analgesic Use Across Both Classes of Rescue Analgesics",
+          "description": "Permitted rescue medications included the nonsteroidal anti-inflammatory drug naproxen (500 mg), the narcotic analgesics 5 mg hydrocodone + 300 or 325 mg acetaminophen, and 30 mg codeine + 300 mg acetaminophen. Assessment was based on average pill counts.",
+          "timeFrame": "Baseline, Month 2 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 4 in Analgesic Use Across Both Classes of Rescue Analgesics",
+          "description": "Permitted rescue medications included the nonsteroidal anti-inflammatory drug naproxen (500 mg), the narcotic analgesics 5 mg hydrocodone + 300 or 325 mg acetaminophen and 30 mg codeine + 300 mg acetaminophen. Assessment was based on average pill counts.",
+          "timeFrame": "Baseline, Month 4 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 5 in Analgesic Use Across Both Classes of Rescue Analgesics",
+          "description": "Permitted rescue medications included the nonsteroidal anti-inflammatory drug naproxen (500 mg), the narcotic analgesics 5 mg hydrocodone + 300 or 325 mg acetaminophen, and 30 mg codeine + 300 mg acetaminophen. Assessment was based on average pill counts.",
+          "timeFrame": "Baseline, Month 5 of Treatment Period"
+        },
+        {
+          "measure": "Response to Patient Global Impression of Change (PGIC) at Month 1",
+          "description": "The PGIC questionnaire is a self-reported 7-point scale rating a participant's overall impression of change from 1 = very much improved to 7 = very much worse. Participants evaluated the change in their endometriosis-associated pain since initiation of study drug.",
+          "timeFrame": "Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Response to PGIC at Month 2",
+          "description": "The PGIC questionnaire is a self-reported 7-point scale rating a participant's overall impression of change from 1 = very much improved to 7 = very much worse. Participants evaluated the change in their endometriosis-associated pain since initiation of study drug.",
+          "timeFrame": "Month 2 of Treatment Period"
+        },
+        {
+          "measure": "Response to PGIC at Month 3",
+          "description": "The PGIC questionnaire is a self-reported 7-point scale rating a participant's overall impression of change from 1 = very much improved to 7 = very much worse. Participants evaluated the change in their endometriosis-associated pain since initiation of study drug.",
+          "timeFrame": "Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Response to PGIC at Month 4",
+          "description": "The PGIC questionnaire is a self-reported 7-point scale rating a participant's overall impression of change from 1 = very much improved to 7 = very much worse. Participants evaluated the change in their endometriosis-associated pain since initiation of study drug.",
+          "timeFrame": "Month 4 of Treatment Period"
+        },
+        {
+          "measure": "Response to PGIC at Month 5",
+          "description": "The PGIC questionnaire is a self-reported 7-point scale rating a participant's overall impression of change from 1 = very much improved to 7 = very much worse. Participants evaluated the change in their endometriosis-associated pain since initiation of study drug.",
+          "timeFrame": "Month 5 of Treatment Period"
+        },
+        {
+          "measure": "Response to PGIC at Month 6",
+          "description": "The PGIC questionnaire is a self-reported 7-point scale rating a participant's overall impression of change from 1 = very much improved to 7 = very much worse. Participants evaluated the change in their endometriosis-associated pain since initiation of study drug.",
+          "timeFrame": "Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 1 in NRS Scores",
+          "description": "The NRS for overall endometriosis-associated pain ranges 0 (none) to 10 (worst pain ever).",
+          "timeFrame": "Baseline, Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 2 in NRS Scores",
+          "description": "The NRS for overall endometriosis-associated pain ranges 0 (none) to 10 (worst pain ever).",
+          "timeFrame": "Baseline, Month 2 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 4 in NRS Scores",
+          "description": "The NRS for overall endometriosis-associated pain ranges 0 (none) to 10 (worst pain ever).",
+          "timeFrame": "Baseline, Month 4 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 5 in NRS Scores",
+          "description": "The NRS for overall endometriosis-associated pain ranges 0 (none) to 10 (worst pain ever).",
+          "timeFrame": "Baseline, Month 5 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 6 in NRS Scores",
+          "description": "The NRS for overall endometriosis-associated pain ranges 0 (none) to 10 (worst pain ever).",
+          "timeFrame": "Baseline, Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 1 in the Pain Domain of the Endometriosis Health Profile-30 (EHP-30)",
+          "description": "The EHP-30 is a disease-specific self-administered questionnaire used to measure health-related quality of life in women with endometriosis. Each domain is calculated on a scale from 0 = best possible health status to 100 = worst possible health status.",
+          "timeFrame": "Baseline, Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 3 in the Pain Domain of the EHP-30",
+          "description": "The EHP-30 is a disease-specific self-administered questionnaire used to measure health-related quality of life in women with endometriosis. Each domain is calculated on a scale from 0 = best possible health status to 100 = worst possible health status.",
+          "timeFrame": "Baseline, Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 6 in the Pain Domain of the EHP-30",
+          "description": "The EHP-30 is a disease-specific self-administered questionnaire used to measure health-related quality of life in women with endometriosis. Each domian is calculated on a scale from 0 = best possible health status to 100 = worst possible health status.",
+          "timeFrame": "Baseline, Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 1 in the Sexual Intercourse Domain of the EHP-30",
+          "description": "The EHP-30 is a disease-specific self-administered questionnaire used to measure health-related quality of life in women with endometriosis. Each domian is calculated on a scale from 0 = best possible health status to 100 = worst possible health status.",
+          "timeFrame": "Baseline, Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 3 in the Sexual Intercourse Domain of the EHP-30",
+          "description": "The EHP-30 is a disease-specific self-administered questionnaire used to measure health-related quality of life in women with endometriosis. Each domain is calculated on a scale from 0 = best possible health status to 100 = worst possible health status.",
+          "timeFrame": "Baseline, Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 6 in the Sexual Intercourse Domain of the EHP-30",
+          "description": "The EHP-30 is a disease-specific self-administered questionnaire used to measure health-related quality of life in women with endometriosis. Each domian is calculated on a scale from 0 = best possible health status to 100 = worst possible health status.",
+          "timeFrame": "Baseline, Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 1 in Health Related Productivity Questionnaire (HRPQ): Number of Hours of Work Lost From Workplace Due to Absenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to absenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 2 in HRPQ: Number of Hours of Work Lost From Workplace Due to Absenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to absenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 2 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 3 in HRPQ: Number of Hours of Work Lost From Workplace Due to Absenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to absenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 4 in HRPQ: Number of Hours of Work Lost From Workplace Due to Absenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to absenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 4 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 5 in HRPQ: Number of Hours of Work Lost From Workplace Due to Absenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to absenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 5 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 6 in HRPQ: Number of Hours of Work Lost From Workplace Due to Absenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to absenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 1 in HRPQ: Number of Hours of Work Lost From Household Due to Absenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to absenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 2 in HRPQ: Number of Hours of Work Lost From Household Due to Absenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to absenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 2 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 3 in HRPQ: Number of Hours of Work Lost From Household Due to Absenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to absenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 4 in HRPQ: Number of Hours of Work Lost From Household Due to Absenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to absenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 4 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 5 in HRPQ: Number of Hours of Work Lost From Household Due to Absenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to absenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 5 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 6 in HRPQ: Number of Hours of Work Lost From Household Due to Absenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to absenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 1 in HRPQ: Number of Hours of Work Lost From Workplace Due to Presenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to presenteeism \\[working while sick\\]) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 2 in HRPQ: Number of Hours of Work Lost From Workplace Due to Presenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to presenteeism \\[working while sick\\]) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 2 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 3 in HRPQ: Number of Hours of Work Lost From Workplace Due to Presenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to presenteeism \\[working while sick\\]) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 4 in HRPQ: Number of Hours of Work Lost From Workplace Due to Presenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to presenteeism \\[working while sick\\]) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 4 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 5 in HRPQ: Number of Hours of Work Lost From Workplace Due to Presenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to presenteeism \\[working while sick\\]) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 5 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 6 in HRPQ: Number of Hours of Work Lost From Workplace Due to Presenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to presenteeism \\[working while sick\\]) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 1 in HRPQ: Number of Hours of Work Lost From Household Due to Presenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to presenteeism \\[working while sick\\]) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 2 in HRPQ: Number of Hours of Work Lost From Household Due to Presenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to presenteeism \\[working while sick\\]) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 2 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 3 in HRPQ: Number of Hours of Work Lost From Household Due to Presenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to presenteeism \\[working while sick\\]) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 4 in HRPQ: Number of Hours of Work Lost From Household Due to Presenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to presenteeism \\[working while sick\\]) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 4 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 5 in HRPQ: Number of Hours of Work Lost From Household Due to Presenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to presenteeism \\[working while sick\\]) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 5 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 6 in HRPQ: Number of Hours of Work Lost From Household Due to Presenteeism",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to presenteeism \\[working while sick\\]) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 1 in HRPQ: Total (Absenteeism and Presenteeism) Number of Hours of Work Lost From Workplace",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to absenteeism and presenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 2 in HRPQ: Total (Absenteeism and Presenteeism) Number of Hours of Work Lost From Workplace",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to absenteeism and presenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 2 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 3 in HRPQ: Total (Absenteeism and Presenteeism) Number of Hours of Work Lost From Workplace",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to absenteeism and presenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 4 in HRPQ: Total (Absenteeism and Presenteeism) Number of Hours of Work Lost From Workplace",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to absenteeism and presenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 4 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 5 in HRPQ: Total (Absenteeism and Presenteeism) Number of Hours of Work Lost From Workplace",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to absenteeism and presenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 5 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 6 in HRPQ: Total (Absenteeism and Presenteeism) Number of Hours of Work Lost From Workplace",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the workplace due to absenteeism and presenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 1 in HRPQ: Total (Absenteeism and Presenteeism) Number of Hours of Work Lost From Household",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to absenteeism and presenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 1 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 2 in HRPQ: Total (Absenteeism and Presenteeism) Number of Hours of Work Lost From Household",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to absenteeism and presenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 2 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 3 in HRPQ: Total (Absenteeism and Presenteeism) Number of Hours of Work Lost From Household",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to absenteeism and presenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 3 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 4 in HRPQ: Total (Absenteeism and Presenteeism) Number of Hours of Work Lost From Household",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to absenteeism and presenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 4 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 5 in HRPQ: Total (Absenteeism and Presenteeism) Number of Hours of Work Lost From Household",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to absenteeism and presenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 5 of Treatment Period"
+        },
+        {
+          "measure": "Change From Baseline to Month 6 in HRPQ: Total (Absenteeism and Presenteeism) Number of Hours of Work Lost From Household",
+          "description": "The HRPQ consists of questions measuring the impact of endometriosis-associated pain and its treatment on work productivity (number of work hours lost from the household due to absenteeism and presenteeism) in the 7 days prior to survey administration.",
+          "timeFrame": "Baseline, Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Number of Participants With Endometriosis-Related Non-Study Health Visits During the Treatment Period",
+          "timeFrame": "Up to Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Number of Days of Hospitalization",
+          "timeFrame": "Up to Month 6 of Treatment Period"
+        },
+        {
+          "measure": "Number of Participants With Emergency Room/Outpatient Procedures During the Treatment Period, by Type",
+          "timeFrame": "Up to Month 6 of Treatment Period"
+        }
+      ]
+    },
+    "eligibilityModule": {
+      "eligibilityCriteria": "Inclusion Criteria:\n\n1. Premenopausal female, between 18 and 49 years of age, inclusive, at the time of signing consent.\n2. Clinical diagnosis of endometriosis (laparoscopy or laparotomy) performed within 10 years of entry into Washout (if applicable) or Screening.\n3. Agrees to use required birth control methods during the entire length of participation in the study.\n4. Subject has a Composite Pelvic Signs and Symptoms Score total score of \u2265 6 at Screening with a score of at least 2 for dysmenorrhea AND at least 2 for non-menstrual pelvic pain. 5. Subjects must have at least two menstrual cycles 24 to 38 days within the Screening Period, prior to Day 1\n\nExclusion Criteria:\n\n1. Subject is pregnant or breast feeding or is planning a pregnancy within the next 24 months or is less than 6 months postpartum, post-abortion, or post-pregnancy at the time of entry into the Screening Period.\n2. Subject has a history of previous non-response to Gonadotropin-releasing hormone (GnRH) agonists, GnRH antagonists, Depot Medroxyprogesterone Acetate, or aromatase inhibitors as assessed by subject report of no improvement in dysmenorrhea or non-menstrual pelvic pain (subject report of partial response to or side effects from these agents is not exclusionary).\n3. Subject has chronic pelvic pain that is not caused by endometriosis that requires chronic analgesic or other chronic therapy, or that would interfere with the assessment of endometriosis related pain.\n4. Clinically significant gynecologic condition identified on Screening transvaginal ultrasound or endometrial biopsy.\n5. Subject has a history of osteoporosis or other metabolic bone disease.\n6. Subject has a current history of undiagnosed abnormal genital bleeding.",
+      "healthyVolunteers": false,
+      "sex": "FEMALE",
+      "minimumAge": "18 Years",
+      "maximumAge": "49 Years",
+      "stdAges": [
+        "ADULT"
+      ]
+    }
+  }
+}

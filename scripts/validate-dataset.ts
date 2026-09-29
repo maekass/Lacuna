@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ZodError } from "zod";
+import { assembleEndometriosisTherapeuticsGraph } from "../src/data/therapeutics/endometriosis/buildGraph";
 import { parseStaticVerifiedDatasetJson } from "../src/lib/data/staticDataset";
 import { validateVerifiedDataset } from "../src/lib/data/validateVerifiedDataset";
 
@@ -93,6 +94,67 @@ function main() {
     for (const e of report.errors) {
       console.error(`  [${e.code}] ${e.message}`);
     }
+  }
+
+  const therapeutics = assembleEndometriosisTherapeuticsGraph({
+    verifiedCompanyIds: new Set(
+      dataset.companies.map((company) => company.id),
+    ),
+  });
+
+  console.log("");
+  console.log("Lacuna therapeutics graph validation");
+  console.log("Graph: therapeutics-endometriosis-v1");
+  console.log("");
+
+  if (therapeutics.schemaErrors.length > 0) {
+    console.error(
+      `--- Therapeutics schema errors (${therapeutics.schemaErrors.length}) ---`,
+    );
+    for (const line of therapeutics.schemaErrors) {
+      console.error(`  ${line}`);
+    }
+    console.error("");
+  }
+
+  const therapeuticsErrors = therapeutics.report?.errors ?? [];
+  if (therapeutics.report) {
+    console.log("--- Therapeutics stats ---");
+    console.log(`Diseases: ${therapeutics.report.stats.diseases}`);
+    console.log(`Assets: ${therapeutics.report.stats.assets}`);
+    console.log(`Trials: ${therapeutics.report.stats.trials}`);
+    console.log(
+      `Regulatory events: ${therapeutics.report.stats.regulatoryEvents}`,
+    );
+    console.log(`Claims: ${therapeutics.report.stats.claims}`);
+    console.log(`Conflicts: ${therapeutics.report.stats.conflicts}`);
+    console.log(`Assumptions: ${therapeutics.report.stats.assumptions}`);
+    console.log("");
+    if (therapeutics.report.warnings.length > 0) {
+      console.log(
+        `--- Therapeutics warnings (${therapeutics.report.warnings.length}) ---`,
+      );
+      for (const warning of therapeutics.report.warnings) {
+        console.log(`  [${warning.code}] ${warning.message}`);
+      }
+      console.log("");
+    }
+  }
+
+  if (therapeuticsErrors.length > 0) {
+    console.error(
+      `--- Therapeutics errors (${therapeuticsErrors.length}) ---`,
+    );
+    for (const issue of therapeuticsErrors) {
+      console.error(`  [${issue.code}] ${issue.message}`);
+    }
+  }
+
+  if (
+    report.errors.length > 0 ||
+    therapeutics.schemaErrors.length > 0 ||
+    therapeuticsErrors.length > 0
+  ) {
     process.exit(1);
   }
 
