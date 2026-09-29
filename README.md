@@ -148,6 +148,22 @@ See [EVIDENCE_GRAPH.md](docs/EVIDENCE_GRAPH.md) for the evidence contract and
 [MARKET_ACCESS.md](docs/MARKET_ACCESS.md) for the separate deterministic demand
 and budget-impact workbench.
 
+## Therapeutics ontology
+
+A separate therapeutics graph sits beside the verified acquisition dataset. It
+does not replace those deals. The first reference vertical is **endometriosis**.
+It is a curated, source-linked demonstration of disease, asset, trial,
+regulatory, and catalyst records. It is not yet a comprehensive therapeutics
+database, and it does not produce an investment score or an rNPV.
+
+Normalized ClinicalTrials.gov studies and FDA regulatory events keep their
+source identifiers. Historical snapshots use publication dates, so a later
+document does not become evidence for an earlier date. Analyst assumptions stay
+on an investment-thesis object and are not written into the evidence layer.
+
+Developer inspection: `/therapeutics/endometriosis` (noindex). See
+[THERAPEUTICS_ONTOLOGY.md](docs/THERAPEUTICS_ONTOLOGY.md).
+
 ## Stack
 
 | Layer                                             | In the public app                                                                                                     |
@@ -156,6 +172,7 @@ and budget-impact workbench.
 | D3.js v7, Framer Motion                           | Network and charts                                                                                                    |
 | `getVerifiedDataset()`                            | Default path; static JSON on Vercel                                                                                   |
 | US Evidence Graph (`src/lib/evidenceGraph`)       | Point-in-time source-backed research observations; separate from verified M&A JSON                                    |
+| Therapeutics ontology (`src/lib/therapeutics`)    | Asset-level disease graph. Endometriosis is the first reference vertical, not a full therapeutics database            |
 | Market access (`src/lib/marketAccess`)            | Deterministic demand funnels and budget-impact scenarios                                                              |
 | simple-statistics                                 | Descriptive summaries, cosine similarity, k-means labels                                                              |
 | PostgreSQL                                        | Optional `LACUNA_DATA_MODE=db` — not required to run the demo                                                         |
@@ -184,6 +201,7 @@ documented in [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md).
 | ------------------------------------------------------------------------------- | ---------------------------------------------------- |
 | [MODEL_CARD.md](docs/MODEL_CARD.md)                                             | What each on-screen score is                         |
 | [EVIDENCE_GRAPH.md](docs/EVIDENCE_GRAPH.md)                                     | US evidence contract and translation boundary        |
+| [THERAPEUTICS_ONTOLOGY.md](docs/THERAPEUTICS_ONTOLOGY.md)                       | Endometriosis reference graph and evidence rules     |
 | [MARKET_ACCESS.md](docs/MARKET_ACCESS.md)                                       | Demand, budget impact, and publication gate          |
 | [LIMITATIONS.md](docs/LIMITATIONS.md)                                           | Disclosed-value definition and live totals           |
 | [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md)                                   | Verified vs staging vs enrichment                    |

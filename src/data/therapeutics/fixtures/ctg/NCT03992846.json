@@ -1,0 +1,210 @@
+{
+  "hasResults": true,
+  "protocolSection": {
+    "identificationModule": {
+      "nctId": "NCT03992846",
+      "orgStudyIdInfo": {
+        "id": "18-OBE2109-003"
+      },
+      "organization": {
+        "fullName": "Kissei Pharmaceutical Co., Ltd.",
+        "class": "INDUSTRY"
+      },
+      "briefTitle": "Efficacy and Safety of Linzagolix for the Treatment of Endometriosis-associated Pain.",
+      "officialTitle": "A Phase 3 Multicenter, Randomized, Double-blind, Placebo-controlled, Clinical Study to Assess the Efficacy and Safety of Linzagolix in Subjects With Moderate to Severe Endometriosis-associated Pain."
+    },
+    "statusModule": {
+      "statusVerifiedDate": "2022-06",
+      "overallStatus": "COMPLETED",
+      "expandedAccessInfo": {
+        "hasExpandedAccess": false
+      },
+      "startDateStruct": {
+        "date": "2019-06-13",
+        "type": "ACTUAL"
+      },
+      "primaryCompletionDateStruct": {
+        "date": "2021-10-18",
+        "type": "ACTUAL"
+      },
+      "completionDateStruct": {
+        "date": "2022-04-01",
+        "type": "ACTUAL"
+      },
+      "studyFirstSubmitDate": "2019-06-18",
+      "studyFirstSubmitQcDate": "2019-06-18",
+      "studyFirstPostDateStruct": {
+        "date": "2019-06-20",
+        "type": "ACTUAL"
+      },
+      "resultsFirstSubmitDate": "2024-04-03",
+      "resultsFirstSubmitQcDate": "2024-05-01",
+      "resultsFirstPostDateStruct": {
+        "date": "2024-05-29",
+        "type": "ACTUAL"
+      },
+      "lastUpdateSubmitDate": "2025-03-25",
+      "lastUpdatePostDateStruct": {
+        "date": "2025-04-02",
+        "type": "ACTUAL"
+      }
+    },
+    "sponsorCollaboratorsModule": {
+      "responsibleParty": {
+        "type": "SPONSOR"
+      },
+      "leadSponsor": {
+        "name": "Kissei Pharmaceutical Co., Ltd.",
+        "class": "INDUSTRY"
+      }
+    },
+    "descriptionModule": {
+      "briefSummary": "The primary objective of this study is to demonstrate the efficacy and safety of linzagolix administered orally once daily for 3 months at a dose of 75 mg alone or of 200 mg in combination with add-back hormone replacement therapy (ABT: estradiol (E2) 1 mg / norethisterone acetate (NETA) 0.5 mg) versus placebo, in the management of moderate to severe endometriosis-associated pain (EAP)."
+    },
+    "conditionsModule": {
+      "conditions": [
+        "Endometriosis"
+      ],
+      "keywords": [
+        "Dysmenorrhea",
+        "Dyspareunia",
+        "Dyschezia",
+        "Non-menstrual pelvic pain"
+      ]
+    },
+    "designModule": {
+      "studyType": "INTERVENTIONAL",
+      "phases": [
+        "PHASE3"
+      ],
+      "designInfo": {
+        "allocation": "RANDOMIZED",
+        "interventionModel": "PARALLEL",
+        "primaryPurpose": "TREATMENT",
+        "maskingInfo": {
+          "masking": "QUADRUPLE",
+          "whoMasked": [
+            "PARTICIPANT",
+            "CARE_PROVIDER",
+            "INVESTIGATOR",
+            "OUTCOMES_ASSESSOR"
+          ]
+        }
+      },
+      "enrollmentInfo": {
+        "count": 486,
+        "type": "ACTUAL"
+      }
+    },
+    "armsInterventionsModule": {
+      "armGroups": [
+        {
+          "label": "Linzagolix 75 mg",
+          "type": "EXPERIMENTAL",
+          "interventionNames": [
+            "Drug: 75 mg linzagolix tablet",
+            "Drug: Placebo tablet to match 200 mg linzagolix tablet",
+            "Drug: Placebo capsule to match Add-back capsule"
+          ]
+        },
+        {
+          "label": "Linzagolix 200 mg + Add-back (E2 1 mg / NETA 0.5 mg)",
+          "type": "EXPERIMENTAL",
+          "interventionNames": [
+            "Drug: 200 mg linzagolix tablet",
+            "Drug: Add-back capsule (E2 1 mg / NETA 0.5 mg)",
+            "Drug: Placebo tablet to match 75 mg linzagolix tablet"
+          ]
+        },
+        {
+          "label": "Placebo",
+          "type": "PLACEBO_COMPARATOR",
+          "interventionNames": [
+            "Drug: Placebo tablet to match 75 mg linzagolix tablet",
+            "Drug: Placebo tablet to match 200 mg linzagolix tablet",
+            "Drug: Placebo capsule to match Add-back capsule"
+          ]
+        }
+      ],
+      "interventions": [
+        {
+          "type": "DRUG",
+          "name": "75 mg linzagolix tablet",
+          "description": "For oral administration once daily",
+          "armGroupLabels": [
+            "Linzagolix 75 mg"
+          ]
+        },
+        {
+          "type": "DRUG",
+          "name": "200 mg linzagolix tablet",
+          "description": "For oral administration once daily",
+          "armGroupLabels": [
+            "Linzagolix 200 mg + Add-back (E2 1 mg / NETA 0.5 mg)"
+          ]
+        },
+        {
+          "type": "DRUG",
+          "name": "Add-back capsule (E2 1 mg / NETA 0.5 mg)",
+          "description": "For oral administration once daily",
+          "armGroupLabels": [
+            "Linzagolix 200 mg + Add-back (E2 1 mg / NETA 0.5 mg)"
+          ]
+        },
+        {
+          "type": "DRUG",
+          "name": "Placebo tablet to match 75 mg linzagolix tablet",
+          "description": "For oral administration once daily",
+          "armGroupLabels": [
+            "Linzagolix 200 mg + Add-back (E2 1 mg / NETA 0.5 mg)",
+            "Placebo"
+          ]
+        },
+        {
+          "type": "DRUG",
+          "name": "Placebo tablet to match 200 mg linzagolix tablet",
+          "description": "For oral administration once daily",
+          "armGroupLabels": [
+            "Linzagolix 75 mg",
+            "Placebo"
+          ]
+        },
+        {
+          "type": "DRUG",
+          "name": "Placebo capsule to match Add-back capsule",
+          "description": "For oral administration once daily",
+          "armGroupLabels": [
+            "Linzagolix 75 mg",
+            "Placebo"
+          ]
+        }
+      ]
+    },
+    "outcomesModule": {
+      "primaryOutcomes": [
+        {
+          "measure": "Reduction of Dysmenorrhea (DYS) at Month 3 - Proportion of Responders",
+          "description": "Percentage of subjects with reduction of 1.1 for DYS in mean pelvic pain score within last 28 days prior to Month 3 or discontinuation, and stable or decreased use of analgesics for Endometriosis-associated pain (=EAP) within the same calendar days.",
+          "timeFrame": "Baseline to Month 3"
+        },
+        {
+          "measure": "Reduction of Non-menstrual Pelvic Pain (NMPP) at Month 3 - Proportion of Responders",
+          "description": "Percentage of subjects with reduction of 0.8 for NMPP in mean pelvic pain score within last 28 days prior to Month 3 or discontinuation, and stable or decreased use of analgesics for Endometriosis-associated pain (=EAP) within the same calendar days.",
+          "timeFrame": "Baseline to Month 3"
+        }
+      ]
+    },
+    "eligibilityModule": {
+      "eligibilityCriteria": "Inclusion Criteria:\n\nThe subject must have:\n\n* Her most recent surgical and - if available - histological diagnosis of pelvic endometriosis up to 10 years before screening.\n* Moderate to severe endometriosis-associated pain during the screening period.\n* Regular menstrual cycles.\n* BMI \u2265 18 kg/m2 at the screening visit. -\n\nExclusion Criteria:\n\nThe subject will be excluded if she:\n\n* Is pregnant or breast feeding or is planning a pregnancy within the duration of the treatment period of the study.\n* Is less than 6 months postpartum or 3 months postabortion/ miscarriage at the time of entry into the screening period.\n* Has had a surgical history of any major abdominal surgery within 6 months or any interventional surgery for endometriosis performed within a period of 2 months before screening.\n* Did not respond to prior treatment with GnRH agonists or GnRH antagonists for endometriosis.\n* Has a history of, or known, osteoporosis or other metabolic bone disease.\n* Has chronic pelvic pain that is not caused by endometriosis and requires chronic analgesic or other chronic therapy which would interfere with the assessment of endometriosis-associated pain.",
+      "healthyVolunteers": false,
+      "sex": "FEMALE",
+      "genderBased": true,
+      "genderDescription": "Females Only",
+      "minimumAge": "18 Years",
+      "maximumAge": "49 Years",
+      "stdAges": [
+        "ADULT"
+      ]
+    }
+  }
+}

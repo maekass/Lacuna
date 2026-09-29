@@ -1,0 +1,33 @@
+{
+  "application_number": "NDA210450",
+  "sponsor_name": "ABBVIE",
+  "openfda": {
+    "brand_name": [
+      "ORILISSA"
+    ],
+    "generic_name": [
+      "ELAGOLIX"
+    ],
+    "application_number": [
+      "NDA210450"
+    ]
+  },
+  "submissions": [
+    {
+      "submission_type": "ORIG",
+      "submission_number": "1",
+      "submission_status": "AP",
+      "submission_status_date": "20180723",
+      "submission_class_code": "TYPE 1",
+      "submission_class_code_description": "Type 1 - New Molecular Entity"
+    },
+    {
+      "submission_type": "SUPPL",
+      "submission_number": "9",
+      "submission_status": "AP",
+      "submission_status_date": "20230605",
+      "submission_class_code": "LABELING",
+      "submission_class_code_description": "Labeling"
+    }
+  ]
+}

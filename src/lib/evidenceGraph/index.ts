@@ -1,7 +1,12 @@
 export {
+  atomicEvidenceValueSchema,
+  type EvidenceKind,
+  evidenceKindSchema,
   type EvidenceObservation,
   evidenceObservationSchema,
   type EvidenceSource,
+  type EvidenceSourceClass,
+  evidenceSourceClassSchema,
   evidenceSourceSchema,
   type EvidenceSubject,
   evidenceSubjectSchema,
@@ -10,6 +15,7 @@ export {
 } from "./schema";
 export {
   assessEvidenceAt,
+  assessPublicationAt,
   evidenceAvailableAt,
   type TemporalEvidenceAssessment,
   type TemporalEvidenceStatus,
@@ -21,6 +27,13 @@ export {
   type OpenFdaDeviceQuery,
   type OpenFdaDeviceSnapshot,
 } from "./openFdaDeviceClient";
+export {
+  buildOpenFdaDrugUrl,
+  fetchOpenFdaDrugSnapshot,
+  type OpenFdaDrugEndpoint,
+  type OpenFdaDrugQuery,
+  type OpenFdaDrugSnapshot,
+} from "./openFdaDrugClient";
 export {
   type EvidenceAccessMode,
   type EvidenceSourceCatalogEntry,

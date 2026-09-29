@@ -204,8 +204,8 @@ export default function CompanySimilarity() {
           <p className="text-sm text-lacuna-text-muted">
             Descriptive similarity index over verified features (sector,
             valuation, funding, year-precision age, stage). This is{" "}
-            {NOT_A_VALUATION_PEER_SET}, not a probability, and not a dual-source
-            badge.
+            {NOT_A_VALUATION_PEER_SET}, not a probability, not an investment
+            recommendation, and not a dual-source badge.
           </p>
         </div>
         <div className="flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full">

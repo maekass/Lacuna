@@ -1,0 +1,429 @@
+{
+  "hasResults": false,
+  "protocolSection": {
+    "identificationModule": {
+      "nctId": "NCT03204318",
+      "orgStudyIdInfo": {
+        "id": "MVT-601-3101"
+      },
+      "secondaryIdInfos": [
+        {
+          "id": "2017-001588-19",
+          "type": "EUDRACT_NUMBER"
+        },
+        {
+          "id": "2017",
+          "type": "NIH",
+          "link": "https://reporter.nih.gov/quickSearch/2017"
+        }
+      ],
+      "organization": {
+        "fullName": "Myovant Sciences GmbH",
+        "class": "INDUSTRY"
+      },
+      "briefTitle": "SPIRIT 1: Efficacy and Safety Study of Relugolix in Women With Endometriosis-Associated Pain",
+      "officialTitle": "SPIRIT 1: An International Phase 3 Randomized, Double-Blind, Placebo-Controlled Efficacy and Safety Study to Evaluate Relugolix Administered With and Without Low-Dose Estradiol and Norethindrone Acetate in Women With Endometriosis-Associated Pain"
+    },
+    "statusModule": {
+      "statusVerifiedDate": "2021-06",
+      "overallStatus": "COMPLETED",
+      "expandedAccessInfo": {
+        "hasExpandedAccess": false
+      },
+      "startDateStruct": {
+        "date": "2017-12-07",
+        "type": "ACTUAL"
+      },
+      "primaryCompletionDateStruct": {
+        "date": "2020-06-09",
+        "type": "ACTUAL"
+      },
+      "completionDateStruct": {
+        "date": "2021-04-08",
+        "type": "ACTUAL"
+      },
+      "studyFirstSubmitDate": "2017-06-27",
+      "studyFirstSubmitQcDate": "2017-06-28",
+      "studyFirstPostDateStruct": {
+        "date": "2017-07-02",
+        "type": "ACTUAL"
+      },
+      "lastUpdateSubmitDate": "2021-06-25",
+      "lastUpdatePostDateStruct": {
+        "date": "2021-06-28",
+        "type": "ACTUAL"
+      }
+    },
+    "sponsorCollaboratorsModule": {
+      "responsibleParty": {
+        "type": "SPONSOR"
+      },
+      "leadSponsor": {
+        "name": "Myovant Sciences GmbH",
+        "class": "INDUSTRY"
+      }
+    },
+    "descriptionModule": {
+      "briefSummary": "The purpose of this study is to determine the benefit and safety of relugolix 40 milligrams (mg) once daily, co-administered with low-dose estradiol (E2) and norethindrone acetate (NETA) compared with placebo for 24 weeks, on dysmenorrhea and on nonmenstrual pelvic pain."
+    },
+    "conditionsModule": {
+      "conditions": [
+        "Endometriosis Related Pain"
+      ],
+      "keywords": [
+        "Endometriosis",
+        "Pain",
+        "Dysmenorrhea"
+      ]
+    },
+    "designModule": {
+      "studyType": "INTERVENTIONAL",
+      "phases": [
+        "PHASE3"
+      ],
+      "designInfo": {
+        "allocation": "RANDOMIZED",
+        "interventionModel": "PARALLEL",
+        "primaryPurpose": "TREATMENT",
+        "maskingInfo": {
+          "masking": "TRIPLE",
+          "whoMasked": [
+            "PARTICIPANT",
+            "CARE_PROVIDER",
+            "INVESTIGATOR"
+          ]
+        }
+      },
+      "enrollmentInfo": {
+        "count": 638,
+        "type": "ACTUAL"
+      }
+    },
+    "armsInterventionsModule": {
+      "armGroups": [
+        {
+          "label": "Relugolix plus E2/NETA (Group A)",
+          "type": "EXPERIMENTAL",
+          "description": "Relugolix co-administered with E2/NETA for 24 weeks.",
+          "interventionNames": [
+            "Drug: Relugolix",
+            "Drug: Estradiol/norethindrone acetate"
+          ]
+        },
+        {
+          "label": "Relugolix plus Delayed E2/NETA (Group B)",
+          "type": "EXPERIMENTAL",
+          "description": "Relugolix co-administered with E2/NETA placebo for 12 weeks, followed by relugolix co-administered with E2/NETA for 12 weeks.",
+          "interventionNames": [
+            "Drug: Relugolix",
+            "Drug: Estradiol/norethindrone acetate",
+            "Drug: Estradiol/norethindrone acetate placebo"
+          ]
+        },
+        {
+          "label": "Placebo (Group C)",
+          "type": "PLACEBO_COMPARATOR",
+          "description": "Relugolix placebo co-administered with E2/NETA placebo for 24 weeks.",
+          "interventionNames": [
+            "Drug: Estradiol/norethindrone acetate placebo",
+            "Drug: Relugolix placebo"
+          ]
+        }
+      ],
+      "interventions": [
+        {
+          "type": "DRUG",
+          "name": "Relugolix",
+          "description": "Relugolix 40-mg tablet administered orally once daily.",
+          "armGroupLabels": [
+            "Relugolix plus Delayed E2/NETA (Group B)",
+            "Relugolix plus E2/NETA (Group A)"
+          ],
+          "otherNames": [
+            "TAK-385",
+            "MVT-601"
+          ]
+        },
+        {
+          "type": "DRUG",
+          "name": "Estradiol/norethindrone acetate",
+          "description": "Capsule containing co-formulated tablet of E2 (1.0 mg)/NETA (0.5 mg) administered orally once daily.",
+          "armGroupLabels": [
+            "Relugolix plus Delayed E2/NETA (Group B)",
+            "Relugolix plus E2/NETA (Group A)"
+          ],
+          "otherNames": [
+            "E2/NETA"
+          ]
+        },
+        {
+          "type": "DRUG",
+          "name": "Estradiol/norethindrone acetate placebo",
+          "description": "E2 (0 mg)/NETA (0 mg) placebo capsule administered orally once daily and designed to match the E2/NETA capsule in size, shape, color, and odor.",
+          "armGroupLabels": [
+            "Placebo (Group C)",
+            "Relugolix plus Delayed E2/NETA (Group B)"
+          ]
+        },
+        {
+          "type": "DRUG",
+          "name": "Relugolix placebo",
+          "description": "Relugolix (0 mg) placebo tablet administered orally once daily and manufactured to match the relugolix tablet in size, shape, color, and odor.",
+          "armGroupLabels": [
+            "Placebo (Group C)"
+          ]
+        }
+      ]
+    },
+    "outcomesModule": {
+      "primaryOutcomes": [
+        {
+          "measure": "Percentage Of Participants Who Meet The Dysmenorrhea Responder Criteria At Week 24 Or End Of Treatment (EOT)",
+          "description": "Assessed using a Numerical Rating Scale (NRS) score (11-point scale) for pain recorded daily in an electronic diary (e-Diary). The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "Week 24 or EOT"
+        },
+        {
+          "measure": "Percentage Of Participants Who Meet The Non-Menstrual Pelvic Pain (NMPP) Responder Criteria At Week 24 Or EOT",
+          "description": "Assessed using an NRS score (11-point scale) for pain recorded daily in an e-Diary. The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "Week 24 or EOT"
+        }
+      ],
+      "secondaryOutcomes": [
+        {
+          "measure": "Change From Baseline In The Endometriosis Health Profile (EHP)-30 Pain Score At Week 24",
+          "description": "Assessed using the Pain Domain of the EHP-30 questionnaire.",
+          "timeFrame": "Baseline, Week 24"
+        },
+        {
+          "measure": "Change From Baseline In Dysmenorrhea NRS Score At Week 24 Or EOT",
+          "description": "Assessed using an NRS score (11-point scale) for pain recorded daily in an e-Diary.",
+          "timeFrame": "Baseline, Week 24 or EOT"
+        },
+        {
+          "measure": "Change From Baseline In NMPP NRS Score At Week 24 Or EOT",
+          "description": "Assessed using an NRS score (11-point scale) for pain recorded daily in an e-Diary.",
+          "timeFrame": "Baseline, Week 24 or EOT"
+        },
+        {
+          "measure": "Change From Baseline In Overall Pelvic Pain NRS Score At Week 24 Or EOT",
+          "description": "Assessed using an NRS score (11-point scale) for pain recorded daily in an e-Diary.",
+          "timeFrame": "Baseline, Week 24 or EOT"
+        },
+        {
+          "measure": "Percentage Of Participants Who Are Not Using Opioids For Endometriosis-associated Pain At Week 24 Or EOT",
+          "description": "Assessed based on usage of protocol-specified opioids for endometriosis-associated pain recorded daily in an e-Diary.",
+          "timeFrame": "Week 24 or EOT"
+        },
+        {
+          "measure": "Change From Baseline In Dyspareunia NRS Scores At Week 24 Or EOT",
+          "description": "Assessed using an NRS score (11-point scale) for dyspareunia recorded daily in an e-Diary.",
+          "timeFrame": "Baseline, Week 24 or EOT"
+        },
+        {
+          "measure": "Change From Baseline In Analgesic Use For Endometriosis-associated Pain Based On Mean Pill Count At Week 24 Or EOT",
+          "description": "Assessed based on usage of protocol-specified analgesic for endometriosis-associated pain recorded daily in an e-Diary.",
+          "timeFrame": "Baseline, Week 24 or EOT"
+        },
+        {
+          "measure": "Percentage Of Participants Who Have A Reduction Of At Least 20 Points In The EHP-30 Pain Domain From Baseline To Week 24",
+          "description": "Assessed using the pain domain of the EHP-30 questionnaire.",
+          "timeFrame": "Baseline to Week 24"
+        },
+        {
+          "measure": "Dysmenorrhea Responder Rate By Month",
+          "description": "The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "Baseline to Week 24"
+        },
+        {
+          "measure": "NMPP Responder Rate By Month",
+          "description": "The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "Baseline to Week 24"
+        },
+        {
+          "measure": "Change In Dysmenorrhea NRS Score By Month",
+          "description": "Assessed using an NRS score (11-point scale) for pain recorded daily in an e-Diary.",
+          "timeFrame": "Baseline to Week 24"
+        },
+        {
+          "measure": "Change In NMPP NRS Score By Month",
+          "description": "Assessed using an NRS score (11-point scale) for pain recorded daily in an e-Diary.",
+          "timeFrame": "Baseline to Week 24"
+        },
+        {
+          "measure": "Change In Overall Pelvic Pain NRS Score By Month",
+          "description": "Assessed using an NRS score (11-point scale) for pain recorded daily in an e-Diary.",
+          "timeFrame": "Baseline to Week 24"
+        },
+        {
+          "measure": "Change In Dyspareunia NRS Score By Month",
+          "description": "Assessed using an NRS score (11-point scale) for pain recorded daily in an e-Diary.",
+          "timeFrame": "Baseline to Week 24"
+        },
+        {
+          "measure": "Change From Baseline In Ibuprofen Use At Week 24 Or EOT",
+          "description": "Assessed using ibuprofen pill counts for endometriosis-associated pain recorded daily in an e-Diary.",
+          "timeFrame": "Baseline, Week 24 or EOT"
+        },
+        {
+          "measure": "Change From Baseline In Opioid Use At Week 24 Or EOT",
+          "description": "Assessed using opioid pill counts for endometriosis-associated pain recorded daily in an e-Diary.",
+          "timeFrame": "Baseline, Week 24 or EOT"
+        },
+        {
+          "measure": "Change From Baseline In The Mean Dysmenorrhea Functional Impairment At Week 24 Or EOT",
+          "description": "Assessed using the subject modified Biberoglu and Behrman 5-point scale for dysmenorrhea recorded daily in an e-Diary.",
+          "timeFrame": "Baseline, Week 24 or EOT"
+        },
+        {
+          "measure": "Change From Baseline In The Mean NMPP Functional Impairment At Week 24 Or EOT",
+          "description": "Assessed using the subject modified Biberoglu and Behrman 4-point scale for pelvic pain recorded daily in an e-Diary.",
+          "timeFrame": "Baseline, Week 24 or EOT"
+        },
+        {
+          "measure": "Change From Baseline In The Mean Dyspareunia Functional Impairment At Week 24 Or EOT",
+          "description": "Assessed using the subject modified Biberoglu and Behrman 5-point scale for dyspareunia recorded daily in an e-Diary.",
+          "timeFrame": "Baseline, Week 24 or EOT"
+        },
+        {
+          "measure": "Change From Baseline In Patient Global Assessment (PGA) For Dysmenorrhea Symptom Severity At Week 24",
+          "description": "The PGA for dysmenorrhea is a 1-item questionnaire designed to assess participants' impression of the severity of pain during their menstrual cycle.",
+          "timeFrame": "Baseline, Week 24"
+        },
+        {
+          "measure": "Percentage Of Participants With Improvement, No Change, Or Worsening From Baseline In PGA For Dysmenorrhea At Week 24",
+          "description": "The PGA for dysmenorrhea is a 1-item questionnaire designed to assess participants' impression of the severity of pain during their menstrual cycle.",
+          "timeFrame": "Week 24"
+        },
+        {
+          "measure": "Change From Baseline In PGA For NMPP Symptom Severity At Week 24",
+          "description": "The PGA for NMPP is a 1-item questionnaire designed to assess participants' impression of the severity of pain when they are not menstruating.",
+          "timeFrame": "Baseline, Week 24"
+        },
+        {
+          "measure": "Percentage Of Participants With Improvement, No Change, Or Worsening From Baseline In PGA For NMPP At Week 24",
+          "description": "The PGA for NMPP is a 1-item questionnaire designed to assess participants' impression of the severity of pain when they are not menstruating.",
+          "timeFrame": "Week 24"
+        },
+        {
+          "measure": "Change From Baseline In PGA For Pain Severity At Week 24",
+          "description": "The PGA for pain severity is a 1-item questionnaire designed to assess participants' impression of how their pain affected their usual activities.",
+          "timeFrame": "Baseline, Week 24"
+        },
+        {
+          "measure": "Percentage Of Participants With Improvement, No Change, Or Worsening From Baseline In PGA For Pain Severity At Week 24",
+          "description": "The PGA for pain severity is a 1-item questionnaire designed to assess participants' impression of how their pain affected their usual activities.",
+          "timeFrame": "Week 24"
+        },
+        {
+          "measure": "Change From Baseline In PGA For Function At Week 24",
+          "description": "The PGA for function is a 1-item questionnaire designed to assess participants' impression of how their pain affected their usual activities.",
+          "timeFrame": "Baseline, Week 24"
+        },
+        {
+          "measure": "Percentage Of Participants With Improvement, No Change, Or Worsening From Baseline In PGA For Function At Week 24",
+          "description": "The PGA for function is a 1-item questionnaire designed to assess participants' impression of how their pain affected their usual activities.",
+          "timeFrame": "Week 24"
+        },
+        {
+          "measure": "Percentage Of Participants Who Are \"Better\" Or \"Much Better\" On The Patient Global Impression Of Change (PGIC) For Dysmenorrhea At Week 24",
+          "description": "The PGIC for dysmenorrhea is a 1-item questionnaire designed to assess participants' impression of change in the severity of pain during their menstrual cycle.",
+          "timeFrame": "Week 24"
+        },
+        {
+          "measure": "Percentage Of Participants Who Are \"Better\" Or \"Much Better\" On The PGIC For NMPP At Week 24",
+          "description": "The PGIC for NMPP is a 1-item questionnaire designed to assess participants' impression of change in the severity of pain during their menstrual cycle.",
+          "timeFrame": "Week 24"
+        },
+        {
+          "measure": "Percentage Of Participants Who Are \"Better\" Or \"Much Better\" On The PGIC For Dyspareunia At Week 24",
+          "description": "The PGIC for dyspareunia is a 1-item questionnaire designed to assess participants' impression of change in the severity of pain during sexual intercourse.",
+          "timeFrame": "Week 24"
+        },
+        {
+          "measure": "Change From Baseline In The Non-Pain Of The EHP-30 Domains At Week 24",
+          "description": "Assessed using the non-pain domains (Control and Powerlessness, Social Support, Emotional Well-Being, and Self-Image) of the EHP-30 questionnaire.",
+          "timeFrame": "Baseline, Week 24"
+        },
+        {
+          "measure": "Change From Baseline In The EHP-30 Scale Total Score At Week 24",
+          "description": "Assessed using the total score of the EHP-30 questionnaire.",
+          "timeFrame": "Baseline, Week 24"
+        },
+        {
+          "measure": "Change From Baseline In The EHP Work Domain Score At Week 24",
+          "description": "The EHP Work domain is a 5-item questionnaire that assesses impact of pain on ability to work.",
+          "timeFrame": "Baseline, Week 24"
+        },
+        {
+          "measure": "Categorical Change From Baseline In Quality Of Life Assessed By European Quality Of Life Five Dimension Five Level (EQ-5D-5L) Questionnaire At Week 24",
+          "description": "The EQ-5D-5L is a 5-item questionnaire designed to assess quality of life.",
+          "timeFrame": "Baseline, Week 24"
+        },
+        {
+          "measure": "Change From Baseline To Week 24 In EQ-5D-5L Visual Analogue Scale Score At Week 24",
+          "description": "The EQ-5D-5L is a 5-item questionnaire designed to assess quality of life.",
+          "timeFrame": "Baseline, Week 24"
+        },
+        {
+          "measure": "Percentage Of Participants Who Meet The Dysmenorrhea Responder Criteria At Week 24 Or EOT For Relugolix Plus Delayed E2/NETA",
+          "description": "Assessed using an NRS score (11-point scale) for pain recorded daily in an e-Diary. The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "Week 24 or EOT"
+        },
+        {
+          "measure": "Percentage Of Participants Who Meet The NMPP Responder Criteria At Week 24 Or EOT For Relugolix Plus Delayed E2/NETA",
+          "description": "Assessed using an NRS score (11-point scale) for pain recorded daily in an e-Diary. The criteria for a responder was based on a pre-defined threshold and accounted for analgesic use.",
+          "timeFrame": "Week 24 or EOT"
+        },
+        {
+          "measure": "Change From Baseline In The EHP-30 Pain Score At Week 24 For Relugolix Plus Delayed E2/NETA",
+          "description": "Assessed using the Pain Domain of the EHP-30 questionnaire.",
+          "timeFrame": "Baseline, Week 24"
+        },
+        {
+          "measure": "Percentage Of Participants Who Have A Reduction Of At Least 20 Points In The EHP-30 Pain Domain From Baseline To Week 24 For Relugolix Plus Delayed E2/NETA",
+          "description": "Assessed using the pain domain of the EHP-30 questionnaire.",
+          "timeFrame": "Baseline to Week 24"
+        },
+        {
+          "measure": "Percentage Change From Baseline In Bone Mineral Density At The Lumbar Spine (L1-L4) At Week 12",
+          "description": "Assessed by dual-energy X-ray absorptiometry (DXA) scan.",
+          "timeFrame": "Baseline, Week 12"
+        },
+        {
+          "measure": "Percentage Change From Baseline In Bone Mineral Density At Lumbar Spine (L1-L4), Femoral Neck, And Total Hip At Week 24",
+          "description": "Assessed by DXA scan.",
+          "timeFrame": "Baseline, Week 24"
+        },
+        {
+          "measure": "Percentage Of Participants Experiencing Vasomotor Symptoms At Week 12 Between Group A And B",
+          "timeFrame": "Week 12"
+        },
+        {
+          "measure": "Change From Baseline In Serum Concentrations Of Luteinizing Hormone, Follicle Stimulating Hormone, Estradiol, And Progesterone",
+          "description": "Blood samples will be collected from participants for hormonal measurements.",
+          "timeFrame": "Baseline, Week 24"
+        },
+        {
+          "measure": "Pre-dose Relugolix Plasma Concentrations",
+          "description": "Blood samples will be collected from participants for relugolix measurements.",
+          "timeFrame": "Week 4"
+        },
+        {
+          "measure": "Endometrial Biopsy At Week 24",
+          "description": "Primary diagnosis of endometrial biopsy assessment by pathologist.",
+          "timeFrame": "Week 24"
+        }
+      ]
+    },
+    "eligibilityModule": {
+      "eligibilityCriteria": "Key Inclusion Criteria:\n\n1. Is a premenopausal female aged 18 to 50 years old (inclusive) on the day of signing of the informed consent form.\n2. Has agreed to use only study-specified analgesic medications during the study and is not known to be intolerant to these.\n3. Has a diagnosis of endometriosis and has had, within 10 years prior to signing the informed consent form, surgical or direct visualization and/or histopathologic confirmation of endometriosis, for example, during a laparoscopy or laparotomy.\n4. During the Run-In Period (35 to 70 days prior to treatment period) has a dysmenorrhea NRS score \u2265 4.0 on at least 2 days and\n\n   1. Mean NMPP NRS score \u2265 2.5, or\n   2. Mean NMPP NRS score \u2265 1.25 and NMPP NRS score \u2265 5.0 on \u2265 4 days.\n\nKey Exclusion Criteria:\n\n1. Has a history of chronic pelvic pain that is not caused by endometriosis.\n2. Has any chronic pain or frequently recurring pain condition, other than endometriosis that is treated with opioids or requires analgesics for \u2265 7 days per month.\n3. Has had surgical procedures for treatment of endometriosis within the 3 months prior to the Screening visit.\n4. Has a history of or currently has osteoporosis or other metabolic bone disease.\n5. Has a clinically significant gynecologic condition, other than endometriosis, identified during Screening or Run-In period transvaginal ultrasound or endometrial biopsy.",
+      "healthyVolunteers": false,
+      "sex": "FEMALE",
+      "minimumAge": "18 Years",
+      "maximumAge": "50 Years",
+      "stdAges": [
+        "ADULT"
+      ]
+    }
+  }
+}

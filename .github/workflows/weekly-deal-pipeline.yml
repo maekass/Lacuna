@@ -34,6 +34,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           SEC_EDGAR_USER_AGENT: ${{ secrets.SEC_EDGAR_USER_AGENT }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LACUNA_HANDS_OFF_INGEST: "true"
           LACUNA_AUTO_APPROVE_CONFIDENCE: high
           LACUNA_PROMOTE_TARGET: both
