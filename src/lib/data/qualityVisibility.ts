@@ -138,6 +138,7 @@ export interface EconomicReplayCensus {
 export interface QualityVisibilityArtifact {
   readonly generatedAt: string;
   readonly datasetHash: string;
+  readonly computationLineageHash: string;
   readonly datasetVersion?: string;
   readonly source: string;
   readonly quality: QualityLayerSummary;
