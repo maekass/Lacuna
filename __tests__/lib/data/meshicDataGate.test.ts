@@ -496,7 +496,11 @@ describe("MeshIC lineage, claims, and the live catalog", () => {
       company.id === "c1"
     );
     expect(modern?.totalFunding).toBe(155);
-    expect(modern?.fundingSource).toMatch(/Crunchbase/);
+    expect(
+      ledger.records.find((record) =>
+        record.companyId === "c1" && record.field === "totalFunding"
+      )?.sourceCitation,
+    ).toMatch(/Crunchbase/);
     expect(economicEvidenceAtDecisionDate(
       ledger,
       "c1",
