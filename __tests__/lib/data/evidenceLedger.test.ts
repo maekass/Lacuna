@@ -144,7 +144,7 @@ describe("economic evidence ledger", () => {
       "c76",
       "totalFunding",
       "2021-07-31",
-    )).toEqual({ eligible: false, reason: "after-cutoff" });
+    )).toEqual({ eligible: false, reason: "imprecise-date" });
     expect(economicEvidenceAtDecisionDate(
       ledger,
       "c79",
