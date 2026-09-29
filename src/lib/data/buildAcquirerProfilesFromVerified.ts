@@ -40,17 +40,19 @@ function recentActivityFromDate(
   return "low";
 }
 
+/**
+ * Range around disclosed prices only.
+ * No disclosed prices → null. A $10–500M band is not invented.
+ */
 function dealSizeRange(
   disclosedValues: number[],
-): { min: number; max: number } {
-  if (disclosedValues.length === 0) {
-    return { min: 10, max: 500 };
-  }
+): { min: number; max: number } | null {
+  if (disclosedValues.length === 0) return null;
   const sorted = [...disclosedValues].sort((a, b) => a - b);
-  return {
-    min: Math.max(1, Math.round(sorted[0] * 0.5)),
-    max: Math.round(sorted[sorted.length - 1] * 1.5),
-  };
+  const min = Math.max(1, Math.round(sorted[0] * 0.5));
+  const max = Math.round(sorted[sorted.length - 1] * 1.5);
+  if (!(max > min)) return null;
+  return { min, max };
 }
 
 /**
@@ -84,11 +86,11 @@ export function buildAcquirerProfilesFromVerified(
         targetSector: mapVerifiedSectorToEngineSector(
           target?.sector ?? acquirer.sector,
         ),
-        dealValue: deal.dealValue ?? 0,
+        dealValue: typeof deal.dealValue === "number" ? deal.dealValue : null,
         dealDate: deal.announcedDate.slice(0, 7),
         stageAtAcquisition: target
           ? mapVerifiedStageToEngineStage(target.stage)
-          : "growth",
+          : "unknown",
         strategicRationale: deal.strategicRationale,
       };
     });
@@ -111,13 +113,12 @@ export function buildAcquirerProfilesFromVerified(
       ...new Set(
         deals.flatMap((deal) => {
           const target = companyById.get(deal.targetId);
-          return target ? [mapVerifiedStageToEngineStage(target.stage)] : [];
+          if (!target) return [];
+          const stage = mapVerifiedStageToEngineStage(target.stage);
+          return stage === "unknown" ? [] : [stage];
         }),
       ),
     ];
-    if (stagePreference.length === 0) {
-      stagePreference.push("series_b", "growth");
-    }
 
     const mostRecentDate = deals.length > 0
       ? [...deals].sort((a, b) =>

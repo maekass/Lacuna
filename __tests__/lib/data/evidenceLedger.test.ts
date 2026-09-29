@@ -103,4 +103,84 @@ describe("economic evidence ledger", () => {
       "2021-05-18",
     )).toMatchObject({ eligible: true, evidence: { value: 155 } });
   });
+
+  it("admits a cited window only after that window is known to have been public", () => {
+    const ledger = parseEconomicEvidenceLedger(rawLedger);
+
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c23",
+      "lastKnownValuation",
+      "2020-08-05",
+    )).toEqual({ eligible: false, reason: "after-cutoff" });
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c23",
+      "lastKnownValuation",
+      "2020-10-30",
+    )).toEqual({ eligible: false, reason: "after-cutoff" });
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c23",
+      "lastKnownValuation",
+      "2021-03-01",
+    )).toMatchObject({ eligible: true, evidence: { value: 13900 } });
+
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c4",
+      "lastKnownValuation",
+      "2021-08-30",
+    )).toEqual({ eligible: false, reason: "after-cutoff" });
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c4",
+      "lastKnownValuation",
+      "2021-08-31",
+    )).toMatchObject({ eligible: true, evidence: { value: 1000 } });
+
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c76",
+      "totalFunding",
+      "2021-07-31",
+    )).toEqual({ eligible: false, reason: "after-cutoff" });
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c79",
+      "totalFunding",
+      "2022-10-31",
+    )).toEqual({ eligible: false, reason: "missing-provenance" });
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c84",
+      "totalFunding",
+      "2023-07-31",
+    )).toEqual({ eligible: false, reason: "missing-provenance" });
+
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c23",
+      "totalFunding",
+      "2020-10-30",
+    )).toEqual({ eligible: false, reason: "missing-provenance" });
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c13",
+      "totalFunding",
+      "2021-10-22",
+    )).toEqual({ eligible: false, reason: "missing-provenance" });
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c13",
+      "lastKnownValuation",
+      "2021-10-21",
+    )).toEqual({ eligible: false, reason: "after-cutoff" });
+    expect(economicEvidenceAtDecisionDate(
+      ledger,
+      "c13",
+      "lastKnownValuation",
+      "2021-10-22",
+    )).toMatchObject({ eligible: true, evidence: { value: 400 } });
+  });
 });

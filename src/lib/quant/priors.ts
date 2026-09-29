@@ -77,9 +77,16 @@ export function classifyValuationType(sector: string): ValuationType {
   return "femtech";
 }
 
+/** Apply a positive finite explicit multiplier only to companies focused on Africa. */
 export function geographicMultiplier(company: QuantCompany): number {
-  if (!company.geographicFocus.includes("Africa")) return 1.0;
-  return company.africaDiscountMultiplier ?? 0.65;
+  const explicit = company.africaDiscountMultiplier;
+  if (
+    company.geographicFocus.includes("Africa") &&
+    typeof explicit === "number" && Number.isFinite(explicit) && explicit > 0
+  ) {
+    return explicit;
+  }
+  return 1;
 }
 
 export function revenueMultiple(company: QuantCompany): number {
