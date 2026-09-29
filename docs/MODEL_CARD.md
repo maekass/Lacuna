@@ -162,8 +162,8 @@ log funding, and year-precision age. Cosine similarity uses only dimensions both
 sides observed. Undisclosed valuation, undisclosed funding, and founding years
 that are not year-precision are excluded, not filled with zero. The panel shows
 a unitless 0–100 descriptive index, not a percentage probability. This is a
-**retrieval/comparison tool**, not a classification or prediction model, and
-not an investment recommendation. No training occurs; the feature encoding is
+**retrieval/comparison tool**, not a classification or prediction model, and not
+an investment recommendation. No training occurs; the feature encoding is
 manually defined. The therapeutics ontology is not an input.
 
 ---
