@@ -2,6 +2,7 @@
 
 import { useEffect, useReducer } from "react";
 import { DOMESTIC_TRIAL_PRESETS } from "@/lib/research/institutionPresets";
+import { summarizeEnrollment } from "@/lib/research/trialEnrollment";
 
 const TRIAL_SCORE_NOTE =
   "Model-derived trial scores are not displayed because Lacuna does not currently ship a version trained on a documented, versioned ClinicalTrials.gov cohort.";
@@ -13,7 +14,7 @@ interface Trial {
   status: string;
   condition: string;
   sponsor: string;
-  enrollment: number;
+  enrollment: number | null;
   startDate: string;
   completionDate?: string;
   interventions?: string[];
@@ -146,7 +147,8 @@ export default function ClinicalTrialTracker() {
     return acc;
   }, {});
 
-  const totalEnrollment = trials.reduce((s, t) => s + (t.enrollment || 0), 0);
+  const enrollmentSummary = summarizeEnrollment(trials);
+  const totalEnrollment = enrollmentSummary.total;
 
   const topSponsors = Object.entries(
     trials.reduce<Record<string, number>>((acc, t) => {
@@ -230,10 +232,12 @@ export default function ClinicalTrialTracker() {
             </div>
             <div className="rounded-lg bg-lacuna-pink/10 border border-lacuna-lavender/30 p-3">
               <p className="text-2xl font-bold text-lacuna-plum">
-                {totalEnrollment.toLocaleString()}
+                {enrollmentSummary.reportedTrials > 0
+                  ? totalEnrollment.toLocaleString()
+                  : "Not reported"}
               </p>
               <p className="text-xs text-lacuna-blue mt-1">
-                Enrollment (shown)
+                {`Enrollment (${enrollmentSummary.reportedTrials} of ${trials.length} shown report)`}
               </p>
             </div>
             <div className="rounded-lg bg-lacuna-pink/10 border border-lacuna-lavender/30 p-3">
@@ -372,7 +376,7 @@ export default function ClinicalTrialTracker() {
                         {trial.nctId}
                       </a>
                     </span>
-                    {trial.enrollment > 0 && (
+                    {trial.enrollment !== null && (
                       <span>
                         Enrollment: {trial.enrollment.toLocaleString()}
                       </span>

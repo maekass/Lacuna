@@ -51,6 +51,15 @@ function main(): void {
       (metrics.withheldRate * 100).toFixed(1)
     }%) are withheld with machine-readable reasons.`,
   );
+  if (artifact.economicReplay) {
+    githubCommand(
+      "warning",
+      "Historical replay gap",
+      `${artifact.economicReplay.currentOnlyMissingPublicAsOf}/${artifact.economicReplay.activeRecords} active economic records (${
+        (artifact.economicReplay.currentOnlyRate * 100).toFixed(1)
+      }%) are current-only because publicAsOfDate is missing. ${artifact.economicReplay.replayEligible} are replay-eligible. Do not invent publication dates.`,
+    );
+  }
   githubCommand(
     "warning",
     "Vintage gap",

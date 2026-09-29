@@ -80,7 +80,6 @@ function resolveNaturalKey(deal: ClassifiedDeal): string {
 }
 
 function toParams(deal: ClassifiedDeal): unknown[] {
-  const formType = resolveFormType(deal);
   return [
     deal.dealId,
     deal.secAccession,

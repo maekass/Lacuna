@@ -1,28 +1,28 @@
 {
   "generatedAt": "2026-09-20T00:00:00.000Z",
-  "datasetHash": "e79ef1cfdc8c2c19b3290ea7eabbb5c5657d0398471013db2ded074be212ddf9",
+  "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
   "datasetVersion": "v9",
   "source": "Lacuna measurement-layer census (quality scores, gated metrics, vintage, display provenance)",
   "quality": {
     "companies": {
       "total": 150,
       "grades": {
-        "A": 14,
-        "B": 29,
-        "C": 45,
-        "D": 59,
-        "F": 3
+        "A": 3,
+        "B": 39,
+        "C": 42,
+        "D": 58,
+        "F": 8
       },
       "avgScore": 63.9
     },
     "acquisitions": {
       "total": 59,
       "grades": {
-        "A": 29,
-        "B": 20,
-        "C": 9,
-        "D": 0,
-        "F": 1
+        "A": 26,
+        "B": 5,
+        "C": 23,
+        "D": 1,
+        "F": 4
       },
       "avgScore": 86.7
     },
@@ -241,31 +241,31 @@
       {
         "id": "c139",
         "label": "Cayaba Care",
-        "grade": "D",
+        "grade": "F",
         "score": 45
       },
       {
         "id": "c142",
         "label": "Eli Health",
-        "grade": "D",
+        "grade": "F",
         "score": 45
       },
       {
         "id": "c146",
         "label": "Planera",
-        "grade": "D",
+        "grade": "F",
         "score": 45
       },
       {
         "id": "c148",
         "label": "Seven Starling",
-        "grade": "D",
+        "grade": "F",
         "score": 45
       },
       {
         "id": "c149",
         "label": "Twenty Eight Health",
-        "grade": "D",
+        "grade": "F",
         "score": 45
       },
       {
@@ -405,6 +405,30 @@
         "label": "YourChoice Therapeutics",
         "grade": "D",
         "score": 56
+      },
+      {
+        "id": "c89",
+        "label": "Juniper Genomics",
+        "grade": "D",
+        "score": 60
+      },
+      {
+        "id": "c21",
+        "label": "NovvaCup",
+        "grade": "D",
+        "score": 60
+      },
+      {
+        "id": "c87",
+        "label": "Testmate Health",
+        "grade": "D",
+        "score": 60
+      },
+      {
+        "id": "c26",
+        "label": "Gynesonics",
+        "grade": "D",
+        "score": 62
       }
     ],
     "lowGradeDeals": [
@@ -413,6 +437,30 @@
         "label": "Maven Clinic → Teladoc",
         "grade": "F",
         "score": 38
+      },
+      {
+        "id": "deal22",
+        "label": "Flatiron Health → Roche",
+        "grade": "F",
+        "score": 60
+      },
+      {
+        "id": "deal21",
+        "label": "Foundation Medicine → Roche",
+        "grade": "F",
+        "score": 60
+      },
+      {
+        "id": "deal46",
+        "label": "SuperSonic Imagine → Hologic",
+        "grade": "F",
+        "score": 60
+      },
+      {
+        "id": "deal9",
+        "label": "Gynesonics → Hologic",
+        "grade": "D",
+        "score": 75
       }
     ]
   },
@@ -499,12 +547,12 @@
     "definition": "Dedicated as-of for the record's primary economic number. lastKnownValuation and totalFunding have no as-of field. dealValue's announcedDate is an event date, not a value vintage. Only preDealValuationDate counts when the primary number is preDealValuation.",
     "recordsInScope": 209,
     "primaryNumbers": 135,
-    "dedicatedAsOf": 2,
-    "missingDedicatedAsOf": 133,
-    "missingDedicatedAsOfRate": 0.9851851851851852,
+    "dedicatedAsOf": 69,
+    "missingDedicatedAsOf": 66,
+    "missingDedicatedAsOfRate": 0.4888888888888889,
     "companyPrimary": {
       "total": 83,
-      "withDedicatedAsOf": 0
+      "withDedicatedAsOf": 67
     },
     "dealValues": {
       "total": 50,
@@ -516,16 +564,38 @@
       "withDedicatedAsOf": 49
     }
   },
+  "economicReplay": {
+    "note": "Missing publicAsOfDate means the fact is current-catalog only. Do not invent a publication date to raise the historical-replay share.",
+    "activeRecords": 98,
+    "replayEligible": 44,
+    "replayEligibleRate": 0.4489795918367347,
+    "currentOnlyMissingPublicAsOf": 31,
+    "currentOnlyRate": 0.3163265306122449,
+    "byField": [
+      {
+        "field": "totalFunding",
+        "active": 40,
+        "replayEligible": 0,
+        "currentOnlyMissingPublicAsOf": 22
+      },
+      {
+        "field": "lastKnownValuation",
+        "active": 58,
+        "replayEligible": 44,
+        "currentOnlyMissingPublicAsOf": 9
+      }
+    ]
+  },
   "premiums": {
     "computed": 47,
     "reproducible": 47
   },
   "displayProvenance": {
-    "total": 900,
+    "total": 899,
     "covered": 21,
-    "exempt": 0,
-    "uncovered": 879,
-    "uncoveredRate": 0.9766666666666667,
+    "exempt": 2,
+    "uncovered": 876,
+    "uncoveredRate": 0.9744160177975528,
     "topUncoveredFiles": [
       {
         "file": "src/components/NetworkAnalysisHonest.tsx",

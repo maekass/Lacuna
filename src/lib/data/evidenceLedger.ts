@@ -26,6 +26,30 @@ export const ECONOMIC_EVIDENCE_FIELDS = [
 
 export type EconomicEvidenceField = (typeof ECONOMIC_EVIDENCE_FIELDS)[number];
 
+/**
+ * What the stored millions figure is, in the citation's own words.
+ * `stated` is a single point the citation quotes. Other bases keep the
+ * number but stop it from being read as an exact whole-company price.
+ */
+export const ECONOMIC_VALUE_BASES = [
+  "stated",
+  "approximate",
+  "range_high",
+  "at_least",
+  "up_to",
+  "upfront",
+  "fully_diluted",
+  "enterprise_value",
+  "equity_value",
+  "stake",
+  "sum_of_cited_rounds",
+  "unquoted_fx",
+  "unstated_conflict",
+  "locator_only",
+] as const;
+
+export type EconomicValueBasis = (typeof ECONOMIC_VALUE_BASES)[number];
+
 const economicEvidenceRecordSchema = z.object({
   id: z.string().min(1),
   companyId: z.string().min(1),
@@ -33,15 +57,30 @@ const economicEvidenceRecordSchema = z.object({
   value: z.number().finite().nonnegative(),
   /** Values are stored in millions of US dollars, matching the legacy dataset contract. */
   unit: z.literal("USD_M"),
+  /**
+   * Machine-readable reading of `value`. Omitted only on hand-built fixtures;
+   * the static ledger must set it on every row.
+   */
+  valueBasis: z.enum(ECONOMIC_VALUE_BASES).optional(),
   /** Source locator/citation; not necessarily a resolvable URL in the legacy catalog. */
   sourceCitation: z.string().min(1),
   sourceUrl: z.string().url().optional(),
+  /**
+   * Earliest day of the cited disclosure window.
+   * Equal to `publicAsOfDate` when `datePrecision` is `day`.
+   */
   effectiveDate: isoDateSchema.nullable(),
+  /**
+   * First day the figure is known to have been public.
+   * Month and year precision use the last calendar day of that window so a
+   * dated replay cannot admit the value before the cited period ends.
+   * Null means the citation does not date this figure.
+   */
   publicAsOfDate: isoDateSchema.nullable(),
   datePrecision: z.enum(EVIDENCE_DATE_PRECISIONS),
   verificationStatus: z.enum(EVIDENCE_VERIFICATION_STATUSES),
   recordedAt: isoDateSchema,
-  /** A correction adds a record; it does not edit the earlier evidence row. */
+  /** A value correction adds a record; it does not edit the earlier row's value. */
   supersedesId: z.string().min(1).optional(),
 });
 

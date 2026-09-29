@@ -47,8 +47,12 @@ export class AcquisitionPredictor {
 
   private scoreMarketTiming(company: QuantCompany): number {
     let score = 5;
-    if (company.raisedToDate < 10) score += 1;
-    if (company.raisedToDate > 50) score -= 2;
+    if (typeof company.raisedToDate === "number" && company.raisedToDate < 10) {
+      score += 1;
+    }
+    if (typeof company.raisedToDate === "number" && company.raisedToDate > 50) {
+      score -= 2;
+    }
     if (company.annualRevenue && company.annualRevenue > 10) score += 2;
     if ((company.targetMarketSize ?? 0) > 1000) score += 2;
     if (company.geographicFocus.length > 2) score += 1;

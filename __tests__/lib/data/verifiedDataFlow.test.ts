@@ -19,7 +19,8 @@ describe("companyProfileMapper", () => {
     expect(withFunding).toBeDefined();
     const profile = mapVerifiedCompanyToProfile(withFunding!);
     expect(profile.fundingTotal).toBe(withFunding!.totalFunding);
-    expect(profile.foundingDate).toBe(`${withFunding!.founded}-01-01`);
+    expect(profile.foundingYear).toBe(withFunding!.founded);
+    expect(String(profile.foundingYear)).not.toMatch(/-01-01/);
     expect(profile.revenue).toBeUndefined();
   });
 

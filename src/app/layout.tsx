@@ -67,7 +67,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Lacuna",
   description:
-    "Prototype investment-research environment for women's health M&A: verified deal provenance, clinical trial search, genomics governance, and cited analytics.",
+    "Descriptive women's health company and exit intelligence: verified deal provenance, similarity-based precedents, and cited analytics. Not a forecast or an investment recommendation.",
   keywords: [
     "women's health M&A diligence",
     "FemTech corporate venture capital",
@@ -93,7 +93,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lacuna",
     description:
-      "Verified deal provenance, clinical trial search, genomics governance, and cited analytics for women's health M&A.",
+      "Descriptive women's health exit intelligence from verified public sources. Not a forecast.",
     url: "https://lacuna-maekass.vercel.app",
     siteName: "Lacuna",
     type: "website",
@@ -103,7 +103,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Lacuna",
     description:
-      "Verified deals, clinical trial search, genomics governance, and cited analytics. BSL 1.1.",
+      "Descriptive women's health exit intelligence from verified public sources. Not a forecast. BSL 1.1.",
   },
   robots: {
     index: true,
@@ -137,7 +137,7 @@ export default function RootLayout({
               name: "Lacuna",
               url: "https://lacuna-maekass.vercel.app",
               description:
-                "Women's health M&A diligence stack — verified deal provenance, clinical trial search, genomics governance, and cited analytics.",
+                "Descriptive women's health company and exit intelligence. Verified deal provenance and cited analytics. Not a forecast.",
               applicationCategory: "BusinessApplication",
               operatingSystem: "Web",
               isAccessibleForFree: true,

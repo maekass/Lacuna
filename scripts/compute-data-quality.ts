@@ -26,6 +26,24 @@ interface SourceQuality {
   score: number;
 }
 
+const GRADE_RANK = { A: 4, B: 3, C: 2, D: 1, F: 0 } as const;
+
+function gradeFromScore(score: number): SourceQuality["level"] {
+  if (score >= 90) return "A";
+  if (score >= 75) return "B";
+  if (score >= 60) return "C";
+  if (score >= 40) return "D";
+  return "F";
+}
+
+/** Completeness must not promote a record above its source-quality letter. */
+function capGradeAtSource(
+  composite: SourceQuality["level"],
+  source: SourceQuality["level"],
+): SourceQuality["level"] {
+  return GRADE_RANK[composite] > GRADE_RANK[source] ? source : composite;
+}
+
 function scoreSource(source?: string): SourceQuality {
   if (!source) {
     return { level: "F", description: "No source provided", score: 0 };
@@ -191,15 +209,7 @@ for (const company of companies) {
     hasFunding,
     hasSource,
     overallScore,
-    grade: overallScore >= 90
-      ? "A"
-      : overallScore >= 75
-      ? "B"
-      : overallScore >= 60
-      ? "C"
-      : overallScore >= 40
-      ? "D"
-      : "F",
+    grade: capGradeAtSource(gradeFromScore(overallScore), sourceQuality.level),
   });
 }
 
@@ -237,15 +247,7 @@ for (const deal of acquisitions) {
     hasDealValue,
     hasSource,
     overallScore,
-    grade: overallScore >= 90
-      ? "A"
-      : overallScore >= 75
-      ? "B"
-      : overallScore >= 60
-      ? "C"
-      : overallScore >= 40
-      ? "D"
-      : "F",
+    grade: capGradeAtSource(gradeFromScore(overallScore), sourceQuality.level),
   });
 }
 

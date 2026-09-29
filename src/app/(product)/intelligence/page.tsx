@@ -10,7 +10,7 @@ export const revalidate = 86_400;
 export const metadata: Metadata = {
   title: "Lacuna · Intelligence",
   description:
-    "Reimbursement intelligence, acquirer fit scores, and dataset export for women's health M&A diligence.",
+    "Reimbursement context, historical acquirer-profile overlap, and dataset export. Descriptive heuristics, not an acquisition forecast.",
   alternates: { canonical: "/intelligence" },
 };
 

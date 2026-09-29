@@ -74,6 +74,26 @@ describe("computeYearDealCounts", () => {
   it("returns empty array with no acquisitions (edge)", () => {
     expect(computeYearDealCounts(emptyDataset)).toEqual([]);
   });
+
+  it("keeps date-only calendar years in negative-offset timezones (edge)", () => {
+    const previousTimezone = process.env.TZ;
+    process.env.TZ = "America/Los_Angeles";
+    try {
+      const dataset: CoverageDatasetInput = {
+        ...minimalVerifiedDataset,
+        acquisitions: [{
+          ...minimalVerifiedDataset.acquisitions[0],
+          announcedDate: "2021-01-01",
+        }],
+      };
+      expect(computeYearDealCounts(dataset)).toEqual([
+        { year: 2021, count: 1, disclosedPrices: 1 },
+      ]);
+    } finally {
+      if (previousTimezone === undefined) delete process.env.TZ;
+      else process.env.TZ = previousTimezone;
+    }
+  });
 });
 
 describe("computeEffectiveNBadges", () => {
