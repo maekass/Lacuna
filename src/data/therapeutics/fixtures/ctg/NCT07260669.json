@@ -1,0 +1,201 @@
+{
+  "hasResults": false,
+  "protocolSection": {
+    "identificationModule": {
+      "nctId": "NCT07260669",
+      "orgStudyIdInfo": {
+        "id": "GS-248-203"
+      },
+      "secondaryIdInfos": [
+        {
+          "id": "2025-522452-16-00",
+          "type": "CTIS"
+        },
+        {
+          "id": "2025",
+          "type": "NIH",
+          "link": "https://reporter.nih.gov/quickSearch/2025"
+        }
+      ],
+      "organization": {
+        "fullName": "Gesynta Pharma AB",
+        "class": "INDUSTRY"
+      },
+      "briefTitle": "A Phase 2 Trial to Investigate Efficacy and Safety of Vipoglanstat in Women With Endometriosis",
+      "officialTitle": "A Phase 2, Randomized, Double-blind, Placebo-controlled Trial to Investigate the Efficacy and Safety of 2 Doses of Vipoglanstat in Patients With Moderate to Severe Endometriosis-related Pain - the NOVA Trial",
+      "acronym": "NOVA"
+    },
+    "statusModule": {
+      "statusVerifiedDate": "2026-09",
+      "overallStatus": "RECRUITING",
+      "expandedAccessInfo": {
+        "hasExpandedAccess": false
+      },
+      "startDateStruct": {
+        "date": "2025-10-15",
+        "type": "ACTUAL"
+      },
+      "primaryCompletionDateStruct": {
+        "date": "2027-06",
+        "type": "ESTIMATED"
+      },
+      "completionDateStruct": {
+        "date": "2027-06",
+        "type": "ESTIMATED"
+      },
+      "studyFirstSubmitDate": "2025-09-29",
+      "studyFirstSubmitQcDate": "2025-11-28",
+      "studyFirstPostDateStruct": {
+        "date": "2025-12-03",
+        "type": "ACTUAL"
+      },
+      "lastUpdateSubmitDate": "2026-09-10",
+      "lastUpdatePostDateStruct": {
+        "date": "2026-09-11",
+        "type": "ACTUAL"
+      }
+    },
+    "sponsorCollaboratorsModule": {
+      "responsibleParty": {
+        "type": "SPONSOR"
+      },
+      "leadSponsor": {
+        "name": "Gesynta Pharma AB",
+        "class": "INDUSTRY"
+      }
+    },
+    "descriptionModule": {
+      "briefSummary": "The main objective of the trial is to evaluate the efficacy of vipoglanstat on endometriosis-related non-menstrual pelvic pain (NMPP)."
+    },
+    "conditionsModule": {
+      "conditions": [
+        "Endometriosis"
+      ],
+      "keywords": [
+        "Non-menstrual pelvic pain",
+        "Dysmenorrhea",
+        "Pelvic pain"
+      ]
+    },
+    "designModule": {
+      "studyType": "INTERVENTIONAL",
+      "phases": [
+        "PHASE2"
+      ],
+      "designInfo": {
+        "allocation": "RANDOMIZED",
+        "interventionModel": "PARALLEL",
+        "primaryPurpose": "TREATMENT",
+        "maskingInfo": {
+          "masking": "TRIPLE",
+          "whoMasked": [
+            "PARTICIPANT",
+            "CARE_PROVIDER",
+            "INVESTIGATOR"
+          ]
+        }
+      },
+      "enrollmentInfo": {
+        "count": 190,
+        "type": "ESTIMATED"
+      }
+    },
+    "armsInterventionsModule": {
+      "armGroups": [
+        {
+          "label": "Dose A Vipoglanstat",
+          "type": "EXPERIMENTAL",
+          "interventionNames": [
+            "Drug: Vipoglanstat"
+          ]
+        },
+        {
+          "label": "Dose B Vipoglanstat",
+          "type": "EXPERIMENTAL",
+          "interventionNames": [
+            "Drug: Vipoglanstat"
+          ]
+        },
+        {
+          "label": "Placebo",
+          "type": "PLACEBO_COMPARATOR",
+          "interventionNames": [
+            "Drug: Placebo"
+          ]
+        }
+      ],
+      "interventions": [
+        {
+          "type": "DRUG",
+          "name": "Vipoglanstat",
+          "description": "Participants will receive vipoglanstat capsules orally for approximately 4 menstrual cycles during the treatment period.",
+          "armGroupLabels": [
+            "Dose A Vipoglanstat",
+            "Dose B Vipoglanstat"
+          ]
+        },
+        {
+          "type": "DRUG",
+          "name": "Placebo",
+          "description": "Participants will receive matching placebo capsules orally for approximately 4 menstrual cycles during the treatment period.",
+          "armGroupLabels": [
+            "Placebo"
+          ]
+        }
+      ]
+    },
+    "outcomesModule": {
+      "primaryOutcomes": [
+        {
+          "measure": "Percentage of Participants who meet the Predefined NMPP Responder Criteria from Baseline to Fourth Month of Treatment",
+          "timeFrame": "Baseline to 4 months"
+        }
+      ],
+      "secondaryOutcomes": [
+        {
+          "measure": "Change in Mean Worst NMPP numeric Rating Scale (NRS) Score from Baseline to Fourth Month of Treatment",
+          "timeFrame": "Baseline to 4 months"
+        },
+        {
+          "measure": "Percentage of Participants who Meet the Predefined Dysmenorrhea Responder Criteria from Baseline to Fourth Month of Treatment",
+          "timeFrame": "Baseline to 4 months"
+        },
+        {
+          "measure": "Change in Mean Worst Dysmenorrhea NRS Score from Baseline to Fourth Month of Treatment",
+          "timeFrame": "Baseline to 4 months"
+        },
+        {
+          "measure": "Change in Endometriosis Health Profile 30 Item Patient Reported Outcome (EHP-30) Score from Baseline to End of Treatment",
+          "timeFrame": "Baseline to 4 months"
+        },
+        {
+          "measure": "Change in EHP-30 Sexual Intercourse Subscale Score from Baseline to End of Treatment",
+          "timeFrame": "Baseline to 4 months"
+        },
+        {
+          "measure": "Change in Mean Daily Opioid Rescue Medication Use for NMPP from Baseline to Fourth Month of Treatment",
+          "timeFrame": "Baseline to 4 months"
+        },
+        {
+          "measure": "Change in Mean Daily Opioid Rescue Medication Use for Dysmenorrhea from Baseline to Fourth Month of Treatment",
+          "timeFrame": "Baseline to 4 months"
+        },
+        {
+          "measure": "Number of Participants with Adverse Events",
+          "description": "Any clinically significant changes in laboratory variables, including clinical chemistry, hematology, and urinalysis will be reported as adverse events.",
+          "timeFrame": "Up to 10 months"
+        }
+      ]
+    },
+    "eligibilityModule": {
+      "eligibilityCriteria": "Inclusion Criteria:\n\n* Premenopausal females 18 to \\< 45 years of age at the time of Visit 1.\n* Endometriosis diagnosis confirmed and documented within the last 10 years prior to Visit 1 or during Visit based on:\n\n  * Surgical (via direct visualization or biopsy verified) or\n  * Imaging (ie, endometriotic lesion(s) detected by transvaginal sonography or magnetic resonance imaging \\[MRI\\].\n* History of NMPP significantly affecting daily life confirmed at Visit 1.\n* The participant reports moderate, severe, or very severe pain during non-menstrual days in the month prior to Visit 2, based on patient global assessment NMPP.\n\nExclusion Criteria:\n\n* Chronic pelvic pain that is not judged to be primarily related to endometriosis (eg, chronic pelvic infection, interstitial cystitis, nerve entrapments or neuropathies, non-endometriosis-related pelvic adhesive disease, persistent symptomatic ovarian cyst \\[eg, dermoid\\], posttubal ligation, symptomatic hydrosalpinx, and vaginismus).\n* Has had more than 2 surgical procedures for endometriosis.",
+      "healthyVolunteers": false,
+      "sex": "FEMALE",
+      "minimumAge": "18 Years",
+      "maximumAge": "44 Years",
+      "stdAges": [
+        "ADULT"
+      ]
+    }
+  }
+}

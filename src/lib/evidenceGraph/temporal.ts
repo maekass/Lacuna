@@ -11,17 +11,15 @@ export interface TemporalEvidenceAssessment {
 }
 
 /**
- * Determine whether an observation was publicly knowable at a snapshot date.
+ * Determine whether a source was publicly knowable at a snapshot date.
  *
- * Event dates do not make evidence historically admissible: a source published
- * after the snapshot remains future information even when it describes an
- * earlier event.
+ * An unknown publication date is not historical evidence. Event dates are not
+ * an input: callers must pass the source publication date, not the event date.
  */
-export function assessEvidenceAt(
-  observation: EvidenceObservation,
+export function assessPublicationAt(
+  publishedAt: string | undefined,
   snapshotDate: string,
 ): TemporalEvidenceAssessment {
-  const publishedAt = observation.source.publishedAt;
   if (!publishedAt) {
     return {
       status: "publication_date_unknown",
@@ -43,6 +41,20 @@ export function assessEvidenceAt(
     reason:
       `Source was published on ${publishedAt}, on or before snapshot ${snapshotDate}.`,
   };
+}
+
+/**
+ * Determine whether an observation was publicly knowable at a snapshot date.
+ *
+ * Event dates do not make evidence historically admissible: a source published
+ * after the snapshot remains future information even when it describes an
+ * earlier event.
+ */
+export function assessEvidenceAt(
+  observation: EvidenceObservation,
+  snapshotDate: string,
+): TemporalEvidenceAssessment {
+  return assessPublicationAt(observation.source.publishedAt, snapshotDate);
 }
 
 export function evidenceAvailableAt(

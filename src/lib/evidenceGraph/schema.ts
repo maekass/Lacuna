@@ -38,11 +38,27 @@ export const populationSchema = z.object({
   exclusion: z.array(z.string().trim().min(1)).default([]),
 });
 
-const atomicEvidenceValueSchema = z.union([
+export const atomicEvidenceValueSchema = z.union([
   z.string(),
   z.number().finite(),
   z.boolean(),
   z.null(),
+]);
+
+/** Observed, derived, or proxy only. Analyst assumptions are not evidence. */
+export const evidenceKindSchema = z.enum(["observed", "derived", "proxy"]);
+
+export const evidenceSourceClassSchema = z.enum([
+  "regulatory",
+  "claims",
+  "surveillance",
+  "trial",
+  "epidemiology",
+  "funding",
+  "pricing",
+  "workforce",
+  "guideline",
+  "other",
 ]);
 
 export const evidenceObservationSchema = z.object({
@@ -54,24 +70,13 @@ export const evidenceObservationSchema = z.object({
   comparator: z.enum(["eq", "lt", "lte", "gt", "gte"]).default("eq"),
   unit: z.string().trim().min(1).optional(),
   source: evidenceSourceSchema,
-  sourceClass: z.enum([
-    "regulatory",
-    "claims",
-    "surveillance",
-    "trial",
-    "epidemiology",
-    "funding",
-    "pricing",
-    "workforce",
-    "guideline",
-    "other",
-  ]),
+  sourceClass: evidenceSourceClassSchema,
   geography: geographySchema.optional(),
   population: populationSchema.optional(),
   eventDate: isoDateSchema.optional(),
   observedAt: isoDateSchema.optional(),
   asOf: isoDateSchema,
-  evidenceKind: z.enum(["observed", "derived", "proxy"]),
+  evidenceKind: evidenceKindSchema,
   derivation: z.string().trim().min(1).optional(),
   limitations: z.array(z.string().trim().min(1)).min(1),
 }).superRefine((observation, ctx) => {
@@ -95,6 +100,8 @@ export const evidenceObservationSchema = z.object({
   }
 });
 
+export type EvidenceKind = z.infer<typeof evidenceKindSchema>;
+export type EvidenceSourceClass = z.infer<typeof evidenceSourceClassSchema>;
 export type EvidenceSubject = z.infer<typeof evidenceSubjectSchema>;
 export type EvidenceSource = z.infer<typeof evidenceSourceSchema>;
 export type EvidenceObservation = z.infer<typeof evidenceObservationSchema>;

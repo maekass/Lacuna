@@ -46,7 +46,10 @@ publicly knowable at a requested snapshot. An earlier event date does not make a
 later publication historically admissible.
 
 A source with an unknown publication date is not silently treated as historical
-evidence.
+evidence. `assessPublicationAt()` is the shared check. The therapeutics ontology
+uses it for asset, trial, and regulatory claims. See
+[THERAPEUTICS_ONTOLOGY.md](THERAPEUTICS_ONTOLOGY.md). Analyst assumptions stay
+out of this observation schema.
 
 ## Ferric carboxymaltose vertical slice
 
