@@ -73,11 +73,10 @@ point-in-time valid, and no forecasting path is enabled by this change. Deal
 announcement dates cannot stand in for valuation or funding vintages.
 
 The labeled in-sample catalog share (`empiricalPriors.ts`
-`overallExitRateEstimate`) is still `acquiredInDataset / companies.length`.
-That figure includes every catalog company. The acquisition index does not
-multiply by it for a company in the catalog. `leaveOneOutExitRate.ts` removes
-that company from the count, and the panel states the in-sample share
-separately.
+`overallExitRateEstimate`) is still `acquiredInDataset / companies.length`. That
+figure includes every catalog company. The acquisition index does not multiply
+by it for a company in the catalog. `leaveOneOutExitRate.ts` removes that
+company from the count, and the panel states the in-sample share separately.
 
 ---
 
