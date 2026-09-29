@@ -17,7 +17,9 @@
 .metadata,
 .state,
 .method,
-.methodLabel {
+.methodLabel,
+.evidenceMeta dt,
+.uncertaintyLabel {
   font-family: var(--font-label);
   font-size: 0.6875rem;
   font-weight: 500;
@@ -55,20 +57,27 @@
 
 .panelList {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr)
+    minmax(5rem, 0.35fr)
+    minmax(0, 1fr);
   gap: clamp(1rem, 2vw, 1.5rem);
+  align-items: stretch;
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
-.panelItem {
+.panelItem,
+.uncertaintyItem {
   min-inline-size: 0;
 }
 
 .panel {
   display: grid;
   min-block-size: 34rem;
+  block-size: 100%;
   grid-template-rows: minmax(16rem, 1fr) auto;
   border: 1px solid var(--lacuna-border);
 }
@@ -177,6 +186,42 @@
   line-height: 1.55;
 }
 
+.evidenceMeta {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding-block-start: 1rem;
+  border-block-start: 1px solid var(--lacuna-border-subtle);
+}
+
+.evidenceMeta > div {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, auto) 1fr;
+  gap: 0.5rem 0.75rem;
+  align-items: baseline;
+}
+
+.evidenceMeta dt,
+.evidenceMeta dd {
+  margin: 0;
+}
+
+.evidenceMeta dt {
+  font-size: 0.625rem;
+}
+
+.evidenceMeta dd {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.evidenceMeta a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
 .panelFooter {
   gap: 0.5rem 1rem;
   padding-block-start: 1rem;
@@ -197,6 +242,56 @@
   text-align: end;
 }
 
+.uncertaintyItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uncertainty {
+  position: relative;
+  display: grid;
+  gap: 0.75rem;
+  inline-size: 100%;
+  padding-block: 1.25rem;
+  border-block: 1px dashed currentColor;
+}
+
+.uncertainty::before,
+.uncertainty::after {
+  position: absolute;
+  inset-inline-start: 50%;
+  inline-size: 1px;
+  block-size: clamp(2.5rem, 7vw, 6rem);
+  background: currentColor;
+  content: "";
+  opacity: 0.35;
+}
+
+.uncertainty::before {
+  inset-block-end: 100%;
+}
+
+.uncertainty::after {
+  inset-block-start: 100%;
+}
+
+.uncertaintyLabel,
+.uncertaintyText {
+  margin: 0;
+  text-align: center;
+}
+
+.uncertaintyLabel {
+  font-size: 0.625rem;
+}
+
+.uncertaintyText {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
 .method {
   display: flex;
   flex-wrap: wrap;
@@ -215,13 +310,28 @@
   font-weight: 600;
 }
 
+@media (max-width: 72rem) {
+  .panelList {
+    grid-template-columns: 1fr;
+  }
+
+  .uncertaintyItem {
+    min-block-size: 8rem;
+  }
+
+  .uncertainty {
+    max-inline-size: 28rem;
+  }
+
+  .uncertainty::before,
+  .uncertainty::after {
+    block-size: 2rem;
+  }
+}
+
 @media (max-width: 48rem) {
   .section {
     gap: 2.5rem;
-  }
-
-  .panelList {
-    grid-template-columns: 1fr;
   }
 
   .panel {
@@ -243,7 +353,8 @@
     padding: 1.25rem;
   }
 
-  .panelFooter {
+  .panelFooter,
+  .evidenceMeta > div {
     display: grid;
   }
 
