@@ -59,9 +59,12 @@ export default function HubPage({
     <div id="top">
       <MotionSection className="mb-12">
         <div className="max-w-3xl">
-          <h1 className="mb-4 text-3xl font-bold leading-tight text-lacuna-plum sm:text-4xl md:text-5xl">
-            <span className="block">Women&apos;s Health M&amp;A</span>
-            <span className="lacuna-gradient-text block">Diligence Stack</span>
+          <p className="font-script mb-3 text-[2.15rem] leading-none text-lacuna-plum sm:text-5xl">
+            Women&apos;s health
+          </p>
+          <h1 className="mb-5 text-[1.7rem] font-bold uppercase leading-[0.92] tracking-[-0.03em] text-lacuna-plum min-[400px]:text-4xl sm:text-5xl md:text-6xl">
+            <span className="block">M&amp;A Diligence</span>
+            <span className="lacuna-gradient-text block">Stack</span>
           </h1>
           <p className="text-base sm:text-lg leading-relaxed text-lacuna-blue">
             Prototype investment-research environment — verified deal
@@ -107,10 +110,10 @@ export default function HubPage({
             href={`/deals/${FEATURED_DEAL_ID}`}
             className="group rounded-xl border border-lacuna-plum/30 bg-gradient-to-br from-lacuna-plum/10 to-lacuna-lavender/20 p-5 shadow-sm transition-shadow hover:shadow-md"
           >
-            <p className="text-xs font-semibold uppercase tracking-wide text-lacuna-plum/70">
+            <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">
               Start diligence
             </p>
-            <p className="mt-2 text-base font-semibold text-lacuna-plum group-hover:text-lacuna-blue">
+            <p className="font-elegant mt-2 text-2xl text-lacuna-plum group-hover:text-lacuna-blue">
               Walk a verified deal
             </p>
             <p className="mt-1 text-sm text-lacuna-blue">
@@ -121,10 +124,10 @@ export default function HubPage({
             href="/research#health-equity"
             className="group rounded-xl border border-lacuna-lavender/50 bg-white/90 p-5 shadow-sm transition-shadow hover:shadow-md"
           >
-            <p className="text-xs font-semibold uppercase tracking-wide text-lacuna-plum/70">
+            <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">
               Evidence &amp; equity
             </p>
-            <p className="mt-2 text-base font-semibold text-lacuna-plum group-hover:text-lacuna-blue">
+            <p className="font-elegant mt-2 text-2xl text-lacuna-plum group-hover:text-lacuna-blue">
               Health equity lens
             </p>
             <p className="mt-1 text-sm text-lacuna-blue">
@@ -135,10 +138,10 @@ export default function HubPage({
             href="/methods#data-quality"
             className="group rounded-xl border border-lacuna-lavender/50 bg-white/90 p-5 shadow-sm transition-shadow hover:shadow-md"
           >
-            <p className="text-xs font-semibold uppercase tracking-wide text-lacuna-plum/70">
+            <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">
               How it&apos;s built
             </p>
-            <p className="mt-2 text-base font-semibold text-lacuna-plum group-hover:text-lacuna-blue">
+            <p className="font-elegant mt-2 text-2xl text-lacuna-plum group-hover:text-lacuna-blue">
               Methods &amp; infrastructure
             </p>
             <p className="mt-1 text-sm text-lacuna-blue">
@@ -248,10 +251,10 @@ export default function HubPage({
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2">
-              <span className="text-base font-semibold text-lacuna-plum group-hover:text-lacuna-blue">
+              <span className="font-elegant text-2xl text-lacuna-plum group-hover:text-lacuna-blue">
                 Payer Intel
               </span>
-              <span className="rounded-full bg-lacuna-pink/40 border border-lacuna-pink/60 px-2 py-0.5 text-[10px] font-semibold text-lacuna-plum uppercase tracking-wide">
+              <span className="lacuna-kicker rounded-full border border-lacuna-pink/60 bg-lacuna-pink/40 px-2 py-0.5 text-[10px] text-lacuna-plum">
                 Featured
               </span>
             </div>
@@ -290,7 +293,7 @@ export default function HubPage({
               href={ws.href}
               className="group rounded-xl border border-lacuna-lavender/40 bg-white/85 backdrop-blur-sm p-5 sm:p-6 shadow-sm transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lacuna-lavender"
             >
-              <h3 className="text-lg font-semibold text-lacuna-plum group-hover:text-lacuna-blue">
+              <h3 className="font-elegant text-2xl font-normal tracking-normal text-lacuna-plum group-hover:text-lacuna-blue">
                 {ws.label}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-lacuna-blue">

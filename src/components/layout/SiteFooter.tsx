@@ -65,9 +65,13 @@ export default function SiteFooter() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 lacuna-gradient rounded flex items-center justify-center">
-              <span className="text-white font-bold text-xs">L</span>
+              <span className="font-display text-sm font-semibold leading-none text-white">
+                L
+              </span>
             </div>
-            <span className="text-sm font-medium text-lacuna-plum">Lacuna</span>
+            <span className="font-script text-2xl leading-none text-lacuna-plum">
+              Lacuna
+            </span>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-lacuna-blue">
             <a

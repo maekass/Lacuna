@@ -1,14 +1,61 @@
 import type { Metadata, Viewport } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Playfair_Display } from "next/font/google";
+import {
+  Bodoni_Moda,
+  Jost,
+  Ovo,
+  Parisienne,
+  Source_Serif_4,
+} from "next/font/google";
 import Providers from "@/components/Providers";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+/** Heavy Didone for poster-scale titles. Optical size keeps small headings open. */
+const display = Bodoni_Moda({
+  variable: "--font-bodoni",
+  subsets: ["latin"],
+  display: "swap",
+  axes: ["opsz"],
+});
+
+/** Calligraphy for the wordmark and short name lines. */
+const script = Parisienne({
+  variable: "--font-parisienne",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
+
+/** Light elegant serif for secondary names (single weight — do not faux-bold). */
+const elegant = Ovo({
+  variable: "--font-ovo",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
+
+/** Reading text. Didone is reserved for display sizes. */
+const body = Source_Serif_4({
+  variable: "--font-source-serif",
+  subsets: ["latin"],
+  display: "swap",
+  axes: ["opsz"],
+});
+
+/** Small caps and interface chrome under the script and Didone lines. */
+const label = Jost({
+  variable: "--font-jost",
   subsets: ["latin"],
   display: "swap",
 });
+
+const luxuryType = [
+  display.variable,
+  script.variable,
+  elegant.variable,
+  body.variable,
+  label.variable,
+].join(" ");
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -78,7 +125,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} h-full antialiased`}
+      className={`${luxuryType} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <script
