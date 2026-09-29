@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { EvidenceField } from "@/components/brand/EvidenceField";
 import DataProvenanceBanner from "@/components/DataProvenanceBanner";
 import DatasetCoverageFootnote from "@/components/DatasetCoverageFootnote";
 import PatientEmpowermentInsight from "@/components/PatientEmpowermentInsight";
@@ -82,6 +83,10 @@ export default function HubPage({
           </p>
         </div>
       </MotionSection>
+
+      <div className="mb-10">
+        <EvidenceField />
+      </div>
 
       <MotionSection delay={0.05} className="mb-10">
         <DataProvenanceBanner />
