@@ -1,0 +1,109 @@
+name: Daily deal discovery
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-deal-discovery
+  cancel-in-progress: false
+
+jobs:
+  daily-deal-discovery:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Migrate Postgres
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npm run db:migrate
+
+      - name: Discover and stage SEC candidates
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SEC_EDGAR_USER_AGENT: ${{ secrets.SEC_EDGAR_USER_AGENT }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          LACUNA_INGEST_RUN_TRACKING: "true"
+          SEC_USE_DB_CURSOR: "true"
+          SEC_MAX_TICKERS_PER_RUN: "50"
+          SEC_MAX_PARSED_FILINGS_PER_RUN: "100"
+        run: npm run pipeline:daily
+
+      - name: Validate verified dataset
+        run: npm run validate:dataset
+
+      - name: MeshIC strict data gate
+        run: npx tsx scripts/meshic-data-gate.ts --strict
+
+      - name: Recompute quantitative artifacts
+        run: npm run compute:all
+
+      - name: Verify computed artifact lineage
+        run: npm run verify:computed
+
+      - name: Verify provenance census
+        run: npm run gate:provenance
+
+      - name: Finalize run report
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          node <<'NODE'
+          const fs = require("fs");
+          const path = "artifacts/daily-deal-discovery-report.json";
+          fs.mkdirSync("artifacts", { recursive: true });
+          let report = {
+            workflowRunTime: new Date().toISOString(),
+            source: "SEC EDGAR",
+            sourceQueryStatus: "failed",
+            candidateCount: 0,
+            validationResult: "failed",
+            publicationOccurred: false,
+            publicationReason: "Discovery or validation failed closed; verified dataset was not published."
+          };
+          if (fs.existsSync(path)) {
+            report = JSON.parse(fs.readFileSync(path, "utf8"));
+          }
+          report.validationResult = process.env.JOB_STATUS === "success" ? "passed" : "failed";
+          report.artifactFreshnessTimestamp = new Date().toISOString();
+          if (report.validationResult !== "passed") {
+            report.publicationOccurred = false;
+            report.publicationReason = "Discovery or validation failed closed; verified dataset was not published.";
+          }
+          fs.writeFileSync(path, JSON.stringify(report, null, 2) + "\n");
+          NODE
+
+      - name: Upload discovery run report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-deal-discovery-report
+          path: artifacts/daily-deal-discovery-report.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Confirm no public dataset mutation
+        if: success()
+        run: |
+          if ! git diff --quiet -- src/data/dataset.verified.json; then
+            echo "::error::Daily discovery must not mutate the verified dataset."
+            git diff -- src/data/dataset.verified.json
+            exit 1
+          fi
+          echo "Discovery completed without publishing verified data."
