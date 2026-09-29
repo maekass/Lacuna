@@ -4,7 +4,10 @@ import { dirname, join } from "node:path";
 import { closePool } from "../src/lib/data/dbClient";
 import { runSecIngest } from "../src/lib/ingestion/secIngestPipeline";
 
-const reportPath = join(process.cwd(), "artifacts/daily-deal-discovery-report.json");
+const reportPath = join(
+  process.cwd(),
+  "artifacts/daily-deal-discovery-report.json",
+);
 
 interface DiscoveryRunReport {
   workflowRunTime: string;
@@ -45,9 +48,9 @@ async function main() {
   console.log("Daily SEC discovery starting…");
   const ingest = await runSecIngest();
 
-  const womensHealthCandidateCount = ingest.classified.filter((candidate) =>
-    candidate.womensHealthRelevant
-  ).length;
+  const womensHealthCandidateCount =
+    ingest.classified.filter((candidate) => candidate.womensHealthRelevant)
+      .length;
   const rejectedCount = ingest.classified.length - womensHealthCandidateCount;
   const report: DiscoveryRunReport = {
     workflowRunTime: startedAt,
