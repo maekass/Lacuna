@@ -199,7 +199,7 @@ describe("quality visibility census", () => {
     expect(markdown).toContain("Display provenance");
     expect(markdown).toContain("Quality grades");
     expect(markdown).toContain("Historical replay eligibility");
-    expect(markdown).toContain("Do not infer a date");
+    expect(markdown).toContain("Do not invent a publication date");
   });
 
   it("pipeline status no longer invents stage durations", () => {
