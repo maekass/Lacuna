@@ -1,0 +1,53 @@
+name: Deal discovery freshness monitor
+
+on:
+  schedule:
+    - cron: "43 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  freshness:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check latest successful discovery run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          run_json="$(gh run list             --repo "$REPO"             --workflow daily-deal-discovery.yml             --status success             --limit 1             --json databaseId,updatedAt,conclusion)"
+
+          run_id="$(jq -r '.[0].databaseId // empty' <<<"$run_json")"
+          updated_at="$(jq -r '.[0].updatedAt // empty' <<<"$run_json")"
+
+          if [[ -z "$run_id" || -z "$updated_at" ]]; then
+            echo "::error::No successful daily deal discovery run is available."
+            exit 1
+          fi
+
+          now_epoch="$(date -u +%s)"
+          updated_epoch="$(date -u -d "$updated_at" +%s)"
+          age_hours="$(( (now_epoch - updated_epoch) / 3600 ))"
+
+          echo "Latest successful discovery run: $run_id"
+          echo "Completed: $updated_at"
+          echo "Age: ${age_hours}h"
+
+          if (( age_hours > 36 )); then
+            echo "::error::Daily deal discovery is stale: latest success is ${age_hours} hours old (>36h)."
+            exit 1
+          fi
+
+          artifact_count="$(gh api             -H "Accept: application/vnd.github+json"             "/repos/$REPO/actions/runs/$run_id/artifacts"             --jq '[.artifacts[] | select(.name == "daily-deal-discovery-report" and .expired == false)] | length')"
+
+          if [[ "$artifact_count" -lt 1 ]]; then
+            echo "::error::Latest successful discovery run has no retained daily-deal-discovery-report artifact."
+            exit 1
+          fi
+
+          echo "Freshness check passed and run report artifact is present."
