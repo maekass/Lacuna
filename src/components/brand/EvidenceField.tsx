@@ -130,11 +130,15 @@ export function EvidenceField({
                         <div>
                           <dt>Source</dt>
                           <dd>
-                            {item.source.href ? (
-                              <a href={item.source.href}>{item.source.label}</a>
-                            ) : (
-                              item.source.label
-                            )}
+                            {item.source.href
+                              ? (
+                                <a href={item.source.href}>
+                                  {item.source.label}
+                                </a>
+                              )
+                              : (
+                                item.source.label
+                              )}
                           </dd>
                         </div>
                       )}
@@ -169,7 +173,9 @@ export function EvidenceField({
                 aria-labelledby={uncertaintyId}
               >
                 <div className={styles.uncertainty}>
-                  <p className={styles.uncertaintyLabel}>Explicit uncertainty</p>
+                  <p className={styles.uncertaintyLabel}>
+                    Explicit uncertainty
+                  </p>
                   <p id={uncertaintyId} className={styles.uncertaintyText}>
                     {uncertainty}
                   </p>
