@@ -44,16 +44,24 @@ function isCoarse(
     precision === "year";
 }
 
-/** A coarse fact may store its period start, never an interior day. */
+/** A coarse fact may use a period boundary, but never an interior day. */
 function isPeriodAnchor(date: string, precision: string): boolean {
   if (!isCalendarDay(date)) return false;
-  const [, monthText, dayText] = date.split("-");
+  const [yearText, monthText, dayText] = date.split("-");
+  const year = Number(yearText);
   const month = Number(monthText);
   const day = Number(dayText);
-  if (precision === "year") return month === 1 && day === 1;
-  if (precision === "month") return day === 1;
-  return day === 1 && (month === 1 || month === 4 || month === 7 ||
-    month === 10);
+  const lastDay = new Date(Date.UTC(year, month, 0)).getUTCDate();
+
+  if (precision === "year") {
+    return (month === 1 && day === 1) || (month === 12 && day === 31);
+  }
+  if (precision === "month") return day === 1 || day === lastDay;
+
+  const quarterStarts = new Set([1, 4, 7, 10]);
+  const quarterEnds = new Set([3, 6, 9, 12]);
+  return (quarterStarts.has(month) && day === 1) ||
+    (quarterEnds.has(month) && day === lastDay);
 }
 
 function dateFindings(record: EconomicEvidenceRecord): MeshicFinding[] {
@@ -134,7 +142,7 @@ function dateFindings(record: EconomicEvidenceRecord): MeshicFinding[] {
         "ledger.misleadingPrecision",
         locationOf(record.id, field),
         `${field} ${value} is an interior day on ${record.datePrecision} precision.`,
-        "Store the period start, or set datePrecision to day only when the source names that day. A coarse fact stays ineligible for day-level replay either way.",
+        "Store a period boundary, or set datePrecision to day only when the source names that day. A coarse fact stays ineligible for day-level replay either way.",
       ));
     }
   }
