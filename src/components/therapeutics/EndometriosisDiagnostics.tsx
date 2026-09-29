@@ -1,3 +1,4 @@
+import Metric from "@/components/Metric";
 import { endometriosisTherapeuticsGraph } from "@/data/therapeutics/endometriosis";
 import { getTherapeuticStateAt } from "@/lib/therapeutics/pointInTime";
 
@@ -158,9 +159,51 @@ export default function EndometriosisDiagnostics() {
             return (
               <li key={`${snapshot.subjectId}-${snapshot.date}`}>
                 {snapshot.subjectId} @ {snapshot.date}: admissible{" "}
-                {state.admissible.length}, excluded future{" "}
-                {state.excludedFuture.length}, unresolved{" "}
-                {state.unresolved.length}
+                <Metric
+                  label="Point-in-time admissible evidence count"
+                  provenance={{
+                    kind: "assumption",
+                    value: state.admissible.length,
+                    model: {
+                      module: "src/lib/therapeutics/pointInTime.ts",
+                      exportName: "getTherapeuticStateAt",
+                      definition:
+                        "Count of graph records admitted by the point-in-time evidence filter for this asset and cutoff date.",
+                    },
+                    caveat:
+                      "Descriptive graph coverage count, not a clinical, regulatory, or investment score.",
+                  }}
+                />, excluded future{" "}
+                <Metric
+                  label="Point-in-time future-excluded evidence count"
+                  provenance={{
+                    kind: "assumption",
+                    value: state.excludedFuture.length,
+                    model: {
+                      module: "src/lib/therapeutics/pointInTime.ts",
+                      exportName: "getTherapeuticStateAt",
+                      definition:
+                        "Count of graph records excluded because their evidence was not yet knowable at the cutoff date.",
+                    },
+                    caveat:
+                      "Descriptive temporal-filter count; it does not imply a future clinical or regulatory outcome.",
+                  }}
+                />, unresolved{" "}
+                <Metric
+                  label="Point-in-time unresolved evidence count"
+                  provenance={{
+                    kind: "assumption",
+                    value: state.unresolved.length,
+                    model: {
+                      module: "src/lib/therapeutics/pointInTime.ts",
+                      exportName: "getTherapeuticStateAt",
+                      definition:
+                        "Count of graph records withheld from the cutoff state because temporal provenance is unresolved.",
+                    },
+                    caveat:
+                      "A provenance-gap count; unresolved records are not treated as zero or inferred.",
+                  }}
+                />
               </li>
             );
           })}
