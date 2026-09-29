@@ -72,10 +72,11 @@ most economic fields; the helper does not make current heuristic outputs
 point-in-time valid, and no forecasting path is enabled by this change. Deal
 announcement dates cannot stand in for valuation or funding vintages.
 
-The catalog exit share itself (`empiricalPriors.ts:180-184`) is
-`acquiredInDataset / companies.length`. That is the _target_, not a driver. It
-is listed here only to note that the index multiplies the weighted score by an
-in-sample event fraction.
+The labeled in-sample catalog share (`empiricalPriors.ts`
+`overallExitRateEstimate`) is still `acquiredInDataset / companies.length`. That
+figure includes every catalog company. The acquisition index does not multiply
+by it for a company in the catalog. `leaveOneOutExitRate.ts` removes that
+company from the count, and the panel states the in-sample share separately.
 
 ---
 

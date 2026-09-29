@@ -4,6 +4,7 @@
 
 import type { EmpiricalPriors } from "./empiricalPriors";
 import { isSufficient, missingInput, numericOrNull } from "./estimators";
+import type { ExitRateBasis } from "./leaveOneOutExitRate";
 import type {
   QuantCompany,
   QuantValue,
@@ -72,22 +73,42 @@ export function formatQuantMillions(value: QuantValue<number>): string {
   return `$${Math.round(n)}M`;
 }
 
+function formatShare(rate: QuantValue<number>): string {
+  if (!isSufficient(rate)) return "unavailable";
+  return `${(rate.value * 100).toFixed(0)}% (n=${rate.sampleSize}, interval ${
+    (rate.confidenceInterval[0] * 100).toFixed(0)
+  }–${(rate.confidenceInterval[1] * 100).toFixed(0)}%)`;
+}
+
 export function acquisitionModelCaveats(
   priors: EmpiricalPriors | undefined,
   exitRate: QuantValue<number>,
+  basis: ExitRateBasis = "in_sample",
 ): string[] {
   const base = [
     "Driver weights are heuristic, not learned from outcome data.",
     "Scores assume independent, additive drivers; real interactions are non-linear.",
   ];
+  if (priors && isSufficient(exitRate) && basis === "leave_one_out") {
+    const inSample = isSufficient(priors.overallExitRateEstimate)
+      ? `In-sample catalog share: ${
+        formatShare(priors.overallExitRateEstimate)
+      }. That share includes every catalog company and is not this index base rate.`
+      : "In-sample catalog share is unavailable.";
+    return [
+      ...base,
+      `Leave-one-out base rate ${
+        formatShare(exitRate)
+      }. The company being scored is excluded from the count. ${inSample}`,
+      exitRate.selectionCaveat ?? priors.derivationNote,
+    ];
+  }
   if (priors && isSufficient(exitRate)) {
     return [
       ...base,
-      `Base rate ${
-        (exitRate.value * 100).toFixed(0)
-      }% from dataset exit share (n=${exitRate.sampleSize}, BCa 95% CI ${
-        (exitRate.confidenceInterval[0] * 100).toFixed(0)
-      }–${(exitRate.confidenceInterval[1] * 100).toFixed(0)}%).`,
+      `In-sample catalog share ${
+        formatShare(exitRate)
+      }. Leave-one-out is withheld because this company is outside the catalog denominator, or catalog membership was not recorded.`,
       exitRate.selectionCaveat ?? priors.derivationNote,
     ];
   }
