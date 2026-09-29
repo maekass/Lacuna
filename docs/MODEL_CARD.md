@@ -110,14 +110,14 @@ This is a **different** heuristic from Surface 1.
 2. That weighted score is multiplied by a **leave-one-out** exit share
    (`leaveOneOutExitRate.ts`) and a sector-share adjustment
    (`acquisitionIndex.ts` `SECTOR_SHARE_SCALE = 5`, an undocumented heuristic
-   pending derivation). The scored company is removed from the numerator when
-   it is in the acquired set, and always removed from the denominator. A
-   sector share is used only when the sector sample still meets the minimum
-   after that exclusion; otherwise the overall leave-one-out share is used.
-   The in-sample catalog share (currently 59/150) stays on
-   `overallExitRateEstimate` and is labeled as in-sample. It is not the index
-   base rate for a catalog company. A company outside the catalog keeps the
-   labeled in-sample share, because there is no row to remove.
+   pending derivation). The scored company is removed from the numerator when it
+   is in the acquired set, and always removed from the denominator. A sector
+   share is used only when the sector sample still meets the minimum after that
+   exclusion; otherwise the overall leave-one-out share is used. The in-sample
+   catalog share (currently 59/150) stays on `overallExitRateEstimate` and is
+   labeled as in-sample. It is not the index base rate for a catalog company. A
+   company outside the catalog keeps the labeled in-sample share, because there
+   is no row to remove.
 3. The product is rendered as a unitless 0–100 historical acquisition-pattern
    similarity (`QuantValuationPanel.tsx`). It is **not** a probability and has
    **no time horizon**.
@@ -144,30 +144,18 @@ a heuristic, not a fitted model.
 
 ## Known limitations
 
-| Limitation                           | Detail                                                                                                                                                                                                                     | Evidence                                                                           |
-| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| **In-sample catalog share**          | 59/150 = 39.3% remains the labeled in-sample event fraction of an outcome-selected catalog, not a population rate. The acquisition index base rate leaves out the company being scored                                                                      | `empiricalPriors.ts` `overallExitRateEstimate`; `leaveOneOutExitRate.ts`           |
-| **Catalog coverage**                 | 59/276 = 21.4% of the AOA Dx "Follow the Exits" 2000–2025 series                                                                                                                                                           | `computed-dataset-summary.json` `coverageDenominator` 276, `coverageReferenceName` |
-| **Missing founding years**           | 47/150 companies (31.3%) have no `founded` year; a company-year panel is not constructible                                                                                                                                 | `dataset.verified.json`                                                            |
-| **Small sector n**                   | 13 sectors, averaging 4.5 events; 3 sectors have a single event                                                                                                                                                            | measured against `acquisitions`                                                    |
-| **No held-out test set**             | Weights are not validated against unseen data                                                                                                                                                                              | this card                                                                          |
-| **Circular priors**                  | Median valuation/age (ExitPredictor) are still derived from the same catalog being scored. The acquisition-index exit share no longer includes the scored company. Age uses announcement year minus founding year for dated peers, with missing ages withheld | `ExitPredictor.tsx`; `src/lib/quant/exitAge.ts`; `leaveOneOutExitRate.ts`          |
-| **No time dimension**                | Neither surface models when an acquisition might occur                                                                                                                                                                     | `predictionEngines.ts:139-144` unused in the index                                 |
-| **Interval understates uncertainty** | Quant engine interval rescales the base-rate CI only; driver-score uncertainty is not propagated                                                                                                                           | `acquisitionIndex.ts` `composeAcquisitionIndex`                                    |
-| **Leakage (weights unknown)**        | Driver weights and remaining cut points have no in-tree derivation. The `"acquired"` → `fda_approved` proxy is removed; those rows fail closed                                                                             | `docs/LEAKAGE_AUDIT.md`; `adaptQuantCompany.ts` `proxyClinicalStage`               |
-| **58 vs 59**                         | `disclosure.companiesWithValuation` is 58; `headline.verifiedDeals` is 59                                                                                                                                                  | `computed-dataset-summary.json`                                                    |
-| Limitation                           | Detail                                                                                                                                                                                                                     | Evidence                                                                                 |
-| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| **In-sample base rate**              | 59/150 = 39.3% is the event fraction of an outcome-selected catalog, not a population rate                                                                                                                                 | `empiricalPriors.ts:180-184`                                                             |
-| **Catalog coverage**                 | 59/276 = 21.4% of the AOA Dx "Follow the Exits" 2000–2025 series                                                                                                                                                           | `computed-dataset-summary.json` `coverageDenominator` 276, `coverageReferenceName`       |
-| **Missing founding years**           | 47/150 companies (31.3%) have no `founded` year; a company-year panel is not constructible                                                                                                                                 | `dataset.verified.json`                                                                  |
-| **Small sector n**                   | 13 sectors, averaging 4.5 events; 3 sectors have a single event                                                                                                                                                            | measured against `acquisitions`                                                          |
-| **No held-out test set**             | Weights are not validated against unseen data                                                                                                                                                                              | this card                                                                                |
-| **Circular priors**                  | Median valuation/age (ExitPredictor) and the 59/150 share (QuantValuationPanel) are derived from the same catalog being scored; age uses announcement year minus founding year for dated peers, with missing ages withheld | `ExitPredictor.tsx`; `src/lib/quant/exitAge.ts`; `empiricalPriors.ts`                    |
-| **No time dimension**                | Neither surface models when an acquisition might occur                                                                                                                                                                     | `predictionEngines.ts:139-144` unused in the index                                       |
-| **Interval understates uncertainty** | Quant engine interval rescales the base-rate CI only; driver-score uncertainty is not propagated                                                                                                                           | `acquisitionIndex.ts` `composeAcquisitionIndex`                                          |
-| **Leakage (weights unknown)**        | Driver weights and remaining cut points have no in-tree derivation. The `"acquired"` → `fda_approved` proxy is removed. Exit Similarity no longer reads an acquisition-outcome label as Late Stage.                        | `docs/LEAKAGE_AUDIT.md`; `adaptQuantCompany.ts`; `verifiedDatasetAdapters.ts` `mapStage` |
-| **58 vs 59**                         | `disclosure.companiesWithValuation` is 58; `headline.verifiedDeals` is 59                                                                                                                                                  | `computed-dataset-summary.json`                                                          |
+| Limitation                           | Detail                                                                                                                                                                                                                                                        | Evidence                                                                                 |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **In-sample catalog share**          | 59/150 = 39.3% remains the labeled in-sample event fraction of an outcome-selected catalog, not a population rate. The acquisition index base rate leaves out the company being scored                                                                        | `empiricalPriors.ts` `overallExitRateEstimate`; `leaveOneOutExitRate.ts`                 |
+| **Catalog coverage**                 | 59/276 = 21.4% of the AOA Dx "Follow the Exits" 2000–2025 series                                                                                                                                                                                              | `computed-dataset-summary.json` `coverageDenominator` 276, `coverageReferenceName`       |
+| **Missing founding years**           | 47/150 companies (31.3%) have no `founded` year; a company-year panel is not constructible                                                                                                                                                                    | `dataset.verified.json`                                                                  |
+| **Small sector n**                   | 13 sectors, averaging 4.5 events; 3 sectors have a single event                                                                                                                                                                                               | measured against `acquisitions`                                                          |
+| **No held-out test set**             | Weights are not validated against unseen data                                                                                                                                                                                                                 | this card                                                                                |
+| **Circular priors**                  | Median valuation/age (ExitPredictor) are still derived from the same catalog being scored. The acquisition-index exit share no longer includes the scored company. Age uses announcement year minus founding year for dated peers, with missing ages withheld | `ExitPredictor.tsx`; `src/lib/quant/exitAge.ts`; `leaveOneOutExitRate.ts`                |
+| **No time dimension**                | Neither surface models when an acquisition might occur                                                                                                                                                                                                        | `predictionEngines.ts:139-144` unused in the index                                       |
+| **Interval understates uncertainty** | Quant engine interval rescales the base-rate CI only; driver-score uncertainty is not propagated                                                                                                                                                              | `acquisitionIndex.ts` `composeAcquisitionIndex`                                          |
+| **Leakage (weights unknown)**        | Driver weights and remaining cut points have no in-tree derivation. The `"acquired"` → `fda_approved` proxy is removed; those rows fail closed                                                                                                                | `docs/LEAKAGE_AUDIT.md`; `adaptQuantCompany.ts` `proxyClinicalStage`                     |
+| **58 vs 59**                         | `disclosure.companiesWithValuation` is 58; `headline.verifiedDeals` is 59                                                                                                                                                                                     | `computed-dataset-summary.json`                                                          |
 
 ---
 
@@ -224,10 +212,9 @@ If referencing this tool in academic or professional contexts:
 > M&A_. Open-source portfolio project. The Exit Similarity Explorer uses
 > deterministic factor scoring derived from n=59 verified public-domain
 > acquisitions (dataset v9); no fitted predictive model is employed. The
-> in-sample catalog share is 59/150 and is labeled as in-sample; the
-> acquisition index leaves the scored company out of that share. Coverage
-> against the AOA Dx Follow the Exits 2000–2025 series is 59/276.
-> https://github.com/maekass/Lacuna
+> in-sample catalog share is 59/150 and is labeled as in-sample; the acquisition
+> index leaves the scored company out of that share. Coverage against the AOA Dx
+> Follow the Exits 2000–2025 series is 59/276. https://github.com/maekass/Lacuna
 
 ---
 
