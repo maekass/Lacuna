@@ -3,7 +3,7 @@
  *
  * QUALITATIVE 2D visualization of acquirer strategies
  * - X-axis: Sector breadth (specialist → generalist)
- * - Y-axis: Deal velocity (slow → fast)
+ * - Y-axis: Catalog funding stage (early → late). Unrecognized stages are omitted.
  *
  * Not a statistical claim - exploratory pattern recognition only
  */
@@ -67,33 +67,35 @@ export default function StrategicPositioningMap(
 
   const companyPositions = useMemo(
     () =>
-      mappedCompanies.map((company, index) => {
+      mappedCompanies.flatMap((company, index) => {
+        const stagePosition = getStagePosition(company.stage);
+        if (stagePosition === null) return [];
         const hash = hashString(`${company.id}-${company.name}-${index}`);
         const xJitter = ((hash % 11) - 5) / 100;
         const yJitter = (((Math.floor(hash / 11)) % 9) - 4) / 120;
-        return {
+        return [{
           ...company,
           xPosition: clamp(
             (sectorAxisPositions[company.sector] ?? 0.5) + xJitter,
             0.08,
             0.94,
           ),
-          yPosition: clamp(
-            getStagePosition(company.stage) + yJitter,
-            0.12,
-            0.96,
-          ),
+          yPosition: clamp(stagePosition + yJitter, 0.12, 0.96),
           pillar: pillarMap[company.sector],
-        };
+        }];
       }),
     [mappedCompanies],
   );
 
+  const omittedForStage = mappedCompanies.length - companyPositions.length;
   const sectorCoverageNote =
-    `Showing ${mappedCompanies.length} of ${verifiedCompanies.length} companies ` +
+    `Showing ${companyPositions.length} of ${verifiedCompanies.length} companies ` +
     `across the ${
       Object.keys(sectorAxisPositions).length
-    } sectors labeled on the x-axis.`;
+    } sectors labeled on the x-axis.` +
+    (omittedForStage > 0
+      ? ` ${omittedForStage} in those sectors have no recognized funding stage and are omitted rather than placed at a midpoint.`
+      : "");
 
   const pillarPatterns = useMemo(() => {
     const counts = new Map<string, number>();

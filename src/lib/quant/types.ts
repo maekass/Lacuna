@@ -30,7 +30,7 @@ export interface QuantCompany {
   clinicalStage?: ClinicalStage;
   annualRevenue?: number;
   ebitda?: number;
-  raisedToDate: number;
+  raisedToDate?: number;
   customerCount: number;
   targetMarketSize?: number;
   geographicFocus: GeographicRegion[];

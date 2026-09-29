@@ -30,10 +30,12 @@ export interface Company {
     | "Series F"
     | "Late Stage"
     | "Pre-IPO"
-    | "Public";
+    | "Public"
+    | "Unspecified";
   founded?: number;
   valuation?: number;
-  employees: number;
+  /** Omitted when headcount is not in the verified dataset. Never zero-filled. */
+  employees?: number;
   hq?: string;
   description?: string;
 }

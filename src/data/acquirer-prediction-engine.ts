@@ -14,13 +14,18 @@ export interface CompanyProfile {
   id: string;
   name: string;
   sector: string;
-  stage: "seed" | "series_a" | "series_b" | "growth" | "late_stage";
+  stage: "seed" | "series_a" | "series_b" | "growth" | "late_stage" | "unknown";
   capabilities: string[];
   technology: string[];
   revenue?: number;
-  fundingTotal: number;
+  /** Disclosed total funding in USD millions. Omitted when undisclosed. */
+  fundingTotal?: number;
   employeeCount?: number;
-  foundingDate: string;
+  /**
+   * Founding year when precision is year. Null when missing.
+   * Not a calendar day — year-only evidence is not stored as January 1.
+   */
+  foundingYear: number | null;
   keyCustomers?: string[];
   partnerships?: string[];
   fdaStatus?: "none" | "pending" | "cleared" | "approved";
@@ -36,7 +41,11 @@ export interface AcquirerProfile {
   acquisitionHistory: HistoricalAcquisition[];
   sectorFocus: string[];
   stagePreference: string[];
-  typicalDealSize: { min: number; max: number }; // in millions
+  /**
+   * Disclosed deal-size range in USD millions.
+   * Null when this acquirer has no disclosed prices — not a $10–500M stand-in.
+   */
+  typicalDealSize: { min: number; max: number } | null;
   recentActivity: "high" | "medium" | "low";
   strategicPriorities: string[];
   integrationStyle: "hands_on" | "hands_off" | "platform";
@@ -45,7 +54,8 @@ export interface AcquirerProfile {
 export interface HistoricalAcquisition {
   targetName: string;
   targetSector: string;
-  dealValue: number; // in millions
+  /** USD millions. Null when the deal did not disclose a price. */
+  dealValue: number | null;
   dealDate: string;
   stageAtAcquisition: string;
   strategicRationale: string;
@@ -56,8 +66,9 @@ export interface AcquirerMatch {
   matchScore: number; // 0-100
   likelihood: "high" | "medium" | "low";
   strategicFit: number; // 0-100
-  culturalFit: number; // 0-100
-  financialFit: number; // 0-100
+  culturalFit: number | null; // Null when company stage is unknown.
+  /** Null when deal size or a value estimate is unavailable. */
+  financialFit: number | null;
   marketFit: number; // 0-100
   estimatedValue: { min: number; max: number; median: number } | null;
   valueRationale: string;
@@ -69,7 +80,11 @@ export interface CompetitiveAnalysis {
   company: CompanyProfile;
   topMatches: AcquirerMatch[];
   predictedWinner?: AcquirerProfile;
-  winProbability: number;
+  /**
+   * Top match score on a 0–1 scale.
+   * A descriptive overlap index, not an acquisition probability.
+   */
+  overlapIndex: number;
   competitiveThreatLevel: "high" | "medium" | "low";
   estimatedBiddingWarPremium: number | null;
   fairValueEstimate: { min: number; max: number; median: number } | null;
@@ -93,7 +108,31 @@ export interface ComparableDeal {
 export const STRATEGIC_ACQUIRERS: AcquirerProfile[] = [];
 
 /**
- * Calculate acquirer-company match score
+ * Hand-set weights. They are not learned from outcomes.
+ * Cultural fit is omitted for unknown company stages, and financial fit is
+ * omitted when disclosed deal size or a value estimate is unavailable. The
+ * remaining weights are renormalized so omissions are not scored as zeroes.
+ */
+const MATCH_WEIGHTS = {
+  strategic: 0.35,
+  cultural: 0.15,
+  financial: 0.25,
+  market: 0.25,
+} as const;
+
+function weightedMatch(
+  parts: readonly { score: number; weight: number }[],
+): number {
+  const total = parts.reduce((sum, part) => sum + part.weight, 0);
+  if (!(total > 0)) return 0;
+  return Math.round(
+    parts.reduce((sum, part) => sum + part.score * part.weight, 0) / total,
+  );
+}
+
+/**
+ * Calculate acquirer-company match score.
+ * `likelihood` is an overlap tier (high ≥ 70, medium ≥ 45), not a probability.
  */
 export function calculateMatchScore(
   company: CompanyProfile,
@@ -116,13 +155,16 @@ export function calculateMatchScore(
   // Market fit: Sector and stage alignment
   const marketFit = calculateMarketFit(company, acquirer);
 
-  // Overall match score
-  const matchScore = Math.round(
-    strategicFit * 0.35 +
-      culturalFit * 0.15 +
-      financialFit * 0.25 +
-      marketFit * 0.25,
-  );
+  const matchScore = weightedMatch([
+    { score: strategicFit, weight: MATCH_WEIGHTS.strategic },
+    ...(culturalFit === null
+      ? []
+      : [{ score: culturalFit, weight: MATCH_WEIGHTS.cultural }]),
+    ...(financialFit === null
+      ? []
+      : [{ score: financialFit, weight: MATCH_WEIGHTS.financial }]),
+    { score: marketFit, weight: MATCH_WEIGHTS.market },
+  ]);
 
   // Estimate value
   const estimatedValue = estimateValue(
@@ -193,7 +235,9 @@ function calculateStrategicFit(
 function calculateCulturalFit(
   company: CompanyProfile,
   acquirer: AcquirerProfile,
-): number {
+): number | null {
+  if (company.stage === "unknown") return null;
+
   // Early stage companies prefer hands-off acquirers
   const stagePrefersHandsOff = ["seed", "series_a"].includes(company.stage);
   const acquirerIsHandsOff = acquirer.integrationStyle === "hands_off";
@@ -208,23 +252,21 @@ function calculateFinancialFit(
   company: CompanyProfile,
   acquirer: AcquirerProfile,
   empiricalPriors?: EmpiricalPriors,
-): number {
+): number | null {
+  if (!acquirer.typicalDealSize) return null;
   const estimate = deriveCompanyValueEstimate(company, empiricalPriors);
-  if (!estimate) return 50;
+  if (!estimate) return null;
 
   const estimatedValue = estimate.medianM;
+  const { min, max } = acquirer.typicalDealSize;
+  const rangeWidth = max - min;
+  if (!(rangeWidth > 0) || !Number.isFinite(estimatedValue)) return null;
 
-  // Check if in typical deal range
-  if (estimatedValue < acquirer.typicalDealSize.min) return 40; // Too small
-  if (estimatedValue > acquirer.typicalDealSize.max) return 30; // Too large
+  if (estimatedValue < min) return 40;
+  if (estimatedValue > max) return 30;
 
-  // Sweet spot: middle of range
-  const rangeMid =
-    (acquirer.typicalDealSize.min + acquirer.typicalDealSize.max) / 2;
+  const rangeMid = (min + max) / 2;
   const distanceFromMid = Math.abs(estimatedValue - rangeMid);
-  const rangeWidth = acquirer.typicalDealSize.max -
-    acquirer.typicalDealSize.min;
-
   return Math.max(40, 100 - (distanceFromMid / rangeWidth) * 40);
 }
 
@@ -261,11 +303,12 @@ function deriveCompanyValueEstimate(
 ): CompanyValueEstimate | null {
   const bucket = normalizeSectorBucket(company.sector);
   const sectorPrior = empiricalPriors?.sectorPriors.get(bucket);
-  const fundingM = company.fundingTotal / 1_000_000;
+  // fundingTotal is already USD millions, matching verified totalFunding.
+  const fundingM = company.fundingTotal;
 
   const fundingMultiple = sectorPrior?.medianFundingMultipleEstimate;
   if (
-    fundingM > 0 &&
+    typeof fundingM === "number" && fundingM > 0 &&
     fundingMultiple &&
     isSufficient(fundingMultiple)
   ) {
@@ -381,7 +424,10 @@ export function analyzeCompetitiveDynamics(
   );
 
   // Sort by match score
-  const sortedMatches = allMatches.sort((a, b) => b.matchScore - a.matchScore);
+  const sortedMatches = allMatches.sort((a, b) => {
+    if (b.matchScore !== a.matchScore) return b.matchScore - a.matchScore;
+    return a.acquirer.name.localeCompare(b.acquirer.name);
+  });
 
   // Top 5 matches
   const topMatches = sortedMatches.slice(0, 5);
@@ -390,7 +436,7 @@ export function analyzeCompetitiveDynamics(
   const predictedWinner = topMatches[0].likelihood === "high"
     ? topMatches[0].acquirer
     : undefined;
-  const winProbability = topMatches[0].matchScore / 100;
+  const overlapIndex = topMatches[0].matchScore / 100;
 
   // Competitive threat assessment
   const highInterestCount =
@@ -413,7 +459,7 @@ export function analyzeCompetitiveDynamics(
     company,
     topMatches,
     predictedWinner,
-    winProbability,
+    overlapIndex,
     competitiveThreatLevel,
     estimatedBiddingWarPremium: null,
     fairValueEstimate: null,
@@ -459,6 +505,7 @@ function areSectorsRelated(sector1: string, sector2: string): boolean {
 function isStageNearPreference(stage: string, preferences: string[]): boolean {
   const stageOrder = ["seed", "series_a", "series_b", "growth", "late_stage"];
   const stageIdx = stageOrder.indexOf(stage);
+  if (stageIdx < 0) return false;
 
   return preferences.some((pref) => {
     const prefIdx = stageOrder.indexOf(pref);

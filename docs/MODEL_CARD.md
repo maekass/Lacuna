@@ -9,7 +9,7 @@ from `src/app/lazyDashboard.tsx`; mounted on `/deals#quant-valuation` and
 `provenance.datasetVersion`)\
 **Verified acquisitions**: 59 (`headline.verifiedDeals`)\
 **Dataset hash**:
-`7f8daa69ae2c7153710d5df3a4192b498421cba9dffce7e3089ac6433da6a063`
+`a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050`
 
 The number **58** in `computed-dataset-summary.json` is
 `disclosure.companiesWithValuation` (the valuation-disclosure count: 58/150). It
@@ -65,13 +65,13 @@ names are implementation identifiers, not UI copy.
 For each company in the verified set, the panel sums hand-set weights for
 factors that are present:
 
-| Factor                                         | Weight | Direction | File:line                   |
-| ---------------------------------------------- | ------ | --------- | --------------------------- |
-| Sector has prior verified exits                | +0.25  | Positive  | `ExitPredictor.tsx:135-139` |
-| Late-stage funding (Series C+)                 | +0.25  | Positive  | `ExitPredictor.tsx:140-144` |
-| Valuation ≥ median prior-exit valuation        | +0.20  | Positive  | `ExitPredictor.tsx:145-149` |
-| Age within 3 years of median prior-exit age    | +0.15  | Positive  | `ExitPredictor.tsx:150-154` |
-| Already public (acquisition less typical path) | −0.15  | Negative  | `ExitPredictor.tsx:155-159` |
+| Factor                                         | Weight | Direction                                                                                                                                         | File:line                   |
+| ---------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| Sector has prior verified exits                | +0.25  | Positive                                                                                                                                          | `ExitPredictor.tsx:135-139` |
+| Late-stage funding (Series C+)                 | +0.25  | Positive                                                                                                                                          | `ExitPredictor.tsx:140-144` |
+| Valuation ≥ median prior-exit valuation        | +0.20  | Positive, omitted when the company valuation or the peer median is missing. No $300 stand-in. The focal company is excluded from the peer median. | `ExitPredictor.tsx`         |
+| Age within 3 years of median prior-exit age    | +0.15  | Positive                                                                                                                                          | `ExitPredictor.tsx:150-154` |
+| Already public (acquisition less typical path) | −0.15  | Negative                                                                                                                                          | `ExitPredictor.tsx:155-159` |
 
 Final score = sum of weights for present factors, clamped to [0, 1]
 (`ExitPredictor.tsx:162-169`). **Weights are fixed, hand-set, and disclosed.**
@@ -156,6 +156,18 @@ a heuristic, not a fitted model.
 | **Interval understates uncertainty** | Quant engine interval rescales the base-rate CI only; driver-score uncertainty is not propagated                                                                                                                           | `acquisitionIndex.ts` `composeAcquisitionIndex`                                    |
 | **Leakage (weights unknown)**        | Driver weights and remaining cut points have no in-tree derivation. The `"acquired"` → `fda_approved` proxy is removed; those rows fail closed                                                                             | `docs/LEAKAGE_AUDIT.md`; `adaptQuantCompany.ts` `proxyClinicalStage`               |
 | **58 vs 59**                         | `disclosure.companiesWithValuation` is 58; `headline.verifiedDeals` is 59                                                                                                                                                  | `computed-dataset-summary.json`                                                    |
+| Limitation                           | Detail                                                                                                                                                                                                                     | Evidence                                                                                 |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **In-sample base rate**              | 59/150 = 39.3% is the event fraction of an outcome-selected catalog, not a population rate                                                                                                                                 | `empiricalPriors.ts:180-184`                                                             |
+| **Catalog coverage**                 | 59/276 = 21.4% of the AOA Dx "Follow the Exits" 2000–2025 series                                                                                                                                                           | `computed-dataset-summary.json` `coverageDenominator` 276, `coverageReferenceName`       |
+| **Missing founding years**           | 47/150 companies (31.3%) have no `founded` year; a company-year panel is not constructible                                                                                                                                 | `dataset.verified.json`                                                                  |
+| **Small sector n**                   | 13 sectors, averaging 4.5 events; 3 sectors have a single event                                                                                                                                                            | measured against `acquisitions`                                                          |
+| **No held-out test set**             | Weights are not validated against unseen data                                                                                                                                                                              | this card                                                                                |
+| **Circular priors**                  | Median valuation/age (ExitPredictor) and the 59/150 share (QuantValuationPanel) are derived from the same catalog being scored; age uses announcement year minus founding year for dated peers, with missing ages withheld | `ExitPredictor.tsx`; `src/lib/quant/exitAge.ts`; `empiricalPriors.ts`                    |
+| **No time dimension**                | Neither surface models when an acquisition might occur                                                                                                                                                                     | `predictionEngines.ts:139-144` unused in the index                                       |
+| **Interval understates uncertainty** | Quant engine interval rescales the base-rate CI only; driver-score uncertainty is not propagated                                                                                                                           | `acquisitionIndex.ts` `composeAcquisitionIndex`                                          |
+| **Leakage (weights unknown)**        | Driver weights and remaining cut points have no in-tree derivation. The `"acquired"` → `fda_approved` proxy is removed. Exit Similarity no longer reads an acquisition-outcome label as Late Stage.                        | `docs/LEAKAGE_AUDIT.md`; `adaptQuantCompany.ts`; `verifiedDatasetAdapters.ts` `mapStage` |
+| **58 vs 59**                         | `disclosure.companiesWithValuation` is 58; `headline.verifiedDeals` is 59                                                                                                                                                  | `computed-dataset-summary.json`                                                          |
 
 ---
 
@@ -164,11 +176,13 @@ a heuristic, not a fitted model.
 **Component**: `CompanySimilarity.tsx`\
 **Type**: Cosine similarity over hand-engineered feature vectors
 
-Each company is represented as an 8-dimensional vector encoding sector, stage,
-valuation tier, age, and funding characteristics. Similarity is computed via
-cosine distance. This is a **retrieval/comparison tool**, not a classification
-or prediction model. No training occurs; the feature encoding is manually
-defined.
+Each company is represented with sector indicators, stage flags, log valuation,
+log funding, and year-precision age. Cosine similarity uses only dimensions both
+sides observed. Undisclosed valuation, undisclosed funding, and founding years
+that are not year-precision are excluded, not filled with zero. The panel shows
+a unitless 0–100 descriptive index, not a percentage probability. This is a
+**retrieval/comparison tool**, not a classification or prediction model. No
+training occurs; the feature encoding is manually defined.
 
 ---
 

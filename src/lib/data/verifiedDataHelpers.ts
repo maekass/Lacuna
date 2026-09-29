@@ -136,19 +136,19 @@ export function buildVerifiedDerivedData(
       verifiedAcquisitions.map((deal) => ({
         source: deal.targetId,
         target: deal.acquirerId,
-        value: deal.dealValue ?? -1,
+        value: typeof deal.dealValue === "number" ? deal.dealValue : -1,
         dealType: deal.dealType,
         date: deal.announcedDate,
       })),
     getVerifiedTotalDealValue: () =>
-      verifiedAcquisitions.reduce(
-        (sum, deal) => sum + (deal.dealValue ?? 0),
-        0,
-      ),
+      verifiedAcquisitions.reduce((sum, deal) => {
+        return typeof deal.dealValue === "number" ? sum + deal.dealValue : sum;
+      }, 0),
     getVerifiedDealsByYear: () => {
       const yearMap = verifiedAcquisitions.reduce<Record<number, number>>(
         (acc, deal) => {
-          const year = new Date(deal.announcedDate).getFullYear();
+          const year = Number(deal.announcedDate.slice(0, 4));
+          if (!Number.isInteger(year)) return acc;
           acc[year] = (acc[year] ?? 0) + 1;
           return acc;
         },

@@ -43,7 +43,9 @@ describe("economic evidence ledger integrity", () => {
     );
     expect(byId.get("c23:lastKnownValuation:v1")).toMatchObject({
       value: 13900,
-      publicAsOfDate: "2020-10-30",
+      valueBasis: "stated",
+      effectiveDate: "2021-03-01",
+      publicAsOfDate: "2021-03-01",
       datePrecision: "day",
     });
     expect(byId.get("c25:lastKnownValuation:v1")?.publicAsOfDate).toBe(
@@ -94,10 +96,16 @@ describe("economic evidence ledger integrity", () => {
       "SEC 8-K filing (Teladoc, Aug 5, 2020 announcement; Oct 30, 2020 close)";
     const closeValue =
       "Teladoc/Livongo merger close value (Oct 30, 2020) — SEC 8-K";
-    expect(inferEconomicDisclosure(announced, "locator_only").publicAsOfDate)
-      .toBe("2020-08-05");
-    expect(inferEconomicDisclosure(closeValue, "locator_only").publicAsOfDate)
-      .toBe("2020-10-30");
+    expect(inferEconomicDisclosure(announced, "locator_only")).toMatchObject({
+      datePrecision: "unknown",
+      effectiveDate: null,
+      publicAsOfDate: null,
+    });
+    expect(inferEconomicDisclosure(closeValue, "locator_only")).toMatchObject({
+      datePrecision: "unknown",
+      effectiveDate: null,
+      publicAsOfDate: null,
+    });
     expect(inferEconomicDisclosure(
       "Acquisition value $8B cash + stock (Illumina press release, Sep 2020; completed Aug 2021)",
       "stated",
@@ -220,10 +228,10 @@ describe("economic evidence ledger integrity", () => {
     });
     expect(byId.get("c23:lastKnownValuation:v1")).toMatchObject({
       value: 13900,
-      valueBasis: "approximate",
-      publicAsOfDate: "2020-10-30",
+      valueBasis: "stated",
+      publicAsOfDate: "2021-03-01",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1477449/000110465920090575/tm2026658d1_8k.htm",
+        "https://www.sec.gov/Archives/edgar/data/1477449/000155837021002118/tdoc-20201231x10k.htm",
     });
     expect(byId.get("c68:lastKnownValuation:v1")?.publicAsOfDate).toBe(
       "2012-08-01",
@@ -274,7 +282,7 @@ describe("economic evidence ledger integrity", () => {
       }),
       dataset,
     );
-    expect(issues.some((issue) => issue.code === "funding-locator-dated")).toBe(
+    expect(issues.some((issue) => issue.code === "locator-dated")).toBe(
       true,
     );
   });

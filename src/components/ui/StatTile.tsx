@@ -91,10 +91,12 @@ export default function StatTile({ value, label, model }: StatTileProps) {
         model ? "cursor-help" : ""
       }`}
     >
-      <p className="text-2xl sm:text-3xl font-bold text-lacuna-plum">
+      <p className="font-display text-3xl font-light tracking-tight text-lacuna-plum sm:text-4xl">
         {shown}
       </p>
-      <p className="text-xs sm:text-sm text-lacuna-blue mt-1">{label}</p>
+      <p className="mt-2 font-label text-xs font-medium tracking-wide text-lacuna-blue">
+        {label}
+      </p>
     </div>
   );
 

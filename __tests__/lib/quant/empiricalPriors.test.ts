@@ -55,6 +55,23 @@ function makeDeal(
   };
 }
 
+describe("year span for exit age", () => {
+  it("uses the announcement calendar year and skips non-year founding precision", () => {
+    const dated = deriveEmpiricalPriors(
+      [makeCompanyView({ founded: 2010, foundedPrecision: "year" })],
+      [makeDeal({ announcedDate: "2018-01-01" })],
+    );
+    expect(getSectorPrior(dated, "Diagnostics")?.medianYearsToExit).toBe(8);
+
+    const estimated = deriveEmpiricalPriors(
+      [makeCompanyView({ founded: 2010, foundedPrecision: "estimated" })],
+      [makeDeal({ announcedDate: "2018-01-01" })],
+    );
+    expect(getSectorPrior(estimated, "Diagnostics")?.medianYearsToExit)
+      .toBeUndefined();
+  });
+});
+
 describe("normalizeSectorBucket", () => {
   it("pools sector variants into shared buckets", () => {
     expect(normalizeSectorBucket("Diagnostics")).toBe("diagnostics");

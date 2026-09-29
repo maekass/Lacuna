@@ -44,8 +44,9 @@ function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value));
 }
 
-function getMedian(values: number[], fallback: number) {
-  if (values.length === 0) return fallback;
+/** Lower median. Empty input is unavailable — there is no substitute value. */
+function medianOrNull(values: readonly number[]): number | null {
+  if (values.length === 0) return null;
   const sorted = [...values].sort((a, b) => a - b);
   return sorted[Math.floor(sorted.length / 2)];
 }
@@ -95,13 +96,6 @@ export function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
       ),
     ]),
   );
-  const acquiredValuationMedian = getMedian(
-    acquiredCompanies.map((c) => c.valuation).filter((v): v is number =>
-      typeof v === "number"
-    ),
-    300,
-  );
-
   const acquirerNameById = new Map<string, string>([
     ...data.verifiedAcquirers.map((a): [string, string] => [a.id, a.name]),
     ...data.verifiedCompanies.map((c): [string, string] => [c.id, c.name]),
@@ -144,18 +138,20 @@ export function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
         "Pre-IPO",
       ].includes(company.stage);
       const peerAcquired = acquiredCompanies.filter((c) => c.id !== company.id);
-      const peerValuationMedian = getMedian(
+      const peerValuationMedian = medianOrNull(
         peerAcquired.map((c) => c.valuation).filter((v): v is number =>
-          typeof v === "number"
+          typeof v === "number" && Number.isFinite(v)
         ),
-        acquiredValuationMedian,
       );
       const peerAgeMedian = peerExitAgeMedian(exitAgeByTarget, company.id);
       const inPriorExitSector = peerAcquired.some((c) =>
         c.sector === company.sector
       );
-      const aboveValuationMedian =
-        (company.valuation ?? 0) >= peerValuationMedian;
+      const valuationAvailable = typeof company.valuation === "number" &&
+        Number.isFinite(company.valuation) &&
+        peerValuationMedian !== null;
+      const aboveValuationMedian = valuationAvailable &&
+        company.valuation! >= peerValuationMedian;
       const ageAvailable = age !== null && peerAgeMedian !== null;
       const ageNearPriorMedian = ageAvailable &&
         Math.abs(age - peerAgeMedian) <= 3;
@@ -179,6 +175,7 @@ export function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
           label: "Valuation ≥ median prior-exit valuation",
           present: aboveValuationMedian,
           weight: 0.2,
+          available: valuationAvailable,
         },
         {
           label: "Age within 3 yrs of median age at acquisition announcement",
@@ -234,7 +231,12 @@ export function buildPredictions(data: VerifiedDerivedData): PredictionRow[] {
         similarPriorExits,
       };
     })
-    .sort((a, b) => b.exitProbability - a.exitProbability);
+    .sort((a, b) => {
+      if (b.exitProbability !== a.exitProbability) {
+        return b.exitProbability - a.exitProbability;
+      }
+      return a.companyName.localeCompare(b.companyName);
+    });
 }
 
 function toCsvValue(value: string | number) {
@@ -450,7 +452,9 @@ export default function ExitPredictor() {
               </>
             )}{" "}
           Weights are fixed and disclosed; there is no fitted model and no
-          randomness.
+          randomness. Unavailable valuation or age adds no weight. It is not
+          filled in, not compared with an imputed median, and not shown as a
+          failed check.
         </p>
         <p className="mt-2 text-xs leading-relaxed text-amber-900" role="note">
           {DETERMINISTIC_COMPARISON_BOUNDARY}
@@ -506,12 +510,18 @@ export default function ExitPredictor() {
                         · {selectedCompany.hq}
                       </p>
                     </div>
-                    <div
-                      className={`w-fit rounded-full border px-3 py-1 text-sm font-semibold ${
-                        getScoreColor(selectedPrediction.indicatorScore)
-                      }`}
-                    >
-                      {indicatorBand(selectedPrediction.indicatorScore)}
+                    <div className="text-right">
+                      <div
+                        className={`w-fit rounded-full border px-3 py-1 text-sm font-semibold ${
+                          getScoreColor(selectedPrediction.indicatorScore)
+                        }`}
+                        title="Ordinal band of the descriptive factor score. Not a probability of exit."
+                      >
+                        {indicatorBand(selectedPrediction.indicatorScore)}
+                      </div>
+                      <p className="mt-1 text-xs text-lacuna-text-muted">
+                        descriptive factor band
+                      </p>
                     </div>
                   </div>
 
@@ -556,6 +566,7 @@ export default function ExitPredictor() {
                               ? "text-rose-500"
                               : "text-lacuna-text-muted"
                           }`}
+                          title="Contribution in factor-score points. Not a probability."
                         >
                           {f.available === false ? "—" : (
                             <>
