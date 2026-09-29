@@ -15,6 +15,7 @@ const HISTORICAL_NAME =
 const DAY_FORMAT_EXEMPT = new Set([
   "atDecisionDate",
   "isCalendarDay",
+  "validReplayDay",
 ]);
 
 function skipBalanced(
