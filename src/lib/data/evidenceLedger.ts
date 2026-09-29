@@ -123,6 +123,7 @@ export type EconomicEvidenceDecisionResult =
       | "missing-evidence"
       | "missing-provenance"
       | "invalid-date"
+      | "imprecise-date"
       | "after-cutoff";
   };
 
@@ -138,9 +139,13 @@ export function economicEvidenceAtDecisionDate(
 ): EconomicEvidenceDecisionResult {
   const record = currentRecords(ledger.records).get(`${companyId}:${field}`);
   if (!record) return { eligible: false, reason: "missing-evidence" };
+  if (!record.publicAsOfDate || !record.sourceCitation?.trim()) {
+    return { eligible: false, reason: "missing-provenance" };
+  }
+  if (record.datePrecision !== "day") {
+    return { eligible: false, reason: "imprecise-date" };
+  }
   if (
-    record.datePrecision !== "day" ||
-    !record.publicAsOfDate ||
     !isCalendarDay(record.publicAsOfDate) ||
     !isCalendarDay(record.recordedAt) ||
     record.publicAsOfDate > record.recordedAt ||
