@@ -54,7 +54,7 @@
     "build:endometrial-cancer-coverage": "tsx scripts/build-endometrial-cancer-coverage.ts",
     "sec:scan": "tsx scripts/sec-scan-acquirers.ts",
     "sec:ingest": "tsx scripts/sec-ingest-deals.ts",
-    "pipeline:weekly": "tsx scripts/weekly-deal-pipeline.ts",
+    "pipeline:daily": "tsx scripts/daily-deal-discovery.ts",
     "sec:ingest-form-d": "tsx scripts/sec-ingest-form-d.ts",
     "sec:search-ma": "tsx scripts/sec-search-ma.ts",
     "sec:ingest-efts": "tsx scripts/sec-ingest-efts.ts",

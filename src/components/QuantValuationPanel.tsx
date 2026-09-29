@@ -141,11 +141,16 @@ export default function QuantValuationPanel() {
           ? `median exit/funding multiple ${
             priors.medianFundingMultipleAllEstimate.value.toFixed(1)
           }x`
-          : "no funding multiples available"}). The exit base rate is the
-        dataset&apos;s observed {isSufficient(priors.overallExitRateEstimate)
-          ? `${(priors.overallExitRateEstimate.value * 100).toFixed(0)}%`
-          : "n/a"}{" "}
-        exit share — small-n and disclosure-biased, so treat as exploratory
+          : "no funding multiples available"}). The in-sample catalog share is
+        {" "}
+        {isSufficient(priors.overallExitRateEstimate)
+          ? `${(priors.overallExitRateEstimate.value * 100).toFixed(0)}% (${
+            priors.acquiredCompanyCount ?? "—"
+          }/${priors.companyCount})`
+          : "unavailable"}
+        . It counts every catalog company, including the company in each row.
+        The similarity index uses a leave-one-out share that removes that
+        company from the count. Small-n and disclosure-biased — exploratory
         framing, not advice.
       </div>
 
@@ -259,8 +264,10 @@ export default function QuantValuationPanel() {
         <span className="text-emerald-600">●</span>{" "}
         marker means the estimate includes an anchor from verified sector deals
         (median exit/funding multiples or median disclosed deal values).
-        Historical acquisition-pattern similarity uses the dataset&apos;s
-        observed exit share as its base rate. Driver weights remain heuristic;
+        Historical acquisition-pattern similarity uses a leave-one-out exit
+        share: the company in that row is removed from the acquired count and
+        from the company count. The in-sample catalog share above includes that
+        company and is not the index base rate. Driver weights remain heuristic;
         disclosed valuations are point-in-time public figures. Burden–capital
         gap scores stay on /research and do not decorate this table. Exploratory
         framing only.
