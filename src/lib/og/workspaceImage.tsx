@@ -69,7 +69,7 @@ export function renderWorkspaceOgImage({
       >
         <LacunaMark caption="Lacuna" />
 
-        <div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             style={{
               fontSize: 16,
