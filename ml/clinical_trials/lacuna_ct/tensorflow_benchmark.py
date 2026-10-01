@@ -413,6 +413,7 @@ def _runtime_manifest(
     bootstrap_resamples: int,
     output_dir: Path,
     metrics_path: Path,
+    split_path: Path,
     model_filename: str | None,
 ) -> dict[str, Any]:
     model_path = output_dir / model_filename if model_filename else None
@@ -452,6 +453,10 @@ def _runtime_manifest(
             "metrics": {
                 "filename": metrics_path.name,
                 "sha256": _file_sha256(metrics_path),
+            },
+            "split": {
+                "filename": split_path.name,
+                "sha256": _file_sha256(split_path),
             },
             "model": (
                 {
@@ -656,6 +661,7 @@ def benchmark_completion_tensorflow(
         bootstrap_resamples=bootstrap_resamples,
         output_dir=output_dir,
         metrics_path=metrics_path,
+        split_path=split_path,
         model_filename=canonical_model_filename,
     )
     _write_json(manifest_path, manifest)
