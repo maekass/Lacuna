@@ -21,6 +21,7 @@ from lacuna_ct.fetch_training_data import (
     fetch_studies_for_condition,
     load_seed_records,
     save_records,
+    write_cache_metadata,
 )
 
 
@@ -81,21 +82,36 @@ def main() -> None:
 
     if args.offline:
         records = load_seed_records()
+        source = "synthetic_seed"
     elif args.all_queries:
         records = ingest_all_queries(
             max_pages=args.max_pages,
             page_size=min(args.page_size, 100),
             fields=args.fields,
         )
+        source = "clinicaltrials_gov_api_v2"
     else:
         records = build_training_records(
             use_network=True,
             max_pages=args.max_pages,
             page_size=min(args.page_size, 100),
         )
+        source = "clinicaltrials_gov_api_v2"
 
     save_records(records, cache)
+    metadata_path = write_cache_metadata(
+        records,
+        cache,
+        source=source,
+        details={
+            "all_queries": bool(args.all_queries),
+            "max_pages_per_query": int(args.max_pages),
+            "page_size": int(min(args.page_size, 100)),
+            "fields": args.fields,
+        },
+    )
     print(f"Saved {len(records)} records → {cache}")
+    print(f"Provenance → {metadata_path}")
 
 
 if __name__ == "__main__":
