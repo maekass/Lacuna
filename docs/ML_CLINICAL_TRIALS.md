@@ -103,18 +103,18 @@ metrics without the Keras model.
 
 ## Artifacts
 
-| File                                                                     | Purpose                                                |
-| ------------------------------------------------------------------------ | ------------------------------------------------------ |
-| `src/data/ml/clinical-trials/wh-relevance-v1.json`                       | WH relevance weights + vocabulary                      |
-| `src/data/ml/clinical-trials/completion-proxy-v2.json`                   | Completion proxy (when gate passes)                    |
-| `src/data/ml/clinical-trials/model-card.json`                            | Metrics, training source, version, export-gate honesty |
-| `__tests__/lib/ml/clinicalTrials/parityFixtures.json`                    | sklearn vs TS probabilities                            |
-| `ml/clinical_trials/data/training_seed.json`                             | Synthetic fallback (committed)                         |
-| `ml/clinical_trials/data/cached_training.json`                           | Live ingest cache (gitignored)                         |
-| `ml/clinical_trials/data/llm_corpus.jsonl`                               | LLM training export (gitignored)                       |
-| `ml/clinical_trials/output/.../metrics.json`                             | Governed holdout comparison + advancement gate         |
-| `ml/clinical_trials/output/.../split.json`                               | Exact public NCT split allocations + split hash        |
-| `ml/clinical_trials/output/.../run-manifest.json`                        | Git/runtime/data/artifact provenance                   |
+| File                                                                       | Purpose                                                |
+| -------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `src/data/ml/clinical-trials/wh-relevance-v1.json`                         | WH relevance weights + vocabulary                      |
+| `src/data/ml/clinical-trials/completion-proxy-v2.json`                     | Completion proxy (when gate passes)                    |
+| `src/data/ml/clinical-trials/model-card.json`                              | Metrics, training source, version, export-gate honesty |
+| `__tests__/lib/ml/clinicalTrials/parityFixtures.json`                      | sklearn vs TS probabilities                            |
+| `ml/clinical_trials/data/training_seed.json`                               | Synthetic fallback (committed)                         |
+| `ml/clinical_trials/data/cached_training.json`                             | Live ingest cache (gitignored)                         |
+| `ml/clinical_trials/data/llm_corpus.jsonl`                                 | LLM training export (gitignored)                       |
+| `ml/clinical_trials/output/.../metrics.json`                               | Governed holdout comparison + advancement gate         |
+| `ml/clinical_trials/output/.../split.json`                                 | Exact public NCT split allocations + split hash        |
+| `ml/clinical_trials/output/.../run-manifest.json`                          | Git/runtime/data/artifact provenance                   |
 | `ml/clinical_trials/output/.../completion-tensorflow-benchmark-v1-*.keras` | Canonical-seed Keras model; not shipped                 |
 
 Commit `src/data/ml/clinical-trials/*` only when retraining the existing serving
