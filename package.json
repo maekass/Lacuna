@@ -40,6 +40,7 @@
     "ml:ct:seed": "PYTHONPATH=ml/clinical_trials python3 ml/clinical_trials/scripts/generate_seed.py",
     "ml:ct:ingest": "PYTHONPATH=ml/clinical_trials python3 ml/clinical_trials/scripts/ingest_ctgov.py --all-queries",
     "ml:ct:train": "PYTHONPATH=ml/clinical_trials python3 ml/clinical_trials/scripts/train_all.py",
+    "ml:ct:train:tensorflow": "PYTHONPATH=ml/clinical_trials python3 ml/clinical_trials/scripts/train_tensorflow.py",
     "ml:ct:parity": "PYTHONPATH=ml/clinical_trials python3 ml/clinical_trials/scripts/export_parity_fixtures.py",
     "hazard:run": "PYTHONPATH=ml/hazard python3 scripts/run_hazard.py",
     "hazard:test": "PYTHONPATH=ml/hazard python3 -m unittest discover -s ml/hazard/tests -v",
