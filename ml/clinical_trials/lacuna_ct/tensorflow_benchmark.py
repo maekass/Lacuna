@@ -209,7 +209,7 @@ def _build_model(
     )
     normalizer.adapt(adapt_numeric)
 
-    text_input = tf.keras.Input(shape=(1,), dtype=tf.string, name="text")
+    text_input = tf.keras.Input(shape=(), dtype=tf.string, name="text")
     numeric_input = tf.keras.Input(
         shape=(adapt_numeric.shape[1],),
         dtype=tf.float32,
@@ -257,7 +257,7 @@ def _as_text_array(texts: list[str], indices: np.ndarray) -> np.ndarray:
     return np.asarray(
         [texts[int(i)] for i in indices],
         dtype=str,
-    ).reshape(-1, 1)
+    )
 
 
 def _fit_tensorflow_seed(
