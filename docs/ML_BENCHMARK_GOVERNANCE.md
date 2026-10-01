@@ -24,7 +24,9 @@ forecast, an M&A forecast, or an investment decision.
 The benchmark must run on an explicit frozen
 `ml/clinical_trials/data/cached_training.json` snapshot or a user-supplied
 snapshot. It does not silently fetch new data and does not fall back to the
-synthetic seed.
+synthetic seed. The cache must also have a matching provenance sidecar attesting
+that it was produced from the ClinicalTrials.gov API; hash mismatch or a
+synthetic source fails closed.
 
 Every run records:
 
