@@ -58,9 +58,9 @@ canonical-seed Keras model.
 
 Promotion is intentionally manual: the benchmark does **not** overwrite
 `completion-proxy-v2.json`, alter the public model card, or create a browser
-TensorFlow dependency. Paired bootstrap intervals, calibration diagnostics,
-seed robustness, snapshot hashes, and explicit production blockers are emitted
-for model-risk review.
+TensorFlow dependency. Paired bootstrap intervals, calibration diagnostics, seed
+robustness, snapshot hashes, and explicit production blockers are emitted for
+model-risk review.
 
 ## Layout
 
