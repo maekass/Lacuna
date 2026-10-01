@@ -3,9 +3,9 @@
 ## Purpose
 
 This document governs the optional TensorFlow challenger in
-`ml/clinical_trials/`. The benchmark exists to answer one narrow question:
-does a small neural network add repeatable held-out value over the simpler
-logistic completion proxy?
+`ml/clinical_trials/`. The benchmark exists to answer one narrow question: does
+a small neural network add repeatable held-out value over the simpler logistic
+completion proxy?
 
 It does **not** authorize a production model, a clinical claim, an approval
 forecast, an M&A forecast, or an investment decision.
@@ -14,8 +14,8 @@ forecast, an M&A forecast, or an investment decision.
 
 - **Champion:** hybrid TF-IDF + numeric logistic regression.
 - **Challenger:** `completion-tensorflow-benchmark-v1`.
-- **Outcome:** ClinicalTrials.gov operational status, `COMPLETED` versus
-  stopped early. This is not efficacy or endpoint success.
+- **Outcome:** ClinicalTrials.gov operational status, `COMPLETED` versus stopped
+  early. This is not efficacy or endpoint success.
 - **Serving:** TensorFlow remains offline. No TensorFlow or TF.js dependency is
   added to the Next.js runtime.
 
@@ -41,10 +41,10 @@ Duplicate NCT identifiers fail the run.
 ### Known data limitations
 
 The current cache is a **current registry snapshot**, not a versioned
-point-in-time reconstruction of every trial field. In particular, enrollment
-can reflect information updated after trial initiation. The condition-query
-assembly is also not a population sampling frame. These remain explicit
-production blockers even if the challenger wins statistically.
+point-in-time reconstruction of every trial field. In particular, enrollment can
+reflect information updated after trial initiation. The condition-query assembly
+is also not a population sampling frame. These remain explicit production
+blockers even if the challenger wins statistically.
 
 ## Split discipline
 
@@ -103,8 +103,8 @@ Reference:
 
 ## Paired uncertainty
 
-The primary architecture comparison uses a paired nonparametric bootstrap on
-the same test observations. It reports 95% intervals for:
+The primary architecture comparison uses a paired nonparametric bootstrap on the
+same test observations. It reports 95% intervals for:
 
 - TensorFlow minus logistic ROC AUC;
 - TensorFlow minus logistic PR AUC;
