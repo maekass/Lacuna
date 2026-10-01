@@ -1,8 +1,8 @@
 # Clinical trials ML (Tier 1 + v2)
 
-Lacuna trains small models on ClinicalTrials.gov text and structured fields.
-The product-serving path remains classical and auditable: **no neural network
-runs in the browser**, and none of these models are M&A deal predictors.
+Lacuna trains small models on ClinicalTrials.gov text and structured fields. The
+product-serving path remains classical and auditable: **no neural network runs
+in the browser**, and none of these models are M&A deal predictors.
 
 TensorFlow is available as an **offline benchmark** for the completion-proxy
 task. It exists to test whether a nonlinear model adds measurable held-out value
@@ -36,27 +36,26 @@ over the simpler logistic baseline, not to add an AI label to the stack.
 
 ## Offline TensorFlow benchmark
 
-`completion-tensorflow-benchmark-v1` uses the same completion label and the
-same text + numeric feature family as the classical completion model.
+`completion-tensorflow-benchmark-v1` uses the same completion label and the same
+text + numeric feature family as the classical completion model.
 
 The benchmark:
 
 1. loads live ClinicalTrials.gov records or the gitignored live-data cache;
 2. refuses to generate benchmark metrics from the synthetic seed;
-3. uses the existing start-year holdout policy when the cohort supports it,
-   with the same stratified fallback policy as the classical training code;
+3. uses the existing start-year holdout policy when the cohort supports it, with
+   the same stratified fallback policy as the classical training code;
 4. fits a fresh TF-IDF + numeric logistic regression on that exact split;
-5. fits a Keras model with a train-only `TextVectorization` layer,
-   train-only numeric normalization, two small dense layers, dropout, class
-   weighting, and early stopping;
-6. evaluates both models on the same untouched test cohort using ROC AUC,
-   PR AUC, Brier score, accuracy, precision, recall, and F1;
+5. fits a Keras model with a train-only `TextVectorization` layer, train-only
+   numeric normalization, two small dense layers, dropout, class weighting, and
+   early stopping;
+6. evaluates both models on the same untouched test cohort using ROC AUC, PR
+   AUC, Brier score, accuracy, precision, recall, and F1;
 7. writes a local comparison artifact rather than promoting either model.
 
 The Keras model is deliberately small. TensorFlow should only displace the
 simpler model after a separate review shows a repeatable improvement that
-justifies the added operational and audit cost. The benchmark's convenience
-flag
+justifies the added operational and audit cost. The benchmark's convenience flag
 `tensorflow_beats_logistic_on_auc_and_brier` means exactly those two held-out
 comparisons; it is **not** a production promotion rule.
 
@@ -98,27 +97,26 @@ npm run ml:ct:train:tensorflow
 
 The benchmark writes only to
 `ml/clinical_trials/output/tensorflow-completion-benchmark-v1/`, which is
-gitignored. Use
-`npm run ml:ct:train:tensorflow -- --no-save-model` to write metrics without
-the Keras model.
+gitignored. Use `npm run ml:ct:train:tensorflow -- --no-save-model` to write
+metrics without the Keras model.
 
 ## Artifacts
 
-| File                                                                  | Purpose                                                |
-| --------------------------------------------------------------------- | ------------------------------------------------------ |
-| `src/data/ml/clinical-trials/wh-relevance-v1.json`                    | WH relevance weights + vocabulary                      |
-| `src/data/ml/clinical-trials/completion-proxy-v2.json`                | Completion proxy (when gate passes)                    |
-| `src/data/ml/clinical-trials/model-card.json`                         | Metrics, training source, version, export-gate honesty |
-| `__tests__/lib/ml/clinicalTrials/parityFixtures.json`                 | sklearn vs TS probabilities                            |
-| `ml/clinical_trials/data/training_seed.json`                          | Synthetic fallback (committed)                         |
-| `ml/clinical_trials/data/cached_training.json`                        | Live ingest cache (gitignored)                         |
-| `ml/clinical_trials/data/llm_corpus.jsonl`                            | LLM training export (gitignored)                       |
-| `ml/clinical_trials/output/.../metrics.json`                          | Local logistic-vs-TensorFlow benchmark                 |
-| `ml/clinical_trials/output/.../completion-tensorflow-benchmark-v1.keras` | Local Keras model; not shipped                          |
+| File                                                                     | Purpose                                                |
+| ------------------------------------------------------------------------ | ------------------------------------------------------ |
+| `src/data/ml/clinical-trials/wh-relevance-v1.json`                       | WH relevance weights + vocabulary                      |
+| `src/data/ml/clinical-trials/completion-proxy-v2.json`                   | Completion proxy (when gate passes)                    |
+| `src/data/ml/clinical-trials/model-card.json`                            | Metrics, training source, version, export-gate honesty |
+| `__tests__/lib/ml/clinicalTrials/parityFixtures.json`                    | sklearn vs TS probabilities                            |
+| `ml/clinical_trials/data/training_seed.json`                             | Synthetic fallback (committed)                         |
+| `ml/clinical_trials/data/cached_training.json`                           | Live ingest cache (gitignored)                         |
+| `ml/clinical_trials/data/llm_corpus.jsonl`                               | LLM training export (gitignored)                       |
+| `ml/clinical_trials/output/.../metrics.json`                             | Local logistic-vs-TensorFlow benchmark                 |
+| `ml/clinical_trials/output/.../completion-tensorflow-benchmark-v1.keras` | Local Keras model; not shipped                         |
 
-Commit `src/data/ml/clinical-trials/*` only when retraining the existing
-serving models. TensorFlow benchmark artifacts are intentionally not committed
-or served.
+Commit `src/data/ml/clinical-trials/*` only when retraining the existing serving
+models. TensorFlow benchmark artifacts are intentionally not committed or
+served.
 
 ## Inference
 
@@ -140,16 +138,16 @@ const scores = scoreClinicalTrial({
 
 ## Relationship to other "models"
 
-| Component                              | Type                                                                           |
-| -------------------------------------- | ------------------------------------------------------------------------------ |
-| Evidence Maturity Dashboard            | Rule-based (`evidenceMaturityCalculator.ts`)                                  |
-| Exit Similarity Explorer               | Hand-set weights on verified deals                                             |
-| AI Insights panel                      | External LLM (optional)                                                        |
-| **Clinical trials serving ML**         | **Offline sklearn → JSON → TS inference**                                      |
-| **TensorFlow completion benchmark**    | **Offline Python/Keras comparator; no runtime serving**                        |
-| Therapeutics `ClinicalTrial`           | Registry normalization. Not this classifier and not an endpoint-success score. |
-| `export_llm_corpus.py`                 | Data prep only — not an LLM                                                    |
-| Removed TF.js `ensemblePredictor`      | Untrained browser stub — remains removed                                       |
+| Component                           | Type                                                                           |
+| ----------------------------------- | ------------------------------------------------------------------------------ |
+| Evidence Maturity Dashboard         | Rule-based (`evidenceMaturityCalculator.ts`)                                   |
+| Exit Similarity Explorer            | Hand-set weights on verified deals                                             |
+| AI Insights panel                   | External LLM (optional)                                                        |
+| **Clinical trials serving ML**      | **Offline sklearn → JSON → TS inference**                                      |
+| **TensorFlow completion benchmark** | **Offline Python/Keras comparator; no runtime serving**                        |
+| Therapeutics `ClinicalTrial`        | Registry normalization. Not this classifier and not an endpoint-success score. |
+| `export_llm_corpus.py`              | Data prep only — not an LLM                                                    |
+| Removed TF.js `ensemblePredictor`   | Untrained browser stub — remains removed                                       |
 
 ## Citation guidance
 
@@ -161,9 +159,9 @@ For shipped scores:
 > efficacy prediction, or approval forecasting.
 
 For a local TensorFlow run, cite the generated `metrics.json` with its
-`training_source`, cohort sizes, split policy, and both model metric blocks.
-Do not cite TensorFlow benchmark performance from synthetic seed data; the
-runner refuses that path by design.
+`training_source`, cohort sizes, split policy, and both model metric blocks. Do
+not cite TensorFlow benchmark performance from synthetic seed data; the runner
+refuses that path by design.
 
 ## Roadmap
 
