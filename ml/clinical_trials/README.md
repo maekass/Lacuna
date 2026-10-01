@@ -6,11 +6,11 @@ optional **offline benchmark** only and is not bundled into the product.
 
 ## Models
 
-| Model                                      | Task                                                                         | Status                                                                                |
-| ------------------------------------------ | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| **wh-relevance-v1**                        | Women's health trial relevance (title + condition + interventions + sponsor) | Shipped (scores withheld in UI while `trainingSource` is `synthetic_seed`)            |
-| **completion-proxy-v2**                    | COMPLETED vs stopped early — operational status, not endpoint success        | Artifact committed; new trains must pass the conjunction export gate before overwrite |
-| **completion-tensorflow-benchmark-v1**     | Same completion-proxy task, nonlinear TensorFlow comparator                  | Offline benchmark only; never exported to the Next.js runtime                         |
+| Model                                  | Task                                                                         | Status                                                                                |
+| -------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| **wh-relevance-v1**                    | Women's health trial relevance (title + condition + interventions + sponsor) | Shipped (scores withheld in UI while `trainingSource` is `synthetic_seed`)            |
+| **completion-proxy-v2**                | COMPLETED vs stopped early — operational status, not endpoint success        | Artifact committed; new trains must pass the conjunction export gate before overwrite |
+| **completion-tensorflow-benchmark-v1** | Same completion-proxy task, nonlinear TensorFlow comparator                  | Offline benchmark only; never exported to the Next.js runtime                         |
 
 Inference runs in the **Next.js app** via exported JSON artifacts in
 `src/data/ml/clinical-trials/` (TF-IDF + logistic — no Python or TensorFlow at
@@ -85,7 +85,6 @@ docs/ML_CLINICAL_TRIALS.md
   `dataset.verified.json`.
 - Termination modeling needs real CT.gov labels; synthetic seed is for pipeline
   CI only.
-- Does not replace Evidence Maturity scores
-  (`evidenceMaturityCalculator.ts`).
+- Does not replace Evidence Maturity scores (`evidenceMaturityCalculator.ts`).
 
 See [docs/ML_CLINICAL_TRIALS.md](../../docs/ML_CLINICAL_TRIALS.md).
