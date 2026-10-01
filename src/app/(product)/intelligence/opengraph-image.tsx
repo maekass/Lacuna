@@ -4,7 +4,6 @@ import {
   renderWorkspaceOgImage,
 } from "@/lib/og/workspaceImage";
 
-export const runtime = "edge";
 export const alt = "Lacuna · Intelligence workspace";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;

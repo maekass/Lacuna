@@ -1,0 +1,106 @@
+name: TensorFlow Benchmark
+
+on:
+  push:
+    branches:
+      - feat/tensorflow-clinical-trials-benchmark
+    paths:
+      - ".github/workflows/tensorflow-benchmark.yml"
+      - "ml/clinical_trials/**"
+      - "package.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    name: governed-tensorflow-benchmark
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: |
+            ml/clinical_trials/requirements.txt
+            ml/clinical_trials/requirements-tensorflow.txt
+
+      - name: Install scientific Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r ml/clinical_trials/requirements.txt
+          python -m pip install -r ml/clinical_trials/requirements-tensorflow.txt
+
+      - name: Verify TensorFlow
+        run: |
+          python - <<'PY'
+          import platform
+          import tensorflow as tf
+          print("Python platform:", platform.platform())
+          print("TensorFlow:", tf.__version__)
+          print("Devices:", tf.config.list_physical_devices())
+          PY
+
+      - name: Ingest frozen ClinicalTrials.gov snapshot
+        run: |
+          PYTHONPATH=ml/clinical_trials \
+            python ml/clinical_trials/scripts/ingest_ctgov.py \
+            --all-queries \
+            --max-pages 5
+
+      - name: Run governed TensorFlow benchmark
+        run: |
+          PYTHONPATH=ml/clinical_trials \
+            python ml/clinical_trials/scripts/train_tensorflow.py \
+            --seeds 17,42,89 \
+            --bootstrap-resamples 2000
+
+      - name: Print benchmark summary
+        if: success()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path(
+              "ml/clinical_trials/output/"
+              "tensorflow-completion-benchmark-v1/metrics.json"
+          )
+          payload = json.loads(path.read_text())
+          print(json.dumps({
+              "training_source": payload["training_source"],
+              "n_labeled": payload["n_labeled"],
+              "split": payload["split"],
+              "logistic_baseline": payload["logistic_baseline"],
+              "tensorflow": {
+                  "canonical_seed": payload["tensorflow"]["canonical_seed"],
+                  "aggregate_across_seeds": payload["tensorflow"][
+                      "aggregate_across_seeds"
+                  ],
+                  "seed_robustness": payload["tensorflow"]["seed_robustness"],
+              },
+              "paired_holdout_comparison": payload[
+                  "paired_holdout_comparison"
+              ],
+              "promotion_gate": payload["promotion_gate"],
+          }, indent=2))
+          PY
+
+      - name: Upload governed benchmark artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tensorflow-benchmark
+          path: |
+            ml/clinical_trials/data/cached_training.json
+            ml/clinical_trials/data/cached_training.meta.json
+            ml/clinical_trials/output/tensorflow-completion-benchmark-v1/
+          if-no-files-found: warn
+          retention-days: 14

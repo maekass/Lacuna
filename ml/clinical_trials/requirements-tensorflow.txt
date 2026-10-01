@@ -1,0 +1,4 @@
+# Optional offline benchmark dependency.
+# Exact TensorFlow version is pinned; the run manifest records all resolved
+# scientific-Python package versions for each empirical benchmark.
+tensorflow==2.21.0

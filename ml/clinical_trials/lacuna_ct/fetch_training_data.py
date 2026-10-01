@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import time
 from dataclasses import asdict, dataclass, field
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -243,3 +245,85 @@ def save_records(records: list[TrialRecord], path: Path) -> None:
         json.dumps([asdict(r) for r in records], indent=2),
         encoding="utf-8",
     )
+
+
+CACHE_METADATA_SCHEMA = "ctgov-cache-v1"
+
+
+def cache_metadata_path(path: Path) -> Path:
+    """Return the provenance sidecar path for a cached training snapshot."""
+    return path.with_name(f"{path.stem}.meta.json")
+
+
+def _file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def write_cache_metadata(
+    records: list[TrialRecord],
+    path: Path,
+    *,
+    source: str,
+    details: dict[str, Any] | None = None,
+) -> Path:
+    """Write a provenance sidecar after the JSON snapshot has been saved."""
+    from lacuna_ct.benchmark_stats import canonical_record_hash
+
+    if not path.exists():
+        raise FileNotFoundError(
+            f"Cannot write cache metadata before snapshot exists: {path}"
+        )
+
+    payload = {
+        "schema": CACHE_METADATA_SCHEMA,
+        "source": source,
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "record_count": len(records),
+        "snapshot_file": path.name,
+        "snapshot_file_sha256": _file_sha256(path),
+        "canonical_record_sha256": canonical_record_hash(records),
+        "details": details or {},
+    }
+    metadata_path = cache_metadata_path(path)
+    metadata_path.write_text(
+        json.dumps(payload, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return metadata_path
+
+
+def load_cache_metadata(path: Path) -> dict[str, Any]:
+    metadata_path = cache_metadata_path(path)
+    if not metadata_path.exists():
+        raise FileNotFoundError(
+            "Missing CT.gov cache provenance sidecar: "
+            f"{metadata_path}. Re-run the ingest command."
+        )
+    return json.loads(metadata_path.read_text(encoding="utf-8"))
+
+
+def verify_cache_metadata(
+    records: list[TrialRecord],
+    path: Path,
+) -> dict[str, Any]:
+    """Fail closed if snapshot bytes or model-relevant records drift."""
+    from lacuna_ct.benchmark_stats import canonical_record_hash
+
+    metadata = load_cache_metadata(path)
+    if metadata.get("schema") != CACHE_METADATA_SCHEMA:
+        raise ValueError(
+            f"Unsupported cache metadata schema: {metadata.get('schema')}"
+        )
+    if int(metadata.get("record_count", -1)) != len(records):
+        raise ValueError("Cached snapshot record count does not match metadata.")
+    if metadata.get("snapshot_file_sha256") != _file_sha256(path):
+        raise ValueError("Cached snapshot file hash does not match metadata.")
+    if metadata.get("canonical_record_sha256") != canonical_record_hash(records):
+        raise ValueError(
+            "Cached snapshot model-relevant record hash does not match metadata."
+        )
+    return metadata
