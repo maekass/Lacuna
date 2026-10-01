@@ -115,7 +115,7 @@ metrics without the Keras model.
 | `ml/clinical_trials/output/.../metrics.json`                               | Governed holdout comparison + advancement gate         |
 | `ml/clinical_trials/output/.../split.json`                                 | Exact public NCT split allocations + split hash        |
 | `ml/clinical_trials/output/.../run-manifest.json`                          | Git/runtime/data/artifact provenance                   |
-| `ml/clinical_trials/output/.../completion-tensorflow-benchmark-v1-*.keras` | Canonical-seed Keras model; not shipped                 |
+| `ml/clinical_trials/output/.../completion-tensorflow-benchmark-v1-*.keras` | Canonical-seed Keras model; not shipped                |
 
 Commit `src/data/ml/clinical-trials/*` only when retraining the existing serving
 models. TensorFlow benchmark artifacts are intentionally not committed or
