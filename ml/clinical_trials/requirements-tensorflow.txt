@@ -1,3 +1,4 @@
 # Optional offline benchmark dependency.
-# Install after ml/clinical_trials/requirements.txt.
-tensorflow>=2.21.0,<2.22.0
+# Exact TensorFlow version is pinned; the run manifest records all resolved
+# scientific-Python package versions for each empirical benchmark.
+tensorflow==2.21.0
