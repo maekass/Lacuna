@@ -10,6 +10,8 @@ from lacuna_ct.fetch_training_data import (
     build_training_records,
     load_cached_records,
     save_records,
+    verify_cache_metadata,
+    write_cache_metadata,
 )
 from lacuna_ct.tensorflow_benchmark import (
     DEFAULT_TENSORFLOW_SEEDS,
@@ -104,6 +106,15 @@ def main() -> None:
             max_pages=args.max_pages,
         )
         save_records(records, data_path)
+        write_cache_metadata(
+            records,
+            data_path,
+            source="clinicaltrials_gov_api_v2",
+            details={
+                "refreshed_by": "train_tensorflow.py",
+                "max_pages_per_query": int(args.max_pages),
+            },
+        )
         training_source = "ctgov_live_snapshot"
         print(
             f"Refreshed {len(records)} ClinicalTrials.gov records → {data_path}"
@@ -117,8 +128,18 @@ def main() -> None:
                 "synthetic data or mutate its dataset."
             )
         records = load_cached_records(data_path)
-        training_source = "ctgov_cached"
-        print(f"Loaded frozen snapshot with {len(records)} records from {data_path}")
+        metadata = verify_cache_metadata(records, data_path)
+        if metadata.get("source") != "clinicaltrials_gov_api_v2":
+            raise SystemExit(
+                "Cached benchmark snapshot is not attested as live "
+                "ClinicalTrials.gov data. Re-run 'npm run ml:ct:ingest' without "
+                "'--offline'."
+            )
+        training_source = "ctgov_cached_verified"
+        print(
+            f"Loaded verified frozen snapshot with {len(records)} records "
+            f"from {data_path}"
+        )
 
     result = benchmark_completion_tensorflow(
         records,
