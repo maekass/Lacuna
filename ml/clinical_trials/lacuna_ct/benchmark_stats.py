@@ -395,7 +395,7 @@ def promotion_gate(
 
     checks = {
         "non_synthetic_snapshot": training_source
-        in {"ctgov_cached", "ctgov_live_snapshot"},
+        in {"ctgov_cached_verified", "ctgov_live_snapshot"},
         "temporal_holdout": split_strategy == "start_year_holdout",
         "no_nct_overlap": int(cohort.get("nct_id_overlap_count", 1)) == 0,
         "both_test_classes_at_least_20": min(
