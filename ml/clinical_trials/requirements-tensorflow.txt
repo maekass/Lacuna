@@ -1,0 +1,3 @@
+# Optional offline benchmark dependency.
+# Install after ml/clinical_trials/requirements.txt.
+tensorflow>=2.21.0,<2.22.0
