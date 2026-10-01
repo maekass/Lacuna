@@ -37,9 +37,10 @@ live-data artifacts before citing metrics.
 
 ### TensorFlow benchmark
 
-The TensorFlow path compares a small neural network with the existing hybrid
-logistic baseline on the **same held-out cohort**. It refuses the synthetic seed
-by default so benchmark metrics cannot be mistaken for empirical performance.
+The TensorFlow path is a governed champion/challenger benchmark. It compares a
+small neural network with the existing hybrid logistic baseline on the **same
+held-out cohort**. The benchmark requires a frozen CT.gov snapshot by default,
+uses predeclared TensorFlow seeds, and refuses synthetic benchmark metrics.
 
 ```bash
 pip install -r ml/clinical_trials/requirements.txt
@@ -51,14 +52,15 @@ npm run ml:ct:train:tensorflow
 
 Outputs are written under
 `ml/clinical_trials/output/tensorflow-completion-benchmark-v1/` and are
-gitignored. The directory contains `metrics.json` and, unless disabled with
-`--no-save-model`, a Keras `.keras` model.
+gitignored. The directory contains `metrics.json`, `split.json`,
+`run-manifest.json`, and, unless disabled with `--no-save-model`, the
+canonical-seed Keras model.
 
 Promotion is intentionally manual: the benchmark does **not** overwrite
 `completion-proxy-v2.json`, alter the public model card, or create a browser
-TensorFlow dependency. A TensorFlow result should only motivate a later product
-change if it beats the logistic baseline on held-out discrimination **and**
-calibration and the data/provenance review supports the added complexity.
+TensorFlow dependency. Paired bootstrap intervals, calibration diagnostics,
+seed robustness, snapshot hashes, and explicit production blockers are emitted
+for model-risk review.
 
 ## Layout
 
@@ -83,8 +85,12 @@ docs/ML_CLINICAL_TRIALS.md
   predictor.
 - The TensorFlow benchmark is not an M&A model and does not use
   `dataset.verified.json`.
-- Termination modeling needs real CT.gov labels; synthetic seed is for pipeline
-  CI only.
+- Benchmarking requires real/cached CT.gov labels; synthetic seed is for
+  pipeline CI only.
+- Current CT.gov rows are not historical field snapshots. Enrollment and other
+  registry fields can therefore lack point-in-time provenance for a prospective
+  prediction claim.
 - Does not replace Evidence Maturity scores (`evidenceMaturityCalculator.ts`).
 
-See [docs/ML_CLINICAL_TRIALS.md](../../docs/ML_CLINICAL_TRIALS.md).
+See [docs/ML_CLINICAL_TRIALS.md](../../docs/ML_CLINICAL_TRIALS.md) and
+[docs/ML_BENCHMARK_GOVERNANCE.md](../../docs/ML_BENCHMARK_GOVERNANCE.md).
