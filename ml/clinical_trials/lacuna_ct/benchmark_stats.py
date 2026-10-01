@@ -8,9 +8,8 @@ from __future__ import annotations
 
 import hashlib
 import json
-import math
 from collections import Counter
-from typing import Any, Callable, Iterable
+from typing import Any, Iterable
 
 import numpy as np
 from sklearn.metrics import (
@@ -428,9 +427,16 @@ def promotion_gate(
         "production_authorized": False,
         "checks": checks,
         "failed_checks": failures,
+        "known_blockers_to_production": [
+            "current_registry_snapshot_not_historical_feature_snapshot",
+            "query_assembled_cohort_not_population_frame",
+            "no_external_validation_cohort",
+            "outcome_is_operational_status_not_clinical_success",
+        ],
         "interpretation": (
             "Passing permits formal model-risk review only. It does not authorize "
-            "runtime serving, clinical claims, investment use, or artifact promotion."
+            "runtime serving, clinical claims, investment use, or artifact promotion. "
+            "Production blockers remain even when statistical checks pass."
         ),
     }
 
