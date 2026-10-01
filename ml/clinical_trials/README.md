@@ -46,7 +46,7 @@ uses predeclared TensorFlow seeds, and refuses synthetic benchmark metrics.
 pip install -r ml/clinical_trials/requirements.txt
 pip install -r ml/clinical_trials/requirements-tensorflow.txt
 
-npm run ml:ct:ingest
+npm run ml:ct:ingest   # writes cached_training.json + provenance sidecar
 npm run ml:ct:train:tensorflow
 ```
 
