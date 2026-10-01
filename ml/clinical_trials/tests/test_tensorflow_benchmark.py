@@ -5,7 +5,9 @@ These tests do not import TensorFlow and are safe for ordinary CI.
 
 from __future__ import annotations
 
+import tempfile
 import unittest
+from pathlib import Path
 
 import numpy as np
 
@@ -14,7 +16,12 @@ from lacuna_ct.benchmark_stats import (
     paired_bootstrap_comparison,
     promotion_gate,
 )
-from lacuna_ct.fetch_training_data import TrialRecord
+from lacuna_ct.fetch_training_data import (
+    TrialRecord,
+    save_records,
+    verify_cache_metadata,
+    write_cache_metadata,
+)
 from lacuna_ct.tensorflow_benchmark import _development_split, _split_indices
 
 
@@ -114,6 +121,30 @@ class BenchmarkControlTests(unittest.TestCase):
         self.assertLess(result["brier_delta"]["ci_95_upper"], 0.0)
         self.assertLess(result["log_loss_delta"]["ci_95_upper"], 0.0)
 
+    def test_cache_provenance_detects_snapshot_tampering(self) -> None:
+        records = [
+            _record(1, year=2020, completed=1),
+            _record(2, year=2021, completed=0),
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "cached_training.json"
+            save_records(records, path)
+            write_cache_metadata(
+                records,
+                path,
+                source="clinicaltrials_gov_api_v2",
+            )
+
+            metadata = verify_cache_metadata(records, path)
+            self.assertEqual(
+                metadata["source"],
+                "clinicaltrials_gov_api_v2",
+            )
+
+            path.write_text("[]\n", encoding="utf-8")
+            with self.assertRaises(ValueError):
+                verify_cache_metadata(records, path)
+
     def test_promotion_gate_rejects_random_or_synthetic_runs(self) -> None:
         paired = {
             "roc_auc_delta": {"ci_95_lower": 0.01},
@@ -129,7 +160,7 @@ class BenchmarkControlTests(unittest.TestCase):
         }
 
         eligible = promotion_gate(
-            training_source="ctgov_cached",
+            training_source="ctgov_cached_verified",
             split_strategy="start_year_holdout",
             cohort=cohort,
             paired=paired,
