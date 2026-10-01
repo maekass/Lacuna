@@ -187,7 +187,7 @@ def _configure_tensorflow(tf: Any, seed: int) -> None:
 
 def _build_model(
     tf: Any,
-    adapt_text: np.ndarray,
+    adapt_text: Any,
     adapt_numeric: np.ndarray,
     *,
     seed: int,
@@ -253,10 +253,14 @@ def _build_model(
     return model
 
 
-def _as_text_array(texts: list[str], indices: np.ndarray) -> np.ndarray:
-    return np.asarray(
+def _as_text_tensor(
+    tf: Any,
+    texts: list[str],
+    indices: np.ndarray,
+) -> Any:
+    return tf.convert_to_tensor(
         [texts[int(i)] for i in indices],
-        dtype=str,
+        dtype=tf.string,
     )
 
 
@@ -276,8 +280,8 @@ def _fit_tensorflow_seed(
     """Select epochs on validation data, refit on full train, then score test."""
     tf = _tensorflow_module()
 
-    development_text = _as_text_array(texts, development_idx)
-    validation_text = _as_text_array(texts, validation_idx)
+    development_text = _as_text_tensor(tf, texts, development_idx)
+    validation_text = _as_text_tensor(tf, texts, validation_idx)
     development_numeric = numeric[development_idx].astype(np.float32)
     validation_numeric = numeric[validation_idx].astype(np.float32)
     y_development = labels[development_idx].astype(np.float32)
@@ -322,8 +326,8 @@ def _fit_tensorflow_seed(
 
     # Epoch selection is now frozen. Refit from scratch on all pre-test data so
     # the final challenger is not disadvantaged by withholding validation rows.
-    train_text = _as_text_array(texts, train_idx)
-    test_text = _as_text_array(texts, test_idx)
+    train_text = _as_text_tensor(tf, texts, train_idx)
+    test_text = _as_text_tensor(tf, texts, test_idx)
     train_numeric = numeric[train_idx].astype(np.float32)
     test_numeric = numeric[test_idx].astype(np.float32)
     y_train = labels[train_idx].astype(np.float32)
