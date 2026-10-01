@@ -36,33 +36,33 @@ over the simpler logistic baseline, not to add an AI label to the stack.
 
 ## Offline TensorFlow benchmark
 
-`completion-tensorflow-benchmark-v1` uses the same completion label and the same
-text + numeric feature family as the classical completion model.
+`completion-tensorflow-benchmark-v1` is an offline challenger for the same
+completion-status task. It never runs in the browser and never overwrites the
+serving artifact.
 
-The benchmark:
+The institutional benchmark now enforces:
 
-1. loads live ClinicalTrials.gov records or the gitignored live-data cache;
-2. refuses to generate benchmark metrics from the synthetic seed;
-3. uses the existing start-year holdout policy when the cohort supports it, with
-   the same stratified fallback policy as the classical training code;
-4. fits a fresh TF-IDF + numeric logistic regression on that exact split;
-5. fits a Keras model with a train-only `TextVectorization` layer, train-only
-   numeric normalization, two small dense layers, dropout, class weighting, and
-   early stopping;
-6. evaluates both models on the same untouched test cohort using ROC AUC, PR
-   AUC, Brier score, accuracy, precision, recall, and F1;
-7. writes a local comparison artifact rather than promoting either model.
+1. a frozen CT.gov snapshot by default, with no silent refresh or synthetic
+   fallback;
+2. a start-year temporal test holdout when the cohort supports it;
+3. a separate development/validation split used only for epoch selection;
+4. a full-train refit after epoch selection, before the untouched test is
+   scored;
+5. predeclared TensorFlow seeds (17, 42, 89), with no best-seed cherry-picking;
+6. paired bootstrap 95% intervals for ROC AUC, PR AUC, Brier, and log-loss
+   deltas versus logistic regression;
+7. reliability bins and expected calibration error in addition to Brier and log
+   loss;
+8. snapshot, split, Git, environment, metrics, and model hashes; and
+9. an explicit advancement gate that can only nominate a run for model-risk
+   review. It never authorizes production.
 
-The Keras model is deliberately small. TensorFlow should only displace the
-simpler model after a separate review shows a repeatable improvement that
-justifies the added operational and audit cost. The benchmark's convenience flag
-`tensorflow_beats_logistic_on_auc_and_brier` means exactly those two held-out
-comparisons; it is **not** a production promotion rule.
+The benchmark also records known production blockers. Current CT.gov data are a
+current registry snapshot rather than a historical reconstruction of every
+feature, the condition-query cohort is not a population sampling frame, and
+there is no external validation cohort.
 
-The TensorFlow API supports preprocessing layers such as
-`tf.keras.layers.TextVectorization` and separate ROC/PR AUC metrics, which is
-why preprocessing and evaluation remain inside the reproducible training path
-rather than being performed in the browser.
+See [ML_BENCHMARK_GOVERNANCE.md](./ML_BENCHMARK_GOVERNANCE.md).
 
 ## Training
 
@@ -75,6 +75,7 @@ npm run ml:ct:train    # train WH + completion; writes shipped JSON artifacts
 npm run ml:ct:corpus   # JSONL for future LLM fine-tuning (does not train an LLM)
 
 npm test -- __tests__/lib/ml/clinicalTrials/inference.test.ts
+npm run ml:ct:test
 ```
 
 **No LLM API key.** CT.gov is public REST. Set a descriptive `User-Agent` in
@@ -111,8 +112,10 @@ metrics without the Keras model.
 | `ml/clinical_trials/data/training_seed.json`                             | Synthetic fallback (committed)                         |
 | `ml/clinical_trials/data/cached_training.json`                           | Live ingest cache (gitignored)                         |
 | `ml/clinical_trials/data/llm_corpus.jsonl`                               | LLM training export (gitignored)                       |
-| `ml/clinical_trials/output/.../metrics.json`                             | Local logistic-vs-TensorFlow benchmark                 |
-| `ml/clinical_trials/output/.../completion-tensorflow-benchmark-v1.keras` | Local Keras model; not shipped                         |
+| `ml/clinical_trials/output/.../metrics.json`                             | Governed holdout comparison + advancement gate         |
+| `ml/clinical_trials/output/.../split.json`                               | Exact public NCT split allocations + split hash        |
+| `ml/clinical_trials/output/.../run-manifest.json`                        | Git/runtime/data/artifact provenance                   |
+| `ml/clinical_trials/output/.../completion-tensorflow-benchmark-v1-*.keras` | Canonical-seed Keras model; not shipped                 |
 
 Commit `src/data/ml/clinical-trials/*` only when retraining the existing serving
 models. TensorFlow benchmark artifacts are intentionally not committed or
