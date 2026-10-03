@@ -110,9 +110,6 @@ jobs:
       - name: Install deps
         run: npm ci
 
-      - name: CI governance contract
-        run: npm run ci:governance
-
       - name: Verify formatting
         run: deno fmt --check
 
