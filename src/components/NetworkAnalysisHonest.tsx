@@ -351,6 +351,9 @@ export default function NetworkAnalysisHonest() {
             </div>
           </div>
 
+        </motion.div>
+      )}
+
       {/* Concentration Tab */}
       {activeTab === "concentration" && (
         <motion.div
