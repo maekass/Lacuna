@@ -3,7 +3,7 @@
 
 import unittest
 
-from scripts.institutional_reproductive_biopharma_sieve import (
+from scripts.reproductive_biopharma_sieve import (
     EXCLUDED,
     INCLUDED,
     REVIEW,
