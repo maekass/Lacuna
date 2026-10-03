@@ -19,6 +19,7 @@
     "deno:fmt": "npx --yes deno@2.1.4 fmt",
     "deno:fmt:check": "npx --yes deno@2.1.4 fmt --check",
     "test": "vitest run",
+    "test:reproductive-biopharma": "python3 -m unittest discover -s scripts/tests -p 'test_reproductive_biopharma_sieve.py' -v",
     "test:watch": "vitest",
     "validate:dataset": "tsx scripts/validate-dataset.ts",
     "report:selection-provenance": "tsx scripts/report-selection-provenance.ts",
