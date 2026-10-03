@@ -19,6 +19,7 @@
     "deno:fmt": "npx --yes deno@2.1.4 fmt",
     "deno:fmt:check": "npx --yes deno@2.1.4 fmt --check",
     "test": "vitest run",
+    "test:reproductive-biopharma": "python3 -m unittest discover -s scripts/tests -p 'test_reproductive_biopharma_sieve.py' -v",
     "test:watch": "vitest",
     "validate:dataset": "tsx scripts/validate-dataset.ts",
     "report:selection-provenance": "tsx scripts/report-selection-provenance.ts",
@@ -94,7 +95,9 @@
     "gate:provenance": "tsx scripts/provenance-gate.ts",
     "quality-history:append": "tsx scripts/append-quality-history.ts",
     "quality-history:backfill": "tsx scripts/backfill-quality-history.ts",
-    "gate:quality-history": "tsx scripts/quality-history-gate.ts"
+    "gate:quality-history": "tsx scripts/quality-history-gate.ts",
+    "ci:governance": "tsx scripts/ci-governance.ts",
+    "ci:preflight": "npm run ci:governance && npm run deno:fmt:check && npm run lint && npm run typecheck && npm test && npm run build:ci"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.114",
