@@ -51,6 +51,19 @@ The goal is not to reproduce proprietary financial datasets. It is to build a **
 
 The product's potential value therefore comes less from raw record count than from **entity resolution, transaction reconstruction, longitudinal evidence, provenance, and the ability to connect otherwise separate datasets into a decision-useful research graph**.
 
+## Scope: sex-specific biology within women's health
+
+For Lacuna, **women's health is not a synonym for every product, service, or company marketed to women**. The primary scope is **sex-specific biology**: anatomical, physiological, genetic, and hormonal differences between females and males that affect organ systems, disease biology, clinical presentation, therapeutic response, risk, diagnosis, or outcomes.
+
+This distinction is deliberate. The research scope is intended to follow **biological and clinical specificity**, not consumer demographics or branding.
+
+Accordingly, Lacuna prioritizes healthcare assets and financing questions where sex-specific biology is materially relevant to the underlying scientific or clinical thesis. Examples can include reproductive and gynecologic disease, sex-linked disease mechanisms, female-specific manifestations or treatment responses, hormonal biology, biomarkers, therapeutics, diagnostics, devices, and other technologies where the biological distinction is part of the evidence.
+
+The scope does **not** attempt to survey the entire women's-health market. In particular, Lacuna is not intended to become a general catalog of fertility products, hormone-replacement products, consumer wellness, home diagnostic tools, service businesses, or other offerings simply because they are marketed primarily to women. Products or services that substitute for or shift care traditionally delivered in settings such as neonatal intensive care are likewise outside the core research scope unless a specific sex-specific biological question makes them analytically relevant.
+
+This boundary keeps the project focused on a narrower and more technically defensible research problem: **how sex-specific biology creates clinical risk, evidence requirements, financing constraints, and strategic opportunities—and how capital structures respond to those conditions**.
+
+
 The product app runs on **Vercel** from this repository. A separate **Framer**
 site is brand and narrative only, with one call to action into the app —
 [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md).
