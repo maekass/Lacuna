@@ -8,6 +8,7 @@ import {
 } from "@/lib/data/dataQualityScores";
 import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 import {
+  capGradeAtSourceQuality,
   computeMetricPublicationCensus,
   computeVintageCensus,
   countReproduciblePremiums,
@@ -30,6 +31,12 @@ describe("quality visibility census", () => {
     expect(getAcquisitionQuality(scores.acquisitions[0].id)?.id).toBe(
       scores.acquisitions[0].id,
     );
+  });
+
+  it("does not let completeness outrank source quality", () => {
+    expect(capGradeAtSourceQuality("A", "D")).toBe("D");
+    expect(capGradeAtSourceQuality("B", "A")).toBe("B");
+    expect(capGradeAtSourceQuality("A", "A")).toBe("A");
   });
 
   it("fills missing letter grades with zero", () => {
@@ -191,6 +198,8 @@ describe("quality visibility census", () => {
     expect(markdown).toContain("Vintage");
     expect(markdown).toContain("Display provenance");
     expect(markdown).toContain("Quality grades");
+    expect(markdown).toContain("Historical replay eligibility");
+    expect(markdown).toContain("Do not invent a publication date");
   });
 
   it("pipeline status no longer invents stage durations", () => {

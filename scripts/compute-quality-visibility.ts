@@ -23,6 +23,7 @@ import {
   summarizeDisplayProvenance,
 } from "../src/lib/data/qualityVisibility";
 import { getStaticVerifiedDataset } from "../src/lib/data/staticDataset";
+import { hashComputationLineage } from "../src/lib/lineage/computationLineage";
 import { hashDataset } from "../src/lib/lineage/datasetHash";
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -60,6 +61,7 @@ function main(): void {
   const output: QualityVisibilityArtifact = {
     generatedAt: generatedAtFromProvenance(dataset.provenance.lastUpdated),
     datasetHash: hashDataset(dataset).fullHash,
+    computationLineageHash: hashComputationLineage(repoRoot),
     datasetVersion: dataset.provenance.datasetVersion,
     source:
       "Lacuna measurement-layer census (quality scores, gated metrics, vintage, display provenance)",

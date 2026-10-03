@@ -43,6 +43,7 @@ export default function DataQualityVisibility({
 }) {
   const census = getQualityVisibility();
   const { quality, metrics, vintage, premiums, displayProvenance } = census;
+  const replay = census.economicReplay;
   const metricClass = "align-baseline font-semibold text-lacuna-plum";
 
   return (
@@ -179,6 +180,29 @@ export default function DataQualityVisibility({
           </div>
         </div>
       </div>
+
+      {replay
+        ? (
+          <p className="mt-4 text-xs text-lacuna-blue">
+            <Metric
+              label="Historical replay eligible"
+              className={metricClass}
+              provenance={{
+                kind: "assumption",
+                value: replay.replayEligibleRate,
+                model: QUALITY_VISIBILITY_MODELS.economicReplayEligibleRate,
+                caveat: replay.note,
+              }}
+              formatValue={(rate) => pct(rate)}
+            />
+            {` ${replay.replayEligible}/${replay.activeRecords} active economic records. ${replay.currentOnlyMissingPublicAsOf} are current-only because publicAsOfDate is missing (${
+              replay.byField.map((row) =>
+                `${row.field} ${row.currentOnlyMissingPublicAsOf}/${row.active}`
+              ).join(", ")
+            }). Missing dates stay missing.`}
+          </p>
+        )
+        : null}
 
       <p className="mt-4 text-xs text-lacuna-blue">
         <Metric

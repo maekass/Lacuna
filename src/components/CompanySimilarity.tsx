@@ -282,7 +282,9 @@ export default function CompanySimilarity() {
                 </>
               )
               : null}
-            {selected.totalFunding && ` · $${selected.totalFunding}M raised`}
+            {selected.totalFunding != null && selected.sources[0]
+              ? ` · ${selected.totalFunding}M raised (${selected.sources[0]})`
+              : null}
           </p>
         </div>
       )}
