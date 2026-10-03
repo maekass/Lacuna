@@ -1,0 +1,34 @@
+name: OpenAlex integrity
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integrity:
+    name: OpenAlex provider integrity
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install deps
+        run: npm ci
+      - name: Unit integrity contract
+        run: npx vitest run src/lib/ingestion/openAlexClient.test.ts
+      - name: Deno format check
+        run: npm run deno:fmt:check
+      - name: Deno lint
+        run: npm run deno:lint
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Authenticated OpenAlex integrity probe
+        run: npx tsx scripts/openalex-smoke.ts
+        env:
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
