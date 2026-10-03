@@ -3,7 +3,6 @@
 import { Suspense, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import {
-  ClusteringAnalysis,
   CompanySimilarity,
   CompetitiveAnalysisDashboard,
   DealFlowChart,
@@ -197,10 +196,7 @@ export default function DealsPage() {
           title="Finding Companies Like Each Other"
           description="Which women's health companies share similar profiles? Explore natural groupings and see how they compare."
         />
-        <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2">
-          <CompanySimilarity />
-        </div>
-        <ClusteringAnalysis />
+        <CompanySimilarity />
       </MotionSection>
 
       <MotionSection id="similarity-indicators" className={SECTION}>
