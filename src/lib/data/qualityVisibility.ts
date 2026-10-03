@@ -11,6 +11,24 @@ import type { ModelProvenance } from "@/lib/provenance/modelProvenance";
 
 export type QualityGrade = "A" | "B" | "C" | "D" | "F";
 
+const QUALITY_GRADE_RANK: Readonly<Record<QualityGrade, number>> = {
+  A: 4,
+  B: 3,
+  C: 2,
+  D: 1,
+  F: 0,
+};
+
+/** Completeness/composite scoring may never improve a row beyond source quality. */
+export function capGradeAtSourceQuality(
+  composite: QualityGrade,
+  source: QualityGrade,
+): QualityGrade {
+  return QUALITY_GRADE_RANK[composite] > QUALITY_GRADE_RANK[source]
+    ? source
+    : composite;
+}
+
 export interface GradeCounts {
   readonly A: number;
   readonly B: number;
@@ -120,6 +138,7 @@ export interface EconomicReplayCensus {
 export interface QualityVisibilityArtifact {
   readonly generatedAt: string;
   readonly datasetHash: string;
+  readonly computationLineageHash: string;
   readonly datasetVersion?: string;
   readonly source: string;
   readonly quality: QualityLayerSummary;
