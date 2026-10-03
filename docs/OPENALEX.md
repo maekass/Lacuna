@@ -31,9 +31,11 @@ paging, response preservation, singleton lookup, OQL routing, HTTP failures,
 malformed responses, secret non-disclosure, empty-input rejection, and abort
 signals.
 
-The authenticated workflow also runs a live one-record integrity probe. It
-checks the response envelope, result cardinality, canonical OpenAlex ID,
-display name, and publication-year type without depending on a specific paper.
+The authenticated workflow runs a live end-to-end integrity probe. It
+requires the secret, verifies a non-empty scholarly result set and strict
+response shape, performs a singleton lookup against the returned canonical ID,
+validates known-good OQL, checks the rate-limit endpoint, and exits non-zero on
+any mismatch. It never prints the API key.
 
 ## Checks
 
