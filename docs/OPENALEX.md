@@ -13,7 +13,8 @@ string, keeping credentials out of request URLs and provenance logs.
 
 ## Provider surface
 
-- `searchOpenAlexWorks` — keyword, exact, semantic, filter, sort, select, paging.
+- `searchOpenAlexWorks` — keyword, exact, semantic, filter, sort, select,
+  paging.
 - `getOpenAlexWork` — singleton work lookup.
 - `executeOpenAlexOql` — OQL execution at the API root.
 - `validateOpenAlexOql` — OQL validation without executing a query.
