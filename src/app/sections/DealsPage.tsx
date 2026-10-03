@@ -159,6 +159,16 @@ export default function DealsPage() {
         <ValuationMatrix />
       </MotionSection>
 
+      <details className="mb-16 overflow-hidden rounded-2xl border border-lacuna-border bg-white/80 shadow-sm">
+        <summary className="cursor-pointer list-none px-5 py-4 text-sm font-semibold text-lacuna-plum sm:px-6 sm:py-5">
+          <span className="inline-flex items-center gap-2">
+            Advanced deal analysis
+            <span className="text-xs font-normal text-lacuna-text-muted">
+              comparables, network diagnostics, acquirer patterns, outcomes, and historical context
+            </span>
+          </span>
+        </summary>
+        <div className="border-t border-lacuna-border px-4 py-6 sm:px-6">
       <MotionSection id="quant-valuation" className={SECTION}>
         <SectionHeader
           title="Comparable context & historical acquisition-pattern similarity"
@@ -222,6 +232,9 @@ export default function DealsPage() {
         />
         <SurvivalCurve />
       </MotionSection>
+
+        </div>
+      </details>
     </div>
   );
 }
