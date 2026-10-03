@@ -102,10 +102,8 @@ export async function getOpenAlexWork(
 ): Promise<unknown> {
   const normalized = id.trim();
   if (!normalized) throw new Error("OpenAlex work ID is required.");
-  const path = normalized.startsWith("http")
-    ? normalized
-    : "/works/" +
-      encodeURIComponent(normalized.replace(/^https?:\/\/openalex.org\//, ""));
+  const path = normalized.startsWith("http") ? normalized : "/works/" +
+    encodeURIComponent(normalized.replace(/^https?:\/\/openalex.org\//, ""));
   return await request<unknown>(new URL(path, OPENALEX_API_BASE), {
     signal: requestOptions?.signal,
   });
