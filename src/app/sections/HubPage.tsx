@@ -71,8 +71,9 @@ export default function HubPage({
           </h1>
           <p className="max-w-3xl text-base sm:text-lg leading-relaxed text-lacuna-blue">
             Lacuna is a public-source research workspace for connecting clinical
-            evidence, company events, financing, ownership, and strategic outcomes.
-            Start with a question; you do not need to understand every dashboard.
+            evidence, company events, financing, ownership, and strategic
+            outcomes. Start with a question; you do not need to understand every
+            dashboard.
           </p>
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
             <div className="rounded-xl border border-lacuna-lavender/40 bg-white/70 p-4">
