@@ -94,7 +94,8 @@
     "gate:provenance": "tsx scripts/provenance-gate.ts",
     "quality-history:append": "tsx scripts/append-quality-history.ts",
     "quality-history:backfill": "tsx scripts/backfill-quality-history.ts",
-    "gate:quality-history": "tsx scripts/quality-history-gate.ts"
+    "gate:quality-history": "tsx scripts/quality-history-gate.ts",
+    "ci:preflight": "npm run deno:fmt:check && npm run lint && npm run typecheck && npm test && npm run build:ci"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.114",
