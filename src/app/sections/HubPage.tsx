@@ -365,8 +365,9 @@ export default function HubPage({
           Explore the workspaces
         </h2>
         <p className="mb-6 max-w-2xl text-sm leading-relaxed text-lacuna-blue">
-          Use the Workspaces menu above when you already know where you are going.
-          Use these cards when you want a plain-English explanation first.
+          Use the Workspaces menu above when you already know where you are
+          going. Use these cards when you want a plain-English explanation
+          first.
         </p>
         <div className="grid grid-cols-1 gap-4 sm:gap-5 sm:grid-cols-2">
           {WORKSPACES.map((ws) => (
