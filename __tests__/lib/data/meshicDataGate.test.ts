@@ -524,10 +524,17 @@ describe("MeshIC lineage, claims, and the live catalog", () => {
     ).toBe(true);
     expect(
       findings.some((finding) =>
-        finding.rule === "replay.descriptiveZeroCoercion" ||
-        finding.rule === "display.economicFactWithoutProvenance"
+        finding.rule === "replay.descriptiveZeroCoercion" &&
+        finding.disposition === "blocking"
       ),
     ).toBe(false);
+    expect(
+      findings
+        .filter((finding) =>
+          finding.rule === "display.economicFactWithoutProvenance"
+        )
+        .every((finding) => finding.disposition === "gap"),
+    ).toBe(true);
     expect(
       rawDataset.companies.some((company) =>
         "totalFunding" in company || "lastKnownValuation" in company
