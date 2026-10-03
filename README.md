@@ -53,8 +53,8 @@ Lacuna is designed around that problem.
 ### The thesis
 
 > **Turn fragmented healthcare information into a traceable, queryable evidence
-  layer so analysts can spend less time collecting and reconciling documents and
-  more time understanding what the evidence means.**
+> layer so analysts can spend less time collecting and reconciling documents and
+> more time understanding what the evidence means.**
 
 The underlying research chain is:
 
@@ -139,9 +139,9 @@ governance.
 The core question is:
 
 > **Given what was knowable about an underlying healthcare asset at time T, how
-  did changes in evidence, risk, capital structure, governance, and strategy
-  interact—and what could a sufficiently systematic analyst have inferred from
-  the information available then?**
+> did changes in evidence, risk, capital structure, governance, and strategy
+> interact—and what could a sufficiently systematic analyst have inferred from
+> the information available then?**
 
 That requires **point-in-time reconstruction**. Later outcomes should not
 silently become evidence for earlier decisions.
@@ -308,15 +308,15 @@ commercial dataset.
 Lacuna favors **primary, public, and reproducible sources** wherever practical.
 Source selection depends on the question and may include:
 
-| Source class | Examples | Typical role |
-| ------------ | -------- | ------------ |
-| Public-company filings | SEC EDGAR, company filings, XBRL | Financials, ownership, transactions, risk factors, governance, disclosures |
-| Scientific literature | OpenAlex, PubMed/NCBI, Crossref and linked identifiers | Publications, authors, institutions, citations, scientific context |
-| Clinical evidence | ClinicalTrials.gov and other public registries | Trial design, status, endpoints, sponsors, investigators |
-| Regulatory | FDA, openFDA, other public regulatory records | Approvals, warnings, safety, devices, regulatory milestones |
-| Population and utilization | CDC, CMS, Census and other public statistical sources | Epidemiology, utilization, population, reimbursement context |
-| Transaction evidence | Press releases, investor relations, merger documents, public filings | Financing, M&A, strategic transactions, disclosed consideration |
-| Investor and fund disclosures | Public portfolio pages, filings, institutional disclosures | Ownership and investment relationships where publicly disclosed |
+| Source class                  | Examples                                                             | Typical role                                                               |
+| ----------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Public-company filings        | SEC EDGAR, company filings, XBRL                                     | Financials, ownership, transactions, risk factors, governance, disclosures |
+| Scientific literature         | OpenAlex, PubMed/NCBI, Crossref and linked identifiers               | Publications, authors, institutions, citations, scientific context         |
+| Clinical evidence             | ClinicalTrials.gov and other public registries                       | Trial design, status, endpoints, sponsors, investigators                   |
+| Regulatory                    | FDA, openFDA, other public regulatory records                        | Approvals, warnings, safety, devices, regulatory milestones                |
+| Population and utilization    | CDC, CMS, Census and other public statistical sources                | Epidemiology, utilization, population, reimbursement context               |
+| Transaction evidence          | Press releases, investor relations, merger documents, public filings | Financing, M&A, strategic transactions, disclosed consideration            |
+| Investor and fund disclosures | Public portfolio pages, filings, institutional disclosures           | Ownership and investment relationships where publicly disclosed            |
 
 These sources are not treated as interchangeable. Lacuna records **which source
 supports which observation**, preserves source locators where available, and
@@ -519,29 +519,35 @@ inference, and hypothesis**.
 ### Questions the research layer should make easier
 
 **Clinical risk**
+
 - What evidence existed at each financing date?
 - Did financing structure change as clinical uncertainty changed?
 
 **Capital structure**
+
 - Which instruments were used at different stages of risk?
 - How did capital providers differ across scientific, clinical, and commercial
   phases?
 
 **Governance**
+
 - When did ownership, board representation, voting power, conversion rights, or
   strategic rights change?
 
 **Strategic behavior**
+
 - Did strategic investment, licensing, partnership, or acquisition follow
   identifiable evidence milestones?
 - What relationships existed before the transaction rather than appearing only
   in the transaction announcement?
 
 **Market access**
+
 - What reimbursement, utilization, pricing, or population evidence was available
   before commercialization or strategic activity?
 
 **Point-in-time research**
+
 - What could an analyst reasonably have known at T?
 - Which information entered the public record only afterward?
 - Which conclusions are robust to removing hindsight?
@@ -583,7 +589,8 @@ The first vertical slice covers **ferric carboxymaltose (Injectafer)**. It
 preserves the August 2026 FDA supplement adding a boxed warning for symptomatic
 hypophosphatemia and FDA's September 2026 Sentinel statement that
 serum-phosphate testing occurred in **fewer than 20%** of administration
-episodes. The latter is stored as an upper bound (`value: 0.2`, `comparator:
+episodes. The latter is stored as an upper bound (`value: 0.2`,
+`comparator:
 "lt"`), not as an exact 20% rate.
 
 The ingestion foundation also includes a typed openFDA device client for 510(k),
@@ -758,8 +765,10 @@ The goal is not to accumulate the largest possible dataset. It is to build a
 connections between public observations reduce research friction and support
 reproducible case research.
 
-**Checks:** `npm run lint` · `npm run typecheck` · `npm test` · `npm run
-deno:fmt:check` · `npm run deno:lint` · `npm run validate:dataset` · `npm run
+**Checks:** `npm run lint` · `npm run typecheck` · `npm test` ·
+`npm run
+deno:fmt:check` · `npm run deno:lint` · `npm run validate:dataset` ·
+`npm run
 build:ci` (`LACUNA_DATA_MODE=static`).
 
 ## Quick start
@@ -799,7 +808,7 @@ that competes as women’s-health M&A intelligence needs a separate license
 Apache 2.0 in May 2030.
 
 **[Mae Kass](https://github.com/maekass)** — MS/MPH; PsyD candidate; incoming
-MBA (2027). Signatory to the [G20 & G7 Health and Development Partnership H20
-Call to
+MBA (2027). Signatory to the
+[G20 & G7 Health and Development Partnership H20 Call to
 Action](https://www.icn.ch/sites/default/files/2024-08/H20%20Call%20to%20action%20-%20Final%20version.pdf)
 (August 2024).
