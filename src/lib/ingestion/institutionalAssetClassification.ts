@@ -28,11 +28,6 @@ export const VALID_ENDPOINT_TYPES = [
   "validated_surrogate",
 ] as const;
 
-export type ClassificationReason =
-  | "consumer_primary_distribution"
-  | "clinical_validation_threshold"
-  | "institutional_adoption_pathway";
-
 export interface InstitutionalAssetMetadata {
   deal_id?: string;
   target_name?: string;
@@ -132,7 +127,6 @@ function finiteNumber(value: number | undefined): number {
 }
 
 function exclusion(
-  reason: ClassificationReason,
   message: string,
   evidenceFlags: ClassificationResult["evidence_flags"],
 ): ClassificationResult {
@@ -182,7 +176,6 @@ export function classifyAndScoreAsset(
 
   if (primaryConsumerAsset) {
     return exclusion(
-      "consumer_primary_distribution",
       "Primary distribution model is consumer-oriented; institutional routing requires additional evidence.",
       initialFlags,
     );
@@ -199,7 +192,6 @@ export function classifyAndScoreAsset(
 
   if (!validatedEndpoint) {
     return exclusion(
-      "clinical_validation_threshold",
       "Clinical endpoint does not meet the configured institutional validation threshold.",
       initialFlags,
     );
@@ -218,7 +210,6 @@ export function classifyAndScoreAsset(
 
   if (!institutionalAdoption) {
     return exclusion(
-      "institutional_adoption_pathway",
       "No sufficiently documented institutional reimbursement or adoption pathway.",
       {
         ...initialFlags,
