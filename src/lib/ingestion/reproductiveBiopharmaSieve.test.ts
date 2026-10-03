@@ -62,7 +62,7 @@ describe("runInstitutionalFertilitySieve", () => {
       result.every(
         (deal) =>
           deal.sub_specialty ===
-          "Reproductive Biopharma / Critical Neonatal Infrastructure",
+            "Reproductive Biopharma / Critical Neonatal Infrastructure",
       ),
     ).toBe(true);
   });
