@@ -12,12 +12,14 @@ export const CONSUMER_RED_FLAGS = [
   "subscription",
   "app-based",
   "fertility-clinic-chain",
+  "lifestyle",
 ] as const;
 
 export const INSTITUTIONAL_BILLING_PATHWAYS = [
   "MS-DRG",
   "NTAP",
   "Inpatient_Formulary",
+  "CMS_Inpatient",
 ] as const;
 
 export const VALID_ENDPOINT_TYPES = [
@@ -32,7 +34,11 @@ export type ClassificationReason =
   | "institutional_adoption_pathway";
 
 export interface InstitutionalAssetMetadata {
+  deal_id?: string;
+  target_name?: string;
+  sector?: string;
   description?: string;
+  disclosed_value_usd?: number;
   distribution_model?: string;
   trial_endpoints_type?: string;
   endpoint_validation_level?: string;
@@ -62,6 +68,50 @@ export interface ClassificationResult {
   };
 }
 
+export interface InstitutionalPipelineResult
+  extends InstitutionalAssetMetadata {
+  category: "Sex-Based Biology & Targeted Therapeutics (SBBT)";
+  defensibility_index: number;
+  classification_confidence: number;
+  workspace_routing: "Deals / In-Hospital Therapeutics";
+  evidence_flags: ClassificationResult["evidence_flags"];
+}
+
+export interface WorkspaceConfig {
+  tags: string[];
+  description: string;
+}
+
+export const INSTITUTIONAL_WORKSPACE_GRID: Record<
+  "Deals" | "Payer Ops" | "Research & Quality",
+  WorkspaceConfig
+> = {
+  Deals: {
+    tags: ["Inpatient B2B", "SBBT Assets", "M&A Valuation Matrix"],
+    description:
+      "Transaction metrics mapping sex-based biological therapeutics against corporate buyout and asset carve-out horizons.",
+  },
+  "Payer Ops": {
+    tags: [
+      "DRG Coding",
+      "NTAP Velocity",
+      "Prior-Auth Friction",
+      "Inpatient Reimbursement",
+    ],
+    description:
+      "Institutional reimbursement timelines, hospital procurement paths, and cost-containment frameworks.",
+  },
+  "Research & Quality": {
+    tags: [
+      "Surrogate Biomarkers",
+      "NICU/PICU Clinical Burden",
+      "Frontline Nursing Overhead",
+    ],
+    description:
+      "Clinical trial endpoint maturity alongside bedside operational impact and time-motion analysis.",
+  },
+};
+
 function normalizeScore(
   value: number,
   minimum: number,
@@ -82,7 +132,6 @@ function finiteNumber(value: number | undefined): number {
 }
 
 function exclusion(
-  reason: ClassificationReason,
   message: string,
   evidenceFlags: ClassificationResult["evidence_flags"],
 ): ClassificationResult {
@@ -100,10 +149,9 @@ function exclusion(
 /**
  * Classify an asset for institutional clinical/deal routing.
  *
- * Classification is deliberately evidence-first. Consumer signals alone do
- * not exclude an asset: a clinically institutional product can have a
- * consumer-facing component. Exclusion occurs when the primary distribution
- * model is explicitly consumer-oriented.
+ * Consumer signals are retained as evidence, but do not automatically
+ * exclude an asset. Exclusion occurs when the primary distribution model
+ * is explicitly consumer-oriented.
  */
 export function classifyAndScoreAsset(
   assetMetadata: InstitutionalAssetMetadata,
@@ -133,7 +181,6 @@ export function classifyAndScoreAsset(
 
   if (primaryConsumerAsset) {
     return exclusion(
-      "consumer_primary_distribution",
       "Primary distribution model is consumer-oriented; institutional routing requires additional evidence.",
       initialFlags,
     );
@@ -150,12 +197,8 @@ export function classifyAndScoreAsset(
 
   if (!validatedEndpoint) {
     return exclusion(
-      "clinical_validation_threshold",
       "Clinical endpoint does not meet the configured institutional validation threshold.",
-      {
-        ...initialFlags,
-        validated_endpoint: false,
-      },
+      initialFlags,
     );
   }
 
@@ -172,7 +215,6 @@ export function classifyAndScoreAsset(
 
   if (!institutionalAdoption) {
     return exclusion(
-      "institutional_adoption_pathway",
       "No sufficiently documented institutional reimbursement or adoption pathway.",
       {
         ...initialFlags,
@@ -193,8 +235,8 @@ export function classifyAndScoreAsset(
   );
   const workflowEconomics = normalizeScore(
     finiteNumber(assetMetadata.nursing_workflow_efficiency_delta),
-    -1,
-    1,
+    -10,
+    10,
   );
 
   const defensibilityIndex =
@@ -235,4 +277,35 @@ export function classifyAndScoreAsset(
       workflow_economics: Number(workflowEconomics.toFixed(4)),
     },
   };
+}
+
+/**
+ * Apply the institutional classifier to a live dataset.
+ *
+ * Only eligible assets are returned, preserving the source record plus
+ * classification evidence for downstream deal routing.
+ */
+export function processInstitutionalPipeline(
+  dataset: InstitutionalAssetMetadata[],
+): InstitutionalPipelineResult[] {
+  const institutionalWorkspaceDeals: InstitutionalPipelineResult[] = [];
+
+  for (const asset of dataset) {
+    const result = classifyAndScoreAsset(asset);
+
+    if (!result.eligible || !result.category || !result.workspace_routing) {
+      continue;
+    }
+
+    institutionalWorkspaceDeals.push({
+      ...asset,
+      category: result.category,
+      defensibility_index: result.defensibility_index,
+      classification_confidence: result.confidence,
+      workspace_routing: result.workspace_routing,
+      evidence_flags: result.evidence_flags,
+    });
+  }
+
+  return institutionalWorkspaceDeals;
 }
