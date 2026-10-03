@@ -65,7 +65,9 @@ export default function HubPage({
           </p>
           <h1 className="mb-5 max-w-4xl text-[2rem] font-medium leading-[0.98] tracking-[-0.03em] text-lacuna-plum min-[400px]:text-4xl sm:text-5xl md:text-6xl">
             <span className="block">Understand the evidence behind</span>
-            <span className="lacuna-gradient-text block">healthcare companies.</span>
+            <span className="lacuna-gradient-text block">
+              healthcare companies.
+            </span>
           </h1>
           <p className="max-w-3xl text-base sm:text-lg leading-relaxed text-lacuna-blue">
             Lacuna is a public-source research workspace for connecting clinical
@@ -74,19 +76,40 @@ export default function HubPage({
           </p>
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
             <div className="rounded-xl border border-lacuna-lavender/40 bg-white/70 p-4">
-              <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">If you are evaluating a company</p>
-              <p className="mt-1 text-sm font-medium text-lacuna-plum">Start with Deals</p>
-              <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">Follow a transaction, sources, comparable context, and what was knowable.</p>
+              <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">
+                If you are evaluating a company
+              </p>
+              <p className="mt-1 text-sm font-medium text-lacuna-plum">
+                Start with Deals
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">
+                Follow a transaction, sources, comparable context, and what was
+                knowable.
+              </p>
             </div>
             <div className="rounded-xl border border-lacuna-lavender/40 bg-white/70 p-4">
-              <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">If you are investigating the science</p>
-              <p className="mt-1 text-sm font-medium text-lacuna-plum">Start with Research</p>
-              <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">Move from clinical trials and evidence maturity to population context.</p>
+              <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">
+                If you are investigating the science
+              </p>
+              <p className="mt-1 text-sm font-medium text-lacuna-plum">
+                Start with Research
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">
+                Move from clinical trials and evidence maturity to population
+                context.
+              </p>
             </div>
             <div className="rounded-xl border border-lacuna-lavender/40 bg-white/70 p-4">
-              <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">If you want to audit the system</p>
-              <p className="mt-1 text-sm font-medium text-lacuna-plum">Start with Methods</p>
-              <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">See coverage, record quality, timing, and the limits of the dataset.</p>
+              <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">
+                If you want to audit the system
+              </p>
+              <p className="mt-1 text-sm font-medium text-lacuna-plum">
+                Start with Methods
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">
+                See coverage, record quality, timing, and the limits of the
+                dataset.
+              </p>
             </div>
           </div>
           <p className="mt-4 text-sm leading-relaxed text-lacuna-blue/80">
@@ -103,16 +126,37 @@ export default function HubPage({
 
       <MotionSection delay={0.04} className="mb-10">
         <div className="rounded-xl border border-lacuna-lavender/40 bg-white/70 p-5 sm:p-6">
-          <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">How to read Lacuna</p>
+          <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">
+            How to read Lacuna
+          </p>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-lacuna-blue">
             Treat the interface as a research trail, not a single score. Observed
             facts, derived context, and unresolved questions should remain visibly
             different.
           </p>
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
-            <div><p className="text-sm font-medium text-lacuna-plum">Evidence</p><p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">What a cited public source directly supports.</p></div>
-            <div><p className="text-sm font-medium text-lacuna-plum">Interpretation</p><p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">What can be derived or compared from those observations.</p></div>
-            <div><p className="text-sm font-medium text-lacuna-plum">Uncertainty</p><p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">What is missing, weakly observed, or still requires diligence.</p></div>
+            <div>
+              <p className="text-sm font-medium text-lacuna-plum">Evidence</p>
+              <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">
+                What a cited public source directly supports.
+              </p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-lacuna-plum">
+                Interpretation
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">
+                What can be derived or compared from those observations.
+              </p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-lacuna-plum">
+                Uncertainty
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">
+                What is missing, weakly observed, or still requires diligence.
+              </p>
+            </div>
           </div>
         </div>
       </MotionSection>
