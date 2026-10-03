@@ -1,27 +1,266 @@
 {
   "version": 1,
-  "allowedClasses": ["integrity", "smoke", "full", "release"],
-  "allowedFailurePolicies": ["fail-closed", "fail", "warn", "informational"],
+  "allowedClasses": [
+    "integrity",
+    "smoke",
+    "full",
+    "release"
+  ],
+  "allowedFailurePolicies": [
+    "fail-closed",
+    "fail",
+    "warn",
+    "informational"
+  ],
   "checks": [
-    {"id":"format","class":"integrity","scope":"all-prs","required":true,"failurePolicy":"fail","command":"deno fmt --check","claim":"Repository formatting is canonical.","doesNotProve":["semantic correctness","data validity","provenance"]},
-    {"id":"eslint","class":"integrity","scope":"all-prs","required":true,"failurePolicy":"fail","command":"npm run lint","claim":"JavaScript and TypeScript lint rules pass.","doesNotProve":["runtime correctness","data validity"]},
-    {"id":"typecheck","class":"integrity","scope":"all-prs","required":true,"failurePolicy":"fail","command":"npm run typecheck","claim":"The application type contract is internally consistent.","doesNotProve":["runtime correctness","analytical validity"]},
-    {"id":"build","class":"integrity","scope":"all-prs","required":true,"failurePolicy":"fail","command":"npm run build:ci","claim":"The production static application can be built.","doesNotProve":["production behavior","analytical validity"]},
-    {"id":"vitest","class":"full","scope":"all-prs","required":true,"failurePolicy":"fail","command":"npm test","claim":"The registered application/unit test suite passes.","doesNotProve":["untested behavior","source truth"]},
-    {"id":"compliance-lint","class":"full","scope":"governance","required":true,"failurePolicy":"fail-closed","command":"npm run compliance:lint","claim":"Declared compliance rules pass.","doesNotProve":["external source truth"]},
-    {"id":"dataset-validation","class":"full","scope":"data","required":true,"failurePolicy":"fail-closed","command":"npm run validate:dataset","claim":"The verified dataset satisfies its declared schema and provenance requirements.","doesNotProve":["truth of external sources"]},
-    {"id":"empowerment-validation","class":"full","scope":"data","required":true,"failurePolicy":"fail","command":"npm run validate:empowerment","claim":"The patient-empowerment catalog satisfies its declared validation rules.","doesNotProve":["clinical efficacy"]},
-    {"id":"catalyst-sweep","class":"smoke","scope":"research","required":true,"failurePolicy":"fail","command":"npm run intel:sweep:check","claim":"The catalyst watchlist sweep is executable and internally consistent.","doesNotProve":["complete market coverage","truth of every external source"]},
-    {"id":"computed-artifacts","class":"full","scope":"data","required":true,"failurePolicy":"fail-closed","command":"npm run compute:all","claim":"Registered quantitative artifacts can be recomputed.","doesNotProve":["validity of source inputs"]},
-    {"id":"computed-freshness","class":"full","scope":"data","required":true,"failurePolicy":"fail-closed","command":"npm run verify:computed","claim":"Committed computed artifacts are current relative to their registered inputs.","doesNotProve":["source truth"]},
-    {"id":"provenance","class":"full","scope":"evidence","required":true,"failurePolicy":"fail-closed","command":"npm run gate:provenance","claim":"The declared provenance census passes.","doesNotProve":["truth of an external source"]},
-    {"id":"quality-history","class":"full","scope":"quality","required":true,"failurePolicy":"fail-closed","command":"npm run gate:quality-history","claim":"The quality-history ratchet passes.","doesNotProve":["absolute data quality"]},
-    {"id":"infrastructure","class":"smoke","scope":"infrastructure","required":true,"failurePolicy":"fail","command":"npm run infra:check","claim":"Declared infrastructure assumptions are executable.","doesNotProve":["production availability"]},
-    {"id":"clinical-trials-controls","class":"full","scope":"ml","required":true,"failurePolicy":"fail-closed","command":"PYTHONPATH=ml/clinical_trials /tmp/lacuna-ml-ci/bin/python -m unittest discover -s ml/clinical_trials/tests -v","claim":"Governed clinical-trials ML controls pass.","doesNotProve":["general model validity outside the governed benchmark"]},
-    {"id":"python-api","class":"full","scope":"backend","required":true,"failurePolicy":"fail","command":"npm run python-api:test","claim":"The Python API test suite passes.","doesNotProve":["production infrastructure health"]},
-    {"id":"reproductive-biopharma","class":"full","scope":"classification","required":true,"failurePolicy":"fail-closed","command":"npm run test:reproductive-biopharma","claim":"The governed reproductive-biopharma classification tests pass.","doesNotProve":["completeness of the underlying universe"]},
-    {"id":"deno-lint","class":"integrity","scope":"all-prs","required":true,"failurePolicy":"fail","command":"deno lint src scripts","claim":"Deno lint rules pass for governed source and script paths.","doesNotProve":["runtime correctness"]},
-    {"id":"e2e-smoke","class":"smoke","scope":"deployment","required":true,"failurePolicy":"fail","command":"npm run test:e2e:smoke","claim":"The deployment smoke path executes.","doesNotProve":["full UI correctness","analytical validity"]},
-    {"id":"release-build","class":"release","scope":"release","required":false,"failurePolicy":"fail-closed","command":"npm run build:ci","claim":"The release candidate can produce the production build.","doesNotProve":["production availability","analytical validity"]}
+    {
+      "id": "format",
+      "class": "integrity",
+      "scope": "all-prs",
+      "required": true,
+      "failurePolicy": "fail",
+      "command": "deno fmt --check",
+      "claim": "Repository formatting is canonical.",
+      "doesNotProve": [
+        "semantic correctness",
+        "data validity",
+        "provenance"
+      ]
+    },
+    {
+      "id": "eslint",
+      "class": "integrity",
+      "scope": "all-prs",
+      "required": true,
+      "failurePolicy": "fail",
+      "command": "npm run lint",
+      "claim": "JavaScript and TypeScript lint rules pass.",
+      "doesNotProve": [
+        "runtime correctness",
+        "data validity"
+      ]
+    },
+    {
+      "id": "typecheck",
+      "class": "integrity",
+      "scope": "all-prs",
+      "required": true,
+      "failurePolicy": "fail",
+      "command": "npm run typecheck",
+      "claim": "The application type contract is internally consistent.",
+      "doesNotProve": [
+        "runtime correctness",
+        "analytical validity"
+      ]
+    },
+    {
+      "id": "build",
+      "class": "integrity",
+      "scope": "all-prs",
+      "required": true,
+      "failurePolicy": "fail",
+      "command": "npm run build:ci",
+      "claim": "The production static application can be built.",
+      "doesNotProve": [
+        "production behavior",
+        "analytical validity"
+      ]
+    },
+    {
+      "id": "vitest",
+      "class": "full",
+      "scope": "all-prs",
+      "required": true,
+      "failurePolicy": "fail",
+      "command": "npm test",
+      "claim": "The registered application/unit test suite passes.",
+      "doesNotProve": [
+        "untested behavior",
+        "source truth"
+      ]
+    },
+    {
+      "id": "compliance-lint",
+      "class": "full",
+      "scope": "governance",
+      "required": true,
+      "failurePolicy": "fail-closed",
+      "command": "npm run compliance:lint",
+      "claim": "Declared compliance rules pass.",
+      "doesNotProve": [
+        "external source truth"
+      ]
+    },
+    {
+      "id": "dataset-validation",
+      "class": "full",
+      "scope": "data",
+      "required": true,
+      "failurePolicy": "fail-closed",
+      "command": "npm run validate:dataset",
+      "claim": "The verified dataset satisfies its declared schema and provenance requirements.",
+      "doesNotProve": [
+        "truth of external sources"
+      ]
+    },
+    {
+      "id": "empowerment-validation",
+      "class": "full",
+      "scope": "data",
+      "required": true,
+      "failurePolicy": "fail",
+      "command": "npm run validate:empowerment",
+      "claim": "The patient-empowerment catalog satisfies its declared validation rules.",
+      "doesNotProve": [
+        "clinical efficacy"
+      ]
+    },
+    {
+      "id": "catalyst-sweep",
+      "class": "smoke",
+      "scope": "research",
+      "required": true,
+      "failurePolicy": "fail",
+      "command": "npm run intel:sweep:check",
+      "claim": "The catalyst watchlist sweep is executable and internally consistent.",
+      "doesNotProve": [
+        "complete market coverage",
+        "truth of every external source"
+      ]
+    },
+    {
+      "id": "computed-artifacts",
+      "class": "full",
+      "scope": "data",
+      "required": true,
+      "failurePolicy": "fail-closed",
+      "command": "npm run compute:all",
+      "claim": "Registered quantitative artifacts can be recomputed.",
+      "doesNotProve": [
+        "validity of source inputs"
+      ]
+    },
+    {
+      "id": "computed-freshness",
+      "class": "full",
+      "scope": "data",
+      "required": true,
+      "failurePolicy": "fail-closed",
+      "command": "npm run verify:computed",
+      "claim": "Committed computed artifacts are current relative to their registered inputs.",
+      "doesNotProve": [
+        "source truth"
+      ]
+    },
+    {
+      "id": "provenance",
+      "class": "full",
+      "scope": "evidence",
+      "required": true,
+      "failurePolicy": "fail-closed",
+      "command": "npm run gate:provenance",
+      "claim": "The declared provenance census passes.",
+      "doesNotProve": [
+        "truth of an external source"
+      ]
+    },
+    {
+      "id": "quality-history",
+      "class": "full",
+      "scope": "quality",
+      "required": true,
+      "failurePolicy": "fail-closed",
+      "command": "npm run gate:quality-history",
+      "claim": "The quality-history ratchet passes.",
+      "doesNotProve": [
+        "absolute data quality"
+      ]
+    },
+    {
+      "id": "infrastructure",
+      "class": "smoke",
+      "scope": "infrastructure",
+      "required": true,
+      "failurePolicy": "fail",
+      "command": "npm run infra:check",
+      "claim": "Declared infrastructure assumptions are executable.",
+      "doesNotProve": [
+        "production availability"
+      ]
+    },
+    {
+      "id": "clinical-trials-controls",
+      "class": "full",
+      "scope": "ml",
+      "required": true,
+      "failurePolicy": "fail-closed",
+      "command": "PYTHONPATH=ml/clinical_trials /tmp/lacuna-ml-ci/bin/python -m unittest discover -s ml/clinical_trials/tests -v",
+      "claim": "Governed clinical-trials ML controls pass.",
+      "doesNotProve": [
+        "general model validity outside the governed benchmark"
+      ]
+    },
+    {
+      "id": "python-api",
+      "class": "full",
+      "scope": "backend",
+      "required": true,
+      "failurePolicy": "fail",
+      "command": "npm run python-api:test",
+      "claim": "The Python API test suite passes.",
+      "doesNotProve": [
+        "production infrastructure health"
+      ]
+    },
+    {
+      "id": "reproductive-biopharma",
+      "class": "full",
+      "scope": "classification",
+      "required": true,
+      "failurePolicy": "fail-closed",
+      "command": "npm run test:reproductive-biopharma",
+      "claim": "The governed reproductive-biopharma classification tests pass.",
+      "doesNotProve": [
+        "completeness of the underlying universe"
+      ]
+    },
+    {
+      "id": "deno-lint",
+      "class": "integrity",
+      "scope": "all-prs",
+      "required": true,
+      "failurePolicy": "fail",
+      "command": "deno lint src scripts",
+      "claim": "Deno lint rules pass for governed source and script paths.",
+      "doesNotProve": [
+        "runtime correctness"
+      ]
+    },
+    {
+      "id": "e2e-smoke",
+      "class": "smoke",
+      "scope": "deployment",
+      "required": true,
+      "failurePolicy": "fail",
+      "command": "npm run test:e2e:smoke",
+      "claim": "The deployment smoke path executes.",
+      "doesNotProve": [
+        "full UI correctness",
+        "analytical validity"
+      ]
+    },
+    {
+      "id": "release-build",
+      "class": "release",
+      "scope": "release",
+      "required": false,
+      "failurePolicy": "fail-closed",
+      "command": "npm run build:ci",
+      "claim": "The release candidate can produce the production build.",
+      "doesNotProve": [
+        "production availability",
+        "analytical validity"
+      ]
+    }
   ]
 }
