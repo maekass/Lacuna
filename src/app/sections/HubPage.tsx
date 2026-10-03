@@ -125,7 +125,7 @@ export default function HubPage({
         </div>
       </MotionSection>
 
-      <MotionSection delay={0.04} className="mb-10">
+      <MotionSection className="mb-10">
         <div className="rounded-xl border border-lacuna-lavender/40 bg-white/70 p-5 sm:p-6">
           <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">
             How to read Lacuna
