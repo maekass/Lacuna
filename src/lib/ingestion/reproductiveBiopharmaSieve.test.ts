@@ -54,7 +54,8 @@ describe("runInstitutionalFertilitySieve", () => {
     expect(
       result.every(
         (deal) =>
-          deal.broad_sector === "Sex-Based Biology & Targeted Therapeutics (SBBT)",
+          deal.broad_sector ===
+            "Sex-Based Biology & Targeted Therapeutics (SBBT)",
       ),
     ).toBe(true);
     expect(
