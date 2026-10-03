@@ -33,13 +33,13 @@ For Lacuna, a **reproductive-biopharma asset** is a development or commercial
 asset for which:
 
 1. **Reproductive relevance** is materially connected to the reproductive
-    system, reproductive function, reproductive disease, reproductive
-    endocrinology, fertility, pregnancy-related complications, or another
-    explicitly reproductive indication/mechanism; and
+   system, reproductive function, reproductive disease, reproductive
+   endocrinology, fertility, pregnancy-related complications, or another
+   explicitly reproductive indication/mechanism; and
 2. **Biopharma modality** is evidenced by a bona fide drug/biologic/therapeutic
-    development modality, such as a small-molecule drug, biologic, therapeutic
-    protein, monoclonal antibody, cell therapy, gene therapy, or pharmaceutical
-    program.
+   development modality, such as a small-molecule drug, biologic, therapeutic
+   protein, monoclonal antibody, cell therapy, gene therapy, or pharmaceutical
+   program.
 
 This is deliberately narrower than **women's health** and narrower than
 **reproductive health services**.
