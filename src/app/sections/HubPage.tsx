@@ -130,9 +130,9 @@ export default function HubPage({
             How to read Lacuna
           </p>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-lacuna-blue">
-            Treat the interface as a research trail, not a single score. Observed
-            facts, derived context, and unresolved questions should remain visibly
-            different.
+            Treat the interface as a research trail, not a single score.
+            Observed facts, derived context, and unresolved questions should
+            remain visibly different.
           </p>
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
             <div>
