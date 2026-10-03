@@ -1,15 +1,15 @@
 <!--
-SEO Meta Description: Lacuna — public-source, evidence-aware women's-health M&A and commercialization diligence. Curated deals, trial and reimbursement context, disclosed-data limits. Not a live terminal, forecast, or clinical tool.
+SEO Meta Description: Lacuna — an evidence layer for understanding how capital is structured around scientifically complex healthcare assets. Women's health is the initial research laboratory, spanning clinical evidence, population health, creative financing, governance, M&A, and IPO/strategic outcomes.
 -->
 
 <h1 align="center">Lacuna</h1>
 
 <p align="center">
-  <strong>Public-source diligence for women’s-health M&amp;A and commercialization</strong>
+  <strong>An evidence layer for science, capital structure, governance, and strategic outcomes in healthcare</strong>
 </p>
 
 <blockquote align="center">
-  <p><strong>Curated public-source sample · 59 verified deals · 150 companies · 38 acquirers · Not a census, a live terminal, or investment advice.</strong></p>
+  <p><strong>Women's health is the initial laboratory · public-source evidence · creative financing · capital structure · governance · M&amp;A / IPO pathways · Not investment advice.</strong></p>
 </blockquote>
 
 <p align="center">
@@ -31,11 +31,25 @@ SEO Meta Description: Lacuna — public-source, evidence-aware women's-health M&
 
 ## What Lacuna is
 
-Lacuna is a **public-source, evidence-aware women’s-health M&A and
-commercialization diligence environment**. It helps a reader explore a curated
-set of acquisition records, strategic buyer patterns, evidence maturity,
-clinical-trial and research context, reimbursement and commercialization
-questions, and the limits of those sources.
+Lacuna is a **public-source evidence layer for understanding how capital is structured around scientifically complex healthcare assets**.
+
+The project began with women’s-health M&A and commercialization, but the deeper research problem is broader: connecting **scientific evidence, clinical risk, population need, capital structure, creative financing, governance/control, strategic optionality, and eventual outcomes**.
+
+Rather than competing with healthcare data terminals or private-markets databases on breadth, Lacuna focuses on the connective tissue those systems often leave fragmented:
+
+**Science → clinical evidence → population need → capital → financing structure → governance/control → strategy → outcome**
+
+Women's health is the initial laboratory because it is a sufficiently focused domain in which these relationships can be reconstructed carefully from public evidence. The architecture is intended to generalize to precision medicine, oncology, orphan drugs, diagnostics, devices, and other scientifically complex healthcare markets.
+
+The central research question is not simply *who funded or acquired whom?* It is:
+
+> **Given what was knowable about an underlying healthcare asset at a particular point in time, why might a particular form of capital, financing structure, governance arrangement, or strategic transaction have made sense?**
+
+Lacuna therefore treats creative financing as a first-class research dimension: equity, venture and growth financing, strategic investment, structured financing, royalty or revenue interests, licensing, milestone structures, asset transactions, recapitalizations, IPOs, and acquisitions can all be analyzed as different responses to changing scientific, clinical, commercial, and capital constraints.
+
+The goal is not to reproduce proprietary financial datasets. It is to build a **provider-agnostic evidence layer** that can enrich authorized financial data—whether supplied through a customer's existing data license, CSV/Excel export, public-market source, or public filings—with clinical, scientific, regulatory, reimbursement, population, and provenance context.
+
+The product's potential value therefore comes less from raw record count than from **entity resolution, transaction reconstruction, longitudinal evidence, provenance, and the ability to connect otherwise separate datasets into a decision-useful research graph**.
 
 The product app runs on **Vercel** from this repository. A separate **Framer**
 site is brand and narrative only, with one call to action into the app —
@@ -76,7 +90,21 @@ fill gaps with TAM/SAM, sector-multiple fallbacks, or editorial stage medians.
 | **46 fund portfolio investments**      | Overlays, not extra closed acquisitions |
 | 50 of 59 deals                         | Rows that disclose a price              |
 
-## Deal evidence
+## Capital, creative financing, and transaction evidence
+
+Lacuna treats transactions as more than rows in a deal database. A financing event can change dilution, governance, control, runway, strategic rights, and the set of future options available to an asset or company.
+
+The research model is designed to capture:
+
+- **Asset:** disease, mechanism, biomarker, technology, clinical stage, regulatory status.
+- **Evidence:** publications, trials, endpoints, investigators, institutions, clinical milestones, and evidence strength.
+- **Population:** burden, unmet need, affected populations, disparities, and market-access context.
+- **Capital:** equity, debt, strategic investment, venture/growth rounds, royalty or revenue financing, licensing, milestones, and other structured instruments.
+- **Governance:** ownership, board or voting rights, conversion mechanics, liquidation preferences, strategic rights, and changes in control where disclosed.
+- **Strategy:** partnerships, licensing, asset sales, acquisitions, IPOs, recapitalizations, and other strategic pathways.
+- **Outcome:** subsequent financing, commercialization, acquisition, public-market transition, licensing, restructuring, or failure/continuation.
+
+The current public catalog remains a curated sample rather than a census. Its purpose is to establish the evidence and provenance infrastructure needed to reconstruct these relationships responsibly.
 
 - n=59 verified deals · 150 companies · 38 acquirers.
 - `dataset.verified.json` v9 (`provenance.lastUpdated: 2026-09-20`).
@@ -92,6 +120,23 @@ fill gaps with TAM/SAM, sector-multiple fallbacks, or editorial stage medians.
 - Acquirer panels report counts, sector mix, timing, and disclosed size. They do
   not infer strategy, synergies, or the next target. See
   [COMPETITIVE_ANALYSIS_METHODOLOGY.md](docs/COMPETITIVE_ANALYSIS_METHODOLOGY.md).
+
+## Creative Financing Atlas
+
+A longer-term research direction is a **Creative Financing Atlas**: a carefully reconstructed set of healthcare transactions in which the financing instrument itself is analytically important.
+
+The initial unit of analysis is not simply a company or funding round. It is the relationship between an underlying asset's changing risk profile and the capital structure used to finance it.
+
+Questions the evidence layer is designed to support include:
+
+- How did financing structures change as clinical risk declined?
+- When did strategic investment, licensing, royalty/revenue financing, or structured capital appear relative to clinical milestones?
+- Did governance or control change as an asset moved from scientific risk toward commercial risk?
+- What capital structures appeared around companies approaching an IPO or strategic transaction?
+- Which information was observable **before** a major transaction, rather than only after the outcome?
+- How did scientific validation, regulatory events, reimbursement evidence, and population need interact with financing choices?
+
+These are research questions, not predictive claims. Lacuna does not infer undisclosed motives, assign investment recommendations, or treat a financing structure as proof of an outcome.
 
 ## Research and reimbursement context
 
