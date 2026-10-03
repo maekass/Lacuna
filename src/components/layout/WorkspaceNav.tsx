@@ -32,7 +32,11 @@ export default function WorkspaceNav() {
           <summary className="touch-target-inline flex cursor-pointer list-none items-center gap-1 rounded-full border border-lacuna-lavender/50 bg-white/70 px-3 py-1.5 text-sm font-medium text-lacuna-plum transition-colors hover:bg-lacuna-lavender/20 [&::-webkit-details-marker]:hidden">
             <span>Workspaces</span>
             {activeWorkspace
-              ? <span className="text-xs text-lacuna-blue">· {activeWorkspace.label}</span>
+              ? (
+                <span className="text-xs text-lacuna-blue">
+                  · {activeWorkspace.label}
+                </span>
+              )
               : null}
             <span aria-hidden="true" className="text-xs">⌄</span>
           </summary>
@@ -43,7 +47,8 @@ export default function WorkspaceNav() {
                 Choose a research path
               </p>
               <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">
-                Each workspace answers a different question. You do not need to understand the whole system to start.
+                Each workspace answers a different question. You do not need to
+                understand the whole system to start.
               </p>
             </div>
 
@@ -65,7 +70,11 @@ export default function WorkspaceNav() {
                     <span className="flex items-center justify-between gap-3">
                       <span className="font-medium">{ws.label}</span>
                       {ws.slug === "payer-ops"
-                        ? <span className="lacuna-kicker text-[9px] text-lacuna-plum">Operator</span>
+                        ? (
+                          <span className="lacuna-kicker text-[9px] text-lacuna-plum">
+                            Operator
+                          </span>
+                        )
                         : null}
                     </span>
                     <span className="mt-0.5 block text-xs leading-relaxed text-lacuna-blue/70">
