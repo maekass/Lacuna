@@ -19,8 +19,6 @@ import re
 from dataclasses import dataclass
 from typing import Any, Iterable
 
-import psycopg2
-from psycopg2.extras import RealDictCursor
 
 
 DEFINITION_VERSION = "2026-10-reproductive-biopharma-v1"
@@ -172,6 +170,9 @@ def classify_reproductive_biopharma(deal: dict[str, Any]) -> Classification:
 
 def execute_reproductive_biopharma_sieve() -> tuple[int, int, int]:
     """Apply the canonical classifier to lacuna_deals and persist audit fields."""
+    import psycopg2
+    from psycopg2.extras import RealDictCursor
+
     connection_profile = {
         "dbname": os.getenv("LACUNA_DB_NAME", "lacuna_db"),
         "user": os.getenv("LACUNA_DB_USER", "postgres"),
