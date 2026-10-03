@@ -1,0 +1,38 @@
+name: CI Governance
+
+on:
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ci-governance:
+    name: CI Governance / contract
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Validate CI governance contract
+        run: npm run ci:governance
+      - name: Write governance result
+        if: always()
+        run: |
+          {
+            echo "## CI Governance"
+            echo
+            echo "The machine-readable CI contract was validated for this PR."
+            echo
+            echo "- Contract: `.github/ci-governance.json`"
+            echo "- Policy: `docs/CI_GOVERNANCE.md`"
+            echo "- Gate: `npm run ci:governance`"
+          } >> "$GITHUB_STEP_SUMMARY"
