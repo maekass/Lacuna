@@ -155,10 +155,15 @@ def classify_reproductive_biopharma(deal: dict[str, Any]) -> Classification:
             INCLUDED, "reproductive_therapeutic_asset", "high", evidence
         )
 
+    if (consumer_matches or service_only_type) and not therapeutic_matches:
+        return Classification(EXCLUDED, "consumer_or_care_service", "high", evidence)
+
     if (therapeutic_matches and not reproductive_matches) or (
         reproductive_matches and not therapeutic_matches
     ):
         return Classification(REVIEW, "single_dimension_signal", "medium", evidence)
+
+    return Classification(REVIEW, "single_dimension_signal", "medium", evidence)
 
     if consumer_matches or service_only_type:
         return Classification(EXCLUDED, "consumer_or_care_service", "high", evidence)
