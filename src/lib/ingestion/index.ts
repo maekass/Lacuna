@@ -90,3 +90,11 @@ export type {
   FreeApiExportSummary,
   FreeApiSourceId,
 } from "@/lib/ingestion/freeApi";
+
+export {
+  executeOpenAlexOql,
+  getOpenAlexRateLimit,
+  getOpenAlexWork,
+  searchOpenAlexWorks,
+  validateOpenAlexOql,
+} from "@/lib/ingestion/openAlexClient";
