@@ -122,7 +122,8 @@ function main() {
   );
   if (missing.length > 0) {
     fail(
-      "required npm commands missing from main CI workflow: " + missing.join(", "),
+      "required npm commands missing from main CI workflow: " +
+        missing.join(", "),
     );
   }
 
@@ -133,7 +134,7 @@ function main() {
     "- Declared checks: " + contract.checks.length,
     "- Universal PR checks: " + requiredAllPr.length,
     "- Integrity: " +
-      contract.checks.filter((c) => c.class === "integrity").length,
+    contract.checks.filter((c) => c.class === "integrity").length,
     "- Smoke: " + contract.checks.filter((c) => c.class === "smoke").length,
     "- Full: " + contract.checks.filter((c) => c.class === "full").length,
     "- Release: " + contract.checks.filter((c) => c.class === "release").length,
