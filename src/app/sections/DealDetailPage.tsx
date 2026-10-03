@@ -25,7 +25,7 @@ const EVIDENCE_CLASS_LABELS: Record<string, string> = {
 
 function sourceLabel(source: string): string {
   try {
-    const hostname = new URL(source).hostname.replace(/^www\\./, "");
+    const hostname = new URL(source).hostname.replace(/^www\./, "");
     if (hostname === "sec.gov") return "SEC";
     return hostname;
   } catch {
@@ -137,7 +137,7 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
               <ul className="mt-2 list-disc space-y-0.5 pl-4 text-[11px] text-lacuna-blue/70">
                 {deal.target.sources.slice(0, 3).map((source) => (
                   <li key={source} className="min-w-0">
-                    {/^(https?:\\/\\/)/i.test(source)
+                    {(source.startsWith("http://") || source.startsWith("https://"))
                       ? (
                         <a
                           href={source}
