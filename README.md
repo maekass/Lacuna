@@ -31,25 +31,135 @@ SEO Meta Description: Lacuna — an evidence layer for understanding how capital
 
 ## What Lacuna is
 
-Lacuna is a **public-source evidence layer for understanding how capital is structured around scientifically complex healthcare assets**.
+Lacuna is a **research infrastructure layer for reconstructing how capital is structured around scientifically complex healthcare assets**.
 
-The project began with women’s-health M&A and commercialization, but the deeper research problem is broader: connecting **scientific evidence, clinical risk, population need, capital structure, creative financing, governance/control, strategic optionality, and eventual outcomes**.
+The project began with women's-health M&A and commercialization. The deeper problem is the research workflow underneath it: important evidence is public, but it is fragmented across filings, clinical-trial registries, scientific literature, regulatory records, company investor-relations pages, transaction announcements, spreadsheets, and—where authorized—commercial financial datasets.
 
-Rather than competing with healthcare data terminals or private-markets databases on breadth, Lacuna focuses on the connective tissue those systems often leave fragmented:
+The bottleneck is often not access to a single source. It is the **time and cognitive cost of moving across sources, resolving entities, reconstructing chronology, deciding what is evidence versus inference, and preserving enough provenance that another analyst can reproduce the work**.
+
+Lacuna is designed around that problem.
+
+### The thesis
+
+> **Turn fragmented healthcare information into a traceable, queryable evidence layer so analysts can spend less time collecting and reconciling documents and more time understanding what the evidence means.**
+
+The underlying research chain is:
 
 **Science → clinical evidence → population need → capital → financing structure → governance/control → strategy → outcome**
 
-Women's health is the initial laboratory because it is a sufficiently focused domain in which these relationships can be reconstructed carefully from public evidence. The architecture is intended to generalize to precision medicine, oncology, orphan drugs, diagnostics, devices, and other scientifically complex healthcare markets.
+Lacuna does not assume that public information is proprietary. Its thesis is that **structured synthesis can be more useful than fragmented access**.
 
-The central research question is not simply *who funded or acquired whom?* It is:
+The system is therefore designed to answer questions such as:
 
-> **Given what was knowable about an underlying healthcare asset at a particular point in time, why might a particular form of capital, financing structure, governance arrangement, or strategic transaction have made sense?**
+- What was knowable about an asset or company at a particular point in time?
+- What changed between two financing or strategic events?
+- Which clinical, scientific, regulatory, or commercial observations were available before a transaction?
+- How did the financing instrument affect dilution, governance, control, runway, or strategic optionality?
+- What relationships become visible when evidence from multiple public sources is resolved to the same canonical entity?
+- Which conclusions are directly observed, which are derived, and which remain hypotheses?
 
-Lacuna therefore treats creative financing as a first-class research dimension: equity, venture and growth financing, strategic investment, structured financing, royalty or revenue interests, licensing, milestone structures, asset transactions, recapitalizations, IPOs, and acquisitions can all be analyzed as different responses to changing scientific, clinical, commercial, and capital constraints.
+### What Lacuna is — and is not
 
-The goal is not to reproduce proprietary financial datasets. It is to build a **provider-agnostic evidence layer** that can enrich authorized financial data—whether supplied through a customer's existing data license, CSV/Excel export, public-market source, or public filings—with clinical, scientific, regulatory, reimbursement, population, and provenance context.
+Lacuna is **not** intended to become another healthcare data terminal, a private-markets database, or a replacement for licensed providers such as PitchBook or Preqin.
 
-The product's potential value therefore comes less from raw record count than from **entity resolution, transaction reconstruction, longitudinal evidence, provenance, and the ability to connect otherwise separate datasets into a decision-useful research graph**.
+It is also not an argument that putting public documents into an LLM creates an information advantage.
+
+Instead, Lacuna aims to provide a **controlled, provider-agnostic research layer** that can work with:
+
+- public and reproducible sources;
+- structured exports such as CSV or Excel;
+- public-market data;
+- and, eventually, authorized proprietary datasets supplied by an analyst or institution.
+
+Where a firm already pays for a financial-data provider, Lacuna's role can be complementary: **connect licensed financial data to scientific, clinical, regulatory, reimbursement, population, governance, and transaction evidence without redistributing the licensed records**.
+
+The long-term value proposition is therefore less about record count and more about **entity resolution, temporal reconstruction, provenance, evidence linkage, and research workflow**.
+
+### Why this matters for institutional research
+
+Institutional research teams may already be permitted to use the underlying public sources. The practical problem is that an analyst can spend hours moving between Google, SEC EDGAR, ClinicalTrials.gov, PubMed, FDA, company IR, investor presentations, transaction documents, and internal spreadsheets just to reconstruct one coherent timeline.
+
+Lacuna is designed to make that workflow more systematic:
+
+**Research question → source retrieval → entity resolution → evidence normalization → point-in-time timeline → cross-source connections → analyst interpretation**
+
+The AI interface belongs at the end of this chain, not at the foundation of it.
+
+That distinction matters. The underlying evidence model should remain useful if the language model changes, and a reviewer should be able to trace an AI-assisted answer back to the observations and sources that support it.
+
+This also creates a cleaner institutional boundary: **source permissions, licensed-data restrictions, provenance, retention, access controls, and model usage can be handled as properties of the research system rather than improvised each time an analyst opens a general-purpose chatbot.**
+
+This is an architectural and workflow objective—not a claim that an in-house deployment is automatically compliant. Any institutional implementation still depends on the firm's policies, contracts, security controls, source terms, and governance.
+
+### The research question
+
+The core question is:
+
+> **Given what was knowable about an underlying healthcare asset at time T, how did changes in evidence, risk, capital structure, governance, and strategy interact—and what could a sufficiently systematic analyst have inferred from the information available then?**
+
+That requires **point-in-time reconstruction**. Later outcomes should not silently become evidence for earlier decisions.
+
+Women's health is the initial laboratory because it provides a focused domain in which these relationships can be reconstructed carefully. The architecture is intended to generalize to precision medicine, oncology, orphan drugs, diagnostics, devices, and other scientifically complex healthcare markets.
+
+### Creative financing as a first-class dimension
+
+Lacuna treats financing instruments as part of the research object rather than metadata attached to a company.
+
+Relevant structures can include equity, venture and growth financing, strategic investment, debt, royalty or revenue interests, licensing, milestone structures, asset transactions, recapitalizations, IPOs, acquisitions, and other structured arrangements.
+
+The analytical question is not simply **who funded or acquired whom?** It is how the financing structure interacted with the underlying scientific and commercial risk.
+
+That makes capital structure, governance, and strategic optionality part of the same longitudinal evidence model.
+
+## The Lacuna architecture
+
+Lacuna is organized as four layers. Each layer has a different job, and the separation is intentional.
+
+### 1. Sources layer — where the evidence comes from
+
+The sources layer ingests or references the systems analysts already use:
+
+**SEC EDGAR / XBRL · FDA / openFDA · ClinicalTrials.gov · PubMed / NCBI · OpenAlex · CDC / CMS / Census · company IR and press releases · merger and financing documents · public investor disclosures · CSV / Excel · authorized financial-data exports**
+
+The goal is not to own every source. It is to make source boundaries explicit and preserve the provenance of every important observation.
+
+### 2. Evidence layer — what the source actually tells us
+
+The evidence layer turns documents and records into normalized observations:
+
+**entities · identifiers · events · dates · metrics · populations · geography · source locators · evidence type · confidence · point-in-time semantics**
+
+This is where company names, investors, trials, publications, assets, transactions, institutions, and other entities become connected.
+
+The evidence layer should preserve the difference between:
+
+- directly observed facts;
+- derived fields;
+- analyst assumptions;
+- heuristics;
+- and model-generated interpretation.
+
+### 3. Research layer — what becomes analyzable
+
+The research layer connects observations into longitudinal cases:
+
+**clinical trajectory · scientific evidence · regulatory trajectory · population need · financing · ownership · governance · reimbursement · strategic relationships · M&A · IPO pathways · outcomes**
+
+This is where the system can reconstruct a company's or asset's changing information set rather than treating each document as an isolated record.
+
+### 4. Intelligence interfaces — how an analyst uses it
+
+The interface layer turns the evidence graph into research workflows:
+
+**search · timelines · deal dossiers · financing maps · evidence graphs · entity pages · comparative cases · question answering · exports · AI-assisted synthesis**
+
+The interface should help an analyst move from **question → evidence → interpretation**, while keeping the underlying evidence inspectable.
+
+### The design principle
+
+**The AI is an interface to the evidence layer, not a substitute for the evidence layer.**
+
+That is the architectural distinction Lacuna is trying to preserve.
 
 ## Scope: sex-specific biology within women's health
 
@@ -98,7 +208,7 @@ Lacuna favors **primary, public, and reproducible sources** wherever practical. 
 
 These sources are not treated as interchangeable. Lacuna records **which source supports which observation**, preserves source locators where available, and distinguishes directly observed facts from derived fields, heuristics, and analyst assumptions.
 
-For example, OpenAlex provides a public scholarly metadata graph covering works, authors, sources, institutions, funders, topics, and related identifiers; its API is available for basic use without a key and its data is published under CC0. citeturn0search0turn0search3 SEC EDGAR likewise provides public access to filings and APIs for company submissions and extracted XBRL data. citeturn0search2turn0search15
+For example, OpenAlex provides a public scholarly metadata graph covering works, authors, sources, institutions, funders, topics, and related identifiers; its API is available for basic use without a key and its data is published under CC0. SEC EDGAR likewise provides public access to filings and APIs for company submissions and extracted XBRL data.
 
 **Public-source does not mean low-quality by default.** It means the research process should be auditable: a reviewer should be able to understand where an observation came from, what was knowable at the relevant point in time, what was inferred, and where uncertainty remains.
 
@@ -179,6 +289,94 @@ Questions the evidence layer is designed to support include:
 
 These are research questions, not predictive claims. Lacuna does not infer undisclosed motives, assign investment recommendations, or treat a financing structure as proof of an outcome.
 
+## A canonical research workflow
+
+A useful Lacuna case should be reconstructable as a sequence of information states rather than a single transaction row.
+
+### Example: following an asset from pre-Series B to acquisition
+
+**Pre-Series B**
+
+What was knowable before the financing?
+
+- What was the scientific thesis?
+- What publications supported it?
+- What clinical trials were active?
+- What were the relevant endpoints and enrollment signals?
+- What regulatory milestones had occurred?
+- What population need or reimbursement constraints were observable?
+- Who were the existing investors and strategic relationships?
+- What capital had already been deployed?
+
+↓
+
+**Series B**
+
+What changed when new capital arrived?
+
+- Who provided the capital?
+- What instrument was used?
+- How much was raised?
+- Was valuation disclosed?
+- What dilution or ownership change was observable?
+- Were there board, voting, conversion, liquidation, or strategic rights?
+- What use of proceeds was stated?
+- Which clinical or regulatory milestone was the financing intended to reach?
+
+↓
+
+**Post-Series B**
+
+What happened after the financing?
+
+- Did the clinical program advance?
+- Did new evidence appear?
+- Did regulatory status change?
+- Did a strategic investor or partner appear?
+- Did additional financing occur?
+- Did governance or ownership change?
+- Did the company shift from scientific validation toward commercialization?
+
+↓
+
+**Acquisition / IPO / strategic outcome**
+
+What became observable at the next major transition?
+
+- What was the transaction structure?
+- Who controlled the asset?
+- What consideration was disclosed?
+- What strategic rationale was publicly stated?
+- Which prior scientific, clinical, regulatory, and financing observations were already knowable?
+- Which relationships only became visible in hindsight?
+
+The point is not to manufacture a causal story after the fact. The point is to preserve the information set at each stage and distinguish **observation, inference, and hypothesis**.
+
+### Questions the research layer should make easier
+
+**Clinical risk**
+- What evidence existed at each financing date?
+- Did financing structure change as clinical uncertainty changed?
+
+**Capital structure**
+- Which instruments were used at different stages of risk?
+- How did capital providers differ across scientific, clinical, and commercial phases?
+
+**Governance**
+- When did ownership, board representation, voting power, conversion rights, or strategic rights change?
+
+**Strategic behavior**
+- Did strategic investment, licensing, partnership, or acquisition follow identifiable evidence milestones?
+- What relationships existed before the transaction rather than appearing only in the transaction announcement?
+
+**Market access**
+- What reimbursement, utilization, pricing, or population evidence was available before commercialization or strategic activity?
+
+**Point-in-time research**
+- What could an analyst reasonably have known at T?
+- Which information entered the public record only afterward?
+- Which conclusions are robust to removing hindsight?
+
 ## Research and reimbursement context
 
 **Clinical trials.** `/api/clinical-trials` searches ClinicalTrials.gov. That volume is not deal coverage. Model-derived women’s-health relevance and completion-proxy badges are withheld until training uses live registry labels rather than the synthetic seed artifact.
@@ -211,6 +409,89 @@ Normalized ClinicalTrials.gov studies and FDA regulatory events keep their sourc
 
 Developer inspection: `/therapeutics/endometriosis` (noindex). See [THERAPEUTICS_ONTOLOGY.md](docs/THERAPEUTICS_ONTOLOGY.md).
 
+## Roadmap
+
+The roadmap is deliberately layered. Each stage should make the next stage more useful; the project should not accumulate features without strengthening the underlying research model.
+
+### Phase 1 — Establish the evidence foundation
+
+**Goal:** make public-source research reproducible.
+
+- Define canonical entities and external identifiers.
+- Normalize source-specific records.
+- Preserve provenance and source locators.
+- Establish point-in-time semantics.
+- Separate observations from inference.
+- Build source adapters for high-value public sources.
+- Keep the verified public dataset small enough to audit.
+
+**Success condition:** another analyst can reproduce a case timeline from the cited evidence.
+
+### Phase 2 — Reconstruct research cases
+
+**Goal:** move from a deal catalog to longitudinal asset and company research.
+
+- Connect scientific literature to companies, assets, and trials.
+- Connect clinical milestones to financing and strategic events.
+- Model capital structure and governance explicitly.
+- Build pre-event and post-event information sets.
+- Develop the Creative Financing Atlas.
+- Benchmark Lacuna against a manual research workflow.
+
+**Success condition:** Lacuna materially reduces the time and reconciliation work required to reconstruct a complex healthcare case.
+
+### Phase 3 — Add authorized financial context
+
+**Goal:** enrich the evidence graph without becoming a proprietary-data vendor.
+
+- Define provider-agnostic financial-data interfaces.
+- Accept authorized CSV / Excel and structured exports.
+- Support institutionally licensed datasets where permitted.
+- Keep proprietary records segregated according to the relevant license.
+- Map external provider identifiers to Lacuna canonical entities.
+
+**Success condition:** an analyst can bring data they are already authorized to use and connect it to Lacuna's evidence graph without replacing the provider.
+
+### Phase 4 — Research intelligence interfaces
+
+**Goal:** make the evidence graph useful at analyst speed.
+
+- Natural-language research questions.
+- Source-linked answer generation.
+- Point-in-time case reconstruction.
+- Interactive timelines and transaction maps.
+- Financing and governance views.
+- Comparable-case exploration.
+- Exportable research packages.
+- Audit-friendly provenance and model/input logging.
+
+**Success condition:** AI reduces research friction without obscuring the evidence underneath the answer.
+
+### Phase 5 — Generalize beyond the initial laboratory
+
+Women's health remains the first research laboratory, but the architecture should eventually support other scientifically complex domains where the interaction between evidence and capital matters.
+
+Potential extensions include:
+
+**precision medicine · oncology · orphan disease · diagnostics · devices · specialty therapeutics**
+
+The domain should expand only when the underlying evidence model generalizes cleanly.
+
+### What is explicitly not the roadmap
+
+Lacuna is not trying to win by:
+
+- accumulating the largest possible company database;
+- reproducing PitchBook, Preqin, or another commercial provider;
+- adding speculative valuation scores;
+- making causal claims from observational timelines;
+- turning every women's-health company into a row;
+- or adding an AI chat box before the evidence model is trustworthy.
+
+The priority is:
+
+**evidence integrity → entity resolution → temporal reconstruction → research utility → interface speed**
+
 ## Stack
 
 | Layer                                             | In the public app                                                                                                     |
@@ -242,7 +523,7 @@ Current and planned source adapters include:
 
 The design principle is **source-agnostic, not source-indifferent**: each source has a defined role, provenance, identifier namespace, temporal semantics, and evidence quality. A source can be authoritative for one field and inappropriate for another.
 
-The goal is not to accumulate the largest possible dataset. It is to build a **small, high-integrity, entity-resolved research graph** in which the connections between public observations can support differentiated case research.
+The goal is not to accumulate the largest possible dataset. It is to build a **small, high-integrity, entity-resolved research graph** in which the connections between public observations reduce research friction and support reproducible case research.
 
 **Checks:** `npm run lint` · `npm run typecheck` · `npm test` · `npm run deno:fmt:check` · `npm run deno:lint` · `npm run validate:dataset` · `npm run build:ci` (`LACUNA_DATA_MODE=static`).
 
