@@ -4,13 +4,20 @@ import path from "node:path";
 type CheckClass = "integrity" | "smoke" | "full" | "release";
 type FailurePolicy = "fail-closed" | "fail" | "warn" | "informational";
 type Check = {
-  id: string; class: CheckClass; scope: string; required: boolean;
-  failurePolicy: FailurePolicy; command: string; claim: string;
+  id: string;
+  class: CheckClass;
+  scope: string;
+  required: boolean;
+  failurePolicy: FailurePolicy;
+  command: string;
+  claim: string;
   doesNotProve: string[];
 };
 type Contract = {
-  version: number; allowedClasses: CheckClass[];
-  allowedFailurePolicies: FailurePolicy[]; checks: Check[];
+  version: number;
+  allowedClasses: CheckClass[];
+  allowedFailurePolicies: FailurePolicy[];
+  checks: Check[];
 };
 
 const ROOT = path.resolve(__dirname, "..");
@@ -30,7 +37,9 @@ function commandScriptName(command: string): string | null {
 
 function main() {
   const contract = readJson<Contract>(contractPath);
-  const packageJson = readJson<{ scripts: Record<string, string> }>(packagePath);
+  const packageJson = readJson<{ scripts: Record<string, string> }>(
+    packagePath,
+  );
   const workflow = readFileSync(workflowPath, "utf8");
 
   if (contract.version !== 1) fail("unsupported contract version");
@@ -43,20 +52,40 @@ function main() {
   for (const check of contract.checks) {
     if (ids.has(check.id)) fail("duplicate check id: " + check.id);
     ids.add(check.id);
-    if (!classes.has(check.class)) fail("check " + check.id + " uses undeclared class");
-    if (!policies.has(check.failurePolicy)) fail("check " + check.id + " uses undeclared failure policy");
-    if (!check.scope || !check.claim || !check.command) fail("check " + check.id + " is missing scope, claim, or command");
-    if (check.doesNotProve.length === 0) fail("check " + check.id + " must declare at least one limitation");
+    if (!classes.has(check.class)) {
+      fail("check " + check.id + " uses undeclared class");
+    }
+    if (!policies.has(check.failurePolicy)) {
+      fail("check " + check.id + " uses undeclared failure policy");
+    }
+    if (!check.scope || !check.claim || !check.command) {
+      fail(
+        "check " + check.id + " is missing scope, claim, or command",
+      );
+    }
+    if (check.doesNotProve.length === 0) {
+      fail("check " + check.id + " must declare at least one limitation");
+    }
 
     const script = commandScriptName(check.command);
     if (script && !packageJson.scripts[script]) {
       fail("check " + check.id + " references missing npm script: " + script);
     }
-    if (check.required && !["fail", "fail-closed"].includes(check.failurePolicy)) {
-      fail("required check " + check.id + " must use fail or fail-closed policy");
+    if (
+      check.required && !["fail", "fail-closed"].includes(check.failurePolicy)
+    ) {
+      fail(
+        "required check " + check.id + " must use fail or fail-closed policy",
+      );
     }
-    if (check.class === "smoke" && /truth|validity|complete|correctness/i.test(check.claim)) {
-      fail("smoke check " + check.id + " makes a claim beyond operability/wiring");
+    if (
+      check.class === "smoke" &&
+      /truth|validity|complete|correctness/i.test(check.claim)
+    ) {
+      fail(
+        "smoke check " + check.id +
+          " makes a claim beyond operability/wiring",
+      );
     }
     if (check.class === "release" && check.required) {
       fail("release check " + check.id + " cannot be universally required");
@@ -66,11 +95,17 @@ function main() {
   const requiredAllPr = contract.checks.filter(
     (check) => check.required && check.scope === "all-prs",
   );
-  if (requiredAllPr.length === 0) fail("no universal PR integrity checks are declared");
+  if (requiredAllPr.length === 0) {
+    fail("no universal PR integrity checks are declared");
+  }
 
   for (const check of requiredAllPr) {
     if (!workflow.includes(check.command)) {
-      fail("universal check " + check.id + " is not represented in the main CI workflow: " + check.command);
+      fail(
+        "universal check " + check.id +
+          " is not represented in the main CI workflow: " +
+          check.command,
+      );
     }
   }
 
@@ -82,9 +117,13 @@ function main() {
     .filter((check) => check.required)
     .map((check) => check.command)
     .filter((command) => command.startsWith("npm run "));
-  const missing = requiredWorkflowCommands.filter((command) => !workflow.includes(command));
+  const missing = requiredWorkflowCommands.filter(
+    (command) => !workflow.includes(command),
+  );
   if (missing.length > 0) {
-    fail("required npm commands missing from main CI workflow: " + missing.join(", "));
+    fail(
+      "required npm commands missing from main CI workflow: " + missing.join(", "),
+    );
   }
 
   const summary = [
@@ -93,7 +132,8 @@ function main() {
     "- Contract version: " + contract.version,
     "- Declared checks: " + contract.checks.length,
     "- Universal PR checks: " + requiredAllPr.length,
-    "- Integrity: " + contract.checks.filter((c) => c.class === "integrity").length,
+    "- Integrity: " +
+      contract.checks.filter((c) => c.class === "integrity").length,
     "- Smoke: " + contract.checks.filter((c) => c.class === "smoke").length,
     "- Full: " + contract.checks.filter((c) => c.class === "full").length,
     "- Release: " + contract.checks.filter((c) => c.class === "release").length,
