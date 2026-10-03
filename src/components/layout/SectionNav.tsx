@@ -61,8 +61,8 @@ export default function SectionNav({ sections }: SectionNavProps) {
 
   const activeLabel =
     sections.find((section) => section.id === activeId)?.label ??
-    sections[0]?.label ??
-    "Sections";
+      sections[0]?.label ??
+      "Sections";
 
   const list = (onNavigate?: () => void) => (
     <ul className="space-y-1">
@@ -101,7 +101,10 @@ export default function SectionNav({ sections }: SectionNavProps) {
             </span>
             <span aria-hidden="true" className="text-xs">⌄</span>
           </summary>
-          <nav aria-label="Page sections" className="mt-1 max-h-[calc(100vh-10rem)] overflow-y-auto border-t border-lacuna-lavender/20 pt-1">
+          <nav
+            aria-label="Page sections"
+            className="mt-1 max-h-[calc(100vh-10rem)] overflow-y-auto border-t border-lacuna-lavender/20 pt-1"
+          >
             {list()}
           </nav>
         </details>
