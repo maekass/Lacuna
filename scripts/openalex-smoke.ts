@@ -1,3 +1,5 @@
+import process from "node:process";
+
 import { getOpenAlexRateLimit, getOpenAlexWork, searchOpenAlexWorks, validateOpenAlexOql } from "../src/lib/ingestion/openAlexClient";
 
 type WorkIntegrityRecord = {
