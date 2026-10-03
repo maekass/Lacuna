@@ -12,7 +12,8 @@ export type PointInTimeResult<T> =
     reason: "missing-provenance" | "invalid-date" | "after-cutoff";
   };
 
-function validDay(value: string): boolean {
+/** True when `value` is a real UTC calendar day, not only a YYYY-MM-DD shape. */
+export function isCalendarDay(value: string): boolean {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const date = new Date(`${value}T00:00:00Z`);
   return !Number.isNaN(date.getTime()) &&
@@ -27,7 +28,7 @@ export function atDecisionDate<T>(
   if (!evidence.asOf || !evidence.source?.trim()) {
     return { eligible: false, reason: "missing-provenance" };
   }
-  if (!validDay(cutoff) || !validDay(evidence.asOf)) {
+  if (!isCalendarDay(cutoff) || !isCalendarDay(evidence.asOf)) {
     return { eligible: false, reason: "invalid-date" };
   }
   if (evidence.asOf > cutoff) {

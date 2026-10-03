@@ -22,6 +22,7 @@
     "test:reproductive-biopharma": "python3 -m unittest discover -s scripts/tests -p 'test_reproductive_biopharma_sieve.py' -v",
     "test:watch": "vitest",
     "validate:dataset": "tsx scripts/validate-dataset.ts",
+    "meshic:gate": "tsx scripts/meshic-data-gate.ts --strict",
     "report:selection-provenance": "tsx scripts/report-selection-provenance.ts",
     "validate:empowerment": "tsx scripts/validate-empowerment.ts",
     "intel:sweep": "tsx scripts/sweep-watchlist.ts",

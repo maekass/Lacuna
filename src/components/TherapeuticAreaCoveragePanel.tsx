@@ -20,10 +20,22 @@ function FundingBadge(
   { company }: { company: TherapeuticAreaCoverageCompany },
 ) {
   const label = company.fundingStatus ?? company.lastFundingType ?? "Funded";
+  const fundingSource = company.sources[0];
+  const showAmount = company.totalFundingM != null &&
+    Boolean(fundingSource);
   return (
-    <span className="inline-flex rounded-full bg-lacuna-lavender/20 px-2 py-0.5 text-[10px] font-medium text-lacuna-plum">
-      {label}
-      {company.totalFundingM != null ? ` · $${company.totalFundingM}M` : ""}
+    <span className="inline-flex max-w-[16rem] flex-col rounded-full bg-lacuna-lavender/20 px-2 py-0.5 text-[10px] font-medium text-lacuna-plum">
+      <span>
+        {label}
+        {showAmount ? ` · $${company.totalFundingM}M` : ""}
+      </span>
+      {showAmount
+        ? (
+          <span className="mt-0.5 font-normal text-lacuna-blue/70">
+            {fundingSource}
+          </span>
+        )
+        : null}
     </span>
   );
 }
