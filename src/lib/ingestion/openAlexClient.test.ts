@@ -90,24 +90,35 @@ describe("OpenAlex client integrity contract", () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it.each([[401, "Unauthorized"], [403, "Forbidden"], [429, "Too Many Requests"], [500, "Internal Server Error"]])
-    ("fails explicitly on HTTP %s and redacts the API key", async (status, statusText) => {
+  it.each([
+    [401, "Unauthorized"],
+    [403, "Forbidden"],
+    [429, "Too Many Requests"],
+    [500, "Internal Server Error"],
+  ])(
+    "fails explicitly on HTTP %s and redacts the API key",
+    async (status, statusText) => {
       process.env.OPENALEX_API_KEY = "test-secret";
       vi.spyOn(globalThis, "fetch").mockResolvedValue(
         new Response("upstream failure: test-secret", { status, statusText }),
       );
-      await expect(searchOpenAlexWorks({ search: "endometriosis" }))
-        .rejects.toThrow(/OpenAlex request failed: HTTP/);
-      await expect(searchOpenAlexWorks({ search: "endometriosis" }))
-        .rejects.not.toThrow("test-secret");
-    });
+      await expect(
+        searchOpenAlexWorks({ search: "endometriosis" }),
+      ).rejects.toThrow(/OpenAlex request failed: HTTP/);
+      await expect(
+        searchOpenAlexWorks({ search: "endometriosis" }),
+      ).rejects.not.toThrow("test-secret");
+    },
+  );
 
   it("fails on malformed JSON rather than returning false success", async () => {
     process.env.OPENALEX_API_KEY = "test-secret";
     vi.spyOn(globalThis, "fetch").mockResolvedValue(
       new Response("{not-json", { status: 200 }),
     );
-    await expect(searchOpenAlexWorks({ search: "endometriosis" })).rejects.toThrow();
+    await expect(
+      searchOpenAlexWorks({ search: "endometriosis" }),
+    ).rejects.toThrow();
   });
 
   it("propagates abort signals", async () => {
@@ -171,8 +182,12 @@ describe("OpenAlex client integrity contract", () => {
   it("rejects empty inputs without network access", async () => {
     process.env.OPENALEX_API_KEY = "test-secret";
     const fetchMock = vi.spyOn(globalThis, "fetch");
-    await expect(validateOpenAlexOql(" ")).rejects.toThrow("OQL query is required");
-    await expect(getOpenAlexWork(" ")).rejects.toThrow("work ID is required");
+    await expect(validateOpenAlexOql(" ")).rejects.toThrow(
+      "OQL query is required",
+    );
+    await expect(getOpenAlexWork(" ")).rejects.toThrow(
+      "work ID is required",
+    );
     expect(fetchMock).not.toHaveBeenCalled();
   });
 });
