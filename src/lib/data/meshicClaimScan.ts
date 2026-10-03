@@ -160,7 +160,7 @@ function sentenceStart(source: string, index: number): number {
 /** Import paths and require() specifiers are not user-facing claims. */
 function isModuleSpecifier(source: string, contentStart: number): boolean {
   const before = source.slice(0, Math.max(0, contentStart - 1));
-  return /(?:\bfrom|\brequire\s*\(|\bimport\s*(?:\()?)|\bmodule\s*:)\s*$/.test(before);
+  return /(?:\bfrom|\brequire\s*\(|\bimport\s*\(?|\bmodule\s*:)\s*$/.test(before);
 }
 
 function isNegated(source: string, index: number): boolean {
