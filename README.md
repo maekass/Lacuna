@@ -63,10 +63,48 @@ The scope does **not** attempt to survey the entire women's-health market. In pa
 
 This boundary keeps the project focused on a narrower and more technically defensible research problem: **how sex-specific biology creates clinical risk, evidence requirements, financing constraints, and strategic opportunities—and how capital structures respond to those conditions**.
 
+## Public-source research and information synthesis
 
-The product app runs on **Vercel** from this repository. A separate **Framer**
-site is brand and narrative only, with one call to action into the app —
-[SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md).
+Lacuna is deliberately built around **publicly available, reproducible evidence**.
+
+For public companies and public-market research, the relevant information set is often necessarily grounded in public disclosures: regulatory filings, earnings materials, investor presentations, clinical-trial registries, scientific literature, regulatory actions, company announcements, and other observable records. Lacuna treats the shared availability of these sources as a feature of the research problem rather than a reason to compete on proprietary data volume.
+
+The research objective is therefore not to possess information that nobody else can access. It is to **extract signal from the same underlying public information set through better structure, entity resolution, temporal reconstruction, evidence linkage, and domain-specific modeling**.
+
+That creates a useful distinction:
+
+- **Raw data:** a filing, trial record, paper, financing announcement, regulatory action, or transaction disclosure.
+- **Structured evidence:** the same observation normalized, time-stamped, linked to canonical entities, and preserved with provenance.
+- **Research signal:** relationships or patterns that become visible only after multiple public sources are connected.
+- **Case-specific model:** a transparent analysis of how the evidence available at a historical point in time could have informed a financing, strategic, clinical, or market hypothesis.
+
+This is an **information-synthesis and research-infrastructure problem**, not a claim of privileged information or a substitute for licensed private-market datasets.
+
+Where an analyst or institution already has authorized access to proprietary sources such as PitchBook, Preqin, or other financial-data providers, Lacuna can eventually serve as an enrichment and evidence layer around that licensed data. It is not intended to redistribute proprietary records or replicate a provider's commercial dataset.
+
+## Data sources and provenance
+
+Lacuna favors **primary, public, and reproducible sources** wherever practical. Source selection depends on the question and may include:
+
+| Source class | Examples | Typical role |
+| ------------ | -------- | ------------ |
+| Public-company filings | SEC EDGAR, company filings, XBRL | Financials, ownership, transactions, risk factors, governance, disclosures |
+| Scientific literature | OpenAlex, PubMed/NCBI, Crossref and linked identifiers | Publications, authors, institutions, citations, scientific context |
+| Clinical evidence | ClinicalTrials.gov and other public registries | Trial design, status, endpoints, sponsors, investigators |
+| Regulatory | FDA, openFDA, other public regulatory records | Approvals, warnings, safety, devices, regulatory milestones |
+| Population and utilization | CDC, CMS, Census and other public statistical sources | Epidemiology, utilization, population, reimbursement context |
+| Transaction evidence | Press releases, investor relations, merger documents, public filings | Financing, M&A, strategic transactions, disclosed consideration |
+| Investor and fund disclosures | Public portfolio pages, filings, institutional disclosures | Ownership and investment relationships where publicly disclosed |
+
+These sources are not treated as interchangeable. Lacuna records **which source supports which observation**, preserves source locators where available, and distinguishes directly observed facts from derived fields, heuristics, and analyst assumptions.
+
+For example, OpenAlex provides a public scholarly metadata graph covering works, authors, sources, institutions, funders, topics, and related identifiers; its API is available for basic use without a key and its data is published under CC0. citeturn0search0turn0search3 SEC EDGAR likewise provides public access to filings and APIs for company submissions and extracted XBRL data. citeturn0search2turn0search15
+
+**Public-source does not mean low-quality by default.** It means the research process should be auditable: a reviewer should be able to understand where an observation came from, what was knowable at the relevant point in time, what was inferred, and where uncertainty remains.
+
+The project therefore treats **provenance, point-in-time semantics, source hierarchy, and reproducibility as part of the data model**, not documentation added after the analysis.
+
+The product app runs on **Vercel** from this repository. A separate **Framer** site is brand and narrative only, with one call to action into the app — [SITE_ARCHITECTURE.md](docs/SITE_ARCHITECTURE.md).
 
 **Live demo:** [lacuna-maekass.vercel.app](https://lacuna-maekass.vercel.app)
 
@@ -81,8 +119,7 @@ site is brand and narrative only, with one call to action into the app —
 | Trial models withheld                 | Offline clinical-trial classifiers exist in the repo. Percentages stay off the public UI while `trainingSource` is `synthetic_seed`. Live trial **search** (ClinicalTrials.gov) is separate and is not a model score. See [ML_CLINICAL_TRIALS.md](docs/ML_CLINICAL_TRIALS.md).    |
 | No synthetic rows in the deal product | Public deal counts, networks, and disclosed-value totals come from the verified JSON. Staging, seed files, and illustrative heuristics are not merged into those figures. See [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md).                                                      |
 
-When a field is missing, panels show insufficient disclosed data. They do not
-fill gaps with TAM/SAM, sector-multiple fallbacks, or editorial stage medians.
+When a field is missing, panels show insufficient disclosed data. They do not fill gaps with TAM/SAM, sector-multiple fallbacks, or editorial stage medians.
 
 ## What you can do in the app
 
@@ -121,18 +158,9 @@ The current public catalog remains a curated sample rather than a census. Its pu
 
 - n=59 verified deals · 150 companies · 38 acquirers.
 - `dataset.verified.json` v9 (`provenance.lastUpdated: 2026-09-20`).
-- Sources are public: SEC filings, press releases, investor relations, and fund
-  portfolio listings, graded in
-  [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md). Promotion does
-  not invent sector, headquarters, or founded year.
-- Disclosed-value headlines are **sums of observed prices** on completed
-  women’s-health deals that published a number. They are not total market
-  volume. Current pinned figures and the sampling frame are in
-  [LIMITATIONS.md](docs/LIMITATIONS.md). Coverage against an external exit list
-  is an observed ratio, not a capture-recapture estimate.
-- Acquirer panels report counts, sector mix, timing, and disclosed size. They do
-  not infer strategy, synergies, or the next target. See
-  [COMPETITIVE_ANALYSIS_METHODOLOGY.md](docs/COMPETITIVE_ANALYSIS_METHODOLOGY.md).
+- Sources are public: SEC filings, press releases, investor relations, and fund portfolio listings, graded in [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md). Promotion does not invent sector, headquarters, or founded year.
+- Disclosed-value headlines are **sums of observed prices** on completed women’s-health deals that published a number. They are not total market volume. Current pinned figures and the sampling frame are in [LIMITATIONS.md](docs/LIMITATIONS.md). Coverage against an external exit list is an observed ratio, not a capture-recapture estimate.
+- Acquirer panels report counts, sector mix, timing, and disclosed size. They do not infer strategy, synergies, or the next target. See [COMPETITIVE_ANALYSIS_METHODOLOGY.md](docs/COMPETITIVE_ANALYSIS_METHODOLOGY.md).
 
 ## Creative Financing Atlas
 
@@ -153,74 +181,35 @@ These are research questions, not predictive claims. Lacuna does not infer undis
 
 ## Research and reimbursement context
 
-**Clinical trials.** `/api/clinical-trials` searches ClinicalTrials.gov. That
-volume is not deal coverage. Model-derived women’s-health relevance and
-completion-proxy badges are withheld until training uses live registry labels
-rather than the synthetic seed artifact.
+**Clinical trials.** `/api/clinical-trials` searches ClinicalTrials.gov. That volume is not deal coverage. Model-derived women’s-health relevance and completion-proxy badges are withheld until training uses live registry labels rather than the synthetic seed artifact.
 
-**Reimbursement.** Source-traceable fee-schedule and coverage questions live
-under `src/lib/reimbursement/` and ship only after review. Older multiple tables
-(for example insurance-driven versus consumer-only “premiums”) are unsupported
-rules of thumb and are not analytical output. See
-[REIMBURSEMENT_INTELLIGENCE.md](docs/REIMBURSEMENT_INTELLIGENCE.md).
+**Reimbursement.** Source-traceable fee-schedule and coverage questions live under `src/lib/reimbursement/` and ship only after review. Older multiple tables (for example insurance-driven versus consumer-only “premiums”) are unsupported rules of thumb and are not analytical output. See [REIMBURSEMENT_INTELLIGENCE.md](docs/REIMBURSEMENT_INTELLIGENCE.md).
 
-**Health equity.** Marker panels cite published disparity statistics (CDC, ACS,
-and similar). They are context. They are not market sizing or allocation advice.
+**Health equity.** Marker panels cite published disparity statistics (CDC, ACS, and similar). They are context. They are not market sizing or allocation advice.
 
-**Narratives.** Optional copy from `POST /api/ai/insights` uses Vercel AI
-Gateway when a key is configured and returns 503 otherwise. Narrative text does
-not override dataset fields or heuristic labels. See
-[INFERENCE.md](docs/INFERENCE.md).
+**Narratives.** Optional copy from `POST /api/ai/insights` uses Vercel AI Gateway when a key is configured and returns 503 otherwise. Narrative text does not override dataset fields or heuristic labels. See [INFERENCE.md](docs/INFERENCE.md).
 
 ## US Evidence Graph
 
-The **US Evidence Graph** is a separate research layer for source-linked
-regulatory, surveillance, claims, trial, epidemiology, funding, pricing, and
-workforce observations. It does not merge research observations into
-`dataset.verified.json`.
+The **US Evidence Graph** is a separate research layer for source-linked regulatory, surveillance, claims, trial, epidemiology, funding, pricing, and workforce observations. It does not merge research observations into `dataset.verified.json`.
 
-Each promoted observation preserves its subject and metric, value plus any
-comparator, primary source and locator, geography and population when known,
-point-in-time `asOf` semantics, evidence type, and limitations. Historical
-snapshots use source publication dates to prevent future-information leakage.
+Each promoted observation preserves its subject and metric, value plus any comparator, primary source and locator, geography and population when known, point-in-time `asOf` semantics, evidence type, and limitations. Historical snapshots use source publication dates to prevent future-information leakage.
 
-The first vertical slice covers **ferric carboxymaltose (Injectafer)**. It
-preserves the August 2026 FDA supplement adding a boxed warning for symptomatic
-hypophosphatemia and FDA's September 2026 Sentinel statement that
-serum-phosphate testing occurred in **fewer than 20%** of administration
-episodes. The latter is stored as an upper bound (`value: 0.2`,
-`comparator: "lt"`), not as an exact 20% rate.
+The first vertical slice covers **ferric carboxymaltose (Injectafer)**. It preserves the August 2026 FDA supplement adding a boxed warning for symptomatic hypophosphatemia and FDA's September 2026 Sentinel statement that serum-phosphate testing occurred in **fewer than 20%** of administration episodes. The latter is stored as an upper bound (`value: 0.2`, `comparator: "lt"`), not as an exact 20% rate.
 
-The ingestion foundation also includes a typed openFDA device client for 510(k),
-PMA, adverse-event, recall, UDI, and classification endpoints, plus a federal
-source catalog for FDA postmarketing requirements/commitments, CDRH
-real-world-evidence precedents, women-specific devices, and openFDA.
+The ingestion foundation also includes a typed openFDA device client for 510(k), PMA, adverse-event, recall, UDI, and classification endpoints, plus a federal source catalog for FDA postmarketing requirements/commitments, CDRH real-world-evidence precedents, women-specific devices, and openFDA.
 
-**Translation boundary:** US evidence can generate a deployment question or
-constraint for a target-market case, but it must not silently become a non-US
-parameter. US utilization is not non-US uptake; US reimbursement is not non-US
-price; and US surveillance results require separate applicability evidence
-before translation.
+**Translation boundary:** US evidence can generate a deployment question or constraint for a target-market case, but it must not silently become a non-US parameter. US utilization is not non-US uptake; US reimbursement is not non-US price; and US surveillance results require separate applicability evidence before translation.
 
-See [EVIDENCE_GRAPH.md](docs/EVIDENCE_GRAPH.md) for the evidence contract and
-[MARKET_ACCESS.md](docs/MARKET_ACCESS.md) for the separate deterministic demand
-and budget-impact workbench.
+See [EVIDENCE_GRAPH.md](docs/EVIDENCE_GRAPH.md) for the evidence contract and [MARKET_ACCESS.md](docs/MARKET_ACCESS.md) for the separate deterministic demand and budget-impact workbench.
 
 ## Therapeutics ontology
 
-A separate therapeutics graph sits beside the verified acquisition dataset. It
-does not replace those deals. The first reference vertical is **endometriosis**.
-It is a curated, source-linked demonstration of disease, asset, trial,
-regulatory, and catalyst records. It is not yet a comprehensive therapeutics
-database, and it does not produce an investment score or an rNPV.
+A separate therapeutics graph sits beside the verified acquisition dataset. It does not replace those deals. The first reference vertical is **endometriosis**. It is a curated, source-linked demonstration of disease, asset, trial, regulatory, and catalyst records. It is not yet a comprehensive therapeutics database, and it does not produce an investment score or an rNPV.
 
-Normalized ClinicalTrials.gov studies and FDA regulatory events keep their
-source identifiers. Historical snapshots use publication dates, so a later
-document does not become evidence for an earlier date. Analyst assumptions stay
-on an investment-thesis object and are not written into the evidence layer.
+Normalized ClinicalTrials.gov studies and FDA regulatory events keep their source identifiers. Historical snapshots use publication dates, so a later document does not become evidence for an earlier date. Analyst assumptions stay on an investment-thesis object and are not written into the evidence layer.
 
-Developer inspection: `/therapeutics/endometriosis` (noindex). See
-[THERAPEUTICS_ONTOLOGY.md](docs/THERAPEUTICS_ONTOLOGY.md).
+Developer inspection: `/therapeutics/endometriosis` (noindex). See [THERAPEUTICS_ONTOLOGY.md](docs/THERAPEUTICS_ONTOLOGY.md).
 
 ## Stack
 
@@ -236,9 +225,26 @@ Developer inspection: `/therapeutics/endometriosis` (noindex). See
 | PostgreSQL                                        | Optional `LACUNA_DATA_MODE=db` — not required to run the demo                                                         |
 | ClickHouse variant catalog                        | Optional and off by default. Not clinical-grade genomics. [GENOMICS_VARIANT_STORE.md](docs/GENOMICS_VARIANT_STORE.md) |
 
-**Checks:** `npm run lint` · `npm run typecheck` · `npm test` ·
-`npm run deno:fmt:check` · `npm run deno:lint` · `npm run validate:dataset` ·
-`npm run build:ci` (`LACUNA_DATA_MODE=static`).
+### Research-data layer
+
+The application layer above is intentionally separate from the **research-data layer**. Lacuna uses public and licensed inputs as evidence sources, then normalizes them into a provenance-aware internal model.
+
+Current and planned source adapters include:
+
+- **OpenAlex** — scholarly works, authors, institutions, funders, topics, and identifiers.
+- **PubMed / NCBI** — biomedical literature and identifiers.
+- **ClinicalTrials.gov** — trial registry records and study metadata.
+- **SEC EDGAR / XBRL** — public-company filings, submissions, and financial statement data.
+- **FDA / openFDA** — regulatory, safety, device, and post-market evidence.
+- **CDC / CMS / Census and other public statistical sources** — population, utilization, epidemiology, and reimbursement context.
+- **Company IR, press releases, merger documents, and public investor disclosures** — transaction and financing evidence.
+- **Authorized third-party financial datasets** — optional enrichment when an analyst or institution supplies data they are licensed to use; Lacuna does not redistribute those records.
+
+The design principle is **source-agnostic, not source-indifferent**: each source has a defined role, provenance, identifier namespace, temporal semantics, and evidence quality. A source can be authoritative for one field and inappropriate for another.
+
+The goal is not to accumulate the largest possible dataset. It is to build a **small, high-integrity, entity-resolved research graph** in which the connections between public observations can support differentiated case research.
+
+**Checks:** `npm run lint` · `npm run typecheck` · `npm test` · `npm run deno:fmt:check` · `npm run deno:lint` · `npm run validate:dataset` · `npm run build:ci` (`LACUNA_DATA_MODE=static`).
 
 ## Quick start
 
@@ -250,8 +256,7 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`. Optional Postgres and the variant store are
-documented in [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md).
+Open `http://localhost:3000`. Optional Postgres and the variant store are documented in [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md).
 
 ## Documentation
 
@@ -271,12 +276,6 @@ documented in [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md).
 
 ## License and author
 
-[BSL 1.1](LICENSE). Research and education use is allowed. A commercial product
-that competes as women’s-health M&A intelligence needs a separate license
-([mps5cy@virginia.edu](mailto:mps5cy@virginia.edu)). The license converts to
-Apache 2.0 in May 2030.
+[BSL 1.1](LICENSE). Research and education use is allowed. A commercial product that competes as women’s-health M&A intelligence needs a separate license ([mps5cy@virginia.edu](mailto:mps5cy@virginia.edu)). The license converts to Apache 2.0 in May 2030.
 
-**[Mae Kass](https://github.com/maekass)** — MS/MPH; PsyD candidate; incoming
-MBA (2027). Signatory to the
-[G20 & G7 Health and Development Partnership H20 Call to Action](https://www.icn.ch/sites/default/files/2024-08/H20%20Call%20to%20action%20-%20Final%20version.pdf)
-(August 2024).
+**[Mae Kass](https://github.com/maekass)** — MS/MPH; PsyD candidate; incoming MBA (2027). Signatory to the [G20 & G7 Health and Development Partnership H20 Call to Action](https://www.icn.ch/sites/default/files/2024-08/H20%20Call%20to%20action%20-%20Final%20version.pdf) (August 2024).
