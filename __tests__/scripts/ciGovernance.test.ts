@@ -25,7 +25,13 @@ describe("CI governance contract", () => {
   it("keeps required checks blocking and release checks conditional", () => {
     const contract = JSON.parse(
       readFileSync(path.join(ROOT, ".github", "ci-governance.json"), "utf8"),
-    ) as { checks: Array<{ class: string; required: boolean; failurePolicy: string }> };
+    ) as {
+      checks: Array<{
+        class: string;
+        required: boolean;
+        failurePolicy: string;
+      }>;
+    };
 
     for (const check of contract.checks) {
       if (check.required) {
