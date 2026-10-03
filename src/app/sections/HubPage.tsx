@@ -63,16 +63,57 @@ export default function HubPage({
           <p className="font-script mb-3 text-[2.15rem] leading-none text-lacuna-plum sm:text-5xl">
             Women&apos;s health
           </p>
-          <h1 className="mb-5 text-[1.7rem] font-bold uppercase leading-[0.92] tracking-[-0.03em] text-lacuna-plum min-[400px]:text-4xl sm:text-5xl md:text-6xl">
-            <span className="block">M&amp;A Diligence</span>
-            <span className="lacuna-gradient-text block">Stack</span>
+          <h1 className="mb-5 max-w-4xl text-[2rem] font-medium leading-[0.98] tracking-[-0.03em] text-lacuna-plum min-[400px]:text-4xl sm:text-5xl md:text-6xl">
+            <span className="block">Understand the evidence behind</span>
+            <span className="lacuna-gradient-text block">
+              healthcare companies.
+            </span>
           </h1>
-          <p className="text-base sm:text-lg leading-relaxed text-lacuna-blue">
-            Prototype investment-research environment — verified deal
-            provenance, clinical trial search, genomics governance, and cited
-            analytics from public sources.
+          <p className="max-w-3xl text-base sm:text-lg leading-relaxed text-lacuna-blue">
+            Lacuna is a public-source research workspace for connecting clinical
+            evidence, company events, financing, ownership, and strategic
+            outcomes. Start with a question; you do not need to understand every
+            dashboard.
           </p>
-          <p className="mt-3 text-sm leading-relaxed text-lacuna-blue/80">
+          <div className="mt-5 grid gap-3 sm:grid-cols-3">
+            <div className="rounded-xl border border-lacuna-lavender/40 bg-white/70 p-4">
+              <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">
+                If you are evaluating a company
+              </p>
+              <p className="mt-1 text-sm font-medium text-lacuna-plum">
+                Start with Deals
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">
+                Follow a transaction, sources, comparable context, and what was
+                knowable.
+              </p>
+            </div>
+            <div className="rounded-xl border border-lacuna-lavender/40 bg-white/70 p-4">
+              <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">
+                If you are investigating the science
+              </p>
+              <p className="mt-1 text-sm font-medium text-lacuna-plum">
+                Start with Research
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">
+                Move from clinical trials and evidence maturity to population
+                context.
+              </p>
+            </div>
+            <div className="rounded-xl border border-lacuna-lavender/40 bg-white/70 p-4">
+              <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">
+                If you want to audit the system
+              </p>
+              <p className="mt-1 text-sm font-medium text-lacuna-plum">
+                Start with Methods
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">
+                See coverage, record quality, timing, and the limits of the
+                dataset.
+              </p>
+            </div>
+          </div>
+          <p className="mt-4 text-sm leading-relaxed text-lacuna-blue/80">
             <DatasetCoverageFootnote
               changelog={changelog}
               variant="compact"
@@ -81,6 +122,43 @@ export default function HubPage({
             analytics only. Not PitchBook, not live market feeds, and not
             investment advice.
           </p>
+        </div>
+      </MotionSection>
+
+      <MotionSection className="mb-10">
+        <div className="rounded-xl border border-lacuna-lavender/40 bg-white/70 p-5 sm:p-6">
+          <p className="lacuna-kicker text-[10px] text-lacuna-plum/70">
+            How to read Lacuna
+          </p>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-lacuna-blue">
+            Treat the interface as a research trail, not a single score.
+            Observed facts, derived context, and unresolved questions should
+            remain visibly different.
+          </p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            <div>
+              <p className="text-sm font-medium text-lacuna-plum">Evidence</p>
+              <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">
+                What a cited public source directly supports.
+              </p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-lacuna-plum">
+                Interpretation
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">
+                What can be derived or compared from those observations.
+              </p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-lacuna-plum">
+                Uncertainty
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-lacuna-blue/75">
+                What is missing, weakly observed, or still requires diligence.
+              </p>
+            </div>
+          </div>
         </div>
       </MotionSection>
 
@@ -285,11 +363,12 @@ export default function HubPage({
 
       <MotionSection delay={0.15}>
         <h2 className="mb-2 text-2xl font-semibold text-lacuna-plum">
-          Choose a workspace
+          Explore the workspaces
         </h2>
-        <p className="mb-6 max-w-2xl text-lacuna-blue">
-          Dashboards are grouped by diligence workflow. Each workspace loads
-          only the panels you need — shareable URLs, less scroll fatigue.
+        <p className="mb-6 max-w-2xl text-sm leading-relaxed text-lacuna-blue">
+          Use the Workspaces menu above when you already know where you are
+          going. Use these cards when you want a plain-English explanation
+          first.
         </p>
         <div className="grid grid-cols-1 gap-4 sm:gap-5 sm:grid-cols-2">
           {WORKSPACES.map((ws) => (

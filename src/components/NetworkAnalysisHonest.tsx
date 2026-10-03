@@ -19,7 +19,6 @@ import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import {
   averageShortestPath,
-  clusteringCoefficient,
   communityDetection,
   degreeDistribution,
   giniCoefficient,
@@ -67,11 +66,6 @@ export default function NetworkAnalysisHonest() {
   const stats = useMemo(() => {
     const degree = degreeDistribution(sampleNodes, sampleEdges);
     const density = networkDensity(sampleNodes.length, sampleEdges.length);
-    const clustering = clusteringCoefficient(
-      sampleNodes,
-      sampleEdges,
-      NETWORK_SEED,
-    );
     const paths = averageShortestPath(sampleNodes, sampleEdges);
 
     // Acquirer concentration analysis
@@ -102,7 +96,6 @@ export default function NetworkAnalysisHonest() {
     return {
       degree,
       density,
-      clustering,
       paths,
       gini,
       hhi,
@@ -358,141 +351,6 @@ export default function NetworkAnalysisHonest() {
             </div>
           </div>
 
-          {/* Clustering — bipartite network caveat */}
-          <div className="bg-white border border-lacuna-border rounded-lg p-6">
-            <h4
-              className="font-medium mb-4"
-              style={displayFont}
-            >
-              Clustering Coefficient
-            </h4>
-
-            {stats.clustering.average === 0
-              ? (
-                <>
-                  <div className="grid grid-cols-2 gap-4 mb-4">
-                    <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
-                      <div
-                        className="text-2xl font-light"
-                        style={{
-                          fontFamily: DISPLAY_FONT,
-                          color: "#5D4E6D",
-                        }}
-                      >
-                        0.000
-                      </div>
-                      <div
-                        className="text-xs text-lacuna-text-muted uppercase mt-1"
-                        style={labelFont}
-                      >
-                        Average
-                      </div>
-                    </div>
-                    <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
-                      <div
-                        className="text-2xl font-light"
-                        style={{
-                          fontFamily: DISPLAY_FONT,
-                          color: "#E8B4B8",
-                        }}
-                      >
-                        Bipartite
-                      </div>
-                      <div
-                        className="text-xs text-lacuna-text-muted uppercase mt-1"
-                        style={labelFont}
-                      >
-                        Network Type
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-3 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
-                    <strong>Why zero?</strong> This acquisition network is{" "}
-                    <strong>bipartite</strong>{" "}
-                    — edges only connect acquirers to targets, never
-                    acquirer-to-acquirer or target-to-target. Triangles cannot
-                    form in a bipartite graph, so the standard clustering
-                    coefficient is always 0. This is a structural property of
-                    acquisition networks, not a data quality issue. Use{" "}
-                    <strong>buyer concentration</strong>{" "}
-                    (Gini, HHI) in the next tab for meaningful structure
-                    analysis.
-                  </div>
-                </>
-              )
-              : (
-                <>
-                  <div className="grid grid-cols-3 gap-4 mb-4">
-                    <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
-                      <div
-                        className="text-2xl font-light"
-                        style={{
-                          fontFamily: DISPLAY_FONT,
-                          color: "#5D4E6D",
-                        }}
-                      >
-                        {stats.clustering.average.toFixed(3)}
-                      </div>
-                      <div
-                        className="text-xs text-lacuna-text-muted uppercase mt-1"
-                        style={labelFont}
-                      >
-                        Average
-                      </div>
-                    </div>
-                    <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
-                      <div
-                        className="text-lg font-light"
-                        style={{
-                          fontFamily: DISPLAY_FONT,
-                          color: "#4A5D8A",
-                        }}
-                      >
-                        [{stats.clustering.bootstrap.lower.toFixed(3)},{" "}
-                        {stats.clustering.bootstrap.upper.toFixed(3)}]
-                      </div>
-                      <div
-                        className="text-xs text-lacuna-text-muted uppercase mt-1"
-                        style={labelFont}
-                      >
-                        95% Bootstrap CI
-                      </div>
-                    </div>
-                    <div className="bg-lacuna-surface-muted p-3 rounded-lg text-center">
-                      <div
-                        className="text-2xl font-light"
-                        style={{
-                          fontFamily: DISPLAY_FONT,
-                          color: "#B8A9C9",
-                        }}
-                      >
-                        {stats.clustering.bootstrap.numSamples}
-                      </div>
-                      <div
-                        className="text-xs text-lacuna-text-muted uppercase mt-1"
-                        style={labelFont}
-                      >
-                        Bootstrap Samples
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-3 bg-blue-50 border border-blue-200 rounded text-sm text-blue-800">
-                    <strong>Interpretation:</strong> Average clustering of{" "}
-                    {stats.clustering.average.toFixed(3)}{" "}
-                    with 95% CI of [{stats.clustering.bootstrap.lower.toFixed(
-                      3,
-                    )}, {stats.clustering.bootstrap.upper.toFixed(3)}].{" "}
-                    {stats.clustering.average < 0.1
-                      ? "Low clustering suggests minimal triadic closure (few acquirer cliques)."
-                      : stats.clustering.average < 0.3
-                      ? "Moderate clustering suggests some acquirer overlap."
-                      : "High clustering suggests strong acquirer community structure."}
-                  </div>
-                </>
-              )}
-          </div>
         </motion.div>
       )}
 

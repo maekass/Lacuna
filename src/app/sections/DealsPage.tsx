@@ -3,7 +3,6 @@
 import { Suspense, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import {
-  ClusteringAnalysis,
   CompanySimilarity,
   CompetitiveAnalysisDashboard,
   DealFlowChart,
@@ -160,6 +159,16 @@ export default function DealsPage() {
         <ValuationMatrix />
       </MotionSection>
 
+      <details className="mb-16 overflow-hidden rounded-2xl border border-lacuna-border bg-white/80 shadow-sm">
+        <summary className="cursor-pointer list-none px-5 py-4 text-sm font-semibold text-lacuna-plum sm:px-6 sm:py-5">
+          <span className="inline-flex items-center gap-2">
+            Advanced deal analysis
+            <span className="text-xs font-normal text-lacuna-text-muted">
+              comparables, network diagnostics, acquirer patterns, outcomes, and historical context
+            </span>
+          </span>
+        </summary>
+        <div className="border-t border-lacuna-border px-4 py-6 sm:px-6">
       <MotionSection id="quant-valuation" className={SECTION}>
         <SectionHeader
           title="Comparable context & historical acquisition-pattern similarity"
@@ -197,10 +206,7 @@ export default function DealsPage() {
           title="Finding Companies Like Each Other"
           description="Which women's health companies share similar profiles? Explore natural groupings and see how they compare."
         />
-        <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2">
-          <CompanySimilarity />
-        </div>
-        <ClusteringAnalysis />
+        <CompanySimilarity />
       </MotionSection>
 
       <MotionSection id="similarity-indicators" className={SECTION}>
@@ -226,6 +232,9 @@ export default function DealsPage() {
         />
         <SurvivalCurve />
       </MotionSection>
+
+        </div>
+      </details>
     </div>
   );
 }

@@ -27,21 +27,21 @@ export type EvidenceFieldProps = {
 const DEFAULT_ITEMS: EvidenceFieldItem[] = [
   {
     id: "need",
-    label: "Need",
-    title: "Clinical burden",
+    label: "Question",
+    title: "What needs explaining?",
     description:
-      "Start with the patient and clinical context that makes the unmet need visible.",
+      "Start with the clinical or commercial question, and name the population, asset, or event you are trying to understand.",
     state: "observed",
-    metadata: "BURDEN · CONTEXT",
-    context: "Clinical need and population context",
+    metadata: "QUESTION · CONTEXT",
+    context: "Question, population, asset, or event",
     confidence: "supported",
   },
   {
     id: "evidence",
     label: "Evidence",
-    title: "Validation context",
+    title: "What can the record support?",
     description:
-      "Trace the evidence that supports the question while retaining its limits and maturity.",
+      "Trace cited observations and keep source quality, maturity, and missing evidence visible.",
     state: "emerging",
     metadata: "EVIDENCE · MATURITY",
     context: "Available clinical and scientific record",
@@ -51,13 +51,13 @@ const DEFAULT_ITEMS: EvidenceFieldItem[] = [
   },
   {
     id: "translation",
-    label: "Translation",
-    title: "Actionable question",
+    label: "Decision",
+    title: "What remains to be decided?",
     description:
-      "Carry what is known into a decision frame without smoothing over what remains unresolved.",
+      "Use the evidence to frame the next diligence question without turning an incomplete record into a conclusion.",
     state: "unresolved",
-    metadata: "PATHWAY · NEXT STEP",
-    context: "Decision pathway and remaining diligence",
+    metadata: "DECISION · NEXT STEP",
+    context: "Next diligence step or decision question",
     confidence: "emerging",
   },
 ];
@@ -189,9 +189,9 @@ export function EvidenceField({
       <footer className={styles.method}>
         <p>
           <span className={styles.methodLabel}>Method</span>{" "}
-          — Question → evidence → explicit uncertainty → action.
+          — Question → evidence → uncertainty → next step.
         </p>
-        <p>Structural prototype; color and imagery deferred.</p>
+        <p>Every step should remain traceable to the underlying record.</p>
       </footer>
     </section>
   );
