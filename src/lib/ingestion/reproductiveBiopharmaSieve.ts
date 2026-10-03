@@ -49,9 +49,11 @@ export function runInstitutionalFertilitySieve(
   return db.flatMap((deal) => {
     const description = deal.description.toLowerCase();
     const consumerNoiseDetected = REPRODUCTIVE_CONSUMER_FLAGS.some((flag) =>
-      description.includes(flag)
+      description.includes(flag),
     );
-    const consumerType = ["Retail Clinics", "Consumer App"].includes(deal.type);
+    const consumerType = ["Retail Clinics", "Consumer App"].includes(
+      deal.type,
+    );
 
     if (consumerNoiseDetected || consumerType) {
       return [];
