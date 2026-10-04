@@ -57,8 +57,7 @@
 
 .panelList {
   display: grid;
-  grid-template-columns:
-    minmax(0, 0.9fr) minmax(0, 1.2fr) minmax(0, 0.9fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr) minmax(0, 0.9fr);
   gap: clamp(0.875rem, 2vw, 1.5rem);
   align-items: stretch;
   padding: 0;
@@ -66,13 +65,35 @@
   list-style: none;
 }
 
-.panelItem { position: relative;
+.panelItem {
+  position: relative;
   min-inline-size: 0;
 }
 
-.panelItem:not(:last-child)::after { position: absolute; inset-block-start: 50%; inset-inline-end: -1rem; inline-size: 0.9rem; border-block-start: 1px solid currentColor; content: ""; opacity: 0.4; transform: translateY(-50%); }
+.panelItem:not(:last-child)::after {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: -1rem;
+  inline-size: 0.9rem;
+  border-block-start: 1px solid currentColor;
+  content: "";
+  opacity: 0.4;
+  transform: translateY(-50%);
+}
 
-.panelItem:not(:last-child)::before { position: absolute; z-index: 1; inset-block-start: calc(50% - 0.18rem); inset-inline-end: -1rem; inline-size: 0.35rem; block-size: 0.35rem; border-block-start: 1px solid currentColor; border-inline-end: 1px solid currentColor; content: ""; opacity: 0.55; transform: translateX(0.02rem) rotate(45deg); }
+.panelItem:not(:last-child)::before {
+  position: absolute;
+  z-index: 1;
+  inset-block-start: calc(50% - 0.18rem);
+  inset-inline-end: -1rem;
+  inline-size: 0.35rem;
+  block-size: 0.35rem;
+  border-block-start: 1px solid currentColor;
+  border-inline-end: 1px solid currentColor;
+  content: "";
+  opacity: 0.55;
+  transform: translateX(0.02rem) rotate(45deg);
+}
 
 .panel {
   display: grid;
@@ -254,8 +275,6 @@
   border-block: 1px dashed currentColor;
 }
 
-
-
 .uncertaintyLabel,
 .uncertaintyText {
   margin: 0;
@@ -291,14 +310,12 @@
 
 @media (max-width: 72rem) {
   .panelItem:not(:last-child)::after,
-  .panelItem:not(:last-child)::before { display: none; }
-  .panelList {
-    grid-template-columns: 1fr;
-  }
-
-  .panelItem:not(:last-child)::after,
   .panelItem:not(:last-child)::before {
     display: none;
+  }
+
+  .panelList {
+    grid-template-columns: 1fr;
   }
 
   .panel {
