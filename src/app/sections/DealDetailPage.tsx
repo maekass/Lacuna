@@ -138,7 +138,7 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
                 {deal.target.sources.slice(0, 3).map((source) => (
                   <li key={source} className="min-w-0">
                     {(source.startsWith("http://") ||
-                      source.startsWith("https://"))
+                        source.startsWith("https://"))
                       ? (
                         <a
                           href={source}
