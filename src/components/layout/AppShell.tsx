@@ -63,10 +63,18 @@ export default function AppShell({ children }: AppShellProps) {
           {workspace
             ? (
               <div className="border-b border-lacuna-lavender/20 glass-layer-tint">
-                <div className="mx-auto max-w-7xl px-4 py-1.5 sm:px-6">
-                  <p className="text-xs text-lacuna-blue/70 truncate">
-                    {workspace.description}
-                  </p>
+                <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6">
+                  <div className="flex items-start gap-3">
+                    <span className="lacuna-kicker shrink-0 pt-0.5 text-[10px] text-lacuna-plum/70">
+                      You are here
+                    </span>
+                    <p className="max-w-4xl text-sm leading-relaxed text-lacuna-blue/80">
+                      <span className="font-medium text-lacuna-plum">
+                        {workspace.label}
+                      </span>{" "}
+                      — {workspace.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             )
@@ -78,7 +86,7 @@ export default function AppShell({ children }: AppShellProps) {
           >
             {sections.length > 0
               ? (
-                <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[220px_minmax(0,1fr)]">
+                <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[180px_minmax(0,1fr)]">
                   <SectionNav sections={sections} />
                   <div>{children}</div>
                 </div>

@@ -592,19 +592,19 @@
     "reproducible": 47
   },
   "displayProvenance": {
-    "total": 899,
+    "total": 892,
     "covered": 21,
     "exempt": 2,
-    "uncovered": 876,
-    "uncoveredRate": 0.9744160177975528,
+    "uncovered": 869,
+    "uncoveredRate": 0.9742152466367713,
     "topUncoveredFiles": [
-      {
-        "file": "src/components/NetworkAnalysisHonest.tsx",
-        "count": 90
-      },
       {
         "file": "src/components/WhiteSpaceAnalysis.tsx",
         "count": 86
+      },
+      {
+        "file": "src/components/NetworkAnalysisHonest.tsx",
+        "count": 83
       },
       {
         "file": "src/components/StrategicPositioningMap.tsx",
