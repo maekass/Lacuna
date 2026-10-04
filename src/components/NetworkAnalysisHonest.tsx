@@ -350,7 +350,6 @@ export default function NetworkAnalysisHonest() {
               </div>
             </div>
           </div>
-
         </motion.div>
       )}
 
