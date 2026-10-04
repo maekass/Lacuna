@@ -1,7 +1,7 @@
 .section {
   display: grid;
-  gap: clamp(2.5rem, 6vw, 6rem);
-  padding: clamp(1.5rem, 4vw, 4.75rem);
+  gap: clamp(2.25rem, 4vw, 4rem);
+  padding: clamp(1.5rem, 3.5vw, 3.5rem);
   border-block: 1px solid var(--lacuna-border);
 }
 
@@ -42,8 +42,8 @@
 }
 
 .question {
-  max-inline-size: 16ch;
-  font-size: clamp(2.75rem, 6vw, 6.5rem);
+  max-inline-size: 18ch;
+  font-size: clamp(2.5rem, 5vw, 5.25rem);
   line-height: 0.96;
 }
 
@@ -51,25 +51,30 @@
   max-inline-size: 42rem;
   margin: 0;
   font-family: var(--font-sans);
-  font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+  font-size: clamp(1rem, 1.35vw, 1.125rem);
   line-height: 1.55;
 }
 
 .panelList {
   display: grid;
   grid-template-columns:
-    minmax(0, 1fr)
-    minmax(0, 1fr)
-    minmax(5rem, 0.35fr)
-    minmax(0, 1fr);
-  gap: clamp(1rem, 2vw, 1.5rem);
+    minmax(0, 0.9fr) minmax(0, 1.2fr) minmax(0, 0.9fr);
+  gap: clamp(0.875rem, 2vw, 1.5rem);
   align-items: stretch;
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
-.panelItem {
+.panelItem { position: relative;
+  min-inline-size: 0;
+}
+
+.panelItem:not(:last-child)::after { position: absolute; inset-block-start: 50%; inset-inline-end: -1rem; inline-size: 0.9rem; border-block-start: 1px solid currentColor; content: ""; opacity: 0.4; transform: translateY(-50%); }
+
+.panelItem:not(:last-child)::before { position: absolute; z-index: 1; inset-block-start: calc(50% - 0.18rem); inset-inline-end: -1rem; inline-size: 0.35rem; block-size: 0.35rem; border-block-start: 1px solid currentColor; border-inline-end: 1px solid currentColor; content: ""; opacity: 0.55; transform: translateX(0.02rem) rotate(45deg); }
+
+
   position: relative;
   min-inline-size: 0;
 }
@@ -174,7 +179,7 @@
   display: grid;
   align-content: start;
   gap: 1.25rem;
-  padding: 1.5rem;
+  padding: 1.25rem;
 }
 
 .panelHeading,
@@ -200,14 +205,14 @@
 }
 
 .title {
-  font-size: clamp(1.875rem, 2.7vw, 2.75rem);
+  font-size: clamp(1.65rem, 2.35vw, 2.35rem);
   line-height: 1.02;
 }
 
 .description {
   margin: 0;
   font-family: var(--font-sans);
-  font-size: 1rem;
+  font-size: 0.9375rem;
   line-height: 1.55;
 }
 
@@ -215,7 +220,7 @@
   display: grid;
   gap: 0.75rem;
   margin: 0;
-  padding-block-start: 1rem;
+  padding-block-start: 0.875rem;
   border-block-start: 1px solid var(--lacuna-border-subtle);
 }
 
@@ -232,12 +237,12 @@
 }
 
 .evidenceMeta dt {
-  font-size: 0.625rem;
+  font-size: 0.6rem;
 }
 
 .evidenceMeta dd {
   font-family: var(--font-sans);
-  font-size: 0.8125rem;
+  font-size: 0.78rem;
   line-height: 1.45;
 }
 
@@ -249,14 +254,14 @@
 
 .panelFooter {
   gap: 0.5rem 1rem;
-  padding-block-start: 1rem;
+  padding-block-start: 0.875rem;
   margin-block-start: auto;
   border-block-start: 1px solid var(--lacuna-border-subtle);
 }
 
 .metadata,
 .state {
-  font-size: 0.625rem;
+  font-size: 0.6rem;
   line-height: 1.5;
 }
 
@@ -267,31 +272,9 @@
   text-align: end;
 }
 
-.uncertainty {
-  display: grid;
-  gap: 0.45rem;
-  padding: 0.8rem 0.9rem;
-  border-block: 1px dashed currentColor;
-}
+.uncertainty { display: grid; gap: 0.45rem; padding: 0.8rem 0.9rem; border-block: 1px dashed currentColor; }
 
-.uncertainty::before,
-.uncertainty::after {
-  position: absolute;
-  inset-inline-start: 50%;
-  inline-size: 1px;
-  block-size: clamp(2.5rem, 7vw, 6rem);
-  background: currentColor;
-  content: "";
-  opacity: 0.35;
-}
 
-.uncertainty::before {
-  inset-block-end: 100%;
-}
-
-.uncertainty::after {
-  inset-block-start: 100%;
-}
 
 .uncertaintyLabel,
 .uncertaintyText {
@@ -301,12 +284,12 @@
 }
 
 .uncertaintyLabel {
-  font-size: 0.625rem;
+  font-size: 0.6rem;
 }
 
 .uncertaintyText {
   font-family: var(--font-sans);
-  font-size: 0.8125rem;
+  font-size: 0.78rem;
   line-height: 1.5;
 }
 
@@ -316,7 +299,7 @@
   gap: 0.75rem 2rem;
   align-items: baseline;
   justify-content: space-between;
-  padding-block-start: 1rem;
+  padding-block-start: 0.875rem;
   border-block-start: 1px solid var(--lacuna-border);
 }
 
@@ -329,6 +312,8 @@
 }
 
 @media (max-width: 72rem) {
+  .panelItem:not(:last-child)::after,
+  .panelItem:not(:last-child)::before { display: none; }
   .panelList {
     grid-template-columns: 1fr;
   }
