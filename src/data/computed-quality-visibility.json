@@ -599,12 +599,12 @@
     "uncoveredRate": 0.9742152466367713,
     "topUncoveredFiles": [
       {
-        "file": "src/components/NetworkAnalysisHonest.tsx",
-        "count": 83
-      },
-      {
         "file": "src/components/WhiteSpaceAnalysis.tsx",
         "count": 86
+      },
+      {
+        "file": "src/components/NetworkAnalysisHonest.tsx",
+        "count": 83
       },
       {
         "file": "src/components/StrategicPositioningMap.tsx",
