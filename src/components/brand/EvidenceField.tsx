@@ -129,11 +129,11 @@ export function EvidenceField({
                       <div>
                         <dt>Source</dt>
                         <dd>
-                          {item.source.href ? (
-                            <a href={item.source.href}>{item.source.label}</a>
-                          ) : (
-                            item.source.label
-                          )}
+                          {item.source.href
+                            ? <a href={item.source.href}>{item.source.label}</a>
+                            : (
+                              item.source.label
+                            )}
                         </dd>
                       </div>
                     )}
