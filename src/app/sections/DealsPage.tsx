@@ -164,7 +164,8 @@ export default function DealsPage() {
           <span className="inline-flex items-center gap-2">
             Advanced deal analysis
             <span className="text-xs font-normal text-lacuna-text-muted">
-              comparables, network diagnostics, acquirer patterns, outcomes, and historical context
+              comparables, network diagnostics, acquirer patterns, outcomes, and
+              historical context
             </span>
           </span>
         </summary>
@@ -176,7 +177,7 @@ export default function DealsPage() {
             />
             <QuantValuationPanel />
           </MotionSection>
-    
+
           <MotionSection id="network-analysis" delay={0.2} className={SECTION}>
             <SectionHeader
               title="A Closer Look at the Network"
@@ -184,7 +185,7 @@ export default function DealsPage() {
             />
             <NetworkAnalysisHonest />
           </MotionSection>
-    
+
           <MotionSection id="competitive-analysis" delay={0.22} className={SECTION}>
             <SectionHeader
               title="Getting to Know the Acquirers"
@@ -192,7 +193,7 @@ export default function DealsPage() {
             />
             <CompetitiveAnalysisDashboard />
           </MotionSection>
-    
+
           <MotionSection id="validation-tracker" delay={0.24} className={SECTION}>
             <SectionHeader
               title="Did the Deal Deliver?"
@@ -200,7 +201,7 @@ export default function DealsPage() {
             />
             <ValidationTracker />
           </MotionSection>
-    
+
           <MotionSection id="descriptive-scoring" delay={0.26} className={SECTION}>
             <SectionHeader
               title="Finding Companies Like Each Other"
@@ -208,7 +209,7 @@ export default function DealsPage() {
             />
             <CompanySimilarity />
           </MotionSection>
-    
+
           <MotionSection id="similarity-indicators" className={SECTION}>
             <SectionHeader
               title="Exit Similarity Explorer"
@@ -216,7 +217,7 @@ export default function DealsPage() {
             />
             <ExitPredictor />
           </MotionSection>
-    
+
           <MotionSection id="white-space-analysis" delay={0.28} className={SECTION}>
             <SectionHeader
               title="White Space Analysis"
@@ -224,7 +225,7 @@ export default function DealsPage() {
             />
             <WhiteSpaceAnalysis />
           </MotionSection>
-    
+
           <MotionSection id="survival-analysis" delay={0.30} className={SECTION}>
             <SectionHeader
               title="Time from founding to announcement"
@@ -232,7 +233,7 @@ export default function DealsPage() {
             />
             <SurvivalCurve />
           </MotionSection>
-    
+
         </div>
       </details>
     </div>
