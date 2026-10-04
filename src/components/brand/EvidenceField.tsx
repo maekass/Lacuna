@@ -28,7 +28,7 @@ const DEFAULT_ITEMS: EvidenceFieldItem[] = [
   {
     id: "need",
     label: "Question",
-    title: "What needs explaining?",
+    title: "What are we trying to know?",
     description:
       "Start with the clinical or commercial question, and name the population, asset, or event you are trying to understand.",
     state: "observed",
@@ -39,7 +39,7 @@ const DEFAULT_ITEMS: EvidenceFieldItem[] = [
   {
     id: "evidence",
     label: "Evidence",
-    title: "What can the record support?",
+    title: "What does the record support?",
     description:
       "Trace cited observations and keep source quality, maturity, and missing evidence visible.",
     state: "emerging",
@@ -52,9 +52,9 @@ const DEFAULT_ITEMS: EvidenceFieldItem[] = [
   {
     id: "translation",
     label: "Decision",
-    title: "What remains to be decided?",
+    title: "What can we responsibly conclude?",
     description:
-      "Use the evidence to frame the next diligence question without turning an incomplete record into a conclusion.",
+      "Translate the evidence into a bounded conclusion or next diligence step without overstating what the record can support.",
     state: "unresolved",
     metadata: "DECISION · NEXT STEP",
     context: "Next diligence step or decision question",
@@ -166,21 +166,13 @@ export function EvidenceField({
                 </div>
               </article>
             </li>
-
             {index === 1 && (
-              <li
-                className={styles.uncertaintyItem}
-                aria-labelledby={uncertaintyId}
-              >
-                <div className={styles.uncertainty}>
-                  <p className={styles.uncertaintyLabel}>
-                    Explicit uncertainty
-                  </p>
-                  <p id={uncertaintyId} className={styles.uncertaintyText}>
-                    {uncertainty}
-                  </p>
-                </div>
-              </li>
+              <div className={styles.uncertainty} aria-labelledby={uncertaintyId}>
+                <p className={styles.uncertaintyLabel}>Explicit uncertainty</p>
+                <p id={uncertaintyId} className={styles.uncertaintyText}>
+                  {uncertainty}
+                </p>
+              </div>
             )}
           </Fragment>
         ))}
