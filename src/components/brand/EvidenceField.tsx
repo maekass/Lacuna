@@ -94,88 +94,88 @@ export function EvidenceField({
         {items.map((item, index) => (
           <li key={item.id} className={styles.panelItem}>
             <article className={styles.panel}>
-                <div className={styles.cellField} aria-hidden="true">
-                  <span className={`${styles.cell} ${styles.cellOne}`} />
-                  <span className={`${styles.cell} ${styles.cellTwo}`} />
-                  <span className={`${styles.cell} ${styles.cellThree}`} />
-                  <span className={styles.connector} />
-                  <span className={styles.lacuna} />
+              <div className={styles.cellField} aria-hidden="true">
+                <span className={`${styles.cell} ${styles.cellOne}`} />
+                <span className={`${styles.cell} ${styles.cellTwo}`} />
+                <span className={`${styles.cell} ${styles.cellThree}`} />
+                <span className={styles.connector} />
+                <span className={styles.lacuna} />
+              </div>
+
+              <div className={styles.panelContent}>
+                <div className={styles.panelHeading}>
+                  <span className={styles.index}>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className={styles.label}>{item.label}</span>
                 </div>
 
-                <div className={styles.panelContent}>
-                  <div className={styles.panelHeading}>
-                    <span className={styles.index}>
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span className={styles.label}>{item.label}</span>
-                  </div>
+                <h3 className={styles.title}>{item.title}</h3>
+                <p className={styles.description}>{item.description}</p>
 
-                  <h3 className={styles.title}>{item.title}</h3>
-                  <p className={styles.description}>{item.description}</p>
+                {(item.context ||
+                  item.source ||
+                  item.limitation ||
+                  item.confidence) && (
+                  <dl className={styles.evidenceMeta}>
+                    {item.context && (
+                      <div>
+                        <dt>Context</dt>
+                        <dd>{item.context}</dd>
+                      </div>
+                    )}
 
-                  {(item.context ||
-                    item.source ||
-                    item.limitation ||
-                    item.confidence) && (
-                    <dl className={styles.evidenceMeta}>
-                      {item.context && (
-                        <div>
-                          <dt>Context</dt>
-                          <dd>{item.context}</dd>
-                        </div>
-                      )}
+                    {item.source && (
+                      <div>
+                        <dt>Source</dt>
+                        <dd>
+                          {item.source.href ? (
+                            <a href={item.source.href}>{item.source.label}</a>
+                          ) : (
+                            item.source.label
+                          )}
+                        </dd>
+                      </div>
+                    )}
 
-                      {item.source && (
-                        <div>
-                          <dt>Source</dt>
-                          <dd>
-                            {item.source.href ? (
-                              <a href={item.source.href}>{item.source.label}</a>
-                            ) : (
-                              item.source.label
-                            )}
-                          </dd>
-                        </div>
-                      )}
+                    {item.limitation && (
+                      <div>
+                        <dt>Limitation</dt>
+                        <dd>{item.limitation}</dd>
+                      </div>
+                    )}
 
-                      {item.limitation && (
-                        <div>
-                          <dt>Limitation</dt>
-                          <dd>{item.limitation}</dd>
-                        </div>
-                      )}
+                    {item.confidence && (
+                      <div>
+                        <dt>Confidence</dt>
+                        <dd>{item.confidence}</dd>
+                      </div>
+                    )}
+                  </dl>
+                )}
 
-                      {item.confidence && (
-                        <div>
-                          <dt>Confidence</dt>
-                          <dd>{item.confidence}</dd>
-                        </div>
-                      )}
-                    </dl>
-                  )}
-
-                  {index === 1 && (
-                    <div
-                      className={styles.uncertainty}
-                      aria-labelledby={uncertaintyId}
+                {index === 1 && (
+                  <div
+                    className={styles.uncertainty}
+                    aria-labelledby={uncertaintyId}
+                  >
+                    <p className={styles.uncertaintyLabel}>
+                      Explicit uncertainty
+                    </p>
+                    <p
+                      id={uncertaintyId}
+                      className={styles.uncertaintyText}
                     >
-                      <p className={styles.uncertaintyLabel}>
-                        Explicit uncertainty
-                      </p>
-                      <p
-                        id={uncertaintyId}
-                        className={styles.uncertaintyText}
-                      >
-                        {uncertainty}
-                      </p>
-                    </div>
-                  )}
-
-                  <div className={styles.panelFooter}>
-                    <span className={styles.metadata}>{item.metadata}</span>
-                    <span className={styles.state}>State · {item.state}</span>
+                      {uncertainty}
+                    </p>
                   </div>
+                )}
+
+                <div className={styles.panelFooter}>
+                  <span className={styles.metadata}>{item.metadata}</span>
+                  <span className={styles.state}>State · {item.state}</span>
                 </div>
+              </div>
             </article>
           </li>
         ))}
