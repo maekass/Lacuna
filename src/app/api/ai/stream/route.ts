@@ -8,7 +8,9 @@ import {
   buildReimbursementInsightPrompt,
   INSIGHTS_SYSTEM_PROMPT,
 } from "@/lib/ai/prompts";
+import { openAgentTurn } from "@/lib/ai/agentAnalytics";
 import {
+  estimateLlmCostUsd,
   gatewayProviderOptions,
   INSIGHTS_GATEWAY_MODEL,
   INSIGHTS_OPENAI_MODEL,
@@ -173,6 +175,46 @@ export async function POST(request: NextRequest) {
     if (opts) (baseParams as Record<string, unknown>).providerOptions = opts;
   }
 
-  const result = streamText(baseParams);
+  const agentTurn = await openAgentTurn("ui-stream", resolved.modelId);
+  const result = streamText({
+    ...baseParams,
+    onFinish: async ({ text, totalUsage }) => {
+      const inputTokens = totalUsage.inputTokens ?? 0;
+      const outputTokens = totalUsage.outputTokens ?? 0;
+      await agentTurn.complete({
+        content: text,
+        inputTokens,
+        outputTokens,
+        totalCostUsd: estimateLlmCostUsd(
+          resolved.modelId,
+          inputTokens,
+          outputTokens,
+        ),
+      });
+    },
+    onError: async ({ error }) => {
+      const message = error instanceof Error
+        ? error.message
+        : "Insight stream failed";
+      await agentTurn.complete({
+        content: message,
+        inputTokens: 0,
+        outputTokens: 0,
+        totalCostUsd: 0,
+        isError: true,
+        errorMessage: message,
+      });
+    },
+    onAbort: async () => {
+      await agentTurn.complete({
+        content: "[Insight stream aborted]",
+        inputTokens: 0,
+        outputTokens: 0,
+        totalCostUsd: 0,
+        isError: true,
+        errorMessage: "Stream aborted",
+      });
+    },
+  });
   return result.toTextStreamResponse();
 }
