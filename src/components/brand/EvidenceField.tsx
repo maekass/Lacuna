@@ -93,7 +93,7 @@ export function EvidenceField({
       <ol className={styles.panelList}>
         {items.map((item, index) => (
           <li key={item.id} className={styles.panelItem}>
-              <article className={styles.panel}>
+            <article className={styles.panel}>
                 <div className={styles.cellField} aria-hidden="true">
                   <span className={`${styles.cell} ${styles.cellOne}`} />
                   <span className={`${styles.cell} ${styles.cellTwo}`} />
@@ -176,7 +176,7 @@ export function EvidenceField({
                     <span className={styles.state}>State · {item.state}</span>
                   </div>
                 </div>
-              </article>
+            </article>
           </li>
         ))}
       </ol>
