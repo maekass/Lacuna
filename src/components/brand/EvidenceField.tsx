@@ -1,4 +1,4 @@
-import { Fragment, useId } from "react";
+import { useId } from "react";
 import styles from "./EvidenceField.module.css";
 
 export type EvidenceFieldItem = {
@@ -92,8 +92,7 @@ export function EvidenceField({
 
       <ol className={styles.panelList}>
         {items.map((item, index) => (
-          <Fragment key={item.id}>
-            <li className={styles.panelItem}>
+          <li key={item.id} className={styles.panelItem}>
               <article className={styles.panel}>
                 <div className={styles.cellField} aria-hidden="true">
                   <span className={`${styles.cell} ${styles.cellOne}`} />
@@ -130,15 +129,11 @@ export function EvidenceField({
                         <div>
                           <dt>Source</dt>
                           <dd>
-                            {item.source.href
-                              ? (
-                                <a href={item.source.href}>
-                                  {item.source.label}
-                                </a>
-                              )
-                              : (
-                                item.source.label
-                              )}
+                            {item.source.href ? (
+                              <a href={item.source.href}>{item.source.label}</a>
+                            ) : (
+                              item.source.label
+                            )}
                           </dd>
                         </div>
                       )}
@@ -160,9 +155,17 @@ export function EvidenceField({
                   )}
 
                   {index === 1 && (
-                    <div className={styles.uncertainty} aria-labelledby={uncertaintyId}>
-                      <p className={styles.uncertaintyLabel}>Explicit uncertainty</p>
-                      <p id={uncertaintyId} className={styles.uncertaintyText}>
+                    <div
+                      className={styles.uncertainty}
+                      aria-labelledby={uncertaintyId}
+                    >
+                      <p className={styles.uncertaintyLabel}>
+                        Explicit uncertainty
+                      </p>
+                      <p
+                        id={uncertaintyId}
+                        className={styles.uncertaintyText}
+                      >
                         {uncertainty}
                       </p>
                     </div>
@@ -174,8 +177,7 @@ export function EvidenceField({
                   </div>
                 </div>
               </article>
-            </li>
-          </Fragment>
+          </li>
         ))}
       </ol>
 
