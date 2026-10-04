@@ -69,22 +69,47 @@
   list-style: none;
 }
 
-.panelItem,
-.uncertaintyItem {
+.panelItem {
+  position: relative;
   min-inline-size: 0;
+}
+
+.panelItem:not(:last-child)::after {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: -1rem;
+  inline-size: 0.9rem;
+  border-block-start: 1px solid currentColor;
+  content: "";
+  opacity: 0.4;
+  transform: translateY(-50%);
+}
+
+.panelItem:not(:last-child)::before {
+  position: absolute;
+  z-index: 1;
+  inset-block-start: calc(50% - 0.18rem);
+  inset-inline-end: -1rem;
+  inline-size: 0.35rem;
+  block-size: 0.35rem;
+  border-block-start: 1px solid currentColor;
+  border-inline-end: 1px solid currentColor;
+  content: "";
+  opacity: 0.55;
+  transform: translateX(0.02rem) rotate(45deg);
 }
 
 .panel {
   display: grid;
-  min-block-size: 34rem;
+  min-block-size: 25rem;
   block-size: 100%;
-  grid-template-rows: minmax(16rem, 1fr) auto;
+  grid-template-rows: 8rem 1fr;
   border: 1px solid var(--lacuna-border);
 }
 
 .cellField {
   position: relative;
-  min-block-size: 16rem;
+  min-block-size: 8rem;
   overflow: hidden;
   border-block-end: 1px solid var(--lacuna-border-subtle);
 }
@@ -242,18 +267,10 @@
   text-align: end;
 }
 
-.uncertaintyItem {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .uncertainty {
-  position: relative;
   display: grid;
-  gap: 0.75rem;
-  inline-size: 100%;
-  padding-block: 1.25rem;
+  gap: 0.45rem;
+  padding: 0.8rem 0.9rem;
   border-block: 1px dashed currentColor;
 }
 
@@ -278,8 +295,9 @@
 
 .uncertaintyLabel,
 .uncertaintyText {
-  margin: 0;
-  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  line-height: 1.45;
 }
 
 .uncertaintyLabel {
@@ -315,17 +333,18 @@
     grid-template-columns: 1fr;
   }
 
-  .uncertaintyItem {
-    min-block-size: 8rem;
+  .panelItem:not(:last-child)::after,
+  .panelItem:not(:last-child)::before {
+    display: none;
   }
 
-  .uncertainty {
-    max-inline-size: 28rem;
+  .panel {
+    min-block-size: 0;
+    grid-template-rows: 7rem auto;
   }
 
-  .uncertainty::before,
-  .uncertainty::after {
-    block-size: 2rem;
+  .cellField {
+    min-block-size: 7rem;
   }
 }
 
