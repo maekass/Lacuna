@@ -186,7 +186,11 @@ export default function DealsPage() {
             <NetworkAnalysisHonest />
           </MotionSection>
 
-          <MotionSection id="competitive-analysis" delay={0.22} className={SECTION}>
+          <MotionSection
+            id="competitive-analysis"
+            delay={0.22}
+            className={SECTION}
+          >
             <SectionHeader
               title="Getting to Know the Acquirers"
               description="Who's been most active, what are they building, and how do their strategies compare?"
@@ -194,7 +198,11 @@ export default function DealsPage() {
             <CompetitiveAnalysisDashboard />
           </MotionSection>
 
-          <MotionSection id="validation-tracker" delay={0.24} className={SECTION}>
+          <MotionSection
+            id="validation-tracker"
+            delay={0.24}
+            className={SECTION}
+          >
             <SectionHeader
               title="Did the Deal Deliver?"
               description="Checking in on what happened after the acquisition — did the outcomes match the promise?"
@@ -202,7 +210,11 @@ export default function DealsPage() {
             <ValidationTracker />
           </MotionSection>
 
-          <MotionSection id="descriptive-scoring" delay={0.26} className={SECTION}>
+          <MotionSection
+            id="descriptive-scoring"
+            delay={0.26}
+            className={SECTION}
+          >
             <SectionHeader
               title="Finding Companies Like Each Other"
               description="Which women's health companies share similar profiles? Explore natural groupings and see how they compare."
@@ -218,7 +230,11 @@ export default function DealsPage() {
             <ExitPredictor />
           </MotionSection>
 
-          <MotionSection id="white-space-analysis" delay={0.28} className={SECTION}>
+          <MotionSection
+            id="white-space-analysis"
+            delay={0.28}
+            className={SECTION}
+          >
             <SectionHeader
               title="White Space Analysis"
               description="Sectors with high company density but low M&A activity — where the next wave may form."
@@ -226,7 +242,11 @@ export default function DealsPage() {
             <WhiteSpaceAnalysis />
           </MotionSection>
 
-          <MotionSection id="survival-analysis" delay={0.30} className={SECTION}>
+          <MotionSection
+            id="survival-analysis"
+            delay={0.30}
+            className={SECTION}
+          >
             <SectionHeader
               title="Time from founding to announcement"
               description="Descriptive Kaplan-Meier curves on verified founding years and announcement dates in this curated set. No hypothesis test is published."
