@@ -159,6 +159,15 @@ export function EvidenceField({
                     </dl>
                   )}
 
+                  {index === 1 && (
+                    <div className={styles.uncertainty} aria-labelledby={uncertaintyId}>
+                      <p className={styles.uncertaintyLabel}>Explicit uncertainty</p>
+                      <p id={uncertaintyId} className={styles.uncertaintyText}>
+                        {uncertainty}
+                      </p>
+                    </div>
+                  )}
+
                   <div className={styles.panelFooter}>
                     <span className={styles.metadata}>{item.metadata}</span>
                     <span className={styles.state}>State · {item.state}</span>
@@ -166,14 +175,6 @@ export function EvidenceField({
                 </div>
               </article>
             </li>
-            {index === 1 && (
-              <div className={styles.uncertainty} aria-labelledby={uncertaintyId}>
-                <p className={styles.uncertaintyLabel}>Explicit uncertainty</p>
-                <p id={uncertaintyId} className={styles.uncertaintyText}>
-                  {uncertainty}
-                </p>
-              </div>
-            )}
           </Fragment>
         ))}
       </ol>
