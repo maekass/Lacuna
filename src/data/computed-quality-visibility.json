@@ -600,7 +600,7 @@
     "topUncoveredFiles": [
       {
         "file": "src/components/NetworkAnalysisHonest.tsx",
-        "count": 89
+        "count": 83
       },
       {
         "file": "src/components/WhiteSpaceAnalysis.tsx",
