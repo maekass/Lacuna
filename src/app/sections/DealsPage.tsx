@@ -253,7 +253,6 @@ export default function DealsPage() {
             />
             <SurvivalCurve />
           </MotionSection>
-
         </div>
       </details>
     </div>
