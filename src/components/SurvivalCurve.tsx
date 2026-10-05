@@ -15,6 +15,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as d3 from "d3";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import { COMPANY_YEAR_PANEL_LIMIT } from "@/lib/data/foundingYearPolicy";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { type KMResult, stratifiedKM } from "@/lib/stats/survival";
 
@@ -247,8 +248,10 @@ export default function SurvivalCurve() {
           Kaplan-Meier curve on this curated set · origin = founding year ·
           event = acquisition announcement · companies without an announcement
           stay in the curve through{" "}
-          {REFERENCE_YEAR}. Shaded bands are Greenwood intervals for these rows.
-          Tick marks are companies still unacquired in the dataset.
+          {REFERENCE_YEAR}. The curve keeps top sectors whose founding year is
+          after 1990. {COMPANY_YEAR_PANEL_LIMIT}{" "}
+          Shaded bands are Greenwood intervals for these rows. Tick marks are
+          companies still unacquired in the dataset.
         </p>
       </div>
 
@@ -334,7 +337,7 @@ export default function SurvivalCurve() {
         <div>
           <span className="font-medium text-lacuna-plum">n = {totalN}</span>
           <span className="text-lacuna-blue/60 ml-1">
-            companies with known founding year
+            companies in this curve (known year after 1990, top sectors)
           </span>
         </div>
         <div>
@@ -361,8 +364,11 @@ export default function SurvivalCurve() {
       </div>
 
       <p className="mt-3 text-[11px] text-lacuna-blue/40 leading-relaxed">
-        These curves count verified companies with a known founding year. They
-        are not a sample of the market, and no hypothesis test is shown.
+        These curves count a subset of verified companies: a known founding year
+        after 1990, in the sectors with the most announcements here. Companies
+        with no founding year are excluded, not imputed.{" "}
+        {COMPANY_YEAR_PANEL_LIMIT}{" "}
+        They are not a sample of the market, and no hypothesis test is shown.
       </p>
     </div>
   );
