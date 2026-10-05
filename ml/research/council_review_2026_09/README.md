@@ -29,5 +29,6 @@ hypothetical AUC of 0.70 with 12 events and 40 non-events. See the roadmap's
 using any figure.
 
 This folder is research documentation. It is not imported by `src/`,
-`ml/clinical_trials/`, or `ml/lacuna_ml/`, and it must not be used to re-enable
-anything under `src/lib/ml/_quarantine/`.
+`ml/clinical_trials/`, or `ml/lacuna_ml/`. Do not import it from the Next.js
+app, and do not use it to restore the removed untrained browser predictor
+described in `docs/INFERENCE.md`.
