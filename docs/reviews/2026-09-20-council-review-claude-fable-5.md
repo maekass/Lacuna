@@ -9,6 +9,9 @@ Follow-up analysis and roadmap: docs/plans/evidence-to-decision-roadmap.md
 
 # Council review (Claude Fable 5): "Don't un-quarantine the ML" — is the argument statistically right?
 
+> **Follow-up.** The untrained browser stub this review refused to ship was
+> later deleted. Do not restore it. See [INFERENCE.md](../INFERENCE.md).
+
 **Scope.** Independent, adversarial evaluation of the methodological memo about
 Lacuna (≈150 verified women's-health companies, ≈58 acquisition events, 8-D
 similarity vectors, quarantined TF.js "acquisition likelihood" model). Every

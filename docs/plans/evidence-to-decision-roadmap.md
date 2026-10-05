@@ -142,14 +142,15 @@ The similarity code uses one dimension per sector plus six additional
 dimensions, including acquired status, rather than a universally fixed
 eight-dimensional vector
 ([CompanySimilarity implementation](https://github.com/maekass/Lacuna/blob/5bddc415dfd57bd5bf1c417ed7d9e5c59040c7a3/src/components/CompanySimilarity.tsx)).
-Do not relabel every output “8-D cosine similarity”: the weighted indicator,
-similarity retrieval, and quarantined ML demo are different mechanisms.
+Do not relabel every output “8-D cosine similarity”: the weighted indicator and
+similarity retrieval are different mechanisms from the browser demo that has
+since been deleted.
 
 Recommended treatment: remove or reframe the unsupported indicator; retain
-evaluated retrieval for an explicitly defined comparison task; leave the legacy
-predictive demo quarantined. An acquired-status feature may be appropriate for
-descriptive grouping, but must not leak into a pre-acquisition forecasting
-experiment.
+evaluated retrieval for an explicitly defined comparison task. The legacy
+predictive demo was an untrained browser stub and has been deleted; do not
+restore it. An acquired-status feature may be appropriate for descriptive
+grouping, but must not leak into a pre-acquisition forecasting experiment.
 
 ### “Descriptive” does not make a biased event rate valid
 
