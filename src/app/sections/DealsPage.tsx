@@ -3,7 +3,6 @@
 import { Suspense, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import {
-  ClusteringAnalysis,
   CompanySimilarity,
   CompetitiveAnalysisDashboard,
   DealFlowChart,
@@ -162,72 +161,102 @@ export default function DealsPage() {
         <ValuationMatrix />
       </MotionSection>
 
-      <MotionSection id="quant-valuation" className={SECTION}>
-        <SectionHeader
-          title="Comparable context & historical acquisition-pattern similarity"
-          description="Deterministic context engine. Heuristic comparable context and a unitless historical acquisition-pattern similarity. Not a calibrated probability and not a five-year forecast. Outcome-only stage labels are withheld."
-        />
-        <QuantValuationPanel />
-      </MotionSection>
+      <details className="mb-16 overflow-hidden rounded-2xl border border-lacuna-border bg-white/80 shadow-sm">
+        <summary className="cursor-pointer list-none px-5 py-4 text-sm font-semibold text-lacuna-plum sm:px-6 sm:py-5">
+          <span className="inline-flex items-center gap-2">
+            Advanced deal analysis
+            <span className="text-xs font-normal text-lacuna-text-muted">
+              comparables, network diagnostics, acquirer patterns, outcomes, and
+              historical context
+            </span>
+          </span>
+        </summary>
+        <div className="border-t border-lacuna-border px-4 py-6 sm:px-6">
+          <MotionSection id="quant-valuation" className={SECTION}>
+            <SectionHeader
+              title="Comparable context & historical acquisition-pattern similarity"
+              description="Deterministic context engine. Heuristic comparable context and a unitless historical acquisition-pattern similarity. Not a calibrated probability and not a five-year forecast. Outcome-only stage labels are withheld."
+            />
+            <QuantValuationPanel />
+          </MotionSection>
 
-      <MotionSection id="network-analysis" delay={0.2} className={SECTION}>
-        <SectionHeader
-          title="A Closer Look at the Network"
-          description="How concentrated is the acquirer landscape? Honest statistical measures with transparent confidence intervals."
-        />
-        <NetworkAnalysisHonest />
-      </MotionSection>
+          <MotionSection id="network-analysis" delay={0.2} className={SECTION}>
+            <SectionHeader
+              title="A Closer Look at the Network"
+              description="How concentrated is the acquirer landscape? Honest statistical measures with transparent confidence intervals."
+            />
+            <NetworkAnalysisHonest />
+          </MotionSection>
 
-      <MotionSection id="competitive-analysis" delay={0.22} className={SECTION}>
-        <SectionHeader
-          title="Getting to Know the Acquirers"
-          description="Who's been most active, what are they building, and how do their strategies compare?"
-        />
-        <CompetitiveAnalysisDashboard />
-      </MotionSection>
+          <MotionSection
+            id="competitive-analysis"
+            delay={0.22}
+            className={SECTION}
+          >
+            <SectionHeader
+              title="Getting to Know the Acquirers"
+              description="Who's been most active, what are they building, and how do their strategies compare?"
+            />
+            <CompetitiveAnalysisDashboard />
+          </MotionSection>
 
-      <MotionSection id="validation-tracker" delay={0.24} className={SECTION}>
-        <SectionHeader
-          title="Did the Deal Deliver?"
-          description="Checking in on what happened after the acquisition — did the outcomes match the promise?"
-        />
-        <ValidationTracker />
-      </MotionSection>
+          <MotionSection
+            id="validation-tracker"
+            delay={0.24}
+            className={SECTION}
+          >
+            <SectionHeader
+              title="Did the Deal Deliver?"
+              description="Checking in on what happened after the acquisition — did the outcomes match the promise?"
+            />
+            <ValidationTracker />
+          </MotionSection>
 
-      <MotionSection id="descriptive-scoring" delay={0.26} className={SECTION}>
-        <SectionHeader
-          title="Finding Companies Like Each Other"
-          description="Which women's health companies share similar profiles? Explore natural groupings and see how they compare."
-        />
-        <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2">
-          <CompanySimilarity />
+          <MotionSection
+            id="descriptive-scoring"
+            delay={0.26}
+            className={SECTION}
+          >
+            <SectionHeader
+              title="Finding Companies Like Each Other"
+              description="Which women's health companies share similar profiles? Explore natural groupings and see how they compare."
+            />
+            <CompanySimilarity />
+          </MotionSection>
+
+          <MotionSection id="similarity-indicators" className={SECTION}>
+            <SectionHeader
+              title="Exit Similarity Explorer"
+              description="Deterministic context engine. Ordinal bands from disclosed factor co-occurrence. Acquired companies are a historical baseline; membership in the acquisitions array does not raise data coverage and assumption completeness."
+            />
+            <ExitPredictor />
+          </MotionSection>
+
+          <MotionSection
+            id="white-space-analysis"
+            delay={0.28}
+            className={SECTION}
+          >
+            <SectionHeader
+              title="White Space Analysis"
+              description="Sectors with high company density but low M&A activity — where the next wave may form."
+            />
+            <WhiteSpaceAnalysis />
+          </MotionSection>
+
+          <MotionSection
+            id="survival-analysis"
+            delay={0.30}
+            className={SECTION}
+          >
+            <SectionHeader
+              title="Time from founding to announcement"
+              description="Descriptive Kaplan-Meier curves on verified founding years and announcement dates in this curated set. No hypothesis test is published."
+            />
+            <SurvivalCurve />
+          </MotionSection>
         </div>
-        <ClusteringAnalysis />
-      </MotionSection>
-
-      <MotionSection id="similarity-indicators" className={SECTION}>
-        <SectionHeader
-          title="Exit Similarity Explorer"
-          description="Deterministic context engine. Ordinal bands from disclosed factor co-occurrence. Acquired companies are a historical baseline; membership in the acquisitions array does not raise data coverage and assumption completeness."
-        />
-        <ExitPredictor />
-      </MotionSection>
-
-      <MotionSection id="white-space-analysis" delay={0.28} className={SECTION}>
-        <SectionHeader
-          title="White Space Analysis"
-          description="Sectors with high company density but low M&A activity — where the next wave may form."
-        />
-        <WhiteSpaceAnalysis />
-      </MotionSection>
-
-      <MotionSection id="survival-analysis" delay={0.30} className={SECTION}>
-        <SectionHeader
-          title="Time from founding to announcement"
-          description="Descriptive Kaplan-Meier curves on verified founding years and announcement dates in this curated set. No hypothesis test is published."
-        />
-        <SurvivalCurve />
-      </MotionSection>
+      </details>
     </div>
   );
 }

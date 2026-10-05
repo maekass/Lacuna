@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "total": 899,
+  "total": 892,
   "covered": 21,
   "exempt": 2,
-  "uncovered": 876,
+  "uncovered": 869,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
     "src/app/sections/ConsumerHealthPage.tsx": 6,
@@ -55,7 +55,7 @@
     "src/components/layout/GlobalProvenanceBar.tsx": 1,
     "src/components/layout/SiteFooter.tsx": 1,
     "src/components/MetricEvidence.tsx": 16,
-    "src/components/NetworkAnalysisHonest.tsx": 90,
+    "src/components/NetworkAnalysisHonest.tsx": 83,
     "src/components/ObservedSectorComposition.tsx": 4,
     "src/components/PatientEmpowermentInsight.tsx": 12,
     "src/components/PatientEmpowermentPanel.tsx": 22,
@@ -4479,62 +4479,6 @@
       "expression": "stats .stability.recommendedSampleSize",
       "kind": "numeric-jsx",
       "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats .stability.recommendedSampleSize",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/NetworkAnalysisHonest.tsx",
-      "functionName": "NetworkAnalysisHonest",
-      "expression": "stats.clustering.average.toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.clustering.average.toFixed(3)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/NetworkAnalysisHonest.tsx",
-      "functionName": "NetworkAnalysisHonest",
-      "expression": "stats.clustering.average.toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.clustering.average.toFixed(3)#2",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/NetworkAnalysisHonest.tsx",
-      "functionName": "NetworkAnalysisHonest",
-      "expression": "stats.clustering.bootstrap.lower.toFixed( 3, )",
-      "kind": "formatting-call",
-      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.clustering.bootstrap.lower.toFixed( 3, )",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/NetworkAnalysisHonest.tsx",
-      "functionName": "NetworkAnalysisHonest",
-      "expression": "stats.clustering.bootstrap.lower.toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.clustering.bootstrap.lower.toFixed(3)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/NetworkAnalysisHonest.tsx",
-      "functionName": "NetworkAnalysisHonest",
-      "expression": "stats.clustering.bootstrap.numSamples",
-      "kind": "numeric-jsx",
-      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.clustering.bootstrap.numSamples",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/NetworkAnalysisHonest.tsx",
-      "functionName": "NetworkAnalysisHonest",
-      "expression": "stats.clustering.bootstrap.upper.toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.clustering.bootstrap.upper.toFixed(3)",
-      "class": "uncovered"
-    },
-    {
-      "file": "src/components/NetworkAnalysisHonest.tsx",
-      "functionName": "NetworkAnalysisHonest",
-      "expression": "stats.clustering.bootstrap.upper.toFixed(3)",
-      "kind": "formatting-call",
-      "key": "src/components/NetworkAnalysisHonest.tsx::NetworkAnalysisHonest::stats.clustering.bootstrap.upper.toFixed(3)#2",
       "class": "uncovered"
     },
     {

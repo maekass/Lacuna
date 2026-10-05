@@ -59,6 +59,11 @@ export default function SectionNav({ sections }: SectionNavProps) {
     return () => observer.disconnect();
   }, [sections]);
 
+  const activeLabel =
+    sections.find((section) => section.id === activeId)?.label ??
+      sections[0]?.label ??
+      "Sections";
+
   const list = (onNavigate?: () => void) => (
     <ul className="space-y-1">
       {sections.map((section) => (
@@ -79,22 +84,30 @@ export default function SectionNav({ sections }: SectionNavProps) {
       <div className="lg:hidden mb-4">
         <MobileSheetNav
           title="On this page"
-          triggerLabel="Sections"
+          triggerLabel={`Sections · ${activeLabel}`}
         >
           <nav aria-label="Page sections">{list()}</nav>
         </MobileSheetNav>
       </div>
 
       <aside className="hidden lg:block">
-        <nav
-          aria-label="Page sections"
-          className="sticky top-20 max-h-[calc(100vh-8rem)] overflow-y-auto rounded-xl border border-lacuna-lavender/30 bg-lacuna-surface/80 p-3 backdrop-blur-sm"
-        >
-          <p className="lacuna-kicker mb-2 px-2 text-[10px] text-lacuna-blue/70">
-            On this page
-          </p>
-          {list()}
-        </nav>
+        <details className="sticky top-20 rounded-xl border border-lacuna-lavender/30 bg-lacuna-surface/90 p-2 backdrop-blur-sm">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm font-medium text-lacuna-plum [&::-webkit-details-marker]:hidden">
+            <span>
+              <span className="lacuna-kicker block text-[10px] text-lacuna-blue/70">
+                On this page
+              </span>
+              <span className="mt-0.5 block">{activeLabel}</span>
+            </span>
+            <span aria-hidden="true" className="text-xs">⌄</span>
+          </summary>
+          <nav
+            aria-label="Page sections"
+            className="mt-1 max-h-[calc(100vh-10rem)] overflow-y-auto border-t border-lacuna-lavender/20 pt-1"
+          >
+            {list()}
+          </nav>
+        </details>
       </aside>
     </>
   );

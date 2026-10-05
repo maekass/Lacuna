@@ -23,6 +23,16 @@ const EVIDENCE_CLASS_LABELS: Record<string, string> = {
   portfolio_investment: "Portfolio investment",
 };
 
+function sourceLabel(source: string): string {
+  try {
+    const hostname = new URL(source).hostname.replace(/^www\./, "");
+    if (hostname === "sec.gov") return "SEC";
+    return hostname;
+  } catch {
+    return source;
+  }
+}
+
 function briefFileName(
   target: string,
   acquirer: string,
@@ -126,7 +136,25 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
             ? (
               <ul className="mt-2 list-disc space-y-0.5 pl-4 text-[11px] text-lacuna-blue/70">
                 {deal.target.sources.slice(0, 3).map((source) => (
-                  <li key={source}>{source}</li>
+                  <li key={source} className="min-w-0">
+                    {(source.startsWith("http://") ||
+                        source.startsWith("https://"))
+                      ? (
+                        <a
+                          href={source}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex max-w-full items-center gap-1 truncate text-lacuna-blue hover:text-lacuna-plum hover:underline"
+                          title={source}
+                        >
+                          <span className="truncate">
+                            {sourceLabel(source)}
+                          </span>
+                          <span aria-hidden="true">↗</span>
+                        </a>
+                      )
+                      : <span>{source}</span>}
+                  </li>
                 ))}
               </ul>
             )
