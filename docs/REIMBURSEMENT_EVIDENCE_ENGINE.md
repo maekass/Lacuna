@@ -183,3 +183,28 @@ outputs are used in decision-grade workflows, they should be audited and either:
 
 The evidence engine should become the authoritative reimbursement layer over
 time.
+
+## Precedent comparator layer
+
+A complementary precedent layer is defined in
+[`REIMBURSEMENT_PRECEDENT_LAYER.md`](./REIMBURSEMENT_PRECEDENT_LAYER.md).
+
+Its role is to classify an observed women's-health financing or reimbursement
+problem by economic mechanism before choosing an intervention. The initial
+framework separates payer mix, cognitive-vs-procedural valuation, and standby
+capacity cost, then compares those drivers with documented cases in other
+specialties or markets.
+
+Precedents are **mechanism evidence, not causal substitutes**. A case may show
+that a payment or policy instrument changed economics elsewhere; it does not
+establish that the same instrument is feasible, sufficient, or desirable in
+women's health. Every comparator must preserve source vintage, verification
+status, transferability limits, and reviewer state.
+
+This creates a more institutional workflow:
+
+`women's-health gap -> confounder decomposition -> comparator precedent -> mechanism -> transferability test -> residual gap -> reviewed action hypothesis`
+
+The seed precedent library is context/intelligence evidence and must not enter
+`dataset.verified.json` or deal economics.
+
