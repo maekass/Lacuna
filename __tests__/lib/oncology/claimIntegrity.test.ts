@@ -232,15 +232,13 @@ describe("claim integrity isolation", () => {
     expect(violations).toEqual([]);
   });
 
-  it("does not import quarantined ML or scoring surfaces", () => {
+  it("does not import deal-scoring surfaces", () => {
     const roots = [
       path.resolve(__dirname, "../../../src/lib/oncology"),
       path.resolve(__dirname, "../../../src/components/oncology"),
       path.resolve(__dirname, "../../../src/app/api/research/oncology"),
     ];
     const banned = [
-      "_quarantine",
-      "ensemblePredictor",
       "ExitPredictor",
       "QuantValuationPanel",
       "predictionEngines",

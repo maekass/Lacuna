@@ -15,6 +15,7 @@ import {
 } from "ai";
 import { openai } from "@ai-sdk/openai";
 import type { z } from "zod";
+import { openAgentTurn } from "@/lib/ai/agentAnalytics";
 import { getModelPricing, type ModelPricing } from "@/lib/ai/modelCatalog";
 import modelRoutes from "@/data/ai-models.routes.json";
 
@@ -239,6 +240,15 @@ export function formatLlmCostHeader(accounting: LlmUsageAccounting): string {
   ].join(";");
 }
 
+function describeInferenceResult(data: unknown): string {
+  if (typeof data === "string") return data;
+  try {
+    return JSON.stringify(data);
+  } catch {
+    return "[Structured model response]";
+  }
+}
+
 async function withInferenceRetry<T>(
   params: GenerateInferenceBaseParams,
   run: (attempt: number, signal: AbortSignal) => Promise<{
@@ -247,42 +257,62 @@ async function withInferenceRetry<T>(
     outputTokens: number;
   }>,
 ): Promise<InferenceCallResult<T>> {
+  const turn = await openAgentTurn(params.feature, params.resolved.modelId);
   const maxRetries = params.maxRetries ?? DEFAULT_INFERENCE_MAX_RETRIES;
   const timeoutMs = params.timeoutMs ?? DEFAULT_INFERENCE_TIMEOUT_MS;
   const baseMs = DEFAULT_INFERENCE_RETRY_BASE_MS;
   const started = Date.now();
   let lastError: unknown;
 
-  for (let attempt = 0; attempt <= maxRetries; attempt++) {
-    const signal = createInferenceAbortSignal(timeoutMs, params.abortSignal);
-    try {
-      const { data, inputTokens, outputTokens } = await run(attempt, signal);
-      const accounting: LlmUsageAccounting = {
-        feature: params.feature,
-        modelId: params.resolved.modelId,
-        inputTokens,
-        outputTokens,
-        estimatedCostUsd: estimateLlmCostUsd(
-          params.resolved.modelId,
+  try {
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      const signal = createInferenceAbortSignal(timeoutMs, params.abortSignal);
+      try {
+        const { data, inputTokens, outputTokens } = await run(attempt, signal);
+        const accounting: LlmUsageAccounting = {
+          feature: params.feature,
+          modelId: params.resolved.modelId,
           inputTokens,
           outputTokens,
-        ),
-        latencyMs: Date.now() - started,
-        attempts: attempt + 1,
-      };
-      recordLlmAccounting(accounting);
-      return { data, accounting };
-    } catch (error) {
-      lastError = error;
-      if (attempt >= maxRetries || !isRetryableInferenceError(error)) {
-        throw error;
+          estimatedCostUsd: estimateLlmCostUsd(
+            params.resolved.modelId,
+            inputTokens,
+            outputTokens,
+          ),
+          latencyMs: Date.now() - started,
+          attempts: attempt + 1,
+        };
+        recordLlmAccounting(accounting);
+        await turn.complete({
+          content: describeInferenceResult(data),
+          inputTokens,
+          outputTokens,
+          totalCostUsd: accounting.estimatedCostUsd,
+        });
+        return { data, accounting };
+      } catch (error) {
+        lastError = error;
+        if (attempt >= maxRetries || !isRetryableInferenceError(error)) {
+          throw error;
+        }
+        await sleep(retryDelayMs(attempt, baseMs));
       }
-      await sleep(retryDelayMs(attempt, baseMs));
     }
+    throw lastError instanceof Error
+      ? lastError
+      : new Error("Inference failed after retries");
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Inference failed";
+    await turn.complete({
+      content: message,
+      inputTokens: 0,
+      outputTokens: 0,
+      totalCostUsd: 0,
+      isError: true,
+      errorMessage: message,
+    });
+    throw error;
   }
-  throw lastError instanceof Error
-    ? lastError
-    : new Error("Inference failed after retries");
 }
 
 function providerOptions(
