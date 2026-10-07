@@ -95,6 +95,7 @@ Canonical conventions live in **`AGENTS.md`**. Cursor and Windsurf also load:
 | -------------------------- | ------------------------------------------- |
 | `AGENTS.md`                | Full stack, layout, data rules, CI, commits |
 | `.cursor/rules/lacuna.mdc` | Cursor always-on rule                       |
+| `.cursor/mcp.json`         | 21st.dev MCP (`API_KEY_21ST` in the env)    |
 | `.cursorrules`             | Cursor legacy pointer                       |
 | `.windsurfrules`           | Windsurf pointer                            |
 
@@ -123,6 +124,7 @@ lacuna/
 ├── AGENTS.md
 ├── .cursorrules
 ├── .cursor/rules/lacuna.mdc
+├── .cursor/mcp.json
 ├── .windsurfrules
 ├── docs/                          # Methodology + this guide
 ├── src/
