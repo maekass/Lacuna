@@ -61,7 +61,7 @@ export default function ClaimIntegrityRegistry() {
       <p className="text-xs font-semibold uppercase tracking-wide text-lacuna-blue">
         Evidence consistency
       </p>
-      <h1 className="mt-1 text-3xl font-bold text-lacuna-plum">
+      <h1 className="lacuna-gradient-text mt-1 text-3xl font-bold">
         Oncology Claim-Integrity Monitor
       </h1>
       <p className="mt-3 max-w-3xl text-sm leading-relaxed text-lacuna-blue">
