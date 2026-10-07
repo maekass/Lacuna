@@ -24,6 +24,7 @@
     "validate:dataset": "tsx scripts/validate-dataset.ts",
     "meshic:gate": "tsx scripts/meshic-data-gate.ts --strict",
     "report:selection-provenance": "tsx scripts/report-selection-provenance.ts",
+    "report:founding-years": "tsx scripts/report-founding-year-review.ts",
     "validate:empowerment": "tsx scripts/validate-empowerment.ts",
     "intel:sweep": "tsx scripts/sweep-watchlist.ts",
     "intel:sweep:check": "tsx scripts/sweep-watchlist.ts --check",

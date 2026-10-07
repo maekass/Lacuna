@@ -75,7 +75,7 @@ export function getPromotionCheckItems(
       id: "profile-attestation",
       label: "Sector, HQ, and founded year attested (not inferred)",
       hint:
-        "Reviewer confirmed target/acquirer profile fields — no keyword inference.",
+        "Founded year needs a source URL, source type, access date, evidence locator, reviewer, and an explicit not-inferred attestation.",
       autoPass: false,
     },
     {

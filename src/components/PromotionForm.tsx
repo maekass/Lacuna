@@ -1,5 +1,6 @@
 "use client";
 
+import FoundingYearPromotionFields from "@/components/FoundingYearPromotionFields";
 import { VERIFIED_COMPANY_SECTORS } from "@/lib/data/companySectors";
 import type { ReviewerPromotionFields } from "@/lib/ingestion/buildPromotionDraft";
 
@@ -128,6 +129,7 @@ export default function PromotionForm({
                 className="mt-1 w-full rounded-md border border-lacuna-lavender/50 px-3 py-2 text-sm"
               />
             </div>
+            <FoundingYearPromotionFields value={value} onChange={update} />
             <div>
               <FieldLabel htmlFor="companyStage">Stage (optional)</FieldLabel>
               <input

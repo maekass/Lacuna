@@ -23,6 +23,7 @@ Among rows in `src/data/dataset.verified.json` with a founded year:
 
 - Convenience sample, not a census of women's-health M&A
 - Year-precision times; missing `founded` is exclusion, not imputation
+- Not a company-year panel. Backfill rules: `docs/FOUNDING_YEAR_PROVENANCE.md`
 - Small _n_ per sector; no sector contrasts are estimated
 - No TAM/SAM, keyword risk scores, or PitchBook fallbacks
 

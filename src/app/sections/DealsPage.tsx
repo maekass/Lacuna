@@ -23,6 +23,7 @@ import ReviewConsole from "@/components/ReviewConsole";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import BiotheranosticsDossierLink from "@/components/BiotheranosticsDossierLink";
+import { COMPANY_YEAR_PANEL_LIMIT } from "@/lib/data/foundingYearPolicy";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { useDashboardData } from "@/lib/data/useDashboardData";
 import { empowermentContextForDeal } from "@/lib/deals/empowermentContextForDeal";
@@ -251,7 +252,7 @@ export default function DealsPage() {
           >
             <SectionHeader
               title="Time from founding to announcement"
-              description="Descriptive Kaplan-Meier curves on verified founding years and announcement dates in this curated set. No hypothesis test is published."
+              description={`Descriptive Kaplan-Meier curves for companies in the top sectors with a founding year after 1990. ${COMPANY_YEAR_PANEL_LIMIT} No hypothesis test is published.`}
             />
             <SurvivalCurve />
           </MotionSection>
