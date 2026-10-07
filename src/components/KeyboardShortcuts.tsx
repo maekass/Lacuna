@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 
 const SHORTCUTS = [
+  { keys: ["⌘K"], label: "Search deals and workspaces" },
   { keys: ["?"], label: "Toggle this panel" },
   { keys: ["G", "H"], label: "Go to Hub" },
   { keys: ["G", "D"], label: "Go to Deals" },

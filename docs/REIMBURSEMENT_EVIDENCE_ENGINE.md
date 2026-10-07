@@ -207,4 +207,3 @@ This creates a more institutional workflow:
 
 The seed precedent library is context/intelligence evidence and must not enter
 `dataset.verified.json` or deal economics.
-
