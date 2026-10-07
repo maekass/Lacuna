@@ -126,7 +126,6 @@ export default function FoundingYearPromotionFields({
         </FieldLabel>
         <textarea
           id="foundingEvidenceLocator"
-          rows={2}
           value={value.foundingEvidenceLocator ?? ""}
           onChange={(event) =>
             onChange({ foundingEvidenceLocator: event.target.value })}
