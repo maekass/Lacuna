@@ -218,7 +218,7 @@ export default function PayerOpsPage({
         <p className="lacuna-eyebrow text-xs font-semibold text-lacuna-blue">
           Portfolio project · healthcare payer administration
         </p>
-        <h1 className="mt-3 max-w-4xl text-3xl font-bold leading-tight text-balance text-lacuna-plum sm:text-5xl">
+        <h1 className="lacuna-gradient-text mt-3 max-w-4xl text-3xl font-bold leading-tight text-balance sm:text-5xl">
           PayerOps Navigator
           <wbr /> for reducing avoidable administrative waste
         </h1>
