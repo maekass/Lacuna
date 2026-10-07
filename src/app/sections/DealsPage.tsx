@@ -228,7 +228,7 @@ export default function DealsPage() {
           <MotionSection id="similarity-indicators" className={SECTION}>
             <SectionHeader
               title="Exit Similarity Explorer"
-              description="Deterministic context engine. Ordinal bands from disclosed factor co-occurrence. Acquired companies are a historical baseline; membership in the acquisitions array does not raise data coverage and assumption completeness."
+              description="Deterministic context engine. Ordinal bands from fixed, disclosed factor weights. Not a fitted model and not a time-to-exit forecast. Acquired companies are a historical baseline; membership in the acquisitions array does not raise data coverage and assumption completeness."
             />
             <ExitPredictor />
           </MotionSection>

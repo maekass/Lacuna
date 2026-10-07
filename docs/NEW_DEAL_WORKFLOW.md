@@ -156,14 +156,15 @@ Omit `dealValue` entirely.
 
 ```json
 "provenance": {
-  "lastUpdated": "2026-07-02",
-  "datasetVersion": "v8",
+  "lastUpdated": "2026-09-20",
+  "datasetVersion": "v9",
   ...
 }
 ```
 
-Bump `lastUpdated` on every release; bump `datasetVersion` when shipping a
-curated release.
+The committed dataset is v9, last updated 2026-09-20. Bump `lastUpdated` on
+every release; bump `datasetVersion` when shipping a curated release. Do not
+copy an older version string over the live file.
 
 ---
 

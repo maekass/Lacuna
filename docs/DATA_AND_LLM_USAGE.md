@@ -13,9 +13,13 @@ Model) integrations for its analytics systems.
 
 - **Source**: Manually curated from SEC EDGAR, press releases, and public
   filings
-- **Size**: ~100KB, 70+ companies, 30+ verified acquisitions
-- **Contains**: Company names, sectors, funding, acquisition details, acquirer
-  types
+- **Size**: 179,580 bytes. 150 companies, 38 acquirers, and 59 verified
+  acquisitions. See [MODEL_CARD.md](MODEL_CARD.md) for which counts are events,
+  companies, and valuation disclosures.
+- **Contains**: Company names, sectors, stages, founding years when known, and
+  acquisition records. Disclosed funding and last-known valuation are applied
+  from the evidence ledger (58 companies have a numeric valuation). That 58 is
+  not the acquisition count.
 - **Usage**: Primary dataset for all analyses
 - **Update**: Manual verification process
 
