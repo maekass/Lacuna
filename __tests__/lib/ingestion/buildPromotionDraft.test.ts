@@ -51,6 +51,14 @@ function reviewerFields(
     companySector: "Fertility",
     companyHq: "Boston, MA",
     companyFounded: 2018,
+    foundingSourceUrl: "https://example.com/about",
+    foundingSourceName: "Example FemTech about page",
+    foundingSourceType: "official_company",
+    foundingSourceAccessDate: "2026-10-05",
+    foundingEvidenceLocator:
+      "About page states the company was founded in 2018.",
+    foundingReviewer: "Case Reviewer",
+    foundingNotInferred: true,
     acquirerSector: "Healthcare",
     acquirerHq: "San Francisco, CA",
     strategicRationale:
@@ -76,7 +84,14 @@ describe("buildPromotionDraft", () => {
     expect(draft?.company?.hq).toBe("Boston, MA");
     expect(draft?.acquirer?.name).toBe("Example Health Corp");
     expect(draft?.acquirer?.hq).toBe("San Francisco, CA");
-    expect(draft?.company?.sources).toHaveLength(2);
+    expect(draft?.company?.sources).toEqual([
+      "https://www.sec.gov/Archives/edgar/data/example-8k.htm",
+      "https://www.businesswire.com/news/home/example",
+      "https://example.com/about",
+    ]);
+    expect(draft?.foundingYearReview?.reviewStatus).toBe("accepted");
+    expect(draft?.foundingYearReview?.foundedYear).toBe(2018);
+    expect(draft?.foundingYearReview?.notInferred).toBe(true);
     expect(draft?.acquisition.strategicRationale).toBe(
       "Added a fertility platform to Example Health's women's health offering.",
     );
@@ -92,6 +107,8 @@ describe("buildPromotionDraft", () => {
     expect(missing).toContain("company.sector");
     expect(missing).toContain("company.hq");
     expect(missing).toContain("company.founded");
+    expect(missing).toContain("company.founded.sourceUrl");
+    expect(missing).toContain("company.founded.notInferred");
     expect(missing).toContain("company.sources.secondary");
     expect(missing).toContain("acquirer.sector");
     expect(missing).toContain("acquirer.hq");
