@@ -112,14 +112,15 @@ describe("MODEL_CARD.md stays true of the current tree", () => {
     expect(card).toMatch(/Deals with a numeric price\s+\|\s+50\s+\|/);
   });
 
-  it("records the raw file hash and the older hazard export hash", () => {
+  it("records the raw file hash and the hazard export hash", () => {
     const fileHash = createHash("sha256").update(rawDataset).digest("hex");
     expect(card).toContain(fileHash);
     expect(card).toContain(rawDataset.length.toLocaleString("en-US"));
     expect(card).toContain(hazard.datasetSha256);
-    expect(hazard.datasetSha256).not.toBe(fileHash);
+    expect(hazard.datasetSha256).toBe(fileHash);
     expect(hazard.datasetSha256).not.toBe(summary.provenance.datasetHash);
-    expect(card).toContain("not the SHA-256 of the current file");
+    expect(card).toContain("not the canonical hash");
+    expect(card).not.toContain("not the SHA-256 of the current file");
   });
 
   it("states the valuation and hazard-event overlap", () => {
