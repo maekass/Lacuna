@@ -63,13 +63,8 @@ export default function HubPage({
           <p className="font-script mb-3 text-[2.15rem] leading-none text-lacuna-plum sm:text-5xl">
             Women&apos;s health
           </p>
-          <h1 className="lacuna-gradient-text mb-5 text-[1.7rem] font-bold uppercase leading-[0.92] tracking-[-0.03em] min-[400px]:text-4xl sm:text-5xl md:text-6xl">
-            M&amp;A Diligence<br />Stack
-          <h1 className="mb-5 max-w-4xl text-[2rem] font-medium leading-[0.98] tracking-[-0.03em] text-lacuna-plum min-[400px]:text-4xl sm:text-5xl md:text-6xl">
-            <span className="block">Understand the evidence behind</span>
-            <span className="lacuna-gradient-text block">
-              healthcare companies.
-            </span>
+          <h1 className="lacuna-gradient-text mb-5 max-w-4xl text-[2rem] font-medium leading-[0.98] tracking-[-0.03em] min-[400px]:text-4xl sm:text-5xl md:text-6xl">
+            Understand the evidence behind<br />healthcare companies.
           </h1>
           <p className="max-w-3xl text-base sm:text-lg leading-relaxed text-lacuna-blue">
             Lacuna is a public-source research workspace for connecting clinical
