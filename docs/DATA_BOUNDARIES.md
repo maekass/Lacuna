@@ -86,6 +86,18 @@ New data source?
 
 ---
 
+## Founding years
+
+Missing `founded` stays missing. Do not infer a year from company age, funding
+date, product launch, domain-registration date, or model output. Do not copy
+`portfolioInitialInvestment`. A year is added only with an accepted row in
+`src/data/foundingYearReview.json`. Rules and the current backlog:
+[FOUNDING_YEAR_PROVENANCE.md](./FOUNDING_YEAR_PROVENANCE.md).
+
+The catalog is not a company-year panel. Observed non-null years are not an
+eight-year window, and companies without a year are excluded from time-to-event
+displays rather than imputed.
+
 ## UI surfaces
 
 | Surface                              | Data tier                                                                                |

@@ -23,6 +23,7 @@ import ReviewConsole from "@/components/ReviewConsole";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import BiotheranosticsDossierLink from "@/components/BiotheranosticsDossierLink";
+import { COMPANY_YEAR_PANEL_LIMIT } from "@/lib/data/foundingYearPolicy";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { useDashboardData } from "@/lib/data/useDashboardData";
 import { empowermentContextForDeal } from "@/lib/deals/empowermentContextForDeal";
@@ -78,7 +79,9 @@ export default function DealsPage() {
   return (
     <div>
       <header className="mb-10">
-        <h1 className="text-3xl font-bold text-lacuna-plum">Deals workspace</h1>
+        <h1 className="lacuna-gradient-text text-3xl font-bold">
+          Deals workspace
+        </h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
           Medicine and biotech M&A — therapeutics, diagnostics, medtech, and
           clinical women&apos;s health. Descriptive analytics from public
@@ -225,7 +228,7 @@ export default function DealsPage() {
           <MotionSection id="similarity-indicators" className={SECTION}>
             <SectionHeader
               title="Exit Similarity Explorer"
-              description="Deterministic context engine. Ordinal bands from disclosed factor co-occurrence. Acquired companies are a historical baseline; membership in the acquisitions array does not raise data coverage and assumption completeness."
+              description="Deterministic context engine. Ordinal bands from fixed, disclosed factor weights. Not a fitted model and not a time-to-exit forecast. Acquired companies are a historical baseline; membership in the acquisitions array does not raise data coverage and assumption completeness."
             />
             <ExitPredictor />
           </MotionSection>
@@ -249,7 +252,7 @@ export default function DealsPage() {
           >
             <SectionHeader
               title="Time from founding to announcement"
-              description="Descriptive Kaplan-Meier curves on verified founding years and announcement dates in this curated set. No hypothesis test is published."
+              description={`Descriptive Kaplan-Meier curves for companies in the top sectors with a founding year after 1990. ${COMPANY_YEAR_PANEL_LIMIT} No hypothesis test is published.`}
             />
             <SurvivalCurve />
           </MotionSection>

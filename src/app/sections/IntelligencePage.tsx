@@ -27,7 +27,7 @@ export default function IntelligencePage(
   return (
     <div>
       <header className="mb-10">
-        <h1 className="text-3xl font-bold text-lacuna-plum">
+        <h1 className="lacuna-gradient-text text-3xl font-bold">
           Intelligence workspace
         </h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
