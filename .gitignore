@@ -45,10 +45,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# cursor (keep rules tracked)
+# cursor (keep shared rules + MCP config tracked)
 .cursor/*
 !.cursor/rules/
 !.cursor/rules/**
+!.cursor/mcp.json
 
 # vscode / cursor (keep shared settings tracked)
 .vscode/*

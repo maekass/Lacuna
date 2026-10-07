@@ -108,6 +108,8 @@ async function upsertPromotionToDb(
           draft.company.name,
           draft.company.sector,
           draft.company.stage,
+          // Integer only. Field-level founding provenance lives in
+          // foundingYearReview.json, not in this table.
           draft.company.founded,
           draft.company.hq,
           draft.company.description,
