@@ -91,17 +91,28 @@ validated a product.
 
 ### Pre-registered measures
 
-| Measure                        | What it checks                                                        | Limit                                                                                     |
-| ------------------------------ | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| Disposition accuracy           | Correct answer / qualified answer / abstain classification            | Does not measure clinical correctness by itself                                          |
-| Unanswerable abstention recall | Fraction of adjudicated unanswerable cases where the system abstained | Cannot establish safety for all unanswered questions                                     |
-| Answerable abstention rate     | Fraction of adjudicated answerable cases where the system abstained   | Must be balanced against unsafe over-answering                                           |
-| Retrieval recall at K          | Relevant evidence IDs retrieved divided by adjudicated relevant IDs   | Depends on the frozen relevance judgments                                                |
-| Retrieval precision at K       | Retrieved evidence IDs judged relevant divided by all retrieved IDs   | Measures irrelevant context burden; depends on the frozen relevance judgments            |
-| Citation validity              | Citations whose source ID was in that case's retrieved set            | A present citation may still fail to support the claim                                   |
-| Citation support rate          | Human-rated supporting citations divided by all citations             | Partial support is not counted as support; unassessed citations remain in the denominator |
-| Citation review coverage       | Citations with completed human ratings divided by all citations       | Two distinct reviewer aliases are required for each assessed citation                   |
-| Review coverage                | Adjudicated benchmark cases divided by all benchmark cases             | Incomplete review is an explicit limitation                                              |
+- **Disposition accuracy:** correct answer / qualified answer / abstain
+  classifications. This does not measure clinical correctness by itself.
+- **Unanswerable abstention recall:** fraction of adjudicated unanswerable cases
+  where the system abstained. This cannot establish safety for all unanswered
+  questions.
+- **Answerable abstention rate:** fraction of adjudicated answerable cases where
+  the system abstained. Balance this against unsafe over-answering.
+- **Retrieval recall at K:** relevant evidence IDs retrieved divided by
+  adjudicated relevant IDs. This depends on the frozen relevance judgments.
+- **Retrieval precision at K:** retrieved evidence IDs judged relevant divided
+  by all retrieved IDs. This measures irrelevant context burden and depends on
+  the frozen relevance judgments.
+- **Citation validity:** citations whose source ID was in that case's retrieved
+  set. A present citation may still fail to support the claim.
+- **Citation support rate:** human-rated supporting citations divided by all
+  citations. Partial support is not counted as support; unassessed citations
+  remain in the denominator.
+- **Citation review coverage:** citations with completed human ratings divided
+  by all citations. Two distinct reviewer aliases are required for each
+  assessed citation.
+- **Review coverage:** adjudicated benchmark cases divided by all benchmark
+  cases. Incomplete review is an explicit limitation.
 
 Slice metrics are descriptive. Slices smaller than the benchmark's predeclared
 minimum (default 5) suppress their sample size and rates. Suppression is a
