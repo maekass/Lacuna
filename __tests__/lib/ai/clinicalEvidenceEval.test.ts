@@ -53,6 +53,7 @@ const run = {
   retrievalConfigHash: "sha256:config",
   sourceSnapshotHash: "sha256:sources",
   reviewerProtocolVersion: "1",
+  retrievalTopK: 5,
   cases: [
     {
       caseId: "answerable-1",
@@ -90,6 +91,7 @@ describe("evaluateClinicalEvidenceRun", () => {
     expect(report.retrievalRecallAtK).toBe(1);
     expect(report.citationValidityRate).toBe(0.5);
     expect(report.citationSupportRate).toBe(0.5);
+    expect(report.citationReviewCoverage).toBe(1);
     expect(report.unsupportedCitationCount).toBe(1);
     expect(report.unresolvedCitationCount).toBe(1);
     expect(report.reviewCoverage).toBe(1);
