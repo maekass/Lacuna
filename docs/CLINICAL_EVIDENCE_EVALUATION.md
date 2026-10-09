@@ -42,7 +42,7 @@ Include ordinary and adversarial cases: direct lookup, conflicting sources, a pu
 1. A curator freezes the exact public source snapshot, records source IDs and locators, and writes the question without looking at model output.
 2. Two reviewers independently label expected disposition and relevant evidence IDs. Reviewers should have appropriate clinical, research, or methods expertise for the case; aliases and roles are recorded, not unnecessary personal details.
 3. A reviewer documents population, setting, endpoint, timing, exclusions, and material source limitations. If reviewers disagree, a named adjudication step records the resolution and rationale.
-4. A separate output review assesses whether each cited source supports its linked claim. Mark citations supports, partially_supports, does_not_support, or not_assessed. Do not treat a model's self-reported confidence as review.
+4. A separate output review assesses whether each cited source supports its linked claim. Record two distinct reviewer aliases and roles for every assessed citation; mark citations supports, partially_supports, does_not_support, or not_assessed. Do not treat a model's self-reported confidence as review.
 5. Keep pending or disputed cases visible in the benchmark. The evaluator excludes pending cases from performance numerators and reports review coverage.
 
 A researcher-reviewed label means these documented review steps occurred for the specified benchmark version. It does not mean a regulator or clinical service validated a product.
@@ -57,6 +57,7 @@ A researcher-reviewed label means these documented review steps occurred for the
 | Retrieval recall at K | Relevant evidence IDs retrieved divided by adjudicated relevant IDs | Depends on the frozen relevance judgments |
 | Citation validity | Citations whose source ID was in that case's retrieved set | A present citation may still fail to support the claim |
 | Citation support rate | Human-rated supporting citations divided by all citations | Partial support is not counted as support; unassessed citations remain in the denominator |
+| Citation review coverage | Citations with completed human ratings divided by all citations | Two distinct reviewer aliases are required for each assessed citation |
 | Review coverage | Adjudicated benchmark cases divided by all benchmark cases | Incomplete review is an explicit limitation |
 
 Slice metrics are descriptive. Slices smaller than the benchmark's predeclared minimum (default 5) suppress their sample size and rates. Suppression is a privacy and small-sample safeguard, not evidence that performance is equivalent across groups. Do not use this small benchmark to claim subgroup fairness.
