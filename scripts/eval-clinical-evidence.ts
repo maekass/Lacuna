@@ -3,8 +3,8 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
-  evaluateClinicalEvidenceRun,
   type ClinicalEvidenceEvalReport,
+  evaluateClinicalEvidenceRun,
 } from "../src/lib/ai/evals/clinicalEvidenceEval";
 
 function arg(name: string): string | undefined {
