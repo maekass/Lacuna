@@ -72,7 +72,8 @@ const benchmark = {
         reviewerAliases: ["reviewer-2", "reviewer-2b"],
         reviewerRoles: ["clinician", "methodologist"],
         adjudicatedAt: "2026-10-01",
-        rationale: "Reviewers agreed that the available source cannot support the claim.",
+        rationale:
+          "Reviewers agreed that the available source cannot support the claim.",
       },
     },
   ],
@@ -146,23 +147,26 @@ describe("evaluateClinicalEvidenceRun", () => {
   it("excludes pending benchmark cases and discloses incomplete review", () => {
     const pendingBenchmark = {
       ...benchmark,
-      cases: benchmark.cases.map((item, index) => index === 1
-        ? {
-          ...item,
-          adjudication: {
-            status: "pending",
-            reviewerAliases: [],
-            reviewerRoles: [],
-          },
-        }
-        : item),
+      cases: benchmark.cases.map((item, index) =>
+        index === 1
+          ? {
+            ...item,
+            adjudication: {
+              status: "pending",
+              reviewerAliases: [],
+              reviewerRoles: [],
+            },
+          }
+          : item
+      ),
     };
     const report = evaluateClinicalEvidenceRun(pendingBenchmark, run);
     expect(report.adjudicatedCaseCount).toBe(1);
     expect(report.reviewCoverage).toBe(0.5);
-    expect(report.interpretation.some((item) => item.includes("incomplete"))).toBe(
-      true,
-    );
+    expect(report.interpretation.some((item) => item.includes("incomplete")))
+      .toBe(
+        true,
+      );
   });
 
   it("fails closed when a run references an unknown case", () => {
