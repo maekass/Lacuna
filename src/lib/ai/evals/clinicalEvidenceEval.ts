@@ -39,28 +39,32 @@ export const clinicalEvidenceCaseSchema = z.object({
   adjudication: z.object({
     status: z.enum(["pending", "adjudicated"]),
     reviewerAliases: z.array(z.string().min(1)),
-    reviewerRoles: z.array(z.enum(["clinician", "researcher", "methodologist"])),
+    reviewerRoles: z.array(
+      z.enum(["clinician", "researcher", "methodologist"]),
+    ),
     adjudicatedAt: z.string().optional(),
     rationale: z.string().optional(),
   }),
 }).superRefine((item, ctx) => {
   if (item.adjudication.status === "adjudicated") {
-    const reviewAliases = unique(item.independentReviews.map((review) =>
-      review.reviewerAlias
-    ));
+    const reviewAliases = unique(
+      item.independentReviews.map((review) => review.reviewerAlias),
+    );
     const adjudicatorAliases = unique(item.adjudication.reviewerAliases);
     if (reviewAliases.length < 2) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["independentReviews"],
-        message: "Adjudicated cases require at least two distinct independent reviewers",
+        message:
+          "Adjudicated cases require at least two distinct independent reviewers",
       });
     }
     if (adjudicatorAliases.length < 2) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["adjudication", "reviewerAliases"],
-        message: "Adjudication must record at least two distinct reviewer aliases",
+        message:
+          "Adjudication must record at least two distinct reviewer aliases",
       });
     }
     if (!item.adjudication.adjudicatedAt || !item.adjudication.rationale) {
@@ -92,12 +96,15 @@ const runCaseSchema = z.object({
   disposition: dispositionSchema,
   answer: z.string(),
   retrievedEvidenceIds: z.array(z.string().min(1)),
-  citations: z.array(z.object({
+  citations: z.array(
+    z.object({
     claimId: z.string().min(1),
     evidenceId: z.string().min(1),
     judgment: citationJudgmentSchema,
     reviewerAliases: z.array(z.string().min(1)),
-    reviewerRoles: z.array(z.enum(["clinician", "researcher", "methodologist"])),
+    reviewerRoles: z.array(
+      z.enum(["clinician", "researcher", "methodologist"]),
+    ),
   }).superRefine((citation, ctx) => {
     if (citation.reviewerAliases.length !== citation.reviewerRoles.length) {
       ctx.addIssue({
