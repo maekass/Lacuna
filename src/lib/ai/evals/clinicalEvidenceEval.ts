@@ -212,8 +212,14 @@ export function evaluateClinicalEvidenceRun(
   if (runIds.some((id) => !caseIds.includes(id))) {
     throw new Error("Run contains a case ID absent from the benchmark");
   }
-  if (run.cases.some((item) => item.retrievedEvidenceIds.length > run.retrievalTopK)) {
-    throw new Error("A case contains more retrieved evidence IDs than retrievalTopK");
+  if (
+    run.cases.some((item) =>
+      item.retrievedEvidenceIds.length > run.retrievalTopK
+    )
+  ) {
+    throw new Error(
+      "A case contains more retrieved evidence IDs than retrievalTopK",
+    );
   }
 
   const runById = new Map(run.cases.map((item) => [item.caseId, item]));
@@ -277,24 +283,25 @@ export function evaluateClinicalEvidenceRun(
     const slice = evaluated.filter(({ gold }) => gold.tags.includes(tag));
     const suppressed = slice.length < benchmark.minimumSliceN;
     const cited = slice.flatMap(({ result }) => result.citations);
-    const supported = cited.filter((item) => item.judgment === "supports").length;
+    const supported = cited.filter((item) =>
+      item.judgment === "supports"
+    ).length;
     return {
       tag,
       n: suppressed ? null : slice.length,
-      dispositionAccuracy: suppressed
-        ? null
-        : ratio(
-          slice.filter(({ gold, result }) =>
-            gold.expectedDisposition === result.disposition
-          ).length,
-          slice.length,
-        ),
+      dispositionAccuracy: suppressed ? null : ratio(
+        slice.filter(({ gold, result }) =>
+          gold.expectedDisposition === result.disposition
+        ).length,
+        slice.length,
+      ),
       citationSupportRate: suppressed ? null : ratio(supported, cited.length),
       suppressed,
     };
   });
 
-  const reviewCoverage = ratio(adjudicatedIds.size, benchmark.cases.length) ?? 0;
+  const reviewCoverage = ratio(adjudicatedIds.size, benchmark.cases.length) ??
+    0;
   const interpretation = [
     "Descriptive benchmark results only; this report does not establish clinical validity, safety, efficacy, fairness, or fitness for patient care.",
     "Only adjudicated benchmark cases contribute to performance metrics; pending cases remain in the review-coverage denominator.",
