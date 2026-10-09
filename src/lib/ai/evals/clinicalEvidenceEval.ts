@@ -249,15 +249,16 @@ export function evaluateClinicalEvidenceRun(
     const retrievedIds = new Set(result.retrievedEvidenceIds);
     for (const citation of result.citations) {
       citationCount++;
-      if (!retrievedIds.has(citation.evidenceId)) unresolvedCitationCount++;
+      let unresolved = false;
+      if (!retrievedIds.has(citation.evidenceId)) unresolved = true;
       else validCitationCount++;
       if (citation.judgment !== "not_assessed") assessedCitationCount++;
+      else unresolved = true;
       if (citation.judgment === "supports") supportedCitationCount++;
       else if (citation.judgment === "does_not_support") {
         unsupportedCitationCount++;
-      } else if (citation.judgment === "not_assessed") {
-        unresolvedCitationCount++;
       }
+      if (unresolved) unresolvedCitationCount++;
     }
   }
 
