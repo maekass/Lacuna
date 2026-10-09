@@ -28,6 +28,14 @@ export const clinicalEvidenceCaseSchema = z.object({
   relevantEvidenceIds: z.array(z.string().min(1)),
   tags: z.array(z.string().min(1)),
   limitationTags: z.array(z.string().min(1)),
+  independentReviews: z.array(z.object({
+    reviewerAlias: z.string().min(1),
+    reviewerRole: z.enum(["clinician", "researcher", "methodologist"]),
+    expectedDisposition: dispositionSchema,
+    relevantEvidenceIds: z.array(z.string().min(1)),
+    reviewedAt: z.string().min(1),
+    rationale: z.string().min(1),
+  })),
   adjudication: z.object({
     status: z.enum(["pending", "adjudicated"]),
     reviewerAliases: z.array(z.string().min(1)),
@@ -35,6 +43,34 @@ export const clinicalEvidenceCaseSchema = z.object({
     adjudicatedAt: z.string().optional(),
     rationale: z.string().optional(),
   }),
+}).superRefine((item, ctx) => {
+  if (item.adjudication.status === "adjudicated") {
+    const reviewAliases = unique(item.independentReviews.map((review) =>
+      review.reviewerAlias
+    ));
+    const adjudicatorAliases = unique(item.adjudication.reviewerAliases);
+    if (reviewAliases.length < 2) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["independentReviews"],
+        message: "Adjudicated cases require at least two distinct independent reviewers",
+      });
+    }
+    if (adjudicatorAliases.length < 2) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["adjudication", "reviewerAliases"],
+        message: "Adjudication must record at least two distinct reviewer aliases",
+      });
+    }
+    if (!item.adjudication.adjudicatedAt || !item.adjudication.rationale) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["adjudication"],
+        message: "Adjudication requires a date and rationale",
+      });
+    }
+  }
 });
 export type ClinicalEvidenceCase = z.infer<typeof clinicalEvidenceCaseSchema>;
 
@@ -60,7 +96,27 @@ const runCaseSchema = z.object({
     claimId: z.string().min(1),
     evidenceId: z.string().min(1),
     judgment: citationJudgmentSchema,
-  })),
+    reviewerAliases: z.array(z.string().min(1)),
+    reviewerRoles: z.array(z.enum(["clinician", "researcher", "methodologist"])),
+  })).superRefine((citation, ctx) => {
+    if (citation.reviewerAliases.length !== citation.reviewerRoles.length) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["reviewerRoles"],
+        message: "Each citation reviewer alias must have a corresponding role",
+      });
+    }
+    if (
+      citation.judgment !== "not_assessed" &&
+      unique(citation.reviewerAliases).length < 2
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["reviewerAliases"],
+        message: "Assessed citations require two distinct reviewer aliases",
+      });
+    }
+  }),
 });
 export type ClinicalEvidenceRunCase = z.infer<typeof runCaseSchema>;
 
