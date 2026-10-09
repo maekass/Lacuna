@@ -108,9 +108,7 @@ validated a product.
 - **Citation support rate:** human-rated supporting citations divided by all
   citations. Partial support is not counted as support; unassessed citations
   remain in the denominator.
-- **Citation review coverage:** citations with completed human ratings divided
-  by all citations. Two distinct reviewer aliases are required for each
- assessed citation.
+- **Citation review coverage:** share of citations reviewed by two reviewers.
 - **Review coverage:** adjudicated benchmark cases divided by all benchmark
   cases. Incomplete review is an explicit limitation.
 
