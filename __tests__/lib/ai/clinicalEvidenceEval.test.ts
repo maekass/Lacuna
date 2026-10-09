@@ -130,7 +130,7 @@ describe("evaluateClinicalEvidenceRun", () => {
     const report = evaluateClinicalEvidenceRun(benchmark, run);
     expect(report.dispositionAccuracy).toBe(1);
     expect(report.unanswerableAbstentionRecall).toBe(1);
-    expect(report.retrievalRecallAtK).toBe(1);
+    expect(report.retrievalRecallAtK).toBe(1);\n    expect(report.retrievalPrecisionAtK).toBe(1);
     expect(report.citationValidityRate).toBe(0.5);
     expect(report.citationSupportRate).toBe(0.5);
     expect(report.citationReviewCoverage).toBe(1);
