@@ -54,7 +54,7 @@ A researcher-reviewed label means these documented review steps occurred for the
 | Disposition accuracy | Correct answer / qualified answer / abstain classification | Does not measure clinical correctness by itself |
 | Unanswerable abstention recall | Fraction of adjudicated unanswerable cases where the system abstained | Cannot establish safety for all unanswered questions |
 | Answerable abstention rate | Fraction of adjudicated answerable cases where the system abstained | Must be balanced against unsafe over-answering |
-| Retrieval recall at K | Relevant evidence IDs retrieved divided by adjudicated relevant IDs | Depends on the frozen relevance judgments |
+| Retrieval recall at K | Relevant evidence IDs retrieved divided by adjudicated relevant IDs | Depends on the frozen relevance judgments |\n| Retrieval precision at K | Retrieved evidence IDs judged relevant divided by all retrieved IDs | Measures irrelevant context burden; depends on the frozen relevance judgments |
 | Citation validity | Citations whose source ID was in that case's retrieved set | A present citation may still fail to support the claim |
 | Citation support rate | Human-rated supporting citations divided by all citations | Partial support is not counted as support; unassessed citations remain in the denominator |
 | Citation review coverage | Citations with completed human ratings divided by all citations | Two distinct reviewer aliases are required for each assessed citation |
