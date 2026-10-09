@@ -98,7 +98,7 @@ const runCaseSchema = z.object({
     judgment: citationJudgmentSchema,
     reviewerAliases: z.array(z.string().min(1)),
     reviewerRoles: z.array(z.enum(["clinician", "researcher", "methodologist"])),
-  })).superRefine((citation, ctx) => {
+  }).superRefine((citation, ctx) => {
     if (citation.reviewerAliases.length !== citation.reviewerRoles.length) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
