@@ -158,6 +158,7 @@ export interface ClinicalEvidenceEvalReport {
   unanswerableAbstentionRecall: number | null;
   answerableAbstentionRate: number | null;
   retrievalRecallAtK: number | null;
+  retrievalPrecisionAtK: number | null;
   citationValidityRate: number | null;
   citationSupportRate: number | null;
   citationReviewCoverage: number | null;
@@ -221,6 +222,7 @@ export function evaluateClinicalEvidenceRun(
   let answerableAbstentions = 0;
   let relevantRetrieved = 0;
   let relevantTotal = 0;
+  let retrievedTotal = 0;
   let citationCount = 0;
   let assessedCitationCount = 0;
   let validCitationCount = 0;
@@ -241,6 +243,7 @@ export function evaluateClinicalEvidenceRun(
     const relevant = new Set(gold.relevantEvidenceIds);
     const retrieved = new Set(result.retrievedEvidenceIds);
     relevantTotal += relevant.size;
+    retrievedTotal += retrieved.size;
     relevantRetrieved += [...relevant].filter((id) => retrieved.has(id)).length;
 
     const retrievedIds = new Set(result.retrievedEvidenceIds);
@@ -310,6 +313,7 @@ export function evaluateClinicalEvidenceRun(
     unanswerableAbstentionRecall: ratio(correctlyAbstained, unanswerable),
     answerableAbstentionRate: ratio(answerableAbstentions, answerable),
     retrievalRecallAtK: ratio(relevantRetrieved, relevantTotal),
+    retrievalPrecisionAtK: ratio(relevantRetrieved, retrievedTotal),
     citationValidityRate: ratio(validCitationCount, citationCount),
     citationSupportRate: ratio(supportedCitationCount, citationCount),
     citationReviewCoverage: ratio(assessedCitationCount, citationCount),
