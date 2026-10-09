@@ -77,6 +77,7 @@ export const clinicalEvidenceRunSchema = z.object({
   retrievalConfigHash: z.string().min(1),
   sourceSnapshotHash: z.string().min(1),
   reviewerProtocolVersion: z.string().min(1),
+  retrievalTopK: z.number().int().positive(),
   cases: z.array(runCaseSchema).min(1),
 });
 export type ClinicalEvidenceRun = z.infer<typeof clinicalEvidenceRunSchema>;
@@ -103,6 +104,7 @@ export interface ClinicalEvidenceEvalReport {
   retrievalRecallAtK: number | null;
   citationValidityRate: number | null;
   citationSupportRate: number | null;
+  citationReviewCoverage: number | null;
   unsupportedCitationCount: number;
   unresolvedCitationCount: number;
   reviewCoverage: number;
@@ -144,6 +146,9 @@ export function evaluateClinicalEvidenceRun(
   if (runIds.some((id) => !caseIds.includes(id))) {
     throw new Error("Run contains a case ID absent from the benchmark");
   }
+  if (run.cases.some((item) => item.retrievedEvidenceIds.length > run.retrievalTopK)) {
+    throw new Error("A case contains more retrieved evidence IDs than retrievalTopK");
+  }
 
   const runById = new Map(run.cases.map((item) => [item.caseId, item]));
   const evaluated = benchmark.cases.flatMap((gold) => {
@@ -161,6 +166,7 @@ export function evaluateClinicalEvidenceRun(
   let relevantRetrieved = 0;
   let relevantTotal = 0;
   let citationCount = 0;
+  let assessedCitationCount = 0;
   let validCitationCount = 0;
   let supportedCitationCount = 0;
   let unsupportedCitationCount = 0;
@@ -186,6 +192,7 @@ export function evaluateClinicalEvidenceRun(
       citationCount++;
       if (!retrievedIds.has(citation.evidenceId)) unresolvedCitationCount++;
       else validCitationCount++;
+      if (citation.judgment !== "not_assessed") assessedCitationCount++;
       if (citation.judgment === "supports") supportedCitationCount++;
       else if (citation.judgment === "does_not_support") {
         unsupportedCitationCount++;
@@ -240,7 +247,7 @@ export function evaluateClinicalEvidenceRun(
     benchmarkId: benchmark.benchmarkId,
     benchmarkVersion: benchmark.benchmarkVersion,
     runId: run.runId,
-    runManifestHash: sha256Json(run),
+    runManifestHash: sha256Json({ benchmark, run }),
     caseCount: benchmark.cases.length,
     adjudicatedCaseCount: evaluated.length,
     dispositionAccuracy: ratio(correctDisposition, evaluated.length),
@@ -249,6 +256,7 @@ export function evaluateClinicalEvidenceRun(
     retrievalRecallAtK: ratio(relevantRetrieved, relevantTotal),
     citationValidityRate: ratio(validCitationCount, citationCount),
     citationSupportRate: ratio(supportedCitationCount, citationCount),
+    citationReviewCoverage: ratio(assessedCitationCount, citationCount),
     unsupportedCitationCount,
     unresolvedCitationCount,
     reviewCoverage,
