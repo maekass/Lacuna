@@ -110,7 +110,7 @@ validated a product.
   remain in the denominator.
 - **Citation review coverage:** citations with completed human ratings divided
   by all citations. Two distinct reviewer aliases are required for each
-  assessed citation.
+ assessed citation.
 - **Review coverage:** adjudicated benchmark cases divided by all benchmark
   cases. Incomplete review is an explicit limitation.
 
