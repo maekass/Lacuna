@@ -72,7 +72,7 @@ A benchmark JSON follows clinicalEvidenceBenchmarkSchema. A candidate run JSON f
 - source snapshot hash and reviewer-protocol version;
 - case disposition, retrieved source IDs, citations linked to claim IDs, and reviewer judgments.
 
-The output report contains a hash of the complete run input, the benchmark identity/version, metrics, review coverage, slice disclosure, and interpretation limits. Save input artifacts with the report; preserve exact source snapshots where licensing and source terms permit. Never place patient identifiers or clinical narratives into a public benchmark, CI artifact, issue, or telemetry.
+The output report contains a hash of the benchmark and complete run input, the benchmark identity/version, metrics, review coverage, slice disclosure, and interpretation limits. Save input artifacts with the report; preserve exact source snapshots where licensing and source terms permit. Never place patient identifiers or clinical narratives into a public benchmark, CI artifact, issue, or telemetry.
 
 The JSON should be treated as a research artifact. If source material is restricted, store source text outside Git and include only the approved identifiers, hashes, and locators required to reproduce the evaluation under the applicable access rules.
 
