@@ -116,7 +116,7 @@ const runCaseSchema = z.object({
         message: "Assessed citations require two distinct reviewer aliases",
       });
     }
-  }),
+  })),
 });
 export type ClinicalEvidenceRunCase = z.infer<typeof runCaseSchema>;
 
