@@ -98,32 +98,34 @@ const runCaseSchema = z.object({
   retrievedEvidenceIds: z.array(z.string().min(1)),
   citations: z.array(
     z.object({
-    claimId: z.string().min(1),
-    evidenceId: z.string().min(1),
-    judgment: citationJudgmentSchema,
-    reviewerAliases: z.array(z.string().min(1)),
-    reviewerRoles: z.array(
-      z.enum(["clinician", "researcher", "methodologist"]),
-    ),
-  }).superRefine((citation, ctx) => {
-    if (citation.reviewerAliases.length !== citation.reviewerRoles.length) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["reviewerRoles"],
-        message: "Each citation reviewer alias must have a corresponding role",
-      });
-    }
-    if (
-      citation.judgment !== "not_assessed" &&
-      unique(citation.reviewerAliases).length < 2
-    ) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["reviewerAliases"],
-        message: "Assessed citations require two distinct reviewer aliases",
-      });
-    }
-  })),
+      claimId: z.string().min(1),
+      evidenceId: z.string().min(1),
+      judgment: citationJudgmentSchema,
+      reviewerAliases: z.array(z.string().min(1)),
+      reviewerRoles: z.array(
+        z.enum(["clinician", "researcher", "methodologist"]),
+      ),
+    }).superRefine((citation, ctx) => {
+      if (citation.reviewerAliases.length !== citation.reviewerRoles.length) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["reviewerRoles"],
+          message:
+            "Each citation reviewer alias must have a corresponding role",
+        });
+      }
+      if (
+        citation.judgment !== "not_assessed" &&
+        unique(citation.reviewerAliases).length < 2
+      ) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["reviewerAliases"],
+          message: "Assessed citations require two distinct reviewer aliases",
+        });
+      }
+    }),
+  ),
 });
 export type ClinicalEvidenceRunCase = z.infer<typeof runCaseSchema>;
 
