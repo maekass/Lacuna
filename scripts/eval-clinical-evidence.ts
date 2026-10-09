@@ -38,8 +38,7 @@ function main(): void {
 try {
   main();
 } catch (error) {
-  process.stderr.write(
-    \`Clinical evidence evaluation failed: \${error instanceof Error ? error.message : String(error)}\n\`,
-  );
+  const message = error instanceof Error ? error.message : String(error);
+  process.stderr.write("Clinical evidence evaluation failed: " + message + "\n");
   process.exitCode = 1;
 }
