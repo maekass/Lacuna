@@ -1,9 +1,11 @@
 # Clinical evidence answer evaluation
 
-**Status:** Evaluation harness and review protocol (development) **Use:**
-Offline, source-grounded answer quality research **Not:** Clinical validation,
-medical-device verification, treatment guidance, or patient-level decision
-support
+**Status:** Evaluation harness and review protocol (development)
+
+**Use:** Offline, source-grounded answer quality research
+
+**Not:** Clinical validation, medical-device verification, treatment guidance,
+or patient-level decision support
 
 ## Why this exists
 
