@@ -99,7 +99,8 @@
     "quality-history:backfill": "tsx scripts/backfill-quality-history.ts",
     "gate:quality-history": "tsx scripts/quality-history-gate.ts",
     "ci:governance": "tsx scripts/ci-governance.ts",
-    "ci:preflight": "npm run ci:governance && npm run deno:fmt:check && npm run lint && npm run typecheck && npm test && npm run build:ci"
+    "ci:preflight": "npm run ci:governance && npm run deno:fmt:check && npm run lint && npm run typecheck && npm test && npm run build:ci",
+    "eval:clinical-evidence": "tsx scripts/eval-clinical-evidence.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.114",
