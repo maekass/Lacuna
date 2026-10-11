@@ -370,6 +370,22 @@ fill gaps with TAM/SAM, sector-multiple fallbacks, or editorial stage medians.
 | Intelligence    | `/intelligence` | Reimbursement questions, precedent maps, and dataset export. Fit scores are affinity, not premiums or comps                                                       |
 | Methods         | `/methods`      | Record-quality grades, observed sector composition, and announcement timing on the verified set. This page does not publish causal effects or Bayesian posteriors |
 
+## Lab · Contribution Skyline (21st.dev)
+
+Developer preview of the [21st.dev](https://21st.dev) **Contribution Skyline**
+component — a GitHub-style year heat map that morphs into an isometric skyline.
+This is a UI integration, not a product workspace, and it is not indexed.
+
+| Item                | Path                                         |
+| ------------------- | -------------------------------------------- |
+| Demo (noindex)      | `/lab/contribution-skyline`                  |
+| Component           | `src/components/ui/contribution-skyline.tsx` |
+| Grid / camera maths | `src/lib/contributions/skyline.ts`           |
+
+The chart accepts `{ date, count }[]`. Without `data` it generates a seeded
+sample year so the demo is never empty. Hover a day, use the arrow keys, or
+toggle 2D / 3D to watch the heat map fold into the skyline.
+
 | Pinned catalog fact                    | Role in the public app                  |
 | -------------------------------------- | --------------------------------------- |
 | **51 medicine & biotech acquisitions** | Default Deals scope                     |

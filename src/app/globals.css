@@ -41,6 +41,8 @@
 
   --background: var(--lacuna-surface-muted);
   --foreground: var(--lacuna-text-primary);
+  --color-border: var(--lacuna-border);
+  --color-muted-foreground: var(--lacuna-text-muted);
 }
 
 /* Cross-browser smooth scrolling */
@@ -138,6 +140,8 @@ textarea:focus-visible {
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-border: var(--lacuna-border);
+  --color-muted-foreground: var(--lacuna-text-muted);
   --color-lacuna-pink: var(--lacuna-pink);
   --color-lacuna-lavender: var(--lacuna-lavender);
   --color-lacuna-blue: var(--lacuna-blue);

@@ -4,7 +4,7 @@ import { SITE_ORIGIN } from "@/lib/seo/siteUrl";
 export const revalidate = 86_400;
 
 /**
- * Allow product pages; keep staging review and API routes out of the crawl.
+ * Allow product pages; keep staging, lab previews, and API routes out of the crawl.
  */
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -16,6 +16,7 @@ export default function robots(): MetadataRoute.Robots {
         "/deals/staging/",
         "/api/",
         "/therapeutics",
+        "/lab",
       ],
     },
     sitemap: new URL("/sitemap.xml", SITE_ORIGIN).href,

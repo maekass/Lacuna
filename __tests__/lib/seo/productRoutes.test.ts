@@ -26,6 +26,7 @@ describe("product sitemap and robots", () => {
     expect(urls).toHaveLength(8 + dataset.acquisitions.length);
     expect(urls.some((url) => url.includes("/staging"))).toBe(false);
     expect(urls.some((url) => url.includes("/therapeutics"))).toBe(false);
+    expect(urls.some((url) => url.includes("/lab"))).toBe(false);
   });
 
   it("points crawlers at the sitemap and keeps staging out of the crawl", () => {
@@ -34,7 +35,12 @@ describe("product sitemap and robots", () => {
     expect(file.host).toBe(SITE_ORIGIN);
     const rules = Array.isArray(file.rules) ? file.rules[0] : file.rules;
     expect(rules?.disallow).toEqual(
-      expect.arrayContaining(["/deals/staging/", "/api/", "/therapeutics"]),
+      expect.arrayContaining([
+        "/deals/staging/",
+        "/api/",
+        "/therapeutics",
+        "/lab",
+      ]),
     );
   });
 
