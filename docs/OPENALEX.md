@@ -39,7 +39,7 @@ mismatch. It never prints the API key.
 
 ## Checks
 
-`OPENALEX_API_KEY=... npm test -- src/lib/ingestion/openAlexClient.test.ts`
+`OPENALEX_API_KEY=... npm test -- __tests__/lib/ingestion/openAlexClient.test.ts`
 
 `OPENALEX_API_KEY=... npx tsx scripts/openalex-smoke.ts`
 

@@ -33,7 +33,7 @@ jobs:
           fi
 
       - name: Unit integrity contract
-        run: npx vitest run src/lib/ingestion/openAlexClient.test.ts
+        run: npx vitest run __tests__/lib/ingestion/openAlexClient.test.ts
 
       - name: Lint
         run: npm run lint
