@@ -109,16 +109,18 @@ export class AcquisitionPredictor {
   }
 
   /**
-   * Sector-share adjustment applied uniformly to the exit-rate point estimate
-   * and both interval bounds: `clamp(sectorShare * 5, 0.8, 1.2)`, or 1 when
-   * no sector prior exists.
+   * Sector-share adjustment passed to `composeAcquisitionIndex`, which applies
+   * it uniformly to the exit-rate point estimate and both interval bounds.
+   * Delegates to `sectorShareAdjustment` (single source of the scale constant);
+   * returns 1 when no sector prior exists.
    */
   private sectorMultiplier(company: QuantCompany): number {
     if (!this.priors || this.priors.dealCount <= 0) return 1;
     const sectorPrior = getSectorPrior(this.priors, company.sector);
     if (!sectorPrior) return 1;
-    const sectorShare = sectorPrior.dealCount / this.priors.dealCount;
-    return Math.min(1.2, Math.max(0.8, sectorShare * 5));
+    return sectorShareAdjustment(
+      sectorPrior.dealCount / this.priors.dealCount,
+    );
   }
 
   predictAcquisition(company: QuantCompany): AcquisitionPredictionResult {
@@ -143,19 +145,11 @@ export class AcquisitionPredictor {
         "Clinical stage unavailable — acquisition outcome labels are not used as a stage proxy",
       );
     } else if (isSufficient(exitRate)) {
-      let sectorAdjustment = 1;
-      if (this.priors && this.priors.dealCount > 0) {
-        const sectorPrior = getSectorPrior(this.priors, company.sector);
-        if (sectorPrior) {
-          const sectorShare = sectorPrior.dealCount / this.priors.dealCount;
-          sectorAdjustment = sectorShareAdjustment(sectorShare);
-        }
-      }
       probability = composeAcquisitionIndex({
         weightedScore,
         baseRate: exitRate.value,
         confidenceInterval: exitRate.confidenceInterval,
-        sectorAdjustment,
+        sectorAdjustment: this.sectorMultiplier(company),
         sampleSize: exitRate.sampleSize,
         disclosedFraction: exitRate.disclosedFraction,
         selectionCaveat: exitRate.selectionCaveat,
