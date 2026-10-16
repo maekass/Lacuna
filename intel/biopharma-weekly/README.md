@@ -8,8 +8,8 @@ Auto-maintained by a scheduled Perplexity Computer task, Fridays 5:00 PM ET.
   (PDUFA dates, advisory committee meetings, CHMP opinions, major readouts,
   guidance changes). Source of truth (19 columns). Updated weekly: new catalysts
   appended, outcomes recorded in `status`, stale rows pruned. Sorted by
-  `scheduled_date`; 76 rows as of the 2026-10-13 update.
-- `catalysts.xlsx` — formatted workbook of the same 76 rows (frozen header,
+  `scheduled_date`; 85 rows as of the 2026-10-16 update.
+- `catalysts.xlsx` — formatted workbook of the same 85 rows (frozen header,
   status colors, source hyperlinks) using the 11 public columns (`catalyst_date`
   = CSV `scheduled_date`). Keep those 11 columns in lockstep with the CSV.
 - `briefs/YYYY-MM-DD.md` — weekly one-page "What moved biopharma this week"
