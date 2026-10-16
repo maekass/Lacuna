@@ -522,12 +522,12 @@
         {
           "status": "announced",
           "statusAsOf": "2018-03-12",
-          "statusSource": "SEC EDGAR \u2014 Cogentix Medical merger filing (Mar 12, 2018); Laborie press release (Apr 23, 2019 \u2014 completion)"
+          "statusSource": "SEC EDGAR \u2014 Cogentix Medical merger filing (Mar 12, 2018); SEC EDGAR \u2014 Cogentix 8-K (Apr 24, 2018 \u2014 merger consummated Apr 23, 2018)"
         },
         {
           "status": "completed",
-          "statusAsOf": "2019-04-23",
-          "statusSource": "SEC EDGAR \u2014 Cogentix Medical merger filing (Mar 12, 2018); Laborie press release (Apr 23, 2019 \u2014 completion)"
+          "statusAsOf": "2018-04-23",
+          "statusSource": "SEC EDGAR \u2014 Cogentix Medical merger filing (Mar 12, 2018); SEC EDGAR \u2014 Cogentix 8-K (Apr 24, 2018 \u2014 merger consummated Apr 23, 2018)"
         }
       ]
     },
@@ -623,13 +623,13 @@
       "statusHistory": [
         {
           "status": "announced",
-          "statusAsOf": "2022-12-30",
-          "statusSource": "Business Wire \u2014 TherapeuticsMD press release (Jan 3, 2023); SEC EDGAR 8-K (Dec 30, 2022)"
+          "statusAsOf": "2022-12-04",
+          "statusSource": "SEC EDGAR \u2014 TherapeuticsMD 8-K EX-99.1 (Dec 4, 2022 \u2014 definitive agreements)"
         },
         {
           "status": "completed",
-          "statusAsOf": "2023-01-03",
-          "statusSource": "Business Wire \u2014 TherapeuticsMD press release (Jan 3, 2023); SEC EDGAR 8-K (Dec 30, 2022)"
+          "statusAsOf": "2022-12-30",
+          "statusSource": "SEC EDGAR \u2014 TherapeuticsMD 8-K (Jan 3, 2023 \u2014 closing effective Dec 30, 2022)"
         }
       ]
     },

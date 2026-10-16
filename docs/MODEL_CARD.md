@@ -11,7 +11,7 @@ predictive model.\
 `provenance.datasetVersion`, also `dataset.verified.json`)\
 **Verified acquisitions**: 59 (`headline.verifiedDeals`)\
 **Canonical dataset hash**:
-`a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050`
+`e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8`
 
 That hash is `hashDataset()` in `src/lib/lineage/datasetHash.ts` applied to the
 materialized dataset (verified JSON plus the economic evidence ledger). The same
@@ -67,12 +67,12 @@ definitions the same count.
 | In-sample catalog share                |    59/150 | 39.3% to one decimal. `overallExitRateEstimate`. The quant panel note rounds it to 39% and prints the acquired-company and company counts. It includes the company in each row. It is not the index base rate for a catalog company, and it is not a population exit rate.        |
 | Hazard cohort                          | 58 events | `src/data/ml/hazard/acquisition-time-v1.json`: 150 companies, 47 excluded for a missing founded year, 103 analyzed, 58 events, 45 censored. The 58 events are acquired companies with a founded year. They are not the 58 valuation disclosures: 49 companies are in both sets.   |
 
-`dataset.verified.json` is 179,580 bytes. SHA-256 of those bytes:
-`110d42236c6f02d64d5a6dc71f6df9c4083b352ceefadfc92616084e43496bb2`.
+`dataset.verified.json` is 181,996 bytes. SHA-256 of those bytes:
+`9a0b03c7e6bb29278cf6410bc9bc40a8e0279cf5446d8c45275384b838374053`.
 
 The hazard artifact records `datasetSha256`
-`110d42236c6f02d64d5a6dc71f6df9c4083b352ceefadfc92616084e43496bb2` (`fittedAt`
-2026-09-21, `datasetVersion` v9). That field is the raw-byte hash at export
+`9a0b03c7e6bb29278cf6410bc9bc40a8e0279cf5446d8c45275384b838374053` (`fittedAt`
+2026-10-16, `datasetVersion` v9). That field is the raw-byte hash at export
 (`dataset_sha256` in `ml/hazard/lacuna_hazard/export.py`). It matches the
 SHA-256 of the current file and is not the canonical hash above. The cohort
 counts match a recount of the current file.
@@ -276,7 +276,7 @@ forecast, and it is not a company-year panel.
 | **Interval scope**            | The index interval rescales the exit-share bootstrap interval only.                                                                                                                                                                                                                                                                                  |
 | **Clinical stage is a proxy** | `proxyClinicalStage` reads the funding-stage string. Strings that are empty after stripping an acquisition phrase are withheld. Residual outcome wording and a public-listing string still produce a stage, including `fda_approved` for public. The other four drivers are not certified free of leakage. See [LEAKAGE_AUDIT.md](LEAKAGE_AUDIT.md). |
 | **58 is two different sets**  | 58 valuation disclosures and 58 hazard events overlap in 49 companies. Neither is the 59-deal count.                                                                                                                                                                                                                                                 |
-| **Hazard hash is raw bytes**  | The artifact `datasetSha256` matches the current file SHA-256 and is not the canonical dataset hash. `fittedAt` remains 2026-09-21. See Counts.                                                                                                                                                                                                      |
+| **Hazard hash is raw bytes**  | The artifact `datasetSha256` matches the current file SHA-256 and is not the canonical dataset hash. `fittedAt` is 2026-10-16. See Counts.                                                                                                                                                                                                           |
 
 ### Provisional choices
 
