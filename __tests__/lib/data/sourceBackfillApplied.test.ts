@@ -42,6 +42,13 @@ describe("applied SEC source backfill", () => {
       "utf8",
     ),
   ) as { records: BackfillRecord[] };
+  const manual = JSON.parse(
+    readFileSync(
+      path.join(repoRoot, "staging/source-backfill/manual-verified.json"),
+      "utf8",
+    ),
+  ) as { records: { dealId: string; url: string }[] };
+  const manualIds = new Set(manual.records.map((r) => r.dealId));
 
   it("appends identity-checked accession URLs and leaves EFTS rejects descriptive (success)", () => {
     const accepted = backfill.records.filter((r) =>
@@ -56,7 +63,7 @@ describe("applied SEC source backfill", () => {
     }
 
     const rejectedWithoutUrl = backfill.records.filter((r) =>
-      r.status !== "accepted"
+      r.status !== "accepted" && !manualIds.has(r.dealId)
     );
     for (const record of rejectedWithoutUrl) {
       const deal = dataset.acquisitions.find((d) => d.id === record.dealId);
@@ -67,7 +74,18 @@ describe("applied SEC source backfill", () => {
     const withArchives = dataset.acquisitions.filter((d) =>
       sourceHasEdgarArchivesUrl(d.source)
     );
-    expect(withArchives).toHaveLength(19);
+    expect(withArchives).toHaveLength(19 + manual.records.length);
+  });
+
+  it("applies every manually verified EDGAR URL to its deal (success)", () => {
+    expect(manual.records.length).toBeGreaterThan(0);
+    for (const record of manual.records) {
+      const deal = dataset.acquisitions.find((d) => d.id === record.dealId);
+      expect(deal?.source, record.dealId).toContain(record.url);
+      expect(
+        backfill.records.find((r) => r.dealId === record.dealId)?.status,
+      ).not.toBe("accepted");
+    }
   });
 
   it("exposes accession or ticker-locator URLs on the evidence ladder, not invented press URLs (success)", () => {
@@ -81,7 +99,7 @@ describe("applied SEC source backfill", () => {
     const deal7Citation = dataset.acquisitions.find((d) => d.id === "deal7")
       ?.source ?? "";
     expect(deal7Citation).toMatch(/8-K/);
-    expect(sourceHasEdgarArchivesUrl(deal7Citation)).toBe(false);
+    expect(sourceHasEdgarArchivesUrl(deal7Citation)).toBe(true);
     const locator = inferSourceUrl(
       deal7Citation.split(";")[0] ?? "",
       hologic?.ticker,
