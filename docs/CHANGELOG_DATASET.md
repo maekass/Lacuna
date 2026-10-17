@@ -8,9 +8,24 @@ Compared against `src/data/computed-dataset-summary.json`:
 
 | Field           | Baseline value |
 | --------------- | -------------- |
-| Verified deals  | 59             |
-| Last updated    | 2026-09-20     |
-| Dataset version | v9             |
+| Verified deals  | 60             |
+| Last updated    | 2026-10-17     |
+| Dataset version | v10            |
+
+2026-10-17 — v10. Added `deal60` Labcorp / BioReference Health select assets
+(announced 2026-10-15; Asset Purchase Agreement dated 2026-10-14) and target
+company `c151`. Primary: OPKO Health 8-K Item 1.01
+https://www.sec.gov/Archives/edgar/data/944809/000119312526422877/opk-20261014.htm.
+Acquirer release:
+https://ir.labcorp.com/news-releases/news-release-details/labcorp-enters-agreement-opko-health-acquire-select-assets.
+Independent: CLP Magazine
+https://clpmag.com/lab-management/company-news/labcorp-acquires-bioreference-health-assets-4kscore-test/.
+`dealValue` 722 is cash at closing, subject to a revenue-based adjustment;
+earnout up to $150M on 4Kscore revenue. Pending HSR clearance (outside date
+2027-04-14), so no `closedDate`. Annotated `scope: adjacency` (mixed clinical,
+women's health, urology, corrections and prostate-test carve-out), so it is
+excluded from women's-health-only totals and, while pending, from
+completed-lifecycle totals. Founding year left blank with an open ledger row.
 
 2026-09-20 — Teladoc/Livongo (`deal1`) announcement corrected to 2020-08-05
 (Teladoc 8-K + IR). Close stays 2020-10-30. Hologic/Biotheranostics (`deal7`)
