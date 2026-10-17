@@ -41,12 +41,12 @@ describe("founding year review ledger", () => {
     expect(validateFoundingYearReview(companyRefs(), review)).toEqual([]);
     const stats = summarizeFoundedYears(dataset.companies, review);
     expect(stats).toMatchObject({
-      companiesTotal: 150,
+      companiesTotal: 151,
       withFoundedYear: 103,
-      missingFoundedYear: 47,
+      missingFoundedYear: 48,
       minFoundedYear: 1948,
       maxFoundedYear: 2022,
-      backlogRows: 47,
+      backlogRows: 48,
       acceptedRows: 0,
     });
     const missingIds = dataset.companies

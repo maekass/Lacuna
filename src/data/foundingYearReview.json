@@ -1015,6 +1015,25 @@
       "entityResolution": "distinct",
       "canonicalCompanyId": null,
       "notes": null
+    },
+    {
+      "companyId": "c151",
+      "companyName": "BioReference Health",
+      "sector": "Diagnostics",
+      "foundedYear": null,
+      "sourceUrl": null,
+      "sourceName": null,
+      "sourceType": null,
+      "sourceAccessDate": null,
+      "evidenceLocator": null,
+      "corroboratingSourceUrl": null,
+      "confidence": "unreviewed",
+      "reviewStatus": "unresolved",
+      "reviewer": null,
+      "notInferred": false,
+      "entityResolution": "distinct",
+      "canonicalCompanyId": null,
+      "notes": null
     }
   ]
 }

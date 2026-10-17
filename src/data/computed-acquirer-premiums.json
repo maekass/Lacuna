@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-20T00:00:00.000Z",
-  "datasetVersion": "v9",
-  "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
+  "generatedAt": "2026-10-17T00:00:00.000Z",
+  "datasetVersion": "v10",
+  "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
   "source": "Lacuna verified catalog + economic evidence ledger",
   "premiumMetrics": {
     "acquirer.premium.preDealValuation": {
@@ -2254,7 +2254,7 @@
             }
           ],
           "n": 47,
-          "originalInputCount": 59,
+          "originalInputCount": 60,
           "excluded": [
             {
               "ref": {
@@ -2263,7 +2263,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -2272,7 +2272,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -2281,7 +2281,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -2290,7 +2290,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -2299,7 +2299,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -2308,7 +2308,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -2317,7 +2317,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -2326,7 +2326,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -2335,7 +2335,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -2344,7 +2344,7 @@
               },
               "reason": "pre_deal_valuation_unresearched",
               "field": "preDealValuation",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -2353,7 +2353,7 @@
               },
               "reason": "pre_deal_valuation_unresearched",
               "field": "preDealValuation",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -2362,24 +2362,33 @@
               },
               "reason": "pre_deal_valuation_unresearched",
               "field": "preDealValuation",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal60"
+              },
+              "reason": "pre_deal_valuation_unresearched",
+              "field": "preDealValuation",
+              "evaluatedCount": 51
             }
           ],
           "missingness": [
             {
               "field": "dealValue",
               "missing": 9,
-              "total": 59
+              "total": 60
             },
             {
               "field": "preDealValuation",
-              "missing": 3,
-              "total": 50
+              "missing": 4,
+              "total": 51
             }
           ],
-          "datasetVersion": "v9",
-          "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-          "computedAt": "2026-09-20T00:00:00.000Z"
+          "datasetVersion": "v10",
+          "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+          "computedAt": "2026-10-17T00:00:00.000Z"
         }
       }
     },
@@ -4686,7 +4695,7 @@
             }
           ],
           "n": 48,
-          "originalInputCount": 59,
+          "originalInputCount": 60,
           "excluded": [
             {
               "ref": {
@@ -4695,7 +4704,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -4704,7 +4713,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -4713,7 +4722,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -4722,7 +4731,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -4731,7 +4740,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -4740,7 +4749,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -4749,7 +4758,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -4758,7 +4767,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -4767,7 +4776,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -4776,7 +4785,7 @@
               },
               "reason": "last_known_valuation_unresearched",
               "field": "lastKnownValuation",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -4785,24 +4794,33 @@
               },
               "reason": "last_known_valuation_unresearched",
               "field": "lastKnownValuation",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal60"
+              },
+              "reason": "last_known_valuation_unresearched",
+              "field": "lastKnownValuation",
+              "evaluatedCount": 51
             }
           ],
           "missingness": [
             {
               "field": "dealValue",
               "missing": 9,
-              "total": 59
+              "total": 60
             },
             {
               "field": "lastKnownValuation",
-              "missing": 2,
-              "total": 50
+              "missing": 3,
+              "total": 51
             }
           ],
-          "datasetVersion": "v9",
-          "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-          "computedAt": "2026-09-20T00:00:00.000Z"
+          "datasetVersion": "v10",
+          "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+          "computedAt": "2026-10-17T00:00:00.000Z"
         }
       }
     },
@@ -5192,7 +5210,7 @@
             }
           ],
           "n": 7,
-          "originalInputCount": 59,
+          "originalInputCount": 60,
           "excluded": [
             {
               "ref": {
@@ -5201,7 +5219,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -5210,7 +5228,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -5219,7 +5237,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -5228,7 +5246,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -5237,7 +5255,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -5246,7 +5264,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -5255,7 +5273,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -5264,7 +5282,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -5273,7 +5291,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -5282,7 +5300,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5291,7 +5309,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5300,7 +5318,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5309,7 +5327,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5318,7 +5336,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5327,7 +5345,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5336,7 +5354,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5345,7 +5363,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5354,7 +5372,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5363,7 +5381,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5372,7 +5390,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5381,7 +5399,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5390,7 +5408,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5399,7 +5417,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5408,7 +5426,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5417,7 +5435,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5426,7 +5444,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5435,7 +5453,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5444,7 +5462,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5453,7 +5471,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5462,7 +5480,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5471,7 +5489,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5480,7 +5498,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5489,7 +5507,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5498,7 +5516,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5507,7 +5525,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5516,7 +5534,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5525,7 +5543,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5534,7 +5552,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5543,7 +5561,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5552,7 +5570,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5561,7 +5579,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5570,7 +5588,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5579,7 +5597,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5588,7 +5606,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5597,7 +5615,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5606,7 +5624,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5615,7 +5633,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5624,7 +5642,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5633,7 +5651,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5642,7 +5660,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5651,7 +5669,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -5660,24 +5678,33 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal60"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 51
             }
           ],
           "missingness": [
             {
               "field": "dealValue",
               "missing": 9,
-              "total": 59
+              "total": 60
             },
             {
               "field": "totalFunding",
-              "missing": 43,
-              "total": 50
+              "missing": 44,
+              "total": 51
             }
           ],
-          "datasetVersion": "v9",
-          "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-          "computedAt": "2026-09-20T00:00:00.000Z"
+          "datasetVersion": "v10",
+          "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+          "computedAt": "2026-10-17T00:00:00.000Z"
         }
       }
     }
@@ -6129,7 +6156,7 @@
             }
           ],
           "n": 9,
-          "originalInputCount": 59,
+          "originalInputCount": 60,
           "excluded": [
             {
               "ref": {
@@ -6138,7 +6165,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -6147,7 +6174,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -6156,7 +6183,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -6165,7 +6192,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -6174,7 +6201,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -6183,7 +6210,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -6192,7 +6219,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -6201,7 +6228,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -6210,7 +6237,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -6219,7 +6246,7 @@
               },
               "reason": "pre_deal_valuation_unresearched",
               "field": "preDealValuation",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -6228,7 +6255,7 @@
               },
               "reason": "pre_deal_valuation_unresearched",
               "field": "preDealValuation",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -6237,7 +6264,16 @@
               },
               "reason": "pre_deal_valuation_unresearched",
               "field": "preDealValuation",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal60"
+              },
+              "reason": "pre_deal_valuation_unresearched",
+              "field": "preDealValuation",
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -6548,17 +6584,17 @@
             {
               "field": "dealValue",
               "missing": 9,
-              "total": 59
+              "total": 60
             },
             {
               "field": "preDealValuation",
-              "missing": 3,
-              "total": 50
+              "missing": 4,
+              "total": 51
             }
           ],
-          "datasetVersion": "v9",
-          "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-          "computedAt": "2026-09-20T00:00:00.000Z"
+          "datasetVersion": "v10",
+          "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+          "computedAt": "2026-10-17T00:00:00.000Z"
         }
       }
     },
@@ -7008,7 +7044,7 @@
             }
           ],
           "n": 9,
-          "originalInputCount": 59,
+          "originalInputCount": 60,
           "excluded": [
             {
               "ref": {
@@ -7017,7 +7053,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -7026,7 +7062,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -7035,7 +7071,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -7044,7 +7080,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -7053,7 +7089,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -7062,7 +7098,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -7071,7 +7107,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -7080,7 +7116,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -7089,7 +7125,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 60
             },
             {
               "ref": {
@@ -7098,7 +7134,7 @@
               },
               "reason": "last_known_valuation_unresearched",
               "field": "lastKnownValuation",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -7107,7 +7143,16 @@
               },
               "reason": "last_known_valuation_unresearched",
               "field": "lastKnownValuation",
-              "evaluatedCount": 50
+              "evaluatedCount": 51
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal60"
+              },
+              "reason": "last_known_valuation_unresearched",
+              "field": "lastKnownValuation",
+              "evaluatedCount": 51
             },
             {
               "ref": {
@@ -7426,17 +7471,17 @@
             {
               "field": "dealValue",
               "missing": 9,
-              "total": 59
+              "total": 60
             },
             {
               "field": "lastKnownValuation",
-              "missing": 2,
-              "total": 50
+              "missing": 3,
+              "total": 51
             }
           ],
-          "datasetVersion": "v9",
-          "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-          "computedAt": "2026-09-20T00:00:00.000Z"
+          "datasetVersion": "v10",
+          "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+          "computedAt": "2026-10-17T00:00:00.000Z"
         }
       }
     }
@@ -7449,7 +7494,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -7457,7 +7502,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -7468,12 +7513,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -7504,9 +7549,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -7516,7 +7561,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 2,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -7524,7 +7569,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -7535,12 +7580,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -7596,9 +7641,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -7608,7 +7653,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 3,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -7616,7 +7661,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -7627,12 +7672,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -7713,9 +7758,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -7725,7 +7770,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 2,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -7733,7 +7778,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -7744,12 +7789,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -7805,9 +7850,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -7817,7 +7862,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -7825,7 +7870,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -7836,12 +7881,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -7872,9 +7917,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -7884,7 +7929,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -7892,7 +7937,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -7903,12 +7948,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -7939,9 +7984,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -7951,7 +7996,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -7959,7 +8004,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -7970,12 +8015,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -8006,9 +8051,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -8018,7 +8063,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 3,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -8026,7 +8071,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -8037,12 +8082,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -8123,9 +8168,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -8135,7 +8180,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 2,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -8143,7 +8188,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -8154,12 +8199,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -8215,9 +8260,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -8227,7 +8272,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -8235,7 +8280,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -8246,12 +8291,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -8282,9 +8327,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -8294,7 +8339,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -8302,7 +8347,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -8313,12 +8358,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -8349,9 +8394,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -8361,7 +8406,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -8369,7 +8414,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -8380,12 +8425,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -8416,9 +8461,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -8428,7 +8473,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -8436,7 +8481,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -8447,12 +8492,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -8483,9 +8528,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -8495,7 +8540,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -8503,7 +8548,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -8514,12 +8559,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -8550,9 +8595,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -8562,7 +8607,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -8570,7 +8615,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -8581,12 +8626,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -8617,9 +8662,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -8629,7 +8674,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -8637,7 +8682,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -8648,12 +8693,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -8684,9 +8729,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -8696,7 +8741,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 3,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -8704,7 +8749,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -8715,12 +8760,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -8801,9 +8846,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -8813,7 +8858,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -8821,7 +8866,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -8832,12 +8877,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -8868,9 +8913,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -8880,7 +8925,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -8888,7 +8933,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -8899,12 +8944,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -8935,9 +8980,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -8947,7 +8992,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -8955,7 +9000,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -8966,12 +9011,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -9002,9 +9047,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -9014,7 +9059,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -9022,7 +9067,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -9033,12 +9078,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -9069,9 +9114,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -9081,7 +9126,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -9089,7 +9134,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -9100,12 +9145,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -9136,9 +9181,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -9148,7 +9193,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -9156,7 +9201,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -9167,12 +9212,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -9203,9 +9248,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -9215,7 +9260,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -9223,7 +9268,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -9234,12 +9279,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -9270,9 +9315,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -9282,7 +9327,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -9290,7 +9335,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -9301,12 +9346,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -9337,9 +9382,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -9349,7 +9394,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -9357,7 +9402,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -9368,12 +9413,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -9404,9 +9449,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -9416,7 +9461,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -9424,7 +9469,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -9435,12 +9480,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -9471,9 +9516,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -9483,7 +9528,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -9491,7 +9536,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -9502,12 +9547,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -9538,9 +9583,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -9550,7 +9595,7 @@
         "metricId": "acquirer.premium.preDealValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "other_acquirer",
@@ -9558,7 +9603,7 @@
           },
           {
             "reason": "pre_deal_valuation_unresearched",
-            "count": 3
+            "count": 4
           },
           {
             "reason": "value_undisclosed",
@@ -9569,12 +9614,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "preDealValuation",
-            "missing": 3,
-            "total": 50
+            "missing": 4,
+            "total": 51
           }
         ],
         "contributors": [
@@ -9605,9 +9650,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -9617,11 +9662,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -9636,12 +9681,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -9672,9 +9717,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -9684,11 +9729,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 2,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -9703,12 +9748,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -9764,9 +9809,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -9776,11 +9821,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -9795,12 +9840,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -9831,9 +9876,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -9843,11 +9888,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 3,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -9862,12 +9907,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -9948,9 +9993,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -9960,11 +10005,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 2,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -9979,12 +10024,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -10040,9 +10085,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -10052,11 +10097,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -10071,12 +10116,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -10107,9 +10152,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -10119,11 +10164,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -10138,12 +10183,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -10174,9 +10219,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -10186,11 +10231,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -10205,12 +10250,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -10241,9 +10286,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -10253,11 +10298,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 3,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -10272,12 +10317,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -10358,9 +10403,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -10370,11 +10415,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 2,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -10389,12 +10434,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -10450,9 +10495,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -10462,11 +10507,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -10481,12 +10526,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -10517,9 +10562,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -10529,11 +10574,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -10548,12 +10593,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -10584,9 +10629,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -10596,11 +10641,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -10615,12 +10660,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -10651,9 +10696,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -10663,11 +10708,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -10682,12 +10727,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -10718,9 +10763,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -10730,11 +10775,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -10749,12 +10794,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -10785,9 +10830,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -10797,11 +10842,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -10816,12 +10861,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -10852,9 +10897,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -10864,11 +10909,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -10883,12 +10928,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -10919,9 +10964,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -10931,11 +10976,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 3,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -10950,12 +10995,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -11036,9 +11081,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -11048,11 +11093,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -11067,12 +11112,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -11103,9 +11148,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -11115,11 +11160,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -11134,12 +11179,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -11170,9 +11215,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -11182,11 +11227,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -11201,12 +11246,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -11237,9 +11282,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -11249,11 +11294,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -11268,12 +11313,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -11304,9 +11349,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -11316,11 +11361,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -11335,12 +11380,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -11371,9 +11416,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -11383,11 +11428,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -11402,12 +11447,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -11438,9 +11483,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -11450,11 +11495,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -11469,12 +11514,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -11505,9 +11550,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -11517,11 +11562,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -11536,12 +11581,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -11572,9 +11617,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -11584,11 +11629,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -11603,12 +11648,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -11639,9 +11684,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -11651,11 +11696,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -11670,12 +11715,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -11706,9 +11751,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -11718,11 +11763,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -11737,12 +11782,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -11773,9 +11818,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -11785,11 +11830,11 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "last_known_valuation_unresearched",
-            "count": 2
+            "count": 3
           },
           {
             "reason": "other_acquirer",
@@ -11804,12 +11849,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "lastKnownValuation",
-            "missing": 2,
-            "total": 50
+            "missing": 3,
+            "total": 51
           }
         ],
         "contributors": [
@@ -11840,9 +11885,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -11852,11 +11897,11 @@
         "metricId": "acquirer.premium.totalFunding",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "funding_unresearched",
-            "count": 43
+            "count": 44
           },
           {
             "reason": "other_acquirer",
@@ -11871,12 +11916,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "totalFunding",
-            "missing": 43,
-            "total": 50
+            "missing": 44,
+            "total": 51
           }
         ],
         "contributors": [
@@ -11907,9 +11952,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -11919,11 +11964,11 @@
         "metricId": "acquirer.premium.totalFunding",
         "estimator": "gatedMedian",
         "n": 2,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "funding_unresearched",
-            "count": 43
+            "count": 44
           },
           {
             "reason": "other_acquirer",
@@ -11938,12 +11983,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "totalFunding",
-            "missing": 43,
-            "total": 50
+            "missing": 44,
+            "total": 51
           }
         ],
         "contributors": [
@@ -11999,9 +12044,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -12011,11 +12056,11 @@
         "metricId": "acquirer.premium.totalFunding",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "funding_unresearched",
-            "count": 43
+            "count": 44
           },
           {
             "reason": "other_acquirer",
@@ -12030,12 +12075,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "totalFunding",
-            "missing": 43,
-            "total": 50
+            "missing": 44,
+            "total": 51
           }
         ],
         "contributors": [
@@ -12066,9 +12111,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -12078,11 +12123,11 @@
         "metricId": "acquirer.premium.totalFunding",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "funding_unresearched",
-            "count": 43
+            "count": 44
           },
           {
             "reason": "other_acquirer",
@@ -12097,12 +12142,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "totalFunding",
-            "missing": 43,
-            "total": 50
+            "missing": 44,
+            "total": 51
           }
         ],
         "contributors": [
@@ -12133,9 +12178,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -12145,11 +12190,11 @@
         "metricId": "acquirer.premium.totalFunding",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "funding_unresearched",
-            "count": 43
+            "count": 44
           },
           {
             "reason": "other_acquirer",
@@ -12164,12 +12209,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "totalFunding",
-            "missing": 43,
-            "total": 50
+            "missing": 44,
+            "total": 51
           }
         ],
         "contributors": [
@@ -12200,9 +12245,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     },
     {
@@ -12212,11 +12257,11 @@
         "metricId": "acquirer.premium.totalFunding",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 60,
         "excluded": [
           {
             "reason": "funding_unresearched",
-            "count": 43
+            "count": 44
           },
           {
             "reason": "other_acquirer",
@@ -12231,12 +12276,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 60
           },
           {
             "field": "totalFunding",
-            "missing": 43,
-            "total": 50
+            "missing": 44,
+            "total": 51
           }
         ],
         "contributors": [
@@ -12267,9 +12312,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v10",
+        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+        "computedAt": "2026-10-17T00:00:00.000Z"
       }
     }
   ]
