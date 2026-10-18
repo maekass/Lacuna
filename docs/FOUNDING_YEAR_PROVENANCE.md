@@ -18,11 +18,11 @@ ledger drifts from the catalog.
 
 <!-- FOUNDING_YEAR_STATS_BEGIN -->
 
-- Companies: **150**
-- With a founded year: **103** (68.7%)
-- Missing a founded year: **47** (31.3%)
+- Companies: **151**
+- With a founded year: **103** (68.2%)
+- Missing a founded year: **48** (31.8%)
 - Non-null founded span: **1948–2022**
-- Open founding-year review rows: **47**
+- Open founding-year review rows: **48**
 - Accepted founding-year review rows: **0**
 
 <!-- FOUNDING_YEAR_STATS_END -->
@@ -30,6 +30,9 @@ ledger drifts from the catalog.
 Before this ledger, the catalog already had 47 missing years and a non-null span
 of 1948–2022. After this ledger, those figures are unchanged. No missing year
 was filled. A company-year panel is **not analysis-ready**.
+
+On 2026-10-17 (v10), c151 BioReference Health entered the catalog with no
+founded year and an open `unresolved` ledger row. Missing years are now 48.
 
 The 103 stored years are listed in `grandfatheredCompanyIds`. They predate this
 gate. They are not field-certified by the ledger, and this workflow does not

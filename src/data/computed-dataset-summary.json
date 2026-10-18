@@ -1,39 +1,39 @@
 {
-  "generatedAt": "2026-09-20T00:00:00.000Z",
+  "generatedAt": "2026-10-17T00:00:00.000Z",
   "model": "computeHeadlineStats/v1",
   "provenance": {
-    "lastUpdated": "2026-09-20",
-    "datasetVersion": "v9",
-    "datasetHash": "e63d83666a494446785db997196c9dad9a8c347b313e260be4c08ff1d363a0d8"
+    "lastUpdated": "2026-10-17",
+    "datasetVersion": "v10",
+    "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6"
   },
   "headline": {
-    "companiesInNetwork": 150,
+    "companiesInNetwork": 151,
     "acquirerCount": 38,
-    "networkNodeCount": 188,
-    "verifiedDeals": 59,
-    "disclosedValueMillions": 140254,
-    "disclosedValueBillionsLabel": "$140.3B",
+    "networkNodeCount": 189,
+    "verifiedDeals": 60,
+    "disclosedValueMillions": 140976,
+    "disclosedValueBillionsLabel": "$141.0B",
     "disclosedValueMillionsWh": 22104,
     "disclosedValueBillionsLabelWh": "$22.1B",
     "adjacencyExcludedMillions": 118150,
     "estimand": "disclosed_only_observed_sum",
     "estimandNote": "disclosedOnlyTotal = Σ dealValueMillions over deals that disclosed a price after filters. Descriptive on the observed disclosed subsample; does not identify total transacted value under MNAR non-disclosure.",
-    "coverageRate": 0.213768115942029,
+    "coverageRate": 0.21739130434782608,
     "coverageDenominator": 276,
     "coverageReferenceName": "AOA Dx Follow the Exits (2000–2025)",
-    "uniqueSourceCitations": 467,
-    "lastUpdated": "2026-09-20",
-    "datasetVersion": "v9"
+    "uniqueSourceCitations": 471,
+    "lastUpdated": "2026-10-17",
+    "datasetVersion": "v10"
   },
   "disclosure": {
-    "dealsTotal": 59,
-    "dealsDisclosed": 50,
+    "dealsTotal": 60,
+    "dealsDisclosed": 51,
     "dealsUndisclosed": 9,
-    "dealsWithValueNote": 59,
-    "disclosureRate": 0.847457627118644,
+    "dealsWithValueNote": 60,
+    "disclosureRate": 0.85,
     "companiesWithValuation": 58,
-    "companiesTotal": 150,
-    "valuationRate": 0.38666666666666666
+    "companiesTotal": 151,
+    "valuationRate": 0.3841059602649007
   },
   "pipelines": {
     "secIngestLastRunAt": null,
