@@ -989,6 +989,18 @@
           "statusSource": "Business Wire press release (October 17, 2022); GeekWire coverage"
         }
       ]
+    },
+    "deal60": {
+      "valueTier": "sec_filing",
+      "scope": "adjacency",
+      "announcedPrecision": "day",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2026-10-15",
+          "statusSource": "OPKO Health 8-K Item 1.01 (Oct 15, 2026; agreement dated Oct 14, 2026); Labcorp press release (Oct 15, 2026)"
+        }
+      ]
     }
   }
 }

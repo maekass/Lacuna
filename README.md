@@ -348,7 +348,7 @@ site is brand and narrative only, with one call to action into the app —
 
 | Boundary                              | What that means here                                                                                                                                                                                                                                                              |
 | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Not a live institutional terminal     | Default data is the committed file `src/data/dataset.verified.json` (dataset v9). It is a convenience sample with public citations, not PitchBook, a data SLA, or a census of women’s-health M&A.                                                                                 |
+| Not a live institutional terminal     | Default data is the committed file `src/data/dataset.verified.json` (dataset v10). It is a convenience sample with public citations, not PitchBook, a data SLA, or a census of women’s-health M&A.                                                                                |
 | Not advice                            | The app does not provide investment advice, clinical guidance, treatment recommendations, or patient-specific interpretation.                                                                                                                                                     |
 | Scores stay descriptive               | Exit Similarity Explorer and the comparables panel are hand-weighted indexes on this catalog. They are not predictions, probabilities, forecasts, calibrated models, enterprise valuations, or expected returns. Read [MODEL_CARD.md](docs/MODEL_CARD.md) before citing a number. |
 | No causal claims                      | `/methods` reports record quality, sector counts, and announcement timing. It does not identify causal effects, treatment effects, or Bayesian causal estimates.                                                                                                                  |
@@ -372,10 +372,10 @@ fill gaps with TAM/SAM, sector-multiple fallbacks, or editorial stage medians.
 
 | Pinned catalog fact                    | Role in the public app                  |
 | -------------------------------------- | --------------------------------------- |
-| **51 medicine & biotech acquisitions** | Default Deals scope                     |
+| **52 medicine & biotech acquisitions** | Default Deals scope                     |
 | **8 consumer health acquisitions**     | `/consumer` filter of the same file     |
 | **46 fund portfolio investments**      | Overlays, not extra closed acquisitions |
-| 50 of 59 deals                         | Rows that disclose a price              |
+| 51 of 60 deals                         | Rows that disclose a price              |
 
 ## Capital, creative financing, and transaction evidence
 
@@ -406,8 +406,8 @@ The current public catalog remains a curated sample rather than a census. Its
 purpose is to establish the evidence and provenance infrastructure needed to
 reconstruct these relationships responsibly.
 
-- n=59 verified deals · 150 companies · 38 acquirers.
-- `dataset.verified.json` v9 (`provenance.lastUpdated: 2026-09-20`).
+- n=60 verified deals · 151 companies · 38 acquirers.
+- `dataset.verified.json` v10 (`provenance.lastUpdated: 2026-10-17`).
 - Sources are public: SEC filings, press releases, investor relations, and fund
   portfolio listings, graded in
   [DATA_CURATION_CHECKLIST.md](docs/DATA_CURATION_CHECKLIST.md). Promotion does

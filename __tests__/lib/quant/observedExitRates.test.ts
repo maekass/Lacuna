@@ -16,18 +16,18 @@ describe("observedCatalogComposition", () => {
     expect(composition.label).toBe(CATALOG_COMPOSITION_LABEL);
   });
 
-  it("reports 59/150 with Wilson bounds to 4dp", () => {
-    expect(composition.overall.successes).toBe(59);
-    expect(composition.overall.sampleSize).toBe(150);
+  it("reports 60/151 with Wilson bounds to 4dp", () => {
+    expect(composition.overall.successes).toBe(60);
+    expect(composition.overall.sampleSize).toBe(151);
     expect(isSufficient(composition.overall.share)).toBe(true);
     if (isSufficient(composition.overall.share)) {
-      expect(composition.overall.share.value).toBeCloseTo(59 / 150, 10);
+      expect(composition.overall.share.value).toBeCloseTo(60 / 151, 10);
       expect(composition.overall.share.confidenceInterval[0]).toBeCloseTo(
-        0.3188,
+        0.3228,
         4,
       );
       expect(composition.overall.share.confidenceInterval[1]).toBeCloseTo(
-        0.4732,
+        0.4770,
         4,
       );
     }

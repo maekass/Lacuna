@@ -66,8 +66,8 @@ describe("computeHeadlineStats", () => {
     );
 
     expect(stats.disclosedValueMillions).toBe(allScopeMillions);
-    expect(stats.disclosedValueMillions).toBe(140254);
-    expect(stats.disclosedValueBillionsLabel).toBe("$140.3B");
+    expect(stats.disclosedValueMillions).toBe(140976);
+    expect(stats.disclosedValueBillionsLabel).toBe("$141.0B");
     expect(stats.disclosedValueMillionsWh).toBe(22104);
     expect(stats.disclosedValueBillionsLabelWh).toBe("$22.1B");
   });
