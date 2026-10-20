@@ -1,16 +1,16 @@
 {
   "generatedAt": "2026-10-19T00:00:00.000Z",
-  "datasetHash": "f95d99872fea1af4048f16d5660499e88cc153bf13011c103bb43cb5f17c86dc",
+  "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
   "computationLineageHash": "c95ea246756a2e9e81fef39df953b355690e88cd8569ebce2aacb37622d7f8a8",
   "datasetVersion": "v11",
   "source": "Lacuna measurement-layer census (quality scores, gated metrics, vintage, display provenance)",
   "quality": {
     "companies": {
-      "total": 151,
+      "total": 152,
       "grades": {
         "A": 3,
         "B": 39,
-        "C": 43,
+        "C": 44,
         "D": 58,
         "F": 8
       },
@@ -546,7 +546,7 @@
   },
   "vintage": {
     "definition": "Dedicated as-of for the record's primary economic number. lastKnownValuation and totalFunding have no as-of field. dealValue's announcedDate is an event date, not a value vintage. Only preDealValuationDate counts when the primary number is preDealValuation.",
-    "recordsInScope": 212,
+    "recordsInScope": 213,
     "primaryNumbers": 137,
     "dedicatedAsOf": 69,
     "missingDedicatedAsOf": 68,

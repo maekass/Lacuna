@@ -406,7 +406,7 @@ The current public catalog remains a curated sample rather than a census. Its
 purpose is to establish the evidence and provenance infrastructure needed to
 reconstruct these relationships responsibly.
 
-- n=61 verified deals · 151 companies · 38 acquirers.
+- n=61 verified deals · 152 companies · 38 acquirers.
 - `dataset.verified.json` v11 (`provenance.lastUpdated: 2026-10-19`).
 - Sources are public: SEC filings, press releases, investor relations, and fund
   portfolio listings, graded in

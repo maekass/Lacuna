@@ -18,11 +18,11 @@ ledger drifts from the catalog.
 
 <!-- FOUNDING_YEAR_STATS_BEGIN -->
 
-- Companies: **151**
-- With a founded year: **103** (68.2%)
-- Missing a founded year: **48** (31.8%)
+- Companies: **152**
+- With a founded year: **103** (67.8%)
+- Missing a founded year: **49** (32.2%)
 - Non-null founded span: **1948–2022**
-- Open founding-year review rows: **48**
+- Open founding-year review rows: **49**
 - Accepted founding-year review rows: **0**
 
 <!-- FOUNDING_YEAR_STATS_END -->
@@ -33,6 +33,11 @@ was filled. A company-year panel is **not analysis-ready**.
 
 On 2026-10-17 (v10), c151 BioReference Health entered the catalog with no
 founded year and an open `unresolved` ledger row. Missing years are now 48.
+
+On 2026-10-19 (v11), c152 entered the catalog as a separate carve-out row for
+the BioReference Health business Labcorp bought in 2024. It has no founded year,
+and its `unresolved` ledger row is `distinct` from c151 (the 2026 asset bundle).
+Missing years are now 49.
 
 The 103 stored years are listed in `grandfatheredCompanyIds`. They predate this
 gate. They are not field-certified by the ledger, and this workflow does not
@@ -136,5 +141,5 @@ integer.
 
 Kaplan-Meier curves and the acquisition-time hazard fit still exclude companies
 without a founding year. The survival curve also keeps only top sectors with a
-founding year after 1990. Neither surface is a company-year panel of all 151
+founding year after 1990. Neither surface is a company-year panel of all 152
 companies.

@@ -107,7 +107,7 @@ describe("MODEL_CARD.md stays true of the current tree", () => {
     expect(card).toContain("The company catalog has 24 sectors");
     expect(
       dataset.companies.filter((company) => company.founded == null).length,
-    ).toBe(48);
+    ).toBe(49);
     expect(summary.disclosure.dealsDisclosed).toBe(52);
     expect(card).toMatch(/Deals with a numeric price\s+\|\s+52\s+\|/);
   });

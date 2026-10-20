@@ -1009,7 +1009,7 @@
     },
     "deal61": {
       "valueTier": "sec_filing",
-      "scope": "womens_health",
+      "scope": "adjacency",
       "announcedPrecision": "day",
       "statusHistory": [
         {

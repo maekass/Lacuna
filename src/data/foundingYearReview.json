@@ -1018,7 +1018,7 @@
     },
     {
       "companyId": "c151",
-      "companyName": "BioReference Health",
+      "companyName": "BioReference Health (clinical, women's health, urology and 4Kscore assets)",
       "sector": "Diagnostics",
       "foundedYear": null,
       "sourceUrl": null,
@@ -1034,6 +1034,25 @@
       "entityResolution": "distinct",
       "canonicalCompanyId": null,
       "notes": null
+    },
+    {
+      "companyId": "c152",
+      "companyName": "BioReference Health (clinical diagnostics and reproductive & women's health, outside NY/NJ)",
+      "sector": "Diagnostics",
+      "foundedYear": null,
+      "sourceUrl": null,
+      "sourceName": null,
+      "sourceType": null,
+      "sourceAccessDate": null,
+      "evidenceLocator": null,
+      "corroboratingSourceUrl": null,
+      "confidence": "unreviewed",
+      "reviewStatus": "unresolved",
+      "reviewer": null,
+      "notInferred": false,
+      "entityResolution": "distinct",
+      "canonicalCompanyId": null,
+      "notes": "Carve-out business unit (2024 Labcorp asset purchase, deal61); distinct from c151 (2026 asset bundle, deal60). No sourced founding year for the business unit."
     }
   ]
 }
