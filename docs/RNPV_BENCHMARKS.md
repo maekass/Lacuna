@@ -91,12 +91,20 @@ import {
 const bioNonNme = getCitableBenchmarks().filter((b) =>
   b.id.startsWith("bio-2011-2020-non-nme-")
 );
+const phase1 = bioNonNme.find((b) => b.transition === "phase1_to_phase2");
+const stepUp = phase1 ? impliedStepUp(phase1.value) : undefined; // ≈1.74x
 const jpm = getBenchmarksBySource("jpm-dealforma-biopharma-q2-2026");
-const stepUp = impliedStepUp(0.52); // ≈1.92x for clearing Phase I
 ```
 
-- Start from `getCitableBenchmarks()`. Use `RNPV_BENCHMARKS` only when you
-  intend to show small-sample figures with their `n`.
+- Start from `getCitableBenchmarks()`. It removes figures with a reported `n`
+  below five but keeps every figure whose source reports no `n`. Those are not
+  screened for sample size: read their caveats before citing them. For example,
+  the IQVIA AI-enabled Phase I rate passes the filter even though IQVIA calls
+  the cohort relatively small.
+- Use `RNPV_BENCHMARKS` only when you intend to show small-sample figures with
+  their `n`.
+- Pass a stored record's `value` to `impliedStepUp`, not a typed-in rate, so the
+  step-up stays traceable to its source and cut.
 - Keep each assumption to one publisher and edition. Mixing BIO phase rates with
   IQVIA or Citeline rates produces a composite neither source reports.
 - Check `KNOWN_SOURCE_ISSUES` for the source before citing it.
@@ -150,7 +158,12 @@ pooled 2021–H1 2026 M&A medians as a single year.
   - The Century of Biology, "AI Versus Eroom's Law" (Apr 12, 2026): its
     emerging-biopharma share of Phase I submissions cites IQVIA Pipeline
     Intelligence (Dec 2022) and IQVIA Institute (Jan 2023), not the 2026 report.
-    Its claim that AI biotechs show greater clinical success has no cited
-    source.
+    Its claim that AI biotechs show greater clinical success links to Jayatunga
+    et al., Drug Discovery Today 29(6):104009 (2024), doi
+    10.1016/j.drudis.2024.104009: a separate peer-reviewed analysis, not IQVIA.
+    That paper reports 80–90% Phase I and about 40% Phase II success for
+    AI-discovered molecules, with Phase II based on a limited sample. Not
+    stored: the AI-discovered set is author-defined and the abstract gives no
+    sample size.
 - Individual transactions. New deals enter the verified dataset only through the
   promotion workflow in `docs/NEW_DEAL_WORKFLOW.md`.
