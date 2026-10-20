@@ -83,4 +83,18 @@ describe("AOA Dx coverage frame", () => {
     expect(coverage.denominator).toBe(272);
     expect(coverage.caveats.join(" ")).toContain("announced 2000–2024");
   });
+
+  it("labels a caller-supplied overlap count as record-matched", () => {
+    const matched = aoaDxCoverage({
+      inFrameDealCount: 57,
+      observedOverlapCount: 40,
+    });
+    expect(matched.numerator).toBe(40);
+    expect(matched.referenceFrameNote).toContain("record-matched overlap count");
+    expect(matched.referenceFrameNote).not.toContain("not record-matched");
+    expect(matched.caveats.join(" ")).not.toContain("not record-matched");
+    const unmatched = aoaDxCoverage({ inFrameDealCount: 57 });
+    expect(unmatched.referenceFrameNote).toContain("not record-matched");
+    expect(unmatched.caveats.join(" ")).toContain("not record-matched");
+  });
 });

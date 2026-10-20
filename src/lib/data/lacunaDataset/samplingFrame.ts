@@ -162,20 +162,27 @@ export function aoaDxCoverage(options: {
   readonly inFrameDealCount: number;
   readonly observedOverlapCount?: number;
 }): CoverageRatio {
+  const matched = options.observedOverlapCount != null;
   return coverageAgainstReference({
     name: AOA_DX_FRAME.name,
     frameNote:
       "AOA Dx examines 272 publicly announced women's-health exits (acquisitions + IPOs) over 2000–2024; " +
       "its 276 headline adds 4 highlighted 2025 exits without a comprehensive 2025 analysis. " +
       "Lacuna is a curated M&A convenience sample with different inclusion rules; " +
-      "overlap is not record-matched.",
+      (matched
+        ? "numerator is a caller-supplied record-matched overlap count."
+        : "overlap is not record-matched."),
     referenceCount: AOA_DX_FRAME.referenceCount,
     observedOverlapCount: options.observedOverlapCount ??
       options.inFrameDealCount,
-    caveats: [
-      "Numerator counts Lacuna deals announced 2000–2024; 2025–2026 Lacuna deals are outside the reference frame and excluded.",
-      "Numerator is not record-matched to AOA Dx rows — interpret as upper-bound style ratio under optimistic matching, not a verified intersection size.",
-    ],
+    caveats: matched
+      ? [
+        "Numerator is a caller-supplied count of Lacuna deals record-matched to AOA Dx rows announced 2000–2024; its matching method is the caller's responsibility.",
+      ]
+      : [
+        "Numerator counts Lacuna deals announced 2000–2024; 2025–2026 Lacuna deals are outside the reference frame and excluded.",
+        "Numerator is not record-matched to AOA Dx rows — interpret as upper-bound style ratio under optimistic matching, not a verified intersection size.",
+      ],
   });
 }
 
