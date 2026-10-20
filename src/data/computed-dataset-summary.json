@@ -18,19 +18,13 @@
     "adjacencyExcludedMillions": 118387.5,
     "estimand": "disclosed_only_observed_sum",
     "estimandNote": "disclosedOnlyTotal = Σ dealValueMillions over deals that disclosed a price after filters. Descriptive on the observed disclosed subsample; does not identify total transacted value under MNAR non-disclosure.",
-    "coverageRate": 0.2210144927536232,
-    "coverageDenominator": 276,
-    "coverageReferenceName": "AOA Dx Follow the Exits (2000–2025)",
+    "coverageRate": 0.21323529411764705,
+    "coverageNumerator": 58,
+    "coverageDenominator": 272,
+    "coverageReferenceName": "AOA Dx Follow the Exits (2000–2024)",
     "uniqueSourceCitations": 476,
     "lastUpdated": "2026-10-19",
     "datasetVersion": "v11"
-    "coverageRate": 0.20955882352941177,
-    "coverageNumerator": 57,
-    "coverageDenominator": 272,
-    "coverageReferenceName": "AOA Dx Follow the Exits (2000–2024)",
-    "uniqueSourceCitations": 471,
-    "lastUpdated": "2026-10-17",
-    "datasetVersion": "v10"
   },
   "disclosure": {
     "dealsTotal": 61,

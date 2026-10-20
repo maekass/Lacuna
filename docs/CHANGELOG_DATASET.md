@@ -38,7 +38,9 @@ missing founded years 48 → 49 (open `c152` ledger row).
 `observedCatalogComposition` now counts acquired companies rather than deals (a
 guard; no number changes under one-deal-per-target). Follow-ups from the PR #287
 review: asset-scoped names, a `pending_regulatory` transition on `deal60`, and
-`c151.hq` re-sourced to explicit headquarters statements.
+`c151.hq` re-sourced to explicit headquarters statements. Coverage uses the #289
+2000–2024 AOA Dx frame: 58/272 (deal61 is in frame; deal50, deal18 and deal60
+are not).
 
 2026-10-17 — v10. Added `deal60` Labcorp / BioReference Health select assets
 (announced 2026-10-15; Asset Purchase Agreement dated 2026-10-14) and target
