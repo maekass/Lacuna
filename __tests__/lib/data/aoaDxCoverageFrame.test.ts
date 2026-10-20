@@ -90,7 +90,9 @@ describe("AOA Dx coverage frame", () => {
       observedOverlapCount: 40,
     });
     expect(matched.numerator).toBe(40);
-    expect(matched.referenceFrameNote).toContain("record-matched overlap count");
+    expect(matched.referenceFrameNote).toContain(
+      "record-matched overlap count",
+    );
     expect(matched.referenceFrameNote).not.toContain("not record-matched");
     expect(matched.caveats.join(" ")).not.toContain("not record-matched");
     const unmatched = aoaDxCoverage({ inFrameDealCount: 57 });
