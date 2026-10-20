@@ -228,6 +228,7 @@ export const BENCHMARK_SOURCES: readonly BenchmarkSource[] = [
       "Composite success = Phase I × Phase II × Phase III × regulatory submission success, from IQVIA's pipeline data. Latest edition with a public composite rate.",
     limitations: [
       "IQVIA's 2025 landing page now redirects to the 2026 edition; the PDF is a third-party-hosted copy.",
+      "Locators give the printed page and the PDF page, which differ by two.",
       "Durations differ from the 2026 edition's restated values for the same years; do not mix editions.",
     ],
     lastReviewedAt: REVIEWED_AT,
@@ -389,14 +390,14 @@ function bioCut(
 }
 
 const BIO: RnpvBenchmark[] = [
-  ...bioCut("all", "All indications", "pp. 6, 10–11 (Figure 1)", [
+  ...bioCut("all", "All indications", "PDF pp. 6, 10–11 (Figure 1)", [
     [0.52, 4414],
     [0.289, 4933],
     [0.578, 1928],
     [0.906, 1453],
     [0.079, 12728],
   ]),
-  ...bioCut("non-nme", "Non-NME", "pp. 15–16 (Figure 9)", [
+  ...bioCut("non-nme", "Non-NME", "PDF pp. 15–16 (Figure 9)", [
     [0.575, 395],
     [0.375, 523],
     [0.675, 471],
@@ -406,7 +407,7 @@ const BIO: RnpvBenchmark[] = [
   ...bioCut(
     "off-patent",
     "Off-patent (non-NME + biosimilar)",
-    "pp. 15–16 (Figure 9)",
+    "PDF pp. 15–16 (Figure 9)",
     [
       [0.604, 455],
       [0.376, 527],
@@ -418,7 +419,7 @@ const BIO: RnpvBenchmark[] = [
   ...bioCut(
     "others",
     "Others (Dermatology, Renal, Obstetrics, non-autoimmune Rheumatology, ENT/Dental, Orthopedics)",
-    "pp. 7, 10–11",
+    "PDF pp. 7, 10–11",
     [
       [0.636, 154],
       [0.386, 228],
@@ -428,16 +429,16 @@ const BIO: RnpvBenchmark[] = [
     ],
     ["Pooled category; no separate dermatology or obstetrics rate exists."],
   ),
-  ...bioCut("oncology", "Oncology", "pp. 7–11", [
+  ...bioCut("oncology", "Oncology", "PDF pp. 7–11", [
     [0.488, 1628],
     [0.246, 1732],
     [0.477, 495],
     [0.92, 324],
     [0.053, 4179],
   ], [
-    "Table reports Phase III 47.7%; narrative on p. 9 states 47.5%. Table value stored.",
+    "Table reports Phase III 47.7%; narrative on PDF p. 9 states 47.5%. Table value stored.",
   ]),
-  ...bioCut("small-molecule", "Small molecule", "pp. 16–17 (Figure 10)", [
+  ...bioCut("small-molecule", "Small molecule", "PDF pp. 16–17 (Figure 10)", [
     [0.526, 2308],
     [0.28, 2896],
     [0.569, 1118],
@@ -447,7 +448,7 @@ const BIO: RnpvBenchmark[] = [
   ...bioCut(
     "rare",
     "Rare disease (non-oncology)",
-    "pp. 13–14",
+    "PDF pp. 13–14",
     [
       [0.674, 380],
       [0.446, 464],
@@ -459,7 +460,7 @@ const BIO: RnpvBenchmark[] = [
   ...bioCut(
     "biomarker",
     "Patient-preselection biomarker",
-    "pp. 17–18",
+    "PDF pp. 17–18",
     [
       [0.524, 414],
       [0.463, 149],
@@ -485,7 +486,7 @@ const BIO: RnpvBenchmark[] = [
       cut: `All indications, ${phase} phase`,
       period: "2011–2020",
       n,
-      locator: "pp. 24–25",
+      locator: "PDF pp. 24–25",
       verification: "primary_verified",
       caveats: [
         "Successful transitions only; measured between public disclosures, not trial dates.",
@@ -500,7 +501,7 @@ const BIO: RnpvBenchmark[] = [
     unit: "years",
     cut: "All indications, Phase I to approval",
     period: "2011–2020",
-    locator: "p. 24",
+    locator: "PDF p. 24",
     verification: "primary_verified",
   }),
 ];
@@ -542,7 +543,7 @@ const IQVIA_2025: RnpvBenchmark[] = [
       cut: "All indications",
       period: period.replace("-", "–"),
       transition: "phase1_to_approval",
-      locator: "Exhibit 46, p. 55",
+      locator: "Exhibit 46, printed p. 55 (PDF p. 57)",
       verification: "primary_third_party_copy",
       caveats: [
         "Commonly misattributed to the 2026 report; cite the 2025 edition.",
@@ -566,7 +567,7 @@ const IQVIA_2025: RnpvBenchmark[] = [
       cut: "All indications",
       period: "2024",
       transition,
-      locator: "Exhibit 46, p. 55",
+      locator: "Exhibit 46, printed p. 55 (PDF p. 57)",
       verification: "primary_third_party_copy",
       caveats: [
         "Single-year rate; IQVIA's regulatory step is submission success, not BIO's NDA/BLA-to-approval.",
@@ -586,9 +587,9 @@ const IQVIA_2025: RnpvBenchmark[] = [
       metric: "total_development_duration",
       value,
       unit: "years",
-      cut: "End-to-end, Phase I start to approval",
+      cut: "Composite median program duration, Phase I start to approval",
       period,
-      locator: "Exhibit 62, p. 71",
+      locator: "Exhibit 62, printed p. 71 (PDF p. 73)",
       verification: "primary_third_party_copy",
       caveats: ["2025-edition value; the 2026 edition restates these years."],
     })
