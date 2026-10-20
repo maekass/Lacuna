@@ -8,9 +8,31 @@ Compared against `src/data/computed-dataset-summary.json`:
 
 | Field           | Baseline value |
 | --------------- | -------------- |
-| Verified deals  | 60             |
-| Last updated    | 2026-10-17     |
-| Dataset version | v10            |
+| Verified deals  | 61             |
+| Last updated    | 2026-10-19     |
+| Dataset version | v11            |
+
+2026-10-19 — v11. Added `deal61` Labcorp / BioReference Health select assets
+(announced **2024-03-28**; Asset Purchase Agreement dated 2024-03-27; closed
+**2024-09-16**; `dealValue` 237.5, cash). Scope: clinical diagnostics and
+reproductive and women's health testing outside New York and New Jersey;
+oncology, urology and NY/NJ excluded. Annotated `scope: womens_health`. Primary:
+OPKO 8-K Item 1.01
+https://www.sec.gov/Archives/edgar/data/944809/000143774924009695/opk20240311_8k.htm
+and Item 2.01
+https://www.sec.gov/Archives/edgar/data/944809/000143774924029310/opk20240903_8k.htm.
+Acquirer releases:
+https://ir.labcorp.com/news-releases/news-release-details/labcorp-announces-acquisition-select-assets-bioreference-healths
+and
+https://ir.labcorp.com/news-releases/news-release-details/labcorp-completes-acquisition-select-assets-bioreference-healths.
+Independent: MedTech Dive
+https://www.medtechdive.com/news/labcorp-buys-bioreference-reproductive-women-health-assets/711713/.
+`c151` is the first company that is the target of two deals, so acquired
+companies (60) and acquisitions (61) now differ; `observedCatalogComposition`
+now counts acquired companies, not deals. Follow-ups from the PR #287 review:
+asset-scoped `targetName` on deal60 and deal61, a `pending_regulatory`
+transition on deal60, and `c151.hq` re-sourced to explicit headquarters
+statements.
 
 2026-10-17 — v10. Added `deal60` Labcorp / BioReference Health select assets
 (announced 2026-10-15; Asset Purchase Agreement dated 2026-10-14) and target

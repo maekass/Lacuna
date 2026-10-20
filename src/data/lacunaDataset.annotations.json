@@ -999,6 +999,28 @@
           "status": "announced",
           "statusAsOf": "2026-10-15",
           "statusSource": "OPKO Health 8-K Item 1.01 (Oct 15, 2026; agreement dated Oct 14, 2026); Labcorp press release (Oct 15, 2026)"
+        },
+        {
+          "status": "pending_regulatory",
+          "statusAsOf": "2026-10-15",
+          "statusSource": "OPKO Health 8-K Item 1.01 (Oct 15, 2026): consummation subject to HSR Clearance; outside date Apr 14, 2027"
+        }
+      ]
+    },
+    "deal61": {
+      "valueTier": "sec_filing",
+      "scope": "womens_health",
+      "announcedPrecision": "day",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2024-03-28",
+          "statusSource": "OPKO Health 8-K Item 1.01 (Mar 28, 2024); Labcorp press release (Mar 28, 2024)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2024-09-16",
+          "statusSource": "OPKO Health 8-K Item 2.01 (Sep 16, 2024); Labcorp press release (Sep 16, 2024)"
         }
       ]
     }

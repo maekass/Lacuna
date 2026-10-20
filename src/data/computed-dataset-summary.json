@@ -1,36 +1,36 @@
 {
-  "generatedAt": "2026-10-17T00:00:00.000Z",
+  "generatedAt": "2026-10-19T00:00:00.000Z",
   "model": "computeHeadlineStats/v1",
   "provenance": {
-    "lastUpdated": "2026-10-17",
-    "datasetVersion": "v10",
-    "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6"
+    "lastUpdated": "2026-10-19",
+    "datasetVersion": "v11",
+    "datasetHash": "f95d99872fea1af4048f16d5660499e88cc153bf13011c103bb43cb5f17c86dc"
   },
   "headline": {
     "companiesInNetwork": 151,
     "acquirerCount": 38,
     "networkNodeCount": 189,
-    "verifiedDeals": 60,
-    "disclosedValueMillions": 140976,
-    "disclosedValueBillionsLabel": "$141.0B",
-    "disclosedValueMillionsWh": 22104,
-    "disclosedValueBillionsLabelWh": "$22.1B",
+    "verifiedDeals": 61,
+    "disclosedValueMillions": 141213.5,
+    "disclosedValueBillionsLabel": "$141.2B",
+    "disclosedValueMillionsWh": 22341.5,
+    "disclosedValueBillionsLabelWh": "$22.3B",
     "adjacencyExcludedMillions": 118150,
     "estimand": "disclosed_only_observed_sum",
     "estimandNote": "disclosedOnlyTotal = Σ dealValueMillions over deals that disclosed a price after filters. Descriptive on the observed disclosed subsample; does not identify total transacted value under MNAR non-disclosure.",
-    "coverageRate": 0.21739130434782608,
+    "coverageRate": 0.2210144927536232,
     "coverageDenominator": 276,
     "coverageReferenceName": "AOA Dx Follow the Exits (2000–2025)",
-    "uniqueSourceCitations": 471,
-    "lastUpdated": "2026-10-17",
-    "datasetVersion": "v10"
+    "uniqueSourceCitations": 474,
+    "lastUpdated": "2026-10-19",
+    "datasetVersion": "v11"
   },
   "disclosure": {
-    "dealsTotal": 60,
-    "dealsDisclosed": 51,
+    "dealsTotal": 61,
+    "dealsDisclosed": 52,
     "dealsUndisclosed": 9,
-    "dealsWithValueNote": 60,
-    "disclosureRate": 0.85,
+    "dealsWithValueNote": 61,
+    "disclosureRate": 0.8524590163934426,
     "companiesWithValuation": 58,
     "companiesTotal": 151,
     "valuationRate": 0.3841059602649007

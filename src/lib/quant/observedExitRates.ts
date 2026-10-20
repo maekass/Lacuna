@@ -76,9 +76,13 @@ export function observedCatalogComposition(
   dataset: VerifiedDataset,
 ): ObservedCatalogComposition {
   const targetIds = new Set(dataset.acquisitions.map((deal) => deal.targetId));
+  // Successes are acquired companies, not deals: one company can be the
+  // target of several asset purchases (c151 has deal60 and deal61).
+  const acquiredCompanies =
+    dataset.companies.filter((company) => targetIds.has(company.id)).length;
   const overall = shareOrGate(
     "catalog overall",
-    dataset.acquisitions.length,
+    acquiredCompanies,
     dataset.companies.length,
     1,
   );

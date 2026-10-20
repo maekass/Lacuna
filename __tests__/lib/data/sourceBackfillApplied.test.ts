@@ -74,8 +74,8 @@ describe("applied SEC source backfill", () => {
     const withArchives = dataset.acquisitions.filter((d) =>
       sourceHasEdgarArchivesUrl(d.source)
     );
-    // deal60 cited its OPKO 8-K at entry (v10), outside the backfill.
-    const nativeEdgarDeals = ["deal60"];
+    // deal60 (v10) and deal61 (v11) cited OPKO 8-Ks at entry, outside the backfill.
+    const nativeEdgarDeals = ["deal60", "deal61"];
     expect(withArchives).toHaveLength(
       19 + manual.records.length + nativeEdgarDeals.length,
     );

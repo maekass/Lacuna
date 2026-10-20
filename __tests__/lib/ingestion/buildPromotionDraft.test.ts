@@ -78,7 +78,7 @@ describe("buildPromotionDraft", () => {
 
     expect(missingFields).toEqual([]);
     expect(draft).not.toBeNull();
-    expect(draft?.acquisition.id).toBe("deal61");
+    expect(draft?.acquisition.id).toBe("deal62");
     expect(draft?.company?.name).toBe("Example FemTech Co");
     expect(draft?.company?.sector).toBe("Fertility");
     expect(draft?.company?.hq).toBe("Boston, MA");

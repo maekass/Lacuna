@@ -136,5 +136,5 @@ integer.
 
 Kaplan-Meier curves and the acquisition-time hazard fit still exclude companies
 without a founding year. The survival curve also keeps only top sectors with a
-founding year after 1990. Neither surface is a company-year panel of all 150
+founding year after 1990. Neither surface is a company-year panel of all 151
 companies.

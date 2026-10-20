@@ -216,7 +216,7 @@ describe("buildSectorDealIntel on verified dataset", () => {
     );
     expect(portfolio.companyCount).toBe(7);
     expect(portfolio.dealCount).toBe(0);
-    expect(diagnostics.dealCount).toBe(12);
+    expect(diagnostics.dealCount).toBe(13);
     expect(diagnostics.deals.some((d) => d.targetName.includes("Sividon")))
       .toBe(false);
   });

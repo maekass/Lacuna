@@ -108,8 +108,8 @@ describe("MODEL_CARD.md stays true of the current tree", () => {
     expect(
       dataset.companies.filter((company) => company.founded == null).length,
     ).toBe(48);
-    expect(summary.disclosure.dealsDisclosed).toBe(51);
-    expect(card).toMatch(/Deals with a numeric price\s+\|\s+51\s+\|/);
+    expect(summary.disclosure.dealsDisclosed).toBe(52);
+    expect(card).toMatch(/Deals with a numeric price\s+\|\s+52\s+\|/);
   });
 
   it("records the raw file hash and the hazard export hash", () => {

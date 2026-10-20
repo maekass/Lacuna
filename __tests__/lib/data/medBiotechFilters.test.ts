@@ -44,7 +44,7 @@ describe("medBiotechFilters", () => {
     expect(med.companies.length + consumer.companies.length).toBe(
       full.companies.length,
     );
-    expect(med.acquisitions).toHaveLength(52);
+    expect(med.acquisitions).toHaveLength(53);
     expect(consumer.acquisitions).toHaveLength(8);
   });
 

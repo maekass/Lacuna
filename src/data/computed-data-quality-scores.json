@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-17T00:00:00.000Z",
-  "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+  "generatedAt": "2026-10-19T00:00:00.000Z",
+  "datasetHash": "f95d99872fea1af4048f16d5660499e88cc153bf13011c103bb43cb5f17c86dc",
   "source": "Lacuna verified catalog + economic evidence ledger",
   "grading": {
     "A": "90-100: SEC filing or equivalent primary source, all fields populated",
@@ -22,15 +22,15 @@
       "avgScore": 64
     },
     "acquisitions": {
-      "total": 60,
+      "total": 61,
       "grades": {
-        "A": 27,
+        "A": 28,
         "B": 5,
         "F": 4,
         "C": 23,
         "D": 1
       },
-      "avgScore": 86.8
+      "avgScore": 87
     }
   },
   "companies": [
@@ -2709,7 +2709,7 @@
     },
     {
       "id": "deal60",
-      "target": "BioReference Health",
+      "target": "BioReference Health (select assets, 2026)",
       "acquirer": "LabCorp",
       "sourceQuality": "A",
       "sourceDescription": "SEC filing (primary government source)",
@@ -2717,6 +2717,18 @@
       "hasDealValue": true,
       "hasSource": true,
       "overallScore": 97,
+      "grade": "A"
+    },
+    {
+      "id": "deal61",
+      "target": "BioReference Health (select assets, 2024)",
+      "acquirer": "LabCorp",
+      "sourceQuality": "A",
+      "sourceDescription": "SEC filing (primary government source)",
+      "completeness": 100,
+      "hasDealValue": true,
+      "hasSource": true,
+      "overallScore": 100,
       "grade": "A"
     }
   ]

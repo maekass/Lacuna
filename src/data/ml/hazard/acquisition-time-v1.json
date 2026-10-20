@@ -4,9 +4,9 @@
   "modelType": "cox_ph_breslow",
   "task": "time_to_verified_acquisition",
   "claimClass": "descriptive",
-  "fittedAt": "2026-10-17T05:29:13Z",
-  "datasetVersion": "v10",
-  "datasetSha256": "d7c802e789f19d16e629577bff67430ab1bb05e783e0c74104eeb39b437753fd",
+  "fittedAt": "2026-10-20T02:10:59Z",
+  "datasetVersion": "v11",
+  "datasetSha256": "e04fbccc0a8ee5fdeb194e30f00b435b306877f9a4e4fb291b765e3a0323b693",
   "disclaimer": "Descriptive time-to-acquisition baseline on Lacuna's curated verified catalog. Not a forecast, not an acquisition probability, not investment advice.",
   "allowedClaims": [
     "Breslow / Nelson\u2013Aalen baseline of time to a verified acquisition in this curated sample.",
@@ -35,7 +35,7 @@
     "excludedNonpositiveTime": 0,
     "excludedMissingSector": 0,
     "timeUnit": "years_from_founded_jan1",
-    "censorDate": "2026-10-17",
+    "censorDate": "2026-10-19",
     "notes": [
       "Time origin is 1 January of founded year (year precision).",
       "Independents are right-censored at provenance.lastUpdated.",

@@ -17,8 +17,12 @@ describe("catalog selection provenance", () => {
     const acquired = dataset.companies.filter((c) =>
       c.outcomeType === "acquired"
     );
-    expect(acquired).toHaveLength(dataset.acquisitions.length);
+    // One company can be the target of several deals (c151: deal60, deal61),
+    // so acquired outcomes match distinct targets, not the deal count.
+    const targetIds = new Set(dataset.acquisitions.map((d) => d.targetId));
+    expect(acquired.map((c) => c.id).sort()).toEqual([...targetIds].sort());
     expect(acquired).toHaveLength(60);
+    expect(dataset.acquisitions).toHaveLength(61);
   });
 
   it("does not impute founding years", () => {

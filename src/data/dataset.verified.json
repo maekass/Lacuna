@@ -1,7 +1,7 @@
 {
   "provenance": {
-    "lastUpdated": "2026-10-17",
-    "datasetVersion": "v10",
+    "lastUpdated": "2026-10-19",
+    "datasetVersion": "v11",
     "sources": [
       "SEC EDGAR filings (acquisitions, 8-K/10-K)",
       "Crunchbase (funding rounds, where cited)",
@@ -63,7 +63,8 @@
       "preDealValuationDatePrecision backfilled from cited sources; 10 post-announcement placeholder dates reset to announcement-year January 1 at year precision.",
       "2026-09-20: Appended 19 identity-checked SEC accession URLs from source backfill; corrected Teladoc/Livongo announcement to Aug 5, 2020 (close remains Oct 30, 2020); Hologic/Biotheranostics 8-K listed on the deal source; renamed portfolio sector Diagnostic → Diagnostic (portfolio). Pre-deal NASDAQ market-cap citations are not acquisition dual-source.",
       "2026-09-20: Added catalogEntryReason, catalogEntryDate, foundedPrecision, and outcomeType. Missing founding years stay absent (foundedPrecision=unknown). Non-acquired outcomes are unknown, not still-private. catalogEntryDate is null where add-date is not recoverable.",
-      "2026-10-17: Added deal60 (Labcorp / BioReference Health select assets, announced 2026-10-15) and company c151. Inclusion exception: mixed-scope carve-out — the purchased Business spans clinical and women's health testing, urology, corrections and the 4Kscore prostate test; it is included because women's health testing is a named line of business in both the 8-K and the acquirer release, and dealValue covers the whole Business, not a women's-health-only slice. Pending at entry: no closedDate; outcomeType=acquired follows the deal-target convention (deriveOutcomeType), not a completed close. Asset carve-out of a subsidiary: no funding or valuation evidence, so no premium or MOIC denominator. Sidecar annotation scope=adjacency, so it does not enter women's-health-only totals."
+      "2026-10-17: Added deal60 (Labcorp / BioReference Health select assets, announced 2026-10-15) and company c151. Inclusion exception: mixed-scope carve-out — the purchased Business spans clinical and women's health testing, urology, corrections and the 4Kscore prostate test; it is included because women's health testing is a named line of business in both the 8-K and the acquirer release, and dealValue covers the whole Business, not a women's-health-only slice. Pending at entry: no closedDate; outcomeType=acquired follows the deal-target convention (deriveOutcomeType), not a completed close. Asset carve-out of a subsidiary: no funding or valuation evidence, so no premium or MOIC denominator. Sidecar annotation scope=adjacency, so it does not enter women's-health-only totals.",
+      "2026-10-19: Added deal61 (Labcorp / BioReference Health select assets, announced 2024-03-28, closed 2024-09-16, $237.5M cash). c151 is now the first catalog company that is the target of two acquisitions (deal60, deal61); acquired-company count (distinct targetId) and acquisition count diverge (60 vs 61). Inclusion: in scope — reproductive and women's health testing is the named specialty line, with general clinical diagnostics in the same carve-out; oncology and urology were excluded. Asset-scoped targetName labels on deal60 and deal61. c151 hq re-sourced to explicit headquarters statements (Labcorp Mar 28, 2024 release; BioReference contact page) instead of the 10-K main-laboratory property row. Labcorp's 2025 BioReference oncology carve-out remains out of scope."
     ],
     "purpose": "Educational demonstration dataset for portfolio project. Not for commercial investment decisions.",
     "disclaimer": "Data compiled from public sources for educational visualization. Verify independently before any commercial use."
@@ -3100,13 +3101,15 @@
       "evidenceClass": "diagnostic_genomic",
       "name": "BioReference Health",
       "sector": "Diagnostics",
-      "stage": "Select assets under agreement to Labcorp (announced 2026-10-15; pending close)",
+      "stage": "Select assets sold to Labcorp in 2024 (closed 2024-09-16); further select assets under agreement to Labcorp (announced 2026-10-15; pending close)",
       "hq": "Elmwood Park, NJ",
       "description": "OPKO Health's clinical laboratory subsidiary; after 2024 and 2025 divestitures to Labcorp, focused on clinical and women's health testing in New York and New Jersey and a national urology franchise including the 4Kscore prostate cancer test",
       "sources": [
         "SEC EDGAR - OPKO Health 8-K Item 1.01 (Oct 15, 2026; Asset Purchase Agreement dated Oct 14, 2026) https://www.sec.gov/Archives/edgar/data/944809/000119312526422877/opk-20261014.htm",
         "Labcorp press release via PR Newswire (Oct 15, 2026) https://ir.labcorp.com/news-releases/news-release-details/labcorp-enters-agreement-opko-health-acquire-select-assets",
-        "SEC EDGAR - OPKO Health 10-K FY2025 (Item 2 Properties: Elmwood Park, NJ main diagnostics laboratory) https://www.sec.gov/Archives/edgar/data/0000944809/000119312526076596/opk-20251231.htm"
+        "SEC EDGAR - OPKO Health 8-K Item 1.01 (Mar 28, 2024; Asset Purchase Agreement dated Mar 27, 2024) https://www.sec.gov/Archives/edgar/data/944809/000143774924009695/opk20240311_8k.htm",
+        "Labcorp press release via PR Newswire (Mar 28, 2024; About BioReference Health: \"Headquartered in Elmwood Park, New Jersey\") https://ir.labcorp.com/news-releases/news-release-details/labcorp-announces-acquisition-select-assets-bioreference-healths",
+        "BioReference Health contact page (\"Headquarters: 481 Edward H. Ross Drive, Elmwood Park, NJ 07407\") https://www.bioreference.com/contact/"
       ],
       "foundedPrecision": "unknown",
       "catalogEntryReason": "deal-list",
@@ -4525,7 +4528,7 @@
       "id": "deal60",
       "targetId": "c151",
       "acquirerId": "acquirer-labcorp",
-      "targetName": "BioReference Health",
+      "targetName": "BioReference Health (select assets, 2026)",
       "acquirerName": "LabCorp",
       "announcedDate": "2026-10-15",
       "dealValue": 722,
@@ -4535,6 +4538,21 @@
       "earnoutComponent": "Up to $150M in cash over up to ten years based on Buyer's 4Kscore Test revenue",
       "source": "SEC EDGAR 8-K Item 1.01 (OPKO Health, Oct 15, 2026) https://www.sec.gov/Archives/edgar/data/944809/000119312526422877/opk-20261014.htm; Labcorp press release (Oct 15, 2026) https://ir.labcorp.com/news-releases/news-release-details/labcorp-enters-agreement-opko-health-acquire-select-assets; CLP Magazine coverage (Oct 15, 2026) https://clpmag.com/lab-management/company-news/labcorp-acquires-bioreference-health-assets-4kscore-test/",
       "strategicRationale": "Labcorp acquires BioReference Health's laboratory testing businesses focused on clinical and women's health testing services, urology, corrections and certain operational assets, including over 80 additional patient service centers, plus the proprietary 4Kscore Test"
+    },
+    {
+      "id": "deal61",
+      "targetId": "c151",
+      "acquirerId": "acquirer-labcorp",
+      "targetName": "BioReference Health (select assets, 2024)",
+      "acquirerName": "LabCorp",
+      "announcedDate": "2024-03-28",
+      "closedDate": "2024-09-16",
+      "dealValue": 237.5,
+      "dealValueNote": "Approximately $237.5M in cash per OPKO 8-K Item 1.01 (agreement) and Item 2.01 (completion), subject to adjustments set forth in the Asset Purchase Agreement dated Mar 27, 2024; no earnout disclosed. Select-asset purchase, not a whole-company acquisition: clinical diagnostics and reproductive and women's health testing outside New York and New Jersey; oncology, urology and all New York and New Jersey operations excluded. Acquired assets generated approximately $100M annual revenue per the Labcorp release.",
+      "dealType": "Asset Acquisition",
+      "dealStructure": "Cash",
+      "source": "SEC EDGAR 8-K Item 1.01 (OPKO Health, Mar 28, 2024) https://www.sec.gov/Archives/edgar/data/944809/000143774924009695/opk20240311_8k.htm; SEC EDGAR 8-K Item 2.01 (OPKO Health, Sep 16, 2024 — completed) https://www.sec.gov/Archives/edgar/data/944809/000143774924029310/opk20240903_8k.htm; Labcorp press release (Mar 28, 2024) https://ir.labcorp.com/news-releases/news-release-details/labcorp-announces-acquisition-select-assets-bioreference-healths; Labcorp press release (Sep 16, 2024 — completed) https://ir.labcorp.com/news-releases/news-release-details/labcorp-completes-acquisition-select-assets-bioreference-healths; MedTech Dive coverage (Mar 29, 2024) https://www.medtechdive.com/news/labcorp-buys-bioreference-reproductive-women-health-assets/711713/",
+      "strategicRationale": "Labcorp acquires BioReference Health's laboratory testing businesses focused on clinical diagnostics and reproductive and women's health outside New York and New Jersey, including patient service centers, customer contracts and operating assets, to enhance its laboratory services network and expand access to its clinical laboratory services"
     }
   ]
 }

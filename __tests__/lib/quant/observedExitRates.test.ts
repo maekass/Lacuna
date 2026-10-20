@@ -33,6 +33,22 @@ describe("observedCatalogComposition", () => {
     }
   });
 
+  it("counts acquired companies, not deals, when one target has two deals", () => {
+    const targets = new Set(dataset.acquisitions.map((d) => d.targetId));
+    expect(dataset.acquisitions.length).toBe(61);
+    expect(targets.size).toBe(60);
+    expect(
+      dataset.acquisitions.filter((d) => d.targetId === "c151").map((d) => d.id)
+        .sort(),
+    ).toEqual(["deal60", "deal61"]);
+    expect(composition.overall.successes).toBe(targets.size);
+    const sectorSum = composition.sectors.reduce(
+      (sum, sector) => sum + sector.successes,
+      0,
+    );
+    expect(sectorSum).toBe(composition.overall.successes);
+  });
+
   it("gates sectors with fewer than 5 events", () => {
     for (const sector of composition.sectors) {
       if (sector.successes < 5) {

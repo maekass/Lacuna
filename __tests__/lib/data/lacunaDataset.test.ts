@@ -153,7 +153,7 @@ describe("estimand-named aggregation (prompt 1)", () => {
 
   it("live WH disclosed-only matches pinned millions", () => {
     const stats = liveDisclosedStats(getStaticVerifiedDataset());
-    expect(stats.womensHealth.disclosedOnlyTotalMillions).toBe(22104);
+    expect(stats.womensHealth.disclosedOnlyTotalMillions).toBe(22341.5);
     expect(stats.adjacencyExcludedMillions).toBe(118150);
   });
 });

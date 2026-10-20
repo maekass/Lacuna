@@ -34,7 +34,7 @@ describe("endometriosis therapeutics graph", () => {
     expect(report.stats.assets).toBe(6);
     expect(report.stats.trials).toBe(8);
     expect(report.stats.regulatoryEvents).toBe(5);
-    expect(getStaticVerifiedDataset().acquisitions).toHaveLength(60);
+    expect(getStaticVerifiedDataset().acquisitions).toHaveLength(61);
   });
 
   it("links reviewed assets to normalized trials", () => {
