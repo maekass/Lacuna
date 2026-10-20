@@ -6,6 +6,8 @@
 import { wilsonConfidenceInterval } from "@/lib/fairness/statisticalMethods";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import computedSummary from "@/data/computed-dataset-summary.json";
+import { dealsFromVerifiedDataset } from "@/lib/data/lacunaDataset/fromVerified";
+import { countInAoaDxFrame } from "@/lib/data/lacunaDataset/samplingFrame";
 import { missingInput } from "./estimators";
 import type { QuantValue } from "./types";
 
@@ -103,9 +105,13 @@ export function observedCatalogComposition(
     );
 
   const coverageDenominator = computedSummary.headline.coverageDenominator;
+  // Only deals announced inside the reference frame (2000–2024) count against
+  // its denominator. Use the annotated announcement date, exactly as the live
+  // headline coverage does, so the two numerators cannot diverge.
+  const inFrameDeals = countInAoaDxFrame(dealsFromVerifiedDataset(dataset));
   const catalogCoverage = shareOrGate(
     computedSummary.headline.coverageReferenceName,
-    dataset.acquisitions.length,
+    inFrameDeals,
     coverageDenominator,
     1,
   );

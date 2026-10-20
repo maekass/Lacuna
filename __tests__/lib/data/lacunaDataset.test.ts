@@ -31,7 +31,7 @@ import {
 import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 import { aoaDxCoverage } from "@/lib/data/lacunaDataset/samplingFrame";
 
-const coverage: CoverageRatio = aoaDxCoverage({ lacunaDealCount: 10 });
+const coverage: CoverageRatio = aoaDxCoverage({ inFrameDealCount: 10 });
 
 function baseParams(
   overrides: Partial<AggregationParams> = {},

@@ -42,7 +42,13 @@ and tier floors are **caller-supplied** and recorded on each result.
 ## Coverage
 
 Coverage is an **observed ratio** against a named external reference (e.g. AOA
-Dx 276 exits, 2000–2025), with the reference frame documented alongside.
+Dx 272 announced exits, 2000–2024), with the reference frame documented
+alongside. The numerator counts only Lacuna deals announced inside that frame.
+AOA's 276 headline adds four highlighted 2025 exits, and the report states that
+"a comprehensive 2025 analysis is not included"
+(https://aoadx.com/wp-content/uploads/2026/01/Follow-the-Exits-Womens-Health-Jan-2026.pdf),
+so 2025 and later Lacuna deals are excluded rather than counted against a
+denominator that does not contain them.
 
 **Do not use capture-recapture / Lincoln–Petersen.** Lacuna and AOA Dx share a
 trade-press substrate (dependence) and are not reliably matchable at the record

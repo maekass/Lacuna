@@ -39,6 +39,8 @@ export interface HeadlineStats {
   estimand: LiveDisclosedStats["womensHealth"]["estimand"];
   estimandNote: string;
   coverageRate: number;
+  /** Lacuna deals announced inside the reference frame (2000–2024). */
+  coverageNumerator: number;
   coverageDenominator: number;
   coverageReferenceName: string;
   uniqueSourceCitations: number;
@@ -143,6 +145,7 @@ export function computeHeadlineStats(input: HeadlineStatsInput): HeadlineStats {
     estimand: live.womensHealth.estimand,
     estimandNote: live.womensHealth.estimandNote,
     coverageRate: live.womensHealth.coverage.rate,
+    coverageNumerator: live.womensHealth.coverage.numerator,
     coverageDenominator: live.womensHealth.coverage.denominator,
     coverageReferenceName: live.womensHealth.coverage.referenceName,
     uniqueSourceCitations: countUniqueSourceCitations(
