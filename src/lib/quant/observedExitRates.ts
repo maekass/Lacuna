@@ -6,6 +6,7 @@
 import { wilsonConfidenceInterval } from "@/lib/fairness/statisticalMethods";
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
 import computedSummary from "@/data/computed-dataset-summary.json";
+import { isInAoaDxFrame } from "@/lib/data/lacunaDataset/samplingFrame";
 import { missingInput } from "./estimators";
 import type { QuantValue } from "./types";
 
@@ -99,9 +100,15 @@ export function observedCatalogComposition(
     );
 
   const coverageDenominator = computedSummary.headline.coverageDenominator;
+  // Only deals announced inside the reference frame (2000–2024) count against
+  // its denominator; later deals are outside AOA Dx's systematic window.
+  const inFrameDeals =
+    dataset.acquisitions.filter((deal) =>
+      isInAoaDxFrame(Number(deal.announcedDate.slice(0, 4)))
+    ).length;
   const catalogCoverage = shareOrGate(
     computedSummary.headline.coverageReferenceName,
-    dataset.acquisitions.length,
+    inFrameDeals,
     coverageDenominator,
     1,
   );
