@@ -20,8 +20,8 @@ deals. Non-disclosure is missing-not-at-random (MNAR).
 <!-- LACUNA_LIVE_STATS_BEGIN -->
 
 - Women's-health disclosed-only total: **$22.1B** (`22104` USD millions)
-- Adjacency disclosed value excluded by `womensHealthOnly`: **$118.2B**
-  (`118150` USD millions)
+- Adjacency disclosed value excluded by `womensHealthOnly`: **$118.4B**
+  (`118387.5` USD millions)
 - SEC-filing share of WH disclosed value: **25.4%**
 - Trade-press share of WH disclosed value: **57.1%**
 - Completed WH deals in filter (disclosed count): **43** deals (**39** with

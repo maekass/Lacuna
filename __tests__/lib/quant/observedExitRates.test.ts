@@ -16,21 +16,44 @@ describe("observedCatalogComposition", () => {
     expect(composition.label).toBe(CATALOG_COMPOSITION_LABEL);
   });
 
-  it("reports 60/151 with Wilson bounds to 4dp", () => {
-    expect(composition.overall.successes).toBe(60);
-    expect(composition.overall.sampleSize).toBe(151);
+  it("reports 61/152 with Wilson bounds to 4dp", () => {
+    expect(composition.overall.successes).toBe(61);
+    expect(composition.overall.sampleSize).toBe(152);
     expect(isSufficient(composition.overall.share)).toBe(true);
     if (isSufficient(composition.overall.share)) {
-      expect(composition.overall.share.value).toBeCloseTo(60 / 151, 10);
+      expect(composition.overall.share.value).toBeCloseTo(61 / 152, 10);
       expect(composition.overall.share.confidenceInterval[0]).toBeCloseTo(
-        0.3228,
+        0.3268,
         4,
       );
       expect(composition.overall.share.confidenceInterval[1]).toBeCloseTo(
-        0.4770,
+        0.4807,
         4,
       );
     }
+  });
+
+  it("counts acquired companies, not deals, when a target has two deals", () => {
+    // Synthetic fixture: the verified catalog keeps one deal per target, so
+    // duplicate an existing deal onto the same target to exercise the guard.
+    const first = dataset.acquisitions[0]!;
+    const fixture = {
+      ...dataset,
+      acquisitions: [
+        ...dataset.acquisitions,
+        { ...first, id: "fixture-duplicate-target" },
+      ],
+    };
+    const distinctTargets =
+      new Set(fixture.acquisitions.map((d) => d.targetId)).size;
+    const result = observedCatalogComposition(fixture);
+    expect(fixture.acquisitions.length).toBe(distinctTargets + 1);
+    expect(result.overall.successes).toBe(distinctTargets);
+    const sectorSum = result.sectors.reduce(
+      (sum, sector) => sum + sector.successes,
+      0,
+    );
+    expect(sectorSum).toBe(result.overall.successes);
   });
 
   it("gates sectors with fewer than 5 events", () => {

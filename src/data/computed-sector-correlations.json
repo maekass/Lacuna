@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-17T00:00:00.000Z",
-  "datasetVersion": "v10",
-  "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+  "generatedAt": "2026-10-19T00:00:00.000Z",
+  "datasetVersion": "v11",
+  "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
   "source": "Lacuna verified catalog + economic evidence ledger",
   "sectors": [],
   "withheld": [
@@ -12,11 +12,11 @@
         "metricId": "sector.correlation.pearson",
         "estimator": "not-computed",
         "n": 7,
-        "originalInputCount": 60,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
-            "count": 44
+            "count": 45
           },
           {
             "reason": "value_undisclosed",
@@ -27,12 +27,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 60
+            "total": 61
           },
           {
             "field": "totalFunding",
-            "missing": 44,
-            "total": 51
+            "missing": 45,
+            "total": 52
           }
         ],
         "contributors": [
@@ -212,9 +212,9 @@
             ]
           }
         ],
-        "datasetVersion": "v10",
-        "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
-        "computedAt": "2026-10-17T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     }
   ]

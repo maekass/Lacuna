@@ -5,7 +5,7 @@ describe("catalog selection provenance", () => {
   const dataset = getStaticVerifiedDataset();
 
   it("gives every company a catalogEntryReason and outcomeType", () => {
-    expect(dataset.companies).toHaveLength(151);
+    expect(dataset.companies).toHaveLength(152);
     for (const company of dataset.companies) {
       expect(company.catalogEntryReason).toBeDefined();
       expect(company.outcomeType).toBeDefined();
@@ -18,7 +18,7 @@ describe("catalog selection provenance", () => {
       c.outcomeType === "acquired"
     );
     expect(acquired).toHaveLength(dataset.acquisitions.length);
-    expect(acquired).toHaveLength(60);
+    expect(acquired).toHaveLength(61);
   });
 
   it("does not impute founding years", () => {

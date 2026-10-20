@@ -1,17 +1,17 @@
 # Model Card: Exit Similarity Explorer
 
-**Card revised**: 2026-10-17\
+**Card revised**: 2026-10-19\
 **Components**: `ExitPredictor.tsx` and `QuantValuationPanel.tsx` (lazy-loaded
 from `src/app/lazyDashboard.tsx`; mounted on `/deals#quant-valuation` and
 `/deals#similarity-indicators` via `src/app/sections/DealsPage.tsx`)\
 **Type**: Hand-set scores on a curated catalog. Not a fitted or calibrated
 predictive model.\
-**Dataset last updated**: 2026-10-17 (`provenance.lastUpdated`)\
-**Dataset version**: v10 (`src/data/computed-dataset-summary.json`
+**Dataset last updated**: 2026-10-19 (`provenance.lastUpdated`)\
+**Dataset version**: v11 (`src/data/computed-dataset-summary.json`
 `provenance.datasetVersion`, also `dataset.verified.json`)\
-**Verified acquisitions**: 60 (`headline.verifiedDeals`)\
+**Verified acquisitions**: 61 (`headline.verifiedDeals`)\
 **Canonical dataset hash**:
-`8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6`
+`5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246`
 
 That hash is `hashDataset()` in `src/lib/lineage/datasetHash.ts` applied to the
 materialized dataset (verified JSON plus the economic evidence ledger). The same
@@ -53,26 +53,26 @@ acquired, or when.
 These counts are different measurements. A matching integer does not make two
 definitions the same count.
 
-| Quantity                               |     Value | Definition                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| -------------------------------------- | --------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Companies                              |       151 | `companies.length`. `headline.companiesInNetwork`.                                                                                                                                                                                                                                                                                                                                                                                |
-| Acquirers                              |        38 | `acquirers.length`. `headline.acquirerCount`.                                                                                                                                                                                                                                                                                                                                                                                     |
-| Verified acquisitions (events / deals) |        60 | `acquisitions.length`. `headline.verifiedDeals`. 60 distinct `targetId` values, each present in `companies`. Five rows have no `closedDate` (deal5, deal6, deal13, deal18, deal60); deal60 is an announced, pending asset purchase.                                                                                                                                                                                               |
-| In-sample acquired companies           |        60 | Companies that are an acquisition target, or whose stage string contains "acquired" (`deriveEmpiricalPriors`). In this snapshot that equals the deal count: every target is in the catalog, and no extra company is stage-acquired without a deal. The definitions stay separate.                                                                                                                                                 |
-| Valuation disclosures                  |        58 | `disclosure.companiesWithValuation`. Companies with a numeric `lastKnownValuation` after `evidence.verified.json` is applied. Raw company objects in `dataset.verified.json` do not store that field. Not the deal count.                                                                                                                                                                                                         |
-| Deals with a numeric price             |        51 | `disclosure.dealsDisclosed` (`dealValue` is a number). 9 acquisitions have no numeric price.                                                                                                                                                                                                                                                                                                                                      |
-| Companies with no founded year         |        48 | `founded` is null and `foundedPrecision` is `"unknown"`. 103 companies have year precision (1948–2022). 48/151 is 31.8% to one decimal. Those rows are not a company-year panel of the catalog. See [FOUNDING_YEAR_PROVENANCE.md](FOUNDING_YEAR_PROVENANCE.md).                                                                                                                                                                   |
-| Acquisition-target sectors             |        13 | Distinct `sector` values among the 60 targets. Mean 60/13, about 4.6 deals. Three of those sectors have one deal: Mental Health, Contraception, Dermatology. The company catalog has 24 sectors. 13 is not the catalog sector count.                                                                                                                                                                                              |
-| External coverage reference            |    57/272 | Deals announced 2000–2024 (`headline.coverageNumerator`) divided by `headline.coverageDenominator` for "AOA Dx Follow the Exits (2000–2024)". 21.0% to one decimal (`coverageRate`). AOA examines 272 announced exits over 2000–2024; its 276 headline adds 4 highlighted 2025 exits without a full 2025 analysis, so deal50 (2025), deal18 and deal60 (2026) are out of frame. Not record-matched. Not a Lacuna population rate. |
-| In-sample catalog share                |    60/151 | 39.7% to one decimal. `overallExitRateEstimate`. The quant panel note rounds it to 40% and prints the acquired-company and company counts. It includes the company in each row. It is not the index base rate for a catalog company, and it is not a population exit rate.                                                                                                                                                        |
-| Hazard cohort                          | 58 events | `src/data/ml/hazard/acquisition-time-v1.json`: 151 companies, 48 excluded for a missing founded year, 103 analyzed, 58 events, 45 censored. The 58 events are acquired companies with a founded year. They are not the 58 valuation disclosures: 49 companies are in both sets.                                                                                                                                                   |
+| Quantity                               |     Value | Definition                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| -------------------------------------- | --------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Companies                              |       152 | `companies.length`. `headline.companiesInNetwork`.                                                                                                                                                                                                                                                                                                                                                                                                           |
+| Acquirers                              |        38 | `acquirers.length`. `headline.acquirerCount`.                                                                                                                                                                                                                                                                                                                                                                                                                |
+| Verified acquisitions (events / deals) |        61 | `acquisitions.length`. `headline.verifiedDeals`. 61 distinct `targetId` values, each present in `companies`. Asset carve-outs are separate catalog rows: c152 is the BioReference business sold in 2024 (deal61) and c151 is the 2026 asset bundle (deal60). Five rows have no `closedDate` (deal5, deal6, deal13, deal18, deal60); deal60 is an announced, pending asset purchase.                                                                          |
+| In-sample acquired companies           |        61 | Companies that are an acquisition target, or whose stage string contains "acquired" (`deriveEmpiricalPriors`). In this snapshot that equals the deal count: every target has one deal, every target is in the catalog, and no extra company is stage-acquired without a deal. The definitions stay separate.                                                                                                                                                 |
+| Valuation disclosures                  |        58 | `disclosure.companiesWithValuation`. Companies with a numeric `lastKnownValuation` after `evidence.verified.json` is applied. Raw company objects in `dataset.verified.json` do not store that field. Not the deal count.                                                                                                                                                                                                                                    |
+| Deals with a numeric price             |        52 | `disclosure.dealsDisclosed` (`dealValue` is a number). 9 acquisitions have no numeric price.                                                                                                                                                                                                                                                                                                                                                                 |
+| Companies with no founded year         |        49 | `founded` is null and `foundedPrecision` is `"unknown"`. 103 companies have year precision (1948–2022). 49/152 is 32.2% to one decimal. Those rows are not a company-year panel of the catalog. See [FOUNDING_YEAR_PROVENANCE.md](FOUNDING_YEAR_PROVENANCE.md).                                                                                                                                                                                              |
+| Acquisition-target sectors             |        13 | Distinct `sector` values among the 61 targets. Mean 61/13, about 4.7 deals. Three of those sectors have one deal: Mental Health, Contraception, Dermatology. The company catalog has 24 sectors. 13 is not the catalog sector count.                                                                                                                                                                                                                         |
+| External coverage reference            |    58/272 | Deals announced 2000–2024 (`headline.coverageNumerator`) divided by `headline.coverageDenominator` for "AOA Dx Follow the Exits (2000–2024)". 21.3% to one decimal (`coverageRate`). AOA examines 272 announced exits over 2000–2024; its 276 headline adds 4 highlighted 2025 exits without a full 2025 analysis, so deal50 (2025), deal18 and deal60 (2026) are out of frame. deal61 (2024) is in frame. Not record-matched. Not a Lacuna population rate. |
+| In-sample catalog share                |    61/152 | 40.1% to one decimal. `overallExitRateEstimate`. The quant panel note rounds it to 40% and prints the acquired-company and company counts. It includes the company in each row. It is not the index base rate for a catalog company, and it is not a population exit rate.                                                                                                                                                                                   |
+| Hazard cohort                          | 58 events | `src/data/ml/hazard/acquisition-time-v1.json`: 152 companies, 49 excluded for a missing founded year, 103 analyzed, 58 events, 45 censored. The 58 events are acquired companies with a founded year. They are not the 58 valuation disclosures: 49 companies are in both sets.                                                                                                                                                                              |
 
-`dataset.verified.json` is 185,853 bytes. SHA-256 of those bytes:
-`d7c802e789f19d16e629577bff67430ab1bb05e783e0c74104eeb39b437753fd`.
+`dataset.verified.json` is 191,073 bytes. SHA-256 of those bytes:
+`d810f3fdad8c66798e4cbf690870bd13f8bda834c90ad3a15a0895328eb47678`.
 
 The hazard artifact records `datasetSha256`
-`d7c802e789f19d16e629577bff67430ab1bb05e783e0c74104eeb39b437753fd` (`fittedAt`
-2026-10-17, `datasetVersion` v10). That field is the raw-byte hash at export
+`d810f3fdad8c66798e4cbf690870bd13f8bda834c90ad3a15a0895328eb47678` (`fittedAt`
+2026-10-20, `datasetVersion` v11). That field is the raw-byte hash at export
 (`dataset_sha256` in `ml/hazard/lacuna_hazard/export.py`). It matches the
 SHA-256 of the current file and is not the canonical hash above. The cohort
 counts match a recount of the current file.
@@ -82,8 +82,8 @@ counts match a recount of the current file.
 ## Intended use / Out of scope
 
 **Intended use:** retrieval and ranking of comparable companies for analyst
-review inside this educational catalog. With 60 acquisition events in a
-151-company catalog, the repository does not contain a fitted, validated
+review inside this educational catalog. With 61 acquisition events in a
+152-company catalog, the repository does not contain a fitted, validated
 predictive model.
 
 **Out of scope** (do not use the scores for):
@@ -215,7 +215,7 @@ This is a **different** heuristic from Surface 1.
    sector still has at least `MIN_SECTOR_SAMPLE` (5) companies after the
    exclusion; otherwise the overall leave-one-out share is used. The deal-count
    multiplier is separate: it applies whenever the sector has a prior, including
-   sectors with a single deal. The in-sample catalog share (60/151) stays on
+   sectors with a single deal. The in-sample catalog share (61/152) stays on
    `overallExitRateEstimate` and is labeled as in-sample. It is not the index
    base rate for a catalog company. A company outside the catalog keeps the
    labeled in-sample share, because there is no row to remove.
@@ -266,17 +266,17 @@ forecast, and it is not a company-year panel.
 | Limitation                    | Detail                                                                                                                                                                                                                                                                                                                                               |
 | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Score, not a fitted model** | Weights, band cuts, coverage constants, `DRIVER_WEIGHTS`, `SECTOR_SHARE_SCALE`, and `timelineMonths` are hand-set. `SECTOR_SHARE_SCALE` has no in-tree derivation.                                                                                                                                                                                   |
-| **In-sample catalog share**   | 60/151 remains the labeled in-sample event fraction of an outcome-selected catalog, not a population rate. The index base rate leaves out the company being scored.                                                                                                                                                                                  |
-| **Catalog coverage**          | 57/272: deals announced 2000–2024 against the AOA Dx 2000–2024 frame. The series has its own definitions.                                                                                                                                                                                                                                            |
-| **Missing founding years**    | 48/151 companies have no founded year. Observed years span 1948–2022, not an eight-year window. A company-year panel is not constructible. See [FOUNDING_YEAR_PROVENANCE.md](FOUNDING_YEAR_PROVENANCE.md). Time-to-event summaries cannot cover the missing rows.                                                                                    |
+| **In-sample catalog share**   | 61/152 remains the labeled in-sample event fraction of an outcome-selected catalog, not a population rate. The index base rate leaves out the company being scored.                                                                                                                                                                                  |
+| **Catalog coverage**          | 58/272: deals announced 2000–2024 against the AOA Dx 2000–2024 frame. The series has its own definitions.                                                                                                                                                                                                                                            |
+| **Missing founding years**    | 49/152 companies have no founded year. Observed years span 1948–2022, not an eight-year window. A company-year panel is not constructible. See [FOUNDING_YEAR_PROVENANCE.md](FOUNDING_YEAR_PROVENANCE.md). Time-to-event summaries cannot cover the missing rows.                                                                                    |
 | **Small sector samples**      | 13 target sectors, about 4.5 events each; 3 sectors have a single event. The company-level sector exit share is not used when fewer than 5 companies remain after leave-one-out. The deal-count multiplier can still apply.                                                                                                                          |
 | **No held-out test**          | Weights are not validated against unseen data.                                                                                                                                                                                                                                                                                                       |
 | **Circular catalog**          | Peer valuation and age medians, and the exit share, come from the same catalog being scored. Leave-one-out removes the scored company from the exit share and from those peer medians. Age for a company that is not a target uses the current year.                                                                                                 |
 | **No time horizon**           | `timelineMonths` is computed and unused. Neither score is a time-to-exit model.                                                                                                                                                                                                                                                                      |
 | **Interval scope**            | The index interval rescales the exit-share bootstrap interval only.                                                                                                                                                                                                                                                                                  |
 | **Clinical stage is a proxy** | `proxyClinicalStage` reads the funding-stage string. Strings that are empty after stripping an acquisition phrase are withheld. Residual outcome wording and a public-listing string still produce a stage, including `fda_approved` for public. The other four drivers are not certified free of leakage. See [LEAKAGE_AUDIT.md](LEAKAGE_AUDIT.md). |
-| **58 is two different sets**  | 58 valuation disclosures and 58 hazard events overlap in 49 companies. Neither is the 60-deal count.                                                                                                                                                                                                                                                 |
-| **Hazard hash is raw bytes**  | The artifact `datasetSha256` matches the current file SHA-256 and is not the canonical dataset hash. `fittedAt` is 2026-10-16. See Counts.                                                                                                                                                                                                           |
+| **58 is two different sets**  | 58 valuation disclosures and 58 hazard events overlap in 49 companies. Neither is the 61-deal count.                                                                                                                                                                                                                                                 |
+| **Hazard hash is raw bytes**  | The artifact `datasetSha256` matches the current file SHA-256 and is not the canonical dataset hash. `fittedAt` is 2026-10-20. See Counts.                                                                                                                                                                                                           |
 
 ### Provisional choices
 
@@ -356,11 +356,11 @@ If referencing this tool in academic or professional contexts:
 
 > Kass, M. (2026). _Lacuna: Network Intelligence Platform for Women's Health
 > M&A_. Open-source portfolio project. The Exit Similarity Explorer applies
-> hand-set factor weights to a catalog of 151 companies and 60 verified
-> public-domain acquisitions (dataset v10). No fitted predictive model is
-> employed. The in-sample catalog share is 60/151 and is labeled as in-sample;
+> hand-set factor weights to a catalog of 152 companies and 61 verified
+> public-domain acquisitions (dataset v11). No fitted predictive model is
+> employed. The in-sample catalog share is 61/152 and is labeled as in-sample;
 > the acquisition index leaves the scored company out of that share. Coverage
-> against the AOA Dx Follow the Exits 2000–2024 frame is 57/272. Valuation
+> against the AOA Dx Follow the Exits 2000–2024 frame is 58/272. Valuation
 > disclosures (58) are a different count. https://github.com/maekass/Lacuna
 
 ---

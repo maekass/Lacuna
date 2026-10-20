@@ -55,17 +55,17 @@ describe("AOA Dx coverage frame", () => {
   it("excludes exactly the 2025–2026 deals from the numerator", () => {
     expect(outOfFrame).toEqual(["deal18", "deal50", "deal60"]);
     expect(countInAoaDxFrame(deals)).toBe(dataset.acquisitions.length - 3);
-    expect(countInAoaDxFrame(deals)).toBe(57);
+    expect(countInAoaDxFrame(deals)).toBe(58);
   });
 
-  it("publishes 57/272 in the headline and the live stats", () => {
+  it("publishes 58/272 in the headline and the live stats", () => {
     const coverage = liveDisclosedStats(dataset).womensHealth.coverage;
-    expect(coverage.numerator).toBe(57);
+    expect(coverage.numerator).toBe(58);
     expect(coverage.denominator).toBe(272);
-    expect(coverage.rate).toBeCloseTo(57 / 272, 12);
-    expect(computedSummary.headline.coverageNumerator).toBe(57);
+    expect(coverage.rate).toBeCloseTo(58 / 272, 12);
+    expect(computedSummary.headline.coverageNumerator).toBe(58);
     expect(computedSummary.headline.coverageDenominator).toBe(272);
-    expect(computedSummary.headline.coverageRate).toBeCloseTo(57 / 272, 12);
+    expect(computedSummary.headline.coverageRate).toBeCloseTo(58 / 272, 12);
     expect(computedSummary.headline.coverageReferenceName).toBe(
       AOA_DX_FRAME.name,
     );
@@ -73,7 +73,7 @@ describe("AOA Dx coverage frame", () => {
 
   it("uses the same in-frame numerator for catalog coverage", () => {
     const { catalogCoverage } = observedCatalogComposition(dataset);
-    expect(catalogCoverage.successes).toBe(57);
+    expect(catalogCoverage.successes).toBe(58);
     expect(catalogCoverage.sampleSize).toBe(272);
   });
 

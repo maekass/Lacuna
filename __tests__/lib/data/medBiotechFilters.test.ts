@@ -39,17 +39,17 @@ describe("medBiotechFilters", () => {
   it("partitions the full catalog without overlap", () => {
     const med = applyMedBiotechScope(full);
     const consumer = applyConsumerHealthScope(full);
-    expect(med.companies).toHaveLength(100);
+    expect(med.companies).toHaveLength(101);
     expect(consumer.companies).toHaveLength(51);
     expect(med.companies.length + consumer.companies.length).toBe(
       full.companies.length,
     );
-    expect(med.acquisitions).toHaveLength(52);
+    expect(med.acquisitions).toHaveLength(53);
     expect(consumer.acquisitions).toHaveLength(8);
   });
 
   it("applyDatasetScope matches dedicated helpers", () => {
-    expect(applyDatasetScope(full, "med_biotech").companies.length).toBe(100);
+    expect(applyDatasetScope(full, "med_biotech").companies.length).toBe(101);
     expect(applyDatasetScope(full, "consumer_health").companies.length).toBe(
       51,
     );

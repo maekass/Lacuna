@@ -1,31 +1,31 @@
 {
-  "generatedAt": "2026-10-17T00:00:00.000Z",
-  "datasetHash": "8323decef016a48cac2b2b3396d04522dbaba44510fc9ed06d55aa25437e66e6",
+  "generatedAt": "2026-10-19T00:00:00.000Z",
+  "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
   "computationLineageHash": "c95ea246756a2e9e81fef39df953b355690e88cd8569ebce2aacb37622d7f8a8",
-  "datasetVersion": "v10",
+  "datasetVersion": "v11",
   "source": "Lacuna measurement-layer census (quality scores, gated metrics, vintage, display provenance)",
   "quality": {
     "companies": {
-      "total": 151,
+      "total": 152,
       "grades": {
         "A": 3,
         "B": 39,
-        "C": 43,
+        "C": 44,
         "D": 58,
         "F": 8
       },
       "avgScore": 64
     },
     "acquisitions": {
-      "total": 60,
+      "total": 61,
       "grades": {
-        "A": 27,
+        "A": 28,
         "B": 5,
         "C": 23,
         "D": 1,
         "F": 4
       },
-      "avgScore": 86.8
+      "avgScore": 87
     },
     "grading": {
       "A": "90-100: SEC filing or equivalent primary source, all fields populated",
@@ -546,18 +546,18 @@
   },
   "vintage": {
     "definition": "Dedicated as-of for the record's primary economic number. lastKnownValuation and totalFunding have no as-of field. dealValue's announcedDate is an event date, not a value vintage. Only preDealValuationDate counts when the primary number is preDealValuation.",
-    "recordsInScope": 211,
-    "primaryNumbers": 136,
+    "recordsInScope": 213,
+    "primaryNumbers": 137,
     "dedicatedAsOf": 69,
-    "missingDedicatedAsOf": 67,
-    "missingDedicatedAsOfRate": 0.49264705882352944,
+    "missingDedicatedAsOf": 68,
+    "missingDedicatedAsOfRate": 0.49635036496350365,
     "companyPrimary": {
       "total": 83,
       "withDedicatedAsOf": 67
     },
     "dealValues": {
-      "total": 51,
-      "withEventDate": 51,
+      "total": 52,
+      "withEventDate": 52,
       "withValueAsOf": 0
     },
     "preDealValuations": {
