@@ -2,7 +2,7 @@
  * Live disclosed-only stats for UI + LIMITATIONS.md drift pins.
  */
 
-import { aoaDxCoverage } from "./samplingFrame";
+import { aoaDxCoverage, countInAoaDxFrame } from "./samplingFrame";
 import {
   dealsFromVerifiedDataset,
   type VerifiedDealSource,
@@ -45,7 +45,7 @@ function hubParams(
     completedOnly: true,
     concentrationWarnShare: HUB_AGGREGATION_THRESHOLDS.concentrationWarnShare,
     adjacencyWarnShare: HUB_AGGREGATION_THRESHOLDS.adjacencyWarnShare,
-    coverage: aoaDxCoverage({ lacunaDealCount: deals.length }),
+    coverage: aoaDxCoverage({ inFrameDealCount: countInAoaDxFrame(deals) }),
   };
 }
 
