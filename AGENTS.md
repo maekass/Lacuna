@@ -97,6 +97,12 @@ and intelligence pages may keep heuristics when labeled `cited_*` or `affinity`;
 those scores must not feed deal economics, valuation peers, or dual-source
 badges.
 
+Published success rates, timelines and stage medians live only in
+`src/lib/research/rnpvBenchmarks.ts`, a reference layer for analyst rNPV work.
+Do not import it from app code; tests and ESLint block that. Add or change
+figures only with a source, edition, locator and verification status — see
+[docs/RNPV_BENCHMARKS.md](docs/RNPV_BENCHMARKS.md).
+
 CI guard: `__tests__/lib/data/noSyntheticData.test.ts`.
 
 ## CI
