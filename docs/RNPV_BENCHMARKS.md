@@ -19,6 +19,14 @@ defend assumptions in an rNPV model built outside Lacuna.
 - **Separate from the biopharma diligence model.** That model accepts PTRS only
   as a reviewed `analyst_assumption` with Statista evidence. Benchmarks here do
   not satisfy that schema.
+- **Outside the data tiers.** The layer holds aggregate published figures, not
+  deals or companies. The withheld items in
+  [DATA_BOUNDARIES.md](DATA_BOUNDARIES.md) still apply: stage medians are not
+  deal prices or comps, cost-per-launch figures do not reinstate R&D-cost
+  valuation, and success rates do not replace withheld trial-model percentages.
+- **Not the ML benchmark.**
+  [ML_BENCHMARK_GOVERNANCE.md](ML_BENCHMARK_GOVERNANCE.md) governs a held-out
+  model evaluation in `ml/clinical_trials/`. It is unrelated to this layer.
 
 ## What each entry records
 
@@ -68,11 +76,81 @@ rest on two deals each and are excluded.
 2026's duplicated device-exit chart, which is why no device exit figures are
 stored.
 
+## Using the layer
+
+Read the figures in a script, test or notebook. App code cannot import them.
+
+```ts
+import {
+  getBenchmarksBySource,
+  getCitableBenchmarks,
+  impliedStepUp,
+  KNOWN_SOURCE_ISSUES,
+} from "@/lib/research/rnpvBenchmarks";
+
+const bioNonNme = getCitableBenchmarks().filter((b) =>
+  b.id.startsWith("bio-2011-2020-non-nme-")
+);
+const jpm = getBenchmarksBySource("jpm-dealforma-biopharma-q2-2026");
+const stepUp = impliedStepUp(0.52); // ≈1.92x for clearing Phase I
+```
+
+- Start from `getCitableBenchmarks()`. Use `RNPV_BENCHMARKS` only when you
+  intend to show small-sample figures with their `n`.
+- Keep each assumption to one publisher and edition. Mixing BIO phase rates with
+  IQVIA or Citeline rates produces a composite neither source reports.
+- Check `KNOWN_SOURCE_ISSUES` for the source before citing it.
+- `impliedStepUp` is a stage check: 1 ÷ phase success, before time value and
+  remaining cost. It is not a valuation.
+
+## Citing a benchmark
+
+Cite the publisher, title, edition, figure, period, cut and locator. Add the
+verification status whenever it is not `primary_verified`.
+
+> BIO / Informa / QLS, Clinical Development Success Rates 2011–2020 (2021):
+> non-NME likelihood of approval from Phase I, 13.3% (n = 1,884), PDF pp. 15–16.
+
+> IQVIA, Global Trends in R&D 2025: composite success rate 7% in 2024, Exhibit
+> 46, printed p. 55 (third-party-hosted copy).
+
+Do not cite IQVIA's 7% composite to the 2026 report. Do not cite J.P. Morgan's
+pooled 2021–H1 2026 M&A medians as a single year.
+
+## Adding or updating figures
+
+1. Read the figure in the primary document. If only secondary coverage is
+   available, use `secondary_reported` and name the outlet in the locator.
+2. Add the source to `BENCHMARK_SOURCES` with edition, publication date, data
+   cutoff, access type, methodology and limitations. If the source is also in
+   the canonical research-source registry, set `registryId`. The tests require
+   matching dates and URLs.
+3. Add each figure with its period, cut, locator, and `n` when reported. Store
+   rates as fractions and money in USD. For any computed figure, use
+   `derived_from_primary` and record the arithmetic in `derivation`.
+4. Store a new edition alongside the old one. Do not overwrite it: editions
+   restate prior years.
+5. Log contradictions, chart errors and text-versus-table differences in
+   `KNOWN_SOURCE_ISSUES`, and say what was stored.
+6. Add or extend an integrity test when a source publishes figures that should
+   reconcile. For example, phase rates should multiply to the reported LOA.
+7. Do not store licensed text, paywalled report content, or anything an analyst
+   could not cite publicly.
+
 ## Excluded material
 
 - Licensed subscription content, including Mergermarket and anything from the
   IQVIA 2026 report beyond IQVIA's public pages.
 - Unverified secondary figures: Citeline phase-by-phase rates circulating in
   summaries, and Substack figures that could not be traced to a primary source.
+  Checked October 2026:
+  - Aurelion Research, "Bottleneck Opportunity in a New Healthcare Era" (May 14,
+    2026): paywalled. The public portion shows none of the funding, R&D or M&A
+    figures attributed to it, and names IQVIA only as a CRO stock.
+  - The Century of Biology, "AI Versus Eroom's Law" (Apr 12, 2026): its
+    emerging-biopharma share of Phase I submissions cites IQVIA Pipeline
+    Intelligence (Dec 2022) and IQVIA Institute (Jan 2023), not the 2026 report.
+    Its claim that AI biotechs show greater clinical success has no cited
+    source.
 - Individual transactions. New deals enter the verified dataset only through the
   promotion workflow in `docs/NEW_DEAL_WORKFLOW.md`.

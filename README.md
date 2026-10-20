@@ -354,6 +354,7 @@ site is brand and narrative only, with one call to action into the app —
 | No causal claims                      | `/methods` reports record quality, sector counts, and announcement timing. It does not identify causal effects, treatment effects, or Bayesian causal estimates.                                                                                                                  |
 | Trial models withheld                 | Offline clinical-trial classifiers exist in the repo. Percentages stay off the public UI while `trainingSource` is `synthetic_seed`. Live trial **search** (ClinicalTrials.gov) is separate and is not a model score. See [ML_CLINICAL_TRIALS.md](docs/ML_CLINICAL_TRIALS.md).    |
 | No synthetic rows in the deal product | Public deal counts, networks, and disclosed-value totals come from the verified JSON. Staging, seed files, and illustrative heuristics are not merged into those figures. See [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md).                                                      |
+| Benchmarks stay reference-only        | Published success rates, timelines and stage medians in `src/lib/research/rnpvBenchmarks.ts` support analyst rNPV work outside the app. Nothing in Lacuna computes from them, and they are not deal prices or comparables. See [RNPV_BENCHMARKS.md](docs/RNPV_BENCHMARKS.md).     |
 
 When a field is missing, panels show insufficient disclosed data. They do not
 fill gaps with TAM/SAM, sector-multiple fallbacks, or editorial stage medians.
@@ -754,6 +755,12 @@ Current and planned source adapters include:
 - **Authorized third-party financial datasets** — optional enrichment when an
   analyst or institution supplies data they are licensed to use; Lacuna does not
   redistribute those records.
+- **Published industry benchmark reports** (BIO, IQVIA, Deloitte, J.P.
+  Morgan/DealForma, SVB) — aggregate success rates, development timelines, stage
+  medians and venture valuations, stored with edition, locator and verification
+  status in a reference-only layer. Analysts cite them in rNPV work; no Lacuna
+  score or valuation reads them. See
+  [RNPV_BENCHMARKS.md](docs/RNPV_BENCHMARKS.md).
 
 The design principle is **source-agnostic, not source-indifferent**: each source
 has a defined role, provenance, identifier namespace, temporal semantics, and
@@ -786,19 +793,20 @@ documented in [INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md).
 
 ## Documentation
 
-| Doc                                                                             | Use it for                                           |
-| ------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| [MODEL_CARD.md](docs/MODEL_CARD.md)                                             | What each on-screen score is                         |
-| [EVIDENCE_GRAPH.md](docs/EVIDENCE_GRAPH.md)                                     | US evidence contract and translation boundary        |
-| [THERAPEUTICS_ONTOLOGY.md](docs/THERAPEUTICS_ONTOLOGY.md)                       | Endometriosis reference graph and evidence rules     |
-| [MARKET_ACCESS.md](docs/MARKET_ACCESS.md)                                       | Demand, budget impact, and publication gate          |
-| [LIMITATIONS.md](docs/LIMITATIONS.md)                                           | Disclosed-value definition and live totals           |
-| [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md)                                   | Verified vs staging vs enrichment                    |
-| [COMPETITIVE_ANALYSIS_METHODOLOGY.md](docs/COMPETITIVE_ANALYSIS_METHODOLOGY.md) | Observable acquirer facts vs inferred intent         |
-| [ML_CLINICAL_TRIALS.md](docs/ML_CLINICAL_TRIALS.md)                             | Why trial-model percentages are withheld             |
-| [REIMBURSEMENT_INTELLIGENCE.md](docs/REIMBURSEMENT_INTELLIGENCE.md)             | What must not be published as reimbursement evidence |
-| [INFERENCE.md](docs/INFERENCE.md)                                               | Optional server LLM                                  |
-| [AGENTS.md](AGENTS.md)                                                          | Contributor conventions                              |
+| Doc                                                                             | Use it for                                                                 |
+| ------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [MODEL_CARD.md](docs/MODEL_CARD.md)                                             | What each on-screen score is                                               |
+| [EVIDENCE_GRAPH.md](docs/EVIDENCE_GRAPH.md)                                     | US evidence contract and translation boundary                              |
+| [THERAPEUTICS_ONTOLOGY.md](docs/THERAPEUTICS_ONTOLOGY.md)                       | Endometriosis reference graph and evidence rules                           |
+| [MARKET_ACCESS.md](docs/MARKET_ACCESS.md)                                       | Demand, budget impact, and publication gate                                |
+| [LIMITATIONS.md](docs/LIMITATIONS.md)                                           | Disclosed-value definition and live totals                                 |
+| [DATA_BOUNDARIES.md](docs/DATA_BOUNDARIES.md)                                   | Verified vs staging vs enrichment                                          |
+| [COMPETITIVE_ANALYSIS_METHODOLOGY.md](docs/COMPETITIVE_ANALYSIS_METHODOLOGY.md) | Observable acquirer facts vs inferred intent                               |
+| [ML_CLINICAL_TRIALS.md](docs/ML_CLINICAL_TRIALS.md)                             | Why trial-model percentages are withheld                                   |
+| [RNPV_BENCHMARKS.md](docs/RNPV_BENCHMARKS.md)                                   | Published success rates, timelines and stage medians for analyst rNPV work |
+| [REIMBURSEMENT_INTELLIGENCE.md](docs/REIMBURSEMENT_INTELLIGENCE.md)             | What must not be published as reimbursement evidence                       |
+| [INFERENCE.md](docs/INFERENCE.md)                                               | Optional server LLM                                                        |
+| [AGENTS.md](AGENTS.md)                                                          | Contributor conventions                                                    |
 
 ## License and author
 

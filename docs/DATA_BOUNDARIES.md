@@ -147,6 +147,26 @@ Burden–capital gap scores stay on `/research` — they do not decorate
 deal-workspace valuation matrices or dossier comps. Dollar output on that panel
 is the verified-dataset stage funding median only.
 
+### rNPV benchmark layer
+
+`src/lib/research/rnpvBenchmarks.ts` stores published aggregate figures: success
+rates (BIO, Citeline, IQVIA), development timelines, cost and return figures
+(Deloitte), stage medians (J.P. Morgan/DealForma) and venture valuations (SVB).
+It sits outside all three data tiers. It holds no deals, no companies and no
+rows from `dataset.verified.json`.
+
+The withheld items above still apply. In particular:
+
+- J.P. Morgan stage medians are not deal prices, comps or valuation peers, and
+  must not fill gaps in `DealEconomicsCard` or `listComparableDeals`.
+- Deloitte cost-per-launch figures do not reinstate an R&D-cost valuation
+  method.
+- Success rates do not substitute for withheld clinical-trial ML percentages.
+
+The module has no importers in `src/`. A test enforces that, and ESLint blocks
+imports from scoring, quant, valuation, biopharma and ML code. See
+[RNPV_BENCHMARKS.md](RNPV_BENCHMARKS.md).
+
 ---
 
 ## Therapeutics graph
