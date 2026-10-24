@@ -10,7 +10,7 @@
  */
 
 import process from "node:process";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { VerifiedDataset } from "../src/lib/data/datasetTypes";
@@ -19,6 +19,10 @@ import {
   downloadFreeApiBundles,
   type FreeApiSourceId,
 } from "../src/lib/ingestion/freeApi";
+import {
+  archiveFreeApiBundleToS3,
+  getFreeApiS3ArchiveConfig,
+} from "../src/lib/ingestion/freeApi/s3Archive";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const datasetPath = join(__dirname, "../src/data/dataset.verified.json");
@@ -28,11 +32,13 @@ function parseArgs(argv: string[]): {
   limit?: number;
   sources?: FreeApiSourceId[];
   outDir?: string;
+  archiveS3?: boolean;
 } {
   const out: {
     limit?: number;
     sources?: FreeApiSourceId[];
     outDir?: string;
+    archiveS3?: boolean;
   } = {};
 
   for (let i = 0; i < argv.length; i++) {
@@ -53,6 +59,8 @@ function parseArgs(argv: string[]): {
       out.sources = ids;
     } else if (arg === "--out" && argv[i + 1]) {
       out.outDir = argv[++i];
+    } else if (arg === "--archive-s3") {
+      out.archiveS3 = true;
     } else if (arg === "--help" || arg === "-h") {
       printHelp();
       process.exit(0);
@@ -70,11 +78,15 @@ Environment:
   SEC_EDGAR_USER_AGENT   Required if SEC sources included
   NCBI_TOOL_EMAIL        PubMed E-utilities (recommended)
   PATENTSVIEW_API_KEY    Optional — PatentsView search
+  LACUNA_EVIDENCE_S3_BUCKET  Required only with --archive-s3
+  AWS_REGION            S3 region (default: us-east-1)
+  AWS_PROFILE           Optional AWS SDK credential profile
 
 Options:
   --limit N              First N unique companies+acquirers only
   --sources a,b,c        Subset of: ${ALL_FREE_API_SOURCES.join(", ")}
   --out DIR              Output directory (default: timestamped subfolder)
+  --archive-s3           Also archive the bundle to AWS S3 (opt-in)
   --help
 
 Example:
@@ -90,6 +102,7 @@ function sanitizeFileName(id: string): string {
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
+  const archiveConfig = args.archiveS3 ? getFreeApiS3ArchiveConfig() : null;
   const sources = args.sources ?? ALL_FREE_API_SOURCES;
   const needsSec = sources.some((s) =>
     s === "sec_submissions" || s === "sec_company_facts"
@@ -125,6 +138,10 @@ async function main() {
     onProgress: (msg) => console.log(msg),
   });
 
+  const archiveReceiptPath = join(outDir, "s3-archive-receipt.json");
+  // A reused --out directory must not retain a receipt for an older bundle.
+  rmSync(archiveReceiptPath, { force: true });
+
   writeFileSync(
     join(outDir, "manifest.json"),
     `${JSON.stringify(manifest, null, 2)}\n`,
@@ -150,6 +167,20 @@ async function main() {
     `${JSON.stringify(records, null, 2)}\n`,
     "utf8",
   );
+
+  if (archiveConfig) {
+    const receipt = await archiveFreeApiBundleToS3(
+      { manifest, records },
+      archiveConfig,
+    );
+    writeFileSync(
+      archiveReceiptPath,
+      `${JSON.stringify(receipt, null, 2)}\n`,
+      "utf8",
+    );
+    console.log(`S3 archive (${receipt.status}): ${receipt.uri}`);
+    console.log(`SHA-256: ${receipt.sha256}`);
+  }
 
   console.log("");
   console.log(
