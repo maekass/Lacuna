@@ -12,6 +12,7 @@ local dev only.
 | Space WH gap analyst           | `POST /api/research/space-wh-pipeline/ask`         | `spacexai/grok-4.3`         | `gpt-4o-mini` or deterministic     |
 | Domestic study discovery       | `POST /api/research/studies/discover`              | `spacexai/grok-4.5`         | deterministic NIH/CT.gov parse     |
 | SEC deal classification (cron) | `dealClassificationEngine.ts`                      | `openai/gpt-5.6-terra`      | keyword-only                       |
+| Evidence ask                   | `POST /api/research/evidence/ask`                  | `openai/gpt-4o-mini`        | abstain; no ungrounded answer      |
 
 The daily model-directory sync reads the public Vercel directory without sending
 an inference credential. It retries an absent ID, then compares any unique
@@ -102,6 +103,7 @@ configured.
 | Space WH gap       | `POST /api/research/space-wh-pipeline/ask` | Yes                                  |
 | Stream insights    | `POST /api/ai/stream`                      | No (tagged `quality:stream-ungated`) |
 | SEC classification | cron / CLI                                 | Structured output (separate path)    |
+| Evidence ask       | `POST /api/research/evidence/ask`          | Structured output, then citation checks |
 
 Prefer **non-streaming** routes for production UI narratives.
 
@@ -115,3 +117,8 @@ Prefer **non-streaming** routes for production UI narratives.
 6. Render `LlmQualityBadge` in the UI.
 7. Document the model slug and fallback here.
 8. Add tests in `__tests__/lib/ai/quality.test.ts` and prompts tests.
+
+Evidence ask is the exception to step 3. It calls `generateInferenceObject`
+with a citation schema, then deterministic citation checks and
+`assessLlmOutput`. `generateQualifiedInference` only emits a narrative string
+and cannot carry passage ids.
