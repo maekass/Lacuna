@@ -19,12 +19,12 @@ import { enforceRateLimit } from "@/lib/api/rateLimitGuard";
 import { getReviewActor } from "@/lib/infra/reviewAuth";
 import {
   type EvidenceAskDraft,
+  evidenceAskDraftSchema,
   type EvidenceAskRequest,
+  evidenceAskRequestSchema,
   type EvidenceAskResponse,
   type EvidenceCitation,
   type EvidencePassage,
-  evidenceAskDraftSchema,
-  evidenceAskRequestSchema,
   RETRIEVER_VERSION,
 } from "./contracts";
 import { corpusSnapshotHash, defaultEvidenceCorpus } from "./corpus";
@@ -142,10 +142,10 @@ function abstainBody(input: {
   };
 }
 
-async function generateWithInference(
-  system: string,
-  prompt: string,
-): Promise<EvidenceDraftGeneration> {
+async function generateWithInference(input: {
+  system: string;
+  prompt: string;
+}): Promise<EvidenceDraftGeneration> {
   const resolved = resolveInferenceModel({
     gatewayModel: EVIDENCE_ASK_GATEWAY_MODEL,
     openaiModel: EVIDENCE_ASK_OPENAI_MODEL,
@@ -155,8 +155,8 @@ async function generateWithInference(
   }
   const { data, accounting } = await generateInferenceObject({
     resolved,
-    system,
-    prompt,
+    system: input.system,
+    prompt: input.prompt,
     schema: evidenceAskDraftSchema,
     schemaName: "EvidenceAskDraft",
     schemaDescription:
@@ -231,7 +231,8 @@ export async function runEvidenceAsk(
       request: input.request,
       requestId,
       corpus,
-      reason: "Inference provider is unavailable. No ungrounded answer was produced.",
+      reason:
+        "Inference provider is unavailable. No ungrounded answer was produced.",
       retrievedPassageIds: retrieval.retrievedPassageIds,
       considered,
       retrievalConfigHash: retrieval.retrievalConfigHash,
@@ -262,10 +263,11 @@ export async function runEvidenceAsk(
         limitations: passage.limitations,
       })),
     });
-    generated = await (generate ?? generateWithInference)(
-      EVIDENCE_RAG_SYSTEM_PROMPT,
+    const run = generate ?? generateWithInference;
+    generated = await run({
+      system: EVIDENCE_RAG_SYSTEM_PROMPT,
       prompt,
-    );
+    });
   } catch (error) {
     console.error(
       "evidence_rag_inference_failed",
@@ -302,7 +304,9 @@ export async function runEvidenceAsk(
     .filter((passage) => citedIds.has(passage.passageId))
     .map(toCitation);
   const groundingContext = citations.map((citation) =>
-    retrieval.passages.find((passage) => passage.passageId === citation.passageId)
+    retrieval.passages.find((passage) =>
+      passage.passageId === citation.passageId
+    )
       ?.text ?? ""
   ).join("\n");
 

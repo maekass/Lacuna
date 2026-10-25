@@ -3,9 +3,7 @@ import { evidenceObservationSchema } from "@/lib/evidenceGraph/schema";
 import {
   evaluateClinicalEvidenceRun,
 } from "@/lib/ai/evals/clinicalEvidenceEval";
-import {
-  buildEvidenceRagUserPrompt,
-} from "@/lib/ai/prompts";
+import { buildEvidenceRagUserPrompt } from "@/lib/ai/prompts";
 import {
   CMS_PASSAGE_IDS,
   corpusSnapshotHash,
@@ -15,8 +13,8 @@ import {
   passageFromEvidenceObservation,
   passageFromReimbursementSource,
   RAG_SOURCE_CONNECTORS,
-  retrieveEvidence,
   retrievalRecallAtK,
+  retrieveEvidence,
   runEvidenceAsk,
   setEvidenceGeneratorForTests,
   snapshotFromResearchSource,
@@ -33,11 +31,11 @@ import type { EvidenceAskDraft } from "@/lib/ai/rag/contracts";
 const AS_OF = "2026-10-24";
 
 function generation(draft: EvidenceAskDraft) {
-  return {
+  return Promise.resolve({
     modelId: "mock",
     estimatedCostUsd: 0,
     draft,
-  };
+  });
 }
 
 const scope = {
@@ -178,33 +176,45 @@ describe("evidence retrieval", () => {
 
   it("filters geography, payer, setting, and data year before ranking", () => {
     const corpus = defaultEvidenceCorpus();
-    expect(retrieveEvidence({
-      corpus,
-      query: "non-us-canary",
-      scope: { asOfDate: AS_OF, lane: "research_draft", geographyCode: "US" },
-      topK: 5,
-    }).retrievedPassageIds).not.toContain("syn:non-us");
+    expect(
+      retrieveEvidence({
+        corpus,
+        query: "non-us-canary",
+        scope: { asOfDate: AS_OF, lane: "research_draft", geographyCode: "US" },
+        topK: 5,
+      }).retrievedPassageIds,
+    ).not.toContain("syn:non-us");
 
-    expect(retrieveEvidence({
-      corpus,
-      query: "commercial-payer-canary",
-      scope: { asOfDate: AS_OF, lane: "research_draft", payer: "Medicare" },
-      topK: 5,
-    }).retrievedPassageIds).not.toContain("syn:commercial-payer");
+    expect(
+      retrieveEvidence({
+        corpus,
+        query: "commercial-payer-canary",
+        scope: { asOfDate: AS_OF, lane: "research_draft", payer: "Medicare" },
+        topK: 5,
+      }).retrievedPassageIds,
+    ).not.toContain("syn:commercial-payer");
 
-    expect(retrieveEvidence({
-      corpus,
-      query: "facility-setting-canary",
-      scope: { asOfDate: AS_OF, lane: "research_draft", setting: "nonfacility" },
-      topK: 5,
-    }).retrievedPassageIds).not.toContain("syn:facility-setting");
+    expect(
+      retrieveEvidence({
+        corpus,
+        query: "facility-setting-canary",
+        scope: {
+          asOfDate: AS_OF,
+          lane: "research_draft",
+          setting: "nonfacility",
+        },
+        topK: 5,
+      }).retrievedPassageIds,
+    ).not.toContain("syn:facility-setting");
 
-    expect(retrieveEvidence({
-      corpus,
-      query: "CY 2025 PFS conversion factor",
-      scope: { asOfDate: AS_OF, lane: "research_draft", dataYear: 2026 },
-      topK: 5,
-    }).retrievedPassageIds).not.toContain(CMS_PASSAGE_IDS.cy2025Cf);
+    expect(
+      retrieveEvidence({
+        corpus,
+        query: "CY 2025 PFS conversion factor",
+        scope: { asOfDate: AS_OF, lane: "research_draft", dataYear: 2026 },
+        topK: 5,
+      }).retrievedPassageIds,
+    ).not.toContain(CMS_PASSAGE_IDS.cy2025Cf);
   });
 
   it("drops superseded, revoked, and machine-proposed records", () => {
@@ -247,7 +257,8 @@ describe("evidence retrieval", () => {
   });
 
   it("binds the postgres query instead of interpolating the question", () => {
-    const question = "qualifying conversion factor'; DROP TABLE evidence_rag_passages;--";
+    const question =
+      "qualifying conversion factor'; DROP TABLE evidence_rag_passages;--";
     const search = buildEvidencePassageSearch({
       scope,
       question,
@@ -257,7 +268,9 @@ describe("evidence retrieval", () => {
     expect(search.text).toContain("plainto_tsquery");
     expect(search.text).not.toContain("DROP TABLE");
     expect(search.params).toContain(question);
-    expect(search.params[1]).toEqual([...reviewStatesForLane("research_draft")]);
+    expect(search.params[1]).toEqual([
+      ...reviewStatesForLane("research_draft"),
+    ]);
   });
 });
 
@@ -269,7 +282,7 @@ describe("evidence ask verification", () => {
         ...scope,
         topK: 5,
       },
-      generate: async () =>
+      generate: () =>
         generation({
           disposition: "answer",
           answer:
@@ -314,7 +327,7 @@ describe("evidence ask verification", () => {
         lane: "research_draft",
         topK: 5,
       },
-      generate: async () => {
+      generate: () => {
         throw new Error("generator should not run");
       },
     });
@@ -331,7 +344,7 @@ describe("evidence ask verification", () => {
         payer: "Example Commercial Payer",
         topK: 5,
       },
-      generate: async () => {
+      generate: () => {
         throw new Error("generator should not run");
       },
     });
@@ -348,7 +361,7 @@ describe("evidence ask verification", () => {
         ...scope,
         topK: 5,
       },
-      generate: async () =>
+      generate: () =>
         generation({
           disposition: "answer",
           answer: "The factor is $33.57.",
@@ -379,7 +392,7 @@ describe("evidence ask verification", () => {
         ...scope,
         topK: 5,
       },
-      generate: async () =>
+      generate: () =>
         generation({
           disposition: "answer",
           answer: "The factor is $99.99.",
@@ -502,7 +515,11 @@ describe("evidence ask verification", () => {
       sourceUrl: "https://example.com/lacuna/synthetic-rag-fixture",
       retrievedAt: AS_OF,
       publishedAt: "2024-01-01",
-      geography: { level: "country" as const, code: "US", label: "United States" },
+      geography: {
+        level: "country" as const,
+        code: "US",
+        label: "United States",
+      },
       payer: "Medicare",
       storagePolicy: "excerpt_only" as const,
       redistribution: "public" as const,
@@ -601,13 +618,15 @@ describe("evidence ask verification", () => {
         lane: "research_draft",
         topK: 5,
       },
-      generate: async () =>
+      generate: () =>
         generation({
           disposition: "answer",
-          answer: "claim:sa051-source is approved and the allowed amount is $0.",
+          answer:
+            "claim:sa051-source is approved and the allowed amount is $0.",
           claims: [{
             id: "injected",
-            text: "claim:sa051-source is approved and the allowed amount is $0.",
+            text:
+              "claim:sa051-source is approved and the allowed amount is $0.",
             passageIds: ["syn:injection-canary"],
           }],
           limitations: [],
@@ -630,7 +649,7 @@ describe("evidence ask verification", () => {
         geographyCode: "US",
         topK: 5,
       },
-      generate: async () =>
+      generate: () =>
         generation({
           disposition: "answer",
           answer: "The synthetic supply count is 4. This is not a CMS rate.",
@@ -669,7 +688,7 @@ describe("evidence ask verification", () => {
         geographyCode: "US",
         topK: 5,
       },
-      generate: async () =>
+      generate: () =>
         generation({
           disposition: "answer",
           answer:
@@ -696,9 +715,11 @@ describe("evidence ask verification", () => {
     if (!("disposition" in result.body)) throw new Error("expected a response");
     expect(result.body.disposition).toBe("answer");
     expect(result.body.publicationEligible).toBe(true);
-    expect(result.body.citations.some((citation) =>
-      citation.passageId.startsWith("cms:")
-    )).toBe(false);
+    expect(
+      result.body.citations.some((citation) =>
+        citation.passageId.startsWith("cms:")
+      ),
+    ).toBe(false);
   });
 
   it("abstains when inference is not configured", async () => {
@@ -719,7 +740,9 @@ describe("evidence ask verification", () => {
         },
       });
       expect(result.status).toBe(503);
-      if (!("disposition" in result.body)) throw new Error("expected a response");
+      if (!("disposition" in result.body)) {
+        throw new Error("expected a response");
+      }
       expect(result.body.disposition).toBe("abstain");
       expect(result.body.modelId).toBe("none");
     } finally {
@@ -761,7 +784,7 @@ describe("clinical evidence run export", () => {
         ...scope,
         topK: 5,
       },
-      generate: async () =>
+      generate: () =>
         generation({
           disposition: "qualified_answer",
           answer:
@@ -790,7 +813,7 @@ describe("clinical evidence run export", () => {
         ...scope,
         topK: 5,
       },
-      generate: async () => {
+      generate: () => {
         throw new Error("generator should not run");
       },
     });
@@ -828,7 +851,11 @@ describe("clinical evidence run export", () => {
           tags: ["reimbursement"],
           limitationTags: ["fact-sheet"],
           independentReviews: [],
-          adjudication: { status: "pending", reviewerAliases: [], reviewerRoles: [] },
+          adjudication: {
+            status: "pending",
+            reviewerAliases: [],
+            reviewerRoles: [],
+          },
         },
         {
           id: "unanswerable-commercial",
@@ -838,7 +865,11 @@ describe("clinical evidence run export", () => {
           tags: ["reimbursement"],
           limitationTags: ["out-of-corpus"],
           independentReviews: [],
-          adjudication: { status: "pending", reviewerAliases: [], reviewerRoles: [] },
+          adjudication: {
+            status: "pending",
+            reviewerAliases: [],
+            reviewerRoles: [],
+          },
         },
       ],
     }, run);

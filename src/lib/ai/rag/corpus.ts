@@ -54,7 +54,8 @@ function publicCmsPassages(): EvidencePassage[] {
       publisher: "Centers for Medicare & Medicaid Services",
       sourceUrl:
         "https://www.cms.gov/newsroom/fact-sheets/calendar-year-cy-2026-medicare-physician-fee-schedule-final-rule-cms-1832-f",
-      locator: "Fact sheet section: CY 2026 PFS Rate Setting and Conversion Factor",
+      locator:
+        "Fact sheet section: CY 2026 PFS Rate Setting and Conversion Factor",
       publishedAt: "2025-10-31",
       retrievedAt,
       applicableDate: "2026-01-01",
@@ -132,11 +133,13 @@ function publicCmsPassages(): EvidencePassage[] {
       passageId: CMS_PASSAGE_IDS.cy2025Cf,
       sourceId: "cms:fact-sheet:pfs-cy2025",
       documentId: "cms-cy2025-pfs-fact-sheet",
-      title: "Calendar Year (CY) 2025 Medicare Physician Fee Schedule Final Rule",
+      title:
+        "Calendar Year (CY) 2025 Medicare Physician Fee Schedule Final Rule",
       publisher: "Centers for Medicare & Medicaid Services",
       sourceUrl:
         "https://www.cms.gov/newsroom/fact-sheets/calendar-year-cy-2025-medicare-physician-fee-schedule-final-rule",
-      locator: "Fact sheet section: CY 2025 PFS Rate Setting and Conversion Factor",
+      locator:
+        "Fact sheet section: CY 2025 PFS Rate Setting and Conversion Factor",
       publishedAt: "2024-11-01",
       retrievedAt,
       applicableDate: "2025-01-01",
@@ -236,7 +239,8 @@ function publicCmsPassages(): EvidencePassage[] {
       documentId: "medicare-gov-cervical-vaginal-cancer-screenings",
       title: "Cervical & vaginal cancer screenings",
       publisher: "Medicare",
-      sourceUrl: "https://www.medicare.gov/coverage/cervical-vaginal-cancer-screenings",
+      sourceUrl:
+        "https://www.medicare.gov/coverage/cervical-vaginal-cancer-screenings",
       locator: "Page section: How often",
       retrievedAt,
       geography: US,
@@ -271,7 +275,8 @@ function publicCmsPassages(): EvidencePassage[] {
       title:
         "Screening Pap Smears and Pelvic Examinations for Early Detection of Cervical or Vaginal Cancer",
       publisher: "Centers for Medicare & Medicaid Services",
-      sourceUrl: "https://www.cms.gov/medicare-coverage-database/view/ncd.aspx?NCDId=185",
+      sourceUrl:
+        "https://www.cms.gov/medicare-coverage-database/view/ncd.aspx?NCDId=185",
       locator: "NCD 210.2 description, screening Pap smear conditions",
       retrievedAt,
       applicableDate: "2006-06-19",
@@ -325,7 +330,8 @@ function syntheticPassages(): EvidencePassage[] {
       reviewState: "superseded",
       supersessionStatus: "superseded",
       limitations: ["Synthetic superseded record. Must not be retrieved."],
-      text: "SYNTHETIC FIXTURE superseded-canary. This record has been superseded.",
+      text:
+        "SYNTHETIC FIXTURE superseded-canary. This record has been superseded.",
     }),
     defineEvidencePassage({
       ...base,
@@ -347,7 +353,9 @@ function syntheticPassages(): EvidencePassage[] {
       title: "SYNTHETIC FIXTURE future-dated",
       locator: "synthetic future publication",
       publishedAt: "2099-01-01",
-      limitations: ["Synthetic future publication date. Not admissible before 2099-01-01."],
+      limitations: [
+        "Synthetic future publication date. Not admissible before 2099-01-01.",
+      ],
       text: "SYNTHETIC FIXTURE future-dated. Published in 2099.",
     }),
     defineEvidencePassage({
@@ -372,8 +380,11 @@ function syntheticPassages(): EvidencePassage[] {
       locator: "synthetic commercial payer",
       publishedAt: "2024-01-01",
       payer: "Example Commercial Payer",
-      limitations: ["Synthetic commercial-payer fixture. Not a Medicare source."],
-      text: "SYNTHETIC FIXTURE commercial-payer-canary. No Medicare rate is stated.",
+      limitations: [
+        "Synthetic commercial-payer fixture. Not a Medicare source.",
+      ],
+      text:
+        "SYNTHETIC FIXTURE commercial-payer-canary. No Medicare rate is stated.",
     }),
     defineEvidencePassage({
       ...base,
@@ -385,7 +396,8 @@ function syntheticPassages(): EvidencePassage[] {
       publishedAt: "2024-01-01",
       setting: "facility",
       limitations: ["Synthetic facility-setting fixture. Not a CMS payment."],
-      text: "SYNTHETIC FIXTURE facility-setting-canary. Setting is facility only.",
+      text:
+        "SYNTHETIC FIXTURE facility-setting-canary. Setting is facility only.",
     }),
     defineEvidencePassage({
       ...base,
@@ -396,7 +408,9 @@ function syntheticPassages(): EvidencePassage[] {
       locator: "synthetic missing RVU",
       publishedAt: "2024-01-01",
       dataYear: 2026,
-      limitations: ["Synthetic missing value. Missing practice-expense RVU is not zero."],
+      limitations: [
+        "Synthetic missing value. Missing practice-expense RVU is not zero.",
+      ],
       text:
         "SYNTHETIC FIXTURE missing-rvu-canary. The practice-expense RVU is not stated. Missing inputs are not zero.",
       record: {

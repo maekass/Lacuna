@@ -30,11 +30,13 @@ describe("POST /api/research/evidence/ask", () => {
 
   function post(body: string, headers?: HeadersInit) {
     return import("@/app/api/research/evidence/ask/route").then(({ POST }) =>
-      POST(new Request("http://localhost/api/research/evidence/ask", {
-        method: "POST",
-        headers: { "content-type": "application/json", ...headers },
-        body,
-      }))
+      POST(
+        new Request("http://localhost/api/research/evidence/ask", {
+          method: "POST",
+          headers: { "content-type": "application/json", ...headers },
+          body,
+        }),
+      )
     );
   }
 
@@ -62,17 +64,19 @@ describe("POST /api/research/evidence/ask", () => {
   });
 
   it("rate limits repeated requests", async () => {
-    setEvidenceGeneratorForTests(async () => ({
-      modelId: "mock",
-      estimatedCostUsd: 0,
-      draft: {
-        disposition: "abstain",
-        answer: "",
-        claims: [],
-        limitations: [],
-        conflicts: [],
-      },
-    }));
+    setEvidenceGeneratorForTests(() =>
+      Promise.resolve({
+        modelId: "mock",
+        estimatedCostUsd: 0,
+        draft: {
+          disposition: "abstain",
+          answer: "",
+          claims: [],
+          limitations: [],
+          conflicts: [],
+        },
+      })
+    );
     const payload = JSON.stringify({
       question: "zeta-gate-701",
       asOfDate: "2026-10-24",
@@ -87,31 +91,33 @@ describe("POST /api/research/evidence/ask", () => {
   });
 
   it("returns a checked research-draft answer", async () => {
-    setEvidenceGeneratorForTests(async () => ({
-      modelId: "mock",
-      estimatedCostUsd: 0,
-      draft: {
-        disposition: "qualified_answer",
-        answer:
-          "The cited CMS fact sheet states a CY 2026 qualifying APM conversion factor of $33.57.",
-        claims: [{
-          id: "cf",
-          text: "The CY 2026 qualifying APM conversion factor is $33.57.",
-          passageIds: [CMS_PASSAGE_IDS.cy2026QualifyingCf],
-          record: {
-            metric: "pfs_conversion_factor_qualifying_apm",
-            value: 33.57,
-            comparator: "eq",
-            unit: "conversion_factor_usd",
-            dataYear: 2026,
-            payer: "Medicare",
-            geographyCode: "US",
-          },
-        }],
-        limitations: [],
-        conflicts: [],
-      },
-    }));
+    setEvidenceGeneratorForTests(() =>
+      Promise.resolve({
+        modelId: "mock",
+        estimatedCostUsd: 0,
+        draft: {
+          disposition: "qualified_answer",
+          answer:
+            "The cited CMS fact sheet states a CY 2026 qualifying APM conversion factor of $33.57.",
+          claims: [{
+            id: "cf",
+            text: "The CY 2026 qualifying APM conversion factor is $33.57.",
+            passageIds: [CMS_PASSAGE_IDS.cy2026QualifyingCf],
+            record: {
+              metric: "pfs_conversion_factor_qualifying_apm",
+              value: 33.57,
+              comparator: "eq",
+              unit: "conversion_factor_usd",
+              dataYear: 2026,
+              payer: "Medicare",
+              geographyCode: "US",
+            },
+          }],
+          limitations: [],
+          conflicts: [],
+        },
+      })
+    );
     const response = await post(JSON.stringify({
       question: "What is the CY 2026 qualifying APM conversion factor?",
       asOfDate: "2026-10-24",

@@ -174,8 +174,8 @@ not change scoring. Pending benchmark cases stay in the review-coverage
 denominator and do not produce recall, precision, or citation-support rates.
 
 A fixture export is a wiring check. It is not a reviewed performance result.
-Targets such as recall@5 of at least 90 percent and reviewed citation support
-of at least 95 percent are release criteria, not results this repository has
+Targets such as recall@5 of at least 90 percent and reviewed citation support of
+at least 95 percent are release criteria, not results this repository has
 established.
 
 ## Running the evaluator

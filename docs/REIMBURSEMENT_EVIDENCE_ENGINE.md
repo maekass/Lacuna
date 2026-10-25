@@ -210,7 +210,6 @@ The seed precedent library is context/intelligence evidence and must not enter
 
 ## Evidence ask
 
-The read-only ask path is documented in
-[EVIDENCE_RAG.md](./EVIDENCE_RAG.md). It retrieves admissible passages and
-abstains when support is missing. It does not approve, publish, or mutate
-this ledger.
+The read-only ask path is documented in [EVIDENCE_RAG.md](./EVIDENCE_RAG.md). It
+retrieves admissible passages and abstains when support is missing. It does not
+approve, publish, or mutate this ledger.

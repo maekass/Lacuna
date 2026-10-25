@@ -97,12 +97,12 @@ User input → build*Prompt() → system prompt + guardrails → LLM
 `GET /api/ai/quality` lists features, standards, and whether inference is
 configured.
 
-| Feature            | Route                                      | Quality-gated                        |
-| ------------------ | ------------------------------------------ | ------------------------------------ |
-| UI insights        | `POST /api/ai/insights`                    | Yes                                  |
-| Space WH gap       | `POST /api/research/space-wh-pipeline/ask` | Yes                                  |
-| Stream insights    | `POST /api/ai/stream`                      | No (tagged `quality:stream-ungated`) |
-| SEC classification | cron / CLI                                 | Structured output (separate path)    |
+| Feature            | Route                                      | Quality-gated                           |
+| ------------------ | ------------------------------------------ | --------------------------------------- |
+| UI insights        | `POST /api/ai/insights`                    | Yes                                     |
+| Space WH gap       | `POST /api/research/space-wh-pipeline/ask` | Yes                                     |
+| Stream insights    | `POST /api/ai/stream`                      | No (tagged `quality:stream-ungated`)    |
+| SEC classification | cron / CLI                                 | Structured output (separate path)       |
 | Evidence ask       | `POST /api/research/evidence/ask`          | Structured output, then citation checks |
 
 Prefer **non-streaming** routes for production UI narratives.
@@ -118,7 +118,7 @@ Prefer **non-streaming** routes for production UI narratives.
 7. Document the model slug and fallback here.
 8. Add tests in `__tests__/lib/ai/quality.test.ts` and prompts tests.
 
-Evidence ask is the exception to step 3. It calls `generateInferenceObject`
-with a citation schema, then deterministic citation checks and
-`assessLlmOutput`. `generateQualifiedInference` only emits a narrative string
-and cannot carry passage ids.
+Evidence ask is the exception to step 3. It calls `generateInferenceObject` with
+a citation schema, then deterministic citation checks and `assessLlmOutput`.
+`generateQualifiedInference` only emits a narrative string and cannot carry
+passage ids.

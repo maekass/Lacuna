@@ -48,7 +48,9 @@ export default function EvidenceAskPanel() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const body = await response.json() as EvidenceAskResponse | { error?: string };
+      const body = await response.json() as EvidenceAskResponse | {
+        error?: string;
+      };
       if (!response.ok && !("disposition" in body)) {
         setError(body.error ?? "The evidence ask could not be completed.");
         return;
@@ -83,7 +85,10 @@ export default function EvidenceAskPanel() {
 
       <form className="space-y-4" onSubmit={onSubmit}>
         <div>
-          <label className="block text-sm font-medium" htmlFor="evidence-question">
+          <label
+            className="block text-sm font-medium"
+            htmlFor="evidence-question"
+          >
             Question
           </label>
           <textarea
@@ -99,7 +104,10 @@ export default function EvidenceAskPanel() {
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           <div>
-            <label className="block text-sm font-medium" htmlFor="evidence-asof">
+            <label
+              className="block text-sm font-medium"
+              htmlFor="evidence-asof"
+            >
               As of
             </label>
             <input
@@ -113,7 +121,10 @@ export default function EvidenceAskPanel() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium" htmlFor="evidence-lane">
+            <label
+              className="block text-sm font-medium"
+              htmlFor="evidence-lane"
+            >
               Evidence lane
             </label>
             <select
@@ -131,7 +142,10 @@ export default function EvidenceAskPanel() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium" htmlFor="evidence-year">
+            <label
+              className="block text-sm font-medium"
+              htmlFor="evidence-year"
+            >
               Data year
             </label>
             <input
@@ -145,7 +159,10 @@ export default function EvidenceAskPanel() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium" htmlFor="evidence-payer">
+            <label
+              className="block text-sm font-medium"
+              htmlFor="evidence-payer"
+            >
               Payer
             </label>
             <input
@@ -191,11 +208,8 @@ function EvidenceResult({ result }: { result: EvidenceAskResponse }) {
         <p className="mt-2 text-sm">
           {result.disposition === "abstain"
             ? "The system abstained."
-            : "A scoped synthesis is below. It is not a decision."}
-          {" "}
-          Lane: {result.lane === "research_draft"
-            ? "research draft"
-            : "publication"}
+            : "A scoped synthesis is below. It is not a decision."} Lane:{" "}
+          {result.lane === "research_draft" ? "research draft" : "publication"}
           .
         </p>
       </section>
@@ -205,7 +219,11 @@ function EvidenceResult({ result }: { result: EvidenceAskResponse }) {
           Evidence
         </h2>
         {result.considered.length === 0
-          ? <p className="mt-2 text-sm">No admissible passages were retrieved.</p>
+          ? (
+            <p className="mt-2 text-sm">
+              No admissible passages were retrieved.
+            </p>
+          )
           : (
             <ul className="mt-3 space-y-3">
               {result.considered.map((citation) => (
@@ -226,7 +244,9 @@ function EvidenceResult({ result }: { result: EvidenceAskResponse }) {
                     Scope: {citation.geographyLabel ?? "unspecified geography"}
                     {citation.payer ? ` · ${citation.payer}` : ""}
                     {citation.setting ? ` · ${citation.setting}` : ""}
-                    {citation.dataYear ? ` · data year ${citation.dataYear}` : ""}
+                    {citation.dataYear
+                      ? ` · data year ${citation.dataYear}`
+                      : ""}
                   </p>
                   <p>
                     Status: {citation.reviewState}
@@ -259,9 +279,7 @@ function EvidenceResult({ result }: { result: EvidenceAskResponse }) {
           )
           : (
             <ul className="mt-1 list-disc pl-5 text-sm">
-              {verified.map((claim) => (
-                <li key={claim.id}>{claim.text}</li>
-              ))}
+              {verified.map((claim) => <li key={claim.id}>{claim.text}</li>)}
             </ul>
           )}
       </section>

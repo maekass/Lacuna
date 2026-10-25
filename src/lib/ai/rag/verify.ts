@@ -282,7 +282,10 @@ export function verifyEvidenceDraft(input: {
   }
 
   let disposition = input.draft.disposition;
-  if (disposition === "answer" && (unresolved || !allApproved || conflicts.length > 0)) {
+  if (
+    disposition === "answer" &&
+    (unresolved || !allApproved || conflicts.length > 0)
+  ) {
     disposition = "qualified_answer";
   }
 
@@ -351,7 +354,9 @@ function conflictMessages(
     const record = passage.record;
     if (!record || typeof record.value !== "number") continue;
     const existing = byMetric.get(record.metric) ?? [];
-    if (!existing.some((value) => numbersClose(value, record.value as number))) {
+    if (
+      !existing.some((value) => numbersClose(value, record.value as number))
+    ) {
       existing.push(record.value);
     }
     byMetric.set(record.metric, existing);
@@ -367,10 +372,9 @@ function conflictMessages(
     seen.add(metric);
     messages.push({
       values,
-      message:
-        `Retrieved passages disagree on ${metric}: ${
-          values.map((value) => value.toFixed(2)).join(", ")
-        }.`,
+      message: `Retrieved passages disagree on ${metric}: ${
+        values.map((value) => value.toFixed(2)).join(", ")
+      }.`,
     });
   }
   return messages;

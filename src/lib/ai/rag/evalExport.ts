@@ -34,7 +34,9 @@ export function exportClinicalEvidenceRun(input: {
     input.cases.map((item) => item.response.retrievalConfigHash),
   );
   if (configs.size !== 1) {
-    throw new Error("An evidence run export requires one retrieval configuration");
+    throw new Error(
+      "An evidence run export requires one retrieval configuration",
+    );
   }
   if (
     input.cases.some((item) =>

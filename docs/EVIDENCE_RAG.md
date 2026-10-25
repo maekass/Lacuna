@@ -1,9 +1,9 @@
 # Evidence ask
 
-**Status:** first vertical slice for US women's-health reimbursement and
-policy questions. This is functioning retrieval and citation checking over a
-frozen public CMS excerpt corpus. It is not a completed multi-source research
-platform, and it is not a reviewed clinical or payment system.
+**Status:** first vertical slice for US women's-health reimbursement and policy
+questions. This is functioning retrieval and citation checking over a frozen
+public CMS excerpt corpus. It is not a completed multi-source research platform,
+and it is not a reviewed clinical or payment system.
 
 ## What this slice does
 
@@ -26,10 +26,10 @@ The model cannot approve, publish, or write the reimbursement ledger.
 
 ## Lanes
 
-| Lane | What can be retrieved | How it is labeled |
-| --- | --- | --- |
-| `publication` | `approved` or `published` claims only | Eligible to be represented as an approved claim only when every citation resolves |
-| `research_draft` | `source_verified` and `specialist_reviewed` observations, plus approved claims | Never represented as publication-approved |
+| Lane             | What can be retrieved                                                          | How it is labeled                                                                 |
+| ---------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| `publication`    | `approved` or `published` claims only                                          | Eligible to be represented as an approved claim only when every citation resolves |
+| `research_draft` | `source_verified` and `specialist_reviewed` observations, plus approved claims | Never represented as publication-approved                                         |
 
 The frozen CMS fact-sheet excerpts are `source_verified` public text. They are
 usable in the research-draft lane. They are not publication-approved Lacuna
@@ -62,26 +62,25 @@ FDA, NIH/ClinicalTrials.gov, OpenAlex, and SEC connectors are named and marked
 
 ## Retrieval
 
-The default retriever is an in-process lexical index, version `1.0.0`,
-algorithm `lexical-v1`. Tie breaks use passage id. `topK` defaults to 5 and
-cannot exceed 8. No new vector database or embedding migration is included.
+The default retriever is an in-process lexical index, version `1.0.0`, algorithm
+`lexical-v1`. Tie breaks use passage id. `topK` defaults to 5 and cannot
+exceed 8. No new vector database or embedding migration is included.
 
 `db/migrations/012_evidence_rag_passages.sql` adds an optional Postgres
-full-text table. `buildEvidencePassageSearch` applies the same pre-rank
-filters with a bound query parameter. The ask route does not use that table
-until passages are loaded. Live Postgres search was not executed in this
-change.
+full-text table. `buildEvidencePassageSearch` applies the same pre-rank filters
+with a bound query parameter. The ask route does not use that table until
+passages are loaded. Live Postgres search was not executed in this change.
 
 ## Versions and rollback
 
 Each response includes the source snapshot hash, model id, prompt version
 (`EVIDENCE_RAG_PROMPT_VERSION`), retriever version, retrieval configuration
-hash, and request id. Logs record those operational fields and passage ids.
-They do not record the question or passage body.
+hash, and request id. Logs record those operational fields and passage ids. They
+do not record the question or passage body.
 
-Rollback is a code revert. Migration 012 only creates a table; it does not
-drop or rewrite existing tables. Stop calling the route to stop the feature.
-Leaving the unused table in place is safe.
+Rollback is a code revert. Migration 012 only creates a table; it does not drop
+or rewrite existing tables. Stop calling the route to stop the feature. Leaving
+the unused table in place is safe.
 
 ## Evaluation
 
@@ -90,16 +89,15 @@ without changing the scoring rules. Fixture runs keep citation judgments at
 `not_assessed` and benchmark cases pending, so the evaluator does not emit
 recall or citation-support rates.
 
-Release targets, not results: every published citation resolves to an
-admissible passage; tests admit no prohibited evidence; published answers
-contain no unresolved citations; no known critical security failure; CI gates
-pass. Recall@5 of at least 90 percent and reviewed citation support of at
-least 95 percent require human adjudication. This slice does not claim those
-rates.
+Release targets, not results: every published citation resolves to an admissible
+passage; tests admit no prohibited evidence; published answers contain no
+unresolved citations; no known critical security failure; CI gates pass.
+Recall@5 of at least 90 percent and reviewed citation support of at least 95
+percent require human adjudication. This slice does not claim those rates.
 
 ## Not established
 
 This software path is implemented and covered by fixture tests. That is not
 independent verification of production inference, a migrated database, or a
-researcher-adjudicated benchmark. Do not describe the CMS excerpts as a
-coverage determination or a fee-schedule payment for a service.
+researcher-adjudicated benchmark. Do not describe the CMS excerpts as a coverage
+determination or a fee-schedule payment for a service.

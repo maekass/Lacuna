@@ -1,10 +1,10 @@
 import { z } from "zod";
 import { dispositionSchema } from "@/lib/ai/evals/clinicalEvidenceEval";
 import {
-  geographySchema,
   type EvidenceObservation,
   type EvidenceSourceClass,
   evidenceSourceClassSchema,
+  geographySchema,
 } from "@/lib/evidenceGraph/schema";
 import type { ResearchSource } from "@/lib/research/sourceRegistry";
 import {
@@ -286,7 +286,9 @@ export interface EvidenceAskResponse {
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
-export function isoDateOrUndefined(value: string | undefined): string | undefined {
+export function isoDateOrUndefined(
+  value: string | undefined,
+): string | undefined {
   if (!value || !ISO_DATE.test(value)) return undefined;
   return value;
 }
@@ -441,7 +443,9 @@ export function passageFromReimbursementClaim(
       "Lacuna-authored ledger statement. Not a CMS excerpt and not verified by this adapter.",
     evidenceType: "pricing",
     reviewState: claim.status,
-    supersessionStatus: claim.status === "superseded" ? "superseded" : "current",
+    supersessionStatus: claim.status === "superseded"
+      ? "superseded"
+      : "current",
     corpusClass: "ledger_adapter",
     limitations: [
       "Adapted from the reimbursement ledger. Registration is not approval.",
@@ -465,17 +469,28 @@ export function passageFromReimbursementClaim(
 }
 
 /** Evidence-graph observations keep their values. Review state is explicit. */
+function structuredObservationValue(
+  value: EvidenceObservation["value"],
+): StructuredRecord["value"] {
+  if (typeof value === "boolean") return value ? "true" : "false";
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    return trimmed.length > 0 ? trimmed : null;
+  }
+  return value;
+}
+
 export function passageFromEvidenceObservation(
   observation: EvidenceObservation,
   reviewState: EvidenceStatus,
 ): EvidencePassage {
-  const valueText = observation.value === null
+  const recordValue = structuredObservationValue(observation.value);
+  const valueText = recordValue === null
     ? "value missing"
-    : String(observation.value);
-  const text =
-    `${observation.metric} ${observation.comparator} ${valueText}${
-      observation.unit ? ` ${observation.unit}` : ""
-    }. ${observation.limitations.join(" ")}`;
+    : String(recordValue);
+  const text = `${observation.metric} ${observation.comparator} ${valueText}${
+    observation.unit ? ` ${observation.unit}` : ""
+  }. ${observation.limitations.join(" ")}`;
   return defineEvidencePassage({
     passageId: `passage:${observation.id}`,
     sourceId: observation.source.id,
@@ -502,7 +517,7 @@ export function passageFromEvidenceObservation(
     text,
     record: {
       metric: observation.metric,
-      value: observation.value,
+      value: recordValue,
       comparator: observation.comparator,
       unit: observation.unit,
       geographyCode: observation.geography?.code,
