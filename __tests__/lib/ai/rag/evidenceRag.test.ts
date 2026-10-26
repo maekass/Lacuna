@@ -433,7 +433,7 @@ describe("evidence ask verification", () => {
   });
 
   it("rejects the wrong unit, year, and a zero standing in for a missing value", () => {
-    const corpus = defaultEvidenceCorpus();
+    const corpus = fixtureEvidenceCorpus();
     const qualifying = corpus.find((passage) =>
       passage.passageId === CMS_PASSAGE_IDS.cy2026QualifyingCf
     );
