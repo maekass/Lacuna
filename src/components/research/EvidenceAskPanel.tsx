@@ -94,9 +94,9 @@ export default function EvidenceAskPanel() {
           <textarea
             className="mt-1 w-full rounded border border-lacuna-plum/30 p-2 text-sm"
             id="evidence-question"
-            maxLength={1000}
+            maxLength="1000"
             required
-            rows={4}
+            rows="4"
             value={form.question}
             onChange={(event) =>
               setForm({ ...form, question: event.target.value })}
