@@ -1,0 +1,13 @@
+# Native analyst rNPV simulator
+
+Route: /research/rnpv. Native React/TypeScript, browser-only; no Streamlit, Python service, new dependencies, secrets, database, or hosting. No imports from rnpvBenchmarks.ts; its existing reference-only rules and tests remain unchanged. All inputs are explicitly hypothetical analyst assumptions, separate from verified records, company valuations, and deal rankings. This feature does not change benchmark approved uses.
+
+Model version: native-rnpv-0.1.0. Amounts USD millions. Starts at Phase I entry; preclinical risk/cost excluded. Stage costs occur evenly at year ends, conditional on stage entry. Failure is observed at stage end. Approval-weighted launch investment occurs at development completion; first revenue one year later. Net operating cash flow equals sales times margin times one minus tax. Finite ramp/plateau/decline horizon; no terminal value, tax-loss credits, royalties, financing bridge, or within-stage abandonment.
+
+Deterministic mode weights each stage cost by stage-entry probability and commercial proceeds by remaining approval probability. Monte Carlo instead samples Bernoulli stage outcomes, stops later costs after failure, and never probability-weights realized path cash flows again. Zero uncertainty spreads should converge to deterministic rNPV.
+
+Positive uncertainty spreads are independent uniform ranges, not empirical estimates: multiplicative for peak sales, discount rate and future costs; additive and clipped to [0,1] for non-endpoint conditional probabilities. Exact zero/one endpoints are preserved. Discount capped at one. Durations, margins, tax and upfront costs fixed. Independence and clipping are explicit limitations; no claimed asset calibration, posterior distribution, empirical correlation, or clinical predictive performance.
+
+Seeded PRNG and bounded iterations (100–10,000). Reports mean, P10/P50/P90, negative-NPV frequency, approval frequency, mean standard error and approximate 95% Monte Carlo sampling interval. Sampling interval is not a confidence interval for true asset value. Exports full scenario, seed, settings, model version, rationale and samples as JSON. Re-run after input changes; stale simulation output is cleared.
+
+Validation required before merge: Deno 2.1.4 format, lint, typecheck, Vitest (including rnpvSimulator.test.ts), dataset guard, static build, browser smoke and input/export checks. Tests are authored, not reported as executed in the connector environment. Do not describe this as deployed or add a completed production achievement to a resume until CI and interface validation are recorded. Existing reference-only benchmark sources must not be auto-imported or copied into scenario defaults.
