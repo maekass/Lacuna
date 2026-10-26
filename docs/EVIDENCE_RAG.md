@@ -53,9 +53,10 @@ stored as excerpts, but their web-page publication dates were not established.
 Those passages are not historically admissible. The AMA documentation-guideline
 list on the NCD page is not stored. CPT descriptor text is not stored.
 
-Synthetic fixtures are labeled `SYNTHETIC FIXTURE` and are separate from the
-public excerpts. They exist so tests can exercise revocation, contradiction,
-prompt injection, and the publication gate without inventing CMS rates.
+Synthetic fixtures are labeled `SYNTHETIC FIXTURE` and are not part of
+`defaultEvidenceCorpus`. Tests inject `fixtureEvidenceCorpus` to exercise
+revocation, contradiction, prompt injection, and the publication gate without
+inventing CMS rates in the live ask path.
 
 FDA, NIH/ClinicalTrials.gov, OpenAlex, and SEC connectors are named and marked
 `not_implemented`.
@@ -75,8 +76,12 @@ passages are loaded. Live Postgres search was not executed in this change.
 
 Each response includes the source snapshot hash, model id, prompt version
 (`EVIDENCE_RAG_PROMPT_VERSION`), retriever version, retrieval configuration
-hash, and request id. Logs record those operational fields and passage ids. They
-do not record the question or passage body.
+hash, retrieval scope hash, and request id. The configuration hash identifies
+the algorithm, retriever version, and top K. The scope hash identifies the date,
+lane, payer, geography, setting, and data year. The snapshot hash covers passage
+text plus publication date, review state, supersession, and structured record.
+Logs record those operational fields and passage ids. They do not record the
+question or passage body.
 
 Rollback is a code revert. Migration 012 only creates a table; it does not drop
 or rewrite existing tables. Stop calling the route to stop the feature. Leaving

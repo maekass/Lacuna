@@ -17,6 +17,7 @@ export interface RetrievalResult {
   retrieverVersion: typeof RETRIEVER_VERSION;
   retrievalAlgorithm: typeof RETRIEVAL_ALGORITHM;
   retrievalConfigHash: string;
+  retrievalScopeHash: string;
   scope: EvidenceRetrievalScope;
 }
 
@@ -48,14 +49,15 @@ export function retrieveEvidence(input: {
     algorithm: RETRIEVAL_ALGORITHM,
     retrieverVersion: RETRIEVER_VERSION,
     topK: input.topK,
-    scope: input.scope,
   });
+  const retrievalScopeHash = sha256Json(input.scope);
   return {
     passages,
     retrievedPassageIds: passages.map((passage) => passage.passageId),
     retrieverVersion: RETRIEVER_VERSION,
     retrievalAlgorithm: RETRIEVAL_ALGORITHM,
     retrievalConfigHash,
+    retrievalScopeHash,
     scope: input.scope,
   };
 }

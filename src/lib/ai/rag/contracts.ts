@@ -275,6 +275,7 @@ export interface EvidenceAskResponse {
   retrieverVersion: string;
   retrievalAlgorithm: string;
   retrievalConfigHash: string;
+  retrievalScopeHash: string;
   retrievedPassageIds: string[];
   operational: {
     latencyMs: number;
