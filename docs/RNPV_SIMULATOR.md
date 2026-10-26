@@ -1,13 +1,88 @@
-# Native analyst rNPV simulator
+# Native analyst rNPV sandbox
 
-Route: /research/rnpv. Native React/TypeScript, browser-only; no Streamlit, Python service, new dependencies, secrets, database, or hosting. No imports from rnpvBenchmarks.ts; its existing reference-only rules and tests remain unchanged. All inputs are explicitly hypothetical analyst assumptions, separate from verified records, company valuations, and deal rankings. This feature does not change benchmark approved uses.
+Route: `/research/rnpv`, linked from the research workspace. The calculator is
+React and TypeScript in this Next.js app. It runs in the browser. It does not
+add a Python service, a new dependency, a database, or another host.
 
-Model version: native-rnpv-0.1.0. Amounts USD millions. Starts at Phase I entry; preclinical risk/cost excluded. Stage costs occur evenly at year ends, conditional on stage entry. Failure is observed at stage end. Approval-weighted launch investment occurs at development completion; first revenue one year later. Net operating cash flow equals sales times margin times one minus tax. Finite ramp/plateau/decline horizon; no terminal value, tax-loss credits, royalties, financing bridge, or within-stage abandonment.
+It does not import `src/lib/research/rnpvBenchmarks.ts`. That reference layer
+stays isolated. Scenario defaults are blank. The only filled example is an
+illustrative preset of round hypothetical inputs, and the page will not load it
+until the reader acknowledges that the inputs are assumptions. Those inputs are
+not observed company data and are not copied from the benchmark layer.
 
-Deterministic mode weights each stage cost by stage-entry probability and commercial proceeds by remaining approval probability. Monte Carlo instead samples Bernoulli stage outcomes, stops later costs after failure, and never probability-weights realized path cash flows again. Zero uncertainty spreads should converge to deterministic rNPV.
+Outputs stay in the sandbox. They do not feed deal scores, rankings, comps, or
+verified records.
 
-Positive uncertainty spreads are independent uniform ranges, not empirical estimates: multiplicative for peak sales, discount rate and future costs; additive and clipped to [0,1] for non-endpoint conditional probabilities. Exact zero/one endpoints are preserved. Discount capped at one. Durations, margins, tax and upfront costs fixed. Independence and clipping are explicit limitations; no claimed asset calibration, posterior distribution, empirical correlation, or clinical predictive performance.
+## What is valued
 
-Seeded PRNG and bounded iterations (100–10,000). Reports mean, P10/P50/P90, negative-NPV frequency, approval frequency, mean standard error and approximate 95% Monte Carlo sampling interval. Sampling interval is not a confidence interval for true asset value. Exports full scenario, seed, settings, model version, rationale and samples as JSON. Re-run after input changes; stale simulation output is cleared.
+The asset is valued at **entry** into the selected stage, not halfway through
+that stage. Stages before the selection are omitted. Historical spend is sunk
+unless the analyst types it into the certain upfront cost, which is paid at the
+valuation date whether or not development succeeds.
 
-Validation required before merge: Deno 2.1.4 format, lint, typecheck, Vitest (including rnpvSimulator.test.ts), dataset guard, static build, browser smoke and input/export checks. Tests are authored, not reported as executed in the connector environment. Do not describe this as deployed or add a completed production achievement to a resume until CI and interface validation are recorded. Existing reference-only benchmark sources must not be auto-imported or copied into scenario defaults.
+Preclinical work is optional. The page does not supply a preclinical
+probability, duration, or cost. Choosing Preclinical requires the analyst to
+enter all three and a written rationale.
+
+Model version: `native-rnpv-0.2.0`. Timing id: `year-end-stage-entry-v1`.
+Amounts are USD millions.
+
+## Deterministic rNPV
+
+Cash flows use year-end discounting. The discount factor is `1 / (1 + r) ^ t`.
+
+- Certain upfront cost is undiscounted at t = 0.
+- A stage of N years pays `cost / N` at the end of each of those years. In the
+  expected-value view that payment is multiplied by the probability of
+  **entering** the stage, which is the product of the conditional success
+  probabilities of the earlier remaining stages.
+- Conditional success is applied at the stage end. Failure cancels every later
+  cost. There is no intra-stage stopping rule.
+- Launch investment is paid at the development-completion year-end and
+  multiplied by the probability of completing every remaining stage.
+- The first commercial cash flow is one year after that completion year, and the
+  whole commercial forecast is multiplied by the same completion probability.
+
+Sales rise linearly and hit the peak in the final ramp year. Additional peak
+years stay at that peak. Later years decline geometrically. Commercial cash flow
+is sales × operating cash margin × (1 − tax). The horizon is finite. There is no
+terminal value, royalty, milestone, tax shield on development cost, tax-loss
+carryforward, dilution, or financing bridge.
+
+## Monte Carlo
+
+Each iteration draws one development path. A uniform random number fails the
+stage when it is greater than or equal to that stage's conditional probability.
+Exact 0% and 100% probabilities stay fixed. After a failure the path pays no
+later stage cost, no launch investment, and no commercial cash flow. The path
+NPV is not multiplied by a success probability again.
+
+Optional uncertainty ranges are independent and uniform:
+
+- Discount rate, peak sales, launch investment, and stage costs move by a
+  multiplicative fraction around the entered value. A zero base stays zero. The
+  sampled discount rate is capped at 100%.
+- Conditional probabilities that are not exactly 0% or 100% move by an absolute
+  percentage-point range and are clipped to 0–100%.
+
+Durations, margin, tax, upfront cost, and the sales shape stay fixed. These
+ranges are analyst choices. They are not estimated confidence intervals,
+posterior distributions, or claims of clinical performance.
+
+The generator is a non-cryptographic seeded PRNG. Iterations are limited to
+100–10,000. The same seed and inputs reproduce the same paths. With both ranges
+at zero, the mean converges to the deterministic rNPV. The reported standard
+error and approximate 95% interval describe sampling noise in that mean, not
+uncertainty about a true asset value.
+
+The run yields between chunks so the page can keep scrolling. Changing a model
+assumption aborts the run and drops the previous distribution. An export
+includes the simulation only when that run still matches the inputs on screen.
+The export records the model version, timing id, seed, settings, rationale, and,
+when the run is current, the path samples.
+
+## What this is not
+
+A hypothetical rNPV is not an equity value, a company ranking, a clinical
+prediction, or an investment recommendation. Do not describe the sandbox as a
+deployed valuation product.
