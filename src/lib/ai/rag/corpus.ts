@@ -528,24 +528,58 @@ function ledgerPassages(): EvidencePassage[] {
 }
 
 let cached: readonly EvidencePassage[] | undefined;
+let fixtureCached: readonly EvidencePassage[] | undefined;
 
-/** Frozen public CMS excerpts, labeled synthetic fixtures, and ledger adapters. */
+/** Frozen public CMS excerpts and ledger adapters. Synthetic fixtures are excluded. */
 export function defaultEvidenceCorpus(): readonly EvidencePassage[] {
   if (!cached) {
     cached = deepFreeze([
       ...publicCmsPassages(),
-      ...syntheticPassages(),
       ...ledgerPassages(),
     ]);
   }
   return cached;
 }
 
+/**
+ * Default corpus plus labeled synthetic fixtures. Tests inject this explicitly.
+ * Production requests do not.
+ */
+export function fixtureEvidenceCorpus(): readonly EvidencePassage[] {
+  if (!fixtureCached) {
+    fixtureCached = deepFreeze([
+      ...defaultEvidenceCorpus(),
+      ...syntheticPassages(),
+    ]);
+  }
+  return fixtureCached;
+}
+
+function passageAuditBasis(passage: EvidencePassage): string {
+  return JSON.stringify({
+    passageId: passage.passageId,
+    contentHash: passage.contentHash,
+    publishedAt: passage.publishedAt ?? null,
+    retrievedAt: passage.retrievedAt,
+    applicableDate: passage.applicableDate ?? null,
+    reviewState: passage.reviewState,
+    passageRole: passage.passageRole,
+    supersessionStatus: passage.supersessionStatus,
+    storagePolicy: passage.storagePolicy,
+    redistribution: passage.redistribution,
+    corpusClass: passage.corpusClass,
+    dataYear: passage.dataYear ?? null,
+    payer: passage.payer ?? null,
+    setting: passage.setting ?? null,
+    geographyCode: passage.geography?.code ?? null,
+    record: passage.record ?? null,
+  });
+}
+
+/** Hash of passage text plus the fields that change retrieval and verification. */
 export function corpusSnapshotHash(
   passages: readonly EvidencePassage[],
 ): string {
-  const lines = passages
-    .map((passage) => `${passage.passageId}:${passage.contentHash}`)
-    .sort();
+  const lines = passages.map(passageAuditBasis).sort();
   return sha256Text(lines.join("\n"));
 }

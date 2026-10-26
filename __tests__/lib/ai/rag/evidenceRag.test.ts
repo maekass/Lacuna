@@ -10,6 +10,7 @@ import {
   defaultEvidenceCorpus,
   defineEvidencePassage,
   exportClinicalEvidenceRun,
+  fixtureEvidenceCorpus,
   passageFromEvidenceObservation,
   passageFromReimbursementSource,
   RAG_SOURCE_CONNECTORS,
@@ -123,6 +124,19 @@ describe("evidence corpus contracts", () => {
     expect(passage.text).toBeUndefined();
     expect(passage.passageRole).toBe("source_passage");
   });
+
+  it("keeps synthetic fixtures out of the production corpus", () => {
+    expect(
+      defaultEvidenceCorpus().some((passage) =>
+        passage.corpusClass === "synthetic_fixture"
+      ),
+    ).toBe(false);
+    expect(
+      fixtureEvidenceCorpus().some((passage) =>
+        passage.passageId === "syn:published-gate"
+      ),
+    ).toBe(true);
+  });
 });
 
 describe("evidence retrieval", () => {
@@ -147,7 +161,7 @@ describe("evidence retrieval", () => {
 
   it("excludes unknown and later publication dates", () => {
     const result = retrieveEvidence({
-      corpus: defaultEvidenceCorpus(),
+      corpus: fixtureEvidenceCorpus(),
       query: "screening Pap pelvic cervical Medicare",
       scope: { asOfDate: AS_OF, lane: "research_draft" },
       topK: 8,
@@ -175,7 +189,7 @@ describe("evidence retrieval", () => {
   });
 
   it("filters geography, payer, setting, and data year before ranking", () => {
-    const corpus = defaultEvidenceCorpus();
+    const corpus = fixtureEvidenceCorpus();
     expect(
       retrieveEvidence({
         corpus,
@@ -218,7 +232,7 @@ describe("evidence retrieval", () => {
   });
 
   it("drops superseded, revoked, and machine-proposed records", () => {
-    const corpus = defaultEvidenceCorpus();
+    const corpus = fixtureEvidenceCorpus();
     for (const query of ["superseded-canary", "revoked-canary", "SA051"]) {
       const ids = retrieveEvidence({
         corpus,
@@ -234,7 +248,7 @@ describe("evidence retrieval", () => {
 
   it("does not let passage instructions widen the retrieved set", () => {
     const result = retrieveEvidence({
-      corpus: defaultEvidenceCorpus(),
+      corpus: fixtureEvidenceCorpus(),
       query: "injection-canary",
       scope: { asOfDate: AS_OF, lane: "research_draft" },
       topK: 5,
@@ -610,6 +624,135 @@ describe("evidence ask verification", () => {
     expect(explicit.conflicts.length).toBeGreaterThan(0);
   });
 
+  it("rejects claim prose and answers that contradict a matched record", () => {
+    const passage = defaultEvidenceCorpus().find((item) =>
+      item.passageId === CMS_PASSAGE_IDS.cy2026QualifyingCf
+    );
+    if (!passage) throw new Error("expected the qualifying conversion factor");
+    const record = {
+      metric: "pfs_conversion_factor_qualifying_apm",
+      value: 33.57,
+      comparator: "eq" as const,
+      unit: "conversion_factor_usd",
+      dataYear: 2026,
+      payer: "Medicare",
+      geographyCode: "US",
+    };
+    const falseClaim = verifyEvidenceDraft({
+      draft: {
+        disposition: "answer",
+        answer: "The CY 2026 qualifying APM conversion factor is $33.57.",
+        claims: [{
+          id: "false-prose",
+          text: "The CY 2026 qualifying APM conversion factor is $99.99.",
+          passageIds: [passage.passageId],
+          record,
+        }],
+        limitations: [],
+        conflicts: [],
+      },
+      retrieved: [passage],
+      scope,
+      lane: "research_draft",
+    });
+    expect(falseClaim.disposition).toBe("abstain");
+
+    const falseAnswer = verifyEvidenceDraft({
+      draft: {
+        disposition: "answer",
+        answer: "The qualifying APM conversion factor is 99.99 USD.",
+        claims: [{
+          id: "true-record",
+          text: "The CY 2026 qualifying APM conversion factor is $33.57.",
+          passageIds: [passage.passageId],
+          record,
+        }],
+        limitations: [],
+        conflicts: [],
+      },
+      retrieved: [passage],
+      scope,
+      lane: "research_draft",
+    });
+    expect(falseAnswer.disposition).toBe("abstain");
+  });
+
+  it("does not treat a different data year as a conflict", () => {
+    const shared = {
+      publisher: "Lacuna synthetic fixture",
+      sourceUrl: "https://example.com/lacuna/synthetic-rag-fixture",
+      retrievedAt: AS_OF,
+      publishedAt: "2024-01-01",
+      geography: {
+        level: "country" as const,
+        code: "US",
+        label: "United States",
+      },
+      payer: "Medicare",
+      storagePolicy: "excerpt_only" as const,
+      redistribution: "public" as const,
+      licenseNote: "Synthetic year fixture.",
+      evidenceType: "other" as const,
+      reviewState: "source_verified" as const,
+      supersessionStatus: "current" as const,
+      corpusClass: "synthetic_fixture" as const,
+      limitations: ["Synthetic year fixture."],
+    };
+    const later = defineEvidencePassage({
+      ...shared,
+      passageId: "syn:year-2026",
+      sourceId: "syn:year-2026",
+      documentId: "syn:year",
+      title: "SYNTHETIC 2026",
+      locator: "2026",
+      dataYear: 2026,
+      text: "SYNTHETIC 2026 practice expense RVU is 2.50.",
+      record: {
+        metric: "practice_expense_rvu",
+        value: 2.5,
+        comparator: "eq",
+        unit: "rvu",
+        dataYear: 2026,
+      },
+    });
+    const earlier = defineEvidencePassage({
+      ...shared,
+      passageId: "syn:year-2025",
+      sourceId: "syn:year-2025",
+      documentId: "syn:year",
+      title: "SYNTHETIC 2025",
+      locator: "2025",
+      dataYear: 2025,
+      text: "SYNTHETIC 2025 practice expense RVU is 2.00.",
+      record: {
+        metric: "practice_expense_rvu",
+        value: 2,
+        comparator: "eq",
+        unit: "rvu",
+        dataYear: 2025,
+      },
+    });
+    const result = verifyEvidenceDraft({
+      draft: {
+        disposition: "qualified_answer",
+        answer: "The 2026 practice expense RVU is 2.50.",
+        claims: [{
+          id: "year-2026",
+          text: "The 2026 practice expense RVU is 2.50.",
+          passageIds: ["syn:year-2026"],
+          record: later.record,
+        }],
+        limitations: [],
+        conflicts: [],
+      },
+      retrieved: [later, earlier],
+      scope: { asOfDate: AS_OF, lane: "research_draft" },
+      lane: "research_draft",
+    });
+    expect(result.disposition).toBe("qualified_answer");
+    expect(result.conflicts).toEqual([]);
+  });
+
   it("rejects approval leakage and zeroed injection text", async () => {
     const result = await runEvidenceAsk({
       request: {
@@ -618,6 +761,7 @@ describe("evidence ask verification", () => {
         lane: "research_draft",
         topK: 5,
       },
+      corpus: fixtureEvidenceCorpus(),
       generate: () =>
         generation({
           disposition: "answer",
@@ -649,6 +793,7 @@ describe("evidence ask verification", () => {
         geographyCode: "US",
         topK: 5,
       },
+      corpus: fixtureEvidenceCorpus(),
       generate: () =>
         generation({
           disposition: "answer",
@@ -688,6 +833,7 @@ describe("evidence ask verification", () => {
         geographyCode: "US",
         topK: 5,
       },
+      corpus: fixtureEvidenceCorpus(),
       generate: () =>
         generation({
           disposition: "answer",
@@ -883,5 +1029,74 @@ describe("clinical evidence run export", () => {
     expect(corpusSnapshotHash(defaultEvidenceCorpus())).toBe(
       first.body.sourceSnapshotHash,
     );
+  });
+
+  it("exports mixed retrieval scopes that share one retriever configuration", () => {
+    const shared = retrieveEvidence({
+      corpus: defaultEvidenceCorpus(),
+      query: "conversion factor",
+      scope,
+      topK: 5,
+    });
+    const otherYear = retrieveEvidence({
+      corpus: defaultEvidenceCorpus(),
+      query: "conversion factor",
+      scope: { ...scope, dataYear: 2025 },
+      topK: 5,
+    });
+    expect(shared.retrievalConfigHash).toBe(otherYear.retrievalConfigHash);
+    expect(shared.retrievalScopeHash).not.toBe(otherYear.retrievalScopeHash);
+    const response = {
+      requestId: "scope-export",
+      disposition: "abstain" as const,
+      lane: "research_draft" as const,
+      answer: "No admissible evidence supports a grounded answer.",
+      claims: [],
+      citations: [],
+      considered: [],
+      limitations: [],
+      conflicts: [],
+      assumptions: [],
+      analystInterpretation: null,
+      abstentionReason: "No admissible passages were retrieved.",
+      publicationEligible: false,
+      representedAsApprovedClaim: false,
+      sourceSnapshotHash: corpusSnapshotHash(defaultEvidenceCorpus()),
+      modelId: "none",
+      promptVersion: "1.0.0",
+      retrieverVersion: shared.retrieverVersion,
+      retrievalAlgorithm: shared.retrievalAlgorithm,
+      retrievalConfigHash: shared.retrievalConfigHash,
+      retrievalScopeHash: shared.retrievalScopeHash,
+      retrievedPassageIds: [],
+      operational: {
+        latencyMs: 0,
+        retrievalLatencyMs: 0,
+        estimatedCostUsd: 0,
+      },
+      disclaimer: "Research synthesis only.",
+    };
+    expect(() =>
+      exportClinicalEvidenceRun({
+        runId: "mixed-scope",
+        createdAt: "2026-10-24T12:00:00.000Z",
+        gitCommit: "test",
+        modelProvider: "mock",
+        modelId: "none",
+        modelVersion: "none",
+        reviewerProtocolVersion: "unset",
+        retrievalTopK: 5,
+        cases: [
+          { caseId: "year-2026", response },
+          {
+            caseId: "year-2025",
+            response: {
+              ...response,
+              retrievalScopeHash: otherYear.retrievalScopeHash,
+            },
+          },
+        ],
+      })
+    ).not.toThrow();
   });
 });

@@ -107,6 +107,28 @@ function passageTextHasNumber(
   });
 }
 
+function recordSupportsToken(
+  record: EvidenceAskDraft["claims"][number]["record"],
+  token: string,
+): boolean {
+  if (!record || record.value == null) return false;
+  if (String(record.value) === token) return true;
+  if (typeof record.value !== "number") return false;
+  const asNumber = Number(token);
+  return Number.isFinite(asNumber) && numbersClose(asNumber, record.value);
+}
+
+function unsupportedNumericToken(
+  text: string,
+  passages: readonly EvidencePassage[],
+  records: readonly EvidenceAskDraft["claims"][number]["record"][],
+): string | undefined {
+  return numericTokens(text).find((token) =>
+    !passageTextHasNumber(passages, token) &&
+    !records.some((record) => recordSupportsToken(record, token))
+  );
+}
+
 /**
  * Deterministic citation checks. An identifier match is not semantic support.
  * Paraphrases that cannot be checked against a structured record stay unresolved.
@@ -205,6 +227,17 @@ export function verifyEvidenceDraft(input: {
       if (!matched) {
         rejectedReasons.push(
           `${claim.id} cites a retrieved passage but the structured assertion is not supported.`,
+        );
+        continue;
+      }
+      const unsupportedClaimNumber = unsupportedNumericToken(
+        claim.text,
+        cited,
+        [claim.record],
+      );
+      if (unsupportedClaimNumber) {
+        rejectedReasons.push(
+          `${claim.id} states ${unsupportedClaimNumber}, which is not the matched record or the cited passage text.`,
         );
         continue;
       }
@@ -307,6 +340,21 @@ export function verifyEvidenceDraft(input: {
     disposition = "qualified_answer";
   }
 
+  const unsupportedAnswerNumber = unsupportedNumericToken(
+    input.draft.answer,
+    input.retrieved,
+    [...survivingRecords.values()],
+  );
+  if (unsupportedAnswerNumber) {
+    return abstain(
+      `The draft answer states ${unsupportedAnswerNumber}, which is not in the retrieved evidence.`,
+      [
+        ...limitations,
+        "The synthesis was withheld because it introduced a number the retrieved passages do not state.",
+      ],
+    );
+  }
+
   const publicationEligible = input.lane === "publication" &&
     disposition === "answer" &&
     !unresolved &&
@@ -345,37 +393,54 @@ function abstain(
   };
 }
 
+function comparableScopeKey(passage: EvidencePassage): string | null {
+  const record = passage.record;
+  if (!record || typeof record.value !== "number") return null;
+  return [
+    record.metric,
+    String(record.dataYear ?? passage.dataYear ?? ""),
+    record.payer ?? passage.payer ?? "",
+    record.geographyCode ?? passage.geography?.code ?? "",
+    record.setting ?? passage.setting ?? "",
+    record.code ?? "",
+    record.unit ?? "",
+    record.comparator ?? "",
+  ].join("|");
+}
+
 function conflictMessages(
   retrieved: readonly EvidencePassage[],
   claims: readonly { record?: EvidenceAskDraft["claims"][number]["record"] }[],
 ): Array<{ message: string; values: number[] }> {
-  const byMetric = new Map<string, number[]>();
+  const byScope = new Map<string, { metric: string; values: number[] }>();
   for (const passage of retrieved) {
-    const record = passage.record;
-    if (!record || typeof record.value !== "number") continue;
-    const existing = byMetric.get(record.metric) ?? [];
-    if (
-      !existing.some((value) => numbersClose(value, record.value as number))
-    ) {
-      existing.push(record.value);
+    const key = comparableScopeKey(passage);
+    const value = passage.record?.value;
+    if (!key || typeof value !== "number") continue;
+    const metric = passage.record?.metric ?? key;
+    const existing = byScope.get(key) ?? { metric, values: [] };
+    if (!existing.values.some((item) => numbersClose(item, value))) {
+      existing.values.push(value);
     }
-    byMetric.set(record.metric, existing);
+    byScope.set(key, existing);
   }
 
   const messages: Array<{ message: string; values: number[] }> = [];
   const seen = new Set<string>();
   for (const claim of claims) {
     const metric = claim.record?.metric;
-    if (!metric || seen.has(metric)) continue;
-    const values = byMetric.get(metric) ?? [];
-    if (values.length < 2) continue;
-    seen.add(metric);
-    messages.push({
-      values,
-      message: `Retrieved passages disagree on ${metric}: ${
-        values.map((value) => value.toFixed(2)).join(", ")
-      }.`,
-    });
+    if (!metric) continue;
+    for (const [key, group] of byScope) {
+      if (!key.startsWith(`${metric}|`) || seen.has(key)) continue;
+      if (group.values.length < 2) continue;
+      seen.add(key);
+      messages.push({
+        values: group.values,
+        message: `Retrieved passages disagree on ${metric}: ${
+          group.values.map((value) => value.toFixed(2)).join(", ")
+        }.`,
+      });
+    }
   }
   return messages;
 }

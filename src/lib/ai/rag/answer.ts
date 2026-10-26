@@ -102,6 +102,7 @@ function abstainBody(input: {
   retrievedPassageIds: string[];
   considered: EvidenceCitation[];
   retrievalConfigHash: string;
+  retrievalScopeHash: string;
   retrievalLatencyMs: number;
   latencyMs: number;
   modelId: string;
@@ -132,6 +133,7 @@ function abstainBody(input: {
     retrieverVersion: RETRIEVER_VERSION,
     retrievalAlgorithm: "lexical-v1",
     retrievalConfigHash: input.retrievalConfigHash,
+    retrievalScopeHash: input.retrievalScopeHash,
     retrievedPassageIds: input.retrievedPassageIds,
     operational: {
       latencyMs: input.latencyMs,
@@ -216,6 +218,7 @@ export async function runEvidenceAsk(
       retrievedPassageIds: [],
       considered: [],
       retrievalConfigHash: retrieval.retrievalConfigHash,
+      retrievalScopeHash: retrieval.retrievalScopeHash,
       retrievalLatencyMs,
       latencyMs: Date.now() - started,
       modelId: "none",
@@ -236,6 +239,7 @@ export async function runEvidenceAsk(
       retrievedPassageIds: retrieval.retrievedPassageIds,
       considered,
       retrievalConfigHash: retrieval.retrievalConfigHash,
+      retrievalScopeHash: retrieval.retrievalScopeHash,
       retrievalLatencyMs,
       latencyMs: Date.now() - started,
       modelId: "none",
@@ -281,6 +285,7 @@ export async function runEvidenceAsk(
       retrievedPassageIds: retrieval.retrievedPassageIds,
       considered,
       retrievalConfigHash: retrieval.retrievalConfigHash,
+      retrievalScopeHash: retrieval.retrievalScopeHash,
       retrievalLatencyMs,
       latencyMs: Date.now() - started,
       modelId: "none",
@@ -363,6 +368,7 @@ export async function runEvidenceAsk(
     retrieverVersion: retrieval.retrieverVersion,
     retrievalAlgorithm: retrieval.retrievalAlgorithm,
     retrievalConfigHash: retrieval.retrievalConfigHash,
+    retrievalScopeHash: retrieval.retrievalScopeHash,
     retrievedPassageIds: retrieval.retrievedPassageIds,
     operational: {
       latencyMs: Date.now() - started,

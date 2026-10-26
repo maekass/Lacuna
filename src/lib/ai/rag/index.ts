@@ -7,6 +7,7 @@ export {
   CMS_SNAPSHOT_RETRIEVED_AT,
   corpusSnapshotHash,
   defaultEvidenceCorpus,
+  fixtureEvidenceCorpus,
 } from "./corpus";
 export {
   defineEvidencePassage,
