@@ -165,6 +165,19 @@ connector or production exchange is added by this benchmark change. A validated
 mapping still would not, by itself, establish clinical validity or regulatory
 clearance.
 
+## Retrieval export
+
+`src/lib/ai/rag/evalExport.ts` maps a real `POST /api/research/evidence/ask`
+response into `clinicalEvidenceRunSchema`. Citation judgments are exported as
+`not_assessed` until two human reviewers record a judgment. The exporter does
+not change scoring. Pending benchmark cases stay in the review-coverage
+denominator and do not produce recall, precision, or citation-support rates.
+
+A fixture export is a wiring check. It is not a reviewed performance result.
+Targets such as recall@5 of at least 90 percent and reviewed citation support of
+at least 95 percent are release criteria, not results this repository has
+established.
+
 ## Running the evaluator
 
 npm run eval:clinical-evidence -- --benchmark path/to/reviewed-benchmark.json

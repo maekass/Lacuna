@@ -280,4 +280,11 @@ export const LLM_QUALITY_CATALOG = [
     description: "Domestic study catalog expansion (structured candidates)",
     grounded: true,
   },
+  {
+    feature: "evidence-ask",
+    route: "POST /api/research/evidence/ask",
+    description:
+      "Citation-checked evidence ask. Structured output is verified before it is returned.",
+    grounded: true,
+  },
 ] as const;
