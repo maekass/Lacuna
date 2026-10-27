@@ -1,11 +1,19 @@
-"use client";
-
 import { formatCuratedDatasetProvenanceLine } from "@/lib/constants/provenance";
-import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 
-export default function GlobalProvenanceBar() {
-  const { verifiedAcquisitions } = useVerifiedDataset();
-  const line = formatCuratedDatasetProvenanceLine(verifiedAcquisitions.length);
+interface GlobalProvenanceBarProps {
+  /** Deal count from the unscoped curated file, not a workspace slice. */
+  dealCount: number;
+}
+
+/**
+ * Honesty line for the curated verified file.
+ * Workspace pages keep their own scoped counts. This bar stays on the full file
+ * so Home and Methods do not disagree with the header.
+ */
+export default function GlobalProvenanceBar(
+  { dealCount }: GlobalProvenanceBarProps,
+) {
+  const line = formatCuratedDatasetProvenanceLine(dealCount);
 
   return (
     <div

@@ -16,7 +16,12 @@ export default async function ProductLayout({
   return (
     <VerifiedDatasetProvider dataset={dataset}>
       <LegacyHashRedirect />
-      <AppShell deals={deals}>{children}</AppShell>
+      <AppShell
+        deals={deals}
+        curatedDealCount={full.acquisitions.length}
+      >
+        {children}
+      </AppShell>
     </VerifiedDatasetProvider>
   );
 }

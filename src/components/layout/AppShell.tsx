@@ -13,17 +13,20 @@ import type { CommandDealRef } from "@/lib/ui/commandPalette";
 import WorkspaceNav from "@/components/layout/WorkspaceNav";
 import KeyboardShortcuts from "@/components/KeyboardShortcuts";
 import { ProvenanceProvider } from "@/lib/provenance/ProvenanceContext";
-import { workspaceForPath } from "@/lib/navigation/workspaces";
+import { sectionsForPath, workspaceForPath } from "@/lib/navigation/workspaces";
 
 interface AppShellProps {
   children: ReactNode;
   deals: readonly CommandDealRef[];
+  curatedDealCount: number;
 }
 
-export default function AppShell({ children, deals }: AppShellProps) {
+export default function AppShell(
+  { children, deals, curatedDealCount }: AppShellProps,
+) {
   const pathname = usePathname();
   const workspace = workspaceForPath(pathname);
-  const sections = workspace?.sections ?? [];
+  const sections = sectionsForPath(pathname);
 
   return (
     <ProvenanceProvider globalBarActive>
@@ -36,7 +39,7 @@ export default function AppShell({ children, deals }: AppShellProps) {
           <AmbientDepth />
 
           <div className="relative z-10">
-            <GlobalProvenanceBar />
+            <GlobalProvenanceBar dealCount={curatedDealCount} />
 
             <header className="sticky top-0 z-50 border-b border-lacuna-lavender/40 glass-layer shadow-[0_4px_24px_-12px_rgba(93,78,109,0.22)]">
               <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-2.5 sm:gap-3 sm:px-6 sm:py-4">
