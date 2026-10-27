@@ -112,9 +112,7 @@ export default function SiteFooter() {
             women&apos;s health M&amp;A — not investment advice and not a
             substitute for paid deal-intelligence products.
           </p>
-          <p className="mt-1">
-            <H20SignatoryNote />
-          </p>
+          <H20SignatoryNote className="mt-1" />
         </div>
       </div>
     </footer>
