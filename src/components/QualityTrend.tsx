@@ -90,9 +90,7 @@ export default function QualityTrend() {
                 const bar = series.value(point);
                 return (
                   <div
-                    key={`${series.key}-${point.runAtLabel}-${
-                      point.backfilled ? "b" : "l"
-                    }`}
+                    key={`${series.key}-${point.id}`}
                     className="flex min-w-0 flex-1 flex-col items-center"
                     title={`${point.runAtLabel}: ${bar.label}${
                       point.backfilled ? " (backfilled)" : ""
