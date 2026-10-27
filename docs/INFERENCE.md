@@ -105,6 +105,16 @@ configured.
 
 Prefer **non-streaming** routes for production UI narratives.
 
+## Response evaluations
+
+`npm run eval:responses` scores about 30 handcrafted prompts (happy path, edge, adversarial) before a merge. `npm run eval:responses:nightly` scores 1,000 seeded synthetic prompts so the gate is not a memorized sentence list.
+
+Each case compares the candidate to an intended meaning with embedding cosine similarity, then a judge scores accuracy, tone, safety, and relevance from 0 to 5. A case passes when those numbers sit inside a band (`ACCEPTABLE_RESPONSE_RANGES`), not when the text matches a single string. Reject-polarity cases are bad outputs that must fall outside the band.
+
+The default embedder is a hashing sentence embedding so CI needs no model download. `--embed transformer` uses `Xenova/all-MiniLM-L6-v2` through `@huggingface/transformers` (install that package first; it is not part of the Next.js bundle). `--judge llm` calls a separate judge model (`openai/gpt-4o-mini`) and refuses to invent scores when no inference credential is set.
+
+`/methods/evals` shows the handcrafted scorecard and in-process traces (latency, hallucination flag, human spot-check). Traces are not durable unless `LACUNA_EVAL_LOG` points at a writable file. An empty trace list is insufficient data, not a zero hallucination rate.
+
 ### Adding a new LLM feature
 
 1. Add prompt templates in `src/lib/ai/prompts.ts` as pure functions.

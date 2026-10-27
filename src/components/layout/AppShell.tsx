@@ -13,7 +13,7 @@ import type { CommandDealRef } from "@/lib/ui/commandPalette";
 import WorkspaceNav from "@/components/layout/WorkspaceNav";
 import KeyboardShortcuts from "@/components/KeyboardShortcuts";
 import { ProvenanceProvider } from "@/lib/provenance/ProvenanceContext";
-import { workspaceForPath } from "@/lib/navigation/workspaces";
+import { sectionsForPath, workspaceForPath } from "@/lib/navigation/workspaces";
 
 interface AppShellProps {
   children: ReactNode;
@@ -23,7 +23,7 @@ interface AppShellProps {
 export default function AppShell({ children, deals }: AppShellProps) {
   const pathname = usePathname();
   const workspace = workspaceForPath(pathname);
-  const sections = workspace?.sections ?? [];
+  const sections = sectionsForPath(pathname);
 
   return (
     <ProvenanceProvider globalBarActive>

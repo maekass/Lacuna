@@ -3,6 +3,7 @@
  * Applied after every free-text inference call.
  */
 
+import { recordOnlineTrace } from "@/lib/ai/evals/onlineEvalStore";
 import {
   generateInferenceObject,
   type ResolvedInferenceModel,
@@ -223,7 +224,7 @@ export async function generateQualifiedInference(
     });
   }
 
-  const { data } = await generateInferenceObject({
+  const { data, accounting } = await generateInferenceObject({
     resolved: params.resolved,
     system: params.system,
     prompt: params.prompt,
@@ -237,14 +238,24 @@ export async function generateQualifiedInference(
   });
 
   const raw = data.answer.trim();
-
-  return assessLlmOutput(raw, {
+  const assessed = assessLlmOutput(raw, {
     feature: params.feature,
     modelId: params.resolved.modelId,
     groundingContext: params.groundingContext,
     requiredTerms: params.requiredTerms,
     prompt: params.prompt,
   });
+  recordOnlineTrace({
+    feature: params.feature,
+    modelId: params.resolved.modelId,
+    latencyMs: accounting.latencyMs,
+    qualityScore: assessed.quality.score,
+    qualityLevel: assessed.quality.level,
+    hallucinationRisk: assessed.quality.flags.hallucinationRisk,
+    prompt: params.prompt,
+    output: assessed.text,
+  });
+  return assessed;
 }
 
 /** Catalog of LLM features and their quality expectations (for /api/ai/quality). */

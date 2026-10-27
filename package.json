@@ -93,6 +93,8 @@
     "test:e2e": "playwright test",
     "test:e2e:smoke": "playwright test e2e/deploy-smoke.spec.ts",
     "eval:llm": "tsx scripts/eval-llm.ts",
+    "eval:responses": "tsx scripts/eval-responses.ts --split handcrafted --embed hashing --judge rubric",
+    "eval:responses:nightly": "tsx scripts/eval-responses.ts --split synthetic --count 1000 --embed hashing --judge rubric",
     "ai:models:sync": "tsx scripts/sync-ai-models.ts",
     "gate:provenance": "tsx scripts/provenance-gate.ts",
     "quality-history:append": "tsx scripts/append-quality-history.ts",
