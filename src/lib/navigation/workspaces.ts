@@ -116,3 +116,21 @@ export function workspaceForPath(pathname: string): Workspace | undefined {
   if (!slug) return undefined;
   return WORKSPACES.find((w) => w.slug === slug);
 }
+
+function pathWithoutTrailingSlash(pathname: string): string {
+  if (pathname.length > 1 && pathname.endsWith("/")) {
+    return pathname.slice(0, -1);
+  }
+  return pathname;
+}
+
+/**
+ * In-page section links for a workspace root.
+ * Nested routes such as `/methods/evals` do not share those anchors.
+ */
+export function sectionsForPath(pathname: string): SectionLink[] {
+  const workspace = workspaceForPath(pathname);
+  if (!workspace) return [];
+  if (pathWithoutTrailingSlash(pathname) !== workspace.href) return [];
+  return workspace.sections;
+}
