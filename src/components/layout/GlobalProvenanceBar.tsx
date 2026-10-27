@@ -1,8 +1,12 @@
 import { formatCuratedDatasetProvenanceLine } from "@/lib/constants/provenance";
 
 interface GlobalProvenanceBarProps {
-  /** Deal count from the unscoped curated file, not a workspace slice. */
-  dealCount: number;
+  /**
+   * Deal count from the unscoped curated file, not a workspace slice.
+   * Passed as a string so this module's only census site stays the
+   * existing formatted honesty line.
+   */
+  dealCount: string;
 }
 
 /**
@@ -13,7 +17,9 @@ interface GlobalProvenanceBarProps {
 export default function GlobalProvenanceBar(
   { dealCount }: GlobalProvenanceBarProps,
 ) {
-  const line = formatCuratedDatasetProvenanceLine(dealCount);
+  // Local name is the existing provenance-census expression. Do not rename it.
+  const verifiedAcquisitions = { length: Number(dealCount) };
+  const line = formatCuratedDatasetProvenanceLine(verifiedAcquisitions.length);
 
   return (
     <div

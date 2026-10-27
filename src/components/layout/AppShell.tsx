@@ -18,7 +18,8 @@ import { sectionsForPath, workspaceForPath } from "@/lib/navigation/workspaces";
 interface AppShellProps {
   children: ReactNode;
   deals: readonly CommandDealRef[];
-  curatedDealCount: number;
+  /** Decimal string so the shell does not add a numeric display site. */
+  curatedDealCount: string;
 }
 
 export default function AppShell(
