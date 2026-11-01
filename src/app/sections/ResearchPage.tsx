@@ -19,6 +19,7 @@ import SpaceWhResearchGapsPanel from "@/components/SpaceWhResearchGapsPanel";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import BiotheranosticsDossierLink from "@/components/BiotheranosticsDossierLink";
+import RnpvSandboxLink from "@/components/RnpvSandboxLink";
 
 import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentInsightTypes";
 import type { PatientEmpowermentSnapshot } from "@/lib/research/patientEmpowermentPipeline";
@@ -52,6 +53,10 @@ export default function ResearchPage({
         </p>
       </header>
 
+      <MotionSection id="rnpv-sandbox" className={SECTION}>
+        <RnpvSandboxLink />
+      </MotionSection>
+
       <BiotheranosticsDossierLink />
       <p className="mb-8 text-sm text-lacuna-blue">
         <Link
@@ -61,15 +66,7 @@ export default function ResearchPage({
           Oncology Claim-Integrity Monitor
         </Link>{" "}
         compares dated public claims with cited evidence. It is separate from
-        valuation and exit-similarity panels.{" "}
-        <Link
-          className="font-semibold text-lacuna-plum underline"
-          href="/research/evidence"
-        >
-          Evidence ask
-        </Link>{" "}
-        retrieves dated public CMS excerpts and abstains when they do not
-        support the question.
+        valuation and exit-similarity panels.
       </p>
 
       <MotionSection id="burden-capital-gap" className={SECTION}>
