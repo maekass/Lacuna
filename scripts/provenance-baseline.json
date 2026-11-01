@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "total": 892,
+  "total": 909,
   "covered": 21,
-  "exempt": 2,
+  "exempt": 19,
   "uncovered": 869,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
@@ -5536,6 +5536,142 @@
       "kind": "formatting-call",
       "key": "src/components/RhCapitalPortfolioContext.tsx::RhCapitalPortfolioContext::formatFunding(summary.citedFundingTotalM)",
       "class": "uncovered"
+    },
+    {
+      "file": "src/components/rnpv/RnpvFields.tsx",
+      "functionName": "RnpvFields",
+      "expression": "0",
+      "kind": "numeric-jsx",
+      "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::0",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvFields.tsx",
+      "functionName": "RnpvFields",
+      "expression": "0.1",
+      "kind": "numeric-jsx",
+      "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::0.1",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvFields.tsx",
+      "functionName": "RnpvFields",
+      "expression": "0.1",
+      "kind": "numeric-jsx",
+      "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::0.1#2",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvFields.tsx",
+      "functionName": "RnpvFields",
+      "expression": "0",
+      "kind": "numeric-jsx",
+      "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::0#2",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvFields.tsx",
+      "functionName": "RnpvFields",
+      "expression": "1",
+      "kind": "numeric-jsx",
+      "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::1",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvFields.tsx",
+      "functionName": "RnpvFields",
+      "expression": "1",
+      "kind": "numeric-jsx",
+      "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::1#2",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvFields.tsx",
+      "functionName": "RnpvFields",
+      "expression": "100",
+      "kind": "numeric-jsx",
+      "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::100",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvFields.tsx",
+      "functionName": "RnpvFields",
+      "expression": "1000000",
+      "kind": "numeric-jsx",
+      "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::1000000",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvFields.tsx",
+      "functionName": "RnpvFields",
+      "expression": "15",
+      "kind": "numeric-jsx",
+      "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::15",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvInputs.tsx",
+      "functionName": "BoundNumberField",
+      "expression": "field.max",
+      "kind": "numeric-jsx",
+      "key": "src/components/rnpv/RnpvInputs.tsx::BoundNumberField::field.max",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvInputs.tsx",
+      "functionName": "BoundNumberField",
+      "expression": "field.min",
+      "kind": "numeric-jsx",
+      "key": "src/components/rnpv/RnpvInputs.tsx::BoundNumberField::field.min",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvInputs.tsx",
+      "functionName": "BoundNumberField",
+      "expression": "field.step",
+      "kind": "numeric-jsx",
+      "key": "src/components/rnpv/RnpvInputs.tsx::BoundNumberField::field.step",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvInputs.tsx",
+      "functionName": "StageInput",
+      "expression": "max",
+      "kind": "numeric-jsx",
+      "key": "src/components/rnpv/RnpvInputs.tsx::StageInput::max",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvInputs.tsx",
+      "functionName": "StageInput",
+      "expression": "min",
+      "kind": "numeric-jsx",
+      "key": "src/components/rnpv/RnpvInputs.tsx::StageInput::min",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvInputs.tsx",
+      "functionName": "StageInput",
+      "expression": "step",
+      "kind": "numeric-jsx",
+      "key": "src/components/rnpv/RnpvInputs.tsx::StageInput::step",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvResults.tsx",
+      "functionName": "percent",
+      "expression": "(value * 100).toFixed(digits)",
+      "kind": "formatting-call",
+      "key": "src/components/rnpv/RnpvResults.tsx::percent::(value * 100).toFixed(digits)",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/rnpv/RnpvResults.tsx",
+      "functionName": "usd",
+      "expression": "new Intl.NumberFormat(\"en-US\", { minimumFractionDigits: 2, maximumFractionDigits: 2, }).format(value)",
+      "kind": "formatting-call",
+      "key": "src/components/rnpv/RnpvResults.tsx::usd::new Intl.NumberFormat(\"en-US\", { minimumFractionDigits: 2, maximumFractionDigits: 2, }).format(value)",
+      "class": "exempt"
     },
     {
       "file": "src/components/SpaceWhResearchGapsPanel.tsx",

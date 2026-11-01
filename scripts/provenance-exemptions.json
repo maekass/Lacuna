@@ -18,5 +18,90 @@
     "key": "src/components/PitchBrief.tsx::formatDealDate::new Intl.DateTimeFormat(\"en-US\", { timeZone: \"UTC\", year: \"numeric\", month: \"short\", ...(day !== undefined ? { day: \"numeric\" as const } : {}), }).format(stamp)",
     "category": "date",
     "reason": "Formats an ISO calendar date as a date label; the resulting string is not a numeric metric."
+  },
+  {
+    "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::0",
+    "category": "ui-control",
+    "reason": "Stage-cost input lower bound on the analyst sandbox form. It is a control limit, not a verified dataset figure."
+  },
+  {
+    "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::0.1",
+    "category": "ui-control",
+    "reason": "Stage-input step on the analyst sandbox form. It is a control increment, not a verified dataset figure."
+  },
+  {
+    "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::0.1#2",
+    "category": "ui-control",
+    "reason": "Second stage-input step on the analyst sandbox form. It is a control increment, not a verified dataset figure."
+  },
+  {
+    "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::0#2",
+    "category": "ui-control",
+    "reason": "Stage-rate input lower bound on the analyst sandbox form. It is a control limit, not a verified dataset figure."
+  },
+  {
+    "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::1",
+    "category": "ui-control",
+    "reason": "Stage-duration input lower bound on the analyst sandbox form. It is a control limit, not a verified dataset figure."
+  },
+  {
+    "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::1#2",
+    "category": "ui-control",
+    "reason": "Stage-duration input step on the analyst sandbox form. It is a control increment, not a verified dataset figure."
+  },
+  {
+    "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::100",
+    "category": "ui-control",
+    "reason": "Stage-rate input upper bound on the analyst sandbox form. It is a control limit, not a verified dataset figure."
+  },
+  {
+    "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::1000000",
+    "category": "ui-control",
+    "reason": "Stage-cost input upper bound on the analyst sandbox form. It is a control limit, not a verified dataset figure."
+  },
+  {
+    "key": "src/components/rnpv/RnpvFields.tsx::RnpvFields::15",
+    "category": "ui-control",
+    "reason": "Stage-duration input upper bound on the analyst sandbox form. It is a control limit, not a verified dataset figure."
+  },
+  {
+    "key": "src/components/rnpv/RnpvInputs.tsx::BoundNumberField::field.max",
+    "category": "ui-control",
+    "reason": "HTML max attribute for a hypothetical rNPV assumption input. It is a control limit, not a verified dataset figure."
+  },
+  {
+    "key": "src/components/rnpv/RnpvInputs.tsx::BoundNumberField::field.min",
+    "category": "ui-control",
+    "reason": "HTML min attribute for a hypothetical rNPV assumption input. It is a control limit, not a verified dataset figure."
+  },
+  {
+    "key": "src/components/rnpv/RnpvInputs.tsx::BoundNumberField::field.step",
+    "category": "ui-control",
+    "reason": "HTML step attribute for a hypothetical rNPV assumption input. It is a control increment, not a verified dataset figure."
+  },
+  {
+    "key": "src/components/rnpv/RnpvInputs.tsx::StageInput::max",
+    "category": "ui-control",
+    "reason": "HTML max attribute for a remaining-stage sandbox input. It is a control limit, not a verified dataset figure."
+  },
+  {
+    "key": "src/components/rnpv/RnpvInputs.tsx::StageInput::min",
+    "category": "ui-control",
+    "reason": "HTML min attribute for a remaining-stage sandbox input. It is a control limit, not a verified dataset figure."
+  },
+  {
+    "key": "src/components/rnpv/RnpvInputs.tsx::StageInput::step",
+    "category": "ui-control",
+    "reason": "HTML step attribute for a remaining-stage sandbox input. It is a control increment, not a verified dataset figure."
+  },
+  {
+    "key": "src/components/rnpv/RnpvResults.tsx::percent::(value * 100).toFixed(digits)",
+    "category": "ui-count",
+    "reason": "Formats a user-entered or simulated rNPV sandbox share as a percent. It is not a verified-dataset statistic and must not use Metric."
+  },
+  {
+    "key": "src/components/rnpv/RnpvResults.tsx::usd::new Intl.NumberFormat(\"en-US\", { minimumFractionDigits: 2, maximumFractionDigits: 2, }).format(value)",
+    "category": "ui-count",
+    "reason": "Formats a hypothetical rNPV sandbox amount. It is not a verified-dataset statistic and must not use Metric."
   }
 ]

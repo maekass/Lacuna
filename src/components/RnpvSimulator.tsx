@@ -282,8 +282,8 @@ export default function RnpvSimulator() {
             Amounts are USD millions. The valuation date is entry into the
             selected stage. A certain upfront cost is paid at that date and is
             not discounted. Remaining stage costs are equal year-end
-            installments, weighted in the expected-value view by the probability
-            of entering the stage. Failure is recognized at the stage end and
+            installments, weighted in the expected-value view by the share of
+            paths that enter the stage. Failure is recognized at the stage end and
             cancels every later cost. Launch investment is paid at the
             development-completion year-end only on success. First revenue is
             one year later.
@@ -298,7 +298,7 @@ export default function RnpvSimulator() {
           </p>
           <p>
             The Monte Carlo draws Bernoulli stage outcomes and does not
-            probability-weight those paths again. Positive uncertainty ranges
+            re-weight those paths by the success rate again. Positive uncertainty ranges
             are independent and uniform. They are not empirical posteriors. The
             reported sampling interval is finite-simulation error only.
           </p>

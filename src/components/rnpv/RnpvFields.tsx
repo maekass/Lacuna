@@ -131,7 +131,7 @@ export default function RnpvFields(
                 className="text-xs font-normal text-lacuna-blue"
                 id="preclinical-rationale-help"
               >
-                Required. Record where the preclinical probability, duration,
+                Required. Record where the preclinical success rate, duration,
                 and cost came from. Lacuna does not supply a preclinical
                 benchmark.
               </span>
@@ -164,7 +164,7 @@ export default function RnpvFields(
           : (
             <p className="text-sm text-lacuna-blue">
               Preclinical risk and cost are excluded. To model them, choose
-              Preclinical and enter your own probability, duration, cost, and
+              Preclinical and enter your own success rate, duration, cost, and
               rationale.
             </p>
           )}
@@ -195,7 +195,7 @@ export default function RnpvFields(
                 />
                 <StageInput
                   id={probabilityId}
-                  label="Conditional success probability"
+                  label="Conditional success rate"
                   unit="percent"
                   min={0}
                   max={100}
@@ -236,7 +236,7 @@ export default function RnpvFields(
 
       <fieldset className="space-y-4">
         <legend className="text-lg font-semibold text-lacuna-plum">
-          Commercial forecast
+          Commercial cash-flow assumptions
         </legend>
         <FieldGrid
           fields={COMMERCIAL_FIELDS}
@@ -271,7 +271,7 @@ export default function RnpvFields(
         </legend>
         <p className="text-sm text-lacuna-blue">
           Each path succeeds or fails stage by stage. Later costs stop after a
-          failure. Path results are not multiplied by the success probability
+          failure. Path results are not multiplied by the success rate
           again. Zero ranges isolate that development risk. Positive ranges are
           independent uniform analyst choices, not estimated confidence
           intervals. Durations, margin, tax, upfront cost, and the sales shape

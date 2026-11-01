@@ -83,9 +83,9 @@ export default function RnpvResults(
             <p className="text-sm text-lacuna-blue">
               Valued at entry into{" "}
               {STAGE_LABELS[startStage]}, not mid-stage. Stage costs are
-              weighted by the probability of entering each stage. Launch
+              weighted by the share of paths that enter each stage. Launch
               investment and commercial cash flows are weighted by the
-              probability of completing every remaining stage. Cash flows use
+              share of paths that complete every remaining stage. Cash flows use
               year-end discounting, and the first revenue is one year after
               development finishes.
             </p>
@@ -95,7 +95,7 @@ export default function RnpvResults(
             </p>
             <dl className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
               <ResultItem
-                term="Probability of completing every remaining stage"
+                term="Share of remaining stages completed"
                 detail={percent(deterministic.approvalProbability, 2)}
               />
               <ResultItem
@@ -179,8 +179,8 @@ export default function RnpvResults(
             </h2>
             <p className="text-sm text-lacuna-blue">
               {zeroSpreads
-                ? "Uncertainty ranges are zero, so this spread is development success and failure only. The approval frequency should sit near the deterministic probability. The gap is sampling error."
-                : "Uncertainty ranges are on, so the approval frequency is not expected to match the entered probability product."}
+                ? "Uncertainty ranges are zero, so this spread is development success and failure only. The approval frequency should sit near the modeled completion rate. The gap is sampling error."
+                : "Uncertainty ranges are on, so the approval frequency is not expected to match the entered success-rate product."}
               {" "}
               The sampling interval is the uncertainty of the simulated mean,
               not a confidence interval for a true asset value.
