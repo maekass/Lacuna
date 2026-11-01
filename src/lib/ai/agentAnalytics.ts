@@ -21,6 +21,7 @@ export const LACUNA_AGENTS = {
     "Patient empowerment baseline versus portfolio gap analyst",
   "sec-deal-classification": "SEC 8-K women's health acquisition classifier",
   "study-discovery": "Domestic women's health study catalog expansion",
+  "evidence-ask": "Evidence-grounded reimbursement and policy research ask",
   "lacuna-inference": "Lacuna inference call outside the named feature catalog",
 } as const;
 
@@ -36,6 +37,8 @@ const USER_LINES: Record<LacunaAgentId, string> = {
     "Classify whether this SEC filing is a women's health acquisition",
   "study-discovery":
     "Extract women's health study candidates from public source text",
+  "evidence-ask":
+    "Answer a research question from retrieved public evidence passages",
   "lacuna-inference": "Run a Lacuna inference call",
 };
 

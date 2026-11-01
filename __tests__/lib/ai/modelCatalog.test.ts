@@ -12,6 +12,7 @@ import {
   CLASSIFICATION_GATEWAY_MODEL,
   EMPOWERMENT_GAP_GATEWAY_MODEL,
   estimateLlmCostUsd,
+  EVIDENCE_ASK_GATEWAY_MODEL,
   FALLBACK_MODEL_PRICING,
   INSIGHTS_GATEWAY_MODEL,
   SPACE_WH_GAP_GATEWAY_MODEL,
@@ -30,6 +31,7 @@ describe("model catalog snapshot", () => {
         EMPOWERMENT_GAP_GATEWAY_MODEL,
         STUDY_DISCOVERY_GATEWAY_MODEL,
         CLASSIFICATION_GATEWAY_MODEL,
+        EVIDENCE_ASK_GATEWAY_MODEL,
       ]
     ) {
       expect(tracked).toContain(gatewayModel);

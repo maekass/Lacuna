@@ -61,7 +61,15 @@ export default function ResearchPage({
           Oncology Claim-Integrity Monitor
         </Link>{" "}
         compares dated public claims with cited evidence. It is separate from
-        valuation and exit-similarity panels.
+        valuation and exit-similarity panels.{" "}
+        <Link
+          className="font-semibold text-lacuna-plum underline"
+          href="/research/evidence"
+        >
+          Evidence ask
+        </Link>{" "}
+        retrieves dated public CMS excerpts and abstains when they do not
+        support the question.
       </p>
 
       <MotionSection id="burden-capital-gap" className={SECTION}>

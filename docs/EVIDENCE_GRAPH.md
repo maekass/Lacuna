@@ -101,3 +101,8 @@ Examples:
 
 This boundary is intentional and should be enforced before any automated
 US-to-target-market scoring is introduced.
+
+Point-in-time admissibility for the evidence ask uses `assessPublicationAt` from
+`src/lib/evidenceGraph/temporal.ts`. Unknown publication dates and sources
+published after the requested date are excluded before ranking. See
+[EVIDENCE_RAG.md](./EVIDENCE_RAG.md).

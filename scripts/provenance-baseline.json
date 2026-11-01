@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "total": 892,
+  "total": 894,
   "covered": 21,
-  "exempt": 2,
+  "exempt": 4,
   "uncovered": 869,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
@@ -5416,6 +5416,22 @@
       "kind": "numeric-jsx",
       "key": "src/components/ReimbursementIntelligenceDashboard.tsx::ReimbursementIntelligenceDashboard::stats.totalCompanies",
       "class": "uncovered"
+    },
+    {
+      "file": "src/components/research/EvidenceAskPanel.tsx",
+      "functionName": "EvidenceAskPanel",
+      "expression": "1000",
+      "kind": "numeric-jsx",
+      "key": "src/components/research/EvidenceAskPanel.tsx::EvidenceAskPanel::1000",
+      "class": "exempt"
+    },
+    {
+      "file": "src/components/research/EvidenceAskPanel.tsx",
+      "functionName": "EvidenceAskPanel",
+      "expression": "4",
+      "kind": "numeric-jsx",
+      "key": "src/components/research/EvidenceAskPanel.tsx::EvidenceAskPanel::4",
+      "class": "exempt"
     },
     {
       "file": "src/components/research/GapAnalystPanel.tsx",
