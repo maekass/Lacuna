@@ -126,6 +126,7 @@ function pathWithoutTrailingSlash(pathname: string): string {
 
 /**
  * In-page section links for a workspace root.
+ * Nested routes such as `/methods/evals` do not share those anchors.
  * Nested routes such as `/deals/[id]` stay in the workspace but do not share
  * those anchors, so they get no section menu.
  */
