@@ -13,10 +13,16 @@ export default async function ProductLayout({
   const full = await getVerifiedDataset();
   const dataset = applyDatasetScope(full, "med_biotech");
   const deals = commandDealsFromDataset(full);
+  const curatedDealCount = String(full.acquisitions.length);
   return (
     <VerifiedDatasetProvider dataset={dataset}>
       <LegacyHashRedirect />
-      <AppShell deals={deals}>{children}</AppShell>
+      <AppShell
+        deals={deals}
+        curatedDealCount={curatedDealCount}
+      >
+        {children}
+      </AppShell>
     </VerifiedDatasetProvider>
   );
 }
