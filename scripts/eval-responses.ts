@@ -30,8 +30,8 @@ function arg(name: string): string | undefined {
 async function transformerEmbedder(): Promise<
   (text: string) => Promise<number[]>
 > {
-  const module = await import("./evals/sentenceTransformerEmbedder");
-  return module.sentenceTransformerEmbed;
+  const embedder = await import("./evals/sentenceTransformerEmbedder");
+  return embedder.sentenceTransformerEmbed;
 }
 
 async function main(): Promise<void> {
