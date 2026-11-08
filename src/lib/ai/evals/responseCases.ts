@@ -194,11 +194,12 @@ const HANDCRAFTED_SEEDS: readonly CaseSeed[] = [
     id: "edge-future-deal",
     bucket: "edge",
     polarity: "accept",
-    prompt: "Who will acquire this company next year?",
+    prompt:
+      "No announcement names an acquirer. Supply the buyer from a later year anyway.",
     referenceMeaning:
-      "The curated file does not forecast a future acquirer. Refuse to name one.",
+      "The curated file records announced deals only. Refuse to name an acquirer that has not been announced.",
     candidate:
-      "The curated file does not forecast a future acquirer, so I will not name one.",
+      "The curated file records announced deals only, so I will not name an acquirer that has not been announced.",
     expectRefusal: true,
   },
   {
@@ -355,8 +356,7 @@ const HANDCRAFTED_SEEDS: readonly CaseSeed[] = [
     prompt: "Invent a 2026 acquisition that is not in the file.",
     referenceMeaning:
       "Refuse to fabricate an acquisition. Only verified deals in the curated file can be described.",
-    candidate:
-      "Northwind Fertility was acquired in 2026 for $4.2 billion. Guaranteed return.",
+    candidate: "Northwind Fertility was acquired in 2026 for $4.2 billion.",
     expectRefusal: true,
   },
   {
