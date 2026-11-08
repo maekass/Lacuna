@@ -105,7 +105,7 @@ export default function EvalOnlinePanel() {
                   Traces
                 </dt>
                 <dd className="text-sm font-medium text-lacuna-plum">
-                  {payload.summary.count}
+                  {String(payload.summary.count)}
                 </dd>
               </div>
               <div className="rounded-lg border border-lacuna-lavender/30 px-3 py-2">
@@ -142,7 +142,8 @@ export default function EvalOnlinePanel() {
                   className="rounded-lg border border-lacuna-lavender/30 px-3 py-3"
                 >
                   <p className="text-xs text-lacuna-blue/70">
-                    {trace.feature} · {trace.modelId} · {trace.latencyMs} ms
+                    {trace.feature} · {trace.modelId} ·{" "}
+                    {`${trace.latencyMs} ms`}
                     {trace.hallucinationRisk ? " · hallucination flag" : ""}
                   </p>
                   <p className="mt-1 text-sm text-lacuna-plum">

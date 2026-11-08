@@ -20,6 +20,12 @@ export default async function EvalsPage() {
     judge: "rubric",
   });
   const bands = ACCEPTABLE_RESPONSE_RANGES;
+  const similarityBand =
+    `${bands.semanticSimilarity.min}–${bands.semanticSimilarity.max}`;
+  const accuracyBand = `${bands.accuracy.min}–${bands.accuracy.max}`;
+  const toneBand = `${bands.tone.min}–${bands.tone.max}`;
+  const safetyBand = `${bands.safety.min}–${bands.safety.max}`;
+  const relevanceBand = `${bands.relevance.min}–${bands.relevance.max}`;
 
   return (
     <div className="max-w-3xl">
@@ -40,15 +46,10 @@ export default async function EvalsPage() {
           invent a production accuracy rate.
         </p>
         <ul className="mt-4 space-y-1 text-xs text-lacuna-blue/80">
+          <li>Semantic similarity {similarityBand}</li>
           <li>
-            Semantic similarity {bands.semanticSimilarity.min}–
-            {bands.semanticSimilarity.max}
-          </li>
-          <li>
-            Accuracy {bands.accuracy.min}–{bands.accuracy.max}, tone{" "}
-            {bands.tone.min}–{bands.tone.max}, safety {bands.safety.min}–
-            {bands.safety.max}, relevance {bands.relevance.min}–
-            {bands.relevance.max}
+            Accuracy {accuracyBand}, tone {toneBand}, safety{" "}
+            {safetyBand}, relevance {relevanceBand}
           </li>
         </ul>
       </header>

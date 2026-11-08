@@ -5,9 +5,17 @@ interface OfflineScorecardProps {
   report: ResponseEvalReport;
 }
 
+function percentLabel(rate: number): string {
+  const scaled = Math.round(rate * 1000) / 10;
+  return `${scaled}%`;
+}
+
 /** Server-rendered handcrafted scorecard. Numbers come from the harness. */
 export default function OfflineScorecard({ report }: OfflineScorecardProps) {
-  const percent = `${(report.passRate * 100).toFixed(1)}%`;
+  const percent = percentLabel(report.passRate);
+  const caseCount = String(report.cases);
+  const passedCount = String(report.passed);
+  const passBand = `${report.passRateRange.min}–${report.passRateRange.max}`;
   return (
     <Card className="mb-8">
       <p className="lacuna-kicker text-[10px] text-lacuna-blue/70">
@@ -17,11 +25,11 @@ export default function OfflineScorecard({ report }: OfflineScorecardProps) {
         Handcrafted set
       </h2>
       <p className="mt-2 text-sm leading-relaxed text-lacuna-blue">
-        {report.cases} cases scored with {report.embedder}{" "}
+        {caseCount} cases scored with {report.embedder}{" "}
         cosine similarity and the {report.judge} judge. The pass-rate band is
         {" "}
-        {report.passRateRange.min}–{report.passRateRange.max}, not a single
-        target. This run is {percent} ({report.passed}/{report.cases}) and{" "}
+        {passBand}, not a single target. This run is {percent}{" "}
+        ({passedCount}/{caseCount}) and{" "}
         {report.pass ? "sits inside the band" : "falls outside the band"}.
       </p>
       <dl className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -34,7 +42,9 @@ export default function OfflineScorecard({ report }: OfflineScorecardProps) {
               {bucket}
             </dt>
             <dd className="mt-1 text-sm font-medium text-lacuna-plum">
-              {report.byBucket[bucket].passed}/{report.byBucket[bucket].cases}
+              {`${report.byBucket[bucket].passed}/${
+                report.byBucket[bucket].cases
+              }`}
             </dd>
           </div>
         ))}
