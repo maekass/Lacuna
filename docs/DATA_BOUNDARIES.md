@@ -167,6 +167,11 @@ The module has no importers in `src/`. A test enforces that, and ESLint blocks
 imports from scoring, quant, valuation, biopharma and ML code. See
 [RNPV_BENCHMARKS.md](RNPV_BENCHMARKS.md).
 
+The analyst sandbox at `/research/rnpv` is a separate hypothetical calculator.
+It does not import this layer, does not copy its figures into defaults, and does
+not write scores, rankings, or verified records. See
+[RNPV_SIMULATOR.md](RNPV_SIMULATOR.md).
+
 ---
 
 ## Therapeutics graph
