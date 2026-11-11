@@ -49,7 +49,6 @@ describe("OpenAlex client integrity contract", () => {
       select: "id,title",
       perPage: 10,
       page: 2,
-      cursor: "cursor-2",
     });
     const url = lastUrl(fetchMock);
     const headers = new Headers(fetchMock.mock.calls[0][1]?.headers);
@@ -59,10 +58,31 @@ describe("OpenAlex client integrity contract", () => {
     expect(url.searchParams.get("filter")).toBe("publication_year:2025");
     expect(url.searchParams.get("per-page")).toBe("10");
     expect(url.searchParams.get("page")).toBe("2");
-    expect(url.searchParams.get("cursor")).toBe("cursor-2");
+    expect(url.searchParams.has("cursor")).toBe(false);
     expect(url.searchParams.has("api_key")).toBe(false);
     expect(headers.get("authorization")).toBe("Bearer test-secret");
     expect(String(url)).not.toContain("test-secret");
+  });
+
+  it("rejects conflicting pagination for search and OQL before network access", async () => {
+    process.env.OPENALEX_API_KEY = "test-secret";
+    const fetchMock = vi.spyOn(globalThis, "fetch");
+    await expect(searchOpenAlexWorks({ search: "health", page: 2, cursor: "*" }))
+      .rejects.toThrow("mutually exclusive");
+    await expect(executeOpenAlexOql("works where year is (2025)", { page: 2, cursor: "*" }))
+      .rejects.toThrow("mutually exclusive");
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("supports cursor pagination without numbered pages", async () => {
+    process.env.OPENALEX_API_KEY = "test-secret";
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      response({ meta: { count: 0 }, results: [] }),
+    );
+    await searchOpenAlexWorks({ search: "health", cursor: "*" });
+    const url = lastUrl(fetchMock);
+    expect(url.searchParams.get("cursor")).toBe("*");
+    expect(url.searchParams.has("page")).toBe(false);
   });
 
   it("preserves real response data and cursor metadata without synthesizing records", async () => {
@@ -99,8 +119,8 @@ describe("OpenAlex client integrity contract", () => {
     "fails explicitly on HTTP %s and redacts the API key",
     async (status, statusText) => {
       process.env.OPENALEX_API_KEY = "test-secret";
-      vi.spyOn(globalThis, "fetch").mockResolvedValue(
-        new Response("upstream failure: test-secret", { status, statusText }),
+      vi.spyOn(globalThis, "fetch").mockImplementation(async () =>
+        new Response("upstream failure: test-secret", { status, statusText })
       );
       await expect(
         searchOpenAlexWorks({ search: "endometriosis" }),

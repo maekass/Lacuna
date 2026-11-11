@@ -1,11 +1,16 @@
 import process from "node:process";
 
 import {
+  executeOpenAlexOql,
   getOpenAlexRateLimit,
   getOpenAlexWork,
   searchOpenAlexWorks,
   validateOpenAlexOql,
 } from "../src/lib/ingestion/openAlexClient";
+
+import { loadEnvLocal } from "./lib/envLocal";
+
+loadEnvLocal();
 
 type WorkIntegrityRecord = {
   id?: unknown;
@@ -93,6 +98,14 @@ assert(
   "known-valid OQL was not accepted by the live validator.",
 );
 
+const oqlResult = await executeOpenAlexOql("works where year is (2025)", {
+  perPage: 1,
+  select: "id,display_name,publication_year",
+});
+assert(Array.isArray(oqlResult.results), "OQL execution returned no results array.");
+assert(oqlResult.meta && typeof oqlResult.meta.count === "number", "OQL execution returned invalid metadata.");
+assert(oqlResult.results.length > 0, "OQL execution returned zero works.");
+
 const rateLimit = await getOpenAlexRateLimit();
 assert(
   rateLimit && typeof rateLimit === "object",
@@ -111,6 +124,7 @@ console.log(
     },
     singletonVerified: true,
     oqlValidationVerified: true,
+    oqlExecutionVerified: true,
     rateLimitEndpointVerified: true,
   }),
 );
