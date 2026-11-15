@@ -140,7 +140,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.60.0",
+    "@playwright/test": "^1.65.1",
     "@storybook/nextjs-vite": "^10.6.0",
     "@storybook/react": "^10.6.0",
     "@tailwindcss/postcss": "^4",
