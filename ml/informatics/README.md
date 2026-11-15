@@ -6,13 +6,13 @@ aggregate-only cohort questions.
 
 ## What this is and is not
 
-- It reimplements the published i2b2 CRC data model. It is not the i2b2
-  software and is not affiliated with or endorsed by i2b2, Harvard Catalyst,
-  Harvard Medical School, SHRINE or PIC-SURE.
+- It reimplements the published i2b2 CRC data model. It is not the i2b2 software
+  and is not affiliated with or endorsed by i2b2, Harvard Catalyst, Harvard
+  Medical School, SHRINE or PIC-SURE.
 - Query semantics follow i2b2 panels: OR inside a panel, AND across panels,
   optional exclusion panels.
-- Results are counts only. Counts of 1 to 10 are suppressed. Row-level
-  requests are rejected.
+- Results are counts only. Counts of 1 to 10 are suppressed. Row-level requests
+  are rejected.
 - Input must be labeled `synthetic`, or `public_deidentified_opt_in` for an
   explicitly approved public de-identified set. Anything else is refused. No
   PHI.
