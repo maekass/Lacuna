@@ -6,6 +6,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _DEFAULT_DATASET = _REPO_ROOT / "src" / "data" / "dataset.verified.json"
+_DEFAULT_COMPLETION_REGISTRY = Path(__file__).resolve().parents[1] / "model_registry" / "completion"
 
 
 class Settings(BaseSettings):
@@ -15,6 +16,7 @@ class Settings(BaseSettings):
     database_url: str | None = None
     cors_origins: str = "http://localhost:3000,http://127.0.0.1:3000"
     clinical_trials_api_base: str = "https://clinicaltrials.gov/api/v2"
+    completion_registry_dir: Path = _DEFAULT_COMPLETION_REGISTRY
 
     @property
     def cors_origin_list(self) -> list[str]:
