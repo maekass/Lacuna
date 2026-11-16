@@ -1,10 +1,18 @@
 from typing import Literal
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from strawberry.fastapi import GraphQLRouter
 
 from app.clinical_trials import search_clinical_trials
+from app.completion_model import (
+    CompletionPrediction,
+    CompletionRegistry,
+    RegistryError,
+    TrialFeaturesInput,
+    UnknownVersionError,
+    get_completion_registry,
+)
 from app.config import get_settings
 from app.dataset import DatasetResource, load_verified_dataset, slice_verified_dataset
 from app.db import check_database_connection, database_configured, load_research_studies_page
@@ -163,3 +171,44 @@ async def get_clinical_trials(
         "total": result.total,
         "query": result.query,
     }
+
+
+def _completion_registry() -> CompletionRegistry:
+    try:
+        return get_completion_registry()
+    except RegistryError as exc:
+        raise HTTPException(status_code=503, detail=f"Completion model registry unavailable: {exc}") from exc
+
+
+_VERSION_QUERY = Query(
+    None,
+    min_length=1,
+    max_length=64,
+    pattern=r"^[A-Za-z0-9._-]+$",
+    description="Registry model version; defaults to the champion.",
+)
+
+
+@app.get("/v1/models/completion")
+def get_completion_model_card(
+    version: str | None = _VERSION_QUERY,
+    registry: CompletionRegistry = Depends(_completion_registry),
+) -> dict:
+    try:
+        return registry.model_card(version)
+    except UnknownVersionError as exc:
+        raise HTTPException(status_code=404, detail=f"Unknown model version: {exc}") from exc
+
+
+@app.post("/v1/models/completion/predict", response_model=CompletionPrediction)
+def predict_completion(
+    trial: TrialFeaturesInput,
+    version: str | None = _VERSION_QUERY,
+    registry: CompletionRegistry = Depends(_completion_registry),
+) -> CompletionPrediction:
+    try:
+        return registry.predict(trial, version)
+    except UnknownVersionError as exc:
+        raise HTTPException(status_code=404, detail=f"Unknown model version: {exc}") from exc
+    except RegistryError as exc:
+        raise HTTPException(status_code=503, detail=f"Completion model unavailable: {exc}") from exc

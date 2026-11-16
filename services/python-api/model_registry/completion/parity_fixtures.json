@@ -1,0 +1,170 @@
+[
+  {
+    "expected": {
+      "3.0.0-logreg": 0.8596234799931625
+    },
+    "nct_id": "NCT01422148",
+    "trial": {
+      "condition": "Atrial Fibrillation",
+      "interventions": "Amiodarone, Minocycline",
+      "phase": "PHASE2",
+      "sponsor": "Baystate Medical Center",
+      "study_type": "INTERVENTIONAL",
+      "title": "Minocycline Plus Amiodarone Versus Amiodarone Alone for the Prevention of Atrial Fibrillation After Cardiac Surgery"
+    }
+  },
+  {
+    "expected": {
+      "3.0.0-logreg": 0.8643155318291371
+    },
+    "nct_id": "NCT06101706",
+    "trial": {
+      "condition": "Psoriatic Arthritis, Psoriasis",
+      "interventions": "Fatigue assessment, Quality of life assessment, Assess severity of psoriatic arthritis, Assess severity of cutaneous psoriasis",
+      "phase": "NA",
+      "sponsor": "Centre Hospitalier Henri Duffaut - Avignon",
+      "study_type": "INTERVENTIONAL",
+      "title": "Assessment of Fatigue in Psoriatic Arthritis and Cutaneous Psoriasis Patients"
+    }
+  },
+  {
+    "expected": {
+      "3.0.0-logreg": 0.9014608188049194
+    },
+    "nct_id": "NCT06323356",
+    "trial": {
+      "condition": "Generalized Pustular Psoriasis, Erythrodermic Psoriasis",
+      "interventions": "TAK-279",
+      "phase": "PHASE3",
+      "sponsor": "Takeda",
+      "study_type": "INTERVENTIONAL",
+      "title": "A Study of TAK-279 in Adult Participants With Generalized Pustular Psoriasis or Erythrodermic Psoriasis"
+    }
+  },
+  {
+    "expected": {
+      "3.0.0-logreg": 0.9516229970005042
+    },
+    "nct_id": "NCT06466213",
+    "trial": {
+      "condition": "Exercise",
+      "interventions": "single exercise bout about one-leg exercise",
+      "phase": "NA",
+      "sponsor": "Hacettepe University",
+      "study_type": "INTERVENTIONAL",
+      "title": "Acute Effects of Three Different Types Single Leg Exercise in Copd"
+    }
+  },
+  {
+    "expected": {
+      "3.0.0-logreg": 0.8177127460003896
+    },
+    "nct_id": "NCT06622161",
+    "trial": {
+      "condition": "Preterm",
+      "interventions": "automated oxygen vs manual oxygen",
+      "phase": "NA",
+      "sponsor": "Aga Khan University Hospital, Pakistan",
+      "study_type": "INTERVENTIONAL",
+      "title": "Automated Versus Manual Oxygen Control in Preterm Babies on Respiratory Support"
+    }
+  },
+  {
+    "expected": {
+      "3.0.0-logreg": 0.9044661485934694
+    },
+    "nct_id": "NCT06780163",
+    "trial": {
+      "condition": "Overactive Bladder (OAB), Menopause, Microbiome",
+      "interventions": "17\u03b2-estradiol 10 mcg",
+      "phase": "PHASE4",
+      "sponsor": "Mahidol University",
+      "study_type": "INTERVENTIONAL",
+      "title": "Effect of Vaginal Estrogen on Alterations in the Urine Microbiome of Menopausal Women With Overactive Bladder"
+    }
+  },
+  {
+    "expected": {
+      "3.0.0-logreg": 0.8978262378587423
+    },
+    "nct_id": "NCT06937008",
+    "trial": {
+      "condition": "Diabetic Peripheral Neuropathy, Postmenopausal Women",
+      "interventions": "Whole body vibration, Balance training",
+      "phase": "NA",
+      "sponsor": "Cairo University",
+      "study_type": "INTERVENTIONAL",
+      "title": "Effect Whole Body Vibration on Balance in Post Diabetic Menopause Women"
+    }
+  },
+  {
+    "expected": {
+      "3.0.0-logreg": 0.9539529364295305
+    },
+    "nct_id": "NCT07074587",
+    "trial": {
+      "condition": "Multiple Sclerosis, Urinary Incontinence, Lower Urinary Tract Symptoms",
+      "interventions": "Pelvic floor muscle exercises, Spinal stabilization exercises focusing on the pelvic floor + Pelvic floor muscle exercises",
+      "phase": "NA",
+      "sponsor": "Abant Izzet Baysal University",
+      "study_type": "INTERVENTIONAL",
+      "title": "Effects of Spinal Stabilization on the Pelvic Floor in Women With Multiple Sclerosis"
+    }
+  },
+  {
+    "expected": {
+      "3.0.0-logreg": 0.933860933621651
+    },
+    "nct_id": "NCT07251998",
+    "trial": {
+      "condition": "Plaque Psoriasis",
+      "interventions": "ICP-332 Tablets, ICP-332 Tablets, ICP-332 Tablets, ICP-332 Placebo Tablets",
+      "phase": "PHASE2",
+      "sponsor": "Beijing InnoCare Pharma Tech Co., Ltd.",
+      "study_type": "INTERVENTIONAL",
+      "title": "Efficacy and Safety of ICP-332 Versus Placebo in Participants With Moderate to Severe Plaque Psoriasis"
+    }
+  },
+  {
+    "expected": {
+      "3.0.0-logreg": 0.9489004788834297
+    },
+    "nct_id": "NCT07408115",
+    "trial": {
+      "condition": "Hot Flashes, Hot Flash, Hot Flushes, Menopause, Postmenopause, Hot Flushes and/or Sweats, Hot Flushes, Night Sweats, Vasomotor Symptoms, Vasomotor Symptoms (VMS), Vasomotor Symptoms Associated With Menopause",
+      "interventions": "JDS-HF3.0",
+      "phase": "NA",
+      "sponsor": "Bonafide Health",
+      "study_type": "INTERVENTIONAL",
+      "title": "Herbal Dietary Supplementation on Vasomotor Symptoms in Menopausal Women"
+    }
+  },
+  {
+    "expected": {
+      "3.0.0-logreg": 0.9253284390161939
+    },
+    "nct_id": "NCT07598292",
+    "trial": {
+      "condition": "Chronic Obstructive Pulmonary Disease (COPD), Asthma",
+      "interventions": "",
+      "phase": "Not Applicable",
+      "sponsor": "Hitit University",
+      "study_type": "OBSERVATIONAL",
+      "title": "Predicting Dynamic Inspiratory Muscle Strength in COPD and Asthma Patients"
+    }
+  },
+  {
+    "expected": {
+      "3.0.0-logreg": 0.9254074831291992
+    },
+    "nct_id": "NCT07782554",
+    "trial": {
+      "condition": "Prehepatic Portal Hypertension",
+      "interventions": "",
+      "phase": "Not Applicable",
+      "sponsor": "Second Affiliated Hospital, Zhejiang University, School of Medicine",
+      "study_type": "OBSERVATIONAL",
+      "title": "EUS-Guided Portal Pressure Gradient Measurement in Prehepatic Portal Hypertension"
+    }
+  }
+]

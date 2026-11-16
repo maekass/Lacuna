@@ -1,0 +1,285 @@
+{
+  "champion": "3.0.0-logreg",
+  "disclaimer": "Operational-status proxy only: estimates the probability that a ClinicalTrials.gov record ends as COMPLETED rather than TERMINATED, WITHDRAWN, or SUSPENDED. It is not a prediction of efficacy, endpoint success, regulatory approval, or investment value.",
+  "evaluated_not_served": {
+    "3.0.0-hgb": {
+      "artifact_location": "gitignored archive (not served)",
+      "artifact_sha256": "038577974546582f26a73ffd07d651d19f7583dd0d811a03e8c9b961b5c37049",
+      "calibration": "sigmoid",
+      "holdout_metrics": {
+        "accuracy": 0.874025974025974,
+        "base_rate_brier": 0.1101045707539214,
+        "brier": 0.10538839308389909,
+        "brier_ci_95": [
+          0.09363605887835616,
+          0.11727328048149117
+        ],
+        "expected_calibration_error": 0.014548720431395556,
+        "export_gate": {
+          "passes": false,
+          "reason": "accuracy=0.874025974025974 <= majority baseline 0.874025974025974"
+        },
+        "f1": 0.9327789327789328,
+        "log_loss": 0.3602608310694323,
+        "log_loss_ci_95": [
+          0.3287904766692683,
+          0.3920638203382096
+        ],
+        "majority_baseline_accuracy": 0.874025974025974,
+        "n": 1540,
+        "positive_rate": 0.874025974025974,
+        "pr_auc": 0.9209898514893935,
+        "precision": 0.874025974025974,
+        "recall": 1.0,
+        "roc_auc": 0.6562131401173389,
+        "roc_auc_ci_lower": 0.6138920487729189,
+        "roc_auc_ci_upper": 0.6984494938537839,
+        "threshold": 0.5
+      },
+      "model_family": "hist_gradient_boosting_tfidf_svd_numeric",
+      "reliability_bins": [
+        {
+          "absolute_gap": null,
+          "count": 0,
+          "event_rate": null,
+          "lower": 0.0,
+          "mean_probability": null,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": null,
+          "count": 0,
+          "event_rate": null,
+          "lower": 0.1,
+          "mean_probability": null,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": null,
+          "count": 0,
+          "event_rate": null,
+          "lower": 0.2,
+          "mean_probability": null,
+          "upper": 0.30000000000000004
+        },
+        {
+          "absolute_gap": null,
+          "count": 0,
+          "event_rate": null,
+          "lower": 0.30000000000000004,
+          "mean_probability": null,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": null,
+          "count": 0,
+          "event_rate": null,
+          "lower": 0.4,
+          "mean_probability": null,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": null,
+          "count": 0,
+          "event_rate": null,
+          "lower": 0.5,
+          "mean_probability": null,
+          "upper": 0.6000000000000001
+        },
+        {
+          "absolute_gap": 0.6850777436491137,
+          "count": 3,
+          "event_rate": 0.0,
+          "lower": 0.6000000000000001,
+          "mean_probability": 0.6850777436491137,
+          "upper": 0.7000000000000001
+        },
+        {
+          "absolute_gap": 0.23478142048323525,
+          "count": 51,
+          "event_rate": 0.5294117647058824,
+          "lower": 0.7000000000000001,
+          "mean_probability": 0.7641931851891176,
+          "upper": 0.8
+        },
+        {
+          "absolute_gap": 0.007256912698972884,
+          "count": 791,
+          "event_rate": 0.8634639696586599,
+          "lower": 0.8,
+          "mean_probability": 0.8707208823576328,
+          "upper": 0.9
+        },
+        {
+          "absolute_gap": 0.003792411286142827,
+          "count": 695,
+          "event_rate": 0.9151079136690647,
+          "lower": 0.9,
+          "mean_probability": 0.9189003249552076,
+          "upper": 1.0
+        }
+      ]
+    }
+  },
+  "featurizer_version": "completion-features-v3",
+  "model_id": "completion-proxy-v3",
+  "negative_labels": [
+    "TERMINATED",
+    "WITHDRAWN",
+    "SUSPENDED"
+  ],
+  "numeric_feature_names": [
+    "phase_num",
+    "intervention_count",
+    "condition_count",
+    "is_interventional",
+    "sponsor_academic",
+    "sponsor_industry",
+    "title_word_count"
+  ],
+  "positive_label": "COMPLETED",
+  "promotion": {
+    "baseline_passes_export_gate": false,
+    "challenger_beats_baseline_by_paired_ci": false,
+    "challenger_passes_export_gate": false,
+    "champion_version": "3.0.0-logreg",
+    "promoted_challenger": false,
+    "reasons_challenger_not_promoted": [
+      "paired ROC AUC delta 95% CI lower bound -0.0925 is not above 0",
+      "challenger fails export gate: accuracy=0.874025974025974 <= majority baseline 0.874025974025974"
+    ],
+    "rule": "challenger is champion iff paired ROC AUC delta CI lower > 0 AND challenger passes the conjunction export gate; otherwise baseline stays"
+  },
+  "schema": "lacuna-model-registry-v1",
+  "sklearn_version": "1.9.1",
+  "split": {
+    "cutoff_year": 2023,
+    "n_test": 1540,
+    "split_sha256": "690b5d0ba045a511ba56ba258c685e3f56cb24d264c2758da5045a8281cdbf10",
+    "strategy": "start_year_holdout"
+  },
+  "task": "trial_completion_proxy",
+  "trained_at_utc": "2026-11-16T03:07:08.479952+00:00",
+  "training_snapshot_sha256": "2f6a310097e96f32f21323b74834d79c4c5d0628c49ab62ddf9eb31c164433a9",
+  "versions": {
+    "3.0.0-logreg": {
+      "artifact": "3.0.0-logreg/model.joblib",
+      "artifact_sha256": "564cc7a1cee18c084bf1bdaf21af1c8bd1a65820ff80c64b93894c7cbef861ae",
+      "calibration": "sigmoid",
+      "drift_reference": "3.0.0-logreg/drift_reference.json",
+      "holdout_metrics": {
+        "accuracy": 0.874025974025974,
+        "base_rate_brier": 0.1101045707539214,
+        "brier": 0.10204979641702315,
+        "brier_ci_95": [
+          0.09041725523475659,
+          0.11399574689465122
+        ],
+        "expected_calibration_error": 0.03063230154322795,
+        "export_gate": {
+          "passes": false,
+          "reason": "accuracy=0.874025974025974 <= majority baseline 0.874025974025974"
+        },
+        "f1": 0.9327789327789328,
+        "log_loss": 0.34733829828861823,
+        "log_loss_ci_95": [
+          0.31511968462162204,
+          0.380467827502213
+        ],
+        "majority_baseline_accuracy": 0.874025974025974,
+        "n": 1540,
+        "positive_rate": 0.874025974025974,
+        "pr_auc": 0.9343947365608409,
+        "precision": 0.874025974025974,
+        "recall": 1.0,
+        "roc_auc": 0.7110606455170724,
+        "roc_auc_ci_lower": 0.6703224801636146,
+        "roc_auc_ci_upper": 0.7522763444055938,
+        "threshold": 0.5
+      },
+      "model_family": "logistic_regression_tfidf_numeric",
+      "reliability_bins": [
+        {
+          "absolute_gap": null,
+          "count": 0,
+          "event_rate": null,
+          "lower": 0.0,
+          "mean_probability": null,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": null,
+          "count": 0,
+          "event_rate": null,
+          "lower": 0.1,
+          "mean_probability": null,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": null,
+          "count": 0,
+          "event_rate": null,
+          "lower": 0.2,
+          "mean_probability": null,
+          "upper": 0.30000000000000004
+        },
+        {
+          "absolute_gap": null,
+          "count": 0,
+          "event_rate": null,
+          "lower": 0.30000000000000004,
+          "mean_probability": null,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": null,
+          "count": 0,
+          "event_rate": null,
+          "lower": 0.4,
+          "mean_probability": null,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.5521797568250224,
+          "count": 3,
+          "event_rate": 0.0,
+          "lower": 0.5,
+          "mean_probability": 0.5521797568250224,
+          "upper": 0.6000000000000001
+        },
+        {
+          "absolute_gap": 0.28306879403681207,
+          "count": 8,
+          "event_rate": 0.375,
+          "lower": 0.6000000000000001,
+          "mean_probability": 0.6580687940368121,
+          "upper": 0.7000000000000001
+        },
+        {
+          "absolute_gap": 0.19714160019434068,
+          "count": 87,
+          "event_rate": 0.5632183908045977,
+          "lower": 0.7000000000000001,
+          "mean_probability": 0.7603599909989384,
+          "upper": 0.8
+        },
+        {
+          "absolute_gap": 0.031454837033769056,
+          "count": 582,
+          "event_rate": 0.8350515463917526,
+          "lower": 0.8,
+          "mean_probability": 0.8665063834255217,
+          "upper": 0.9
+        },
+        {
+          "absolute_gap": 0.009063512073535174,
+          "count": 860,
+          "event_rate": 0.9395348837209302,
+          "lower": 0.9,
+          "mean_probability": 0.930471371647395,
+          "upper": 1.0
+        }
+      ]
+    }
+  }
+}

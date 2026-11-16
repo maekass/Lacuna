@@ -149,6 +149,17 @@ A governed run writes only to the gitignored benchmark output directory:
 The run manifest hashes the metrics and saved model so a reviewer can verify
 that an artifact has not changed after evaluation.
 
+## Completion-proxy v3 promotion
+
+`completion-proxy-v3` uses a separate, simpler rule for the sklearn challenger
+(HistGradientBoosting) in `lacuna_ct/completion_production.py`: the challenger
+becomes the served champion only if the paired bootstrap 95% CI for the ROC AUC
+delta is above zero **and** it passes the conjunction export gate. Otherwise the
+calibrated logistic baseline stays. Both models are Platt-calibrated on a
+stratified 20% slice of the training cohort; the temporal test cohort is never
+used for fitting or calibration. The first run kept the baseline (ΔAUC −0.055
+[−0.093, −0.018]). The production blockers listed above still apply.
+
 ## CI scope
 
 Ordinary CI does **not** install or train TensorFlow. CI runs the statistical,
