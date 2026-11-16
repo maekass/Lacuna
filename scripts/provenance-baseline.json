@@ -1,11 +1,8 @@
 {
   "version": 1,
-  "total": 909,
+  "total": 911,
   "covered": 21,
-  "exempt": 19,
-  "total": 894,
-  "covered": 21,
-  "exempt": 4,
+  "exempt": 21,
   "uncovered": 869,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
