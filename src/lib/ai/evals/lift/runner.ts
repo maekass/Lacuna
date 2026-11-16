@@ -45,6 +45,22 @@ interface Captured {
   error?: string;
 }
 
+/**
+ * Error name, HTTP status, and a short provider message for diagnostics.
+ * Provider messages do not carry credentials; the length cap keeps records
+ * small.
+ */
+export function describeError(error: unknown): string {
+  if (!(error instanceof Error)) return "inference_error";
+  const status = (error as { statusCode?: unknown }).statusCode;
+  const message = error.message.replace(/\s+/g, " ").trim().slice(0, 160);
+  return [
+    error.name || "Error",
+    typeof status === "number" ? `status=${status}` : "",
+    message,
+  ].filter(Boolean).join(" ");
+}
+
 function capture(
   generate: EvidenceDraftGenerator,
   sink: Captured,
@@ -55,9 +71,7 @@ function capture(
       sink.generation = generation;
       return generation;
     } catch (error) {
-      sink.error = error instanceof Error
-        ? error.name || "Error"
-        : "inference_error";
+      sink.error = describeError(error);
       throw error;
     }
   };

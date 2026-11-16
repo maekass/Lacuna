@@ -123,12 +123,24 @@ npm run eval:lift -- --live --record eval-artifacts/lift-responses.jsonl \
 npm run eval:lift -- --replay eval-artifacts/lift-responses.jsonl --gate
 ```
 
-Live mode prints only whether each credential name is set, never its value. If
-`HTTPS_PROXY` is set, live mode enables Node's built-in proxy support
-(`http.setGlobalProxyFromEnv()`, Node 24) so the AI SDK's fetch goes through the
-proxy. Without it, Node's fetch ignores `HTTPS_PROXY`. A credential proxy that
-injects the gateway bearer token can then be used with a placeholder key in the
-environment:
+Live mode prints only whether each credential name is set, never its value.
+
+Live mode has two HTTP transports for the same call path (`runEvidenceAsk` ->
+`generateEvidenceDraftWithInference`):
+
+- `--transport curl`, the default when `HTTPS_PROXY` is set. It installs a
+  gateway provider backed by a curl subprocess as the AI SDK default provider
+  (`globalThis.AI_SDK_DEFAULT_PROVIDER`), so string model ids on the gateway
+  path go through curl. Node's fetch cannot get through some credential proxies
+  that inject auth, but curl can. Headers reach curl through stdin config, never
+  argv. The code is in `src/lib/ai/evals/lift/curlTransport.ts`. It covers only
+  the AI Gateway path, and production inference never imports it.
+- `--transport fetch`, the default with no proxy. It uses Node's fetch, and when
+  a proxy is set it enables Node 24's env proxy support
+  (`http.setGlobalProxyFromEnv()`).
+
+With a credential proxy that injects the gateway bearer token, a placeholder key
+in the environment is enough:
 
 ```bash
 AI_GATEWAY_API_KEY=proxy-injected pplx credentials run <handle> -- \

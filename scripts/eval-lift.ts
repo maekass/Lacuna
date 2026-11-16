@@ -33,6 +33,7 @@ import {
   renderLiftReportMarkdown,
 } from "../src/lib/ai/evals/lift/report";
 import { runLiftCell } from "../src/lib/ai/evals/lift/runner";
+import { installCurlGatewayTransport } from "../src/lib/ai/evals/lift/curlTransport";
 import {
   type LiftArm,
   liftArmSchema,
@@ -97,8 +98,42 @@ const PROXY_ENV = ["HTTPS_PROXY", "https_proxy", "HTTP_PROXY", "http_proxy"];
  * straight to the gateway, so enable env proxy support at runtime. Only the
  * fact that a proxy is configured is logged, never its value.
  */
-function routeThroughEnvProxy(): void {
-  if (!PROXY_ENV.some((name) => process.env[name]?.trim())) return;
+/**
+ * Pick the HTTP transport for live calls. `curl` (the default when a proxy is
+ * configured) installs a curl-backed gateway provider as the AI SDK default,
+ * because Node's fetch cannot pass some credential proxies. `fetch` keeps
+ * Node's fetch and enables its env proxy support. The model call path
+ * (`runEvidenceAsk` -> `generateEvidenceDraftWithInference`) is the same.
+ */
+function configureTransport(): void {
+  const proxied = PROXY_ENV.some((name) => process.env[name]?.trim());
+  const transport = arg("--transport") ?? (proxied ? "curl" : "fetch");
+  if (transport === "curl") {
+    if (
+      !process.env.AI_GATEWAY_API_KEY?.trim() &&
+      !process.env.VERCEL_OIDC_TOKEN?.trim()
+    ) {
+      throw new Error(
+        "--transport curl applies to the AI Gateway path only; set AI_GATEWAY_API_KEY (a placeholder is fine behind a credential proxy).",
+      );
+    }
+    installCurlGatewayTransport();
+    console.log(
+      `Transport: curl subprocess for AI Gateway calls${
+        proxied ? " (honors the HTTPS proxy from the environment)" : ""
+      }.`,
+    );
+    return;
+  }
+  if (transport !== "fetch") {
+    throw new Error(`Unknown --transport ${transport}; use curl or fetch.`);
+  }
+  routeThroughEnvProxy(proxied);
+  console.log("Transport: Node fetch.");
+}
+
+function routeThroughEnvProxy(proxied: boolean): void {
+  if (!proxied) return;
   const setter = (http as unknown as { setGlobalProxyFromEnv?: () => void })
     .setGlobalProxyFromEnv;
   if (typeof setter !== "function") {
@@ -145,7 +180,6 @@ async function main(): Promise<void> {
   let records: LiftResponseRecord[];
   if (live) {
     console.log(`Inference credentials: ${credentialStatus()}`);
-    routeThroughEnvProxy();
     if (!isServerInferenceConfigured()) {
       const message =
         "Live lift eval blocked: no inference credential is set. No results were produced.";
@@ -155,6 +189,7 @@ async function main(): Promise<void> {
       }
       throw new Error(message);
     }
+    configureTransport();
     const arms = list(
       arg("--arms") ?? "no_retrieval,retrieval",
       (value) => liftArmSchema.parse(value),
