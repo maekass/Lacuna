@@ -36,6 +36,9 @@ export { buildEvidencePassageSearch } from "./postgresSearch";
 export { retrieveEvidence } from "./retrieve";
 export { verifyEvidenceDraft } from "./verify";
 export {
+  type EvidenceDraftGeneration,
+  type EvidenceDraftGenerator,
+  generateEvidenceDraftWithInference,
   handleEvidenceAskRequest,
   runEvidenceAsk,
   setEvidenceGeneratorForTests,
