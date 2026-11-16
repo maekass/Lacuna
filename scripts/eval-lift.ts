@@ -167,6 +167,10 @@ async function main(): Promise<void> {
     mkdirSync(dirname(recordPath), { recursive: true });
     writeFileSync(recordPath, "");
     const concurrency = Number(arg("--concurrency") ?? "4");
+    // Smoke test only: run the first N items and skip the report, which
+    // requires complete cells.
+    const limit = arg("--limit") ? Number(arg("--limit")) : undefined;
+    const items = limit ? evalSet.items.slice(0, limit) : evalSet.items;
     records = [];
     // Fail fast when the provider is unreachable instead of burning a full
     // pass that would only record errors.
@@ -187,7 +191,7 @@ async function main(): Promise<void> {
       for (const arm of arms) {
         const started = Date.now();
         const cell = await runLiftCell({
-          items: evalSet.items,
+          items,
           arm,
           promptVersion,
           corpus,
@@ -214,6 +218,18 @@ async function main(): Promise<void> {
       }
     }
     console.log(`Recorded ${records.length} responses to ${recordPath}`);
+    if (limit) {
+      for (const record of records) {
+        console.log(
+          `smoke ${record.itemId} ${record.arm}/${record.promptVersion}: ${record.disposition}, model=${record.modelId}, tokens=${record.usage.inputTokens}/${record.usage.outputTokens}${
+            record.error ? `, error=${record.error}` : ""
+          }`,
+        );
+      }
+      console.log("Smoke run only (--limit): no report built.");
+      if (records.some((record) => record.error)) process.exit(1);
+      return;
+    }
   } else {
     records = readJsonl(replayPath as string);
   }

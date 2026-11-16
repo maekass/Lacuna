@@ -136,6 +136,9 @@ AI_GATEWAY_API_KEY=proxy-injected pplx credentials run <handle> -- \
   --write eval-artifacts/lift-report.json --markdown eval-artifacts/lift-report.md --gate
 ```
 
+`--limit N` runs only the first N items as a smoke test. It prints each response
+and builds no report.
+
 If the first 5 provider calls all fail, the run aborts and produces no results.
 A report where any cell's provider error rate is above `maxErrorRate` (0.02)
 gets the status `invalid_provider_errors`, and the gate rejects it, because
