@@ -1,0 +1,108 @@
+# LLM lift eval: measures the lift from Lacuna's cited-answer path.
+# See docs/LLM_LIFT_EVAL.md.
+#
+# `offline` always runs: scorer unit tests (fake model, unit tests only) and
+# the frozen eval-set hash + gold-drift check. No provider calls.
+#
+# `live` runs the fixed set once per arm/prompt at temperature 0 only when an
+# inference secret exists, then gates the retrieval arm against
+# src/lib/ai/evals/fixtures/lift-gate.thresholds.json and the committed
+# baseline report. GitHub Actions does not allow `secrets.*` in job-level `if`,
+# so credentials are checked in a step (same pattern as
+# datadog-synthetics.yml); without a secret the job logs a skip and succeeds.
+
+name: LLM lift eval
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "src/lib/ai/**"
+      - "src/data/dataset.verified.json"
+      - "scripts/eval-lift.ts"
+      - "scripts/build-lift-eval-set.ts"
+      - "__tests__/lib/ai/lift/**"
+      - ".github/workflows/llm-lift-eval.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: llm-lift-eval-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  offline:
+    name: lift-offline
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Scorer unit tests
+        run: npx vitest run __tests__/lib/ai/lift
+
+      - name: Frozen eval-set hash check
+        run: npm run eval:lift:check
+
+  live:
+    name: lift-live
+    needs: offline
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      AI_GATEWAY_API_KEY: ${{ secrets.AI_GATEWAY_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    steps:
+      - name: Check inference credentials
+        id: creds
+        run: |
+          if [ -z "$AI_GATEWAY_API_KEY" ] && [ -z "$OPENAI_API_KEY" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "AI_GATEWAY_API_KEY / OPENAI_API_KEY are not set; skipping live lift eval."
+            echo "Live lift eval skipped: no inference secret configured." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup repo
+        if: steps.creds.outputs.configured == 'true'
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        if: steps.creds.outputs.configured == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install deps
+        if: steps.creds.outputs.configured == 'true'
+        run: npm ci
+
+      - name: Run live lift eval and gate
+        if: steps.creds.outputs.configured == 'true'
+        run: >-
+          npm run eval:lift -- --live
+          --record eval-artifacts/lift-responses.jsonl
+          --write eval-artifacts/lift-report.json
+          --markdown eval-artifacts/lift-report.md
+          --gate
+
+      - name: Upload lift artifacts
+        if: always() && steps.creds.outputs.configured == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: llm-lift-eval
+          path: eval-artifacts/
+          if-no-files-found: ignore
