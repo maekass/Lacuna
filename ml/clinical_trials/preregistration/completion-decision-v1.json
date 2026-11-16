@@ -1,7 +1,7 @@
 {
   "schema": "lacuna-preregistration-v1",
   "id": "completion-decision-v1",
-  "registered_at_utc": "2026-11-16T15:40:00Z",
+  "registered_at_utc": "2026-11-16T07:24:21Z",
   "written_before_test_evaluation": true,
   "order_statement": "This file is committed on branch feat/ct-completion-decision before any code computes decision metrics (precision/recall/lift at k, net benefit) on the temporal holdout or the external cohort, and before the v4 candidate is scored on the holdout. The evaluation script records this file's sha256 and the commit that introduced it; the PR lists the commit order.",
   "prior_knowledge_disclosure": [
