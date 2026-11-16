@@ -207,7 +207,7 @@ def predict_completion(
     registry: CompletionRegistry = Depends(_completion_registry),
 ) -> CompletionPrediction:
     try:
-        return registry.predict(trial, version)
+        return registry.predict(trial, version, shadow_log_path=get_settings().completion_shadow_log_path)
     except UnknownVersionError as exc:
         raise HTTPException(status_code=404, detail=f"Unknown model version: {exc}") from exc
     except RegistryError as exc:

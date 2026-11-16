@@ -1,0 +1,22 @@
+{
+  "schema": "lacuna-preregistration-addendum-v1",
+  "amends": "completion-decision-v1.json",
+  "registered_at_utc": "2026-11-16T07:31:01Z",
+  "written_before_test_evaluation": true,
+  "reason": "The version-history probe in completion-decision-v1 found /api/int/studies/{nct}/history reachable (HTTP 200 JSON with a site session cookie; HTTP 403 without one). This addendum fixes the exact version-history features before any of them are computed against labels. Gate thresholds, k, the promotion rule, the censoring filter and the external cohort are unchanged.",
+  "prediction_time": "first registration (history version 0). Every v4 feature must be known at that time.",
+  "version_history_features_included": {
+    "v0_enrollment_log10": "log10(max(planned enrollment in version 0, 1))",
+    "v0_site_count_log1p": "log1p(number of locations listed in version 0)",
+    "v0_not_yet_recruiting": "1 if version 0 overallStatus is NOT_YET_RECRUITING else 0",
+    "v0_planned_duration_months": "version 0 completion date - version 0 start date, in months, clipped to [-24, 240]",
+    "v0_registration_lead_months": "version 0 start date - first submit date, in months, clipped to [-120, 60]"
+  },
+  "unusable_version_0": "If version 0 is missing or already has a terminal status (COMPLETED, TERMINATED, WITHDRAWN, SUSPENDED: registered after the outcome), all five v0 features are imputed with training-fit medians and no missingness indicator is added. Missing individual dates are imputed the same way.",
+  "version_history_features_excluded": {
+    "amendment_count, start_date_slips, recruitment_status_changes": "Change counts over the record's life include the closing update (a stop or completion is itself a new version) and grow with time to outcome, so they are not knowable at registration. At the registration prediction time they are zero by construction. They are computed for the holdout only as a leakage demonstration (single-feature AUC), never as model inputs."
+  },
+  "candidate_v4_features": "v3 features + sponsor track record (3 features, as pre-registered) + the five v0 features above",
+  "sensitivity_analysis": "Also report v3 vs v4 on the holdout excluding rows whose version 0 is unusable. Report-only.",
+  "leakage_tests": "Per new feature: unit tests that the feature ignores the target's own label/final status and any information dated after the prediction time, plus the pre-registered single-feature holdout AUC alarm (> 0.75 either direction blocks promotion)."
+}
