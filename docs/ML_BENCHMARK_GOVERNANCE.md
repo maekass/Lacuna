@@ -160,6 +160,20 @@ stratified 20% slice of the training cohort; the temporal test cohort is never
 used for fitting or calibration. The first run kept the baseline (ΔAUC −0.055
 [−0.093, −0.018]). The production blockers listed above still apply.
 
+## Completion decision gate (pre-registered)
+
+For the triage use case the export gate is `decision-gate-v1`, fixed in
+`ml/clinical_trials/preregistration/completion-decision-v1.json` (plus
+addendum-1 for the version-0 features) and committed before any test-set
+evaluation: ROC AUC CI lower > 0.55, Brier < base-rate Brier, ECE ≤ 0.05, and
+lift@10% CI lower > 1.0 against random review. Accuracy vs majority is no longer
+a gate check (kept as `legacy_accuracy_gate`). The same promotion rule applies
+to the point-in-time candidate `4.0.0-logreg-pit`, plus a pre-registered leakage
+alarm (single new feature with holdout AUC > 0.75 either way blocks promotion).
+Result: v4 promoted, ΔAUC +0.050 [0.032, 0.069]. The thresholds must not be
+edited after results; a new gate needs a new pre-registration file. See
+[`ML_COMPLETION_DECISION.md`](ML_COMPLETION_DECISION.md).
+
 ## CI scope
 
 Ordinary CI does **not** install or train TensorFlow. CI runs the statistical,

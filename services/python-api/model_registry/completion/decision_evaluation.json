@@ -500,10 +500,10 @@
         "point": -0.003731051106620517
       },
       "direction": {
-        "brier_delta": "negative_favors_tensorflow",
-        "log_loss_delta": "negative_favors_tensorflow",
-        "pr_auc_delta": "positive_favors_tensorflow",
-        "roc_auc_delta": "positive_favors_tensorflow"
+        "brier_delta": "negative_favors_v4",
+        "log_loss_delta": "negative_favors_v4",
+        "pr_auc_delta": "positive_favors_v4",
+        "roc_auc_delta": "positive_favors_v4"
       },
       "log_loss_delta": {
         "ci_95_lower": -0.018680536404590425,
@@ -532,7 +532,7 @@
     "top_20pct": 0.13598487666890335,
     "top_5pct": 0.211981491423759
   },
-  "evaluated_at_utc": "2026-11-16T07:58:49.715632+00:00",
+  "evaluated_at_utc": "2026-11-16T08:04:30.120447+00:00",
   "external": {
     "class_counts": {
       "completed": 2337,
@@ -976,10 +976,10 @@
           "point": -0.0019165960418828093
         },
         "direction": {
-          "brier_delta": "negative_favors_tensorflow",
-          "log_loss_delta": "negative_favors_tensorflow",
-          "pr_auc_delta": "positive_favors_tensorflow",
-          "roc_auc_delta": "positive_favors_tensorflow"
+          "brier_delta": "negative_favors_v4",
+          "log_loss_delta": "negative_favors_v4",
+          "pr_auc_delta": "positive_favors_v4",
+          "roc_auc_delta": "positive_favors_v4"
         },
         "log_loss_delta": {
           "ci_95_lower": -0.01267281745366809,
@@ -1425,7 +1425,7 @@
     "sponsor_history_pool": "training snapshot + external cohort, outcomes public before each trial's anchor date",
     "v0_usable_rows": 2279
   },
-  "git_sha_at_evaluation": "82fe63a1fcfadc8f956606fa2ffa81c5e44a8c40",
+  "git_sha_at_evaluation": "b107bd0c5d625a2d9e43dd99f59cd61a4bf58d7f",
   "holdout": {
     "3.0.0-logreg": {
       "accuracy": 0.874025974025974,
@@ -2136,6 +2136,18 @@
     "v4_leakage_alarm_clear": true,
     "v4_passes_decision_gate": true
   },
+  "rank_thresholds_risk_by_version": {
+    "3.0.0-logreg": {
+      "top_10pct": 0.1720946134679584,
+      "top_20pct": 0.1399424049081449,
+      "top_5pct": 0.21125107333671678
+    },
+    "4.0.0-logreg-pit": {
+      "top_10pct": 0.1714930536003687,
+      "top_20pct": 0.13598487666890335,
+      "top_5pct": 0.211981491423759
+    }
+  },
   "runtime": {
     "numpy": "2.5.5",
     "python": "3.12.15",
@@ -2550,10 +2562,10 @@
         "point": -0.006195133971762301
       },
       "direction": {
-        "brier_delta": "negative_favors_tensorflow",
-        "log_loss_delta": "negative_favors_tensorflow",
-        "pr_auc_delta": "positive_favors_tensorflow",
-        "roc_auc_delta": "positive_favors_tensorflow"
+        "brier_delta": "negative_favors_v4",
+        "log_loss_delta": "negative_favors_v4",
+        "pr_auc_delta": "positive_favors_v4",
+        "roc_auc_delta": "positive_favors_v4"
       },
       "log_loss_delta": {
         "ci_95_lower": -0.028762051417139833,
@@ -2964,5 +2976,34 @@
     "returned": 18923,
     "source": "clinicaltrials_gov_api_v2",
     "training_snapshot_sha256": "2f6a310097e96f32f21323b74834d79c4c5d0628c49ab62ddf9eb31c164433a9"
+  },
+  "v4_serving": {
+    "numeric_feature_names": [
+      "phase_num",
+      "intervention_count",
+      "condition_count",
+      "is_interventional",
+      "sponsor_academic",
+      "sponsor_industry",
+      "title_word_count",
+      "sponsor_prior_trials_log1p",
+      "sponsor_prior_stop_rate_smoothed",
+      "sponsor_has_prior",
+      "v0_enrollment_log10",
+      "v0_site_count_log1p",
+      "v0_not_yet_recruiting",
+      "v0_planned_duration_months",
+      "v0_registration_lead_months"
+    ],
+    "smoothing_alpha": 5.0,
+    "sponsor_index_sha256": "55475eafeba2566879e1be5052ead55a6b4e2d9ca795cfc363ae7894adc1b7dc",
+    "sponsor_prior_stop_rate": 0.12723556463975472,
+    "v0_training_medians": [
+      2.0718820073061255,
+      0.6931471805599453,
+      1.0,
+      22.99794661190965,
+      0.03285420944558522
+    ]
   }
 }

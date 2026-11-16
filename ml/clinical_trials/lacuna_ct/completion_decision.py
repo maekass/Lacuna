@@ -112,6 +112,20 @@ def build_v4_logistic() -> Pipeline:
 # --------------------------------------------------------------------------- #
 
 
+PAIRED_DIRECTION = {
+    "roc_auc_delta": "positive_favors_v4",
+    "pr_auc_delta": "positive_favors_v4",
+    "brier_delta": "negative_favors_v4",
+    "log_loss_delta": "negative_favors_v4",
+}
+
+
+def paired_v4_minus_v3(y: np.ndarray, p3: np.ndarray, p4: np.ndarray, n_boot: int) -> dict[str, Any]:
+    out = paired_bootstrap_comparison(y, p3, p4, n_resamples=n_boot)
+    out["direction"] = dict(PAIRED_DIRECTION)  # benchmark_stats labels deltas for its TF use
+    return out
+
+
 def full_metrics(
     y: np.ndarray,
     p: np.ndarray,
@@ -275,13 +289,7 @@ def run(
     # ---- holdout metrics -------------------------------------------------- #
     m3 = full_metrics(y_test, p3, test_ids, prereg, n_boot=n_boot)
     m4 = full_metrics(y_test, p4, test_ids, prereg, n_boot=n_boot)
-    paired = paired_bootstrap_comparison(y_test, p3, p4, n_resamples=n_boot)
-    paired["direction"] = {
-        "roc_auc_delta": "positive_favors_v4",
-        "pr_auc_delta": "positive_favors_v4",
-        "brier_delta": "negative_favors_v4",
-        "log_loss_delta": "negative_favors_v4",
-    }
+    paired = paired_v4_minus_v3(y_test, p3, p4, n_boot)
     beats = float(paired["roc_auc_delta"]["ci_95_lower"]) > 0.0
     promote = beats and m4["export_gate"]["passes"] and leakage_ok
     reasons = []
@@ -331,7 +339,7 @@ def run(
     if len(np.unique(yf)) == 2 and len(yf) >= 40:
         censoring[V3_VERSION] = light_metrics(yf, p3[keep], fids, prereg, n_boot=n_boot)
         censoring[CANDIDATE_VERSION] = light_metrics(yf, p4[keep], fids, prereg, n_boot=n_boot)
-        censoring["paired_v4_minus_v3"] = paired_bootstrap_comparison(yf, p3[keep], p4[keep], n_resamples=n_boot)
+        censoring["paired_v4_minus_v3"] = paired_v4_minus_v3(yf, p3[keep], p4[keep], n_boot)
     else:
         censoring["note"] = "too few filtered rows for metrics"
 
@@ -356,7 +364,7 @@ def run(
         "primary_all_years": {
             V3_VERSION: light_metrics(yx, px3, xids, prereg, n_boot=n_boot),
             CANDIDATE_VERSION: light_metrics(yx, px4, xids, prereg, n_boot=n_boot),
-            "paired_v4_minus_v3": paired_bootstrap_comparison(yx, px3, px4, n_resamples=n_boot),
+            "paired_v4_minus_v3": paired_v4_minus_v3(yx, px3, px4, n_boot),
         },
     }
     yl = yx[late]
@@ -383,7 +391,7 @@ def run(
         "excluded": int((~use).sum()),
         V3_VERSION: light_metrics(yu, p3[use], uids, prereg, n_boot=n_boot),
         CANDIDATE_VERSION: light_metrics(yu, p4[use], uids, prereg, n_boot=n_boot),
-        "paired_v4_minus_v3": paired_bootstrap_comparison(yu, p3[use], p4[use], n_resamples=n_boot),
+        "paired_v4_minus_v3": paired_v4_minus_v3(yu, p3[use], p4[use], n_boot),
     }
     external["v0_usable_rows"] = int(ext_usable.sum())
 
@@ -413,6 +421,12 @@ def run(
     v4_path = archive_dir / CANDIDATE_VERSION / "model.joblib"
     v4_path.parent.mkdir(parents=True, exist_ok=True)
     joblib.dump(v4_model, v4_path, compress=3)
+    sponsor_index = sponsor_index_payload(records, supplement, prior_stop, snapshot_meta)
+    cp._write_json(v4_path.parent / "sponsor_history.json", sponsor_index)
+    cp._write_json(
+        v4_path.parent / "parity_fixtures_v4.json",
+        v4_parity_fixtures(labeled, test_idx, supplement, first_versions, X4, p3_all=v3_model.predict_proba(X3)[:, 1], p4_all=v4_model.predict_proba(X4)[:, 1]),
+    )
 
     champion_p = p4 if promote else p3
     evaluation = {
@@ -454,6 +468,17 @@ def run(
         "external": external,
         "subgroup_calibration": subgroups,
         "champion_rank_thresholds_risk": rank_thresholds(champion_p, test_ids, prereg["decision"]["k_fractions"]),
+        "rank_thresholds_risk_by_version": {
+            V3_VERSION: rank_thresholds(p3, test_ids, prereg["decision"]["k_fractions"]),
+            CANDIDATE_VERSION: rank_thresholds(p4, test_ids, prereg["decision"]["k_fractions"]),
+        },
+        "v4_serving": {
+            "numeric_feature_names": [*cf.NUMERIC_FEATURE_NAMES, *NEW_FEATURE_NAMES],
+            "v0_training_medians": list(v0_medians),
+            "sponsor_prior_stop_rate": prior_stop,
+            "smoothing_alpha": pit.SMOOTHING_ALPHA,
+            "sponsor_index_sha256": cp.file_sha256(v4_path.parent / "sponsor_history.json"),
+        },
         "runtime": {
             "python": platform.python_version(),
             "scikit_learn": importlib.metadata.version("scikit-learn"),
@@ -462,6 +487,96 @@ def run(
     }
     cp._write_json(registry_dir / "decision_evaluation.json", evaluation)
     return evaluation
+
+
+def sponsor_index_payload(
+    records: Sequence[TrialRecord],
+    supplement: Mapping[str, Mapping[str, Any]],
+    prior_stop: float,
+    snapshot_meta: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Frozen sponsor outcome index served with v4 (dates + stopped flag only)."""
+    sponsors: dict[str, list[list[Any]]] = {}
+    for r in records:
+        sup = supplement.get(r.nct_id) or {}
+        public_by = pit.parse_ctgov_date(sup.get("last_update_post_date"))
+        if r.label_completed is None or public_by is None:
+            continue
+        sponsors.setdefault(pit.normalize_sponsor(r.sponsor), []).append(
+            [public_by.isoformat(), 1 - int(r.label_completed)]
+        )
+    for events in sponsors.values():
+        events.sort()
+    return {
+        "schema": "lacuna-completion-sponsor-index-v1",
+        "as_of": str(snapshot_meta.get("generated_at_utc")),
+        "snapshot_file_sha256": snapshot_meta.get("snapshot_file_sha256"),
+        "definition": "lead-sponsor terminal outcomes in the frozen training snapshot; date = LastUpdatePostDate "
+        "(outcome public by); stopped = 1 for TERMINATED/WITHDRAWN/SUSPENDED, 0 for COMPLETED",
+        "prior_stop_rate": prior_stop,
+        "smoothing_alpha": pit.SMOOTHING_ALPHA,
+        "n_events": sum(len(v) for v in sponsors.values()),
+        "sponsors": dict(sorted(sponsors.items())),
+    }
+
+
+API_PHASES = frozenset({"EARLY_PHASE1", "PHASE1", "PHASE2", "PHASE3", "PHASE4", "NA", "NOT_APPLICABLE"})
+
+
+def _api_phase(phase: str | None) -> str:
+    key = str(phase or "").upper().replace(" ", "_")
+    return key if key in API_PHASES else "NA"
+
+
+def v4_parity_fixtures(
+    labeled: Sequence[TrialRecord],
+    test_idx: Sequence[int],
+    supplement: Mapping[str, Mapping[str, Any]],
+    first_versions: Mapping[str, Mapping[str, Any]],
+    X4: np.ndarray,
+    *,
+    p3_all: np.ndarray,
+    p4_all: np.ndarray,
+    n: int = 12,
+) -> list[dict[str, Any]]:
+    """Holdout trials as API inputs with the training-side v4 row and probability."""
+    out = []
+    for i in sorted(test_idx, key=lambda j: labeled[j].nct_id)[:: max(1, len(test_idx) // n)][:n]:
+        r = labeled[i]
+        sup = supplement.get(r.nct_id) or {}
+        v0 = first_versions.get(r.nct_id) or {}
+        trial = cp.record_to_trial(r)
+        api = {
+            "title": trial["title"],
+            "condition": [c.strip() for c in str(r.condition or "").split(",") if c.strip()],
+            "interventions": [c.strip() for c in str(r.interventions or "").split(",") if c.strip()],
+            "sponsor": r.sponsor,
+            "phase": _api_phase(r.phase),
+            "study_type": r.study_type,
+            "start_date": sup.get("start_date"),
+            "first_submit_date": sup.get("study_first_submit_date"),
+        }
+        if v0 and str(v0.get("v0_status") or "").upper() not in pit.TERMINAL_STATUSES and v0.get("v0_status"):
+            api.update(
+                {
+                    "registered_status": v0.get("v0_status"),
+                    "registered_enrollment": v0.get("v0_enrollment"),
+                    "registered_site_count": v0.get("v0_site_count"),
+                    "registered_start_date": v0.get("v0_start_date"),
+                    "registered_completion_date": v0.get("v0_completion_date"),
+                }
+            )
+            if v0.get("v0_first_submit_date") != sup.get("study_first_submit_date"):
+                continue  # API uses one first_submit_date for both anchor and lead
+        out.append(
+            {
+                "nct_id": r.nct_id,
+                "api_input": {k: v for k, v in api.items() if v is not None},
+                "expected_pit_row": [float(v) for v in X4[i, 1 + len(cf.NUMERIC_FEATURE_NAMES):]],
+                "expected": {V3_VERSION: float(p3_all[i]), CANDIDATE_VERSION: float(p4_all[i])},
+            }
+        )
+    return out
 
 
 def _compact(m: Mapping[str, Any]) -> dict[str, Any]:
@@ -475,42 +590,97 @@ def _compact(m: Mapping[str, Any]) -> dict[str, Any]:
     return out
 
 
-def update_registry(registry_dir: Path, evaluation: Mapping[str, Any]) -> dict[str, Any]:
-    """Record the decision gate, rank thresholds and v4 outcome in the manifest.
+def _decision_fields(m: Mapping[str, Any]) -> dict[str, Any]:
+    return {
+        "decision_metrics": {k: v for k, v in m["decision"].items() if k.startswith("top_")},
+        "net_benefit": m["net_benefit"],
+    }
 
-    Only versions that already have a committed artifact can be served; a
-    promoted v4 would need its artifact and featurizer wired into the API, so
-    this function refuses rather than silently serving it.
+
+def update_registry(registry_dir: Path, evaluation: Mapping[str, Any], archive_dir: Path) -> dict[str, Any]:
+    """Apply the pre-registered outcome to the served registry.
+
+    Always: v3 gets the decision gate (old accuracy gate kept as
+    ``legacy_accuracy_gate``), decision metrics and its own rank thresholds.
+    If v4 was promoted under the existing rule, its artifact, sponsor index and
+    parity fixtures are copied in (hash-checked) and it becomes champion; v3
+    stays servable by explicit ``?version=``.
     """
+    import shutil
+
     manifest_path = registry_dir / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     promotion = evaluation["promotion"]
-    if promotion["champion_version"] != V3_VERSION:
-        raise NotImplementedError("v4 promoted: wire its featurizer into the API before serving")
-    entry = manifest["versions"][V3_VERSION]
-    hm = entry["holdout_metrics"]
+    thresholds = evaluation["rank_thresholds_risk_by_version"]
+    m3 = evaluation["holdout"][V3_VERSION]
+    m4 = evaluation["holdout"][CANDIDATE_VERSION]
+
+    entry3 = manifest["versions"][V3_VERSION]
+    hm = entry3["holdout_metrics"]
     if "legacy_accuracy_gate" not in hm:
         hm["legacy_accuracy_gate"] = hm["export_gate"]
-    m3 = evaluation["holdout"][V3_VERSION]
     hm["export_gate"] = m3["export_gate"]
-    entry["decision_metrics"] = {k: v for k, v in m3["decision"].items() if k.startswith("top_")}
-    entry["net_benefit"] = m3["net_benefit"]
-    entry["rank_thresholds_risk"] = evaluation["champion_rank_thresholds_risk"]
+    entry3.update(_decision_fields(m3))
+    entry3["rank_thresholds_risk"] = thresholds[V3_VERSION]
+    entry3.setdefault("featurizer_version", cf.FEATURIZER_VERSION)
+
+    if "previous_promotion" not in manifest:
+        manifest["previous_promotion"] = manifest.get("promotion")
+    manifest["promotion"] = promotion
     manifest["decision_tool"] = {
         "decision": "review the top k% of trials by risk_stopped = 1 - probability_completed",
         "primary_k": 0.1,
         "gate_version": m3["export_gate"]["gate_version"],
         "preregistration": evaluation["preregistration"],
         "evaluation": "decision_evaluation.json",
-        "promotion_v4": promotion,
-        "rank_bucket_note": "Buckets use risk cut points that put 5/10/20% of the temporal holdout in each bucket.",
+        "rank_bucket_note": "Buckets use each version's own risk cut points that put 5/10/20% of the temporal holdout in each bucket.",
     }
-    manifest.setdefault("evaluated_not_served", {})[CANDIDATE_VERSION] = {
-        "model_family": "logistic_regression_tfidf_numeric_point_in_time",
-        "artifact_sha256": evaluation["holdout"][CANDIDATE_VERSION]["artifact_sha256"],
-        "artifact_location": "gitignored archive (not served)",
-        "calibration": cp.CALIBRATION_METHOD,
-        "holdout_metrics": _compact(evaluation["holdout"][CANDIDATE_VERSION]),
-    }
+    manifest.setdefault("evaluated_not_served", {})
+    if promotion["champion_version"] == CANDIDATE_VERSION:
+        serving = evaluation["v4_serving"]
+        src = archive_dir / CANDIDATE_VERSION
+        dst = registry_dir / CANDIDATE_VERSION
+        dst.mkdir(parents=True, exist_ok=True)
+        for name in ("model.joblib", "sponsor_history.json"):
+            shutil.copyfile(src / name, dst / name)
+        if cp.file_sha256(dst / "model.joblib") != m4["artifact_sha256"]:
+            raise ValueError("v4 artifact hash differs from decision_evaluation.json")
+        if cp.file_sha256(dst / "sponsor_history.json") != serving["sponsor_index_sha256"]:
+            raise ValueError("sponsor index hash differs from decision_evaluation.json")
+        shutil.copyfile(src / "parity_fixtures_v4.json", registry_dir / "parity_fixtures_v4.json")
+        manifest["versions"][CANDIDATE_VERSION] = {
+            "artifact": f"{CANDIDATE_VERSION}/model.joblib",
+            "artifact_sha256": m4["artifact_sha256"],
+            "calibration": cp.CALIBRATION_METHOD,
+            "model_family": "logistic_regression_tfidf_numeric_point_in_time",
+            "featurizer_version": "completion-features-v4-pit",
+            "numeric_feature_names": serving["numeric_feature_names"],
+            "sponsor_index": f"{CANDIDATE_VERSION}/sponsor_history.json",
+            "sponsor_index_sha256": serving["sponsor_index_sha256"],
+            "v0_training_medians": serving["v0_training_medians"],
+            "holdout_metrics": _compact(m4),
+            **_decision_fields(m4),
+            "rank_thresholds_risk": thresholds[CANDIDATE_VERSION],
+            "external_metrics": {
+                k: v
+                for k, v in evaluation["external"]["primary_all_years"][CANDIDATE_VERSION].items()
+                if k in ("n", "roc_auc", "roc_auc_ci_lower", "roc_auc_ci_upper", "brier", "expected_calibration_error")
+            },
+        }
+        manifest["evaluated_not_served"].pop(CANDIDATE_VERSION, None)
+        manifest["champion"] = CANDIDATE_VERSION
+        manifest["drift_monitor_version"] = V3_VERSION
+        manifest["drift_monitor_note"] = (
+            "Weekly PSI drift runs on the shared v3 design features and the v3 score. v4's point-in-time "
+            "inputs need a version-0 history fetch per recent trial, which the drift job does not do yet."
+        )
+    else:
+        manifest["evaluated_not_served"][CANDIDATE_VERSION] = {
+            "model_family": "logistic_regression_tfidf_numeric_point_in_time",
+            "artifact_sha256": m4["artifact_sha256"],
+            "artifact_location": "gitignored archive (not served)",
+            "calibration": cp.CALIBRATION_METHOD,
+            "holdout_metrics": _compact(m4),
+        }
     cp._write_json(manifest_path, manifest)
     return manifest

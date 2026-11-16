@@ -17,9 +17,10 @@ from importlib import metadata
 from pathlib import Path
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from app import completion_features as cf
+from app import completion_pit_features as pitf
 from app import shadow_log
 from app.config import get_settings
 
@@ -36,6 +37,16 @@ Phase = Literal[
     "EARLY_PHASE1", "PHASE1", "PHASE2", "PHASE3", "PHASE4", "NA", "NOT_APPLICABLE"
 ]
 StudyType = Literal["INTERVENTIONAL", "OBSERVATIONAL", "EXPANDED_ACCESS"]
+# Status of the record as first registered. Terminal statuses are rejected:
+# a trial first registered as COMPLETED/TERMINATED/... is post-outcome.
+RegisteredStatus = Literal[
+    "NOT_YET_RECRUITING", "RECRUITING", "ENROLLING_BY_INVITATION", "ACTIVE_NOT_RECRUITING", "WITHHELD"
+]
+
+
+def _ct_date() -> Any:
+    return Field(default=None, pattern=r"^\d{4}(-\d{2}(-\d{2})?)?$")
+
 
 
 class TrialFeaturesInput(BaseModel):
@@ -53,6 +64,15 @@ class TrialFeaturesInput(BaseModel):
     sponsor: str = Field(default="", max_length=300)
     phase: Phase = "NA"
     study_type: StudyType = "INTERVENTIONAL"
+    # Point-in-time inputs (used by completion-features-v4-pit, ignored by v3).
+    # All describe the record as first registered; omitted -> training medians.
+    start_date: str | None = _ct_date()
+    first_submit_date: str | None = _ct_date()
+    registered_status: RegisteredStatus | None = None
+    registered_enrollment: int | None = Field(default=None, ge=0, le=10_000_000)
+    registered_site_count: int | None = Field(default=None, ge=0, le=100_000)
+    registered_start_date: str | None = _ct_date()
+    registered_completion_date: str | None = _ct_date()
     # Not model inputs: identify the trial and record the human decision in
     # the shadow log. They never reach the featurizer.
     nct_id: str | None = Field(default=None, pattern=r"^NCT\d{8}$")
@@ -69,6 +89,18 @@ class TrialFeaturesInput(BaseModel):
         if any(len(item) > 300 for item in cleaned):
             raise ValueError("list items must be at most 300 characters")
         return cleaned
+
+    @model_validator(mode="after")
+    def _registered_needs_status(self) -> "TrialFeaturesInput":
+        given = [
+            self.registered_enrollment,
+            self.registered_site_count,
+            self.registered_start_date,
+            self.registered_completion_date,
+        ]
+        if any(v is not None for v in given) and self.registered_status is None:
+            raise ValueError("registered_* fields require registered_status")
+        return self
 
 
 NON_FEATURE_FIELDS = frozenset({"nct_id", "reviewer_decision"})
@@ -100,11 +132,14 @@ class CompletionPrediction(BaseModel):
     nct_id: str | None = None
     reviewer_decision: str | None = None
     reviewer_override: bool | None = None
+    point_in_time: dict[str, Any] | None = None
     shadow_logged: bool
     disclaimer: str
 
 
-def explain_logistic(estimator: Any, row: Any, top_n: int = 5) -> tuple[list[FeatureContribution], str]:
+def explain_logistic(
+    estimator: Any, row: Any, top_n: int = 5, numeric_names: list[str] | None = None
+) -> tuple[list[FeatureContribution], str]:
     """Per-feature logit contributions of the uncalibrated logistic pipeline.
 
     Platt scaling is a monotone map of the logistic decision function, so the
@@ -123,7 +158,7 @@ def explain_logistic(estimator: Any, row: Any, top_n: int = 5) -> tuple[list[Fea
     z = features.transform(row)
     z = z.toarray().ravel() if hasattr(z, "toarray") else np.asarray(z).ravel()
     names = list(features.get_feature_names_out())
-    numeric_names = list(cf.NUMERIC_FEATURE_NAMES)
+    numeric_names = list(numeric_names or cf.NUMERIC_FEATURE_NAMES)
     raw_numeric = [float(v) for v in row[0][1:]]
     items: list[FeatureContribution] = []
     n_text = len(names) - len(numeric_names)
@@ -154,6 +189,26 @@ class LoadedModel:
     version: str
     entry: dict[str, Any]
     estimator: Any
+    sponsor_index: pitf.SponsorIndex | None = None
+
+    @property
+    def featurizer_version(self) -> str:
+        return str(self.entry.get("featurizer_version") or cf.FEATURIZER_VERSION)
+
+    @property
+    def numeric_names(self) -> list[str]:
+        return list(self.entry.get("numeric_feature_names") or cf.NUMERIC_FEATURE_NAMES)
+
+    def row(self, features: dict[str, Any]) -> tuple[list[Any], dict[str, Any] | None]:
+        base = cf.model_row(features)
+        if self.featurizer_version == cf.FEATURIZER_VERSION:
+            return base, None
+        assert self.sponsor_index is not None
+        extra, audit = pitf.pit_features(features, self.sponsor_index, self.entry["v0_training_medians"])
+        return [*base, *extra], audit
+
+
+SUPPORTED_FEATURIZERS = frozenset({cf.FEATURIZER_VERSION, pitf.FEATURIZER_VERSION})
 
 
 def _sha256(path: Path) -> str:
@@ -183,7 +238,7 @@ class CompletionRegistry:
         for key in ("model_id", "champion", "versions", "sklearn_version", "disclaimer"):
             if key not in self.manifest:
                 raise RegistryError(f"model registry manifest missing '{key}'")
-        if self.manifest["featurizer_version"] != cf.FEATURIZER_VERSION:
+        if self.manifest["featurizer_version"] != cf.FEATURIZER_VERSION:  # base featurizer
             raise RegistryError(
                 "featurizer version mismatch: manifest "
                 f"{self.manifest['featurizer_version']} vs service {cf.FEATURIZER_VERSION}"
@@ -220,9 +275,20 @@ class CompletionRegistry:
                     f"scikit-learn {installed} cannot load artifact trained with "
                     f"{self.manifest['sklearn_version']}"
                 )
+            featurizer = str(entry.get("featurizer_version") or cf.FEATURIZER_VERSION)
+            if featurizer not in SUPPORTED_FEATURIZERS:
+                raise RegistryError(f"unsupported featurizer {featurizer} for {resolved}")
+            index = None
+            if featurizer == pitf.FEATURIZER_VERSION:
+                index_path = (self.root / entry["sponsor_index"]).resolve()
+                if self.root.resolve() not in index_path.parents or not index_path.is_file():
+                    raise RegistryError(f"sponsor index for {resolved} is missing")
+                if _sha256(index_path) != entry["sponsor_index_sha256"]:
+                    raise RegistryError(f"sponsor index sha256 mismatch for {resolved}")
+                index = pitf.SponsorIndex(json.loads(index_path.read_text(encoding="utf-8")))
             import joblib  # deferred so the rest of the API starts without it
 
-            loaded = LoadedModel(resolved, entry, joblib.load(artifact))
+            loaded = LoadedModel(resolved, entry, joblib.load(artifact), index)
             self._loaded[resolved] = loaded
             return loaded
 
@@ -237,12 +303,13 @@ class CompletionRegistry:
 
         model = self.load(version)
         features = {k: v for k, v in trial.model_dump().items() if k not in NON_FEATURE_FIELDS}
-        row = np.asarray([cf.model_row(features)], dtype=object)
+        raw_row, pit_audit = model.row(features)
+        row = np.asarray([raw_row], dtype=object)
         probability = float(model.estimator.predict_proba(row)[0, 1])
         gate = model.entry["holdout_metrics"]["export_gate"]
         thresholds = model.entry.get("rank_thresholds_risk") or {}
         bucket = shadow_log.rank_bucket(1.0 - probability, thresholds)
-        top, method = explain_logistic(model.estimator, row)
+        top, method = explain_logistic(model.estimator, row, numeric_names=model.numeric_names)
         record = shadow_log.make_record(
             nct_id=trial.nct_id,
             model_id=str(self.manifest["model_id"]),
@@ -272,12 +339,13 @@ class CompletionRegistry:
             calibration_method=str(model.entry.get("calibration") or "none"),
             export_gate_passed=bool(gate["passes"]),
             export_gate_version=str(gate.get("gate_version", "legacy")),
-            featurizer_version=cf.FEATURIZER_VERSION,
+            featurizer_version=model.featurizer_version,
             top_features=top,
             explanation_method=method,
             nct_id=trial.nct_id,
             reviewer_decision=trial.reviewer_decision,
             reviewer_override=record["reviewer_override"],
+            point_in_time=pit_audit,
             shadow_logged=logged,
             disclaimer=str(self.manifest["disclaimer"]),
         )
@@ -299,10 +367,23 @@ class CompletionRegistry:
             "trained_at_utc": self.manifest.get("trained_at_utc"),
             "training_snapshot_sha256": self.manifest.get("training_snapshot_sha256"),
             "sklearn_version": self.manifest.get("sklearn_version"),
-            "featurizer_version": self.manifest.get("featurizer_version"),
+            "featurizer_version": entry.get("featurizer_version") or self.manifest.get("featurizer_version"),
             "input_features": {
                 "text": ["title", "condition", "interventions", "sponsor"],
-                "numeric": self.manifest.get("numeric_feature_names"),
+                "numeric": entry.get("numeric_feature_names") or self.manifest.get("numeric_feature_names"),
+            },
+            "point_in_time_inputs": None
+            if (entry.get("featurizer_version") or cf.FEATURIZER_VERSION) == cf.FEATURIZER_VERSION
+            else {
+                "start_date": "trial start date (YYYY, YYYY-MM or YYYY-MM-DD); with first_submit_date sets the sponsor-history anchor",
+                "first_submit_date": "date first submitted to the registry",
+                "registered_status": "status as first registered (non-terminal only)",
+                "registered_enrollment": "planned enrollment as first registered",
+                "registered_site_count": "number of sites as first registered",
+                "registered_start_date": "planned start date as first registered",
+                "registered_completion_date": "planned completion date as first registered",
+                "omitted": "registration fields omitted -> training-fit medians (pre-registered); sponsor history "
+                "from the frozen index counts only outcomes public before the anchor date",
             },
             "excluded_fields": cf.EXCLUDED_FIELDS,
             "split": self.manifest.get("split"),
@@ -321,8 +402,10 @@ class CompletionRegistry:
             },
             "disclaimer": self.manifest["disclaimer"],
             "limitations": [
-                "The served v3 model uses current-registry design fields; point-in-time "
-                "features were evaluated in the v4 candidate (see decision_evaluation.json).",
+                "v4 sponsor history comes from a frozen index built from the training snapshot; "
+                "outcomes after that snapshot are not counted.",
+                "Weekly drift monitoring covers the shared design features and the v3 score, not v4's "
+                "point-in-time inputs.",
                 "Condition-query cohort is not a population sampling frame.",
                 "Temporal holdout is right-censored: recent trials only carry a label "
                 "if they already finished or stopped.",

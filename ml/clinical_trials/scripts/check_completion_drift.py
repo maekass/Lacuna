@@ -87,8 +87,12 @@ def load_champion(registry: Path) -> tuple[dict[str, Any], str, Any, dict[str, A
     import joblib
 
     manifest = json.loads((registry / "manifest.json").read_text(encoding="utf-8"))
-    version = manifest["champion"]
+    # The monitored version may differ from the champion when the champion's
+    # inputs cannot be rebuilt from a plain CT.gov fetch (see drift_monitor_note).
+    version = manifest.get("drift_monitor_version") or manifest["champion"]
     entry = manifest["versions"][version]
+    if entry.get("featurizer_version", cf.FEATURIZER_VERSION) != cf.FEATURIZER_VERSION:
+        raise ValueError(f"{version} uses {entry['featurizer_version']}; drift check supports {cf.FEATURIZER_VERSION} only")
     artifact = registry / entry["artifact"]
     digest = hashlib.sha256(artifact.read_bytes()).hexdigest()
     if digest != entry["artifact_sha256"]:
@@ -150,6 +154,8 @@ def main() -> int:
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "model_id": manifest["model_id"],
         "model_version": version,
+        "champion_version": manifest["champion"],
+        "drift_monitor_note": manifest.get("drift_monitor_note"),
         "artifact_sha256": manifest["versions"][version]["artifact_sha256"],
         "training_snapshot_sha256": manifest.get("training_snapshot_sha256"),
         "current_source": source,

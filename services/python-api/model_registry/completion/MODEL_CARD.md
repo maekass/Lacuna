@@ -4,6 +4,30 @@ Generated from `evaluation.json` and `manifest.json` in this directory. Every
 number below is measured on the frozen snapshot listed under Data; none are
 estimates.
 
+## Update: decision tool and v4 champion
+
+`4.0.0-logreg-pit` (v3 recipe + sponsor track record +
+record-as-first-registered features) is now the champion under the existing
+promotion rule; `3.0.0-logreg` stays servable with `?version=3.0.0-logreg`. The
+export gate is now the pre-registered `decision-gate-v1` (AUC CI lower > 0.55,
+Brier < base rate, ECE ≤ 0.05, lift@10% CI lower > 1.0); **both versions pass
+it** on the temporal holdout. The accuracy-vs-majority check below is kept as
+`legacy_accuracy_gate`.
+
+| Holdout (n = 1,540) | v3                   | v4                   |
+| ------------------- | -------------------- | -------------------- |
+| ROC AUC [CI]        | 0.711 [0.670, 0.752] | 0.761 [0.720, 0.800] |
+| lift@10% [CI]       | 2.94 [2.39, 3.53]    | 3.92 [3.28, 4.47]    |
+| recall@10%          | 0.294                | 0.392                |
+| Brier / ECE         | 0.1020 / 0.031       | 0.0976 / 0.042       |
+| External AUC        | 0.609 [0.579, 0.638] | 0.651 [0.622, 0.678] |
+
+Paired ΔAUC (v4 − v3) +0.050 [0.032, 0.069]. Full detail, censoring, subgroup
+calibration, shadow mode and limitations:
+[`docs/ML_COMPLETION_DECISION.md`](../../../../docs/ML_COMPLETION_DECISION.md)
+and `decision_evaluation.json`. The sections below describe the original v3
+production run and are unchanged.
+
 ## Task
 
 Probability that a ClinicalTrials.gov record ends as `COMPLETED` (1) rather than
@@ -14,14 +38,14 @@ part of training or evaluation.
 
 ## Served version
 
-| Field         | Value                                                                   |
-| ------------- | ----------------------------------------------------------------------- |
-| Champion      | `3.0.0-logreg` — TF-IDF + numeric logistic regression, Platt-calibrated |
-| Not served    | `3.0.0-hgb` — HistGradientBoosting on TF-IDF→SVD(100) + numeric, Platt  |
-| Artifact hash | `artifact_sha256` in `manifest.json` (checked before every load)        |
-| Runtime       | scikit-learn 1.9.x (loader refuses a different minor version)           |
-| API           | `GET /v1/models/completion`, `POST /v1/models/completion/predict`       |
-| Export gate   | **Fails** (accuracy at 0.50 equals the majority-class rate; see below)  |
+| Field         | Value                                                                              |
+| ------------- | ---------------------------------------------------------------------------------- |
+| Champion      | `3.0.0-logreg` — TF-IDF + numeric logistic regression, Platt-calibrated            |
+| Not served    | `3.0.0-hgb` — HistGradientBoosting on TF-IDF→SVD(100) + numeric, Platt             |
+| Artifact hash | `artifact_sha256` in `manifest.json` (checked before every load)                   |
+| Runtime       | scikit-learn 1.9.x (loader refuses a different minor version)                      |
+| API           | `GET /v1/models/completion`, `POST /v1/models/completion/predict`                  |
+| Export gate   | v3 run: **failed** legacy accuracy gate (see below); now `decision-gate-v1` passes |
 
 ## Data
 
