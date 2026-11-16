@@ -84,10 +84,10 @@ export default function RnpvResults(
               Valued at entry into{" "}
               {STAGE_LABELS[startStage]}, not mid-stage. Stage costs are
               weighted by the share of paths that enter each stage. Launch
-              investment and commercial cash flows are weighted by the
-              share of paths that complete every remaining stage. Cash flows use
-              year-end discounting, and the first revenue is one year after
-              development finishes.
+              investment and commercial cash flows are weighted by the share of
+              paths that complete every remaining stage. Cash flows use year-end
+              discounting, and the first revenue is one year after development
+              finishes.
             </p>
             <p className="text-sm font-medium text-lacuna-plum">
               {signLabel(deterministic.rnpv)} hypothetical rNPV:{" "}

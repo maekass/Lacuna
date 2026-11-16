@@ -271,8 +271,8 @@ export default function RnpvFields(
         </legend>
         <p className="text-sm text-lacuna-blue">
           Each path succeeds or fails stage by stage. Later costs stop after a
-          failure. Path results are not multiplied by the success rate
-          again. Zero ranges isolate that development risk. Positive ranges are
+          failure. Path results are not multiplied by the success rate again.
+          Zero ranges isolate that development risk. Positive ranges are
           independent uniform analyst choices, not estimated confidence
           intervals. Durations, margin, tax, upfront cost, and the sales shape
           stay fixed.
