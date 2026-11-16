@@ -1,0 +1,63 @@
+name: Completion model shadow scoring
+
+# Weekly, read-only scoring of the completion-proxy shadow log
+# (ml/clinical_trials/shadow/completion_predictions.jsonl). Verifies the
+# append-only hash chain, joins current ClinicalTrials.gov statuses (public API,
+# no secrets) and uploads a JSON report. It never writes to the repository.
+# See docs/ML_CLINICAL_TRIALS.md ("Shadow mode").
+
+on:
+  schedule:
+    - cron: "41 7 * * 1" # Mondays 07:41 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: completion-shadow-score
+  cancel-in-progress: false
+
+jobs:
+  score:
+    name: completion-shadow-score
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            ml/clinical_trials/requirements.txt
+            services/python-api/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r ml/clinical_trials/requirements.txt
+          python -m pip install -r services/python-api/requirements.txt
+
+      - name: Shadow and decision unit tests
+        run: |
+          PYTHONPATH=ml/clinical_trials python -m unittest \
+            ml/clinical_trials/tests/test_completion_decision.py -v
+
+      - name: Score shadow log against realized outcomes
+        run: |
+          PYTHONPATH=ml/clinical_trials python \
+            ml/clinical_trials/scripts/score_shadow_log.py
+
+      - name: Upload shadow score report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: completion-shadow-score
+          path: ml/clinical_trials/output/shadow/completion-shadow-score.json
+          if-no-files-found: warn
+          retention-days: 90

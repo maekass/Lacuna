@@ -116,3 +116,6 @@ __pycache__/
 ml/clinical_trials/data/completion_supplement*.json
 ml/clinical_trials/data/external_cohort*.json
 ml/clinical_trials/data/first_versions*.json
+
+# completion shadow-mode API log (runtime, append-only)
+services/python-api/var/
