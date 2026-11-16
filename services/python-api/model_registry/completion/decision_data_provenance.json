@@ -51,6 +51,31 @@
     "record_count": 7258,
     "source": "clinicaltrials_gov_api_v2"
   },
+  "first_versions": {
+    "fetched_finished_at_utc": "2026-11-16T07:56:58.631537+00:00",
+    "fetched_started_at_utc": "2026-11-16T07:30:25.623119+00:00",
+    "file": "first_versions.json",
+    "file_sha256": "15223352ae2b8745504dfd4111021f35a9d3aae2cd9fffd606af2a4ed6c4e8d3",
+    "first_version_fetch": {
+      "delay_s": 0.2,
+      "http_status_counts": {
+        "200": 11562
+      },
+      "requested": 11562,
+      "returned": 11562,
+      "stopped_early_on_repeated_failures": false,
+      "workers": 2
+    },
+    "holdout_change_list_fetch": {
+      "http_status_counts": {
+        "200": 1540
+      },
+      "requested": 1540,
+      "returned": 1540
+    },
+    "ids": "labeled training-snapshot rows with start year + labeled external-cohort rows",
+    "source": "clinicaltrials.gov /api/int/studies/{nct}/history (website record-history endpoint)"
+  },
   "generated_at_utc": "2026-11-16T07:25:48.804948+00:00",
   "history_api_probe": {
     "attempts": [

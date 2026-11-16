@@ -22,6 +22,7 @@ from lacuna_ct.fetch_training_data import TrialRecord, load_cached_records, veri
 ROOT = Path(__file__).resolve().parents[3]
 DATA = ROOT / "ml/clinical_trials/data"
 REGISTRY = ROOT / "services/python-api/model_registry/completion"
+ARCHIVE = ROOT / "ml/clinical_trials/output/completion-proxy-v4"
 
 
 def summarize(ev: dict) -> dict:
@@ -78,15 +79,12 @@ def main() -> None:
         holdout_changes=fv["holdout_changes"],
         first_versions_meta=fv_meta,
         registry_dir=REGISTRY,
-        archive_dir=ROOT / "ml/clinical_trials/output/completion-proxy-v4",
+        archive_dir=ARCHIVE,
         n_boot=args.bootstrap_resamples,
     )
     print(json.dumps(summarize(evaluation), indent=2))
-    if evaluation["promotion"]["champion_version"] == cdec.V3_VERSION:
-        cdec.update_registry(REGISTRY, evaluation)
-        print("manifest updated: v3 stays champion; decision gate + rank thresholds recorded")
-    else:
-        print("v4 promoted by the pre-registered rule; serving it needs API featurizer work (manifest unchanged)")
+    cdec.update_registry(REGISTRY, evaluation, ARCHIVE)
+    print(f"manifest updated: champion = {evaluation['promotion']['champion_version']}")
 
 
 if __name__ == "__main__":

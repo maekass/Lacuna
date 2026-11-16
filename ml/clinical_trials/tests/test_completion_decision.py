@@ -451,3 +451,77 @@ class ShadowScoringTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+# --------------------------------------------------------------------------- #
+# Served v4 featurizer (dependency-free copy used by the API)
+# --------------------------------------------------------------------------- #
+
+
+class ServedPitFeaturizerTests(unittest.TestCase):
+    def test_api_copy_is_identical(self) -> None:
+        ml = REPO / "ml/clinical_trials/lacuna_ct/completion_pit_features.py"
+        api = REPO / "services/python-api/app/completion_pit_features.py"
+        self.assertEqual(ml.read_bytes(), api.read_bytes())
+
+    def test_feature_names_match_training(self) -> None:
+        from lacuna_ct import completion_pit_features as pitf
+
+        self.assertEqual(pitf.SPONSOR_FEATURE_NAMES, pit.SPONSOR_FEATURE_NAMES)
+        self.assertEqual(pitf.V0_FEATURE_NAMES, pit.V0_FEATURE_NAMES)
+        self.assertEqual(pitf.TERMINAL_STATUSES, pit.TERMINAL_STATUSES)
+        self.assertEqual(tuple(cdec.NEW_FEATURE_NAMES), pitf.PIT_FEATURE_NAMES)
+
+    def test_v0_rows_match_training_code(self) -> None:
+        from lacuna_ct import completion_pit_features as pitf
+
+        medians = [2.0, 0.7, 1.0, 23.0, 0.0]
+        cases = [
+            None,
+            {"v0_status": "COMPLETED", "v0_enrollment": 10},
+            {"v0_status": "RECRUITING", "v0_enrollment": 120, "v0_site_count": 3, "v0_start_date": "2020-01",
+             "v0_completion_date": "2023-06-15", "v0_first_submit_date": "2019-11-02"},
+            {"v0_status": "NOT_YET_RECRUITING", "v0_enrollment": 0, "v0_start_date": "2020",
+             "v0_completion_date": "2060-01", "v0_first_submit_date": "2030-01-01"},
+            {"v0_status": "WITHHELD"},
+        ]
+        for v0 in cases:
+            self.assertEqual(pitf.v0_feature_row(v0, medians), pit.v0_feature_row(v0, medians), v0)
+
+    def test_sponsor_index_matches_training_history(self) -> None:
+        from lacuna_ct import completion_pit_features as pitf
+
+        records = [_rec(f"NCT{i:08d}", sponsor="Acme  Pharma Inc" if i % 2 else "acme pharma inc", completed=i % 3 and 1 or 0)
+                   for i in range(1, 30)]
+        sup = {r.nct_id: {"last_update_post_date": f"20{10 + i % 12:02d}-0{1 + i % 9}-15"} for i, r in enumerate(records)}
+        history = pit.build_sponsor_history(records, sup)
+        payload = cdec.sponsor_index_payload(records, sup, 0.2, {"generated_at_utc": "x"})
+        index = pitf.SponsorIndex(payload)
+        for anchor in (date(2009, 1, 1), date(2012, 3, 15), date(2016, 7, 1), date(2030, 1, 1)):
+            expected = history.counts("acme pharma inc", anchor, "NCT99999999")
+            self.assertEqual(index.counts("Acme Pharma Inc", anchor), expected)
+            self.assertEqual(
+                index.features("Acme Pharma Inc", anchor)[0],
+                pit.sponsor_features(*expected, 0.2, pit.SMOOTHING_ALPHA),
+            )
+
+    def test_sponsor_index_never_counts_outcomes_on_or_after_anchor(self) -> None:
+        from lacuna_ct import completion_pit_features as pitf
+
+        index = pitf.SponsorIndex(
+            {"prior_stop_rate": 0.1, "smoothing_alpha": 5.0, "sponsors": {"s": [["2020-01-01", 1], ["2020-06-01", 1]]}}
+        )
+        self.assertEqual(index.counts("S", date(2020, 1, 1)), (0, 0))
+        self.assertEqual(index.counts("S", date(2020, 1, 2)), (1, 1))
+        self.assertEqual(index.counts("S", None), (0, 0))
+
+    def test_pit_features_use_registration_inputs_only(self) -> None:
+        from lacuna_ct import completion_pit_features as pitf
+
+        index = pitf.SponsorIndex({"prior_stop_rate": 0.1, "smoothing_alpha": 5.0, "sponsors": {}})
+        trial = {"sponsor": "x", "start_date": "2024-03", "first_submit_date": "2024-01-15",
+                 "registered_status": "RECRUITING", "registered_enrollment": 50}
+        row, audit = pitf.pit_features(trial, index, [1.0] * 5)
+        leaky = {**trial, "status": "TERMINATED", "enrollment": 0, "has_results": True, "why_stopped": "x"}
+        self.assertEqual(pitf.pit_features(leaky, index, [1.0] * 5)[0], row)
+        self.assertEqual(audit["anchor_date"], "2024-01-15")

@@ -48,6 +48,14 @@ Refuses synthetic snapshots. Non-champion artifacts go to the gitignored
 `ml/clinical_trials/output/completion-proxy-v3/`. See the
 [model card](../../services/python-api/model_registry/completion/MODEL_CARD.md).
 
+### Completion decision tool
+
+`npm run ml:ct:decision:fetch` then `npm run ml:ct:decision` evaluates v3 vs the
+point-in-time v4 against the pre-registered decision gate (`preregistration/`),
+and `npm run ml:ct:shadow:predict` / `npm run ml:ct:shadow:score` maintain and
+score the shadow log in `shadow/`. Details:
+[`docs/ML_COMPLETION_DECISION.md`](../../docs/ML_COMPLETION_DECISION.md).
+
 ### TensorFlow benchmark
 
 The TensorFlow path is a governed champion/challenger benchmark. It compares a

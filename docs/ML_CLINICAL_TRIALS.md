@@ -70,6 +70,16 @@ and `evaluation.json`.
   `.github/workflows/completion-drift.yml` compute per-feature and score PSI vs
   the committed training reference; PSI > 0.20 fails, 0.10–0.20 warns.
 
+### Completion decision tool (`4.0.0-logreg-pit` champion)
+
+Triage framing (review the top 10% by risk of stopping), pre-registered
+`decision-gate-v1` (lift@10% CI lower > 1.0 plus the AUC-CI, Brier and ECE
+checks), point-in-time v4 features from the ClinicalTrials.gov record history,
+censoring and external checks, explanations in the predict response, and an
+append-only shadow log with a weekly read-only scoring workflow. v4 holdout AUC
+0.761 [0.720, 0.800] vs v3 0.711; lift@10% 3.92 vs 2.94. See
+[`ML_COMPLETION_DECISION.md`](ML_COMPLETION_DECISION.md).
+
 ## Offline TensorFlow benchmark
 
 `completion-tensorflow-benchmark-v1` is an offline challenger for the same
