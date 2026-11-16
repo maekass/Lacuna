@@ -15,6 +15,16 @@
     "reason": "The tabIndex value enables keyboard focus on an interactive table row; it is an accessibility attribute, not a displayed metric."
   },
   {
+    "key": "src/components/research/EvidenceAskPanel.tsx::EvidenceAskPanel::1000",
+    "category": "ui-control",
+    "reason": "Question field character limit. It is a form control, not a displayed metric."
+  },
+  {
+    "key": "src/components/research/EvidenceAskPanel.tsx::EvidenceAskPanel::4",
+    "category": "ui-control",
+    "reason": "Question field row count. It is a form control, not a displayed metric."
+  },
+  {
     "key": "src/components/PitchBrief.tsx::formatDealDate::new Intl.DateTimeFormat(\"en-US\", { timeZone: \"UTC\", year: \"numeric\", month: \"short\", ...(day !== undefined ? { day: \"numeric\" as const } : {}), }).format(stamp)",
     "category": "date",
     "reason": "Formats an ISO calendar date as a date label; the resulting string is not a numeric metric."
