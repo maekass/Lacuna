@@ -34,6 +34,42 @@ over the simpler logistic baseline, not to add an AI label to the stack.
 - **UI:** Complete % badge only when scores are released; metrics panel on
   Research page
 
+### Completion proxy v3 (`completion-proxy-v3`, Python API)
+
+Served by `services/python-api`, not the browser. Trained by
+`npm run ml:ct:train:production` on a frozen, provenance-verified CT.gov
+snapshot (`npm run ml:ct:ingest -- --max-pages 10`). Full numbers live in
+[`services/python-api/model_registry/completion/MODEL_CARD.md`](../services/python-api/model_registry/completion/MODEL_CARD.md)
+and `evaluation.json`.
+
+- **Features (leakage-screened):** TF-IDF text (title, condition, interventions,
+  sponsor) + `phase_num`, `intervention_count`, `condition_count`,
+  `is_interventional`, sponsor class, `title_word_count`. `enrollment`,
+  `has_results`, status, completion dates, `start_year`, and cohort-query fields
+  are excluded (`completion_features.EXCLUDED_FIELDS`).
+- **Split:** existing start-year rule → train ≤ 2023 (7,339 rows, of which 20%
+  stratified for calibration), test 2024–2028 (1,540 rows).
+- **Models:** (a) logistic, Platt-calibrated; (b) HistGradientBoosting on
+  TF-IDF→SVD + numeric, Platt-calibrated; plus majority and base-rate
+  references.
+- **Result:** logistic ROC AUC 0.711 [0.670, 0.752], Brier 0.102, ECE 0.031;
+  HistGB 0.656 [0.614, 0.698], Brier 0.105, ECE 0.015; base-rate Brier 0.110.
+  Paired ΔAUC (HistGB − logistic) −0.055 [−0.093, −0.018] → **logistic stays
+  champion**.
+- **Export gate:** fails on accuracy (0.874 = majority 0.874), so predictions
+  carry `export_gate_passed: false` and the UI keeps percentages withheld.
+- **Leakage:** with `enrollment_log10` (the v2 recipe) the same split scores AUC
+  0.913; enrollment alone scores 0.877. 99.4% of WITHDRAWN rows have
+  enrollment 0.
+- **Serving:** `GET /v1/models/completion` (model card) and
+  `POST /v1/models/completion/predict?version=…` load
+  `model_registry/completion/manifest.json`, verify the artifact SHA-256 and
+  scikit-learn minor, reject unknown versions with 404, and reject unknown input
+  fields (for example `enrollment` or `status`) with 422.
+- **Drift:** `npm run ml:ct:drift` and the weekly
+  `.github/workflows/completion-drift.yml` compute per-feature and score PSI vs
+  the committed training reference; PSI > 0.20 fails, 0.10–0.20 warns.
+
 ## Offline TensorFlow benchmark
 
 `completion-tensorflow-benchmark-v1` is an offline challenger for the same
@@ -73,6 +109,8 @@ npm run ml:ct:seed     # ~1200 synthetic records (CI / offline fallback)
 npm run ml:ct:ingest   # bulk CT.gov fetch → ml/clinical_trials/data/cached_training.json
 npm run ml:ct:train    # train WH + completion; writes shipped JSON artifacts
 npm run ml:ct:corpus   # JSONL for future LLM fine-tuning (does not train an LLM)
+npm run ml:ct:train:production  # completion-proxy-v3 → services/python-api/model_registry/completion
+npm run ml:ct:drift    # PSI drift check vs the committed training reference
 
 npm test -- __tests__/lib/ml/clinicalTrials/inference.test.ts
 npm run ml:ct:test
@@ -109,6 +147,7 @@ metrics without the Keras model.
 | `src/data/ml/clinical-trials/completion-proxy-v2.json`                     | Completion proxy (when gate passes)                    |
 | `src/data/ml/clinical-trials/model-card.json`                              | Metrics, training source, version, export-gate honesty |
 | `__tests__/lib/ml/clinicalTrials/parityFixtures.json`                      | sklearn vs TS probabilities                            |
+| `services/python-api/model_registry/completion/`                           | v3 champion artifact, manifest, evaluation, model card |
 | `ml/clinical_trials/data/training_seed.json`                               | Synthetic fallback (committed)                         |
 | `ml/clinical_trials/data/cached_training.json`                             | Live ingest cache (gitignored)                         |
 | `ml/clinical_trials/data/llm_corpus.jsonl`                                 | LLM training export (gitignored)                       |

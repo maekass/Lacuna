@@ -1,0 +1,348 @@
+{
+  "cohort_audit": {
+    "nct_id_overlap_count": 0,
+    "test_class_counts": {
+      "0": 194,
+      "1": 1346
+    },
+    "test_rows_with_known_sponsor": 1540,
+    "test_rows_with_sponsor_seen_in_train": 911,
+    "test_sponsor_overlap_fraction": 0.5915584415584415,
+    "test_start_year_range": {
+      "max": 2028,
+      "min": 2024
+    },
+    "train_class_counts": {
+      "0": 934,
+      "1": 6405
+    },
+    "train_start_year_range": {
+      "max": 2023,
+      "min": 1976
+    },
+    "unique_train_sponsors": 2341
+  },
+  "counts": {
+    "calibration": 1468,
+    "test": 1540,
+    "train_fit": 5871
+  },
+  "features": {
+    "featurizer_version": "completion-features-v3",
+    "numeric": [
+      "phase_num",
+      "intervention_count",
+      "condition_count",
+      "is_interventional",
+      "sponsor_academic",
+      "sponsor_industry",
+      "title_word_count"
+    ],
+    "text": "TF-IDF(1-2 grams, max 5000, min_df 2) of title + condition + interventions + sponsor"
+  },
+  "git_sha_at_training": "4ebb3122fefcdefe8afe3ead310c0549e87a34bc",
+  "leakage_audit": {
+    "enrollment_by_status": {
+      "COMPLETED": {
+        "enrollment_median": 94.0,
+        "enrollment_zero_fraction": 0.0033544058831118566,
+        "has_results_fraction": 0.0,
+        "n": 7751
+      },
+      "SUSPENDED": {
+        "enrollment_median": 90.0,
+        "enrollment_zero_fraction": 0.0,
+        "has_results_fraction": 0.0,
+        "n": 63
+      },
+      "TERMINATED": {
+        "enrollment_median": 28.0,
+        "enrollment_zero_fraction": 0.004098360655737705,
+        "has_results_fraction": 0.0,
+        "n": 732
+      },
+      "WITHDRAWN": {
+        "enrollment_median": 0.0,
+        "enrollment_zero_fraction": 0.993993993993994,
+        "has_results_fraction": 0.0,
+        "n": 333
+      }
+    },
+    "enrollment_log10_alone_holdout_auc": 0.8772154225578652,
+    "excluded_fields": {
+      "ResultsFirstPostDate": "Post-outcome timestamp; same leakage as has_results.",
+      "completion_date / primary_completion_date": "Updated to the actual stop date at closure; not ingested.",
+      "enrollment": "CT.gov overwrites anticipated enrollment with ACTUAL enrollment when a trial ends. Withdrawn trials are reset to 0 (99.4% of WITHDRAWN rows in the frozen snapshot have enrollment 0), so the field encodes the label.",
+      "has_results": "Results are posted after a trial ends and are far more common for completed trials (post-outcome information).",
+      "source_query / label_wh": "Artifacts of how the training cohort was assembled; not available for an arbitrary trial at inference time.",
+      "start_year": "Temporal split key. Excluded as a feature so the model cannot extrapolate a calendar trend across the holdout boundary.",
+      "status": "Outcome itself; the label is derived from overall status.",
+      "why_stopped": "Only populated for stopped trials; not ingested."
+    },
+    "has_results_note": "The ingest field filter does not request resultsSection, so has_results is constant False in this snapshot. It is excluded regardless because results posting happens after the outcome.",
+    "has_results_unique_values_in_snapshot": [
+      false
+    ],
+    "status_token_note": "Status-like substrings are rare in title/condition/intervention/sponsor text and are not concentrated in stopped trials, so text is kept without a stop list.",
+    "status_token_occurrences_in_text": {
+      "complet": {
+        "completed": 29,
+        "stopped": 1
+      },
+      "discontinu": {
+        "completed": 10,
+        "stopped": 1
+      },
+      "halt": {
+        "completed": 3,
+        "stopped": 1
+      },
+      "stopped": {
+        "completed": 0,
+        "stopped": 0
+      },
+      "suspend": {
+        "completed": 0,
+        "stopped": 0
+      },
+      "terminat": {
+        "completed": 16,
+        "stopped": 2
+      },
+      "withdraw": {
+        "completed": 12,
+        "stopped": 1
+      }
+    },
+    "v2_recipe_with_enrollment_reference": {
+      "brier": 0.11372269405895528,
+      "description": "completion-proxy-v2 features (text + phase_num + enrollment_log10), uncalibrated, same split. Leaky reference only; never eligible for promotion.",
+      "roc_auc": 0.9133476815612507,
+      "roc_auc_ci_95": [
+        0.8847582481588363,
+        0.9387598457675925
+      ]
+    }
+  },
+  "model_id": "completion-proxy-v3",
+  "models": {
+    "3.0.0-hgb": {
+      "accuracy": 0.874025974025974,
+      "base_rate_brier": 0.1101045707539214,
+      "brier": 0.10538839308389909,
+      "brier_ci_95": [
+        0.09363605887835616,
+        0.11727328048149117
+      ],
+      "expected_calibration_error": 0.014548720431395556,
+      "export_gate": {
+        "passes": false,
+        "reason": "accuracy=0.874025974025974 <= majority baseline 0.874025974025974"
+      },
+      "f1": 0.9327789327789328,
+      "log_loss": 0.3602608310694323,
+      "log_loss_ci_95": [
+        0.3287904766692683,
+        0.3920638203382096
+      ],
+      "majority_baseline_accuracy": 0.874025974025974,
+      "n": 1540,
+      "positive_rate": 0.874025974025974,
+      "pr_auc": 0.9209898514893935,
+      "precision": 0.874025974025974,
+      "recall": 1.0,
+      "roc_auc": 0.6562131401173389,
+      "roc_auc_ci_lower": 0.6138920487729189,
+      "roc_auc_ci_upper": 0.6984494938537839,
+      "threshold": 0.5
+    },
+    "3.0.0-logreg": {
+      "accuracy": 0.874025974025974,
+      "base_rate_brier": 0.1101045707539214,
+      "brier": 0.10204979641702315,
+      "brier_ci_95": [
+        0.09041725523475659,
+        0.11399574689465122
+      ],
+      "expected_calibration_error": 0.03063230154322795,
+      "export_gate": {
+        "passes": false,
+        "reason": "accuracy=0.874025974025974 <= majority baseline 0.874025974025974"
+      },
+      "f1": 0.9327789327789328,
+      "log_loss": 0.34733829828861823,
+      "log_loss_ci_95": [
+        0.31511968462162204,
+        0.380467827502213
+      ],
+      "majority_baseline_accuracy": 0.874025974025974,
+      "n": 1540,
+      "positive_rate": 0.874025974025974,
+      "pr_auc": 0.9343947365608409,
+      "precision": 0.874025974025974,
+      "recall": 1.0,
+      "roc_auc": 0.7110606455170724,
+      "roc_auc_ci_lower": 0.6703224801636146,
+      "roc_auc_ci_upper": 0.7522763444055938,
+      "threshold": 0.5
+    }
+  },
+  "paired_bootstrap_challenger_minus_baseline": {
+    "accepted_resamples": 2000,
+    "brier_delta": {
+      "ci_95_lower": 0.0016568985465144031,
+      "ci_95_upper": 0.005042987609349987,
+      "point": 0.0033385966668759426
+    },
+    "direction": {
+      "brier_delta": "negative_favors_challenger",
+      "log_loss_delta": "negative_favors_challenger",
+      "pr_auc_delta": "positive_favors_challenger",
+      "roc_auc_delta": "positive_favors_challenger"
+    },
+    "log_loss_delta": {
+      "ci_95_lower": 0.005730746411264344,
+      "ci_95_upper": 0.020187588134046395,
+      "point": 0.012922532780814067
+    },
+    "method": "paired_nonparametric_bootstrap",
+    "pr_auc_delta": {
+      "ci_95_lower": -0.027916503462428802,
+      "ci_95_upper": 0.0011547214167521762,
+      "point": -0.013404885071447437
+    },
+    "requested_resamples": 2000,
+    "roc_auc_delta": {
+      "ci_95_lower": -0.09254272311891047,
+      "ci_95_upper": -0.01835177426953957,
+      "point": -0.05484750539973349
+    },
+    "seed": 1729
+  },
+  "paired_bootstrap_model_minus_base_rate": {
+    "3.0.0-hgb": {
+      "accepted_resamples": 2000,
+      "brier_delta": {
+        "ci_95_lower": -0.006395184653441648,
+        "ci_95_upper": -0.003045425796740588,
+        "point": -0.004717845045717983
+      },
+      "direction": {
+        "brier_delta": "negative_favors_model_over_base_rate",
+        "log_loss_delta": "negative_favors_model_over_base_rate"
+      },
+      "log_loss_delta": {
+        "ci_95_lower": -0.025053610254763933,
+        "ci_95_upper": -0.0116274161935143,
+        "point": -0.01840789764076106
+      },
+      "method": "paired_nonparametric_bootstrap",
+      "pr_auc_delta": {
+        "ci_95_lower": 0.03217673455678969,
+        "ci_95_upper": 0.06163483054000798,
+        "point": 0.04696387746341946
+      },
+      "requested_resamples": 2000,
+      "roc_auc_delta": {
+        "ci_95_lower": 0.1132915066141014,
+        "ci_95_upper": 0.19589745678647197,
+        "point": 0.1562131401173389
+      },
+      "seed": 1729
+    },
+    "3.0.0-logreg": {
+      "accepted_resamples": 2000,
+      "brier_delta": {
+        "ci_95_lower": -0.010475336377982137,
+        "ci_95_upper": -0.0056757327139590535,
+        "point": -0.008056441712593926
+      },
+      "direction": {
+        "brier_delta": "negative_favors_model_over_base_rate",
+        "log_loss_delta": "negative_favors_model_over_base_rate"
+      },
+      "log_loss_delta": {
+        "ci_95_lower": -0.04057691955783018,
+        "ci_95_upper": -0.021734076299411622,
+        "point": -0.03133043042157513
+      },
+      "method": "paired_nonparametric_bootstrap",
+      "pr_auc_delta": {
+        "ci_95_lower": 0.044936495030316284,
+        "ci_95_upper": 0.0755683405736872,
+        "point": 0.06036876253486689
+      },
+      "requested_resamples": 2000,
+      "roc_auc_delta": {
+        "ci_95_lower": 0.1695299578444543,
+        "ci_95_upper": 0.25076936646350567,
+        "point": 0.21106064551707238
+      },
+      "seed": 1729
+    }
+  },
+  "promotion": {
+    "baseline_passes_export_gate": false,
+    "challenger_beats_baseline_by_paired_ci": false,
+    "challenger_passes_export_gate": false,
+    "champion_version": "3.0.0-logreg",
+    "promoted_challenger": false,
+    "reasons_challenger_not_promoted": [
+      "paired ROC AUC delta 95% CI lower bound -0.0925 is not above 0",
+      "challenger fails export gate: accuracy=0.874025974025974 <= majority baseline 0.874025974025974"
+    ],
+    "rule": "challenger is champion iff paired ROC AUC delta CI lower > 0 AND challenger passes the conjunction export gate; otherwise baseline stays"
+  },
+  "reference_predictors": {
+    "base_rate": {
+      "accuracy": 0.874025974025974,
+      "brier": 0.11010623812961708,
+      "description": "Always predicts the training completion rate p=0.8727.",
+      "expected_calibration_error": 0.0012912690252927517,
+      "log_loss": 0.37866872871019336,
+      "roc_auc": 0.5,
+      "train_positive_rate": 0.8727347050006813
+    },
+    "majority_class": {
+      "accuracy": 0.874025974025974,
+      "brier": 0.12597402597402596,
+      "description": "Always predicts class 1 (training majority) with probability 1.",
+      "log_loss": 2.030461487654568,
+      "roc_auc": 0.5
+    }
+  },
+  "runtime": {
+    "numpy": "2.5.5",
+    "python": "3.12.15",
+    "scikit_learn": "1.9.1"
+  },
+  "snapshot": {
+    "canonical_record_sha256": "ad2da67d8fd285cbac32006d802f2b9353b118fa91334d3dd734cf20693c62f9",
+    "generated_at_utc": "2026-11-16T02:54:03.781036+00:00",
+    "ingest_details": {
+      "all_queries": true,
+      "fields": "NCTId,BriefTitle,OverallStatus,Phase,Condition,LeadSponsorName,EnrollmentCount,InterventionName,StudyType,StartDate,ResultsFirstPostDate",
+      "max_pages_per_query": 10,
+      "page_size": 100
+    },
+    "labeled_rows_sha256": "db1169a366c1d10d97f6670ea6b183311e03f70915bc4ac22a4c96e65506e2ec",
+    "labeled_with_start_year": 8879,
+    "record_count": 18923,
+    "snapshot_file_sha256": "2f6a310097e96f32f21323b74834d79c4c5d0628c49ab62ddf9eb31c164433a9",
+    "source": "clinicaltrials_gov_api_v2"
+  },
+  "split": {
+    "calibration": {
+      "fraction_of_train": 0.2,
+      "method": "sigmoid",
+      "seed": 42,
+      "stratified": true
+    },
+    "cutoff_year": 2023,
+    "excluded_missing_start_year": "rows without start_year are dropped before splitting",
+    "rule": "cutoff = start_year at the 75th percentile of labeled rows; train start_year <= cutoff, test start_year > cutoff",
+    "split_sha256": "690b5d0ba045a511ba56ba258c685e3f56cb24d264c2758da5045a8281cdbf10",
+    "strategy": "start_year_holdout"
+  },
+  "trained_at_utc": "2026-11-16T03:07:08.479952+00:00"
+}
