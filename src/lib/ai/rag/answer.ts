@@ -39,6 +39,9 @@ export interface EvidenceDraftGeneration {
   draft: EvidenceAskDraft;
   modelId: string;
   estimatedCostUsd: number;
+  /** Provider-reported token usage, when the generator has it. */
+  inputTokens?: number;
+  outputTokens?: number;
 }
 
 export type EvidenceDraftGenerator = (input: {
@@ -60,6 +63,11 @@ export interface RunEvidenceAskInput {
   corpus?: readonly EvidencePassage[];
   generate?: EvidenceDraftGenerator;
   requestId?: string;
+  /**
+   * Offline evaluation hook for versioned prompt revisions. Production
+   * requests leave this unset and use EVIDENCE_RAG_SYSTEM_PROMPT.
+   */
+  prompt?: { version: string; system: string };
 }
 
 export interface RunEvidenceAskResult {
@@ -144,7 +152,11 @@ function abstainBody(input: {
   };
 }
 
-async function generateWithInference(input: {
+/**
+ * Production evidence-ask generator: gateway model, citation schema,
+ * temperature 0. Exported so offline evals call the same configuration.
+ */
+export async function generateEvidenceDraftWithInference(input: {
   system: string;
   prompt: string;
 }): Promise<EvidenceDraftGeneration> {
@@ -174,6 +186,8 @@ async function generateWithInference(input: {
     draft: data,
     modelId: accounting.modelId,
     estimatedCostUsd: accounting.estimatedCostUsd,
+    inputTokens: accounting.inputTokens,
+    outputTokens: accounting.outputTokens,
   };
 }
 
@@ -267,9 +281,9 @@ export async function runEvidenceAsk(
         limitations: passage.limitations,
       })),
     });
-    const run = generate ?? generateWithInference;
+    const run = generate ?? generateEvidenceDraftWithInference;
     generated = await run({
-      system: EVIDENCE_RAG_SYSTEM_PROMPT,
+      system: input.prompt?.system ?? EVIDENCE_RAG_SYSTEM_PROMPT,
       prompt,
     });
   } catch (error) {
@@ -364,7 +378,7 @@ export async function runEvidenceAsk(
     representedAsApprovedClaim: publicationEligible,
     sourceSnapshotHash: corpusSnapshotHash(corpus),
     modelId: generated.modelId,
-    promptVersion: EVIDENCE_RAG_PROMPT_VERSION,
+    promptVersion: input.prompt?.version ?? EVIDENCE_RAG_PROMPT_VERSION,
     retrieverVersion: retrieval.retrieverVersion,
     retrievalAlgorithm: retrieval.retrievalAlgorithm,
     retrievalConfigHash: retrieval.retrievalConfigHash,

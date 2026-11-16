@@ -48,6 +48,7 @@ export const corpusClassSchema = z.enum([
   "synthetic_fixture",
   "ledger_adapter",
   "observation_adapter",
+  "verified_dataset_adapter",
 ]);
 
 export const structuredRecordSchema = z.object({
