@@ -352,7 +352,7 @@ export default function StagingDealDetailPage(
       <MotionSection>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-lacuna-plum">
+            <h1 className="lacuna-gradient-text text-2xl font-bold">
               {deal.targetName ?? "Unknown target"}
               <span className="mx-2 text-lacuna-blue/60">←</span>
               {deal.acquirerName ?? "Unknown acquirer"}

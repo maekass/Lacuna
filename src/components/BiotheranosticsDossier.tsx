@@ -26,7 +26,7 @@ export default function BiotheranosticsDossier() {
         <p className="mb-3 text-sm font-medium text-lacuna-plum">
           Research · cited public sources
         </p>
-        <h1 className="text-3xl font-bold leading-tight text-lacuna-plum sm:text-4xl">
+        <h1 className="lacuna-gradient-text text-3xl font-bold leading-tight sm:text-4xl">
           {dossier.title}
         </h1>
         <p className="mt-4 text-sm">

@@ -14,7 +14,7 @@
  * The script matches companies by name (fuzzy match) and enriches:
  *   - totalFunding (from "Total Funding Amount")
  *   - lastKnownValuation (from "Last Known Valuation")
- *   - foundedDate (from "Founded Date")
+ *   - founded years are NOT copied; see docs/FOUNDING_YEAR_PROVENANCE.md
  *   - employees (from "Number of Employees")
  *   - operatingStatus (from "Operating Status")
  *   - lastFundingType (from "Last Funding Type")
@@ -316,16 +316,15 @@ function main() {
         }
       }
 
-      // Founded Date
+      // Crunchbase is not an accepted sole source for `founded`.
+      // A year enters the catalog only through foundingYearReview.json.
       const foundedKey = Object.keys(row).find((k) =>
         k.toLowerCase().includes("founded")
       );
-      if (foundedKey) {
-        const founded = parseDate(row[foundedKey]);
-        if (founded) {
-          matched.foundedDate = founded;
-          fieldsUpdated.push("foundedDate");
-        }
+      if (foundedKey && row[foundedKey]?.trim()) {
+        console.log(
+          `    skip founded for ${matched.id}: Crunchbase export is not an accepted founding-year source`,
+        );
       }
 
       // Employees

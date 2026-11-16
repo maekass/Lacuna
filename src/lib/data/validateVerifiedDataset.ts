@@ -6,6 +6,7 @@ import {
   type DisclosureStats,
   type SectorDealCount,
 } from "./datasetCoverageStats";
+import { validateDatasetConsistency } from "./validateDatasetConsistency";
 
 export interface ValidationIssue {
   code: string;
@@ -297,6 +298,10 @@ export function validateVerifiedDataset(
       });
     }
   }
+
+  const consistency = validateDatasetConsistency(dataset);
+  errors.push(...consistency.errors);
+  warnings.push(...consistency.warnings);
 
   return {
     ok: errors.length === 0,

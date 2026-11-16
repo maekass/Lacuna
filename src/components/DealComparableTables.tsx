@@ -1,95 +1,13 @@
 "use client";
 
-import type { ReactNode } from "react";
-import Link from "next/link";
 import Metric from "@/components/Metric";
+import SortableDealTable from "@/components/deals/SortableDealTable";
 import type { AdjacentNonPeer } from "@/lib/deals/listComparableDeals";
 import type { ComparableDealSummary } from "@/lib/deals/dealTypes";
-import {
-  DEAL_VALUE_MODEL,
-  VALUE_RATIO_MODEL,
-} from "@/lib/deals/dealMetricModels";
+import { VALUE_RATIO_MODEL } from "@/lib/deals/dealMetricModels";
 
-function DealTable<T extends ComparableDealSummary>({
-  title,
-  caption,
-  rows,
-  extraHeader,
-  extraCell,
-}: {
-  title: string;
-  caption?: string;
-  rows: T[];
-  extraHeader?: string;
-  extraCell?: (row: T) => ReactNode;
-}) {
-  if (rows.length === 0) return null;
-  return (
-    <div>
-      <h3 className="text-lg font-semibold text-lacuna-plum">{title}</h3>
-      {caption
-        ? <p className="mt-1 text-xs text-lacuna-blue/80">{caption}</p>
-        : null}
-      <div className="mt-3 overflow-x-auto rounded-lg border border-lacuna-lavender/40">
-        <table className="min-w-full text-sm">
-          <thead className="bg-lacuna-lavender/20 text-left text-xs uppercase tracking-wide text-lacuna-plum/80">
-            <tr>
-              <th className="px-3 py-2">Target</th>
-              <th className="px-3 py-2">Acquirer</th>
-              <th className="px-3 py-2">Announced</th>
-              <th className="px-3 py-2">Value</th>
-              {extraHeader
-                ? <th className="px-3 py-2">{extraHeader}</th>
-                : null}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row) => (
-              <tr key={row.id} className="border-t border-lacuna-lavender/30">
-                <td className="px-3 py-2">
-                  <Link
-                    href={`/deals/${row.id}`}
-                    className="font-medium text-lacuna-plum hover:text-lacuna-blue underline-offset-2 hover:underline"
-                  >
-                    {row.targetName}
-                  </Link>
-                </td>
-                <td className="px-3 py-2 text-lacuna-blue">
-                  {row.acquirerName}
-                </td>
-                <td className="px-3 py-2 text-lacuna-blue/80">
-                  {row.announcedLabel}
-                </td>
-                <td className="px-3 py-2 text-lacuna-blue/80">
-                  {typeof row.dealValue === "number"
-                    ? (
-                      <Metric
-                        label={`${row.targetName} disclosed value`}
-                        provenance={{
-                          kind: "proxy",
-                          value: row.dealValue,
-                          model: DEAL_VALUE_MODEL,
-                        }}
-                        formatValue={(millions) =>
-                          `$${millions.toLocaleString()}M`}
-                      />
-                    )
-                    : "Undisclosed"}
-                </td>
-                {extraHeader
-                  ? (
-                    <td className="px-3 py-2 text-xs text-lacuna-blue/80">
-                      {extraCell?.(row) ?? "—"}
-                    </td>
-                  )
-                  : null}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+function rowKey(title: string, rows: readonly { id: string }[]): string {
+  return `${title}:${rows.map((row) => row.id).join("|")}`;
 }
 
 export default function DealComparableTables({
@@ -107,10 +25,13 @@ export default function DealComparableTables({
 }) {
   return (
     <div className="space-y-8">
-      <DealTable
+      <SortableDealTable
+        key={rowKey("peers", peers)}
         title={`Valuation peers · ${sector}`}
-        caption="Same sector, same deal type, announced within ±3 years, disclosed value within 0.25×–4× of this transaction. Ranked by evidence class, then same acquirer."
+        caption="Same sector, same deal type, announced within ±3 years, disclosed value within 0.25×–4× of this transaction. Ranked by evidence class, then same acquirer, until you sort."
         rows={peers}
+        emptyTitle="Insufficient disclosed data"
+        emptyDescription={`No verified ${sector} deals meet the peer rule: same deal type, announced within ±3 years, and a disclosed value inside 0.25×–4× of this transaction.`}
         extraHeader="Why included"
         extraCell={(row) => {
           const bits: string[] = [];
@@ -121,10 +42,13 @@ export default function DealComparableTables({
       />
       {adjacencyNotPeers.length > 0
         ? (
-          <DealTable
+          <SortableDealTable
+            key={rowKey("adjacency", adjacencyNotPeers)}
             title="Same-sector adjacency — not valuation peers"
             caption="These deals share the sector tag and window but sit outside the 0.25×–4× value band. The dataset keeps them for clinical adjacency, not as price comps."
             rows={adjacencyNotPeers}
+            emptyTitle="Insufficient disclosed data"
+            emptyDescription="No same-sector deals sit outside the valuation-peer value band."
             extraHeader="Vs this deal"
             extraCell={(row) => (
               <Metric
@@ -142,10 +66,13 @@ export default function DealComparableTables({
           />
         )
         : null}
-      <DealTable
+      <SortableDealTable
+        key={rowKey("acquirer", acquirerDeals)}
         title={`Other verified deals by ${acquirerName}`}
         caption="Acquirer program history not already listed as a valuation peer or adjacency row."
         rows={acquirerDeals}
+        emptyTitle="No further verified deals"
+        emptyDescription={`Other verified transactions by ${acquirerName} are already listed above, or none are in the dataset.`}
         extraHeader="Sector"
         extraCell={(row) => row.sector}
       />

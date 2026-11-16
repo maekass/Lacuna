@@ -16,6 +16,8 @@ interface QualityHistoryRow {
 }
 
 export interface QualityTrendPoint {
+  /** Stable across same-day snapshots. `runAtLabel` is only the calendar day. */
+  readonly id: string;
   readonly runAtLabel: string;
   readonly backfilled: boolean;
   readonly companiesAvgLabel: string;
@@ -86,7 +88,8 @@ export function buildQualityTrendView(
       ? `${(latest.disclosure.disclosureRate * 100).toFixed(1)}%`
       : "—",
     hasBackfilledRegion: backfilled.length > 0,
-    points: rows.map((row) => ({
+    points: rows.map((row, index) => ({
+      id: `${row.runAt}#${index}`,
       runAtLabel: row.runAt.slice(0, 10),
       backfilled: Boolean(row.backfilled),
       companiesAvgLabel: row.companies.avgScore.toFixed(1),

@@ -4,11 +4,21 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ZodError } from "zod";
 import { assembleEndometriosisTherapeuticsGraph } from "../src/data/therapeutics/endometriosis/buildGraph";
+import {
+  formatFoundingYearStatsBlock,
+  parseFoundingYearReview,
+  summarizeFoundedYears,
+  validateFoundingYearReview,
+} from "../src/lib/data/foundingYearReview";
 import { parseStaticVerifiedDatasetJson } from "../src/lib/data/staticDataset";
 import { validateVerifiedDataset } from "../src/lib/data/validateVerifiedDataset";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const datasetPath = join(__dirname, "../src/data/dataset.verified.json");
+const foundingYearReviewPath = join(
+  __dirname,
+  "../src/data/foundingYearReview.json",
+);
 
 function formatSchemaErrors(error: ZodError): string[] {
   return error.issues.map((issue) => {
@@ -150,10 +160,51 @@ function main() {
     }
   }
 
+  let foundingYearErrors = 0;
+  console.log("Lacuna founding-year review");
+  console.log("File:", foundingYearReviewPath);
+  try {
+    const foundingReview = parseFoundingYearReview(
+      JSON.parse(readFileSync(foundingYearReviewPath, "utf8")),
+    );
+    const foundingStats = summarizeFoundedYears(
+      dataset.companies,
+      foundingReview,
+    );
+    console.log(formatFoundingYearStatsBlock(foundingStats));
+    console.log("");
+    const foundingIssues = validateFoundingYearReview(
+      dataset.companies,
+      foundingReview,
+    );
+    foundingYearErrors = foundingIssues.length;
+    if (foundingIssues.length > 0) {
+      console.error(
+        `--- Founding-year review errors (${foundingIssues.length}) ---`,
+      );
+      for (const issue of foundingIssues) {
+        console.error(`  [${issue.code}] ${issue.message}`);
+      }
+      console.error("");
+    }
+  } catch (error) {
+    foundingYearErrors = 1;
+    console.error("--- Founding-year review schema errors ---");
+    if (error instanceof ZodError) {
+      for (const line of formatSchemaErrors(error)) {
+        console.error(`  ${line}`);
+      }
+    } else {
+      console.error(error);
+    }
+    console.error("");
+  }
+
   if (
     report.errors.length > 0 ||
     therapeutics.schemaErrors.length > 0 ||
-    therapeuticsErrors.length > 0
+    therapeuticsErrors.length > 0 ||
+    foundingYearErrors > 0
   ) {
     process.exit(1);
   }

@@ -69,12 +69,12 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
       </nav>
 
       <header className="mb-8">
-        <h1 className="text-2xl font-bold leading-tight text-lacuna-plum sm:text-3xl md:text-4xl">
-          <span className="block sm:inline">{acq.targetName}</span>
-          <span className="mx-0 my-1 block text-lacuna-blue/60 sm:mx-2 sm:my-0 sm:inline">
-            →
-          </span>
-          <span className="block sm:inline">{acq.acquirerName}</span>
+        <h1 className="lacuna-gradient-text text-2xl font-bold leading-tight sm:text-3xl md:text-4xl">
+          {acq.targetName}
+          <br className="sm:hidden" />
+          <span className="text-lacuna-blue/60 sm:mx-2">→</span>
+          <br className="sm:hidden" />
+          {acq.acquirerName}
         </h1>
         <p className="mt-2 text-sm leading-relaxed text-lacuna-blue sm:text-base">
           {acq.dealType}

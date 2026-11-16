@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-20T00:00:00.000Z",
-  "datasetVersion": "v9",
-  "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
+  "generatedAt": "2026-10-19T00:00:00.000Z",
+  "datasetVersion": "v11",
+  "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
   "source": "Lacuna verified catalog + economic evidence ledger",
   "results": [
     {
@@ -133,7 +133,7 @@
             },
             {
               "kind": "prose",
-              "rawCitation": "SEC EDGAR EX-99.1 (23andMe–Lemonaid merger agreement, Oct 22, 2021); Globe Newswire closing release (Nov 1, 2021)"
+              "rawCitation": "SEC EDGAR EX-99.1 (23andMe–Lemonaid merger agreement, Oct 22, 2021); Globe Newswire closing release (Nov 1, 2021); SEC EDGAR 8-K EX-99.1 (merger agreement, Oct 22, 2021) https://www.sec.gov/Archives/edgar/data/1804591/000119312521305409/d231996dex991.htm; SEC EDGAR 8-K EX-99.1 (closing, Nov 1, 2021) https://www.sec.gov/Archives/edgar/data/1804591/000119312521316240/d247525dex991.htm"
             },
             {
               "kind": "prose",
@@ -390,7 +390,7 @@
             }
           ],
           "n": 7,
-          "originalInputCount": 59,
+          "originalInputCount": 61,
           "excluded": [
             {
               "ref": {
@@ -399,7 +399,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 61
             },
             {
               "ref": {
@@ -408,7 +408,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 61
             },
             {
               "ref": {
@@ -417,7 +417,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 61
             },
             {
               "ref": {
@@ -426,7 +426,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 61
             },
             {
               "ref": {
@@ -435,7 +435,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 61
             },
             {
               "ref": {
@@ -444,7 +444,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 61
             },
             {
               "ref": {
@@ -453,7 +453,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 61
             },
             {
               "ref": {
@@ -462,7 +462,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 61
             },
             {
               "ref": {
@@ -471,7 +471,7 @@
               },
               "reason": "value_undisclosed",
               "field": "dealValue",
-              "evaluatedCount": 59
+              "evaluatedCount": 61
             },
             {
               "ref": {
@@ -480,7 +480,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -489,7 +489,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -498,7 +498,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -507,7 +507,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -516,7 +516,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -525,7 +525,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -534,7 +534,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -543,7 +543,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -552,7 +552,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -561,7 +561,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -570,7 +570,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -579,7 +579,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -588,7 +588,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -597,7 +597,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -606,7 +606,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -615,7 +615,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -624,7 +624,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -633,7 +633,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -642,7 +642,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -651,7 +651,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -660,7 +660,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -669,7 +669,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -678,7 +678,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -687,7 +687,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -696,7 +696,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -705,7 +705,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -714,7 +714,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -723,7 +723,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -732,7 +732,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -741,7 +741,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -750,7 +750,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -759,7 +759,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -768,7 +768,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -777,7 +777,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -786,7 +786,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -795,7 +795,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -804,7 +804,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -813,7 +813,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -822,7 +822,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -831,7 +831,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -840,7 +840,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -849,7 +849,7 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
             },
             {
               "ref": {
@@ -858,24 +858,42 @@
               },
               "reason": "funding_unresearched",
               "field": "totalFunding",
-              "evaluatedCount": 50
+              "evaluatedCount": 52
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal60"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 52
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal61"
+              },
+              "reason": "funding_unresearched",
+              "field": "totalFunding",
+              "evaluatedCount": 52
             }
           ],
           "missingness": [
             {
               "field": "dealValue",
               "missing": 9,
-              "total": 59
+              "total": 61
             },
             {
               "field": "totalFunding",
-              "missing": 43,
-              "total": 50
+              "missing": 45,
+              "total": 52
             }
           ],
-          "datasetVersion": "v9",
-          "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-          "computedAt": "2026-09-20T00:00:00.000Z"
+          "datasetVersion": "v11",
+          "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+          "computedAt": "2026-10-19T00:00:00.000Z"
         }
       }
     }
@@ -888,11 +906,11 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 7,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
-            "count": 43
+            "count": 45
           },
           {
             "reason": "value_undisclosed",
@@ -903,12 +921,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 61
           },
           {
             "field": "totalFunding",
-            "missing": 43,
-            "total": 50
+            "missing": 45,
+            "total": 52
           }
         ],
         "contributors": [
@@ -1089,9 +1107,9 @@
           }
         ],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -1101,11 +1119,11 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 7,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
-            "count": 43
+            "count": 45
           },
           {
             "reason": "value_undisclosed",
@@ -1116,12 +1134,12 @@
           {
             "field": "dealValue",
             "missing": 9,
-            "total": 59
+            "total": 61
           },
           {
             "field": "totalFunding",
-            "missing": 43,
-            "total": 50
+            "missing": 45,
+            "total": 52
           }
         ],
         "contributors": [
@@ -1302,9 +1320,9 @@
           }
         ],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -1314,7 +1332,7 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -1322,7 +1340,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 47
+            "count": 49
           },
           {
             "reason": "value_undisclosed",
@@ -1369,9 +1387,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -1381,7 +1399,7 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -1389,7 +1407,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 47
+            "count": 49
           },
           {
             "reason": "value_undisclosed",
@@ -1436,9 +1454,9 @@
           }
         ],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -1448,7 +1466,7 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -1456,7 +1474,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 47
+            "count": 49
           },
           {
             "reason": "value_undisclosed",
@@ -1503,9 +1521,9 @@
           }
         ],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -1515,11 +1533,11 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 3,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 56
+            "count": 58
           }
         ],
         "missingness": [],
@@ -1601,9 +1619,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -1613,11 +1631,11 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 3,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 56
+            "count": 58
           }
         ],
         "missingness": [],
@@ -1699,9 +1717,9 @@
           }
         ],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -1711,11 +1729,11 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 3,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 56
+            "count": 58
           }
         ],
         "missingness": [],
@@ -1797,9 +1815,9 @@
           }
         ],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -1809,7 +1827,7 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -1817,7 +1835,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 56
+            "count": 58
           },
           {
             "reason": "value_undisclosed",
@@ -1838,9 +1856,9 @@
         ],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -1850,7 +1868,7 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -1858,7 +1876,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 56
+            "count": 58
           },
           {
             "reason": "value_undisclosed",
@@ -1879,9 +1897,9 @@
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -1891,7 +1909,7 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -1899,7 +1917,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 56
+            "count": 58
           },
           {
             "reason": "value_undisclosed",
@@ -1920,9 +1938,9 @@
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -1932,11 +1950,11 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 58
+            "count": 60
           }
         ],
         "missingness": [],
@@ -1968,9 +1986,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -1980,11 +1998,11 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 58
+            "count": 60
           }
         ],
         "missingness": [],
@@ -2016,9 +2034,9 @@
           }
         ],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2028,11 +2046,11 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 58
+            "count": 60
           }
         ],
         "missingness": [],
@@ -2064,9 +2082,9 @@
           }
         ],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2076,19 +2094,19 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2098,19 +2116,19 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2120,19 +2138,19 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2142,7 +2160,7 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -2150,7 +2168,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 52
+            "count": 54
           }
         ],
         "missingness": [
@@ -2162,9 +2180,9 @@
         ],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2174,7 +2192,7 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -2182,7 +2200,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 52
+            "count": 54
           }
         ],
         "missingness": [
@@ -2194,9 +2212,9 @@
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2206,7 +2224,7 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -2214,7 +2232,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 52
+            "count": 54
           }
         ],
         "missingness": [
@@ -2226,9 +2244,9 @@
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2238,7 +2256,7 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -2246,7 +2264,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 54
+            "count": 56
           }
         ],
         "missingness": [
@@ -2258,9 +2276,9 @@
         ],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2270,7 +2288,7 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -2278,7 +2296,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 54
+            "count": 56
           }
         ],
         "missingness": [
@@ -2290,9 +2308,9 @@
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2302,7 +2320,7 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -2310,7 +2328,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 54
+            "count": 56
           }
         ],
         "missingness": [
@@ -2322,9 +2340,9 @@
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2334,185 +2352,185 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
             "count": 3
           },
-          {
-            "reason": "out_of_sector",
-            "count": 55
-          }
-        ],
-        "missingness": [
-          {
-            "field": "totalFunding",
-            "missing": 3,
-            "total": 4
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal11"
-            },
-            "value": 6.4,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal11"
-                },
-                "field": "dealValue",
-                "value": 1600
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c28"
-                },
-                "field": "totalFunding",
-                "value": 250
-              }
-            ]
-          }
-        ],
-        "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "sector.moic.p25",
-      "reason": "n=1 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
-      "lineage": {
-        "metricId": "sector.moic.p25",
-        "estimator": "bcaP25",
-        "n": 1,
-        "originalInputCount": 59,
-        "excluded": [
-          {
-            "reason": "funding_unresearched",
-            "count": 3
-          },
-          {
-            "reason": "out_of_sector",
-            "count": 55
-          }
-        ],
-        "missingness": [
-          {
-            "field": "totalFunding",
-            "missing": 3,
-            "total": 4
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal11"
-            },
-            "value": 6.4,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal11"
-                },
-                "field": "dealValue",
-                "value": 1600
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c28"
-                },
-                "field": "totalFunding",
-                "value": 250
-              }
-            ]
-          }
-        ],
-        "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "sector.moic.p75",
-      "reason": "n=1 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
-      "lineage": {
-        "metricId": "sector.moic.p75",
-        "estimator": "bcaP75",
-        "n": 1,
-        "originalInputCount": 59,
-        "excluded": [
-          {
-            "reason": "funding_unresearched",
-            "count": 3
-          },
-          {
-            "reason": "out_of_sector",
-            "count": 55
-          }
-        ],
-        "missingness": [
-          {
-            "field": "totalFunding",
-            "missing": 3,
-            "total": 4
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal11"
-            },
-            "value": 6.4,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal11"
-                },
-                "field": "dealValue",
-                "value": 1600
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c28"
-                },
-                "field": "totalFunding",
-                "value": 250
-              }
-            ]
-          }
-        ],
-        "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "sector.moic.median",
-      "reason": "n=1 below minimum 5 for Median exit-value / capital-raised ratio",
-      "lineage": {
-        "metricId": "sector.moic.median",
-        "estimator": "gatedMedian",
-        "n": 1,
-        "originalInputCount": 59,
-        "excluded": [
           {
             "reason": "out_of_sector",
             "count": 57
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 3,
+            "total": 4
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal11"
+            },
+            "value": 6.4,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal11"
+                },
+                "field": "dealValue",
+                "value": 1600
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c28"
+                },
+                "field": "totalFunding",
+                "value": 250
+              }
+            ]
+          }
+        ],
+        "suppression": "n<5",
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=1 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 1,
+        "originalInputCount": 61,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 3
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 57
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 3,
+            "total": 4
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal11"
+            },
+            "value": 6.4,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal11"
+                },
+                "field": "dealValue",
+                "value": 1600
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c28"
+                },
+                "field": "totalFunding",
+                "value": 250
+              }
+            ]
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=1 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 1,
+        "originalInputCount": 61,
+        "excluded": [
+          {
+            "reason": "funding_unresearched",
+            "count": 3
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 57
+          }
+        ],
+        "missingness": [
+          {
+            "field": "totalFunding",
+            "missing": 3,
+            "total": 4
+          }
+        ],
+        "contributors": [
+          {
+            "ref": {
+              "table": "acquisitions",
+              "id": "deal11"
+            },
+            "value": 6.4,
+            "reads": [
+              {
+                "ref": {
+                  "table": "acquisitions",
+                  "id": "deal11"
+                },
+                "field": "dealValue",
+                "value": 1600
+              },
+              {
+                "ref": {
+                  "table": "companies",
+                  "id": "c28"
+                },
+                "field": "totalFunding",
+                "value": 250
+              }
+            ]
+          }
+        ],
+        "suppression": "n<10",
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=1 below minimum 5 for Median exit-value / capital-raised ratio",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 1,
+        "originalInputCount": 61,
+        "excluded": [
+          {
+            "reason": "out_of_sector",
+            "count": 59
           },
           {
             "reason": "value_undisclosed",
@@ -2554,9 +2572,9 @@
           }
         ],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2566,11 +2584,11 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 57
+            "count": 59
           },
           {
             "reason": "value_undisclosed",
@@ -2612,9 +2630,9 @@
           }
         ],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2624,11 +2642,11 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 1,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 57
+            "count": 59
           },
           {
             "reason": "value_undisclosed",
@@ -2670,9 +2688,9 @@
           }
         ],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2682,11 +2700,11 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
-            "count": 11
+            "count": 13
           },
           {
             "reason": "out_of_sector",
@@ -2696,15 +2714,15 @@
         "missingness": [
           {
             "field": "totalFunding",
-            "missing": 11,
-            "total": 11
+            "missing": 13,
+            "total": 13
           }
         ],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2714,11 +2732,11 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
-            "count": 11
+            "count": 13
           },
           {
             "reason": "out_of_sector",
@@ -2728,15 +2746,15 @@
         "missingness": [
           {
             "field": "totalFunding",
-            "missing": 11,
-            "total": 11
+            "missing": 13,
+            "total": 13
           }
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2746,11 +2764,11 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
-            "count": 11
+            "count": 13
           },
           {
             "reason": "out_of_sector",
@@ -2760,15 +2778,15 @@
         "missingness": [
           {
             "field": "totalFunding",
-            "missing": 11,
-            "total": 11
+            "missing": 13,
+            "total": 13
           }
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2778,7 +2796,7 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -2786,7 +2804,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 58
+            "count": 60
           }
         ],
         "missingness": [
@@ -2798,9 +2816,9 @@
         ],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2810,7 +2828,7 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -2818,7 +2836,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 58
+            "count": 60
           }
         ],
         "missingness": [
@@ -2830,9 +2848,9 @@
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2842,7 +2860,7 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -2850,7 +2868,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 58
+            "count": 60
           }
         ],
         "missingness": [
@@ -2862,9 +2880,9 @@
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2874,7 +2892,7 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -2882,7 +2900,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 53
+            "count": 55
           }
         ],
         "missingness": [
@@ -2894,9 +2912,9 @@
         ],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2906,7 +2924,7 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -2914,7 +2932,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 53
+            "count": 55
           }
         ],
         "missingness": [
@@ -2926,9 +2944,9 @@
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2938,7 +2956,7 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -2946,7 +2964,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 53
+            "count": 55
           }
         ],
         "missingness": [
@@ -2958,9 +2976,9 @@
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -2970,7 +2988,7 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -2978,7 +2996,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 56
+            "count": 58
           },
           {
             "reason": "value_undisclosed",
@@ -2999,9 +3017,9 @@
         ],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3011,7 +3029,7 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -3019,7 +3037,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 56
+            "count": 58
           },
           {
             "reason": "value_undisclosed",
@@ -3040,9 +3058,9 @@
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3052,7 +3070,7 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -3060,7 +3078,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 56
+            "count": 58
           },
           {
             "reason": "value_undisclosed",
@@ -3081,9 +3099,9 @@
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3093,7 +3111,7 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -3101,7 +3119,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 58
+            "count": 60
           }
         ],
         "missingness": [
@@ -3113,9 +3131,9 @@
         ],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3125,7 +3143,7 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -3133,7 +3151,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 58
+            "count": 60
           }
         ],
         "missingness": [
@@ -3145,9 +3163,9 @@
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3157,7 +3175,7 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "funding_unresearched",
@@ -3165,7 +3183,7 @@
           },
           {
             "reason": "out_of_sector",
-            "count": 58
+            "count": 60
           }
         ],
         "missingness": [
@@ -3177,9 +3195,9 @@
         ],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3189,19 +3207,19 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3211,19 +3229,19 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3233,19 +3251,19 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3255,19 +3273,19 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3277,19 +3295,19 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3299,19 +3317,19 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3321,19 +3339,19 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3343,19 +3361,19 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3365,19 +3383,19 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3387,19 +3405,19 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3409,19 +3427,19 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3431,19 +3449,19 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3453,19 +3471,19 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3475,19 +3493,19 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3497,19 +3515,19 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3519,19 +3537,19 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3541,19 +3559,19 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3563,19 +3581,19 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3585,19 +3603,19 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3607,19 +3625,19 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3629,19 +3647,19 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3651,19 +3669,19 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3673,19 +3691,19 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3695,19 +3713,19 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3717,19 +3735,19 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3739,19 +3757,19 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3761,19 +3779,19 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3783,19 +3801,19 @@
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<5",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3805,19 +3823,19 @@
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
@@ -3827,19 +3845,19 @@
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
         "n": 0,
-        "originalInputCount": 59,
+        "originalInputCount": 61,
         "excluded": [
           {
             "reason": "out_of_sector",
-            "count": 59
+            "count": 61
           }
         ],
         "missingness": [],
         "contributors": [],
         "suppression": "n<10",
-        "datasetVersion": "v9",
-        "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050",
-        "computedAt": "2026-09-20T00:00:00.000Z"
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
       }
     }
   ]

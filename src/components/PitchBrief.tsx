@@ -188,7 +188,7 @@ export default function PitchBrief(
               <div className="mt-3 space-y-2 text-sm text-lacuna-text-secondary">
                 <p>
                   <span className="font-medium text-lacuna-text-primary">
-                    Cluster:
+                    Stage group:
                   </span>{" "}
                   {marketPosition}
                 </p>

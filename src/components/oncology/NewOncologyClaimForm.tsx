@@ -60,7 +60,7 @@ export default function NewOncologyClaimForm() {
       >
         Registry
       </Link>
-      <h1 className="mt-3 text-2xl font-bold text-lacuna-plum">
+      <h1 className="lacuna-gradient-text mt-3 text-2xl font-bold">
         Record an oncology claim
       </h1>
       <p className="mt-3 text-sm leading-relaxed text-lacuna-blue">

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   ObservedSectorComposition,
   TemporalValidation,
@@ -24,7 +25,7 @@ export default function MethodsPage(
   return (
     <div>
       <header className="mb-10">
-        <h1 className="text-3xl font-bold text-lacuna-plum">
+        <h1 className="lacuna-gradient-text text-3xl font-bold">
           Methods workspace
         </h1>
         <p className="mt-2 max-w-2xl text-lacuna-blue">
@@ -50,6 +51,16 @@ export default function MethodsPage(
             LIMITATIONS.md
           </a>
           .
+        </p>
+        <p className="mt-3 text-xs text-lacuna-blue/80">
+          <Link
+            href="/methods/evals"
+            className="font-medium text-lacuna-plum underline underline-offset-2"
+          >
+            Model output checks
+          </Link>{" "}
+          score answers by meaning and judge bands. They are separate from these
+          dataset grades.
         </p>
       </header>
 

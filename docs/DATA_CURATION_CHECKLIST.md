@@ -23,17 +23,17 @@ CSV imports.
 
 ### `companies[]`
 
-| Field           | Required | Rule                                                                                                    |
-| --------------- | -------- | ------------------------------------------------------------------------------------------------------- |
-| `id`            | Yes      | Stable slug (`c1`, `c23`); never reuse after publish                                                    |
-| `name`          | Yes      | Legal or brand name at time of curation                                                                 |
-| `sector`        | Yes      | One of: Fertility, Mental Health, General Wellness, Wearables, Pelvic Health                            |
-| `stage`         | Yes      | Verifiable label (funding round, acquired, public)                                                      |
-| `founded`       | Yes      | Integer year                                                                                            |
-| `hq`            | Yes      | City, region/country                                                                                    |
-| `description`   | Yes      | One sentence from website or filing                                                                     |
-| `sources[]`     | Yes      | **≥2 URLs or citations** per company                                                                    |
-| Economic values | N/A      | Do not add `lastKnownValuation`, `valuationSource`, or `totalFunding` here; add a ledger record instead |
+| Field           | Required | Rule                                                                                                                                                                                       |
+| --------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`            | Yes      | Stable slug (`c1`, `c23`); never reuse after publish                                                                                                                                       |
+| `name`          | Yes      | Legal or brand name at time of curation                                                                                                                                                    |
+| `sector`        | Yes      | One of: Fertility, Mental Health, General Wellness, Wearables, Pelvic Health                                                                                                               |
+| `stage`         | Yes      | Verifiable label (funding round, acquired, public)                                                                                                                                         |
+| `founded`       | No       | Omit when unknown. Add an integer year only with an accepted row in `src/data/foundingYearReview.json`. Do not infer it. See [FOUNDING_YEAR_PROVENANCE.md](./FOUNDING_YEAR_PROVENANCE.md). |
+| `hq`            | Yes      | City, region/country                                                                                                                                                                       |
+| `description`   | Yes      | One sentence from website or filing                                                                                                                                                        |
+| `sources[]`     | Yes      | **≥2 URLs or citations** per company                                                                                                                                                       |
+| Economic values | N/A      | Do not add `lastKnownValuation`, `valuationSource`, or `totalFunding` here; add a ledger record instead                                                                                    |
 
 ### `evidence.verified.json` economic records
 

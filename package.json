@@ -24,6 +24,7 @@
     "validate:dataset": "tsx scripts/validate-dataset.ts",
     "meshic:gate": "tsx scripts/meshic-data-gate.ts --strict",
     "report:selection-provenance": "tsx scripts/report-selection-provenance.ts",
+    "report:founding-years": "tsx scripts/report-founding-year-review.ts",
     "validate:empowerment": "tsx scripts/validate-empowerment.ts",
     "intel:sweep": "tsx scripts/sweep-watchlist.ts",
     "intel:sweep:check": "tsx scripts/sweep-watchlist.ts --check",
@@ -92,13 +93,16 @@
     "test:e2e": "playwright test",
     "test:e2e:smoke": "playwright test e2e/deploy-smoke.spec.ts",
     "eval:llm": "tsx scripts/eval-llm.ts",
+    "eval:responses": "tsx scripts/eval-responses.ts --split handcrafted --embed hashing --judge rubric",
+    "eval:responses:nightly": "tsx scripts/eval-responses.ts --split synthetic --count 1000 --embed hashing --judge rubric",
     "ai:models:sync": "tsx scripts/sync-ai-models.ts",
     "gate:provenance": "tsx scripts/provenance-gate.ts",
     "quality-history:append": "tsx scripts/append-quality-history.ts",
     "quality-history:backfill": "tsx scripts/backfill-quality-history.ts",
     "gate:quality-history": "tsx scripts/quality-history-gate.ts",
     "ci:governance": "tsx scripts/ci-governance.ts",
-    "ci:preflight": "npm run ci:governance && npm run deno:fmt:check && npm run lint && npm run typecheck && npm test && npm run build:ci"
+    "ci:preflight": "npm run ci:governance && npm run deno:fmt:check && npm run lint && npm run typecheck && npm test && npm run build:ci",
+    "eval:clinical-evidence": "tsx scripts/eval-clinical-evidence.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.114",
@@ -136,7 +140,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.60.0",
+    "@playwright/test": "^1.65.1",
     "@storybook/nextjs-vite": "^10.6.0",
     "@storybook/react": "^10.6.0",
     "@tailwindcss/postcss": "^4",

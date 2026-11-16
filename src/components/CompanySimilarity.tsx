@@ -210,7 +210,7 @@ export default function CompanySimilarity() {
         </div>
         <div className="flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full">
           <span className="text-xs font-medium text-blue-700">
-            n={verifiedCompanies.length}
+            {verifiedCompanies.length} companies
           </span>
         </div>
       </div>

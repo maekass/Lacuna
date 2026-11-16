@@ -5,7 +5,7 @@ import {
   getOpenAlexWork,
   searchOpenAlexWorks,
   validateOpenAlexOql,
-} from "./openAlexClient";
+} from "@/lib/ingestion/openAlexClient";
 
 const originalKey = process.env.OPENALEX_API_KEY;
 
@@ -169,9 +169,9 @@ describe("OpenAlex client integrity contract", () => {
 
   it("covers validation and rate-limit endpoints", async () => {
     process.env.OPENALEX_API_KEY = "test-secret";
-    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      response({ valid: true }),
-    );
+    const fetchMock = vi.spyOn(globalThis, "fetch")
+      .mockResolvedValueOnce(response({ valid: true }))
+      .mockResolvedValueOnce(response({ valid: true }));
     await validateOpenAlexOql("works where year is (2025)");
     await getOpenAlexRateLimit();
     expect(fetchMock).toHaveBeenCalledTimes(2);

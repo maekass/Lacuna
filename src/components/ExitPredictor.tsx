@@ -423,7 +423,7 @@ export default function ExitPredictor() {
           )}
           <div className="flex items-center gap-2 px-3 py-1 bg-lacuna-surface-subtle rounded-full">
             <span className="text-xs font-medium text-lacuna-text-primary">
-              Descriptive · n={verifiedCompanies.length}
+              Descriptive · {verifiedCompanies.length} companies
             </span>
           </div>
         </div>
@@ -432,16 +432,14 @@ export default function ExitPredictor() {
       {/* Honest disclaimer */}
       <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
         <p className="text-xs text-amber-900 leading-relaxed">
-          <strong>Methodological note:</strong>{" "}
-          With n={verifiedAcquisitions.length}{" "}
-          verified acquisitions in this dataset, no statistically valid
-          predictive model is possible. {mode === "single"
+          <strong>Methodological note:</strong> With{" "}
+          {verifiedAcquisitions.length}{" "}
+          verified acquisitions in this dataset, this panel does not fit or
+          validate a predictive model. {mode === "single"
             ? (
               <>
-                This panel scores each non-acquired company on factors that{" "}
-                <em>co-occurred</em>{" "}
-                with prior exits — useful for descriptive comparison, not for
-                forecasting.
+                It applies fixed weights to disclosed factors — useful for
+                descriptive comparison, not for forecasting.
               </>
             )
             : (
@@ -684,9 +682,9 @@ export default function ExitPredictor() {
 
       <div className="mt-4 pt-4 border-t border-lacuna-border-subtle">
         <p className="text-xs text-lacuna-text-muted leading-relaxed">
-          Scores are deterministic and reproducible. Factor weights derived from
-          observed co-occurrence in {verifiedAcquisitions.length}{" "}
-          verified acquisitions.{" "}
+          Scores are deterministic and reproducible. Factor weights are fixed
+          and hand-set. They are not estimated from the{" "}
+          {verifiedAcquisitions.length} verified acquisitions.{" "}
           <strong>Not financial advice. Not a forecast.</strong>
         </p>
       </div>

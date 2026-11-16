@@ -63,6 +63,78 @@ export const WEEKLY_CATALYST_TRIAL_LINKS: readonly CatalystTrialMatch[] = [
       },
     ],
   },
+  {
+    companyContains: "Pfizer",
+    drugContains: "tucatinib",
+    dealHref: "/deals/deal39",
+    dealLabel: "Seagen → Pfizer",
+    ncts: [
+      {
+        nctId: "NCT05132582",
+        url: "https://clinicaltrials.gov/study/NCT05132582",
+        title:
+          "HER2CLIMB-05 — tucatinib + trastuzumab/pertuzumab maintenance, HER2+ MBC",
+        surface: "deal_keyed",
+        nihSponsor: false,
+      },
+    ],
+  },
+  {
+    companyContains: "Bayer",
+    drugContains: "elinzanetant",
+    dealHref: "/deals/deal52",
+    dealLabel: "KaNDy Therapeutics → Bayer",
+    ncts: [
+      {
+        nctId: "NCT05587296",
+        url: "https://clinicaltrials.gov/study/NCT05587296",
+        title:
+          "OASIS-4 — elinzanetant for endocrine-therapy-induced vasomotor symptoms",
+        surface: "deal_keyed",
+        nihSponsor: false,
+      },
+    ],
+  },
+  {
+    companyContains: "AstraZeneca",
+    drugContains: "camizestrant",
+    ncts: [
+      {
+        nctId: "NCT04964934",
+        url: "https://clinicaltrials.gov/study/NCT04964934",
+        title: "SERENA-6 — camizestrant switch on ESR1 mutation, HR+/HER2- MBC",
+        surface: "research_only",
+        nihSponsor: false,
+      },
+    ],
+  },
+  {
+    companyContains: "Roche",
+    drugContains: "everolimus",
+    ncts: [
+      {
+        nctId: "NCT05306340",
+        url: "https://clinicaltrials.gov/study/NCT05306340",
+        title:
+          "evERA — giredestrant + everolimus, ER+/HER2- advanced breast cancer",
+        surface: "research_only",
+        nihSponsor: false,
+      },
+    ],
+  },
+  {
+    companyContains: "Roche",
+    drugContains: "giredestrant",
+    ncts: [
+      {
+        nctId: "NCT04961996",
+        url: "https://clinicaltrials.gov/study/NCT04961996",
+        title: "lidERA — adjuvant giredestrant, ER+/HER2- early breast cancer",
+        surface: "research_only",
+        nihSponsor: false,
+      },
+    ],
+  },
 ];
 
 function includesInsensitive(haystack: string, needle: string): boolean {

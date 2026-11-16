@@ -73,8 +73,12 @@ export type {
   SamplingFrame,
 } from "./lacunaDataset/samplingFrame";
 export {
+  announcedYear,
+  AOA_DX_FRAME,
   aoaDxCoverage,
+  countInAoaDxFrame,
   coverageAgainstReference,
+  isInAoaDxFrame,
   LACUNA_SAMPLE_BOUNDARY_NOTE,
   LACUNA_VERIFIED_FRAME,
   withCoverage,

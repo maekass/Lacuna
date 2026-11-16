@@ -1,0 +1,69 @@
+{
+  "verifiedAt": "2026-10-14",
+  "method": "Manual read of the EDGAR archive document. These deals were rejected by the automated backfill in results.json (acquirer_not_a_filer / no_hit) even though the filer is on EDGAR.",
+  "records": [
+    {
+      "dealId": "deal4",
+      "url": "https://www.sec.gov/Archives/edgar/data/1804591/000119312521305409/d231996dex991.htm",
+      "accession": "0001193125-21-305409",
+      "filedAt": "2021-10-22",
+      "quote": "23andMe Agrees to Acquire Lemonaid Health"
+    },
+    {
+      "dealId": "deal7",
+      "url": "https://www.sec.gov/Archives/edgar/data/859737/000115752321000089/a52368387ex99_1.htm",
+      "accession": "0001157523-21-000089",
+      "filedAt": "2021-01-27",
+      "quote": "In early January, announced an agreement to acquire Biotheranostics ... for approximately $230 million."
+    },
+    {
+      "dealId": "deal20",
+      "url": "https://www.sec.gov/Archives/edgar/data/1124140/000110465919042167/a19-15265_3ex99d1.htm",
+      "accession": "0001104659-19-042167",
+      "filedAt": "2019-07-29",
+      "quote": "Exact Sciences will combine with Genomic Health for $72.00 per share in a cash and stock transaction valued at $2.8 billion."
+    },
+    {
+      "dealId": "deal24",
+      "url": "https://www.sec.gov/Archives/edgar/data/859737/000115752321001297/a52518777_ex991.htm",
+      "accession": "0001157523-21-001297",
+      "filedAt": "2021-11-01",
+      "quote": "announced the acquisition of Bolder Surgical ... for approximately $160 million."
+    },
+    {
+      "dealId": "deal25",
+      "url": "https://www.sec.gov/Archives/edgar/data/859737/000085973718000016/a8-kxfocalclosing10118.htm",
+      "accession": "0000859737-18-000016",
+      "filedAt": "2018-10-01",
+      "quote": "On October 1, 2018, Hologic, Inc. (the \"Company\") completed the previously announced acquisition of Focal Therapeutics, Inc. ... for $125 million in cash."
+    },
+    {
+      "dealId": "deal32",
+      "url": "https://www.sec.gov/Archives/edgar/data/894237/000119312518127561/d569300d8k.htm",
+      "accession": "0001193125-18-127561",
+      "filedAt": "2018-04-24",
+      "quote": "the consummation of the Merger pursuant to Section 251(h) of the DGCL on April 23, 2018"
+    },
+    {
+      "dealId": "deal38",
+      "url": "https://www.sec.gov/Archives/edgar/data/25743/000119312523000222/d417698d8k.htm",
+      "accession": "0001193125-23-000222",
+      "filedAt": "2023-01-03",
+      "quote": "Effective December 30, 2022 (the \"Closing Date\"), TherapeuticsMD, Inc. ... completed its previously announced transaction ... with Mayne Pharma LLC"
+    },
+    {
+      "dealId": "deal43",
+      "url": "https://www.sec.gov/Archives/edgar/data/1124140/000112414022000005/exas-20220110xexx992.htm",
+      "accession": "0001124140-22-000005",
+      "filedAt": "2022-01-10",
+      "quote": "Exact Sciences Acquires PreventionGenetics"
+    },
+    {
+      "dealId": "deal51",
+      "url": "https://www.sec.gov/Archives/edgar/data/859737/000119312512329033/d388669dex991.htm",
+      "accession": "0001193125-12-329033",
+      "filedAt": "2012-08-01",
+      "quote": "Hologic, Inc. ... today announced that it has successfully completed its acquisition of Gen-Probe Incorporated"
+    }
+  ]
+}

@@ -1,10 +1,22 @@
 import type { VerifiedDataset } from "@/lib/data/datasetTypes";
+import {
+  acceptedRowFromAttestation,
+  type FoundingYearReviewRow,
+  listFoundingYearAttestationGaps,
+} from "@/lib/data/foundingYearReview";
+import type { FoundingYearSourceType } from "@/lib/data/foundingYearPolicy";
 import type { PendingDealRecord } from "@/lib/ingestion/pendingDeals";
 
 export interface PromotionDraft {
   company?: VerifiedDataset["companies"][number];
   acquirer?: VerifiedDataset["acquirers"][number];
   acquisition: VerifiedDataset["acquisitions"][number];
+  /**
+   * Accepted founding-year citation for a new company. Persist this row in
+   * `src/data/foundingYearReview.json` when the company is merged into the
+   * static catalog. The companies table does not store these fields.
+   */
+  foundingYearReview?: FoundingYearReviewRow;
 }
 
 /** Reviewer-attested fields required for new verified rows (Phase E0). */
@@ -12,6 +24,15 @@ export interface ReviewerPromotionFields {
   companySector?: string | null;
   companyHq?: string | null;
   companyFounded?: number | null;
+  foundingSourceUrl?: string | null;
+  foundingSourceName?: string | null;
+  foundingSourceType?: FoundingYearSourceType | null;
+  foundingSourceAccessDate?: string | null;
+  foundingEvidenceLocator?: string | null;
+  foundingCorroboratingSourceUrl?: string | null;
+  foundingReviewer?: string | null;
+  /** True only when the reviewer attests the year was not inferred. */
+  foundingNotInferred?: boolean | null;
   companyDescription?: string | null;
   companyStage?: string | null;
   acquirerSector?: string | null;
@@ -96,10 +117,17 @@ function resolveSecondarySource(
 function buildCompanySources(
   filingUrl: string,
   secondarySourceUrl: string | null,
+  foundingSourceUrl?: string | null,
 ): string[] {
   const sources = [filingUrl];
   if (secondarySourceUrl && secondarySourceUrl !== filingUrl) {
     sources.push(secondarySourceUrl);
+  }
+  if (
+    foundingSourceUrl &&
+    !sources.includes(foundingSourceUrl)
+  ) {
+    sources.push(foundingSourceUrl);
   }
   return sources;
 }
@@ -161,13 +189,17 @@ export function listPromotionMissingFields(
   if (!existingTargetId) {
     if (!reviewer.companySector?.trim()) missing.push("company.sector");
     if (!reviewer.companyHq?.trim()) missing.push("company.hq");
-    if (
-      reviewer.companyFounded === null ||
-      reviewer.companyFounded === undefined ||
-      !Number.isFinite(reviewer.companyFounded)
-    ) {
-      missing.push("company.founded");
-    }
+    missing.push(...listFoundingYearAttestationGaps({
+      foundedYear: reviewer.companyFounded,
+      sourceUrl: reviewer.foundingSourceUrl,
+      sourceName: reviewer.foundingSourceName,
+      sourceType: reviewer.foundingSourceType,
+      sourceAccessDate: reviewer.foundingSourceAccessDate,
+      evidenceLocator: reviewer.foundingEvidenceLocator,
+      corroboratingSourceUrl: reviewer.foundingCorroboratingSourceUrl,
+      reviewer: reviewer.foundingReviewer,
+      notInferred: reviewer.foundingNotInferred,
+    }));
     if (!resolveCompanyDescription(deal, reviewer)) {
       missing.push("company.description");
     }
@@ -234,20 +266,48 @@ export function buildPromotionDraft(
 
   const secondary = resolveSecondarySource(deal, options)!;
 
-  const company = existingTargetId ? undefined : {
-    id: targetId,
-    name: targetName,
-    sector: reviewer.companySector!.trim(),
-    stage: reviewer.companyStage?.trim() || "Acquired",
-    founded: reviewer.companyFounded!,
-    foundedPrecision: "year" as const,
-    catalogEntryReason: "deal-list" as const,
-    catalogEntryDate: null,
-    outcomeType: "acquired" as const,
-    hq: reviewer.companyHq!.trim(),
-    description: resolveCompanyDescription(deal, reviewer)!,
-    sources: buildCompanySources(deal.filingUrl, secondary),
-  };
+  let foundingYearReview: FoundingYearReviewRow | undefined;
+  if (!existingTargetId) {
+    const accepted = acceptedRowFromAttestation({
+      companyId: targetId,
+      companyName: targetName,
+      sector: reviewer.companySector!.trim(),
+      foundedYear: reviewer.companyFounded,
+      sourceUrl: reviewer.foundingSourceUrl,
+      sourceName: reviewer.foundingSourceName,
+      sourceType: reviewer.foundingSourceType,
+      sourceAccessDate: reviewer.foundingSourceAccessDate,
+      evidenceLocator: reviewer.foundingEvidenceLocator,
+      corroboratingSourceUrl: reviewer.foundingCorroboratingSourceUrl,
+      reviewer: reviewer.foundingReviewer,
+      notInferred: reviewer.foundingNotInferred,
+    });
+    if (accepted?.foundedYear == null) {
+      return { draft: null, missingFields };
+    }
+    foundingYearReview = accepted;
+  }
+
+  const company = foundingYearReview
+    ? {
+      id: targetId,
+      name: targetName,
+      sector: reviewer.companySector!.trim(),
+      stage: reviewer.companyStage?.trim() || "Acquired",
+      founded: foundingYearReview.foundedYear ?? undefined,
+      foundedPrecision: "year" as const,
+      catalogEntryReason: "deal-list" as const,
+      catalogEntryDate: null,
+      outcomeType: "acquired" as const,
+      hq: reviewer.companyHq!.trim(),
+      description: resolveCompanyDescription(deal, reviewer)!,
+      sources: buildCompanySources(
+        deal.filingUrl,
+        secondary,
+        foundingYearReview.sourceUrl,
+      ),
+    }
+    : undefined;
 
   const acquirer = existingAcquirerId ? undefined : {
     id: acquirerId,
@@ -279,7 +339,12 @@ export function buildPromotionDraft(
   };
 
   return {
-    draft: { company, acquirer, acquisition },
+    draft: {
+      company,
+      acquirer,
+      acquisition,
+      ...(foundingYearReview ? { foundingYearReview } : {}),
+    },
     missingFields: [],
   };
 }

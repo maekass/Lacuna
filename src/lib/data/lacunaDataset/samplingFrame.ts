@@ -9,7 +9,7 @@
  * ratio against a named external reference whose own frame is documented.
  */
 
-import type { AggregateCoverage, CoverageRatio } from "./types";
+import type { AggregateCoverage, AnnouncedDate, CoverageRatio } from "./types";
 
 export interface KnownExclusion {
   readonly name: string;
@@ -67,7 +67,7 @@ export const LACUNA_VERIFIED_FRAME: SamplingFrame = {
     {
       name: "AOA Dx exits outside Lacuna promotion criteria",
       reason:
-        "External 276-exit frame (2000–2025) is broader; Lacuna promotes a curated educational subset only",
+        "External frame (272 announced exits 2000–2024, plus 4 highlighted 2025 exits in the 276 headline) is broader; Lacuna promotes a curated educational subset only",
       source: "AOA Dx Follow the Exits (Jan 2026)",
     },
   ],
@@ -111,23 +111,78 @@ export function coverageAgainstReference(
   };
 }
 
-/** AOA Dx headline frame (276 exits, 2000–2025) — external macro reference. */
+/**
+ * AOA Dx Follow the Exits systematic frame. The report's "Scope, criteria, and
+ * sources" page: "This report examines 272 publicly announced exits of women's
+ * health companies between 2000 and 2024" and "Select billion-dollar exits
+ * from 2025 are highlighted ... though a comprehensive 2025 analysis is not
+ * included." The 276 headline is 272 + those 4 highlighted 2025 exits, so
+ * 2025 is not a comparable frame year.
+ * https://aoadx.com/wp-content/uploads/2026/01/Follow-the-Exits-Womens-Health-Jan-2026.pdf
+ */
+export const AOA_DX_FRAME = {
+  name: "AOA Dx Follow the Exits (2000–2024)",
+  startYear: 2000,
+  endYear: 2024,
+  referenceCount: 272,
+} as const;
+
+/** Calendar year of a deal's public announcement, at any stored precision. */
+export function announcedYear(announced: AnnouncedDate): number {
+  switch (announced.precision) {
+    case "day":
+      return Number(announced.date.slice(0, 4));
+    case "month":
+      return Number(announced.yearMonth.slice(0, 4));
+    case "year":
+      return announced.year;
+  }
+}
+
+/** True when an announcement year falls inside the AOA Dx systematic frame. */
+export function isInAoaDxFrame(year: number): boolean {
+  return Number.isInteger(year) && year >= AOA_DX_FRAME.startYear &&
+    year <= AOA_DX_FRAME.endYear;
+}
+
+/** Lacuna deals whose announcement year is inside the AOA Dx frame. */
+export function countInAoaDxFrame(
+  deals: readonly { readonly announced: AnnouncedDate }[],
+): number {
+  return deals.filter((deal) => isInAoaDxFrame(announcedYear(deal.announced)))
+    .length;
+}
+
+/**
+ * Coverage against the AOA Dx frame. `inFrameDealCount` must be restricted to
+ * deals announced 2000–2024 (`countInAoaDxFrame`); counting deals outside the
+ * reference window against its denominator inflates the ratio.
+ */
 export function aoaDxCoverage(options: {
-  readonly lacunaDealCount: number;
+  readonly inFrameDealCount: number;
   readonly observedOverlapCount?: number;
 }): CoverageRatio {
+  const matched = options.observedOverlapCount != null;
   return coverageAgainstReference({
-    name: "AOA Dx Follow the Exits (2000–2025)",
+    name: AOA_DX_FRAME.name,
     frameNote:
-      "AOA Dx reports 276 women's-health exits (acquisitions + IPOs) over 2000–2025. " +
+      "AOA Dx examines 272 publicly announced women's-health exits (acquisitions + IPOs) over 2000–2024; " +
+      "its 276 headline adds 4 highlighted 2025 exits without a comprehensive 2025 analysis. " +
       "Lacuna is a curated M&A convenience sample with different inclusion rules; " +
-      "overlap is not record-matched.",
-    referenceCount: 276,
+      (matched
+        ? "numerator is a caller-supplied record-matched overlap count."
+        : "overlap is not record-matched."),
+    referenceCount: AOA_DX_FRAME.referenceCount,
     observedOverlapCount: options.observedOverlapCount ??
-      options.lacunaDealCount,
-    caveats: [
-      "Numerator defaults to Lacuna deal count when record-level overlap is unavailable — interpret as upper-bound style ratio under optimistic matching, not a verified intersection size.",
-    ],
+      options.inFrameDealCount,
+    caveats: matched
+      ? [
+        "Numerator is a caller-supplied count of Lacuna deals record-matched to AOA Dx rows announced 2000–2024; its matching method is the caller's responsibility.",
+      ]
+      : [
+        "Numerator counts Lacuna deals announced 2000–2024; 2025–2026 Lacuna deals are outside the reference frame and excluded.",
+        "Numerator is not record-matched to AOA Dx rows — interpret as upper-bound style ratio under optimistic matching, not a verified intersection size.",
+      ],
   });
 }
 

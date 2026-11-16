@@ -1,39 +1,40 @@
 {
-  "generatedAt": "2026-09-20T00:00:00.000Z",
+  "generatedAt": "2026-10-19T00:00:00.000Z",
   "model": "computeHeadlineStats/v1",
   "provenance": {
-    "lastUpdated": "2026-09-20",
-    "datasetVersion": "v9",
-    "datasetHash": "a6ef9998a42fd5835cf5b3c6b43613b179218c699b450b91faf3358bcbd1f050"
+    "lastUpdated": "2026-10-19",
+    "datasetVersion": "v11",
+    "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246"
   },
   "headline": {
-    "companiesInNetwork": 150,
+    "companiesInNetwork": 152,
     "acquirerCount": 38,
-    "networkNodeCount": 188,
-    "verifiedDeals": 59,
-    "disclosedValueMillions": 140254,
-    "disclosedValueBillionsLabel": "$140.3B",
+    "networkNodeCount": 190,
+    "verifiedDeals": 61,
+    "disclosedValueMillions": 141213.5,
+    "disclosedValueBillionsLabel": "$141.2B",
     "disclosedValueMillionsWh": 22104,
     "disclosedValueBillionsLabelWh": "$22.1B",
-    "adjacencyExcludedMillions": 118150,
+    "adjacencyExcludedMillions": 118387.5,
     "estimand": "disclosed_only_observed_sum",
     "estimandNote": "disclosedOnlyTotal = Σ dealValueMillions over deals that disclosed a price after filters. Descriptive on the observed disclosed subsample; does not identify total transacted value under MNAR non-disclosure.",
-    "coverageRate": 0.213768115942029,
-    "coverageDenominator": 276,
-    "coverageReferenceName": "AOA Dx Follow the Exits (2000–2025)",
-    "uniqueSourceCitations": 467,
-    "lastUpdated": "2026-09-20",
-    "datasetVersion": "v9"
+    "coverageRate": 0.21323529411764705,
+    "coverageNumerator": 58,
+    "coverageDenominator": 272,
+    "coverageReferenceName": "AOA Dx Follow the Exits (2000–2024)",
+    "uniqueSourceCitations": 476,
+    "lastUpdated": "2026-10-19",
+    "datasetVersion": "v11"
   },
   "disclosure": {
-    "dealsTotal": 59,
-    "dealsDisclosed": 50,
+    "dealsTotal": 61,
+    "dealsDisclosed": 52,
     "dealsUndisclosed": 9,
-    "dealsWithValueNote": 59,
-    "disclosureRate": 0.847457627118644,
+    "dealsWithValueNote": 61,
+    "disclosureRate": 0.8524590163934426,
     "companiesWithValuation": 58,
-    "companiesTotal": 150,
-    "valuationRate": 0.38666666666666666
+    "companiesTotal": 152,
+    "valuationRate": 0.3815789473684211
   },
   "pipelines": {
     "secIngestLastRunAt": null,

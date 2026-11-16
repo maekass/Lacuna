@@ -61,6 +61,40 @@ const eslintConfig = defineConfig([
     },
   },
   {
+    name: "lacuna/rnpv-benchmarks-reference-only",
+    // rNPV benchmarks are analyst reference figures. Scoring, quant,
+    // valuation, biopharma-model and ML code must not compute from them.
+    files: [
+      "src/lib/scoring/**/*.{ts,tsx}",
+      "src/lib/quant/**/*.{ts,tsx}",
+      "src/lib/valuation/**/*.{ts,tsx}",
+      "src/lib/biopharma/**/*.{ts,tsx}",
+      "src/lib/ml/**/*.{ts,tsx}",
+    ],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "@/lib/research/rnpvBenchmarks",
+              message:
+                "rNPV benchmarks are analyst reference only and must not feed " +
+                "scores, valuations, or models. See docs/RNPV_BENCHMARKS.md.",
+            },
+          ],
+          patterns: [
+            {
+              group: ["**/rnpvBenchmarks"],
+              message:
+                "rNPV benchmarks are analyst reference only. See docs/RNPV_BENCHMARKS.md.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     name: "lacuna/client-no-static-verified-dataset",
     // Client-component surfaces (`"use client"`). Server pages/layouts under
     // src/app/(product) may still import staticDataset for build-time paths.

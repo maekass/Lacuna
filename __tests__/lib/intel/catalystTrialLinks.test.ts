@@ -82,3 +82,53 @@ describe("weekly catalyst trial links", () => {
     ]);
   });
 });
+
+describe("pipeline-to-deal trial links for women's-health catalysts", () => {
+  it.each([
+    ["Pfizer", "Tukysa (tucatinib)", "NCT05132582", "/deals/deal39"],
+    ["Pfizer", "Tukysa (tucatinib) extension", "NCT05132582", "/deals/deal39"],
+    ["Bayer", "Lynkuet (elinzanetant) sNDA", "NCT05587296", "/deals/deal52"],
+  ])(
+    "%s %s keys %s to the acquisition that brought the asset in",
+    (company, drug, nctId, dealHref) => {
+      const match = trialLinksForCatalyst(company, drug);
+      expect(match?.dealHref).toBe(dealHref);
+      expect(match?.ncts).toEqual([
+        expect.objectContaining({ nctId, surface: "deal_keyed" }),
+      ]);
+    },
+  );
+
+  it.each([
+    ["AstraZeneca", "Etcamah (camizestrant)", "NCT04964934"],
+    ["Roche", "giredestrant (adjuvant)", "NCT04961996"],
+    ["Roche", "giredestrant + everolimus", "NCT05306340"],
+  ])(
+    "%s %s links %s as research-only with no deal",
+    (company, drug, nctId) => {
+      const match = trialLinksForCatalyst(company, drug);
+      expect(match?.dealHref).toBeUndefined();
+      expect(match?.ncts.map((row) => [row.nctId, row.surface])).toEqual([
+        [nctId, "research_only"],
+      ]);
+    },
+  );
+
+  it("points every deal-keyed link at a verified acquisition", async () => {
+    const { WEEKLY_CATALYST_TRIAL_LINKS } = await import(
+      "@/lib/intel/catalystTrialLinks"
+    );
+    const { default: verified } = await import("@/data/dataset.verified.json");
+    const dealIds = new Set(verified.acquisitions.map((d) => d.id));
+    for (const row of WEEKLY_CATALYST_TRIAL_LINKS) {
+      const keyed = row.ncts.some((n) => n.surface === "deal_keyed");
+      expect(Boolean(row.dealHref), row.drugContains).toBe(keyed);
+      if (row.dealHref) {
+        expect(dealIds.has(row.dealHref.replace("/deals/", ""))).toBe(true);
+      }
+      for (const n of row.ncts) {
+        expect(n.url).toBe(`https://clinicaltrials.gov/study/${n.nctId}`);
+      }
+    }
+  });
+});

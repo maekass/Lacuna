@@ -1,7 +1,7 @@
 {
   "provenance": {
-    "lastUpdated": "2026-09-20",
-    "datasetVersion": "v9",
+    "lastUpdated": "2026-10-19",
+    "datasetVersion": "v11",
     "sources": [
       "SEC EDGAR filings (acquisitions, 8-K/10-K)",
       "Crunchbase (funding rounds, where cited)",
@@ -37,7 +37,8 @@
       "EQT Group press release and Times of India (BPEA EQT/Indira IVF acquisition, 2023)",
       "Hims & Hers investor relations and Business Wire (Apostrophe acquisition, 2021)",
       "SEC EDGAR EX-99.1 and Globe Newswire (23andMe/Lemonaid Health acquisition, 2021)",
-      "Business Wire and PitchBook (KKR IVI-RMA/Eugin Group North America acquisition, 2024)"
+      "Business Wire and PitchBook (KKR IVI-RMA/Eugin Group North America acquisition, 2024)",
+      "OPKO Health SEC filings and Labcorp press release (BioReference select-asset purchase, Oct 2026)"
     ],
     "notes": [
       "Private company valuations are from last disclosed funding rounds and may not reflect current market value",
@@ -61,7 +62,9 @@
       "2026-07-06: Dual-scope dataset — medicine & biotech (default product) and consumer health (separate /consumer workspace). Full catalog retained; each workspace filters in memory.",
       "preDealValuationDatePrecision backfilled from cited sources; 10 post-announcement placeholder dates reset to announcement-year January 1 at year precision.",
       "2026-09-20: Appended 19 identity-checked SEC accession URLs from source backfill; corrected Teladoc/Livongo announcement to Aug 5, 2020 (close remains Oct 30, 2020); Hologic/Biotheranostics 8-K listed on the deal source; renamed portfolio sector Diagnostic → Diagnostic (portfolio). Pre-deal NASDAQ market-cap citations are not acquisition dual-source.",
-      "2026-09-20: Added catalogEntryReason, catalogEntryDate, foundedPrecision, and outcomeType. Missing founding years stay absent (foundedPrecision=unknown). Non-acquired outcomes are unknown, not still-private. catalogEntryDate is null where add-date is not recoverable."
+      "2026-09-20: Added catalogEntryReason, catalogEntryDate, foundedPrecision, and outcomeType. Missing founding years stay absent (foundedPrecision=unknown). Non-acquired outcomes are unknown, not still-private. catalogEntryDate is null where add-date is not recoverable.",
+      "2026-10-17: Added deal60 (Labcorp / BioReference Health select assets, announced 2026-10-15) and company c151. Inclusion exception: mixed-scope carve-out — the purchased Business spans clinical and women's health testing, urology, corrections and the 4Kscore prostate test; it is included because women's health testing is a named line of business in both the 8-K and the acquirer release, and dealValue covers the whole Business, not a women's-health-only slice. Pending at entry: no closedDate; outcomeType=acquired follows the deal-target convention (deriveOutcomeType), not a completed close. Asset carve-out of a subsidiary: no funding or valuation evidence, so no premium or MOIC denominator. Sidecar annotation scope=adjacency, so it does not enter women's-health-only totals.",
+      "2026-10-19: Added deal61 (Labcorp / BioReference Health select assets, announced 2024-03-28, closed 2024-09-16, $237.5M cash) on new catalog row c152. Per the dataset's carve-out convention (c34 Estetra (Mithra assets), c54 Invitae Reproductive Health, c67 Ethicon GYNECARE TVT Products), each asset bundle sold is its own catalog row named for the business sold with the seller's HQ; c151 is renamed to the 2026 asset bundle (deal60) and c152 is the 2024 bundle, so every target still has exactly one deal. deal61 is annotated scope adjacency, not womens_health: the price covers general clinical diagnostics together with reproductive and women's health testing and is not allocated by line, the same rule applied to deal60. c151 and c152 hq cite explicit headquarters statements (Labcorp Mar 28, 2024 release; BioReference contact page) instead of the 10-K main-laboratory property row. Labcorp's 2025 BioReference oncology carve-out remains out of scope."
     ],
     "purpose": "Educational demonstration dataset for portfolio project. Not for commercial investment decisions.",
     "disclaimer": "Data compiled from public sources for educational visualization. Verify independently before any commercial use."
@@ -986,7 +989,7 @@
       "evidenceClass": "clinical_therapeutic",
       "name": "Cogentix Medical",
       "sector": "Pelvic Health",
-      "stage": "Acquired by Laborie Medical (2019)",
+      "stage": "Acquired by Laborie Medical (2018)",
       "founded": 1997,
       "hq": "Minnetonka, MN",
       "description": "Urogynecology devices — Urgent PC neuromodulation (percutaneous tibial nerve stimulation for overactive bladder) and PrimeSight cystoscopy with EndoSheath protective barrier",
@@ -1094,7 +1097,7 @@
       "evidenceClass": "clinical_therapeutic",
       "name": "TherapeuticsMD",
       "sector": "Reproductive Health",
-      "stage": "Products licensed to Mayne Pharma (2023)",
+      "stage": "Products licensed to Mayne Pharma (2022)",
       "founded": 2008,
       "hq": "Boca Raton, FL",
       "description": "Women's health hormone therapy — BIJUVA (bio-identical estradiol/progesterone for menopause), ANNOVERA (contraceptive vaginal ring), IMVEXXY (estradiol vaginal inserts); $153M total consideration",
@@ -3092,6 +3095,44 @@
       "catalogEntryReason": "sec",
       "catalogEntryDate": null,
       "outcomeType": "unknown"
+    },
+    {
+      "id": "c151",
+      "evidenceClass": "diagnostic_genomic",
+      "name": "BioReference Health (clinical, women's health, urology and 4Kscore assets)",
+      "sector": "Diagnostics",
+      "stage": "Select assets under agreement to Labcorp (announced 2026-10-15; pending close)",
+      "hq": "Elmwood Park, NJ",
+      "description": "Select assets of OPKO Health subsidiary BioReference Health under agreement to Labcorp in 2026: laboratory testing businesses focused on clinical and women's health testing, urology and corrections, over 80 patient service centers and the proprietary 4Kscore prostate cancer test; follows BioReference's 2024 sale of clinical diagnostics and reproductive and women's health assets outside NY/NJ to Labcorp (c152)",
+      "sources": [
+        "SEC EDGAR - OPKO Health 8-K Item 1.01 (Oct 15, 2026; Asset Purchase Agreement dated Oct 14, 2026) https://www.sec.gov/Archives/edgar/data/944809/000119312526422877/opk-20261014.htm",
+        "Labcorp press release via PR Newswire (Oct 15, 2026) https://ir.labcorp.com/news-releases/news-release-details/labcorp-enters-agreement-opko-health-acquire-select-assets",
+        "Labcorp press release via PR Newswire (Mar 28, 2024; About BioReference Health: \"Headquartered in Elmwood Park, New Jersey\") https://ir.labcorp.com/news-releases/news-release-details/labcorp-announces-acquisition-select-assets-bioreference-healths",
+        "BioReference Health contact page (\"Headquarters: 481 Edward H. Ross Drive, Elmwood Park, NJ 07407\") https://www.bioreference.com/contact/"
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": "2026-10-17",
+      "outcomeType": "acquired"
+    },
+    {
+      "id": "c152",
+      "evidenceClass": "diagnostic_genomic",
+      "name": "BioReference Health (clinical diagnostics and reproductive & women's health, outside NY/NJ)",
+      "sector": "Diagnostics",
+      "stage": "Assets acquired by Labcorp (2024)",
+      "hq": "Elmwood Park, NJ",
+      "description": "BioReference Health laboratory testing business focused on clinical diagnostics and reproductive and women's health in the US outside New York and New Jersey, including patient service centers, customer contracts and operating assets (approximately $100M annual revenue); divested by OPKO Health subsidiary BioReference Health to Labcorp, which excluded oncology, urology and NY/NJ operations",
+      "sources": [
+        "SEC EDGAR - OPKO Health 8-K Item 1.01 (Mar 28, 2024; Asset Purchase Agreement dated Mar 27, 2024) https://www.sec.gov/Archives/edgar/data/944809/000143774924009695/opk20240311_8k.htm",
+        "SEC EDGAR - OPKO Health 8-K Item 2.01 (Sep 16, 2024; completed) https://www.sec.gov/Archives/edgar/data/944809/000143774924029310/opk20240903_8k.htm",
+        "Labcorp press release via PR Newswire (Mar 28, 2024; About BioReference Health: \"Headquartered in Elmwood Park, New Jersey\") https://ir.labcorp.com/news-releases/news-release-details/labcorp-announces-acquisition-select-assets-bioreference-healths",
+        "MedTech Dive (Mar 29, 2024) https://www.medtechdive.com/news/labcorp-buys-bioreference-reproductive-women-health-assets/711713/"
+      ],
+      "foundedPrecision": "unknown",
+      "catalogEntryReason": "deal-list",
+      "catalogEntryDate": "2026-10-19",
+      "outcomeType": "acquired"
     }
   ],
   "acquirers": [
@@ -3430,7 +3471,7 @@
       "dealValue": 400,
       "dealValueNote": "$400M purchase price (25% cash, 75% 23andMe Class A stock), subject to customary adjustments per SEC EX-99.1 (Oct 22, 2021)",
       "dealType": "Acquisition",
-      "source": "SEC EDGAR EX-99.1 (23andMe–Lemonaid merger agreement, Oct 22, 2021); Globe Newswire closing release (Nov 1, 2021)",
+      "source": "SEC EDGAR EX-99.1 (23andMe–Lemonaid merger agreement, Oct 22, 2021); Globe Newswire closing release (Nov 1, 2021); SEC EDGAR 8-K EX-99.1 (merger agreement, Oct 22, 2021) https://www.sec.gov/Archives/edgar/data/1804591/000119312521305409/d231996dex991.htm; SEC EDGAR 8-K EX-99.1 (closing, Nov 1, 2021) https://www.sec.gov/Archives/edgar/data/1804591/000119312521316240/d247525dex991.htm",
       "strategicRationale": "Combined consumer genetics with telehealth and mail-order pharmacy to expand into personalized virtual care",
       "dealStructure": "Cash and stock"
     },
@@ -3479,7 +3520,7 @@
       "dealValue": 230,
       "dealValueNote": "~$230M subject to working capital adjustments",
       "dealType": "Acquisition",
-      "source": "Hologic 8-K filing, SEC EDGAR (Jan 5, 2021); Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021)",
+      "source": "Hologic 8-K filing, SEC EDGAR (Jan 5, 2021); Hologic investor relations press release (Jan 5, 2021); Business Wire (Feb 22, 2021); SEC EDGAR 8-K EX-99.1 (Q1 FY2021 results; agreement to acquire, ~$230M) https://www.sec.gov/Archives/edgar/data/859737/000115752321000089/a52368387ex99_1.htm; SEC EDGAR 10-Q (Q2 FY2021 — completed Feb 22, 2021) https://www.sec.gov/Archives/edgar/data/859737/000085973721000012/holx-20210327.htm",
       "strategicRationale": "Entry into oncology growth market — Breast Cancer Index guides post-surgery treatment decisions for breast cancer patients",
       "dealStructure": "Cash",
       "preDealValuation": 170,
@@ -3718,7 +3759,7 @@
       "dealValue": 2800,
       "dealValueNote": "~$2.8B total consideration",
       "dealType": "Acquisition",
-      "source": "Exact Sciences newsroom (Jul 29, 2019); SEC merger proxy",
+      "source": "Exact Sciences newsroom (Jul 29, 2019); SEC merger proxy; SEC EDGAR 8-K EX-99.1 (Jul 29, 2019 — $2.8B agreement) https://www.sec.gov/Archives/edgar/data/1124140/000110465919042167/a19-15265_3ex99d1.htm; SEC EDGAR 8-K (Genomic Health, Nov 8, 2019 — merger consummated) https://www.sec.gov/Archives/edgar/data/1131324/000110465919061746/tm1922359d1_8k.htm",
       "strategicRationale": "Combined Cologuard (colorectal) with Oncotype DX (breast cancer) to create leading global cancer diagnostics company — Oncotype DX guides chemotherapy decisions for ~50% of early-stage breast cancer patients",
       "dealStructure": "Cash + Stock",
       "preDealValuation": 2400,
@@ -3801,7 +3842,7 @@
       "dealValue": 160,
       "dealValueNote": "~$160M subject to working capital adjustments",
       "dealType": "Acquisition",
-      "source": "Nasdaq — Hologic press release (Oct 14, 2021); SEC 10-K FY2022",
+      "source": "Nasdaq — Hologic press release (Oct 14, 2021); SEC 10-K FY2022; SEC EDGAR 8-K EX-99.1 (Q4 FY2021 results, Nov 1, 2021 — ~$160M agreement) https://www.sec.gov/Archives/edgar/data/859737/000115752321001297/a52518777_ex991.htm; SEC EDGAR 10-Q (Q1 FY2022 — completed Nov 29, 2021) https://www.sec.gov/Archives/edgar/data/859737/000085973722000004/holx-20211225.htm",
       "strategicRationale": "CoolSeal vessel sealing devices expand laparoscopic GYN surgery portfolio — Hologic estimates 5× more laparoscopic procedures in OB/GYN vs. pediatrics (Bolder's prior focus)",
       "dealStructure": "Cash",
       "preDealValuation": 100,
@@ -3822,7 +3863,7 @@
       "dealValue": 125,
       "dealValueNote": "~$125M cash (SEC filing shows $120.1M final purchase price)",
       "dealType": "Acquisition",
-      "source": "Hologic investor relations press release (Sep 26, 2018); SEC 10-K FY2019",
+      "source": "Hologic investor relations press release (Sep 26, 2018); SEC 10-K FY2019; SEC EDGAR 8-K (Oct 1, 2018 — completed, $125M cash) https://www.sec.gov/Archives/edgar/data/859737/000085973718000016/a8-kxfocalclosing10118.htm",
       "strategicRationale": "BioZorb 3D marker strengthens breast conserving surgery franchise — complements Faxitron biopsy imaging in rapidly growing lumpectomy market",
       "dealStructure": "Cash",
       "preDealValuation": 80,
@@ -3953,11 +3994,11 @@
       "targetName": "Cogentix Medical",
       "acquirerName": "Laborie Medical Technologies",
       "announcedDate": "2018-03-12",
-      "closedDate": "2019-04-23",
+      "closedDate": "2018-04-23",
       "dealValue": 214,
       "dealValueNote": "$3.85/share, ~$214M enterprise value",
       "dealType": "Acquisition",
-      "source": "SEC EDGAR — Cogentix Medical merger filing (Mar 12, 2018); Laborie press release (Apr 23, 2019 — completion)",
+      "source": "SEC EDGAR — Cogentix Medical merger filing (Mar 12, 2018); Laborie completion (Apr 23, 2018); SEC EDGAR 8-K (Cogentix, Mar 12, 2018 — merger agreement) https://www.sec.gov/Archives/edgar/data/894237/000114036118013088/form8k.htm; SEC EDGAR 8-K (Cogentix, Apr 24, 2018 — merger consummated Apr 23, 2018) https://www.sec.gov/Archives/edgar/data/894237/000119312518127561/d569300d8k.htm",
       "strategicRationale": "Urgent PC neuromodulation and PrimeSight cystoscopy expand Laborie's urology/urogynecology portfolio — addresses overactive bladder and stress urinary incontinence",
       "dealStructure": "Cash",
       "preDealValuation": 160,
@@ -4074,12 +4115,12 @@
       "acquirerId": "acquirer-maynepharma",
       "targetName": "TherapeuticsMD",
       "acquirerName": "Mayne Pharma",
-      "announcedDate": "2022-12-30",
-      "closedDate": "2023-01-03",
+      "announcedDate": "2022-12-04",
+      "closedDate": "2022-12-30",
       "dealValue": 153,
       "dealValueNote": "$140M upfront license + $13.1M working capital + up to $30M milestones + 20-year royalties",
       "dealType": "License/Asset Acquisition",
-      "source": "Business Wire — TherapeuticsMD press release (Jan 3, 2023); SEC EDGAR 8-K (Dec 30, 2022)",
+      "source": "Business Wire — TherapeuticsMD press release (Jan 3, 2023); SEC EDGAR 8-K (Jan 3, 2023; closing effective Dec 30, 2022); SEC EDGAR 8-K EX-99.1 (TherapeuticsMD, Dec 4, 2022 — definitive agreements) https://www.sec.gov/Archives/edgar/data/25743/000119312522298002/d409080dex991.htm; SEC EDGAR 8-K (TherapeuticsMD, Jan 3, 2023 — closing effective Dec 30, 2022) https://www.sec.gov/Archives/edgar/data/25743/000119312523000222/d417698d8k.htm",
       "strategicRationale": "Exclusive US rights to BIJUVA (menopause), ANNOVERA (contraception), and IMVEXXY (vaginal atrophy) — establishes Mayne Pharma in women's health hormone therapy",
       "dealStructure": "Cash (license/asset)",
       "preDealValuation": 100,
@@ -4184,7 +4225,7 @@
       "dealValue": 190,
       "dealValueNote": "~$190M (Laboratory Economics reporting)",
       "dealType": "Acquisition",
-      "source": "PR Newswire — Exact Sciences press release (Jan 9, 2022); SEC EDGAR 8-K (Jan 10, 2022)",
+      "source": "PR Newswire — Exact Sciences press release (Jan 9, 2022); SEC EDGAR 8-K (Jan 10, 2022); SEC EDGAR 8-K (Jan 10, 2022 — PreventionGenetics acquisition release, EX-99.2) https://www.sec.gov/Archives/edgar/data/1124140/000112414022000005/exas-20220110xexx992.htm",
       "strategicRationale": "5,000+ genetic tests for hereditary cancer (BRCA1/2, Lynch syndrome) + carrier screening — enters hereditary cancer testing market; leverages Exact Sciences' 300K+ provider relationships in primary care and women's health",
       "dealStructure": "Cash",
       "preDealValuation": 140,
@@ -4335,7 +4376,7 @@
       "dealValueNote": "Aggregate ~$3.7B including assumption of debt; $82.75/share cash tender",
       "dealType": "Acquisition",
       "dealStructure": "Cash",
-      "source": "SEC EDGAR DEFM14A filing; Hologic press release (August 1, 2012)",
+      "source": "SEC EDGAR DEFM14A filing; Hologic press release (August 1, 2012); SEC EDGAR 8-K EX-99.1 (Gen-Probe, Apr 30, 2012 — agreement) https://www.sec.gov/Archives/edgar/data/820237/000119312512193510/d343874dex991.htm; SEC EDGAR 8-K EX-99.1 (Hologic, Aug 1, 2012 — completed) https://www.sec.gov/Archives/edgar/data/859737/000119312512329033/d388669dex991.htm",
       "strategicRationale": "Added molecular diagnostics leadership including Aptima HPV test and cervical cancer screening to Hologic's women's health portfolio",
       "preDealValuation": 3200,
       "preDealValuationSource": "Hologic 8-K filing, SEC EDGAR — Gen-Probe acquisition (NASDAQ:GPRO)",
@@ -4500,6 +4541,36 @@
       "dealType": "Acquisition",
       "source": "Business Wire press release (October 17, 2022); GeekWire coverage",
       "strategicRationale": "Folded Gennev's virtual menopause clinic into Unified's national ob-gyn support platform to scale menopause care across its provider network"
+    },
+    {
+      "id": "deal60",
+      "targetId": "c151",
+      "acquirerId": "acquirer-labcorp",
+      "targetName": "BioReference Health (clinical, women's health, urology and 4Kscore assets)",
+      "acquirerName": "LabCorp",
+      "announcedDate": "2026-10-15",
+      "dealValue": 722,
+      "dealValueNote": "$722M cash at closing per OPKO 8-K Item 1.01, subject to upward or downward adjustment based on Business revenues at closing; up to $150M additional earnout (total potential $872M). Select-asset purchase (Asset Purchase Agreement dated Oct 14, 2026), not a whole-company acquisition. Pending: subject to HSR clearance; outside date Apr 14, 2027; $28.88M Buyer termination fee on specified regulatory failure. No closedDate until a completion filing or release.",
+      "dealType": "Asset Acquisition",
+      "dealStructure": "Cash plus earnout",
+      "earnoutComponent": "Up to $150M in cash over up to ten years based on Buyer's 4Kscore Test revenue",
+      "source": "SEC EDGAR 8-K Item 1.01 (OPKO Health, Oct 15, 2026) https://www.sec.gov/Archives/edgar/data/944809/000119312526422877/opk-20261014.htm; Labcorp press release (Oct 15, 2026) https://ir.labcorp.com/news-releases/news-release-details/labcorp-enters-agreement-opko-health-acquire-select-assets; CLP Magazine coverage (Oct 15, 2026) https://clpmag.com/lab-management/company-news/labcorp-acquires-bioreference-health-assets-4kscore-test/",
+      "strategicRationale": "Labcorp acquires BioReference Health's laboratory testing businesses focused on clinical and women's health testing services, urology, corrections and certain operational assets, including over 80 additional patient service centers, plus the proprietary 4Kscore Test"
+    },
+    {
+      "id": "deal61",
+      "targetId": "c152",
+      "acquirerId": "acquirer-labcorp",
+      "targetName": "BioReference Health (clinical diagnostics and reproductive & women's health, outside NY/NJ)",
+      "acquirerName": "LabCorp",
+      "announcedDate": "2024-03-28",
+      "closedDate": "2024-09-16",
+      "dealValue": 237.5,
+      "dealValueNote": "Approximately $237.5M in cash per OPKO 8-K Item 1.01 (agreement) and Item 2.01 (completion), subject to adjustments set forth in the Asset Purchase Agreement dated Mar 27, 2024; no earnout disclosed. Select-asset purchase, not a whole-company acquisition: clinical diagnostics and reproductive and women's health testing outside New York and New Jersey; oncology, urology and all New York and New Jersey operations excluded. Acquired assets generated approximately $100M annual revenue per the Labcorp release.",
+      "dealType": "Asset Acquisition",
+      "dealStructure": "Cash",
+      "source": "SEC EDGAR 8-K Item 1.01 (OPKO Health, Mar 28, 2024) https://www.sec.gov/Archives/edgar/data/944809/000143774924009695/opk20240311_8k.htm; SEC EDGAR 8-K Item 2.01 (OPKO Health, Sep 16, 2024 — completed) https://www.sec.gov/Archives/edgar/data/944809/000143774924029310/opk20240903_8k.htm; Labcorp press release (Mar 28, 2024) https://ir.labcorp.com/news-releases/news-release-details/labcorp-announces-acquisition-select-assets-bioreference-healths; Labcorp press release (Sep 16, 2024 — completed) https://ir.labcorp.com/news-releases/news-release-details/labcorp-completes-acquisition-select-assets-bioreference-healths; MedTech Dive coverage (Mar 29, 2024) https://www.medtechdive.com/news/labcorp-buys-bioreference-reproductive-women-health-assets/711713/",
+      "strategicRationale": "Labcorp acquires BioReference Health's laboratory testing businesses focused on clinical diagnostics and reproductive and women's health outside New York and New Jersey, including patient service centers, customer contracts and operating assets, to enhance its laboratory services network and expand access to its clinical laboratory services"
     }
   ]
 }

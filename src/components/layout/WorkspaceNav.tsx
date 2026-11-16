@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { CommandPaletteButton } from "@/components/layout/CommandPalette";
 import { WORKSPACES } from "@/lib/navigation/workspaces";
 
 export default function WorkspaceNav() {
@@ -86,6 +87,8 @@ export default function WorkspaceNav() {
             </div>
           </div>
         </details>
+
+        <CommandPaletteButton />
 
         <a
           href="https://github.com/maekass/Lacuna"

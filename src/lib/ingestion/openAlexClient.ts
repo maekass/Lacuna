@@ -102,11 +102,14 @@ export async function getOpenAlexWork(
 ): Promise<unknown> {
   const normalized = id.trim();
   if (!normalized) throw new Error("OpenAlex work ID is required.");
-  const path = normalized.startsWith("http") ? normalized : "/works/" +
-    encodeURIComponent(normalized.replace(/^https?:\/\/openalex.org\//, ""));
-  return await request<unknown>(new URL(path, OPENALEX_API_BASE), {
-    signal: requestOptions?.signal,
-  });
+  const workId = normalized
+    .replace(/^https?:\/\/(?:api\.)?openalex\.org\//i, "")
+    .replace(/^works\//i, "");
+  if (!workId) throw new Error("OpenAlex work ID is required.");
+  return await request<unknown>(
+    new URL("/works/" + encodeURIComponent(workId), OPENALEX_API_BASE),
+    { signal: requestOptions?.signal },
+  );
 }
 
 export async function executeOpenAlexOql(

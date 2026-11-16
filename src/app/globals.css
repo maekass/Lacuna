@@ -226,12 +226,15 @@ body {
   );
 }
 
+/* Page titles: plum at the top of the heading, cosmic blue at the bottom.
+   The fill is clipped to this element's own text, so keep the headline
+   copy in the heading (a <br> is fine). A child with no background of
+   its own inherits color: transparent and disappears. */
 .lacuna-gradient-text {
-  background: linear-gradient(
-    135deg,
+  background-image: linear-gradient(
+    to bottom,
     var(--lacuna-plum) 0%,
-    var(--lacuna-blue) 50%,
-    var(--lacuna-lavender) 100%
+    var(--lacuna-blue) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;

@@ -522,12 +522,12 @@
         {
           "status": "announced",
           "statusAsOf": "2018-03-12",
-          "statusSource": "SEC EDGAR \u2014 Cogentix Medical merger filing (Mar 12, 2018); Laborie press release (Apr 23, 2019 \u2014 completion)"
+          "statusSource": "SEC EDGAR \u2014 Cogentix Medical merger filing (Mar 12, 2018); SEC EDGAR \u2014 Cogentix 8-K (Apr 24, 2018 \u2014 merger consummated Apr 23, 2018)"
         },
         {
           "status": "completed",
-          "statusAsOf": "2019-04-23",
-          "statusSource": "SEC EDGAR \u2014 Cogentix Medical merger filing (Mar 12, 2018); Laborie press release (Apr 23, 2019 \u2014 completion)"
+          "statusAsOf": "2018-04-23",
+          "statusSource": "SEC EDGAR \u2014 Cogentix Medical merger filing (Mar 12, 2018); SEC EDGAR \u2014 Cogentix 8-K (Apr 24, 2018 \u2014 merger consummated Apr 23, 2018)"
         }
       ]
     },
@@ -623,13 +623,13 @@
       "statusHistory": [
         {
           "status": "announced",
-          "statusAsOf": "2022-12-30",
-          "statusSource": "Business Wire \u2014 TherapeuticsMD press release (Jan 3, 2023); SEC EDGAR 8-K (Dec 30, 2022)"
+          "statusAsOf": "2022-12-04",
+          "statusSource": "SEC EDGAR \u2014 TherapeuticsMD 8-K EX-99.1 (Dec 4, 2022 \u2014 definitive agreements)"
         },
         {
           "status": "completed",
-          "statusAsOf": "2023-01-03",
-          "statusSource": "Business Wire \u2014 TherapeuticsMD press release (Jan 3, 2023); SEC EDGAR 8-K (Dec 30, 2022)"
+          "statusAsOf": "2022-12-30",
+          "statusSource": "SEC EDGAR \u2014 TherapeuticsMD 8-K (Jan 3, 2023 \u2014 closing effective Dec 30, 2022)"
         }
       ]
     },
@@ -987,6 +987,40 @@
           "status": "completed",
           "statusAsOf": "2022-10-17",
           "statusSource": "Business Wire press release (October 17, 2022); GeekWire coverage"
+        }
+      ]
+    },
+    "deal60": {
+      "valueTier": "sec_filing",
+      "scope": "adjacency",
+      "announcedPrecision": "day",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2026-10-15",
+          "statusSource": "OPKO Health 8-K Item 1.01 (Oct 15, 2026; agreement dated Oct 14, 2026); Labcorp press release (Oct 15, 2026)"
+        },
+        {
+          "status": "pending_regulatory",
+          "statusAsOf": "2026-10-15",
+          "statusSource": "OPKO Health 8-K Item 1.01 (Oct 15, 2026): consummation subject to HSR Clearance; outside date Apr 14, 2027"
+        }
+      ]
+    },
+    "deal61": {
+      "valueTier": "sec_filing",
+      "scope": "adjacency",
+      "announcedPrecision": "day",
+      "statusHistory": [
+        {
+          "status": "announced",
+          "statusAsOf": "2024-03-28",
+          "statusSource": "OPKO Health 8-K Item 1.01 (Mar 28, 2024); Labcorp press release (Mar 28, 2024)"
+        },
+        {
+          "status": "completed",
+          "statusAsOf": "2024-09-16",
+          "statusSource": "OPKO Health 8-K Item 2.01 (Sep 16, 2024); Labcorp press release (Sep 16, 2024)"
         }
       ]
     }
