@@ -1,0 +1,2912 @@
+{
+  "version": "lift-eval-set.v1",
+  "generator": "scripts/build-lift-eval-set.ts",
+  "source": {
+    "file": "src/data/dataset.verified.json",
+    "datasetVersion": "v11",
+    "lastUpdated": "2026-10-19"
+  },
+  "counts": {
+    "total": 160,
+    "answerable": 115,
+    "shouldAbstain": 45,
+    "byTemplate": {
+      "deal_value": 50,
+      "announced_date": 25,
+      "acquirer": 25,
+      "founded_year": 15,
+      "undisclosed_deal_value": 9,
+      "pending_close_date": 5,
+      "undisclosed_founded_year": 6,
+      "out_of_scope_revenue": 15,
+      "out_of_scope_headcount": 10
+    }
+  },
+  "itemsSha256": "67ec3e97e31ca82152a7a1968c89087f7eca0b19ba771646b1ea1cde6cfc107c",
+  "items": [
+    {
+      "id": "lift-deal_value-deal58",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for KKR (via IVI-RMA)'s acquisition of Eugin Group (North American operations)?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 534,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal58].dealValue"
+      },
+      "goldRecordIds": [
+        "deal58"
+      ],
+      "goldPassageIds": [
+        "vd:deal58:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal42",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Exact Sciences's acquisition of Thrive Earlier Detection?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 2150,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal42].dealValue"
+      },
+      "goldRecordIds": [
+        "deal42"
+      ],
+      "goldPassageIds": [
+        "vd:deal42:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal49",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Abbott Laboratories's acquisition of Alere?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 5300,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal49].dealValue"
+      },
+      "goldRecordIds": [
+        "deal49"
+      ],
+      "goldPassageIds": [
+        "vd:deal49:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal36",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Myriad Genetics's acquisition of Gateway Genomics?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 67.5,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal36].dealValue"
+      },
+      "goldRecordIds": [
+        "deal36"
+      ],
+      "goldPassageIds": [
+        "vd:deal36:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal28",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Boston Scientific's acquisition of nVision Medical?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 275,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal28].dealValue"
+      },
+      "goldRecordIds": [
+        "deal28"
+      ],
+      "goldPassageIds": [
+        "vd:deal28:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal1",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Teladoc's acquisition of Livongo Health?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 13900,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal1].dealValue"
+      },
+      "goldRecordIds": [
+        "deal1"
+      ],
+      "goldPassageIds": [
+        "vd:deal1:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal27",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Medtronic's acquisition of Smith & Nephew Gynecology (Truclear)?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 350,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal27].dealValue"
+      },
+      "goldRecordIds": [
+        "deal27"
+      ],
+      "goldPassageIds": [
+        "vd:deal27:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal56",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for BPEA EQT's acquisition of Indira IVF?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 657,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal56].dealValue"
+      },
+      "goldRecordIds": [
+        "deal56"
+      ],
+      "goldPassageIds": [
+        "vd:deal56:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal26",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for CooperSurgical (CooperCompanies)'s acquisition of obp Surgical?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 100,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal26].dealValue"
+      },
+      "goldRecordIds": [
+        "deal26"
+      ],
+      "goldPassageIds": [
+        "vd:deal26:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal37",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Natera's asset acquisition of Invitae Reproductive Health?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 52.5,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal37].dealValue"
+      },
+      "goldRecordIds": [
+        "deal37"
+      ],
+      "goldPassageIds": [
+        "vd:deal37:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal4",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for 23andMe's acquisition of Lemonaid Health?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 400,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal4].dealValue"
+      },
+      "goldRecordIds": [
+        "deal4"
+      ],
+      "goldPassageIds": [
+        "vd:deal4:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal51",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Hologic's acquisition of Gen-Probe?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 3700,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal51].dealValue"
+      },
+      "goldRecordIds": [
+        "deal51"
+      ],
+      "goldPassageIds": [
+        "vd:deal51:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal43",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Exact Sciences's acquisition of PreventionGenetics?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 190,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal43].dealValue"
+      },
+      "goldRecordIds": [
+        "deal43"
+      ],
+      "goldPassageIds": [
+        "vd:deal43:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal19",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for LabCorp's acquisition of Sequenom?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 371,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal19].dealValue"
+      },
+      "goldRecordIds": [
+        "deal19"
+      ],
+      "goldPassageIds": [
+        "vd:deal19:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal22",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Roche's acquisition of Flatiron Health?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 1900,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal22].dealValue"
+      },
+      "goldRecordIds": [
+        "deal22"
+      ],
+      "goldPassageIds": [
+        "vd:deal22:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal44",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for PerkinElmer (Revvity)'s acquisition of EUROIMMUN?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 1300,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal44].dealValue"
+      },
+      "goldRecordIds": [
+        "deal44"
+      ],
+      "goldPassageIds": [
+        "vd:deal44:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal20",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Exact Sciences's acquisition of Genomic Health?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 2800,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal20].dealValue"
+      },
+      "goldRecordIds": [
+        "deal20"
+      ],
+      "goldPassageIds": [
+        "vd:deal20:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal23",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Hologic's acquisition of Acessa Health?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 80,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal23].dealValue"
+      },
+      "goldRecordIds": [
+        "deal23"
+      ],
+      "goldPassageIds": [
+        "vd:deal23:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal45",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Hologic's acquisition of Faxitron Bioptics?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 85,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal45].dealValue"
+      },
+      "goldRecordIds": [
+        "deal45"
+      ],
+      "goldPassageIds": [
+        "vd:deal45:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal57",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Hims & Hers Health's acquisition of Apostrophe?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 190,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal57].dealValue"
+      },
+      "goldRecordIds": [
+        "deal57"
+      ],
+      "goldPassageIds": [
+        "vd:deal57:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal39",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Pfizer's acquisition of Seagen?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 43000,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal39].dealValue"
+      },
+      "goldRecordIds": [
+        "deal39"
+      ],
+      "goldPassageIds": [
+        "vd:deal39:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal33",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Coloplast's acquisition of Nine Continents Medical?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 145,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal33].dealValue"
+      },
+      "goldRecordIds": [
+        "deal33"
+      ],
+      "goldPassageIds": [
+        "vd:deal33:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal55",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for KKR's acquisition of IVI-RMA Global?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 3250,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal55].dealValue"
+      },
+      "goldRecordIds": [
+        "deal55"
+      ],
+      "goldPassageIds": [
+        "vd:deal55:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal48",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Myriad Genetics's acquisition of Sividon Diagnostics?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 56,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal48].dealValue"
+      },
+      "goldRecordIds": [
+        "deal48"
+      ],
+      "goldPassageIds": [
+        "vd:deal48:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal29",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Illumina's acquisition of GRAIL?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 8000,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal29].dealValue"
+      },
+      "goldRecordIds": [
+        "deal29"
+      ],
+      "goldPassageIds": [
+        "vd:deal29:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal14",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Organon (via Merck spinoff)'s acquisition of Alydia Health?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 240,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal14].dealValue"
+      },
+      "goldRecordIds": [
+        "deal14"
+      ],
+      "goldPassageIds": [
+        "vd:deal14:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal40",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Siemens Healthineers's acquisition of Varian Medical Systems?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 16400,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal40].dealValue"
+      },
+      "goldRecordIds": [
+        "deal40"
+      ],
+      "goldPassageIds": [
+        "vd:deal40:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal16",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Vitrolife's acquisition of Igenomix?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 1450,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal16].dealValue"
+      },
+      "goldRecordIds": [
+        "deal16"
+      ],
+      "goldPassageIds": [
+        "vd:deal16:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal60",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for LabCorp's asset acquisition of BioReference Health (clinical, women's health, urology and 4Kscore assets)?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 722,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal60].dealValue"
+      },
+      "goldRecordIds": [
+        "deal60"
+      ],
+      "goldPassageIds": [
+        "vd:deal60:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal38",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Mayne Pharma's license/asset acquisition of TherapeuticsMD?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 153,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal38].dealValue"
+      },
+      "goldRecordIds": [
+        "deal38"
+      ],
+      "goldPassageIds": [
+        "vd:deal38:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal35",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Myriad Genetics's acquisition of Counsyl?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 375,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal35].dealValue"
+      },
+      "goldRecordIds": [
+        "deal35"
+      ],
+      "goldPassageIds": [
+        "vd:deal35:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal25",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Hologic's acquisition of Focal Therapeutics?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 125,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal25].dealValue"
+      },
+      "goldRecordIds": [
+        "deal25"
+      ],
+      "goldPassageIds": [
+        "vd:deal25:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal10",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for CooperSurgical (CooperCompanies)'s acquisition of ORIGIO a/s?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 147,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal10].dealValue"
+      },
+      "goldRecordIds": [
+        "deal10"
+      ],
+      "goldPassageIds": [
+        "vd:deal10:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal52",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Bayer's acquisition of KaNDy Therapeutics?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 425,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal52].dealValue"
+      },
+      "goldRecordIds": [
+        "deal52"
+      ],
+      "goldPassageIds": [
+        "vd:deal52:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal21",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Roche's acquisition of Foundation Medicine?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 2400,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal21].dealValue"
+      },
+      "goldRecordIds": [
+        "deal21"
+      ],
+      "goldPassageIds": [
+        "vd:deal21:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal11",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for CooperSurgical (CooperCompanies)'s acquisition of Generate Life Sciences?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 1600,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal11].dealValue"
+      },
+      "goldRecordIds": [
+        "deal11"
+      ],
+      "goldPassageIds": [
+        "vd:deal11:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal7",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Hologic's acquisition of Biotheranostics?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 230,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal7].dealValue"
+      },
+      "goldRecordIds": [
+        "deal7"
+      ],
+      "goldPassageIds": [
+        "vd:deal7:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal30",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Astorg's acquisition of Hamilton Thorne?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 282,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal30].dealValue"
+      },
+      "goldRecordIds": [
+        "deal30"
+      ],
+      "goldPassageIds": [
+        "vd:deal30:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal8",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Hologic's acquisition of Endomagnetics?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 310,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal8].dealValue"
+      },
+      "goldRecordIds": [
+        "deal8"
+      ],
+      "goldPassageIds": [
+        "vd:deal8:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal9",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Hologic's acquisition of Gynesonics?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 350,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal9].dealValue"
+      },
+      "goldRecordIds": [
+        "deal9"
+      ],
+      "goldPassageIds": [
+        "vd:deal9:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal61",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for LabCorp's asset acquisition of BioReference Health (clinical diagnostics and reproductive & women's health, outside NY/NJ)?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 237.5,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal61].dealValue"
+      },
+      "goldRecordIds": [
+        "deal61"
+      ],
+      "goldPassageIds": [
+        "vd:deal61:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal24",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Hologic's acquisition of Bolder Surgical?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 160,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal24].dealValue"
+      },
+      "goldRecordIds": [
+        "deal24"
+      ],
+      "goldPassageIds": [
+        "vd:deal24:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal54",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Organon's acquisition of Dermavant Sciences?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 1200,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal54].dealValue"
+      },
+      "goldRecordIds": [
+        "deal54"
+      ],
+      "goldPassageIds": [
+        "vd:deal54:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal17",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Gedeon Richter's acquisition of Estetra (Mithra assets)?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 195,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal17].dealValue"
+      },
+      "goldRecordIds": [
+        "deal17"
+      ],
+      "goldPassageIds": [
+        "vd:deal17:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal46",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Hologic's acquisition of SuperSonic Imagine?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 85,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal46].dealValue"
+      },
+      "goldRecordIds": [
+        "deal46"
+      ],
+      "goldPassageIds": [
+        "vd:deal46:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal15",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Organon's acquisition of Forendo Pharma?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 75,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal15].dealValue"
+      },
+      "goldRecordIds": [
+        "deal15"
+      ],
+      "goldPassageIds": [
+        "vd:deal15:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal34",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Sumitovant Biopharma (Sumitomo Pharma)'s acquisition of Myovant Sciences?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 2900,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal34].dealValue"
+      },
+      "goldRecordIds": [
+        "deal34"
+      ],
+      "goldPassageIds": [
+        "vd:deal34:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal53",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Astellas Pharma's acquisition of Ogeda SA?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 560,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal53].dealValue"
+      },
+      "goldRecordIds": [
+        "deal53"
+      ],
+      "goldPassageIds": [
+        "vd:deal53:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal32",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Laborie Medical Technologies's acquisition of Cogentix Medical?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 214,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal32].dealValue"
+      },
+      "goldRecordIds": [
+        "deal32"
+      ],
+      "goldPassageIds": [
+        "vd:deal32:value"
+      ]
+    },
+    {
+      "id": "lift-deal_value-deal41",
+      "type": "answerable",
+      "template": "deal_value",
+      "question": "What was the disclosed deal value in USD for Gilead Sciences's acquisition of Immunomedics?",
+      "gold": {
+        "kind": "usd_millions",
+        "value": 21000,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal41].dealValue"
+      },
+      "goldRecordIds": [
+        "deal41"
+      ],
+      "goldPassageIds": [
+        "vd:deal41:value"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal26",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did CooperSurgical (CooperCompanies) announce its acquisition of obp Surgical?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2024-08-01",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal26].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal26"
+      ],
+      "goldPassageIds": [
+        "vd:deal26:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal3",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Ro announce its acquisition of Nurx?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2021-12-15",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal3].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal3"
+      ],
+      "goldPassageIds": [
+        "vd:deal3:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal46",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Hologic announce its acquisition of SuperSonic Imagine?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2019-06-21",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal46].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal46"
+      ],
+      "goldPassageIds": [
+        "vd:deal46:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal16",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Vitrolife announce its acquisition of Igenomix?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2021-07-08",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal16].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal16"
+      ],
+      "goldPassageIds": [
+        "vd:deal16:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal52",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Bayer announce its acquisition of KaNDy Therapeutics?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2020-08-11",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal52].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal52"
+      ],
+      "goldPassageIds": [
+        "vd:deal52:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal30",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Astorg announce its acquisition of Hamilton Thorne?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2024-07-22",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal30].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal30"
+      ],
+      "goldPassageIds": [
+        "vd:deal30:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal33",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Coloplast announce its acquisition of Nine Continents Medical?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2020-11-03",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal33].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal33"
+      ],
+      "goldPassageIds": [
+        "vd:deal33:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal37",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Natera announce its asset acquisition of Invitae Reproductive Health?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2024-01-22",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal37].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal37"
+      ],
+      "goldPassageIds": [
+        "vd:deal37:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal51",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Hologic announce its acquisition of Gen-Probe?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2012-04-30",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal51].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal51"
+      ],
+      "goldPassageIds": [
+        "vd:deal51:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal38",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Mayne Pharma announce its license/asset acquisition of TherapeuticsMD?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2022-12-04",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal38].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal38"
+      ],
+      "goldPassageIds": [
+        "vd:deal38:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal54",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Organon announce its acquisition of Dermavant Sciences?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2024-09-18",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal54].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal54"
+      ],
+      "goldPassageIds": [
+        "vd:deal54:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal40",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Siemens Healthineers announce its acquisition of Varian Medical Systems?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2020-08-02",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal40].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal40"
+      ],
+      "goldPassageIds": [
+        "vd:deal40:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal44",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did PerkinElmer (Revvity) announce its acquisition of EUROIMMUN?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2017-06-16",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal44].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal44"
+      ],
+      "goldPassageIds": [
+        "vd:deal44:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal55",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did KKR announce its acquisition of IVI-RMA Global?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2022-03-01",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal55].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal55"
+      ],
+      "goldPassageIds": [
+        "vd:deal55:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal39",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Pfizer announce its acquisition of Seagen?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2023-03-13",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal39].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal39"
+      ],
+      "goldPassageIds": [
+        "vd:deal39:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal11",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did CooperSurgical (CooperCompanies) announce its acquisition of Generate Life Sciences?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2021-11-10",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal11].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal11"
+      ],
+      "goldPassageIds": [
+        "vd:deal11:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal61",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did LabCorp announce its asset acquisition of BioReference Health (clinical diagnostics and reproductive & women's health, outside NY/NJ)?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2024-03-28",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal61].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal61"
+      ],
+      "goldPassageIds": [
+        "vd:deal61:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal59",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Unified Women's Healthcare announce its acquisition of Gennev?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2022-10-17",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal59].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal59"
+      ],
+      "goldPassageIds": [
+        "vd:deal59:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal20",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Exact Sciences announce its acquisition of Genomic Health?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2019-07-29",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal20].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal20"
+      ],
+      "goldPassageIds": [
+        "vd:deal20:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal56",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did BPEA EQT announce its acquisition of Indira IVF?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2023-07-28",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal56].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal56"
+      ],
+      "goldPassageIds": [
+        "vd:deal56:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal34",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Sumitovant Biopharma (Sumitomo Pharma) announce its acquisition of Myovant Sciences?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2022-10-24",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal34].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal34"
+      ],
+      "goldPassageIds": [
+        "vd:deal34:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal60",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did LabCorp announce its asset acquisition of BioReference Health (clinical, women's health, urology and 4Kscore assets)?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2026-10-15",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal60].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal60"
+      ],
+      "goldPassageIds": [
+        "vd:deal60:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal15",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Organon announce its acquisition of Forendo Pharma?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2021-11-11",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal15].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal15"
+      ],
+      "goldPassageIds": [
+        "vd:deal15:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal18",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Gedeon Richter announce its acquisition of Celmatix?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2026-03-03",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal18].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal18"
+      ],
+      "goldPassageIds": [
+        "vd:deal18:announcement"
+      ]
+    },
+    {
+      "id": "lift-announced_date-deal35",
+      "type": "answerable",
+      "template": "announced_date",
+      "question": "On what date did Myriad Genetics announce its acquisition of Counsyl?",
+      "gold": {
+        "kind": "iso_date",
+        "value": "2018-05-28",
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal35].announcedDate"
+      },
+      "goldRecordIds": [
+        "deal35"
+      ],
+      "goldPassageIds": [
+        "vd:deal35:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal49",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Alere in the deal announced on 2016-02-01?",
+      "gold": {
+        "kind": "entity",
+        "value": "Abbott Laboratories",
+        "aliases": [
+          "Abbott Laboratories"
+        ],
+        "sourceField": "acquisitions[id=deal49].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal49"
+      ],
+      "goldPassageIds": [
+        "vd:deal49:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal31",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired eFertility (STB Zorg) in the deal announced on 2024-05-02?",
+      "gold": {
+        "kind": "entity",
+        "value": "Vitrolife",
+        "aliases": [
+          "Vitrolife"
+        ],
+        "sourceField": "acquisitions[id=deal31].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal31"
+      ],
+      "goldPassageIds": [
+        "vd:deal31:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal58",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Eugin Group (North American operations) in the deal announced on 2023-11-01?",
+      "gold": {
+        "kind": "entity",
+        "value": "KKR (via IVI-RMA)",
+        "aliases": [
+          "KKR (via IVI-RMA)",
+          "KKR"
+        ],
+        "sourceField": "acquisitions[id=deal58].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal58"
+      ],
+      "goldPassageIds": [
+        "vd:deal58:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal56",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Indira IVF in the deal announced on 2023-07-28?",
+      "gold": {
+        "kind": "entity",
+        "value": "BPEA EQT",
+        "aliases": [
+          "BPEA EQT",
+          "BPEA EQT (EQT)"
+        ],
+        "sourceField": "acquisitions[id=deal56].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal56"
+      ],
+      "goldPassageIds": [
+        "vd:deal56:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal7",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Biotheranostics in the deal announced on 2021-01-05?",
+      "gold": {
+        "kind": "entity",
+        "value": "Hologic",
+        "aliases": [
+          "Hologic"
+        ],
+        "sourceField": "acquisitions[id=deal7].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal7"
+      ],
+      "goldPassageIds": [
+        "vd:deal7:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal51",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Gen-Probe in the deal announced on 2012-04-30?",
+      "gold": {
+        "kind": "entity",
+        "value": "Hologic",
+        "aliases": [
+          "Hologic"
+        ],
+        "sourceField": "acquisitions[id=deal51].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal51"
+      ],
+      "goldPassageIds": [
+        "vd:deal51:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal34",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Myovant Sciences in the deal announced on 2022-10-24?",
+      "gold": {
+        "kind": "entity",
+        "value": "Sumitovant Biopharma (Sumitomo Pharma)",
+        "aliases": [
+          "Sumitovant Biopharma (Sumitomo Pharma)",
+          "Sumitovant Biopharma"
+        ],
+        "sourceField": "acquisitions[id=deal34].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal34"
+      ],
+      "goldPassageIds": [
+        "vd:deal34:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal29",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired GRAIL in the deal announced on 2020-09-21?",
+      "gold": {
+        "kind": "entity",
+        "value": "Illumina",
+        "aliases": [
+          "Illumina"
+        ],
+        "sourceField": "acquisitions[id=deal29].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal29"
+      ],
+      "goldPassageIds": [
+        "vd:deal29:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal46",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired SuperSonic Imagine in the deal announced on 2019-06-21?",
+      "gold": {
+        "kind": "entity",
+        "value": "Hologic",
+        "aliases": [
+          "Hologic"
+        ],
+        "sourceField": "acquisitions[id=deal46].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal46"
+      ],
+      "goldPassageIds": [
+        "vd:deal46:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal57",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Apostrophe in the deal announced on 2021-06-24?",
+      "gold": {
+        "kind": "entity",
+        "value": "Hims & Hers Health",
+        "aliases": [
+          "Hims & Hers Health"
+        ],
+        "sourceField": "acquisitions[id=deal57].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal57"
+      ],
+      "goldPassageIds": [
+        "vd:deal57:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal33",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Nine Continents Medical in the deal announced on 2020-11-03?",
+      "gold": {
+        "kind": "entity",
+        "value": "Coloplast",
+        "aliases": [
+          "Coloplast"
+        ],
+        "sourceField": "acquisitions[id=deal33].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal33"
+      ],
+      "goldPassageIds": [
+        "vd:deal33:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal18",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Celmatix in the deal announced on 2026-03-03?",
+      "gold": {
+        "kind": "entity",
+        "value": "Gedeon Richter",
+        "aliases": [
+          "Gedeon Richter"
+        ],
+        "sourceField": "acquisitions[id=deal18].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal18"
+      ],
+      "goldPassageIds": [
+        "vd:deal18:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal36",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Gateway Genomics in the deal announced on 2022-11-01?",
+      "gold": {
+        "kind": "entity",
+        "value": "Myriad Genetics",
+        "aliases": [
+          "Myriad Genetics"
+        ],
+        "sourceField": "acquisitions[id=deal36].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal36"
+      ],
+      "goldPassageIds": [
+        "vd:deal36:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal35",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Counsyl in the deal announced on 2018-05-28?",
+      "gold": {
+        "kind": "entity",
+        "value": "Myriad Genetics",
+        "aliases": [
+          "Myriad Genetics"
+        ],
+        "sourceField": "acquisitions[id=deal35].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal35"
+      ],
+      "goldPassageIds": [
+        "vd:deal35:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal4",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Lemonaid Health in the deal announced on 2021-10-22?",
+      "gold": {
+        "kind": "entity",
+        "value": "23andMe",
+        "aliases": [
+          "23andMe"
+        ],
+        "sourceField": "acquisitions[id=deal4].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal4"
+      ],
+      "goldPassageIds": [
+        "vd:deal4:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal41",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Immunomedics in the deal announced on 2020-09-13?",
+      "gold": {
+        "kind": "entity",
+        "value": "Gilead Sciences",
+        "aliases": [
+          "Gilead Sciences"
+        ],
+        "sourceField": "acquisitions[id=deal41].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal41"
+      ],
+      "goldPassageIds": [
+        "vd:deal41:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal21",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Foundation Medicine in the deal announced on 2018-06-19?",
+      "gold": {
+        "kind": "entity",
+        "value": "Roche",
+        "aliases": [
+          "Roche"
+        ],
+        "sourceField": "acquisitions[id=deal21].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal21"
+      ],
+      "goldPassageIds": [
+        "vd:deal21:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal23",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Acessa Health in the deal announced on 2020-08-25?",
+      "gold": {
+        "kind": "entity",
+        "value": "Hologic",
+        "aliases": [
+          "Hologic"
+        ],
+        "sourceField": "acquisitions[id=deal23].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal23"
+      ],
+      "goldPassageIds": [
+        "vd:deal23:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal38",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired TherapeuticsMD in the deal announced on 2022-12-04?",
+      "gold": {
+        "kind": "entity",
+        "value": "Mayne Pharma",
+        "aliases": [
+          "Mayne Pharma"
+        ],
+        "sourceField": "acquisitions[id=deal38].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal38"
+      ],
+      "goldPassageIds": [
+        "vd:deal38:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal19",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Sequenom in the deal announced on 2016-07-27?",
+      "gold": {
+        "kind": "entity",
+        "value": "LabCorp",
+        "aliases": [
+          "LabCorp"
+        ],
+        "sourceField": "acquisitions[id=deal19].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal19"
+      ],
+      "goldPassageIds": [
+        "vd:deal19:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal26",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired obp Surgical in the deal announced on 2024-08-01?",
+      "gold": {
+        "kind": "entity",
+        "value": "CooperSurgical (CooperCompanies)",
+        "aliases": [
+          "CooperSurgical (CooperCompanies)",
+          "CooperSurgical"
+        ],
+        "sourceField": "acquisitions[id=deal26].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal26"
+      ],
+      "goldPassageIds": [
+        "vd:deal26:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal28",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired nVision Medical in the deal announced on 2018-04-16?",
+      "gold": {
+        "kind": "entity",
+        "value": "Boston Scientific",
+        "aliases": [
+          "Boston Scientific"
+        ],
+        "sourceField": "acquisitions[id=deal28].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal28"
+      ],
+      "goldPassageIds": [
+        "vd:deal28:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal43",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired PreventionGenetics in the deal announced on 2022-01-09?",
+      "gold": {
+        "kind": "entity",
+        "value": "Exact Sciences",
+        "aliases": [
+          "Exact Sciences"
+        ],
+        "sourceField": "acquisitions[id=deal43].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal43"
+      ],
+      "goldPassageIds": [
+        "vd:deal43:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal3",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Nurx in the deal announced on 2021-12-15?",
+      "gold": {
+        "kind": "entity",
+        "value": "Ro",
+        "aliases": [
+          "Ro"
+        ],
+        "sourceField": "acquisitions[id=deal3].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal3"
+      ],
+      "goldPassageIds": [
+        "vd:deal3:announcement"
+      ]
+    },
+    {
+      "id": "lift-acquirer-deal54",
+      "type": "answerable",
+      "template": "acquirer",
+      "question": "Which company acquired Dermavant Sciences in the deal announced on 2024-09-18?",
+      "gold": {
+        "kind": "entity",
+        "value": "Organon",
+        "aliases": [
+          "Organon"
+        ],
+        "sourceField": "acquisitions[id=deal54].acquirerName"
+      },
+      "goldRecordIds": [
+        "deal54"
+      ],
+      "goldPassageIds": [
+        "vd:deal54:announcement"
+      ]
+    },
+    {
+      "id": "lift-founded_year-c86",
+      "type": "answerable",
+      "template": "founded_year",
+      "question": "In what year was Gesynta Pharma founded?",
+      "gold": {
+        "kind": "year",
+        "value": 2017,
+        "aliases": [],
+        "sourceField": "companies[id=c86].founded"
+      },
+      "goldRecordIds": [
+        "c86"
+      ],
+      "goldPassageIds": [
+        "vd:c86:profile"
+      ]
+    },
+    {
+      "id": "lift-founded_year-c136",
+      "type": "answerable",
+      "template": "founded_year",
+      "question": "In what year was AOA Dx founded?",
+      "gold": {
+        "kind": "year",
+        "value": 2020,
+        "aliases": [],
+        "sourceField": "companies[id=c136].founded"
+      },
+      "goldRecordIds": [
+        "c136"
+      ],
+      "goldPassageIds": [
+        "vd:c136:profile"
+      ]
+    },
+    {
+      "id": "lift-founded_year-c48",
+      "type": "answerable",
+      "template": "founded_year",
+      "question": "In what year was eFertility (STB Zorg) founded?",
+      "gold": {
+        "kind": "year",
+        "value": 2015,
+        "aliases": [],
+        "sourceField": "companies[id=c48].founded"
+      },
+      "goldRecordIds": [
+        "c48"
+      ],
+      "goldPassageIds": [
+        "vd:c48:profile"
+      ]
+    },
+    {
+      "id": "lift-founded_year-c17",
+      "type": "answerable",
+      "template": "founded_year",
+      "question": "In what year was Whoop founded?",
+      "gold": {
+        "kind": "year",
+        "value": 2012,
+        "aliases": [],
+        "sourceField": "companies[id=c17].founded"
+      },
+      "goldRecordIds": [
+        "c17"
+      ],
+      "goldPassageIds": [
+        "vd:c17:profile"
+      ]
+    },
+    {
+      "id": "lift-founded_year-c51",
+      "type": "answerable",
+      "template": "founded_year",
+      "question": "In what year was Myovant Sciences founded?",
+      "gold": {
+        "kind": "year",
+        "value": 2016,
+        "aliases": [],
+        "sourceField": "companies[id=c51].founded"
+      },
+      "goldRecordIds": [
+        "c51"
+      ],
+      "goldPassageIds": [
+        "vd:c51:profile"
+      ]
+    },
+    {
+      "id": "lift-founded_year-c26",
+      "type": "answerable",
+      "template": "founded_year",
+      "question": "In what year was Gynesonics founded?",
+      "gold": {
+        "kind": "year",
+        "value": 2005,
+        "aliases": [],
+        "sourceField": "companies[id=c26].founded"
+      },
+      "goldRecordIds": [
+        "c26"
+      ],
+      "goldPassageIds": [
+        "vd:c26:profile"
+      ]
+    },
+    {
+      "id": "lift-founded_year-c62",
+      "type": "answerable",
+      "template": "founded_year",
+      "question": "In what year was Faxitron Bioptics founded?",
+      "gold": {
+        "kind": "year",
+        "value": 1992,
+        "aliases": [],
+        "sourceField": "companies[id=c62].founded"
+      },
+      "goldRecordIds": [
+        "c62"
+      ],
+      "goldPassageIds": [
+        "vd:c62:profile"
+      ]
+    },
+    {
+      "id": "lift-founded_year-c63",
+      "type": "answerable",
+      "template": "founded_year",
+      "question": "In what year was SuperSonic Imagine founded?",
+      "gold": {
+        "kind": "year",
+        "value": 2005,
+        "aliases": [],
+        "sourceField": "companies[id=c63].founded"
+      },
+      "goldRecordIds": [
+        "c63"
+      ],
+      "goldPassageIds": [
+        "vd:c63:profile"
+      ]
+    },
+    {
+      "id": "lift-founded_year-c45",
+      "type": "answerable",
+      "template": "founded_year",
+      "question": "In what year was nVision Medical founded?",
+      "gold": {
+        "kind": "year",
+        "value": 2013,
+        "aliases": [],
+        "sourceField": "companies[id=c45].founded"
+      },
+      "goldRecordIds": [
+        "c45"
+      ],
+      "goldPassageIds": [
+        "vd:c45:profile"
+      ]
+    },
+    {
+      "id": "lift-founded_year-c69",
+      "type": "answerable",
+      "template": "founded_year",
+      "question": "In what year was KaNDy Therapeutics founded?",
+      "gold": {
+        "kind": "year",
+        "value": 2017,
+        "aliases": [],
+        "sourceField": "companies[id=c69].founded"
+      },
+      "goldRecordIds": [
+        "c69"
+      ],
+      "goldPassageIds": [
+        "vd:c69:profile"
+      ]
+    },
+    {
+      "id": "lift-founded_year-c1",
+      "type": "answerable",
+      "template": "founded_year",
+      "question": "In what year was Modern Fertility founded?",
+      "gold": {
+        "kind": "year",
+        "value": 2017,
+        "aliases": [],
+        "sourceField": "companies[id=c1].founded"
+      },
+      "goldRecordIds": [
+        "c1"
+      ],
+      "goldPassageIds": [
+        "vd:c1:profile"
+      ]
+    },
+    {
+      "id": "lift-founded_year-c141",
+      "type": "answerable",
+      "template": "founded_year",
+      "question": "In what year was Cofertility founded?",
+      "gold": {
+        "kind": "year",
+        "value": 2022,
+        "aliases": [],
+        "sourceField": "companies[id=c141].founded"
+      },
+      "goldRecordIds": [
+        "c141"
+      ],
+      "goldPassageIds": [
+        "vd:c141:profile"
+      ]
+    },
+    {
+      "id": "lift-founded_year-c143",
+      "type": "answerable",
+      "template": "founded_year",
+      "question": "In what year was Mae founded?",
+      "gold": {
+        "kind": "year",
+        "value": 2021,
+        "aliases": [],
+        "sourceField": "companies[id=c143].founded"
+      },
+      "goldRecordIds": [
+        "c143"
+      ],
+      "goldPassageIds": [
+        "vd:c143:profile"
+      ]
+    },
+    {
+      "id": "lift-founded_year-c5",
+      "type": "answerable",
+      "template": "founded_year",
+      "question": "In what year was Tia founded?",
+      "gold": {
+        "kind": "year",
+        "value": 2017,
+        "aliases": [],
+        "sourceField": "companies[id=c5].founded"
+      },
+      "goldRecordIds": [
+        "c5"
+      ],
+      "goldPassageIds": [
+        "vd:c5:profile"
+      ]
+    },
+    {
+      "id": "lift-founded_year-c56",
+      "type": "answerable",
+      "template": "founded_year",
+      "question": "In what year was Seagen founded?",
+      "gold": {
+        "kind": "year",
+        "value": 1998,
+        "aliases": [],
+        "sourceField": "companies[id=c56].founded"
+      },
+      "goldRecordIds": [
+        "c56"
+      ],
+      "goldPassageIds": [
+        "vd:c56:profile"
+      ]
+    },
+    {
+      "id": "lift-undisclosed_deal_value-deal47",
+      "type": "should_abstain",
+      "template": "undisclosed_deal_value",
+      "question": "What was the disclosed deal value in USD for LabCorp's acquisition of Ovia Health?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal47].dealValue"
+      },
+      "goldRecordIds": [
+        "deal47"
+      ],
+      "goldPassageIds": [
+        "vd:deal47:value"
+      ]
+    },
+    {
+      "id": "lift-undisclosed_deal_value-deal12",
+      "type": "should_abstain",
+      "template": "undisclosed_deal_value",
+      "question": "What was the disclosed deal value in USD for CooperSurgical (CooperCompanies)'s acquisition of Cook Medical Reproductive Health?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal12].dealValue"
+      },
+      "goldRecordIds": [
+        "deal12"
+      ],
+      "goldPassageIds": [
+        "vd:deal12:value"
+      ]
+    },
+    {
+      "id": "lift-undisclosed_deal_value-deal5",
+      "type": "should_abstain",
+      "template": "undisclosed_deal_value",
+      "question": "What was the disclosed deal value in USD for Teladoc's strategic investment in Maven Clinic?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal5].dealValue"
+      },
+      "goldRecordIds": [
+        "deal5"
+      ],
+      "goldPassageIds": [
+        "vd:deal5:value"
+      ]
+    },
+    {
+      "id": "lift-undisclosed_deal_value-deal18",
+      "type": "should_abstain",
+      "template": "undisclosed_deal_value",
+      "question": "What was the disclosed deal value in USD for Gedeon Richter's acquisition of Celmatix?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal18].dealValue"
+      },
+      "goldRecordIds": [
+        "deal18"
+      ],
+      "goldPassageIds": [
+        "vd:deal18:value"
+      ]
+    },
+    {
+      "id": "lift-undisclosed_deal_value-deal13",
+      "type": "should_abstain",
+      "template": "undisclosed_deal_value",
+      "question": "What was the disclosed deal value in USD for CooperSurgical's acquisition of ZyMōt Fertility?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal13].dealValue"
+      },
+      "goldRecordIds": [
+        "deal13"
+      ],
+      "goldPassageIds": [
+        "vd:deal13:value"
+      ]
+    },
+    {
+      "id": "lift-undisclosed_deal_value-deal50",
+      "type": "should_abstain",
+      "template": "undisclosed_deal_value",
+      "question": "What was the disclosed deal value in USD for Caldera Medical's asset acquisition of Ethicon GYNECARE TVT Products?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal50].dealValue"
+      },
+      "goldRecordIds": [
+        "deal50"
+      ],
+      "goldPassageIds": [
+        "vd:deal50:value"
+      ]
+    },
+    {
+      "id": "lift-undisclosed_deal_value-deal31",
+      "type": "should_abstain",
+      "template": "undisclosed_deal_value",
+      "question": "What was the disclosed deal value in USD for Vitrolife's acquisition of eFertility (STB Zorg)?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal31].dealValue"
+      },
+      "goldRecordIds": [
+        "deal31"
+      ],
+      "goldPassageIds": [
+        "vd:deal31:value"
+      ]
+    },
+    {
+      "id": "lift-undisclosed_deal_value-deal59",
+      "type": "should_abstain",
+      "template": "undisclosed_deal_value",
+      "question": "What was the disclosed deal value in USD for Unified Women's Healthcare's acquisition of Gennev?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal59].dealValue"
+      },
+      "goldRecordIds": [
+        "deal59"
+      ],
+      "goldPassageIds": [
+        "vd:deal59:value"
+      ]
+    },
+    {
+      "id": "lift-undisclosed_deal_value-deal6",
+      "type": "should_abstain",
+      "template": "undisclosed_deal_value",
+      "question": "What was the disclosed deal value in USD for Teladoc's strategic investment in Kindbody?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal6].dealValue"
+      },
+      "goldRecordIds": [
+        "deal6"
+      ],
+      "goldPassageIds": [
+        "vd:deal6:value"
+      ]
+    },
+    {
+      "id": "lift-pending_close_date-deal5",
+      "type": "should_abstain",
+      "template": "pending_close_date",
+      "question": "On what date did Teladoc's strategic investment in Maven Clinic close?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal5].closedDate"
+      },
+      "goldRecordIds": [
+        "deal5"
+      ],
+      "goldPassageIds": [
+        "vd:deal5:closing"
+      ]
+    },
+    {
+      "id": "lift-pending_close_date-deal60",
+      "type": "should_abstain",
+      "template": "pending_close_date",
+      "question": "On what date did LabCorp's asset acquisition of BioReference Health (clinical, women's health, urology and 4Kscore assets) close?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal60].closedDate"
+      },
+      "goldRecordIds": [
+        "deal60"
+      ],
+      "goldPassageIds": [
+        "vd:deal60:closing"
+      ]
+    },
+    {
+      "id": "lift-pending_close_date-deal6",
+      "type": "should_abstain",
+      "template": "pending_close_date",
+      "question": "On what date did Teladoc's strategic investment in Kindbody close?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal6].closedDate"
+      },
+      "goldRecordIds": [
+        "deal6"
+      ],
+      "goldPassageIds": [
+        "vd:deal6:closing"
+      ]
+    },
+    {
+      "id": "lift-pending_close_date-deal13",
+      "type": "should_abstain",
+      "template": "pending_close_date",
+      "question": "On what date did CooperSurgical's acquisition of ZyMōt Fertility close?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal13].closedDate"
+      },
+      "goldRecordIds": [
+        "deal13"
+      ],
+      "goldPassageIds": [
+        "vd:deal13:closing"
+      ]
+    },
+    {
+      "id": "lift-pending_close_date-deal18",
+      "type": "should_abstain",
+      "template": "pending_close_date",
+      "question": "On what date did Gedeon Richter's acquisition of Celmatix close?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "acquisitions[id=deal18].closedDate"
+      },
+      "goldRecordIds": [
+        "deal18"
+      ],
+      "goldPassageIds": [
+        "vd:deal18:closing"
+      ]
+    },
+    {
+      "id": "lift-undisclosed_founded_year-c126",
+      "type": "should_abstain",
+      "template": "undisclosed_founded_year",
+      "question": "In what year was Siren founded?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "companies[id=c126].founded"
+      },
+      "goldRecordIds": [
+        "c126"
+      ],
+      "goldPassageIds": [
+        "vd:c126:profile"
+      ]
+    },
+    {
+      "id": "lift-undisclosed_founded_year-c111",
+      "type": "should_abstain",
+      "template": "undisclosed_founded_year",
+      "question": "In what year was Madison Reed founded?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "companies[id=c111].founded"
+      },
+      "goldRecordIds": [
+        "c111"
+      ],
+      "goldPassageIds": [
+        "vd:c111:profile"
+      ]
+    },
+    {
+      "id": "lift-undisclosed_founded_year-c110",
+      "type": "should_abstain",
+      "template": "undisclosed_founded_year",
+      "question": "In what year was L-Nutra founded?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "companies[id=c110].founded"
+      },
+      "goldRecordIds": [
+        "c110"
+      ],
+      "goldPassageIds": [
+        "vd:c110:profile"
+      ]
+    },
+    {
+      "id": "lift-undisclosed_founded_year-c117",
+      "type": "should_abstain",
+      "template": "undisclosed_founded_year",
+      "question": "In what year was Nalu Bio founded?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "companies[id=c117].founded"
+      },
+      "goldRecordIds": [
+        "c117"
+      ],
+      "goldPassageIds": [
+        "vd:c117:profile"
+      ]
+    },
+    {
+      "id": "lift-undisclosed_founded_year-c120",
+      "type": "should_abstain",
+      "template": "undisclosed_founded_year",
+      "question": "In what year was NowDx founded?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "companies[id=c120].founded"
+      },
+      "goldRecordIds": [
+        "c120"
+      ],
+      "goldPassageIds": [
+        "vd:c120:profile"
+      ]
+    },
+    {
+      "id": "lift-undisclosed_founded_year-c107",
+      "type": "should_abstain",
+      "template": "undisclosed_founded_year",
+      "question": "In what year was Inherent Biosciences founded?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "companies[id=c107].founded"
+      },
+      "goldRecordIds": [
+        "c107"
+      ],
+      "goldPassageIds": [
+        "vd:c107:profile"
+      ]
+    },
+    {
+      "id": "lift-out_of_scope_revenue-deal7",
+      "type": "should_abstain",
+      "template": "out_of_scope_revenue",
+      "question": "What annual revenue did Biotheranostics report for the fiscal year before the acquisition by Hologic was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target revenue"
+      },
+      "goldRecordIds": [
+        "deal7"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_revenue-deal45",
+      "type": "should_abstain",
+      "template": "out_of_scope_revenue",
+      "question": "What annual revenue did Faxitron Bioptics report for the fiscal year before the acquisition by Hologic was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target revenue"
+      },
+      "goldRecordIds": [
+        "deal45"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_revenue-deal36",
+      "type": "should_abstain",
+      "template": "out_of_scope_revenue",
+      "question": "What annual revenue did Gateway Genomics report for the fiscal year before the acquisition by Myriad Genetics was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target revenue"
+      },
+      "goldRecordIds": [
+        "deal36"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_revenue-deal15",
+      "type": "should_abstain",
+      "template": "out_of_scope_revenue",
+      "question": "What annual revenue did Forendo Pharma report for the fiscal year before the acquisition by Organon was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target revenue"
+      },
+      "goldRecordIds": [
+        "deal15"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_revenue-deal40",
+      "type": "should_abstain",
+      "template": "out_of_scope_revenue",
+      "question": "What annual revenue did Varian Medical Systems report for the fiscal year before the acquisition by Siemens Healthineers was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target revenue"
+      },
+      "goldRecordIds": [
+        "deal40"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_revenue-deal22",
+      "type": "should_abstain",
+      "template": "out_of_scope_revenue",
+      "question": "What annual revenue did Flatiron Health report for the fiscal year before the acquisition by Roche was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target revenue"
+      },
+      "goldRecordIds": [
+        "deal22"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_revenue-deal31",
+      "type": "should_abstain",
+      "template": "out_of_scope_revenue",
+      "question": "What annual revenue did eFertility (STB Zorg) report for the fiscal year before the acquisition by Vitrolife was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target revenue"
+      },
+      "goldRecordIds": [
+        "deal31"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_revenue-deal27",
+      "type": "should_abstain",
+      "template": "out_of_scope_revenue",
+      "question": "What annual revenue did Smith & Nephew Gynecology (Truclear) report for the fiscal year before the acquisition by Medtronic was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target revenue"
+      },
+      "goldRecordIds": [
+        "deal27"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_revenue-deal54",
+      "type": "should_abstain",
+      "template": "out_of_scope_revenue",
+      "question": "What annual revenue did Dermavant Sciences report for the fiscal year before the acquisition by Organon was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target revenue"
+      },
+      "goldRecordIds": [
+        "deal54"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_revenue-deal55",
+      "type": "should_abstain",
+      "template": "out_of_scope_revenue",
+      "question": "What annual revenue did IVI-RMA Global report for the fiscal year before the acquisition by KKR was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target revenue"
+      },
+      "goldRecordIds": [
+        "deal55"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_revenue-deal50",
+      "type": "should_abstain",
+      "template": "out_of_scope_revenue",
+      "question": "What annual revenue did Ethicon GYNECARE TVT Products report for the fiscal year before the asset acquisition by Caldera Medical was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target revenue"
+      },
+      "goldRecordIds": [
+        "deal50"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_revenue-deal52",
+      "type": "should_abstain",
+      "template": "out_of_scope_revenue",
+      "question": "What annual revenue did KaNDy Therapeutics report for the fiscal year before the acquisition by Bayer was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target revenue"
+      },
+      "goldRecordIds": [
+        "deal52"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_revenue-deal33",
+      "type": "should_abstain",
+      "template": "out_of_scope_revenue",
+      "question": "What annual revenue did Nine Continents Medical report for the fiscal year before the acquisition by Coloplast was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target revenue"
+      },
+      "goldRecordIds": [
+        "deal33"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_revenue-deal21",
+      "type": "should_abstain",
+      "template": "out_of_scope_revenue",
+      "question": "What annual revenue did Foundation Medicine report for the fiscal year before the acquisition by Roche was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target revenue"
+      },
+      "goldRecordIds": [
+        "deal21"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_revenue-deal42",
+      "type": "should_abstain",
+      "template": "out_of_scope_revenue",
+      "question": "What annual revenue did Thrive Earlier Detection report for the fiscal year before the acquisition by Exact Sciences was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target revenue"
+      },
+      "goldRecordIds": [
+        "deal42"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_headcount-deal49",
+      "type": "should_abstain",
+      "template": "out_of_scope_headcount",
+      "question": "How many employees did Alere have when the acquisition by Abbott Laboratories was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target headcount"
+      },
+      "goldRecordIds": [
+        "deal49"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_headcount-deal9",
+      "type": "should_abstain",
+      "template": "out_of_scope_headcount",
+      "question": "How many employees did Gynesonics have when the acquisition by Hologic was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target headcount"
+      },
+      "goldRecordIds": [
+        "deal9"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_headcount-deal10",
+      "type": "should_abstain",
+      "template": "out_of_scope_headcount",
+      "question": "How many employees did ORIGIO a/s have when the acquisition by CooperSurgical (CooperCompanies) was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target headcount"
+      },
+      "goldRecordIds": [
+        "deal10"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_headcount-deal33",
+      "type": "should_abstain",
+      "template": "out_of_scope_headcount",
+      "question": "How many employees did Nine Continents Medical have when the acquisition by Coloplast was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target headcount"
+      },
+      "goldRecordIds": [
+        "deal33"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_headcount-deal13",
+      "type": "should_abstain",
+      "template": "out_of_scope_headcount",
+      "question": "How many employees did ZyMōt Fertility have when the acquisition by CooperSurgical was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target headcount"
+      },
+      "goldRecordIds": [
+        "deal13"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_headcount-deal6",
+      "type": "should_abstain",
+      "template": "out_of_scope_headcount",
+      "question": "How many employees did Kindbody have when the strategic investment by Teladoc was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target headcount"
+      },
+      "goldRecordIds": [
+        "deal6"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_headcount-deal52",
+      "type": "should_abstain",
+      "template": "out_of_scope_headcount",
+      "question": "How many employees did KaNDy Therapeutics have when the acquisition by Bayer was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target headcount"
+      },
+      "goldRecordIds": [
+        "deal52"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_headcount-deal7",
+      "type": "should_abstain",
+      "template": "out_of_scope_headcount",
+      "question": "How many employees did Biotheranostics have when the acquisition by Hologic was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target headcount"
+      },
+      "goldRecordIds": [
+        "deal7"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_headcount-deal27",
+      "type": "should_abstain",
+      "template": "out_of_scope_headcount",
+      "question": "How many employees did Smith & Nephew Gynecology (Truclear) have when the acquisition by Medtronic was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target headcount"
+      },
+      "goldRecordIds": [
+        "deal27"
+      ],
+      "goldPassageIds": []
+    },
+    {
+      "id": "lift-out_of_scope_headcount-deal3",
+      "type": "should_abstain",
+      "template": "out_of_scope_headcount",
+      "question": "How many employees did Nurx have when the acquisition by Ro was announced?",
+      "gold": {
+        "kind": "none",
+        "value": null,
+        "aliases": [],
+        "sourceField": "not collected: target headcount"
+      },
+      "goldRecordIds": [
+        "deal3"
+      ],
+      "goldPassageIds": []
+    }
+  ]
+}
