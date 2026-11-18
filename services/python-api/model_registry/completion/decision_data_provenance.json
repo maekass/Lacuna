@@ -1,0 +1,114 @@
+{
+  "external_cohort": {
+    "condition_queries": [
+      "asthma",
+      "migraine",
+      "multiple sclerosis",
+      "heart failure",
+      "osteoarthritis",
+      "major depressive disorder",
+      "obesity",
+      "HIV"
+    ],
+    "excluded": "NCT ids present in the training snapshot",
+    "fetched_at_utc": "2026-11-16T07:25:48.804948+00:00",
+    "file": "external_cohort.json",
+    "file_sha256": "3f8a101ad9ddeb2c2423d3d8d1e7f25e50f647b3a40b1c8da1f69386af0c0f8a",
+    "per_query": {
+      "HIV": {
+        "fetched": 1000,
+        "kept_after_dedup_and_exclusion": 925
+      },
+      "asthma": {
+        "fetched": 1000,
+        "kept_after_dedup_and_exclusion": 889
+      },
+      "heart failure": {
+        "fetched": 1000,
+        "kept_after_dedup_and_exclusion": 835
+      },
+      "major depressive disorder": {
+        "fetched": 1000,
+        "kept_after_dedup_and_exclusion": 968
+      },
+      "migraine": {
+        "fetched": 1000,
+        "kept_after_dedup_and_exclusion": 983
+      },
+      "multiple sclerosis": {
+        "fetched": 1000,
+        "kept_after_dedup_and_exclusion": 964
+      },
+      "obesity": {
+        "fetched": 1000,
+        "kept_after_dedup_and_exclusion": 756
+      },
+      "osteoarthritis": {
+        "fetched": 1000,
+        "kept_after_dedup_and_exclusion": 938
+      }
+    },
+    "record_count": 7258,
+    "source": "clinicaltrials_gov_api_v2"
+  },
+  "first_versions": {
+    "fetched_finished_at_utc": "2026-11-16T07:56:58.631537+00:00",
+    "fetched_started_at_utc": "2026-11-16T07:30:25.623119+00:00",
+    "file": "first_versions.json",
+    "file_sha256": "15223352ae2b8745504dfd4111021f35a9d3aae2cd9fffd606af2a4ed6c4e8d3",
+    "first_version_fetch": {
+      "delay_s": 0.2,
+      "http_status_counts": {
+        "200": 11562
+      },
+      "requested": 11562,
+      "returned": 11562,
+      "stopped_early_on_repeated_failures": false,
+      "workers": 2
+    },
+    "holdout_change_list_fetch": {
+      "http_status_counts": {
+        "200": 1540
+      },
+      "requested": 1540,
+      "returned": 1540
+    },
+    "ids": "labeled training-snapshot rows with start year + labeled external-cohort rows",
+    "source": "clinicaltrials.gov /api/int/studies/{nct}/history (website record-history endpoint)"
+  },
+  "generated_at_utc": "2026-11-16T07:25:48.804948+00:00",
+  "history_api_probe": {
+    "attempts": [
+      {
+        "json": false,
+        "status_code": 404,
+        "url": "https://clinicaltrials.gov/api/v2/studies/NCT04280705/history"
+      },
+      {
+        "json": true,
+        "status_code": 200,
+        "url": "https://clinicaltrials.gov/api/int/studies/NCT04280705/history"
+      },
+      {
+        "json": true,
+        "status_code": 200,
+        "url": "https://clinicaltrials.gov/api/int/studies/NCT04280705?history=true"
+      }
+    ],
+    "nct_id": "NCT04280705",
+    "probed_at_utc": "2026-11-16T07:25:48.931252+00:00",
+    "reachable": true
+  },
+  "supplement": {
+    "fetched_at_utc": "2026-11-16T07:25:48.804948+00:00",
+    "fields": "NCTId,OverallStatus,StartDate,StudyFirstSubmitDate,LastUpdatePostDate,CompletionDate",
+    "file": "completion_supplement.json",
+    "file_sha256": "7c3c5a0311fa94263bf096dca12baf04a63c77f8fe317eb5d3af6a7d77e07f4b",
+    "requested": 18923,
+    "returned": 18923,
+    "source": "clinicaltrials_gov_api_v2",
+    "training_snapshot_sha256": "2f6a310097e96f32f21323b74834d79c4c5d0628c49ab62ddf9eb31c164433a9"
+  },
+  "supplement_status_changed_since_snapshot": 0,
+  "training_snapshot_sha256": "2f6a310097e96f32f21323b74834d79c4c5d0628c49ab62ddf9eb31c164433a9"
+}

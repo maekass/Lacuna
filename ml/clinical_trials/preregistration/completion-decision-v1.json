@@ -1,0 +1,101 @@
+{
+  "schema": "lacuna-preregistration-v1",
+  "id": "completion-decision-v1",
+  "registered_at_utc": "2026-11-16T07:24:21Z",
+  "written_before_test_evaluation": true,
+  "order_statement": "This file is committed on branch feat/ct-completion-decision before any code computes decision metrics (precision/recall/lift at k, net benefit) on the temporal holdout or the external cohort, and before the v4 candidate is scored on the holdout. The evaluation script records this file's sha256 and the commit that introduced it; the PR lists the commit order.",
+  "prior_knowledge_disclosure": [
+    "completion-proxy-v3 (3.0.0-logreg) holdout ROC AUC 0.711 [0.670, 0.752], Brier 0.102, log loss 0.347, ECE 0.031 and accuracy 0.874 were already reported in PR #302 when these thresholds were chosen.",
+    "No top-k, lift or net-benefit number had been computed for any model on the holdout when this file was written.",
+    "The v4 candidate below has not been fit or scored on any holdout row when this file was written.",
+    "The calibration threshold (ECE <= 0.05) is new; v3's ECE of 0.031 was known when it was chosen. It is reported as a disclosed, non-blind threshold."
+  ],
+  "decision": {
+    "action": "Review the top k% of trials ranked by predicted stop risk.",
+    "risk_score": "1 - probability_completed",
+    "positive_class_for_triage": "STOPPED (TERMINATED, WITHDRAWN or SUSPENDED)",
+    "k_fractions": [0.05, 0.1, 0.2],
+    "primary_k": 0.1,
+    "top_k_size": "ceil(k * n)",
+    "tie_break": "stable sort by descending risk, then ascending nct_id",
+    "metrics": ["precision_at_k", "recall_at_k", "lift_at_k"],
+    "lift_definition": "precision_at_k / prevalence_of_stopped in the evaluated set (random review = 1.0)",
+    "bootstrap": {
+      "method": "nonparametric percentile bootstrap over evaluated trials, ranking recomputed inside each resample",
+      "resamples": 2000,
+      "seed": 42,
+      "ci": 0.95
+    },
+    "net_benefit": {
+      "definition": "NB(pt) = TP/n - FP/n * pt / (1 - pt), treating risk >= pt as 'review'; compared with review-all and review-none",
+      "threshold_probabilities": [0.05, 0.1, 0.15, 0.2, 0.3]
+    }
+  },
+  "export_gate": {
+    "gate_version": "decision-gate-v1",
+    "replaces": "train.passes_export_gate accuracy > majority-baseline check (production completion models only; the legacy v2 browser export keeps its gate)",
+    "checks": {
+      "auc_ci_lower": "roc_auc_ci_lower > 0.55 (unchanged EXPORT_AUC_CI_LOWER_MIN)",
+      "brier_vs_base_rate": "brier < base_rate_brier (unchanged)",
+      "calibration": "expected_calibration_error <= 0.05 (10 equal-width bins)",
+      "decision_lift": "lift_at_10pct ci_95_lower > 1.0"
+    },
+    "thresholds": {
+      "auc_ci_lower_min_exclusive": 0.55,
+      "ece_max_inclusive": 0.05,
+      "lift_at_primary_k_ci_lower_min_exclusive": 1.0
+    },
+    "evaluated_on": "temporal holdout (start_year > cutoff), full labeled holdout without the follow-up filter",
+    "no_post_hoc_tuning": "Thresholds, k and the rule are fixed by this file. A failing result is reported as failing."
+  },
+  "candidate_v4": {
+    "version": "4.0.0-logreg-pit",
+    "model": "Same as 3.0.0-logreg (TF-IDF 1-2 grams max 5000 min_df 2 + StandardScaler numeric, LogisticRegression class_weight=balanced max_iter=1500 seed 42, Platt calibration on the same 20% stratified calibration split)",
+    "features": "v3 features plus point-in-time features that pass the leakage tests",
+    "planned_point_in_time_features": {
+      "version_history": "original planned enrollment, start-date slips, amendment count, site count, recruitment-status changes from the first registered version. Only if the ClinicalTrials.gov version-history API is reachable; otherwise documented as blocked and omitted.",
+      "sponsor_track_record": {
+        "anchor_date": "min(StartDate, StudyFirstSubmitDate) of the target trial",
+        "outcome_public_by": "LastUpdatePostDate of the other trial (its final status was public no later than this date)",
+        "eligible_history": "other trials in the frozen snapshot with the same normalized lead sponsor, a terminal label, and outcome_public_by strictly before the target anchor_date; the target itself is never counted",
+        "features": [
+          "sponsor_prior_trials_log1p",
+          "sponsor_prior_stop_rate_smoothed",
+          "sponsor_has_prior"
+        ],
+        "smoothing": "(stopped + 5 * p0) / (n + 5) with p0 = stop rate of the training-fit rows"
+      }
+    },
+    "leakage_alarm": "Any single new feature with holdout ROC AUC (either direction) > 0.75 is flagged and the candidate is not eligible for promotion.",
+    "promotion_rule": "Existing rule: candidate is champion iff the paired ROC AUC delta (candidate - champion) 95% CI lower bound > 0 AND the candidate passes the export gate. Otherwise the current champion stays."
+  },
+  "censoring": {
+    "method": "minimum follow-up label filter",
+    "min_follow_up_months": 24,
+    "reference_date": "snapshot generated_at_utc (2026-11-16)",
+    "rule": "keep a labeled trial only if StartDate (day 1 if missing) + 24 months <= reference_date",
+    "reporting": "holdout metrics with and without the filter for every model; the gate uses the unfiltered holdout"
+  },
+  "external_cohort": {
+    "condition_queries": [
+      "asthma",
+      "migraine",
+      "multiple sclerosis",
+      "heart failure",
+      "osteoarthritis",
+      "major depressive disorder",
+      "obesity",
+      "HIV"
+    ],
+    "ingest": "CT.gov API v2, same fields, page_size 100, max 10 pages per query, sort LastUpdatePostDate:desc; frozen with a provenance hash",
+    "exclusion": "any NCT id present in the training snapshot",
+    "primary": "all labeled external trials with a start year",
+    "secondary": "external trials with start_year > holdout cutoff",
+    "use": "report-only; never used for fitting, calibration, thresholds or promotion"
+  },
+  "subgroups": {
+    "calibration_by": ["phase", "sponsor_class"],
+    "min_group_n": 30,
+    "report": "n, observed completion rate, mean predicted, ECE, ROC AUC when both classes have >= 10 rows"
+  }
+}

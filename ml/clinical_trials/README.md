@@ -6,11 +6,12 @@ optional **offline benchmark** only and is not bundled into the product.
 
 ## Models
 
-| Model                                  | Task                                                                         | Status                                                                                |
-| -------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| **wh-relevance-v1**                    | Women's health trial relevance (title + condition + interventions + sponsor) | Shipped (scores withheld in UI while `trainingSource` is `synthetic_seed`)            |
-| **completion-proxy-v2**                | COMPLETED vs stopped early — operational status, not endpoint success        | Artifact committed; new trains must pass the conjunction export gate before overwrite |
-| **completion-tensorflow-benchmark-v1** | Same completion-proxy task, nonlinear TensorFlow comparator                  | Offline benchmark only; never exported to the Next.js runtime                         |
+| Model                                  | Task                                                                         | Status                                                                                   |
+| -------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **wh-relevance-v1**                    | Women's health trial relevance (title + condition + interventions + sponsor) | Shipped (scores withheld in UI while `trainingSource` is `synthetic_seed`)               |
+| **completion-proxy-v2**                | COMPLETED vs stopped early — operational status, not endpoint success        | Artifact committed; new trains must pass the conjunction export gate before overwrite    |
+| **completion-proxy-v3**                | Same task, leakage-screened features, calibrated logistic champion           | Served by `services/python-api` (`/v1/models/completion`); fails export gate on accuracy |
+| **completion-tensorflow-benchmark-v1** | Same completion-proxy task, nonlinear TensorFlow comparator                  | Offline benchmark only; never exported to the Next.js runtime                            |
 
 Inference runs in the **Next.js app** via exported JSON artifacts in
 `src/data/ml/clinical-trials/` (TF-IDF + logistic — no Python or TensorFlow at
@@ -34,6 +35,26 @@ pip install -r ml/clinical_trials/requirements.txt
 If CT.gov blocks automated fetch (403), the shipped sklearn pipeline can fall
 back to `ml/clinical_trials/data/training_seed.json`. **Re-run locally** for
 live-data artifacts before citing metrics.
+
+### Completion proxy v3 (production API)
+
+```bash
+npm run ml:ct:ingest -- --max-pages 10   # frozen snapshot + provenance sidecar
+npm run ml:ct:train:production           # writes services/python-api/model_registry/completion
+npm run ml:ct:drift                      # weekly PSI check (also in CI)
+```
+
+Refuses synthetic snapshots. Non-champion artifacts go to the gitignored
+`ml/clinical_trials/output/completion-proxy-v3/`. See the
+[model card](../../services/python-api/model_registry/completion/MODEL_CARD.md).
+
+### Completion decision tool
+
+`npm run ml:ct:decision:fetch` then `npm run ml:ct:decision` evaluates v3 vs the
+point-in-time v4 against the pre-registered decision gate (`preregistration/`),
+and `npm run ml:ct:shadow:predict` / `npm run ml:ct:shadow:score` maintain and
+score the shadow log in `shadow/`. Details:
+[`docs/ML_COMPLETION_DECISION.md`](../../docs/ML_COMPLETION_DECISION.md).
 
 ### TensorFlow benchmark
 

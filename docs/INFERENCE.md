@@ -131,6 +131,13 @@ hallucination flag, human spot-check). Traces are not durable unless
 `LACUNA_EVAL_LOG` points at a writable file. An empty trace list is insufficient
 data, not a zero hallucination rate.
 
+### Cited-answer lift eval
+
+`npm run eval:lift` measures the lift from the evidence-ask path: 160 frozen
+questions from the verified dataset, with and without retrieval, under two
+versioned prompts, scored deterministically with bootstrap CIs. See
+[LLM_LIFT_EVAL.md](LLM_LIFT_EVAL.md).
+
 ### Adding a new LLM feature
 
 1. Add prompt templates in `src/lib/ai/prompts.ts` as pure functions.

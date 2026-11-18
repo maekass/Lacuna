@@ -1,6 +1,7 @@
-scikit-learn>=1.5.0,<2.0
+scikit-learn>=1.6.0,<2.0  # FrozenEstimator (completion-proxy v3 calibration)
 numpy>=1.26.0,<3.0
 scipy>=1.11.0,<2.0
 httpx>=0.28.0,<1.0
 urllib3>=2.7.0
 psycopg2-binary>=2.9.9,<3.0
+matplotlib>=3.8,<4.0  # reliability plot for completion-proxy v3

@@ -4,12 +4,14 @@ WORKDIR /app
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    LACUNA_DATASET_PATH=/app/src/data/dataset.verified.json
+    LACUNA_DATASET_PATH=/app/src/data/dataset.verified.json \
+    COMPLETION_REGISTRY_DIR=/app/model_registry/completion
 
 COPY services/python-api/requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
 COPY services/python-api/app /app/app
+COPY services/python-api/model_registry /app/model_registry
 COPY src/data/dataset.verified.json /app/src/data/dataset.verified.json
 
 EXPOSE 8000

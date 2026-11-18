@@ -111,3 +111,14 @@ __pycache__/
 *.vcf.gz
 *.gvcf
 *.bam
+
+# completion decision-evaluation frozen fetches (hashes committed in the model registry)
+ml/clinical_trials/data/completion_supplement*.json
+ml/clinical_trials/data/external_cohort*.json
+ml/clinical_trials/data/first_versions*.json
+
+# completion shadow-mode API log (runtime, append-only)
+services/python-api/var/
+
+# LLM lift eval outputs (docs/LLM_LIFT_EVAL.md)
+eval-artifacts/
