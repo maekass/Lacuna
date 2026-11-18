@@ -46,18 +46,32 @@ export function isStaticRatioDenominatorAdmissible(
 }
 
 /**
- * Company ids whose current static-ledger `field` is admitted as a ratio
- * denominator. Server layouts pass this list to `VerifiedDatasetProvider` so
- * client views can gate funding multiples without bundling the ledger.
+ * Admitted ratio denominators from the static ledger, keyed by company id, with
+ * the exact ledger value admitted. Server layouts pass this to
+ * `VerifiedDatasetProvider`; a loaded catalog value that differs (for example
+ * a database row) is not admitted, so the gate fails closed outside static mode.
  */
-export function staticRatioDenominatorCompanyIds(
+export function staticRatioDenominatorValues(
   field: EconomicEvidenceField,
-): string[] {
-  const ids = new Set(
-    staticLedger.records
-      .filter((record) => record.field === field)
-      .map((record) => record.companyId),
-  );
-  return [...ids].filter((id) => isStaticRatioDenominatorAdmissible(id, field))
-    .sort();
+): Record<string, number> {
+  const admitted: Record<string, number> = {};
+  for (const record of staticLedger.records) {
+    if (
+      record.field === field &&
+      ratioDenominatorAdmission(staticLedger, record.companyId, field)
+        .admissible &&
+      admittedRecordValue(record.companyId, field) === record.value
+    ) {
+      admitted[record.companyId] = record.value;
+    }
+  }
+  return admitted;
+}
+
+function admittedRecordValue(
+  companyId: string,
+  field: EconomicEvidenceField,
+): number | undefined {
+  const company = parsedStaticDataset.companies.find((c) => c.id === companyId);
+  return company?.[field];
 }

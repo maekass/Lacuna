@@ -75,17 +75,17 @@ export interface VerifiedDerivedData {
   getVerifiedTotalDealValue: () => number;
   getVerifiedDealsByYear: () => Array<{ year: number; count: number }>;
   /**
-   * Whether a company's `totalFunding` may divide a deal value. Fails closed:
-   * only ids supplied by the server from the evidence-ledger basis gate pass.
+   * Whether a company's `totalFunding` value may divide a deal value. Fails
+   * closed: only an id and exact value supplied by the server from the
+   * evidence-ledger basis gate pass.
    */
-  admitFundingDenominator: (companyId: string) => boolean;
+  admitFundingDenominator: (companyId: string, totalFunding: number) => boolean;
 }
 
 export function buildVerifiedDerivedData(
   dataset: VerifiedDataset,
-  fundingDenominatorCompanyIds: readonly string[] = [],
+  fundingDenominators: Readonly<Record<string, number>> = {},
 ): VerifiedDerivedData {
-  const admittedFundingDenominators = new Set(fundingDenominatorCompanyIds);
   const verifiedCompanies: VerifiedCompanyView[] = dataset.companies.map((
     c,
   ) => ({
@@ -114,8 +114,9 @@ export function buildVerifiedDerivedData(
     verifiedAcquisitions,
     verifiedAcquirers,
     dataProvenance,
-    admitFundingDenominator: (companyId) =>
-      admittedFundingDenominators.has(companyId),
+    admitFundingDenominator: (companyId, totalFunding) =>
+      Object.hasOwn(fundingDenominators, companyId) &&
+      fundingDenominators[companyId] === totalFunding,
     getVerifiedNetworkNodes: () => [
       ...verifiedCompanies.map((c) => {
         const sourced = sourcedLastKnownValuationForCompany(

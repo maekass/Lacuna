@@ -100,12 +100,15 @@ function yearsBetween(foundedYear: number, isoDate: string): number | null {
 
 export interface EmpiricalPriorOptions {
   /**
-   * Whether a target's `totalFunding` may divide its deal value. Production
-   * callers pass the evidence-ledger basis gate
-   * (`isStaticRatioDenominatorAdmissible`); omitting it admits every positive
-   * value and is intended only for self-contained fixtures.
+   * Whether a target's `totalFunding` value may divide its deal value.
+   * Production callers pass the evidence-ledger gate from
+   * `useVerifiedDataset()`, which checks both id and value; omitting it admits
+   * every positive value and is intended only for self-contained fixtures.
    */
-  readonly admitFundingDenominator?: (companyId: string) => boolean;
+  readonly admitFundingDenominator?: (
+    companyId: string,
+    totalFunding: number,
+  ) => boolean;
 }
 
 /**
@@ -148,7 +151,7 @@ export function deriveEmpiricalPriors(
       if (
         typeof deal.dealValue === "number" && deal.dealValue > 0 &&
         typeof target?.totalFunding === "number" && target.totalFunding > 0 &&
-        admitFundingDenominator(target.id)
+        admitFundingDenominator(target.id, target.totalFunding)
       ) {
         multiples.push(deal.dealValue / target.totalFunding);
       }

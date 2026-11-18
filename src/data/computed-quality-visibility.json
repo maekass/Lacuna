@@ -1,7 +1,7 @@
 {
   "generatedAt": "2026-10-19T00:00:00.000Z",
   "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-  "computationLineageHash": "806c1f4eab18568e775a6828538c5ef084aca8bc38b6b8e73cbc7b4c1bdc1ad2",
+  "computationLineageHash": "b12b620412e452094d117b8faa3c89bb795adc8e60b8663c1426d3c39b9c3538",
   "datasetVersion": "v11",
   "source": "Lacuna measurement-layer census (quality scores, gated metrics, vintage, display provenance)",
   "quality": {

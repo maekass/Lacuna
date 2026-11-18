@@ -12,20 +12,20 @@ const VerifiedDatasetContext = createContext<VerifiedDerivedData | null>(null);
 interface VerifiedDatasetProviderProps {
   dataset: VerifiedDataset;
   /**
-   * Company ids whose funding figure the evidence ledger admits as a ratio
-   * denominator. Omitted means none are admitted.
+   * Funding values the evidence ledger admits as ratio denominators, keyed by
+   * company id. A catalog value that differs is not admitted; omitted means
+   * none are admitted.
    */
-  fundingDenominatorCompanyIds?: readonly string[];
+  fundingDenominators?: Readonly<Record<string, number>>;
   children: ReactNode;
 }
 
 export function VerifiedDatasetProvider(
-  { dataset, fundingDenominatorCompanyIds, children }:
-    VerifiedDatasetProviderProps,
+  { dataset, fundingDenominators, children }: VerifiedDatasetProviderProps,
 ) {
   const value = useMemo(
-    () => buildVerifiedDerivedData(dataset, fundingDenominatorCompanyIds),
-    [dataset, fundingDenominatorCompanyIds],
+    () => buildVerifiedDerivedData(dataset, fundingDenominators),
+    [dataset, fundingDenominators],
   );
   return (
     <VerifiedDatasetContext.Provider value={value}>

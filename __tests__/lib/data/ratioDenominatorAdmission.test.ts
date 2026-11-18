@@ -11,7 +11,7 @@ import {
 import {
   getStaticVerifiedDataset,
   isStaticRatioDenominatorAdmissible,
-  staticRatioDenominatorCompanyIds,
+  staticRatioDenominatorValues,
 } from "@/lib/data/staticDataset";
 import { buildVerifiedDerivedData } from "@/lib/data/verifiedDataHelpers";
 
@@ -155,32 +155,46 @@ describe("static ledger denominator gate", () => {
 });
 
 describe("client funding-denominator gate", () => {
-  it("lists exactly the static companies whose funding is admitted", () => {
+  it("lists exactly the admitted static funding figures with their values", () => {
     const ledger = parseEconomicEvidenceLedger(rawLedger);
+    const dataset = getStaticVerifiedDataset();
+    const admitted = staticRatioDenominatorValues("totalFunding");
     const funded = new Set(
       ledger.records.filter((r) => r.field === "totalFunding").map((r) =>
         r.companyId
       ),
     );
-    const ids = staticRatioDenominatorCompanyIds("totalFunding");
     for (const id of funded) {
-      expect(ids.includes(id)).toBe(
+      expect(Object.hasOwn(admitted, id), id).toBe(
         isStaticRatioDenominatorAdmissible(id, "totalFunding"),
       );
     }
-    expect(ids.every((id) => funded.has(id))).toBe(true);
+    for (const [id, value] of Object.entries(admitted)) {
+      expect(dataset.companies.find((c) => c.id === id)?.totalFunding).toBe(
+        value,
+      );
+    }
   });
 
-  it("fails closed when the provider receives no admitted ids", () => {
-    const dataset = getStaticVerifiedDataset();
-    const closed = buildVerifiedDerivedData(dataset);
+  it("fails closed when the provider receives no admitted values", () => {
+    const closed = buildVerifiedDerivedData(getStaticVerifiedDataset());
     expect(
       closed.verifiedCompanies.some((c) =>
-        closed.admitFundingDenominator(c.id)
+        c.totalFunding !== undefined &&
+        closed.admitFundingDenominator(c.id, c.totalFunding)
       ),
     ).toBe(false);
-    const open = buildVerifiedDerivedData(dataset, ["c1"]);
-    expect(open.admitFundingDenominator("c1")).toBe(true);
-    expect(open.admitFundingDenominator("c2")).toBe(false);
+  });
+
+  it("refuses a loaded value that differs from the admitted ledger value", () => {
+    // DB mode can load a different figure for an id the static ledger admits.
+    const derived = buildVerifiedDerivedData(getStaticVerifiedDataset(), {
+      c100: 50,
+    });
+    expect(derived.admitFundingDenominator("c100", 50)).toBe(true);
+    expect(derived.admitFundingDenominator("c100", 75)).toBe(false);
+    expect(derived.admitFundingDenominator("c101", 50)).toBe(false);
+    // Prototype keys are not admitted ids.
+    expect(derived.admitFundingDenominator("toString", 50)).toBe(false);
   });
 });

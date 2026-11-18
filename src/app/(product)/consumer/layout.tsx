@@ -1,6 +1,6 @@
 import { getVerifiedDataset } from "@/lib/data/datasetProvider";
 import { applyDatasetScope } from "@/lib/data/medBiotechFilters";
-import { staticRatioDenominatorCompanyIds } from "@/lib/data/staticDataset";
+import { staticRatioDenominatorValues } from "@/lib/data/staticDataset";
 import { VerifiedDatasetProvider } from "@/lib/data/VerifiedDatasetContext";
 
 /** Consumer health workspace uses its own scoped dataset (nested provider). */
@@ -14,7 +14,7 @@ export default async function ConsumerLayout({
   return (
     <VerifiedDatasetProvider
       dataset={dataset}
-      fundingDenominatorCompanyIds={staticRatioDenominatorCompanyIds(
+      fundingDenominators={staticRatioDenominatorValues(
         "totalFunding",
       )}
     >
