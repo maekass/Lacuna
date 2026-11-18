@@ -48,11 +48,13 @@ describe("lineage-backed computed artifacts", () => {
       }>;
     }>("src/data/computed-benchmarks.json");
 
-    expect(artifact.benchmarks).toHaveLength(1);
+    // Every v11 funding denominator is locator_only or unstated_conflict, so
+    // no sector exit/funding ratio is published.
+    expect(artifact.benchmarks).toHaveLength(0);
     expect(
       artifact.withheld.some((entry) =>
         entry.metricId === "sector.moic.median" &&
-        entry.lineage.n === 1 &&
+        entry.lineage.n === 0 &&
         entry.reason.includes("below minimum")
       ),
     ).toBe(true);
@@ -63,25 +65,44 @@ describe("lineage-backed computed artifacts", () => {
       premiumMetrics: Record<string, {
         estimate: { lineage: { n: number } };
       }>;
+      withheld: Array<{
+        metricId: string;
+        lineage: {
+          n: number;
+          excluded: Array<{ reason: string; count: number }>;
+          missingness: Array<{ field: string; missing: number }>;
+        };
+      }>;
     }>("src/data/computed-acquirer-premiums.json");
 
     expect(Object.keys(artifact.premiumMetrics).sort()).toEqual([
       "acquirer.premium.lastKnownValuation",
       "acquirer.premium.preDealValuation",
-      "acquirer.premium.totalFunding",
     ]);
     expect(
       artifact.premiumMetrics["acquirer.premium.preDealValuation"].estimate
         .lineage.n,
     ).toBe(47);
+    // 48 sourced last-known valuations minus 9 bounds or partial figures
+    // (up_to, range_high, upfront, stake).
     expect(
       artifact.premiumMetrics["acquirer.premium.lastKnownValuation"].estimate
         .lineage.n,
-    ).toBe(48);
+    ).toBe(39);
+
+    const funding = artifact.withheld.find((entry) =>
+      entry.metricId === "acquirer.premium.totalFunding"
+    );
+    expect(funding?.lineage.n).toBe(0);
+    expect(funding?.lineage.excluded).toContainEqual({
+      reason: "funding_basis_inadmissible",
+      count: 7,
+    });
+    // An inadmissible basis is not a missing value.
     expect(
-      artifact.premiumMetrics["acquirer.premium.totalFunding"].estimate.lineage
-        .n,
-    ).toBe(7);
+      funding?.lineage.missingness.filter((m) => m.field === "totalFunding")
+        .map((m) => m.missing),
+    ).toEqual([45]);
   });
 
   it("produces byte-stable artifacts across consecutive computations", () => {

@@ -31,7 +31,12 @@ function findMetric(metricId: string): MetricRecord | undefined {
     }>
   )[metricId];
   if (premium) return { metricId, estimate: premium.estimate };
-  const confidence = confidenceIntervals.results.find((result) =>
+  // Typed explicitly: when every interval is withheld the JSON infers never[].
+  const confidenceResults: readonly {
+    readonly metricId: string;
+    readonly estimate: { readonly lineage?: unknown };
+  }[] = confidenceIntervals.results;
+  const confidence = confidenceResults.find((result) =>
     result.metricId === metricId
   );
   if (confidence) return { metricId, estimate: confidence.estimate };

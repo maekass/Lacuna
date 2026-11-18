@@ -97,6 +97,31 @@ describe("deriveEmpiricalPriors", () => {
     makeDeal({ id: "d2", targetId: "c2", dealValue: 500 }),
   ];
 
+  it("uses only admitted funding denominators for funding multiples", () => {
+    const sixDeals = companies.map((c, i) =>
+      makeDeal({ id: `d${i + 1}`, targetId: c.id, dealValue: 400 + i * 10 })
+    );
+    const ungated = deriveEmpiricalPriors(companies, sixDeals);
+    expect(ungated.derivationNote).toContain("6 with funding multiples");
+
+    const gated = deriveEmpiricalPriors(companies, sixDeals, {
+      admitFundingDenominator: (id) => id === "c1" || id === "c2",
+    });
+    expect(gated.derivationNote).toContain("2 with funding multiples");
+    expect(isSufficient(gated.medianFundingMultipleAllEstimate)).toBe(false);
+    // Deal values and exit rates do not depend on the funding gate.
+    expect(gated.disclosedDealCount).toBe(ungated.disclosedDealCount);
+    expect(gated.overallExitRateEstimate).toEqual(
+      ungated.overallExitRateEstimate,
+    );
+
+    const none = deriveEmpiricalPriors(companies, sixDeals, {
+      admitFundingDenominator: () => false,
+    });
+    expect(none.derivationNote).toContain("0 with funding multiples");
+    expect(isSufficient(none.medianFundingMultipleAllEstimate)).toBe(false);
+  });
+
   it("computes the overall exit rate from acquired targets", () => {
     const priors = deriveEmpiricalPriors(companies, deals);
     expect(isSufficient(priors.overallExitRateEstimate)).toBe(true);

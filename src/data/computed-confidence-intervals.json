@@ -3,911 +3,21 @@
   "datasetVersion": "v11",
   "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
   "source": "Lacuna verified catalog + economic evidence ledger",
-  "results": [
-    {
-      "metricId": "sector.moic.median",
-      "scope": "All sectors",
-      "label": "Median exit-value / capital-raised ratio",
-      "definition": "Deal value divided by the target company's total disclosed capital raised. This is a descriptive capital-efficiency ratio, not fund or investment MOIC and not a revenue multiple.",
-      "estimate": {
-        "kind": "sufficient",
-        "value": 7.2727272727272725,
-        "sampleSize": 7,
-        "disclosedFraction": 1,
-        "confidenceInterval": [
-          2.542372881355932,
-          27.142857142857142
-        ],
-        "selectionCaveat": "Disclosed-price deals are a non-random subsample (100% of n=7 sector deals). Selection bias may inflate medians; Heckman correction not applied.",
-        "lineage": {
-          "metricId": "sector.moic.median",
-          "estimator": "gatedMedian",
-          "inputs": [
-            {
-              "table": "acquisitions",
-              "id": "deal1"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal2"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal3"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal4"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal11"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal14"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal57"
-            }
-          ],
-          "supporting": [
-            {
-              "table": "companies",
-              "id": "c23"
-            },
-            {
-              "table": "companies",
-              "id": "c1"
-            },
-            {
-              "table": "companies",
-              "id": "c12"
-            },
-            {
-              "table": "companies",
-              "id": "c13"
-            },
-            {
-              "table": "companies",
-              "id": "c28"
-            },
-            {
-              "table": "companies",
-              "id": "c31"
-            },
-            {
-              "table": "companies",
-              "id": "c74"
-            }
-          ],
-          "sources": [
-            {
-              "kind": "prose",
-              "rawCitation": "Teladoc Health 8-K filing, SEC EDGAR (Aug 5, 2020); Teladoc Health investor relations press release (Aug 5, 2020); SEC EDGAR 8-K https://www.sec.gov/Archives/edgar/data/1477449/000110465920090575/tm2026658d1_8k.htm"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "SEC 8-K filing (Teladoc, Aug 5, 2020 announcement; Oct 30, 2020 close)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Teladoc Health investor relations press release (Aug 5, 2020)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Crunchbase - crunchbase.com/organization/livongo-health"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Press reports (Fierce Healthcare, May 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Crunchbase - crunchbase.com/organization/modern-fertility"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "TechCrunch - acquisition coverage (May 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Company website - modernfertility.com"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Press reports (TechCrunch, December 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Nurx.com - company website (now Ro)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "TechCrunch - Ro acquisition (Dec 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Crunchbase - crunchbase.com/organization/nurx"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "SEC EDGAR EX-99.1 (23andMe–Lemonaid merger agreement, Oct 22, 2021); Globe Newswire closing release (Nov 1, 2021); SEC EDGAR 8-K EX-99.1 (merger agreement, Oct 22, 2021) https://www.sec.gov/Archives/edgar/data/1804591/000119312521305409/d231996dex991.htm; SEC EDGAR 8-K EX-99.1 (closing, Nov 1, 2021) https://www.sec.gov/Archives/edgar/data/1804591/000119312521316240/d247525dex991.htm"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "SEC EDGAR EX-99.1 — 23andMe/Lemonaid merger agreement (Oct 22, 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Globe Newswire — acquisition closing (Nov 1, 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Crunchbase - crunchbase.com/organization/lemonaid-health"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Company website - lemonaidhealth.com"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "CooperCompanies investor relations — Globe Newswire (Nov 10, 2021); SEC EDGAR 8-K https://www.sec.gov/Archives/edgar/data/711404/000119312521326207/d204711d8k.htm"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "CooperCompanies investor relations - press release (Nov 10, 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Globe Newswire - acquisition announcement"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Organon.com press release (Mar 30, 2021); Business Wire; SEC EDGAR 8-K https://www.sec.gov/Archives/edgar/data/1821825/000119312521180652/d49288dex992.htm"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Organon.com - press release (Mar 30, 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Business Wire - Merck acquisition on behalf of Organon spinoff"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Crunchbase - crunchbase.com/organization/alydia-health"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Organon press release - acquisition announcement, 2021"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Hims & Hers investor relations (June 24, 2021); Business Wire (July 7, 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Hims & Hers investor relations press release (June 24, 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Business Wire - acquisition completion (July 7, 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "MobiHealthNews coverage (June 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Crunchbase - crunchbase.com/organization/apostrophe"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "TechCrunch - Hims & Hers acquisition coverage, 2021"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Company website - apostrophe.com"
-            }
-          ],
-          "contributors": [
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal1"
-              },
-              "value": 57.916666666666664,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal1"
-                  },
-                  "field": "dealValue",
-                  "value": 13900
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c23"
-                  },
-                  "field": "totalFunding",
-                  "value": 240
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal2"
-              },
-              "value": 1.4516129032258065,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal2"
-                  },
-                  "field": "dealValue",
-                  "value": 225
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c1"
-                  },
-                  "field": "totalFunding",
-                  "value": 155
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal3"
-              },
-              "value": 2.542372881355932,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal3"
-                  },
-                  "field": "dealValue",
-                  "value": 300
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c12"
-                  },
-                  "field": "totalFunding",
-                  "value": 118
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal4"
-              },
-              "value": 7.2727272727272725,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal4"
-                  },
-                  "field": "dealValue",
-                  "value": 400
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c13"
-                  },
-                  "field": "totalFunding",
-                  "value": 55
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal11"
-              },
-              "value": 6.4,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal11"
-                  },
-                  "field": "dealValue",
-                  "value": 1600
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c28"
-                  },
-                  "field": "totalFunding",
-                  "value": 250
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal14"
-              },
-              "value": 9.6,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal14"
-                  },
-                  "field": "dealValue",
-                  "value": 240
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c31"
-                  },
-                  "field": "totalFunding",
-                  "value": 25
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal57"
-              },
-              "value": 27.142857142857142,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal57"
-                  },
-                  "field": "dealValue",
-                  "value": 190
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c74"
-                  },
-                  "field": "totalFunding",
-                  "value": 7
-                }
-              ]
-            }
-          ],
-          "n": 7,
-          "originalInputCount": 61,
-          "excluded": [
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal5"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal6"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal12"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal13"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal18"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal31"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal47"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal50"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal59"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal7"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal8"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal9"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal10"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal15"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal16"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal17"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal19"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal20"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal21"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal22"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal23"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal24"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal25"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal26"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal27"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal28"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal29"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal30"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal32"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal33"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal34"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal35"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal36"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal37"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal38"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal39"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal40"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal41"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal42"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal43"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal44"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal45"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal46"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal48"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal49"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal51"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal52"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal53"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal54"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal55"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal56"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal58"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal60"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal61"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            }
-          ],
-          "missingness": [
-            {
-              "field": "dealValue",
-              "missing": 9,
-              "total": 61
-            },
-            {
-              "field": "totalFunding",
-              "missing": 45,
-              "total": 52
-            }
-          ],
-          "datasetVersion": "v11",
-          "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-          "computedAt": "2026-10-19T00:00:00.000Z"
-        }
-      }
-    }
-  ],
+  "results": [],
   "withheld": [
     {
-      "metricId": "sector.moic.p25",
-      "reason": "n=7 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
-        "metricId": "sector.moic.p25",
-        "estimator": "bcaP25",
-        "n": 7,
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
         "originalInputCount": 61,
         "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 7
+          },
           {
             "reason": "funding_unresearched",
             "count": 45
@@ -929,198 +39,26 @@
             "total": 52
           }
         ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal1"
-            },
-            "value": 57.916666666666664,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal1"
-                },
-                "field": "dealValue",
-                "value": 13900
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c23"
-                },
-                "field": "totalFunding",
-                "value": 240
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal2"
-            },
-            "value": 1.4516129032258065,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal2"
-                },
-                "field": "dealValue",
-                "value": 225
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c1"
-                },
-                "field": "totalFunding",
-                "value": 155
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal3"
-            },
-            "value": 2.542372881355932,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal3"
-                },
-                "field": "dealValue",
-                "value": 300
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c12"
-                },
-                "field": "totalFunding",
-                "value": 118
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal4"
-            },
-            "value": 7.2727272727272725,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal4"
-                },
-                "field": "dealValue",
-                "value": 400
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c13"
-                },
-                "field": "totalFunding",
-                "value": 55
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal11"
-            },
-            "value": 6.4,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal11"
-                },
-                "field": "dealValue",
-                "value": 1600
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c28"
-                },
-                "field": "totalFunding",
-                "value": 250
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal14"
-            },
-            "value": 9.6,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal14"
-                },
-                "field": "dealValue",
-                "value": 240
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c31"
-                },
-                "field": "totalFunding",
-                "value": 25
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal57"
-            },
-            "value": 27.142857142857142,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal57"
-                },
-                "field": "dealValue",
-                "value": 190
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c74"
-                },
-                "field": "totalFunding",
-                "value": 7
-              }
-            ]
-          }
-        ],
-        "suppression": "n<10",
+        "contributors": [],
+        "suppression": "n<5",
         "datasetVersion": "v11",
         "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
         "computedAt": "2026-10-19T00:00:00.000Z"
       }
     },
     {
-      "metricId": "sector.moic.p75",
-      "reason": "n=7 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
-        "metricId": "sector.moic.p75",
-        "estimator": "bcaP75",
-        "n": 7,
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
         "originalInputCount": 61,
         "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 7
+          },
           {
             "reason": "funding_unresearched",
             "count": 45
@@ -1142,317 +80,7 @@
             "total": 52
           }
         ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal1"
-            },
-            "value": 57.916666666666664,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal1"
-                },
-                "field": "dealValue",
-                "value": 13900
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c23"
-                },
-                "field": "totalFunding",
-                "value": 240
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal2"
-            },
-            "value": 1.4516129032258065,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal2"
-                },
-                "field": "dealValue",
-                "value": 225
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c1"
-                },
-                "field": "totalFunding",
-                "value": 155
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal3"
-            },
-            "value": 2.542372881355932,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal3"
-                },
-                "field": "dealValue",
-                "value": 300
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c12"
-                },
-                "field": "totalFunding",
-                "value": 118
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal4"
-            },
-            "value": 7.2727272727272725,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal4"
-                },
-                "field": "dealValue",
-                "value": 400
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c13"
-                },
-                "field": "totalFunding",
-                "value": 55
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal11"
-            },
-            "value": 6.4,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal11"
-                },
-                "field": "dealValue",
-                "value": 1600
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c28"
-                },
-                "field": "totalFunding",
-                "value": 250
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal14"
-            },
-            "value": 9.6,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal14"
-                },
-                "field": "dealValue",
-                "value": 240
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c31"
-                },
-                "field": "totalFunding",
-                "value": 25
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal57"
-            },
-            "value": 27.142857142857142,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal57"
-                },
-                "field": "dealValue",
-                "value": 190
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c74"
-                },
-                "field": "totalFunding",
-                "value": 7
-              }
-            ]
-          }
-        ],
-        "suppression": "n<10",
-        "datasetVersion": "v11",
-        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-        "computedAt": "2026-10-19T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "sector.moic.median",
-      "reason": "n=1 below minimum 5 for Median exit-value / capital-raised ratio",
-      "lineage": {
-        "metricId": "sector.moic.median",
-        "estimator": "gatedMedian",
-        "n": 1,
-        "originalInputCount": 61,
-        "excluded": [
-          {
-            "reason": "funding_unresearched",
-            "count": 5
-          },
-          {
-            "reason": "out_of_sector",
-            "count": 49
-          },
-          {
-            "reason": "value_undisclosed",
-            "count": 6
-          }
-        ],
-        "missingness": [
-          {
-            "field": "dealValue",
-            "missing": 6,
-            "total": 12
-          },
-          {
-            "field": "totalFunding",
-            "missing": 5,
-            "total": 6
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal2"
-            },
-            "value": 1.4516129032258065,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal2"
-                },
-                "field": "dealValue",
-                "value": 225
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c1"
-                },
-                "field": "totalFunding",
-                "value": 155
-              }
-            ]
-          }
-        ],
-        "suppression": "n<5",
-        "datasetVersion": "v11",
-        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-        "computedAt": "2026-10-19T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "sector.moic.p25",
-      "reason": "n=1 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
-      "lineage": {
-        "metricId": "sector.moic.p25",
-        "estimator": "bcaP25",
-        "n": 1,
-        "originalInputCount": 61,
-        "excluded": [
-          {
-            "reason": "funding_unresearched",
-            "count": 5
-          },
-          {
-            "reason": "out_of_sector",
-            "count": 49
-          },
-          {
-            "reason": "value_undisclosed",
-            "count": 6
-          }
-        ],
-        "missingness": [
-          {
-            "field": "dealValue",
-            "missing": 6,
-            "total": 12
-          },
-          {
-            "field": "totalFunding",
-            "missing": 5,
-            "total": 6
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal2"
-            },
-            "value": 1.4516129032258065,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal2"
-                },
-                "field": "dealValue",
-                "value": 225
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c1"
-                },
-                "field": "totalFunding",
-                "value": 155
-              }
-            ]
-          }
-        ],
+        "contributors": [],
         "suppression": "n<10",
         "datasetVersion": "v11",
         "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
@@ -1461,13 +89,58 @@
     },
     {
       "metricId": "sector.moic.p75",
-      "reason": "n=1 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
-        "n": 1,
+        "n": 0,
         "originalInputCount": 61,
         "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 7
+          },
+          {
+            "reason": "funding_unresearched",
+            "count": 45
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 9
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 9,
+            "total": 61
+          },
+          {
+            "field": "totalFunding",
+            "missing": 45,
+            "total": 52
+          }
+        ],
+        "contributors": [],
+        "suppression": "n<10",
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 61,
+        "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 1
+          },
           {
             "reason": "funding_unresearched",
             "count": 5
@@ -1493,131 +166,7 @@
             "total": 6
           }
         ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal2"
-            },
-            "value": 1.4516129032258065,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal2"
-                },
-                "field": "dealValue",
-                "value": 225
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c1"
-                },
-                "field": "totalFunding",
-                "value": 155
-              }
-            ]
-          }
-        ],
-        "suppression": "n<10",
-        "datasetVersion": "v11",
-        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-        "computedAt": "2026-10-19T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "sector.moic.median",
-      "reason": "n=3 below minimum 5 for Median exit-value / capital-raised ratio",
-      "lineage": {
-        "metricId": "sector.moic.median",
-        "estimator": "gatedMedian",
-        "n": 3,
-        "originalInputCount": 61,
-        "excluded": [
-          {
-            "reason": "out_of_sector",
-            "count": 58
-          }
-        ],
-        "missingness": [],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal1"
-            },
-            "value": 57.916666666666664,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal1"
-                },
-                "field": "dealValue",
-                "value": 13900
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c23"
-                },
-                "field": "totalFunding",
-                "value": 240
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal3"
-            },
-            "value": 2.542372881355932,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal3"
-                },
-                "field": "dealValue",
-                "value": 300
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c12"
-                },
-                "field": "totalFunding",
-                "value": 118
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal57"
-            },
-            "value": 27.142857142857142,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal57"
-                },
-                "field": "dealValue",
-                "value": 190
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c74"
-                },
-                "field": "totalFunding",
-                "value": 7
-              }
-            ]
-          }
-        ],
+        "contributors": [],
         "suppression": "n<5",
         "datasetVersion": "v11",
         "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
@@ -1626,96 +175,43 @@
     },
     {
       "metricId": "sector.moic.p25",
-      "reason": "n=3 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
-        "n": 3,
+        "n": 0,
         "originalInputCount": 61,
         "excluded": [
           {
+            "reason": "funding_basis_inadmissible",
+            "count": 1
+          },
+          {
+            "reason": "funding_unresearched",
+            "count": 5
+          },
+          {
             "reason": "out_of_sector",
-            "count": 58
-          }
-        ],
-        "missingness": [],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal1"
-            },
-            "value": 57.916666666666664,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal1"
-                },
-                "field": "dealValue",
-                "value": 13900
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c23"
-                },
-                "field": "totalFunding",
-                "value": 240
-              }
-            ]
+            "count": 49
           },
           {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal3"
-            },
-            "value": 2.542372881355932,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal3"
-                },
-                "field": "dealValue",
-                "value": 300
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c12"
-                },
-                "field": "totalFunding",
-                "value": 118
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal57"
-            },
-            "value": 27.142857142857142,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal57"
-                },
-                "field": "dealValue",
-                "value": 190
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c74"
-                },
-                "field": "totalFunding",
-                "value": 7
-              }
-            ]
+            "reason": "value_undisclosed",
+            "count": 6
           }
         ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 6,
+            "total": 12
+          },
+          {
+            "field": "totalFunding",
+            "missing": 5,
+            "total": 6
+          }
+        ],
+        "contributors": [],
         "suppression": "n<10",
         "datasetVersion": "v11",
         "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
@@ -1724,96 +220,121 @@
     },
     {
       "metricId": "sector.moic.p75",
-      "reason": "n=3 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
-        "n": 3,
+        "n": 0,
         "originalInputCount": 61,
         "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 1
+          },
+          {
+            "reason": "funding_unresearched",
+            "count": 5
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 49
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 6
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 6,
+            "total": 12
+          },
+          {
+            "field": "totalFunding",
+            "missing": 5,
+            "total": 6
+          }
+        ],
+        "contributors": [],
+        "suppression": "n<10",
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.median",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
+      "lineage": {
+        "metricId": "sector.moic.median",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 61,
+        "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 3
+          },
           {
             "reason": "out_of_sector",
             "count": 58
           }
         ],
         "missingness": [],
-        "contributors": [
+        "contributors": [],
+        "suppression": "n<5",
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p25",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
+      "lineage": {
+        "metricId": "sector.moic.p25",
+        "estimator": "bcaP25",
+        "n": 0,
+        "originalInputCount": 61,
+        "excluded": [
           {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal1"
-            },
-            "value": 57.916666666666664,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal1"
-                },
-                "field": "dealValue",
-                "value": 13900
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c23"
-                },
-                "field": "totalFunding",
-                "value": 240
-              }
-            ]
+            "reason": "funding_basis_inadmissible",
+            "count": 3
           },
           {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal3"
-            },
-            "value": 2.542372881355932,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal3"
-                },
-                "field": "dealValue",
-                "value": 300
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c12"
-                },
-                "field": "totalFunding",
-                "value": 118
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal57"
-            },
-            "value": 27.142857142857142,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal57"
-                },
-                "field": "dealValue",
-                "value": 190
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c74"
-                },
-                "field": "totalFunding",
-                "value": 7
-              }
-            ]
+            "reason": "out_of_sector",
+            "count": 58
           }
         ],
+        "missingness": [],
+        "contributors": [],
+        "suppression": "n<10",
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
+      }
+    },
+    {
+      "metricId": "sector.moic.p75",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
+      "lineage": {
+        "metricId": "sector.moic.p75",
+        "estimator": "bcaP75",
+        "n": 0,
+        "originalInputCount": 61,
+        "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 3
+          },
+          {
+            "reason": "out_of_sector",
+            "count": 58
+          }
+        ],
+        "missingness": [],
+        "contributors": [],
         "suppression": "n<10",
         "datasetVersion": "v11",
         "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
@@ -1945,46 +466,24 @@
     },
     {
       "metricId": "sector.moic.median",
-      "reason": "n=1 below minimum 5 for Median exit-value / capital-raised ratio",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
-        "n": 1,
+        "n": 0,
         "originalInputCount": 61,
         "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 1
+          },
           {
             "reason": "out_of_sector",
             "count": 60
           }
         ],
         "missingness": [],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal4"
-            },
-            "value": 7.2727272727272725,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal4"
-                },
-                "field": "dealValue",
-                "value": 400
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c13"
-                },
-                "field": "totalFunding",
-                "value": 55
-              }
-            ]
-          }
-        ],
+        "contributors": [],
         "suppression": "n<5",
         "datasetVersion": "v11",
         "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
@@ -1993,46 +492,24 @@
     },
     {
       "metricId": "sector.moic.p25",
-      "reason": "n=1 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
-        "n": 1,
+        "n": 0,
         "originalInputCount": 61,
         "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 1
+          },
           {
             "reason": "out_of_sector",
             "count": 60
           }
         ],
         "missingness": [],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal4"
-            },
-            "value": 7.2727272727272725,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal4"
-                },
-                "field": "dealValue",
-                "value": 400
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c13"
-                },
-                "field": "totalFunding",
-                "value": 55
-              }
-            ]
-          }
-        ],
+        "contributors": [],
         "suppression": "n<10",
         "datasetVersion": "v11",
         "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
@@ -2041,46 +518,24 @@
     },
     {
       "metricId": "sector.moic.p75",
-      "reason": "n=1 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
-        "n": 1,
+        "n": 0,
         "originalInputCount": 61,
         "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 1
+          },
           {
             "reason": "out_of_sector",
             "count": 60
           }
         ],
         "missingness": [],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal4"
-            },
-            "value": 7.2727272727272725,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal4"
-                },
-                "field": "dealValue",
-                "value": 400
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c13"
-                },
-                "field": "totalFunding",
-                "value": 55
-              }
-            ]
-          }
-        ],
+        "contributors": [],
         "suppression": "n<10",
         "datasetVersion": "v11",
         "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
@@ -2347,13 +802,17 @@
     },
     {
       "metricId": "sector.moic.median",
-      "reason": "n=1 below minimum 5 for Median exit-value / capital-raised ratio",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
-        "n": 1,
+        "n": 0,
         "originalInputCount": 61,
         "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 1
+          },
           {
             "reason": "funding_unresearched",
             "count": 3
@@ -2370,33 +829,7 @@
             "total": 4
           }
         ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal11"
-            },
-            "value": 6.4,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal11"
-                },
-                "field": "dealValue",
-                "value": 1600
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c28"
-                },
-                "field": "totalFunding",
-                "value": 250
-              }
-            ]
-          }
-        ],
+        "contributors": [],
         "suppression": "n<5",
         "datasetVersion": "v11",
         "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
@@ -2405,13 +838,17 @@
     },
     {
       "metricId": "sector.moic.p25",
-      "reason": "n=1 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
-        "n": 1,
+        "n": 0,
         "originalInputCount": 61,
         "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 1
+          },
           {
             "reason": "funding_unresearched",
             "count": 3
@@ -2428,33 +865,7 @@
             "total": 4
           }
         ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal11"
-            },
-            "value": 6.4,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal11"
-                },
-                "field": "dealValue",
-                "value": 1600
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c28"
-                },
-                "field": "totalFunding",
-                "value": 250
-              }
-            ]
-          }
-        ],
+        "contributors": [],
         "suppression": "n<10",
         "datasetVersion": "v11",
         "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
@@ -2463,13 +874,17 @@
     },
     {
       "metricId": "sector.moic.p75",
-      "reason": "n=1 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
-        "n": 1,
+        "n": 0,
         "originalInputCount": 61,
         "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 1
+          },
           {
             "reason": "funding_unresearched",
             "count": 3
@@ -2486,33 +901,7 @@
             "total": 4
           }
         ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal11"
-            },
-            "value": 6.4,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal11"
-                },
-                "field": "dealValue",
-                "value": 1600
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c28"
-                },
-                "field": "totalFunding",
-                "value": 250
-              }
-            ]
-          }
-        ],
+        "contributors": [],
         "suppression": "n<10",
         "datasetVersion": "v11",
         "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
@@ -2521,13 +910,17 @@
     },
     {
       "metricId": "sector.moic.median",
-      "reason": "n=1 below minimum 5 for Median exit-value / capital-raised ratio",
+      "reason": "n=0 below minimum 5 for Median exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.median",
         "estimator": "gatedMedian",
-        "n": 1,
+        "n": 0,
         "originalInputCount": 61,
         "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 1
+          },
           {
             "reason": "out_of_sector",
             "count": 59
@@ -2544,33 +937,7 @@
             "total": 2
           }
         ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal14"
-            },
-            "value": 9.6,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal14"
-                },
-                "field": "dealValue",
-                "value": 240
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c31"
-                },
-                "field": "totalFunding",
-                "value": 25
-              }
-            ]
-          }
-        ],
+        "contributors": [],
         "suppression": "n<5",
         "datasetVersion": "v11",
         "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
@@ -2579,13 +946,17 @@
     },
     {
       "metricId": "sector.moic.p25",
-      "reason": "n=1 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
+      "reason": "n=0 below minimum 10 for 25th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p25",
         "estimator": "bcaP25",
-        "n": 1,
+        "n": 0,
         "originalInputCount": 61,
         "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 1
+          },
           {
             "reason": "out_of_sector",
             "count": 59
@@ -2602,33 +973,7 @@
             "total": 2
           }
         ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal14"
-            },
-            "value": 9.6,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal14"
-                },
-                "field": "dealValue",
-                "value": 240
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c31"
-                },
-                "field": "totalFunding",
-                "value": 25
-              }
-            ]
-          }
-        ],
+        "contributors": [],
         "suppression": "n<10",
         "datasetVersion": "v11",
         "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
@@ -2637,13 +982,17 @@
     },
     {
       "metricId": "sector.moic.p75",
-      "reason": "n=1 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
+      "reason": "n=0 below minimum 10 for 75th percentile exit-value / capital-raised ratio",
       "lineage": {
         "metricId": "sector.moic.p75",
         "estimator": "bcaP75",
-        "n": 1,
+        "n": 0,
         "originalInputCount": 61,
         "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 1
+          },
           {
             "reason": "out_of_sector",
             "count": 59
@@ -2660,33 +1009,7 @@
             "total": 2
           }
         ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal14"
-            },
-            "value": 9.6,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal14"
-                },
-                "field": "dealValue",
-                "value": 240
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c31"
-                },
-                "field": "totalFunding",
-                "value": 25
-              }
-            ]
-          }
-        ],
+        "contributors": [],
         "suppression": "n<10",
         "datasetVersion": "v11",
         "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
