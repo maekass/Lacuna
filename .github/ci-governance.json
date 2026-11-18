@@ -261,6 +261,32 @@
         "production availability",
         "analytical validity"
       ]
+    },
+    {
+      "id": "llm-lift-offline",
+      "class": "integrity",
+      "scope": "evidence",
+      "required": false,
+      "failurePolicy": "fail",
+      "command": "npm run eval:lift:check",
+      "claim": "The frozen lift eval set hash is intact, its gold values still match the verified dataset, and the deterministic scorers pass their unit tests.",
+      "doesNotProve": [
+        "model answer quality",
+        "live retrieval lift"
+      ]
+    },
+    {
+      "id": "llm-lift-live",
+      "class": "full",
+      "scope": "evidence",
+      "required": false,
+      "failurePolicy": "fail",
+      "command": "npm run eval:lift -- --live --gate",
+      "claim": "When an inference secret is configured, the retrieval arm meets committed accuracy, citation, and abstention floors and does not regress beyond the margin vs the committed baseline.",
+      "doesNotProve": [
+        "performance outside the frozen eval set",
+        "clinical or analytical validity of answers"
+      ]
     }
   ]
 }

@@ -39,6 +39,10 @@ export const STUDY_DISCOVERY_OPENAI_MODEL = "gpt-4o-mini" as const;
 export const CLASSIFICATION_GATEWAY_MODEL = modelRoutes.classification;
 export const CLASSIFICATION_OPENAI_MODEL = "gpt-4o-mini" as const;
 
+/** Gateway slug for evidence-grounded research ask. */
+export const EVIDENCE_ASK_GATEWAY_MODEL = modelRoutes.evidenceAsk;
+export const EVIDENCE_ASK_OPENAI_MODEL = "gpt-4o-mini" as const;
+
 export const DEFAULT_INFERENCE_TIMEOUT_MS = 45_000;
 export const DEFAULT_INFERENCE_MAX_RETRIES = 3;
 export const DEFAULT_INFERENCE_RETRY_BASE_MS = 500;

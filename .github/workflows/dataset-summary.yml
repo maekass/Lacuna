@@ -7,10 +7,19 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
+
+concurrency:
+  group: dataset-summary
+  cancel-in-progress: false
 
 jobs:
   dataset-summary:
     runs-on: ubuntu-latest
+    env:
+      # main is protected (changes must go through a pull request), so the
+      # daily rows are proposed on this branch instead of pushed to main.
+      SYNC_BRANCH: chore/quality-history-sync
     steps:
       - name: Setup repo
         uses: actions/checkout@v4
@@ -74,14 +83,42 @@ jobs:
             quality-visibility-report.md
           if-no-files-found: warn
 
-      - name: Commit quality history and payer-ops snapshot
+      - name: Propose quality history and payer-ops snapshot
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Never interpolate github.* into `run:` (CodeQL actions/code-injection).
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          REPOSITORY: ${{ github.repository }}
         run: |
           git add data/quality-history.jsonl src/data/payer-ops-benchmarks.snapshot.json
           if git diff --cached --quiet; then
-            echo "No quality-history or payer-ops snapshot changes to commit."
+            echo "No quality-history or payer-ops snapshot changes to propose."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore: append quality-history JSONL [skip ci]"
-          git push
+          git checkout -B "$SYNC_BRANCH"
+          git commit -m "chore: append quality-history JSONL"
+          # Rebuilt from the default branch each run; the lease refuses to
+          # overwrite a branch someone else pushed since this checkout.
+          git fetch origin "$SYNC_BRANCH" || true
+          git push --force-with-lease origin "$SYNC_BRANCH"
+          if [ -n "$(gh pr list --head "$SYNC_BRANCH" --state open --json number --jq '.[].number')" ]; then
+            echo "Updated the open quality-history pull request."
+            exit 0
+          fi
+          if ! gh pr create \
+            --draft \
+            --head "$SYNC_BRANCH" \
+            --base "$DEFAULT_BRANCH" \
+            --title "chore: append quality-history JSONL" \
+            --body "Automated daily quality-history row and payer-ops citation snapshot from the Daily dataset summary workflow. Review the appended row before merging; it records catalog coverage and data-quality counts, not analytical validity."; then
+            compare="https://github.com/${REPOSITORY}/compare/${DEFAULT_BRANCH}...${SYNC_BRANCH}"
+            echo "::warning::Pushed ${SYNC_BRANCH} but could not open a pull request. If Actions may not create pull requests in this repository, open one from ${compare}."
+            {
+              echo "## Quality-history sync"
+              echo ""
+              echo "Pushed \`${SYNC_BRANCH}\`; pull request creation was refused."
+              echo "Open it manually: ${compare}"
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi

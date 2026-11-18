@@ -2,6 +2,7 @@ import AppShell from "@/components/layout/AppShell";
 import LegacyHashRedirect from "@/components/layout/LegacyHashRedirect";
 import { getVerifiedDataset } from "@/lib/data/datasetProvider";
 import { applyDatasetScope } from "@/lib/data/medBiotechFilters";
+import { staticRatioDenominatorValues } from "@/lib/data/staticDataset";
 import { VerifiedDatasetProvider } from "@/lib/data/VerifiedDatasetContext";
 import { commandDealsFromDataset } from "@/lib/ui/commandPalette";
 
@@ -13,10 +14,21 @@ export default async function ProductLayout({
   const full = await getVerifiedDataset();
   const dataset = applyDatasetScope(full, "med_biotech");
   const deals = commandDealsFromDataset(full);
+  const curatedDealCount = String(full.acquisitions.length);
   return (
-    <VerifiedDatasetProvider dataset={dataset}>
+    <VerifiedDatasetProvider
+      dataset={dataset}
+      fundingDenominators={staticRatioDenominatorValues(
+        "totalFunding",
+      )}
+    >
       <LegacyHashRedirect />
-      <AppShell deals={deals}>{children}</AppShell>
+      <AppShell
+        deals={deals}
+        curatedDealCount={curatedDealCount}
+      >
+        {children}
+      </AppShell>
     </VerifiedDatasetProvider>
   );
 }

@@ -12,6 +12,7 @@ local dev only.
 | Space WH gap analyst           | `POST /api/research/space-wh-pipeline/ask`         | `spacexai/grok-4.3`         | `gpt-4o-mini` or deterministic     |
 | Domestic study discovery       | `POST /api/research/studies/discover`              | `spacexai/grok-4.5`         | deterministic NIH/CT.gov parse     |
 | SEC deal classification (cron) | `dealClassificationEngine.ts`                      | `openai/gpt-5.6-terra`      | keyword-only                       |
+| Evidence ask                   | `POST /api/research/evidence/ask`                  | `openai/gpt-4o-mini`        | abstain; no ungrounded answer      |
 
 The daily model-directory sync reads the public Vercel directory without sending
 an inference credential. It retries an absent ID, then compares any unique
@@ -96,14 +97,46 @@ User input → build*Prompt() → system prompt + guardrails → LLM
 `GET /api/ai/quality` lists features, standards, and whether inference is
 configured.
 
-| Feature            | Route                                      | Quality-gated                        |
-| ------------------ | ------------------------------------------ | ------------------------------------ |
-| UI insights        | `POST /api/ai/insights`                    | Yes                                  |
-| Space WH gap       | `POST /api/research/space-wh-pipeline/ask` | Yes                                  |
-| Stream insights    | `POST /api/ai/stream`                      | No (tagged `quality:stream-ungated`) |
-| SEC classification | cron / CLI                                 | Structured output (separate path)    |
+| Feature            | Route                                      | Quality-gated                           |
+| ------------------ | ------------------------------------------ | --------------------------------------- |
+| UI insights        | `POST /api/ai/insights`                    | Yes                                     |
+| Space WH gap       | `POST /api/research/space-wh-pipeline/ask` | Yes                                     |
+| Stream insights    | `POST /api/ai/stream`                      | No (tagged `quality:stream-ungated`)    |
+| SEC classification | cron / CLI                                 | Structured output (separate path)       |
+| Evidence ask       | `POST /api/research/evidence/ask`          | Structured output, then citation checks |
 
 Prefer **non-streaming** routes for production UI narratives.
+
+## Response evaluations
+
+`npm run eval:responses` scores about 30 handcrafted prompts (happy path, edge,
+adversarial) before a merge. `npm run eval:responses:nightly` scores 1,000
+seeded synthetic prompts so the gate is not a memorized sentence list.
+
+Each case compares the candidate to an intended meaning with embedding cosine
+similarity, then a judge scores accuracy, tone, safety, and relevance from 0
+to 5. A case passes when those numbers sit inside a band
+(`ACCEPTABLE_RESPONSE_RANGES`), not when the text matches a single string.
+Reject-polarity cases are bad outputs that must fall outside the band.
+
+The default embedder is a hashing sentence embedding so CI needs no model
+download. `--embed transformer` uses `Xenova/all-MiniLM-L6-v2` through
+`@huggingface/transformers` (install that package first; it is not part of the
+Next.js bundle). `--judge llm` calls a separate judge model
+(`openai/gpt-4o-mini`) and refuses to invent scores when no inference credential
+is set.
+
+`/methods/evals` shows the handcrafted scorecard and in-process traces (latency,
+hallucination flag, human spot-check). Traces are not durable unless
+`LACUNA_EVAL_LOG` points at a writable file. An empty trace list is insufficient
+data, not a zero hallucination rate.
+
+### Cited-answer lift eval
+
+`npm run eval:lift` measures the lift from the evidence-ask path: 160 frozen
+questions from the verified dataset, with and without retrieval, under two
+versioned prompts, scored deterministically with bootstrap CIs. See
+[LLM_LIFT_EVAL.md](LLM_LIFT_EVAL.md).
 
 ### Adding a new LLM feature
 
@@ -115,3 +148,8 @@ Prefer **non-streaming** routes for production UI narratives.
 6. Render `LlmQualityBadge` in the UI.
 7. Document the model slug and fallback here.
 8. Add tests in `__tests__/lib/ai/quality.test.ts` and prompts tests.
+
+Evidence ask is the exception to step 3. It calls `generateInferenceObject` with
+a citation schema, then deterministic citation checks and `assessLlmOutput`.
+`generateQualifiedInference` only emits a narrative string and cannot carry
+passage ids.

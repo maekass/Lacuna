@@ -11,6 +11,7 @@ import {
   type QuantCompany,
   ValuationEngine,
 } from "@/lib/quant/quantEngine";
+import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 import type {
   VerifiedAcquisitionView,
   VerifiedCompanyView,
@@ -82,6 +83,53 @@ describe("normalizeSectorBucket", () => {
     expect(normalizeSectorBucket("Reproductive Health")).toBe("fertility");
     expect(normalizeSectorBucket("Something Unmapped")).toBe("other");
   });
+
+  it("does not read General Wellness as precision medicine (regression)", () => {
+    expect(normalizeSectorBucket("General Wellness")).toBe("wellness");
+    expect(normalizeSectorBucket("Precision Medicine")).toBe(
+      "precision_medicine",
+    );
+    expect(normalizeSectorBucket("Genomics")).toBe("precision_medicine");
+    expect(normalizeSectorBucket("Gene Therapy")).toBe("precision_medicine");
+    expect(normalizeSectorBucket("Genetic Testing")).toBe("precision_medicine");
+  });
+
+  it("buckets every v11 sector label as reviewed", () => {
+    const expected: Record<string, string> = {
+      "Biotech": "other",
+      "Breast Health": "other",
+      "Consumer": "wellness",
+      "Contraception": "other",
+      "Dermatology": "other",
+      "Diagnostic (portfolio)": "diagnostics",
+      "Diagnostics": "diagnostics",
+      "Digital Health": "other",
+      "Fertility": "fertility",
+      "General Wellness": "wellness",
+      "Gynecological Surgery": "other",
+      "Maternal Health": "maternal",
+      "Medical Device": "devices",
+      "Menopause": "menopause",
+      "Mental Health": "mental_health",
+      "Pelvic Health": "pelvic",
+      "Precision Medicine": "precision_medicine",
+      "Reproductive Health": "fertility",
+      "Reproductive": "fertility",
+      "Sexual Wellness": "wellness",
+      "Tech Bio": "other",
+      "Therapeutics": "other",
+      "Wearables": "devices",
+      "Wellness": "wellness",
+    };
+    const sectors = new Set(
+      getStaticVerifiedDataset().companies.map((c) => c.sector),
+    );
+    // A new sector label must be added here so its bucket is a reviewed choice.
+    expect([...sectors].sort()).toEqual(Object.keys(expected).sort());
+    for (const sector of sectors) {
+      expect(normalizeSectorBucket(sector), sector).toBe(expected[sector]);
+    }
+  });
 });
 
 describe("deriveEmpiricalPriors", () => {
@@ -96,6 +144,31 @@ describe("deriveEmpiricalPriors", () => {
     makeDeal({ id: "d1", targetId: "c1", dealValue: 400 }),
     makeDeal({ id: "d2", targetId: "c2", dealValue: 500 }),
   ];
+
+  it("uses only admitted funding denominators for funding multiples", () => {
+    const sixDeals = companies.map((c, i) =>
+      makeDeal({ id: `d${i + 1}`, targetId: c.id, dealValue: 400 + i * 10 })
+    );
+    const ungated = deriveEmpiricalPriors(companies, sixDeals);
+    expect(ungated.derivationNote).toContain("6 with funding multiples");
+
+    const gated = deriveEmpiricalPriors(companies, sixDeals, {
+      admitFundingDenominator: (id) => id === "c1" || id === "c2",
+    });
+    expect(gated.derivationNote).toContain("2 with funding multiples");
+    expect(isSufficient(gated.medianFundingMultipleAllEstimate)).toBe(false);
+    // Deal values and exit rates do not depend on the funding gate.
+    expect(gated.disclosedDealCount).toBe(ungated.disclosedDealCount);
+    expect(gated.overallExitRateEstimate).toEqual(
+      ungated.overallExitRateEstimate,
+    );
+
+    const none = deriveEmpiricalPriors(companies, sixDeals, {
+      admitFundingDenominator: () => false,
+    });
+    expect(none.derivationNote).toContain("0 with funding multiples");
+    expect(isSufficient(none.medianFundingMultipleAllEstimate)).toBe(false);
+  });
 
   it("computes the overall exit rate from acquired targets", () => {
     const priors = deriveEmpiricalPriors(companies, deals);

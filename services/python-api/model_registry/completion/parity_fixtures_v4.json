@@ -1,0 +1,437 @@
+[
+  {
+    "api_input": {
+      "condition": [
+        "Atrial Fibrillation"
+      ],
+      "first_submit_date": "2011-08-17",
+      "interventions": [
+        "Amiodarone",
+        "Minocycline"
+      ],
+      "phase": "PHASE2",
+      "registered_completion_date": "2013-12",
+      "registered_enrollment": 400,
+      "registered_site_count": 0,
+      "registered_start_date": "2011-10",
+      "registered_status": "NOT_YET_RECRUITING",
+      "sponsor": "Baystate Medical Center",
+      "start_date": "2025-09-03",
+      "study_type": "INTERVENTIONAL",
+      "title": "Minocycline Plus Amiodarone Versus Amiodarone Alone for the Prevention of Atrial Fibrillation After Cardiac Surgery"
+    },
+    "expected": {
+      "3.0.0-logreg": 0.8596234799931625,
+      "4.0.0-logreg-pit": 0.8775319170219547
+    },
+    "expected_pit_row": [
+      0.0,
+      0.12723556463975472,
+      0.0,
+      2.6020599913279625,
+      0.0,
+      1.0,
+      26.02053388090349,
+      1.4784394250513346
+    ],
+    "nct_id": "NCT01422148"
+  },
+  {
+    "api_input": {
+      "condition": [
+        "Psoriatic Arthritis",
+        "Psoriasis"
+      ],
+      "first_submit_date": "2023-10-16",
+      "interventions": [
+        "Fatigue assessment",
+        "Quality of life assessment",
+        "Assess severity of psoriatic arthritis",
+        "Assess severity of cutaneous psoriasis"
+      ],
+      "phase": "NA",
+      "registered_completion_date": "2025-01",
+      "registered_enrollment": 60,
+      "registered_site_count": 1,
+      "registered_start_date": "2023-10-16",
+      "registered_status": "NOT_YET_RECRUITING",
+      "sponsor": "Centre Hospitalier Henri Duffaut - Avignon",
+      "start_date": "2024-03-11",
+      "study_type": "INTERVENTIONAL",
+      "title": "Assessment of Fatigue in Psoriatic Arthritis and Cutaneous Psoriasis Patients"
+    },
+    "expected": {
+      "3.0.0-logreg": 0.8643155318291371,
+      "4.0.0-logreg-pit": 0.8760070451065126
+    },
+    "expected_pit_row": [
+      0.0,
+      0.12723556463975472,
+      0.0,
+      1.7781512503836436,
+      0.6931471805599453,
+      1.0,
+      14.55441478439425,
+      0.0
+    ],
+    "nct_id": "NCT06101706"
+  },
+  {
+    "api_input": {
+      "condition": [
+        "Generalized Pustular Psoriasis",
+        "Erythrodermic Psoriasis"
+      ],
+      "first_submit_date": "2024-03-15",
+      "interventions": [
+        "TAK-279"
+      ],
+      "phase": "PHASE3",
+      "registered_completion_date": "2026-03-27",
+      "registered_enrollment": 20,
+      "registered_site_count": 0,
+      "registered_start_date": "2024-03-19",
+      "registered_status": "NOT_YET_RECRUITING",
+      "sponsor": "Takeda",
+      "start_date": "2024-03-19",
+      "study_type": "INTERVENTIONAL",
+      "title": "A Study of TAK-279 in Adult Participants With Generalized Pustular Psoriasis or Erythrodermic Psoriasis"
+    },
+    "expected": {
+      "3.0.0-logreg": 0.9014608188049194,
+      "4.0.0-logreg-pit": 0.8770470280839187
+    },
+    "expected_pit_row": [
+      1.9459101490553132,
+      0.057834347563524874,
+      1.0,
+      1.3010299956639813,
+      0.0,
+      1.0,
+      24.246406570841888,
+      0.13141683778234087
+    ],
+    "nct_id": "NCT06323356"
+  },
+  {
+    "api_input": {
+      "condition": [
+        "Exercise"
+      ],
+      "first_submit_date": "2024-05-17",
+      "interventions": [
+        "single exercise bout about one-leg exercise"
+      ],
+      "phase": "NA",
+      "registered_completion_date": "2025-01-02",
+      "registered_enrollment": 45,
+      "registered_site_count": 1,
+      "registered_start_date": "2024-02-20",
+      "registered_status": "RECRUITING",
+      "sponsor": "Hacettepe University",
+      "start_date": "2024-02-20",
+      "study_type": "INTERVENTIONAL",
+      "title": "Acute Effects of Three Different Types Single Leg Exercise in Copd"
+    },
+    "expected": {
+      "3.0.0-logreg": 0.9516229970005042,
+      "4.0.0-logreg-pit": 0.9530156248809939
+    },
+    "expected_pit_row": [
+      1.9459101490553132,
+      0.057834347563524874,
+      1.0,
+      1.6532125137753437,
+      0.6931471805599453,
+      0.0,
+      10.414784394250514,
+      -2.858316221765914
+    ],
+    "nct_id": "NCT06466213"
+  },
+  {
+    "api_input": {
+      "condition": [
+        "Preterm"
+      ],
+      "first_submit_date": "2024-09-25",
+      "interventions": [
+        "automated oxygen vs manual oxygen"
+      ],
+      "phase": "NA",
+      "registered_completion_date": "2025-02",
+      "registered_enrollment": 26,
+      "registered_site_count": 1,
+      "registered_start_date": "2024-09-24",
+      "registered_status": "RECRUITING",
+      "sponsor": "Aga Khan University Hospital, Pakistan",
+      "start_date": "2024-10-03",
+      "study_type": "INTERVENTIONAL",
+      "title": "Automated Versus Manual Oxygen Control in Preterm Babies on Respiratory Support"
+    },
+    "expected": {
+      "3.0.0-logreg": 0.8177127460003896,
+      "4.0.0-logreg-pit": 0.8388436254184525
+    },
+    "expected_pit_row": [
+      0.0,
+      0.12723556463975472,
+      0.0,
+      1.414973347970818,
+      0.6931471805599453,
+      0.0,
+      4.271047227926078,
+      -0.03285420944558522
+    ],
+    "nct_id": "NCT06622161"
+  },
+  {
+    "api_input": {
+      "condition": [
+        "Overactive Bladder (OAB)",
+        "Menopause",
+        "Microbiome"
+      ],
+      "first_submit_date": "2025-01-13",
+      "interventions": [
+        "17\u03b2-estradiol 10 mcg"
+      ],
+      "phase": "PHASE4",
+      "registered_completion_date": "2025-10-31",
+      "registered_enrollment": 30,
+      "registered_site_count": 1,
+      "registered_start_date": "2025-03-01",
+      "registered_status": "NOT_YET_RECRUITING",
+      "sponsor": "Mahidol University",
+      "start_date": "2025-06-27",
+      "study_type": "INTERVENTIONAL",
+      "title": "Effect of Vaginal Estrogen on Alterations in the Urine Microbiome of Menopausal Women With Overactive Bladder"
+    },
+    "expected": {
+      "3.0.0-logreg": 0.9044661485934694,
+      "4.0.0-logreg-pit": 0.8990097561109579
+    },
+    "expected_pit_row": [
+      2.1972245773362196,
+      0.12585983255375183,
+      1.0,
+      1.4771212547196624,
+      0.6931471805599453,
+      1.0,
+      8.016427104722792,
+      1.5441478439425051
+    ],
+    "nct_id": "NCT06780163"
+  },
+  {
+    "api_input": {
+      "condition": [
+        "Diabetic Peripheral Neuropathy",
+        "Postmenopausal Women"
+      ],
+      "first_submit_date": "2025-01-06",
+      "interventions": [
+        "Whole body vibration",
+        "Balance training"
+      ],
+      "phase": "NA",
+      "sponsor": "Cairo University",
+      "start_date": "2024-05-28",
+      "study_type": "INTERVENTIONAL",
+      "title": "Effect Whole Body Vibration on Balance in Post Diabetic Menopause Women"
+    },
+    "expected": {
+      "3.0.0-logreg": 0.8978262378587423,
+      "4.0.0-logreg-pit": 0.8912926792963941
+    },
+    "expected_pit_row": [
+      3.8066624897703196,
+      0.05379954741221987,
+      1.0,
+      2.0718820073061255,
+      0.6931471805599453,
+      1.0,
+      22.99794661190965,
+      0.03285420944558522
+    ],
+    "nct_id": "NCT06937008"
+  },
+  {
+    "api_input": {
+      "condition": [
+        "Multiple Sclerosis",
+        "Urinary Incontinence",
+        "Lower Urinary Tract Symptoms"
+      ],
+      "first_submit_date": "2025-06-25",
+      "interventions": [
+        "Pelvic floor muscle exercises",
+        "Spinal stabilization exercises focusing on the pelvic floor + Pelvic floor muscle exercises"
+      ],
+      "phase": "NA",
+      "registered_completion_date": "2027-12-15",
+      "registered_enrollment": 36,
+      "registered_site_count": 1,
+      "registered_start_date": "2025-06-30",
+      "registered_status": "ENROLLING_BY_INVITATION",
+      "sponsor": "Abant Izzet Baysal University",
+      "start_date": "2025-06-30",
+      "study_type": "INTERVENTIONAL",
+      "title": "Effects of Spinal Stabilization on the Pelvic Floor in Women With Multiple Sclerosis"
+    },
+    "expected": {
+      "3.0.0-logreg": 0.9539529364295305,
+      "4.0.0-logreg-pit": 0.925070074180663
+    },
+    "expected_pit_row": [
+      0.6931471805599453,
+      0.10602963719979559,
+      1.0,
+      1.5563025007672873,
+      0.6931471805599453,
+      0.0,
+      29.503080082135522,
+      0.16427104722792607
+    ],
+    "nct_id": "NCT07074587"
+  },
+  {
+    "api_input": {
+      "condition": [
+        "Plaque Psoriasis"
+      ],
+      "first_submit_date": "2025-11-19",
+      "interventions": [
+        "ICP-332 Tablets",
+        "ICP-332 Tablets",
+        "ICP-332 Tablets",
+        "ICP-332 Placebo Tablets"
+      ],
+      "phase": "PHASE2",
+      "registered_completion_date": "2027-05",
+      "registered_enrollment": 172,
+      "registered_site_count": 1,
+      "registered_start_date": "2025-12",
+      "registered_status": "NOT_YET_RECRUITING",
+      "sponsor": "Beijing InnoCare Pharma Tech Co., Ltd.",
+      "start_date": "2025-12-22",
+      "study_type": "INTERVENTIONAL",
+      "title": "Efficacy and Safety of ICP-332 Versus Placebo in Participants With Moderate to Severe Plaque Psoriasis"
+    },
+    "expected": {
+      "3.0.0-logreg": 0.933860933621651,
+      "4.0.0-logreg-pit": 0.9128354588376416
+    },
+    "expected_pit_row": [
+      0.6931471805599453,
+      0.10602963719979559,
+      1.0,
+      2.2355284469075487,
+      0.6931471805599453,
+      1.0,
+      16.95277207392197,
+      0.3942505133470226
+    ],
+    "nct_id": "NCT07251998"
+  },
+  {
+    "api_input": {
+      "condition": [
+        "Hot Flashes",
+        "Hot Flash",
+        "Hot Flushes",
+        "Menopause",
+        "Postmenopause",
+        "Hot Flushes and/or Sweats",
+        "Hot Flushes",
+        "Night Sweats",
+        "Vasomotor Symptoms",
+        "Vasomotor Symptoms (VMS)",
+        "Vasomotor Symptoms Associated With Menopause"
+      ],
+      "first_submit_date": "2025-11-24",
+      "interventions": [
+        "JDS-HF3.0"
+      ],
+      "phase": "NA",
+      "sponsor": "Bonafide Health",
+      "start_date": "2024-05-24",
+      "study_type": "INTERVENTIONAL",
+      "title": "Herbal Dietary Supplementation on Vasomotor Symptoms in Menopausal Women"
+    },
+    "expected": {
+      "3.0.0-logreg": 0.9489004788834297,
+      "4.0.0-logreg-pit": 0.9426514108696552
+    },
+    "expected_pit_row": [
+      0.0,
+      0.12723556463975472,
+      0.0,
+      2.0718820073061255,
+      0.6931471805599453,
+      1.0,
+      22.99794661190965,
+      0.03285420944558522
+    ],
+    "nct_id": "NCT07408115"
+  },
+  {
+    "api_input": {
+      "condition": [
+        "Chronic Obstructive Pulmonary Disease (COPD)",
+        "Asthma"
+      ],
+      "first_submit_date": "2026-05-07",
+      "interventions": [],
+      "phase": "NOT_APPLICABLE",
+      "sponsor": "Hitit University",
+      "start_date": "2026-02-02",
+      "study_type": "OBSERVATIONAL",
+      "title": "Predicting Dynamic Inspiratory Muscle Strength in COPD and Asthma Patients"
+    },
+    "expected": {
+      "3.0.0-logreg": 0.9253284390161939,
+      "4.0.0-logreg-pit": 0.9221895441546223
+    },
+    "expected_pit_row": [
+      1.3862943611198906,
+      0.0795222278998467,
+      1.0,
+      2.0718820073061255,
+      0.6931471805599453,
+      1.0,
+      22.99794661190965,
+      0.03285420944558522
+    ],
+    "nct_id": "NCT07598292"
+  },
+  {
+    "api_input": {
+      "condition": [
+        "Prehepatic Portal Hypertension"
+      ],
+      "first_submit_date": "2026-07-19",
+      "interventions": [],
+      "phase": "NOT_APPLICABLE",
+      "sponsor": "Second Affiliated Hospital, Zhejiang University, School of Medicine",
+      "start_date": "2025-03-01",
+      "study_type": "OBSERVATIONAL",
+      "title": "EUS-Guided Portal Pressure Gradient Measurement in Prehepatic Portal Hypertension"
+    },
+    "expected": {
+      "3.0.0-logreg": 0.9254074831291992,
+      "4.0.0-logreg-pit": 0.9242669102900178
+    },
+    "expected_pit_row": [
+      0.0,
+      0.12723556463975472,
+      0.0,
+      2.0718820073061255,
+      0.6931471805599453,
+      1.0,
+      22.99794661190965,
+      0.03285420944558522
+    ],
+    "nct_id": "NCT07782554"
+  }
+]

@@ -62,6 +62,7 @@ export interface EmpiricalPriors {
   derivationNote: string;
 }
 
+/** Map a free-text sector label to a coarse prior bucket; unmatched is `other`. */
 export function normalizeSectorBucket(sector: string): string {
   const s = sector.toLowerCase();
   if (s.includes("diagn") || s.includes("screen") || s.includes("imaging")) {
@@ -74,7 +75,11 @@ export function normalizeSectorBucket(sector: string): string {
   if (s.includes("oncolog") || s.includes("cancer")) return "oncology";
   if (s.includes("menopause")) return "menopause";
   if (s.includes("pelvic")) return "pelvic";
-  if (s.includes("precision") || s.includes("genomic") || s.includes("gene")) {
+  // Whole-word "gene"/"genetic": a bare substring test also matches "General".
+  if (
+    s.includes("precision") || s.includes("genomic") ||
+    /\bgene(s|tic|tics)?\b/.test(s)
+  ) {
     return "precision_medicine";
   }
   if (s.includes("mental") || s.includes("behavior")) return "mental_health";
@@ -98,10 +103,30 @@ function yearsBetween(foundedYear: number, isoDate: string): number | null {
   return years >= 0 && years < 60 ? years : null;
 }
 
+export interface EmpiricalPriorOptions {
+  /**
+   * Whether a target's `totalFunding` value may divide its deal value.
+   * Production callers pass the evidence-ledger gate from
+   * `useVerifiedDataset()`, which checks both id and value; omitting it admits
+   * every positive value and is intended only for self-contained fixtures.
+   */
+  readonly admitFundingDenominator?: (
+    companyId: string,
+    totalFunding: number,
+  ) => boolean;
+}
+
+/**
+ * Derive descriptive sector priors from verified deals. Funding multiples use
+ * only denominators admitted by `options.admitFundingDenominator`.
+ */
 export function deriveEmpiricalPriors(
   companies: readonly VerifiedCompanyView[],
   acquisitions: readonly VerifiedAcquisitionView[],
+  options: EmpiricalPriorOptions = {},
 ): EmpiricalPriors {
+  const admitFundingDenominator = options.admitFundingDenominator ??
+    (() => true);
   const companyById = new Map(companies.map((c) => [c.id, c]));
   const acquiredTargetIds = new Set(acquisitions.map((d) => d.targetId));
 
@@ -130,7 +155,8 @@ export function deriveEmpiricalPriors(
       const target = companyById.get(deal.targetId);
       if (
         typeof deal.dealValue === "number" && deal.dealValue > 0 &&
-        typeof target?.totalFunding === "number" && target.totalFunding > 0
+        typeof target?.totalFunding === "number" && target.totalFunding > 0 &&
+        admitFundingDenominator(target.id, target.totalFunding)
       ) {
         multiples.push(deal.dealValue / target.totalFunding);
       }
