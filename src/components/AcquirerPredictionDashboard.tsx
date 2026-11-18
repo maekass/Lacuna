@@ -29,12 +29,16 @@ export default function AcquirerPredictionDashboard() {
     verifiedCompanies,
     verifiedAcquisitions,
     verifiedAcquirers,
+    admitFundingDenominator,
   } = useVerifiedDataset();
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
 
   const empiricalPriors = useMemo(
-    () => deriveEmpiricalPriors(verifiedCompanies, verifiedAcquisitions),
-    [verifiedCompanies, verifiedAcquisitions],
+    () =>
+      deriveEmpiricalPriors(verifiedCompanies, verifiedAcquisitions, {
+        admitFundingDenominator,
+      }),
+    [verifiedCompanies, verifiedAcquisitions, admitFundingDenominator],
   );
 
   const verifiedAcquirerProfiles = useMemo(

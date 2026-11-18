@@ -1,0 +1,11 @@
+{
+  "note": "Initial policy floors chosen before any live run. They are not measurements. Recalibrate after the first measured baseline is committed.",
+  "gatedPromptVersions": ["v1"],
+  "min": {
+    "accuracy": 0.5,
+    "citationCorrectness": 0.8,
+    "abstentionRate": 0.7
+  },
+  "maxDropVsBaseline": 0.05,
+  "maxErrorRate": 0.02
+}

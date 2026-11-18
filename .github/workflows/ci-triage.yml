@@ -1,0 +1,97 @@
+# Spot check for failed CI runs. Classifies each failed job from its log,
+# posts or updates one PR comment, and re-runs failed jobs once only when every
+# failure looks transient. It never edits or pushes code.
+#
+# workflow_run always executes the default-branch copy of this file, so it
+# starts working after this file is merged to main. It checks out main, never
+# PR code.
+
+name: CI triage
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: write
+  pull-requests: write
+
+jobs:
+  triage:
+    if: github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { classify, shouldRerun } = await import(
+              `${process.env.GITHUB_WORKSPACE}/scripts/ci-triage-rules.mjs`
+            );
+            const run = context.payload.workflow_run;
+            const { owner, repo } = context.repo;
+            const jobs = await github.paginate(
+              github.rest.actions.listJobsForWorkflowRunAttempt,
+              { owner, repo, run_id: run.id, attempt_number: run.run_attempt },
+            );
+            const failed = jobs.filter((j) => j.conclusion === "failure");
+            const results = [];
+            for (const job of failed) {
+              let log = "";
+              try {
+                const res = await github.rest.actions.downloadJobLogsForWorkflowRun(
+                  { owner, repo, job_id: job.id },
+                );
+                log = String(res.data);
+              } catch (e) {
+                core.warning(`Could not read log for ${job.name}: ${e.message}`);
+              }
+              const step = (job.steps || []).find((s) => s.conclusion === "failure");
+              results.push({ job: job.name, step: step ? step.name : "?", url: job.html_url, ...classify(log) });
+            }
+            const rerun = shouldRerun(results, run.run_attempt);
+            if (rerun) {
+              await github.rest.actions.reRunWorkflowFailedJobs({ owner, repo, run_id: run.id });
+            }
+            const rows = results.map((r) =>
+              `| [${r.job}](${r.url}) | ${r.step} | ${r.label} | ${r.action} | ${r.hint} |`
+            ).join("\n");
+            const evidence = results.filter((r) => r.evidence)
+              .map((r) => `- **${r.job}:** \`${r.evidence.replace(/`/g, "'")}\``).join("\n");
+            const marker = "<!-- lacuna-ci-triage -->";
+            const body = [
+              marker,
+              `### CI triage for ${run.head_sha.slice(0, 7)} (attempt ${run.run_attempt})`,
+              "",
+              "| Job | Failed step | Likely cause | Action | Suggested fix |",
+              "|---|---|---|---|---|",
+              rows || "| (no failed jobs found) | | | | |",
+              "",
+              evidence ? `Evidence:\n${evidence}\n` : "",
+              rerun
+                ? "All failures look transient, so failed jobs were re-run once automatically."
+                : "No automatic re-run: at least one failure needs a change, or this is already a re-run.",
+              "",
+              "Classification is pattern-based and can be wrong. Check the linked log before acting.",
+            ].join("\n");
+            await core.summary.addRaw(body).write();
+            let prs = (run.pull_requests || []).map((p) => p.number);
+            if (prs.length === 0) {
+              const assoc = await github.rest.repos.listPullRequestsAssociatedWithCommit(
+                { owner, repo, commit_sha: run.head_sha },
+              );
+              prs = assoc.data.filter((p) => p.state === "open").map((p) => p.number);
+            }
+            for (const issue_number of prs) {
+              const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number });
+              const existing = comments.find((c) => c.body && c.body.includes(marker));
+              if (existing) {
+                await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+              } else {
+                await github.rest.issues.createComment({ owner, repo, issue_number, body });
+              }
+            }

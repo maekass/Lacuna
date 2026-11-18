@@ -2409,13 +2409,13 @@
       "estimate": {
         "kind": "sufficient",
         "value": 1,
-        "sampleSize": 48,
+        "sampleSize": 39,
         "disclosedFraction": 1,
         "confidenceInterval": [
           1,
           1
         ],
-        "selectionCaveat": "Disclosed-price deals are a non-random subsample (100% of n=48 sector deals). Selection bias may inflate medians; Heckman correction not applied.",
+        "selectionCaveat": "Disclosed-price deals are a non-random subsample (100% of n=39 sector deals). Selection bias may inflate medians; Heckman correction not applied.",
         "lineage": {
           "metricId": "acquirer.premium.lastKnownValuation",
           "estimator": "gatedMedian",
@@ -2423,10 +2423,6 @@
             {
               "table": "acquisitions",
               "id": "deal1"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal2"
             },
             {
               "table": "acquisitions",
@@ -2455,10 +2451,6 @@
             {
               "table": "acquisitions",
               "id": "deal11"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal15"
             },
             {
               "table": "acquisitions",
@@ -2506,10 +2498,6 @@
             },
             {
               "table": "acquisitions",
-              "id": "deal28"
-            },
-            {
-              "table": "acquisitions",
               "id": "deal29"
             },
             {
@@ -2522,10 +2510,6 @@
             },
             {
               "table": "acquisitions",
-              "id": "deal33"
-            },
-            {
-              "table": "acquisitions",
               "id": "deal34"
             },
             {
@@ -2535,10 +2519,6 @@
             {
               "table": "acquisitions",
               "id": "deal36"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal37"
             },
             {
               "table": "acquisitions",
@@ -2578,10 +2558,6 @@
             },
             {
               "table": "acquisitions",
-              "id": "deal48"
-            },
-            {
-              "table": "acquisitions",
               "id": "deal49"
             },
             {
@@ -2590,19 +2566,7 @@
             },
             {
               "table": "acquisitions",
-              "id": "deal52"
-            },
-            {
-              "table": "acquisitions",
               "id": "deal53"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal54"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal55"
             },
             {
               "table": "acquisitions",
@@ -2617,10 +2581,6 @@
             {
               "table": "companies",
               "id": "c23"
-            },
-            {
-              "table": "companies",
-              "id": "c1"
             },
             {
               "table": "companies",
@@ -2649,10 +2609,6 @@
             {
               "table": "companies",
               "id": "c28"
-            },
-            {
-              "table": "companies",
-              "id": "c32"
             },
             {
               "table": "companies",
@@ -2700,10 +2656,6 @@
             },
             {
               "table": "companies",
-              "id": "c45"
-            },
-            {
-              "table": "companies",
               "id": "c46"
             },
             {
@@ -2716,10 +2668,6 @@
             },
             {
               "table": "companies",
-              "id": "c50"
-            },
-            {
-              "table": "companies",
               "id": "c51"
             },
             {
@@ -2729,10 +2677,6 @@
             {
               "table": "companies",
               "id": "c53"
-            },
-            {
-              "table": "companies",
-              "id": "c54"
             },
             {
               "table": "companies",
@@ -2772,10 +2716,6 @@
             },
             {
               "table": "companies",
-              "id": "c65"
-            },
-            {
-              "table": "companies",
               "id": "c66"
             },
             {
@@ -2784,19 +2724,7 @@
             },
             {
               "table": "companies",
-              "id": "c69"
-            },
-            {
-              "table": "companies",
               "id": "c70"
-            },
-            {
-              "table": "companies",
-              "id": "c71"
-            },
-            {
-              "table": "companies",
-              "id": "c72"
             },
             {
               "table": "companies",
@@ -2823,22 +2751,6 @@
             {
               "kind": "prose",
               "rawCitation": "Crunchbase - crunchbase.com/organization/livongo-health"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Press reports (Fierce Healthcare, May 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Crunchbase - crunchbase.com/organization/modern-fertility"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "TechCrunch - acquisition coverage (May 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Company website - modernfertility.com"
             },
             {
               "kind": "prose",
@@ -2935,18 +2847,6 @@
             {
               "kind": "prose",
               "rawCitation": "Globe Newswire - acquisition announcement"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Business Wire (Dec 13, 2021); Organon.com press release; SEC EDGAR 8-K https://www.sec.gov/Archives/edgar/data/1821825/000110465921137472/tm2131080d1_ex99-1.htm"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Organon.com - press release (Nov 11, 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Business Wire - acquisition completion (Dec 13, 2021)"
             },
             {
               "kind": "prose",
@@ -3106,18 +3006,6 @@
             },
             {
               "kind": "prose",
-              "rawCitation": "PR Newswire — Boston Scientific press release (Apr 16, 2018); MassDevice deal coverage; SEC EDGAR 8-K https://www.sec.gov/Archives/edgar/data/885725/000088572518000019/q12018earningsrelease.htm"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "PR Newswire — Boston Scientific press release (Apr 16, 2018)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "MassDevice deal coverage ($275M total)"
-            },
-            {
-              "kind": "prose",
               "rawCitation": "Illumina press release (Sep 21, 2020); SEC merger filing; GRAIL completion announcement (Aug 18, 2021); SEC EDGAR 8-K https://www.sec.gov/Archives/edgar/data/1110803/000095015720001121/ex10-1.htm"
             },
             {
@@ -3162,10 +3050,6 @@
             },
             {
               "kind": "prose",
-              "rawCitation": "Globe Newswire — Coloplast press release (Nov 3, 2020)"
-            },
-            {
-              "kind": "prose",
               "rawCitation": "Sumitomo Pharma press release (Oct 24, 2022); Business Wire — completion announcement (Mar 10, 2023)"
             },
             {
@@ -3199,14 +3083,6 @@
             {
               "kind": "prose",
               "rawCitation": "Globe Newswire — Myriad Genetics press release (Nov 1, 2022)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Business Wire — Natera press release (Jan 22, 2024)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Natera investor relations"
             },
             {
               "kind": "prose",
@@ -3358,22 +3234,6 @@
             },
             {
               "kind": "prose",
-              "rawCitation": "Globe Newswire — Myriad Genetics press release (May 31, 2016); SEC EDGAR — Myriad 8-K; SEC EDGAR 8-K https://www.sec.gov/Archives/edgar/data/899923/000119312516608366/d195219d8k.htm"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Globe Newswire — Myriad Genetics press release (May 31, 2016)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "SEC EDGAR — Myriad Genetics 8-K (May 31, 2016)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "GEN News — deal coverage (May 31, 2016)"
-            },
-            {
-              "kind": "prose",
               "rawCitation": "SEC EDGAR — Abbott/Alere amended merger (Apr 14, 2017); Abbott Mediaroom — closing (Sep 29, 2017); SEC EDGAR 8-K https://www.sec.gov/Archives/edgar/data/1800/000110465916092968/a16-3252_18k.htm"
             },
             {
@@ -3406,22 +3266,6 @@
             },
             {
               "kind": "prose",
-              "rawCitation": "Business Wire press release (August 11, 2020); Bayer.com media (September 9, 2020)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Business Wire - Bayer acquisition announcement (August 11, 2020)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Business Wire - Bayer completion announcement (September 9, 2020)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Bayer.com media release"
-            },
-            {
-              "kind": "prose",
               "rawCitation": "Astellas Pharma press release (May 17, 2017); PR Newswire"
             },
             {
@@ -3435,38 +3279,6 @@
             {
               "kind": "prose",
               "rawCitation": "Astellas newsroom - newsroom.astellas.com"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Organon press release (September 18, 2024); Fierce Pharma; SEC EDGAR 8-K https://www.sec.gov/Archives/edgar/data/1821825/000110465924102053/tm2424316d1_8k.htm"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Organon press release (September 18, 2024)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Fierce Pharma coverage (September 18, 2024)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Roivant/Dermavant investor presentation (September 2024)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Axios Pro (April 13, 2022); Fertility Bridge (January 26, 2023); CNMC approval (December 21, 2022)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Axios Pro (April 13, 2022) - deal announcement"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Fertility Bridge (January 26, 2023) - deal close confirmation"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Spanish CNMC regulatory approval (December 21, 2022)"
             },
             {
               "kind": "prose",
@@ -3524,31 +3336,6 @@
                   },
                   "field": "lastKnownValuation",
                   "value": 13900
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal2"
-              },
-              "value": 1,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal2"
-                  },
-                  "field": "dealValue",
-                  "value": 225
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c1"
-                  },
-                  "field": "lastKnownValuation",
-                  "value": 225
                 }
               ]
             },
@@ -3724,31 +3511,6 @@
                   },
                   "field": "lastKnownValuation",
                   "value": 1600
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal15"
-              },
-              "value": 1,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal15"
-                  },
-                  "field": "dealValue",
-                  "value": 75
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c32"
-                  },
-                  "field": "lastKnownValuation",
-                  "value": 75
                 }
               ]
             },
@@ -4030,31 +3792,6 @@
             {
               "ref": {
                 "table": "acquisitions",
-                "id": "deal28"
-              },
-              "value": 1,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal28"
-                  },
-                  "field": "dealValue",
-                  "value": 275
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c45"
-                  },
-                  "field": "lastKnownValuation",
-                  "value": 275
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
                 "id": "deal29"
               },
               "value": 1,
@@ -4130,31 +3867,6 @@
             {
               "ref": {
                 "table": "acquisitions",
-                "id": "deal33"
-              },
-              "value": 1,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal33"
-                  },
-                  "field": "dealValue",
-                  "value": 145
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c50"
-                  },
-                  "field": "lastKnownValuation",
-                  "value": 145
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
                 "id": "deal34"
               },
               "value": 1,
@@ -4224,31 +3936,6 @@
                   },
                   "field": "lastKnownValuation",
                   "value": 67.5
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal37"
-              },
-              "value": 1,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal37"
-                  },
-                  "field": "dealValue",
-                  "value": 52.5
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c54"
-                  },
-                  "field": "lastKnownValuation",
-                  "value": 52.5
                 }
               ]
             },
@@ -4480,31 +4167,6 @@
             {
               "ref": {
                 "table": "acquisitions",
-                "id": "deal48"
-              },
-              "value": 1,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal48"
-                  },
-                  "field": "dealValue",
-                  "value": 56
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c65"
-                  },
-                  "field": "lastKnownValuation",
-                  "value": 56
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
                 "id": "deal49"
               },
               "value": 1,
@@ -4555,31 +4217,6 @@
             {
               "ref": {
                 "table": "acquisitions",
-                "id": "deal52"
-              },
-              "value": 1,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal52"
-                  },
-                  "field": "dealValue",
-                  "value": 425
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c69"
-                  },
-                  "field": "lastKnownValuation",
-                  "value": 425
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
                 "id": "deal53"
               },
               "value": 1,
@@ -4599,56 +4236,6 @@
                   },
                   "field": "lastKnownValuation",
                   "value": 560
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal54"
-              },
-              "value": 1,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal54"
-                  },
-                  "field": "dealValue",
-                  "value": 1200
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c71"
-                  },
-                  "field": "lastKnownValuation",
-                  "value": 1200
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal55"
-              },
-              "value": 1,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal55"
-                  },
-                  "field": "dealValue",
-                  "value": 3250
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c72"
-                  },
-                  "field": "lastKnownValuation",
-                  "value": 3250
                 }
               ]
             },
@@ -4703,7 +4290,7 @@
               ]
             }
           ],
-          "n": 48,
+          "n": 39,
           "originalInputCount": 61,
           "excluded": [
             {
@@ -4822,6 +4409,78 @@
               "reason": "last_known_valuation_unresearched",
               "field": "lastKnownValuation",
               "evaluatedCount": 52
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal2"
+              },
+              "reason": "valuation_basis_inadmissible",
+              "evaluatedCount": 48
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal15"
+              },
+              "reason": "valuation_basis_inadmissible",
+              "evaluatedCount": 48
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal28"
+              },
+              "reason": "valuation_basis_inadmissible",
+              "evaluatedCount": 48
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal33"
+              },
+              "reason": "valuation_basis_inadmissible",
+              "evaluatedCount": 48
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal37"
+              },
+              "reason": "valuation_basis_inadmissible",
+              "evaluatedCount": 48
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal48"
+              },
+              "reason": "valuation_basis_inadmissible",
+              "evaluatedCount": 48
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal52"
+              },
+              "reason": "valuation_basis_inadmissible",
+              "evaluatedCount": 48
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal54"
+              },
+              "reason": "valuation_basis_inadmissible",
+              "evaluatedCount": 48
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal55"
+              },
+              "reason": "valuation_basis_inadmissible",
+              "evaluatedCount": 48
             }
           ],
           "missingness": [
@@ -4833,899 +4492,6 @@
             {
               "field": "lastKnownValuation",
               "missing": 4,
-              "total": 52
-            }
-          ],
-          "datasetVersion": "v11",
-          "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-          "computedAt": "2026-10-19T00:00:00.000Z"
-        }
-      }
-    },
-    "acquirer.premium.totalFunding": {
-      "metricId": "acquirer.premium.totalFunding",
-      "label": "Deal value / total capital raised",
-      "definition": "Deal value divided by the target's total disclosed capital raised. This is not a valuation premium in the conventional sense and not investor MOIC.",
-      "unit": "x",
-      "estimate": {
-        "kind": "sufficient",
-        "value": 7.2727272727272725,
-        "sampleSize": 7,
-        "disclosedFraction": 1,
-        "confidenceInterval": [
-          2.542372881355932,
-          27.142857142857142
-        ],
-        "selectionCaveat": "Disclosed-price deals are a non-random subsample (100% of n=7 sector deals). Selection bias may inflate medians; Heckman correction not applied.",
-        "lineage": {
-          "metricId": "acquirer.premium.totalFunding",
-          "estimator": "gatedMedian",
-          "inputs": [
-            {
-              "table": "acquisitions",
-              "id": "deal1"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal2"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal3"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal4"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal11"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal14"
-            },
-            {
-              "table": "acquisitions",
-              "id": "deal57"
-            }
-          ],
-          "supporting": [
-            {
-              "table": "companies",
-              "id": "c23"
-            },
-            {
-              "table": "companies",
-              "id": "c1"
-            },
-            {
-              "table": "companies",
-              "id": "c12"
-            },
-            {
-              "table": "companies",
-              "id": "c13"
-            },
-            {
-              "table": "companies",
-              "id": "c28"
-            },
-            {
-              "table": "companies",
-              "id": "c31"
-            },
-            {
-              "table": "companies",
-              "id": "c74"
-            }
-          ],
-          "sources": [
-            {
-              "kind": "prose",
-              "rawCitation": "Teladoc Health 8-K filing, SEC EDGAR (Aug 5, 2020); Teladoc Health investor relations press release (Aug 5, 2020); SEC EDGAR 8-K https://www.sec.gov/Archives/edgar/data/1477449/000110465920090575/tm2026658d1_8k.htm"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "SEC 8-K filing (Teladoc, Aug 5, 2020 announcement; Oct 30, 2020 close)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Teladoc Health investor relations press release (Aug 5, 2020)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Crunchbase - crunchbase.com/organization/livongo-health"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Press reports (Fierce Healthcare, May 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Crunchbase - crunchbase.com/organization/modern-fertility"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "TechCrunch - acquisition coverage (May 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Company website - modernfertility.com"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Press reports (TechCrunch, December 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Nurx.com - company website (now Ro)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "TechCrunch - Ro acquisition (Dec 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Crunchbase - crunchbase.com/organization/nurx"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "SEC EDGAR EX-99.1 (23andMe–Lemonaid merger agreement, Oct 22, 2021); Globe Newswire closing release (Nov 1, 2021); SEC EDGAR 8-K EX-99.1 (merger agreement, Oct 22, 2021) https://www.sec.gov/Archives/edgar/data/1804591/000119312521305409/d231996dex991.htm; SEC EDGAR 8-K EX-99.1 (closing, Nov 1, 2021) https://www.sec.gov/Archives/edgar/data/1804591/000119312521316240/d247525dex991.htm"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "SEC EDGAR EX-99.1 — 23andMe/Lemonaid merger agreement (Oct 22, 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Globe Newswire — acquisition closing (Nov 1, 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Crunchbase - crunchbase.com/organization/lemonaid-health"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Company website - lemonaidhealth.com"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "CooperCompanies investor relations — Globe Newswire (Nov 10, 2021); SEC EDGAR 8-K https://www.sec.gov/Archives/edgar/data/711404/000119312521326207/d204711d8k.htm"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "CooperCompanies investor relations - press release (Nov 10, 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Globe Newswire - acquisition announcement"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Organon.com press release (Mar 30, 2021); Business Wire; SEC EDGAR 8-K https://www.sec.gov/Archives/edgar/data/1821825/000119312521180652/d49288dex992.htm"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Organon.com - press release (Mar 30, 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Business Wire - Merck acquisition on behalf of Organon spinoff"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Crunchbase - crunchbase.com/organization/alydia-health"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Organon press release - acquisition announcement, 2021"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Hims & Hers investor relations (June 24, 2021); Business Wire (July 7, 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Hims & Hers investor relations press release (June 24, 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Business Wire - acquisition completion (July 7, 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "MobiHealthNews coverage (June 2021)"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Crunchbase - crunchbase.com/organization/apostrophe"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "TechCrunch - Hims & Hers acquisition coverage, 2021"
-            },
-            {
-              "kind": "prose",
-              "rawCitation": "Company website - apostrophe.com"
-            }
-          ],
-          "contributors": [
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal1"
-              },
-              "value": 57.916666666666664,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal1"
-                  },
-                  "field": "dealValue",
-                  "value": 13900
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c23"
-                  },
-                  "field": "totalFunding",
-                  "value": 240
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal2"
-              },
-              "value": 1.4516129032258065,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal2"
-                  },
-                  "field": "dealValue",
-                  "value": 225
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c1"
-                  },
-                  "field": "totalFunding",
-                  "value": 155
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal3"
-              },
-              "value": 2.542372881355932,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal3"
-                  },
-                  "field": "dealValue",
-                  "value": 300
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c12"
-                  },
-                  "field": "totalFunding",
-                  "value": 118
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal4"
-              },
-              "value": 7.2727272727272725,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal4"
-                  },
-                  "field": "dealValue",
-                  "value": 400
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c13"
-                  },
-                  "field": "totalFunding",
-                  "value": 55
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal11"
-              },
-              "value": 6.4,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal11"
-                  },
-                  "field": "dealValue",
-                  "value": 1600
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c28"
-                  },
-                  "field": "totalFunding",
-                  "value": 250
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal14"
-              },
-              "value": 9.6,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal14"
-                  },
-                  "field": "dealValue",
-                  "value": 240
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c31"
-                  },
-                  "field": "totalFunding",
-                  "value": 25
-                }
-              ]
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal57"
-              },
-              "value": 27.142857142857142,
-              "reads": [
-                {
-                  "ref": {
-                    "table": "acquisitions",
-                    "id": "deal57"
-                  },
-                  "field": "dealValue",
-                  "value": 190
-                },
-                {
-                  "ref": {
-                    "table": "companies",
-                    "id": "c74"
-                  },
-                  "field": "totalFunding",
-                  "value": 7
-                }
-              ]
-            }
-          ],
-          "n": 7,
-          "originalInputCount": 61,
-          "excluded": [
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal5"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal6"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal12"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal13"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal18"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal31"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal47"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal50"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal59"
-              },
-              "reason": "value_undisclosed",
-              "field": "dealValue",
-              "evaluatedCount": 61
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal7"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal8"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal9"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal10"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal15"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal16"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal17"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal19"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal20"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal21"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal22"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal23"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal24"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal25"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal26"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal27"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal28"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal29"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal30"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal32"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal33"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal34"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal35"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal36"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal37"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal38"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal39"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal40"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal41"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal42"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal43"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal44"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal45"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal46"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal48"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal49"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal51"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal52"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal53"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal54"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal55"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal56"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal58"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal60"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal61"
-              },
-              "reason": "funding_unresearched",
-              "field": "totalFunding",
-              "evaluatedCount": 52
-            }
-          ],
-          "missingness": [
-            {
-              "field": "dealValue",
-              "missing": 9,
-              "total": 61
-            },
-            {
-              "field": "totalFunding",
-              "missing": 45,
               "total": 52
             }
           ],
@@ -7202,49 +5968,9 @@
             {
               "ref": {
                 "table": "acquisitions",
-                "id": "deal1"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
                 "id": "deal2"
               },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal3"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal4"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal10"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal11"
-              },
-              "reason": "other_acquirer",
+              "reason": "valuation_basis_inadmissible",
               "evaluatedCount": 48
             },
             {
@@ -7252,71 +5978,7 @@
                 "table": "acquisitions",
                 "id": "deal15"
               },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal16"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal17"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal19"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal20"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal21"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal22"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal26"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal27"
-              },
-              "reason": "other_acquirer",
+              "reason": "valuation_basis_inadmissible",
               "evaluatedCount": 48
             },
             {
@@ -7324,31 +5986,7 @@
                 "table": "acquisitions",
                 "id": "deal28"
               },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal29"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal30"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal32"
-              },
-              "reason": "other_acquirer",
+              "reason": "valuation_basis_inadmissible",
               "evaluatedCount": 48
             },
             {
@@ -7356,31 +5994,7 @@
                 "table": "acquisitions",
                 "id": "deal33"
               },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal34"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal35"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal36"
-              },
-              "reason": "other_acquirer",
+              "reason": "valuation_basis_inadmissible",
               "evaluatedCount": 48
             },
             {
@@ -7388,63 +6002,7 @@
                 "table": "acquisitions",
                 "id": "deal37"
               },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal38"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal39"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal40"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal41"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal42"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal43"
-              },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal44"
-              },
-              "reason": "other_acquirer",
+              "reason": "valuation_basis_inadmissible",
               "evaluatedCount": 48
             },
             {
@@ -7452,15 +6010,7 @@
                 "table": "acquisitions",
                 "id": "deal48"
               },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal49"
-              },
-              "reason": "other_acquirer",
+              "reason": "valuation_basis_inadmissible",
               "evaluatedCount": 48
             },
             {
@@ -7468,15 +6018,7 @@
                 "table": "acquisitions",
                 "id": "deal52"
               },
-              "reason": "other_acquirer",
-              "evaluatedCount": 48
-            },
-            {
-              "ref": {
-                "table": "acquisitions",
-                "id": "deal53"
-              },
-              "reason": "other_acquirer",
+              "reason": "valuation_basis_inadmissible",
               "evaluatedCount": 48
             },
             {
@@ -7484,7 +6026,7 @@
                 "table": "acquisitions",
                 "id": "deal54"
               },
-              "reason": "other_acquirer",
+              "reason": "valuation_basis_inadmissible",
               "evaluatedCount": 48
             },
             {
@@ -7492,8 +6034,232 @@
                 "table": "acquisitions",
                 "id": "deal55"
               },
-              "reason": "other_acquirer",
+              "reason": "valuation_basis_inadmissible",
               "evaluatedCount": 48
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal1"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal3"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal4"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal10"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal11"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal16"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal17"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal19"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal20"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal21"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal22"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal26"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal27"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal29"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal30"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal32"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal34"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal35"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal36"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal38"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal39"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal40"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal41"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal42"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal43"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal44"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal49"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
+            },
+            {
+              "ref": {
+                "table": "acquisitions",
+                "id": "deal53"
+              },
+              "reason": "other_acquirer",
+              "evaluatedCount": 39
             },
             {
               "ref": {
@@ -7501,7 +6267,7 @@
                 "id": "deal56"
               },
               "reason": "other_acquirer",
-              "evaluatedCount": 48
+              "evaluatedCount": 39
             },
             {
               "ref": {
@@ -7509,7 +6275,7 @@
                 "id": "deal58"
               },
               "reason": "other_acquirer",
-              "evaluatedCount": 48
+              "evaluatedCount": 39
             }
           ],
           "missingness": [
@@ -7532,6 +6298,47 @@
     }
   ],
   "withheld": [
+    {
+      "metricId": "acquirer.premium.totalFunding",
+      "reason": "n=0 below minimum 5 for Deal value / total capital raised",
+      "lineage": {
+        "metricId": "acquirer.premium.totalFunding",
+        "estimator": "gatedMedian",
+        "n": 0,
+        "originalInputCount": 61,
+        "excluded": [
+          {
+            "reason": "funding_basis_inadmissible",
+            "count": 7
+          },
+          {
+            "reason": "funding_unresearched",
+            "count": 45
+          },
+          {
+            "reason": "value_undisclosed",
+            "count": 9
+          }
+        ],
+        "missingness": [
+          {
+            "field": "dealValue",
+            "missing": 9,
+            "total": 61
+          },
+          {
+            "field": "totalFunding",
+            "missing": 45,
+            "total": 52
+          }
+        ],
+        "contributors": [],
+        "suppression": "n<5",
+        "datasetVersion": "v11",
+        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
+        "computedAt": "2026-10-19T00:00:00.000Z"
+      }
+    },
     {
       "metricId": "acquirer.premium.preDealValuation",
       "reason": "Acquirer Teladoc has n=1; aggregate withheld below the registry minimum",
@@ -9715,7 +8522,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -9769,11 +8580,11 @@
     },
     {
       "metricId": "acquirer.premium.lastKnownValuation",
-      "reason": "Acquirer Ro has n=2; aggregate withheld below the registry minimum",
+      "reason": "Acquirer Ro has n=1; aggregate withheld below the registry minimum",
       "lineage": {
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
-        "n": 2,
+        "n": 1,
         "originalInputCount": 61,
         "excluded": [
           {
@@ -9782,7 +8593,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 46
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -9802,31 +8617,6 @@
           }
         ],
         "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal2"
-            },
-            "value": 1,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal2"
-                },
-                "field": "dealValue",
-                "value": 225
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c1"
-                },
-                "field": "lastKnownValuation",
-                "value": 225
-              }
-            ]
-          },
           {
             "ref": {
               "table": "acquisitions",
@@ -9874,7 +8664,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -9941,7 +8735,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 45
+            "count": 36
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -10045,98 +8843,6 @@
     },
     {
       "metricId": "acquirer.premium.lastKnownValuation",
-      "reason": "Acquirer Organon has n=2; aggregate withheld below the registry minimum",
-      "lineage": {
-        "metricId": "acquirer.premium.lastKnownValuation",
-        "estimator": "gatedMedian",
-        "n": 2,
-        "originalInputCount": 61,
-        "excluded": [
-          {
-            "reason": "last_known_valuation_unresearched",
-            "count": 4
-          },
-          {
-            "reason": "other_acquirer",
-            "count": 46
-          },
-          {
-            "reason": "value_undisclosed",
-            "count": 9
-          }
-        ],
-        "missingness": [
-          {
-            "field": "dealValue",
-            "missing": 9,
-            "total": 61
-          },
-          {
-            "field": "lastKnownValuation",
-            "missing": 4,
-            "total": 52
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal15"
-            },
-            "value": 1,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal15"
-                },
-                "field": "dealValue",
-                "value": 75
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c32"
-                },
-                "field": "lastKnownValuation",
-                "value": 75
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal54"
-            },
-            "value": 1,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal54"
-                },
-                "field": "dealValue",
-                "value": 1200
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c71"
-                },
-                "field": "lastKnownValuation",
-                "value": 1200
-              }
-            ]
-          }
-        ],
-        "suppression": "n<5",
-        "datasetVersion": "v11",
-        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-        "computedAt": "2026-10-19T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "acquirer.premium.lastKnownValuation",
       "reason": "Acquirer Vitrolife has n=1; aggregate withheld below the registry minimum",
       "lineage": {
         "metricId": "acquirer.premium.lastKnownValuation",
@@ -10150,7 +8856,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -10217,7 +8927,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -10284,7 +8998,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -10351,7 +9069,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 45
+            "count": 36
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -10468,7 +9190,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 46
+            "count": 37
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -10560,7 +9286,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -10614,73 +9344,6 @@
     },
     {
       "metricId": "acquirer.premium.lastKnownValuation",
-      "reason": "Acquirer Boston Scientific has n=1; aggregate withheld below the registry minimum",
-      "lineage": {
-        "metricId": "acquirer.premium.lastKnownValuation",
-        "estimator": "gatedMedian",
-        "n": 1,
-        "originalInputCount": 61,
-        "excluded": [
-          {
-            "reason": "last_known_valuation_unresearched",
-            "count": 4
-          },
-          {
-            "reason": "other_acquirer",
-            "count": 47
-          },
-          {
-            "reason": "value_undisclosed",
-            "count": 9
-          }
-        ],
-        "missingness": [
-          {
-            "field": "dealValue",
-            "missing": 9,
-            "total": 61
-          },
-          {
-            "field": "lastKnownValuation",
-            "missing": 4,
-            "total": 52
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal28"
-            },
-            "value": 1,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal28"
-                },
-                "field": "dealValue",
-                "value": 275
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c45"
-                },
-                "field": "lastKnownValuation",
-                "value": 275
-              }
-            ]
-          }
-        ],
-        "suppression": "n<5",
-        "datasetVersion": "v11",
-        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-        "computedAt": "2026-10-19T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "acquirer.premium.lastKnownValuation",
       "reason": "Acquirer Illumina has n=1; aggregate withheld below the registry minimum",
       "lineage": {
         "metricId": "acquirer.premium.lastKnownValuation",
@@ -10694,7 +9357,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -10761,7 +9428,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -10828,7 +9499,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -10882,73 +9557,6 @@
     },
     {
       "metricId": "acquirer.premium.lastKnownValuation",
-      "reason": "Acquirer Coloplast has n=1; aggregate withheld below the registry minimum",
-      "lineage": {
-        "metricId": "acquirer.premium.lastKnownValuation",
-        "estimator": "gatedMedian",
-        "n": 1,
-        "originalInputCount": 61,
-        "excluded": [
-          {
-            "reason": "last_known_valuation_unresearched",
-            "count": 4
-          },
-          {
-            "reason": "other_acquirer",
-            "count": 47
-          },
-          {
-            "reason": "value_undisclosed",
-            "count": 9
-          }
-        ],
-        "missingness": [
-          {
-            "field": "dealValue",
-            "missing": 9,
-            "total": 61
-          },
-          {
-            "field": "lastKnownValuation",
-            "missing": 4,
-            "total": 52
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal33"
-            },
-            "value": 1,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal33"
-                },
-                "field": "dealValue",
-                "value": 145
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c50"
-                },
-                "field": "lastKnownValuation",
-                "value": 145
-              }
-            ]
-          }
-        ],
-        "suppression": "n<5",
-        "datasetVersion": "v11",
-        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-        "computedAt": "2026-10-19T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "acquirer.premium.lastKnownValuation",
       "reason": "Acquirer Sumitovant Biopharma (Sumitomo Pharma) has n=1; aggregate withheld below the registry minimum",
       "lineage": {
         "metricId": "acquirer.premium.lastKnownValuation",
@@ -10962,7 +9570,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -11016,11 +9628,11 @@
     },
     {
       "metricId": "acquirer.premium.lastKnownValuation",
-      "reason": "Acquirer Myriad Genetics has n=3; aggregate withheld below the registry minimum",
+      "reason": "Acquirer Myriad Genetics has n=2; aggregate withheld below the registry minimum",
       "lineage": {
         "metricId": "acquirer.premium.lastKnownValuation",
         "estimator": "gatedMedian",
-        "n": 3,
+        "n": 2,
         "originalInputCount": 61,
         "excluded": [
           {
@@ -11029,7 +9641,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 45
+            "count": 37
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -11098,98 +9714,6 @@
                 "value": 67.5
               }
             ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal48"
-            },
-            "value": 1,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal48"
-                },
-                "field": "dealValue",
-                "value": 56
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c65"
-                },
-                "field": "lastKnownValuation",
-                "value": 56
-              }
-            ]
-          }
-        ],
-        "suppression": "n<5",
-        "datasetVersion": "v11",
-        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-        "computedAt": "2026-10-19T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "acquirer.premium.lastKnownValuation",
-      "reason": "Acquirer Natera has n=1; aggregate withheld below the registry minimum",
-      "lineage": {
-        "metricId": "acquirer.premium.lastKnownValuation",
-        "estimator": "gatedMedian",
-        "n": 1,
-        "originalInputCount": 61,
-        "excluded": [
-          {
-            "reason": "last_known_valuation_unresearched",
-            "count": 4
-          },
-          {
-            "reason": "other_acquirer",
-            "count": 47
-          },
-          {
-            "reason": "value_undisclosed",
-            "count": 9
-          }
-        ],
-        "missingness": [
-          {
-            "field": "dealValue",
-            "missing": 9,
-            "total": 61
-          },
-          {
-            "field": "lastKnownValuation",
-            "missing": 4,
-            "total": 52
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal37"
-            },
-            "value": 1,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal37"
-                },
-                "field": "dealValue",
-                "value": 52.5
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c54"
-                },
-                "field": "lastKnownValuation",
-                "value": 52.5
-              }
-            ]
           }
         ],
         "suppression": "n<5",
@@ -11213,7 +9737,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -11280,7 +9808,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -11347,7 +9879,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -11414,7 +9950,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -11481,7 +10021,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -11548,7 +10092,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -11602,73 +10150,6 @@
     },
     {
       "metricId": "acquirer.premium.lastKnownValuation",
-      "reason": "Acquirer Bayer has n=1; aggregate withheld below the registry minimum",
-      "lineage": {
-        "metricId": "acquirer.premium.lastKnownValuation",
-        "estimator": "gatedMedian",
-        "n": 1,
-        "originalInputCount": 61,
-        "excluded": [
-          {
-            "reason": "last_known_valuation_unresearched",
-            "count": 4
-          },
-          {
-            "reason": "other_acquirer",
-            "count": 47
-          },
-          {
-            "reason": "value_undisclosed",
-            "count": 9
-          }
-        ],
-        "missingness": [
-          {
-            "field": "dealValue",
-            "missing": 9,
-            "total": 61
-          },
-          {
-            "field": "lastKnownValuation",
-            "missing": 4,
-            "total": 52
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal52"
-            },
-            "value": 1,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal52"
-                },
-                "field": "dealValue",
-                "value": 425
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c69"
-                },
-                "field": "lastKnownValuation",
-                "value": 425
-              }
-            ]
-          }
-        ],
-        "suppression": "n<5",
-        "datasetVersion": "v11",
-        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-        "computedAt": "2026-10-19T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "acquirer.premium.lastKnownValuation",
       "reason": "Acquirer Astellas Pharma has n=1; aggregate withheld below the registry minimum",
       "lineage": {
         "metricId": "acquirer.premium.lastKnownValuation",
@@ -11682,7 +10163,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -11736,73 +10221,6 @@
     },
     {
       "metricId": "acquirer.premium.lastKnownValuation",
-      "reason": "Acquirer KKR has n=1; aggregate withheld below the registry minimum",
-      "lineage": {
-        "metricId": "acquirer.premium.lastKnownValuation",
-        "estimator": "gatedMedian",
-        "n": 1,
-        "originalInputCount": 61,
-        "excluded": [
-          {
-            "reason": "last_known_valuation_unresearched",
-            "count": 4
-          },
-          {
-            "reason": "other_acquirer",
-            "count": 47
-          },
-          {
-            "reason": "value_undisclosed",
-            "count": 9
-          }
-        ],
-        "missingness": [
-          {
-            "field": "dealValue",
-            "missing": 9,
-            "total": 61
-          },
-          {
-            "field": "lastKnownValuation",
-            "missing": 4,
-            "total": 52
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal55"
-            },
-            "value": 1,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal55"
-                },
-                "field": "dealValue",
-                "value": 3250
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c72"
-                },
-                "field": "lastKnownValuation",
-                "value": 3250
-              }
-            ]
-          }
-        ],
-        "suppression": "n<5",
-        "datasetVersion": "v11",
-        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-        "computedAt": "2026-10-19T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "acquirer.premium.lastKnownValuation",
       "reason": "Acquirer BPEA EQT has n=1; aggregate withheld below the registry minimum",
       "lineage": {
         "metricId": "acquirer.premium.lastKnownValuation",
@@ -11816,7 +10234,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -11883,7 +10305,11 @@
           },
           {
             "reason": "other_acquirer",
-            "count": 47
+            "count": 38
+          },
+          {
+            "reason": "valuation_basis_inadmissible",
+            "count": 9
           },
           {
             "reason": "value_undisclosed",
@@ -11925,433 +10351,6 @@
                 },
                 "field": "lastKnownValuation",
                 "value": 534
-              }
-            ]
-          }
-        ],
-        "suppression": "n<5",
-        "datasetVersion": "v11",
-        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-        "computedAt": "2026-10-19T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "acquirer.premium.totalFunding",
-      "reason": "Acquirer Teladoc has n=1; aggregate withheld below the registry minimum",
-      "lineage": {
-        "metricId": "acquirer.premium.totalFunding",
-        "estimator": "gatedMedian",
-        "n": 1,
-        "originalInputCount": 61,
-        "excluded": [
-          {
-            "reason": "funding_unresearched",
-            "count": 45
-          },
-          {
-            "reason": "other_acquirer",
-            "count": 6
-          },
-          {
-            "reason": "value_undisclosed",
-            "count": 9
-          }
-        ],
-        "missingness": [
-          {
-            "field": "dealValue",
-            "missing": 9,
-            "total": 61
-          },
-          {
-            "field": "totalFunding",
-            "missing": 45,
-            "total": 52
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal1"
-            },
-            "value": 57.916666666666664,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal1"
-                },
-                "field": "dealValue",
-                "value": 13900
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c23"
-                },
-                "field": "totalFunding",
-                "value": 240
-              }
-            ]
-          }
-        ],
-        "suppression": "n<5",
-        "datasetVersion": "v11",
-        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-        "computedAt": "2026-10-19T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "acquirer.premium.totalFunding",
-      "reason": "Acquirer Ro has n=2; aggregate withheld below the registry minimum",
-      "lineage": {
-        "metricId": "acquirer.premium.totalFunding",
-        "estimator": "gatedMedian",
-        "n": 2,
-        "originalInputCount": 61,
-        "excluded": [
-          {
-            "reason": "funding_unresearched",
-            "count": 45
-          },
-          {
-            "reason": "other_acquirer",
-            "count": 5
-          },
-          {
-            "reason": "value_undisclosed",
-            "count": 9
-          }
-        ],
-        "missingness": [
-          {
-            "field": "dealValue",
-            "missing": 9,
-            "total": 61
-          },
-          {
-            "field": "totalFunding",
-            "missing": 45,
-            "total": 52
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal2"
-            },
-            "value": 1.4516129032258065,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal2"
-                },
-                "field": "dealValue",
-                "value": 225
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c1"
-                },
-                "field": "totalFunding",
-                "value": 155
-              }
-            ]
-          },
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal3"
-            },
-            "value": 2.542372881355932,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal3"
-                },
-                "field": "dealValue",
-                "value": 300
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c12"
-                },
-                "field": "totalFunding",
-                "value": 118
-              }
-            ]
-          }
-        ],
-        "suppression": "n<5",
-        "datasetVersion": "v11",
-        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-        "computedAt": "2026-10-19T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "acquirer.premium.totalFunding",
-      "reason": "Acquirer 23andMe has n=1; aggregate withheld below the registry minimum",
-      "lineage": {
-        "metricId": "acquirer.premium.totalFunding",
-        "estimator": "gatedMedian",
-        "n": 1,
-        "originalInputCount": 61,
-        "excluded": [
-          {
-            "reason": "funding_unresearched",
-            "count": 45
-          },
-          {
-            "reason": "other_acquirer",
-            "count": 6
-          },
-          {
-            "reason": "value_undisclosed",
-            "count": 9
-          }
-        ],
-        "missingness": [
-          {
-            "field": "dealValue",
-            "missing": 9,
-            "total": 61
-          },
-          {
-            "field": "totalFunding",
-            "missing": 45,
-            "total": 52
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal4"
-            },
-            "value": 7.2727272727272725,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal4"
-                },
-                "field": "dealValue",
-                "value": 400
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c13"
-                },
-                "field": "totalFunding",
-                "value": 55
-              }
-            ]
-          }
-        ],
-        "suppression": "n<5",
-        "datasetVersion": "v11",
-        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-        "computedAt": "2026-10-19T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "acquirer.premium.totalFunding",
-      "reason": "Acquirer CooperSurgical (CooperCompanies) has n=1; aggregate withheld below the registry minimum",
-      "lineage": {
-        "metricId": "acquirer.premium.totalFunding",
-        "estimator": "gatedMedian",
-        "n": 1,
-        "originalInputCount": 61,
-        "excluded": [
-          {
-            "reason": "funding_unresearched",
-            "count": 45
-          },
-          {
-            "reason": "other_acquirer",
-            "count": 6
-          },
-          {
-            "reason": "value_undisclosed",
-            "count": 9
-          }
-        ],
-        "missingness": [
-          {
-            "field": "dealValue",
-            "missing": 9,
-            "total": 61
-          },
-          {
-            "field": "totalFunding",
-            "missing": 45,
-            "total": 52
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal11"
-            },
-            "value": 6.4,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal11"
-                },
-                "field": "dealValue",
-                "value": 1600
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c28"
-                },
-                "field": "totalFunding",
-                "value": 250
-              }
-            ]
-          }
-        ],
-        "suppression": "n<5",
-        "datasetVersion": "v11",
-        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-        "computedAt": "2026-10-19T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "acquirer.premium.totalFunding",
-      "reason": "Acquirer Organon (via Merck spinoff) has n=1; aggregate withheld below the registry minimum",
-      "lineage": {
-        "metricId": "acquirer.premium.totalFunding",
-        "estimator": "gatedMedian",
-        "n": 1,
-        "originalInputCount": 61,
-        "excluded": [
-          {
-            "reason": "funding_unresearched",
-            "count": 45
-          },
-          {
-            "reason": "other_acquirer",
-            "count": 6
-          },
-          {
-            "reason": "value_undisclosed",
-            "count": 9
-          }
-        ],
-        "missingness": [
-          {
-            "field": "dealValue",
-            "missing": 9,
-            "total": 61
-          },
-          {
-            "field": "totalFunding",
-            "missing": 45,
-            "total": 52
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal14"
-            },
-            "value": 9.6,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal14"
-                },
-                "field": "dealValue",
-                "value": 240
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c31"
-                },
-                "field": "totalFunding",
-                "value": 25
-              }
-            ]
-          }
-        ],
-        "suppression": "n<5",
-        "datasetVersion": "v11",
-        "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-        "computedAt": "2026-10-19T00:00:00.000Z"
-      }
-    },
-    {
-      "metricId": "acquirer.premium.totalFunding",
-      "reason": "Acquirer Hims & Hers Health has n=1; aggregate withheld below the registry minimum",
-      "lineage": {
-        "metricId": "acquirer.premium.totalFunding",
-        "estimator": "gatedMedian",
-        "n": 1,
-        "originalInputCount": 61,
-        "excluded": [
-          {
-            "reason": "funding_unresearched",
-            "count": 45
-          },
-          {
-            "reason": "other_acquirer",
-            "count": 6
-          },
-          {
-            "reason": "value_undisclosed",
-            "count": 9
-          }
-        ],
-        "missingness": [
-          {
-            "field": "dealValue",
-            "missing": 9,
-            "total": 61
-          },
-          {
-            "field": "totalFunding",
-            "missing": 45,
-            "total": 52
-          }
-        ],
-        "contributors": [
-          {
-            "ref": {
-              "table": "acquisitions",
-              "id": "deal57"
-            },
-            "value": 27.142857142857142,
-            "reads": [
-              {
-                "ref": {
-                  "table": "acquisitions",
-                  "id": "deal57"
-                },
-                "field": "dealValue",
-                "value": 190
-              },
-              {
-                "ref": {
-                  "table": "companies",
-                  "id": "c74"
-                },
-                "field": "totalFunding",
-                "value": 7
               }
             ]
           }

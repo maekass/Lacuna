@@ -16,6 +16,10 @@ export const COMPUTATION_LINEAGE_FILES = [
   "scripts/compute-growth-rates.ts",
   "scripts/compute-quality-visibility.ts",
   "scripts/compute-sector-correlations.ts",
+  // Ratio-denominator admission reads valueBasis and verificationStatus, which
+  // the materialized dataset hash does not cover; a basis-only correction must
+  // still invalidate computed ratios.
+  "src/data/evidence.verified.json",
   "src/lib/data/dataQualityScores.ts",
   "src/lib/data/evidenceLedger.ts",
   "src/lib/data/qualityVisibility.ts",
