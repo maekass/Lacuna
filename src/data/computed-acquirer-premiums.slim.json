@@ -29,33 +29,23 @@
       "estimate": {
         "kind": "sufficient",
         "value": 1,
-        "sampleSize": 48,
+        "sampleSize": 39,
         "disclosedFraction": 1,
         "confidenceInterval": [
           1,
           1
         ],
-        "selectionCaveat": "Disclosed-price deals are a non-random subsample (100% of n=48 sector deals). Selection bias may inflate medians; Heckman correction not applied."
+        "selectionCaveat": "Disclosed-price deals are a non-random subsample (100% of n=39 sector deals). Selection bias may inflate medians; Heckman correction not applied."
       },
-      "n": 48
+      "n": 39
     },
     {
       "metricId": "acquirer.premium.totalFunding",
-      "label": "Deal value / total capital raised",
-      "definition": "Deal value divided by the target's total disclosed capital raised. This is not a valuation premium in the conventional sense and not investor MOIC.",
+      "label": "acquirer.premium.totalFunding",
+      "definition": "acquirer.premium.totalFunding",
       "unit": "x",
-      "estimate": {
-        "kind": "sufficient",
-        "value": 7.2727272727272725,
-        "sampleSize": 7,
-        "disclosedFraction": 1,
-        "confidenceInterval": [
-          2.542372881355932,
-          27.142857142857142
-        ],
-        "selectionCaveat": "Disclosed-price deals are a non-random subsample (100% of n=7 sector deals). Selection bias may inflate medians; Heckman correction not applied."
-      },
-      "n": 7
+      "n": 0,
+      "withheldReason": "n=0 below minimum 5 for Deal value / total capital raised"
     },
     {
       "metricId": "acquirer.premium.preDealValuation",
@@ -302,8 +292,8 @@
       "label": "acquirer.premium.lastKnownValuation",
       "definition": "acquirer.premium.lastKnownValuation",
       "unit": "x",
-      "n": 2,
-      "withheldReason": "Acquirer Ro has n=2; aggregate withheld below the registry minimum"
+      "n": 1,
+      "withheldReason": "Acquirer Ro has n=1; aggregate withheld below the registry minimum"
     },
     {
       "metricId": "acquirer.premium.lastKnownValuation",
@@ -320,14 +310,6 @@
       "unit": "x",
       "n": 3,
       "withheldReason": "Acquirer CooperSurgical (CooperCompanies) has n=3; aggregate withheld below the registry minimum"
-    },
-    {
-      "metricId": "acquirer.premium.lastKnownValuation",
-      "label": "acquirer.premium.lastKnownValuation",
-      "definition": "acquirer.premium.lastKnownValuation",
-      "unit": "x",
-      "n": 2,
-      "withheldReason": "Acquirer Organon has n=2; aggregate withheld below the registry minimum"
     },
     {
       "metricId": "acquirer.premium.lastKnownValuation",
@@ -383,14 +365,6 @@
       "definition": "acquirer.premium.lastKnownValuation",
       "unit": "x",
       "n": 1,
-      "withheldReason": "Acquirer Boston Scientific has n=1; aggregate withheld below the registry minimum"
-    },
-    {
-      "metricId": "acquirer.premium.lastKnownValuation",
-      "label": "acquirer.premium.lastKnownValuation",
-      "definition": "acquirer.premium.lastKnownValuation",
-      "unit": "x",
-      "n": 1,
       "withheldReason": "Acquirer Illumina has n=1; aggregate withheld below the registry minimum"
     },
     {
@@ -415,14 +389,6 @@
       "definition": "acquirer.premium.lastKnownValuation",
       "unit": "x",
       "n": 1,
-      "withheldReason": "Acquirer Coloplast has n=1; aggregate withheld below the registry minimum"
-    },
-    {
-      "metricId": "acquirer.premium.lastKnownValuation",
-      "label": "acquirer.premium.lastKnownValuation",
-      "definition": "acquirer.premium.lastKnownValuation",
-      "unit": "x",
-      "n": 1,
       "withheldReason": "Acquirer Sumitovant Biopharma (Sumitomo Pharma) has n=1; aggregate withheld below the registry minimum"
     },
     {
@@ -430,16 +396,8 @@
       "label": "acquirer.premium.lastKnownValuation",
       "definition": "acquirer.premium.lastKnownValuation",
       "unit": "x",
-      "n": 3,
-      "withheldReason": "Acquirer Myriad Genetics has n=3; aggregate withheld below the registry minimum"
-    },
-    {
-      "metricId": "acquirer.premium.lastKnownValuation",
-      "label": "acquirer.premium.lastKnownValuation",
-      "definition": "acquirer.premium.lastKnownValuation",
-      "unit": "x",
-      "n": 1,
-      "withheldReason": "Acquirer Natera has n=1; aggregate withheld below the registry minimum"
+      "n": 2,
+      "withheldReason": "Acquirer Myriad Genetics has n=2; aggregate withheld below the registry minimum"
     },
     {
       "metricId": "acquirer.premium.lastKnownValuation",
@@ -495,23 +453,7 @@
       "definition": "acquirer.premium.lastKnownValuation",
       "unit": "x",
       "n": 1,
-      "withheldReason": "Acquirer Bayer has n=1; aggregate withheld below the registry minimum"
-    },
-    {
-      "metricId": "acquirer.premium.lastKnownValuation",
-      "label": "acquirer.premium.lastKnownValuation",
-      "definition": "acquirer.premium.lastKnownValuation",
-      "unit": "x",
-      "n": 1,
       "withheldReason": "Acquirer Astellas Pharma has n=1; aggregate withheld below the registry minimum"
-    },
-    {
-      "metricId": "acquirer.premium.lastKnownValuation",
-      "label": "acquirer.premium.lastKnownValuation",
-      "definition": "acquirer.premium.lastKnownValuation",
-      "unit": "x",
-      "n": 1,
-      "withheldReason": "Acquirer KKR has n=1; aggregate withheld below the registry minimum"
     },
     {
       "metricId": "acquirer.premium.lastKnownValuation",
@@ -528,54 +470,6 @@
       "unit": "x",
       "n": 1,
       "withheldReason": "Acquirer KKR (via IVI-RMA) has n=1; aggregate withheld below the registry minimum"
-    },
-    {
-      "metricId": "acquirer.premium.totalFunding",
-      "label": "acquirer.premium.totalFunding",
-      "definition": "acquirer.premium.totalFunding",
-      "unit": "x",
-      "n": 1,
-      "withheldReason": "Acquirer Teladoc has n=1; aggregate withheld below the registry minimum"
-    },
-    {
-      "metricId": "acquirer.premium.totalFunding",
-      "label": "acquirer.premium.totalFunding",
-      "definition": "acquirer.premium.totalFunding",
-      "unit": "x",
-      "n": 2,
-      "withheldReason": "Acquirer Ro has n=2; aggregate withheld below the registry minimum"
-    },
-    {
-      "metricId": "acquirer.premium.totalFunding",
-      "label": "acquirer.premium.totalFunding",
-      "definition": "acquirer.premium.totalFunding",
-      "unit": "x",
-      "n": 1,
-      "withheldReason": "Acquirer 23andMe has n=1; aggregate withheld below the registry minimum"
-    },
-    {
-      "metricId": "acquirer.premium.totalFunding",
-      "label": "acquirer.premium.totalFunding",
-      "definition": "acquirer.premium.totalFunding",
-      "unit": "x",
-      "n": 1,
-      "withheldReason": "Acquirer CooperSurgical (CooperCompanies) has n=1; aggregate withheld below the registry minimum"
-    },
-    {
-      "metricId": "acquirer.premium.totalFunding",
-      "label": "acquirer.premium.totalFunding",
-      "definition": "acquirer.premium.totalFunding",
-      "unit": "x",
-      "n": 1,
-      "withheldReason": "Acquirer Organon (via Merck spinoff) has n=1; aggregate withheld below the registry minimum"
-    },
-    {
-      "metricId": "acquirer.premium.totalFunding",
-      "label": "acquirer.premium.totalFunding",
-      "definition": "acquirer.premium.totalFunding",
-      "unit": "x",
-      "n": 1,
-      "withheldReason": "Acquirer Hims & Hers Health has n=1; aggregate withheld below the registry minimum"
     }
   ]
 }

@@ -16,7 +16,10 @@ import type {
   VerifiedAcquisition,
   VerifiedCompany,
 } from "../src/lib/data/datasetSchema";
-import { getStaticVerifiedDataset } from "../src/lib/data/staticDataset";
+import {
+  getStaticVerifiedDataset,
+  isStaticRatioDenominatorAdmissible,
+} from "../src/lib/data/staticDataset";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 import { withoutLineage, writeSlimArtifact } from "./slimArtifacts";
 
@@ -132,6 +135,23 @@ function eligibleCollection(
         : metricId === "acquirer.premium.lastKnownValuation"
         ? "lastKnownValuation"
         : "totalFunding",
+    )
+    .exclude(
+      (deal) =>
+        metricId === "acquirer.premium.lastKnownValuation" &&
+        !isStaticRatioDenominatorAdmissible(
+          deal.company.id,
+          "lastKnownValuation",
+        ),
+      // Value is present; omit the field so missingness does not count it.
+      "valuation_basis_inadmissible",
+    )
+    .exclude(
+      (deal) =>
+        metricId === "acquirer.premium.totalFunding" &&
+        !isStaticRatioDenominatorAdmissible(deal.company.id, "totalFunding"),
+      // Value is present; omit the field so missingness does not count it.
+      "funding_basis_inadmissible",
     )
     .exclude(
       (deal) =>

@@ -1,7 +1,7 @@
 {
   "generatedAt": "2026-10-19T00:00:00.000Z",
   "datasetHash": "5a0a432d5db8bda2b5e926a479465bdddcb9e48f0fbbbb37364c1a376ab4b246",
-  "computationLineageHash": "c95ea246756a2e9e81fef39df953b355690e88cd8569ebce2aacb37622d7f8a8",
+  "computationLineageHash": "b12b620412e452094d117b8faa3c89bb795adc8e60b8663c1426d3c39b9c3538",
   "datasetVersion": "v11",
   "source": "Lacuna measurement-layer census (quality scores, gated metrics, vintage, display provenance)",
   "quality": {
@@ -466,23 +466,13 @@
     ]
   },
   "metrics": {
-    "published": 7,
-    "withheld": 214,
-    "registered": 221,
-    "withheldRate": 0.9683257918552036,
-    "publishedWithFullProvenance": 7,
+    "published": 4,
+    "withheld": 205,
+    "registered": 209,
+    "withheldRate": 0.9808612440191388,
+    "publishedWithFullProvenance": 4,
     "publishedMetrics": [
       {
-        "metricId": "sector.moic.median",
-        "scope": "All sectors",
-        "label": "Median exit-value / capital-raised ratio",
-        "hasUnit": true,
-        "hasDefinition": true,
-        "hasN": true,
-        "hasBootstrapCi": true,
-        "hasLineage": true
-      },
-      {
         "metricId": "acquirer.premium.preDealValuation",
         "scope": "all acquirers",
         "label": "Acquirer premium over pre-deal valuation",
@@ -503,16 +493,6 @@
         "hasLineage": true
       },
       {
-        "metricId": "acquirer.premium.totalFunding",
-        "scope": "all acquirers",
-        "label": "Deal value / total capital raised",
-        "hasUnit": true,
-        "hasDefinition": true,
-        "hasN": true,
-        "hasBootstrapCi": true,
-        "hasLineage": true
-      },
-      {
         "metricId": "acquirer.premium.preDealValuation",
         "scope": "Hologic",
         "label": "Acquirer premium over pre-deal valuation",
@@ -526,16 +506,6 @@
         "metricId": "acquirer.premium.lastKnownValuation",
         "scope": "Hologic",
         "label": "Acquirer premium over last-known valuation",
-        "hasUnit": true,
-        "hasDefinition": true,
-        "hasN": true,
-        "hasBootstrapCi": true,
-        "hasLineage": true
-      },
-      {
-        "metricId": "sector.moic.median",
-        "scope": "All sectors",
-        "label": "Median exit-value / capital-raised ratio",
         "hasUnit": true,
         "hasDefinition": true,
         "hasN": true,

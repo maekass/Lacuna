@@ -45,7 +45,11 @@ function formatM(value: number): string {
 }
 
 export default function QuantValuationPanel() {
-  const { verifiedCompanies, verifiedAcquisitions } = useVerifiedDataset();
+  const {
+    verifiedCompanies,
+    verifiedAcquisitions,
+    admitFundingDenominator,
+  } = useVerifiedDataset();
   const [showAll, setShowAll] = useState(false);
 
   const { rows, anchoredCount, priors } = useMemo(() => {
@@ -54,6 +58,7 @@ export default function QuantValuationPanel() {
     const empiricalPriors = deriveEmpiricalPriors(
       verifiedCompanies,
       verifiedAcquisitions,
+      { admitFundingDenominator },
     );
     const engine = new ValuationEngine(empiricalPriors);
     const predictor = new AcquisitionPredictor(empiricalPriors);
@@ -104,7 +109,7 @@ export default function QuantValuationPanel() {
       anchoredCount: built.filter((r) => r.hasComparableAnchor).length,
       priors: empiricalPriors,
     };
-  }, [verifiedCompanies, verifiedAcquisitions]);
+  }, [verifiedCompanies, verifiedAcquisitions, admitFundingDenominator]);
 
   const visibleRows = showAll ? rows : rows.slice(0, 12);
 
