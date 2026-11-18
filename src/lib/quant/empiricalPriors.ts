@@ -103,10 +103,30 @@ function yearsBetween(foundedYear: number, isoDate: string): number | null {
   return years >= 0 && years < 60 ? years : null;
 }
 
+export interface EmpiricalPriorOptions {
+  /**
+   * Whether a target's `totalFunding` value may divide its deal value.
+   * Production callers pass the evidence-ledger gate from
+   * `useVerifiedDataset()`, which checks both id and value; omitting it admits
+   * every positive value and is intended only for self-contained fixtures.
+   */
+  readonly admitFundingDenominator?: (
+    companyId: string,
+    totalFunding: number,
+  ) => boolean;
+}
+
+/**
+ * Derive descriptive sector priors from verified deals. Funding multiples use
+ * only denominators admitted by `options.admitFundingDenominator`.
+ */
 export function deriveEmpiricalPriors(
   companies: readonly VerifiedCompanyView[],
   acquisitions: readonly VerifiedAcquisitionView[],
+  options: EmpiricalPriorOptions = {},
 ): EmpiricalPriors {
+  const admitFundingDenominator = options.admitFundingDenominator ??
+    (() => true);
   const companyById = new Map(companies.map((c) => [c.id, c]));
   const acquiredTargetIds = new Set(acquisitions.map((d) => d.targetId));
 
@@ -135,7 +155,8 @@ export function deriveEmpiricalPriors(
       const target = companyById.get(deal.targetId);
       if (
         typeof deal.dealValue === "number" && deal.dealValue > 0 &&
-        typeof target?.totalFunding === "number" && target.totalFunding > 0
+        typeof target?.totalFunding === "number" && target.totalFunding > 0 &&
+        admitFundingDenominator(target.id, target.totalFunding)
       ) {
         multiples.push(deal.dealValue / target.totalFunding);
       }

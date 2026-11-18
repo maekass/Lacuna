@@ -67,6 +67,15 @@ a partial stake, or a sum of cited rounds. The citation has to state the figure
 those labels describe. `npm run validate:dataset` checks the static ledger
 against those rules.
 
+The basis also decides whether a figure may divide a deal value (exit/funding
+multiples, last-known-valuation premiums). Only `stated`, `approximate`,
+`sum_of_cited_rounds`, `fully_diluted`, `equity_value`, and `enterprise_value`
+are admitted (`RATIO_DENOMINATOR_BASES` in `src/lib/data/evidenceLedger.ts`).
+Bounds, partial figures, unquoted FX, unstated totals, `locator_only`, a missing
+basis, and contested or retracted rows stay displayable but are excluded as
+`funding_basis_inadmissible` / `valuation_basis_inadmissible`. Upgrading a basis
+therefore changes published ratios: run `npm run compute:all` after the edit.
+
 ```json
 {
   "id": "c136:totalFunding:v1",

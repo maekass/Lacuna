@@ -8,8 +8,10 @@ describe("GET /api/quality/visibility", () => {
     expect(response.status).toBe(200);
     const body = await response.json();
     expect(body).toEqual(getQualityVisibility());
-    expect(body.metrics.published).toBe(7);
-    expect(body.metrics.withheld).toBe(214);
+    expect(body.metrics.published).toBe(4);
+    // Basis-gated funding ratios are withheld; acquirers left with no admitted
+    // denominator no longer register a per-acquirer row (221 -> 209 total).
+    expect(body.metrics.withheld).toBe(205);
     expect(body.premiums.reproducible).toBe(body.premiums.computed);
   });
 });
