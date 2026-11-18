@@ -8,7 +8,10 @@ import {
 } from "../src/lib/lineage";
 import { hashDataset } from "../src/lib/lineage/datasetHash";
 import { isSufficient } from "../src/lib/quant/estimators";
-import { getStaticVerifiedDataset } from "../src/lib/data/staticDataset";
+import {
+  getStaticVerifiedDataset,
+  isStaticRatioDenominatorAdmissible,
+} from "../src/lib/data/staticDataset";
 import { generatedAtFromProvenance } from "../src/lib/data/computedArtifactMeta";
 
 const dataset = getStaticVerifiedDataset();
@@ -39,6 +42,12 @@ const collection = fromRecords(
       deal.company.totalFunding <= 0,
     "funding_unresearched",
     "totalFunding",
+  )
+  .exclude(
+    (deal) =>
+      !isStaticRatioDenominatorAdmissible(deal.company.id, "totalFunding"),
+    // Value is present; omit the field so missingness does not count it.
+    "funding_basis_inadmissible",
   )
   .map(
     (deal) => deal.dealValue! / deal.company.totalFunding!,

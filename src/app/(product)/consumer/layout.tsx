@@ -1,5 +1,6 @@
 import { getVerifiedDataset } from "@/lib/data/datasetProvider";
 import { applyDatasetScope } from "@/lib/data/medBiotechFilters";
+import { staticRatioDenominatorCompanyIds } from "@/lib/data/staticDataset";
 import { VerifiedDatasetProvider } from "@/lib/data/VerifiedDatasetContext";
 
 /** Consumer health workspace uses its own scoped dataset (nested provider). */
@@ -11,7 +12,12 @@ export default async function ConsumerLayout({
   const full = await getVerifiedDataset();
   const dataset = applyDatasetScope(full, "consumer_health");
   return (
-    <VerifiedDatasetProvider dataset={dataset}>
+    <VerifiedDatasetProvider
+      dataset={dataset}
+      fundingDenominatorCompanyIds={staticRatioDenominatorCompanyIds(
+        "totalFunding",
+      )}
+    >
       {children}
     </VerifiedDatasetProvider>
   );

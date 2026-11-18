@@ -164,6 +164,71 @@ export function economicEvidenceAtDecisionDate(
 }
 
 /**
+ * Bases whose stored figure is a point the citation states for the whole
+ * company, so it may divide a deal value. Bounds (`up_to`, `at_least`,
+ * `range_high`), partial figures (`upfront`, `stake`), unconverted foreign
+ * amounts, unstated totals and locator-only citations stay displayable but are
+ * never a ratio denominator.
+ */
+export const RATIO_DENOMINATOR_BASES: ReadonlySet<EconomicValueBasis> = new Set<
+  EconomicValueBasis
+>([
+  "stated",
+  "approximate",
+  "sum_of_cited_rounds",
+  "fully_diluted",
+  "equity_value",
+  "enterprise_value",
+]);
+
+export type RatioDenominatorAdmission =
+  | { readonly admissible: true; readonly basis: EconomicValueBasis }
+  | {
+    readonly admissible: false;
+    readonly reason:
+      | "missing-evidence"
+      | "missing-basis"
+      | "inadmissible-basis"
+      | "unverified-status";
+    readonly basis?: EconomicValueBasis;
+  };
+
+/**
+ * Whether the current ledger record for `companyId`/`field` may be used as the
+ * denominator of a descriptive ratio (deal value / funding, deal value /
+ * valuation). Fails closed: no record, no basis, a contested or retracted
+ * record, or a basis outside `RATIO_DENOMINATOR_BASES` is not admitted.
+ * The stored value itself is unchanged and may still be displayed.
+ */
+export function ratioDenominatorAdmission(
+  ledger: EconomicEvidenceLedger,
+  companyId: string,
+  field: EconomicEvidenceField,
+): RatioDenominatorAdmission {
+  const record = currentRecords(ledger.records).get(`${companyId}:${field}`);
+  if (!record) return { admissible: false, reason: "missing-evidence" };
+  if (!record.valueBasis) return { admissible: false, reason: "missing-basis" };
+  if (
+    record.verificationStatus === "contested" ||
+    record.verificationStatus === "retracted"
+  ) {
+    return {
+      admissible: false,
+      reason: "unverified-status",
+      basis: record.valueBasis,
+    };
+  }
+  if (!RATIO_DENOMINATOR_BASES.has(record.valueBasis)) {
+    return {
+      admissible: false,
+      reason: "inadmissible-basis",
+      basis: record.valueBasis,
+    };
+  }
+  return { admissible: true, basis: record.valueBasis };
+}
+
+/**
  * Materialize the present-day economic fields from evidence. Historical queries
  * must additionally call `atDecisionDate` per field; a null public date is not
  * admitted merely because this projection can display the current catalog.
