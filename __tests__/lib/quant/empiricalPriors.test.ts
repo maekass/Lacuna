@@ -11,6 +11,7 @@ import {
   type QuantCompany,
   ValuationEngine,
 } from "@/lib/quant/quantEngine";
+import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
 import type {
   VerifiedAcquisitionView,
   VerifiedCompanyView,
@@ -81,6 +82,53 @@ describe("normalizeSectorBucket", () => {
     expect(normalizeSectorBucket("Fertility")).toBe("fertility");
     expect(normalizeSectorBucket("Reproductive Health")).toBe("fertility");
     expect(normalizeSectorBucket("Something Unmapped")).toBe("other");
+  });
+
+  it("does not read General Wellness as precision medicine (regression)", () => {
+    expect(normalizeSectorBucket("General Wellness")).toBe("wellness");
+    expect(normalizeSectorBucket("Precision Medicine")).toBe(
+      "precision_medicine",
+    );
+    expect(normalizeSectorBucket("Genomics")).toBe("precision_medicine");
+    expect(normalizeSectorBucket("Gene Therapy")).toBe("precision_medicine");
+    expect(normalizeSectorBucket("Genetic Testing")).toBe("precision_medicine");
+  });
+
+  it("buckets every v11 sector label as reviewed", () => {
+    const expected: Record<string, string> = {
+      "Biotech": "other",
+      "Breast Health": "other",
+      "Consumer": "wellness",
+      "Contraception": "other",
+      "Dermatology": "other",
+      "Diagnostic (portfolio)": "diagnostics",
+      "Diagnostics": "diagnostics",
+      "Digital Health": "other",
+      "Fertility": "fertility",
+      "General Wellness": "wellness",
+      "Gynecological Surgery": "other",
+      "Maternal Health": "maternal",
+      "Medical Device": "devices",
+      "Menopause": "menopause",
+      "Mental Health": "mental_health",
+      "Pelvic Health": "pelvic",
+      "Precision Medicine": "precision_medicine",
+      "Reproductive Health": "fertility",
+      "Reproductive": "fertility",
+      "Sexual Wellness": "wellness",
+      "Tech Bio": "other",
+      "Therapeutics": "other",
+      "Wearables": "devices",
+      "Wellness": "wellness",
+    };
+    const sectors = new Set(
+      getStaticVerifiedDataset().companies.map((c) => c.sector),
+    );
+    // A new sector label must be added here so its bucket is a reviewed choice.
+    expect([...sectors].sort()).toEqual(Object.keys(expected).sort());
+    for (const sector of sectors) {
+      expect(normalizeSectorBucket(sector), sector).toBe(expected[sector]);
+    }
   });
 });
 

@@ -62,6 +62,7 @@ export interface EmpiricalPriors {
   derivationNote: string;
 }
 
+/** Map a free-text sector label to a coarse prior bucket; unmatched is `other`. */
 export function normalizeSectorBucket(sector: string): string {
   const s = sector.toLowerCase();
   if (s.includes("diagn") || s.includes("screen") || s.includes("imaging")) {
@@ -74,7 +75,11 @@ export function normalizeSectorBucket(sector: string): string {
   if (s.includes("oncolog") || s.includes("cancer")) return "oncology";
   if (s.includes("menopause")) return "menopause";
   if (s.includes("pelvic")) return "pelvic";
-  if (s.includes("precision") || s.includes("genomic") || s.includes("gene")) {
+  // Whole-word "gene"/"genetic": a bare substring test also matches "General".
+  if (
+    s.includes("precision") || s.includes("genomic") ||
+    /\bgene(s|tic|tics)?\b/.test(s)
+  ) {
     return "precision_medicine";
   }
   if (s.includes("mental") || s.includes("behavior")) return "mental_health";
