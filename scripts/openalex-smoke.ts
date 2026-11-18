@@ -102,8 +102,14 @@ const oqlResult = await executeOpenAlexOql("works where year is (2025)", {
   perPage: 1,
   select: "id,display_name,publication_year",
 });
-assert(Array.isArray(oqlResult.results), "OQL execution returned no results array.");
-assert(oqlResult.meta && typeof oqlResult.meta.count === "number", "OQL execution returned invalid metadata.");
+assert(
+  Array.isArray(oqlResult.results),
+  "OQL execution returned no results array.",
+);
+assert(
+  oqlResult.meta && typeof oqlResult.meta.count === "number",
+  "OQL execution returned invalid metadata.",
+);
 assert(oqlResult.results.length > 0, "OQL execution returned zero works.");
 
 const rateLimit = await getOpenAlexRateLimit();

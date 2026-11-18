@@ -67,9 +67,16 @@ describe("OpenAlex client integrity contract", () => {
   it("rejects conflicting pagination for search and OQL before network access", async () => {
     process.env.OPENALEX_API_KEY = "test-secret";
     const fetchMock = vi.spyOn(globalThis, "fetch");
-    await expect(searchOpenAlexWorks({ search: "health", page: 2, cursor: "*" }))
+    await expect(
+      searchOpenAlexWorks({ search: "health", page: 2, cursor: "*" }),
+    )
       .rejects.toThrow("mutually exclusive");
-    await expect(executeOpenAlexOql("works where year is (2025)", { page: 2, cursor: "*" }))
+    await expect(
+      executeOpenAlexOql("works where year is (2025)", {
+        page: 2,
+        cursor: "*",
+      }),
+    )
       .rejects.toThrow("mutually exclusive");
     expect(fetchMock).not.toHaveBeenCalled();
   });
