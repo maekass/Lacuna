@@ -2,8 +2,6 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { buildRnpvExport } from "@/lib/research/rnpvExport";
 import {
-  illustrativePreset,
-  parseScenarioForm,
   blankScenarioForm,
   illustrativePreset,
   parseScenarioForm,

@@ -240,8 +240,6 @@ export default function RnpvSimulator() {
         <legend className="sr-only">Hypothetical rNPV assumptions</legend>
         <RnpvFields
           form={form}
-          fieldErrors={parsed.ok ? {} : parsed.fieldErrors}
-          showErrors={showErrors}
           fieldErrors={revealed.fieldErrors}
           showErrors={showingErrors}
           onPatch={patch}
@@ -249,7 +247,6 @@ export default function RnpvSimulator() {
           onStage={onStage}
           onLoadPreset={loadPreset}
         />
-        {accepted && showErrors && !parsed.ok
         {accepted && showingErrors
           ? (
             <div
@@ -258,7 +255,6 @@ export default function RnpvSimulator() {
             >
               <p className="font-medium">These assumptions need attention.</p>
               <ul className="mt-2 list-disc space-y-1 pl-5">
-                {parsed.errors.map((error) => <li key={error}>{error}</li>)}
                 {revealed.errors.map((error) => <li key={error}>{error}</li>)}
               </ul>
             </div>
@@ -273,8 +269,6 @@ export default function RnpvSimulator() {
               progress={progress}
               running={running}
               runError={runError}
-              canRun={parsed.ok}
-              showIncomplete={!parsed.ok && !showErrors}
               showIncomplete={!parsed.ok && !showingErrors}
               onRun={() => void run()}
               onCancel={cancel}
