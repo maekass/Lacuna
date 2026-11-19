@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { assessMissingModels } from "../../scripts/ai-model-sync-policy";
+import reviewedRetirementsFile from "../../src/data/ai-models.reviewed-retirements.json";
+import {
+  assessMissingModels,
+  directoryGapExitCode,
+  reviewedRetirementsSchema,
+} from "../../scripts/ai-model-sync-policy";
 
 const previous = [{
   id: "xai/grok-4.3",
@@ -56,5 +61,37 @@ describe("gateway model drift policy", () => {
       assessMissingModels([previous[0].id], [], [], previous)[0].classification,
     )
       .toBe("possible_deprecation");
+  });
+});
+
+describe("reviewed model retirements", () => {
+  const recorded = reviewedRetirementsSchema.parse(reviewedRetirementsFile);
+  const sonnet = recorded.find((item) =>
+    item.id === "anthropic/claude-sonnet-4"
+  );
+
+  it("passes the recorded Sonnet 4 retirement when its replacement is listed", () => {
+    expect(sonnet?.replacement).toBe("anthropic/claude-sonnet-4.5");
+    expect(directoryGapExitCode(
+      ["anthropic/claude-sonnet-4"],
+      recorded,
+      new Set([sonnet!.replacement]),
+    )).toBe(0);
+  });
+
+  it("still exits non-zero when the replacement is not in the directory", () => {
+    expect(directoryGapExitCode(
+      ["anthropic/claude-sonnet-4"],
+      recorded,
+      new Set<string>(),
+    )).not.toBe(0);
+  });
+
+  it("still exits non-zero when a reviewed gap is mixed with an unreviewed one", () => {
+    expect(directoryGapExitCode(
+      ["anthropic/claude-sonnet-4", "anthropic/claude-missing"],
+      recorded,
+      new Set([sonnet!.replacement]),
+    )).not.toBe(0);
   });
 });

@@ -9,6 +9,10 @@
  *
  * The snapshot is rewritten only when model metadata actually changed, so
  * `fetchedAt` does not churn the file (and the daily workflow) every run.
+ *
+ * A missing id recorded in src/data/ai-models.reviewed-retirements.json with a
+ * date, replacement, and reason passes when that replacement is still listed.
+ * Any other missing id preserves the snapshot and exits non-zero.
  */
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
@@ -16,7 +20,13 @@ import { join } from "node:path";
 import process from "node:process";
 import { z } from "zod";
 import modelRoutes from "../src/data/ai-models.routes.json";
-import { assessMissingModels } from "./ai-model-sync-policy";
+import reviewedRetirementsFile from "../src/data/ai-models.reviewed-retirements.json";
+import {
+  assessMissingModels,
+  directoryGapExitCode,
+  matchingReviewedRetirement,
+  reviewedRetirementsSchema,
+} from "./ai-model-sync-policy";
 import {
   type CatalogModel,
   type ModelCatalogSnapshot,
@@ -210,6 +220,14 @@ async function main() {
         item.replacement!.split("/")[0] ===
           replacements[0].replacement!.split("/")[0]
       );
+    const reviewedRetirements = reviewedRetirementsSchema.parse(
+      reviewedRetirementsFile,
+    );
+    const directoryIds = new Set(byId.keys());
+    const gapExit = canMigrate
+      ? 0
+      : directoryGapExitCode(missing, reviewedRetirements, directoryIds);
+    const reviewedPass = !canMigrate && gapExit === 0;
     writeFileSync(
       REPORT_PATH,
       `${
@@ -217,13 +235,15 @@ async function main() {
           {
             classification: canMigrate
               ? "confirmed_provider_rename"
+              : reviewedPass
+              ? "reviewed_retirement"
               : "directory_gap_requires_review",
             providerSpecific,
             firstDirectoryCount: gatewayModels.length,
             secondDirectoryCount: second.length,
             authentication: "not_assessed_public_directory",
             decisions,
-            snapshotPreserved: !canMigrate,
+            snapshotPreserved: gapExit !== 0,
             note:
               "Directory absence alone does not establish deprecation or runtime availability.",
           },
@@ -232,15 +252,27 @@ async function main() {
         )
       }\n`,
     );
-    if (!canMigrate) {
+    if (gapExit !== 0) {
       console.error(
         "Model directory inconclusive; see ai-model-sync-diagnostic.json",
       );
-      process.exitCode = 1;
+      process.exitCode = gapExit;
       return;
     }
     const migrations = new Map(
-      replacements.map((item) => [item.id, item.replacement!]),
+      canMigrate
+        ? replacements.map((item) => [item.id, item.replacement!])
+        : missing.map((id) => {
+          const reviewed = matchingReviewedRetirement(
+            id,
+            reviewedRetirements,
+            directoryIds,
+          );
+          if (!reviewed) {
+            throw new Error(`Missing reviewed retirement for ${id}`);
+          }
+          return [id, reviewed.replacement] as const;
+        }),
     );
     const routes = Object.fromEntries(
       Object.entries(modelRoutes).map(([key, id]) => [
@@ -254,7 +286,7 @@ async function main() {
       models.push(toCatalogModel(byId.get(migrations.get(id)!)!));
     }
     console.log(
-      `Confirmed provider rename: ${
+      `${canMigrate ? "Confirmed provider rename" : "Reviewed retirement"}: ${
         [...migrations].map(([a, b]) => `${a} -> ${b}`).join(", ")
       }`,
     );

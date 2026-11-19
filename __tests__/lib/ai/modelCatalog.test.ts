@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import modelRoutes from "@/data/ai-models.routes.json";
 import {
   findCatalogModel,
   getModelKnowledgeCutoff,
@@ -8,6 +9,7 @@ import {
   modelCatalogSnapshotSchema,
   TRACKED_MODEL_IDS,
 } from "@/lib/ai/modelCatalog";
+import { directoryGapExitCode } from "../../../scripts/ai-model-sync-policy";
 import {
   CLASSIFICATION_GATEWAY_MODEL,
   EMPOWERMENT_GAP_GATEWAY_MODEL,
@@ -64,6 +66,21 @@ describe("model catalog snapshot", () => {
     expect(getModelPricing("acme/not-a-model")).toBeNull();
   });
 
+  it("fails if a route points at a model absent from the snapshot", () => {
+    const present = new Set(listCatalogModels().map((model) => model.id));
+    for (const modelId of Object.values(modelRoutes)) {
+      expect(present.has(modelId)).toBe(true);
+    }
+  });
+
+  it("exits non-zero for an unreviewed directory gap", () => {
+    expect(directoryGapExitCode(
+      ["anthropic/claude-sonnet-4"],
+      [],
+      new Set(["anthropic/claude-sonnet-4.5"]),
+    )).not.toBe(0);
+  });
+
   it("rejects a malformed snapshot instead of casting it", () => {
     expect(
       modelCatalogSnapshotSchema.safeParse({
@@ -76,6 +93,19 @@ describe("model catalog snapshot", () => {
 });
 
 describe("estimateLlmCostUsd", () => {
+  it("prices the insights route from the snapshot", () => {
+    const pricing = getModelPricing(INSIGHTS_GATEWAY_MODEL);
+    expect(pricing).not.toBeNull();
+    expect(estimateLlmCostUsd(INSIGHTS_GATEWAY_MODEL, 1e6, 1e6)).toBeCloseTo(
+      pricing!.inputPerMillionTokens + pricing!.outputPerMillionTokens,
+      10,
+    );
+    expect(estimateLlmCostUsd(INSIGHTS_GATEWAY_MODEL, 1e6, 0)).not.toBeCloseTo(
+      FALLBACK_MODEL_PRICING.inputPerMillionTokens,
+      10,
+    );
+  });
+
   it("prices from the snapshot rather than hardcoded rates", () => {
     const pricing = getModelPricing(CLASSIFICATION_GATEWAY_MODEL);
     expect(pricing).not.toBeNull();

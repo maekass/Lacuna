@@ -1,0 +1,8 @@
+[
+  {
+    "id": "anthropic/claude-sonnet-4",
+    "date": "2026-11-19",
+    "replacement": "anthropic/claude-sonnet-4.5",
+    "reason": "Absent from the public Vercel AI Gateway directory fetched at 2026-11-19T20:56:01.147Z (518 models, no same-slug candidate). Insights now uses anthropic/claude-sonnet-4.5, the listed Sonnet model whose description says it updates Sonnet 4."
+  }
+]
