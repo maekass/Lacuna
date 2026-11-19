@@ -2,8 +2,10 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { buildRnpvExport } from "@/lib/research/rnpvExport";
 import {
+  blankScenarioForm,
   illustrativePreset,
   parseScenarioForm,
+  visibleAssumptionErrors,
 } from "@/lib/research/rnpvScenarioForm";
 import {
   calculateRnpv,
@@ -341,5 +343,39 @@ describe("rNPV scenario form", () => {
     expect(current.simulation?.samples).toHaveLength(100);
     expect(current.acknowledgedHypothetical).toBe(true);
     expect(current.presetId).toBe("illustrative-round-v1");
+  });
+
+  it("shows an out-of-range duration without waiting for a disabled action", () => {
+    const form = illustrativePreset();
+    form.stages.phase1.years = "16";
+    const parsed = parseScenarioForm(form);
+    expect(parsed.ok).toBe(false);
+    if (parsed.ok) return;
+    const visible = visibleAssumptionErrors(form, parsed, false);
+    expect(visible.fieldErrors["stage-phase1-years"]).toMatch(/1 to 15/);
+    expect(visible.errors).toEqual([visible.fieldErrors["stage-phase1-years"]]);
+  });
+
+  it("shows a missing preclinical rationale when that stage is selected", () => {
+    const form = {
+      ...illustrativePreset(),
+      startStage: "preclinical" as const,
+      preclinicalRationale: "",
+    };
+    const parsed = parseScenarioForm(form);
+    expect(parsed.ok).toBe(false);
+    if (parsed.ok) return;
+    const visible = visibleAssumptionErrors(form, parsed, false);
+    expect(visible.fieldErrors.preclinicalRationale).toMatch(/rationale/i);
+  });
+
+  it("keeps a blank form quiet until the analyst asks to run or export", () => {
+    const form = blankScenarioForm();
+    const parsed = parseScenarioForm(form);
+    expect(parsed.ok).toBe(false);
+    if (parsed.ok) return;
+    expect(visibleAssumptionErrors(form, parsed, false).errors).toEqual([]);
+    expect(visibleAssumptionErrors(form, parsed, true).errors.length)
+      .toBeGreaterThan(0);
   });
 });

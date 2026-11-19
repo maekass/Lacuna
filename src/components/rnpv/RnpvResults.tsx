@@ -34,7 +34,6 @@ interface RnpvResultsProps {
   progress: SimulationProgress | null;
   running: boolean;
   runError: string;
-  canRun: boolean;
   showIncomplete: boolean;
   onRun: () => void;
   onCancel: () => void;
@@ -49,7 +48,6 @@ export default function RnpvResults(
     progress,
     running,
     runError,
-    canRun,
     showIncomplete,
     onRun,
     onCancel,
@@ -127,7 +125,7 @@ export default function RnpvResults(
         <button
           type="button"
           className="touch-target-inline rounded-lg bg-lacuna-plum px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lacuna-plum"
-          disabled={!canRun || running}
+          disabled={running}
           aria-busy={running}
           onClick={onRun}
         >
@@ -147,7 +145,7 @@ export default function RnpvResults(
         <button
           type="button"
           className="touch-target-inline rounded-lg border border-lacuna-lavender px-4 py-2 text-sm font-semibold text-lacuna-plum disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lacuna-plum"
-          disabled={!canRun || running}
+          disabled={running}
           onClick={onExport}
         >
           Export scenario JSON
