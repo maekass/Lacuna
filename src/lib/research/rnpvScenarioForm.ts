@@ -560,3 +560,61 @@ export function parseScenarioForm(
     settings: { iterations, seed, financialSpread, probabilitySpread },
   };
 }
+
+function draftForErrorKey(form: ScenarioFormState, key: string): string | null {
+  if (key === "preclinicalRationale") return form.preclinicalRationale;
+  if ((STAGE_ORDER as readonly string[]).includes(key)) return null;
+  const numericKeys: readonly string[] = [
+    "discountPercent",
+    "peakSales",
+    "marginPercent",
+    "taxPercent",
+    "commercialYears",
+    "rampYears",
+    "peakYears",
+    "declinePercent",
+    "upfront",
+    "launchCost",
+    "iterations",
+    "seed",
+    "financialSpreadPercent",
+    "probabilitySpreadPoints",
+  ];
+  if (numericKeys.includes(key)) {
+    return form[key as NumericFormKey];
+  }
+  const stage =
+    /^stage-(preclinical|phase1|phase2|phase3|submission)-(years|probability|cost)$/
+      .exec(key);
+  if (!stage) return null;
+  const draft = form.stages[stage[1] as StageId];
+  if (stage[2] === "years") return draft.years;
+  if (stage[2] === "probability") return draft.probabilityPercent;
+  return draft.cost;
+}
+
+/**
+ * Errors for values the analyst has entered, plus a missing preclinical
+ * rationale after that stage is selected. Blank fields stay quiet until the
+ * analyst asks to run or export.
+ */
+export function visibleAssumptionErrors(
+  form: ScenarioFormState,
+  failure: ScenarioParseFailure,
+  revealAll: boolean,
+): { errors: string[]; fieldErrors: Record<string, string> } {
+  if (revealAll) {
+    return { errors: failure.errors, fieldErrors: failure.fieldErrors };
+  }
+  const fieldErrors: Record<string, string> = {};
+  for (const [key, message] of Object.entries(failure.fieldErrors)) {
+    const entered = key === "preclinicalRationale" ||
+      (draftForErrorKey(form, key) ?? "").trim() !== "";
+    if (entered) fieldErrors[key] = message;
+  }
+  const shown = new Set(Object.values(fieldErrors));
+  return {
+    errors: failure.errors.filter((error) => shown.has(error)),
+    fieldErrors,
+  };
+}

@@ -8,6 +8,7 @@ import {
   blankScenarioForm,
   illustrativePreset,
   parseScenarioForm,
+  visibleAssumptionErrors,
 } from "@/lib/research/rnpvScenarioForm";
 import type {
   NumericFormKey,
@@ -68,6 +69,10 @@ export default function RnpvSimulator() {
   }, []);
 
   const parsed = parseScenarioForm(form);
+  const revealed = parsed.ok
+    ? { errors: [], fieldErrors: {} }
+    : visibleAssumptionErrors(form, parsed, showErrors);
+  const showingErrors = revealed.errors.length > 0;
   const deterministic = parsed.ok ? calculateRnpv(parsed.scenario) : null;
 
   function invalidate() {
@@ -237,12 +242,15 @@ export default function RnpvSimulator() {
           form={form}
           fieldErrors={parsed.ok ? {} : parsed.fieldErrors}
           showErrors={showErrors}
+          fieldErrors={revealed.fieldErrors}
+          showErrors={showingErrors}
           onPatch={patch}
           onField={onField}
           onStage={onStage}
           onLoadPreset={loadPreset}
         />
         {accepted && showErrors && !parsed.ok
+        {accepted && showingErrors
           ? (
             <div
               role="alert"
@@ -251,6 +259,7 @@ export default function RnpvSimulator() {
               <p className="font-medium">These assumptions need attention.</p>
               <ul className="mt-2 list-disc space-y-1 pl-5">
                 {parsed.errors.map((error) => <li key={error}>{error}</li>)}
+                {revealed.errors.map((error) => <li key={error}>{error}</li>)}
               </ul>
             </div>
           )
@@ -266,6 +275,7 @@ export default function RnpvSimulator() {
               runError={runError}
               canRun={parsed.ok}
               showIncomplete={!parsed.ok && !showErrors}
+              showIncomplete={!parsed.ok && !showingErrors}
               onRun={() => void run()}
               onCancel={cancel}
               onExport={download}
