@@ -8,6 +8,7 @@ import {
   RH_CAPITAL_PORTFOLIO,
   RH_CAPITAL_SOURCES,
 } from "@/data/rhCapitalPortfolio";
+import { BASIS_NOT_RECORDED, withBasisLabel } from "@/lib/data/valueBasisLabel";
 
 function StatBox({ value, label }: { value: string; label: string }) {
   return (
@@ -20,8 +21,8 @@ function StatBox({ value, label }: { value: string; label: string }) {
 
 function formatFunding(m: number | null): string {
   if (m == null) return "—";
-  if (m >= 1000) return `$${(m / 1000).toFixed(1)}B`;
-  return `$${m}M`;
+  const formatted = m >= 1000 ? `$${(m / 1000).toFixed(1)}B` : `$${m}M`;
+  return withBasisLabel(formatted, BASIS_NOT_RECORDED);
 }
 
 export default function RhCapitalPortfolioContext() {
@@ -105,14 +106,20 @@ export default function RhCapitalPortfolioContext() {
                       <span>
                         {company.exit.acquirer}
                         {company.exit.dealValueM != null
-                          ? ` · $${company.exit.dealValueM}M`
+                          ? ` · ${
+                            withBasisLabel(
+                              `$${company.exit.dealValueM}M`,
+                              BASIS_NOT_RECORDED,
+                            )
+                          }`
                           : " · terms undisclosed"}
                       </span>
                     )
                     : company.lastKnownValuationM != null
                     ? (
                       <span>
-                        Valued ${company.lastKnownValuationM}M (
+                        Valued ${company.lastKnownValuationM}M ·{" "}
+                        {BASIS_NOT_RECORDED} (
                         {company.valuationSource})
                       </span>
                     )

@@ -18,6 +18,7 @@ import {
   compareAcquirerTypes,
   type ExternalEvent,
 } from "@/lib/competitive/acquirerAnalysis";
+import { BASIS_NOT_RECORDED } from "@/lib/data/valueBasisLabel";
 import { getVerifiedCompetitiveAnalysisData } from "@/lib/data/verifiedDatasetAdapters";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import { calendarYear } from "@/lib/format/calendarDate";
@@ -214,7 +215,8 @@ export default function CompetitiveAnalysisDashboard() {
                         color: "#4A5D8A",
                       }}
                     >
-                      ${selectedPortfolio.valueStats.median}M
+                      ${selectedPortfolio.valueStats.median}M ·{" "}
+                      {BASIS_NOT_RECORDED}
                     </div>
                     <div
                       className="text-xs text-lacuna-text-muted uppercase mt-1"
@@ -640,7 +642,7 @@ export default function CompetitiveAnalysisDashboard() {
                     <td className="py-2 text-right">{t.count}</td>
                     <td className="py-2 text-right">{t.totalAcquisitions}</td>
                     <td className="py-2 text-right">
-                      ${t.valueStats.medianTargetValue}M
+                      ${t.valueStats.medianTargetValue}M · {BASIS_NOT_RECORDED}
                     </td>
                     <td className="py-2 text-right">
                       {t.valueStats.medianTargetAge}y

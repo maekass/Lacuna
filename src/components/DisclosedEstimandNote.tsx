@@ -2,8 +2,10 @@
 
 import { useMemo } from "react";
 import Metric from "@/components/Metric";
+import ValueBasisMark from "@/components/ValueBasisMark";
 import { ModelProvenanceHint } from "@/components/ui/ModelProvenanceHint";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import { BASIS_NOT_RECORDED } from "@/lib/data/valueBasisLabel";
 import {
   formatDisclosedBillions,
   liveDisclosedStats,
@@ -53,7 +55,8 @@ export default function DisclosedEstimandNote() {
                 "disclosed_only_observed_sum over completed women's-health deals. Not a market topline.",
             }}
             formatValue={formatDisclosedBillions}
-          />{" "}
+          />
+          <ValueBasisMark label={BASIS_NOT_RECORDED} />{" "}
           disclosed among completed WH deals ·{" "}
           <Metric
             label="Adjacency excluded"
@@ -66,7 +69,8 @@ export default function DisclosedEstimandNote() {
                 "Disclosed value on adjacency-scope completed deals excluded from the WH estimand.",
             }}
             formatValue={formatDisclosedBillions}
-          />{" "}
+          />
+          <ValueBasisMark label={BASIS_NOT_RECORDED} />{" "}
           adjacency excluded · coverage{" "}
           <Metric
             label="Coverage vs AOA Dx"

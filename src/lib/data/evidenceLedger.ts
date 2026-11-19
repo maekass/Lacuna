@@ -59,10 +59,10 @@ const economicEvidenceRecordSchema = z.object({
   /** Values are stored in millions of US dollars, matching the legacy dataset contract. */
   unit: z.literal("USD_M"),
   /**
-   * Machine-readable reading of `value`. Omitted only on hand-built fixtures;
-   * the static ledger must set it on every row.
+   * Machine-readable reading of `value`. Required for every record that
+   * passes `parseEconomicEvidenceLedger`.
    */
-  valueBasis: z.enum(ECONOMIC_VALUE_BASES).optional(),
+  valueBasis: z.enum(ECONOMIC_VALUE_BASES),
   /** Source locator/citation; not necessarily a resolvable URL in the legacy catalog. */
   sourceCitation: z.string().min(1),
   sourceUrl: z.string().url().optional(),

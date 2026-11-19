@@ -13,6 +13,7 @@ import {
   analyzeCompetitiveDynamics,
   type ComparableDeal,
 } from "@/data/acquirer-prediction-engine";
+import { BASIS_NOT_RECORDED, withBasisLabel } from "@/lib/data/valueBasisLabel";
 import { DETERMINISTIC_COMPARISON_BOUNDARY } from "@/lib/research/evidenceBoundaries";
 import ResearchIntegrityNote from "@/components/research/ResearchIntegrityNote";
 import { buildAcquirerProfilesFromVerified } from "@/lib/data/buildAcquirerProfilesFromVerified";
@@ -100,8 +101,10 @@ export default function AcquirerPredictionDashboard() {
     : null;
 
   const formatCurrency = (value: number): string => {
-    if (value >= 1000) return `$${(value / 1000).toFixed(1)}B`;
-    return `$${value}M`;
+    const formatted = value >= 1000
+      ? `$${(value / 1000).toFixed(1)}B`
+      : `$${value}M`;
+    return withBasisLabel(formatted, BASIS_NOT_RECORDED);
   };
 
   return (

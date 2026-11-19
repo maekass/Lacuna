@@ -11,6 +11,7 @@ import DatasetScopeBanner from "@/components/DatasetScopeBanner";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import { BASIS_NOT_RECORDED } from "@/lib/data/valueBasisLabel";
 import { useDashboardData } from "@/lib/data/useDashboardData";
 import { CONSUMER_FEATURED_DEAL_ID } from "@/lib/deals/dealTypes";
 import { getDealById } from "@/lib/deals/getDealById";
@@ -67,7 +68,7 @@ export default function ConsumerHealthPage() {
               {featuredDeal.acquisition.acquirerName} →{" "}
               {featuredDeal.acquisition.targetName}
               {featuredDeal.acquisition.dealValue
-                ? ` · $${featuredDeal.acquisition.dealValue}M disclosed`
+                ? ` · $${featuredDeal.acquisition.dealValue}M disclosed · ${BASIS_NOT_RECORDED}`
                 : ""}
               {" · "}
               <Link

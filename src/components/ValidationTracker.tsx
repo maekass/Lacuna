@@ -10,6 +10,7 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import { BASIS_NOT_RECORDED, withBasisLabel } from "@/lib/data/valueBasisLabel";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 
 interface VerifiedDealRow {
@@ -156,7 +157,10 @@ export default function ValidationTracker() {
                 </td>
                 <td className="p-3 text-right">
                   {typeof v.dealValue === "number"
-                    ? v.dealValue.toLocaleString()
+                    ? withBasisLabel(
+                      v.dealValue.toLocaleString(),
+                      BASIS_NOT_RECORDED,
+                    )
                     : "Undisclosed"}
                 </td>
                 <td className="p-3 text-lacuna-text-secondary text-xs">
@@ -185,7 +189,10 @@ export default function ValidationTracker() {
                 <span className="text-lacuna-text-muted">Deal value:</span>{" "}
                 <span className="font-medium">
                   {typeof v.dealValue === "number"
-                    ? `$${v.dealValue.toLocaleString()}M`
+                    ? withBasisLabel(
+                      `$${v.dealValue.toLocaleString()}M`,
+                      BASIS_NOT_RECORDED,
+                    )
                     : "Not disclosed"}
                 </span>
                 {v.dealValueNote

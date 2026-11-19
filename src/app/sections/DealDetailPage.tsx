@@ -121,6 +121,7 @@ export default function DealDetailPage({ view }: { view: DealDetailView }) {
           {view.targetLastKnownValuation
             ? (
               <DealTargetLastKnownValuation
+                companyId={deal.target.id}
                 valuation={view.targetLastKnownValuation}
               />
             )

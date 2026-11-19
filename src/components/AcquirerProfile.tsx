@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Metric from "@/components/Metric";
 import { buildAcquirerDealValueView } from "@/lib/data/acquirerDealValueMetric";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import { BASIS_NOT_RECORDED, withBasisLabel } from "@/lib/data/valueBasisLabel";
 
 interface AcquirerProfileProps {
   acquirerId: string | null;
@@ -103,7 +104,11 @@ export default function AcquirerProfile(
                 <Metric
                   label={dealValueView.populationLabel}
                   provenance={dealValueView.provenance}
-                  formatValue={(value) => `$${value.toFixed(1)}M`}
+                  formatValue={(value) =>
+                    withBasisLabel(
+                      `$${value.toFixed(1)}M`,
+                      BASIS_NOT_RECORDED,
+                    )}
                 />
               </p>
             </div>
@@ -163,7 +168,10 @@ export default function AcquirerProfile(
                       </div>
                       <p className="text-sm font-medium text-lacuna-blue">
                         {typeof deal.dealValue === "number"
-                          ? `$${deal.dealValue}M`
+                          ? withBasisLabel(
+                            `$${deal.dealValue}M`,
+                            BASIS_NOT_RECORDED,
+                          )
                           : "Undisclosed"}
                       </p>
                     </div>

@@ -726,6 +726,7 @@ export default function ForceNetwork(
                       </span>{" "}
                       <DealTargetLastKnownValuation
                         compact
+                        companyId={selectedNode.id}
                         valuation={{
                           value: selectedNode.valuation,
                           source: selectedNode.valuationSource,

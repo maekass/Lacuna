@@ -15,6 +15,8 @@
  * - Haleblian, J., et al. (2009). "Taking Stock of What We Know About Mergers and Acquisitions"
  */
 
+import { BASIS_NOT_RECORDED } from "@/lib/data/valueBasisLabel";
+
 export interface Acquirer {
   id: string;
   name: string;
@@ -206,7 +208,7 @@ export function analyzePortfolio(
       topStage.stage.replace(/_/g, " ")
     } (${topStage.count} deals). ` +
     `Median age at acquisition: ${ageAtAcquisitionStats.median} years. ` +
-    `${values.length} of ${acquiredCompanies.length} acquisitions have disclosed values (median: $${valueStats.median}M).`;
+    `${values.length} of ${acquiredCompanies.length} acquisitions have disclosed values (median: $${valueStats.median}M · ${BASIS_NOT_RECORDED}).`;
 
   return {
     acquirerId: acquirer.id,
@@ -689,7 +691,7 @@ export function compareAcquirerTypes(
       findings.push(
         `${
           t.type.replace(/_/g, " ")
-        } median target value: $${t.valueStats.medianTargetValue}M (n=${t.totalAcquisitions})`,
+        } median target value: $${t.valueStats.medianTargetValue}M · ${BASIS_NOT_RECORDED} (n=${t.totalAcquisitions})`,
       );
     }
   });

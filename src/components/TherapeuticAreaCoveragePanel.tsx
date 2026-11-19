@@ -1,5 +1,6 @@
 "use client";
 
+import { BASIS_NOT_RECORDED } from "@/lib/data/valueBasisLabel";
 import type { TherapeuticAreaCoverageManifest } from "@/lib/data/therapeuticAreaCoverageTypes";
 import type { TherapeuticAreaCoverageCompany } from "@/lib/data/therapeuticAreaCoverageTypes";
 import { getTherapeuticAreaCoverageStats } from "@/lib/data/therapeuticAreaCoverage";
@@ -27,7 +28,9 @@ function FundingBadge(
     <span className="inline-flex max-w-[16rem] flex-col rounded-full bg-lacuna-lavender/20 px-2 py-0.5 text-[10px] font-medium text-lacuna-plum">
       <span>
         {label}
-        {showAmount ? ` · $${company.totalFundingM}M` : ""}
+        {showAmount
+          ? ` · $${company.totalFundingM}M · ${BASIS_NOT_RECORDED}`
+          : ""}
       </span>
       {showAmount
         ? (

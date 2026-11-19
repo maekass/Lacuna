@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
+import { BASIS_NOT_RECORDED } from "@/lib/data/valueBasisLabel";
 import { getDealById } from "@/lib/deals";
 
 export const size = { width: 1200, height: 630 };
@@ -23,7 +24,9 @@ export default async function Image({ params }: OgProps) {
     : "Verified deal";
   const subline = acq
     ? `${acq.dealType} · ${acq.announcedDate}${
-      typeof acq.dealValue === "number" ? ` · $${acq.dealValue}M` : ""
+      typeof acq.dealValue === "number"
+        ? ` · $${acq.dealValue}M · ${BASIS_NOT_RECORDED}`
+        : ""
     }`
     : "Women's health M&A diligence";
   const sector = deal?.target.sector ?? "Lacuna";

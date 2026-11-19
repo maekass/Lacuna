@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import { BASIS_NOT_RECORDED } from "@/lib/data/valueBasisLabel";
 import { deriveStageMedians } from "@/lib/quant/empiricalPriors";
 import {
   BURDEN_AREAS,
@@ -293,6 +294,7 @@ export default function BurdenCapitalGapValuation() {
           <label className="mb-1 block text-xs font-medium text-lacuna-blue">
             Total funding raised:{" "}
             <span className="text-lacuna-plum font-semibold">${fundingM}M</span>
+            <span className="font-normal">· {BASIS_NOT_RECORDED}</span>
           </label>
           <input
             type="range"

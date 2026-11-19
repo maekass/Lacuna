@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import ReviewAccessGate from "@/components/ReviewAccessGate";
+import { BASIS_NOT_RECORDED, withBasisLabel } from "@/lib/data/valueBasisLabel";
 import type { FundingEventRecord } from "@/lib/ingestion/fundingEvents";
 
 interface FundingResponse {
@@ -13,9 +14,12 @@ interface FundingResponse {
 
 function formatUsd(value: number | null): string {
   if (value === null) return "—";
-  if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(1)}M`;
-  if (value >= 1_000) return `$${(value / 1_000).toFixed(0)}K`;
-  return `$${value.toLocaleString()}`;
+  const formatted = value >= 1_000_000
+    ? `$${(value / 1_000_000).toFixed(1)}M`
+    : value >= 1_000
+    ? `$${(value / 1_000).toFixed(0)}K`
+    : `$${value.toLocaleString()}`;
+  return withBasisLabel(formatted, BASIS_NOT_RECORDED);
 }
 
 /** SEC Form D funding candidates — separate from M&A review queue. */

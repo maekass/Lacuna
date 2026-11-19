@@ -3,7 +3,12 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
+import ValueBasisMark from "@/components/ValueBasisMark";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import {
+  BASIS_NOT_RECORDED,
+  ledgerBasisLabel,
+} from "@/lib/data/valueBasisLabel";
 import { adaptQuantCompanies } from "@/lib/quant/adaptQuantCompany";
 import { deriveEmpiricalPriors } from "@/lib/quant/empiricalPriors";
 import {
@@ -207,7 +212,17 @@ export default function QuantValuationPanel() {
                 </td>
                 <td className="py-2 px-3 text-right text-lacuna-blue">
                   {typeof row.disclosedValuation === "number"
-                    ? formatM(row.disclosedValuation)
+                    ? (
+                      <>
+                        {formatM(row.disclosedValuation)}
+                        <ValueBasisMark
+                          label={ledgerBasisLabel(
+                            row.id,
+                            "lastKnownValuation",
+                          )}
+                        />
+                      </>
+                    )
                     : <span className="text-lacuna-blue/40">—</span>}
                 </td>
                 <td className="py-2 px-3 text-right font-semibold text-lacuna-plum">
@@ -219,6 +234,7 @@ export default function QuantValuationPanel() {
                           : "Heuristic methods only — no sector comparables"}
                       >
                         {formatM(row.modelEstimate)}
+                        <ValueBasisMark label={BASIS_NOT_RECORDED} />
                         {row.hasComparableAnchor && (
                           <span
                             className="ml-1 text-emerald-600"

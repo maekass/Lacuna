@@ -437,6 +437,7 @@ export default function StrategicPositioningMap(
                       Valuation:{" "}
                       <DealTargetLastKnownValuation
                         compact
+                        companyId={hoveredCompany.id}
                         valuation={hoveredSourced}
                       />
                     </div>
@@ -511,6 +512,7 @@ export default function StrategicPositioningMap(
                 ? (
                   <DealTargetLastKnownValuation
                     compact
+                    companyId={selectedCompany.id}
                     valuation={selectedSourced}
                   />
                 )

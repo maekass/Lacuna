@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import rawLedger from "@/data/evidence.verified.json";
 import {
   ECONOMIC_VALUE_BASES,
+  type EconomicEvidenceLedger,
   type EconomicEvidenceRecord,
   type EconomicValueBasis,
   parseEconomicEvidenceLedger,
@@ -72,13 +73,13 @@ describe("ratioDenominatorAdmission", () => {
   });
 
   it("fails closed when the basis is missing", () => {
-    expect(
-      ratioDenominatorAdmission(
-        ledgerWith({ valueBasis: undefined }),
-        "x1",
-        "totalFunding",
-      ),
-    ).toEqual({ admissible: false, reason: "missing-basis" });
+    const { valueBasis: _basis, ...withoutBasis } = ledgerWith({}).records[0];
+    const handBuilt = {
+      schemaVersion: "1.0" as const,
+      records: [withoutBasis],
+    } as EconomicEvidenceLedger;
+    expect(ratioDenominatorAdmission(handBuilt, "x1", "totalFunding"))
+      .toEqual({ admissible: false, reason: "missing-basis" });
   });
 
   it("fails closed when there is no ledger record for the field", () => {

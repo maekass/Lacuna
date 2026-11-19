@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import DealDetailPage from "@/app/sections/DealDetailPage";
 import { getStaticVerifiedDataset } from "@/lib/data/staticDataset";
+import { BASIS_NOT_RECORDED } from "@/lib/data/valueBasisLabel";
 import { getDealById, getDealDetailView } from "@/lib/deals";
 
 export const revalidate = 86_400;
@@ -26,7 +27,7 @@ export async function generateMetadata(
   }
   const acq = deal.acquisition;
   const valueBit = typeof acq.dealValue === "number"
-    ? ` $${acq.dealValue}M disclosed.`
+    ? ` $${acq.dealValue}M disclosed. ${BASIS_NOT_RECORDED}.`
     : " Value undisclosed.";
   const description =
     `Verified women's health ${acq.dealType}: ${acq.targetName} → ${acq.acquirerName}, announced ${acq.announcedDate}.${valueBit} Sources and limitations from public filings.`;
