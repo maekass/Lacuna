@@ -146,7 +146,7 @@ export const COMMERCIAL_FIELDS: readonly AssumptionField[] = [
   },
   {
     key: "commercialYears",
-    label: "Commercial forecast horizon",
+    label: "Commercial cash-flow horizon",
     unit: "years after first revenue",
     help: "Finite horizon. There is no terminal value after the last year.",
     min: 1,
@@ -221,10 +221,10 @@ export const MONTE_CARLO_FIELDS: readonly AssumptionField[] = [
   },
   {
     key: "probabilitySpreadPoints",
-    label: "Probability uncertainty range",
+    label: "Success-rate uncertainty range",
     unit: "± percentage points",
     help:
-      "Independent uniform range for conditional probabilities that are not exactly 0% or 100%. Values are clipped to 0–100%. Exact 0% and 100% stay fixed.",
+      "Independent uniform range for conditional success rates that are not exactly 0% or 100%. Values are clipped to 0–100%. Exact 0% and 100% stay fixed.",
     min: 0,
     max: 100,
     step: 1,
@@ -370,7 +370,7 @@ export function parseScenarioForm(
   const active = stagesFromStart(form.startStage);
   if (form.startStage === "preclinical" && !form.preclinicalRationale.trim()) {
     const detail =
-      "Enter a rationale for the preclinical probability, duration, and cost. Lacuna does not supply a preclinical benchmark.";
+      "Enter a rationale for the preclinical success rate, duration, and cost. Lacuna does not supply a preclinical benchmark.";
     fieldErrors.preclinicalRationale = detail;
     errors.push(detail);
   }
@@ -415,7 +415,7 @@ export function parseScenarioForm(
     fieldErrors,
     errors,
     "commercialYears",
-    "Commercial forecast horizon",
+    "Commercial cash-flow horizon",
     form.commercialYears,
     1,
     40,
@@ -524,7 +524,7 @@ export function parseScenarioForm(
       fieldErrors,
       errors,
       `${prefix}-probability`,
-      `${STAGE_LABELS[id]} conditional success probability`,
+      `${STAGE_LABELS[id]} conditional success rate`,
       draft.probabilityPercent,
       0,
       100,
