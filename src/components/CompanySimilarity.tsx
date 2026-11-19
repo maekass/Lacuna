@@ -8,6 +8,7 @@ import Metric from "@/components/Metric";
 import { INVESTOR_PORTFOLIOS, type PortfolioKey } from "@/lib/data/portfolios";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
 import type { VerifiedCompanyView } from "@/lib/data/verifiedDataHelpers";
+import { ledgerBasisLabel } from "@/lib/data/valueBasisLabel";
 import { sourcedLastKnownValuationForCompany } from "@/lib/deals/sourcedLastKnownValuation";
 import {
   buildObservedFeatures,
@@ -277,13 +278,16 @@ export default function CompanySimilarity() {
                   {" · "}
                   <DealTargetLastKnownValuation
                     compact
+                    companyId={selected.id}
                     valuation={selectedSourced}
                   />
                 </>
               )
               : null}
             {selected.totalFunding != null && selected.sources[0]
-              ? ` · ${selected.totalFunding}M raised (${selected.sources[0]})`
+              ? ` · ${selected.totalFunding}M raised · ${
+                ledgerBasisLabel(selected.id, "totalFunding")
+              } (${selected.sources[0]})`
               : null}
           </p>
         </div>

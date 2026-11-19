@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import ReviewAccessGate from "@/components/ReviewAccessGate";
+import { BASIS_NOT_RECORDED, withBasisLabel } from "@/lib/data/valueBasisLabel";
 import type {
   PendingDealRecord,
   PendingDealStatus,
@@ -33,7 +34,10 @@ function confidenceClass(confidence: string): string {
 
 function formatDealValue(millions: number | null): string {
   if (millions === null) return "Undisclosed";
-  return `$${millions.toLocaleString()}M`;
+  return withBasisLabel(
+    `$${millions.toLocaleString()}M`,
+    BASIS_NOT_RECORDED,
+  );
 }
 
 function PendingDealCard({

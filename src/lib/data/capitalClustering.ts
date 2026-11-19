@@ -1,4 +1,5 @@
 import * as ss from "simple-statistics";
+import { BASIS_NOT_RECORDED } from "@/lib/data/valueBasisLabel";
 import type { VerifiedCompanyView } from "./verifiedDataHelpers";
 
 const K = 3;
@@ -77,9 +78,13 @@ export function computeCapitalClusters(
       color: clusterColors[i],
       characteristics: [
         members.length > 0 &&
-        `Median valuation: $${Math.round(ss.median(valuations))}M`,
+        `Median valuation: $${
+          Math.round(ss.median(valuations))
+        }M · ${BASIS_NOT_RECORDED}`,
         members.length > 0 &&
-        `Median funding: $${Math.round(ss.median(fundings))}M`,
+        `Median funding: $${
+          Math.round(ss.median(fundings))
+        }M · ${BASIS_NOT_RECORDED}`,
         `Sectors: ${sectors.slice(0, 3).join(", ")}${
           sectors.length > 3 ? "..." : ""
         }`,

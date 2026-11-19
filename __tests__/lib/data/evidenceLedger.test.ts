@@ -53,6 +53,7 @@ describe("economic evidence ledger", () => {
       field: "totalFunding" as const,
       value: 10,
       unit: "USD_M" as const,
+      valueBasis: "stated" as const,
       sourceCitation: "Company release",
       effectiveDate: "2020-01-01",
       publicAsOfDate: "2020-01-01",
@@ -182,5 +183,34 @@ describe("economic evidence ledger", () => {
       "lastKnownValuation",
       "2021-10-22",
     )).toMatchObject({ eligible: true, evidence: { value: 400 } });
+  });
+
+  it("rejects a record with no valueBasis and accepts a stated basis", () => {
+    const record = {
+      id: "c-test:totalFunding:v1",
+      companyId: "c-test",
+      field: "totalFunding" as const,
+      value: 10,
+      unit: "USD_M" as const,
+      sourceCitation: "Company release",
+      effectiveDate: "2020-01-01",
+      publicAsOfDate: "2020-01-01",
+      datePrecision: "day" as const,
+      verificationStatus: "verified" as const,
+      recordedAt: "2026-09-20",
+    };
+    expect(() =>
+      parseEconomicEvidenceLedger({
+        schemaVersion: "1.0",
+        records: [record],
+      })
+    ).toThrow(/valueBasis/);
+
+    const loaded = parseEconomicEvidenceLedger({
+      schemaVersion: "1.0",
+      records: [{ ...record, valueBasis: "stated" }],
+    });
+    expect(loaded.records).toHaveLength(1);
+    expect(loaded.records[0].valueBasis).toBe("stated");
   });
 });

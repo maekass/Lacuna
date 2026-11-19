@@ -6,6 +6,7 @@ import Metric from "@/components/Metric";
 import InsufficientDataEmpty from "@/components/ui/InsufficientDataEmpty";
 import type { ComparableDealSummary } from "@/lib/deals/dealTypes";
 import { DEAL_VALUE_MODEL } from "@/lib/deals/dealMetricModels";
+import { BASIS_NOT_RECORDED, withBasisLabel } from "@/lib/data/valueBasisLabel";
 import {
   type DealSort,
   type DealSortKey,
@@ -165,7 +166,10 @@ export default function SortableDealTable<T extends ComparableDealSummary>({
                                     model: DEAL_VALUE_MODEL,
                                   }}
                                   formatValue={(millions) =>
-                                    `$${millions.toLocaleString()}M`}
+                                    withBasisLabel(
+                                      `$${millions.toLocaleString()}M`,
+                                      BASIS_NOT_RECORDED,
+                                    )}
                                 />
                               )
                               : "Undisclosed"}

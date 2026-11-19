@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import ResearchIntegrityNote from "@/components/research/ResearchIntegrityNote";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import { BASIS_NOT_RECORDED, withBasisLabel } from "@/lib/data/valueBasisLabel";
 import { isGenomicsRelevantCompany } from "@/lib/data/genomicsFilters";
 import { reportWarning } from "@/lib/observability/reportError";
 
@@ -140,7 +141,10 @@ function registryFromLookups(
 }
 
 function formatDisclosedValue(value: number): string {
-  return value >= 1000 ? `$${(value / 1000).toFixed(1)}B` : `$${value}M`;
+  const formatted = value >= 1000
+    ? `$${(value / 1000).toFixed(1)}B`
+    : `$${value}M`;
+  return withBasisLabel(formatted, BASIS_NOT_RECORDED);
 }
 
 export default function EvidenceMaturityDashboard() {

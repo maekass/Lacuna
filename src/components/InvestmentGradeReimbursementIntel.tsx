@@ -6,6 +6,7 @@ import Card from "@/components/ui/Card";
 import Metric from "@/components/Metric";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import { BASIS_NOT_RECORDED, withBasisLabel } from "@/lib/data/valueBasisLabel";
 import {
   buildSectorDealIntel,
   displaySectorLabel,
@@ -198,7 +199,10 @@ export default function InvestmentGradeReimbursementIntel() {
                             <td className="px-3 py-2">{d.announcedDate}</td>
                             <td className="px-3 py-2">
                               {typeof d.dealValue === "number"
-                                ? `$${d.dealValue.toLocaleString()}M`
+                                ? withBasisLabel(
+                                  `$${d.dealValue.toLocaleString()}M`,
+                                  BASIS_NOT_RECORDED,
+                                )
                                 : "Undisclosed"}
                             </td>
                           </tr>

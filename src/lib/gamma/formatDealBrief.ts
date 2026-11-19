@@ -5,6 +5,11 @@ import type { DealEmpowermentContext } from "@/lib/deals/empowermentContextForDe
 import { buildEvidenceLadder } from "@/lib/deals/evidenceLadder";
 import { premiumPercent } from "@/lib/deals/dealTiming";
 import type { SourcedLastKnownValuation } from "@/lib/deals/sourcedLastKnownValuation";
+import {
+  BASIS_NOT_RECORDED,
+  ledgerBasisLabel,
+  withBasisLabel,
+} from "@/lib/data/valueBasisLabel";
 
 export interface DealBriefExtras {
   adjacencyNotPeers?: AdjacentNonPeer[];
@@ -18,7 +23,7 @@ export interface DealBriefExtras {
 
 function formatMillions(value?: number): string {
   return typeof value === "number"
-    ? `$${value.toLocaleString()}M`
+    ? withBasisLabel(`$${value.toLocaleString()}M`, BASIS_NOT_RECORDED)
     : "undisclosed";
 }
 
@@ -51,7 +56,14 @@ export function formatDealBrief(
   lines.push("");
 
   if (typeof acq.dealValue === "number") {
-    lines.push(`Deal value: $${acq.dealValue.toLocaleString()}M`);
+    lines.push(
+      `Deal value: ${
+        withBasisLabel(
+          `$${acq.dealValue.toLocaleString()}M`,
+          BASIS_NOT_RECORDED,
+        )
+      }`,
+    );
     if (acq.dealValueNote) lines.push(`Note: ${acq.dealValueNote}`);
   } else {
     lines.push("Deal value: Undisclosed");
@@ -68,7 +80,12 @@ export function formatDealBrief(
   }
   if (extras.targetLastKnownValuation) {
     lines.push(
-      `Last known valuation: $${extras.targetLastKnownValuation.value.toLocaleString()}M`,
+      `Last known valuation: ${
+        withBasisLabel(
+          `$${extras.targetLastKnownValuation.value.toLocaleString()}M`,
+          ledgerBasisLabel(deal.target.id, "lastKnownValuation"),
+        )
+      }`,
     );
     lines.push(
       `Valuation source: ${extras.targetLastKnownValuation.source}`,

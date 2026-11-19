@@ -8,6 +8,7 @@ import {
   PREMIUM_PERCENT_MODEL,
 } from "@/lib/deals/dealMetricModels";
 import type { DealDetailView } from "@/lib/deals";
+import { BASIS_NOT_RECORDED, withBasisLabel } from "@/lib/data/valueBasisLabel";
 
 const metricClass = "align-baseline font-semibold text-lacuna-plum";
 
@@ -46,7 +47,11 @@ export default function DealEconomicsCard({ view }: { view: DealDetailView }) {
                 model: DEAL_VALUE_MODEL,
                 caveat: acq.dealValueNote,
               }}
-              formatValue={(millions) => `$${millions.toLocaleString()}M`}
+              formatValue={(millions) =>
+                withBasisLabel(
+                  `$${millions.toLocaleString()}M`,
+                  BASIS_NOT_RECORDED,
+                )}
             />
           )
           : "Undisclosed"}
@@ -104,7 +109,11 @@ export default function DealEconomicsCard({ view }: { view: DealDetailView }) {
                 model: PRE_DEAL_VALUATION_MODEL,
                 caveat: acq.preDealValuationSource,
               }}
-              formatValue={(millions) => `~$${millions.toLocaleString()}M`}
+              formatValue={(millions) =>
+                withBasisLabel(
+                  `~$${millions.toLocaleString()}M`,
+                  BASIS_NOT_RECORDED,
+                )}
             />
             {acq.preDealValuationDate
               ? ` · pre-deal mark: ${

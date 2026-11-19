@@ -8,6 +8,7 @@ import type {
 import { indicatorBand } from "@/lib/quant/indicatorBands";
 import type { Company } from "@/lib/types";
 import type { PredictionRow } from "@/components/ExitPredictor";
+import { BASIS_NOT_RECORDED, withBasisLabel } from "@/lib/data/valueBasisLabel";
 import { DETERMINISTIC_COMPARISON_BOUNDARY } from "@/lib/research/evidenceBoundaries";
 
 export interface PitchBriefProps {
@@ -21,9 +22,12 @@ export interface PitchBriefProps {
 
 function formatDealValue(value?: number) {
   if (typeof value !== "number") return "Undisclosed";
-  if (value >= 1000) return `$${(value / 1000).toFixed(1)}B`;
-  if (value >= 100) return `$${value.toFixed(0)}M`;
-  return `$${value.toFixed(1)}M`;
+  const formatted = value >= 1000
+    ? `$${(value / 1000).toFixed(1)}B`
+    : value >= 100
+    ? `$${value.toFixed(0)}M`
+    : `$${value.toFixed(1)}M`;
+  return withBasisLabel(formatted, BASIS_NOT_RECORDED);
 }
 
 /**

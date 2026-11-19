@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import CuratedDatasetBanner from "@/components/CuratedDatasetBanner";
 import { useVerifiedDataset } from "@/lib/data/VerifiedDatasetContext";
+import { BASIS_NOT_RECORDED, withBasisLabel } from "@/lib/data/valueBasisLabel";
 import { LACUNA_SEMANTIC } from "@/lib/theme/palette";
 
 const CHART = LACUNA_SEMANTIC.chart;
@@ -44,6 +45,10 @@ function fmtVal(v: number): string {
   if (v >= 1000) return `$${(v / 1000).toFixed(1)}B`;
   if (v > 0) return `$${Math.round(v)}M`;
   return "$0";
+}
+
+function fmtValLabeled(v: number): string {
+  return withBasisLabel(fmtVal(v), BASIS_NOT_RECORDED);
 }
 
 function resolveCollisions(pts: SectorPoint[], padding: number = 6): void {
@@ -416,7 +421,7 @@ export default function WhiteSpaceAnalysis({
             className="text-[10px] fill-lacuna-text-muted font-medium"
             opacity={0.6}
           >
-            Average Valuation
+            Average Valuation · {BASIS_NOT_RECORDED}
           </text>
 
           {/* legend — minimal */}
@@ -588,7 +593,7 @@ export default function WhiteSpaceAnalysis({
                   />
                   <MetricCell
                     label="Avg valuation"
-                    value={fmtVal(hoveredPoint.avgValuation)}
+                    value={fmtValLabeled(hoveredPoint.avgValuation)}
                   />
                   <MetricCell
                     label="Market share"
@@ -629,7 +634,7 @@ export default function WhiteSpaceAnalysis({
                   <div className="mt-1.5 flex flex-wrap gap-1.5">
                     <Chip label={`${p.companyCount} cos`} />
                     <Chip label={`${p.dealCount} deals`} />
-                    <Chip label={fmtVal(p.avgValuation)} />
+                    <Chip label={fmtValLabeled(p.avgValuation)} />
                   </div>
                 </motion.div>
               ))}

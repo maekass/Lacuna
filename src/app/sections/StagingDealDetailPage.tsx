@@ -9,6 +9,7 @@ import PromotionForm from "@/components/PromotionForm";
 import PromotionPreviewDiffPanel from "@/components/PromotionPreviewDiff";
 import ReviewAccessGate from "@/components/ReviewAccessGate";
 import MotionSection from "@/components/ui/MotionSection";
+import { BASIS_NOT_RECORDED, withBasisLabel } from "@/lib/data/valueBasisLabel";
 import type { ReviewerPromotionFields } from "@/lib/ingestion/buildPromotionDraft";
 import {
   labelPromotionMissingField,
@@ -51,7 +52,10 @@ function initialReviewerFields(
 
 function formatDealValue(millions: number | null): string {
   if (millions === null) return "Undisclosed";
-  return `$${millions.toLocaleString()}M`;
+  return withBasisLabel(
+    `$${millions.toLocaleString()}M`,
+    BASIS_NOT_RECORDED,
+  );
 }
 
 export default function StagingDealDetailPage(

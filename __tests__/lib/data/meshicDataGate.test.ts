@@ -62,6 +62,7 @@ function record(
     field: "totalFunding",
     value: 10,
     unit: "USD_M",
+    valueBasis: "stated",
     sourceCitation: "Company release",
     effectiveDate: "2020-01-01",
     publicAsOfDate: "2020-01-02",

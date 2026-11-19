@@ -5,6 +5,7 @@ import Metric from "@/components/Metric";
 import { medianBCaCI } from "@/lib/stats/bootstrap";
 import type { TracedValue } from "@/lib/lineage";
 import type { MetricProvenance } from "@/lib/provenance/metricProvenance";
+import { BASIS_NOT_RECORDED, withBasisLabel } from "@/lib/data/valueBasisLabel";
 
 export interface ValuationMatrixCellData {
   readonly sector: string;
@@ -58,9 +59,12 @@ export default function ValuationMatrixCell({
     [cell.valuations],
   );
   const tooltipSummary = cell.estimate.kind === "sufficient" && interval
-    ? `n=${cell.estimate.sampleSize} · 95% BCa CI: $${
-      Math.round(interval.lower)
-    }M–$${Math.round(interval.upper)}M`
+    ? `n=${cell.estimate.sampleSize} · 95% BCa CI: ${
+      withBasisLabel(
+        `$${Math.round(interval.lower)}M–$${Math.round(interval.upper)}M`,
+        BASIS_NOT_RECORDED,
+      )
+    }`
     : undefined;
   const evidence = interval
     ? (
@@ -69,7 +73,7 @@ export default function ValuationMatrixCell({
         <p className="mt-1">
           95% BCa CI: ${Math.round(interval.lower)}M–${Math.round(
             interval.upper,
-          )}M
+          )}M · {BASIS_NOT_RECORDED}
         </p>
         <p className="mt-1 text-lacuna-text-muted">
           Method: {interval.method}, B={interval.B}
@@ -87,7 +91,8 @@ export default function ValuationMatrixCell({
     <Metric
       label={`${cell.stage} · ${cell.sector}`}
       provenance={metricFromEstimate(cell.estimate)}
-      formatValue={(value) => `$${Math.round(value)}M`}
+      formatValue={(value) =>
+        withBasisLabel(`$${Math.round(value)}M`, BASIS_NOT_RECORDED)}
       compact={cell.estimate.kind === "insufficient"}
       compactLabel={`·${cell.totalCount}`}
       tooltipSummary={tooltipSummary}

@@ -23,6 +23,7 @@ import {
   labelFont,
 } from "@/lib/theme/typography";
 import AnalysisPanelHeader from "@/components/ui/AnalysisPanelHeader";
+import { BASIS_NOT_RECORDED } from "@/lib/data/valueBasisLabel";
 
 export interface CompanyProfile {
   id: string;
@@ -514,17 +515,19 @@ export default function FounderCharacteristics(
                   color: COLORS.womenDark,
                 }}
               >
-                ${valueComparison.women.mean.toFixed(0)}M
+                ${valueComparison.women.mean.toFixed(0)}M · {BASIS_NOT_RECORDED}
               </div>
               <div className="text-xs text-lacuna-text-secondary mt-1">
                 Mean acquisition value
               </div>
               <div className="mt-2 pt-2 border-t border-pink-200">
                 <div className="text-xs text-lacuna-text-muted">
-                  Median: ${valueComparison.women.median}M
+                  Median: ${valueComparison.women.median}M ·{" "}
+                  {BASIS_NOT_RECORDED}
                 </div>
                 <div className="text-xs text-lacuna-text-muted">
-                  Total: ${valueComparison.women.total.toFixed(0)}M
+                  Total: ${valueComparison.women.total.toFixed(0)}M ·{" "}
+                  {BASIS_NOT_RECORDED}
                 </div>
               </div>
             </div>
@@ -543,17 +546,18 @@ export default function FounderCharacteristics(
                   color: COLORS.menDark,
                 }}
               >
-                ${valueComparison.men.mean.toFixed(0)}M
+                ${valueComparison.men.mean.toFixed(0)}M · {BASIS_NOT_RECORDED}
               </div>
               <div className="text-xs text-lacuna-text-secondary mt-1">
                 Mean acquisition value
               </div>
               <div className="mt-2 pt-2 border-t border-blue-200">
                 <div className="text-xs text-lacuna-text-muted">
-                  Median: ${valueComparison.men.median}M
+                  Median: ${valueComparison.men.median}M · {BASIS_NOT_RECORDED}
                 </div>
                 <div className="text-xs text-lacuna-text-muted">
-                  Total: ${valueComparison.men.total.toFixed(0)}M
+                  Total: ${valueComparison.men.total.toFixed(0)}M ·{" "}
+                  {BASIS_NOT_RECORDED}
                 </div>
               </div>
             </div>
