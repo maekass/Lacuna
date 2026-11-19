@@ -19,6 +19,7 @@ import SpaceWhResearchGapsPanel from "@/components/SpaceWhResearchGapsPanel";
 import MotionSection from "@/components/ui/MotionSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import BiotheranosticsDossierLink from "@/components/BiotheranosticsDossierLink";
+import RnpvSandboxLink from "@/components/RnpvSandboxLink";
 
 import type { PatientEmpowermentInsightData } from "@/lib/research/patientEmpowermentInsightTypes";
 import type { PatientEmpowermentSnapshot } from "@/lib/research/patientEmpowermentPipeline";
@@ -51,6 +52,10 @@ export default function ResearchPage({
           economics, comps, or dual-source badges.
         </p>
       </header>
+
+      <MotionSection id="rnpv-sandbox" className={SECTION}>
+        <RnpvSandboxLink />
+      </MotionSection>
 
       <BiotheranosticsDossierLink />
       <p className="mb-8 text-sm text-lacuna-blue">

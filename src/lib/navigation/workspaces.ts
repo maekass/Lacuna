@@ -64,8 +64,9 @@ export const WORKSPACES: Workspace[] = [
     label: "Research",
     description:
       "Clinical trials, evidence maturity, genomics, health equity, and patient empowerment baselines.",
-    tags: ["clinical trials", "evidence", "empowerment"],
+    tags: ["clinical trials", "evidence", "empowerment", "rnpv"],
     sections: [
+      { id: "rnpv-sandbox", label: "rNPV" },
       { id: "burden-capital-gap", label: "Gap" },
       { id: "womens-health-exits", label: "Exits" },
       { id: "patient-empowerment", label: "Empowerment" },
