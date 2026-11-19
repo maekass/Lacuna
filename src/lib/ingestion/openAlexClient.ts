@@ -35,6 +35,12 @@ function apiKey(): string {
   return key;
 }
 
+function assertPaging(page?: number, cursor?: string): void {
+  if (page !== undefined && cursor !== undefined) {
+    throw new Error("OpenAlex page and cursor are mutually exclusive.");
+  }
+}
+
 function buildUrl(
   path: string,
   params: Record<string, string | undefined>,
@@ -71,6 +77,7 @@ async function request<T>(url: URL, init?: RequestInit): Promise<T> {
   return await response.json() as T;
 }
 
+/** Search OpenAlex works with exactly one search mode and one pagination mode. Requires a server-side API key; throws on upstream failures. */
 export async function searchOpenAlexWorks(
   options: OpenAlexQueryOptions,
   requestOptions?: OpenAlexRequestOptions,
@@ -80,6 +87,7 @@ export async function searchOpenAlexWorks(
   if (searchModes > 1) {
     throw new Error("OpenAlex accepts only one of search, exact, or semantic.");
   }
+  assertPaging(options.page, options.cursor);
   const url = buildUrl("/works", {
     search: options.search,
     "search.exact": options.exact,
@@ -96,6 +104,7 @@ export async function searchOpenAlexWorks(
   });
 }
 
+/** Retrieve a work by canonical OpenAlex URL or ID. Requires a server-side API key; throws on upstream failures. */
 export async function getOpenAlexWork(
   id: string,
   requestOptions?: OpenAlexRequestOptions,
@@ -112,6 +121,7 @@ export async function getOpenAlexWork(
   );
 }
 
+/** Execute OQL with mutually exclusive page/cursor options. Requires a server-side API key; throws on upstream failures. */
 export async function executeOpenAlexOql(
   oql: string,
   options?: Pick<
@@ -122,6 +132,7 @@ export async function executeOpenAlexOql(
 ): Promise<OpenAlexResponse> {
   const query = oql.trim();
   if (!query) throw new Error("OpenAlex OQL query is required.");
+  assertPaging(options?.page, options?.cursor);
   const url = buildUrl("/", {
     oql: query,
     sort: options?.sort,
@@ -135,6 +146,7 @@ export async function executeOpenAlexOql(
   });
 }
 
+/** Validate nonempty OpenAlex OQL; requires server-side authentication and throws on failure. */
 export async function validateOpenAlexOql(
   oql: string,
   requestOptions?: OpenAlexRequestOptions,
@@ -147,6 +159,7 @@ export async function validateOpenAlexOql(
   );
 }
 
+/** Retrieve the authenticated OpenAlex rate-limit response; throws on upstream failure. */
 export async function getOpenAlexRateLimit(
   requestOptions?: OpenAlexRequestOptions,
 ): Promise<unknown> {
