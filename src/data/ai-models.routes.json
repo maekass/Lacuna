@@ -1,5 +1,5 @@
 {
-  "insights": "anthropic/claude-sonnet-4",
+  "insights": "anthropic/claude-sonnet-4.5",
   "spaceWhGap": "spacexai/grok-4.3",
   "empowermentGap": "spacexai/grok-4.3",
   "studyDiscovery": "spacexai/grok-4.5",

@@ -16,7 +16,7 @@ import type {
   ResponseEvalCase,
 } from "@/lib/ai/evals/responseTypes";
 
-/** Distinct from the insight narrative model (`anthropic/claude-sonnet-4`). */
+/** Distinct from the insight narrative model (`anthropic/claude-sonnet-4.5`). */
 export const RESPONSE_JUDGE_GATEWAY_MODEL = "openai/gpt-4o-mini";
 export const RESPONSE_JUDGE_OPENAI_MODEL = "gpt-4o-mini";
 

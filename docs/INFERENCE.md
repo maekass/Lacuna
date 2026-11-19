@@ -6,13 +6,13 @@ local dev only.
 
 ## What uses inference
 
-| Feature                        | Route / module                                     | Model (gateway slug)        | Fallback                           |
-| ------------------------------ | -------------------------------------------------- | --------------------------- | ---------------------------------- |
-| Optional UI narrative blurbs   | `POST /api/ai/insights` → `src/lib/ai/insights.ts` | `anthropic/claude-sonnet-4` | `gpt-4o-mini` via `@ai-sdk/openai` |
-| Space WH gap analyst           | `POST /api/research/space-wh-pipeline/ask`         | `spacexai/grok-4.3`         | `gpt-4o-mini` or deterministic     |
-| Domestic study discovery       | `POST /api/research/studies/discover`              | `spacexai/grok-4.5`         | deterministic NIH/CT.gov parse     |
-| SEC deal classification (cron) | `dealClassificationEngine.ts`                      | `openai/gpt-5.6-terra`      | keyword-only                       |
-| Evidence ask                   | `POST /api/research/evidence/ask`                  | `openai/gpt-4o-mini`        | abstain; no ungrounded answer      |
+| Feature                        | Route / module                                     | Model (gateway slug)          | Fallback                           |
+| ------------------------------ | -------------------------------------------------- | ----------------------------- | ---------------------------------- |
+| Optional UI narrative blurbs   | `POST /api/ai/insights` → `src/lib/ai/insights.ts` | `anthropic/claude-sonnet-4.5` | `gpt-4o-mini` via `@ai-sdk/openai` |
+| Space WH gap analyst           | `POST /api/research/space-wh-pipeline/ask`         | `spacexai/grok-4.3`           | `gpt-4o-mini` or deterministic     |
+| Domestic study discovery       | `POST /api/research/studies/discover`              | `spacexai/grok-4.5`           | deterministic NIH/CT.gov parse     |
+| SEC deal classification (cron) | `dealClassificationEngine.ts`                      | `openai/gpt-5.6-terra`        | keyword-only                       |
+| Evidence ask                   | `POST /api/research/evidence/ask`                  | `openai/gpt-4o-mini`          | abstain; no ungrounded answer      |
 
 The daily model-directory sync reads the public Vercel directory without sending
 an inference credential. It retries an absent ID, then compares any unique
@@ -21,10 +21,13 @@ and input/output prices on two directory reads. A confirmed provider-prefix
 change updates `src/data/ai-models.routes.json` and the pricing snapshot in a
 reviewable PR. Unresolved absences preserve the previous snapshot and emit the
 sanitized `ai-model-sync-diagnostic` Actions artifact. A successful retry is a
-warning, while a persistent or ambiguous gap fails the job for review. Directory
-presence does not establish runtime availability or account-specific
-authorization; investigate inference failures separately before declaring an
-upstream deprecation or changing fallback behavior.
+warning. A persistent gap fails the job unless
+`src/data/ai-models.reviewed-retirements.json` records that id with a date, a
+replacement still listed in the directory, and a reason. An unreviewed gap still
+preserves the snapshot and fails for review. Directory presence does not
+establish runtime availability or account-specific authorization; investigate
+inference failures separately before declaring an upstream deprecation or
+changing fallback behavior.
 
 ## What is **not** inference
 
