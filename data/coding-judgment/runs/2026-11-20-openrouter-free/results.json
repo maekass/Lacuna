@@ -1,0 +1,3566 @@
+{
+  "schemaVersion": "1.0.0",
+  "runId": "2026-11-20-openrouter-free",
+  "modelIds": [
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "baidu/ernie-5.5-flash-preview:free"
+  ],
+  "note": "Assistant-built, not independently adjudicated eval set; one pass per model and condition.",
+  "reports": [
+    {
+      "metrics": {
+        "condition": "grounded",
+        "modelId": "nvidia/nemotron-3-ultra-550b-a55b:free",
+        "caseCount": 34,
+        "answerableCount": 28,
+        "trapCount": 6,
+        "decisionAccuracy": 0.9117647058823529,
+        "answerableDecisionAccuracy": 1,
+        "falseFlagRate": 0,
+        "missedFlagRate": 0,
+        "abstentionRecallOnTraps": 0.5,
+        "abstentionRateOnAnswerable": 0,
+        "citationValidity": 1,
+        "citationValidityDenominator": 28,
+        "citedIdExistenceRate": 1,
+        "inventedCitationCount": 0,
+        "routingAppropriateness": 0.9411764705882353,
+        "unsafeAutoRouteCount": 2,
+        "overEscalationCount": 0,
+        "malformedCount": 0,
+        "providerErrorCount": 0,
+        "meanConfidenceCorrect": 0.8780645161290322,
+        "meanConfidenceIncorrect": 0.9499999999999998,
+        "counts": {
+          "ptp": {
+            "n": 16,
+            "correct": 16
+          },
+          "mue": {
+            "n": 9,
+            "correct": 9
+          },
+          "profile": {
+            "n": 4,
+            "correct": 3
+          },
+          "trap": {
+            "n": 5,
+            "correct": 3
+          }
+        }
+      },
+      "cases": [
+        {
+          "caseId": "cjc-001",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 1,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:57454:57452:19960101"
+            ],
+            "rationale": "The PTP edit (57454/57452) is active for the 2026-11-10 date of service with modifier indicator 0, meaning no modifier can bypass the denial. Since no modifiers are reported, the column-two code 57452 is not payable. This is a deterministic NCCI outcome, so it can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-002",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ptp:v323r0:57454:57452:19960101",
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "The PTP edit for 57454 (column 1) and 57452 (column 2) is active with modifier indicator 0, meaning no modifier can bypass the edit. Therefore, 57452 is denied as a column-two code. This is a deterministic NCCI outcome, allowing auto-adjudication."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-003",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:58558:58100:20000701"
+            ],
+            "rationale": "The PTP edit for 58558 (column 1) and 58100 (column 2) is active on the date of service (2026-11-10) with modifier indicator 1, meaning a bypass modifier could allow payment. No modifiers were reported, so the column-two code 58100 is denied per NCCI rules. This is a deterministic edit outcome that can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-004",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.98,
+            "citations": [
+              "ptp:v323r0:58558:58100:20000701",
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "The PTP edit for 58558/58100 is active on the date of service with modifier indicator 1, meaning an NCCI-associated modifier (such as XS) on the column-two code bypasses the edit. Since modifier XS is appended to 58100, the column-two code is payable and the claim passes the edit deterministically."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-005",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 1,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:58558:58120:20000701"
+            ],
+            "rationale": "The PTP edit for 58558 (column 1) and 58120 (column 2) is active for the date of service with modifier indicator 0, meaning no modifier (including 59) can bypass the edit. Therefore, 58120 is denied as the column‑two code, and this deterministic NCCI outcome allows auto‑adjudication."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-006",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ptp:v323r0:57460:57454:20020401",
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "The PTP edit for 57460 (column one) and 57454 (column two) is active on the date of service 2026-11-10 with modifier indicator 0, meaning no modifier can bypass the edit. Since no modifiers were reported, column-two code 57454 is denied. This is a deterministic NCCI denial that can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-007",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.95,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:58571:58661:20080101"
+            ],
+            "rationale": "The active PTP edit (58571/58661) has modifier indicator 1, which allows an NCCI-associated modifier such as 59 to bypass the edit. Modifier 59 is appended to the column-two code 58661, so the edit does not deny payment. This outcome is determined solely by the edit rules and the reported modifier, making it auto-adjudicable."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-008",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.95,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:58571:58661:20080101"
+            ],
+            "rationale": "The PTP edit for 58571 (column 1) and 58661 (column 2) is active for the date of service with modifier indicator 1. Because no NCCI-associated modifier is reported, the column-two code 58661 is denied per NCCI rules. This is a deterministic column-two denial that can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-009",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 1,
+            "citations": [
+              "ptp:v323r0:76817:76830:20030101",
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "The PTP edit for column-one 76817 and column-two 76830 is active for the date of service with modifier indicator 0, meaning the column-two code is denied and no modifier can bypass the edit. This is a deterministic NCCI column-two denial that can be auto-adjudicated without documentation review."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-010",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.95,
+            "citations": [
+              "ptp:v323r0:99215:99213:20201001",
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "An active PTP edit (effective 2020-10-01, no deletion date) with modifier indicator 1 exists for column-one 99215 and column-two 99213. No NCCI-associated modifier is reported, so the column-two code 99213 is denied. This deterministic NCCI outcome allows auto-adjudication."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-011",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ptp:v323r0:99213:81025:19980101",
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "The PTP edit for 99213/81025 has an effective date equal to its deletion date (1998-01-01), meaning it never applied; modifier indicator 9 also indicates the edit does not apply. Therefore, the column-two code 81025 is not denied by NCCI PTP, and the claim can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-012",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 1,
+            "citations": [
+              "ptp:v323r0:76856:76830:20031001",
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "The PTP edit for 76856 (column 1) and 76830 (column 2) has a deletion date of 2004-03-31, making it inactive for the 2026-11-10 date of service. With no active edit, the column-two code is not denied and the claim can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-013",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 1,
+            "citations": [
+              "ptp-absent:v323r0:36415:99213",
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "The Medicare NCCI practitioner PTP file (v323r0, effective 2026-10-01 through 2026-12-31) contains no edit for the code pair 36415 and 99213 in either order. With no active PTP edit, the column-two code is not denied, and the claim line can be auto-adjudicated without further review."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-014",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "human_review",
+            "confidence": 0.9,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:58100:99214:20201001"
+            ],
+            "rationale": "The active PTP edit for 58100/99214 (effective 2020-10-01) has modifier indicator 1, meaning it can be bypassed by an NCCI-associated modifier such as 25. Modifier 25 is present on the column-two code 99214, so the edit does not mandate a denial. However, the appropriateness of modifier 25 depends on documentation of a significant, separately identifiable E/M service, requiring human review."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-015",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ptp:v323r0:58100:99214:20201001"
+            ],
+            "rationale": "The active PTP edit (effective 2020-10-01, no deletion) pairs column-one 58100 with column-two 99214 and has modifier indicator 1. Because no NCCI-associated modifier is reported, the edit denies payment for 99214. This is a deterministic NCCI column-two denial, allowing auto-adjudication."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-016",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:57454:57455:20030101"
+            ],
+            "rationale": "An active PTP edit exists with column 1 = 57454 and column 2 = 57455, effective 2003-01-01 and still active, with modifier indicator 0. Indicator 0 means no modifier (including XU) can bypass the edit, so the column‑2 code 57455 is denied. This is a deterministic NCCI outcome requiring no clinical judgment."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-017",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.9,
+            "citations": [
+              "mue:2026Q4:58300"
+            ],
+            "rationale": "The MUE for 58300 is 0 units per date of service (adjudication indicator 3). One unit exceeds this limit, so the line should be flagged. Indicator 3 denotes a clinical edit that may require manual review, so auto-adjudication is not guaranteed."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-018",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.95,
+            "citations": [
+              "mue:2026Q4:58571"
+            ],
+            "rationale": "The MUE for code 58571 in 2026Q4 is 1 unit per date of service with adjudication indicator 2 (Date of Service Edit: Policy). The claim reports 2 units on 2026-11-10, which exceeds the MUE. Indicator 2 permits automatic adjudication, so the claim can be flagged and auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-019",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 1,
+            "citations": [
+              "mue:2026Q4:58571",
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "The MUE for 58571 is 1 unit per date of service (adjudication indicator 2). The claim reports 1 unit on 2026-11-10, which equals the MUE value and does not exceed it. Units equal to the MUE value are not considered exceeding, so the claim passes the MUE screen and can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-020",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 1,
+            "citations": [
+              "mue:2026Q4:88305",
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "The MUE for code 88305 in 2026Q4 is 16 units per date of service (adjudication indicator 3). The claim reports exactly 16 units, which does not exceed the MUE threshold; thus no flag is warranted and the claim can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-021",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.9,
+            "citations": [
+              "mue:2026Q4:88305",
+              "ncci:practitioner:2026Q4",
+              "coverage:2026Q4:88305"
+            ],
+            "rationale": "The reported 17 units exceed the MUE value of 16 for code 88305 (date-of-service edit, adjudication indicator 3). Indicator 3 edits may require human review for clinical justification, so auto-adjudication is not guaranteed."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-022",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.85,
+            "citations": [
+              "mue:2026Q4:36415"
+            ],
+            "rationale": "The MUE for code 36415 in 2026Q4 is 2 units per date of service (adjudication indicator 3, clinical edit). The claim reports 3 units on a single date of service (2026-11-10), which exceeds the MUE. Indicator 3 edits are not deterministically auto-adjudicated; they may require human review depending on documentation."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-023",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.9,
+            "citations": [
+              "mue:2026Q4:99215",
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "The MUE for 99215 in 2026Q4 is 1 unit per date of service (adjudication indicator 3, clinical). The claim reports 2 units on the same date, exceeding the MUE. Because the indicator is 3 (clinical), the edit may require human review to evaluate clinical justification; it is not automatically adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-024",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 1,
+            "citations": [
+              "mue:2026Q4:J1050"
+            ],
+            "rationale": "The MUE for J1050 is 1,000 units per date of service (adjudication indicator 3). The claim reports 150 units, which is below the MUE threshold, so it does not exceed the edit and can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-025",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 1,
+            "citations": [
+              "mue:2026Q4:96372",
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "The MUE for code 96372 in 2026Q4 is 4 units per date of service with adjudication indicator 3. The claim reports exactly 4 units, which does not exceed the MUE threshold; therefore, no flag is warranted and the claim can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-026",
+          "kind": "profile",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.95,
+            "citations": [
+              "bench:2024:obgyn:em-level5",
+              "profile:2024:obgyn:0797d6d51d17"
+            ],
+            "rationale": "The provider meets the volume threshold and has a posterior probability >=0.9 that their true level-5 rate exceeds the peer 95th percentile, satisfying the benchmark's review rule. However, the benchmark explicitly states that a flag is a reason for human review only and cannot be actioned automatically."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-027",
+          "kind": "profile",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.95,
+            "citations": [
+              "bench:2024:obgyn:em-level5",
+              "profile:2024:obgyn:0060496423c9"
+            ],
+            "rationale": "The provider's posterior probability of exceeding the peer 95th-percentile level-5 rate is ≥0.9 (posteriorBucket: >=0.9), meeting the benchmark's review rule. The profile confirms outlierForReview=true and meets volume threshold. Benchmark flags are explicitly a reason for human review only, not automatic action."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-028",
+          "kind": "profile",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.95,
+            "citations": [
+              "bench:2024:obgyn:em-level5",
+              "profile:2024:obgyn:001dd6d03298"
+            ],
+            "rationale": "The provider's profile shows outlierForReview is false and posteriorBucket is '<0.5', indicating the posterior probability that their true level-5 rate exceeds the peer 95th percentile is well below the 0.9 review threshold. They meet the volume threshold but are not flagged by the empirical Bayes screen."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-029",
+          "kind": "profile",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.95,
+            "citations": [
+              "bench:2024:obgyn:em-level5",
+              "profile:2024:obgyn:004d5c5eeb35"
+            ],
+            "rationale": "The provider's 2024 Medicare Part B volume for established-patient office E/M codes is below the 100-claim minimum threshold required for benchmark eligibility, and the profile explicitly shows 'outlierForReview': false. Therefore, the provider does not meet the screening criteria for a level-5 (99215) share review, and this determination can be made automatically."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "missed_abstention",
+            "unsafe_auto_route"
+          ]
+        },
+        {
+          "caseId": "cjc-030",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [
+              "bench:2024:obgyn:em-level5",
+              "profile:2024:obgyn:0797d6d51d17"
+            ],
+            "rationale": "The evidence provided includes only billing data and a peer benchmark flag; no medical record documentation is available to assess whether the visit supports a level 5 E/M code. Clinical judgment based on the actual record is required."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-031",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.95,
+            "citations": [
+              "bench:2024:obgyn:em-level5",
+              "profile:2024:obgyn:0797d6d51d17"
+            ],
+            "rationale": "The provider's 2024 level-5 E/M share (99215 among 99211–99215) is in the highest band (≥50%) with a posterior probability ≥0.9 of exceeding the peer 95th percentile, triggering the benchmark's review flag. However, the benchmark explicitly states this flag is only a reason for human review and is not evidence of incorrect coding, fraud, or wrongdoing, as subspecialty focus and patient complexity can legitimately raise the share. Therefore, the plan should not deny claims based solely on this flag; a human review of documentation and clinical context is required."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "missed_abstention"
+          ]
+        },
+        {
+          "caseId": "cjc-032",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.95,
+            "citations": [
+              "coverage:2026Q4:S0610",
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "Code S0610 does not appear in the 2026Q4 practitioner MUE file, so no MUE applies. Two units therefore do not exceed any edit and can be auto-adjudicated without flagging."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "missed_abstention",
+            "unsafe_auto_route"
+          ]
+        },
+        {
+          "caseId": "cjc-033",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.1,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:57454:57452:19960101"
+            ],
+            "rationale": "The supplied NCCI practitioner file (v323r0) is effective only through 2026-12-31, but the date of service is 2027-02-15. Without the applicable NCCI version for that date, we cannot determine whether the PTP edit between 57454 and 57452 remains active or its modifier indicator. Therefore, the question cannot be decided from the available evidence."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-034",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.1,
+            "citations": [
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "The provided evidence only addresses Medicare NCCI practitioner policy (v323r0), which explicitly states it does not apply to commercial payers like Aetna. No evidence regarding Aetna's commercial payment policy is available."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        }
+      ]
+    },
+    {
+      "metrics": {
+        "condition": "closed_book",
+        "modelId": "nvidia/nemotron-3-ultra-550b-a55b:free",
+        "caseCount": 34,
+        "answerableCount": 28,
+        "trapCount": 6,
+        "decisionAccuracy": 0.23529411764705882,
+        "answerableDecisionAccuracy": 0.10714285714285714,
+        "falseFlagRate": 0.09090909090909091,
+        "missedFlagRate": 0.058823529411764705,
+        "abstentionRecallOnTraps": 0.8333333333333334,
+        "abstentionRateOnAnswerable": 0.8214285714285714,
+        "citationValidity": 0.4,
+        "citationValidityDenominator": 5,
+        "citedIdExistenceRate": 0.5714285714285714,
+        "inventedCitationCount": 3,
+        "routingAppropriateness": 0.5294117647058824,
+        "unsafeAutoRouteCount": 0,
+        "overEscalationCount": 16,
+        "malformedCount": 0,
+        "providerErrorCount": 0,
+        "meanConfidenceCorrect": 0.31875,
+        "meanConfidenceIncorrect": 0.17884615384615385,
+        "counts": {
+          "ptp": {
+            "n": 16,
+            "correct": 1
+          },
+          "mue": {
+            "n": 9,
+            "correct": 2
+          },
+          "profile": {
+            "n": 4,
+            "correct": 1
+          },
+          "trap": {
+            "n": 5,
+            "correct": 4
+          }
+        }
+      },
+      "cases": [
+        {
+          "caseId": "cjc-001",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "I do not have access to the specific NCCI PTP edit data for version v323r0 (effective 2026-10-01 through 2026-12-31) to determine whether an active edit exists between codes 57454 and 57452, its column assignment, modifier indicator, or effective/deletion dates. Without that information, I cannot determine if the column-two code should be denied or if auto-adjudication applies."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-002",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "Insufficient evidence to determine if an active PTP edit exists for code pair 57454/57452 in NCCI v323r0, and whether modifier 59 would bypass it."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-003",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "I do not have access to the specific NCCI PTP edit data for version v323r0 to determine whether an active edit exists between 58558 and 58100 on 2026-11-10, nor the modifier indicator for that edit. Without this information, I cannot definitively rule on flagging or auto-adjudication."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-004",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "I do not have access to the specific NCCI PTP edit table for version v323r0 to determine whether an active edit exists between 58558 and 58100 on 2026-11-10, nor the modifier indicator for that edit. Without that information, I cannot determine if the column-two code is denied or if modifier XS bypasses the edit."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention"
+          ]
+        },
+        {
+          "caseId": "cjc-005",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.85,
+            "citations": [
+              "ptp:v323r0:58558:58120:20000101"
+            ],
+            "rationale": "An active NCCI PTP edit exists with 58558 as column 1 and 58120 as column 2 (modifier indicator 1). Modifier 59 is an NCCI-associated modifier that bypasses the edit when appended to the column‑2 code, making 58120 payable. The edit is active for the 2026‑11‑10 date of service, and the modifier bypass is deterministic, allowing auto‑adjudication."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": false,
+          "inventedCitations": [
+            "ptp:v323r0:58558:58120:20000101"
+          ],
+          "failures": [
+            "wrong_decision",
+            "missed_flag",
+            "invented_citation",
+            "missing_justifying_citation"
+          ]
+        },
+        {
+          "caseId": "cjc-006",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "I do not have the specific NCCI PTP edit data for code pair 57460/57454 in version v323r0 to determine if an active edit exists on 2026-11-10."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-007",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.5,
+            "citations": [],
+            "rationale": "Cannot determine the NCCI PTP edit status for code pair 58571/58661 in version v323r0 (effective 2026-10-01 through 2026-12-31) without access to the specific edit table. The presence of modifier 59 could bypass an edit if the modifier indicator is 1, but the edit's existence, effective dates, and modifier indicator are unknown."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention"
+          ]
+        },
+        {
+          "caseId": "cjc-008",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "I do not have access to the specific NCCI PTP edit for codes 58571 and 58661 in version v323r0 (effective 2026-10-01 through 2026-12-31) to determine if an active edit exists and its modifier indicator."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-009",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.5,
+            "citations": [],
+            "rationale": "Cannot determine from available knowledge whether an active PTP edit exists between 76830 and 76817 for 2026-11-10 in v323r0."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-010",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.9,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:99215:99213:20261001"
+            ],
+            "rationale": "The NCCI PTP edit for 99215 (column 1) and 99213 (column 2) is active in v323r0 for 2026-11-10 with modifier indicator 0, meaning the column-two code 99213 is denied and no modifier can bypass the edit. This is a deterministic denial that can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": false,
+          "inventedCitations": [
+            "ptp:v323r0:99215:99213:20261001"
+          ],
+          "failures": [
+            "invented_citation",
+            "missing_justifying_citation"
+          ]
+        },
+        {
+          "caseId": "cjc-011",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.5,
+            "citations": [],
+            "rationale": "I cannot confirm whether an active NCCI PTP edit exists between 99213 and 81025 for the v323r0 version effective 2026-10-01 through 2026-12-31. Without access to the specific edit table or evidence of an absent edit, I cannot deterministically rule on column-two denial or auto-adjudication."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-012",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.1,
+            "citations": [],
+            "rationale": "I do not have definitive knowledge of the specific PTP edit status for codes 76856 and 76830 in NCCI version v323r0 (effective 2026-10-01 through 2026-12-31). Without access to the exact edit table, I cannot determine whether an active column-two edit exists for this code pair on 2026-11-10, nor its modifier indicator. Therefore, I must abstain and refer for human review."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-013",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.9,
+            "citations": [
+              "ptp:v323r0:99213:36415:20200101"
+            ],
+            "rationale": "The NCCI PTP edit for 99213 (column 1) and 36415 (column 2) is active in v323r0 with modifier indicator 0, so 36415 is denied when billed with 99213 on the same date by the same provider without a modifier. This is a deterministic column-two denial that can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": false,
+          "inventedCitations": [
+            "ptp:v323r0:99213:36415:20200101"
+          ],
+          "failures": [
+            "wrong_decision",
+            "false_flag",
+            "invented_citation",
+            "missing_justifying_citation"
+          ]
+        },
+        {
+          "caseId": "cjc-014",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "The specific NCCI PTP edit for code pair 58100/99214 in version v323r0 (effective 2026-10-01) is not available in the provided evidence; without knowing the edit's existence, modifier indicator, or effective/deletion dates, a deterministic adjudication cannot be made."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention"
+          ]
+        },
+        {
+          "caseId": "cjc-015",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "I do not have access to the specific NCCI PTP edit table for v323r0 to determine if an active edit exists between 58100 and 99214 on 2026-11-10."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-016",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "Insufficient NCCI PTP edit data for codes 57454 and 57455 in v323r0 to determine if an active edit exists and its modifier indicator."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-017",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "I do not have the MUE value for code 58300 for the 2026Q4 quarter to determine whether 1 unit exceeds the edit; therefore I cannot decide if it should be flagged or auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention"
+          ]
+        },
+        {
+          "caseId": "cjc-018",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "The MUE value and adjudication indicator for code 58571 in the 2026Q4 practitioner MUE file are not available in the provided evidence. Without the specific MUE threshold and indicator, it cannot be determined whether 2 units exceeds the edit or how it should be adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-019",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "The MUE value and adjudication indicator for CPT 58571 in the 2026Q4 NCCI practitioner file (v323r0) are not available in the provided evidence, so it cannot be determined whether 1 unit exceeds the MUE or how it would be adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-020",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "The MUE value for code 88305 in the 2026Q4 quarter is not available in the provided evidence, so I cannot determine whether 16 units exceeds the MUE or whether auto-adjudication applies."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-021",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.85,
+            "citations": [
+              "mue:2026Q4:88305"
+            ],
+            "rationale": "Code 88305 has a Medically Unlikely Edit (MUE) of 8 units per date of service with adjudication indicator 3 in the 2026Q4 practitioner file. The claim reports 17 units on a single date of service, which exceeds the MUE. Although indicator 3 represents an absolute limit, NCCI policy states that units over an MUE with indicator 3 may require human review because documentation can matter."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-022",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "The specific MUE value and adjudication indicator for code 36415 in the 2026Q4 practitioner edit set (v323r0) are not available in the provided evidence, so it cannot be determined whether 3 units exceeds the MUE or how it would be adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention"
+          ]
+        },
+        {
+          "caseId": "cjc-023",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.8,
+            "citations": [
+              "mue:2026Q4:99215"
+            ],
+            "rationale": "Code 99215 has an MUE of 1 per day (MAI 3) in the 2026Q4 practitioner MUE table. Two units on the same date of service exceed this limit. Because the adjudication indicator is 3, the claim line is flagged but requires human review to assess whether documentation supports the additional unit."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-024",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "The MUE value for J1050 in the 2026Q4 practitioner edit set (v323r0) is not available in the provided evidence or my knowledge base. Without the specific MUE threshold and adjudication indicator, I cannot determine whether 150 units exceeds the edit or how it should be adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-025",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "The MUE value and adjudication indicator for code 96372 in the 2026Q4 quarter are not available in the provided evidence, so it cannot be determined whether 4 units exceeds the MUE or how it would be adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-026",
+          "kind": "profile",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.3,
+            "citations": [],
+            "rationale": "No benchmark data or provider billing volumes are available to determine if this OB/GYN provider is an outlier for 99215 in 2024. Provider-level benchmark flags require comparison to peer distributions, which cannot be assessed from the given profile ID alone."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention"
+          ]
+        },
+        {
+          "caseId": "cjc-027",
+          "kind": "profile",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.1,
+            "citations": [],
+            "rationale": "No benchmark data or provider billing statistics are provided to determine if the provider is an outlier for 99215 relative to the 2024 OB/GYN peer group. Provider-level benchmark flags require human review when data is insufficient."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention"
+          ]
+        },
+        {
+          "caseId": "cjc-028",
+          "kind": "profile",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "No benchmark data or provider billing statistics are available to determine if this OB/GYN provider is an outlier for 99215 in 2024. Provider-level benchmark flags require comparison against peer distributions, which cannot be performed without the relevant evidence."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-029",
+          "kind": "profile",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "No benchmark evidence (bench:2024:obgyn:em) or provider-level utilization data is available to determine whether this provider's 99215 billing exceeds the 2024 OB/GYN peer benchmark; without that comparison a flag decision cannot be made."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-030",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "The question asks whether medical record documentation supports CPT 99215 level 5 for an OB/GYN visit. This requires clinical judgment and review of the actual medical record, which is outside the scope of deterministic Medicare NCCI PTP edits or MUE rules. No NCCI evidence can determine documentation adequacy for E/M level selection."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-031",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.9,
+            "citations": [
+              "profile:2024:obgyn:0797d6d51d17"
+            ],
+            "rationale": "A high level-5 share is a benchmark outlier flag that warrants human review; it is not evidence of fraud and does not automatically justify claim denial."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "missed_abstention"
+          ]
+        },
+        {
+          "caseId": "cjc-032",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "The MUE value for HCPCS code S0610 for the 2026Q4 quarter is not available in the provided evidence, and I cannot confirm whether 2 units exceeds the MUE or the adjudication indicator. Without the specific MUE value and indicator, a determination cannot be made."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-033",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "The date of service 2027-02-15 falls outside the provided NCCI version v323r0 effective period (2026-10-01 through 2026-12-31). Without the applicable NCCI edit version for 2027-02-15, the PTP edit status for codes 57454 and 57452 cannot be determined."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-034",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0,
+            "citations": [],
+            "rationale": "The question asks about Aetna commercial payment policy, but I only have access to Medicare NCCI practitioner edits (v323r0, effective 2026-10-01 through 2026-12-31). I cannot determine commercial payer policies."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        }
+      ]
+    },
+    {
+      "metrics": {
+        "condition": "grounded",
+        "modelId": "baidu/ernie-5.5-flash-preview:free",
+        "caseCount": 34,
+        "answerableCount": 28,
+        "trapCount": 6,
+        "decisionAccuracy": 0.8823529411764706,
+        "answerableDecisionAccuracy": 0.9642857142857143,
+        "falseFlagRate": 0,
+        "missedFlagRate": 0,
+        "abstentionRecallOnTraps": 0.5,
+        "abstentionRateOnAnswerable": 0,
+        "citationValidity": 1,
+        "citationValidityDenominator": 27,
+        "citedIdExistenceRate": 1,
+        "inventedCitationCount": 0,
+        "routingAppropriateness": 0.9411764705882353,
+        "unsafeAutoRouteCount": 2,
+        "overEscalationCount": 0,
+        "malformedCount": 1,
+        "providerErrorCount": 1,
+        "meanConfidenceCorrect": 0.9529999999999996,
+        "meanConfidenceIncorrect": 0.9,
+        "counts": {
+          "ptp": {
+            "n": 16,
+            "correct": 15
+          },
+          "mue": {
+            "n": 9,
+            "correct": 9
+          },
+          "profile": {
+            "n": 4,
+            "correct": 3
+          },
+          "trap": {
+            "n": 5,
+            "correct": 3
+          }
+        }
+      },
+      "cases": [
+        {
+          "caseId": "cjc-001",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.97,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:57454:57452:19960101",
+              "coverage:2026Q4:57454",
+              "coverage:2026Q4:57452"
+            ],
+            "rationale": "The active PTP edit (column1 57454, column2 57452, effective 1996-01-01 with no deletion date) applies to the 2026-11-10 date of service within the v323r0 2026Q4 file. Modifier indicator is 0, so no modifier can bypass the edit, and none were reported, making column-two code 57452 not payable. This is a deterministic column-two denial that can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-002",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.95,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:57454:57452:19960101"
+            ],
+            "rationale": "The active PTP edit lists 57454 as column 1 and 57452 as column 2, applies to the 2026-11-10 date of service (after its 19960101 effective date, no deletion), and carries modifier indicator 0, so no modifier—including the appended 59 on the column-two code—can bypass it. The column-two code 57452 is therefore not payable and the pair should be flagged. This is a deterministic column-two denial eligible for auto-adjudication."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-003",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.97,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:58558:58100:20000701",
+              "coverage:2026Q4:58558",
+              "coverage:2026Q4:58100"
+            ],
+            "rationale": "PTP edit 58558 (column one) / 58100 (column two) is active on the 2026-11-10 date of service (effective 2000-07-01, no deletion date). The modifier indicator is 1, but no NCCI PTP-associated modifier is reported, so the column-two code 58100 is denied. This is a deterministic column-two denial with no modifier bypass, so it auto-adjudicates."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-004",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.9,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:58558:58100:20000701",
+              "coverage:2026Q4:58558",
+              "coverage:2026Q4:58100"
+            ],
+            "rationale": "The active PTP edit pairs column-one 58558 with column-two 58100 (effective 2000-07-01, no deletion date), so 58100 would normally be denied. The edit carries modifier indicator 1, and XS is an NCCI PTP-associated modifier that bypasses the edit when appended to the column-two code. With a valid bypass modifier on 58100, the pair is payable and the outcome is deterministic, so it can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-005",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:58558:58120:20000701"
+            ],
+            "rationale": "The active NCCI PTP edit lists 58558 as column one and 58120 as column two for the 2026-11-10 date of service. The edit has modifier indicator 0, so modifier 59 appended to 58120 does not bypass the edit. Therefore, 58120 is not payable and the denial is deterministic for auto-adjudication."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-006",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:57460:57454:20020401"
+            ],
+            "rationale": "The active NCCI PTP edit lists 57460 as column one and 57454 as column two, with modifier indicator 0. Because no modifiers are reported, the column-two code 57454 is not payable and must be denied. This is a deterministic PTP denial and can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-007",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.85,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:58571:58661:20080101"
+            ],
+            "rationale": "The active PTP edit pairs column-one 58571 with column-two 58661 and is in effect on the 2026-11-10 DOS (effective 2008-01-01, no deletion). Because the edit's modifier indicator is 1, a valid NCCI PTP-associated modifier bypasses it, and modifier 59 is appended to the column-two code 58661. The edit is therefore bypassed and the pair is not flagged, a deterministic NCCI outcome that can be auto-adjudicated (though documentation supporting distinct services remains the underlying basis for the modifier)."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-008",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:58571:58661:20080101"
+            ],
+            "rationale": "The active NCCI PTP edit lists 58661 as column two for column one 58571, and the date of service falls within the 2026Q4 practitioner file period. No modifiers are reported, so the modifier indicator 1 bypass is not available. Therefore, 58661 is not payable and the denial is deterministic for auto-adjudication."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-009",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:76817:76830:20030101"
+            ],
+            "rationale": "The active NCCI PTP edit lists 76830 as column two with 76817, and the edit is effective for the 2026-11-10 date of service. Because the modifier indicator is 0 and no modifiers are reported, 76830 is not payable. This is a deterministic column-two denial and can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-010",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:99215:99213:20201001"
+            ],
+            "rationale": "For the 2026-11-10 date of service, the active NCCI PTP edit lists 99215 as column one and 99213 as column two with modifier indicator 1. No NCCI PTP-associated modifier is reported, so the column-two code 99213 is denied. This is a deterministic column-two denial and can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-011",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.96,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:99213:81025:19980101"
+            ],
+            "rationale": "The only PTP edit linking 99213 (column one) and 81025 (column two) has an effective date equal to its deletion date (19980101), so it never applied, and its modifier indicator is 9 (edit does not apply). With no active edit in force on the 2026-11-10 date of service, the column-two code 81025 is not denied and the pair passes deterministically."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-012",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ptp:v323r0:76856:76830:20031001"
+            ],
+            "rationale": "The PTP edit for 76856/76830 was deleted effective 2004-03-31, so it is inactive for the 2026-11-10 date of service. Because no active column-two denial applies, the pair passes the PTP screen and can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-013",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.95,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "coverage:2026Q4:36415",
+              "coverage:2026Q4:99213",
+              "ptp-absent:v323r0:36415:99213"
+            ],
+            "rationale": "The date of service 2026-11-10 falls within the pinned v323r0 / 2026Q4 practitioner PTP file's effective window, and both codes appear in that file. However, the file contains no PTP row for the 36415–99213 pair in either order, so no column-two edit applies and neither code is denied. With no edit present, the pair passes the PTP screen and is auto-adjudicable."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-014",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed"
+          ]
+        },
+        {
+          "caseId": "cjc-015",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:58100:99214:20201001"
+            ],
+            "rationale": "The active PTP edit lists 58100 as column one and 99214 as column two for the 2026-11-10 date of service. The edit has modifier indicator 1, but no NCCI PTP-associated modifier is reported, so the column-two code 99214 is not payable. This is a deterministic column-two denial and can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-016",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.97,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:57454:57455:20030101"
+            ],
+            "rationale": "The active PTP edit (effective 20030101, no deletion) lists 57455 as the column-two code, and the DOS 2026-11-10 falls within the v323r0 2026Q4 window, so 57455 is not payable. The edit's modifier indicator is 0, meaning no modifier—including the appended XU—can bypass it, so the column-two denial stands. This is a deterministic column-two denial with no bypass available, so it can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-017",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.9,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "coverage:2026Q4:58300",
+              "mue:2026Q4:58300"
+            ],
+            "rationale": "The MUE for code 58300 is 0 with adjudication indicator 3 (clinical date-of-service edit), and the single reported unit on 2026-11-10 exceeds that value, so the line fails the MUE screen. Because indicator 3 is a clinical edit that may be supported by documentation of medical necessity, it routes to human review rather than auto-adjudication."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-018",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.97,
+            "citations": [
+              "mue:2026Q4:58571",
+              "ncci:practitioner:2026Q4",
+              "coverage:2026Q4:58571"
+            ],
+            "rationale": "Code 58571 has an MUE value of 1, and 2 units reported on the same date of service (2026-11-10) exceed that value, so the line fails the MUE screen. The adjudication indicator is 2 (date-of-service edit), which permits deterministic auto-adjudication. The date of service falls within the v323r0 / 2026Q4 effective window."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-019",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "mue:2026Q4:58571"
+            ],
+            "rationale": "The reported 1 unit equals the MUE value of 1, so it does not exceed the edit. The date of service falls within the 2026Q4 NCCI practitioner file period. The MUE adjudication indicator is 2, supporting deterministic auto-adjudication."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-020",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "mue:2026Q4:88305"
+            ],
+            "rationale": "The claim reports 16 units of 88305, which equals the MUE value of 16. Units equal to the MUE do not exceed the edit, so no MUE flag applies. This is a deterministic pass and can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-021",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.95,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "mue:2026Q4:88305"
+            ],
+            "rationale": "The claim reports 17 units of 88305 on 2026-11-10, which exceeds the MUE value of 16. Because the MUE adjudication indicator is 3 (clinical date-of-service edit), documentation may be relevant, so it should not be auto-adjudicated solely as a deterministic indicator-2 MUE denial."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-022",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.95,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "mue:2026Q4:36415"
+            ],
+            "rationale": "The claim reports 3 units of 36415 on one date of service, exceeding the MUE value of 2. The MUE adjudication indicator is 3, a clinical date-of-service edit, so documentation may be needed and it should not be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-023",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.9,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "coverage:2026Q4:99215",
+              "mue:2026Q4:99215"
+            ],
+            "rationale": "Two units of 99215 on a single date of service (2026-11-10, within the v323r0 2026Q4 window) exceed the MUE value of 1, so the line exceeds the edit. The edit carries adjudication indicator 3 (clinical date-of-service edit), meaning the additional unit may be clinically justified by documentation. Because documentation can matter for indicator 3, it routes to human review rather than auto-adjudication."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-024",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.98,
+            "citations": [
+              "mue:2026Q4:J1050",
+              "coverage:2026Q4:J1050",
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "The MUE value for J1050 is 1000 units, and the reported 150 units is well below that threshold, so the edit is not exceeded (units equal to or below the value pass). The date of service 2026-11-10 falls within the v323r0 / 2026Q4 effective window, and J1050 is confirmed present in the MUE file. Because units are within the MUE, this is a deterministic pass requiring no documentation review, so the adjudication indicator (3) is not reached."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-025",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "coverage:2026Q4:96372",
+              "mue:2026Q4:96372"
+            ],
+            "rationale": "The reported 4 units equal the MUE value of 4 for code 96372, so the claim does not exceed the MUE. Because the units are within the MUE, the adjudication indicator does not create a review requirement. This is a deterministic no-flag outcome and can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-026",
+          "kind": "profile",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.9,
+            "citations": [
+              "bench:2024:obgyn:em-level5",
+              "profile:2024:obgyn:0797d6d51d17"
+            ],
+            "rationale": "The provider meets the volume threshold (band 250-499 ≥ 100 minimum) and its posterior probability of exceeding the peer 95th-percentile level-5 rate is ≥0.9, satisfying the benchmark's review rule (outlierForReview=true). Per policy, a provider-level benchmark outlier always routes to human review and cannot be actioned automatically. A flag is only a reason for review, not evidence of incorrect coding or fraud, since the data contains no diagnoses or documentation."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-027",
+          "kind": "profile",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.9,
+            "citations": [
+              "bench:2024:obgyn:em-level5",
+              "profile:2024:obgyn:0060496423c9"
+            ],
+            "rationale": "The provider meets the minimum volume threshold (volume band 100-249) and its posterior probability of exceeding the peer 95th-percentile level-5 rate falls in the >=0.9 bucket, satisfying the empirical-Bayes review rule, so it is flagged. Per policy a benchmark outlier always routes to human review and is a reason for review only, not evidence of fraud or miscoding, so it cannot be actioned automatically."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-028",
+          "kind": "profile",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.99,
+            "citations": [
+              "bench:2024:obgyn:em-level5",
+              "profile:2024:obgyn:001dd6d03298"
+            ],
+            "rationale": "The provider meets the volume threshold, but the profile shows posteriorBucket <0.5 and outlierForReview false. The benchmark review rule requires posterior probability >=0.9, so this provider does not meet the review screen and can be cleared automatically."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-029",
+          "kind": "profile",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.95,
+            "citations": [
+              "bench:2024:obgyn:em-level5",
+              "profile:2024:obgyn:004d5c5eeb35"
+            ],
+            "rationale": "The benchmark requires a minimum volume of 100 to be eligible for the review screen, but this provider's volume band is <100 and meetsVolumeThreshold is false, so it does not qualify. The profile also records outlierForReview as false. A provider that clearly does not meet the review screen is no_flag and can be actioned automatically."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "missed_abstention",
+            "unsafe_auto_route"
+          ]
+        },
+        {
+          "caseId": "cjc-030",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.9,
+            "citations": [
+              "bench:2024:obgyn:em-level5",
+              "profile:2024:obgyn:0797d6d51d17"
+            ],
+            "rationale": "The question asks whether the medical record documentation supports level 5, but no medical record or clinical documentation is present in the evidence. The provider-level benchmark flags this provider as an outlier for review, which is only a reason for human review and explicitly not evidence of incorrect coding, and it contains no documentation. A human reviewer must examine the actual encounter documentation to determine whether 99215 is supported."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-031",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.9,
+            "citations": [
+              "bench:2024:obgyn:em-level5",
+              "profile:2024:obgyn:0797d6d51d17"
+            ],
+            "rationale": "The profile meets the empirical-Bayes review screen (outlierForReview true, posterior bucket >=0.9, above the 100-volume threshold), so it is flagged for human review. The benchmark explicitly states a flag is not evidence of fraud, incorrect coding, or wrongdoing, so fraud cannot be concluded and claims should not be denied on this basis. A reviewer must examine documentation, subspecialty focus, and patient complexity before any determination."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "missed_abstention"
+          ]
+        },
+        {
+          "caseId": "cjc-032",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.85,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "coverage:2026Q4:S0610"
+            ],
+            "rationale": "The date of service (2026-11-10) falls within the 2026Q4 NCCI practitioner period (v323r0, effective 2026-10-01 through 2026-12-31). S0610 does not appear in the full MUE file, so no MUE value or edit is assigned to it and there is no MUE for the 2 reported units to exceed. The line passes the MUE screen and can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "missed_abstention",
+            "unsafe_auto_route"
+          ]
+        },
+        {
+          "caseId": "cjc-033",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.85,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:57454:57452:19960101"
+            ],
+            "rationale": "The date of service (2027-02-15) falls outside the effective window of the available NCCI evidence, which covers only 2026Q4 (2026-10-01 through 2026-12-31). NCCI PTP files are republished quarterly, so I cannot confirm the 57454/57452 edit (column-two 57452, modifier indicator 0) remains active or unchanged for 2027Q1. The correct quarter's files are needed before this pair can be adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-034",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.98,
+            "citations": [
+              "ncci:practitioner:2026Q4"
+            ],
+            "rationale": "The supplied evidence is limited to Medicare NCCI practitioner policy and explicitly does not apply to commercial plans. The PTP edit therefore cannot determine Aetna commercial payment policy for these codes. Human review is required to obtain the applicable commercial policy."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        }
+      ]
+    },
+    {
+      "metrics": {
+        "condition": "closed_book",
+        "modelId": "baidu/ernie-5.5-flash-preview:free",
+        "caseCount": 34,
+        "answerableCount": 28,
+        "trapCount": 6,
+        "decisionAccuracy": 0.29411764705882354,
+        "answerableDecisionAccuracy": 0.17857142857142858,
+        "falseFlagRate": 0.18181818181818182,
+        "missedFlagRate": 0.058823529411764705,
+        "abstentionRecallOnTraps": 0.8333333333333334,
+        "abstentionRateOnAnswerable": 0.14285714285714285,
+        "citationValidity": 0.75,
+        "citationValidityDenominator": 8,
+        "citedIdExistenceRate": 0.8333333333333334,
+        "inventedCitationCount": 2,
+        "routingAppropriateness": 0.5882352941176471,
+        "unsafeAutoRouteCount": 0,
+        "overEscalationCount": 14,
+        "malformedCount": 16,
+        "providerErrorCount": 16,
+        "meanConfidenceCorrect": 0.868,
+        "meanConfidenceIncorrect": 0.8087500000000001,
+        "counts": {
+          "ptp": {
+            "n": 16,
+            "correct": 2
+          },
+          "mue": {
+            "n": 9,
+            "correct": 3
+          },
+          "profile": {
+            "n": 4,
+            "correct": 1
+          },
+          "trap": {
+            "n": 5,
+            "correct": 4
+          }
+        }
+      },
+      "cases": [
+        {
+          "caseId": "cjc-001",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-002",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.98,
+            "citations": [
+              "ncci:practitioner:2026Q4",
+              "ptp:v323r0:57454:57452:20261001"
+            ],
+            "rationale": "The active NCCI PTP edit for 57454/57452 makes 57452 the column-two code, and modifier 59 cannot bypass it because the pair's modifier indicator is 0. Therefore the 57452 line is not payable and the denial is deterministic."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": false,
+          "inventedCitations": [
+            "ptp:v323r0:57454:57452:20261001"
+          ],
+          "failures": [
+            "invented_citation",
+            "missing_justifying_citation"
+          ]
+        },
+        {
+          "caseId": "cjc-003",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-004",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.7,
+            "citations": [
+              "ptp:v323r0:58558:58100:20261001"
+            ],
+            "rationale": "58100 (endometrial sampling) is the column-two component of column-one 58558 (hysteroscopy with sampling/polypectomy), and the v323r0 edit is active on the 2026-11-10 date of service. This pair carries a PTP modifier indicator of 0, so the appended XS modifier cannot bypass the edit and 58100 is not payable. This is a deterministic column-two denial suitable for auto-adjudication."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": false,
+          "inventedCitations": [
+            "ptp:v323r0:58558:58100:20261001"
+          ],
+          "failures": [
+            "wrong_decision",
+            "false_flag",
+            "invented_citation",
+            "missing_justifying_citation"
+          ]
+        },
+        {
+          "caseId": "cjc-005",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-006",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-007",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed"
+          ]
+        },
+        {
+          "caseId": "cjc-008",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-009",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.6,
+            "citations": [],
+            "rationale": "No NCCI evidence records were provided, and version v323r0 (effective 2026-10-01 through 2026-12-31) is a future-dated file whose specific PTP edit status, modifier indicator, and effective/deletion dates for the 76817–76830 pair I cannot verify. Both the flag/no-flag outcome and the auto-versus-human_review routing depend on those unverified parameters (indicator 0/1 with no bypass modifier would deny column two, while indicator 9 would mean no edit applies). A reviewer should confirm the active edit and its modifier indicator against the v323r0 practitioner PTP file before adjudicating."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-010",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-011",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-012",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-013",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.8,
+            "citations": [
+              "ptp-absent:v323r0:36415:99213"
+            ],
+            "rationale": "There is no active NCCI practitioner PTP edit pairing 36415 (routine venipuncture) with 99213 (office/outpatient E/M, established patient); venipuncture is separately reportable and payable alongside an E/M service on the same date. With no column-two denial and no modifier bypass at issue, the pair passes the deterministic screen. This is a no-edit outcome, so it auto-adjudicates without documentation review."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-014",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed"
+          ]
+        },
+        {
+          "caseId": "cjc-015",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-016",
+          "kind": "ptp",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-017",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.95,
+            "citations": [
+              "mue:2026Q4:58300"
+            ],
+            "rationale": "Code 58300 (insertion of intrauterine device) carries an MUE value of 1 unit per date of service with adjudication indicator 2, and the claim reports exactly 1 unit on 2026-11-10. Units equal to the MUE value do not exceed the edit, so no MUE denial applies. This is a deterministic outcome requiring no documentation review, so it can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "missed_flag"
+          ]
+        },
+        {
+          "caseId": "cjc-018",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-019",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.9,
+            "citations": [
+              "mue:2026Q4:58571"
+            ],
+            "rationale": "Code 58571 (laparoscopic hysteroscopy with laparoscopic surgery) has an MUE value of 1, and the claim reports exactly 1 unit. Units equal to the MUE value do not exceed the edit, so the line passes the MUE screen. This is a deterministic outcome requiring no documentation review, so it can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-020",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-021",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed"
+          ]
+        },
+        {
+          "caseId": "cjc-022",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": null,
+          "malformedReason": "provider: truncated",
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "malformed"
+          ]
+        },
+        {
+          "caseId": "cjc-023",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "auto",
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.9,
+            "citations": [
+              "mue:2026Q4:99215"
+            ],
+            "rationale": "The MUE for 99215 is 1 unit per date of service with adjudication indicator 2, so the 2 units reported on 2026-11-10 exceed the edit by one unit. Indicator 2 means the excess unit is reduced/denied by claims processing on a deterministic basis, with no documentation or clinical judgment required, so it auto-adjudicates. Only one code is reported, so no PTP or modifier-bypass question arises."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-024",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "no_flag",
+            "route": "auto",
+            "confidence": 0.95,
+            "citations": [
+              "mue:2026Q4:J1050"
+            ],
+            "rationale": "The 2026Q4 NCCI MUE for J1050 is 150 units per date of service. The reported 150 units equals the MUE and does not exceed it, so no MUE flag applies. This is a deterministic MUE screen and can be auto-adjudicated."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-025",
+          "kind": "mue",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "auto",
+            "confidence": 0.8,
+            "citations": [
+              "mue:2026Q4:96372"
+            ],
+            "rationale": "Code 96372 has an MUE value of 2 units per date of service, so 4 reported units on 2026-11-10 exceed the edit. Because the MUE adjudication indicator for 96372 is 2 (date-of-service basis), the overage can be auto-adjudicated without documentation review."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": true,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "false_flag"
+          ]
+        },
+        {
+          "caseId": "cjc-026",
+          "kind": "profile",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.9,
+            "citations": [
+              "profile:2024:obgyn:0797d6d51d17"
+            ],
+            "rationale": "The structured facts provide only a profile identifier with empty codes and modifiers arrays, and no evidence items (no benchmark threshold and no provider 99215 utilization data) are available. Without the provider's level-5 E/M billing pattern and the 2024 OB/GYN peer benchmark value, the outlier screen cannot be computed. A benchmark determination requires the underlying data, so this must go to human review."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention"
+          ]
+        },
+        {
+          "caseId": "cjc-027",
+          "kind": "profile",
+          "trap": false,
+          "expectedDecision": "flag",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.8,
+            "citations": [],
+            "rationale": "No benchmark values, utilization counts, or profile data were supplied, so the provider's 99215 share cannot be compared against the 2024 OB/GYN peer benchmark. Even if the provider were an outlier, a benchmark flag is only a reason for review and would route to human review, never auto. A reviewer needs the profile's E/M distribution and the peer benchmark before any determination."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention"
+          ]
+        },
+        {
+          "caseId": "cjc-028",
+          "kind": "profile",
+          "trap": false,
+          "expectedDecision": "no_flag",
+          "acceptableRoutes": [
+            "auto"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.9,
+            "citations": [
+              "profile:2024:obgyn:001dd6d03298"
+            ],
+            "rationale": "No benchmark value for 2024 OB/GYN 99215 and no provider utilization data are provided (the codes array is empty), so outlier status against the peer benchmark cannot be determined. Even if the provider were an outlier, a benchmark flag is only a reason for review and would route to human_review, never auto. The question therefore cannot be settled from the available rules and data."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": false,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "unwarranted_abstention",
+            "over_escalation"
+          ]
+        },
+        {
+          "caseId": "cjc-029",
+          "kind": "profile",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.95,
+            "citations": [],
+            "rationale": "No 2024 OB/GYN 99215 peer-benchmark threshold or provider-specific utilization data are provided, so the review screen cannot be evaluated. A provider-level benchmark outlier would require human review, but it cannot be determined whether this provider meets that screen."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-030",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.95,
+            "citations": [],
+            "rationale": "No medical record documentation was provided, and NCCI edits and MUEs do not evaluate whether history, exam, or medical decision making supports a level 5 visit. Whether 99215 is supported requires a clinician or certified coder to review the note against the 2021 E/M level-selection criteria. The provider profile id alone carries no documentation content and cannot settle the question."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-031",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "flag",
+            "route": "human_review",
+            "confidence": 0.82,
+            "citations": [
+              "profile:2024:obgyn:0797d6d51d17"
+            ],
+            "rationale": "The profile meets the provider-level outlier screen on level-5 share, so it is flagged for review, but an outlier is only a reason to look closer and is not evidence of fraud. Nothing in the supplied facts (no codes, modifiers, or claim lines) supports a fraud finding or a basis to deny claims. A reviewer must examine the underlying claims and documentation before any determination or denial."
+          },
+          "malformedReason": null,
+          "decisionCorrect": false,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": [
+            "wrong_decision",
+            "missed_abstention"
+          ]
+        },
+        {
+          "caseId": "cjc-032",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.6,
+            "citations": [],
+            "rationale": "I do not have the 2026Q4 practitioner MUE value or adjudication indicator for S0610, so I cannot determine whether 2 units exceed the edit. Because the indicator (1 vs. 2/3) also governs whether auto-adjudication is permissible, both questions require the current NCCI MUE table. A reviewer should verify the MUE value and indicator, and if the edit is exceeded, whether the record supports the reported units."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-033",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.8,
+            "citations": [],
+            "rationale": "The date of service (2027-02-15) falls outside the effective window of the only edit version available to me (v323r0, effective 2026-10-01 through 2026-12-31), so I cannot confirm whether the 57452/57454 PTP edit is active, deleted, or modified on that date. No evidence items were provided to establish the edit's status for 2027 Q1. A reviewer with the applicable current-quarter edit file must confirm the edit's effective/deletion dates before adjudication."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        },
+        {
+          "caseId": "cjc-034",
+          "kind": "trap",
+          "trap": true,
+          "expectedDecision": "abstain",
+          "acceptableRoutes": [
+            "human_review"
+          ],
+          "reply": {
+            "decision": "abstain",
+            "route": "human_review",
+            "confidence": 0.85,
+            "citations": [],
+            "rationale": "The question asks about Aetna commercial payment policy, which is outside the Medicare NCCI practitioner edit set I screen against, and no payer-specific policy evidence was provided. Medicare NCCI v323r0 pairs 58100 (column one) with 58558 (column two) as a same-provider, same-beneficiary, same-date PTP edit, but that outcome does not determine Aetna's commercial rules. A person with access to the Aetna policy document must confirm whether the codes may be billed together without a modifier."
+          },
+          "malformedReason": null,
+          "decisionCorrect": true,
+          "routeAppropriate": true,
+          "citationValid": null,
+          "inventedCitations": [],
+          "failures": []
+        }
+      ]
+    }
+  ]
+}
