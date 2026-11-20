@@ -141,6 +141,15 @@ questions from the verified dataset, with and without retrieval, under two
 versioned prompts, scored deterministically with bootstrap CIs. See
 [LLM_LIFT_EVAL.md](LLM_LIFT_EVAL.md).
 
+### Coding judgment check
+
+`npm run eval:coding-judgment` re-scores the recorded run of a small
+payment-integrity agent (Medicare NCCI PTP/MUE rules plus a provider peer
+screen), grounded vs closed-book, with no network or keys. Live runs default to
+the AI Gateway path here; the committed run used zero-spend OpenRouter `:free`
+models because the gateway account had a billing block. See
+[CODING_JUDGMENT_CHECK.md](CODING_JUDGMENT_CHECK.md).
+
 ### Adding a new LLM feature
 
 1. Add prompt templates in `src/lib/ai/prompts.ts` as pure functions.

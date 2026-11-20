@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "runId": "2026-11-20-openrouter-free",
+  "createdAt": "2026-11-20T20:02:33.412Z",
+  "gitCommit": "0e6203942b8f5b44a6b62f9b0f77819e15e33497",
+  "modelIds": [
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "baidu/ernie-5.5-flash-preview:free"
+  ],
+  "provider": "openrouter_free",
+  "providerNote": "OpenRouter free-tier models, zero spend. Used because the Vercel AI Gateway account returned a billing block (no card on file) when this run was recorded. Pinned :free ids, no models fallback, returned model id recorded per reply.",
+  "inferencePath": "src/lib/payerOps/codingJudgment/openrouter.ts -> OpenRouter chat completions",
+  "temperature": 0,
+  "maxOutputTokens": 4000,
+  "promptVersion": "cjc-v1.0.0",
+  "systemPromptSha256": {
+    "grounded": "277367574375948b94b26ea7900217782ee3098ebad4292913be6ca87be52e65",
+    "closed_book": "b5f0f86f020a780d63ff1edf5a7269b463d59c6ed5aeec8d390bf8b1be43b7cd"
+  },
+  "evalSetSha256": "96ad58c45f9a248cab8fc763a9532eff332c4cc45956122dad011127255d6566",
+  "ncciSubsetSha256": "76f9d504226db9ad0907fedfdd93835d097adeeb02b0f5a7a1431ec17747fac2",
+  "emBenchmarkSha256": "963aab92b1da2d1cba6a023e7cec39bc1e1071e57f9bf31c2dc65100fc628f16",
+  "conditions": [
+    "grounded",
+    "closed_book"
+  ],
+  "caseCount": 34,
+  "passes": 1,
+  "transportReissues": [
+    "baidu/ernie-5.5-flash-preview:free|closed_book|cjc-032",
+    "baidu/ernie-5.5-flash-preview:free|closed_book|cjc-033",
+    "baidu/ernie-5.5-flash-preview:free|closed_book|cjc-034",
+    "nvidia/nemotron-3-ultra-550b-a55b:free|closed_book|cjc-014",
+    "nvidia/nemotron-3-ultra-550b-a55b:free|closed_book|cjc-015",
+    "nvidia/nemotron-3-ultra-550b-a55b:free|closed_book|cjc-016",
+    "nvidia/nemotron-3-ultra-550b-a55b:free|closed_book|cjc-017",
+    "nvidia/nemotron-3-ultra-550b-a55b:free|closed_book|cjc-018"
+  ]
+}
