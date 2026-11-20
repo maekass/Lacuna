@@ -68,9 +68,15 @@ Run `2026-11-20-openrouter-free`: temperature 0, one pass. Vercel AI Gateway,
 the repo default, returned a billing block (no card on file), so this run used
 zero-spend OpenRouter `:free` models with pinned ids, no fallback list, and the
 returned model id checked on every reply. All 136 replies came from the
-requested model. Eight calls that never reached the provider (local proxy 407)
-were re-issued; they are listed in the manifest. Model truncations were kept as
-failures.
+requested model. Eight calls failed with `CONNECT tunnel failed, response 407`
+from the local credential proxy, so they never reached the provider. They were
+re-issued and are listed in the manifest (the console logs with those errors are
+not committed). Resume re-issues only that error. Timeouts and other transport
+errors are kept as failures, as are model truncations. Replay and resume refuse
+to run if input, prompt or setting hashes differ from the manifest. Replies were
+recorded at commits `9394176` and `0e62039` with the same prompt (`cjc-v1.0.0`).
+Gateway runs record `returnedModelId: null` because the gateway helper does not
+expose the response model.
 
 **Peer screen.** 14,391 OB/GYN providers. 2,914 eligible (10,800 below volume,
 677 missing a 99213/99214 row). Pooled 99215 share 5.3%. Raw share median 0%

@@ -47,6 +47,11 @@ import {
 } from "../../src/lib/payerOps/codingJudgment/agent";
 import { checkEvalSet } from "../../src/lib/payerOps/codingJudgment/checks";
 import {
+  isPreProviderTransportFailure,
+  manifestMismatches,
+  stalePromptReplies,
+} from "../../src/lib/payerOps/codingJudgment/runIntegrity";
+import {
   pinnedIds,
   retrieveEvidence,
 } from "../../src/lib/payerOps/codingJudgment/retrieval";
@@ -190,6 +195,9 @@ function score(runDir: string): void {
     JSON.parse(readFileSync(path.join(runDir, "manifest.json"), "utf8")),
   );
   const replies = readReplies(path.join(runDir, "replies.jsonl"));
+  // Refuse to grade a run against inputs it was not recorded on; nothing is
+  // written when this fails.
+  assertRunMatchesInputs(manifest, replies, evalSet, subset, benchmark);
   const pinned = pinnedIds(subset, benchmark);
   const reports = manifest.modelIds.flatMap((modelId) =>
     manifest.conditions.map((condition) =>
@@ -228,9 +236,35 @@ function score(runDir: string): void {
   }
 }
 
-/** Local transport failure: the request never produced a provider response. */
-function isTransportFailure(error: string | null): boolean {
-  return error !== null && error.startsWith("curl transport failed");
+function currentHashes() {
+  return {
+    evalSetSha256: sha256File(FILES.evalSet),
+    ncciSubsetSha256: sha256File(FILES.subset),
+    emBenchmarkSha256: sha256File(FILES.benchmark),
+  };
+}
+
+function assertRunMatchesInputs(
+  manifest: RunManifest | null,
+  replies: readonly ReplyRecord[],
+  evalSet: ReturnType<typeof loadInputs>["evalSet"],
+  subset: ReturnType<typeof loadInputs>["subset"],
+  benchmark: ReturnType<typeof loadInputs>["benchmark"],
+): void {
+  const problems = manifest
+    ? manifestMismatches(manifest, currentHashes())
+    : [];
+  const stale = stalePromptReplies(replies, evalSet.cases, subset, benchmark);
+  if (stale.length) {
+    problems.push(`prompt hash differs for ${stale.join(", ")}`);
+  }
+  if (problems.length) {
+    throw new Error(
+      `Recorded run does not match current inputs (${
+        problems.join("; ")
+      }). Check out the commit in its manifest to replay it.`,
+    );
+  }
 }
 
 type ProviderName = "ai_gateway" | "openrouter_free";
@@ -258,7 +292,9 @@ function gatewayGenerate(modelId: string): GenerateFn {
       text,
       inputTokens: usage?.inputTokens ?? 0,
       outputTokens: usage?.outputTokens ?? 0,
-      returnedModelId: usage?.modelId ?? null,
+      // generateInferenceText does not expose the response's model identity;
+      // usage.modelId is the requested id, so record null rather than claim it.
+      returnedModelId: null,
     };
   };
 }
@@ -312,20 +348,41 @@ async function live(): Promise<string> {
     .trim();
   const repliesPath = path.join(runDir, "replies.jsonl");
   const reissuePath = path.join(runDir, "transport-reissues.json");
-  // --resume keeps every recorded model reply (including truncations and
-  // model errors, which stay failures) and re-issues only calls that never
-  // reached the provider because the local transport failed.
+  // --resume keeps every recorded model reply (including truncations, model
+  // errors and ambiguous transport errors, which stay failures) and re-issues
+  // only credential-proxy 407s, which never reached the provider. It refuses to
+  // resume a run recorded with different settings, inputs or prompts.
   const done = new Set<string>();
+  let createdAtKept = createdAt;
   let reissued: string[] = [];
   const key = (m: string, c: string, id: string) => `${m}|${c}|${id}`;
   if (process.argv.includes("--resume") && existsSync(repliesPath)) {
     const previous = readReplies(repliesPath);
-    const kept = previous.filter((r) => !isTransportFailure(r.error));
+    const manifestPath = path.join(runDir, "manifest.json");
+    const previousManifest = existsSync(manifestPath)
+      ? runManifestSchema.parse(JSON.parse(readFileSync(manifestPath, "utf8")))
+      : null;
+    if (
+      previousManifest &&
+      (previousManifest.provider !== provider ||
+        previousManifest.temperature !== TEMPERATURE ||
+        previousManifest.maxOutputTokens !==
+          (provider === "ai_gateway"
+            ? GATEWAY_MAX_OUTPUT_TOKENS
+            : OPENROUTER_MAX_OUTPUT_TOKENS))
+    ) {
+      throw new Error("Cannot resume: provider or model settings changed.");
+    }
+    if (previousManifest) createdAtKept = previousManifest.createdAt;
+    const kept = previous.filter((r) =>
+      !isPreProviderTransportFailure(r.error)
+    );
+    assertRunMatchesInputs(previousManifest, kept, evalSet, subset, benchmark);
     reissued = existsSync(reissuePath)
       ? (JSON.parse(readFileSync(reissuePath, "utf8")) as string[])
       : [];
     for (const r of previous) {
-      if (isTransportFailure(r.error)) {
+      if (isPreProviderTransportFailure(r.error)) {
         reissued.push(key(r.modelId, r.condition, r.caseId));
       }
     }
@@ -339,6 +396,42 @@ async function live(): Promise<string> {
     writeFileSync(repliesPath, "");
     if (existsSync(reissuePath)) writeFileSync(reissuePath, "[]\n");
   }
+
+  // Written before the first request and after the last, so an interrupted
+  // run still carries its settings and input hashes for a later --resume.
+  const writeManifest = (): void => {
+    const manifest: RunManifest = runManifestSchema.parse({
+      schemaVersion: "1.0.0",
+      runId,
+      createdAt: createdAtKept,
+      gitCommit,
+      modelIds,
+      provider,
+      providerNote: PROVIDER_NOTES[provider],
+      inferencePath: provider === "ai_gateway"
+        ? "src/lib/ai/inference.ts generateInferenceText -> Vercel AI Gateway"
+        : "src/lib/payerOps/codingJudgment/openrouter.ts -> OpenRouter chat completions",
+      temperature: TEMPERATURE,
+      maxOutputTokens: provider === "ai_gateway"
+        ? GATEWAY_MAX_OUTPUT_TOKENS
+        : OPENROUTER_MAX_OUTPUT_TOKENS,
+      promptVersion: CODING_JUDGMENT_PROMPT_VERSION,
+      systemPromptSha256: {
+        grounded: sha256Text(buildSystemPrompt("grounded")),
+        closed_book: sha256Text(buildSystemPrompt("closed_book")),
+      },
+      ...currentHashes(),
+      conditions: CONDITIONS,
+      caseCount: evalSet.cases.length,
+      passes: 1,
+      transportReissues: [...new Set(reissued)].sort(),
+    });
+    writeFileSync(
+      path.join(runDir, "manifest.json"),
+      `${JSON.stringify(manifest, null, 2)}\n`,
+    );
+  };
+  writeManifest();
 
   for (const modelId of modelIds) {
     const generate = makeGenerate(modelId);
@@ -385,38 +478,7 @@ async function live(): Promise<string> {
       }
     }
   }
-  const manifest: RunManifest = runManifestSchema.parse({
-    schemaVersion: "1.0.0",
-    runId,
-    createdAt,
-    gitCommit,
-    modelIds,
-    provider,
-    providerNote: PROVIDER_NOTES[provider],
-    inferencePath: provider === "ai_gateway"
-      ? "src/lib/ai/inference.ts generateInferenceText -> Vercel AI Gateway"
-      : "src/lib/payerOps/codingJudgment/openrouter.ts -> OpenRouter chat completions",
-    temperature: TEMPERATURE,
-    maxOutputTokens: provider === "ai_gateway"
-      ? GATEWAY_MAX_OUTPUT_TOKENS
-      : OPENROUTER_MAX_OUTPUT_TOKENS,
-    promptVersion: CODING_JUDGMENT_PROMPT_VERSION,
-    systemPromptSha256: {
-      grounded: sha256Text(buildSystemPrompt("grounded")),
-      closed_book: sha256Text(buildSystemPrompt("closed_book")),
-    },
-    evalSetSha256: sha256File(FILES.evalSet),
-    ncciSubsetSha256: sha256File(FILES.subset),
-    emBenchmarkSha256: sha256File(FILES.benchmark),
-    conditions: CONDITIONS,
-    caseCount: evalSet.cases.length,
-    passes: 1,
-    transportReissues: [...new Set(reissued)].sort(),
-  });
-  writeFileSync(
-    path.join(runDir, "manifest.json"),
-    `${JSON.stringify(manifest, null, 2)}\n`,
-  );
+  writeManifest();
   return runDir;
 }
 

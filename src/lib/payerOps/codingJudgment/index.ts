@@ -9,3 +9,4 @@ export * from "@/lib/payerOps/codingJudgment/retrieval";
 export * from "@/lib/payerOps/codingJudgment/agent";
 export * from "@/lib/payerOps/codingJudgment/scorer";
 export * from "@/lib/payerOps/codingJudgment/checks";
+export * from "@/lib/payerOps/codingJudgment/runIntegrity";
