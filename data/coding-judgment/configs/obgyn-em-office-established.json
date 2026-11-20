@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "obgyn-em-office-established",
+  "dataYear": 2024,
+  "specialty": {
+    "label": "OB/GYN",
+    "slug": "obgyn",
+    "cmsProviderType": "Obstetrics & Gynecology",
+    "legitimateHighShareReasons": "subspecialty focus (e.g. gynecologic oncology, maternal-fetal medicine, urogynecology), referral patterns, and patient complexity can legitimately raise the share"
+  },
+  "cms": {
+    "title": "Medicare Physician & Other Practitioners - by Provider and Service : 2024-12-01",
+    "datasetId": "92396110-2aed-4d63-a6a2-5d6207d46a29",
+    "alternateDatasetIds": ["335e5f35-eca6-482d-87b3-f99883e213e3"],
+    "catalogUrl": "https://data.cms.gov/data.json",
+    "catalogModified": "2026-05-21",
+    "csvDownloadUrl": "https://data.cms.gov/sites/default/files/2026-05/b5ebab5a-f490-418a-9bce-4b9f31419356/PHY_R26_P05_V10_D24_Prov_Svc.csv",
+    "currentnessEvidence": "data.cms.gov/data.json lists two 2024 API distributions; only 92396110-… carries description \"latest\" and is the dataset-level data-viewer identifier. Both returned identical found_rows (1,195 OB/GYN 99215 rows of 9,781,673 total) on the retrieval date."
+  },
+  "codeFamily": {
+    "slug": "em-level5",
+    "label": "established-patient office E/M",
+    "codes": ["99211", "99212", "99213", "99214", "99215"],
+    "targetCode": "99215",
+    "targetLabel": "level-5",
+    "requiredVisibleCodes": ["99213", "99214"],
+    "sensitivityRequiredCodes": ["99213", "99214", "99215"]
+  },
+  "screen": {
+    "minimumVolume": 100,
+    "reviewPercentile": 0.95,
+    "posteriorThreshold": 0.9,
+    "fdrLevel": 0.05,
+    "kAnonymity": 5
+  },
+  "caseBuilder": {
+    "firstCaseNumber": 26,
+    "highVolumeCut": 250,
+    "typicalVolumeBand": "250-499",
+    "belowThresholdMinShare": 0.5
+  }
+}

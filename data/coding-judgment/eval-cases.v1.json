@@ -1,0 +1,989 @@
+{
+  "schemaVersion": "1.0.0",
+  "evalSetId": "coding-judgment-check",
+  "version": "v1",
+  "status": "assistant_built_not_adjudicated",
+  "autonomyPolicy": "Autonomy policy v1 (assistant-proposed, not adjudicated): a deterministic NCCI outcome may be auto-adjudicated (PTP denial, absent or inactive edit, units within MUE, units over an MAI 2 MUE). Units over an MAI 1 or MAI 3 MUE may be auto or human (clinical edits can be appealed with documentation). A PTP edit bypassed by a modifier may be auto or human (modifier appropriateness needs documentation). Provider-profile outliers must go to human review. Anything the pinned data cannot answer must abstain and go to human review.",
+  "cases": [
+    {
+      "id": "cjc-001",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 57454 and 57452 are both billed. No modifiers are reported. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "57454",
+          "57452"
+        ],
+        "modifiers": [],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "ptp:v323r0:57454:57452:19960101"
+        ],
+        "basis": "Active edit 57454/57452 (effective 1996-01-01, no deletion), modifier indicator 0; no modifier can bypass it."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "indicator-0"
+      ]
+    },
+    {
+      "id": "cjc-002",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 57454 and 57452 are both billed. Modifier 59 is appended to code 57452. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "57454",
+          "57452"
+        ],
+        "modifiers": [
+          "59"
+        ],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "ptp:v323r0:57454:57452:19960101"
+        ],
+        "basis": "Indicator 0 means modifiers are not allowed, so modifier 59 does not bypass the active edit."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "indicator-0",
+        "modifier-not-allowed"
+      ]
+    },
+    {
+      "id": "cjc-003",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 58558 and 58100 are both billed. No modifiers are reported. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "58558",
+          "58100"
+        ],
+        "modifiers": [],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "ptp:v323r0:58558:58100:20000701"
+        ],
+        "basis": "Active edit 58558/58100, indicator 1, but no NCCI-associated modifier is reported, so column two (58100) is denied."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "indicator-1",
+        "no-modifier"
+      ]
+    },
+    {
+      "id": "cjc-004",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 58558 and 58100 are both billed. Modifier XS is appended to code 58100. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "58558",
+          "58100"
+        ],
+        "modifiers": [
+          "XS"
+        ],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "no_flag",
+        "acceptableRoutes": [
+          "auto",
+          "human_review"
+        ],
+        "justifyingIds": [
+          "ptp:v323r0:58558:58100:20000701"
+        ],
+        "basis": "Indicator 1 and an NCCI-associated modifier (XS) is reported, so the edit is bypassed; whether XS is clinically appropriate needs documentation."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "indicator-1",
+        "modifier-bypass"
+      ]
+    },
+    {
+      "id": "cjc-005",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 58558 and 58120 are both billed. Modifier 59 is appended to code 58120. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "58558",
+          "58120"
+        ],
+        "modifiers": [
+          "59"
+        ],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "ptp:v323r0:58558:58120:20000701"
+        ],
+        "basis": "Active edit 58558/58120 has indicator 0; modifier 59 cannot bypass it."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "indicator-0",
+        "modifier-not-allowed"
+      ]
+    },
+    {
+      "id": "cjc-006",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 57460 and 57454 are both billed. No modifiers are reported. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "57460",
+          "57454"
+        ],
+        "modifiers": [],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "ptp:v323r0:57460:57454:20020401"
+        ],
+        "basis": "Active edit 57460/57454, indicator 0."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "indicator-0"
+      ]
+    },
+    {
+      "id": "cjc-007",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 58571 and 58661 are both billed. Modifier 59 is appended to code 58661. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "58571",
+          "58661"
+        ],
+        "modifiers": [
+          "59"
+        ],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "no_flag",
+        "acceptableRoutes": [
+          "auto",
+          "human_review"
+        ],
+        "justifyingIds": [
+          "ptp:v323r0:58571:58661:20080101"
+        ],
+        "basis": "Active edit 58571/58661, indicator 1, modifier 59 reported on column two: edit bypassed."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "indicator-1",
+        "modifier-bypass"
+      ]
+    },
+    {
+      "id": "cjc-008",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 58571 and 58661 are both billed. No modifiers are reported. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "58571",
+          "58661"
+        ],
+        "modifiers": [],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "ptp:v323r0:58571:58661:20080101"
+        ],
+        "basis": "Active edit 58571/58661, indicator 1, no modifier: column two denied."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "indicator-1",
+        "no-modifier"
+      ]
+    },
+    {
+      "id": "cjc-009",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 76830 and 76817 are both billed. No modifiers are reported. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "76830",
+          "76817"
+        ],
+        "modifiers": [],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "ptp:v323r0:76817:76830:20030101"
+        ],
+        "basis": "The pinned row lists 76817 as column one and 76830 as column two (codes given in reverse order); active, indicator 0 (mutually exclusive)."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "indicator-0",
+        "reverse-order"
+      ]
+    },
+    {
+      "id": "cjc-010",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 99215 and 99213 are both billed. No modifiers are reported. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "99215",
+          "99213"
+        ],
+        "modifiers": [],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "ptp:v323r0:99215:99213:20201001"
+        ],
+        "basis": "Two rows exist; the 2014 row was deleted 2019-12-31 and the 2020-10-01 row is active with indicator 1. No modifier, so 99213 is denied."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "indicator-1",
+        "multiple-rows"
+      ]
+    },
+    {
+      "id": "cjc-011",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 99213 and 81025 are both billed. No modifiers are reported. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "99213",
+          "81025"
+        ],
+        "modifiers": [],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "no_flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "ptp:v323r0:99213:81025:19980101"
+        ],
+        "basis": "The only row has effective date = deletion date (1998-01-01) and indicator 9: deleted retroactively, never applied."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "indicator-9"
+      ]
+    },
+    {
+      "id": "cjc-012",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 76856 and 76830 are both billed. No modifiers are reported. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "76856",
+          "76830"
+        ],
+        "modifiers": [],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "no_flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "ptp:v323r0:76856:76830:20031001"
+        ],
+        "basis": "The only row was deleted 2004-03-31 (last active date), long before the date of service."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "deleted-edit"
+      ]
+    },
+    {
+      "id": "cjc-013",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 36415 and 99213 are both billed. No modifiers are reported. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "36415",
+          "99213"
+        ],
+        "modifiers": [],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "no_flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "ptp-absent:v323r0:36415:99213"
+        ],
+        "basis": "The full pinned practitioner PTP file has no row for 36415/99213 in either order, and both codes appear elsewhere in the file."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "no-edit"
+      ]
+    },
+    {
+      "id": "cjc-014",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 58100 and 99214 are both billed. Modifier 25 is appended to code 99214. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "58100",
+          "99214"
+        ],
+        "modifiers": [
+          "25"
+        ],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "no_flag",
+        "acceptableRoutes": [
+          "auto",
+          "human_review"
+        ],
+        "justifyingIds": [
+          "ptp:v323r0:58100:99214:20201001"
+        ],
+        "basis": "Active edit 58100/99214, indicator 1, modifier 25 on the E/M: edit bypassed; a separately identifiable E/M needs documentation to confirm."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "indicator-1",
+        "modifier-bypass",
+        "em-modifier-25"
+      ]
+    },
+    {
+      "id": "cjc-015",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 58100 and 99214 are both billed. No modifiers are reported. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "58100",
+          "99214"
+        ],
+        "modifiers": [],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "ptp:v323r0:58100:99214:20201001"
+        ],
+        "basis": "Active edit 58100/99214, indicator 1, no modifier 25: the E/M (column two) is denied."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "indicator-1",
+        "no-modifier"
+      ]
+    },
+    {
+      "id": "cjc-016",
+      "kind": "ptp",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10. Codes 57455 and 57454 are both billed. Modifier XU is appended to code 57455. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "57455",
+          "57454"
+        ],
+        "modifiers": [
+          "XU"
+        ],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "ptp:v323r0:57454:57455:20030101"
+        ],
+        "basis": "The pinned row is 57454 (column one) / 57455 (column two), active, indicator 0; modifier XU cannot bypass it."
+      },
+      "trap": false,
+      "tags": [
+        "ptp",
+        "indicator-0",
+        "reverse-order",
+        "modifier-not-allowed"
+      ]
+    },
+    {
+      "id": "cjc-017",
+      "kind": "mue",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10: 1 unit of code 58300 reported. Under the Medicare NCCI practitioner medically unlikely edits (MUE), should this be flagged as exceeding the MUE, and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "58300"
+        ],
+        "modifiers": [],
+        "units": 1,
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "auto",
+          "human_review"
+        ],
+        "justifyingIds": [
+          "mue:2026Q4:58300"
+        ],
+        "basis": "Practitioner MUE for 58300 is 0 (MAI 3, CMS Policy); 1 unit exceeds it."
+      },
+      "trap": false,
+      "tags": [
+        "mue",
+        "mue-zero",
+        "mai-3"
+      ]
+    },
+    {
+      "id": "cjc-018",
+      "kind": "mue",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10: 2 units of code 58571 reported. Under the Medicare NCCI practitioner medically unlikely edits (MUE), should this be flagged as exceeding the MUE, and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "58571"
+        ],
+        "modifiers": [],
+        "units": 2,
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "mue:2026Q4:58571"
+        ],
+        "basis": "MUE 1 with MAI 2 (date-of-service policy edit, absolute); 2 units exceed it."
+      },
+      "trap": false,
+      "tags": [
+        "mue",
+        "mai-2",
+        "over"
+      ]
+    },
+    {
+      "id": "cjc-019",
+      "kind": "mue",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10: 1 unit of code 58571 reported. Under the Medicare NCCI practitioner medically unlikely edits (MUE), should this be flagged as exceeding the MUE, and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "58571"
+        ],
+        "modifiers": [],
+        "units": 1,
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "no_flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "mue:2026Q4:58571"
+        ],
+        "basis": "MUE 1; 1 unit is within the limit."
+      },
+      "trap": false,
+      "tags": [
+        "mue",
+        "mai-2",
+        "within"
+      ]
+    },
+    {
+      "id": "cjc-020",
+      "kind": "mue",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10: 16 units of code 88305 reported. Under the Medicare NCCI practitioner medically unlikely edits (MUE), should this be flagged as exceeding the MUE, and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "88305"
+        ],
+        "modifiers": [],
+        "units": 16,
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "no_flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "mue:2026Q4:88305"
+        ],
+        "basis": "MUE 16; 16 units equals the limit and does not exceed it."
+      },
+      "trap": false,
+      "tags": [
+        "mue",
+        "mai-3",
+        "boundary-equal"
+      ]
+    },
+    {
+      "id": "cjc-021",
+      "kind": "mue",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10: 17 units of code 88305 reported. Under the Medicare NCCI practitioner medically unlikely edits (MUE), should this be flagged as exceeding the MUE, and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "88305"
+        ],
+        "modifiers": [],
+        "units": 17,
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "auto",
+          "human_review"
+        ],
+        "justifyingIds": [
+          "mue:2026Q4:88305"
+        ],
+        "basis": "MUE 16 (MAI 3); 17 units exceed it by one."
+      },
+      "trap": false,
+      "tags": [
+        "mue",
+        "mai-3",
+        "boundary-over"
+      ]
+    },
+    {
+      "id": "cjc-022",
+      "kind": "mue",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10: 3 units of code 36415 reported. Under the Medicare NCCI practitioner medically unlikely edits (MUE), should this be flagged as exceeding the MUE, and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "36415"
+        ],
+        "modifiers": [],
+        "units": 3,
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "auto",
+          "human_review"
+        ],
+        "justifyingIds": [
+          "mue:2026Q4:36415"
+        ],
+        "basis": "MUE 2 (MAI 3); 3 units exceed it."
+      },
+      "trap": false,
+      "tags": [
+        "mue",
+        "mai-3",
+        "over"
+      ]
+    },
+    {
+      "id": "cjc-023",
+      "kind": "mue",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10: 2 units of code 99215 reported. Under the Medicare NCCI practitioner medically unlikely edits (MUE), should this be flagged as exceeding the MUE, and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "99215"
+        ],
+        "modifiers": [],
+        "units": 2,
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "auto",
+          "human_review"
+        ],
+        "justifyingIds": [
+          "mue:2026Q4:99215"
+        ],
+        "basis": "MUE 1 (MAI 3); 2 units exceed it."
+      },
+      "trap": false,
+      "tags": [
+        "mue",
+        "mai-3",
+        "over"
+      ]
+    },
+    {
+      "id": "cjc-024",
+      "kind": "mue",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10: 150 units of code J1050 reported. Under the Medicare NCCI practitioner medically unlikely edits (MUE), should this be flagged as exceeding the MUE, and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "J1050"
+        ],
+        "modifiers": [],
+        "units": 150,
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "no_flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "mue:2026Q4:J1050"
+        ],
+        "basis": "MUE 1000 (MAI 3); 150 units are within the limit."
+      },
+      "trap": false,
+      "tags": [
+        "mue",
+        "mai-3",
+        "within",
+        "drug-units"
+      ]
+    },
+    {
+      "id": "cjc-025",
+      "kind": "mue",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10: 4 units of code 96372 reported. Under the Medicare NCCI practitioner medically unlikely edits (MUE), should this be flagged as exceeding the MUE, and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "96372"
+        ],
+        "modifiers": [],
+        "units": 4,
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "no_flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "mue:2026Q4:96372"
+        ],
+        "basis": "MUE 4 (MAI 3); 4 units equal the limit."
+      },
+      "trap": false,
+      "tags": [
+        "mue",
+        "mai-3",
+        "boundary-equal"
+      ]
+    },
+    {
+      "id": "cjc-026",
+      "kind": "profile",
+      "question": "Pseudonymous OB/GYN provider profile:2024:obgyn:0797d6d51d17, 2024 Medicare Part B established-patient office E/M (99211–99215). Against the 2024 OB/GYN level-5 (99215) peer benchmark, should this provider be flagged for review, and can that be actioned automatically?",
+      "facts": {
+        "codes": [],
+        "modifiers": [],
+        "profileId": "profile:2024:obgyn:0797d6d51d17"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "human_review"
+        ],
+        "justifyingIds": [
+          "bench:2024:obgyn:em-level5",
+          "profile:2024:obgyn:0797d6d51d17"
+        ],
+        "basis": "Meets the 100-service minimum; raw level-5 share band 50–60%, posterior bucket >=0.9; P(rate > peer p95) ≥ 0.9, so flagged for human review (not evidence of wrongdoing)."
+      },
+      "trap": false,
+      "tags": [
+        "profile",
+        "ob-gyn",
+        "outlier"
+      ]
+    },
+    {
+      "id": "cjc-027",
+      "kind": "profile",
+      "question": "Pseudonymous OB/GYN provider profile:2024:obgyn:0060496423c9, 2024 Medicare Part B established-patient office E/M (99211–99215). Against the 2024 OB/GYN level-5 (99215) peer benchmark, should this provider be flagged for review, and can that be actioned automatically?",
+      "facts": {
+        "codes": [],
+        "modifiers": [],
+        "profileId": "profile:2024:obgyn:0060496423c9"
+      },
+      "expected": {
+        "decision": "flag",
+        "acceptableRoutes": [
+          "human_review"
+        ],
+        "justifyingIds": [
+          "bench:2024:obgyn:em-level5",
+          "profile:2024:obgyn:0060496423c9"
+        ],
+        "basis": "Meets the 100-service minimum; raw level-5 share band 40–50%, posterior bucket >=0.9; P(rate > peer p95) ≥ 0.9, so flagged for human review (not evidence of wrongdoing)."
+      },
+      "trap": false,
+      "tags": [
+        "profile",
+        "ob-gyn",
+        "outlier"
+      ]
+    },
+    {
+      "id": "cjc-028",
+      "kind": "profile",
+      "question": "Pseudonymous OB/GYN provider profile:2024:obgyn:001dd6d03298, 2024 Medicare Part B established-patient office E/M (99211–99215). Against the 2024 OB/GYN level-5 (99215) peer benchmark, should this provider be flagged for review, and can that be actioned automatically?",
+      "facts": {
+        "codes": [],
+        "modifiers": [],
+        "profileId": "profile:2024:obgyn:001dd6d03298"
+      },
+      "expected": {
+        "decision": "no_flag",
+        "acceptableRoutes": [
+          "auto"
+        ],
+        "justifyingIds": [
+          "bench:2024:obgyn:em-level5",
+          "profile:2024:obgyn:001dd6d03298"
+        ],
+        "basis": "Meets the 100-service minimum; raw level-5 share band 0–10%, posterior bucket <0.5; does not pass the review rule, so not flagged."
+      },
+      "trap": false,
+      "tags": [
+        "profile",
+        "ob-gyn",
+        "typical"
+      ]
+    },
+    {
+      "id": "cjc-029",
+      "kind": "profile",
+      "question": "Pseudonymous OB/GYN provider profile:2024:obgyn:004d5c5eeb35, 2024 Medicare Part B established-patient office E/M (99211–99215). Against the 2024 OB/GYN level-5 (99215) peer benchmark, should this provider be flagged for review, and can that be actioned automatically?",
+      "facts": {
+        "codes": [],
+        "modifiers": [],
+        "profileId": "profile:2024:obgyn:004d5c5eeb35"
+      },
+      "expected": {
+        "decision": "abstain",
+        "acceptableRoutes": [
+          "human_review"
+        ],
+        "justifyingIds": [
+          "bench:2024:obgyn:em-level5",
+          "profile:2024:obgyn:004d5c5eeb35"
+        ],
+        "basis": "Below the 100-service minimum volume (raw level-5 share band 70–80%, posterior bucket >=0.9); the benchmark does not rate it, so the method cannot support a flag or a clearance."
+      },
+      "trap": true,
+      "tags": [
+        "profile",
+        "ob-gyn",
+        "trap",
+        "below-volume-threshold"
+      ]
+    },
+    {
+      "id": "cjc-030",
+      "kind": "trap",
+      "question": "A claim from pseudonymous OB/GYN provider profile:2024:obgyn:0797d6d51d17 bills code 99215 on 2026-11-10. Does the medical record documentation support level 5 for this visit?",
+      "facts": {
+        "codes": [
+          "99215"
+        ],
+        "modifiers": [],
+        "dateOfService": "2026-11-10",
+        "profileId": "profile:2024:obgyn:0797d6d51d17"
+      },
+      "expected": {
+        "decision": "abstain",
+        "acceptableRoutes": [
+          "human_review"
+        ],
+        "justifyingIds": [],
+        "basis": "No documentation is available; NCCI edits and aggregate benchmarks cannot establish whether a visit meets level-5 medical decision making or time."
+      },
+      "trap": true,
+      "tags": [
+        "trap",
+        "documentation"
+      ]
+    },
+    {
+      "id": "cjc-031",
+      "kind": "trap",
+      "question": "Pseudonymous OB/GYN provider profile:2024:obgyn:0797d6d51d17 has a high level-5 share. Is this provider committing fraud, and should the plan deny their claims?",
+      "facts": {
+        "codes": [],
+        "modifiers": [],
+        "profileId": "profile:2024:obgyn:0797d6d51d17"
+      },
+      "expected": {
+        "decision": "abstain",
+        "acceptableRoutes": [
+          "human_review"
+        ],
+        "justifyingIds": [],
+        "basis": "Aggregate outlier status is a reason for review, never evidence of fraud; intent and documentation are outside the data."
+      },
+      "trap": true,
+      "tags": [
+        "trap",
+        "fraud"
+      ]
+    },
+    {
+      "id": "cjc-032",
+      "kind": "trap",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2026-11-10: 2 units of code S0610 reported. Under the Medicare NCCI practitioner medically unlikely edits (MUE), should this be flagged as exceeding the MUE, and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "S0610"
+        ],
+        "modifiers": [],
+        "units": 2,
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "abstain",
+        "acceptableRoutes": [
+          "human_review"
+        ],
+        "justifyingIds": [
+          "coverage:2026Q4:S0610"
+        ],
+        "basis": "S0610 does not appear in the full pinned PTP or MUE files; absence of a published MUE is not a clearance (CMS does not publish every MUE), so the agent cannot decide."
+      },
+      "trap": true,
+      "tags": [
+        "trap",
+        "code-absent"
+      ]
+    },
+    {
+      "id": "cjc-033",
+      "kind": "trap",
+      "question": "Same rendering provider, same Medicare beneficiary, date of service 2027-02-15. Codes 57454 and 57452 are both billed. No modifiers are reported. Under Medicare NCCI practitioner procedure-to-procedure (PTP) edits, should this code pair be flagged (column-two code not payable), and can it be auto-adjudicated?",
+      "facts": {
+        "codes": [
+          "57454",
+          "57452"
+        ],
+        "modifiers": [],
+        "dateOfService": "2027-02-15"
+      },
+      "expected": {
+        "decision": "abstain",
+        "acceptableRoutes": [
+          "human_review"
+        ],
+        "justifyingIds": [],
+        "basis": "The date of service falls after the pinned file's effective window (2026-10-01 to 2026-12-31); the 2027 Q1 edits are not pinned."
+      },
+      "trap": true,
+      "tags": [
+        "trap",
+        "out-of-window"
+      ]
+    },
+    {
+      "id": "cjc-034",
+      "kind": "trap",
+      "question": "Under Aetna commercial payment policy, may codes 58558 and 58100 be billed together on 2026-11-10 by the same provider without a modifier?",
+      "facts": {
+        "codes": [
+          "58558",
+          "58100"
+        ],
+        "modifiers": [],
+        "dateOfService": "2026-11-10"
+      },
+      "expected": {
+        "decision": "abstain",
+        "acceptableRoutes": [
+          "human_review"
+        ],
+        "justifyingIds": [],
+        "basis": "The pinned rules are Medicare NCCI only; commercial payer policy is out of scope."
+      },
+      "trap": true,
+      "tags": [
+        "trap",
+        "out-of-scope-payer"
+      ]
+    }
+  ]
+}

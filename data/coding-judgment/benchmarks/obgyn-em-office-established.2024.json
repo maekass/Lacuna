@@ -1,0 +1,175 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "bench:2024:obgyn:em-level5",
+  "configId": "obgyn-em-office-established",
+  "configSha256": "1e9fec83a013078563576c5824659196b934961f41c613eeaa4696ceee0326cd",
+  "dataset": {
+    "title": "Medicare Physician & Other Practitioners - by Provider and Service : 2024-12-01",
+    "dataYear": 2024,
+    "datasetId": "92396110-2aed-4d63-a6a2-5d6207d46a29",
+    "alternateDatasetIds": [
+      "335e5f35-eca6-482d-87b3-f99883e213e3"
+    ],
+    "currentnessEvidence": "data.cms.gov/data.json lists two 2024 API distributions; only 92396110-… carries description \"latest\" and is the dataset-level data-viewer identifier. Both returned identical found_rows (1,195 OB/GYN 99215 rows of 9,781,673 total) on the retrieval date.",
+    "catalogUrl": "https://data.cms.gov/data.json",
+    "catalogModified": "2026-05-21",
+    "csvDownloadUrl": "https://data.cms.gov/sites/default/files/2026-05/b5ebab5a-f490-418a-9bce-4b9f31419356/PHY_R26_P05_V10_D24_Prov_Svc.csv"
+  },
+  "pull": {
+    "retrievedAt": "2026-11-20T19:10:29.437Z",
+    "queryUrls": [
+      "https://data.cms.gov/data-api/v1/dataset/92396110-2aed-4d63-a6a2-5d6207d46a29/data/stats?filter%5BRndrng_Prvdr_Type%5D=Obstetrics+%26+Gynecology&filter%5BHCPCS_Cd%5D=99211",
+      "https://data.cms.gov/data-api/v1/dataset/92396110-2aed-4d63-a6a2-5d6207d46a29/data?filter%5BRndrng_Prvdr_Type%5D=Obstetrics+%26+Gynecology&filter%5BHCPCS_Cd%5D=99211&size=5000&offset=0",
+      "https://data.cms.gov/data-api/v1/dataset/92396110-2aed-4d63-a6a2-5d6207d46a29/data/stats?filter%5BRndrng_Prvdr_Type%5D=Obstetrics+%26+Gynecology&filter%5BHCPCS_Cd%5D=99212",
+      "https://data.cms.gov/data-api/v1/dataset/92396110-2aed-4d63-a6a2-5d6207d46a29/data?filter%5BRndrng_Prvdr_Type%5D=Obstetrics+%26+Gynecology&filter%5BHCPCS_Cd%5D=99212&size=5000&offset=0",
+      "https://data.cms.gov/data-api/v1/dataset/92396110-2aed-4d63-a6a2-5d6207d46a29/data/stats?filter%5BRndrng_Prvdr_Type%5D=Obstetrics+%26+Gynecology&filter%5BHCPCS_Cd%5D=99213",
+      "https://data.cms.gov/data-api/v1/dataset/92396110-2aed-4d63-a6a2-5d6207d46a29/data?filter%5BRndrng_Prvdr_Type%5D=Obstetrics+%26+Gynecology&filter%5BHCPCS_Cd%5D=99213&size=5000&offset=0",
+      "https://data.cms.gov/data-api/v1/dataset/92396110-2aed-4d63-a6a2-5d6207d46a29/data?filter%5BRndrng_Prvdr_Type%5D=Obstetrics+%26+Gynecology&filter%5BHCPCS_Cd%5D=99213&size=5000&offset=5000",
+      "https://data.cms.gov/data-api/v1/dataset/92396110-2aed-4d63-a6a2-5d6207d46a29/data?filter%5BRndrng_Prvdr_Type%5D=Obstetrics+%26+Gynecology&filter%5BHCPCS_Cd%5D=99213&size=5000&offset=10000",
+      "https://data.cms.gov/data-api/v1/dataset/92396110-2aed-4d63-a6a2-5d6207d46a29/data/stats?filter%5BRndrng_Prvdr_Type%5D=Obstetrics+%26+Gynecology&filter%5BHCPCS_Cd%5D=99214",
+      "https://data.cms.gov/data-api/v1/dataset/92396110-2aed-4d63-a6a2-5d6207d46a29/data?filter%5BRndrng_Prvdr_Type%5D=Obstetrics+%26+Gynecology&filter%5BHCPCS_Cd%5D=99214&size=5000&offset=0",
+      "https://data.cms.gov/data-api/v1/dataset/92396110-2aed-4d63-a6a2-5d6207d46a29/data?filter%5BRndrng_Prvdr_Type%5D=Obstetrics+%26+Gynecology&filter%5BHCPCS_Cd%5D=99214&size=5000&offset=5000",
+      "https://data.cms.gov/data-api/v1/dataset/92396110-2aed-4d63-a6a2-5d6207d46a29/data/stats?filter%5BRndrng_Prvdr_Type%5D=Obstetrics+%26+Gynecology&filter%5BHCPCS_Cd%5D=99215",
+      "https://data.cms.gov/data-api/v1/dataset/92396110-2aed-4d63-a6a2-5d6207d46a29/data?filter%5BRndrng_Prvdr_Type%5D=Obstetrics+%26+Gynecology&filter%5BHCPCS_Cd%5D=99215&size=5000&offset=0"
+    ],
+    "rowCountsByCode": {
+      "99211": 135,
+      "99212": 1872,
+      "99213": 12739,
+      "99214": 7642,
+      "99215": 1195
+    },
+    "apiFoundRowsByCode": {
+      "99211": 135,
+      "99212": 1872,
+      "99213": 12739,
+      "99214": 7642,
+      "99215": 1195
+    },
+    "totalRows": 23583,
+    "canonicalRowsSha256": "6e2e0045a25f5214d98237f2d29c69243d234a2953e5fb83e7b78876b799394a"
+  },
+  "method": {
+    "specialty": "Obstetrics & Gynecology",
+    "specialtyLabel": "OB/GYN",
+    "codeFamilyLabel": "established-patient office E/M",
+    "targetLabel": "level-5",
+    "codes": [
+      "99211",
+      "99212",
+      "99213",
+      "99214",
+      "99215"
+    ],
+    "targetCode": "99215",
+    "unit": "services (Tot_Srvcs), summed across places of service",
+    "minimumVolume": 100,
+    "requiredVisibleCodes": [
+      "99213",
+      "99214"
+    ],
+    "peerModel": "beta-binomial, method of moments",
+    "reviewRule": "Route for review when P(true level-5 rate > peer 95th-percentile rate | data) >= 0.9 under the fitted Beta prior (empirical Bayes).",
+    "reviewPercentile": 0.95,
+    "posteriorThreshold": 0.9,
+    "significanceTest": "one-sided beta-binomial upper-tail p-value, Benjamini-Hochberg",
+    "fdrLevel": 0.05,
+    "suppressionNote": "CMS omits provider × code rows with fewer than 11 beneficiaries. Providers without visible 99213 and 99214 rows are excluded (a missing high-volume row inflates share). A missing 99215 row is counted as 0 level-5 services, a lower bound."
+  },
+  "results": {
+    "providersPulled": 14391,
+    "providersEligible": 2914,
+    "excludedBelowVolume": 10800,
+    "excludedIncompleteDenominator": 677,
+    "pooledTargetShare": 0.052582,
+    "betaAlpha": 0.117408,
+    "betaBeta": 2.115441,
+    "intraclassRho": 0.309325,
+    "peerRateAtReviewPercentile": 0.324649,
+    "rawShareQuantiles": {
+      "p10": 0,
+      "p25": 0,
+      "p50": 0,
+      "p75": 0,
+      "p90": 0.176554,
+      "p95": 0.311098,
+      "p99": 0.552594
+    },
+    "volumeQuantiles": {
+      "p10": 111,
+      "p25": 132,
+      "p50": 187,
+      "p75": 300,
+      "p90": 513,
+      "p95": 692.35,
+      "p99": 1303.88
+    },
+    "eligibleWithTargetSuppressed": 2219,
+    "flaggedForReview": 117,
+    "estimatedFalseReviewFraction": 0.0063,
+    "betaBinomialSignificantAtFdr": 0,
+    "naiveBinomialSignificantAtFdr": 450,
+    "flaggedShareBandHistogram": {
+      "0.3": 11,
+      "0.4": 61,
+      "0.5": 21,
+      "0.6": 14,
+      "0.7": 9,
+      "0.8": 1
+    },
+    "minFlaggedRawShareBandLow": 0.3,
+    "sensitivity": {
+      "cohort": "Same rule, restricted to providers with visible 99213, 99214, 99215 rows (selection toward higher level-5 use, so peers look higher and flags are fewer).",
+      "providersEligible": 695,
+      "pooledTargetShare": 0.16817,
+      "rawShareMedian": 0.146479,
+      "peerRateAtReviewPercentile": 0.53353,
+      "flaggedForReview": 27,
+      "flaggedAlsoInPrimary": 27
+    }
+  },
+  "profiles": [
+    {
+      "id": "profile:2024:obgyn:0797d6d51d17",
+      "targetShareBandLow": 0.5,
+      "volumeBand": "250-499",
+      "shrunkShareBandLow": 0.5,
+      "posteriorBucket": ">=0.9",
+      "meetsVolumeThreshold": true,
+      "outlierForReview": true,
+      "cellPeerCount": 5
+    },
+    {
+      "id": "profile:2024:obgyn:0060496423c9",
+      "targetShareBandLow": 0.4,
+      "volumeBand": "100-249",
+      "shrunkShareBandLow": 0.4,
+      "posteriorBucket": ">=0.9",
+      "meetsVolumeThreshold": true,
+      "outlierForReview": true,
+      "cellPeerCount": 37
+    },
+    {
+      "id": "profile:2024:obgyn:001dd6d03298",
+      "targetShareBandLow": 0,
+      "volumeBand": "250-499",
+      "shrunkShareBandLow": 0,
+      "posteriorBucket": "<0.5",
+      "meetsVolumeThreshold": true,
+      "outlierForReview": false,
+      "cellPeerCount": 529
+    },
+    {
+      "id": "profile:2024:obgyn:004d5c5eeb35",
+      "targetShareBandLow": 0.7,
+      "volumeBand": "<100",
+      "shrunkShareBandLow": 0.6,
+      "posteriorBucket": ">=0.9",
+      "meetsVolumeThreshold": false,
+      "outlierForReview": false,
+      "cellPeerCount": 13
+    }
+  ],
+  "privacy": "No NPI, name, address, or exact per-provider count is committed. Profile ids are HMAC-SHA256 pseudonyms keyed by a local salt that is not committed. Each profile's share band × volume band cell holds at least 5 providers.",
+  "interpretation": "A flag means a provider's 2024 Medicare Part B level-5 share (99215 among 99211–99215) is unusual relative to OB/GYN peers after allowing for normal between-provider variation. It is a reason for human review only. It is not evidence of incorrect coding, fraud, or wrongdoing: subspecialty focus (e.g. gynecologic oncology, maternal-fetal medicine, urogynecology), referral patterns, and patient complexity can legitimately raise the share, and this data has no diagnoses or documentation."
+}

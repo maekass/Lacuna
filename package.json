@@ -111,7 +111,13 @@
     "gate:quality-history": "tsx scripts/quality-history-gate.ts",
     "ci:governance": "tsx scripts/ci-governance.ts",
     "ci:preflight": "npm run ci:governance && npm run deno:fmt:check && npm run lint && npm run typecheck && npm test && npm run build:ci",
-    "eval:clinical-evidence": "tsx scripts/eval-clinical-evidence.ts"
+    "eval:clinical-evidence": "tsx scripts/eval-clinical-evidence.ts",
+    "coding-judgment:fetch-cms": "tsx scripts/coding-judgment/fetch-cms-em.ts",
+    "coding-judgment:build-benchmark": "tsx scripts/coding-judgment/build-em-benchmark.ts",
+    "coding-judgment:build-ncci": "tsx scripts/coding-judgment/build-ncci-subset.ts",
+    "coding-judgment:build-cases": "tsx scripts/coding-judgment/build-profile-cases.ts",
+    "coding-judgment:check": "tsx scripts/coding-judgment/check.ts",
+    "eval:coding-judgment": "tsx scripts/coding-judgment/run-eval.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.114",

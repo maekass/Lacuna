@@ -1,0 +1,392 @@
+{
+  "schemaVersion": "1.0.0",
+  "program": "Medicare NCCI — practitioner",
+  "ptpVersion": "v323r0",
+  "quarter": "2026Q4",
+  "effectiveFrom": "2026-10-01",
+  "effectiveThrough": "2026-12-31",
+  "retrievedAt": "2026-11-20T19:20:12.047Z",
+  "sourcePages": [
+    "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits/medicare-ncci-procedure-procedure-ptp-edits",
+    "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits/medicare-ncci-medically-unlikely-edits"
+  ],
+  "sourceFiles": [
+    {
+      "role": "ptp",
+      "url": "https://www.cms.gov/files/zip/medicare-ncci-2026q4-practitioner-ptp-edits-ccipra-v323r0-f1.zip",
+      "zipSha256": "40adc15de0b5cf9470f874b4a0183a2edb285783f2c1c3db35ab27e1a0b032e2",
+      "zipBytes": 20238121,
+      "memberName": "ccipra-v323r0-f1.TXT",
+      "memberSha256": "7793c0b6686c1e2285b160befa1dd189d5896ac8f25a67f53d75a88c6cf77a7d",
+      "dataRowCount": 675157
+    },
+    {
+      "role": "ptp",
+      "url": "https://www.cms.gov/files/zip/medicare-ncci-2026q4-practitioner-ptp-edits-ccipra-v323r0-f2.zip",
+      "zipSha256": "e0c916cc5b0bf1b7d1dea454a02f024fa1f8b8c819da0f86f144ab1d6ff5343d",
+      "zipBytes": 19186336,
+      "memberName": "ccipra-v323r0-f2.TXT",
+      "memberSha256": "6d71d935ad87a762ae02e85912964d4c7e3d333fc326bad05a07d188500c1188",
+      "dataRowCount": 674914
+    },
+    {
+      "role": "ptp",
+      "url": "https://www.cms.gov/files/zip/medicare-ncci-2026q4-practitioner-ptp-edits-ccipra-v323r0-f3.zip",
+      "zipSha256": "79024324e5f2ac9666a5183c9b256a79cd217f1c495d0f69d53c2a1b9d98b208",
+      "zipBytes": 19812296,
+      "memberName": "ccipra-v323r0-f3.txt",
+      "memberSha256": "34a66d80a16dd1be512b37146a732b4ca4770e230f81469cc2e40b07e12613bf",
+      "dataRowCount": 675035
+    },
+    {
+      "role": "ptp",
+      "url": "https://www.cms.gov/files/zip/medicare-ncci-2026q4-practitioner-ptp-edits-ccipra-v323r0-f4.zip",
+      "zipSha256": "028a6d91e27ab177a70f125db22f3f3e898f66345852e7f5470e2065796ef545",
+      "zipBytes": 17884951,
+      "memberName": "ccipra-v323r0-f4.txt",
+      "memberSha256": "c895e787d3e1f896fd0ccd16b6b91ea61309e40c7dce1892201162eefa43557b",
+      "dataRowCount": 612539
+    },
+    {
+      "role": "mue",
+      "url": "https://www.cms.gov/files/zip/medicare-ncci-2026-q4-practitioner-services-mue-table.zip",
+      "zipSha256": "4574336755ba4e49b7c8ec07de5b74d3f0b8593e3e6192013631724981180d00",
+      "zipBytes": 407831,
+      "memberName": "MCR_MUE_PractitionerServices_Eff_10-01-2026.csv",
+      "memberSha256": "ef038efaf902b7bd41b8d43318ead2944e712806f903358eb2f8ab5df98711b3",
+      "dataRowCount": 15212
+    }
+  ],
+  "licenseNote": "CMS NCCI files include CPT codes (copyright American Medical Association). Only code numbers, dates, indicators and CMS rationale labels are committed here; no CPT descriptors. See docs/REIMBURSEMENT_CPT_LICENSING.md.",
+  "ptpEdits": [
+    {
+      "id": "ptp:v323r0:57454:57452:19960101",
+      "column1": "57454",
+      "column2": "57452",
+      "priorTo1996": true,
+      "effectiveDate": "19960101",
+      "deletionDate": null,
+      "modifierIndicator": "0",
+      "rationale": "CPT Manual or CMS manual coding instruction"
+    },
+    {
+      "id": "ptp:v323r0:57454:57455:20030101",
+      "column1": "57454",
+      "column2": "57455",
+      "priorTo1996": false,
+      "effectiveDate": "20030101",
+      "deletionDate": null,
+      "modifierIndicator": "0",
+      "rationale": "HCPCS/CPT procedure code definition"
+    },
+    {
+      "id": "ptp:v323r0:57460:57454:20020401",
+      "column1": "57460",
+      "column2": "57454",
+      "priorTo1996": false,
+      "effectiveDate": "20020401",
+      "deletionDate": null,
+      "modifierIndicator": "0",
+      "rationale": "Misuse of Column Two code with Column One code"
+    },
+    {
+      "id": "ptp:v323r0:58100:99214:20130701",
+      "column1": "58100",
+      "column2": "99214",
+      "priorTo1996": false,
+      "effectiveDate": "20130701",
+      "deletionDate": "20191231",
+      "modifierIndicator": "1",
+      "rationale": "CPT Manual or CMS manual coding instruction"
+    },
+    {
+      "id": "ptp:v323r0:58100:99214:20201001",
+      "column1": "58100",
+      "column2": "99214",
+      "priorTo1996": false,
+      "effectiveDate": "20201001",
+      "deletionDate": null,
+      "modifierIndicator": "1",
+      "rationale": "CPT Manual or CMS manual coding instruction"
+    },
+    {
+      "id": "ptp:v323r0:58558:58100:20000701",
+      "column1": "58558",
+      "column2": "58100",
+      "priorTo1996": false,
+      "effectiveDate": "20000701",
+      "deletionDate": null,
+      "modifierIndicator": "1",
+      "rationale": "CPT Separate procedure definition"
+    },
+    {
+      "id": "ptp:v323r0:58558:58120:20000701",
+      "column1": "58558",
+      "column2": "58120",
+      "priorTo1996": false,
+      "effectiveDate": "20000701",
+      "deletionDate": null,
+      "modifierIndicator": "0",
+      "rationale": "HCPCS/CPT procedure code definition"
+    },
+    {
+      "id": "ptp:v323r0:58571:58661:20080101",
+      "column1": "58571",
+      "column2": "58661",
+      "priorTo1996": false,
+      "effectiveDate": "20080101",
+      "deletionDate": null,
+      "modifierIndicator": "1",
+      "rationale": "CPT Manual or CMS manual coding instruction"
+    },
+    {
+      "id": "ptp:v323r0:76817:76830:20030101",
+      "column1": "76817",
+      "column2": "76830",
+      "priorTo1996": false,
+      "effectiveDate": "20030101",
+      "deletionDate": null,
+      "modifierIndicator": "0",
+      "rationale": "Mutually exclusive procedures"
+    },
+    {
+      "id": "ptp:v323r0:76856:76830:20031001",
+      "column1": "76856",
+      "column2": "76830",
+      "priorTo1996": false,
+      "effectiveDate": "20031001",
+      "deletionDate": "20040331",
+      "modifierIndicator": "1",
+      "rationale": "Standards of medical/surgical practice"
+    },
+    {
+      "id": "ptp:v323r0:99213:81025:19980101",
+      "column1": "99213",
+      "column2": "81025",
+      "priorTo1996": false,
+      "effectiveDate": "19980101",
+      "deletionDate": "19980101",
+      "modifierIndicator": "9",
+      "rationale": "Standards of medical/surgical practice"
+    },
+    {
+      "id": "ptp:v323r0:99215:99213:20140701",
+      "column1": "99215",
+      "column2": "99213",
+      "priorTo1996": false,
+      "effectiveDate": "20140701",
+      "deletionDate": "20191231",
+      "modifierIndicator": "1",
+      "rationale": "Misuse of Column Two code with Column One code"
+    },
+    {
+      "id": "ptp:v323r0:99215:99213:20201001",
+      "column1": "99215",
+      "column2": "99213",
+      "priorTo1996": false,
+      "effectiveDate": "20201001",
+      "deletionDate": null,
+      "modifierIndicator": "1",
+      "rationale": "Misuse of Column Two code with Column One code"
+    }
+  ],
+  "mueEdits": [
+    {
+      "id": "mue:2026Q4:36415",
+      "code": "36415",
+      "mueValue": 2,
+      "adjudicationIndicator": "3",
+      "adjudicationLabel": "Date of Service Edit: Clinical",
+      "rationale": "CMS Policy"
+    },
+    {
+      "id": "mue:2026Q4:58300",
+      "code": "58300",
+      "mueValue": 0,
+      "adjudicationIndicator": "3",
+      "adjudicationLabel": "Date of Service Edit: Clinical",
+      "rationale": "CMS Policy"
+    },
+    {
+      "id": "mue:2026Q4:58571",
+      "code": "58571",
+      "mueValue": 1,
+      "adjudicationIndicator": "2",
+      "adjudicationLabel": "Date of Service Edit: Policy",
+      "rationale": "Anatomic Consideration"
+    },
+    {
+      "id": "mue:2026Q4:88305",
+      "code": "88305",
+      "mueValue": 16,
+      "adjudicationIndicator": "3",
+      "adjudicationLabel": "Date of Service Edit: Clinical",
+      "rationale": "Clinical: Data"
+    },
+    {
+      "id": "mue:2026Q4:96372",
+      "code": "96372",
+      "mueValue": 4,
+      "adjudicationIndicator": "3",
+      "adjudicationLabel": "Date of Service Edit: Clinical",
+      "rationale": "Clinical: Data"
+    },
+    {
+      "id": "mue:2026Q4:99215",
+      "code": "99215",
+      "mueValue": 1,
+      "adjudicationIndicator": "3",
+      "adjudicationLabel": "Date of Service Edit: Clinical",
+      "rationale": "Clinical: Data"
+    },
+    {
+      "id": "mue:2026Q4:J1050",
+      "code": "J1050",
+      "mueValue": 1000,
+      "adjudicationIndicator": "3",
+      "adjudicationLabel": "Date of Service Edit: Clinical",
+      "rationale": "Prescribing Information"
+    }
+  ],
+  "coverage": [
+    {
+      "id": "coverage:2026Q4:36415",
+      "code": "36415",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:57452",
+      "code": "57452",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:57454",
+      "code": "57454",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:57455",
+      "code": "57455",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:57460",
+      "code": "57460",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:58100",
+      "code": "58100",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:58120",
+      "code": "58120",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:58300",
+      "code": "58300",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:58558",
+      "code": "58558",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:58571",
+      "code": "58571",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:58661",
+      "code": "58661",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:76817",
+      "code": "76817",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:76830",
+      "code": "76830",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:76856",
+      "code": "76856",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:81025",
+      "code": "81025",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:88305",
+      "code": "88305",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:96372",
+      "code": "96372",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:99213",
+      "code": "99213",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:99214",
+      "code": "99214",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:99215",
+      "code": "99215",
+      "inPtpFile": true,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:J1050",
+      "code": "J1050",
+      "inPtpFile": false,
+      "inMueFile": true
+    },
+    {
+      "id": "coverage:2026Q4:S0610",
+      "code": "S0610",
+      "inPtpFile": false,
+      "inMueFile": false
+    }
+  ],
+  "ptpPairAbsences": [
+    {
+      "id": "ptp-absent:v323r0:36415:99213",
+      "codeA": "36415",
+      "codeB": "99213"
+    }
+  ]
+}
