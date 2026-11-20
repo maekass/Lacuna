@@ -5,7 +5,7 @@
  *   npm run eval:coding-judgment                       # re-score committed run
  *   npm run eval:coding-judgment -- --replay <dir>     # re-score a run dir
  *   npm run eval:coding-judgment -- --live --model <id>[,<id>] [--out <dir>]
- *       [--provider gateway|openrouter-free]
+ *       [--provider gateway|openrouter-free] [--run-id <id>] [--resume]
  *
  * Live mode makes one pass per model × condition at temperature 0 and writes
  * raw replies, a config manifest and scored results. The default provider is
@@ -228,6 +228,11 @@ function score(runDir: string): void {
   }
 }
 
+/** Local transport failure: the request never produced a provider response. */
+function isTransportFailure(error: string | null): boolean {
+  return error !== null && error.startsWith("curl transport failed");
+}
+
 type ProviderName = "ai_gateway" | "openrouter_free";
 
 function gatewayGenerate(modelId: string): GenerateFn {
@@ -306,13 +311,41 @@ async function live(): Promise<string> {
   const gitCommit = execSync("git rev-parse HEAD", { encoding: "utf8" })
     .trim();
   const repliesPath = path.join(runDir, "replies.jsonl");
-  writeFileSync(repliesPath, "");
+  const reissuePath = path.join(runDir, "transport-reissues.json");
+  // --resume keeps every recorded model reply (including truncations and
+  // model errors, which stay failures) and re-issues only calls that never
+  // reached the provider because the local transport failed.
+  const done = new Set<string>();
+  let reissued: string[] = [];
+  const key = (m: string, c: string, id: string) => `${m}|${c}|${id}`;
+  if (process.argv.includes("--resume") && existsSync(repliesPath)) {
+    const previous = readReplies(repliesPath);
+    const kept = previous.filter((r) => !isTransportFailure(r.error));
+    reissued = existsSync(reissuePath)
+      ? (JSON.parse(readFileSync(reissuePath, "utf8")) as string[])
+      : [];
+    for (const r of previous) {
+      if (isTransportFailure(r.error)) {
+        reissued.push(key(r.modelId, r.condition, r.caseId));
+      }
+    }
+    writeFileSync(reissuePath, `${JSON.stringify(reissued, null, 2)}\n`);
+    writeFileSync(
+      repliesPath,
+      kept.map((r) => `${JSON.stringify(r)}\n`).join(""),
+    );
+    for (const r of kept) done.add(key(r.modelId, r.condition, r.caseId));
+  } else {
+    writeFileSync(repliesPath, "");
+    if (existsSync(reissuePath)) writeFileSync(reissuePath, "[]\n");
+  }
 
   for (const modelId of modelIds) {
     const generate = makeGenerate(modelId);
     let consecutiveErrors = 0;
     for (const condition of CONDITIONS) {
       for (const item of evalSet.cases) {
+        if (done.has(key(modelId, condition, item.id))) continue;
         const evidence = condition === "grounded"
           ? retrieveEvidence(item.facts, subset, benchmark)
           : [];
@@ -378,6 +411,7 @@ async function live(): Promise<string> {
     conditions: CONDITIONS,
     caseCount: evalSet.cases.length,
     passes: 1,
+    transportReissues: [...new Set(reissued)].sort(),
   });
   writeFileSync(
     path.join(runDir, "manifest.json"),

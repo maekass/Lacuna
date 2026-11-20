@@ -309,5 +309,11 @@ export const runManifestSchema = z.object({
   conditions: z.array(conditionSchema).min(1),
   caseCount: z.number().int().positive(),
   passes: z.literal(1),
+  /**
+   * model|condition|case keys re-issued because the local transport failed
+   * before any provider response (e.g. credential-proxy 407). Model replies,
+   * including truncations and provider errors, are never re-issued.
+   */
+  transportReissues: z.array(z.string()),
 });
 export type RunManifest = z.infer<typeof runManifestSchema>;
