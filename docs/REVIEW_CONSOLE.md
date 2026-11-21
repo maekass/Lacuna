@@ -71,15 +71,21 @@ copied into `metadata`.
 - **Keys** live only in the environment. Generate one with
   `openssl rand -base64 32` and set `LACUNA_FIELD_ENCRYPTION_KEYS=k1:<key>`.
   Audit writes fail closed (no plaintext fallback) when the key is missing or
-  malformed.
+  malformed. Review write routes (approve/reject, promote, enrich, CSV import)
+  check the keyring before changing anything and return 503, so a missing key
+  cannot leave a saved change without its audit row. The
+  `promote-approved-deals` workflow reads both variables from repository secrets
+  of the same names.
 - **Binding:** the key ID and the column name are authenticated data, so a value
   cannot be decrypted under another key ID or moved to another column.
 - **Rotation:** add the new key (`k1:<old>,k2:<new>`), set
   `LACUNA_FIELD_ENCRYPTION_ACTIVE_KEY=k2`, run
   `npm run encryption:rotate -- --dry-run`, then `npm run encryption:rotate`.
   Remove `k1` once the dry run reports `would rotate 0`. The same command
-  encrypts rows written before encryption existed; until it runs, those legacy
-  plaintext rows are still readable.
+  encrypts rows written before encryption existed and removes the plaintext
+  `metadata.login` copy that older GitHub sign-in rows carried; until it runs,
+  those legacy rows are still readable. It reads `.env.local` for any value not
+  already exported.
 - **In transit:** Postgres connections verify TLS certificates by default and
   refuse `PGSSLMODE=disable` for non-local hosts (`src/lib/data/pgSslPolicy.ts`,
   `resolvePgSslConfig` in `src/lib/data/dbClient.ts`). The site sends HSTS

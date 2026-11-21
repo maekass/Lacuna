@@ -1,3 +1,4 @@
+import { Buffer } from "node:buffer";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/ingestion/pendingDeals", () => ({
@@ -93,6 +94,11 @@ describe("PATCH /api/deals/pending/[dealId]", () => {
     vi.unstubAllEnvs();
     vi.stubEnv("DATABASE_URL", "postgresql://user:pass@localhost:5432/lacuna");
     vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv(
+      "LACUNA_FIELD_ENCRYPTION_KEYS",
+      `k1:${Buffer.alloc(32, 5).toString("base64")}`,
+    );
+    vi.stubEnv("LACUNA_FIELD_ENCRYPTION_ACTIVE_KEY", "");
   });
 
   it("updates pending deal status", async () => {
@@ -141,6 +147,34 @@ describe("PATCH /api/deals/pending/[dealId]", () => {
     expect(response.status).toBe(200);
     expect(body.ok).toBe(true);
     expect(body.item.status).toBe("approved");
+  });
+});
+
+describe("PATCH /api/deals/pending/[dealId] without the audit key", () => {
+  beforeEach(() => {
+    vi.resetModules();
+    vi.unstubAllEnvs();
+    vi.stubEnv("DATABASE_URL", "postgresql://user:pass@localhost:5432/lacuna");
+    vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv("LACUNA_FIELD_ENCRYPTION_KEYS", "");
+  });
+
+  it("refuses before saving, so no change lands without an audit row", async () => {
+    const { updatePendingDeal } = await import("@/lib/ingestion/pendingDeals");
+    vi.mocked(updatePendingDeal).mockClear();
+
+    const { PATCH } = await import("@/app/api/deals/pending/[dealId]/route");
+    const response = await PATCH(
+      new Request("http://localhost/api/deals/pending/sec-1", {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ status: "approved" }),
+      }),
+      { params: Promise.resolve({ dealId: "sec-1" }) },
+    );
+
+    expect(response.status).toBe(503);
+    expect(updatePendingDeal).not.toHaveBeenCalled();
   });
 });
 

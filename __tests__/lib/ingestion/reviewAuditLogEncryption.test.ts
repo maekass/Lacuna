@@ -8,6 +8,7 @@ import {
   listReviewAuditForDeal,
   logReviewAction,
   rotateReviewAuditActorIds,
+  withoutLegacyLogin,
 } from "@/lib/ingestion/reviewAuditLog";
 import {
   FieldDecryptionError,
@@ -101,19 +102,19 @@ describe("review_audit_log actor_id encryption at rest (pg-mem)", () => {
     const dry = await rotateReviewAuditActorIds(db.pool, ring, {
       dryRun: true,
     });
-    expect(dry).toEqual({ scanned: 2, rotated: 2 });
+    expect(dry).toEqual({ scanned: 2, rotated: 2, scrubbed: 0 });
     expect(await rawActorIds()).toEqual(before);
 
     const real = await rotateReviewAuditActorIds(db.pool, ring, {
       batchSize: 1,
     });
-    expect(real).toEqual({ scanned: 2, rotated: 2 });
+    expect(real).toEqual({ scanned: 2, rotated: 2, scrubbed: 0 });
     const after = await rawActorIds();
     expect(after.every((v) => v.startsWith("enc:v1:k2:"))).toBe(true);
     expect(after.join(" ")).not.toContain("system:promote");
 
     const again = await rotateReviewAuditActorIds(db.pool, ring);
-    expect(again).toEqual({ scanned: 2, rotated: 0 });
+    expect(again).toEqual({ scanned: 2, rotated: 0, scrubbed: 0 });
 
     // The old key can now be retired.
     vi.stubEnv("LACUNA_FIELD_ENCRYPTION_KEYS", `k2:${KEY_B}`);
@@ -121,5 +122,56 @@ describe("review_audit_log actor_id encryption at rest (pg-mem)", () => {
     expect(rows.map((r) => r.actorId).sort()).toEqual(
       [ACTOR, "system:promote"].sort(),
     );
+  });
+
+  it("removes the legacy plaintext login copy and keeps other metadata", async () => {
+    // Shape the pre-encryption GitHub callback wrote: login in both columns.
+    await db.pool.query(
+      `INSERT INTO review_audit_log (action, actor_id, actor_method, metadata)
+       VALUES ('session_start', $1, 'github', $2::jsonb)`,
+      [
+        ACTOR,
+        JSON.stringify({ provider: "github", login: "example-reviewer" }),
+      ],
+    );
+    await db.pool.query(
+      `INSERT INTO review_audit_log (action, actor_id, actor_method, metadata)
+       VALUES ('import', 'system:promote', 'api_key', $1::jsonb)`,
+      [JSON.stringify({ parsed: 3, login: "not-a-github-row" })],
+    );
+    const ring = parseFieldKeyring(`k1:${KEY_A}`);
+
+    const dry = await rotateReviewAuditActorIds(db.pool, ring, {
+      dryRun: true,
+    });
+    expect(dry).toEqual({ scanned: 2, rotated: 2, scrubbed: 1 });
+
+    const real = await rotateReviewAuditActorIds(db.pool, ring);
+    expect(real).toEqual({ scanned: 2, rotated: 2, scrubbed: 1 });
+
+    const { rows } = await db.pool.query<
+      { actor_id: string; metadata: Record<string, unknown> }
+    >("SELECT actor_id, metadata FROM review_audit_log ORDER BY id");
+    expect(rows[0].metadata).toEqual({ provider: "github" });
+    expect(JSON.stringify(rows[0])).not.toContain("example-reviewer");
+    // Non-GitHub metadata is not touched.
+    expect(rows[1].metadata).toEqual({ parsed: 3, login: "not-a-github-row" });
+
+    const again = await rotateReviewAuditActorIds(db.pool, ring);
+    expect(again).toEqual({ scanned: 2, rotated: 0, scrubbed: 0 });
+  });
+});
+
+describe("withoutLegacyLogin", () => {
+  it("returns null when there is nothing to remove", () => {
+    expect(withoutLegacyLogin(null)).toBeNull();
+    expect(withoutLegacyLogin({})).toBeNull();
+    expect(withoutLegacyLogin({ provider: "github" })).toBeNull();
+    expect(withoutLegacyLogin({ login: "x" })).toBeNull();
+  });
+
+  it("drops only the login key from GitHub sign-in metadata", () => {
+    expect(withoutLegacyLogin({ provider: "github", login: "x", n: 1 }))
+      .toEqual({ provider: "github", n: 1 });
   });
 });

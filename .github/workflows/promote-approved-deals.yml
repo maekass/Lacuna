@@ -39,6 +39,10 @@ jobs:
       - name: Promote approved deals
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          # Promotion writes an encrypted review_audit_log row; without the
+          # keyring the transaction rolls back (docs/REVIEW_CONSOLE.md).
+          LACUNA_FIELD_ENCRYPTION_KEYS: ${{ secrets.LACUNA_FIELD_ENCRYPTION_KEYS }}
+          LACUNA_FIELD_ENCRYPTION_ACTIVE_KEY: ${{ secrets.LACUNA_FIELD_ENCRYPTION_ACTIVE_KEY }}
           LACUNA_PROMOTE_TARGET: json
           DEAL_ID: ${{ inputs.deal_id }}
         shell: bash
