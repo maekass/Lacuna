@@ -1,6 +1,16 @@
 import { query } from "@/lib/data/dbClient";
 import type { Pool } from "pg";
 import type { ReviewAuthMethod } from "@/lib/infra/reviewSession";
+import {
+  encryptField,
+  type FieldKeyring,
+  needsFieldRotation,
+  readEncryptedOrLegacyField,
+  rotateField,
+} from "@/lib/infra/fieldEncryption";
+
+/** AAD context for the encrypted reviewer identity column. */
+export const REVIEW_AUDIT_ACTOR_CONTEXT = "review_audit_log.actor_id";
 
 export type ReviewAuditAction =
   | "approve"
@@ -44,7 +54,10 @@ function mapRow(row: ReviewAuditLogDbRow): ReviewAuditLogRow {
     id: row.id,
     dealId: row.deal_id,
     action: row.action,
-    actorId: row.actor_id,
+    actorId: readEncryptedOrLegacyField(
+      row.actor_id,
+      REVIEW_AUDIT_ACTOR_CONTEXT,
+    ),
     actorMethod: row.actor_method,
     metadata: row.metadata ?? {},
     createdAt: row.created_at instanceof Date
@@ -87,7 +100,7 @@ function auditParams(input: ReviewAuditLogInput): unknown[] {
   return [
     input.dealId ?? null,
     input.action,
-    input.actorId,
+    encryptField(input.actorId, REVIEW_AUDIT_ACTOR_CONTEXT),
     input.actorMethod,
     JSON.stringify(input.metadata ?? {}),
   ];
@@ -127,4 +140,56 @@ export async function listReviewAuditForDeal(
     [dealId, limit],
   );
   return rows.map(mapRow);
+}
+
+export interface RotateReviewAuditResult {
+  scanned: number;
+  rotated: number;
+}
+
+/**
+ * Re-encrypt `actor_id` under the active key: rows under an older key and
+ * legacy plaintext rows from before encryption. Walks by id so a dry run
+ * terminates. Each row is updated only if it still holds the value read.
+ */
+export async function rotateReviewAuditActorIds(
+  client: Pick<Pool, "query">,
+  keyring: FieldKeyring,
+  options: { dryRun?: boolean; batchSize?: number } = {},
+): Promise<RotateReviewAuditResult> {
+  const batchSize = options.batchSize ?? 500;
+  let cursor = 0;
+  let scanned = 0;
+  let rotated = 0;
+
+  for (;;) {
+    const { rows } = await client.query<{ id: number; actor_id: string }>(
+      `SELECT id, actor_id FROM review_audit_log
+       WHERE id > $1
+       ORDER BY id
+       LIMIT $2`,
+      [cursor, batchSize],
+    );
+    if (rows.length === 0) break;
+
+    for (const row of rows) {
+      scanned += 1;
+      cursor = Number(row.id);
+      if (!needsFieldRotation(row.actor_id, keyring)) continue;
+      const next = rotateField(
+        row.actor_id,
+        REVIEW_AUDIT_ACTOR_CONTEXT,
+        keyring,
+      );
+      rotated += 1;
+      if (options.dryRun) continue;
+      await client.query(
+        `UPDATE review_audit_log SET actor_id = $1
+         WHERE id = $2 AND actor_id = $3`,
+        [next, row.id, row.actor_id],
+      );
+    }
+  }
+
+  return { scanned, rotated };
 }

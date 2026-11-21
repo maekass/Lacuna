@@ -1,4 +1,5 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { Buffer } from "node:buffer";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockQuery = vi.fn();
 
@@ -9,6 +10,15 @@ vi.mock("@/lib/data/dbClient", () => ({
 describe("reviewAuditLog", () => {
   beforeEach(() => {
     mockQuery.mockReset();
+    // Synthetic test key; the audit writer refuses to run without one.
+    vi.stubEnv(
+      "LACUNA_FIELD_ENCRYPTION_KEYS",
+      `k1:${Buffer.alloc(32, 3).toString("base64")}`,
+    );
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
   });
 
   it("inserts approve audit rows", async () => {
@@ -36,6 +46,9 @@ describe("reviewAuditLog", () => {
     expect(mockQuery.mock.calls[0]?.[0]).toContain(
       "INSERT INTO review_audit_log",
     );
+    const insertedActor = String(mockQuery.mock.calls[0]?.[1]?.[2]);
+    expect(insertedActor.startsWith("enc:v1:k1:")).toBe(true);
+    expect(insertedActor).not.toContain("maekass");
   });
 
   it("swallows insert failures in tryLogReviewAction (error)", async () => {

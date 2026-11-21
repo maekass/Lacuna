@@ -64,7 +64,7 @@ export async function GET(request: Request) {
       action: "session_start",
       actorId: `github:${login}`,
       actorMethod: "github",
-      metadata: { provider: "github", login },
+      metadata: { provider: "github" },
     });
 
     return response;
