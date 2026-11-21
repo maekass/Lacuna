@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { auditReviewRequest } from "@/lib/api/reviewAudit";
-import { guardDealReviewRequest } from "@/lib/api/dealReviewAccess";
+import {
+  guardDealReviewRequest,
+  guardReviewAuditReady,
+} from "@/lib/api/dealReviewAccess";
 import { importCandidatesCsv } from "@/lib/ingestion/importCandidatesCsv";
 
 interface ImportBody {
@@ -16,6 +19,8 @@ const MAX_CSV_CHARS = 2_000_000;
 export async function POST(request: Request) {
   const denied = guardDealReviewRequest(request);
   if (denied) return denied;
+  const auditBlocked = guardReviewAuditReady();
+  if (auditBlocked) return auditBlocked;
 
   let body: ImportBody;
   try {

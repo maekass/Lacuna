@@ -83,6 +83,7 @@
     "db:restore": "tsx scripts/restore-postgres.ts",
     "db:ping": "tsx scripts/restore-postgres.ts --check",
     "deals:promote-approved": "tsx scripts/promote-approved-deals.ts",
+    "encryption:rotate": "tsx scripts/rotate-field-encryption.ts",
     "db:seed-research": "tsx scripts/seed-research-studies.ts",
     "clickhouse:migrate": "tsx scripts/clickhouse-migrate.ts",
     "clickhouse:seed": "tsx scripts/seed-variant-callsets.ts",

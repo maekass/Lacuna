@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { auditReviewRequest } from "@/lib/api/reviewAudit";
-import { guardDealReviewRequest } from "@/lib/api/dealReviewAccess";
+import {
+  guardDealReviewRequest,
+  guardReviewAuditReady,
+} from "@/lib/api/dealReviewAccess";
 import {
   getPendingDealByDealId,
   type PendingDealStatus,
@@ -92,6 +95,8 @@ export async function PATCH(
 ) {
   const denied = guardDealReviewRequest(request);
   if (denied) return denied;
+  const auditBlocked = guardReviewAuditReady();
+  if (auditBlocked) return auditBlocked;
 
   const { dealId } = await context.params;
   if (!dealId?.trim()) {
