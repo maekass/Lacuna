@@ -1,5 +1,9 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { guardDealReviewRequest } from "@/lib/api/dealReviewAccess";
+import {
+  guardDealReviewRequest,
+  guardReviewAuditReady,
+} from "@/lib/api/dealReviewAccess";
+import { Buffer } from "node:buffer";
 import { signReviewSession } from "@/lib/infra/reviewSession";
 
 function productionPublicDemo() {
@@ -54,5 +58,33 @@ describe("guardDealReviewRequest", () => {
       headers: { authorization: "Bearer review-key" },
     });
     expect(guardDealReviewRequest(request)).toBeNull();
+  });
+});
+
+describe("guardReviewAuditReady", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it("allows writes when the audit keyring is configured (success)", () => {
+    vi.stubEnv(
+      "LACUNA_FIELD_ENCRYPTION_KEYS",
+      `k1:${Buffer.alloc(32, 3).toString("base64")}`,
+    );
+    vi.stubEnv("LACUNA_FIELD_ENCRYPTION_ACTIVE_KEY", "");
+    expect(guardReviewAuditReady()).toBeNull();
+  });
+
+  it("refuses writes when the key is missing (error)", async () => {
+    vi.stubEnv("LACUNA_FIELD_ENCRYPTION_KEYS", "");
+    const blocked = guardReviewAuditReady();
+    expect(blocked?.status).toBe(503);
+    expect((await blocked?.json()).error).toContain("not configured");
+  });
+
+  it("refuses writes when the key is malformed (edge)", () => {
+    vi.stubEnv("LACUNA_FIELD_ENCRYPTION_KEYS", "k1:too-short");
+    vi.stubEnv("LACUNA_FIELD_ENCRYPTION_ACTIVE_KEY", "");
+    expect(guardReviewAuditReady()?.status).toBe(503);
   });
 });

@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { auditReviewRequest } from "@/lib/api/reviewAudit";
 import { getClientIp, rateLimit } from "@/lib/api/rateLimit";
-import { guardDealReviewRequest } from "@/lib/api/dealReviewAccess";
+import {
+  guardDealReviewRequest,
+  guardReviewAuditReady,
+} from "@/lib/api/dealReviewAccess";
 import { enrichPendingDeal } from "@/lib/ingestion/enrichPendingDeal";
 import { getPendingDealByDealId } from "@/lib/ingestion/pendingDeals";
 
@@ -15,6 +18,8 @@ export async function POST(
 ) {
   const denied = guardDealReviewRequest(request);
   if (denied) return denied;
+  const auditBlocked = guardReviewAuditReady();
+  if (auditBlocked) return auditBlocked;
 
   const { dealId } = await context.params;
   if (!dealId?.trim()) {

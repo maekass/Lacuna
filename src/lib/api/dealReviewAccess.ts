@@ -1,6 +1,10 @@
 import process from "node:process";
 import { NextResponse } from "next/server";
 import {
+  FieldEncryptionConfigError,
+  fieldKeyringFromEnv,
+} from "@/lib/infra/fieldEncryption";
+import {
   getReviewActor,
   isDealReviewAuthConfigured,
   isWriteCapableReviewActor,
@@ -58,4 +62,27 @@ export function guardDealReviewRequest(
   }
 
   return null;
+}
+
+/**
+ * Review writes must leave an encrypted audit record. Check the keyring before
+ * a route mutates anything, so a missing or malformed key refuses the write
+ * instead of saving it without an audit entry.
+ */
+export function guardReviewAuditReady(): NextResponse | null {
+  try {
+    fieldKeyringFromEnv();
+    return null;
+  } catch (error) {
+    if (!(error instanceof FieldEncryptionConfigError)) throw error;
+    return NextResponse.json(
+      {
+        ok: false,
+        error:
+          "Review audit encryption is not configured; set LACUNA_FIELD_ENCRYPTION_KEYS",
+        docs: "/docs/REVIEW_CONSOLE.md",
+      },
+      { status: 503 },
+    );
+  }
 }
