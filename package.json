@@ -119,7 +119,8 @@
     "coding-judgment:build-cases": "tsx scripts/coding-judgment/build-profile-cases.ts",
     "coding-judgment:check": "tsx scripts/coding-judgment/check.ts",
     "eval:coding-judgment": "tsx scripts/coding-judgment/run-eval.ts",
-    "coding-judgment:guard": "tsx scripts/coding-judgment/guard-rescore.ts"
+    "coding-judgment:guard": "tsx scripts/coding-judgment/guard-rescore.ts",
+    "coding-judgment:build-heldout-profiles": "tsx scripts/coding-judgment/build-heldout-profiles.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.114",

@@ -4,8 +4,13 @@
  * every rule-derivable expected answer must match the oracle, justifying ids
  * must exist, and committed artifacts must contain no NPI-like strings.
  *
+ * The held-out set (v2) is checked the same way against its own subset and
+ * benchmark, and its committed SHA-256 manifest must still match, so labels
+ * cannot change after the freeze without this check failing.
+ *
  *   npm run coding-judgment:check
  */
+import { createHash } from "node:crypto";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
@@ -19,10 +24,13 @@ import {
 import {
   emBenchmarkSchema,
   evalSetSchema,
+  heldoutEvalSetSchema,
   ncciSubsetSchema,
 } from "../../src/lib/payerOps/codingJudgment/schemas";
 
 const DIR = "data/coding-judgment";
+const HELDOUT_SET = "eval-cases.v2-heldout.json";
+const HELDOUT_HASHES = "eval-cases.v2-heldout.sha256";
 
 function walk(dir: string): string[] {
   return readdirSync(dir).flatMap((entry) => {
@@ -55,6 +63,31 @@ function main(): void {
       problems.push(`${item.id}: differs from the profile-case builder output`);
     }
   }
+  const heldout = heldoutEvalSetSchema.parse(read(HELDOUT_SET));
+  const heldoutProblems = checkEvalSet(
+    heldout,
+    ncciSubsetSchema.parse(
+      JSON.parse(readFileSync(heldout.ncciSubsetPath, "utf8")),
+    ),
+    emBenchmarkSchema.parse(
+      JSON.parse(readFileSync(heldout.emBenchmarkPath, "utf8")),
+    ),
+  );
+  for (const problem of heldoutProblems) problems.push(`v2-heldout ${problem}`);
+  for (
+    const line of readFileSync(path.join(DIR, HELDOUT_HASHES), "utf8").split(
+      "\n",
+    )
+  ) {
+    const match = /^([0-9a-f]{64}) {2}(.+)$/.exec(line);
+    if (!match) continue;
+    const actual = createHash("sha256").update(readFileSync(match[2])).digest(
+      "hex",
+    );
+    if (actual !== match[1]) {
+      problems.push(`${match[2]}: SHA-256 differs from the freeze manifest`);
+    }
+  }
   for (const file of walk(DIR)) {
     const hits = findNpiLikeStrings(readFileSync(file, "utf8"));
     if (hits.length) problems.push(`${file}: ${hits.length} NPI-like strings`);
@@ -65,7 +98,7 @@ function main(): void {
     return;
   }
   console.log(
-    `✓ ${evalSet.cases.length} cases consistent with pinned NCCI ${subset.ptpVersion} and ${benchmark.id}`,
+    `✓ ${evalSet.cases.length} v1 cases and ${heldout.cases.length} held-out cases consistent with pinned NCCI ${subset.ptpVersion} and ${benchmark.id}; freeze hashes match`,
   );
 }
 
