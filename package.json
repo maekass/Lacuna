@@ -118,7 +118,8 @@
     "coding-judgment:build-ncci": "tsx scripts/coding-judgment/build-ncci-subset.ts",
     "coding-judgment:build-cases": "tsx scripts/coding-judgment/build-profile-cases.ts",
     "coding-judgment:check": "tsx scripts/coding-judgment/check.ts",
-    "eval:coding-judgment": "tsx scripts/coding-judgment/run-eval.ts"
+    "eval:coding-judgment": "tsx scripts/coding-judgment/run-eval.ts",
+    "coding-judgment:guard": "tsx scripts/coding-judgment/guard-rescore.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.114",

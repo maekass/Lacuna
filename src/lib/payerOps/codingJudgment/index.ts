@@ -10,3 +10,6 @@ export * from "@/lib/payerOps/codingJudgment/agent";
 export * from "@/lib/payerOps/codingJudgment/scorer";
 export * from "@/lib/payerOps/codingJudgment/checks";
 export * from "@/lib/payerOps/codingJudgment/runIntegrity";
+export * from "@/lib/payerOps/codingJudgment/routingGuard";
+export * from "@/lib/payerOps/codingJudgment/guardedScore";
+export * from "@/lib/payerOps/codingJudgment/recordedRun";
