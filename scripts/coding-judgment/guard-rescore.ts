@@ -25,6 +25,8 @@ function arg(name: string): string | undefined {
 const NOTES: Record<string, string> = {
   "2026-11-20-openrouter-free":
     "The routing guard was written after seeing these iteration-1 failures. This set shaped the guard, so it cannot validate it. Results here show only that the guard fixes the failures it was designed for.",
+  "2026-11-23-heldout-openrouter-free":
+    "Held-out set frozen (cases, labels and SHA-256) in commit aaa9837 before any model call on it; the guard was committed in 302c3d9 and not changed after this run. The same assistant wrote the guard and these cases, so they test new codes, dates, payers and profiles within known failure types, not failure types nobody anticipated. Labels are assistant-built and not adjudicated by a coder.",
 };
 
 function row(label: string, r: GuardedReport): string[] {

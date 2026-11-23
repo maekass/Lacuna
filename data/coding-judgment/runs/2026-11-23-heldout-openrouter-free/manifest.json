@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "runId": "2026-11-23-heldout-openrouter-free",
+  "createdAt": "2026-11-23T18:54:12.037Z",
+  "gitCommit": "a949d4795156dade573c0cee88a8f9ab3de10fb7",
+  "modelIds": [
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "baidu/ernie-5.5-flash-preview:free"
+  ],
+  "provider": "openrouter_free",
+  "providerNote": "OpenRouter free-tier models, zero spend. Used because the Vercel AI Gateway account returned a billing block (no card on file) when this run was recorded. Pinned :free ids, no models fallback, returned model id recorded per reply.",
+  "inferencePath": "src/lib/payerOps/codingJudgment/openrouter.ts -> OpenRouter chat completions",
+  "temperature": 0,
+  "maxOutputTokens": 4000,
+  "promptVersion": "cjc-v1.0.0",
+  "systemPromptSha256": {
+    "grounded": "277367574375948b94b26ea7900217782ee3098ebad4292913be6ca87be52e65",
+    "closed_book": "b5f0f86f020a780d63ff1edf5a7269b463d59c6ed5aeec8d390bf8b1be43b7cd"
+  },
+  "evalSetSha256": "857d5a155cc9e3ddad675303c482c75cd34fb3381f1b8ce8ecef30c05e6dce61",
+  "ncciSubsetSha256": "f38d166f473f319a419339f52c86eb13cc7a029bbbf2dfd4fc564e18539ff933",
+  "emBenchmarkSha256": "55f1454e00d1663fb0d0047b5c144ec0becf8341f6793922d6c0e4a9d84bba74",
+  "conditions": [
+    "grounded"
+  ],
+  "caseCount": 37,
+  "passes": 1,
+  "transportReissues": [
+    "baidu/ernie-5.5-flash-preview:free|grounded|cjc-128",
+    "baidu/ernie-5.5-flash-preview:free|grounded|cjc-129",
+    "baidu/ernie-5.5-flash-preview:free|grounded|cjc-130",
+    "baidu/ernie-5.5-flash-preview:free|grounded|cjc-131",
+    "baidu/ernie-5.5-flash-preview:free|grounded|cjc-132"
+  ],
+  "evalSetPath": "data/coding-judgment/eval-cases.v2-heldout.json",
+  "ncciSubsetPath": "data/coding-judgment/ncci-practitioner-2026q4.subset.v2.json",
+  "emBenchmarkPath": "data/coding-judgment/benchmarks/obgyn-em-office-established.2024.heldout.json"
+}
