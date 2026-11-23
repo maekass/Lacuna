@@ -6,6 +6,7 @@
  *   npm run eval:coding-judgment -- --replay <dir>     # re-score a run dir
  *   npm run eval:coding-judgment -- --live --model <id>[,<id>] [--out <dir>]
  *       [--provider gateway|openrouter-free] [--run-id <id>] [--resume]
+ *       [--eval-set <file>] [--conditions grounded[,closed_book]]
  *
  * Live mode makes one pass per model × condition at temperature 0 and writes
  * raw replies, a config manifest and scored results. The default provider is
@@ -71,13 +72,35 @@ import {
 } from "../../src/lib/payerOps/codingJudgment/schemas";
 
 const DIR = "data/coding-judgment";
+const COMMITTED_RUN = `${DIR}/runs/latest.txt`;
+const DEFAULT_EVAL_SET = `${DIR}/eval-cases.v1.json`;
+/**
+ * Input files for this invocation. Defaults to the v1 set. A live run takes
+ * `--eval-set <file>` (its subset and benchmark paths come from the set when
+ * it records them); a replay reads the paths from the run manifest.
+ */
 const FILES = {
-  evalSet: `${DIR}/eval-cases.v1.json`,
+  evalSet: DEFAULT_EVAL_SET,
   subset: `${DIR}/ncci-practitioner-2026q4.subset.json`,
   benchmark: benchmarkPathFor(loadPeerScreenConfig().config),
-  committedRun: `${DIR}/runs/latest.txt`,
 };
-const CONDITIONS: EvalCondition[] = ["grounded", "closed_book"];
+const DEFAULT_CONDITIONS: EvalCondition[] = ["grounded", "closed_book"];
+let CONDITIONS: EvalCondition[] = DEFAULT_CONDITIONS;
+
+function useEvalSet(file: string): void {
+  const raw = JSON.parse(readFileSync(file, "utf8")) as Record<string, unknown>;
+  FILES.evalSet = file;
+  if (typeof raw.ncciSubsetPath === "string") FILES.subset = raw.ncciSubsetPath;
+  if (typeof raw.emBenchmarkPath === "string") {
+    FILES.benchmark = raw.emBenchmarkPath;
+  }
+}
+
+function useManifestInputs(manifest: RunManifest): void {
+  if (manifest.evalSetPath) FILES.evalSet = manifest.evalSetPath;
+  if (manifest.ncciSubsetPath) FILES.subset = manifest.ncciSubsetPath;
+  if (manifest.emBenchmarkPath) FILES.benchmark = manifest.emBenchmarkPath;
+}
 const TEMPERATURE = 0;
 const GATEWAY_MAX_OUTPUT_TOKENS = 600;
 /** Free reasoning models spend tokens before answering; give them headroom. */
@@ -190,10 +213,11 @@ function renderMarkdown(manifest: RunManifest, reports: ConditionReport[]) {
 }
 
 function score(runDir: string): void {
-  const { evalSet, subset, benchmark } = loadInputs();
   const manifest = runManifestSchema.parse(
     JSON.parse(readFileSync(path.join(runDir, "manifest.json"), "utf8")),
   );
+  useManifestInputs(manifest);
+  const { evalSet, subset, benchmark } = loadInputs();
   const replies = readReplies(path.join(runDir, "replies.jsonl"));
   // Refuse to grade a run against inputs it was not recorded on; nothing is
   // written when this fails.
@@ -311,6 +335,17 @@ async function live(): Promise<string> {
     : (() => {
       throw new Error(`Unknown --provider ${providerArg}`);
     })();
+  const evalSetArg = arg("--eval-set");
+  if (evalSetArg) useEvalSet(evalSetArg);
+  const conditionsArg = arg("--conditions");
+  if (conditionsArg) {
+    CONDITIONS = conditionsArg.split(",").map((c) => {
+      if (c !== "grounded" && c !== "closed_book") {
+        throw new Error(`Unknown condition ${c}`);
+      }
+      return c;
+    });
+  }
   const { evalSet, subset, benchmark } = loadInputs();
 
   let makeGenerate: (modelId: string) => GenerateFn;
@@ -373,6 +408,12 @@ async function live(): Promise<string> {
     ) {
       throw new Error("Cannot resume: provider or model settings changed.");
     }
+    if (
+      previousManifest &&
+      previousManifest.conditions.join(",") !== CONDITIONS.join(",")
+    ) {
+      throw new Error("Cannot resume: conditions changed.");
+    }
     if (previousManifest) createdAtKept = previousManifest.createdAt;
     const kept = previous.filter((r) =>
       !isPreProviderTransportFailure(r.error)
@@ -421,6 +462,11 @@ async function live(): Promise<string> {
         closed_book: sha256Text(buildSystemPrompt("closed_book")),
       },
       ...currentHashes(),
+      ...(FILES.evalSet === DEFAULT_EVAL_SET ? {} : {
+        evalSetPath: FILES.evalSet,
+        ncciSubsetPath: FILES.subset,
+        emBenchmarkPath: FILES.benchmark,
+      }),
       conditions: CONDITIONS,
       caseCount: evalSet.cases.length,
       passes: 1,
@@ -489,8 +535,8 @@ async function main(): Promise<void> {
   }
   const replay = arg("--replay");
   const runDir = replay ??
-    (existsSync(FILES.committedRun)
-      ? path.join(DIR, "runs", readFileSync(FILES.committedRun, "utf8").trim())
+    (existsSync(COMMITTED_RUN)
+      ? path.join(DIR, "runs", readFileSync(COMMITTED_RUN, "utf8").trim())
       : undefined);
   if (!runDir) throw new Error("No committed run; pass --replay <dir>.");
   score(runDir);
