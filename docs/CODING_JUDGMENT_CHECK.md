@@ -17,6 +17,10 @@ have not been independently adjudicated.
 An outlier is a reason for human review. It is never evidence of incorrect
 coding, fraud, or wrongdoing.
 
+Iteration 2 adds a deterministic routing guard and a held-out set. See
+[CODING_JUDGMENT_ITERATION_2.md](CODING_JUDGMENT_ITERATION_2.md). The results
+below are iteration 1, before any guard existed.
+
 ## Data and versions
 
 - **CMS Medicare Physician & Other Practitioners — by Provider and Service,
@@ -129,6 +133,11 @@ failures: `data/coding-judgment/runs/2026-11-20-openrouter-free/results.md`.
 
 ## Recommended autonomy line
 
+This section is the iteration-1 recommendation. Iteration 1 did not build a
+guard: the routes in its results are the models' own. Iteration 2 builds the
+guard and measures it; see
+[CODING_JUDGMENT_ITERATION_2.md](CODING_JUDGMENT_ITERATION_2.md).
+
 Rule outcomes should be computed by the deterministic NCCI code in this module,
 not by the model. Allow `auto` only when a pinned row exists and the date is
 inside the pinned window, the outcome is PTP denial / no edit / inactive edit /
@@ -137,7 +146,7 @@ oracle. Hard-route everything else to human review in code: missing rows,
 below-threshold or flagged provider profiles, dates outside the window, other
 payers, documentation and intent questions. Closed-book use should not be
 allowed. The grounded models' only unsafe autos were exactly the cases that
-these guards cover.
+these proposed rules would cover.
 
 ## Reuse path
 

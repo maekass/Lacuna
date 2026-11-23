@@ -87,7 +87,7 @@ const FILES = {
 const DEFAULT_CONDITIONS: EvalCondition[] = ["grounded", "closed_book"];
 let CONDITIONS: EvalCondition[] = DEFAULT_CONDITIONS;
 
-function useEvalSet(file: string): void {
+function selectEvalSet(file: string): void {
   const raw = JSON.parse(readFileSync(file, "utf8")) as Record<string, unknown>;
   FILES.evalSet = file;
   if (typeof raw.ncciSubsetPath === "string") FILES.subset = raw.ncciSubsetPath;
@@ -96,7 +96,7 @@ function useEvalSet(file: string): void {
   }
 }
 
-function useManifestInputs(manifest: RunManifest): void {
+function selectManifestInputs(manifest: RunManifest): void {
   if (manifest.evalSetPath) FILES.evalSet = manifest.evalSetPath;
   if (manifest.ncciSubsetPath) FILES.subset = manifest.ncciSubsetPath;
   if (manifest.emBenchmarkPath) FILES.benchmark = manifest.emBenchmarkPath;
@@ -216,7 +216,7 @@ function score(runDir: string): void {
   const manifest = runManifestSchema.parse(
     JSON.parse(readFileSync(path.join(runDir, "manifest.json"), "utf8")),
   );
-  useManifestInputs(manifest);
+  selectManifestInputs(manifest);
   const { evalSet, subset, benchmark } = loadInputs();
   const replies = readReplies(path.join(runDir, "replies.jsonl"));
   // Refuse to grade a run against inputs it was not recorded on; nothing is
@@ -336,7 +336,7 @@ async function live(): Promise<string> {
       throw new Error(`Unknown --provider ${providerArg}`);
     })();
   const evalSetArg = arg("--eval-set");
-  if (evalSetArg) useEvalSet(evalSetArg);
+  if (evalSetArg) selectEvalSet(evalSetArg);
   const conditionsArg = arg("--conditions");
   if (conditionsArg) {
     CONDITIONS = conditionsArg.split(",").map((c) => {
