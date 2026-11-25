@@ -230,6 +230,26 @@ the model got right, with the deciding row cited.
   in `transport-reissues.json`.
 - Spend: $0.
 
+## Reviewer view (recorded run)
+
+The page `/payer-ops/coding-review` shows the recorded cases the way a claim
+reviewer would see them. Each card shows the claim question, the claim facts,
+the model's decision and reasoning, the rule rows the model cited, the final
+route, and one sentence on why the case went there.
+
+- Filters: all cases, decided automatically, sent to a person, and guard
+  overrode the model. A selector picks the run, the model and the arm.
+- Disagree: the reviewer writes a note and can propose a decision and a route.
+  The page builds a test-case candidate from the case and the note and offers it
+  as a JSON download. Nothing is saved or sent. The candidate has status
+  `candidate_not_adjudicated`: it is not a label until someone adjudicates it.
+- Data: `src/data/coding-judgment-reviewer-demo.json`, built by
+  `npm run coding-judgment:reviewer-demo` from the committed runs. A test checks
+  that the committed file matches a fresh build. The answer key is left out, and
+  providers appear only as hashed ids.
+- This is a recorded run, not a live model. The page makes no model calls, needs
+  no login, and is kept out of search indexing.
+
 ## Reproduce
 
 ```sh
