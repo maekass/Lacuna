@@ -250,7 +250,7 @@ export const REVIEWER_DEMO_RUNS = [
     runDir: "data/coding-judgment/runs/2026-11-23-heldout-openrouter-free",
     label: "Held-out set (37 cases): frozen before the run",
     note:
-      "Cases, labels and hashes were committed before any model call on them, and the guard was not changed after the run. The same assistant wrote the guard and these cases. Grounded arm only, one pass.",
+      "Cases, labels and hashes were committed before any model call on them. The guard changed once after the run: one spelling pattern in the question-text screen was rewritten to pass a repo lint, and re-scoring the recorded replies with the changed guard gives the same route on every case. The same assistant wrote the guard and these cases. Grounded arm only, one pass.",
   },
 ] as const;
 
