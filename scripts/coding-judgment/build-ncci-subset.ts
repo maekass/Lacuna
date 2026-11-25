@@ -5,6 +5,12 @@
  * eval needs.
  *
  *   npm run coding-judgment:build-ncci
+ *   npm run coding-judgment:build-ncci -- --cases <a.json,b.json> --out <path>
+ *
+ * With --cases, rows are pinned for every listed eval set (the held-out
+ * subset is a superset of the v1 subset). When an existing subset at the
+ * default path was built from byte-identical zips, its retrievedAt is kept,
+ * since that is when the files were downloaded.
  *
  * Full zips live under staging/coding-judgment/ncci/ (gitignored). Extraction
  * uses the system `unzip` binary; CI never runs this script.
@@ -31,8 +37,14 @@ import {
 const PTP_VERSION = "v323r0";
 const QUARTER = "2026Q4";
 const CACHE = "staging/coding-judgment/ncci";
-const CASES_PATH = "data/coding-judgment/eval-cases.v1.json";
-const OUT_PATH = "data/coding-judgment/ncci-practitioner-2026q4.subset.json";
+const DEFAULT_CASES = "data/coding-judgment/eval-cases.v1.json";
+const DEFAULT_OUT = "data/coding-judgment/ncci-practitioner-2026q4.subset.json";
+function arg(name: string): string | undefined {
+  const i = process.argv.indexOf(name);
+  return i < 0 ? undefined : process.argv[i + 1];
+}
+const CASES_PATHS = (arg("--cases") ?? DEFAULT_CASES).split(",");
+const OUT_PATH = arg("--out") ?? DEFAULT_OUT;
 const PTP_PAGE =
   "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits/medicare-ncci-procedure-procedure-ptp-edits";
 const MUE_PAGE =
@@ -74,11 +86,14 @@ async function download(url: string, path: string): Promise<void> {
 
 async function main(): Promise<void> {
   mkdirSync(CACHE, { recursive: true });
-  const evalSet = evalSetSchema.parse(
-    JSON.parse(readFileSync(CASES_PATH, "utf8")),
+  const cases = CASES_PATHS.flatMap((file) =>
+    evalSetSchema.parse(JSON.parse(readFileSync(file, "utf8"))).cases
   );
-  const keys = requiredRuleKeys(evalSet.cases);
-  const retrievedAt = new Date().toISOString();
+  const keys = requiredRuleKeys(cases);
+  let retrievedAt = new Date().toISOString();
+  const previous = existsSync(DEFAULT_OUT)
+    ? ncciSubsetSchema.parse(JSON.parse(readFileSync(DEFAULT_OUT, "utf8")))
+    : null;
 
   const ptpRows: PtpEdit[] = [];
   let mueRows: MueEdit[] = [];
@@ -108,6 +123,14 @@ async function main(): Promise<void> {
     });
     console.log(`${source.member}: ${parsed.length} rows`);
   }
+
+  if (
+    previous &&
+    previous.sourceFiles.length === sourceFiles.length &&
+    previous.sourceFiles.every((f, i) =>
+      f.zipSha256 === sourceFiles[i].zipSha256
+    )
+  ) retrievedAt = previous.retrievedAt;
 
   const ptpCodes = new Set<string>();
   for (const row of ptpRows) {

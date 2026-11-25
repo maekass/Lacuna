@@ -23,7 +23,10 @@ function pctBand(low: number): string {
   return `${a}–${a + 10}%`;
 }
 
-function basisFor(benchmark: EmBenchmark, profile: ProviderProfile): string {
+export function basisFor(
+  benchmark: EmBenchmark,
+  profile: ProviderProfile,
+): string {
   const { minimumVolume, reviewPercentile, posteriorThreshold } =
     benchmark.method;
   const share = `raw ${benchmark.method.targetLabel} share band ${

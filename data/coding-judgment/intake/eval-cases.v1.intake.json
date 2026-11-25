@@ -1,0 +1,144 @@
+{
+  "schemaVersion": "1.0.0",
+  "evalSetPath": "data/coding-judgment/eval-cases.v1.json",
+  "evalSetSha256": "96ad58c45f9a248cab8fc763a9532eff332c4cc45956122dad011127255d6566",
+  "note": "Claim intake for the v1 eval set, which predates intake fields. Each entry was transcribed from the case question text (payer named in the question; request type from what the question asks) in iteration 2, after the iteration-1 results were known. It stands in for claim-header and work-queue fields. It was not derived from case kinds or labels, but it was written by the same assistant that wrote the labels.",
+  "intake": {
+    "cjc-001": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-002": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-003": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-004": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-005": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-006": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-007": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-008": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-009": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-010": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-011": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-012": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-013": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-014": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-015": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-016": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-017": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-018": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-019": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-020": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-021": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-022": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-023": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-024": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-025": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-026": {
+      "payer": "medicare_ffs",
+      "requestType": "provider_profile_review"
+    },
+    "cjc-027": {
+      "payer": "medicare_ffs",
+      "requestType": "provider_profile_review"
+    },
+    "cjc-028": {
+      "payer": "medicare_ffs",
+      "requestType": "provider_profile_review"
+    },
+    "cjc-029": {
+      "payer": "medicare_ffs",
+      "requestType": "provider_profile_review"
+    },
+    "cjc-030": {
+      "payer": "medicare_ffs",
+      "requestType": "documentation_review"
+    },
+    "cjc-031": {
+      "payer": "medicare_ffs",
+      "requestType": "intent_question"
+    },
+    "cjc-032": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-033": {
+      "payer": "medicare_ffs",
+      "requestType": "claim_edit_check"
+    },
+    "cjc-034": {
+      "payer": "commercial",
+      "requestType": "claim_edit_check"
+    }
+  }
+}

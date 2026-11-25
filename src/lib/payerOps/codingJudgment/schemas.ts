@@ -315,5 +315,70 @@ export const runManifestSchema = z.object({
    * including truncations and provider errors, are never re-issued.
    */
   transportReissues: z.array(z.string()),
+  /** Input files, when not the v1 defaults (added in iteration 2). */
+  evalSetPath: z.string().min(1).optional(),
+  ncciSubsetPath: z.string().min(1).optional(),
+  emBenchmarkPath: z.string().min(1).optional(),
 });
 export type RunManifest = z.infer<typeof runManifestSchema>;
+
+/**
+ * Claim intake fields the routing guard reads. In production these come from
+ * the claim header (payer) and the work queue the item arrived on (request
+ * type), not from the model and not from any answer key.
+ */
+export const payerSchema = z.enum([
+  "medicare_ffs",
+  "medicare_advantage",
+  "medicaid",
+  "commercial",
+  "unknown",
+]);
+export type Payer = z.infer<typeof payerSchema>;
+
+export const requestTypeSchema = z.enum([
+  "claim_edit_check",
+  "provider_profile_review",
+  "documentation_review",
+  "intent_question",
+  "unknown",
+]);
+export type RequestType = z.infer<typeof requestTypeSchema>;
+
+export const claimIntakeSchema = z.object({
+  payer: payerSchema,
+  requestType: requestTypeSchema,
+}).strict();
+export type ClaimIntake = z.infer<typeof claimIntakeSchema>;
+
+/**
+ * Intake for an eval set whose cases predate the intake fields (v1). Each
+ * entry is transcribed from the case question text, never from its label.
+ */
+export const intakeSidecarSchema = z.object({
+  schemaVersion: z.literal("1.0.0"),
+  evalSetPath: z.string().min(1),
+  evalSetSha256: z.string().regex(/^[a-f0-9]{64}$/),
+  note: z.string().min(1),
+  intake: z.record(z.string().regex(/^cjc-\d{3}$/), claimIntakeSchema),
+});
+export type IntakeSidecar = z.infer<typeof intakeSidecarSchema>;
+
+/** Held-out case: a v1 case plus the intake fields, frozen together. */
+export const heldoutEvalCaseSchema = evalCaseSchema.extend({
+  intake: claimIntakeSchema,
+});
+export type HeldoutEvalCase = z.infer<typeof heldoutEvalCaseSchema>;
+
+export const heldoutEvalSetSchema = z.object({
+  schemaVersion: z.literal("1.0.0"),
+  evalSetId: z.literal("coding-judgment-check"),
+  version: z.literal("v2-heldout"),
+  status: z.literal("assistant_built_not_adjudicated"),
+  frozenAt: z.iso.datetime(),
+  autonomyPolicy: z.string().min(1),
+  ncciSubsetPath: z.string().min(1),
+  emBenchmarkPath: z.string().min(1),
+  cases: z.array(heldoutEvalCaseSchema).min(20),
+});
+export type HeldoutEvalSet = z.infer<typeof heldoutEvalSetSchema>;
