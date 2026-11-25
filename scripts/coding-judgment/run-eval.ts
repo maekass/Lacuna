@@ -339,12 +339,16 @@ async function live(): Promise<string> {
   if (evalSetArg) selectEvalSet(evalSetArg);
   const conditionsArg = arg("--conditions");
   if (conditionsArg) {
-    CONDITIONS = conditionsArg.split(",").map((c) => {
+    const parsed = conditionsArg.split(",").map((c) => {
       if (c !== "grounded" && c !== "closed_book") {
         throw new Error(`Unknown condition ${c}`);
       }
       return c;
     });
+    if (new Set(parsed).size !== parsed.length) {
+      throw new Error(`--conditions repeats a condition: ${conditionsArg}`);
+    }
+    CONDITIONS = parsed;
   }
   const { evalSet, subset, benchmark } = loadInputs();
 
@@ -383,6 +387,13 @@ async function live(): Promise<string> {
     .trim();
   const repliesPath = path.join(runDir, "replies.jsonl");
   const reissuePath = path.join(runDir, "transport-reissues.json");
+  // Never erase recorded replies: an existing run is only reopened with
+  // --resume, otherwise pick a different --run-id or --out.
+  if (existsSync(repliesPath) && !process.argv.includes("--resume")) {
+    throw new Error(
+      `${repliesPath} already exists. Use --resume, or a new --run-id/--out.`,
+    );
+  }
   // --resume keeps every recorded model reply (including truncations, model
   // errors and ambiguous transport errors, which stay failures) and re-issues
   // only credential-proxy 407s, which never reached the provider. It refuses to

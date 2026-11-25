@@ -251,7 +251,7 @@ export interface GuardDecision {
  * documentation, intent, and non-Medicare payer wording when intake is wrong.
  */
 const QUESTION_SCREEN =
-  /\b(fraud\w*|abus\w*|intent\w*|deliberate\w*|upcod\w*|kickback\w*|documentation|documented|medical record\w*|chart notes?|medically necessary|medical necessity|commercial|medicare advantage|medicaid|part c)\b/i;
+  /\b(fraud\w*|abus\w*|intent\w*|deliberate\w*|upcod\w*|kick-?back\w*|documentation|documented|medical record\w*|chart notes?|medically necessary|medical necessity|commercial|medicare advantage|medicaid|part c)\b/i;
 
 export function questionTextScreen(question: string): boolean {
   return QUESTION_SCREEN.test(question);
