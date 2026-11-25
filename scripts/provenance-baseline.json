@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "total": 911,
+  "total": 913,
   "covered": 21,
-  "exempt": 21,
+  "exempt": 23,
   "uncovered": 869,
   "perFileUncovered": {
     "src/app/lazyDashboard.tsx": 10,
@@ -89,6 +89,22 @@
     "src/components/WomensHealthExitsContext.tsx": 10
   },
   "sites": [
+    {
+      "file": "src/app/(product)/payer-ops/coding-review/CodingReviewDemo.tsx",
+      "functionName": "CodingReviewDemo",
+      "expression": "count",
+      "kind": "numeric-jsx",
+      "key": "src/app/(product)/payer-ops/coding-review/CodingReviewDemo.tsx::CodingReviewDemo::count",
+      "class": "exempt"
+    },
+    {
+      "file": "src/app/(product)/payer-ops/coding-review/CodingReviewDemo.tsx",
+      "functionName": "DisagreeForm",
+      "expression": "3",
+      "kind": "numeric-jsx",
+      "key": "src/app/(product)/payer-ops/coding-review/CodingReviewDemo.tsx::DisagreeForm::3",
+      "class": "exempt"
+    },
     {
       "file": "src/app/lazyDashboard.tsx",
       "functionName": "DealFlowChartSkeleton",

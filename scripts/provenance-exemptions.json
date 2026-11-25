@@ -113,5 +113,15 @@
     "key": "src/components/rnpv/RnpvResults.tsx::usd::new Intl.NumberFormat(\"en-US\", { minimumFractionDigits: 2, maximumFractionDigits: 2, }).format(value)",
     "category": "ui-count",
     "reason": "Formats a hypothetical rNPV sandbox amount. It is not a verified-dataset statistic and must not use Metric."
+  },
+  {
+    "key": "src/app/(product)/payer-ops/coding-review/CodingReviewDemo.tsx::CodingReviewDemo::count",
+    "category": "ui-count",
+    "reason": "Number of recorded cases matching each route filter button in the current run, model and arm. It counts cards on the page; it is not a dataset statistic."
+  },
+  {
+    "key": "src/app/(product)/payer-ops/coding-review/CodingReviewDemo.tsx::DisagreeForm::3",
+    "category": "ui-control",
+    "reason": "Reviewer note field row count. It is a form control, not a displayed metric."
   }
 ]
