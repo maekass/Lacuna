@@ -3,7 +3,7 @@
   "runId": "2026-11-23-heldout-openrouter-free",
   "guardVersion": "cjc-guard-v1.0.0",
   "evalSetPath": "data/coding-judgment/eval-cases.v2-heldout.json",
-  "note": "Held-out set frozen (cases, labels and SHA-256) in commit aaa9837 before any model call on it; the guard was committed in 302c3d9 and not changed after this run. The same assistant wrote the guard and these cases, so they test new codes, dates, payers and profiles within known failure types, not failure types nobody anticipated. Labels are assistant-built and not adjudicated by a coder.",
+  "note": "Held-out set frozen (cases, labels and SHA-256) in commit aaa9837 before any model call on it; the guard was committed in 302c3d9. It changed once after this run, in 720f778: one spelling pattern in the question-text screen was rewritten (the word for a payment for referrals now allows an optional hyphen, kick-?back) to pass a repo lint. Re-scoring the recorded replies with the changed guard gives the same route, reasons and deciding rows on every case. The same assistant wrote the guard and these cases, so they test new codes, dates, payers and profiles within known failure types, not failure types nobody anticipated. Labels are assistant-built and not adjudicated by a coder.",
   "status": "Assistant-built eval set and labels, not independently adjudicated; one pass per model.",
   "reports": [
     {

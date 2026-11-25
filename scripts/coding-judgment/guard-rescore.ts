@@ -26,7 +26,7 @@ const NOTES: Record<string, string> = {
   "2026-11-20-openrouter-free":
     "The routing guard was written after seeing these iteration-1 failures. This set shaped the guard, so it cannot validate it. Results here show only that the guard fixes the failures it was designed for.",
   "2026-11-23-heldout-openrouter-free":
-    "Held-out set frozen (cases, labels and SHA-256) in commit aaa9837 before any model call on it; the guard was committed in 302c3d9 and not changed after this run. The same assistant wrote the guard and these cases, so they test new codes, dates, payers and profiles within known failure types, not failure types nobody anticipated. Labels are assistant-built and not adjudicated by a coder.",
+    "Held-out set frozen (cases, labels and SHA-256) in commit aaa9837 before any model call on it; the guard was committed in 302c3d9. It changed once after this run, in 720f778: one spelling pattern in the question-text screen was rewritten (the word for a payment for referrals now allows an optional hyphen, kick-?back) to pass a repo lint. Re-scoring the recorded replies with the changed guard gives the same route, reasons and deciding rows on every case. The same assistant wrote the guard and these cases, so they test new codes, dates, payers and profiles within known failure types, not failure types nobody anticipated. Labels are assistant-built and not adjudicated by a coder.",
 };
 
 function row(label: string, r: GuardedReport): string[] {

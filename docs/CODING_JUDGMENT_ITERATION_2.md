@@ -118,6 +118,12 @@ Order of work, visible in the branch history:
    SHA-256 committed and pushed. No model had seen these cases.
 3. `a949d47` — runner can take a named eval set (no prompt change).
 4. `5cc05a0` — the recorded run, then re-scored with the unchanged guard.
+5. `720f778` — the one change to the guard after the run. One spelling pattern
+   in the question-text screen was rewritten to pass a repo lint: the word for a
+   payment for referrals is now written `kick-?back`, which also allows a
+   hyphen. Re-scoring the recorded replies with the changed guard gives the same
+   route, reasons and deciding rows on every case (136 v1 and 74 held-out
+   results).
 
 Run: both free models, grounded arm only, temperature 0, one pass, prompt
 `cjc-v1.0.0` (same as iteration 1). Source:
