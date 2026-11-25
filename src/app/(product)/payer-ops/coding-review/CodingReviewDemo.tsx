@@ -16,6 +16,17 @@ type RouteFilter = "all" | "auto" | "person" | "overrode";
 type Decision = "flag" | "no_flag" | "abstain";
 type Route = "auto" | "human_review";
 
+/** A reviewer's unsent disagreement, kept per record so filters and selector
+ * changes do not discard it. Lives only in this page's memory. */
+interface Draft {
+  open: boolean;
+  note: string;
+  decision: Decision | "";
+  route: Route | "";
+}
+
+const EMPTY_DRAFT: Draft = { open: false, note: "", decision: "", route: "" };
+
 const ROUTE_FILTERS: { id: RouteFilter; label: string }[] = [
   { id: "all", label: "All cases" },
   { id: "auto", label: "Decided automatically" },
@@ -107,19 +118,19 @@ function RowDetails({ row }: { row: PinnedRowView }) {
 }
 
 function DisagreeForm(
-  { record, item, guardVersion, onClose }: {
+  { record, item, guardVersion, draft, onChange, onClose }: {
     record: ReviewerRecord;
     item: ReviewerItem;
     guardVersion: string;
+    draft: Draft;
+    onChange: (next: Partial<Draft>) => void;
     onClose: () => void;
   },
 ) {
   const noteId = useId();
   const decisionId = useId();
   const routeId = useId();
-  const [note, setNote] = useState("");
-  const [decision, setDecision] = useState<Decision | "">("");
-  const [route, setRoute] = useState<Route | "">("");
+  const { note, decision, route } = draft;
   const [downloaded, setDownloaded] = useState<string | null>(null);
   const ready = note.trim().length > 0;
 
@@ -158,7 +169,7 @@ function DisagreeForm(
       <textarea
         id={noteId}
         value={note}
-        onChange={(event) => setNote(event.target.value)}
+        onChange={(event) => onChange({ note: event.target.value })}
         rows={3}
         className="mt-1 w-full rounded-lg border border-lacuna-lavender/60 bg-white p-2 text-sm text-lacuna-plum"
       />
@@ -174,7 +185,7 @@ function DisagreeForm(
             id={decisionId}
             value={decision}
             onChange={(event) =>
-              setDecision(event.target.value as Decision | "")}
+              onChange({ decision: event.target.value as Decision | "" })}
             className="mt-1 w-full rounded-lg border border-lacuna-lavender/60 bg-white p-2 text-sm text-lacuna-plum"
           >
             <option value="">No proposal</option>
@@ -193,7 +204,8 @@ function DisagreeForm(
           <select
             id={routeId}
             value={route}
-            onChange={(event) => setRoute(event.target.value as Route | "")}
+            onChange={(event) =>
+              onChange({ route: event.target.value as Route | "" })}
             className="mt-1 w-full rounded-lg border border-lacuna-lavender/60 bg-white p-2 text-sm text-lacuna-plum"
           >
             <option value="">No proposal</option>
@@ -231,14 +243,15 @@ function DisagreeForm(
 }
 
 function RecordCard(
-  { record, item, run, guardVersion }: {
+  { record, item, run, guardVersion, draft, onDraft }: {
     record: ReviewerRecord;
     item: ReviewerItem;
     run: ReviewerRun;
     guardVersion: string;
+    draft: Draft;
+    onDraft: (next: Draft | null) => void;
   },
 ) {
-  const [disagreeing, setDisagreeing] = useState(false);
   const { facts, intake } = item;
   const cited = record.model.ok
     ? record.model.citations.map((id) => ({ id, row: run.rows[id] }))
@@ -378,19 +391,21 @@ function RecordCard(
               : null}
           </div>
 
-          {disagreeing
+          {draft.open
             ? (
               <DisagreeForm
                 record={record}
                 item={item}
                 guardVersion={guardVersion}
-                onClose={() => setDisagreeing(false)}
+                draft={draft}
+                onChange={(next) => onDraft({ ...draft, ...next })}
+                onClose={() => onDraft(null)}
               />
             )
             : (
               <button
                 type="button"
-                onClick={() => setDisagreeing(true)}
+                onClick={() => onDraft({ ...draft, open: true })}
                 className="mt-4 rounded-lg border border-lacuna-plum/40 bg-white px-3 py-2 text-sm font-semibold text-lacuna-plum"
               >
                 Disagree
@@ -411,6 +426,12 @@ export default function CodingReviewDemo({ demo }: { demo: ReviewerDemo }) {
   const [modelId, setModelId] = useState(run.modelIds[0]);
   const [condition, setCondition] = useState(run.conditions[0]);
   const [filter, setFilter] = useState<RouteFilter>("all");
+  const [drafts, setDrafts] = useState<Record<string, Draft>>({});
+  const setDraft = (key: string, next: Draft | null) =>
+    setDrafts((current) => {
+      const { [key]: _dropped, ...rest } = current;
+      return next ? { ...rest, [key]: next } : rest;
+    });
 
   const selectRun = (next: string) => {
     const nextRun = demo.runs.find((r) => r.runId === next) ?? demo.runs[0];
@@ -586,6 +607,8 @@ export default function CodingReviewDemo({ demo }: { demo: ReviewerDemo }) {
                       item={item}
                       run={run}
                       guardVersion={demo.guardVersion}
+                      draft={drafts[record.key] ?? EMPTY_DRAFT}
+                      onDraft={(next) => setDraft(record.key, next)}
                     />
                   )
                   : null;

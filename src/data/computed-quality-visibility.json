@@ -562,11 +562,11 @@
     "reproducible": 47
   },
   "displayProvenance": {
-    "total": 911,
+    "total": 913,
     "covered": 21,
-    "exempt": 21,
+    "exempt": 23,
     "uncovered": 869,
-    "uncoveredRate": 0.9538968166849616,
+    "uncoveredRate": 0.9518072289156626,
     "topUncoveredFiles": [
       {
         "file": "src/components/WhiteSpaceAnalysis.tsx",

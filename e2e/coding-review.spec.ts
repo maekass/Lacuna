@@ -50,6 +50,11 @@ test.describe("Coding judgment reviewer view (recorded run)", () => {
     await card.getByLabel(/What is wrong with this result/).fill(
       "e2e reviewer note",
     );
+    // A draft survives filter changes until the reviewer cancels it.
+    await page.getByRole("button", { name: /^Decided automatically/ }).click();
+    await page.getByRole("button", { name: /^Sent to a person/ }).click();
+    await expect(card.getByLabel(/What is wrong with this result/))
+      .toHaveValue("e2e reviewer note");
     const [file] = await Promise.all([
       page.waitForEvent("download"),
       download.click(),
