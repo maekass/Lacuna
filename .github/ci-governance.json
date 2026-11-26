@@ -19,7 +19,7 @@
       "scope": "all-prs",
       "required": true,
       "failurePolicy": "fail",
-      "command": "deno fmt --check",
+      "command": "npm run deno:fmt:check",
       "claim": "Repository formatting is canonical.",
       "doesNotProve": [
         "semantic correctness",
@@ -230,7 +230,7 @@
       "scope": "all-prs",
       "required": true,
       "failurePolicy": "fail",
-      "command": "deno lint src scripts",
+      "command": "npm run deno:lint",
       "claim": "Deno lint rules pass for governed source and script paths.",
       "doesNotProve": [
         "runtime correctness"

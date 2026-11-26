@@ -102,16 +102,14 @@ jobs:
           node-version: 24
           cache: npm
 
-      - name: Setup Deno
-        uses: denoland/setup-deno@v1.2.0
-        with:
-          deno-version: v2.1.4
-
       - name: Install deps
+        id: install
         run: npm ci
 
+      # Prefer npm scripts (npx deno@2.1.4) over denoland/setup-deno — the
+      # action's GitHub release download flakes with TypeError: terminated.
       - name: Verify formatting
-        run: deno fmt --check
+        run: npm run deno:fmt:check
 
       - name: ESLint
         run: npm run lint
@@ -141,11 +139,14 @@ jobs:
         run: npm run gate:quality-history
 
       - name: Quality visibility report
-        if: always()
+        # Still emit when later gates fail, but not when npm ci never ran
+        # (e.g. setup flake) — otherwise tsx is missing and this step reds
+        # over the real failure.
+        if: always() && steps.install.outcome == 'success'
         run: npm run report:quality
 
       - name: Upload quality artifacts
-        if: always()
+        if: always() && steps.install.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: quality-visibility
@@ -212,4 +213,4 @@ jobs:
         run: npm run test:reproductive-biopharma
 
       - name: Deno lint (require-await + no-node-globals)
-        run: deno lint src scripts
+        run: npm run deno:lint
