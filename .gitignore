@@ -25,7 +25,7 @@
 .DS_Store
 *.pem
 
-# local Deno toolchain (CI uses denoland/setup-deno)
+# local Deno toolchain (CI uses npx deno@2.1.4 via npm scripts)
 .deno/
 
 # debug
