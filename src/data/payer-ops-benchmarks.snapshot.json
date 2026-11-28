@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-05T00:51:19.988Z",
+  "fetchedAt": "2026-11-28T15:44:38.794Z",
   "benchmarkCount": 21,
   "uniqueSourceUrls": [
     {
@@ -48,8 +48,8 @@
       "sourceUrl": "https://masshpc.gov/publications/datapoints-series/issue-33-evidence-administrative-complexity-health-insurance-claim",
       "value": 20.4,
       "unit": "percent of all claims",
-      "httpStatus": 200,
-      "ok": true,
+      "httpStatus": 403,
+      "ok": false,
       "contentType": "text/html; charset=UTF-8"
     },
     {
@@ -78,9 +78,9 @@
       "sourceUrl": "https://www.nihcr.org/wp-content/uploads/Altarum-Prior-Authorization-Review-November-2019.pdf",
       "value": 2200,
       "unit": "USD per physician per year (2010 dollars)",
-      "httpStatus": 200,
-      "ok": true,
-      "contentType": "application/pdf"
+      "httpStatus": 403,
+      "ok": false,
+      "contentType": "text/html; charset=UTF-8"
     }
   ]
 }
